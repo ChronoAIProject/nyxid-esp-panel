@@ -1,0 +1,42 @@
+diff --git a/espressif__gmf_video/esp_gmf_video_enc.c b/espressif__gmf_video/esp_gmf_video_enc.c
+index 41bf5b1..8b09b4f 100644
+--- a/espressif__gmf_video/esp_gmf_video_enc.c
++++ b/espressif__gmf_video/esp_gmf_video_enc.c
+@@ -14,6 +14,7 @@
+ #include "esp_gmf_video_element.h"
+ #include "esp_video_enc.h"
+ #include "esp_video_enc_reg.h"
++#include "encoder/impl/esp_video_enc_mjpeg.h"
+ #include "esp_video_codec_utils.h"
+ #include "esp_gmf_video_enc.h"
+ #include "gmf_video_common.h"
+@@ -80,6 +81,9 @@ static int venc_get_input_codecs(venc_t *venc, uint32_t dst_codec, const uint32_
+         .codec_type = (esp_video_codec_type_t)dst_codec,
+         .codec_cc = venc->codec_cc,
+     };
++    if (dst_codec == ESP_FOURCC_MJPG && query.codec_cc == 0) {
++        query.codec_cc = ESP_VIDEO_ENC_SW_MJPEG_TAG;
++    }
+     int ret = esp_video_enc_query_caps(&query, &caps);
+     if (ret != ESP_VC_ERR_OK) {
+         return ESP_GMF_ERR_NOT_SUPPORT;
+@@ -96,6 +100,9 @@ static bool venc_is_codec_supported(venc_t *venc, uint32_t src_codec, uint32_t d
+         .codec_type = (esp_video_codec_type_t)dst_codec,
+         .codec_cc = venc->codec_cc,
+     };
++    if (dst_codec == ESP_FOURCC_MJPG && query.codec_cc == 0) {
++        query.codec_cc = ESP_VIDEO_ENC_SW_MJPEG_TAG;
++    }
+     int ret = esp_video_enc_query_caps(&query, &caps);
+     if (ret != ESP_VC_ERR_OK) {
+         return false;
+@@ -171,6 +178,9 @@ static esp_gmf_job_err_t venc_el_open(esp_gmf_video_element_handle_t self, void
+             enc_cfg.codec_cc = cfg->codec_cc;
+             venc->codec_cc = cfg->codec_cc;
+         }
++        if (enc_cfg.codec_type == ESP_FOURCC_MJPG && enc_cfg.codec_cc == 0) {
++            enc_cfg.codec_cc = ESP_VIDEO_ENC_SW_MJPEG_TAG;
++        }
+         esp_vc_err_t ret = esp_video_enc_open(&enc_cfg, &venc->enc_handle);
+         if (ret != ESP_VC_ERR_OK) {
+             ESP_LOGE(TAG, "Fail to open encoder ret %d", ret);

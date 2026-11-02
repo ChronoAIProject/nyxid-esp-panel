@@ -1,0 +1,33 @@
+diff --git a/espressif__esp_video_codec/src/encoder/esp_video_enc_sw_mjpeg.c b/espressif__esp_video_codec/src/encoder/esp_video_enc_sw_mjpeg.c
+index f56f01b..7394ee7 100644
+--- a/espressif__esp_video_codec/src/encoder/esp_video_enc_sw_mjpeg.c
++++ b/espressif__esp_video_codec/src/encoder/esp_video_enc_sw_mjpeg.c
+@@ -36,7 +36,7 @@
+ #define TYPICAL_ENCODE_HEIGHT  480
+ #define TYPICAL_ENCODE_FPS     10
+ #define TYPICAL_FPS_REFER_FREQ 240
+-#define DEFAULT_IMAGE_QUALITY  60
++#define DEFAULT_IMAGE_QUALITY  80
+ 
+ typedef struct {
+     jpeg_enc_handle_t enc_handle;
+@@ -46,6 +46,8 @@ typedef struct {
+ // TODO add other format support
+ static esp_video_codec_pixel_fmt_t sw_mjpeg_inputs[] = {
+     ESP_VIDEO_CODEC_PIXEL_FMT_YUV422,
++    ESP_VIDEO_CODEC_PIXEL_FMT_RGB565_LE,
++    ESP_VIDEO_CODEC_PIXEL_FMT_RGB565_BE,
+     ESP_VIDEO_CODEC_PIXEL_FMT_RGB888,
+ };
+ 
+@@ -54,6 +56,10 @@ static jpeg_pixel_format_t get_jpeg_pixel_format(esp_video_codec_pixel_fmt_t fmt
+     switch (fmt) {
+         case ESP_VIDEO_CODEC_PIXEL_FMT_RGB888:
+             return JPEG_PIXEL_FORMAT_RGB888;
++        case ESP_VIDEO_CODEC_PIXEL_FMT_RGB565_LE:
++            return JPEG_PIXEL_FORMAT_RGB565_LE;
++        case ESP_VIDEO_CODEC_PIXEL_FMT_RGB565_BE:
++            return JPEG_PIXEL_FORMAT_RGB565_BE;
+         case ESP_VIDEO_CODEC_PIXEL_FMT_YUV422:
+             return JPEG_PIXEL_FORMAT_YCbYCr;
+         default:

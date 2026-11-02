@@ -1,0 +1,185 @@
+diff --git a/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_auto_video_pipeline.c b/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_auto_video_pipeline.c
+index 9541847..fd45462 100644
+--- a/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_auto_video_pipeline.c
++++ b/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_auto_video_pipeline.c
+@@ -118,7 +118,7 @@ static uint8_t get_sink_num(video_pipeline_t *video_pipe)
+ {
+     uint8_t sink_num = 0;
+     for (int i = 0; i < MAX_SINK_NUM; i++) {
+-        if (video_pipe->sink_cfg[i].video_info.format_id) {
++        if (video_pipe->sink_cfg[i].video_info.format_id != ESP_CAPTURE_FMT_ID_NONE) {
+             sink_num++;
+         }
+     }
+diff --git a/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_path_mngr.c b/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_path_mngr.c
+index c41b160..6072f09 100644
+--- a/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_path_mngr.c
++++ b/espressif__esp_capture/impl/capture_gmf_path/src/gmf_capture_path_mngr.c
+@@ -73,7 +73,7 @@ static bool have_valid_path(gmf_capture_path_mngr_t *mngr)
+ {
+     for (int i = 0; i < mngr->path_num; i++) {
+         gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
+-        if (res->configured) {
++        if (res->configured && res->enable) {
+             return true;
+         }
+     }
+@@ -98,7 +98,7 @@ static esp_capture_err_t prepare_for_all_path(gmf_capture_path_mngr_t *mngr, gmf
+     }
+     for (int i = 0; i < mngr->path_num; i++) {
+         gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
+-        if (res->configured) {
++        if (res->configured && res->enable) {
+             res->negotiated = true;
+         }
+     }
+@@ -384,16 +384,56 @@ static esp_capture_err_t start_all_path(gmf_capture_path_mngr_t *mngr, gmf_captu
+                                         gmf_capture_prepare_path_cb prepare_cb)
+ {
+     int ret = ESP_CAPTURE_ERR_OK;
++    bool configured[8] = {0};
++    esp_capture_stream_info_t sink_cfg[8] = {0};
++    uint8_t path_num = mngr->path_num;
++    if (path_num > sizeof(configured)) {
++        path_num = sizeof(configured);
++    }
++    for (int i = 0; i < path_num; i++) {
++        gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
++        configured[i] = res->configured;
++        if (!res->enable) {
++            res->configured = false;
++            if (mngr->pipeline_builder->get_sink_cfg &&
++                mngr->pipeline_builder->set_sink_cfg &&
++                mngr->pipeline_builder->get_sink_cfg(mngr->pipeline_builder, res->path, &sink_cfg[i]) == ESP_CAPTURE_ERR_OK) {
++                esp_capture_stream_info_t disabled = {0};
++                mngr->pipeline_builder->set_sink_cfg(mngr->pipeline_builder, res->path, &disabled);
++            }
++        }
++    }
+     // Only get pipeline when all sinks are set
+     if (get_pipelines(mngr) != ESP_CAPTURE_ERR_OK) {
+         ESP_LOGE(TAG, "Fail to get pipelines for %d", mngr->stream_type);
++        for (int i = 0; i < path_num; i++) {
++            gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
++            res->configured = configured[i];
++            if (!res->enable && mngr->pipeline_builder->set_sink_cfg) {
++                mngr->pipeline_builder->set_sink_cfg(mngr->pipeline_builder, res->path, &sink_cfg[i]);
++            }
++        }
+         return ESP_CAPTURE_ERR_INVALID_ARG;
+     }
+     ret = prepare_for_all_path(mngr, prepare_all);
+     if (ret != ESP_CAPTURE_ERR_OK) {
+         ESP_LOGE(TAG, "Fail to prepare for all path");
++        for (int i = 0; i < path_num; i++) {
++            gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
++            res->configured = configured[i];
++            if (!res->enable && mngr->pipeline_builder->set_sink_cfg) {
++                mngr->pipeline_builder->set_sink_cfg(mngr->pipeline_builder, res->path, &sink_cfg[i]);
++            }
++        }
+         return ret;
+     }
++    for (int i = 0; i < path_num; i++) {
++        gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
++        res->configured = configured[i];
++        if (!res->enable && mngr->pipeline_builder->set_sink_cfg) {
++            mngr->pipeline_builder->set_sink_cfg(mngr->pipeline_builder, res->path, &sink_cfg[i]);
++        }
++    }
+     for (int i = 0; i < mngr->path_num; i++) {
+         gmf_capture_path_res_t *res = gmf_capture_path_mngr_get_idx(mngr, i);
+         if (res->enable) {
+@@ -528,12 +568,16 @@ esp_capture_err_t gmf_capture_path_mngr_start(gmf_capture_path_mngr_t *mngr, gmf
+     if (mngr->started == true) {
+         return ESP_CAPTURE_ERR_OK;
+     }
+-    mngr->started = true;
+     // Skip for no valid path
+-    if (mngr->path_num == 0) {
++    if (mngr->path_num == 0 || have_valid_path(mngr) == false) {
+         return ESP_CAPTURE_ERR_OK;
+     }
+-    return start_all_path(mngr, prepare_all, prepare_cb);
++    mngr->started = true;
++    esp_capture_err_t ret = start_all_path(mngr, prepare_all, prepare_cb);
++    if (ret != ESP_CAPTURE_ERR_OK) {
++        mngr->started = false;
++    }
++    return ret;
+ }
+ 
+ esp_capture_err_t gmf_capture_path_mngr_frame_reached(gmf_capture_path_res_t *res, esp_capture_stream_frame_t *frame)
+diff --git a/espressif__esp_capture/src/esp_capture.c b/espressif__esp_capture/src/esp_capture.c
+index 3bc73fe..da9c75b 100644
+--- a/espressif__esp_capture/src/esp_capture.c
++++ b/espressif__esp_capture/src/esp_capture.c
+@@ -454,6 +454,18 @@ static esp_capture_err_t stop_path(capture_path_t *path)
+     return ESP_CAPTURE_ERR_OK;
+ }
+ 
++static void stop_started_managers(capture_t *capture, bool stop_audio, bool stop_video)
++{
++    if (stop_audio && capture->cfg.audio_path) {
++        esp_capture_path_mngr_if_t *audio_path = &capture->cfg.audio_path->base;
++        audio_path->stop(audio_path);
++    }
++    if (stop_video && capture->cfg.video_path) {
++        esp_capture_path_mngr_if_t *video_path = &capture->cfg.video_path->base;
++        video_path->stop(video_path);
++    }
++}
++
+ static int build_audio_path(capture_t *capture, esp_capture_cfg_t *cfg)
+ {
+ #ifdef CONFIG_ESP_CAPTURE_ENABLE_AUDIO
+@@ -1103,18 +1115,28 @@ esp_capture_err_t esp_capture_start(esp_capture_handle_t h)
+     }
+     // We start video firstly for initialize video take long time than audio
+     esp_capture_path_mngr_if_t *video_path = &capture->cfg.video_path->base;
++    bool video_started = false;
+     if (video_path) {
+         CAPTURE_PERF_MON(0, "Start Video Path", {
+             ret = video_path->start(video_path);
+         });
+         CAPTURE_LOG_ON_ERR(ret, "Fail to start video path ret %d", ret);
++        if (ret != ESP_CAPTURE_ERR_OK) {
++            goto start_failed;
++        }
++        video_started = true;
+     }
+     esp_capture_path_mngr_if_t *audio_path = &capture->cfg.audio_path->base;
++    bool audio_started = false;
+     if (audio_path) {
+         CAPTURE_PERF_MON(0, "Start Audio Path", {
+             ret = audio_path->start(audio_path);
+         });
+         CAPTURE_LOG_ON_ERR(ret, "Fail to start audio path ret %d", ret);
++        if (ret != ESP_CAPTURE_ERR_OK) {
++            goto start_failed;
++        }
++        audio_started = true;
+     }
+     if (capture->sync_handle) {
+         esp_capture_sync_on(capture->sync_handle);
+@@ -1125,6 +1147,20 @@ esp_capture_err_t esp_capture_start(esp_capture_handle_t h)
+     CAPTURE_PERF_MON(0, "Start Finished", {});
+     capture_mutex_unlock(capture->api_lock);
+     return ret;
++
++start_failed:
++    stop_started_managers(capture, audio_started, video_started);
++    for (int i = 0; i < capture->path_num; i++) {
++        capture_path_t *path = capture->path[i];
++        if (path) {
++            stop_path(path);
++            release_path(path);
++            path->sink_disabled = false;
++        }
++    }
++    capture->started = false;
++    capture_mutex_unlock(capture->api_lock);
++    return ret;
+ }
+ 
+ esp_capture_err_t esp_capture_sink_set_bitrate(esp_capture_sink_handle_t h, esp_capture_stream_type_t stream_type, uint32_t bitrate)
