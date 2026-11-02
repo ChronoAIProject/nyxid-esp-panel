@@ -570,7 +570,9 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     if (!panel_ota_try_lock()) { httpd_resp_set_status(req,"409 Conflict"); return httpd_resp_sendstr(req,"OTA busy"); }
     panel_ota_progress("receiving", ESP_OK);
     esp_ota_handle_t handle=0;
+    panel_flash_lock();
     esp_err_t err=esp_ota_begin(update,req->content_len,&handle);
+    panel_flash_unlock();
     mbedtls_sha256_context sha;
     mbedtls_sha256_init(&sha); mbedtls_sha256_starts(&sha,0);
     char *buffer=malloc(4096);

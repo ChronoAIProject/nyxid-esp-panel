@@ -187,7 +187,11 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(ota, "last_error", update_error == ESP_OK ? "" :
         update_error == ESP_ERR_INVALID_CRC ? "sha256_mismatch" : esp_err_to_name(update_error));
     esp_ota_img_states_t ota_state;
-    cJSON_AddStringToObject(ota, "state", running && esp_ota_get_state_partition(running, &ota_state)==ESP_OK ?
+    // IDF reads otadata through an MMU mapping here, bypassing esp_flash_read.
+    panel_flash_lock();
+    esp_err_t state_error = running ? esp_ota_get_state_partition(running, &ota_state) : ESP_ERR_NOT_FOUND;
+    panel_flash_unlock();
+    cJSON_AddStringToObject(ota, "state", state_error==ESP_OK ?
         (ota_state==ESP_OTA_IMG_VALID ? "valid" : ota_state==ESP_OTA_IMG_PENDING_VERIFY ? "pending_verify" : "other") : "initial");
     cJSON *st = cJSON_AddObjectToObject(root, "stream");
     cJSON_AddStringToObject(st, "state", stream.state);
@@ -1165,7 +1169,9 @@ static void url_ota_task(void *arg)
         // Bound each erase to the next 4 KiB write, rather than blocking in
         // one multi-megabyte erase on the legacy P4 while the UI is running.
         ESP_LOGI(TAG, "URL OTA download verified; starting sector writes");
+        panel_flash_lock();
         err = esp_ota_begin(job->update, OTA_WITH_SEQUENTIAL_WRITES, &handle);
+        panel_flash_unlock();
         if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA writer ready");
     }
     for (size_t offset = 0; err == ESP_OK && offset < received;) {

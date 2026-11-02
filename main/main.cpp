@@ -172,9 +172,11 @@ extern "C" void app_main(void)
     // Keep rollback pending until the native UI and service task survive startup.
     xTaskCreate([](void *) {
         vTaskDelay(pdMS_TO_TICKS(30000));
+        panel_flash_lock();
         if (!panel_runtime_ready()) {
             ESP_LOGE("panel.boot", "Services failed health check; rolling back pending OTA");
             esp_ota_mark_app_invalid_rollback_and_reboot();
+            panel_flash_unlock();
             vTaskDelete(nullptr);
         }
         esp_ota_img_states_t state;
@@ -183,6 +185,7 @@ extern "C" void app_main(void)
             state == ESP_OTA_IMG_PENDING_VERIFY) {
             ESP_ERROR_CHECK(esp_ota_mark_app_valid_cancel_rollback());
         }
+        panel_flash_unlock();
         ESP_LOGI("panel.boot", "Startup health check passed");
         vTaskDelete(nullptr);
     }, "boot_health", 3072, nullptr, 3, nullptr);
