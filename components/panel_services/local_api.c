@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "stream_publisher.h"
 #include "network.h"
+#include "panel_ota.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -35,6 +36,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+#include <math.h>
 
 // 0 = sticky (image / text persists until explicitly cleared or replaced).
 // HOME state for the AI terminal: pushed image is the durable surface.
@@ -43,25 +45,6 @@
 #define WIFI_TEST_TIMEOUT_MS    60000u
 
 static const char *TAG = "haCam.api";
-
-static void body_preview_hex(const uint8_t *body, size_t body_len, char *out, size_t cap)
-{
-    static const char hex[] = "0123456789abcdef";
-    if (!out || cap == 0u) {
-        return;
-    }
-    out[0] = '\0';
-    if (!body || body_len == 0u) {
-        return;
-    }
-    size_t n = body_len > 64u ? 64u : body_len;
-    size_t pos = 0u;
-    for (size_t i = 0u; i < n && pos + 2u < cap; ++i) {
-        out[pos++] = hex[(body[i] >> 4) & 0x0f];
-        out[pos++] = hex[body[i] & 0x0f];
-    }
-    out[pos] = '\0';
-}
 
 static const char *header_value(const nyx_proxy_request_t *req, const char *name)
 {
@@ -140,6 +123,15 @@ static void json_response_len(char *resp, size_t *resp_len)
     }
 }
 
+static int object_response(cJSON *root, char *resp, size_t cap, size_t *resp_len)
+{
+    bool ok=root && cJSON_PrintPreallocated(root,resp,cap,false);
+    cJSON_Delete(root);
+    if (!ok) snprintf(resp,cap,"{\"error\":\"response_buffer_or_allocation\"}");
+    json_response_len(resp,resp_len);
+    return ok ? 200 : 500;
+}
+
 size_t local_api_format_status_json(char *resp, size_t cap)
 {
     if (!resp || cap == 0u) {
@@ -161,50 +153,94 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     stream_publisher_get_status(&stream);
     media_mode_t media_mode = media_mode_current();
 
-    int n = snprintf(resp, cap,
-             "{\"fw\":\"%s\",\"uptime_s\":%llu,"
-             "\"net\":{\"connected\":%s,\"wifi\":{\"ssid\":\"%s\",\"ip\":\"%s\"},"
-             "\"eth\":{\"ip\":\"%s\"}},"
-             "\"nyx\":{\"state\":\"%s\",\"slug\":\"%s\",\"last_error\":\"%s\"},"
-             "\"ota\":{\"running\":\"%s\",\"marker\":\"wifi-ota\"},"
-             "\"stream\":{\"state\":\"%s\",\"last_error\":\"%s\"},\"lcd\":{\"mode\":\"boot\"},"
-             "\"mqtt\":{\"state\":\"%s\",\"host\":\"%s\",\"last_error\":\"%s\"},"
-             "\"media\":{\"mode\":\"%s\"},"
-             "\"heap\":{\"free\":%lu,\"spiram_free\":%lu,"
-             "\"dma_free\":%lu,\"dma_largest_free\":%lu,"
-             "\"internal_free\":%lu,\"internal_largest_free\":%lu,"
-             "\"dma_internal_largest_free\":%lu}}",
-             esp_app_get_description()->version,
-             (unsigned long long)(esp_timer_get_time() / 1000000ULL),
-             (net.wifi_ip || net.eth_ip) ? "true" : "false",
-             wifi.ssid_1,
-             net.wifi_ip_addr,
-             net.eth_ip_addr,
-             nyx,
-             nyx_creds_service_slug(),
-             nyx_node_last_error(),
-             running ? running->label : "",
-             stream.state,
-             stream.last_error,
-             "disabled",
-             "",
-             "",
-             media_mode_name(media_mode),
-             (unsigned long)esp_get_free_heap_size(),
-             (unsigned long)heap_caps_get_free_size(MALLOC_CAP_SPIRAM),
-             (unsigned long)heap_caps_get_free_size(MALLOC_CAP_DMA),
-             (unsigned long)heap_caps_get_largest_free_block(MALLOC_CAP_DMA),
-             (unsigned long)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
-             (unsigned long)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL),
-             (unsigned long)heap_caps_get_largest_free_block(MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL));
-    if (n <= 0) {
-        return 0u;
+    cJSON *root = cJSON_CreateObject();
+    if (!root) return 0;
+    cJSON_AddStringToObject(root, "fw", esp_app_get_description()->version);
+    cJSON_AddStringToObject(root, "project", esp_app_get_description()->project_name);
+    char app_sha[65];
+    for (size_t i=0;i<32;++i) snprintf(app_sha+i*2,3,"%02x",esp_app_get_description()->app_elf_sha256[i]);
+    cJSON_AddStringToObject(root, "app_sha256", app_sha);
+    cJSON_AddStringToObject(root, "board", "Waveshare ESP32-P4 JD9365 / OV5647 / ES8311");
+    cJSON_AddNumberToObject(root, "uptime_s", esp_timer_get_time() / 1000000ULL);
+    cJSON *network = cJSON_AddObjectToObject(root, "net");
+    cJSON_AddBoolToObject(network, "connected", net.wifi_ip || net.eth_ip);
+    cJSON *w = cJSON_AddObjectToObject(network, "wifi");
+    wifi_config_t station = {0};
+    if (esp_wifi_get_config(WIFI_IF_STA, &station) == ESP_OK && !wifi.ssid_1[0])
+        snprintf(wifi.ssid_1, sizeof(wifi.ssid_1), "%.*s", 32, station.sta.ssid);
+    cJSON_AddStringToObject(w, "ssid", wifi.ssid_1);
+    cJSON_AddStringToObject(w, "ip", net.wifi_ip_addr);
+    cJSON *eth = cJSON_AddObjectToObject(network, "eth");
+    cJSON_AddStringToObject(eth, "ip", net.eth_ip_addr);
+    cJSON *node = cJSON_AddObjectToObject(root, "nyx");
+    cJSON_AddStringToObject(node, "state", nyx);
+    cJSON_AddStringToObject(node, "slug", nyx_creds_service_slug());
+    cJSON_AddStringToObject(node, "last_error", nyx_node_last_error());
+    cJSON *ota = cJSON_AddObjectToObject(root, "ota");
+    cJSON_AddStringToObject(ota, "running", running ? running->label : "");
+    const esp_partition_t *next = esp_ota_get_next_update_partition(NULL);
+    cJSON_AddStringToObject(ota, "next", next ? next->label : "");
+    esp_ota_img_states_t ota_state;
+    cJSON_AddStringToObject(ota, "state", running && esp_ota_get_state_partition(running, &ota_state)==ESP_OK ?
+        (ota_state==ESP_OTA_IMG_VALID ? "valid" : ota_state==ESP_OTA_IMG_PENDING_VERIFY ? "pending_verify" : "other") : "initial");
+    cJSON *st = cJSON_AddObjectToObject(root, "stream");
+    cJSON_AddStringToObject(st, "state", stream.state);
+    cJSON_AddStringToObject(st, "last_error", stream.last_error);
+    cJSON *lcd = cJSON_AddObjectToObject(root, "lcd");
+    const char *screen = "unknown";
+    size_t depth = 0;
+    (void)lcd_renderer_current_screen(&screen, &depth);
+    cJSON_AddStringToObject(lcd, "mode", screen);
+    cJSON_AddNumberToObject(lcd, "depth", depth);
+    cJSON *mqtt = cJSON_AddObjectToObject(root, "mqtt");
+    cJSON_AddStringToObject(mqtt, "state", "disabled");
+    cJSON *media = cJSON_AddObjectToObject(root, "media");
+    cJSON_AddStringToObject(media, "mode", media_mode_name(media_mode));
+    cJSON *heap = cJSON_AddObjectToObject(root, "heap");
+    cJSON_AddNumberToObject(heap, "free", esp_get_free_heap_size());
+    cJSON_AddNumberToObject(heap, "spiram_free", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+    cJSON_AddNumberToObject(heap, "dma_free", heap_caps_get_free_size(MALLOC_CAP_DMA));
+    cJSON_AddNumberToObject(heap, "dma_largest_free", heap_caps_get_largest_free_block(MALLOC_CAP_DMA));
+    cJSON_AddNumberToObject(heap, "internal_free", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+    cJSON_AddNumberToObject(heap, "internal_largest_free", heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+    bool ok = cJSON_PrintPreallocated(root, resp, cap, false);
+    cJSON_Delete(root);
+    if (!ok) snprintf(resp, cap, "{\"error\":\"status_buffer_too_small\"}");
+    return strlen(resp);
+}
+
+static bool valid_config_fields(const cJSON *root)
+{
+    static const struct { const char *name; double min, max; } numbers[] = {
+        {"fps",1,60}, {"bitrate",32000,8000000}, {"brightness",0,100},
+        {"rotation",0,3}, {"port",1,65535},
+    };
+    for (size_t i=0;i<sizeof(numbers)/sizeof(numbers[0]);++i) {
+        const cJSON *v=cJSON_GetObjectItemCaseSensitive(root,numbers[i].name);
+        if (v && (!cJSON_IsNumber(v) || !isfinite(v->valuedouble) ||
+            v->valuedouble<numbers[i].min || v->valuedouble>numbers[i].max ||
+            v->valuedouble!=(double)(uint32_t)v->valuedouble)) return false;
     }
-    size_t len = (size_t)n;
-    if (len >= cap) {
-        len = cap - 1u;
+    static const struct { const char *name; size_t cap; } strings[] = {
+        {"target_whip_url",CFG_STREAM_TARGET_MAX}, {"idle_mode",CFG_LCD_MODE_MAX},
+        {"label",CFG_DEVICE_TEXT_MAX}, {"location",CFG_DEVICE_TEXT_MAX},
+        {"ssid_1",CFG_WIFI_SSID_MAX}, {"ssid_2",CFG_WIFI_SSID_MAX},
+        {"psw_1",CFG_WIFI_PSW_MAX}, {"psw_2",CFG_WIFI_PSW_MAX},
+        {"host",CFG_MQTT_HOST_MAX}, {"user",CFG_MQTT_USER_MAX},
+        {"pass",CFG_MQTT_PASS_MAX}, {"base_topic",CFG_MQTT_TOPIC_MAX},
+    };
+    for (size_t i=0;i<sizeof(strings)/sizeof(strings[0]);++i) {
+        const cJSON *v=cJSON_GetObjectItemCaseSensitive(root,strings[i].name);
+        if (v && (!cJSON_IsString(v) || strlen(v->valuestring)>=strings[i].cap)) return false;
     }
-    return len;
+    const char *booleans[]={"enabled","auto_start","dry_run"};
+    for (size_t i=0;i<sizeof(booleans)/sizeof(booleans[0]);++i) {
+        const cJSON *v=cJSON_GetObjectItemCaseSensitive(root,booleans[i]);
+        if (v && !cJSON_IsBool(v)) return false;
+    }
+    const cJSON *url=cJSON_GetObjectItemCaseSensitive(root,"target_whip_url");
+    if (url && *url->valuestring && strncmp(url->valuestring,"http://",7) && strncmp(url->valuestring,"https://",8)) return false;
+    return true;
 }
 
 static cJSON *parse_json_body(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -237,6 +273,12 @@ static cJSON *parse_json_body(const nyx_proxy_request_t *req, char *resp, size_t
         json_response_len(resp, resp_len);
         return NULL;
     }
+    if (req->path && !strncmp(req->path,"/config/",8) && !valid_config_fields(root)) {
+        cJSON_Delete(root);
+        snprintf(resp,cap,"{\"error\":\"invalid_config_field\"}");
+        json_response_len(resp,resp_len);
+        return NULL;
+    }
     if (status) {
         *status = 200;
     }
@@ -253,11 +295,6 @@ static int log_route_result(const nyx_proxy_request_t *req, int status,
              status,
              (unsigned)resp_len,
              content_type ? content_type : "");
-    if (req && req->body_len > 64u) {
-        char hex[129];
-        body_preview_hex(req->body, req->body_len, hex, sizeof(hex));
-        ESP_LOGI(TAG, "route body_preview_hex=%s total_len=%u", hex, (unsigned)req->body_len);
-    }
     return status;
 }
 
@@ -578,14 +615,12 @@ static int h_get_config_stream(const nyx_proxy_request_t *req, char *resp, size_
     snprintf(ct, ct_cap, "application/json");
     stream_publisher_config_t cfg = {0};
     stream_publisher_get_config(&cfg);
-    snprintf(resp, cap,
-             "{\"target_whip_url\":\"%s\",\"auto_start\":%s,\"fps\":%u,\"bitrate\":%lu}",
-             cfg.target_whip_url,
-             cfg.auto_start ? "true" : "false",
-             (unsigned)cfg.fps,
-             (unsigned long)cfg.bitrate);
-    json_response_len(resp, resp_len);
-    return 200;
+    cJSON *result=cJSON_CreateObject();
+    cJSON_AddStringToObject(result,"target_whip_url",cfg.target_whip_url);
+    cJSON_AddBoolToObject(result,"auto_start",cfg.auto_start);
+    cJSON_AddNumberToObject(result,"fps",cfg.fps);
+    cJSON_AddNumberToObject(result,"bitrate",cfg.bitrate);
+    return object_response(result,resp,cap,resp_len);
 }
 
 static int h_post_config_stream(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -593,27 +628,9 @@ static int h_post_config_stream(const nyx_proxy_request_t *req, char *resp, size
 {
     (void)user;
     snprintf(ct, ct_cap, "application/json");
-    if (!req->body || req->body_len == 0u) {
-        snprintf(resp, cap, "{\"error\":\"empty_json_body\"}");
-        json_response_len(resp, resp_len);
-        return 400;
-    }
-    char *json = malloc(req->body_len + 1u);
-    if (!json) {
-        snprintf(resp, cap, "{\"error\":\"oom\"}");
-        json_response_len(resp, resp_len);
-        return 500;
-    }
-    memcpy(json, req->body, req->body_len);
-    json[req->body_len] = '\0';
-    cJSON *root = cJSON_Parse(json);
-    free(json);
-    if (!cJSON_IsObject(root)) {
-        cJSON_Delete(root);
-        snprintf(resp, cap, "{\"error\":\"invalid_json\"}");
-        json_response_len(resp, resp_len);
-        return 400;
-    }
+    int status=0;
+    cJSON *root=parse_json_body(req,resp,cap,resp_len,&status);
+    if (!root) return status;
 
     stream_publisher_config_t cfg = {0};
     stream_publisher_get_config(&cfg);
@@ -811,10 +828,11 @@ static int h_get_config_lcd(const nyx_proxy_request_t *req, char *resp, size_t c
         json_response_len(resp, resp_len);
         return 500;
     }
-    snprintf(resp, cap, "{\"idle_mode\":\"%s\",\"brightness\":%u,\"rotation\":%u}",
-             cfg.idle_mode, (unsigned)cfg.brightness, (unsigned)cfg.rotation);
-    json_response_len(resp, resp_len);
-    return 200;
+    cJSON *result=cJSON_CreateObject();
+    cJSON_AddStringToObject(result,"idle_mode",cfg.idle_mode);
+    cJSON_AddNumberToObject(result,"brightness",cfg.brightness);
+    cJSON_AddNumberToObject(result,"rotation",cfg.rotation);
+    return object_response(result,resp,cap,resp_len);
 }
 
 static int h_post_config_lcd(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -863,9 +881,10 @@ static int h_get_config_device(const nyx_proxy_request_t *req, char *resp, size_
         json_response_len(resp, resp_len);
         return 500;
     }
-    snprintf(resp, cap, "{\"label\":\"%s\",\"location\":\"%s\"}", cfg.label, cfg.location);
-    json_response_len(resp, resp_len);
-    return 200;
+    cJSON *result=cJSON_CreateObject();
+    cJSON_AddStringToObject(result,"label",cfg.label);
+    cJSON_AddStringToObject(result,"location",cfg.location);
+    return object_response(result,resp,cap,resp_len);
 }
 
 static int h_post_config_device(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -903,9 +922,10 @@ static int h_get_config_wifi(const nyx_proxy_request_t *req, char *resp, size_t 
         json_response_len(resp, resp_len);
         return 500;
     }
-    snprintf(resp, cap, "{\"ssid_1\":\"%s\",\"ssid_2\":\"%s\"}", cfg.ssid_1, cfg.ssid_2);
-    json_response_len(resp, resp_len);
-    return 200;
+    cJSON *result=cJSON_CreateObject();
+    cJSON_AddStringToObject(result,"ssid_1",cfg.ssid_1);
+    cJSON_AddStringToObject(result,"ssid_2",cfg.ssid_2);
+    return object_response(result,resp,cap,resp_len);
 }
 
 static int h_post_config_wifi(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -1019,17 +1039,14 @@ static int h_get_config_mqtt(const nyx_proxy_request_t *req, char *resp, size_t 
         json_response_len(resp, resp_len);
         return 500;
     }
-    snprintf(resp, cap,
-             "{\"enabled\":%s,\"host\":\"%s\",\"port\":%u,\"user\":\"%s\",\"pass\":\"%s\","
-             "\"base_topic\":\"%s\"}",
-             cfg.enabled ? "true" : "false",
-             cfg.host,
-             (unsigned)cfg.port,
-             cfg.user,
-             cfg.pass,
-             cfg.base_topic);
-    json_response_len(resp, resp_len);
-    return 200;
+    cJSON *result=cJSON_CreateObject();
+    cJSON_AddBoolToObject(result,"enabled",cfg.enabled);
+    cJSON_AddStringToObject(result,"host",cfg.host);
+    cJSON_AddNumberToObject(result,"port",cfg.port);
+    cJSON_AddStringToObject(result,"user",cfg.user);
+    cJSON_AddStringToObject(result,"pass",cfg.pass[0] ? "<redacted>" : "");
+    cJSON_AddStringToObject(result,"base_topic",cfg.base_topic);
+    return object_response(result,resp,cap,resp_len);
 }
 
 static int h_post_config_mqtt(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -1130,6 +1147,11 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
     }
 
     const esp_partition_t *update = esp_ota_get_next_update_partition(NULL);
+    if (!update || !panel_ota_try_lock()) {
+        free(url); free(sha);
+        snprintf(resp, cap, "{\"error\":\"ota_slot_unavailable_or_busy\"}");
+        json_response_len(resp, resp_len); return 409;
+    }
     ESP_LOGI(TAG, "OTA started url=%s target=%s", url, update ? update->label : "(none)");
     esp_http_client_config_t http_cfg = {
         .url = url,
@@ -1173,6 +1195,7 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
                      actual_hex);
             json_response_len(resp, resp_len);
             esp_https_ota_abort(handle);
+            panel_ota_unlock();
             free(url);
             free(sha);
             return 422;
@@ -1184,6 +1207,7 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
         ESP_LOGW(TAG, "OTA aborting error=%s", esp_err_to_name(err));
         esp_https_ota_abort(handle);
     }
+    panel_ota_unlock();
     free(url);
     free(sha);
     if (err != ESP_OK) {

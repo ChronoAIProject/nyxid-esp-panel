@@ -16,8 +16,16 @@
 #include "nvs_config.h"
 #include "snapshot.h"
 #include "common.h"
+#include "panel_ota.h"
+#include "nyx_creds.h"
+#include "esp_ota_ops.h"
+#include "esp_system.h"
+#include "mbedtls/sha256.h"
 
 #include <stdlib.h>
+#include <ctype.h>
+#include <sys/param.h>
+#include "freertos/task.h"
 #include <string.h>
 #include <strings.h>
 
@@ -78,7 +86,7 @@ static size_t local_api_response_cap(const char *path)
 
 static esp_err_t root_get(httpd_req_t *req)
 {
-    char status[768];
+    char status[4096];
     (void)local_api_format_status_json(status, sizeof(status));
     httpd_resp_set_type(req, "text/html; charset=utf-8");
     esp_err_t err = httpd_resp_sendstr_chunk(req,
@@ -103,7 +111,7 @@ static esp_err_t root_get(httpd_req_t *req)
 
 static esp_err_t status_get(httpd_req_t *req)
 {
-    char body[768];
+    char body[4096];
     size_t len = local_api_format_status_json(body, sizeof(body));
     httpd_resp_set_type(req, "application/json");
     esp_err_t err = httpd_resp_send(req, body, len);
@@ -534,6 +542,67 @@ static esp_err_t local_api_dispatch(httpd_req_t *req)
     return send_err == ESP_OK ? ESP_OK : send_err;
 }
 
+static void ota_reboot(void *arg)
+{
+    vTaskDelay(pdMS_TO_TICKS(1500)); esp_restart();
+}
+
+static esp_err_t ota_image_post(httpd_req_t *req)
+{
+    char auth[192], expected[65];
+    const char *key=nyx_creds_http_api_key();
+    if (!key || !*key || httpd_req_get_hdr_value_str(req,"Authorization",auth,sizeof(auth)) != ESP_OK ||
+        strncmp(auth,"Bearer ",7) || strlen(auth+7) != strlen(key)) {
+        httpd_resp_set_status(req,"401 Unauthorized"); return httpd_resp_sendstr(req,"unauthorized");
+    }
+    unsigned diff=0;
+    for (size_t i=0; i<strlen(key); ++i) diff |= (unsigned char)auth[7+i] ^ (unsigned char)key[i];
+    if (diff) { httpd_resp_set_status(req,"401 Unauthorized"); return httpd_resp_sendstr(req,"unauthorized"); }
+    const esp_partition_t *update=esp_ota_get_next_update_partition(NULL);
+    if (!update || req->content_len <= 0 || (size_t)req->content_len > update->size ||
+        httpd_req_get_hdr_value_str(req,"X-SHA256",expected,sizeof(expected)) != ESP_OK || strlen(expected)!=64) {
+        httpd_resp_set_status(req,"400 Bad Request"); return httpd_resp_sendstr(req,"invalid size or X-SHA256");
+    }
+    for (int i=0; i<64; ++i) if (!isxdigit((unsigned char)expected[i])) {
+        httpd_resp_set_status(req,"400 Bad Request"); return httpd_resp_sendstr(req,"invalid digest");
+    }
+    if (!panel_ota_try_lock()) { httpd_resp_set_status(req,"409 Conflict"); return httpd_resp_sendstr(req,"OTA busy"); }
+    esp_ota_handle_t handle=0;
+    esp_err_t err=esp_ota_begin(update,req->content_len,&handle);
+    mbedtls_sha256_context sha;
+    mbedtls_sha256_init(&sha); mbedtls_sha256_starts(&sha,0);
+    char *buffer=malloc(4096);
+    if (!buffer) err=ESP_ERR_NO_MEM;
+    size_t received=0;
+    int64_t deadline=esp_timer_get_time()+300000000LL;
+    while (err==ESP_OK && received<(size_t)req->content_len) {
+        size_t n=MIN(4096u,(size_t)req->content_len-received);
+        int got=httpd_req_recv(req,buffer,n);
+        if (got==HTTPD_SOCK_ERR_TIMEOUT && esp_timer_get_time()<deadline) continue;
+        if (got<=0) { err=ESP_ERR_TIMEOUT; break; }
+        mbedtls_sha256_update(&sha,(const uint8_t *)buffer,got);
+        err=esp_ota_write(handle,buffer,got); received+=got;
+    }
+    free(buffer);
+    uint8_t digest[32]; mbedtls_sha256_finish(&sha,digest); mbedtls_sha256_free(&sha);
+    char actual[65];
+    for (int i=0;i<32;++i) snprintf(actual+i*2,3,"%02x",digest[i]);
+    if (err==ESP_OK && strcasecmp(actual,expected)) err=ESP_ERR_INVALID_CRC;
+    if (err==ESP_OK) { err=esp_ota_end(handle); handle=0; }
+    if (err==ESP_OK) err=esp_ota_set_boot_partition(update);
+    if (handle) esp_ota_abort(handle);
+    panel_ota_unlock();
+    httpd_resp_set_type(req,"application/json");
+    if (err!=ESP_OK) {
+        httpd_resp_set_status(req,err==ESP_ERR_INVALID_CRC?"422 Unprocessable Entity":"500 Internal Server Error");
+        return httpd_resp_sendstr(req,"{\"ok\":false,\"error\":\"ota_image_rejected\"}");
+    }
+    httpd_resp_set_status(req,"202 Accepted");
+    esp_err_t sent=httpd_resp_sendstr(req,"{\"ok\":true,\"rebooting\":true}");
+    xTaskCreate(ota_reboot,"ota_reboot",2048,NULL,5,NULL);
+    return sent;
+}
+
 esp_err_t local_http_server_start(void)
 {
     if (s_server) {
@@ -568,9 +637,9 @@ esp_err_t local_http_server_start(void)
     httpd_config_t http_cfg = HTTPD_DEFAULT_CONFIG();
     http_cfg.server_port = cfg.port;
     http_cfg.ctrl_port = (uint16_t)(cfg.port == 32768u ? 32769u : 32768u);
-    http_cfg.max_uri_handlers = 16;
+    http_cfg.max_uri_handlers = 18;
     http_cfg.lru_purge_enable = true;
-    http_cfg.stack_size = 6144;
+    http_cfg.stack_size = 16 * 1024;
 
     err = httpd_start(&s_server, &http_cfg);
     if (err != ESP_OK) {
@@ -579,6 +648,9 @@ esp_err_t local_http_server_start(void)
         s_server = NULL;
         return err;
     }
+
+    const httpd_uri_t ota_uri = { .uri = "/system/ota/image", .method = HTTP_POST, .handler = ota_image_post };
+    ESP_ERROR_CHECK(httpd_register_uri_handler(s_server, &ota_uri));
 
     const httpd_uri_t root_uri = {
         .uri = "/",

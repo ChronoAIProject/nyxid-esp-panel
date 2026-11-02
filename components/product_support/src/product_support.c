@@ -301,3 +301,6 @@ bool product_player_is_playing_by_index(file_iterator_instance_t *instance, int 
 {
     return (index == file_iterator_get_index(instance));
 }
+
+esp_codec_dev_handle_t product_codec_speaker(void) { return play_dev_handle; }
+esp_codec_dev_handle_t product_codec_microphone(void) { return record_dev_handle; }

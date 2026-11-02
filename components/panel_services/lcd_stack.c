@@ -1,6 +1,11 @@
 #include "lcd_stack.h"
 
+#ifdef ESP_PLATFORM
 #include "esp_log.h"
+#else
+#include <stdio.h>
+#define ESP_LOGI(tag, ...) do { (void)(tag); if (0) printf(__VA_ARGS__); } while (0)
+#endif
 
 static const char *TAG = "haCam.lcdstack";
 

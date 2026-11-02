@@ -11,6 +11,7 @@
 #include <esp_log.h>
 #include <esp_system.h>
 #include <string.h>
+#include <stdio.h>
 #include <nvs_flash.h>
 #include <sys/param.h>
 #include "esp_netif.h"
@@ -28,6 +29,7 @@
 
 static bool               network_connected = false;
 static network_connect_cb connect_cb;
+static bool initialized;
 
 static void network_set_connected(bool connected)
 {
@@ -54,32 +56,16 @@ static wifi_config_t wifi_config;
 
 static bool load_from_nvs(void)
 {
-    nvs_handle_t wifi_nvs = 0;
-    bool load_ok = false;
-    do {
-        esp_err_t ret = nvs_open(PART_NAME, NVS_READWRITE, &wifi_nvs);
-        if (ret != ESP_OK) {
-            ESP_LOGE(TAG, "Fail to open nvs ret %d", ret);
-            break;
-        }
-        size_t size = sizeof(wifi_config.sta.ssid);
-        ret = nvs_get_str(wifi_nvs, WIFI_SSID_KEY, (char*)(wifi_config.sta.ssid), &size);
-        if (ret != ESP_OK) {
-            break;
-        }
-        wifi_config.sta.ssid[size] = '\0';
-        size = sizeof(wifi_config.sta.password);
-        ret = nvs_get_str(wifi_nvs, WIFI_PSW_KEY, (char*)(wifi_config.sta.password), &size);
-        if (ret != ESP_OK) {
-            break;
-        }
-        wifi_config.sta.password[size] = '\0';
-        load_ok = true;
-    } while (0);
-    if (wifi_nvs) {
-        nvs_close(wifi_nvs);
-    }
-    return load_ok;
+    nvs_handle_t h;
+    if (nvs_open(PART_NAME, NVS_READONLY, &h) != ESP_OK) return false;
+    wifi_config_t saved = {0};
+    size_t ssid_len = sizeof(saved.sta.ssid), pass_len = sizeof(saved.sta.password);
+    bool found = nvs_get_str(h, WIFI_SSID_KEY, (char *)saved.sta.ssid, &ssid_len) == ESP_OK && saved.sta.ssid[0];
+    esp_err_t pass_err = nvs_get_str(h, WIFI_PSW_KEY, (char *)saved.sta.password, &pass_len);
+    nvs_close(h);
+    if (pass_err != ESP_OK && pass_err != ESP_ERR_NVS_NOT_FOUND) found = false;
+    if (found) wifi_config = saved;
+    return found;
 }
 
 static void store_to_nvs(void)
@@ -101,6 +87,7 @@ static void store_to_nvs(void)
         }
     } while (0);
     if (wifi_nvs) {
+        nvs_commit(wifi_nvs);
         nvs_close(wifi_nvs);
     }
 }
@@ -118,15 +105,18 @@ static void event_handler(void *arg, esp_event_base_t event_base,
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         network_set_connected(true);
+        esp_wifi_get_config(WIFI_IF_STA, &wifi_config);
         store_to_nvs();
     }
 }
 
 int network_init(const char *ssid, const char *password, network_connect_cb cb)
 {
-    ESP_ERROR_CHECK(nvs_flash_init());
+    if (cb) connect_cb = cb;
+    if (initialized) return ESP_OK;
     ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    esp_err_t loop_err = esp_event_loop_create_default();
+    if (loop_err != ESP_OK && loop_err != ESP_ERR_INVALID_STATE) return loop_err;
     esp_netif_create_default_wifi_sta();
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -144,18 +134,14 @@ int network_init(const char *ssid, const char *password, network_connect_cb cb)
                                                         &event_handler,
                                                         NULL,
                                                         &instance_got_ip));
-    wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
-    if (load_from_nvs()) {
-        ESP_LOGI(TAG, "Force to use wifi config from nvs");
-    } else {
-        if (ssid) {
-            memcpy(wifi_config.sta.ssid, ssid, strlen(ssid) + 1);
-        }
-        if (password) {
-            memcpy(wifi_config.sta.password, password, strlen(password) + 1);
-        }
+    // First retain the vendor driver's saved station; legacy NVS overrides it.
+    ESP_ERROR_CHECK(esp_wifi_get_config(WIFI_IF_STA, &wifi_config));
+    if (!load_from_nvs() && ssid && ssid[0]) {
+        memset(&wifi_config, 0, sizeof(wifi_config));
+        snprintf((char *)wifi_config.sta.ssid, sizeof(wifi_config.sta.ssid), "%s", ssid);
+        snprintf((char *)wifi_config.sta.password, sizeof(wifi_config.sta.password), "%s", password ? password : "");
     }
-    connect_cb = cb;
+    initialized = true;
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     esp_wifi_set_ps(WIFI_PS_NONE);
@@ -173,13 +159,11 @@ int network_get_mac(uint8_t mac[6])
 
 int network_connect_wifi(const char *ssid, const char *password)
 {
-    wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
-    if (ssid) {
-        memcpy(wifi_config.sta.ssid, ssid, strlen(ssid) + 1);
-    }
-    if (password) {
-        memcpy(wifi_config.sta.password, password, strlen(password) + 1);
-    }
+    if (!ssid || strlen(ssid) >= sizeof(wifi_config.sta.ssid) ||
+        (password && strlen(password) >= sizeof(wifi_config.sta.password))) return ESP_ERR_INVALID_ARG;
+    memset(&wifi_config, 0, sizeof(wifi_config));
+    snprintf((char *)wifi_config.sta.ssid, sizeof(wifi_config.sta.ssid), "%s", ssid);
+    snprintf((char *)wifi_config.sta.password, sizeof(wifi_config.sta.password), "%s", password ? password : "");
     network_connected = false;
     esp_wifi_disconnect();
     esp_wifi_stop();
@@ -237,6 +221,9 @@ static void got_ip_event_handler(void *arg, esp_event_base_t event_base,
 
 int network_init(const char *ssid, const char *password, network_connect_cb cb)
 {
+    if (cb) connect_cb = cb;
+    if (initialized) return ESP_OK;
+    initialized = true;
     // Initialize Ethernet driver
     uint8_t eth_port_cnt = 0;
     ESP_ERROR_CHECK(example_eth_init(&eth_handles, &eth_port_cnt));
@@ -244,7 +231,8 @@ int network_init(const char *ssid, const char *password, network_connect_cb cb)
     // Initialize TCP/IP network interface aka the esp-netif (should be called only once in application)
     ESP_ERROR_CHECK(esp_netif_init());
     // Create default event loop that running in background
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    esp_err_t loop_err = esp_event_loop_create_default();
+    if (loop_err != ESP_OK && loop_err != ESP_ERR_INVALID_STATE) return loop_err;
 
     // Create instance(s) of esp-netif for Ethernet(s)
     if (eth_port_cnt == 1) {
@@ -300,8 +288,7 @@ int network_get_mac(uint8_t mac[6])
 
 int network_connect_wifi(const char *ssid, const char *password)
 {
-    ESP_LOGE(TAG, "Using ethernet now not support wifi config");
-    return 0;
+    return ESP_ERR_NOT_SUPPORTED;
 }
 
 #endif

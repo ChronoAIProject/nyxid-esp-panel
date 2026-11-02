@@ -32,6 +32,7 @@ typedef struct {
     char psw[CFG_WIFI_PSW_MAX];
     char token[QR_FIELD_MAX];
     char node[QR_FIELD_MAX];
+    char secret[80];
     cfg_mqtt_t mqtt;
     bool has_wifi;
     bool has_nyx;
@@ -149,6 +150,7 @@ static bool parse_payload(const char *payload, qr_provision_t *out)
                         query_value(query, "psw", out->psw, sizeof(out->psw));
         return out->has_wifi;
     }
+    (void)query_value(query, "secret", out->secret, sizeof(out->secret));
     if (path_len == 3u && strncmp(path, "nyx", path_len) == 0) {
         out->has_nyx = query_value(query, "token", out->token, sizeof(out->token)) &&
                        query_value(query, "node", out->node, sizeof(out->node)) &&
@@ -384,7 +386,8 @@ static bool apply_provisioning(const qr_provision_t *prov)
     }
     if (prov->has_nyx) {
         if (nyx_creds_save_api_key(prov->token) != 0 ||
-            nyx_creds_save_node_id(prov->node) != 0) {
+            nyx_creds_save_node_id(prov->node) != 0 ||
+            (prov->secret[0] && nyx_creds_save_signing_secret(prov->secret) != 0)) {
             return false;
         }
     }
@@ -427,7 +430,7 @@ esp_err_t qr_scanner_process_jpeg(const uint8_t *jpeg, size_t jpeg_len)
         return ESP_ERR_NOT_FOUND;
     }
 
-    ESP_LOGI(TAG, "decoded='%s'", payload);
+    ESP_LOGI(TAG, "QR decoded (%u bytes; payload redacted)", (unsigned)strlen(payload));
     qr_provision_t prov = {0};
     if (!parse_payload(payload, &prov)) {
         ESP_LOGW(TAG, "qr decode result=unsupported payload_len=%u", (unsigned)strlen(payload));
@@ -516,7 +519,7 @@ void qr_scanner_poll(void)
         return;
     }
 
-    ESP_LOGI(TAG, "decoded='%s'", payload);
+    ESP_LOGI(TAG, "QR decoded (%u bytes; payload redacted)", (unsigned)strlen(payload));
     qr_provision_t prov = {0};
     if (!parse_payload(payload, &prov)) {
         ESP_LOGW(TAG, "qr decode result=unsupported payload_len=%u", (unsigned)strlen(payload));

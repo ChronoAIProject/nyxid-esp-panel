@@ -1,0 +1,33 @@
+menu "NyxID Panel Services"
+
+config HA_CAM_DEVICE_CODE
+    bool "Experimental NyxID device-code provisioning"
+    default n
+    help
+        Enables the RFC 8628-style NyxID device-code provisioning client.
+        This path is experimental and additive; NVS credentials remain
+        the default production path.
+
+config HA_CAM_DEVICE_CODE_MOCK
+    bool "Use local mock fixture for device-code provisioning"
+    depends on HA_CAM_DEVICE_CODE
+    default n
+    help
+        Replace NyxID device-code HTTP calls with a local fixture so the LCD
+        flow, key generation, request shape, and polling state machine can be
+        verified before the NyxID backend endpoints exist.
+
+config HA_CAM_DEVICE_CODE_NYX_BASE
+    string "NyxID device-code API base URL"
+    depends on HA_CAM_DEVICE_CODE
+    default "https://nyx-api.chrono-ai.fun"
+    help
+        Base URL used for device-code provisioning requests.
+
+endmenu
+
+# The registry's dependency solver also evaluates newer esp_video manifests.
+# Keep its optional-version selector defined while this project pins 2.1.0.
+config ESP_VIDEO_USE_CUSTOMIZED_ESP_H264_VERSION
+    bool "Override pinned video H.264 dependency (keep disabled)"
+    default n

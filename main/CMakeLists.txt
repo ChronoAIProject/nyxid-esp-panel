@@ -13,6 +13,9 @@ idf_component_register(
         MusicPlayer
         Settings
         Camera
+        NyxPanel
+        panel_services
+        panel_common
         VideoPlayer
         brookesia_app_calculator
 )

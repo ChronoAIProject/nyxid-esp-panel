@@ -93,7 +93,7 @@ bool nyx_creds_load(void)
     nvs_handle_t h = 0;
     esp_err_t err = nvs_open("nyx", NVS_READONLY, &h);
     if (err == ESP_ERR_NVS_NOT_FOUND) {
-        ESP_LOGW(TAG, "nyx namespace empty; using baked fallback from devices_data.h");
+        ESP_LOGW(TAG, "Nyx credentials unset; runtime provisioning is available");
         copy_string(s_api_key,        sizeof(s_api_key),        fallback_api);
         copy_string(s_http_api_key,   sizeof(s_http_api_key),   fallback_http);
         copy_string(s_node_id,        sizeof(s_node_id),        fallback_node);

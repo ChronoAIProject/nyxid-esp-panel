@@ -30,6 +30,7 @@
 #include "freertos/task.h"
 #include "heap_diag.h"
 #include "snapshot.h"
+#include "product_support.h"
 
 #include "linux/videodev2.h"
 #include <fcntl.h>
@@ -39,6 +40,7 @@
 #include <sys/mman.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <errno.h>
 
 #define TAG  "MEDIA_SYS"
 #define PREVIEW_FPS 30u
@@ -131,25 +133,14 @@ static int build_player_system(void)
 {
     ESP_LOGI(TAG, "=== Building player system ===");
 
-    spk_handle_global = bsp_audio_codec_speaker_init();
+    spk_handle_global = product_codec_speaker();
     if (spk_handle_global == NULL) {
         ESP_LOGE(TAG, "Speaker codec init FAILED");
         return -1;
     }
     ESP_LOGI(TAG, "Speaker codec init OK: handle=%p", spk_handle_global);
 
-    // Pre-open speaker codec at 16kHz (Opus sample rate) BEFORE anything else.
-    esp_codec_dev_sample_info_t spk_fs = {
-        .sample_rate = 16000,
-        .channel = 1,
-        .bits_per_sample = 16,
-    };
-    esp_err_t err = esp_codec_dev_open(spk_handle_global, &spk_fs);
-    ESP_LOGI(TAG, "Speaker pre-open(16kHz/1ch/16bit): %s", esp_err_to_name(err));
-
-    err = esp_codec_dev_set_out_vol(spk_handle_global, 100);
-    ESP_LOGI(TAG, "Speaker volume set to 80: %s", esp_err_to_name(err));
-
+    // Brookesia has already configured the shared I2S codec.
     i2s_render_cfg_t i2s_cfg = {
         .play_handle = spk_handle_global,
     };
@@ -190,7 +181,7 @@ static esp_err_t build_capture_system(bool include_audio)
 
     if (include_audio) {
         if (!mic_handle_global) {
-            mic_handle_global = bsp_audio_codec_microphone_init();
+            mic_handle_global = product_codec_microphone();
         }
         if (mic_handle_global == NULL) {
             ESP_LOGW(TAG, "Microphone codec init FAILED");
@@ -424,6 +415,21 @@ int media_sys_preview_start(void)
             return ESP_ERR_NO_MEM;
         }
     }
+    // Do not declare preview ready before the capture worker produces a frame.
+    for (unsigned i=0;i<80;++i) {
+        bool have_frame=false;
+        if (xSemaphoreTake(preview_frame_lock,pdMS_TO_TICKS(20))==pdTRUE) {
+            have_frame=preview_frame_len>0;
+            xSemaphoreGive(preview_frame_lock);
+        }
+        if (have_frame) break;
+        if (!preview_pump_task || i==79) {
+            preview_pump_running=false;
+            preview_capture_started=false;
+            return ESP_ERR_NOT_FOUND;
+        }
+        vTaskDelay(pdMS_TO_TICKS(50));
+    }
     ESP_LOGI(TAG, "preview capture started direct_v4l2=1");
     heap_diag_log(TAG, "preview_capture_start_after");
     return 0;
@@ -586,11 +592,14 @@ static void preview_pump_task_fn(void *arg)
             ESP_LOGW(TAG, "preview direct get format failed");
             break;
         }
+        // esp_video 2.1 G_FMT copies a default descriptor with type zero.
+        // Restore the requested stream before passing it back to S_FMT.
+        format.type = type;
         format.fmt.pix.pixelformat = V4L2_PIX_FMT_RGB565;
         if (ioctl(fd, VIDIOC_S_FMT, &format) != 0) {
-            ESP_LOGW(TAG, "preview direct set format failed width=%lu height=%lu",
+            ESP_LOGW(TAG, "preview direct set format failed width=%lu height=%lu errno=%d",
                      (unsigned long)format.fmt.pix.width,
-                     (unsigned long)format.fmt.pix.height);
+                     (unsigned long)format.fmt.pix.height, errno);
             break;
         }
         actual_w = format.fmt.pix.width;

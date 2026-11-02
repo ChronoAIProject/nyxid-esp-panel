@@ -9,8 +9,8 @@
      ESP_H264_GOTO_ON_FALSE(param->ref, ESP_H264_ERR_MEM, __exit__, TAG, "No memory for reference frame");
      param->db = (uint8_t *)esp_h264_calloc_prefer(1, max_db_buffer_size(param->mb_width, param->mb_height), &actual_size, ESP_H264_MEM_INTERNAL, ESP_H264_MEM_SPIRAM);
      ESP_H264_GOTO_ON_FALSE(param->db, ESP_H264_ERR_MEM, __exit__, TAG, "No memory for data");
---- a/espressif__esp_hosted/host/port/esp/freertos/include/os_wrapper.h
-+++ b/espressif__esp_hosted/host/port/esp/freertos/include/os_wrapper.h
+--- a/espressif__esp_hosted/host/port/include/os_wrapper.h
++++ b/espressif__esp_hosted/host/port/include/os_wrapper.h
 @@ -102,7 +102,7 @@
  /* without alignment */
  #define MALLOC(x)                        malloc(x)

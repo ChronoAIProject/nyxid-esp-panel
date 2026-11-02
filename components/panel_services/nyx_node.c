@@ -13,10 +13,16 @@
 #include "nyx_link_sm.h"
 #include "nyx_proto.h"
 #include "settings.h"
+#include "nyx_ws_rx.h"
+#include "nyx_upload.h"
+#include "nyx_security.h"
+#include "cJSON.h"
+#include <stdatomic.h>
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <strings.h>
 
 static const char *TAG = "haCam.nyx";
 
@@ -25,6 +31,7 @@ typedef enum {
     EVT_NET_DOWN,
     EVT_WSS_CONNECTED,
     EVT_WSS_MSG,
+    EVT_WSS_BINARY,
     EVT_WSS_CLOSED,
     EVT_SEND_TEXT,
     EVT_TICK,
@@ -38,7 +45,10 @@ typedef struct {
 
 typedef struct {
     char *payload;
+    nyx_proxy_request_t request;
+    bool binary;
 } proxy_task_arg_t;
+static atomic_int proxy_workers;
 
 static struct {
     esp_websocket_client_handle_t ws;
@@ -54,9 +64,10 @@ static struct {
     int64_t last_heartbeat_tx_us;
     uint32_t heartbeat_interval_secs;
     uint32_t idle_timeout_secs;
-    char *rx_frag;
-    size_t rx_frag_len;
-    size_t rx_frag_cap;
+    nyx_ws_rx_t rx;
+    nyx_upload_t upload;
+    nyx_proxy_request_t upload_request;
+    int64_t upload_deadline;
     bool ws_starting;
     bool network_up;
     int64_t last_heap_log_us;
@@ -171,62 +182,12 @@ static uint32_t compute_idle_timeout_secs(uint32_t heartbeat_secs)
 
 static void post_event(const evt_t *e)
 {
-    if (!mailbox_post(&g.mb, e, MAILBOX_NOWAIT) && e->payload) {
+    if (xQueueSend(g.mb.queue, e, pdMS_TO_TICKS(10)) != pdTRUE && e->payload) {
         free(e->payload);
     }
 }
 
-static void reset_rx_fragment(void)
-{
-    free(g.rx_frag);
-    g.rx_frag = NULL;
-    g.rx_frag_len = 0u;
-    g.rx_frag_cap = 0u;
-}
-
-static bool append_rx_fragment(const esp_websocket_event_data_t *ev, evt_t *out)
-{
-    if (!ev || !out || !ev->data_ptr || ev->data_len <= 0 || ev->payload_len <= 0 ||
-        ev->payload_offset < 0 || ev->payload_offset > ev->payload_len ||
-        ev->data_len > ev->payload_len - ev->payload_offset) {
-        copy_string(g.last_error, sizeof(g.last_error), "bad_ws_fragment");
-        reset_rx_fragment();
-        return false;
-    }
-
-    size_t total = (size_t)ev->payload_len;
-    size_t offset = (size_t)ev->payload_offset;
-    size_t len = (size_t)ev->data_len;
-    if (offset == 0u) {
-        reset_rx_fragment();
-        g.rx_frag = (char *)malloc(total + 1u);
-        if (!g.rx_frag) {
-            copy_string(g.last_error, sizeof(g.last_error), "oom_ws_fragment");
-            return false;
-        }
-        g.rx_frag_cap = total;
-    }
-    if (!g.rx_frag || g.rx_frag_cap != total || offset != g.rx_frag_len) {
-        copy_string(g.last_error, sizeof(g.last_error), "ws_fragment_gap");
-        reset_rx_fragment();
-        return false;
-    }
-
-    memcpy(g.rx_frag + offset, ev->data_ptr, len);
-    g.rx_frag_len += len;
-    if (g.rx_frag_len < total) {
-        return false;
-    }
-
-    g.rx_frag[total] = '\0';
-    out->kind = EVT_WSS_MSG;
-    out->payload = g.rx_frag;
-    out->len = total;
-    g.rx_frag = NULL;
-    g.rx_frag_len = 0u;
-    g.rx_frag_cap = 0u;
-    return true;
-}
+static void reset_rx_fragment(void) { nyx_ws_rx_reset(&g.rx); }
 
 static void ws_event_handler(void *handler_args, esp_event_base_t base, int32_t id, void *data)
 {
@@ -238,27 +199,23 @@ static void ws_event_handler(void *handler_args, esp_event_base_t base, int32_t 
         ESP_LOGI(TAG, "wss connected");
         evt_t e = { .kind = EVT_WSS_CONNECTED };
         post_event(&e);
-    } else if (id == WEBSOCKET_EVENT_DATA && ev && ev->op_code == 0x01 && ev->data_len > 0) {
+    } else if (id == WEBSOCKET_EVENT_DATA && ev &&
+               (ev->op_code == 0 || ev->op_code == 1 || ev->op_code == 2)) {
         g.last_rx_us = esp_timer_get_time();
-        ESP_LOGD(TAG, "wss data opcode=%u chunk=%d offset=%d total=%d fin=%d",
-                 (unsigned)ev->op_code, ev->data_len, ev->payload_offset, ev->payload_len,
-                 ev->fin ? 1 : 0);
-        evt_t e = {0};
-        int total = ev->payload_len > 0 ? ev->payload_len : ev->data_len;
-        if (total == ev->data_len && ev->payload_offset == 0) {
-            e.kind = EVT_WSS_MSG;
-            e.len = (size_t)ev->data_len;
-            e.payload = (char *)malloc(e.len + 1u);
-            if (!e.payload) {
-                copy_string(g.last_error, sizeof(g.last_error), "oom_ws_payload");
-                return;
-            }
-            memcpy(e.payload, ev->data_ptr, e.len);
-            e.payload[e.len] = '\0';
+        uint8_t *payload = NULL, opcode = 0;
+        size_t size = 0;
+        if (ev->payload_len < 0 || ev->payload_offset < 0 || ev->data_len < 0) {
+            reset_rx_fragment();
+            return;
+        }
+        int result = nyx_ws_rx_feed(&g.rx, ev->op_code, ev->fin, ev->payload_len,
+            ev->payload_offset, ev->data_ptr, ev->data_len, &payload, &size, &opcode);
+        if (result == 1) {
+            evt_t e = {.kind = opcode == 2 ? EVT_WSS_BINARY : EVT_WSS_MSG,
+                       .payload = (char *)payload, .len = size};
             post_event(&e);
-        } else if (append_rx_fragment(ev, &e)) {
-            ESP_LOGI(TAG, "wss fragmented message reassembled len=%u", (unsigned)e.len);
-            post_event(&e);
+        } else if (result < 0) {
+            copy_string(g.last_error, sizeof(g.last_error), "invalid_or_oversize_ws_message");
         }
     } else if (id == WEBSOCKET_EVENT_DISCONNECTED || id == WEBSOCKET_EVENT_ERROR) {
         ESP_LOGW(TAG, "wss closed event=%ld", (long)id);
@@ -322,13 +279,8 @@ static void queue_proxy_response(const char *request_id, int status, const char 
     send_ws_text(out, n);
 }
 
-static void handle_proxy_request(const char *json)
+static void dispatch_proxy_request(nyx_proxy_request_t req)
 {
-    nyx_proxy_request_t req = {0};
-    if (nyx_proto_parse_text(json, &req, NULL) != NYX_MSG_PROXY_REQUEST) {
-        return;
-    }
-
     const size_t body_cap = 96u * 1024u;
     char *body = (char *)malloc(body_cap);
     char content_type[64];
@@ -374,10 +326,16 @@ static void handle_proxy_request(const char *json)
 static void proxy_task(void *arg)
 {
     proxy_task_arg_t *task_arg = (proxy_task_arg_t *)arg;
-    if (task_arg && task_arg->payload) {
-        handle_proxy_request(task_arg->payload);
-        free(task_arg->payload);
+    if (task_arg) {
+        if (task_arg->binary) dispatch_proxy_request(task_arg->request);
+        else if (task_arg->payload) {
+            nyx_proxy_request_t req = {0};
+            if (nyx_proto_parse_text(task_arg->payload, &req, NULL) == NYX_MSG_PROXY_REQUEST)
+                dispatch_proxy_request(req);
+            free(task_arg->payload);
+        }
     }
+    atomic_fetch_sub(&proxy_workers, 1);
     free(task_arg);
     vTaskDelete(NULL);
 }
@@ -398,11 +356,101 @@ static void start_proxy_task(const char *payload)
         copy_string(g.last_error, sizeof(g.last_error), "proxy_payload_oom");
         return;
     }
+    if (atomic_fetch_add(&proxy_workers, 1) >= 4) {
+        atomic_fetch_sub(&proxy_workers, 1);
+        free(arg->payload); free(arg); return;
+    }
     BaseType_t ok = xTaskCreate(proxy_task, "nyx_proxy", 12 * 1024, arg, 5, NULL);
     if (ok != pdPASS) {
+        atomic_fetch_sub(&proxy_workers, 1);
         free(arg->payload);
         free(arg);
         copy_string(g.last_error, sizeof(g.last_error), "proxy_task_create_failed");
+    }
+}
+
+static const char *json_string(cJSON *o, const char *key)
+{
+    cJSON *v = cJSON_GetObjectItemCaseSensitive(o,key);
+    return cJSON_IsString(v) ? v->valuestring : "";
+}
+
+static void cancel_upload(void)
+{
+    uint8_t *buffer = g.upload.buffer;
+    nyx_upload_cancel(&g.upload);
+    memset(&g.upload, 0, sizeof(g.upload));
+    free(buffer);
+    nyx_proto_free_request(&g.upload_request);
+    g.upload_deadline = 0;
+}
+
+static void open_upload(cJSON *root)
+{
+    const char *id = json_string(root,"request_id");
+    if (g.upload.active || !nyx_security_verify_upload(root,nyx_creds_signing_secret(),nyx_creds_node_id())) {
+        const char *error="{\"error\":\"upload_rejected\"}";
+        queue_proxy_response(id,403,"application/json",error,strlen(error));
+        return;
+    }
+    cJSON *params = cJSON_GetObjectItemCaseSensitive(root,"parameters");
+    // Initial negotiated scope: raw JPEG pushes only, capped at 64 KiB.
+    if (strcmp(json_string(params,"method"),"POST") || strcmp(json_string(params,"path"),"/lcd/image")) {
+        const char *error="{\"error\":\"upload_route_not_supported\"}";
+        queue_proxy_response(id,413,"application/json",error,strlen(error)); return;
+    }
+    cJSON *metadata = cJSON_Duplicate(params,true);
+    if (!metadata) return;
+    cJSON_DeleteItemFromObject(metadata,"type");
+    cJSON_DeleteItemFromObject(metadata,"body");
+    cJSON_DeleteItemFromObject(metadata,"request_id");
+    cJSON_AddStringToObject(metadata,"type","proxy_request");
+    cJSON_AddStringToObject(metadata,"request_id",id);
+    char *json = cJSON_PrintUnformatted(metadata);
+    cJSON_Delete(metadata);
+    if (!json) return;
+    bool parsed = nyx_proto_parse_text(json,&g.upload_request,NULL)==NYX_MSG_PROXY_REQUEST;
+    cJSON_free(json);
+    uint8_t *buffer = malloc(NYX_UPLOAD_MAX_BYTES);
+    bool exact = false;
+    size_t expected = 0;
+    for (size_t i=0; i<g.upload_request.header_count; ++i) {
+        if (!strcasecmp(g.upload_request.headers[i].name,"content-length")) {
+            char *end = NULL;
+            unsigned long n = strtoul(g.upload_request.headers[i].value,&end,10);
+            if (end && !*end) { exact=true; expected=n; }
+        }
+    }
+    if (!parsed || !buffer || !nyx_upload_open(&g.upload,id,buffer,NYX_UPLOAD_MAX_BYTES,exact,expected)) {
+        free(buffer); nyx_proto_free_request(&g.upload_request);
+        const char *error="{\"error\":\"upload_size_or_metadata\"}";
+        queue_proxy_response(id,413,"application/json",error,strlen(error)); return;
+    }
+    g.upload_deadline = esp_timer_get_time() + 30000000LL;
+}
+
+static void receive_upload(const uint8_t *data, size_t len)
+{
+    if (!g.upload.active) return;
+    nyx_upload_result_t result = nyx_upload_frame(&g.upload,data,len);
+    if (result == NYX_UPLOAD_MORE) {
+        g.upload_deadline = esp_timer_get_time() + 30000000LL; return;
+    }
+    if (result != NYX_UPLOAD_DONE) { cancel_upload(); return; }
+    proxy_task_arg_t *arg = calloc(1,sizeof(*arg));
+    if (!arg) { cancel_upload(); return; }
+    arg->binary=true;
+    arg->request=g.upload_request;
+    arg->request.body=g.upload.buffer;
+    arg->request.body_len=g.upload.used;
+    memset(&g.upload_request,0,sizeof(g.upload_request));
+    memset(&g.upload,0,sizeof(g.upload));
+    g.upload_deadline=0;
+    if (atomic_fetch_add(&proxy_workers,1) >= 4) {
+        atomic_fetch_sub(&proxy_workers,1); nyx_proto_free_request(&arg->request); free(arg); return;
+    }
+    if (xTaskCreate(proxy_task,"nyx_upload",12288,arg,5,NULL)!=pdPASS) {
+        atomic_fetch_sub(&proxy_workers,1); nyx_proto_free_request(&arg->request); free(arg);
     }
 }
 
@@ -432,6 +480,7 @@ static void destroy_ws(void)
     esp_websocket_client_handle_t ws = g.ws;
     g.ws = NULL;
     g.ws_starting = false;
+    cancel_upload();
     ESP_LOGI(TAG, "destroying wss client");
     (void)esp_websocket_client_destroy(ws);
     reset_rx_fragment();
@@ -449,6 +498,17 @@ static void maybe_log_periodic_heap(void)
 
 static void handle_ws_msg(const char *payload)
 {
+    cJSON *root=cJSON_Parse(payload);
+    if (root && !strcmp(json_string(root,"type"),"proxy_upload")) {
+        open_upload(root); cJSON_Delete(root); return;
+    }
+    if (root && !strcmp(json_string(root,"type"),"proxy_request") &&
+        !nyx_security_verify_proxy(root,nyx_creds_signing_secret())) {
+        const char *error="{\"error\":\"invalid_signature_or_replay\"}";
+        queue_proxy_response(json_string(root,"request_id"),403,"application/json",error,strlen(error));
+        cJSON_Delete(root); return;
+    }
+    cJSON_Delete(root);
     nyx_auth_result_t auth = {0};
     nyx_msg_kind_t kind = nyx_proto_parse_text(payload, NULL, &auth);
     g.last_rx_us = esp_timer_get_time();
@@ -462,6 +522,10 @@ static void handle_ws_msg(const char *payload)
     switch (kind) {
     case NYX_MSG_AUTH_OK:
         apply_link_event(NYX_LINK_EVT_WSS_ACK, "auth_ok");
+        if (nyx_creds_signing_secret()[0]) {
+            const char *caps="{\"type\":\"status_update\",\"capabilities\":{\"proxy_upload_v1\":true}}";
+            esp_websocket_client_send_text(g.ws,caps,strlen(caps),pdMS_TO_TICKS(3000));
+        }
         g.last_error[0] = '\0';
         if (auth.heartbeat_interval_secs > 0u) {
             g.heartbeat_interval_secs = auth.heartbeat_interval_secs;
@@ -503,7 +567,7 @@ static void handle_ws_msg(const char *payload)
         start_proxy_task(payload);
         break;
     default:
-        ESP_LOGW(TAG, "unknown nyx message: %.80s", payload ? payload : "");
+        ESP_LOGW(TAG, "unknown nyx message (payload redacted)");
         break;
     }
     nyx_proto_free_auth_result(&auth);
@@ -511,6 +575,7 @@ static void handle_ws_msg(const char *payload)
 
 static void start_ws_if_needed(void)
 {
+    if (!nyx_creds_api_key()[0] || !nyx_creds_node_id()[0]) return;
     if (!g.network_up) {
         ESP_LOGD(TAG, "wss start skipped; network is not up");
         return;
@@ -602,12 +667,17 @@ static void consumer_loop(void *arg)
             check_idle_timeout();
             start_ws_if_needed();
             maybe_log_periodic_heap();
+        if (g.upload_deadline && esp_timer_get_time() >= g.upload_deadline) cancel_upload();
             continue;
         }
 
         switch (e.kind) {
         case EVT_NET_UP:
             g.network_up = true;
+            if (!nyx_creds_api_key()[0] || !nyx_creds_node_id()[0]) {
+                copy_string(g.last_error,sizeof(g.last_error),"credentials_unset");
+                break;
+            }
             apply_link_event(NYX_LINK_EVT_NETIF_UP, "network_up");
             start_ws_if_needed();
             break;
@@ -621,6 +691,9 @@ static void consumer_loop(void *arg)
             apply_link_event(NYX_LINK_EVT_NETIF_UP, "wss_connected");
             send_auth();
             heap_diag_log(TAG, "nyx_wss_connected");
+            break;
+        case EVT_WSS_BINARY:
+            receive_upload((const uint8_t *)e.payload,e.len);
             break;
         case EVT_WSS_MSG:
             handle_ws_msg(e.payload);

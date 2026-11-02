@@ -27,6 +27,8 @@ namespace esp_brookesia::apps
         static Settings *requestInstance(bool use_status_bar = true, bool use_navigation_bar = false);
         ~Settings();
         bool run(void) override;
+        void showWifi() { if (active_page != ActivePage::Wlan) open_page("WLAN"); }
+        const char *remotePage() const { return active_page == ActivePage::Wlan ? "wifi" : "settings"; }
         i2c_master_bus_handle_t i2c_bus_handle;
         i2c_master_dev_handle_t pmu_dev_handle;
         static int pmu_register_read(uint8_t devAddr, uint8_t regAddr, uint8_t *data, uint8_t len);

@@ -160,6 +160,15 @@ void net_manager_init(void)
     ESP_ERROR_CHECK(esp_event_handler_register(ETH_EVENT, ESP_EVENT_ANY_ID, event_handler, NULL));
 #endif
     g.initialized = true;
+    // Wi-Fi may already have obtained its IP while the desktop was starting.
+    esp_netif_t *sta = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+    esp_netif_ip_info_t ip = {0};
+    if (sta && esp_netif_get_ip_info(sta, &ip) == ESP_OK && ip.ip.addr) {
+        net_manager_snapshot_t next = net_manager_snapshot();
+        next.wifi_link = next.wifi_ip = true;
+        snprintf(next.wifi_ip_addr, sizeof(next.wifi_ip_addr), IPSTR, IP2STR(&ip.ip));
+        update_snapshot(&next);
+    }
 }
 
 void net_manager_subscribe(net_manager_cb_t cb, void *user)

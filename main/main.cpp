@@ -24,6 +24,12 @@
 #include "MusicPlayer.hpp"
 #include "Settings.hpp"
 #include "Camera.hpp"
+#include "NyxPanel.hpp"
+#include "panel_runtime.h"
+#include "network.h"
+extern "C" {
+#include "lcd_renderer.h"
+}
 #include "VideoPlayer.hpp"
 #include "esp_brookesia_app_calculator.hpp"
 
@@ -42,19 +48,14 @@ static bool is_wifi_connected()
 extern "C" void app_main(void)
 {
     esp_log_level_set("rpc_rsp", ESP_LOG_ERROR);
-    const esp_partition_t *update_partition = esp_partition_find_first(
-        ESP_PARTITION_TYPE_APP, ESP_PARTITION_SUBTYPE_APP_FACTORY, NULL
-    );
-    ESP_UTILS_CHECK_NULL_EXIT(update_partition, "Factory partition not found");
-    ESP_LOGI(ESP_UTILS_LOG_TAG, "Switch to partition factory");
-    ESP_ERROR_CHECK(esp_ota_set_boot_partition(update_partition));
-
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         err = nvs_flash_init();
     }
     ESP_ERROR_CHECK(err);
+
+    ESP_ERROR_CHECK(network_init(nullptr, nullptr, nullptr));
 
     ESP_ERROR_CHECK(bsp_spiffs_mount());
     ESP_LOGI(ESP_UTILS_LOG_TAG, "SPIFFS mount successfully");
@@ -130,6 +131,12 @@ extern "C" void app_main(void)
         auto app6 = esp_brookesia::apps::Settings::requestInstance();
         ESP_UTILS_CHECK_FALSE_EXIT(phone->installApp(app6), "Start Settings failed");
 
+        auto nyx_app = new esp_brookesia::apps::NyxPanel();
+        ESP_UTILS_CHECK_FALSE_EXIT(phone->installApp(nyx_app), "Install Nyx Panel failed");
+        esp_brookesia::apps::NyxPanel::attach(phone, nyx_app);
+        ESP_ERROR_CHECK(lcd_renderer_init());
+        lcd_renderer_reload_config();
+
         bsp_display_backlight_on();
 
         /* Create a timer to update the clock */
@@ -159,6 +166,25 @@ extern "C" void app_main(void)
             );
         }, 1000, phone);
     }
+
+    ESP_ERROR_CHECK(panel_runtime_start());
+    // Keep rollback pending until the native UI and service task survive startup.
+    xTaskCreate([](void *) {
+        vTaskDelay(pdMS_TO_TICKS(30000));
+        if (!panel_runtime_ready()) {
+            ESP_LOGE("panel.boot", "Services failed health check; rolling back pending OTA");
+            esp_ota_mark_app_invalid_rollback_and_reboot();
+            vTaskDelete(nullptr);
+        }
+        esp_ota_img_states_t state;
+        const esp_partition_t *running = esp_ota_get_running_partition();
+        if (running && esp_ota_get_state_partition(running, &state) == ESP_OK &&
+            state == ESP_OTA_IMG_PENDING_VERIFY) {
+            ESP_ERROR_CHECK(esp_ota_mark_app_valid_cancel_rollback());
+        }
+        ESP_LOGI("panel.boot", "Startup health check passed");
+        vTaskDelete(nullptr);
+    }, "boot_health", 3072, nullptr, 3, nullptr);
 
     if constexpr (EXAMPLE_SHOW_MEM_INFO) {
         esp_utils::thread_config_guard thread_config({

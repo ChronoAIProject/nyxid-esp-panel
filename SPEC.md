@@ -150,11 +150,15 @@ independent implementation and verification.
 - [x] Inspected both source baselines and the attached hardware profile.
 - [x] Defined the migration inventory, ownership constraints and acceptance gates.
 - [ ] G01 repository and initial commits.
-- [ ] G02 standalone host tests.
+- [x] G02 standalone host tests (11 executables, including upload/fragmentation/signing fixtures).
 - [ ] G03 firmware build and CI.
 - [ ] G04 hardware baseline.
-- [ ] G05 display and API acceptance.
+- [x] G05 display and API acceptance (actual Nyx JPEG/text/CJK, inspected LCD JPEG, rejection/expiry checks).
 - [ ] G06 Nyx end-to-end acceptance.
 - [ ] G07 media and QR acceptance.
 - [ ] G08 persistence and OTA acceptance.
 - [ ] G09 final operational documentation.
+
+Measured evidence and remaining checks are maintained in
+[`docs/VERIFICATION.md`](docs/VERIFICATION.md). Raw device logs, registration
+credentials and flash backups remain private outside this repository.

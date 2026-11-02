@@ -1,0 +1,30 @@
+name: Firmware
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - run: cmake -S tests/host -B build-host && cmake --build build-host -j2
+      - run: ctest --test-dir build-host --output-on-failure
+  esp32p4:
+    runs-on: ubuntu-latest
+    container: espressif/idf:v5.5.4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build legacy P4 profile and verify partition capacity
+        shell: bash
+        run: |
+          . "$IDF_PATH/export.sh"
+          idf.py build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nyxid-esp-panel-esp32p4-rev1
+          path: |
+            build/nyxid-esp-panel.bin
+            build/bootloader/bootloader.bin
+            build/partition_table/partition-table.bin
+            build/ota_data_initial.bin
+            build/storage.bin
+            build/flash_args

@@ -117,14 +117,6 @@ esp_err_t nvs_config_get_stream(cfg_stream_t *o)
     if (o->bitrate == 0u) {
         o->bitrate = VIDEO_BITRATE;
     }
-    if (o->fps < VIDEO_FPS || o->bitrate < VIDEO_BITRATE) {
-        ESP_LOGI(TAG, "migrate stream profile below firmware default fps=%u bitrate=%lu -> fps=%u bitrate=%lu",
-                 (unsigned)o->fps, (unsigned long)o->bitrate,
-                 (unsigned)VIDEO_FPS, (unsigned long)VIDEO_BITRATE);
-        o->fps = VIDEO_FPS;
-        o->bitrate = VIDEO_BITRATE;
-        (void)nvs_config_set_stream(o);
-    }
     return ESP_OK;
 }
 

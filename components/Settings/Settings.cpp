@@ -10,6 +10,7 @@
 #include "esp_netif.h"
 #include "esp_sntp.h"
 #include "esp_wifi.h"
+#include "network.h"
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
@@ -365,47 +366,9 @@ namespace esp_brookesia::apps
 
     esp_err_t Settings::initWifi()
     {
-        static bool netif_initialized = false;
-        static bool event_loop_initialized = false;
-        static bool wifi_initialized = false;
         static bool time_event_handler_registered = false;
-        static esp_netif_t *sta_netif = nullptr;
-
-        if (!netif_initialized) {
-            esp_err_t ret = esp_netif_init();
-            if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
-                ESP_UTILS_LOGE("esp_netif_init failed: %s", esp_err_to_name(ret));
-                return ret;
-            }
-            netif_initialized = true;
-        }
-
-        if (!event_loop_initialized) {
-            esp_err_t ret = esp_event_loop_create_default();
-            if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
-                ESP_UTILS_LOGE("esp_event_loop_create_default failed: %s", esp_err_to_name(ret));
-                return ret;
-            }
-            event_loop_initialized = true;
-        }
-
-        if (!sta_netif) {
-            sta_netif = esp_netif_create_default_wifi_sta();
-            if (!sta_netif) {
-                ESP_UTILS_LOGE("esp_netif_create_default_wifi_sta failed");
-                return ESP_FAIL;
-            }
-        }
-
-        if (!wifi_initialized) {
-            wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-            esp_err_t ret = esp_wifi_init(&cfg);
-            if (ret != ESP_OK) {
-                ESP_UTILS_LOGE("esp_wifi_init failed: %s", esp_err_to_name(ret));
-                return ret;
-            }
-            wifi_initialized = true;
-        }
+        esp_err_t shared_err = network_init(nullptr, nullptr, nullptr);
+        if (shared_err != ESP_OK) return shared_err;
 
         if (!time_event_handler_registered) {
             esp_err_t ret = esp_event_handler_register(
@@ -419,6 +382,9 @@ namespace esp_brookesia::apps
             }
             time_event_handler_registered = true;
         }
+
+        wifi_ap_record_t ap_info;
+        if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK) start_time_sync_once();
 
         esp_err_t ret = esp_wifi_set_mode(WIFI_MODE_STA);
         if (ret != ESP_OK) {

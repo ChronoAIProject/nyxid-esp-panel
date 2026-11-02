@@ -3,8 +3,8 @@ project(haCam_host_tests C)
 
 set(CMAKE_C_STANDARD 11)
 add_compile_options(-Wall -Wextra -Werror -Wno-unused-parameter)
-include_directories(unity ../../main)
-include_directories(../../managed_components/espressif__cjson/cJSON)
+include_directories(unity ../../components/panel_services)
+include_directories(third_party/cjson)
 
 enable_testing()
 
@@ -19,14 +19,21 @@ function(haCam_add_test name)
 endfunction()
 
 haCam_add_test(test_smoke)
-haCam_add_test(test_mailbox ../../main/mailbox.c)
-haCam_add_test(test_nyx_link_sm ../../main/nyx_link_sm.c)
-haCam_add_test(test_stream_sm ../../main/stream_sm.c)
-haCam_add_test(test_lcd_stack ../../main/lcd_stack.c)
-haCam_add_test(test_b64 ../../main/b64.c)
+haCam_add_test(test_mailbox ../../components/panel_services/mailbox.c)
+haCam_add_test(test_nyx_link_sm ../../components/panel_services/nyx_link_sm.c)
+haCam_add_test(test_stream_sm ../../components/panel_services/stream_sm.c)
+haCam_add_test(test_lcd_stack ../../components/panel_services/lcd_stack.c)
+haCam_add_test(test_b64 ../../components/panel_services/b64.c)
 haCam_add_test(test_nyx_proto
-    ../../main/nyx_proto.c
-    ../../main/cjson_tiny.c
-    ../../main/b64.c
-    ../../managed_components/espressif__cjson/cJSON/cJSON.c)
-haCam_add_test(test_status_bar ../../main/status_bar.c)
+    ../../components/panel_services/nyx_proto.c
+    ../../components/panel_services/cjson_tiny.c
+    ../../components/panel_services/b64.c
+    third_party/cjson/cJSON.c)
+haCam_add_test(test_status_bar ../../components/panel_services/status_bar.c)
+haCam_add_test(test_nyx_upload ../../components/panel_services/nyx_upload.c)
+haCam_add_test(test_nyx_ws_rx ../../components/panel_services/nyx_ws_rx.c)
+find_package(OpenSSL REQUIRED)
+haCam_add_test(test_nyx_security ../../components/panel_services/nyx_security.c third_party/cjson/cJSON.c)
+target_include_directories(test_nyx_security PRIVATE crypto_shim)
+target_link_libraries(test_nyx_security OpenSSL::Crypto)
+target_compile_options(test_nyx_security PRIVATE -Wno-deprecated-declarations)

@@ -137,6 +137,10 @@ esp_err_t product_i2s_write(void *audio_buffer, size_t len, size_t *bytes_writte
  */
 esp_err_t product_codec_init(void);
 
+// Shared BSP codec handles; callers must not initialize another I2S device.
+esp_codec_dev_handle_t product_codec_speaker(void);
+esp_codec_dev_handle_t product_codec_microphone(void);
+
 /**
  * @brief Initialize audio player task.
  *
