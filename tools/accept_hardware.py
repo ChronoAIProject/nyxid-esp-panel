@@ -39,8 +39,15 @@ def main():
             r = urllib.request.urlopen(req, timeout=30)
         except urllib.error.HTTPError as e:
             r = e
-        body = r.read()
-        assert r.code == expected, (path, r.code, body[:100])
+        assert r.code == expected, (path, r.code)
+        try:
+            body = r.read()
+        except ConnectionResetError:
+            # An early rejection can close while request bytes are still in
+            # flight. The HTTP error status must already have been received.
+            if expected < 400:
+                raise
+            body = b''
         return body
 
     def nyx(path, data=None, json_body=None, expected_ok=True):
