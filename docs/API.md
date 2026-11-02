@@ -44,5 +44,7 @@ expiry; it only permits POST `/lcd/image`. It does not advertise machine v2.
 
 URL OTA requires HTTP 200 with a positive `Content-Length` within the inactive
 slot size. It follows at most three HTTP redirects and verifies HTTPS server
-certificates. A failed download/hash leaves the active boot slot unchanged;
+certificates. It buffers the complete bounded image in PSRAM, checks SHA256,
+closes HTTP, then erases/writes flash in 4 KiB steps. Allocation failure is
+reported as a failed update. A failed download/hash leaves flash untouched;
 poll `ota.stage == "failed"` and `ota.last_error` after an accepted request.

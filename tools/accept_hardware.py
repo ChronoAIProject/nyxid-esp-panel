@@ -23,6 +23,8 @@ def main():
     p.add_argument('--image', type=Path, required=True)
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--camera', action='store_true')
+    p.add_argument('--native-pages', action='store_true',
+                   help='Exercise Settings/WLAN exit persistence and native status pages')
     a = p.parse_args()
     a.output_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
     results = []
@@ -71,6 +73,7 @@ def main():
 
     state = json.loads(nyx('/status'))
     assert state['nyx']['state'] == 'up'
+    initial_uptime = state['uptime_s']
     record('Nyx status', {'fw': state['fw'], 'ota': state['ota']})
     lan('/lcd/clear', b'', 202)
     nyx('/lcd/image', a.image.read_bytes())
@@ -93,6 +96,24 @@ def main():
     record('Text expiry restores content', True)
     nyx('/lcd/screen?target=unknown', b'', expected_ok=False)
     record('Unknown native target rejected', True)
+    if a.native_pages:
+        for cycle in range(1, 3):
+            for target in ['settings', 'wifi', 'info', 'device_bind', 'home']:
+                nyx('/lcd/screen?target=' + target, b'')
+                end = time.monotonic() + 20
+                while time.monotonic() < end:
+                    screen = json.loads(lan('/lcd/screen'))
+                    if screen['target'] == target:
+                        break
+                    time.sleep(.5)
+                else:
+                    raise AssertionError((target, screen))
+                time.sleep(1)
+                _, size = snapshot(f'native-{cycle}-{target}.jpg')
+                state = json.loads(lan('/status'))
+                assert state['uptime_s'] >= initial_uptime, 'Board rebooted during native navigation'
+                initial_uptime = state['uptime_s']
+                record(f'Native page cycle {cycle}: {target}', {'screen': screen, 'size': size})
     if a.camera:
         try:
             for cycle in range(1, 4):
@@ -120,7 +141,9 @@ def main():
                 record(f'Camera open/snapshot/back cycle {cycle}', size)
         finally:
             nyx('/lcd/screen?target=home', b'')
-    record('Final status', json.loads(lan('/status')))
+    state = json.loads(lan('/status'))
+    assert state['uptime_s'] >= initial_uptime, 'Board rebooted during acceptance'
+    record('Final status', state)
 
 
 if __name__ == '__main__':

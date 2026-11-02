@@ -1161,9 +1161,11 @@ static void url_ota_task(void *arg)
     // The buffer is bounded by the inactive slot and available PSRAM.
     if (err == ESP_OK) {
         panel_ota_progress("writing", ESP_OK);
-        ESP_LOGI(TAG, "URL OTA download verified; erasing slot");
-        err = esp_ota_begin(job->update, (size_t)image_len, &handle);
-        if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA slot erased");
+        // Bound each erase to the next 4 KiB write, rather than blocking in
+        // one multi-megabyte erase on the legacy P4 while the UI is running.
+        ESP_LOGI(TAG, "URL OTA download verified; starting sector writes");
+        err = esp_ota_begin(job->update, OTA_WITH_SEQUENTIAL_WRITES, &handle);
+        if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA writer ready");
     }
     for (size_t offset = 0; err == ESP_OK && offset < received;) {
         size_t count = received - offset;
@@ -1171,6 +1173,9 @@ static void url_ota_task(void *arg)
         memcpy(buffer, image + offset, count);
         err = esp_ota_write(handle, buffer, count);
         offset += count;
+        if (err == ESP_OK && ((offset % (1024 * 1024)) == 0 || offset == received)) {
+            ESP_LOGI(TAG, "URL OTA written %u/%u bytes", (unsigned)offset, (unsigned)received);
+        }
         vTaskDelay(1);
     }
     free(buffer);

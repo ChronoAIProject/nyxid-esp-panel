@@ -46,7 +46,7 @@ component source lists. CI builds the same hardware profile.
 The 16 MiB layout retains 840 KiB NVS, two **6.5625 MiB** application slots and
 2 MiB SPIFFS. The native MP3 player and Opus/PCM service decoders are linked;
 service audio encoding is disabled because publishing is video-only.
-the unused SquareLine demonstration app is excluded. Bundled music contains
+The unused SquareLine demonstration app is excluded. Bundled music contains
 BGM 1, For Elise and Something; BGM 2 and Waka Waka are omitted for flash space.
 Native music, drawing, calculator, Settings, camera and spectrum apps remain.
 
@@ -164,12 +164,34 @@ Nyx `POST /system/ota` takes `{"url":"...","sha256":"..."}` and promptly returns
 `/status` → `ota.busy`, `ota.stage`, `ota.last_error` for progress/failure;
 acceptance alone does not mean the update succeeded. Concurrent updates return
 409. The HTTP(S) server must provide `Content-Length`; up to three redirects
-are followed. Verify the expected firmware version and valid slot after reboot. For a raw LAN
+are followed. The complete image is buffered in PSRAM, bounded by the inactive
+slot capacity and available memory, and its digest is checked before flash is
+erased. After closing the download connection, writes erase one 4 KiB sector at
+a time and yield between writes. Verify the expected firmware version and valid
+slot after reboot. For a raw LAN
 image, send `POST /system/ota/image` with `Authorization: Bearer <node_token>`,
 `X-SHA256: <hex_digest>` and the application binary as the body. The raw route
 streams into the inactive slot and rejects a missing/mismatched digest before
 changing the boot slot. URL and raw OTA share an update lock. Boot health checks
 wait 30 seconds for UI/services before validating a pending image for rollback.
+
+## Hardware acceptance
+
+With a logged-in NyxID CLI and Pillow, run the real display, native Settings/WLAN
+and three-cycle Camera acceptance against a provisioned panel:
+
+```sh
+python tools/accept_hardware.py --ip "$PANEL_IP" --slug "$SLUG" \
+  --image /private/hello-lexa.jpg --output-dir /private/panel-acceptance \
+  --camera --native-pages
+```
+
+`tools/accept_media.py` checks a real MediaMTX WHIP/RTSP receiver for sustained
+H.264 decoding, Nyx responsiveness and Camera preview/publisher recovery. Run
+`--help` for receiver and ffmpeg arguments. Both tools change the board's UI;
+media acceptance restores the prior stream configuration. Keep camera artifacts
+private. The publisher uses a centered 640×480 crop of the 800×800 sensor mode;
+its field of view is narrower than the full sensor image.
 
 See [docs/API.md](docs/API.md) for the route inventory and
 [docs/VERIFICATION.md](docs/VERIFICATION.md) for measured results and open checks.

@@ -75,12 +75,12 @@ extern "C" void app_main(void)
             .mirror_x = 0,
             .mirror_y = 0}};
 
-    // Keep LVGL on core 1 with a larger PSRAM-backed stack; high-resolution UI and
-    // app switching can otherwise starve the GUI task or overflow the default stack.
+    // Native Settings callbacks persist NVS on this task. Flash operations
+    // disable the external-memory cache, so its stack must stay in internal RAM.
     cfg.lv_adapter_cfg.task_stack_size = 16 * 1024;
     cfg.lv_adapter_cfg.task_priority = 10;
     cfg.lv_adapter_cfg.task_core_id = 1;
-    cfg.lv_adapter_cfg.stack_in_psram = true;
+    cfg.lv_adapter_cfg.stack_in_psram = false;
 
     /* Configure display */
     lv_display_t *disp = bsp_display_start_with_config(&cfg);

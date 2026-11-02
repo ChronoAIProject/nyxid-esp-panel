@@ -35,7 +35,7 @@ Never commit that backup or restore a raw NVS image from another device.
 | --- | --- | --- |
 | R01 | Brookesia desktop | Preserve launcher, Settings, touch, clock, brightness, volume, music, calculator and drawing apps; missing SD media must not prevent boot. |
 | R02 | Nyx Panel app | A native launcher app shows sticky pushed JPEGs and the last 20 timestamped text messages, including CJK. Remote display pushes open this app. Clear removes both content types. Duration expiry is supported. |
-| R03 | HTTP compatibility | Preserve the old route inventory and response status semantics for `/status`, LCD routes, snapshots, stream routes, configuration and system operations. LAN keeps its documented narrow recovery subset; authenticated Nyx exposes the full set. |
+| R03 | HTTP compatibility | Preserve the old route inventory and response status semantics for `/status`, LCD routes, snapshots, stream routes, configuration and system operations. URL OTA is asynchronous: 202 acknowledges acceptance; later download/digest errors are reported in `/status.ota`. Raw image digest rejection remains 422. LAN keeps its documented narrow recovery subset; authenticated Nyx exposes the full set. |
 | R04 | NyxID connection | Runtime NVS credentials, authenticated WSS registration, heartbeats, reconnect with bounded backoff, service registration, and a truthful connection state. No UI work or long HTTP work in the socket callback. |
 | R05 | Image transport | LAN accepts JPEG bytes directly. Retain JSON/Base64 Nyx compatibility and add negotiated binary-upload handling with bounded chunks; never advertise unsupported capabilities. Invalid, oversized or incomplete transfers cannot replace the displayed image. |
 | R06 | Provisioning | Wi-Fi setup through Brookesia Settings; saved primary/fallback network configuration, Nyx key/node/slug provisioning through UART and QR, QR feedback, provisioning mode and unknown-device boot without a registry halt. Preserve optional device-code support only against real configured endpoints; mock mode is a development option. |
@@ -63,7 +63,9 @@ Use one Brookesia app/screen lifecycle and the BSP recursive LVGL mutex. Worker
 threads submit bounded messages/content to the GUI adapter; decode or network
 work happens outside the GUI lock. The GUI adopts completed content under the
 lock and releases previous buffers only after image widgets stop referencing
-them. The shared `App::notifyCoreClosed` lock fix is retained.
+them. The shared `App::notifyCoreClosed` lock fix is retained. The GUI task uses
+an internal RAM stack because native Settings callbacks write NVS; an external
+stack triggers the P4 flash cache-disable assertion on WLAN exit.
 
 Remote `/lcd/screen` names map to native apps/pages: home→Nyx Panel,
 settings→Settings, camera→Camera, scan→QR scanner, info/operator→device status,
