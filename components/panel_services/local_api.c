@@ -1107,8 +1107,10 @@ static void url_ota_task(void *arg)
     for (unsigned redirects = 0; err == ESP_OK; ++redirects) {
         err = esp_http_client_open(client, 0);
         if (err != ESP_OK) break;
+        ESP_LOGI(TAG, "URL OTA HTTP connected");
         image_len = esp_http_client_fetch_headers(client);
         int status = esp_http_client_get_status_code(client);
+        ESP_LOGI(TAG, "URL OTA HTTP status=%d bytes=%lld", status, (long long)image_len);
         if (status == 200) break;
         if (redirects >= 3 || (status != 301 && status != 302 && status != 303 &&
                                status != 307 && status != 308)) {
@@ -1123,9 +1125,9 @@ static void url_ota_task(void *arg)
     }
     uint8_t *buffer = heap_caps_malloc(4096, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
     if (!buffer) err = ESP_ERR_NO_MEM;
+    uint8_t *image = err == ESP_OK ? heap_caps_malloc((size_t)image_len, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT) : NULL;
+    if (err == ESP_OK && !image) err = ESP_ERR_NO_MEM;
     esp_ota_handle_t handle = 0;
-    if (err == ESP_OK) err = esp_ota_begin(job->update, (size_t)image_len, &handle);
-    if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA slot erased, expected bytes=%lld", (long long)image_len);
     mbedtls_sha256_context hash;
     mbedtls_sha256_init(&hash);
     if (mbedtls_sha256_starts(&hash, 0) != 0) err = ESP_FAIL;
@@ -1143,9 +1145,8 @@ static void url_ota_task(void *arg)
             err = ESP_FAIL;
             break;
         }
-        err = esp_ota_write(handle, buffer, count);
+        memcpy(image + received, buffer, count);
         received += count;
-        if (err == ESP_OK && received == (size_t)count) ESP_LOGI(TAG, "URL OTA first write complete");
         vTaskDelay(1);
     }
     uint8_t actual[32] = {0};
@@ -1155,8 +1156,25 @@ static void url_ota_task(void *arg)
         else if (!sha256_matches(job->expected, actual)) err = ESP_ERR_INVALID_CRC;
     }
     mbedtls_sha256_free(&hash);
-    free(buffer);
     if (client) esp_http_client_cleanup(client);
+    // Close the download transport and verify its complete body before flash I/O.
+    // The buffer is bounded by the inactive slot and available PSRAM.
+    if (err == ESP_OK) {
+        panel_ota_progress("writing", ESP_OK);
+        ESP_LOGI(TAG, "URL OTA download verified; erasing slot");
+        err = esp_ota_begin(job->update, (size_t)image_len, &handle);
+        if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA slot erased");
+    }
+    for (size_t offset = 0; err == ESP_OK && offset < received;) {
+        size_t count = received - offset;
+        if (count > 4096) count = 4096;
+        memcpy(buffer, image + offset, count);
+        err = esp_ota_write(handle, buffer, count);
+        offset += count;
+        vTaskDelay(1);
+    }
+    free(buffer);
+    free(image);
     if (err == ESP_OK) {
         err = esp_ota_end(handle);
         handle = 0;
