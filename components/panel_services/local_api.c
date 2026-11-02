@@ -1138,17 +1138,21 @@ static void url_ota_task(void *arg)
         .crt_bundle_attach = esp_crt_bundle_attach,
         .timeout_ms = 15000,
         .keep_alive_enable = true,
-        .buffer_size = 32768,
+        // Match the verified raw OTA's small internal-memory writes. Large
+        // PSRAM-backed sequential writes reset the legacy P4 during flash I/O.
+        .buffer_size = 4096,
     };
     esp_https_ota_config_t ota_cfg = {
         .http_config = &http_cfg,
         .partition = { .staging = job->update },
+        .bulk_flash_erase = true,
     };
     esp_https_ota_handle_t handle = NULL;
     esp_err_t err = esp_https_ota_begin(&ota_cfg, &handle);
     while (err == ESP_OK || err == ESP_ERR_HTTPS_OTA_IN_PROGRESS) {
         err = esp_https_ota_perform(handle);
         if (err != ESP_ERR_HTTPS_OTA_IN_PROGRESS) break;
+        vTaskDelay(1);
     }
     if (err == ESP_OK && !esp_https_ota_is_complete_data_received(handle)) {
         err = ESP_ERR_INVALID_SIZE;

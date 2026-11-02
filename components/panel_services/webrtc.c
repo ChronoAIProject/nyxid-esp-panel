@@ -21,6 +21,28 @@
 #define TAG "haCamWebRTC"
 
 static esp_webrtc_handle_t webrtc = NULL;
+static struct {
+    int64_t interval_us;
+    int64_t first_us;
+    int64_t next_us;
+} video_clock;
+
+static int pace_video(esp_peer_video_frame_t *frame, void *ctx)
+{
+    (void)ctx;
+    int64_t now = esp_timer_get_time();
+    if (now < video_clock.next_us) {
+        media_lib_thread_sleep((video_clock.next_us - now + 999) / 1000);
+        now = esp_timer_get_time();
+    }
+    if (!video_clock.first_us) video_clock.first_us = now;
+    // A fixed-rate sensor can deliver faster than negotiated sink FPS. Apply
+    // backpressure without dropping encoded reference frames, and timestamp
+    // against elapsed time instead of the sensor's negotiated frame counter.
+    frame->pts = (uint32_t)((now - video_clock.first_us) / 1000);
+    video_clock.next_us = now + video_clock.interval_us;
+    return 0;
+}
 
 static const char *peer_state_str(int type)
 {
@@ -97,6 +119,8 @@ int start_webrtc_with_video_config(const char *session_id, uint8_t fps, uint32_t
         ESP_LOGW(TAG, "WebRTC already running, stopping first...");
         stop_webrtc();
     }
+    memset(&video_clock, 0, sizeof(video_clock));
+    video_clock.interval_us = 1000000LL / fps;
 
     ESP_LOGI(TAG, "========================================");
     ESP_LOGI(TAG, "Starting WebRTC");
@@ -129,6 +153,7 @@ int start_webrtc_with_video_config(const char *session_id, uint8_t fps, uint32_t
             .video_dir = ESP_PEER_MEDIA_DIR_SEND_ONLY,
             .enable_data_channel = DATA_CHANNEL_ENABLED,
             .no_auto_reconnect = true,
+            .on_video_send = pace_video,
             .extra_cfg = &peer_cfg,
             .extra_size = sizeof(peer_cfg),
         },

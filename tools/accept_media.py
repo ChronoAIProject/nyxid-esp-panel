@@ -95,6 +95,7 @@ def main():
                    'receiver_bytes': receiver.get('bytesReceived', receiver.get('inboundBytes')),
                    'receiver_errors': receiver.get('inboundFramesInError')})
             if not transitioned and elapsed >= a.seconds / 2:
+                old_source = receiver['source']['id']
                 nyx('/lcd/screen?target=camera', True)
                 wait_for(lambda: lan('/status')['media']['mode'] == 'preview')
                 with urllib.request.urlopen('http://' + a.ip + '/snapshot.jpg', timeout=10) as r:
@@ -102,7 +103,11 @@ def main():
                 record('Camera preview while publisher suspended', lan('/status')['media'])
                 nyx('/lcd/screen?target=back', True)
                 wait_for(lambda: lan('/status')['media']['mode'] == 'publish')
-                wait_for(lambda: get(a.receiver_api)['ready'])
+                wait_for(lambda: lan('/stream/status')['state'] == 'publishing')
+                def new_publisher_ready():
+                    current = get(a.receiver_api)
+                    return current['ready'] and current['source']['id'] != old_source
+                wait_for(new_publisher_ready)
                 decode('resumed-receiver-frame')
                 transitioned = True
             time.sleep(3)
