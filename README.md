@@ -159,7 +159,11 @@ native navigation; unsupported targets return an error.
 
 ## OTA
 
-Nyx `POST /system/ota` takes `{"url":"...","sha256":"..."}`. For a raw LAN
+Nyx `POST /system/ota` takes `{"url":"...","sha256":"..."}` and promptly returns
+202 accepted. A worker downloads and verifies the image, then reboots. Poll
+`/status` → `ota.busy`, `ota.stage`, `ota.last_error` for progress/failure;
+acceptance alone does not mean the update succeeded. Concurrent updates return
+409. Verify the expected firmware version and valid slot after reboot. For a raw LAN
 image, send `POST /system/ota/image` with `Authorization: Bearer <node_token>`,
 `X-SHA256: <hex_digest>` and the application binary as the body. The raw route
 streams into the inactive slot and rejects a missing/mismatched digest before

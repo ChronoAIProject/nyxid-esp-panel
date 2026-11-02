@@ -294,7 +294,8 @@ esp_err_t nvs_config_get_mqtt(cfg_mqtt_t *o)
 
 esp_err_t nvs_config_set_mqtt(const cfg_mqtt_t *i)
 {
-    if (!i || i->port == 0u || i->host[0] == '\0' || i->base_topic[0] == '\0') {
+    if (!i || i->port == 0u ||
+        (i->enabled && (i->host[0] == '\0' || i->base_topic[0] == '\0'))) {
         return ESP_ERR_INVALID_ARG;
     }
     ESP_LOGI(TAG, "write namespace=mqtt keys=enabled,host,port,user,pass,base_topic enabled=%d host=%s port=%u user=%s pass=<redacted> base_topic=%s",

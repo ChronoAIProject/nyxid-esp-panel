@@ -45,4 +45,4 @@ idf_component_register(
         esp_https_ota esp_http_client esp_http_server app_update esp_peer
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
         esp_webrtc json lvgl media_lib_sal nvs_flash quirc
-        waveshare__esp32_p4_platform product_support)
+        waveshare__esp32_p4_platform product_support gmf_video)

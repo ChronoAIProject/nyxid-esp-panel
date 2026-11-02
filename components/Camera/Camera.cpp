@@ -67,7 +67,7 @@ void Camera::tick(lv_timer_t *timer) {
         lv_image_set_src(self->_image, &self->_frame);
         lv_image_set_scale(self->_image, 560 * 256 / self->_frame.header.w);
         lv_label_set_text(self->_status, provisioning_mode_active() ?
-            "Scan a Wi-Fi / NyxID QR code. Back to exit." : "Camera · Back to exit");
+            "Scan a Wi-Fi / NyxID QR code. Back to exit." : "Camera - Back to exit");
     }
 }
 bool Camera::back() { return notifyCoreClosed(); }

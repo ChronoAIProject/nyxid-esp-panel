@@ -135,9 +135,8 @@ extern "C" void app_main(void)
         ESP_UTILS_CHECK_FALSE_EXIT(phone->installApp(nyx_app), "Install Nyx Panel failed");
         esp_brookesia::apps::NyxPanel::attach(phone, nyx_app);
         ESP_ERROR_CHECK(lcd_renderer_init());
-        lcd_renderer_reload_config();
-
         bsp_display_backlight_on();
+        lcd_renderer_reload_config();
 
         /* Create a timer to update the clock */
         lv_timer_create([](lv_timer_t *t) {

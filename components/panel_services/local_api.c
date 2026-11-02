@@ -180,6 +180,11 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(ota, "running", running ? running->label : "");
     const esp_partition_t *next = esp_ota_get_next_update_partition(NULL);
     cJSON_AddStringToObject(ota, "next", next ? next->label : "");
+    cJSON_AddBoolToObject(ota, "busy", panel_ota_busy());
+    cJSON_AddStringToObject(ota, "stage", panel_ota_stage());
+    esp_err_t update_error = panel_ota_error();
+    cJSON_AddStringToObject(ota, "last_error", update_error == ESP_OK ? "" :
+        update_error == ESP_ERR_INVALID_CRC ? "sha256_mismatch" : esp_err_to_name(update_error));
     esp_ota_img_states_t ota_state;
     cJSON_AddStringToObject(ota, "state", running && esp_ota_get_state_partition(running, &ota_state)==ESP_OK ?
         (ota_state==ESP_OTA_IMG_VALID ? "valid" : ota_state==ESP_OTA_IMG_PENDING_VERIFY ? "pending_verify" : "other") : "initial");
@@ -412,14 +417,6 @@ static bool parse_hex_sha256(const char *hex, uint8_t out[32])
         out[i] = (uint8_t)v;
     }
     return true;
-}
-
-static void hex_sha256(const uint8_t in[32], char out[65])
-{
-    for (size_t i = 0; i < 32u; ++i) {
-        snprintf(out + i * 2u, 3u, "%02x", in[i]);
-    }
-    out[64] = '\0';
 }
 
 static bool sha256_matches(const uint8_t a[32], const uint8_t b[32])
@@ -1073,12 +1070,12 @@ static int h_post_config_mqtt(const nyx_proxy_request_t *req, char *resp, size_t
         json_response_len(resp, resp_len);
         return 400;
     }
-    if (cfg.host[0] == '\0') {
+    if (cfg.enabled && cfg.host[0] == '\0') {
         snprintf(resp, cap, "{\"error\":\"host_required\"}");
         json_response_len(resp, resp_len);
         return 400;
     }
-    if (cfg.base_topic[0] == '\0') {
+    if (cfg.enabled && cfg.base_topic[0] == '\0') {
         snprintf(resp, cap, "{\"error\":\"base_topic_required\"}");
         json_response_len(resp, resp_len);
         return 400;
@@ -1124,37 +1121,20 @@ static int h_system_factory_reset(const nyx_proxy_request_t *req, char *resp, si
     return 200;
 }
 
-static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                        char *ct, size_t ct_cap, size_t *resp_len, void *user)
-{
-    (void)user;
-    snprintf(ct, ct_cap, "application/json");
-    int status = 0;
-    cJSON *root = parse_json_body(req, resp, cap, resp_len, &status);
-    if (!root) {
-        return status;
-    }
-    char *url = json_dup_string(root, "url");
-    char *sha = json_dup_string(root, "sha256");
-    cJSON_Delete(root);
-    uint8_t expected[32] = {0};
-    if (!url || !parse_hex_sha256(sha, expected)) {
-        free(url);
-        free(sha);
-        snprintf(resp, cap, "{\"error\":\"missing_or_invalid_url_sha256\"}");
-        json_response_len(resp, resp_len);
-        return 400;
-    }
+typedef struct {
+    char *url;
+    uint8_t expected[32];
+    const esp_partition_t *update;
+} url_ota_job_t;
 
-    const esp_partition_t *update = esp_ota_get_next_update_partition(NULL);
-    if (!update || !panel_ota_try_lock()) {
-        free(url); free(sha);
-        snprintf(resp, cap, "{\"error\":\"ota_slot_unavailable_or_busy\"}");
-        json_response_len(resp, resp_len); return 409;
-    }
-    ESP_LOGI(TAG, "OTA started url=%s target=%s", url, update ? update->label : "(none)");
+static void url_ota_task(void *arg)
+{
+    url_ota_job_t *job = arg;
+    // URLs may contain signed query credentials; log only the target partition.
+    ESP_LOGI(TAG, "URL OTA downloading target=%s", job->update->label);
+    panel_ota_progress("downloading", ESP_OK);
     esp_http_client_config_t http_cfg = {
-        .url = url,
+        .url = job->url,
         .crt_bundle_attach = esp_crt_bundle_attach,
         .timeout_ms = 15000,
         .keep_alive_enable = true,
@@ -1162,64 +1142,95 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
     };
     esp_https_ota_config_t ota_cfg = {
         .http_config = &http_cfg,
-        .partition = {
-            .staging = update,
-        },
+        .partition = { .staging = job->update },
     };
     esp_https_ota_handle_t handle = NULL;
-    esp_err_t err = esp_ota_mark_app_valid_cancel_rollback();
-    if (err == ESP_ERR_OTA_ROLLBACK_INVALID_STATE) {
-        err = ESP_OK;
-    }
-    if (err == ESP_OK) {
-        err = esp_https_ota_begin(&ota_cfg, &handle);
-    }
-    if (err == ESP_OK) {
+    esp_err_t err = esp_https_ota_begin(&ota_cfg, &handle);
+    while (err == ESP_OK || err == ESP_ERR_HTTPS_OTA_IN_PROGRESS) {
         err = esp_https_ota_perform(handle);
-        while (err == ESP_ERR_HTTPS_OTA_IN_PROGRESS) {
-            err = esp_https_ota_perform(handle);
-        }
+        if (err != ESP_ERR_HTTPS_OTA_IN_PROGRESS) break;
     }
     if (err == ESP_OK && !esp_https_ota_is_complete_data_received(handle)) {
         err = ESP_ERR_INVALID_SIZE;
     }
     if (err == ESP_OK) {
+        panel_ota_progress("verifying", ESP_OK);
         uint8_t actual[32] = {0};
         int image_len = esp_https_ota_get_image_len_read(handle);
-        err = partition_image_sha256(update, image_len > 0 ? (size_t)image_len : 0u, actual);
-        if (err == ESP_OK && !sha256_matches(expected, actual)) {
-            char actual_hex[65];
-            hex_sha256(actual, actual_hex);
-            ESP_LOGW(TAG, "OTA sha256 mismatch actual=%s", actual_hex);
-            snprintf(resp, cap, "{\"ok\":false,\"error\":\"sha256_mismatch\",\"actual\":\"%s\"}",
-                     actual_hex);
-            json_response_len(resp, resp_len);
-            esp_https_ota_abort(handle);
-            panel_ota_unlock();
-            free(url);
-            free(sha);
-            return 422;
+        err = partition_image_sha256(job->update, image_len > 0 ? (size_t)image_len : 0u, actual);
+        if (err == ESP_OK && !sha256_matches(job->expected, actual)) {
+            err = ESP_ERR_INVALID_CRC;
         }
     }
     if (err == ESP_OK) {
         err = esp_https_ota_finish(handle);
-    } else if (handle) {
-        ESP_LOGW(TAG, "OTA aborting error=%s", esp_err_to_name(err));
-        esp_https_ota_abort(handle);
+        handle = NULL;
     }
-    panel_ota_unlock();
-    free(url);
+    if (handle) esp_https_ota_abort(handle);
+    free(job->url);
+    free(job);
+    if (err == ESP_OK) {
+        panel_ota_progress("rebooting", ESP_OK);
+        ESP_LOGI(TAG, "URL OTA verified; rebooting");
+        // Keep the update lock until reboot so no request can overwrite this slot.
+        schedule_reboot();
+    } else {
+        panel_ota_progress("failed", err);
+        panel_ota_unlock();
+        ESP_LOGE(TAG, "URL OTA failed error=%s", esp_err_to_name(err));
+    }
+    vTaskDelete(NULL);
+}
+
+static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                        char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;
+    snprintf(ct, ct_cap, "application/json");
+    int status = 0;
+    cJSON *root = parse_json_body(req, resp, cap, resp_len, &status);
+    if (!root) return status;
+    char *url = json_dup_string(root, "url");
+    char *sha = json_dup_string(root, "sha256");
+    cJSON_Delete(root);
+    uint8_t expected[32] = {0};
+    bool valid = url && strlen(url) <= 2048 &&
+        (!strncmp(url, "https://", 8) || !strncmp(url, "http://", 7)) &&
+        parse_hex_sha256(sha, expected);
     free(sha);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "OTA failed error=%s", esp_err_to_name(err));
-        snprintf(resp, cap, "{\"ok\":false,\"error\":\"%s\"}", esp_err_to_name(err));
+    if (!valid) {
+        free(url);
+        snprintf(resp, cap, "{\"error\":\"missing_or_invalid_url_sha256\"}");
         json_response_len(resp, resp_len);
-        return 500;
+        return 400;
     }
-    ESP_LOGI(TAG, "OTA verified; rebooting");
-    snprintf(resp, cap, "{\"ok\":true,\"ota\":true,\"rebooting\":true}");
+    const esp_partition_t *update = esp_ota_get_next_update_partition(NULL);
+    if (!update || !panel_ota_try_lock()) {
+        free(url);
+        snprintf(resp, cap, "{\"error\":\"ota_slot_unavailable_or_busy\"}");
+        json_response_len(resp, resp_len);
+        return 409;
+    }
+    url_ota_job_t *job = calloc(1, sizeof(*job));
+    if (job) {
+        job->url = url;
+        job->update = update;
+        memcpy(job->expected, expected, sizeof(expected));
+        panel_ota_progress("queued", ESP_OK);
+    }
+    if (!job || xTaskCreate(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL) != pdPASS) {
+        free(job);
+        free(url);
+        panel_ota_progress("failed", ESP_ERR_NO_MEM);
+        panel_ota_unlock();
+        snprintf(resp, cap, "{\"error\":\"ota_worker_unavailable\"}");
+        json_response_len(resp, resp_len);
+        return 503;
+    }
+    // Nyx proxies have a finite response deadline. Download in a separate worker;
+    // 202 acknowledges acceptance, and /status reports completion or failure.
+    snprintf(resp, cap, "{\"ok\":true,\"accepted\":true,\"ota\":true}");
     json_response_len(resp, resp_len);
-    schedule_reboot();
     return 202;
 }
 

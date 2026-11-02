@@ -567,6 +567,7 @@ static esp_err_t ota_image_post(httpd_req_t *req)
         httpd_resp_set_status(req,"400 Bad Request"); return httpd_resp_sendstr(req,"invalid digest");
     }
     if (!panel_ota_try_lock()) { httpd_resp_set_status(req,"409 Conflict"); return httpd_resp_sendstr(req,"OTA busy"); }
+    panel_ota_progress("receiving", ESP_OK);
     esp_ota_handle_t handle=0;
     esp_err_t err=esp_ota_begin(update,req->content_len,&handle);
     mbedtls_sha256_context sha;
@@ -587,16 +588,19 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     uint8_t digest[32]; mbedtls_sha256_finish(&sha,digest); mbedtls_sha256_free(&sha);
     char actual[65];
     for (int i=0;i<32;++i) snprintf(actual+i*2,3,"%02x",digest[i]);
+    if (err==ESP_OK) panel_ota_progress("verifying", ESP_OK);
     if (err==ESP_OK && strcasecmp(actual,expected)) err=ESP_ERR_INVALID_CRC;
     if (err==ESP_OK) { err=esp_ota_end(handle); handle=0; }
     if (err==ESP_OK) err=esp_ota_set_boot_partition(update);
     if (handle) esp_ota_abort(handle);
-    panel_ota_unlock();
     httpd_resp_set_type(req,"application/json");
     if (err!=ESP_OK) {
+        panel_ota_progress("failed", err);
+        panel_ota_unlock();
         httpd_resp_set_status(req,err==ESP_ERR_INVALID_CRC?"422 Unprocessable Entity":"500 Internal Server Error");
         return httpd_resp_sendstr(req,"{\"ok\":false,\"error\":\"ota_image_rejected\"}");
     }
+    panel_ota_progress("rebooting", ESP_OK);
     httpd_resp_set_status(req,"202 Accepted");
     esp_err_t sent=httpd_resp_sendstr(req,"{\"ok\":true,\"rebooting\":true}");
     xTaskCreate(ota_reboot,"ota_reboot",2048,NULL,5,NULL);

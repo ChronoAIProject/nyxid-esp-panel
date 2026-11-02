@@ -10,6 +10,7 @@
 #include <esp_system.h>
 #include <nvs_flash.h>
 #include <nvs.h>
+#include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_console.h"
@@ -79,6 +80,18 @@ static int wifi_cli(int argc, char **argv)
     (void)nvs_config_set_wifi(&wifi);
     (void)nvs_config_set_legacy_wifi_primary(&wifi);
     return network_connect_wifi(wifi.ssid_1, wifi.psw_1);
+}
+
+static int wifi_reconnect_cli(int argc, char **argv)
+{
+    (void)argc;
+    (void)argv;
+#ifdef CONFIG_NETWORK_USE_ETHERNET
+    return ESP_ERR_NOT_SUPPORTED;
+#else
+    // The shared event handler reconnects using the station's saved settings.
+    return esp_wifi_disconnect();
+#endif
 }
 
 static bool is_uuid_shape(const char *text)
@@ -349,6 +362,7 @@ static int init_console(void)
         { .command = "stop",          .help = "Stop WebRTC\n",               .func = stop_cli },
         { .command = "i",             .help = "System status\r\n",           .func = sys_cli },
         { .command = "wifi",          .help = "wifi ssid psw\r\n",           .func = wifi_cli },
+        { .command = "wifi-reconnect", .help = "Reconnect saved Wi-Fi station", .func = wifi_reconnect_cli },
         { .command = "nyx-key",       .help = "nyx-key auth_token\r\n",      .func = nyx_key_cli },
         { .command = "nyx-secret", .help = "Save Nyx signing secret", .func = nyx_secret_cli },
         { .command = "nyx-node",      .help = "nyx-node node_id\r\n",        .func = nyx_node_cli },
@@ -408,7 +422,7 @@ static void capture_scheduler(const char *name, esp_capture_thread_schedule_cfg_
 
 // --- Network event handling ---
 
-static bool wifi_fallback_tried = false;
+static atomic_bool wifi_fallback_tried;
 static atomic_bool fallback_requested;
 
 static void on_net_manager_event(const net_manager_snapshot_t *snapshot, void *user)
@@ -422,7 +436,7 @@ static int network_event_handler(bool connected)
 {
     net_manager_note_legacy_network(connected);
     if (connected) {
-        wifi_fallback_tried = false;
+        atomic_store(&wifi_fallback_tried, false);
         provisioning_mode_note_network_up();
         ESP_LOGI(TAG, "Network connected");
     } else {
@@ -448,6 +462,9 @@ esp_err_t panel_runtime_preview_error(void) { return atomic_load(&preview_error)
 
 static void service_task(void *arg)
 {
+    // The peer library logs every RTP retransmission at INFO. At 115200 baud
+    // this can block network/media tasks during a loss burst.
+    esp_log_level_set("PEER_DEF", ESP_LOG_WARN);
     media_lib_add_default_adapter();
     esp_capture_set_thread_scheduler(capture_scheduler);
     media_lib_thread_set_schedule_cb(thread_scheduler);
@@ -478,8 +495,8 @@ static void service_task(void *arg)
     atomic_store(&ready, http_err == ESP_OK);
     bool applied_preview = false;
     while (1) {
-        if (atomic_exchange(&fallback_requested, false) && !wifi_fallback_tried && !network_is_connected()) {
-            wifi_fallback_tried = true;
+        if (atomic_exchange(&fallback_requested, false) && !atomic_load(&wifi_fallback_tried) && !network_is_connected()) {
+            atomic_store(&wifi_fallback_tried, true);
             cfg_wifi_t wf = {0};
             nvs_config_get_wifi(&wf);
             if (wf.ssid_2[0]) network_connect_wifi(wf.ssid_2, wf.psw_2);

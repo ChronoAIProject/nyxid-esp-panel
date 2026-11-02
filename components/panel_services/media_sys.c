@@ -19,6 +19,8 @@
 #include "esp_video_dec_default.h"
 #include "esp_capture_defaults.h"
 #include "esp_capture_sink.h"
+#include "esp_capture_advance.h"
+#include "esp_gmf_video_ppa.h"
 #include "esp_codec_dev.h"
 #include "esp_timer.h"
 #include "esp_video_ioctl.h"
@@ -82,8 +84,35 @@ static bool preview_pump_running;
 static bool webrtc_capture_started;
 static bool preview_capture_started;
 static bool camera_initialized;
+static uint16_t publish_source_width;
+static uint16_t publish_source_height;
+static bool publish_crop_ready;
 
 static void preview_pump_task_fn(void *arg);
+
+static esp_capture_err_t publish_pipeline_event(esp_capture_event_t event, void *ctx)
+{
+    (void)ctx;
+    if (event != ESP_CAPTURE_EVENT_VIDEO_PIPELINE_BUILT) return ESP_CAPTURE_ERR_OK;
+    esp_gmf_element_handle_t ppa = NULL;
+    if (esp_capture_sink_get_element_by_tag(webrtc_sink, ESP_CAPTURE_STREAM_TYPE_VIDEO,
+                                          "vid_ppa", &ppa) != ESP_CAPTURE_ERR_OK || !ppa) {
+        return ESP_CAPTURE_ERR_NOT_FOUND;
+    }
+    // PPA YUV420 coefficients are quantized to eighths. Scaling 800x800 to
+    // 640x480 writes only 600x400, leaving stale memory in the encoded border.
+    // Center crop the native sensor frame so this pipeline uses exact 1:1 geometry.
+    esp_gmf_video_rgn_t crop = {
+        .x = ((publish_source_width - VIDEO_WIDTH) / 2u) & ~1u,
+        .y = ((publish_source_height - VIDEO_HEIGHT) / 2u) & ~1u,
+        .width = VIDEO_WIDTH,
+        .height = VIDEO_HEIGHT,
+    };
+    ESP_LOGI(TAG, "Publish crop %ux%u at %u,%u from %ux%u", crop.width, crop.height,
+             crop.x, crop.y, publish_source_width, publish_source_height);
+    publish_crop_ready = esp_gmf_video_ppa_set_cropped_rgn(ppa, &crop) == ESP_GMF_ERR_OK;
+    return publish_crop_ready ? ESP_CAPTURE_ERR_OK : ESP_CAPTURE_ERR_NOT_SUPPORTED;
+}
 
 static esp_err_t ensure_camera_initialized(void)
 {
@@ -309,10 +338,24 @@ esp_err_t media_sys_prepare_publish_capture(uint8_t fps)
     if (fps == 0u) {
         fps = VIDEO_FPS;
     }
-    esp_err_t err = build_capture_system(false);
+    media_sys_capture_close();
+    esp_err_t err = ensure_camera_initialized();
+    if (err != ESP_OK) return err;
+    int fd = open("/dev/video0", O_RDONLY);
+    struct v4l2_format native = { .type = V4L2_BUF_TYPE_VIDEO_CAPTURE };
+    int fmt_ret = fd < 0 ? -1 : ioctl(fd, VIDIOC_G_FMT, &native);
+    if (fd >= 0) close(fd);
+    if (fmt_ret != 0 || native.fmt.pix.width < VIDEO_WIDTH || native.fmt.pix.height < VIDEO_HEIGHT) {
+        ESP_LOGE(TAG, "Camera cannot provide the publish crop");
+        return ESP_ERR_NOT_SUPPORTED;
+    }
+    publish_source_width = native.fmt.pix.width;
+    publish_source_height = native.fmt.pix.height;
+    err = build_capture_system(false);
     if (err != ESP_OK) {
         return err;
     }
+    esp_capture_set_event_cb(capture_sys.capture_handle, publish_pipeline_event, NULL);
     esp_capture_sink_cfg_t sink_cfg = {
         .audio_info = { .format_id = ESP_CAPTURE_FMT_ID_NONE },
         .video_info = {
@@ -354,7 +397,12 @@ int media_sys_webrtc_capture_start(void)
     }
     webrtc_capture_started = true;
 
+    publish_crop_ready = false;
     ret = esp_capture_start(capture_sys.capture_handle);
+    if (ret == ESP_CAPTURE_ERR_OK && !publish_crop_ready) {
+        (void)esp_capture_stop(capture_sys.capture_handle);
+        ret = ESP_CAPTURE_ERR_NOT_SUPPORTED;
+    }
     if (ret != ESP_CAPTURE_ERR_OK) {
         ESP_LOGW(TAG, "webrtc capture start failed: %d", ret);
         esp_capture_sink_enable(webrtc_sink, ESP_CAPTURE_RUN_MODE_DISABLE);

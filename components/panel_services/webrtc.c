@@ -15,6 +15,7 @@
 #include "esp_capture_sink.h"
 #include "esp_system.h"
 #include "esp_heap_caps.h"
+#include "esp_timer.h"
 #include "stream_publisher.h"
 
 #define TAG "haCamWebRTC"
@@ -107,8 +108,9 @@ int start_webrtc_with_video_config(const char *session_id, uint8_t fps, uint32_t
     esp_peer_default_cfg_t peer_cfg = {
         .agent_recv_timeout = 500,
         .rtp_cfg = {
-            .send_pool_size = 32768,
-            .send_queue_num = 32,
+            // Retain a full IDR burst while the C6/Wi-Fi transport drains it.
+            .send_pool_size = 128 * 1024,
+            .send_queue_num = 128,
         },
     };
 
@@ -186,7 +188,10 @@ int start_webrtc(const char *session_id)
 
 void query_webrtc(void)
 {
-    if (webrtc) {
+    static int64_t last_query;
+    int64_t now=esp_timer_get_time();
+    if (webrtc && now-last_query>=10000000LL) {
+        last_query=now;
         esp_webrtc_query(webrtc);
     }
 }
