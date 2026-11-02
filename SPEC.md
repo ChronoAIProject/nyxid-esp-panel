@@ -113,6 +113,9 @@ resource partition within the real chip size. Verify final image sizes against
 both slots. Record the migration from the installed factory layout and back up
 NVS before changing offsets. Fresh firmware validates its startup before
 marking a pending update valid; failure retains an available rollback image.
+Runtime Flash APIs share an internal RAM recursive mutex. Image verification
+through a Flash mapping also holds that mutex, so status/configuration reads
+cannot overlap OTA flash operations on the legacy P4.
 
 ## 5. Implementation sequence
 

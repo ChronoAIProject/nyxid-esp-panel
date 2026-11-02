@@ -26,6 +26,7 @@
 #include "Camera.hpp"
 #include "NyxPanel.hpp"
 #include "panel_runtime.h"
+#include "panel_flash.h"
 #include "network.h"
 extern "C" {
 #include "lcd_renderer.h"
@@ -47,6 +48,7 @@ static bool is_wifi_connected()
 
 extern "C" void app_main(void)
 {
+    ESP_ERROR_CHECK(panel_flash_init());
     esp_log_level_set("rpc_rsp", ESP_LOG_ERROR);
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {

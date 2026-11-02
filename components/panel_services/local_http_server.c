@@ -17,6 +17,7 @@
 #include "snapshot.h"
 #include "common.h"
 #include "panel_ota.h"
+#include "panel_flash.h"
 #include "nyx_creds.h"
 #include "esp_ota_ops.h"
 #include "esp_system.h"
@@ -590,8 +591,12 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     for (int i=0;i<32;++i) snprintf(actual+i*2,3,"%02x",digest[i]);
     if (err==ESP_OK) panel_ota_progress("verifying", ESP_OK);
     if (err==ESP_OK && strcasecmp(actual,expected)) err=ESP_ERR_INVALID_CRC;
-    if (err==ESP_OK) { err=esp_ota_end(handle); handle=0; }
-    if (err==ESP_OK) err=esp_ota_set_boot_partition(update);
+    if (err==ESP_OK) {
+        panel_flash_lock();
+        err=esp_ota_end(handle); handle=0;
+        if (err==ESP_OK) err=esp_ota_set_boot_partition(update);
+        panel_flash_unlock();
+    }
     if (handle) esp_ota_abort(handle);
     httpd_resp_set_type(req,"application/json");
     if (err!=ESP_OK) {

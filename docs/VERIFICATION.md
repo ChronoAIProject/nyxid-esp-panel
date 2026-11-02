@@ -17,9 +17,9 @@ credentials.
 - A separate clean defaults build passed (`build-clean`, v0.1.2); GitHub Actions
   also builds the actual firmware, not just the host tests. Runs `41536695098`,
   `41540218209`, `41541223809` and `41542434054` succeeded.
-- Candidate v0.1.10 builds locally: application `0x66b6b0` bytes within each
-  `0x690000` OTA slot (149840 bytes spare). Binary SHA256:
-  `cfca100e8f13b1dca8f4ef96c126f04441da95901891e1ef6d510346ffe43ad8`.
+- Candidate v0.1.12 builds locally: application `0x66bb40` bytes within each
+  `0x690000` OTA slot (148672 bytes spare). Binary SHA256:
+  `45b05e93d9dc2f43b7d758fd83c5e54d55ae0bd7b1a6a742c3c19f664f18d72c`.
 - Complete pre-migration backup: 16 MiB, SHA256
   `b25d05f4e50b90eba16b969bc82a1e516518fa64a07decba5350e1db51f09005`.
 - Before reset acceptance, current same-board NVS was separately saved at its

@@ -168,7 +168,10 @@ are followed. The complete image is buffered in PSRAM, bounded by the inactive
 slot capacity and available memory, and its digest is checked before flash is
 erased. After closing the download connection, writes erase one 4 KiB sector at
 a time and yield between writes. Verify the expected firmware version and valid
-slot after reboot. For a raw LAN
+slot after reboot. Runtime Flash reads, writes and erases share a recursive
+mutex, including NVS/status reads and mapped image verification; this prevents
+the overlapping Flash access observed during status polling on the legacy P4.
+For a raw LAN
 image, send `POST /system/ota/image` with `Authorization: Bearer <node_token>`,
 `X-SHA256: <hex_digest>` and the application binary as the body. The raw route
 streams into the inactive slot and rejects a missing/mismatched digest before

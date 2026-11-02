@@ -25,6 +25,7 @@
 #include "stream_publisher.h"
 #include "network.h"
 #include "panel_ota.h"
+#include "panel_flash.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -1181,10 +1182,12 @@ static void url_ota_task(void *arg)
     free(buffer);
     free(image);
     if (err == ESP_OK) {
+        panel_flash_lock();
         err = esp_ota_end(handle);
         handle = 0;
+        if (err == ESP_OK) err = esp_ota_set_boot_partition(job->update);
+        panel_flash_unlock();
     }
-    if (err == ESP_OK) err = esp_ota_set_boot_partition(job->update);
     if (handle) esp_ota_abort(handle);
     free(job->url);
     free(job);
@@ -1237,7 +1240,7 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
         memcpy(job->expected, expected, sizeof(expected));
         panel_ota_progress("queued", ESP_OK);
     }
-    if (!job || xTaskCreatePinnedToCore(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL, 0) != pdPASS) {
+    if (!job || xTaskCreate(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL) != pdPASS) {
         free(job);
         free(url);
         panel_ota_progress("failed", ESP_ERR_NO_MEM);

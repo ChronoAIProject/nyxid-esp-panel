@@ -21,6 +21,7 @@ set(panel_sources
     nyx_upload.c
     nyx_ws_rx.c
     panel_ota.c
+    panel_flash.c
     panel_runtime.c
     provisioning.c
     qr_scanner.c
@@ -44,5 +45,10 @@ idf_component_register(
     REQUIRES av_render panel_common console esp_app_format esp_capture
         esp_https_ota esp_http_client esp_http_server app_update esp_peer
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
-        esp_webrtc json lvgl media_lib_sal nvs_flash quirc
+        esp_webrtc json lvgl media_lib_sal nvs_flash spi_flash quirc
         waveshare__esp32_p4_platform product_support gmf_video)
+
+foreach(flash_api esp_flash_read esp_flash_write esp_flash_read_encrypted
+                  esp_flash_write_encrypted esp_flash_erase_region esp_flash_erase_chip)
+    target_link_libraries(${COMPONENT_LIB} INTERFACE "-Wl,--wrap=${flash_api}")
+endforeach()
