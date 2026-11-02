@@ -41,3 +41,8 @@ use the server's JSON/Base64 forwarding. Negotiated machine-ingress
 `proxy_upload_v1` uses signed metadata plus `NYXM` binary chunks. The receiver
 validates request identity, sequence, size, completion, cancellation, replay and
 expiry; it only permits POST `/lcd/image`. It does not advertise machine v2.
+
+URL OTA requires HTTP 200 with a positive `Content-Length` within the inactive
+slot size. It follows at most three HTTP redirects and verifies HTTPS server
+certificates. A failed download/hash leaves the active boot slot unchanged;
+poll `ota.stage == "failed"` and `ota.last_error` after an accepted request.

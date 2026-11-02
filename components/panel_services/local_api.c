@@ -3,7 +3,7 @@
 #include "esp_app_desc.h"
 #include "esp_crt_bundle.h"
 #include "esp_heap_caps.h"
-#include "esp_https_ota.h"
+#include "esp_http_client.h"
 #include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_partition.h"
@@ -426,46 +426,6 @@ static bool sha256_matches(const uint8_t a[32], const uint8_t b[32])
         diff |= (uint8_t)(a[i] ^ b[i]);
     }
     return diff == 0u;
-}
-
-static esp_err_t partition_image_sha256(const esp_partition_t *part, size_t image_len, uint8_t out[32])
-{
-    if (!part || image_len == 0u || !out || image_len > part->size) {
-        return ESP_ERR_INVALID_ARG;
-    }
-
-    mbedtls_sha256_context ctx;
-    mbedtls_sha256_init(&ctx);
-    int rc = mbedtls_sha256_starts(&ctx, 0);
-
-    uint8_t *buf = malloc(4096u);
-    if (!buf) {
-        mbedtls_sha256_free(&ctx);
-        return ESP_ERR_NO_MEM;
-    }
-
-    size_t off = 0u;
-    while (rc == 0 && off < image_len) {
-        size_t n = image_len - off;
-        if (n > 4096u) {
-            n = 4096u;
-        }
-        esp_err_t err = esp_partition_read(part, off, buf, n);
-        if (err != ESP_OK) {
-            free(buf);
-            mbedtls_sha256_free(&ctx);
-            return err;
-        }
-        rc = mbedtls_sha256_update(&ctx, buf, n);
-        off += n;
-    }
-
-    free(buf);
-    if (rc == 0) {
-        rc = mbedtls_sha256_finish(&ctx, out);
-    }
-    mbedtls_sha256_free(&ctx);
-    return rc == 0 ? ESP_OK : ESP_FAIL;
 }
 
 static int h_status(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -1138,39 +1098,71 @@ static void url_ota_task(void *arg)
         .crt_bundle_attach = esp_crt_bundle_attach,
         .timeout_ms = 15000,
         .keep_alive_enable = true,
-        // Match the verified raw OTA's small internal-memory writes. Large
-        // PSRAM-backed sequential writes reset the legacy P4 during flash I/O.
+        // Use the same bounded flash write path as the raw OTA endpoint.
         .buffer_size = 4096,
     };
-    esp_https_ota_config_t ota_cfg = {
-        .http_config = &http_cfg,
-        .partition = { .staging = job->update },
-        .bulk_flash_erase = true,
-    };
-    esp_https_ota_handle_t handle = NULL;
-    esp_err_t err = esp_https_ota_begin(&ota_cfg, &handle);
-    while (err == ESP_OK || err == ESP_ERR_HTTPS_OTA_IN_PROGRESS) {
-        err = esp_https_ota_perform(handle);
-        if (err != ESP_ERR_HTTPS_OTA_IN_PROGRESS) break;
-        vTaskDelay(1);
+    esp_http_client_handle_t client = esp_http_client_init(&http_cfg);
+    esp_err_t err = client ? ESP_OK : ESP_ERR_NO_MEM;
+    int64_t image_len = 0;
+    for (unsigned redirects = 0; err == ESP_OK; ++redirects) {
+        err = esp_http_client_open(client, 0);
+        if (err != ESP_OK) break;
+        image_len = esp_http_client_fetch_headers(client);
+        int status = esp_http_client_get_status_code(client);
+        if (status == 200) break;
+        if (redirects >= 3 || (status != 301 && status != 302 && status != 303 &&
+                               status != 307 && status != 308)) {
+            err = ESP_ERR_INVALID_RESPONSE;
+            break;
+        }
+        err = esp_http_client_set_redirection(client);
+        esp_http_client_close(client);
     }
-    if (err == ESP_OK && !esp_https_ota_is_complete_data_received(handle)) {
+    if (err == ESP_OK && (image_len <= 0 || image_len > job->update->size)) {
         err = ESP_ERR_INVALID_SIZE;
     }
+    uint8_t *buffer = heap_caps_malloc(4096, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+    if (!buffer) err = ESP_ERR_NO_MEM;
+    esp_ota_handle_t handle = 0;
+    if (err == ESP_OK) err = esp_ota_begin(job->update, (size_t)image_len, &handle);
+    if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA slot erased, expected bytes=%lld", (long long)image_len);
+    mbedtls_sha256_context hash;
+    mbedtls_sha256_init(&hash);
+    if (mbedtls_sha256_starts(&hash, 0) != 0) err = ESP_FAIL;
+    size_t received = 0;
+    int64_t deadline = esp_timer_get_time() + 300000000LL;
+    while (err == ESP_OK && received < (size_t)image_len) {
+        size_t wanted = (size_t)image_len - received;
+        if (wanted > 4096) wanted = 4096;
+        int count = esp_http_client_read(client, (char *)buffer, wanted);
+        if (count <= 0 || esp_timer_get_time() > deadline) {
+            err = ESP_ERR_TIMEOUT;
+            break;
+        }
+        if (mbedtls_sha256_update(&hash, buffer, count) != 0) {
+            err = ESP_FAIL;
+            break;
+        }
+        err = esp_ota_write(handle, buffer, count);
+        received += count;
+        if (err == ESP_OK && received == (size_t)count) ESP_LOGI(TAG, "URL OTA first write complete");
+        vTaskDelay(1);
+    }
+    uint8_t actual[32] = {0};
     if (err == ESP_OK) {
         panel_ota_progress("verifying", ESP_OK);
-        uint8_t actual[32] = {0};
-        int image_len = esp_https_ota_get_image_len_read(handle);
-        err = partition_image_sha256(job->update, image_len > 0 ? (size_t)image_len : 0u, actual);
-        if (err == ESP_OK && !sha256_matches(job->expected, actual)) {
-            err = ESP_ERR_INVALID_CRC;
-        }
+        if (mbedtls_sha256_finish(&hash, actual) != 0) err = ESP_FAIL;
+        else if (!sha256_matches(job->expected, actual)) err = ESP_ERR_INVALID_CRC;
     }
+    mbedtls_sha256_free(&hash);
+    free(buffer);
+    if (client) esp_http_client_cleanup(client);
     if (err == ESP_OK) {
-        err = esp_https_ota_finish(handle);
-        handle = NULL;
+        err = esp_ota_end(handle);
+        handle = 0;
     }
-    if (handle) esp_https_ota_abort(handle);
+    if (err == ESP_OK) err = esp_ota_set_boot_partition(job->update);
+    if (handle) esp_ota_abort(handle);
     free(job->url);
     free(job);
     if (err == ESP_OK) {
@@ -1222,7 +1214,7 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
         memcpy(job->expected, expected, sizeof(expected));
         panel_ota_progress("queued", ESP_OK);
     }
-    if (!job || xTaskCreate(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL) != pdPASS) {
+    if (!job || xTaskCreatePinnedToCore(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL, 0) != pdPASS) {
         free(job);
         free(url);
         panel_ota_progress("failed", ESP_ERR_NO_MEM);
