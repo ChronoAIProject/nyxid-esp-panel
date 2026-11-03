@@ -17,11 +17,14 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 | GET | `/lcd/snapshot.jpg` | yes | Current LVGL screen encoded as JPEG |
 | GET | `/lcd/screen` | yes | Actual `target`, native stack `depth` and `err` |
 | POST | `/lcd/screen?target=NAME` | no | `home`, `settings`, `wifi`, `camera`, `scan`, `info`, `operator`, `device_bind`, `back`; unknown target 404; accepted navigation runs on the GUI timer |
-| GET | `/snapshot.jpg` | yes | Current preview JPEG; publish mode returns 503 |
-| GET | `/stream/status` | yes | Publisher state, target, profile and last error |
-| POST | `/stream/start` | yes | Starts configured video-only WHIP publisher asynchronously |
-| POST | `/stream/stop` | yes | Stops publisher asynchronously |
-| GET, POST | `/config/stream` | yes | `target_whip_url`, `auto_start`, `fps`, `bitrate` |
+| GET | `/camera/snapshot.jpg` | no | Fresh 320×240 JPEG on demand; LCD unchanged; CSI/buffers/encoder released before response unless native preview is open; 503 busy/unavailable |
+| GET | `/camera` | no | Mode, dimensions, capture counts, last duration/error; no automatic capture |
+| GET | `/openapi.json` | no | Camera service OpenAPI with `camera_take_photo` and `camera_get_status` |
+| GET | `/snapshot.jpg` | preview only | Nyx: alias for on-demand capture. LAN: requires native preview already open, otherwise 503 |
+| GET | `/stream/status` | yes | Compatibility: state `disabled`, auto_start false |
+| POST | `/stream/start` | yes | 410 `continuous_streaming_removed`; replacement `/camera/snapshot.jpg` |
+| POST | `/stream/stop` | yes | Idempotent 200, state `disabled` |
+| GET, POST | `/config/stream` | yes | GET reports disabled; POST returns 410. Legacy NVS settings cannot activate streaming |
 | GET, POST | `/config/lcd` | no | `idle_mode`, `brightness`, `rotation`; physical display orientation follows the BSP profile |
 | GET, POST | `/config/device` | no | `label`, `location` |
 | GET, POST | `/config/wifi` | no | `ssid_1`, `psw_1`, `ssid_2`, `psw_2`; GET excludes passwords; POST defaults to `dry_run:true`; false tests connection before saving |
@@ -52,3 +55,13 @@ certificates. It buffers the complete bounded image in PSRAM, checks SHA256,
 closes HTTP, then erases/writes flash in 4 KiB steps. Allocation failure is
 reported as a failed update. A failed download/hash leaves flash untouched;
 poll `ota.stage == "failed"` and `ota.last_error` after an accepted request.
+
+Camera capture uses a single owner shared with native Camera and Wi-Fi QR.
+Concurrent capture requests fail with 503 rather than queueing capture jobs.
+Errors return JSON and never a stale JPEG. Capture startup waits at most about
+5.6 seconds for its first frame, then up to 1.5 seconds for a fresh frame; hardware
+encoding has a 1-second timeout and cleanup waits up to 1.5 seconds for the pump.
+Network/proxy latency is additional. `/camera` and `/status` do not wait for CSI.
+For CLI JPEG output use `nyxid proxy request "$SLUG" /camera/snapshot.jpg --stream`;
+this flag copies raw response bytes from one request and does not enable video.
+The schema endpoint alone does not install dedicated Nyx MCP tools.

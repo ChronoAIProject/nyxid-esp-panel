@@ -40,7 +40,6 @@ static const char *TAG = "haCam.lan";
 #define BODY_RECV_CHUNK_BYTES 4096u
 
 static httpd_handle_t s_server;
-static SemaphoreHandle_t s_snapshot_lock;
 static SemaphoreHandle_t s_lcd_snapshot_lock;
 
 static const char *remote_ip(httpd_req_t *req, char *buf, size_t cap)
@@ -122,55 +121,21 @@ static esp_err_t status_get(httpd_req_t *req)
 
 static esp_err_t snapshot_get(httpd_req_t *req)
 {
-    if (!media_mode_is_preview()) {
-        httpd_resp_send_custom_err(req, "503 Service Unavailable",
-                                   "snapshot unavailable in publish mode");
-        log_request(req, 503, 0u);
-        return ESP_OK;
-    }
-    if (!s_snapshot_lock || xSemaphoreTake(s_snapshot_lock, pdMS_TO_TICKS(3000)) != pdTRUE) {
-        httpd_resp_send_custom_err(req, "503 Service Unavailable", "snapshot busy");
-        log_request(req, 503, 0u);
-        return ESP_OK;
-    }
-
-    size_t grabbed_len = 0u;
-    esp_err_t grab_err = media_sys_preview_snapshot_encode(2500u, &grabbed_len);
-    if (grab_err == ESP_ERR_NOT_SUPPORTED || grab_err == ESP_ERR_INVALID_STATE) {
-        grab_err = media_sys_snapshot_grab(2500u, &grabbed_len);
-    }
-    if (grab_err != ESP_OK) {
-        xSemaphoreGive(s_snapshot_lock);
-        httpd_resp_send_custom_err(req, "503 Service Unavailable", esp_err_to_name(grab_err));
-        log_request(req, 503, 0u);
-        return ESP_OK;
-    }
-
     uint8_t *buf = heap_caps_malloc(SNAPSHOT_MAX_BYTES, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-    if (!buf) {
-        buf = heap_caps_malloc(SNAPSHOT_MAX_BYTES, MALLOC_CAP_8BIT);
-    }
-    if (!buf) {
-        xSemaphoreGive(s_snapshot_lock);
-        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "snapshot alloc failed");
-        log_request(req, 500, 0u);
-        return ESP_OK;
-    }
-    size_t len = 0u;
-    esp_err_t copy_err = snapshot_copy_latest(buf, SNAPSHOT_MAX_BYTES, &len);
-    if (copy_err != ESP_OK) {
+    if (!buf) return httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "snapshot alloc failed");
+    size_t len = 0;
+    // Unauthenticated LAN can read a visible preview, but cannot start CSI.
+    esp_err_t err = media_mode_snapshot(buf, SNAPSHOT_MAX_BYTES, &len, false);
+    if (err != ESP_OK) {
         free(buf);
-        xSemaphoreGive(s_snapshot_lock);
-        httpd_resp_send_custom_err(req, "503 Service Unavailable", esp_err_to_name(copy_err));
-        log_request(req, 503, 0u);
+        httpd_resp_send_custom_err(req, "503 Service Unavailable", esp_err_to_name(err));
+        log_request(req, 503, 0);
         return ESP_OK;
     }
     httpd_resp_set_type(req, "image/jpeg");
     httpd_resp_set_hdr(req, "Cache-Control", "no-store, max-age=0");
-    esp_err_t err = httpd_resp_send(req, (const char *)buf, len);
+    err = httpd_resp_send(req, (const char *)buf, len);
     free(buf);
-    xSemaphoreGive(s_snapshot_lock);
-    (void)grabbed_len;
     log_request(req, err == ESP_OK ? 200 : 500, len);
     return err;
 }
@@ -618,13 +583,6 @@ esp_err_t local_http_server_start(void)
 {
     if (s_server) {
         return ESP_OK;
-    }
-    if (!s_snapshot_lock) {
-        s_snapshot_lock = xSemaphoreCreateMutex();
-        if (!s_snapshot_lock) {
-            ESP_LOGE(TAG, "snapshot mutex alloc failed");
-            return ESP_ERR_NO_MEM;
-        }
     }
     if (!s_lcd_snapshot_lock) {
         s_lcd_snapshot_lock = xSemaphoreCreateMutex();

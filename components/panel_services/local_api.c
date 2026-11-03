@@ -20,9 +20,7 @@
 #include "nyx_creds.h"
 #include "nyx_node.h"
 #include "qr_scanner.h"
-#include "snapshot.h"
 #include "settings.h"
-#include "stream_publisher.h"
 #include "network.h"
 #include "panel_ota.h"
 #include "panel_flash.h"
@@ -151,8 +149,6 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     net_manager_snapshot_t net = net_manager_snapshot();
     cfg_wifi_t wifi = {0};
     (void)nvs_config_get_wifi(&wifi);
-    stream_publisher_status_t stream = {0};
-    stream_publisher_get_status(&stream);
     media_mode_t media_mode = media_mode_current();
 
     cJSON *root = cJSON_CreateObject();
@@ -195,8 +191,8 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(ota, "state", state_error==ESP_OK ?
         (ota_state==ESP_OTA_IMG_VALID ? "valid" : ota_state==ESP_OTA_IMG_PENDING_VERIFY ? "pending_verify" : "other") : "initial");
     cJSON *st = cJSON_AddObjectToObject(root, "stream");
-    cJSON_AddStringToObject(st, "state", stream.state);
-    cJSON_AddStringToObject(st, "last_error", stream.last_error);
+    cJSON_AddStringToObject(st, "state", "disabled");
+    cJSON_AddStringToObject(st, "last_error", "");
     cJSON *lcd = cJSON_AddObjectToObject(root, "lcd");
     const char *screen = "unknown";
     size_t depth = 0;
@@ -207,6 +203,12 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(mqtt, "state", "disabled");
     cJSON *media = cJSON_AddObjectToObject(root, "media");
     cJSON_AddStringToObject(media, "mode", media_mode_name(media_mode));
+    camera_status_t camera;
+    media_mode_status(&camera);
+    cJSON_AddNumberToObject(media, "captures", camera.completed);
+    cJSON_AddNumberToObject(media, "failed_captures", camera.failed);
+    cJSON_AddNumberToObject(media, "last_capture_ms", camera.last_capture_ms);
+    cJSON_AddStringToObject(media, "last_error", camera.last_error == ESP_OK ? "" : esp_err_to_name(camera.last_error));
     cJSON *heap = cJSON_AddObjectToObject(root, "heap");
     cJSON_AddNumberToObject(heap, "free", esp_get_free_heap_size());
     cJSON_AddNumberToObject(heap, "spiram_free", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
@@ -570,97 +572,68 @@ static int h_lcd_clear(const nyx_proxy_request_t *req, char *resp, size_t cap,
     return 202;
 }
 
-static int h_get_config_stream(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                               char *ct, size_t ct_cap, size_t *resp_len, void *user)
+// Compatibility routes cannot reactivate the retired continuous publisher.
+static int h_stream_removed(const nyx_proxy_request_t *req, char *resp, size_t cap,
+    char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
-    (void)req;
-    (void)user;
+    (void)req; (void)user;
     snprintf(ct, ct_cap, "application/json");
-    stream_publisher_config_t cfg = {0};
-    stream_publisher_get_config(&cfg);
-    cJSON *result=cJSON_CreateObject();
-    cJSON_AddStringToObject(result,"target_whip_url",cfg.target_whip_url);
-    cJSON_AddBoolToObject(result,"auto_start",cfg.auto_start);
-    cJSON_AddNumberToObject(result,"fps",cfg.fps);
-    cJSON_AddNumberToObject(result,"bitrate",cfg.bitrate);
-    return object_response(result,resp,cap,resp_len);
-}
-
-static int h_post_config_stream(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                                char *ct, size_t ct_cap, size_t *resp_len, void *user)
-{
-    (void)user;
-    snprintf(ct, ct_cap, "application/json");
-    int status=0;
-    cJSON *root=parse_json_body(req,resp,cap,resp_len,&status);
-    if (!root) return status;
-
-    stream_publisher_config_t cfg = {0};
-    stream_publisher_get_config(&cfg);
-    char *target = json_dup_string(root, "target_whip_url");
-    if (target) {
-        snprintf(cfg.target_whip_url, sizeof(cfg.target_whip_url), "%s", target);
-    }
-    cfg.auto_start = json_bool(root, "auto_start", cfg.auto_start);
-    cfg.fps = (uint8_t)json_u32(root, "fps", cfg.fps ? cfg.fps : VIDEO_FPS);
-    cfg.bitrate = json_u32(root, "bitrate", cfg.bitrate ? cfg.bitrate : VIDEO_BITRATE);
-    free(target);
-    cJSON_Delete(root);
-
-    esp_err_t err = stream_publisher_set_config(&cfg, true);
-    if (err != ESP_OK) {
-        snprintf(resp, cap, "{\"ok\":false,\"error\":\"%s\"}", esp_err_to_name(err));
-        json_response_len(resp, resp_len);
-        return 500;
-    }
-    snprintf(resp, cap, "{\"ok\":true}");
+    snprintf(resp, cap, "{\"error\":\"continuous_streaming_removed\",\"replacement\":\"/camera/snapshot.jpg\"}");
     json_response_len(resp, resp_len);
-    return 202;
-}
-
-static int h_stream_start(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                          char *ct, size_t ct_cap, size_t *resp_len, void *user)
-{
-    (void)req;
-    (void)user;
-    snprintf(ct, ct_cap, "application/json");
-    esp_err_t err = stream_publisher_start();
-    snprintf(resp, cap, err == ESP_OK ? "{\"ok\":true}" : "{\"ok\":false,\"error\":\"%s\"}",
-             esp_err_to_name(err));
-    json_response_len(resp, resp_len);
-    return err == ESP_OK ? 202 : 400;
-}
-
-static int h_stream_stop(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                         char *ct, size_t ct_cap, size_t *resp_len, void *user)
-{
-    (void)req;
-    (void)user;
-    snprintf(ct, ct_cap, "application/json");
-    esp_err_t err = stream_publisher_stop();
-    snprintf(resp, cap, err == ESP_OK ? "{\"ok\":true}" : "{\"ok\":false,\"error\":\"%s\"}",
-             esp_err_to_name(err));
-    json_response_len(resp, resp_len);
-    return err == ESP_OK ? 202 : 400;
+    return 410;
 }
 
 static int h_stream_status(const nyx_proxy_request_t *req, char *resp, size_t cap,
-                           char *ct, size_t ct_cap, size_t *resp_len, void *user)
+    char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
-    (void)req;
-    (void)user;
+    (void)req; (void)user;
     snprintf(ct, ct_cap, "application/json");
-    stream_publisher_status_t status = {0};
-    stream_publisher_get_status(&status);
+    snprintf(resp, cap, "{\"state\":\"disabled\",\"auto_start\":false,\"target_whip_url\":\"\",\"last_error\":\"\"}");
+    json_response_len(resp, resp_len);
+    return 200;
+}
+
+static int h_stream_stop(const nyx_proxy_request_t *req, char *resp, size_t cap,
+    char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)req; (void)user;
+    snprintf(ct, ct_cap, "application/json");
+    snprintf(resp, cap, "{\"ok\":true,\"state\":\"disabled\"}");
+    json_response_len(resp, resp_len);
+    return 200;
+}
+
+static int h_camera_status(const nyx_proxy_request_t *req, char *resp, size_t cap,
+    char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)req; (void)user;
+    camera_status_t state;
+    media_mode_status(&state);
+    snprintf(ct, ct_cap, "application/json");
     snprintf(resp, cap,
-             "{\"state\":\"%s\",\"target_whip_url\":\"%s\",\"auto_start\":%s,"
-             "\"fps\":%u,\"bitrate\":%lu,\"last_error\":\"%s\"}",
-             status.state,
-             status.target_whip_url,
-             status.auto_start ? "true" : "false",
-             (unsigned)status.fps,
-             (unsigned long)status.bitrate,
-             status.last_error);
+        "{\"mode\":\"%s\",\"width\":320,\"height\":240,\"content_type\":\"image/jpeg\","
+        "\"snapshot_path\":\"/camera/snapshot.jpg\",\"continuous_streaming\":false,"
+        "\"captures\":%lu,\"failed_captures\":%lu,\"last_capture_ms\":%lu,\"last_error\":\"%s\"}",
+        media_mode_name(state.mode), (unsigned long)state.completed, (unsigned long)state.failed,
+        (unsigned long)state.last_capture_ms, state.last_error == ESP_OK ? "" : esp_err_to_name(state.last_error));
+    json_response_len(resp, resp_len);
+    return 200;
+}
+
+static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t cap,
+    char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)req; (void)user;
+    snprintf(ct, ct_cap, "application/json");
+    snprintf(resp, cap,
+        "{\"openapi\":\"3.0.3\",\"info\":{\"title\":\"Nyx Panel Camera\",\"version\":\"1.0.0\"},"
+        "\"paths\":{\"/camera/snapshot.jpg\":{\"get\":{\"operationId\":\"camera_take_photo\","
+        "\"summary\":\"Take a fresh camera photo\","
+        "\"description\":\"Captures a 320x240 JPEG on demand. Releases CSI and buffers after capture unless the native Camera or QR preview is open. Leaves the LCD unchanged. Concurrent capture returns 503.\","
+        "\"responses\":{\"200\":{\"description\":\"Fresh JPEG\",\"content\":{\"image/jpeg\":{\"schema\":{\"type\":\"string\",\"format\":\"binary\"}}}},"
+        "\"503\":{\"description\":\"Camera busy or unavailable; no cached image returned\"}}}},"
+        "\"/camera\":{\"get\":{\"operationId\":\"camera_get_status\",\"summary\":\"Get camera availability and capture statistics\","
+        "\"responses\":{\"200\":{\"description\":\"Camera status\",\"content\":{\"application/json\":{\"schema\":{\"type\":\"object\"}}}}}}}}}");
     json_response_len(resp, resp_len);
     return 200;
 }
@@ -671,20 +644,13 @@ static int h_snapshot(const nyx_proxy_request_t *req, char *resp, size_t cap,
     (void)req;
     (void)user;
     snprintf(ct, ct_cap, "image/jpeg");
-    if (!media_mode_is_preview()) {
-        snprintf(ct, ct_cap, "application/json");
-        snprintf(resp, cap, "{\"error\":\"snapshot_unavailable_in_publish_mode\"}");
-        json_response_len(resp, resp_len);
-        return 503;
-    }
-    size_t len = 0u;
-    (void)media_sys_preview_snapshot_encode(2500u, NULL);
-    esp_err_t err = snapshot_copy_latest((uint8_t *)resp, cap, &len);
+    size_t len = 0;
+    esp_err_t err = media_mode_snapshot((uint8_t *)resp, cap, &len, true);
     if (err != ESP_OK) {
         snprintf(ct, ct_cap, "application/json");
-        snprintf(resp, cap, "{\"error\":\"snapshot_unavailable\"}");
+        snprintf(resp, cap, "{\"error\":\"camera_unavailable\",\"reason\":\"%s\"}", esp_err_to_name(err));
         json_response_len(resp, resp_len);
-        return 404;
+        return 503;
     }
     if (resp_len) {
         *resp_len = len;
@@ -1364,13 +1330,16 @@ static const nyx_route_t s_routes[] = {
     { .path = "/lcd/clear", .method = "POST", .fn = h_lcd_clear, .user = NULL },
     { .path = "/lcd/snapshot.jpg", .method = "GET", .fn = h_lcd_snapshot, .user = NULL },
     { .path = "/snapshot.jpg", .method = "GET", .fn = h_snapshot, .user = NULL },
-    { .path = "/stream/start", .method = "POST", .fn = h_stream_start, .user = NULL },
+    { .path = "/camera/snapshot.jpg", .method = "GET", .fn = h_snapshot, .user = NULL },
+    { .path = "/camera", .method = "GET", .fn = h_camera_status, .user = NULL },
+    { .path = "/openapi.json", .method = "GET", .fn = h_camera_openapi, .user = NULL },
+    { .path = "/stream/start", .method = "POST", .fn = h_stream_removed, .user = NULL },
     { .path = "/stream/stop", .method = "POST", .fn = h_stream_stop, .user = NULL },
     { .path = "/stream/status", .method = "GET", .fn = h_stream_status, .user = NULL },
     { .path = "/lcd/screen", .method = "GET", .fn = h_lcd_screen_get, .user = NULL },
     { .path = "/lcd/screen", .method = "POST", .fn = h_lcd_screen_post, .user = NULL },
-    { .path = "/config/stream", .method = "GET", .fn = h_get_config_stream, .user = NULL },
-    { .path = "/config/stream", .method = "POST", .fn = h_post_config_stream, .user = NULL },
+    { .path = "/config/stream", .method = "GET", .fn = h_stream_status, .user = NULL },
+    { .path = "/config/stream", .method = "POST", .fn = h_stream_removed, .user = NULL },
     { .path = "/config/lcd", .method = "GET", .fn = h_get_config_lcd, .user = NULL },
     { .path = "/config/lcd", .method = "POST", .fn = h_post_config_lcd, .user = NULL },
     { .path = "/config/device", .method = "GET", .fn = h_get_config_device, .user = NULL },
@@ -1392,11 +1361,11 @@ static const nyx_route_t s_routes[] = {
 static const nyx_route_t s_lan_routes[] = {
     { .path = "/lcd/image", .method = "POST", .fn = h_lcd_image, .user = NULL },
     { .path = "/lcd/clear", .method = "POST", .fn = h_lcd_clear, .user = NULL },
-    { .path = "/stream/start", .method = "POST", .fn = h_stream_start, .user = NULL },
+    { .path = "/stream/start", .method = "POST", .fn = h_stream_removed, .user = NULL },
     { .path = "/stream/stop", .method = "POST", .fn = h_stream_stop, .user = NULL },
     { .path = "/stream/status", .method = "GET", .fn = h_stream_status, .user = NULL },
-    { .path = "/config/stream", .method = "GET", .fn = h_get_config_stream, .user = NULL },
-    { .path = "/config/stream", .method = "POST", .fn = h_post_config_stream, .user = NULL },
+    { .path = "/config/stream", .method = "GET", .fn = h_stream_status, .user = NULL },
+    { .path = "/config/stream", .method = "POST", .fn = h_stream_removed, .user = NULL },
     { .path = "/config/mqtt", .method = "GET", .fn = h_get_config_mqtt, .user = NULL },
     { .path = "/config/mqtt", .method = "POST", .fn = h_post_config_mqtt, .user = NULL },
 };

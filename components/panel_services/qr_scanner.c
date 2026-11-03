@@ -13,7 +13,6 @@
 #include "nyx_creds.h"
 #include "provisioning.h"
 #include "quirc.h"
-#include "snapshot.h"
 #include "wifi_qr.h"
 #include "esp_wifi.h"
 #include "network.h"
@@ -644,16 +643,6 @@ void qr_scanner_poll(void)
     uint32_t seq = 0u;
     if (media_sys_preview_copy_latest_rgb565(g.rgb, QR_SCAN_MAX_RGB_BYTES, &w, &h,
                                              &rgb_len, &seq) != ESP_OK) {
-        size_t jpeg_len = 0u;
-        (void)media_sys_snapshot_grab(0u, NULL);
-        if (snapshot_copy_latest(g.jpeg, QR_SCAN_MAX_JPEG_BYTES, &jpeg_len) != ESP_OK) {
-            return;
-        }
-        if (!g.logged_frame && jpeg_len > 0u) {
-            ESP_LOGI(TAG, "qr scanner read snapshot frame len=%u", (unsigned)jpeg_len);
-            g.logged_frame = true;
-        }
-        (void)qr_scanner_process_jpeg(g.jpeg, jpeg_len);
         return;
     }
     if (!g.logged_frame && rgb_len > 0u) {

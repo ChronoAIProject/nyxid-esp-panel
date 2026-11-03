@@ -224,7 +224,7 @@ def main():
                 end = time.monotonic() + 20
                 while time.monotonic() < end:
                     state = json.loads(lan('/status'))
-                    if state['media']['mode'] == 'publish':
+                    if state['media']['mode'] == 'idle':
                         break
                     time.sleep(.5)
                 else:

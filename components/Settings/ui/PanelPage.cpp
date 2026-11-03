@@ -11,7 +11,6 @@ extern "C" {
 #include "nyx_creds.h"
 #include "nyx_node.h"
 #include "panel_ota.h"
-#include "stream_publisher.h"
 }
 #include <cstring>
 
@@ -105,13 +104,10 @@ void PanelPage::refresh()
     const char *connection = nyx_node_state() == NYX_NODE_UP ? "Connected" :
         nyx_node_state() == NYX_NODE_CONNECTING ? "Connecting" : "Not connected";
     if (!nyx) {
-        stream_publisher_status_t stream{};
-        stream_publisher_get_status(&stream);
         lv_label_set_text_fmt(summary,
-            "Device\n%s\n\nFirmware\n%s\n\nNetwork\n%s\n\nNyxID\n%s\n\nCamera\n%s\n\nVideo stream\n%s\n\nUpdate\n%s",
+            "Device\n%s\n\nFirmware\n%s\n\nNetwork\n%s\n\nNyxID\n%s\n\nCamera\n%s\n\nUpdate\n%s",
             devices_self()->label, esp_app_get_description()->version, ip, connection,
-            media_mode_is_preview() ? "Preview / scanning" : "Available for streaming",
-            !strcmp(stream.state, "idle") ? "Stopped" : stream.state,
+            media_mode_is_preview() ? "Preview / scanning" : "Remote photos on request",
             panel_ota_busy() ? "Installing update" : panel_ota_error() != ESP_OK ? "Last update failed" : "Ready");
         return;
     }

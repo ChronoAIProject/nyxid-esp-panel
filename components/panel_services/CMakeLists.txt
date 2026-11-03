@@ -28,22 +28,17 @@ set(panel_sources
     provisioning.c
     qr_scanner.c
     service_registrar.c
-    snapshot.c
     status_bar.c
-    stream_publisher.c
-    stream_sm.c
-    webrtc.c
-    whip_signaling.c
     wifi_qr.c
 )
 idf_component_register(
     SRCS ${panel_sources} "fonts/lv_font_noto_sans_sc_med_20.c"
     INCLUDE_DIRS "."
-    REQUIRES av_render panel_common console esp_app_format esp_capture
-        esp_https_ota esp_http_client esp_http_server app_update esp_peer
+    REQUIRES panel_common console esp_app_format
+        esp_https_ota esp_http_client esp_http_server app_update
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
-        esp_webrtc json lvgl media_lib_sal nvs_flash spi_flash quirc
-        waveshare__esp32_p4_platform product_support gmf_video)
+        json lvgl nvs_flash spi_flash quirc
+        waveshare__esp32_p4_platform product_support)
 
 foreach(flash_api esp_flash_read esp_flash_write esp_flash_read_encrypted
                   esp_flash_write_encrypted esp_flash_erase_region esp_flash_erase_chip)

@@ -14,10 +14,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_console.h"
-#include "esp_webrtc.h"
-#include "media_lib_adapter.h"
-#include "media_lib_os.h"
-#include "esp_capture.h"
 #include "common.h"
 #include "devices.h"
 #include "settings.h"
@@ -33,7 +29,6 @@
 #include "nyx_node.h"
 #include "provisioning.h"
 #include "qr_scanner.h"
-#include "stream_publisher.h"
 #include "panel_runtime.h"
 #include <stdatomic.h>
 
@@ -42,21 +37,11 @@
 
 static const char *TAG = "haCam";
 
-#define CAMERA_SNAPSHOT_PIPELINE_ENABLED false
-
-#define RUN_ASYNC(name, body)           \
-    void run_async##name(void *arg)     \
-    {                                   \
-        body;                           \
-        media_lib_thread_destroy(NULL); \
-    }                                   \
-    media_lib_thread_create_from_scheduler(NULL, #name, run_async##name, NULL);
-
 // --- Console commands ---
 
 static int stop_cli(int argc, char **argv)
 {
-    RUN_ASYNC(leave, { stop_webrtc(); });
+    panel_runtime_set_preview(false);
     return 0;
 }
 
@@ -384,7 +369,7 @@ static int init_console(void)
 #endif
 
     esp_console_cmd_t cmds[] = {
-        { .command = "stop",          .help = "Stop WebRTC\n",               .func = stop_cli },
+        { .command = "stop",          .help = "Stop camera preview\n",               .func = stop_cli },
         { .command = "i",             .help = "System status\r\n",           .func = sys_cli },
         { .command = "wifi",          .help = "wifi ssid psw\r\n",           .func = wifi_cli },
         { .command = "wifi-reconnect", .help = "Reconnect saved Wi-Fi station", .func = wifi_reconnect_cli },
@@ -406,45 +391,6 @@ static int init_console(void)
     }
     ESP_ERROR_CHECK(esp_console_start_repl(repl));
     return 0;
-}
-
-// --- Thread scheduling ---
-
-static void thread_scheduler(const char *thread_name, media_lib_thread_cfg_t *schedule_cfg)
-{
-    if (strcmp(thread_name, "venc_0") == 0) {
-        schedule_cfg->priority = 10;
-    } else if (strcmp(thread_name, "aenc_0") == 0) {
-        // Opus encoder needs a large stack.
-        schedule_cfg->stack_size = 40 * 1024;
-        schedule_cfg->priority = 10;
-        schedule_cfg->core_id = 1;
-    } else if (strncmp(thread_name, "Adec", 4) == 0 || strncmp(thread_name, "adec", 4) == 0) {
-        schedule_cfg->stack_size = 40 * 1024;
-        schedule_cfg->priority = 10;
-    } else if (strcmp(thread_name, "AUD_SRC") == 0) {
-        schedule_cfg->priority = 15;
-    } else if (strcmp(thread_name, "pc_task") == 0) {
-        schedule_cfg->stack_size = 25 * 1024;
-        schedule_cfg->priority = 18;
-        schedule_cfg->core_id = 1;
-    } else if (strcmp(thread_name, "start") == 0) {
-        schedule_cfg->stack_size = 6 * 1024;
-    }
-}
-
-static void capture_scheduler(const char *name, esp_capture_thread_schedule_cfg_t *schedule_cfg)
-{
-    media_lib_thread_cfg_t cfg = {
-        .stack_size = schedule_cfg->stack_size,
-        .priority = schedule_cfg->priority,
-        .core_id = schedule_cfg->core_id,
-    };
-    schedule_cfg->stack_in_ext = true;
-    thread_scheduler(name, &cfg);
-    schedule_cfg->stack_size = cfg.stack_size;
-    schedule_cfg->priority = cfg.priority;
-    schedule_cfg->core_id = cfg.core_id;
 }
 
 // --- Network event handling ---
@@ -489,13 +435,6 @@ esp_err_t panel_runtime_preview_error(void) { return atomic_load(&preview_error)
 
 static void service_task(void *arg)
 {
-    // The peer library logs every RTP retransmission at INFO. At 115200 baud
-    // this can block network/media tasks during a loss burst.
-    esp_log_level_set("PEER_DEF", ESP_LOG_WARN);
-    media_lib_add_default_adapter();
-    esp_capture_set_thread_scheduler(capture_scheduler);
-    media_lib_thread_set_schedule_cb(thread_scheduler);
-    media_sys_buildup();
     media_mode_init();
     qr_scanner_start();
     init_console();
@@ -510,7 +449,6 @@ static void service_task(void *arg)
     net_manager_subscribe(on_net_manager_event, NULL);
     net_manager_init();
     (void)network_init(NULL, NULL, network_event_handler);
-    stream_publisher_init();
     esp_err_t http_err = local_http_server_start();
     nyx_node_start();
     // Registration is optional; an unprovisioned panel still serves recovery APIs.
@@ -530,14 +468,13 @@ static void service_task(void *arg)
         if (wanted != applied_preview) {
             atomic_store(&preview_active, false);
             esp_err_t err = wanted ? media_mode_request_preview("native Camera") :
-                                     media_mode_request_publish("native Camera closed");
+                                     media_mode_request_idle("native Camera closed");
             atomic_store(&preview_error, err);
             if (err == ESP_OK) {
                 applied_preview = wanted;
                 atomic_store(&preview_active, wanted);
             }
         }
-        stream_publisher_poll();
         qr_scanner_poll();
         vTaskDelay(pdMS_TO_TICKS(100));
     }

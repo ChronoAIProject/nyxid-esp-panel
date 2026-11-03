@@ -1,5 +1,70 @@
 # Hardware acceptance, 2026-11-03
 
+## v0.3.0 on-demand Camera
+
+The operator requested retirement of continuous video publishing. The final
+firmware is installed on the replacement board using app-only flash, with a
+verified write. Its existing Nyx identity and company WLAN remain active.
+A private post-binding NVS backup was taken before flashing (860,160 bytes,
+SHA256 `ee1ed741d1c5f10c2860646f5243c0c0f9d1e7171d30018de16344026e4520a9`).
+The first flash attempt was interrupted by a prematurely opened serial monitor;
+subsequent complete writes verified successfully.
+
+- ESP-IDF v5.5.4 build passes; final binary is `0x587bd0` (5,798,864 bytes),
+  leaving 1,082,416 bytes in each app slot. Binary SHA256:
+  `55e3183fe265dfa7708ec3c17ce9f82454fdc5d74f88659ffa4aa068c3a32583`.
+  Installed ELF SHA256 from `/status`:
+  `38437c25e5f96ba9a3b164ec6fbb0a64312f9f8feaa6c5714a414bdc9ca7cfa8`.
+- All 15 host executables pass. The new tests run the actual camera-owner source
+  with a pthread-based mutex adapter and fake camera driver. They cover idle
+  release, preserving native preview, failed-start/encode/cleanup, rejecting LAN
+  activation, and concurrent capture versus opening native preview. Hardware
+  driver faults/power measurements are outside that substitute's coverage.
+- `camera-030-final/results.json`: eight authenticated, fresh 320×240 JPEGs decode
+  successfully. Each returns to idle without changing the native screen, with
+  continuous uptime. End-to-end calls take 0.768–1.864 s; simultaneous Nyx status
+  calls take 0.400–1.140 s. Board capture time is 315–333 ms, including
+  startup and teardown. These are short-run measurements on the company WLAN.
+- Three simultaneous camera requests produce one valid JPEG and two 503 busy
+  responses. Native Camera supports both LAN and Nyx snapshots without closing
+  preview; Back returns to idle. The final capture count is 11, with zero failed
+  driver captures. Busy rejections do not increment the driver failure counter.
+- After warmup, eight idle samples have unchanged internal free heap (238,119
+  bytes while response workers settle), with total free heap varying by tens of
+  bytes. After native preview closes, free heap is 21,412,780 bytes and internal
+  free heap is 241,551 bytes. UART confirms CSI/buffers/JPEG encoder released;
+  no continuous publisher is linked or started. This establishes bounded release
+  in this run, not a long-duration leak or power/CPU benchmark.
+- New `/camera`, `/camera/snapshot.jpg` and `/openapi.json` routes are absent on
+  unauthenticated LAN. LAN `/snapshot.jpg` returns 503 in idle. Stream start and
+  stream config writes return 410; the compiled-out publisher cannot read or
+  activate legacy auto-start settings. Reboot starts idle.
+- Full final-firmware regression passed (`acceptance-030/results.json`): pushed
+  text/JPEG/expiry and invalid images, two native navigation cycles, scan return
+  paths, Wi-Fi QR confirmation/replacement rejection, real login request/cancel,
+  and three Camera/snapshot/Back cycles followed by Settings. Uptime remained
+  continuous through 226 seconds; the final media mode is idle and Nyx is up.
+  Device status was visually checked: the Camera label reads “Remote photos on
+  request” and fits the native page.
+- Wi-Fi QR JPEG injection followed by explicit confirmation actually reconnects
+  and saves the current company WLAN (`wifi-030-results.json`). An unreachable
+  hotspot attempt times out and restores the previous WLAN and Nyx connection
+  without reboot (`wifi-030-rollback.json`; UART records about 30 seconds from
+  disconnect to original-IP recovery). The initiating Nyx request timed out
+  during the intentional disconnection; later state confirms rollback.
+  Closing the scan page during another unreachable-hotspot attempt also cancels
+  the worker, restores the company WLAN/Nyx, and releases Camera to idle
+  (`wifi-030-cancel.json`). This tests network behavior using the real decoder,
+  not physical camera optics.
+- Screenshot-heavy navigation logs include transient LVGL lock acquisition
+  timeouts. A separate immediate WLAN→scan request returned 500 while WLAN was
+  scanning; the page remained operable afterward. General navigation reliability
+  under native Wi-Fi scanning remains a limitation separate from the passed
+  Camera call/ownership checks.
+- OpenAPI fetched through Nyx is valid JSON, version 3.0.3, with the two Camera
+  operations. It is an authenticated schema endpoint; dedicated MCP discovery
+  has not been configured with a server-reachable schema URL.
+
 ## v0.2.2 native onboarding
 
 The independent upstream/deployed NyxID audit is in
@@ -52,12 +117,30 @@ The independent upstream/deployed NyxID audit is in
   failed grant's RAM tokens were erased; its logout attempts also encountered
   the header failure, so that attempt does not prove session revocation.
 - v0.2.2 LAN checks confirm `/nyx/login` and `/wifi/qr` return 404 without Nyx
-  authentication. Source `39aff4c` passed host and real firmware CI in run
-  `41603552234`; that run predates the lifecycle/header fixes.
+  authentication. Source `895134f` passed host and real firmware CI in run
+  `41606374672`, including the lifecycle/header fixes.
 
-New-target live onboarding acceptance is in progress. Real phone
-approval, node/service registration, optical Wi-Fi scanning and network
-transitions are not established by the local tests or historical results below.
+The operator then approved the v0.2.2 code on their phone. Account login,
+node registration, service creation, atomic binding save and account logout all
+completed. The page showed the saved connection before restart; active memory
+remained unbound until reboot. After reboot, authenticated WSS and service
+`nyx-panel-d2eead-cf4ad508` were online using the replacement board's own node
+`cf4ad508-aef1-4b3c-9af7-7360c22a2f7b`. The custom service was independently
+checked for its node binding, active status and `auth_method:none`. The successful
+grant left no new device-code account session. This does not revoke the earlier
+failed grant described above.
+
+Full v0.2.2 acceptance passed after the old publisher was stopped
+(`acceptance-022-idle/results.json`): image/text/expiry and rejected images, two
+native page cycles, scan/back to all three origins, real Wi-Fi QR decoding with
+SSID confirmation/password hiding/replacement rejection/cancel, real login
+request/cancel, and three Camera/snapshot/Back cycles followed by NyxID/Settings.
+Uptime stayed continuous. The first run with the old publisher running timed out
+reading an LCD JPEG; that failed run remains in `acceptance-022.log`.
+
+At v0.2.2 acceptance, optical scanning and Wi-Fi network transitions remained
+unverified. The v0.3.0 checks above establish reconnect and failed-attempt
+rollback; optical scanning and switching to a different available AP remain open.
 
 ## v0.1.14 original-board evidence (historical)
 

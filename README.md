@@ -1,8 +1,8 @@
 # nyxid-esp-panel
 
 An ESP32-P4 panel that combines the Waveshare ESP-Brookesia desktop with NyxID
-remote control, pushed text and images, camera snapshots, provisioning, and
-Home Assistant H.264/WHIP publishing.
+remote control, pushed text and images, on-demand camera capture and provisioning.
+Continuous H.264/WHIP publishing was retired in v0.3.0.
 
 The hardware target is the attached legacy ESP32-P4 v1.3 board: 16 MiB flash,
 32 MiB PSRAM, ESP32-C6 over SDIO, a Waveshare 10.1-inch 800×1280 JD9365 touch
@@ -44,8 +44,8 @@ component patches are part of the build. Run `idf.py reconfigure` after changing
 component source lists. CI builds the same hardware profile.
 
 The 16 MiB layout retains 840 KiB NVS, two **6.5625 MiB** application slots and
-2 MiB SPIFFS. The native MP3 player and Opus/PCM service decoders are linked;
-service audio encoding is disabled because publishing is video-only.
+2 MiB SPIFFS. The native MP3 player remains available. Camera service startup does not allocate
+a WebRTC player, H.264 pipeline or service audio codecs.
 The unused SquareLine demonstration app is excluded. Bundled music contains
 BGM 1, For Elise and Something; BGM 2 and Waka Waka are omitted for flash space.
 Native music, drawing, calculator, Settings, camera and spectrum apps remain.
@@ -152,13 +152,40 @@ python tools/provision_agent.py --config-dir /private/node-config \
   --port "$PORT" --slug "$SLUG"
 ```
 
+## On-demand Camera service
+
+The panel's existing authenticated NyxID service exposes:
+
+- `GET /camera/snapshot.jpg`: take a fresh 320×240 JPEG without navigating the LCD.
+- `GET /camera`: availability, capture counts, duration and last error.
+- `GET /openapi.json`: Camera operation descriptions for remote callers.
+
+```sh
+nyxid proxy request "$SLUG" /camera --output json
+nyxid proxy request "$SLUG" /camera/snapshot.jpg --stream > photo.jpg
+```
+
+The CLI's `--stream` flag preserves binary stdout for this single HTTP response;
+it does not start continuous camera streaming. Without it the CLI treats JPEG
+bytes as text. The board starts CSI only for the request, waits for a fresh
+frame, encodes the JPEG, and releases CSI, buffers and encoder before responding.
+A second overlapping request gets 503 while the camera is busy. Failed capture
+never returns an earlier image. Native Camera and QR scanning keep preview alive
+only while their page is open; taking a photo during preview preserves that page.
+
+`/snapshot.jpg` remains an authenticated alias. Unauthenticated LAN can read it
+only while native preview is already open; the new Camera routes require NyxID.
+The OpenAPI document is served through the same authenticated service; automatic
+Nyx MCP tool discovery requires a separately configured, server-reachable schema.
+
 ## API and transport
 
 Nyx exposes the compatibility routes in
 [`local_api.c`](components/panel_services/local_api.c): status, text/JPEG/clear,
-screens and snapshots, stream start/stop/status, LCD/device/Wi-Fi/LAN/MQTT
-configuration, reboot, identity-preserving reset and SHA256-checked URL OTA.
-MQTT remains disabled. WHIP publishes H.264 video only.
+screens and snapshots, LCD/device/Wi-Fi/LAN/MQTT configuration, reboot,
+identity-preserving reset and SHA256-checked URL OTA. MQTT remains disabled.
+Legacy stream start/config writes now return HTTP 410; status reports disabled.
+Old stored WHIP targets and auto-start flags are ignored.
 
 LAN recovery exposes `/status`, `/snapshot.jpg`, `/lcd/snapshot.jpg`,
 `GET /lcd/screen`, raw `POST /lcd/image`, `POST /lcd/clear`, stream operations,
@@ -229,12 +256,10 @@ request followed by cancellation. It never approves a login. Optional
 without connecting to that network. Actual phone approval, physical camera
 scanning and successful Wi-Fi switching require separate checks.
 
-`tools/accept_media.py` checks a real MediaMTX WHIP/RTSP receiver for sustained
-H.264 decoding, Nyx responsiveness and Camera preview/publisher recovery. Run
-`--help` for receiver and ffmpeg arguments. Both tools change the board's UI;
-media acceptance restores the prior stream configuration. Keep camera artifacts
-private. The publisher uses a centered 640×480 crop of the 800×800 sensor mode;
-its field of view is narrower than the full sensor image.
+`tools/accept_camera.py --ip "$PANEL_IP" --slug "$SLUG" --output-dir /private/camera-acceptance`
+checks repeated authenticated photographs, concurrent control/capture calls,
+resource release and native preview compatibility. Keep its images private.
+`accept_media.py` refuses to run because continuous publishing is retired.
 
 See [docs/API.md](docs/API.md) for the route inventory and
 [docs/VERIFICATION.md](docs/VERIFICATION.md) for measured results and open checks.

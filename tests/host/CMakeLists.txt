@@ -42,3 +42,9 @@ haCam_add_test(test_nyx_security ../../components/panel_services/nyx_security.c 
 target_include_directories(test_nyx_security PRIVATE crypto_shim)
 target_link_libraries(test_nyx_security OpenSSL::Crypto)
 target_compile_options(test_nyx_security PRIVATE -Wno-deprecated-declarations)
+
+find_package(Threads REQUIRED)
+haCam_add_test(test_media_mode ../../components/panel_services/media_mode.c)
+target_include_directories(test_media_mode PRIVATE camera_shim platform_shim)
+target_link_libraries(test_media_mode Threads::Threads)
+set_tests_properties(test_media_mode PROPERTIES TIMEOUT 20)
