@@ -27,6 +27,7 @@ namespace esp_brookesia::apps
         static Settings *requestInstance(bool use_status_bar = true, bool use_navigation_bar = false);
         ~Settings();
         bool run(void) override;
+        void showRoot() { if (active_page != ActivePage::None) { close(); run(); } }
         void showWifi() { if (active_page != ActivePage::Wlan) open_page("WLAN"); }
         const char *remotePage() const { return active_page == ActivePage::Wlan ? "wifi" : "settings"; }
         i2c_master_bus_handle_t i2c_bus_handle;

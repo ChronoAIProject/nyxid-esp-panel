@@ -5,6 +5,7 @@ Requires a logged-in nyxid CLI and Pillow. Changes the displayed content and
 opens/closes Camera three times. Artifacts may contain the camera's surroundings.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import io
 import json
 from pathlib import Path
@@ -86,19 +87,35 @@ def main():
     unchanged, _ = snapshot('after-rejected-images.jpg')
     assert unchanged == baseline, 'Rejected image altered the display'
     record('Invalid/oversized images preserve current content', True)
-    nyx('/lcd/text', json_body={'text': 'Expires after 2 seconds', 'duration_ms': 2000})
-    time.sleep(.4)
-    temporary, _ = snapshot('temporary-text.jpg')
-    assert temporary != baseline
-    time.sleep(2)
-    expired, _ = snapshot('expired-text.jpg')
-    assert expired == baseline, 'Expiry did not restore the original rendered content'
-    record('Text expiry restores content', True)
+    # Observe while Nyx is in flight: its response can arrive after a short
+    # message has already expired, even though the board rendered it correctly.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        pushed = pool.submit(nyx, '/lcd/text', json_body={
+            'text': 'Expires after 10 seconds', 'duration_ms': 10000})
+        end = time.monotonic() + 45
+        while time.monotonic() < end:
+            temporary, _ = snapshot('temporary-text.jpg')
+            if temporary != baseline:
+                break
+            time.sleep(.3)
+        else:
+            raise AssertionError('Expiring text was never observed')
+        pushed.result()
+    end = time.monotonic() + 20
+    while time.monotonic() < end:
+        expired, _ = snapshot('expired-text.jpg')
+        if expired == baseline:
+            break
+        time.sleep(.5)
+    else:
+        raise AssertionError('Expiry did not restore the original rendered content')
+    record('10-second text observed and expiry restores content', True)
     nyx('/lcd/screen?target=unknown', b'', expected_ok=False)
     record('Unknown native target rejected', True)
     if a.native_pages:
         for cycle in range(1, 3):
-            for target in ['settings', 'wifi', 'info', 'device_bind', 'home']:
+            targets = ['settings', 'wifi', 'settings', 'wifi', 'info', 'device_bind', 'home']
+            for step, target in enumerate(targets, 1):
                 nyx('/lcd/screen?target=' + target, b'')
                 end = time.monotonic() + 20
                 while time.monotonic() < end:
@@ -109,7 +126,7 @@ def main():
                 else:
                     raise AssertionError((target, screen))
                 time.sleep(1)
-                _, size = snapshot(f'native-{cycle}-{target}.jpg')
+                _, size = snapshot(f'native-{cycle}-{step}-{target}.jpg')
                 state = json.loads(lan('/status'))
                 assert state['uptime_s'] >= initial_uptime, 'Board rebooted during native navigation'
                 initial_uptime = state['uptime_s']

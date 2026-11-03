@@ -355,13 +355,14 @@ namespace esp_brookesia::apps
     bool Settings::pause()
     {
         ESP_UTILS_LOGD("Pause");
-        return true;
+        // Stop subpage workers/event callbacks while another native app is active.
+        return close();
     }
 
     bool Settings::resume()
     {
         ESP_UTILS_LOGD("Resume");
-        return true;
+        return run();
     }
 
     esp_err_t Settings::initWifi()

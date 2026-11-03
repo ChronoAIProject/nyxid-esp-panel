@@ -266,7 +266,10 @@ static esp_err_t navigate_now(const char *target) {
     } else if (!strcmp(target, "settings") || !strcmp(target, "wifi")) {
         auto settings = Settings::requestInstance();
         err = activate(settings);
-        if (err == ESP_OK && !strcmp(target, "wifi")) settings->showWifi();
+        if (err == ESP_OK) {
+            if (!strcmp(target, "wifi")) settings->showWifi();
+            else settings->showRoot();
+        }
     } else if (!strcmp(target, "camera") || !strcmp(target, "scan")) {
         if (!strcmp(target, "scan")) provisioning_mode_enter("remote scan");
         err = activate(Camera::requestInstance());
