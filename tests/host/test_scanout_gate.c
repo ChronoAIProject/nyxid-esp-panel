@@ -6,7 +6,7 @@ void tearDown(void) {}
 
 static void test_old_dma_selection_cannot_release_new_frame(void)
 {
-    int buffers[2];
+    int buffers[2] = {0};
     panel_scanout_gate_t gate = {0};
     TEST_ASSERT_FALSE(panel_scanout_complete(&gate, &buffers[0]));
     panel_scanout_submit(&gate, &buffers[1]);
@@ -23,7 +23,7 @@ static void test_old_dma_selection_cannot_release_new_frame(void)
 
 static void test_completion_before_submit_is_recovered_by_next_dma(void)
 {
-    int buffers[2];
+    int buffers[2] = {0};
     panel_scanout_gate_t gate = {0};
     // A switch before the task arms the gate is conservative, not a lost wake:
     // IDF invokes the callback at every real DMA completion, including repeats.
