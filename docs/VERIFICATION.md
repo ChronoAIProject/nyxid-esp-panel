@@ -1,6 +1,6 @@
 # Hardware acceptance, 2026-11-03
 
-## v0.2.0 native onboarding
+## v0.2.2 native onboarding
 
 The independent upstream/deployed NyxID audit is in
 [NYXID_FEATURE_AUDIT.md](NYXID_FEATURE_AUDIT.md); implemented behavior is in
@@ -11,9 +11,9 @@ The independent upstream/deployed NyxID audit is in
   Wi-Fi QR escaping/Unicode/open/hidden/bounds; legacy identity migration,
   failed binding writes, delayed activation and identity-preserving reset.
   The NVS API substitute does not establish physical power-loss durability.
-- ESP-IDF v5.5.4 firmware build passes. Application size is `0x673bc0`
-  (6,765,504 bytes), within each `0x690000` slot with 115,776 bytes spare.
-  SHA256: `7868f4f85f73ab2544cadb976e302444b23464dfe39827e118887119654a0b37`.
+- ESP-IDF v5.5.4 firmware build passes. Application size is `0x673d10`
+  (6,765,840 bytes), within each `0x690000` slot with 115,440 bytes spare.
+  SHA256: `acdbdbf748b9bfcc595a126b304aa01e3e786394345ca0505c508bfaef4462b5`.
 - `git diff --check` and Python compilation/help checks pass. The hardware tool
   adds `--onboarding` for scan/back and a real login request/cancellation, plus
   optional `--wifi-qr-image` for decoder/confirmation checks without connecting.
@@ -28,7 +28,34 @@ The independent upstream/deployed NyxID audit is in
   `0xd2000` partition. Namespaces are `storage`, `wifi-set`, `stream`; it has
   no existing Nyx identity. No original-board credentials were imported.
 
-New-target flashing and live onboarding acceptance are in progress. Real phone
+- v0.2.0 was flashed with write verification and booted using the new board's
+  saved company WLAN (`10.0.1.235`). A real account device-login QR was displayed
+  and decoded from its actual LCD JPEG to the trusted NyxID authorization URL.
+  Pending cancellation cleared the code. Three Camera/snapshot/back cycles
+  passed, but then revisiting Settings caused a load-access fault in
+  `PanelPage::refresh`. This is a failed navigation acceptance, not a full pass.
+- Root cause: Brookesia paused an active app when resuming an existing app, but
+  did not pause it when starting a new app. Settings retained a subpage timer;
+  its later root rebuild deleted the timer's label. v0.2.1 pauses the old app
+  on both transitions, closes Settings before rebuilding, and binds the panel
+  timer to its root object's deletion. Camera acceptance now revisits Settings
+  to exercise that exact transition. v0.2.1 passed three Camera → launcher →
+  NyxID → Settings cycles with continuous uptime (75–112 seconds), then all
+  three Settings/WLAN/NyxID → scan → originating-page paths (130–168 seconds).
+  Actual LCD and preview JPEGs were saved for each step.
+- The operator approved a real code on v0.2.1. Polling delivered an account
+  session, but authenticated HTTP setup failed: ESP-IDF's default 512-byte send
+  buffer could not fit the Authorization header. No new node appeared. v0.2.2
+  uses a 10 KiB send buffer for bounded account JWTs (maximum 8 KiB), covering
+  both registration/service requests and logout. It was flashed with verified
+  writes, reconnected, and displayed a fresh real code for approval. The first
+  failed grant's RAM tokens were erased; its logout attempts also encountered
+  the header failure, so that attempt does not prove session revocation.
+- v0.2.2 LAN checks confirm `/nyx/login` and `/wifi/qr` return 404 without Nyx
+  authentication. Source `39aff4c` passed host and real firmware CI in run
+  `41603552234`; that run predates the lifecycle/header fixes.
+
+New-target live onboarding acceptance is in progress. Real phone
 approval, node/service registration, optical Wi-Fi scanning and network
 transitions are not established by the local tests or historical results below.
 

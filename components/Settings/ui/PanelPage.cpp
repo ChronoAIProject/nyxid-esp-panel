@@ -42,6 +42,13 @@ void PanelPage::run(bool show_nyx)
     close();
     nyx = show_nyx;
     root = lv_obj_create(lv_screen_active());
+    lv_obj_add_event_cb(root, [](lv_event_t *event) {
+        auto self = static_cast<PanelPage *>(lv_event_get_user_data(event));
+        if (self->timer) { lv_timer_delete(self->timer); self->timer = nullptr; }
+        if (self->nyx) device_code_cancel();
+        self->root = nullptr;
+        self->qr_value[0] = 0;
+    }, LV_EVENT_DELETE, this);
     lv_obj_set_size(root, BSP_LCD_H_RES - 80, BSP_LCD_V_RES - 160);
     lv_obj_center(root);
     lv_obj_set_style_bg_color(root, lv_color_hex(0x101114), 0);
@@ -92,6 +99,7 @@ void PanelPage::run(bool show_nyx)
 
 void PanelPage::refresh()
 {
+    if (!root) return;
     auto net = net_manager_snapshot();
     const char *ip = net.eth_ip ? net.eth_ip_addr : net.wifi_ip ? net.wifi_ip_addr : "Not connected";
     const char *connection = nyx_node_state() == NYX_NODE_UP ? "Connected" :

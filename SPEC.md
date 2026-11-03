@@ -1,6 +1,6 @@
 # NyxID ESP Panel — migration specification
 
-Status: initial migration installed as v0.1.14; v0.2.0 native onboarding integration
+Status: initial migration installed as v0.1.14; v0.2.2 native onboarding integration
 is in verification. Its current evidence is tracked in docs/VERIFICATION.md.
 Known transport and verification limits are recorded below. Date: 2026-11-03.
 

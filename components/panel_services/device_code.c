@@ -96,6 +96,9 @@ static int request(esp_http_client_method_t method, const char *path,
     response_t data = {.data = response};
     esp_http_client_config_t config = {
         .url = url, .method = method, .timeout_ms = 12000,
+        // An account JWT can exceed ESP-IDF's default 512-byte header buffer.
+        // Each header must fit whole; otherwise Authorization is never sent.
+        .buffer_size_tx = access_token ? 10240 : 1024,
         .disable_auto_redirect = true, .crt_bundle_attach = esp_crt_bundle_attach,
         .event_handler = http_event, .user_data = &data,
     };

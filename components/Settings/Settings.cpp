@@ -321,7 +321,8 @@ namespace esp_brookesia::apps
     bool Settings::run(void)
     {
         ESP_UTILS_LOGD("Run");
-        active_page = ActivePage::None;
+        // Stop subpage timers before the root's object tree can be rebuilt.
+        close();
         if (list1 == nullptr)
         {
             create_settings_ui();

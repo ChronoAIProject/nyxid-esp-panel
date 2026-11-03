@@ -266,6 +266,12 @@ bool Manager::processAppRun(App *app)
     ESP_UTILS_CHECK_NULL_RETURN(app, false, "Invalid app");
     ESP_UTILS_LOGD("Process app(%d) run", app->_id);
 
+    // Starting a new app must suspend the previous app just like resuming an
+    // existing one. Its workers and timers otherwise outlive the visible page.
+    if ((_active_app != nullptr) && (_active_app != app)) {
+        ESP_UTILS_CHECK_FALSE_RETURN(processAppPause(_active_app), false, "App process pause failed");
+    }
+
     // Process display, and get the visual area of the app
     ESP_UTILS_CHECK_FALSE_RETURN(is_display_run = display.processAppRun(app), false, "Process display before app run failed");
 

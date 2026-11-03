@@ -231,6 +231,11 @@ def main():
                     raise AssertionError('Camera close did not release preview')
                 record(f'Camera open/snapshot/back cycle {cycle}', size)
         finally:
+            # Revisit Settings after Camera was started for the first time.
+            # This catches subpage timers that survived a missing app pause.
+            navigate('device_bind')
+            snapshot('nyx-after-camera-cycles.jpg')
+            navigate('settings')
             nyx('/lcd/screen?target=home', b'')
     state = json.loads(lan('/status'))
     assert state['uptime_s'] >= initial_uptime, 'Board rebooted during acceptance'
