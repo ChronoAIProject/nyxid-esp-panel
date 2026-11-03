@@ -163,19 +163,26 @@ esp_err_t media_sys_preview_snapshot_encode(uint8_t *dst, size_t cap, size_t *ou
     // Require a frame produced after this request; a stopped camera cannot
     // accidentally return the JPEG from a previous request.
     uint32_t initial_seq = 0;
-    if (xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(200)) != pdTRUE) return ESP_ERR_TIMEOUT;
+    int64_t deadline = esp_timer_get_time() + PANEL_CAMERA_WARMUP_US + 1500000;
+    // Native preview also copies this 2 MiB frame. A short lock collision is
+    // normal under PSRAM load; use the existing request deadline instead of
+    // failing the entire capture on the first 100/200 ms collision.
+    while (xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(100)) != pdTRUE) {
+        if (esp_timer_get_time() >= deadline || !atomic_load(&preview_pump_alive))
+            return ESP_ERR_TIMEOUT;
+    }
     initial_seq = preview_frame_seq;
     xSemaphoreGive(preview_frame_lock);
     jpeg_encode_memory_alloc_cfg_t mem_cfg = { .buffer_direction = JPEG_ENC_ALLOC_OUTPUT_BUFFER };
     preview_jpeg_buf = jpeg_alloc_encoder_mem(SNAPSHOT_MAX_BYTES, &mem_cfg, &preview_jpeg_cap);
     jpeg_encode_engine_cfg_t eng = { .timeout_ms = 1000 };
     esp_err_t err = preview_jpeg_buf ? jpeg_new_encoder_engine(&eng, &preview_jpeg_encoder) : ESP_ERR_NO_MEM;
-    int64_t deadline = esp_timer_get_time() + PANEL_CAMERA_WARMUP_US + 1500000;
     while (err == ESP_OK) {
-        if (xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(100)) != pdTRUE) {
+        if (esp_timer_get_time() >= deadline || !atomic_load(&preview_pump_alive)) {
             err = ESP_ERR_TIMEOUT;
             break;
         }
+        if (xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(100)) != pdTRUE) continue;
         if (preview_frame_len == PREVIEW_FRAME_BYTES && preview_frame_seq != initial_seq &&
             preview_frame_seq >= 3 && preview_first_frame_us > 0 &&
             esp_timer_get_time() - preview_first_frame_us >= PANEL_CAMERA_WARMUP_US) {

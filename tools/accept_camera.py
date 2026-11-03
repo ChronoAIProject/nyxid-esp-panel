@@ -78,6 +78,15 @@ def main():
         p.chmod(0o600)
         return len(raw)
 
+    def show_home():
+        nyx('/lcd/screen?target=home', b'')
+        end = time.monotonic() + 20
+        while time.monotonic() < end:
+            if status()['lcd']['mode'] == 'home':
+                return
+            time.sleep(.2)
+        raise AssertionError('Nyx Panel did not become active')
+
     initial = wait_mode('idle')
     assert initial['stream']['state'] == 'disabled'
     record('Initial idle status', initial)
@@ -93,6 +102,18 @@ def main():
     assert (profile['width'], profile['height']) == (800, 1280), profile
     assert profile['mode'] == 'idle' and profile['continuous_streaming'] is False
     record('Authenticated camera routes and retired stream routes', True)
+
+    # The first transition away from the boot Panel allocates Brookesia's
+    # retained 800x1280 recents thumbnail (about 2 MiB). Warm that UI cache before
+    # measuring camera allocations; keep the existing leak thresholds intact.
+    nyx('/lcd/screen?target=camera', b'')
+    try:
+        wait_mode('preview')
+    finally:
+        nyx('/lcd/screen?target=back', b'')
+    wait_mode('idle')
+    show_home()
+    record('Native recents cache warmed before camera heap baseline', status()['heap'])
 
     latencies = []
     baseline = None
@@ -139,6 +160,7 @@ def main():
         assert status()['media']['mode'] == 'preview', 'Snapshot closed the native preview'
     finally:
         nyx('/lcd/screen?target=back', b'')
+    show_home()
     final = wait_mode('idle')
     assert final['uptime_s'] >= initial['uptime_s'], 'Board rebooted'
     assert final['nyx']['state'] == 'up'

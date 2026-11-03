@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /*
  * SPDX-FileCopyrightText: 2023-2025 Espressif Systems (Shanghai) CO LTD
  *
@@ -47,7 +48,7 @@ Drawpanel::~Drawpanel()
 bool Drawpanel::run(void)
 {
     ESP_UTILS_LOGD("Run");
-    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0xFFFFE0), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(NYX_BG), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
 
     lv_area_t area = getVisualArea();
@@ -146,7 +147,7 @@ void Drawpanel::touch_event_cb(lv_event_t *e)
     lv_obj_t *dot = lv_obj_create(app->_panel_obj ? app->_panel_obj : lv_scr_act());
     lv_obj_set_size(dot, 10, 10);
     lv_obj_set_pos(dot, point.x - area.x1, point.y - area.y1);
-    lv_obj_set_style_bg_color(dot, lv_color_make(255, 0, 0), 0);
+    lv_obj_set_style_bg_color(dot, lv_color_hex(NYX_SECONDARY), 0);
     lv_obj_set_style_radius(dot, 5, 0);
     
     app->_dots.push_back(dot);

@@ -5,6 +5,7 @@ set(panel_sources
     device_code.c
     device_login_proto.c
     heap_diag.c
+    lcd_background.c
     lcd_image.c
     lcd_stack.c
     lcd_text.c

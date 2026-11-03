@@ -8,6 +8,7 @@
 #include <esp_err.h>
 #include <esp_app_desc.h>
 #include <esp_system.h>
+#include <esp_sntp.h>
 #include <nvs_flash.h>
 #include <nvs.h>
 #include "esp_wifi.h"
@@ -34,8 +35,29 @@
 
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 static const char *TAG = "haCam";
+
+static void clock_synced(struct timeval *now)
+{
+    ESP_LOGI(TAG, "System clock synchronized");
+}
+
+static void start_clock_if_connected(void)
+{
+    // Signed Nyx requests need wall time even when Settings has never opened.
+    // Only the service task initializes SNTP; the image page never waits for it.
+    if (esp_sntp_enabled() || !network_is_connected()) return;
+    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    esp_sntp_setservername(0, "time.cloudflare.com");
+#if CONFIG_LWIP_SNTP_MAX_SERVERS > 1
+    esp_sntp_setservername(1, "pool.ntp.org");
+#endif
+    esp_sntp_set_time_sync_notification_cb(clock_synced);
+    esp_sntp_init();
+}
 
 // --- Console commands ---
 
@@ -435,6 +457,14 @@ esp_err_t panel_runtime_preview_error(void) { return atomic_load(&preview_error)
 
 static void service_task(void *arg)
 {
+    // Art preparation runs alongside hardware initialization. Show the actual
+    // Panel page immediately; no splash timer or network prerequisite.
+    ESP_ERROR_CHECK(lcd_renderer_start());
+    lcd_renderer_reload_config();
+    bsp_display_backlight_on();
+    ESP_LOGI(TAG, "Nyx Panel visible");
+    setenv("TZ", "CST-8", 1);
+    tzset();
     media_mode_init();
     qr_scanner_start();
     init_console();
@@ -449,6 +479,7 @@ static void service_task(void *arg)
     net_manager_subscribe(on_net_manager_event, NULL);
     net_manager_init();
     (void)network_init(NULL, NULL, network_event_handler);
+    start_clock_if_connected();
     esp_err_t http_err = local_http_server_start();
     nyx_node_start();
     // Registration is optional; an unprovisioned panel still serves recovery APIs.
@@ -457,6 +488,7 @@ static void service_task(void *arg)
     atomic_store(&ready, http_err == ESP_OK);
     bool applied_preview = false;
     while (1) {
+        start_clock_if_connected();
         if (atomic_exchange(&fallback_requested, false) && !provisioning_mode_active() &&
             !atomic_load(&wifi_fallback_tried) && !network_is_connected()) {
             atomic_store(&wifi_fallback_tried, true);

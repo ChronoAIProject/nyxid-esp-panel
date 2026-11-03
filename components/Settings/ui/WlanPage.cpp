@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 #include "WlanPage.hpp"
 extern "C" {
 #include "lcd_renderer.h"
@@ -171,31 +172,31 @@ namespace esp_brookesia::apps
         lv_style_set_pad_row(&style_list, 2);
         lv_style_set_border_width(&style_list, 0);
         lv_style_set_radius(&style_list, 10);
-        lv_style_set_bg_color(&style_list, lv_color_hex(0x000000));
+        lv_style_set_bg_color(&style_list, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list, LV_OPA_COVER);
 
         lv_style_set_height(&style_list_btn, SETTINGS_ROW_HEIGHT);
         lv_style_set_pad_all(&style_list_btn, 16);
         lv_style_set_radius(&style_list_btn, 8);
-        lv_style_set_bg_color(&style_list_btn, lv_color_hex(0x38393A));
+        lv_style_set_bg_color(&style_list_btn, lv_color_hex(NYX_CARD));
         lv_style_set_text_font(&style_list_btn, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_btn, lv_color_hex(0xFFFFFF));
+        lv_style_set_text_color(&style_list_btn, lv_color_hex(NYX_TEXT));
         lv_style_set_border_width(&style_list_btn, 1);
         lv_style_set_border_side(&style_list_btn, LV_BORDER_SIDE_BOTTOM);
-        lv_style_set_border_color(&style_list_btn, lv_color_hex(0x505050));
+        lv_style_set_border_color(&style_list_btn, lv_color_hex(NYX_BORDER));
 
         lv_style_set_text_font(&style_list_text, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_text, lv_color_hex(0xFFFFFF));
-        lv_style_set_bg_color(&style_list_text, lv_color_hex(0x000000));
+        lv_style_set_text_color(&style_list_text, lv_color_hex(NYX_TEXT));
+        lv_style_set_bg_color(&style_list_text, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list_text, LV_OPA_COVER);
         lv_style_set_pad_all(&style_list_text, 10);
         lv_style_set_pad_bottom(&style_list_text, 5);
 
-        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(0x505050));
-        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(0xFFFFFF));
-        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(0x505050));
+        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
+        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(NYX_TEXT));
+        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
 
-        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);
+        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(NYX_BG), LV_PART_MAIN);
         lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
 
         list1 = lv_list_create(lv_scr_act());
@@ -207,8 +208,8 @@ namespace esp_brookesia::apps
         static lv_style_t style_status;
         lv_style_init(&style_status);
         lv_style_set_text_font(&style_status, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_status, lv_color_hex(0x00BFFF));
-        lv_style_set_bg_color(&style_status, lv_color_hex(0x38393A));
+        lv_style_set_text_color(&style_status, lv_color_hex(NYX_SECONDARY));
+        lv_style_set_bg_color(&style_status, lv_color_hex(NYX_CARD));
         lv_style_set_bg_opa(&style_status, LV_OPA_COVER);
         lv_style_set_pad_all(&style_status, 10);
 
@@ -281,14 +282,14 @@ namespace esp_brookesia::apps
         lv_textarea_set_password_show_time(ta,1500);
         lv_textarea_set_placeholder_text(ta, "Enter password...");
 
-        lv_obj_set_style_border_color(ta, lv_color_hex(0x555555), LV_PART_MAIN);
+        lv_obj_set_style_border_color(ta, lv_color_hex(NYX_BORDER), LV_PART_MAIN);
         lv_obj_set_style_border_width(ta, 2, LV_PART_MAIN);
         lv_obj_set_style_radius(ta, 5, LV_PART_MAIN);
-        lv_obj_set_style_text_color(ta, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+        lv_obj_set_style_text_color(ta, lv_color_hex(NYX_TEXT), LV_PART_MAIN);
 
-        lv_obj_set_style_bg_color(ta, lv_color_hex(0x181818), static_cast<lv_style_prop_t>(LV_PART_CURSOR) | static_cast<lv_style_prop_t>(LV_STATE_DEFAULT));
+        lv_obj_set_style_bg_color(ta, lv_color_hex(NYX_SURFACE), static_cast<lv_style_prop_t>(LV_PART_CURSOR) | static_cast<lv_style_prop_t>(LV_STATE_DEFAULT));
 
-        lv_obj_set_style_text_color(ta, lv_color_hex(0xAAAAAA), LV_PART_TEXTAREA_PLACEHOLDER);
+        lv_obj_set_style_text_color(ta, lv_color_hex(NYX_MUTED), LV_PART_TEXTAREA_PLACEHOLDER);
 
         lv_obj_set_style_text_font(ta, &lv_font_montserrat_20, LV_PART_MAIN);
         lv_obj_set_style_text_font(ta, &lv_font_montserrat_20, LV_PART_TEXTAREA_PLACEHOLDER);
@@ -300,8 +301,8 @@ namespace esp_brookesia::apps
         lv_obj_set_size(kb, BSP_LCD_H_RES - 80, 420);
         lv_obj_align(kb, LV_ALIGN_BOTTOM_MID, 0, -40);
 
-        lv_obj_set_style_bg_color(kb, lv_color_hex(0x181818), 0);
-        lv_obj_set_style_border_color(kb, lv_color_hex(0x555555), 0);
+        lv_obj_set_style_bg_color(kb, lv_color_hex(NYX_SURFACE), 0);
+        lv_obj_set_style_border_color(kb, lv_color_hex(NYX_BORDER), 0);
         lv_obj_set_style_border_width(kb, 2, 0);
         lv_obj_set_style_radius(kb, 5, 0);
 
@@ -312,9 +313,9 @@ namespace esp_brookesia::apps
             uint32_t btn_cnt = lv_obj_get_child_cnt(row);
             for(uint32_t j = 0; j < btn_cnt; j++) {
                 lv_obj_t * btn = lv_obj_get_child(row, j);
-                lv_obj_set_style_bg_color(btn, lv_color_hex(0x333333), 0);
-                lv_obj_set_style_text_color(btn, lv_color_hex(0xFFFFFF), 0);
-                lv_obj_set_style_border_color(btn, lv_color_hex(0x555555), 0);
+                lv_obj_set_style_bg_color(btn, lv_color_hex(NYX_CARD), 0);
+                lv_obj_set_style_text_color(btn, lv_color_hex(NYX_TEXT), 0);
+                lv_obj_set_style_border_color(btn, lv_color_hex(NYX_BORDER), 0);
                 lv_obj_set_style_border_width(btn, 1, 0);
                 lv_obj_set_style_radius(btn, 5, 0);
             }

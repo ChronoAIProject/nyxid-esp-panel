@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /*
  * SPDX-FileCopyrightText: 2023-2025 Espressif Systems (Shanghai) CO LTD
  *
@@ -8,7 +9,6 @@
 #include "esp_brookesia.hpp"
 #include "esp_event.h"
 #include "esp_netif.h"
-#include "esp_sntp.h"
 #include "esp_wifi.h"
 #include "network.h"
 #include <stdlib.h>
@@ -40,44 +40,6 @@ namespace esp_brookesia::apps
     static constexpr int SETTINGS_LIST_WIDTH = BSP_LCD_H_RES - SETTINGS_PAGE_MARGIN * 2;
     static constexpr int SETTINGS_LIST_HEIGHT = BSP_LCD_V_RES - 220;
     static constexpr int SETTINGS_ROW_HEIGHT = 88;
-    static bool s_time_sync_started = false;
-    static bool s_time_synced = false;
-
-    static void time_sync_notification_cb(struct timeval *tv)
-    {
-        (void)tv;
-        setenv("TZ", "CST-8", 1);
-        tzset();
-        s_time_synced = true;
-        ESP_UTILS_LOGI("SNTP time synced, timezone CST-8 applied");
-    }
-
-    static void start_time_sync_once()
-    {
-        if (s_time_sync_started || esp_sntp_enabled()) {
-            return;
-        }
-
-        // Time sync is started lazily after Wi-Fi obtains an IP address, which avoids
-        // SNTP retries before the network stack is ready.
-        esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
-        esp_sntp_setservername(0, "ntp.aliyun.com");
-        esp_sntp_set_time_sync_notification_cb(time_sync_notification_cb);
-        esp_sntp_init();
-        s_time_sync_started = true;
-        ESP_UTILS_LOGI("SNTP time sync started");
-    }
-
-    static void wifi_time_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
-    {
-        (void)arg;
-        (void)event_data;
-
-        if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
-            start_time_sync_once();
-        }
-    }
-
     Settings *Settings::_instance = nullptr;
 
     Settings *Settings::requestInstance(bool use_status_bar, bool use_navigation_bar)
@@ -114,32 +76,32 @@ namespace esp_brookesia::apps
         lv_style_set_pad_row(&style_list, 2);
         lv_style_set_border_width(&style_list, 0);
         lv_style_set_radius(&style_list, 10);
-        lv_style_set_bg_color(&style_list, lv_color_hex(0x000000));
+        lv_style_set_bg_color(&style_list, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list, LV_OPA_COVER);
 
         lv_style_set_height(&style_list_btn, SETTINGS_ROW_HEIGHT);
         lv_style_set_pad_all(&style_list_btn, 16);
         lv_style_set_border_width(&style_list_btn, 0);
         lv_style_set_radius(&style_list_btn, 8);
-        lv_style_set_bg_color(&style_list_btn, lv_color_hex(0x38393A));
+        lv_style_set_bg_color(&style_list_btn, lv_color_hex(NYX_CARD));
         lv_style_set_text_font(&style_list_btn, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_btn, lv_color_hex(0xFFFFFF));
+        lv_style_set_text_color(&style_list_btn, lv_color_hex(NYX_TEXT));
         lv_style_set_border_width(&style_list_btn, 1);
         lv_style_set_border_side(&style_list_btn, LV_BORDER_SIDE_BOTTOM);
-        lv_style_set_border_color(&style_list_btn, lv_color_hex(0x505050));
+        lv_style_set_border_color(&style_list_btn, lv_color_hex(NYX_BORDER));
 
         lv_style_set_text_font(&style_list_text, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_text, lv_color_hex(0xFFFFFF));
-        lv_style_set_bg_color(&style_list_text, lv_color_hex(0x000000));
+        lv_style_set_text_color(&style_list_text, lv_color_hex(NYX_TEXT));
+        lv_style_set_bg_color(&style_list_text, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list_text, LV_OPA_COVER);
         lv_style_set_pad_all(&style_list_text, 10);
         lv_style_set_pad_bottom(&style_list_text, 5);
 
-        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(0x505050));
-        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(0xFFFFFF));
-        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(0x505050));
+        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
+        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(NYX_TEXT));
+        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
 
-        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);
+        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(NYX_BG), LV_PART_MAIN);
         lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
 
         list1 = lv_list_create(lv_scr_act());
@@ -396,25 +358,8 @@ namespace esp_brookesia::apps
 
     esp_err_t Settings::initWifi()
     {
-        static bool time_event_handler_registered = false;
         esp_err_t shared_err = network_init(nullptr, nullptr, nullptr);
         if (shared_err != ESP_OK) return shared_err;
-
-        if (!time_event_handler_registered) {
-            esp_err_t ret = esp_event_handler_register(
-                IP_EVENT,
-                IP_EVENT_STA_GOT_IP,
-                &wifi_time_event_handler,
-                nullptr);
-            if (ret != ESP_OK) {
-                ESP_UTILS_LOGE("Register time sync event handler failed: %s", esp_err_to_name(ret));
-                return ret;
-            }
-            time_event_handler_registered = true;
-        }
-
-        wifi_ap_record_t ap_info;
-        if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK) start_time_sync_once();
 
         esp_err_t ret = esp_wifi_set_mode(WIFI_MODE_STA);
         if (ret != ESP_OK) {

@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /*
  * SPDX-FileCopyrightText: 2023-2025 Espressif Systems (Shanghai) CO LTD
  *
@@ -86,7 +87,7 @@ namespace esp_brookesia::apps
         ESP_UTILS_LOGD("Run");
         is_paused = false;
         bsp_display_lock(-1);
-        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);
+        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(NYX_BG), LV_PART_MAIN);
         lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
         status_label = lv_label_create(lv_scr_act());
         lv_label_set_text(status_label, sd_mounted ? "loading files..." : "sd error");

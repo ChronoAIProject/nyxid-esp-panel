@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 #include "PanelPage.hpp"
 #include "../Settings.hpp"
 #include "esp_app_desc.h"
@@ -29,6 +30,9 @@ lv_obj_t *button(lv_obj_t *parent, const char *text)
     auto item = lv_button_create(parent);
     lv_obj_set_width(item, lv_pct(100));
     lv_obj_set_height(item, 72);
+    lv_obj_set_style_bg_color(item, lv_color_hex(NYX_PRIMARY), 0);
+    lv_obj_set_style_bg_color(item, lv_color_hex(NYX_PRESSED), LV_STATE_PRESSED);
+    lv_obj_set_style_text_color(item, lv_color_hex(NYX_TEXT), 0);
     auto caption = lv_label_create(item);
     lv_label_set_text(caption, text);
     lv_obj_center(caption);
@@ -50,7 +54,7 @@ void PanelPage::run(bool show_nyx)
     }, LV_EVENT_DELETE, this);
     lv_obj_set_size(root, BSP_LCD_H_RES - 80, BSP_LCD_V_RES - 160);
     lv_obj_center(root);
-    lv_obj_set_style_bg_color(root, lv_color_hex(0x101114), 0);
+    lv_obj_set_style_bg_color(root, lv_color_hex(NYX_SURFACE), 0);
     lv_obj_set_style_text_color(root, lv_color_white(), 0);
     lv_obj_set_style_text_font(root, &lv_font_montserrat_30, 0);
     lv_obj_set_style_border_width(root, 0, 0);

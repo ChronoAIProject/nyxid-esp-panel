@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /**
  * @file lv_demo_music_main.c
  *
@@ -23,9 +24,9 @@
  *      DEFINES
  *********************/
 #define INTRO_TIME          2000
-#define BAR_COLOR1          lv_color_hex(0xe9dbfc)
-#define BAR_COLOR2          lv_color_hex(0x6f8af6)
-#define BAR_COLOR3          lv_color_hex(0xffffff)
+#define BAR_COLOR1          lv_color_hex(NYX_TINT)
+#define BAR_COLOR2          lv_color_hex(NYX_PRIMARY)
+#define BAR_COLOR3          lv_color_hex(NYX_TEXT)
 #if APP_DEMO_MUSIC_LARGE
     #define BAR_COLOR1_STOP     160
     #define BAR_COLOR2_STOP     200
@@ -433,7 +434,7 @@ static lv_obj_t * create_cont(lv_obj_t * parent)
 #endif
     lv_obj_remove_flag(player, LV_OBJ_FLAG_SNAPPABLE);
 
-    lv_obj_set_style_bg_color(player, lv_color_hex(0xffffff), 0);
+    lv_obj_set_style_bg_color(player, lv_color_hex(NYX_SURFACE), 0);
     lv_obj_set_style_border_width(player, 0, 0);
     lv_obj_set_style_pad_all(player, 0, 0);
     lv_obj_set_scroll_dir(player, LV_DIR_VER);
@@ -525,18 +526,18 @@ static lv_obj_t * create_title_box(lv_obj_t * parent)
 
     title_label = lv_label_create(cont);
     lv_obj_set_style_text_font(title_label, font_large, 0);
-    lv_obj_set_style_text_color(title_label, lv_color_hex(0x504d6d), 0);
+    lv_obj_set_style_text_color(title_label, lv_color_hex(NYX_TEXT), 0);
     lv_label_set_text(title_label, lv_demo_music_get_title(track_id));
     lv_obj_set_height(title_label, lv_font_get_line_height(font_large) * 3 / 2);
 
     artist_label = lv_label_create(cont);
     lv_obj_set_style_text_font(artist_label, font_small, 0);
-    lv_obj_set_style_text_color(artist_label, lv_color_hex(0x504d6d), 0);
+    lv_obj_set_style_text_color(artist_label, lv_color_hex(NYX_TEXT), 0);
     lv_label_set_text(artist_label, lv_demo_music_get_artist(track_id));
 
     genre_label = lv_label_create(cont);
     lv_obj_set_style_text_font(genre_label, font_small, 0);
-    lv_obj_set_style_text_color(genre_label, lv_color_hex(0x8a86b8), 0);
+    lv_obj_set_style_text_color(genre_label, lv_color_hex(NYX_MUTED), 0);
     lv_label_set_text(genre_label, lv_demo_music_get_genre(track_id));
 
     return cont;
@@ -558,12 +559,20 @@ static lv_obj_t * create_icon_box(lv_obj_t * parent)
     LV_IMAGE_DECLARE(img_lv_demo_music_icon_4);
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_icon_1);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_icon_2);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_icon_3);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_icon_4);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
 
     return cont;
 }
@@ -611,14 +620,20 @@ static lv_obj_t * create_ctrl_box(lv_obj_t * parent)
     lv_obj_t * icon;
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_btn_rnd);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     lv_obj_set_grid_cell(icon, LV_GRID_ALIGN_START, 1, 1, LV_GRID_ALIGN_CENTER, 0, 1);
 
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_btn_loop);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     lv_obj_set_grid_cell(icon, LV_GRID_ALIGN_END, 5, 1, LV_GRID_ALIGN_CENTER, 0, 1);
 
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_btn_prev);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     lv_obj_set_grid_cell(icon, LV_GRID_ALIGN_CENTER, 2, 1, LV_GRID_ALIGN_CENTER, 0, 1);
     lv_obj_add_event_cb(icon, prev_click_event_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_add_flag(icon, LV_OBJ_FLAG_CLICKABLE);
@@ -635,6 +650,8 @@ static lv_obj_t * create_ctrl_box(lv_obj_t * parent)
 
     icon = lv_image_create(cont);
     lv_image_set_src(icon, &img_lv_demo_music_btn_next);
+    lv_obj_set_style_image_recolor(icon, lv_color_hex(NYX_TINT), 0);
+    lv_obj_set_style_image_recolor_opa(icon, LV_OPA_COVER, 0);
     lv_obj_set_grid_cell(icon, LV_GRID_ALIGN_CENTER, 4, 1, LV_GRID_ALIGN_CENTER, 0, 1);
     lv_obj_add_event_cb(icon, next_click_event_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_add_flag(icon, LV_OBJ_FLAG_CLICKABLE);
@@ -656,14 +673,14 @@ static lv_obj_t * create_ctrl_box(lv_obj_t * parent)
     lv_obj_set_style_bg_opa(slider_obj, LV_OPA_TRANSP, LV_PART_KNOB);
     lv_obj_set_style_pad_all(slider_obj, 20, LV_PART_KNOB);
     lv_obj_set_style_bg_grad_dir(slider_obj, LV_GRAD_DIR_HOR, LV_PART_INDICATOR);
-    lv_obj_set_style_bg_color(slider_obj, lv_color_hex(0x569af8), LV_PART_INDICATOR);
-    lv_obj_set_style_bg_grad_color(slider_obj, lv_color_hex(0xa666f1), LV_PART_INDICATOR);
+    lv_obj_set_style_bg_color(slider_obj, lv_color_hex(NYX_PRIMARY), LV_PART_INDICATOR);
+    lv_obj_set_style_bg_grad_color(slider_obj, lv_color_hex(NYX_SECONDARY), LV_PART_INDICATOR);
     lv_obj_set_style_outline_width(slider_obj, 0, 0);
     lv_obj_add_event_cb(slider_obj, del_counter_timer_cb, LV_EVENT_DELETE, NULL);
 
     time_obj = lv_label_create(cont);
     lv_obj_set_style_text_font(time_obj, font_small, 0);
-    lv_obj_set_style_text_color(time_obj, lv_color_hex(0x8a86b8), 0);
+    lv_obj_set_style_text_color(time_obj, lv_color_hex(NYX_MUTED), 0);
     lv_label_set_text(time_obj, "0:00");
     lv_obj_set_grid_cell(time_obj, LV_GRID_ALIGN_END, 5, 1, LV_GRID_ALIGN_CENTER, 1, 1);
     lv_obj_add_event_cb(time_obj, del_counter_timer_cb, LV_EVENT_DELETE, NULL);
@@ -685,7 +702,7 @@ static lv_obj_t * create_handle(lv_obj_t * parent)
     lv_obj_t * handle_label = lv_label_create(cont);
     lv_label_set_text(handle_label, "ALL TRACKS");
     lv_obj_set_style_text_font(handle_label, font_small, 0);
-    lv_obj_set_style_text_color(handle_label, lv_color_hex(0x8a86b8), 0);
+    lv_obj_set_style_text_color(handle_label, lv_color_hex(NYX_MUTED), 0);
 
     lv_obj_t * handle_rect = lv_obj_create(cont);
 #if APP_DEMO_MUSIC_LARGE
@@ -694,7 +711,7 @@ static lv_obj_t * create_handle(lv_obj_t * parent)
     lv_obj_set_size(handle_rect, 20, 2);
 #endif
 
-    lv_obj_set_style_bg_color(handle_rect, lv_color_hex(0x8a86b8), 0);
+    lv_obj_set_style_bg_color(handle_rect, lv_color_hex(NYX_MUTED), 0);
     lv_obj_set_style_border_width(handle_rect, 0, 0);
 
     return cont;

@@ -16,12 +16,15 @@
 extern "C" {
 #include "lcd_renderer.h"
 #include "lcd_image.h"
+#include "lcd_background.h"
+#include "nyx_theme.h"
+#include "nvs.h"
 #include "lcd_text.h"
 #include "panel_dpi_compat.h"
 #include "nvs_config.h"
 #include "provisioning.h"
 }
-LV_IMAGE_DECLARE(img_app_settings);
+LV_IMAGE_DECLARE(nyx_panel_icon);
 extern "C" { static esp_err_t navigate_now(const char *target); }
 using esp_brookesia::apps::NyxPanel;
 using esp_brookesia::systems::base::Context;
@@ -36,7 +39,7 @@ int64_t image_expiry;
 struct Message {
     char text[1025]{};
     int64_t expiry{};
-    uint32_t color{0xffffff}, bg{0x121a2b};
+    uint32_t color{0xffffff}, bg{NYX_BG};
     lcd_text_size_t size{LCD_TEXT_SIZE_MEDIUM};
     lcd_text_align_t align{LCD_TEXT_ALIGN_LEFT};
 };
@@ -45,6 +48,14 @@ size_t count;
 char note[160]{};
 lv_timer_t *expiry_timer;
 SemaphoreHandle_t screenshot_lock;
+SemaphoreHandle_t background_lock;
+SemaphoreHandle_t background_ready;
+esp_err_t background_error;
+lcd_image_t background{};
+bool background_stored;
+size_t background_bytes;
+extern const uint8_t builtin_start[] asm("_binary_nyxbot_default_jpg_start");
+extern const uint8_t builtin_end[] asm("_binary_nyxbot_default_jpg_end");
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
@@ -121,13 +132,13 @@ void expire(lv_timer_t *) {
 }
 }
 namespace esp_brookesia::apps {
-NyxPanel::NyxPanel() : App("Nyx Panel", &img_app_settings, true, false, true) {}
+NyxPanel::NyxPanel() : App("Nyx Panel", &nyx_panel_icon, true, false, true) {}
 void NyxPanel::attach(Phone *p, NyxPanel *a) { phone = p; app = a; }
 bool NyxPanel::run() {
     root = lv_obj_create(lv_screen_active());
     lv_obj_set_size(root, lv_pct(100), lv_pct(100));
     lv_obj_align(root, LV_ALIGN_TOP_LEFT, 0, 0);
-    lv_obj_set_style_bg_color(root, lv_color_black(), 0);
+    lv_obj_set_style_bg_color(root, lv_color_hex(NYX_BG), 0);
     lv_obj_set_style_bg_opa(root, LV_OPA_COVER, 0);
     lv_obj_set_style_border_width(root, 0, 0);
     lv_obj_set_style_radius(root, 0, 0);
@@ -145,24 +156,25 @@ void NyxPanel::render() {
     if (!root) return;
     image_widget = nullptr;
     lv_obj_clean(root);
-    if (image.dsc.data) {
+    const auto &visible = image.dsc.data ? image : background;
+    if (visible.dsc.data) {
         image_widget = lv_image_create(root);
-        lv_image_set_src(image_widget, &image.dsc);
+        lv_image_set_src(image_widget, &visible.dsc);
         lv_obj_update_layout(root);
         // Round cover scaling up: LVGL's built-in COVER rounds down and can
         // leave a one-pixel seam on opposite edges for non-integral ratios.
-        int sx = (lv_obj_get_content_width(root) * LV_SCALE_NONE + image.width - 1) / image.width;
-        int sy = (lv_obj_get_content_height(root) * LV_SCALE_NONE + image.height - 1) / image.height;
+        int sx = (lv_obj_get_content_width(root) * LV_SCALE_NONE + visible.width - 1) / visible.width;
+        int sy = (lv_obj_get_content_height(root) * LV_SCALE_NONE + visible.height - 1) / visible.height;
         lv_image_set_scale(image_widget, sx > sy ? sx : sy);
         lv_obj_center(image_widget);
     }
     // Show only the latest unexpired caption. Keeping the bounded history lets
     // a temporary caption expire back to the previous one without hiding art.
     if (count) caption(root, messages[count - 1]);
-    if (!count && !image.dsc.data) {
+    if (!count && !visible.dsc.data) {
         auto label = lv_label_create(root);
         lv_obj_set_style_text_font(label, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
-        lv_obj_set_style_text_color(label, lv_color_hex(0x91b4ef), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(NYX_SECONDARY), 0);
         lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
         lv_label_set_text_fmt(label, "Nyx Panel\n%s", note[0] ? note : "Ready for messages and images");
         lv_obj_center(label);
@@ -172,10 +184,91 @@ void NyxPanel::render() {
 extern "C" {
 esp_err_t lcd_renderer_init(void) {
     if (!screenshot_lock) screenshot_lock = xSemaphoreCreateMutex();
+    if (!background_lock) background_lock = xSemaphoreCreateMutex();
     if (!expiry_timer) expiry_timer = lv_timer_create(expire, 250, nullptr);
-    return screenshot_lock ? ESP_OK : ESP_ERR_NO_MEM;
+    return screenshot_lock && background_lock && expiry_timer ? ESP_OK : ESP_ERR_NO_MEM;
 }
-esp_err_t lcd_renderer_start(void) { return ESP_OK; }
+static void prepare_background(void *) {
+    // Decode on core 1 while startup initializes networking, codec and display.
+    uint8_t *saved = nullptr;
+    size_t len = 0;
+    esp_err_t err = lcd_background_read(&saved, &len);
+    if (err == ESP_OK) err = lcd_image_decode_jpeg(saved, len, &background);
+    free(saved);
+    background_stored = err == ESP_OK;
+    if (!background_stored) {
+        if (err != ESP_ERR_NVS_NOT_FOUND)
+            ESP_LOGW("panel.gui", "Default image unavailable (%s); using built-in art", esp_err_to_name(err));
+        len = builtin_end - builtin_start;
+        err = lcd_image_decode_jpeg(builtin_start, len, &background);
+    }
+    background_error = err;
+    background_bytes = len;
+    ESP_LOGI("panel.gui", "Default image prepared: %s", esp_err_to_name(err));
+    xSemaphoreGive(background_ready);
+    vTaskDelete(nullptr);
+}
+esp_err_t lcd_renderer_prepare(void) {
+    if (background_ready) return ESP_ERR_INVALID_STATE;
+    background_ready = xSemaphoreCreateBinary();
+    if (!background_ready) return ESP_ERR_NO_MEM;
+    if (xTaskCreatePinnedToCore(prepare_background, "panel_art", 12288, nullptr, 1, nullptr, 1) != pdPASS) {
+        vSemaphoreDelete(background_ready);
+        background_ready = nullptr;
+        return ESP_ERR_NO_MEM;
+    }
+    return ESP_OK;
+}
+esp_err_t lcd_renderer_start(void) {
+    if (!background_ready) return ESP_ERR_INVALID_STATE;
+    if (xSemaphoreTake(background_ready, pdMS_TO_TICKS(10000)) != pdTRUE) return ESP_ERR_TIMEOUT;
+    vSemaphoreDelete(background_ready);
+    background_ready = nullptr;
+    if (background_error != ESP_OK) return background_error;
+    return navigate_now("home");
+}
+
+static esp_err_t update_default_image(const uint8_t *jpeg, size_t len, bool reset) {
+    if (!background_lock) return ESP_ERR_INVALID_STATE;
+    if (!jpeg || !len || len > LCD_BACKGROUND_MAX_BYTES) return ESP_ERR_INVALID_SIZE;
+    if (xSemaphoreTake(background_lock, pdMS_TO_TICKS(10000)) != pdTRUE) return ESP_ERR_TIMEOUT;
+    lcd_image_t decoded{};
+    esp_err_t err = lcd_image_decode_jpeg(jpeg, len, &decoded);
+    // Validate fully before touching the persistent blob. Flash is written with
+    // no GUI lock held; NVS atomically replaces the blob across power loss.
+    if (err == ESP_OK) err = reset ? lcd_background_reset() : lcd_background_write(jpeg, len);
+    if (err == ESP_OK) {
+        // Commit succeeded; wait for the GUI so runtime always agrees with NVS.
+        err = bsp_display_lock(static_cast<uint32_t>(-1));
+        if (err == ESP_OK) {
+            if (image_widget) lv_image_set_src(image_widget, nullptr);
+            lv_image_cache_drop(&background.dsc);
+            lcd_image_free(&background);
+            background = decoded;
+            decoded = {};
+            background_stored = !reset;
+            background_bytes = len;
+            dirty = true;
+            bsp_display_unlock();
+        }
+    }
+    lcd_image_free(&decoded);
+    xSemaphoreGive(background_lock);
+    return err;
+}
+esp_err_t lcd_renderer_set_default_image(const uint8_t *jpeg, size_t len) {
+    return update_default_image(jpeg, len, false);
+}
+esp_err_t lcd_renderer_reset_default_image(void) {
+    return update_default_image(builtin_start, builtin_end - builtin_start, true);
+}
+esp_err_t lcd_renderer_default_image_info(lcd_default_image_info_t *info) {
+    if (!info) return ESP_ERR_INVALID_ARG;
+    if (bsp_display_lock(2000) != ESP_OK) return ESP_ERR_TIMEOUT;
+    *info = {background_stored, background.width, background.height, background_bytes};
+    bsp_display_unlock();
+    return ESP_OK;
+}
 void lcd_renderer_set_net(const net_manager_snapshot_t *) {}
 void lcd_renderer_refresh_status(void) {}
 void lcd_renderer_reload_config(void) {
@@ -183,7 +276,7 @@ void lcd_renderer_reload_config(void) {
     if (nvs_config_get_lcd(&cfg) == ESP_OK) bsp_display_brightness_set(cfg.brightness);
 }
 void lcd_renderer_set_message(const char *text) {
-    (void)lcd_renderer_push_text(text, "medium", "#ffffff", "#121a2b", "left", 0);
+    (void)lcd_renderer_push_text(text, "medium", "#ffffff", "#0d0d0d", "left", 0);
 }
 void lcd_renderer_note_qr_decoded(const char *kind) {
     if (bsp_display_lock(1000) != ESP_OK) return;
@@ -218,7 +311,7 @@ esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char 
     snprintf(msg.text, sizeof(msg.text), "%s", text);
     msg.expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
     msg.color = parse_color(color, 0xffffff);
-    msg.bg = parse_color(bg, 0x121a2b);
+    msg.bg = parse_color(bg, NYX_BG);
     msg.size = size && !strcmp(size, "small") ? LCD_TEXT_SIZE_SMALL : LCD_TEXT_SIZE_MEDIUM;
     msg.align = align && !strcmp(align, "right") ? LCD_TEXT_ALIGN_RIGHT :
         align && !strcmp(align, "center") ? LCD_TEXT_ALIGN_CENTER : LCD_TEXT_ALIGN_LEFT;

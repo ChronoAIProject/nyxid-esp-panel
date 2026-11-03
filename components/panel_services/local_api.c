@@ -38,9 +38,10 @@
 #include <string.h>
 #include <strings.h>
 #include <math.h>
+#include <time.h>
 
 // 0 = sticky (image / text persists until explicitly cleared or replaced).
-// HOME state for the AI terminal: pushed image is the durable surface.
+// Temporary pushes stay in RAM; the separate default-image API persists fallback art.
 #define LCD_DEFAULT_DURATION_MS 0u
 #define LCD_IMAGE_MAX_BYTES     (64u * 1024u)
 #define WIFI_TEST_TIMEOUT_MS    60000u
@@ -161,6 +162,7 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(root, "app_sha256", app_sha);
     cJSON_AddStringToObject(root, "board", "Waveshare ESP32-P4 JD9365 / OV5647 / ES8311");
     cJSON_AddNumberToObject(root, "uptime_s", esp_timer_get_time() / 1000000ULL);
+    cJSON_AddBoolToObject(root, "time_valid", time(NULL) >= 1700000000);
     cJSON *network = cJSON_AddObjectToObject(root, "net");
     cJSON_AddBoolToObject(network, "connected", net.wifi_ip || net.eth_ip);
     cJSON *w = cJSON_AddObjectToObject(network, "wifi");
@@ -200,6 +202,11 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     (void)lcd_renderer_current_screen(&screen, &depth);
     cJSON_AddStringToObject(lcd, "mode", screen);
     cJSON_AddNumberToObject(lcd, "depth", depth);
+    lcd_default_image_info_t art = {0};
+    if (lcd_renderer_default_image_info(&art) == ESP_OK) {
+        cJSON_AddStringToObject(lcd, "default_image", art.stored ? "stored" : "builtin");
+        cJSON_AddNumberToObject(lcd, "default_image_bytes", art.jpeg_bytes);
+    }
     cJSON *mqtt = cJSON_AddObjectToObject(root, "mqtt");
     cJSON_AddStringToObject(mqtt, "state", "disabled");
     cJSON *media = cJSON_AddObjectToObject(root, "media");
@@ -484,17 +491,48 @@ static int h_lcd_image(const nyx_proxy_request_t *req, char *resp, size_t cap,
     }
 
     uint32_t duration_ms = query_u32(req->query, "duration_ms", LCD_DEFAULT_DURATION_MS);
-    esp_err_t err = lcd_renderer_push_image(req->body, req->body_len, duration_ms);
+    bool persistent = !strcmp(req->path, "/lcd/default-image");
+    esp_err_t err = persistent ? lcd_renderer_set_default_image(req->body, req->body_len) :
+        lcd_renderer_push_image(req->body, req->body_len, duration_ms);
     if (err != ESP_OK) {
         int n = snprintf(resp, cap, "{\"ok\":false,\"error\":\"%s\"}", esp_err_to_name(err));
         if (resp_len) *resp_len = n > 0 ? (size_t)n : 0u;
-        return 400;
+        return err == ESP_ERR_INVALID_ARG || err == ESP_ERR_INVALID_SIZE ||
+            err == ESP_ERR_INVALID_RESPONSE ? 400 : 503;
     }
-    int n = snprintf(resp, cap, "{\"ok\":true,\"duration_ms\":%lu}",
-             (unsigned long)duration_ms);
+    int n = persistent ? snprintf(resp, cap, "{\"ok\":true,\"persistent\":true}") :
+        snprintf(resp, cap, "{\"ok\":true,\"duration_ms\":%lu}", (unsigned long)duration_ms);
     if (resp_len) *resp_len = n > 0 ? (size_t)n : 0u;
     ESP_LOGI(TAG, "lcd_image: response_sent");
     return 202;
+}
+
+static int h_lcd_default_get(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                           char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    snprintf(ct, ct_cap, "application/json");
+    lcd_default_image_info_t info = {0};
+    esp_err_t err = lcd_renderer_default_image_info(&info);
+    if (err != ESP_OK) {
+        snprintf(resp, cap, "{\"error\":\"%s\"}", esp_err_to_name(err));
+        json_response_len(resp, resp_len);
+        return 503;
+    }
+    snprintf(resp, cap, "{\"source\":\"%s\",\"persistent\":%s,\"width\":%u,\"height\":%u,\"jpeg_bytes\":%u}",
+        info.stored ? "stored" : "builtin", info.stored ? "true" : "false",
+        info.width, info.height, (unsigned)info.jpeg_bytes);
+    json_response_len(resp, resp_len);
+    return 200;
+}
+
+static int h_lcd_default_delete(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                              char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    snprintf(ct, ct_cap, "application/json");
+    esp_err_t err = lcd_renderer_reset_default_image();
+    snprintf(resp, cap, "{\"ok\":%s,\"err\":\"%s\"}", err == ESP_OK ? "true" : "false", esp_err_to_name(err));
+    json_response_len(resp, resp_len);
+    return err == ESP_OK ? 200 : 503;
 }
 
 static int h_lcd_text(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -1328,6 +1366,9 @@ static const nyx_route_t s_routes[] = {
     { .path = "/wifi/qr", .method = "GET", .fn = h_wifi_qr, .user = NULL },
     { .path = "/wifi/qr", .method = "POST", .fn = h_wifi_qr, .user = NULL },
     { .path = "/lcd/image", .method = "POST", .fn = h_lcd_image, .user = NULL },
+    { .path = "/lcd/default-image", .method = "GET", .fn = h_lcd_default_get, .user = NULL },
+    { .path = "/lcd/default-image", .method = "POST", .fn = h_lcd_image, .user = NULL },
+    { .path = "/lcd/default-image", .method = "DELETE", .fn = h_lcd_default_delete, .user = NULL },
     { .path = "/lcd/text", .method = "POST", .fn = h_lcd_text, .user = NULL },
     { .path = "/lcd/clear", .method = "POST", .fn = h_lcd_clear, .user = NULL },
     { .path = "/lcd/snapshot.jpg", .method = "GET", .fn = h_lcd_snapshot, .user = NULL },

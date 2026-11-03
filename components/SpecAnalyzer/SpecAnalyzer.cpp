@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 #include "lvgl.h"
 #include "esp_brookesia.hpp"
 #include "esp_task.h"
@@ -62,7 +63,7 @@ bool SpecAnalyzer::run(void)
     ESP_UTILS_LOGD("Run");
 
     lv_obj_t *scr = lv_scr_act();
-    lv_obj_set_style_bg_color(scr, lv_color_black(), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(scr, lv_color_hex(NYX_BG), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(scr, LV_OPA_COVER, LV_PART_MAIN);
     
     // Prefer PSRAM for the large canvas buffer and fall back to SRAM if PSRAM is exhausted.
@@ -132,8 +133,8 @@ bool SpecAnalyzer::run(void)
     
     _mic_label = lv_label_create(scr);
     lv_label_set_text(_mic_label, "Mic");
-    lv_obj_set_style_text_color(_mic_label, lv_color_hex(0x00BFFF), LV_PART_MAIN);
-    lv_obj_set_style_bg_color(_mic_label, lv_color_hex(0x222222), LV_PART_MAIN);
+    lv_obj_set_style_text_color(_mic_label, lv_color_hex(NYX_SECONDARY), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(_mic_label, lv_color_hex(NYX_CARD), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(_mic_label, LV_OPA_70, LV_PART_MAIN);
     lv_obj_set_style_pad_all(_mic_label, 6, LV_PART_MAIN);
     lv_obj_align_to(_mic_label, _canvas, LV_ALIGN_TOP_LEFT, 20, 12);
@@ -270,7 +271,7 @@ void SpecAnalyzer::timer_cb(lv_timer_t *timer)
     
     lv_layer_t layer;
     lv_canvas_init_layer(app->_canvas, &layer);
-    lv_canvas_fill_bg(app->_canvas, lv_color_black(), LV_OPA_COVER);
+    lv_canvas_fill_bg(app->_canvas, lv_color_hex(NYX_BG), LV_OPA_COVER);
     
     const int bar_total_width = app->CANVAS_WIDTH - 40;          // Leave side margins
     const int bar_width = bar_total_width / app->STRIPE_COUNT - 2;

@@ -397,8 +397,10 @@ static void open_upload(cJSON *root)
         return;
     }
     cJSON *params = cJSON_GetObjectItemCaseSensitive(root,"parameters");
-    // Initial negotiated scope: raw JPEG pushes only, capped at 64 KiB.
-    if (strcmp(json_string(params,"method"),"POST") || strcmp(json_string(params,"path"),"/lcd/image")) {
+    // Raw JPEG pushes and persistent fallback art only, capped at 64 KiB.
+    const char *path = json_string(params,"path");
+    if (strcmp(json_string(params,"method"),"POST") ||
+        (strcmp(path,"/lcd/image") && strcmp(path,"/lcd/default-image"))) {
         const char *error="{\"error\":\"upload_route_not_supported\"}";
         queue_proxy_response(id,413,"application/json",error,strlen(error)); return;
     }

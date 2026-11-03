@@ -98,7 +98,7 @@ def main():
     record('Nyx status', {'fw': state['fw'], 'ota': state['ota']})
     lan('/lcd/clear', b'', 202)
     nyx('/lcd/image', a.image.read_bytes())
-    nyx('/lcd/text', json_body={'text': 'Hello Lexa · 你好，世界', 'duration_ms': 0})
+    nyx('/lcd/text', json_body={'text': 'NyxBot · 你好，世界', 'duration_ms': 0})
     time.sleep(1)
     baseline, size = snapshot('display.jpg')
     record('Nyx JPEG/text and LCD JPEG decode', size)

@@ -28,6 +28,7 @@
 #include "panel_runtime.h"
 #include "panel_flash.h"
 #include "network.h"
+#include "nyx_stylesheet.hpp"
 extern "C" {
 #include "lcd_renderer.h"
 }
@@ -60,6 +61,7 @@ extern "C" void app_main(void)
     }
     ESP_ERROR_CHECK(err);
 
+    ESP_ERROR_CHECK(lcd_renderer_prepare());
     ESP_ERROR_CHECK(network_init(nullptr, nullptr, nullptr));
 
     ESP_ERROR_CHECK(bsp_spiffs_mount());
@@ -111,6 +113,11 @@ extern "C" void app_main(void)
         // When operating on non-GUI tasks, should acquire a lock before operating on LVGL
         LvLockGuard gui_guard;
 
+        lv_theme_t *theme = lv_theme_default_init(disp, lv_color_hex(NYX_PRIMARY),
+            lv_color_hex(NYX_SECONDARY), true, LV_FONT_DEFAULT);
+        lv_display_set_theme(disp, theme);
+        ESP_UTILS_CHECK_FALSE_EXIT(phone->addStylesheet(nyx_stylesheet()), "Add NyxID theme failed");
+
         /* Begin the phone */
         ESP_UTILS_CHECK_FALSE_EXIT(phone->begin(), "Begin failed");
         // assert(phone->getDisplay().showContainerBorder() && "Show container border failed");
@@ -140,8 +147,6 @@ extern "C" void app_main(void)
         ESP_UTILS_CHECK_FALSE_EXIT(phone->installApp(nyx_app), "Install Nyx Panel failed");
         esp_brookesia::apps::NyxPanel::attach(phone, nyx_app);
         ESP_ERROR_CHECK(lcd_renderer_init());
-        bsp_display_backlight_on();
-        lcd_renderer_reload_config();
 
         /* Create a timer to update the clock */
         lv_timer_create([](lv_timer_t *t) {

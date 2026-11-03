@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /*
  * SPDX-FileCopyrightText: 2023-2025 Espressif Systems (Shanghai) CO LTD
  *
@@ -21,13 +22,13 @@ LV_IMG_DECLARE(img_app_calculator);
 
 #define KEYBOARD_H_PERCENT      70
 #define KEYBOARD_FONT           &lv_font_montserrat_20
-#define KEYBOARD_SPECIAL_COLOR  lv_color_hex(0xFF3034)
-#define KEYBOARD_BG_COLOR       lv_color_hex(0xFFFFFF)
+#define KEYBOARD_SPECIAL_COLOR  lv_color_hex(NYX_SECONDARY)
+#define KEYBOARD_BG_COLOR       lv_color_hex(NYX_BG)
 
 #define LABEL_PAD               3
 #define LABEL_FONT_SMALL        &lv_font_montserrat_16
 #define LABEL_FONT_BIG          &lv_font_montserrat_20
-#define LABEL_COLOR             lv_color_hex(0xFF3034)
+#define LABEL_COLOR             lv_color_hex(NYX_SECONDARY)
 #define LABEL_FORMULA_LEN_MAX   256
 
 #define APP_NAME                "Calculator"

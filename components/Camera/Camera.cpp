@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /* SPDX-License-Identifier: Apache-2.0 */
 #include "Camera.hpp"
 #include "panel_runtime.h"
@@ -32,7 +33,7 @@ void Camera::setScanMode(bool enabled, const char *return_target) {
 bool Camera::run() {
     if (_timer) return true;
     lv_obj_t *screen = lv_screen_active();
-    lv_obj_set_style_bg_color(screen, lv_color_black(), 0);
+    lv_obj_set_style_bg_color(screen, lv_color_hex(NYX_BG), 0);
     _image = lv_image_create(screen);
     lv_obj_set_size(_image, 640, 880);
     lv_image_set_inner_align(_image, LV_IMAGE_ALIGN_CONTAIN);

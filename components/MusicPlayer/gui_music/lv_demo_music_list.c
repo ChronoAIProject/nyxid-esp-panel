@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /**
  * @file lv_demo_music_list.c
  *
@@ -88,11 +89,11 @@ lv_obj_t * lv_demo_music_list_create(lv_obj_t * parent)
 #endif
     lv_style_init(&style_button_pr);
     lv_style_set_bg_opa(&style_button_pr, LV_OPA_COVER);
-    lv_style_set_bg_color(&style_button_pr,  lv_color_hex(0x4c4965));
+    lv_style_set_bg_color(&style_button_pr,  lv_color_hex(NYX_PRESSED));
 
     lv_style_init(&style_button_chk);
     lv_style_set_bg_opa(&style_button_chk, LV_OPA_COVER);
-    lv_style_set_bg_color(&style_button_chk, lv_color_hex(0x4c4965));
+    lv_style_set_bg_color(&style_button_chk, lv_color_hex(NYX_PRESSED));
 
     lv_style_init(&style_button_dis);
     lv_style_set_text_opa(&style_button_dis, LV_OPA_40);
@@ -100,15 +101,15 @@ lv_obj_t * lv_demo_music_list_create(lv_obj_t * parent)
 
     lv_style_init(&style_title);
     lv_style_set_text_font(&style_title, font_medium);
-    lv_style_set_text_color(&style_title, lv_color_hex(0xffffff));
+    lv_style_set_text_color(&style_title, lv_color_hex(NYX_TEXT));
 
     lv_style_init(&style_artist);
     lv_style_set_text_font(&style_artist, font_small);
-    lv_style_set_text_color(&style_artist, lv_color_hex(0xb1b0be));
+    lv_style_set_text_color(&style_artist, lv_color_hex(NYX_MUTED));
 
     lv_style_init(&style_time);
     lv_style_set_text_font(&style_time, font_medium);
-    lv_style_set_text_color(&style_time, lv_color_hex(0xffffff));
+    lv_style_set_text_color(&style_time, lv_color_hex(NYX_TEXT));
 
     /*Create an empty transparent container*/
     list = lv_obj_create(parent);

@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 #include "DisplayPage.hpp"
 #include "esp_log.h"
 #include "../Settings.hpp"
@@ -47,32 +48,32 @@ namespace esp_brookesia::apps
         lv_style_set_pad_row(&style_list, 2);
         lv_style_set_border_width(&style_list, 0);
         lv_style_set_radius(&style_list, 10);
-        lv_style_set_bg_color(&style_list, lv_color_hex(0x000000));
+        lv_style_set_bg_color(&style_list, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list, LV_OPA_COVER);
 
         lv_style_set_height(&style_list_btn, SETTINGS_ROW_HEIGHT);
         lv_style_set_pad_all(&style_list_btn, 16);
         lv_style_set_border_width(&style_list_btn, 0);
         lv_style_set_radius(&style_list_btn, 8);
-        lv_style_set_bg_color(&style_list_btn, lv_color_hex(0x38393A));
+        lv_style_set_bg_color(&style_list_btn, lv_color_hex(NYX_CARD));
         lv_style_set_text_font(&style_list_btn, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_btn, lv_color_hex(0xFFFFFF));
+        lv_style_set_text_color(&style_list_btn, lv_color_hex(NYX_TEXT));
         lv_style_set_border_width(&style_list_btn, 1);
         lv_style_set_border_side(&style_list_btn, LV_BORDER_SIDE_BOTTOM);
-        lv_style_set_border_color(&style_list_btn, lv_color_hex(0x505050));
+        lv_style_set_border_color(&style_list_btn, lv_color_hex(NYX_BORDER));
 
         lv_style_set_text_font(&style_list_text, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_list_text, lv_color_hex(0xFFFFFF));
-        lv_style_set_bg_color(&style_list_text, lv_color_hex(0x000000));
+        lv_style_set_text_color(&style_list_text, lv_color_hex(NYX_TEXT));
+        lv_style_set_bg_color(&style_list_text, lv_color_hex(NYX_BG));
         lv_style_set_bg_opa(&style_list_text, LV_OPA_COVER);
         lv_style_set_pad_all(&style_list_text, 10);
         lv_style_set_pad_bottom(&style_list_text, 5);
 
-        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(0x505050));
-        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(0xFFFFFF));
-        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(0x505050));
+        lv_style_set_bg_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
+        lv_style_set_text_color(&style_list_btn_pressed, lv_color_hex(NYX_TEXT));
+        lv_style_set_border_color(&style_list_btn_pressed, lv_color_hex(NYX_BORDER));
 
-        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);
+        lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(NYX_BG), LV_PART_MAIN);
         lv_obj_set_style_bg_opa(lv_scr_act(), LV_OPA_COVER, LV_PART_MAIN);
 
         list1 = lv_list_create(lv_scr_act());
@@ -84,8 +85,8 @@ namespace esp_brookesia::apps
         static lv_style_t style_status;
         lv_style_init(&style_status);
         lv_style_set_text_font(&style_status, &lv_font_montserrat_30);
-        lv_style_set_text_color(&style_status, lv_color_hex(0x00BFFF));
-        lv_style_set_bg_color(&style_status, lv_color_hex(0x38393A));
+        lv_style_set_text_color(&style_status, lv_color_hex(NYX_SECONDARY));
+        lv_style_set_bg_color(&style_status, lv_color_hex(NYX_CARD));
         lv_style_set_bg_opa(&style_status, LV_OPA_COVER);
         lv_style_set_pad_all(&style_status, 10);
 
@@ -119,8 +120,8 @@ namespace esp_brookesia::apps
         int value = product_display_brightness_get();
         lv_slider_set_value(brightness_slider, value, LV_ANIM_OFF);
 
-        lv_obj_set_style_bg_color(brightness_slider, lv_color_hex(0x505050), LV_PART_MAIN);
-        lv_obj_set_style_bg_color(brightness_slider, lv_color_hex(0x00BFFF), LV_PART_INDICATOR);
+        lv_obj_set_style_bg_color(brightness_slider, lv_color_hex(NYX_BORDER), LV_PART_MAIN);
+        lv_obj_set_style_bg_color(brightness_slider, lv_color_hex(NYX_SECONDARY), LV_PART_INDICATOR);
         lv_obj_set_style_bg_color(brightness_slider, lv_color_white(), LV_PART_KNOB);
         lv_obj_set_style_pad_all(brightness_slider, 5, LV_PART_KNOB);
         lv_obj_set_style_radius(brightness_slider, LV_RADIUS_CIRCLE, LV_PART_KNOB);

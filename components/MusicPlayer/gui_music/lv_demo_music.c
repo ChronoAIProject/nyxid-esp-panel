@@ -1,3 +1,4 @@
+#include "nyx_theme.h"
 /**
  * @file lv_demo_music.c
  *
@@ -129,7 +130,7 @@ void lv_demo_music(lv_obj_t *parent, file_iterator_instance_t *file_iterator)
     _file_iterator = file_iterator;
 
     active_track_cnt = file_iterator_get_count(_file_iterator);
-    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x343247), 0);
+    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(NYX_BG), 0);
 
     list = lv_demo_music_list_create(parent);
     ctrl = lv_demo_music_main_create(parent, file_iterator);
@@ -299,7 +300,7 @@ static void auto_step_cb(lv_timer_t *t)
     case 40:
     {
         lv_obj_t *bg = lv_layer_top();
-        lv_obj_set_style_bg_color(bg, lv_color_hex(0x6f8af6), 0);
+        lv_obj_set_style_bg_color(bg, lv_color_hex(NYX_PRIMARY), 0);
         lv_obj_set_style_text_color(bg, lv_color_white(), 0);
         lv_obj_set_style_bg_opa(bg, LV_OPA_COVER, 0);
         lv_obj_fade_in(bg, 400, 0);

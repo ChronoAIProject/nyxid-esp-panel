@@ -200,6 +200,14 @@ Nyx MCP tool discovery requires a separately configured, server-reachable schema
 
 ## API and transport
 
+Nyx Panel opens automatically at boot. It shows the long-term default image
+whenever no temporary image is active. `POST /lcd/default-image` saves a JPEG
+through NyxID in NVS; `GET` reports its metadata and `DELETE` restores the embedded
+NyxBot image. Temporary image expiry and clear reveal the default; reboot
+and app updates preserve a saved image. See [API details](docs/API.md).
+The system uses NyxID's black surfaces and purple controls, with a shared
+[brand palette](components/panel_common/nyx_theme.h).
+
 Nyx exposes the compatibility routes in
 [`local_api.c`](components/panel_services/local_api.c): status, text/JPEG/clear,
 screens and snapshots, LCD/device/Wi-Fi/LAN/MQTT configuration, reboot,
@@ -215,10 +223,10 @@ Example with the NyxID CLI:
 
 ```sh
 nyxid proxy request "$SLUG" /lcd/image -m POST \
-  -H 'Content-Type:image/jpeg' -d @hello-lexa.jpg
+  -H 'Content-Type:image/jpeg' -d @nyxbot.jpg
 nyxid proxy request "$SLUG" /lcd/text -m POST \
-  -d '{"text":"Hello Lexa · 你好，世界","color":"#ffffff","bg":"#121a2b","align":"center","duration_ms":0}'
-curl -H 'Content-Type: image/jpeg' --data-binary @hello-lexa.jpg \
+  -d '{"text":"NyxBot · 你好，世界","color":"#ffffff","bg":"#0d0d0d","align":"center","duration_ms":0}'
+curl -H 'Content-Type: image/jpeg' --data-binary @nyxbot.jpg \
   "http://$PANEL_IP/lcd/image"
 ```
 

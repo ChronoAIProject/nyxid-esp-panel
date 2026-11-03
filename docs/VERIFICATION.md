@@ -1,5 +1,66 @@
 # Hardware acceptance, 2026-11-03
 
+## v0.5.0 startup, persistent background and NyxID colors
+
+Nyx Panel now opens at boot. A validated JPEG can be saved remotely in a single
+NVS blob; temporary images and captions stay independent. The built-in fallback
+is an 800×1280 composition of existing NyxID brand artwork, its N-mark, and the
+default bot name NyxBot, embedded in the application. This is deterministic
+branding/layout, not a new AI illustration. No image API/key fallback was used.
+See `components/NyxPanel/assets/README.md`.
+
+The NyxID stylesheet uses the vendor's 800×1280 geometry with official brand
+colors. Its large object has static storage and is returned by reference to
+avoid overflowing the startup stack. Background decoding runs on a temporary
+12 KiB task on core 1, alongside hardware/UI initialization, outside the GUI
+lock. The service task activates the actual Panel page as soon as UI setup
+finishes, without a splash timer or a network prerequisite. Clock sync now
+starts in the backend after network connection, independent of visiting Settings,
+so a cold boot into Panel can verify signed Nyx requests.
+
+The observed boot prepares the NyxBot image at 2.91 s, shows the Panel at 7.03 s,
+obtains a Wi-Fi IP at 11.68 s and synchronizes time at 13.39 s. These are measured
+timestamps for the home board, not a claim of instant hardware startup. Image
+decoding completes ahead of the UI; no splash timer or network delay gates the
+picture. The remaining startup time is the existing hardware/framework setup.
+NVS owns its normal lock; flash serialization remains in the flash wrappers to
+preserve the same NVS → flash lock order as native Settings.
+
+- IDF v5.5.4 build and all 16 host executables pass. The v0.4.1 app was read back
+  and its SHA256 matched the previously installed binary before app-only flash.
+- Installed v0.5.0 binary: 5,939,776 bytes, at `ota_1`/`0x770000`.
+  Binary SHA256:
+  `35a0b4eac8e171092b609975f3bdcd5a5de2fb81b3b0fecbbd67d4900f8b78c5`.
+  ELF SHA256, also reported by `/status`:
+  `ee8ad8a4a458ffb61fb5593c997129862f97e42a1b0a9e6716ed7f3742078207`.
+  The home board retains its WLAN and Nyx identity; only the app was flashed.
+- `tools/accept_background.py` passed remote set/get/reset, invalid JPEG,
+  oversized bytes/dimensions, wrong content type, LAN exclusion, concurrent
+  image/Settings writes, TTL, clear, set/reset beneath a temporary image,
+  persistence across reboot, and built-in fallback after reset and reboot.
+- Two native page cycles captured Settings, WLAN, device info and NyxID at
+  800×1280. Visual inspection confirms readable text, purple controls and dark
+  surfaces. Single-worker font decoding and actual DMA framebuffer snapshots
+  remain in place.
+- Initial camera testing exposed preview frame-lock collisions: the original
+  100/200 ms acquisition limit sometimes rejected a snapshot while native UI
+  copied its 2 MiB frame. The capture now retries lock acquisition within the
+  existing overall fresh-frame deadline. Concurrent requests still return busy;
+  the system never starts continuous publishing.
+- Final `accept_camera.py --count 3` passes: three remote photos take
+  1.985–2.082 s; three concurrent requests produce one photo and two busy
+  responses. Native LAN/Nyx snapshots and return to idle also pass. The test
+  warms Brookesia's retained 2 MiB recents thumbnail before measuring camera
+  heap recovery, with the original leak thresholds unchanged.
+- Final native acceptance includes three Camera/photo/Back cycles. Combined
+  tests finish with 15 successful captures and zero failed captures. A temporary
+  Chinese/English/numeric outlined caption over the NyxBot fallback expires
+  back to the byte-identical baseline screenshot. Final state is `home`,
+  built-in NyxBot art, camera `idle`, continuous streaming `disabled`, and a
+  synchronized clock. UART records no panic, assert, watchdog or DMA underrun
+  during this run; this is a short functional regression, not a physical-screen
+  soak test.
+
 ## v0.4.1 compressed-font concurrency repair
 
 After v0.4.0, the home-board operator still reports missing/garbled letters.
