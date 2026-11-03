@@ -30,8 +30,9 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 | POST | `/system/ota/image` | yes, bearer required | Raw app binary, `Authorization: Bearer <node token>` and `X-SHA256`; digest mismatch 422; success 202 then reboot |
 | POST | `/_dev/qr/inject_jpeg` | no | Development decoder test: a real QR JPEG passes through the same decoder/provisioning path; no camera-optics validation |
 
-The full-wipe operation is the explicit UART `factory-reset` command. Save a
-private backup first. `nyx-status` masks credentials. `nyx-key`, `nyx-node`,
+The explicit UART `factory-reset` command wipes P4 NVS, including Nyx identity.
+The C6 Wi-Fi driver has separate storage and can retain its station settings.
+Save a private backup first. `nyx-status` masks credentials. `nyx-key`, `nyx-node`,
 `nyx-secret` and `nyx-slug` save NVS values; reboot applies the WSS credentials.
 `wifi-reconnect` disconnects the station to exercise the saved-network reconnect
 path without changing its configuration.

@@ -1,6 +1,7 @@
 # NyxID ESP Panel — migration specification
 
-Status: implementation in progress. Date: 2026-11-03.
+Status: initial migration implemented, pushed and installed as v0.1.14.
+Known transport and verification limits are recorded below. Date: 2026-11-03.
 
 ## 1. Outcome
 
@@ -63,7 +64,8 @@ Use one Brookesia app/screen lifecycle and the BSP recursive LVGL mutex. Worker
 threads submit bounded messages/content to the GUI adapter; decode or network
 work happens outside the GUI lock. The GUI adopts completed content under the
 lock and releases previous buffers only after image widgets stop referencing
-them. The shared `App::notifyCoreClosed` lock fix is retained. The GUI task uses
+them. The shared `App::notifyCoreClosed` lock fix is retained. Settings closes subpages and their workers on pause, rebuilds its root on
+resume, and remote `settings` explicitly opens that root. The GUI task uses
 an internal RAM stack because native Settings callbacks write NVS; an external
 stack triggers the P4 flash cache-disable assertion on WLAN exit.
 
@@ -102,8 +104,9 @@ Credentials come from NVS or explicit provisioning. Import neither
 `devices_data.h` nor `secrets.h`. Derive an unregistered device label from the
 hardware MAC; it must still boot into the desktop and accept provisioning.
 Preserve the installed board's Wi-Fi configuration during normal upgrades.
-Factory-reset operations must distinguish identity-preserving reset from full
-wipe. A normal build and flash must not silently reset unrelated settings.
+Factory-reset operations must distinguish identity-preserving reset from a full
+wipe of P4 NVS. C6 station-driver storage is separate and may retain Wi-Fi
+settings. A normal build and flash must not silently reset unrelated settings.
 
 ### Flash layout and OTA
 
@@ -154,15 +157,21 @@ independent implementation and verification.
 
 - [x] Inspected both source baselines and the attached hardware profile.
 - [x] Defined the migration inventory, ownership constraints and acceptance gates.
-- [ ] G01 repository and initial commits.
+- [x] G01 private repository, source/provenance and implementation commits pushed.
 - [x] G02 standalone host tests (11 executables, including upload/fragmentation/signing fixtures).
-- [ ] G03 firmware build and CI.
-- [ ] G04 hardware baseline.
+- [x] G03 firmware build and CI (final v0.1.14 source `4fdd57d`, Actions `41551346822`).
+- [x] G04 v0.1.14 boot, two full native Settings/WLAN/navigation cycles and three Camera open/snapshot/Back cycles without a reset.
 - [x] G05 display and API acceptance (actual Nyx JPEG/text/CJK, inspected LCD JPEG, rejection/expiry checks).
-- [ ] G06 Nyx end-to-end acceptance.
-- [ ] G07 media and QR acceptance.
-- [ ] G08 persistence and OTA acceptance.
-- [ ] G09 final operational documentation.
+- [x] G06 deployed signed ordinary Nyx proxy: registration, text/JPEG/status and network recovery. Binary machine-ingress end-to-end remains unverified.
+- [x] G07 camera/LCD JPEGs, actual QR decoder/provisioning and H.264 receiver with preview→publish recovery; final media sequence uses a 30-second LAN deadline. Strict 10-second control stability failed and remains a known limitation.
+- [x] G08 v0.1.13 reboot/reset/restore and both OTA paths with concurrent Nyx status; v0.1.14 installed through actual other-slot OTA. Intermittent C6 startup failure retained in the evidence.
+- [x] G09 route inventory, recovery/provisioning/build procedures and measured acceptance results, including failures and unverified paths.
+
+Open validation beyond the implemented migration:
+
+- [ ] Machine-ingress binary upload end-to-end against the deployed server.
+- [ ] Strict control responsiveness under publishing and long-duration C6/Wi-Fi stability.
+- [ ] Physical camera QR optics, gestures/audio, secondary AP and Ethernet coverage.
 
 Measured evidence and remaining checks are maintained in
 [`docs/VERIFICATION.md`](docs/VERIFICATION.md). Raw device logs, registration

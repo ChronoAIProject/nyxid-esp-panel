@@ -109,6 +109,9 @@ be provisioned from QR codes using `nyxprov://nyx?token=...&node=...&secret=...`
 `nyxprov://full?ssid=...&psw=...&token=...&node=...&secret=...` (URL encode values).
 Use native Settings → WLAN for Wi-Fi, or remote screen `scan` for QR setup.
 The optional device-code client is disabled by default; mock mode is explicit.
+UART `factory-reset` erases P4 NVS including Nyx identity; the C6 station driver
+has separate storage and can retain its Wi-Fi settings. Back up current NVS
+before using it. The authenticated reset API preserves both Wi-Fi and Nyx.
 
 Alternatively, install `pyserial` and `cryptography` in a local Python
 environment and import an encrypted node-agent registration:
