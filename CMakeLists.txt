@@ -15,6 +15,7 @@ set(EXCLUDE_COMPONENTS brookesia_app_squareline_demo)
 set(ENV{NYX_PANEL_PROJECT_DIR} "${CMAKE_CURRENT_SOURCE_DIR}")
 project(nyxid-esp-panel)
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/apply_managed_component_patches.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/panel_lcd_compat.cmake")
 # Component Manager resolves environment variables in local lock paths. Keep
 # those paths portable while retaining every registry version/hash in the lock.
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/dependencies.lock")

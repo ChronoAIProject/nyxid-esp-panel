@@ -7,10 +7,12 @@
 #include "bsp/esp-bsp.h"
 #include "driver/jpeg_encode.h"
 #include "esp_heap_caps.h"
+#include "esp_cache.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "snapshot.h"
+#include "camera_capture.h"
 #include "linux/videodev2.h"
 #include <fcntl.h>
 #include <string.h>
@@ -23,10 +25,10 @@
 #include <errno.h>
 
 #define TAG "MEDIA_SYS"
-#define PREVIEW_WIDTH 320
-#define PREVIEW_HEIGHT 240
+#define PREVIEW_WIDTH PANEL_CAMERA_WIDTH
+#define PREVIEW_HEIGHT PANEL_CAMERA_HEIGHT
 #define PREVIEW_FRAME_BYTES ((size_t)PREVIEW_WIDTH * PREVIEW_HEIGHT * 2u)
-#define PREVIEW_V4L2_BUF_COUNT 2u
+#define PREVIEW_V4L2_BUF_COUNT PANEL_CAMERA_BUFFER_COUNT
 
 static SemaphoreHandle_t preview_frame_lock;
 static uint8_t *preview_frame_buf;
@@ -35,6 +37,7 @@ static size_t preview_jpeg_cap;
 static jpeg_encoder_handle_t preview_jpeg_encoder;
 static size_t preview_frame_len;
 static uint32_t preview_frame_seq;
+static int64_t preview_first_frame_us;
 static uint16_t preview_frame_w;
 static uint16_t preview_frame_h;
 static atomic_bool preview_pump_running;
@@ -53,7 +56,7 @@ static esp_err_t ensure_camera_initialized(void)
             .sccb_config = {
                 .init_sccb = false,
                 .i2c_handle = i2c_handle,
-                .freq = 100000,
+                .freq = CONFIG_BSP_I2C_CLK_SPEED_HZ,
             },
             .reset_pin = -1,
             .pwdn_pin = -1,
@@ -86,6 +89,7 @@ esp_err_t media_sys_capture_close(void)
     preview_frame_buf = NULL;
     preview_frame_len = 0;
     preview_frame_seq = 0;
+    preview_first_frame_us = 0;
     preview_frame_w = preview_frame_h = 0;
     if (preview_frame_lock) xSemaphoreGive(preview_frame_lock);
     if (preview_jpeg_encoder) {
@@ -126,7 +130,8 @@ int media_sys_preview_start(void)
     preview_capture_started = true;
     preview_pump_running = true;
     atomic_store(&preview_pump_alive, true);
-    if (xTaskCreate(preview_pump_task_fn, "preview_pump", 4096, NULL, 8, NULL) != pdPASS) {
+    if (xTaskCreatePinnedToCore(preview_pump_task_fn, "preview_pump", PANEL_CAMERA_TASK_STACK,
+            NULL, PANEL_CAMERA_TASK_PRIORITY, NULL, PANEL_CAMERA_TASK_CORE) != pdPASS) {
         preview_capture_started = false;
         preview_pump_running = false;
         atomic_store(&preview_pump_alive, false);
@@ -165,21 +170,28 @@ esp_err_t media_sys_preview_snapshot_encode(uint8_t *dst, size_t cap, size_t *ou
     preview_jpeg_buf = jpeg_alloc_encoder_mem(SNAPSHOT_MAX_BYTES, &mem_cfg, &preview_jpeg_cap);
     jpeg_encode_engine_cfg_t eng = { .timeout_ms = 1000 };
     esp_err_t err = preview_jpeg_buf ? jpeg_new_encoder_engine(&eng, &preview_jpeg_encoder) : ESP_ERR_NO_MEM;
-    int64_t deadline = esp_timer_get_time() + 1500000;
+    int64_t deadline = esp_timer_get_time() + PANEL_CAMERA_WARMUP_US + 1500000;
     while (err == ESP_OK) {
         if (xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(100)) != pdTRUE) {
             err = ESP_ERR_TIMEOUT;
             break;
         }
-        if (preview_frame_len == PREVIEW_FRAME_BYTES && preview_frame_seq != initial_seq && preview_frame_seq >= 3) {
+        if (preview_frame_len == PREVIEW_FRAME_BYTES && preview_frame_seq != initial_seq &&
+            preview_frame_seq >= 3 && preview_first_frame_us > 0 &&
+            esp_timer_get_time() - preview_first_frame_us >= PANEL_CAMERA_WARMUP_US) {
             jpeg_encode_cfg_t cfg = {
                 .height = PREVIEW_HEIGHT, .width = PREVIEW_WIDTH,
                 .src_type = JPEG_ENCODE_IN_FORMAT_RGB565,
                 .sub_sample = JPEG_DOWN_SAMPLING_YUV420, .image_quality = 50,
             };
             uint32_t produced = 0;
-            err = jpeg_encoder_process(preview_jpeg_encoder, &cfg, preview_frame_buf,
-                                        PREVIEW_FRAME_BYTES, preview_jpeg_buf, preview_jpeg_cap, &produced);
+            // IDF 5.5's allocator calloc leaves dirty zero cache lines in the
+            // DMA output. Retire them before DMA can write compressed bytes.
+            err = esp_cache_msync(preview_jpeg_buf, preview_jpeg_cap,
+                                  ESP_CACHE_MSYNC_FLAG_DIR_C2M | ESP_CACHE_MSYNC_FLAG_INVALIDATE);
+            if (err == ESP_OK)
+                err = jpeg_encoder_process(preview_jpeg_encoder, &cfg, preview_frame_buf,
+                                            PREVIEW_FRAME_BYTES, preview_jpeg_buf, preview_jpeg_cap, &produced);
             if (err == ESP_OK) {
                 if (!produced || produced > cap) err = ESP_ERR_INVALID_SIZE;
                 else { memcpy(dst, preview_jpeg_buf, produced); *out_len = produced; }
@@ -244,6 +256,8 @@ static void preview_pump_task_fn(void *arg)
         // esp_video 2.1 G_FMT copies a default descriptor with type zero.
         // Restore the requested stream before passing it back to S_FMT.
         format.type = type;
+        format.fmt.pix.width = PREVIEW_WIDTH;
+        format.fmt.pix.height = PREVIEW_HEIGHT;
         format.fmt.pix.pixelformat = V4L2_PIX_FMT_RGB565;
         if (ioctl(fd, VIDIOC_S_FMT, &format) != 0) {
             ESP_LOGW(TAG, "preview direct set format failed width=%lu height=%lu errno=%d",
@@ -251,11 +265,17 @@ static void preview_pump_task_fn(void *arg)
                      (unsigned long)format.fmt.pix.height, errno);
             break;
         }
+        format.type = type;
+        if (ioctl(fd, VIDIOC_G_FMT, &format) != 0 ||
+            format.fmt.pix.width != PREVIEW_WIDTH || format.fmt.pix.height != PREVIEW_HEIGHT ||
+            format.fmt.pix.pixelformat != V4L2_PIX_FMT_RGB565) {
+            ESP_LOGE(TAG, "Camera does not match the native 800x1280 RGB565 profile");
+            break;
+        }
         actual_w = format.fmt.pix.width;
         actual_h = format.fmt.pix.height;
 
-        // Keep the sensor's native frame interval. OV5647's 800x800 mode
-        // has a fixed rate and rejects arbitrary VIDIOC_S_PARM requests.
+        // Keep OV5647's native 800x1280 / 50 FPS frame interval.
         ESP_LOGI(TAG, "preview direct format=%lux%lu fourcc=%c%c%c%c",
                  (unsigned long)actual_w, (unsigned long)actual_h,
                  (char)(format.fmt.pix.pixelformat & 0xff),
@@ -317,22 +337,11 @@ static void preview_pump_task_fn(void *arg)
             preview_frame_lock && xSemaphoreTake(preview_frame_lock, pdMS_TO_TICKS(20)) == pdTRUE) {
             const uint16_t *src = (const uint16_t *)bufs[buf.index].data;
             uint16_t *dst = (uint16_t *)preview_frame_buf;
-            if (actual_w == PREVIEW_WIDTH && actual_h == PREVIEW_HEIGHT) {
-                memcpy(dst, src, PREVIEW_FRAME_BYTES);
-            } else {
-                for (uint32_t y = 0; y < PREVIEW_HEIGHT; ++y) {
-                    uint32_t sy = (y * actual_h) / PREVIEW_HEIGHT;
-                    const uint16_t *src_row = src + ((size_t)sy * actual_w);
-                    uint16_t *dst_row = dst + ((size_t)y * PREVIEW_WIDTH);
-                    for (uint32_t x = 0; x < PREVIEW_WIDTH; ++x) {
-                        uint32_t sx = (x * actual_w) / PREVIEW_WIDTH;
-                        dst_row[x] = src_row[sx];
-                    }
-                }
-            }
+            memcpy(dst, src, PREVIEW_FRAME_BYTES);
             preview_frame_len = PREVIEW_FRAME_BYTES;
             preview_frame_w = PREVIEW_WIDTH;
             preview_frame_h = PREVIEW_HEIGHT;
+            if (!preview_first_frame_us) preview_first_frame_us = esp_timer_get_time();
             preview_frame_seq++;
             xSemaphoreGive(preview_frame_lock);
             fps_frames++;
@@ -409,9 +418,32 @@ esp_err_t media_sys_preview_copy_rgb565(uint8_t *dst, size_t cap, uint32_t last_
     return err;
 }
 
-esp_err_t media_sys_preview_copy_latest_rgb565(uint8_t *dst, size_t cap, uint16_t *out_w,
+esp_err_t media_sys_preview_copy_qr_rgb565(uint8_t *dst, size_t cap, uint16_t *out_w,
                                                uint16_t *out_h, size_t *out_len,
                                                uint32_t *out_seq)
 {
-    return media_sys_preview_copy_rgb565(dst, cap, 0u, out_w, out_h, out_len, out_seq);
+    if (out_w) *out_w = 0;
+    if (out_h) *out_h = 0;
+    if (out_len) *out_len = 0;
+    if (out_seq) *out_seq = 0;
+    if (!dst || cap < PANEL_CAMERA_QR_BYTES) return ESP_ERR_INVALID_ARG;
+    if (!preview_capture_started || !preview_frame_lock) return ESP_ERR_INVALID_STATE;
+    if (xSemaphoreTake(preview_frame_lock, 0) != pdTRUE) return ESP_ERR_TIMEOUT;
+    esp_err_t err = ESP_ERR_NOT_FOUND;
+    if (preview_frame_buf && preview_frame_len == PREVIEW_FRAME_BYTES) {
+        const uint16_t *src = (const uint16_t *)preview_frame_buf;
+        uint16_t *target = (uint16_t *)dst;
+        for (unsigned y = 0; y < PANEL_CAMERA_QR_HEIGHT; ++y)
+            for (unsigned x = 0; x < PANEL_CAMERA_QR_WIDTH; ++x)
+                target[y * PANEL_CAMERA_QR_WIDTH + x] =
+                    src[(y * PREVIEW_HEIGHT / PANEL_CAMERA_QR_HEIGHT) * PREVIEW_WIDTH +
+                        x * PREVIEW_WIDTH / PANEL_CAMERA_QR_WIDTH];
+        if (out_w) *out_w = PANEL_CAMERA_QR_WIDTH;
+        if (out_h) *out_h = PANEL_CAMERA_QR_HEIGHT;
+        if (out_len) *out_len = PANEL_CAMERA_QR_BYTES;
+        if (out_seq) *out_seq = preview_frame_seq;
+        err = ESP_OK;
+    }
+    xSemaphoreGive(preview_frame_lock);
+    return err;
 }

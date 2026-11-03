@@ -16,6 +16,7 @@
 #include "nyx_ws_rx.h"
 #include "nyx_upload.h"
 #include "nyx_security.h"
+#include "snapshot.h"
 #include "cJSON.h"
 #include <stdatomic.h>
 
@@ -281,7 +282,9 @@ static void queue_proxy_response(const char *request_id, int status, const char 
 
 static void dispatch_proxy_request(nyx_proxy_request_t req)
 {
-    const size_t body_cap = 96u * 1024u;
+    const bool camera_photo = req.path &&
+        (!strcmp(req.path, "/camera/snapshot.jpg") || !strcmp(req.path, "/snapshot.jpg"));
+    const size_t body_cap = camera_photo ? SNAPSHOT_MAX_BYTES : 96u * 1024u;
     char *body = (char *)malloc(body_cap);
     char content_type[64];
     if (!body) {

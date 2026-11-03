@@ -1,5 +1,120 @@
 # Hardware acceptance, 2026-11-03
 
+## v0.4.0 full-screen picture and outlined captions
+
+The operator moved home and connected another board of the same model. USB
+confirms ESP32-P4 rev v1.3, MAC ending `d2:ef:63`. Its own system/NVS/partition
+metadata and running app were backed up privately before an app-only update;
+the company board's NVS is not used. Its current partition table matches the
+project, with the running `ota_1` app at `0x770000`.
+
+Nyx Panel now hides the status bar, uses an edge-to-edge 800×1280 image with an
+aspect-preserving center crop, and overlays the latest caption on transparent
+labels. Eight offset bitmap labels provide a 2-pixel stroke for both Latin and
+Chinese; `color` selects the fill and `bg` the outline. Temporary captions can
+expire back to earlier retained messages. Native navigation stays available.
+Both JPEG encoding paths also hand output cache lines to DMA before encoding.
+
+- ESP-IDF v5.5.4 build and all 16 host executables pass.
+- Binary size: `0x587fe0` (5,799,904 bytes), leaving `0x108020` bytes per slot.
+  Binary SHA256:
+  `c02792305e15a780f0a78ff85e12e58b49afb0553ddd8b9702dcf40303b854f3`.
+  ELF SHA256:
+  `6cab88f36c046bb6b4f7d11015ce4e7df3bd52ad2274b30bfdf7e425e64dc6b6`.
+- Final app-only write verifies successfully; `/status` reports the exact ELF
+  hash, `ota_1` valid, the original home WLAN/slug, and disabled streaming.
+- `panel-040-final/results.json`: ten authenticated 800×1280 static LCD JPEGs
+  are byte-identical and decode normally (22,107 bytes each). Portrait pixels
+  reach all four corners. Landscape cover reaches the extreme canvas edges;
+  upward scale rounding removes the one-pixel seam seen in the first build.
+  A round source marker measures 533×535 pixels after enlargement. Chinese and
+  English outlines are visually checked on bright/dark halves, with left/right
+  alignment, colored outlines and long text clipped inside the safe area.
+- `acceptance-040-final/results.json` passes the complete LAN-screenshot run:
+  text expiry/restoration, rejected JPEG preservation, two native page cycles,
+  scan return paths, injected Wi-Fi QR confirmation/replacement rejection,
+  real device-code request/cancel, and three native Camera/photo/Back cycles.
+  Uptime stays continuous through 188 seconds; Nyx is up and Camera is idle.
+  Wi-Fi QR is cancelled before connecting and the account code is never
+  approved. This home-network pass does not resolve the company-network JPEG
+  timeouts recorded below. One WLAN page transition emits an adapter lock
+  timeout during screen polling; the subsequent poll succeeds and all checks
+  finish. Missing SD-card errors remain expected on this board.
+- `camera-040-final/results.json` passes using the unchanged 15-second Nyx
+  deadline: eight fresh 800×1280 cold photos with the LCD unchanged, concurrent
+  status calls, three concurrent photos (one success/two busy), and native
+  LAN/Nyx photos followed by Back to idle. Cold calls take 2.035–2.464 seconds
+  remotely. The combined run counts 14 successful captures and zero capture
+  errors, with idle internal heap unchanged across the cold captures.
+- `expiry-040-final/results.json` confirms image expiry preserves the caption,
+  native Back exits to the launcher, and reopening restores the same caption
+  pixels. Image/text-only operations leave Camera idle without increasing its
+  capture count. The board finishes on the full-screen “Hello Lexa” picture
+  with Chinese outlined captions. UART records no panic/assert/abort or DMA
+  underrun during the final run.
+
+These screenshots establish logical rendering and the tested DMA JPEG handoff.
+The company board's earlier physical-text feedback remains the only operator
+observation of scanout after the display fix; this home board's intermittent
+physical artifacts still need observation over time. The injected Wi-Fi QR
+check does not verify camera optics, and SD video playback remains untested.
+
+## v0.3.1 system Camera profile and display synchronization
+
+Reference comparison uses the phone-style `p4-brookesia` checkout, including
+its Camera, main display setup, resolved Waveshare BSP and JD9365 driver.
+Panel initialization and DSI timing match that reference. The Camera capture
+profile is now 800×1280 RGB565, two buffers, SCCB 400 kHz and the native
+50 FPS OV5647 sensor mode. This describes the configured sensor mode, not a
+measured 50 FPS GUI rendering rate. QR reads an aspect-preserving 200×320 sample.
+See [DISPLAY.md](DISPLAY.md) for the source comparison and DMA ownership fix.
+
+- ESP-IDF v5.5.4 build and all 16 host executables pass. The new submission-gate
+  tests cover stale DMA selection, repeated completions, alternating buffers
+  and completion before arming. The actual DMA callback is exercised on board;
+  host substitutes do not reproduce the DSI hardware.
+- App-only flash verified on the company replacement board. Its installed binary is
+  `0x588100` (5,800,192 bytes), with `0x107f00` bytes spare in each app slot.
+  Binary SHA256:
+  `b46c8837c97884e72b2852742735753ffca679c3bd60365e93411ea759d92648`.
+  Installed ELF SHA256:
+  `97ab3f85f53098890c411389ff56ed8e23a7b920a012c852f81d42a4975eab13`.
+  USB confirms the existing node identity and company WLAN/IP are retained.
+- `camera-031-final-ready/results.json` passes with the unchanged 15-second
+  per-Nyx-request deadline: eight fresh 800×1280 remote JPEGs, no LCD navigation,
+  concurrent status requests, then three concurrent photos (one success, two
+  busy), native LAN/Nyx photos, and Back to idle. Eight cold captures take
+  2.516–6.451 seconds remotely, including 1.394–1.414 seconds on board; concurrent
+  status takes 0.445–2.079 seconds. All 11 successful photos are counted, with
+  no capture errors, reset or retained large capture allocation.
+- Initial cold photos were visibly underexposed. Native preview settles brighter
+  in the same ceiling scene; a one-second warmup now produces cold photos with
+  approximately the same brightness. Artifacts retain that comparison. This is
+  exposure-startup evidence, not color calibration or general image-quality QA.
+- An earlier build's native Nyx snapshot exceeded the 15-second CLI deadline,
+  although UART records a 200 response about 269 ms after dispatch. A first
+  final-image attempt began before SNTP completed (42 seconds after boot) and
+  received `invalid_signature_or_replay` on the schema request. The passing run
+  starts after time synchronization. A separate initial runner started before
+  network readiness and timed out. These failures are retained privately;
+  the later pass does not establish their general removal.
+- Two broad LAN-screenshot navigation runs stop at their 30-second JPEG
+  request deadline (`acceptance-031`, `acceptance-031-retry`). UART records
+  successful image generation and HTTP sends; the board stays alive. The retry
+  completes both full Settings/WLAN/info/NyxID/home navigation cycles before
+  timing out on a scan-page screenshot. LAN status probes afterward take
+  0.871–1.749 seconds; four pings have no loss but take 170–743 ms. The cause of
+  this intermittent transport behavior remains unresolved. The runner now has
+  `--snapshots-via-nyx` to exercise JPEGs through authenticated Nyx explicitly;
+  that result must be distinguished from the unsuccessful LAN runs.
+
+Logical LCD screenshots cannot prove physical scanout quality. The user's
+`IMG_4182.jpg` shows damaged Camera title pixels; the synchronization defect
+is fixed, and the operator reports that the updated physical screen's text is
+currently normal. This short observation does not establish a complete cure
+for intermittent artifacts; a longer soak remains outstanding. SD video
+playback and physical camera QR optics remain unverified.
+
 ## v0.3.0 on-demand Camera
 
 The operator requested retirement of continuous video publishing. The final

@@ -1,0 +1,105 @@
+--- a/espressif__esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c
++++ b/espressif__esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c
+@@ -37,6 +37,10 @@
+
+ #if SOC_MIPI_DSI_SUPPORTED
+ #include "esp_lcd_mipi_dsi.h"
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++#include "panel_dpi_compat.h"
++#include "panel_scanout_gate.h"
++#endif
+ #endif
+
+ #if SOC_LCDCAM_RGB_LCD_SUPPORTED
+@@ -132,6 +136,9 @@
+     uint32_t double_wait_switch_seq;
+     bool double_wait_active;
+     bool frame_buf_submit_pending;
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++    panel_scanout_gate_t scanout_gate;
++#endif
+     SemaphoreHandle_t double_wait_sem;
+     TaskHandle_t notify_task;
+     TaskHandle_t dummy_draw_wait_task;
+@@ -588,7 +595,7 @@
+            bridge_mode_uses_buf_switch_release(mode);
+ }
+
+-static inline void display_bridge_v9_mark_frame_buf_submit(esp_lv_adapter_display_bridge_v9_t *impl)
++static inline void display_bridge_v9_mark_frame_buf_submit(esp_lv_adapter_display_bridge_v9_t *impl, const void *frame)
+ {
+     if (!bridge_mode_needs_submit_gated_frame_complete(impl)) {
+         return;
+@@ -596,6 +603,9 @@
+
+     portENTER_CRITICAL(&impl->double_sync_lock);
+     impl->frame_buf_submit_pending = true;
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++    panel_scanout_submit(&impl->scanout_gate, frame);
++#endif
+     portEXIT_CRITICAL(&impl->double_sync_lock);
+ }
+
+@@ -630,7 +640,7 @@
+
+     esp_err_t ret = display_lcd_blit_full(impl->panel, &impl->runtime, frame_buffer);
+     if (ret == ESP_OK) {
+-        display_bridge_v9_mark_frame_buf_submit(impl);
++        display_bridge_v9_mark_frame_buf_submit(impl, frame_buffer);
+     }
+
+     return ret;
+@@ -2019,6 +2029,19 @@
+
+     return display_bridge_v9_handle_frame_buf_complete(impl);
+ }
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++static bool IRAM_ATTR display_bridge_v9_on_mipi_dma_scanout(esp_lcd_panel_handle_t panel,
++                                                         const void *active_frame, void *ctx)
++{
++    esp_lv_adapter_display_bridge_v9_t *impl = ctx;
++    if (!impl || !impl->panel) return false;
++    portENTER_CRITICAL_ISR(&impl->double_sync_lock);
++    bool complete = panel_scanout_complete(&impl->scanout_gate, active_frame);
++    portEXIT_CRITICAL_ISR(&impl->double_sync_lock);
++    if (!complete) return false;
++    return display_bridge_v9_on_mipi_frame_buf_complete(panel, NULL, ctx);
++}
++#endif
+ #endif /* CONFIG_SOC_MIPI_DSI_SUPPORTED */
+
+ #if CONFIG_SOC_LCD_RGB_SUPPORTED
+@@ -2112,12 +2135,22 @@
+             .on_color_trans_done = display_bridge_v9_on_mipi_color_trans_done,
+ #ifdef ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB
+             .on_frame_buf_complete = (bridge_mode_uses_buf_switch_release(mode) || impl->dummy_draw) ? display_bridge_v9_on_mipi_frame_buf_complete : NULL,
++#elif defined(PANEL_DPI_DMA_SCANOUT_COMPAT)
++            .on_refresh_done = NULL, // VSYNC does not prove that DMA switched buffers.
+ #else
+             .on_refresh_done = (bridge_mode_uses_buf_switch_release(mode) || impl->dummy_draw) ? display_bridge_v9_on_mipi_frame_buf_complete : NULL,
+ #endif
+         };
+
+-#ifndef ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++        // This backport intentionally supports the project's full-frame double
++        // buffering only. Partial pipelines need their own ownership protocol.
++        ESP_ERROR_CHECK(mode == ESP_LV_ADAPTER_TEAR_AVOID_MODE_DOUBLE_FULL && !impl->dummy_draw &&
++                        bridge_rotation(impl) == ESP_LV_ADAPTER_ROTATE_0 ? ESP_OK : ESP_ERR_NOT_SUPPORTED);
++        ESP_ERROR_CHECK(panel_dpi_register_scanout_callback(impl->panel,
++                        display_bridge_v9_on_mipi_dma_scanout, impl));
++        ESP_LOGI(TAG, "MIPI full-frame double buffering uses actual DMA scanout completion");
++#elif !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
+         ESP_LOGW(TAG, "on_frame_buf_complete unavailable; buffer-switch release and dummy-draw may not function on MIPI DSI");
+ #endif
+         esp_err_t ret = esp_lcd_dpi_panel_register_event_callbacks(impl->panel, &cbs, impl);
+@@ -2191,6 +2224,9 @@
+             break;
+         }
+
++#if defined(PANEL_DPI_DMA_SCANOUT_COMPAT) && !defined(ESP_LCD_DPI_HAS_FRAME_BUF_COMPLETE_CB)
++        ESP_ERROR_CHECK(panel_dpi_register_scanout_callback(impl->panel, NULL, NULL));
++#endif
+         const esp_lcd_dpi_panel_event_callbacks_t cbs = {0};
+         esp_err_t ret = esp_lcd_dpi_panel_register_event_callbacks(impl->panel, &cbs, NULL);
+         if (ret != ESP_OK) {

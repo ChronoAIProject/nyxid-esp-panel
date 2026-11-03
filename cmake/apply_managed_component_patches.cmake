@@ -3,6 +3,7 @@ set(_ha_cam_managed_component_patches
     "esp_capture_select_enabled_paths.patch"
     "gmf_video_force_sw_mjpeg.patch"
     "esp_video_codec_sw_mjpeg_rgb565.patch"
+    "esp_lvgl_adapter_dma_scanout.patch"
 )
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/managed_components")

@@ -1,0 +1,54 @@
+--- a/components/esp_lcd/dsi/esp_lcd_panel_dpi.c
++++ b/components/esp_lcd/dsi/esp_lcd_panel_dpi.c
+@@ -14,6 +14,7 @@
+ #include "esp_memory_utils.h"
+ #include "esp_private/dw_gdma.h"
+ #include "hal/color_hal.h"
++#include "panel_dpi_compat.h"
+
+ typedef struct esp_lcd_dpi_panel_t esp_lcd_dpi_panel_t;
+
+@@ -42,6 +43,8 @@
+     esp_pm_lock_handle_t pm_lock;          // Power management lock
+     esp_lcd_dpi_panel_color_trans_done_cb_t on_color_trans_done; // Callback invoked when color data transfer has finished
+     esp_lcd_dpi_panel_refresh_done_cb_t on_refresh_done; // Callback invoked when one refresh operation finished (kinda like a vsync end)
++    panel_dpi_scanout_cb_t on_scanout; // Actual DMA-selected framebuffer, independent of VSYNC
++    void *scanout_ctx;
+     void *user_ctx; // User context for the callback
+ };
+
+@@ -82,6 +85,13 @@
+     dw_gdma_lli_set_block_markers(dw_gdma_link_list_get_item(link_list, 0), markers);
+     dw_gdma_channel_use_link_list(chan, link_list);
+     dw_gdma_channel_enable_ctrl(chan, true);
++
++    // The previous descriptor has retired. Report the index sampled above,
++    // never cur_fb_index again: another core may already have submitted a frame.
++    if (dpi_panel->on_scanout && dpi_panel->on_scanout(&dpi_panel->base,
++            dpi_panel->fbs[fb_index], dpi_panel->scanout_ctx)) {
++        yield_needed = true;
++    }
+
+ #if !MIPI_DSI_BRG_LL_EVENT_VSYNC
+     // the DMA descriptor is large enough to carry a whole frame buffer, so this event can also be treated as a fake "vsync end"
+@@ -644,3 +654,20 @@
+
+     return ESP_OK;
+ }
++
++// Project-local compatibility API. Public IDF headers and the SDK checkout are
++// unchanged. The adapter only uses this with serialized full-frame buffering.
++esp_err_t panel_dpi_register_scanout_callback(esp_lcd_panel_handle_t panel,
++                                            panel_dpi_scanout_cb_t callback, void *ctx)
++{
++    ESP_RETURN_ON_FALSE(panel, ESP_ERR_INVALID_ARG, TAG, "invalid panel");
++    esp_lcd_dpi_panel_t *dpi_panel = __containerof(panel, esp_lcd_dpi_panel_t, base);
++#if CONFIG_LCD_DSI_ISR_CACHE_SAFE
++    ESP_RETURN_ON_FALSE(!callback || esp_ptr_in_iram(callback), ESP_ERR_INVALID_ARG, TAG, "scanout callback not in IRAM");
++    ESP_RETURN_ON_FALSE(!ctx || esp_ptr_internal(ctx), ESP_ERR_INVALID_ARG, TAG, "scanout context not in internal RAM");
++#endif
++    dpi_panel->on_scanout = NULL;
++    dpi_panel->scanout_ctx = ctx;
++    dpi_panel->on_scanout = callback;
++    return ESP_OK;
++}

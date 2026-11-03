@@ -34,6 +34,8 @@ bool Camera::run() {
     lv_obj_t *screen = lv_screen_active();
     lv_obj_set_style_bg_color(screen, lv_color_black(), 0);
     _image = lv_image_create(screen);
+    lv_obj_set_size(_image, 640, 880);
+    lv_image_set_inner_align(_image, LV_IMAGE_ALIGN_CONTAIN);
     lv_obj_center(_image);
     _status = lv_label_create(screen);
     lv_obj_set_width(_status, BSP_LCD_H_RES - 80);
@@ -68,7 +70,7 @@ bool Camera::run() {
     _frame = {};
     _frame.header.magic = LV_IMAGE_HEADER_MAGIC;
     _frame.header.cf = LV_COLOR_FORMAT_RGB565;
-    _frame.data_size = 320 * 240 * 2;
+    _frame.data_size = PANEL_CAMERA_FRAME_BYTES;
     _frame.data = static_cast<uint8_t *>(heap_caps_malloc(_frame.data_size, MALLOC_CAP_SPIRAM));
     if (!_frame.data) {
         lv_label_set_text(_status, "Camera: insufficient memory");
@@ -113,7 +115,6 @@ void Camera::tick(lv_timer_t *timer) {
     }
     if (self->_frame.header.w) {
         lv_image_set_src(self->_image, &self->_frame);
-        lv_image_set_scale(self->_image, 560 * 256 / self->_frame.header.w);
         if (!self->_scanning) lv_label_set_text(self->_status, "Camera - Back to exit");
     }
 }

@@ -22,9 +22,13 @@ def main():
     parser.add_argument('--slug', required=True)
     parser.add_argument('--output-dir', required=True, type=Path)
     parser.add_argument('--count', type=int, default=8)
+    parser.add_argument('--nyx-timeout', type=float, default=15,
+                        help='Per-request CLI deadline in seconds (default: 15)')
     args = parser.parse_args()
     if not 2 <= args.count <= 50:
         parser.error('--count must be 2..50')
+    if not 0 < args.nyx_timeout <= 60:
+        parser.error('--nyx-timeout must be >0 and <=60')
     args.output_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
     results = []
 
@@ -48,7 +52,7 @@ def main():
         if data is not None:
             cmd += ['-m', 'POST', '-d', '-']
         started = time.monotonic()
-        r = subprocess.run(cmd, input=data, capture_output=True, timeout=15)
+        r = subprocess.run(cmd, input=data, capture_output=True, timeout=args.nyx_timeout)
         if expect_ok:
             assert r.returncode == 0, (path, r.stdout[:160], r.stderr[:160])
         return r, time.monotonic() - started
@@ -68,7 +72,7 @@ def main():
     def check_jpeg(raw, name):
         im = Image.open(io.BytesIO(raw))
         im.load()
-        assert im.size == (320, 240), im.size
+        assert im.size == (800, 1280), im.size
         p = args.output_dir / name
         p.write_bytes(raw)
         p.chmod(0o600)
@@ -77,6 +81,7 @@ def main():
     initial = wait_mode('idle')
     assert initial['stream']['state'] == 'disabled'
     record('Initial idle status', initial)
+    record('Nyx request deadline seconds', args.nyx_timeout)
     for path in ['/camera', '/camera/snapshot.jpg', '/openapi.json']:
         lan(path, 404)
     lan('/snapshot.jpg', 503)
@@ -84,6 +89,9 @@ def main():
     lan('/config/stream', 410, b'{"auto_start":true}')
     schema = json.loads(nyx('/openapi.json')[0].stdout)
     assert schema['paths']['/camera/snapshot.jpg']['get']['operationId'] == 'camera_take_photo'
+    profile = json.loads(nyx('/camera')[0].stdout)
+    assert (profile['width'], profile['height']) == (800, 1280), profile
+    assert profile['mode'] == 'idle' and profile['continuous_streaming'] is False
     record('Authenticated camera routes and retired stream routes', True)
 
     latencies = []

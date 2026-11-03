@@ -54,6 +54,14 @@ Native music, drawing, calculator, Settings, camera and spectrum apps remain.
 
 Nyx Panel is the message/image app. Network, NyxID connection and device status
 live in native Settings; the content app has no duplicate system menu.
+Images fill the full 800×1280 canvas, preserving their aspect ratio with a
+center crop. The latest text floats near the bottom with a transparent
+background and a 2-pixel outline, including Chinese bitmap glyphs. `color`
+sets the lettering and the existing `bg` field now sets the outline color.
+Text wraps; oversized text is clipped to the canvas's safe area. Up to 20
+messages are retained so an expiring caption restores the previous unexpired
+one. There is no timestamp or title over the image. The native bottom-edge
+navigation gesture remains available to exit the app.
 
 - **Settings → WLAN → Scan Wi-Fi QR** opens the shared camera scanner. Standard
   `WIFI:` personal WPA/WPA2/WPA3 and open-network codes, escaped fields and
@@ -156,7 +164,7 @@ python tools/provision_agent.py --config-dir /private/node-config \
 
 The panel's existing authenticated NyxID service exposes:
 
-- `GET /camera/snapshot.jpg`: take a fresh 320×240 JPEG without navigating the LCD.
+- `GET /camera/snapshot.jpg`: take a fresh 800×1280 JPEG without navigating the LCD.
 - `GET /camera`: availability, capture counts, duration and last error.
 - `GET /openapi.json`: Camera operation descriptions for remote callers.
 
@@ -168,10 +176,22 @@ nyxid proxy request "$SLUG" /camera/snapshot.jpg --stream > photo.jpg
 The CLI's `--stream` flag preserves binary stdout for this single HTTP response;
 it does not start continuous camera streaming. Without it the CLI treats JPEG
 bytes as text. The board starts CSI only for the request, waits for a fresh
-frame, encodes the JPEG, and releases CSI, buffers and encoder before responding.
+frame after a one-second cold exposure warmup, encodes the JPEG, and releases
+CSI, buffers and encoder before responding.
 A second overlapping request gets 503 while the camera is busy. Failed capture
 never returns an earlier image. Native Camera and QR scanning keep preview alive
 only while their page is open; taking a photo during preview preserves that page.
+
+Capture matches the `p4-brookesia` system Camera profile: RGB565, two capture
+buffers, 400 kHz SCCB, and OV5647's native 800×1280 / 50 FPS sensor mode. JPEG
+encoding occurs only on request (quality 50, bounded to 512 KiB). QR decoding
+uses a separate 200×320 sample to keep its memory and CPU work bounded.
+
+Display initialization retains the original 10.1-inch JD9365 timing and DSI
+configuration. Full-frame double buffering replaces partial refresh. A checked
+patch builds a local copy of the IDF 5.5 DPI driver and reports actual DMA
+scanout selection to LVGL; it never edits the installed SDK or substitutes
+periodic VSYNC for framebuffer retirement. See [display details](docs/DISPLAY.md).
 
 `/snapshot.jpg` remains an authenticated alias. Unauthenticated LAN can read it
 only while native preview is already open; the new Camera routes require NyxID.
@@ -194,9 +214,10 @@ Raw JPEG requests use `Content-Type: image/jpeg`; the initial limit is 64 KiB.
 Example with the NyxID CLI:
 
 ```sh
-nyxid proxy request "$SLUG" /lcd/text -m POST -d '{"text":"Hello Lexa"}'
 nyxid proxy request "$SLUG" /lcd/image -m POST \
   -H 'Content-Type:image/jpeg' -d @hello-lexa.jpg
+nyxid proxy request "$SLUG" /lcd/text -m POST \
+  -d '{"text":"Hello Lexa · 你好，世界","color":"#ffffff","bg":"#121a2b","align":"center","duration_ms":0}'
 curl -H 'Content-Type: image/jpeg' --data-binary @hello-lexa.jpg \
   "http://$PANEL_IP/lcd/image"
 ```

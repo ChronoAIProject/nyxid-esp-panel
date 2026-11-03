@@ -26,6 +26,8 @@ def main():
     p.add_argument('--camera', action='store_true')
     p.add_argument('--native-pages', action='store_true',
                    help='Exercise Settings/WLAN exit persistence and native status pages')
+    p.add_argument('--snapshots-via-nyx', action='store_true',
+                   help='Read JPEGs through authenticated Nyx instead of the LAN HTTP connection')
     p.add_argument('--onboarding', action='store_true',
                    help='Exercise scan/back navigation and request then cancel a real login; never approves it')
     p.add_argument('--wifi-qr-image', type=Path,
@@ -59,8 +61,10 @@ def main():
             body = b''
         return body
 
-    def nyx(path, data=None, json_body=None, expected_ok=True):
+    def nyx(path, data=None, json_body=None, expected_ok=True, raw=False):
         cmd = ['nyxid', 'proxy', 'request', a.slug, path, '--output', 'json']
+        if raw:
+            cmd += ['--stream']  # One binary HTTP response, not continuous video.
         if data is not None or json_body is not None:
             cmd += ['-m', 'POST', '-H', 'Content-Type:' +
                     ('application/json' if json_body is not None else 'image/jpeg'), '-d', '-']
@@ -70,7 +74,7 @@ def main():
         return r.stdout
 
     def snapshot(name, path='/lcd/snapshot.jpg'):
-        raw = lan(path)
+        raw = nyx(path, raw=True) if a.snapshots_via_nyx else lan(path)
         im = Image.open(io.BytesIO(raw))
         im.load()
         out = a.output_dir / name

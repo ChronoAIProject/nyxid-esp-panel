@@ -5,6 +5,7 @@
 #include "esp_brookesia.hpp"
 #include "bsp/esp-bsp.h"
 #include "esp_heap_caps.h"
+#include "esp_cache.h"
 #include "esp_timer.h"
 #include "driver/jpeg_encode.h"
 #include "esp_log.h"
@@ -12,7 +13,6 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
-#include <ctime>
 extern "C" {
 #include "lcd_renderer.h"
 #include "lcd_image.h"
@@ -34,7 +34,6 @@ lcd_image_t image{};
 int64_t image_expiry;
 struct Message {
     char text[1025]{};
-    char timestamp[24]{};
     int64_t expiry{};
     uint32_t color{0xffffff}, bg{0x121a2b};
     lcd_text_size_t size{LCD_TEXT_SIZE_MEDIUM};
@@ -48,6 +47,31 @@ SemaphoreHandle_t screenshot_lock;
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
+
+// The bundled Chinese font contains bitmap glyphs. LVGL's vector-font outline
+// styles do not stroke them, so render the same wrapped text at eight offsets.
+// Labels stay transparent and share the same bounds, including for long text.
+void caption(lv_obj_t *parent, const Message &message) {
+    constexpr int stroke = 2;
+    constexpr int margin = 40;
+    constexpr int bottom = 56; // Keep the native bottom-edge gesture accessible.
+    lv_obj_update_layout(parent);
+    int width = lv_obj_get_content_width(parent) - 2 * margin;
+    int max_height = lv_obj_get_content_height(parent) - 2 * bottom;
+    auto layer = [&](int x, int y, uint32_t color) {
+        auto label = lv_label_create(parent);
+        lv_obj_set_width(label, width);
+        lv_obj_set_style_max_height(label, max_height, 0);
+        lcd_text_style_t style{message.text, message.size, color, message.bg, message.align};
+        lcd_text_apply(label, &style);
+        lv_obj_set_style_bg_opa(label, LV_OPA_TRANSP, 0);
+        lv_obj_align(label, LV_ALIGN_BOTTOM_MID, x, -bottom + y);
+    };
+    for (int y = -stroke; y <= stroke; y += stroke)
+        for (int x = -stroke; x <= stroke; x += stroke)
+            if (x || y) layer(x, y, message.bg);
+    layer(0, 0, message.color);
+}
 
 
 esp_err_t activate(esp_brookesia::systems::base::App *target) {
@@ -96,15 +120,18 @@ void expire(lv_timer_t *) {
 }
 }
 namespace esp_brookesia::apps {
-NyxPanel::NyxPanel() : App("Nyx Panel", &img_app_settings, true, true, true) {}
+NyxPanel::NyxPanel() : App("Nyx Panel", &img_app_settings, true, false, true) {}
 void NyxPanel::attach(Phone *p, NyxPanel *a) { phone = p; app = a; }
 bool NyxPanel::run() {
     root = lv_obj_create(lv_screen_active());
     lv_obj_set_size(root, lv_pct(100), lv_pct(100));
-    lv_obj_set_style_bg_color(root, lv_color_hex(0x101728), 0);
+    lv_obj_align(root, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_obj_set_style_bg_color(root, lv_color_black(), 0);
+    lv_obj_set_style_bg_opa(root, LV_OPA_COVER, 0);
     lv_obj_set_style_border_width(root, 0, 0);
-    lv_obj_set_style_pad_all(root, 24, 0);
-    lv_obj_set_flex_flow(root, LV_FLEX_FLOW_COLUMN);
+    lv_obj_set_style_radius(root, 0, 0);
+    lv_obj_set_style_pad_all(root, 0, 0);
+    lv_obj_remove_flag(root, LV_OBJ_FLAG_SCROLLABLE);
     render();
     return true;
 }
@@ -117,40 +144,28 @@ void NyxPanel::render() {
     if (!root) return;
     image_widget = nullptr;
     lv_obj_clean(root);
-    auto title = lv_label_create(root);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_30, 0);
-    lv_obj_set_style_text_color(title, lv_color_white(), 0);
-    lv_label_set_text(title, "Nyx Panel");
-    if (note[0]) {
-        auto label = lv_label_create(root);
-        lv_obj_set_width(label, lv_pct(100));
-        lv_obj_set_style_text_color(label, lv_color_hex(0x91b4ef), 0);
-        lv_label_set_text(label, note);
-    }
     if (image.dsc.data) {
         image_widget = lv_image_create(root);
         lv_image_set_src(image_widget, &image.dsc);
-        int scale = (700 * 256) / image.width;
-        if (image.height * scale / 256 > 650) scale = (650 * 256) / image.height;
-        lv_image_set_scale(image_widget, scale);
-        lv_image_set_inner_align(image_widget, LV_IMAGE_ALIGN_CONTAIN);
-        lv_obj_set_size(image_widget, 700, image.height * scale / 256);
+        lv_obj_update_layout(root);
+        // Round cover scaling up: LVGL's built-in COVER rounds down and can
+        // leave a one-pixel seam on opposite edges for non-integral ratios.
+        int sx = (lv_obj_get_content_width(root) * LV_SCALE_NONE + image.width - 1) / image.width;
+        int sy = (lv_obj_get_content_height(root) * LV_SCALE_NONE + image.height - 1) / image.height;
+        lv_image_set_scale(image_widget, sx > sy ? sx : sy);
+        lv_obj_center(image_widget);
     }
-    for (size_t i = 0; i < count; ++i) {
-        auto label = lv_label_create(root);
-        lv_obj_set_width(label, lv_pct(100));
-        lcd_text_style_t style{messages[i].text, messages[i].size, messages[i].color, messages[i].bg, messages[i].align};
-        lcd_text_apply(label, &style);
-        lv_obj_set_style_bg_color(label, lv_color_hex(messages[i].bg), 0);
-        lv_obj_set_style_bg_opa(label, LV_OPA_COVER, 0);
-        lv_label_set_text_fmt(label, "%s  %s", messages[i].timestamp, messages[i].text);
-    }
+    // Show only the latest unexpired caption. Keeping the bounded history lets
+    // a temporary caption expire back to the previous one without hiding art.
+    if (count) caption(root, messages[count - 1]);
     if (!count && !image.dsc.data) {
         auto label = lv_label_create(root);
+        lv_obj_set_style_text_font(label, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
         lv_obj_set_style_text_color(label, lv_color_hex(0x91b4ef), 0);
-        lv_label_set_text(label, "Ready for messages and images");
+        lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
+        lv_label_set_text_fmt(label, "Nyx Panel\n%s", note[0] ? note : "Ready for messages and images");
+        lv_obj_center(label);
     }
-    lv_obj_scroll_to_y(root, LV_COORD_MAX, LV_ANIM_OFF);
 }
 }
 extern "C" {
@@ -200,10 +215,6 @@ esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char 
     auto &msg = messages[count++];
     msg = {};
     snprintf(msg.text, sizeof(msg.text), "%s", text);
-    time_t now = time(nullptr);
-    tm t{};
-    localtime_r(&now, &t);
-    strftime(msg.timestamp, sizeof(msg.timestamp), "%H:%M:%S", &t);
     msg.expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
     msg.color = parse_color(color, 0xffffff);
     msg.bg = parse_color(bg, 0x121a2b);
@@ -379,9 +390,14 @@ esp_err_t lcd_renderer_snapshot_jpeg(uint8_t *out, size_t cap, size_t *out_len)
         .image_quality = 40,
     };
     uint32_t produced = 0u;
-    esp_err_t err = jpeg_encoder_process(encoder, &enc_cfg,
-                                         raw, raw_size,
-                                         enc_out, (uint32_t)alloc_size, &produced);
+    // jpeg_alloc_encoder_mem calloc leaves dirty zero cache lines. Hand the
+    // output to DMA before encoding so a later eviction cannot overwrite JPEG
+    // bytes. The driver invalidates the payload again after DMA completes.
+    esp_err_t err = esp_cache_msync(enc_out, alloc_size,
+        ESP_CACHE_MSYNC_FLAG_DIR_C2M | ESP_CACHE_MSYNC_FLAG_INVALIDATE);
+    if (err == ESP_OK)
+        err = jpeg_encoder_process(encoder, &enc_cfg, raw, raw_size,
+                                    enc_out, (uint32_t)alloc_size, &produced);
     free(raw);
     if (err != ESP_OK) {
         free(enc_out);

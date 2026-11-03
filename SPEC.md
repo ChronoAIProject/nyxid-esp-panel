@@ -2,6 +2,8 @@
 
 Status: v0.2.2 native onboarding is installed and verified on the replacement
 board; v0.3.0 retires continuous streaming in favor of on-demand Camera service.
+v0.3.1 restores the system Camera profile and synchronizes full-frame display
+buffer reuse with actual DMA completion on IDF 5.5.
 Current evidence is tracked in docs/VERIFICATION.md.
 Known transport and verification limits are recorded below. Date: 2026-11-03.
 
@@ -37,7 +39,7 @@ Never commit that backup or restore a raw NVS image from another device.
 | ID | Capability | Required resulting behavior |
 | --- | --- | --- |
 | R01 | Brookesia desktop | Preserve launcher, Settings, touch, clock, brightness, volume, music, calculator and drawing apps; missing SD media must not prevent boot. |
-| R02 | Nyx Panel app | A native launcher app shows sticky pushed JPEGs and the last 20 timestamped text messages, including CJK. Remote display pushes open this app. Clear removes both content types. Duration expiry is supported. |
+| R02 | Nyx Panel app | A native launcher app fills the canvas with sticky pushed JPEGs using an aspect-preserving center crop. The latest unexpired text floats over it with transparent background and a bitmap-compatible 2-pixel outline, including CJK; `bg` controls the outline color. Retain up to 20 captions for expiry restoration. Remote display pushes open this app; native navigation can exit it. Clear removes both content types. Independent image/text expiry is supported. |
 | R03 | HTTP compatibility | Preserve the old route inventory for `/status`, LCD routes, snapshots, configuration and system operations. Retired stream start/config writes return 410; stop returns 200 and status reports disabled. URL OTA is asynchronous: 202 acknowledges acceptance; later download/digest errors are reported in `/status.ota`. Raw image digest rejection remains 422. LAN keeps its documented narrow recovery subset; authenticated Nyx exposes the full set. |
 | R04 | NyxID connection | Runtime NVS credentials, authenticated WSS registration, heartbeats, reconnect with bounded backoff, service registration, and a truthful connection state. No UI work or long HTTP work in the socket callback. |
 | R05 | Image transport | LAN accepts JPEG bytes directly. Retain JSON/Base64 Nyx compatibility and add negotiated binary-upload handling with bounded chunks; never advertise unsupported capabilities. Invalid, oversized or incomplete transfers cannot replace the displayed image. |
@@ -83,6 +85,11 @@ target returns an explicit error; no fake navigation success or separate legacy
 screen stack is allowed.
 
 ### Media
+
+Use the `p4-brookesia` Camera capture profile: 800×1280 RGB565, two capture
+buffers, 400 kHz SCCB, and the native 50 FPS OV5647 mode. Retain full-resolution
+photos and use an aspect-preserving 200×320 sample for QR decoding. GUI preview
+fits the portrait frame without stretching it. JPEGs are bounded to 512 KiB.
 
 One owner initializes CSI and allocates capture buffers. Backend snapshots,
 camera UI and QR scanner request transitions through one serialized camera

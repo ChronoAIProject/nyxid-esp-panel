@@ -7,7 +7,7 @@ was `ff302d5ecfe8d188cf0f167995e87bc08c722296`.
 
 ## Screen ownership
 
-Nyx Panel displays pushed images and timestamped messages. Native Settings owns
+Nyx Panel displays full-screen pushed images and outlined text captions. Native Settings owns
 WLAN, NyxID connection and device status. Camera handles previews and scanning.
 Remote `home`, `settings`, `wifi`, `camera`, `scan`, `info`, `operator`,
 `device_bind` and `back` remain supported. Scanning reports target `scan` and

@@ -19,6 +19,8 @@ function(haCam_add_test name)
 endfunction()
 
 haCam_add_test(test_smoke)
+haCam_add_test(test_scanout_gate)
+target_include_directories(test_scanout_gate PRIVATE ../../compat/include)
 haCam_add_test(test_mailbox ../../components/panel_services/mailbox.c)
 haCam_add_test(test_nyx_link_sm ../../components/panel_services/nyx_link_sm.c)
 haCam_add_test(test_stream_sm ../../components/panel_services/stream_sm.c)

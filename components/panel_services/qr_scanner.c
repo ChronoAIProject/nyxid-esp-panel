@@ -126,7 +126,7 @@ void qr_scanner_confirm(void)
 }
 
 #define QR_SCAN_MAX_JPEG_BYTES (80u * 1024u)
-#define QR_SCAN_MAX_RGB_BYTES  (320u * 240u * 2u)
+#define QR_SCAN_MAX_RGB_BYTES  PANEL_CAMERA_QR_BYTES
 #define QR_SCAN_INTERVAL_US    (1000000LL)
 #define QR_FIELD_MAX           128u
 
@@ -641,7 +641,7 @@ void qr_scanner_poll(void)
     uint16_t h = 0;
     size_t rgb_len = 0u;
     uint32_t seq = 0u;
-    if (media_sys_preview_copy_latest_rgb565(g.rgb, QR_SCAN_MAX_RGB_BYTES, &w, &h,
+    if (media_sys_preview_copy_qr_rgb565(g.rgb, QR_SCAN_MAX_RGB_BYTES, &w, &h,
                                              &rgb_len, &seq) != ESP_OK) {
         return;
     }

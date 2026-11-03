@@ -15,6 +15,7 @@
 #include "cjson_tiny.h"
 #include "lcd_renderer.h"
 #include "media_mode.h"
+#include "camera_profile.h"
 #include "net_manager.h"
 #include "nvs_config.h"
 #include "nyx_creds.h"
@@ -611,10 +612,11 @@ static int h_camera_status(const nyx_proxy_request_t *req, char *resp, size_t ca
     media_mode_status(&state);
     snprintf(ct, ct_cap, "application/json");
     snprintf(resp, cap,
-        "{\"mode\":\"%s\",\"width\":320,\"height\":240,\"content_type\":\"image/jpeg\","
+        "{\"mode\":\"%s\",\"width\":%u,\"height\":%u,\"content_type\":\"image/jpeg\","
         "\"snapshot_path\":\"/camera/snapshot.jpg\",\"continuous_streaming\":false,"
         "\"captures\":%lu,\"failed_captures\":%lu,\"last_capture_ms\":%lu,\"last_error\":\"%s\"}",
-        media_mode_name(state.mode), (unsigned long)state.completed, (unsigned long)state.failed,
+        media_mode_name(state.mode), PANEL_CAMERA_WIDTH, PANEL_CAMERA_HEIGHT,
+        (unsigned long)state.completed, (unsigned long)state.failed,
         (unsigned long)state.last_capture_ms, state.last_error == ESP_OK ? "" : esp_err_to_name(state.last_error));
     json_response_len(resp, resp_len);
     return 200;
@@ -629,7 +631,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         "{\"openapi\":\"3.0.3\",\"info\":{\"title\":\"Nyx Panel Camera\",\"version\":\"1.0.0\"},"
         "\"paths\":{\"/camera/snapshot.jpg\":{\"get\":{\"operationId\":\"camera_take_photo\","
         "\"summary\":\"Take a fresh camera photo\","
-        "\"description\":\"Captures a 320x240 JPEG on demand. Releases CSI and buffers after capture unless the native Camera or QR preview is open. Leaves the LCD unchanged. Concurrent capture returns 503.\","
+        "\"description\":\"Captures a native 800x1280 JPEG on demand. RGB565 capture uses the system Camera profile. Releases CSI and buffers after capture unless the native Camera or QR preview is open. Leaves the LCD unchanged. Concurrent capture returns 503.\","
         "\"responses\":{\"200\":{\"description\":\"Fresh JPEG\",\"content\":{\"image/jpeg\":{\"schema\":{\"type\":\"string\",\"format\":\"binary\"}}}},"
         "\"503\":{\"description\":\"Camera busy or unavailable; no cached image returned\"}}}},"
         "\"/camera\":{\"get\":{\"operationId\":\"camera_get_status\",\"summary\":\"Get camera availability and capture statistics\","
