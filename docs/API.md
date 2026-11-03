@@ -14,7 +14,7 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 | POST | `/lcd/image` | yes | Raw JPEG; fills the 800×1280 canvas with an aspect-preserving center crop; optional `?duration_ms=N`, 0 means sticky; 202 accepted, 400 invalid JPEG, 413 oversized |
 | POST | `/lcd/text` | no | `{"text":"Hello Lexa","size":"medium","color":"#ffffff","bg":"#121a2b","align":"center","duration_ms":0}`; latest caption floats over the image, `bg` is the 2-pixel outline color; retains 20 messages for expiry restoration |
 | POST | `/lcd/clear` | yes | Clears image and message history |
-| GET | `/lcd/snapshot.jpg` | yes | Current LVGL screen encoded as JPEG |
+| GET | `/lcd/snapshot.jpg` | yes | Actual DMA-selected 800×1280 framebuffer encoded as JPEG, including system overlays; no object-tree redraw |
 | GET | `/lcd/screen` | yes | Actual `target`, native stack `depth` and `err` |
 | POST | `/lcd/screen?target=NAME` | no | `home`, `settings`, `wifi`, `camera`, `scan`, `info`, `operator`, `device_bind`, `back`; unknown target 404; accepted navigation runs on the GUI timer |
 | GET | `/camera/snapshot.jpg` | no | Fresh 800×1280 JPEG on demand; LCD unchanged; CSI/buffers/encoder released before response unless native preview is open; 503 busy/unavailable |

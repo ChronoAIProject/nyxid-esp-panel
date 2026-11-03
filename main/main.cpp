@@ -38,6 +38,9 @@ using namespace esp_brookesia;
 using namespace esp_brookesia::gui;
 using namespace esp_brookesia::systems::phone;
 
+static_assert(LV_DRAW_SW_DRAW_UNIT_CNT == 1,
+              "Compressed bitmap fonts share RLE state; use one LVGL software renderer");
+
 constexpr bool EXAMPLE_SHOW_MEM_INFO = true;
 
 static bool is_wifi_connected()

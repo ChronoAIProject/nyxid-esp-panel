@@ -1,26 +1,30 @@
 --- a/components/esp_lcd/dsi/esp_lcd_panel_dpi.c
 +++ b/components/esp_lcd/dsi/esp_lcd_panel_dpi.c
-@@ -14,6 +14,7 @@
+@@ -14,6 +14,8 @@
  #include "esp_memory_utils.h"
  #include "esp_private/dw_gdma.h"
  #include "hal/color_hal.h"
 +#include "panel_dpi_compat.h"
++#include <stdatomic.h>
 
  typedef struct esp_lcd_dpi_panel_t esp_lcd_dpi_panel_t;
 
-@@ -42,6 +43,8 @@
+@@ -42,6 +44,9 @@
      esp_pm_lock_handle_t pm_lock;          // Power management lock
      esp_lcd_dpi_panel_color_trans_done_cb_t on_color_trans_done; // Callback invoked when color data transfer has finished
      esp_lcd_dpi_panel_refresh_done_cb_t on_refresh_done; // Callback invoked when one refresh operation finished (kinda like a vsync end)
 +    panel_dpi_scanout_cb_t on_scanout; // Actual DMA-selected framebuffer, independent of VSYNC
 +    void *scanout_ctx;
++    _Atomic(const void *) scanout_frame;
      void *user_ctx; // User context for the callback
  };
 
-@@ -82,6 +85,13 @@
+@@ -82,6 +87,15 @@
      dw_gdma_lli_set_block_markers(dw_gdma_link_list_get_item(link_list, 0), markers);
      dw_gdma_channel_use_link_list(chan, link_list);
      dw_gdma_channel_enable_ctrl(chan, true);
++
++    atomic_store_explicit(&dpi_panel->scanout_frame, dpi_panel->fbs[fb_index], memory_order_release);
 +
 +    // The previous descriptor has retired. Report the index sampled above,
 +    // never cur_fb_index again: another core may already have submitted a frame.
@@ -31,7 +35,15 @@
 
  #if !MIPI_DSI_BRG_LL_EVENT_VSYNC
      // the DMA descriptor is large enough to carry a whole frame buffer, so this event can also be treated as a fake "vsync end"
-@@ -644,3 +654,20 @@
+@@ -456,6 +470,7 @@
+     }
+
+     // by default, we use the fb0 as the first working frame buffer
++    atomic_store_explicit(&dpi_panel->scanout_frame, dpi_panel->fbs[0], memory_order_release);
+     dpi_panel->cur_fb_index = 0;
+     link_list = dpi_panel->link_lists[0];
+     dw_gdma_channel_use_link_list(dma_chan, link_list);
+@@ -644,3 +659,30 @@
 
      return ESP_OK;
  }
@@ -51,4 +63,14 @@
 +    dpi_panel->scanout_ctx = ctx;
 +    dpi_panel->on_scanout = callback;
 +    return ESP_OK;
++}
++
++esp_err_t panel_dpi_get_scanout_buffer(esp_lcd_panel_handle_t panel,
++                                     const void **frame, size_t *size)
++{
++    ESP_RETURN_ON_FALSE(panel && frame && size, ESP_ERR_INVALID_ARG, TAG, "invalid scanout arguments");
++    esp_lcd_dpi_panel_t *dpi_panel = __containerof(panel, esp_lcd_dpi_panel_t, base);
++    *frame = atomic_load_explicit(&dpi_panel->scanout_frame, memory_order_acquire);
++    *size = dpi_panel->fb_size;
++    return *frame ? ESP_OK : ESP_ERR_INVALID_STATE;
 +}

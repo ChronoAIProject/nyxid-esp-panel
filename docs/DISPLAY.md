@@ -1,5 +1,40 @@
 # Display compatibility
 
+## Compressed bitmap glyphs and software render threads
+
+The user still observed damaged letters on the home board with v0.4.0. Its
+two LVGL software workers can decode the bundled Noto SC font concurrently.
+The font uses `bitmap_format = 1` (compressed). In LVGL 9.4,
+`src/font/lv_font_fmt_txt.c` maps `font_rle` to the single
+`LV_GLOBAL_DEFAULT()->font_fmt_rle` state. `rle_init` and `rle_next` mutate that
+shared input pointer, bit position and repeat counters without a decode lock.
+The normal GUI lock does not serialize the separate render workers.
+
+A host probe using the actual pinned LVGL source and the project's font
+reproduces incorrect glyph pixels with two simultaneous decoder calls; the
+same workload passes with calls serialized. v0.4.1 sets
+`CONFIG_LV_DRAW_SW_DRAW_UNIT_CNT=1`, and a build assertion rejects configurations
+that retain two workers. This preserves the font and its storage format while
+serializing decoding through the renderer. It removes software render
+parallelism; native Camera capture and the network/service tasks remain separate.
+
+After `idf.py build` has resolved the pinned component, reproduce with the real
+decoder and both Latin/Chinese glyphs:
+
+```sh
+cmake -S tools/font_decode_probe -B /tmp/panel-font-probe
+cmake --build /tmp/panel-font-probe -j4
+ctest --test-dir /tmp/panel-font-probe --output-on-failure
+/tmp/panel-font-probe/font_decode_probe --concurrent
+```
+
+The default probe serializes two callers and must pass. The explicit concurrent
+mode intentionally bypasses the renderer's serialization and returns nonzero
+when it reproduces bad pixels. Its mismatch count varies with scheduling;
+v0.4.1 prevents this access pattern rather than changing upstream's decoder.
+
+## DMA scanout synchronization
+
 The reference is the phone-style `firmware/brookesia` in Waveshare's
 ESP32-P4-Platform, commit `6f78fa810ec505048c1941e3d09cefc9f29129bd`.
 Its native Camera uses 800×1280 RGB565, two camera buffers, 400 kHz SCCB and
@@ -40,9 +75,16 @@ the reference Camera's independent dummy-draw framebuffer writer.
 
 Host tests check stale DMA selection, repeated callbacks, alternating buffers
 and completion before gate arming. Hardware acceptance exercises actual display
-flushes and CSI activity. A `/lcd/snapshot.jpg` read captures LVGL's logical
-image and cannot establish that the physical scanout is artifact-free. Physical
-follow-up and a long soak remain necessary to assess intermittent corruption.
+flushes and CSI activity. Through v0.4.0, `/lcd/snapshot.jpg` redrew LVGL's object
+tree; that could produce intact letters while the previously rendered screen
+had bad glyphs. v0.4.1 instead acquires the GUI lock, reads the DMA-selected
+frame pointer published by the driver, invalidates its CPU cache and copies
+the actual RGB565 memory into a private JPEG input buffer. It includes the
+system overlays and always captures the full 800×1280 panel. The LCD DMA only
+reads this storage, and the GUI lock prevents new rendering/submissions during
+the copy. This exposes stored glyph corruption without silently repainting it.
+Physical follow-up is still needed for faults after the framebuffer, such as
+panel transport or electrical problems.
 
 ## JPEG snapshot DMA buffers
 

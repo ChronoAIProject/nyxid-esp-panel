@@ -17,6 +17,7 @@ extern "C" {
 #include "lcd_renderer.h"
 #include "lcd_image.h"
 #include "lcd_text.h"
+#include "panel_dpi_compat.h"
 #include "nvs_config.h"
 #include "provisioning.h"
 }
@@ -328,18 +329,22 @@ esp_err_t lcd_renderer_snapshot_jpeg(uint8_t *out, size_t cap, size_t *out_len)
         return ESP_ERR_TIMEOUT;
     }
 
-    lv_obj_t *scr = lv_screen_active();
-    if (!scr) {
+    lv_display_t *display = lv_display_get_default();
+    const void *scanout = nullptr;
+    size_t scanout_size = 0;
+    esp_err_t capture_err = panel_dpi_get_scanout_buffer(bsp_display_get_panel_handle(),
+                                                         &scanout, &scanout_size);
+    if (!display || capture_err != ESP_OK) {
         bsp_display_unlock();
         xSemaphoreGive(screenshot_lock);
-        return ESP_ERR_INVALID_STATE;
+        return capture_err == ESP_OK ? ESP_ERR_INVALID_STATE : capture_err;
     }
-    int32_t w = lv_obj_get_width(scr);
-    int32_t h = lv_obj_get_height(scr);
-    if (w <= 0 || h <= 0) {
+    int32_t w = lv_display_get_horizontal_resolution(display);
+    int32_t h = lv_display_get_vertical_resolution(display);
+    if (w <= 0 || h <= 0 || scanout_size != (size_t)w * h * 2u) {
         bsp_display_unlock();
         xSemaphoreGive(screenshot_lock);
-        return ESP_ERR_INVALID_STATE;
+        return ESP_ERR_INVALID_SIZE;
     }
 
     size_t raw_size = (size_t)w * (size_t)h * 2u;  // RGB565
@@ -352,15 +357,18 @@ esp_err_t lcd_renderer_snapshot_jpeg(uint8_t *out, size_t cap, size_t *out_len)
         return ESP_ERR_NO_MEM;
     }
 
-    lv_image_dsc_t dsc = {0};
-    lv_result_t lr = lv_snapshot_take_to_buf(scr, LV_COLOR_FORMAT_RGB565,
-                                             &dsc, raw, raw_size);
+    // Copy the actual DMA-selected frame, including system overlays. Redrawing
+    // the object tree here can hide corruption in the frame the user sees.
+    // Rendering is quiescent under the GUI lock; DMA only reads this buffer.
+    capture_err = esp_cache_msync(const_cast<void *>(scanout), scanout_size,
+                                  ESP_CACHE_MSYNC_FLAG_DIR_M2C);
+    if (capture_err == ESP_OK) memcpy(raw, scanout, raw_size);
     bsp_display_unlock();
-    if (lr != LV_RESULT_OK) {
+    if (capture_err != ESP_OK) {
         free(raw);
-        ESP_LOGE(TAG, "lv_snapshot_take_to_buf failed");
+        ESP_LOGE(TAG, "scanout buffer read failed: %s", esp_err_to_name(capture_err));
         xSemaphoreGive(screenshot_lock);
-        return ESP_FAIL;
+        return capture_err;
     }
 
     // The HW encoder requires its output buffer to be allocated via

@@ -1,5 +1,52 @@
 # Hardware acceptance, 2026-11-03
 
+## v0.4.1 compressed-font concurrency repair
+
+After v0.4.0, the home-board operator still reports missing/garbled letters.
+The earlier scanout/JPEG fixes did not remove this separate font-decoder race.
+The bundled Noto SC font is compressed, and the two configured LVGL 9.4
+software render workers share its unprotected global RLE state. The real-source
+host probe in `tools/font_decode_probe` uses separate glyph descriptors and
+output buffers for each caller. In the recorded Latin/Chinese run, concurrent
+calls corrupt 5,869 of 6,000 decodes; serialized calls corrupt zero. The count
+is scheduling-dependent. The default serialized CTest passes. An earlier
+ASCII-only probe reproduces the same fault independently.
+
+The firmware now configures one software render worker and rejects a retained
+multi-worker configuration at compile time. `/lcd/snapshot.jpg` copies the
+actual DMA-selected framebuffer under the GUI lock instead of redrawing the
+object tree, so this verification observes already rendered glyphs. Native
+screenshots include system overlays and now consistently measure 800×1280.
+
+- ESP-IDF v5.5.4 build and all 16 existing host executables pass, in addition to
+  the real-font serialized probe. App-only flash at `ota_1`/`0x770000` verifies;
+  the home WLAN, original node identity and slug are retained.
+- Installed binary: `0x587e90` (5,799,568 bytes), with `0x108170` bytes spare.
+  Binary SHA256:
+  `4dbe8646d345b9fb5dc284de7771f6d7324a17fee68b631b22260ccac1ca70e0`.
+  ELF SHA256, also reported by `/status`:
+  `6ac3552cc1a12f6df0f4dd6d7a40e64ddbd6ff390cbfaae422b2d781e01031b0`.
+- `panel-041/results.json`: ten actual static frame captures are byte-identical
+  (23,433 bytes), both image orientations cover the canvas edges, and outlined
+  Latin/Chinese text, alignment, color and long-text clipping are visually
+  checked. The full-frame captures now show the native navigation affordance.
+- `acceptance-041/results.json`: complete LAN-screenshot regression passes,
+  including text expiry/restoration, invalid-image preservation, two native
+  page cycles, scan return paths, Wi-Fi QR confirmation, real device-code
+  request/cancel and three native Camera/photo/Back cycles. No account code is
+  approved and the test Wi-Fi is never connected. Uptime remains continuous
+  through 296 seconds, with three successful photos, zero capture errors and
+  Camera idle at the end. One adapter-lock timeout appears in UART during the
+  run; subsequent polling completes. No panic/assert/abort or DMA underrun is
+  recorded. This is functional verification, not a preview frame-rate benchmark.
+- `glyph-stability-041/results.json`: twenty actual Camera frames have identical
+  title pixels while live preview redraws, and twenty Nyx Panel frames have
+  identical mixed Chinese/English/numeric caption pixels. Final mode is idle,
+  with no extra camera-photo requests and continuous uptime through 362 seconds.
+  The operator checks the physical home-board screen and confirms that the
+  letters are complete and currently normal. This is a short physical
+  observation, not a long-duration soak result.
+
 ## v0.4.0 full-screen picture and outlined captions
 
 The operator moved home and connected another board of the same model. USB
