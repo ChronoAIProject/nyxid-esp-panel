@@ -17,7 +17,6 @@ extern "C" {
 #include "lcd_renderer.h"
 #include "lcd_image.h"
 #include "lcd_text.h"
-#include "local_api.h"
 #include "nvs_config.h"
 #include "provisioning.h"
 }
@@ -43,7 +42,6 @@ struct Message {
 };
 std::array<Message, 20> messages;
 size_t count;
-char page[24] = "home";
 char note[160]{};
 lv_timer_t *expiry_timer;
 SemaphoreHandle_t screenshot_lock;
@@ -123,32 +121,6 @@ void NyxPanel::render() {
     lv_obj_set_style_text_font(title, &lv_font_montserrat_30, 0);
     lv_obj_set_style_text_color(title, lv_color_white(), 0);
     lv_label_set_text(title, "Nyx Panel");
-    auto actions = lv_obj_create(root);
-    lv_obj_set_size(actions, lv_pct(100), LV_SIZE_CONTENT);
-    lv_obj_set_flex_flow(actions, LV_FLEX_FLOW_ROW);
-    lv_obj_set_style_bg_opa(actions, LV_OPA_TRANSP, 0);
-    lv_obj_set_style_border_width(actions, 0, 0);
-    const char *names[] = {"Messages", "Scan QR", "Wi-Fi", "Device status"};
-    const char *targets[] = {"home", "scan", "wifi", "info"};
-    for (size_t i=0; i<4; ++i) {
-        auto button=lv_button_create(actions);
-        auto label=lv_label_create(button);
-        lv_label_set_text(label,names[i]);
-        lv_obj_add_event_cb(button,[](lv_event_t *e) {
-            lcd_renderer_navigate(static_cast<const char *>(lv_event_get_user_data(e)));
-        },LV_EVENT_CLICKED,const_cast<char *>(targets[i]));
-    }
-    if (strcmp(page, "info") == 0 || strcmp(page, "operator") == 0 || strcmp(page, "device_bind") == 0) {
-        auto status = lv_label_create(root);
-        lv_obj_set_width(status, lv_pct(100));
-        lv_label_set_long_mode(status, LV_LABEL_LONG_MODE_WRAP);
-        lv_obj_set_style_text_color(status, lv_color_white(), 0);
-        char json[4096];
-        local_api_format_status_json(json, sizeof(json));
-        lv_label_set_text(status, strcmp(page, "device_bind") == 0 ?
-            "Provision using UART: nyx-key, nyx-node, nyx-slug, reboot.\nUse Scan QR for camera provisioning." : json);
-        return;
-    }
     if (note[0]) {
         auto label = lv_label_create(root);
         lv_obj_set_width(label, lv_pct(100));
@@ -212,7 +184,6 @@ esp_err_t lcd_renderer_push_image(const uint8_t *jpeg, size_t len, uint32_t dura
     remove_image();
     image = decoded;
     image_expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
-    strcpy(page, "home");
     err = lcd_renderer_navigate("home");
     dirty=true;
     bsp_display_unlock();
@@ -239,7 +210,6 @@ esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char 
     msg.size = size && !strcmp(size, "small") ? LCD_TEXT_SIZE_SMALL : LCD_TEXT_SIZE_MEDIUM;
     msg.align = align && !strcmp(align, "right") ? LCD_TEXT_ALIGN_RIGHT :
         align && !strcmp(align, "center") ? LCD_TEXT_ALIGN_CENTER : LCD_TEXT_ALIGN_LEFT;
-    strcpy(page, "home");
     esp_err_t err = lcd_renderer_navigate("home");
     dirty=true;
     bsp_display_unlock();
@@ -263,18 +233,25 @@ static esp_err_t navigate_now(const char *target) {
     using namespace esp_brookesia::apps;
     if (!strcmp(target, "back")) {
         err = phone->sendNavigateEvent(Manager::NavigateType::BACK) ? ESP_OK : ESP_FAIL;
-    } else if (!strcmp(target, "settings") || !strcmp(target, "wifi")) {
+    } else if (!strcmp(target, "settings") || !strcmp(target, "wifi") ||
+               !strcmp(target, "info") || !strcmp(target, "operator") || !strcmp(target, "device_bind")) {
         auto settings = Settings::requestInstance();
         err = activate(settings);
         if (err == ESP_OK) {
             if (!strcmp(target, "wifi")) settings->showWifi();
+            else if (!strcmp(target, "device_bind")) settings->showNyx();
+            else if (!strcmp(target, "info") || !strcmp(target, "operator")) settings->showDevice(target);
             else settings->showRoot();
         }
     } else if (!strcmp(target, "camera") || !strcmp(target, "scan")) {
-        if (!strcmp(target, "scan")) provisioning_mode_enter("remote scan");
-        err = activate(Camera::requestInstance());
+        const char *return_target = "settings";
+        auto current = phone->getManager().getActiveApp();
+        if (current && !strcmp(current->getName(), "Settings"))
+            return_target = Settings::requestInstance()->remotePage();
+        auto camera = Camera::requestInstance();
+        camera->setScanMode(!strcmp(target, "scan"), return_target);
+        err = activate(camera);
     } else {
-        snprintf(page, sizeof(page), "%s", target);
         err = activate(app);
         app->render();
     }
@@ -302,9 +279,10 @@ esp_err_t lcd_renderer_current_screen(const char **target, size_t *depth) {
     if (!phone || !target || !depth) return ESP_ERR_INVALID_ARG;
     if (bsp_display_lock(1000) != ESP_OK) return ESP_ERR_TIMEOUT;
     auto active = phone->getManager().getActiveApp();
-    if (active == app) *target = page;
+    if (active == app) *target = "home";
     else if (active && !strcmp(active->getName(), "Settings")) *target = esp_brookesia::apps::Settings::requestInstance()->remotePage();
-    else if (active && !strcmp(active->getName(), "Camera")) *target = "camera";
+    else if (active && !strcmp(active->getName(), "Camera"))
+        *target = esp_brookesia::apps::Camera::requestInstance()->scanning() ? "scan" : "camera";
     else *target = active ? "native_app" : "launcher";
     *depth = active ? 2 : 1;
     bsp_display_unlock();

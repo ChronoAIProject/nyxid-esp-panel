@@ -13,6 +13,7 @@
 #include "./ui/DisplayPage.hpp"
 #include "./ui/SoundPage.hpp"
 #include "./ui/WlanPage.hpp"
+#include "./ui/PanelPage.hpp"
 
 namespace esp_brookesia::apps
 {
@@ -29,7 +30,16 @@ namespace esp_brookesia::apps
         bool run(void) override;
         void showRoot() { if (active_page != ActivePage::None) { close(); run(); } }
         void showWifi() { if (active_page != ActivePage::Wlan) open_page("WLAN"); }
-        const char *remotePage() const { return active_page == ActivePage::Wlan ? "wifi" : "settings"; }
+        void showNyx() { if (active_page != ActivePage::Nyx) open_page("NyxID"); }
+        void showDevice(const char *target) {
+            if (active_page != ActivePage::Device) open_page("Device status");
+            device_target = !strcmp(target, "operator") ? "operator" : "info";
+        }
+        const char *remotePage() const {
+            return active_page == ActivePage::Wlan ? "wifi" :
+                active_page == ActivePage::Nyx ? "device_bind" :
+                active_page == ActivePage::Device ? device_target : "settings";
+        }
         i2c_master_bus_handle_t i2c_bus_handle;
         i2c_master_dev_handle_t pmu_dev_handle;
         static int pmu_register_read(uint8_t devAddr, uint8_t regAddr, uint8_t *data, uint8_t len);
@@ -53,6 +63,8 @@ namespace esp_brookesia::apps
             Sound,
             Display,
             About,
+            Nyx,
+            Device,
         };
 
         static void event_handler_cb(lv_event_t *e);
@@ -73,6 +85,8 @@ namespace esp_brookesia::apps
         lv_style_t style_list_text;
         lv_style_t style_list_btn_pressed;
         ActivePage active_page;
+        PanelPage panel_page;
+        const char *device_target = "info";
     };
 
 } // namespace esp_brookesia::apps

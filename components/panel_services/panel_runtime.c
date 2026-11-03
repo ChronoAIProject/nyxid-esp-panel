@@ -22,9 +22,7 @@
 #include "devices.h"
 #include "settings.h"
 #include "bsp/esp-bsp.h"
-#ifdef CONFIG_HA_CAM_DEVICE_CODE
 #include "device_code.h"
-#endif
 #include "lcd_renderer.h"
 #include "media_mode.h"
 #include "local_api.h"
@@ -222,8 +220,6 @@ static int nyx_status_cli(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    (void)nyx_creds_load();
-
     const char *api_key = nyx_creds_api_key();
     size_t api_len = api_key ? strlen(api_key) : 0u;
     char masked[32] = "";
@@ -242,6 +238,35 @@ static int nyx_status_cli(int argc, char **argv)
            ssid[0] ? ssid : "(unset)",
            ip && ip[0] ? ip : "none",
            nyx_link_text());
+    return 0;
+}
+
+static int screen_cli(int argc, char **argv)
+{
+    if (argc != 2) {
+        printf("Usage: screen <home|settings|wifi|device_bind|info|camera|scan|back>\n");
+        return -1;
+    }
+    esp_err_t err = lcd_renderer_navigate(argv[1]);
+    printf("Navigation: %s\n", esp_err_to_name(err));
+    return err == ESP_OK ? 0 : -1;
+}
+
+static int nyx_login_cli(int argc, char **argv)
+{
+    if (argc != 2 || (strcmp(argv[1], "start") && strcmp(argv[1], "status") && strcmp(argv[1], "cancel"))) {
+        printf("Usage: nyx-login <start|status|cancel>\n");
+        return -1;
+    }
+    if (!strcmp(argv[1], "start")) {
+        esp_err_t err = lcd_renderer_navigate("device_bind");
+        if (err == ESP_OK) err = device_code_start_if_needed();
+        if (err != ESP_OK) { printf("Sign-in: %s\n", esp_err_to_name(err)); return -1; }
+    } else if (!strcmp(argv[1], "cancel")) device_code_cancel();
+    device_login_snapshot_t login;
+    device_code_snapshot(&login);
+    printf("Sign-in state=%d busy=%d remaining=%lu code=%s\n%s\n", login.state,
+        login.busy, (unsigned long)login.seconds_remaining, login.user_code, login.message);
     return 0;
 }
 
@@ -368,6 +393,8 @@ static int init_console(void)
         { .command = "nyx-node",      .help = "nyx-node node_id\r\n",        .func = nyx_node_cli },
         { .command = "nyx-slug",      .help = "nyx-slug service_slug\r\n",   .func = nyx_slug_cli },
         { .command = "nyx-status",    .help = "Print reprovisioning status", .func = nyx_status_cli },
+        { .command = "screen",        .help = "Open a native screen", .func = screen_cli },
+        { .command = "nyx-login",     .help = "Account sign-in start/status/cancel; no secret tokens", .func = nyx_login_cli },
         { .command = "provision-mode", .help = "Enter provisioning mode",     .func = provision_mode_cli },
         { .command = "exit-provision", .help = "Exit provisioning mode",      .func = exit_provision_cli },
         { .command = "factory-reset", .help = "Wipe all NVS config",         .func = factory_reset_cli },
@@ -489,13 +516,11 @@ static void service_task(void *arg)
     // Registration is optional; an unprovisioned panel still serves recovery APIs.
     net_manager_snapshot_t snapshot = net_manager_snapshot();
     on_net_manager_event(&snapshot, NULL);
-#ifdef CONFIG_HA_CAM_DEVICE_CODE
-    if (!nyx_creds_have_nvs_credentials()) (void)device_code_start_if_needed();
-#endif
     atomic_store(&ready, http_err == ESP_OK);
     bool applied_preview = false;
     while (1) {
-        if (atomic_exchange(&fallback_requested, false) && !atomic_load(&wifi_fallback_tried) && !network_is_connected()) {
+        if (atomic_exchange(&fallback_requested, false) && !provisioning_mode_active() &&
+            !atomic_load(&wifi_fallback_tried) && !network_is_connected()) {
             atomic_store(&wifi_fallback_tried, true);
             cfg_wifi_t wf = {0};
             nvs_config_get_wifi(&wf);

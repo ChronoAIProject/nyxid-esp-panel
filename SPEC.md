@@ -1,6 +1,7 @@
 # NyxID ESP Panel — migration specification
 
-Status: initial migration implemented, pushed and installed as v0.1.14.
+Status: initial migration installed as v0.1.14; v0.2.0 native onboarding integration
+is in verification. Its current evidence is tracked in docs/VERIFICATION.md.
 Known transport and verification limits are recorded below. Date: 2026-11-03.
 
 ## 1. Outcome
@@ -69,9 +70,14 @@ resume, and remote `settings` explicitly opens that root. The GUI task uses
 an internal RAM stack because native Settings callbacks write NVS; an external
 stack triggers the P4 flash cache-disable assertion on WLAN exit.
 
+Nyx Panel has no system-menu toolbar or device-status/provisioning subpages.
+Native Settings owns WLAN, NyxID account device login and readable device status;
+Camera scans Wi-Fi QR codes with explicit confirmation and connection rollback.
+The real account login and registration contract is in docs/ONBOARDING.md.
+
 Remote `/lcd/screen` names map to native apps/pages: home→Nyx Panel,
 settings→Settings, camera→Camera, scan→QR scanner, info/operator→device status,
-wifi→WLAN, device_bind→provisioning, back→Brookesia navigation. An unsupported
+wifi→WLAN, device_bind→Settings NyxID, back→Brookesia navigation. An unsupported
 target returns an explicit error; no fake navigation success or separate legacy
 screen stack is allowed.
 

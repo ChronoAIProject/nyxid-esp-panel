@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
+extern "C" {
+#include "lcd_renderer.h"
+}
 #ifdef ESP_UTILS_LOG_TAG
 #undef ESP_UTILS_LOG_TAG
 #endif
@@ -149,6 +152,7 @@ namespace esp_brookesia::apps
         text_obj = lv_list_add_text(list1, "Wireless");
         lv_obj_add_style(text_obj, &style_list_text, 0);
         add_button_with_arrow(&WIFI, "WLAN");
+        add_button_with_arrow(&WIFI, "Scan Wi-Fi QR");
         // add_button_with_arrow(&BLE, "Bluetooth");
 
         text_obj = lv_list_add_text(list1, "Media");
@@ -159,6 +163,8 @@ namespace esp_brookesia::apps
         text_obj = lv_list_add_text(list1, "More");
         lv_obj_add_style(text_obj, &style_list_text, 0);
         add_button_with_arrow(&info, "About");
+        add_button_with_arrow(&info, "NyxID");
+        add_button_with_arrow(&info, "Device status");
     }
 
     void Settings::destroy_settings_ui()
@@ -218,6 +224,18 @@ namespace esp_brookesia::apps
             {
                 lv_async_call(open_page_async_cb, (void *)"WLAN");
             }
+            else if (strcmp(txt, "Scan Wi-Fi QR") == 0)
+            {
+                lcd_renderer_navigate("scan");
+            }
+            else if (strcmp(txt, "NyxID") == 0)
+            {
+                lv_async_call(open_page_async_cb, (void *)"NyxID");
+            }
+            else if (strcmp(txt, "Device status") == 0)
+            {
+                lv_async_call(open_page_async_cb, (void *)"Device status");
+            }
             else if (strcmp(txt, "Sound") == 0)
             {
                 lv_async_call(open_page_async_cb, (void *)"Sound");
@@ -235,7 +253,7 @@ namespace esp_brookesia::apps
 
     void Settings::open_page(const char *page_name)
     {
-        destroy_settings_ui();
+        close();
 
         if (strcmp(page_name, "WLAN") == 0)
         {
@@ -260,6 +278,11 @@ namespace esp_brookesia::apps
             active_page = ActivePage::About;
             auto about = AboutPage::requestInstance(true, false);
             about->run();
+        }
+        else if (strcmp(page_name, "NyxID") == 0 || strcmp(page_name, "Device status") == 0)
+        {
+            active_page = !strcmp(page_name, "NyxID") ? ActivePage::Nyx : ActivePage::Device;
+            panel_page.run(active_page == ActivePage::Nyx);
         }
     }
 
@@ -309,6 +332,7 @@ namespace esp_brookesia::apps
     bool Settings::back(void)
     {
         ESP_UTILS_LOGD("Back");
+        if (active_page != ActivePage::None) { showRoot(); return true; }
         return notifyCoreClosed();
     }
 
@@ -317,6 +341,10 @@ namespace esp_brookesia::apps
         ESP_UTILS_LOGD("Close");
         switch (active_page)
         {
+        case ActivePage::Nyx:
+        case ActivePage::Device:
+            panel_page.close();
+            break;
         case ActivePage::Wlan:
             WlanPage::requestInstance(true, false)->close();
             break;

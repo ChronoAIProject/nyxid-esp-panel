@@ -2,6 +2,8 @@ set(panel_sources
     b64.c
     cjson_tiny.c
     devices.c
+    device_code.c
+    device_login_proto.c
     heap_diag.c
     lcd_image.c
     lcd_stack.c
@@ -32,13 +34,8 @@ set(panel_sources
     stream_sm.c
     webrtc.c
     whip_signaling.c
+    wifi_qr.c
 )
-if(CONFIG_HA_CAM_DEVICE_CODE)
-    list(APPEND panel_sources "device_code.c")
-    if(CONFIG_HA_CAM_DEVICE_CODE_MOCK)
-        list(APPEND panel_sources "device_code_mock.c")
-    endif()
-endif()
 idf_component_register(
     SRCS ${panel_sources} "fonts/lv_font_noto_sans_sc_med_20.c"
     INCLUDE_DIRS "."

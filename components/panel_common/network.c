@@ -59,8 +59,10 @@ static bool load_from_nvs(void)
     nvs_handle_t h;
     if (nvs_open(PART_NAME, NVS_READONLY, &h) != ESP_OK) return false;
     wifi_config_t saved = {0};
-    size_t ssid_len = sizeof(saved.sta.ssid), pass_len = sizeof(saved.sta.password);
-    bool found = nvs_get_str(h, WIFI_SSID_KEY, (char *)saved.sta.ssid, &ssid_len) == ESP_OK && saved.sta.ssid[0];
+    char saved_ssid[33] = {0};
+    size_t ssid_len = sizeof(saved_ssid), pass_len = sizeof(saved.sta.password);
+    bool found = nvs_get_str(h, WIFI_SSID_KEY, saved_ssid, &ssid_len) == ESP_OK && saved_ssid[0];
+    memcpy(saved.sta.ssid, saved_ssid, sizeof(saved.sta.ssid));
     esp_err_t pass_err = nvs_get_str(h, WIFI_PSW_KEY, (char *)saved.sta.password, &pass_len);
     nvs_close(h);
     if (pass_err != ESP_OK && pass_err != ESP_ERR_NVS_NOT_FOUND) found = false;
@@ -77,7 +79,9 @@ static void store_to_nvs(void)
             ESP_LOGE(TAG, "Fail to open nvs ret %d", ret);
             break;
         }
-        ret = nvs_set_str(wifi_nvs, WIFI_SSID_KEY, (char*)(wifi_config.sta.ssid));
+        char ssid[33] = {0};
+        memcpy(ssid, wifi_config.sta.ssid, sizeof(wifi_config.sta.ssid));
+        ret = nvs_set_str(wifi_nvs, WIFI_SSID_KEY, ssid);
         if (ret != ESP_OK) {
             break;
         }
@@ -159,17 +163,18 @@ int network_get_mac(uint8_t mac[6])
 
 int network_connect_wifi(const char *ssid, const char *password)
 {
-    if (!ssid || strlen(ssid) >= sizeof(wifi_config.sta.ssid) ||
+    if (!ssid || strlen(ssid) > sizeof(wifi_config.sta.ssid) ||
         (password && strlen(password) >= sizeof(wifi_config.sta.password))) return ESP_ERR_INVALID_ARG;
     memset(&wifi_config, 0, sizeof(wifi_config));
-    snprintf((char *)wifi_config.sta.ssid, sizeof(wifi_config.sta.ssid), "%s", ssid);
+    memcpy(wifi_config.sta.ssid, ssid, strlen(ssid));
     snprintf((char *)wifi_config.sta.password, sizeof(wifi_config.sta.password), "%s", password ? password : "");
-    network_connected = false;
-    esp_wifi_disconnect();
-    esp_wifi_stop();
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
-    ESP_ERROR_CHECK(esp_wifi_start());
-    return 0;
+    network_set_connected(false);
+    (void)esp_wifi_disconnect();
+    esp_err_t err = esp_wifi_stop();
+    if (err != ESP_OK) return err;
+    err = esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
+    if (err != ESP_OK) return err;
+    return esp_wifi_start();
 }
 
 #else

@@ -26,7 +26,13 @@ def main():
     p.add_argument('--camera', action='store_true')
     p.add_argument('--native-pages', action='store_true',
                    help='Exercise Settings/WLAN exit persistence and native status pages')
+    p.add_argument('--onboarding', action='store_true',
+                   help='Exercise scan/back navigation and request then cancel a real login; never approves it')
+    p.add_argument('--wifi-qr-image', type=Path,
+                   help='With --onboarding, decode a Wi-Fi QR JPEG and check confirmation without connecting')
     a = p.parse_args()
+    if a.wifi_qr_image and not a.onboarding:
+        p.error('--wifi-qr-image requires --onboarding')
     a.output_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
     results = []
 
@@ -71,6 +77,16 @@ def main():
         out.write_bytes(raw)
         out.chmod(0o600)
         return raw, im.size
+
+    def navigate(target):
+        nyx('/lcd/screen?target=' + target, b'')
+        end = time.monotonic() + 20
+        while time.monotonic() < end:
+            screen = json.loads(lan('/lcd/screen'))
+            if screen['target'] == target:
+                return screen
+            time.sleep(.3)
+        raise AssertionError((target, screen))
 
     state = json.loads(nyx('/status'))
     assert state['nyx']['state'] == 'up'
@@ -131,6 +147,64 @@ def main():
                 assert state['uptime_s'] >= initial_uptime, 'Board rebooted during native navigation'
                 initial_uptime = state['uptime_s']
                 record(f'Native page cycle {cycle}: {target}', {'screen': screen, 'size': size})
+    if a.onboarding:
+        # These routes must stay outside the unauthenticated LAN recovery API.
+        lan('/nyx/login', expected=404)
+        lan('/wifi/qr', expected=404)
+        for origin in ['settings', 'wifi', 'device_bind']:
+            navigate(origin)
+            navigate('scan')
+            snapshot(f'scan-from-{origin}.jpg')
+            nyx('/lcd/screen?target=back', b'')
+            end = time.monotonic() + 20
+            while time.monotonic() < end:
+                screen = json.loads(lan('/lcd/screen'))
+                if screen['target'] == origin:
+                    break
+                time.sleep(.3)
+            else:
+                raise AssertionError(('scan return', origin, screen))
+        record('Scan returns to its originating Settings page', True)
+        if a.wifi_qr_image:
+            navigate('scan')
+            result = json.loads(nyx('/_dev/qr/inject_jpeg', a.wifi_qr_image.read_bytes()))
+            assert result.get('confirmation_required') is True, result
+            candidate = json.loads(nyx('/wifi/qr'))
+            assert candidate['state'] == 'confirm' and candidate['ssid'], candidate
+            assert 'password' not in candidate and 'psw' not in candidate
+            # A second decode must not replace the candidate awaiting consent.
+            nyx('/_dev/qr/inject_jpeg', a.wifi_qr_image.read_bytes(), expected_ok=False)
+            assert json.loads(nyx('/wifi/qr')) == candidate
+            snapshot('wifi-qr-confirmation.jpg')
+            navigate('settings')  # Cancels; intentionally never POST /wifi/qr.
+            record('Wi-Fi QR requires confirmation and rejects replacement', True)
+        try:
+            nyx('/nyx/login', b'')
+            end = time.monotonic() + 30
+            while time.monotonic() < end:
+                login = json.loads(nyx('/nyx/login'))
+                assert not {'device_code', 'access_token', 'refresh_token'} & login.keys()
+                if login['state'] == 'waiting':
+                    assert login['user_code'] and login['seconds_remaining'] > 0
+                    break
+                assert login['state'] == 'requesting', login['state']
+                time.sleep(.5)
+            else:
+                raise AssertionError('No real sign-in code was delivered')
+            snapshot('nyx-login-qr.jpg')
+            record('Real device login waits for human approval', True)
+        finally:
+            nyx('/nyx/login/cancel', b'')
+            navigate('settings')
+        end = time.monotonic() + 35
+        while time.monotonic() < end:
+            login = json.loads(nyx('/nyx/login'))
+            if not login['busy']:
+                break
+            time.sleep(.5)
+        assert login['state'] == 'cancelled' and not login['busy'], login['state']
+        assert not login['user_code'] and not login['verification_uri_complete']
+        record('Device login cancels and removes the displayed code', True)
     if a.camera:
         try:
             for cycle in range(1, 4):

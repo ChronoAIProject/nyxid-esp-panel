@@ -8,6 +8,9 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 | Method | Path | LAN | Body / behavior |
 | --- | --- | --- | --- |
 | GET | `/status` | yes | Firmware, ELF hash, network, Nyx, actual native screen, media, heap and OTA slots/state |
+| GET, POST | `/nyx/login` | no | Sanitized account device-login status; POST starts login and opens Settings; no secret device code or tokens returned |
+| POST | `/nyx/login/cancel` | no | Cancel login; a late account-session delivery is revoked before further registration |
+| GET, POST | `/wifi/qr` | no | Scanned SSID and confirmation/connection state; POST confirms the scanned network; passwords stay hidden |
 | POST | `/lcd/image` | yes | Raw JPEG; optional `?duration_ms=N`, 0 means sticky; 202 accepted, 400 invalid JPEG, 413 oversized |
 | POST | `/lcd/text` | no | `{"text":"Hello Lexa","size":"medium","color":"#ffffff","bg":"#121a2b","align":"left","duration_ms":0}`; last 20 messages |
 | POST | `/lcd/clear` | yes | Clears image and message history |
@@ -28,7 +31,7 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 | POST | `/system/factory_reset` | no | Resets config while preserving Wi-Fi and Nyx identity, then reboots |
 | POST | `/system/ota` | no | `url` and required `sha256`; 202 accepts a background download, 409 busy; poll `/status` → `ota.stage`/`last_error`; only a verified image switches the boot slot |
 | POST | `/system/ota/image` | yes, bearer required | Raw app binary, `Authorization: Bearer <node token>` and `X-SHA256`; digest mismatch 422; success 202 then reboot |
-| POST | `/_dev/qr/inject_jpeg` | no | Development decoder test: a real QR JPEG passes through the same decoder/provisioning path; no camera-optics validation |
+| POST | `/_dev/qr/inject_jpeg` | no | Open `scan` first; real QR decoding stages Wi-Fi for confirmation. Busy/pending scans reject replacement. No camera-optics validation |
 
 The explicit UART `factory-reset` command wipes P4 NVS, including Nyx identity.
 The C6 Wi-Fi driver has separate storage and can retain its station settings.

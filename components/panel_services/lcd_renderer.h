@@ -27,10 +27,9 @@ void lcd_renderer_clear(void);
 esp_err_t lcd_renderer_snapshot_jpeg(uint8_t *out, size_t cap, size_t *out_len);
 
 // Remote screen navigation. target is one of: "home", "settings", "scan",
-// "camera", "info", "operator", "wifi", "mqtt", "device_bind", "back".
-// All non-"back" targets reset the stack to a clean home root before pushing
-// the requested path, so depth never grows past 3 (home → settings → sub).
-// "back" calls screen_manager_pop() and is a no-op if depth ≤ 1.
+// "camera", "info", "operator", "wifi", "device_bind", "back".
+// Settings owns network, status and NyxID setup pages; Camera owns scanning.
+// "back" invokes native navigation (scan returns to its originating Settings page).
 esp_err_t lcd_renderer_navigate(const char *target);
 
 // Read-only: which screen is currently on top + how deep is the stack.

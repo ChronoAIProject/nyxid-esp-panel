@@ -14,13 +14,117 @@
 #include "provisioning.h"
 #include "quirc.h"
 #include "snapshot.h"
+#include "wifi_qr.h"
+#include "esp_wifi.h"
+#include "network.h"
 
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdatomic.h>
 
 static const char *TAG = "haCam.qr";
+static portMUX_TYPE scan_lock = portMUX_INITIALIZER_UNLOCKED;
+static qr_scan_snapshot_t scan_state;
+static wifi_qr_t candidate;
+static atomic_bool wifi_cancelled;
+static bool wifi_busy;
+static atomic_bool legacy_reboot_scheduled;
+
+static void scan_result(qr_scan_state_t state, const char *message)
+{
+    portENTER_CRITICAL(&scan_lock);
+    scan_state.state = state;
+    snprintf(scan_state.message, sizeof(scan_state.message), "%s", message);
+    portEXIT_CRITICAL(&scan_lock);
+}
+
+void qr_scanner_snapshot(qr_scan_snapshot_t *snapshot)
+{
+    if (!snapshot) return;
+    portENTER_CRITICAL(&scan_lock); *snapshot = scan_state; portEXIT_CRITICAL(&scan_lock);
+}
+
+void qr_scanner_begin(void)
+{
+    portENTER_CRITICAL(&scan_lock);
+    if (!wifi_busy) {
+        memset(&candidate, 0, sizeof(candidate));
+        memset(&scan_state, 0, sizeof(scan_state));
+        strcpy(scan_state.message, "Point the camera at a Wi-Fi QR code.");
+        atomic_store(&wifi_cancelled, false);
+    }
+    portEXIT_CRITICAL(&scan_lock);
+    provisioning_mode_enter("Wi-Fi QR scan");
+}
+
+void qr_scanner_cancel(void) { atomic_store(&wifi_cancelled, true); }
+
+static void wifi_connect_task(void *arg)
+{
+    (void)arg;
+    wifi_qr_t next;
+    portENTER_CRITICAL(&scan_lock); next = candidate; portEXIT_CRITICAL(&scan_lock);
+    wifi_config_t station = {0};
+    cfg_wifi_t saved = {0};
+    (void)nvs_config_get_wifi(&saved);
+    cfg_wifi_t previous = saved;
+    bool have_previous = esp_wifi_get_config(WIFI_IF_STA, &station) == ESP_OK;
+    if (have_previous) {
+        snprintf(previous.ssid_1, sizeof(previous.ssid_1), "%.*s", 32, station.sta.ssid);
+        snprintf(previous.psw_1, sizeof(previous.psw_1), "%.*s", 63, station.sta.password);
+    }
+    bool connected = false;
+    if (!atomic_load(&wifi_cancelled) && network_connect_wifi(next.ssid, next.password) == ESP_OK) {
+        int64_t deadline = esp_timer_get_time() + 25000000;
+        while (!atomic_load(&wifi_cancelled) && esp_timer_get_time() < deadline) {
+            wifi_ap_record_t ap = {0};
+            if (network_is_connected() && esp_wifi_sta_get_ap_info(&ap) == ESP_OK &&
+                !strncmp((const char *)ap.ssid, next.ssid, sizeof(ap.ssid))) { connected = true; break; }
+            vTaskDelay(pdMS_TO_TICKS(250));
+        }
+    }
+    bool persisted = false;
+    if (connected && !atomic_load(&wifi_cancelled)) {
+        cfg_wifi_t config = saved;
+        strcpy(config.ssid_1, next.ssid);
+        strcpy(config.psw_1, next.password);
+        persisted = nvs_config_set_wifi(&config) == ESP_OK && nvs_config_set_legacy_wifi_primary(&config) == ESP_OK;
+    }
+    if (!persisted) {
+        (void)nvs_config_set_wifi(&saved);
+        (void)nvs_config_set_legacy_wifi_primary(&previous);
+        // Restore even an empty station, so a first-time failed setup does not
+        // leave the candidate in the driver's own persistent configuration.
+        (void)network_connect_wifi(previous.ssid_1, previous.psw_1);
+        scan_result(QR_SCAN_ERROR, atomic_load(&wifi_cancelled) ? "Connection cancelled. Returning to the previous network." :
+            "Could not connect. Returning to the previous network. Check the code and try again.");
+    } else {
+        scan_result(QR_SCAN_CONNECTED, "Wi-Fi connected and saved. You can return to Settings.");
+        provisioning_mode_exit();
+    }
+    memset(&next, 0, sizeof(next)); memset(&station, 0, sizeof(station));
+    portENTER_CRITICAL(&scan_lock);
+    wifi_busy = false;
+    memset(&candidate, 0, sizeof(candidate));
+    portEXIT_CRITICAL(&scan_lock);
+    vTaskDelete(NULL);
+}
+
+void qr_scanner_confirm(void)
+{
+    portENTER_CRITICAL(&scan_lock);
+    bool start = !wifi_busy && !atomic_load(&wifi_cancelled) && scan_state.state == QR_SCAN_CONFIRM;
+    if (start) { wifi_busy = true; scan_state.state = QR_SCAN_CONNECTING; }
+    portEXIT_CRITICAL(&scan_lock);
+    if (!start) return;
+    scan_result(QR_SCAN_CONNECTING, "Connecting to this Wi-Fi network...");
+    if (xTaskCreate(wifi_connect_task, "qr_wifi", 8192, NULL, 4, NULL) != pdPASS) {
+        portENTER_CRITICAL(&scan_lock); wifi_busy = false; portEXIT_CRITICAL(&scan_lock);
+        scan_result(QR_SCAN_ERROR, "Not enough memory to connect. Please try again.");
+    }
+}
 
 #define QR_SCAN_MAX_JPEG_BYTES (80u * 1024u)
 #define QR_SCAN_MAX_RGB_BYTES  (320u * 240u * 2u)
@@ -85,7 +189,8 @@ static bool url_decode_copy(char *dst, size_t cap, const char *src, size_t len)
         char c = src[i];
         if (c == '+') {
             c = ' ';
-        } else if (c == '%' && i + 2u < len) {
+        } else if (c == '%') {
+            if (i + 2u >= len) return false;
             int hi = hex_value(src[i + 1u]);
             int lo = hex_value(src[i + 2u]);
             if (hi < 0 || lo < 0) {
@@ -94,7 +199,7 @@ static bool url_decode_copy(char *dst, size_t cap, const char *src, size_t len)
             c = (char)((hi << 4) | lo);
             i += 2u;
         }
-        if (out + 1u >= cap) {
+        if (!c || out + 1u >= cap) {
             return false;
         }
         dst[out++] = c;
@@ -110,18 +215,20 @@ static bool query_value(const char *query, const char *key, char *dst, size_t ca
     }
     size_t key_len = strlen(key);
     const char *p = query;
+    bool found = false;
     while (*p) {
         const char *amp = strchr(p, '&');
         size_t part_len = amp ? (size_t)(amp - p) : strlen(p);
         if (part_len > key_len && strncmp(p, key, key_len) == 0 && p[key_len] == '=') {
-            return url_decode_copy(dst, cap, p + key_len + 1u, part_len - key_len - 1u);
+            if (found || !url_decode_copy(dst, cap, p + key_len + 1u, part_len - key_len - 1u)) return false;
+            found = true;
         }
         if (!amp) {
             break;
         }
         p = amp + 1u;
     }
-    return false;
+    return found;
 }
 
 static bool parse_payload(const char *payload, qr_provision_t *out)
@@ -148,13 +255,18 @@ static bool parse_payload(const char *payload, qr_provision_t *out)
     if (path_len == 4u && strncmp(path, "wifi", path_len) == 0) {
         out->has_wifi = query_value(query, "ssid", out->ssid, sizeof(out->ssid)) &&
                         query_value(query, "psw", out->psw, sizeof(out->psw));
-        return out->has_wifi;
+        return out->has_wifi && out->ssid[0] && (!out->psw[0] || strlen(out->psw) >= 8);
     }
-    (void)query_value(query, "secret", out->secret, sizeof(out->secret));
+    if ((!strncmp(query, "secret=", 7) || strstr(query, "&secret=")) &&
+        !query_value(query, "secret", out->secret, sizeof(out->secret))) return false;
+    if (out->secret[0]) {
+        if (strlen(out->secret) != 64) return false;
+        for (size_t i = 0; i < 64; ++i) if (!isxdigit((unsigned char)out->secret[i])) return false;
+    }
     if (path_len == 3u && strncmp(path, "nyx", path_len) == 0) {
         out->has_nyx = query_value(query, "token", out->token, sizeof(out->token)) &&
                        query_value(query, "node", out->node, sizeof(out->node)) &&
-                       is_uuid_shape(out->node);
+                       is_uuid_shape(out->node) && !strncmp(out->token, "nyx_nauth_", 10);
         return out->has_nyx;
     }
     if (path_len == 4u && strncmp(path, "mqtt", path_len) == 0) {
@@ -179,8 +291,9 @@ static bool parse_payload(const char *payload, qr_provision_t *out)
                         query_value(query, "psw", out->psw, sizeof(out->psw));
         out->has_nyx = query_value(query, "token", out->token, sizeof(out->token)) &&
                        query_value(query, "node", out->node, sizeof(out->node)) &&
-                       is_uuid_shape(out->node);
-        return out->has_wifi && out->has_nyx;
+                       is_uuid_shape(out->node) && !strncmp(out->token, "nyx_nauth_", 10);
+        return out->has_wifi && out->has_nyx && out->ssid[0] &&
+            (!out->psw[0] || strlen(out->psw) >= 8);
     }
     return false;
 }
@@ -342,8 +455,8 @@ static bool decode_qr_payload(const uint8_t *gray, int w, int h, char *payload, 
         }
         if (err == QUIRC_SUCCESS && data->payload_len > 0) {
             size_t len = (size_t)data->payload_len;
-            if (len >= cap) {
-                len = cap - 1u;
+            if (len >= cap || memchr(data->payload, 0, len)) {
+                heap_caps_free(code); heap_caps_free(data); continue;
             }
             memcpy(payload, data->payload, len);
             payload[len] = '\0';
@@ -372,6 +485,33 @@ static bool apply_provisioning(const qr_provision_t *prov)
     if (!prov) {
         return false;
     }
+    portENTER_CRITICAL(&scan_lock);
+    bool available = !wifi_busy && !atomic_load(&wifi_cancelled) &&
+        !atomic_load(&legacy_reboot_scheduled) && scan_state.state == QR_SCAN_SCANNING;
+    if (!available) { portEXIT_CRITICAL(&scan_lock); return false; }
+    if (prov->has_wifi && !prov->has_nyx) {
+        memset(&candidate, 0, sizeof(candidate));
+        strcpy(candidate.ssid, prov->ssid);
+        strcpy(candidate.password, prov->psw);
+        strcpy(scan_state.ssid, prov->ssid);
+        scan_state.state = QR_SCAN_CONFIRM;
+        strcpy(scan_state.message, "Connect to this Wi-Fi network? Your password stays hidden.");
+        portEXIT_CRITICAL(&scan_lock);
+        return true;
+    }
+    atomic_store(&legacy_reboot_scheduled, true);
+    portEXIT_CRITICAL(&scan_lock);
+    nyx_binding_t binding = {0};
+    if (prov->has_nyx) {
+        strcpy(binding.auth_token, prov->token);
+        strcpy(binding.node_id, prov->node);
+        if (prov->secret[0]) strcpy(binding.signing_secret, prov->secret);
+        else if (!strcmp(prov->node, nyx_creds_node_id()))
+            snprintf(binding.signing_secret, sizeof(binding.signing_secret), "%s", nyx_creds_signing_secret());
+        if (strlen(binding.signing_secret) != 64) goto failed;
+        if (!strcmp(prov->node, nyx_creds_node_id()))
+            snprintf(binding.slug, sizeof(binding.slug), "%s", nyx_creds_service_slug());
+    }
     if (prov->has_wifi) {
         cfg_wifi_t wifi = {0};
         nvs_config_defaults_wifi(&wifi);
@@ -381,30 +521,36 @@ static bool apply_provisioning(const qr_provision_t *prov)
         wifi.psw_2[0] = '\0';
         if (nvs_config_set_wifi(&wifi) != ESP_OK ||
             nvs_config_set_legacy_wifi_primary(&wifi) != ESP_OK) {
-            return false;
+            goto failed;
         }
     }
     if (prov->has_nyx) {
-        if (nyx_creds_save_api_key(prov->token) != 0 ||
-            nyx_creds_save_node_id(prov->node) != 0 ||
-            (prov->secret[0] && nyx_creds_save_signing_secret(prov->secret) != 0)) {
-            return false;
-        }
+        if (nyx_creds_store_binding(&binding) != 0) goto failed;
     }
     if (prov->has_mqtt) {
         if (nvs_config_set_mqtt(&prov->mqtt) != ESP_OK) {
-            return false;
+            goto failed;
         }
     }
 
-    const char *payload_type = (prov->has_wifi && prov->has_nyx) ? "full" :
-                               (prov->has_wifi ? "wifi" :
-                                (prov->has_nyx ? "nyx" : "mqtt"));
-    lcd_renderer_note_qr_decoded(payload_type);
-    lcd_renderer_push_text("Got config - rebooting in 3 s", "large", "#ffffff", "#14532d",
-                           "center", 3000u);
-    xTaskCreate(reboot_after_delay_task, "qr_reboot", 3072, NULL, 5, NULL);
+    if (xTaskCreate(reboot_after_delay_task, "qr_reboot", 3072, NULL, 5, NULL) != pdPASS) goto failed;
+    scan_result(QR_SCAN_CONNECTED, "Configuration saved. Restarting the panel...");
+    memset(&binding, 0, sizeof(binding));
     return true;
+failed:
+    memset(&binding, 0, sizeof(binding));
+    atomic_store(&legacy_reboot_scheduled, false);
+    scan_result(QR_SCAN_ERROR, "Could not save this configuration. Scan again to retry.");
+    return false;
+}
+
+static bool scan_available(void)
+{
+    portENTER_CRITICAL(&scan_lock);
+    bool available = !wifi_busy && !atomic_load(&wifi_cancelled) &&
+        !atomic_load(&legacy_reboot_scheduled) && scan_state.state == QR_SCAN_SCANNING;
+    portEXIT_CRITICAL(&scan_lock);
+    return available;
 }
 
 esp_err_t qr_scanner_process_jpeg(const uint8_t *jpeg, size_t jpeg_len)
@@ -412,6 +558,7 @@ esp_err_t qr_scanner_process_jpeg(const uint8_t *jpeg, size_t jpeg_len)
     if (!jpeg || jpeg_len == 0u) {
         return ESP_ERR_INVALID_ARG;
     }
+    if (!scan_available()) return ESP_ERR_INVALID_STATE;
 
     uint8_t *gray = NULL;
     int w = 0;
@@ -430,9 +577,16 @@ esp_err_t qr_scanner_process_jpeg(const uint8_t *jpeg, size_t jpeg_len)
         return ESP_ERR_NOT_FOUND;
     }
 
+    if (!scan_available()) return ESP_ERR_INVALID_STATE;
+
     ESP_LOGI(TAG, "QR decoded (%u bytes; payload redacted)", (unsigned)strlen(payload));
     qr_provision_t prov = {0};
+    wifi_qr_t wifi = {0};
+    if (wifi_qr_parse(payload, &wifi)) {
+        strcpy(prov.ssid, wifi.ssid); strcpy(prov.psw, wifi.password); prov.has_wifi = true;
+    } else
     if (!parse_payload(payload, &prov)) {
+        scan_result(QR_SCAN_ERROR, "This is not a supported Wi-Fi setup code. Use NyxID in Settings to sign in.");
         ESP_LOGW(TAG, "qr decode result=unsupported payload_len=%u", (unsigned)strlen(payload));
         return ESP_ERR_INVALID_ARG;
     }
@@ -475,6 +629,9 @@ void qr_scanner_poll(void)
     if (!g.started || !provisioning_mode_active()) {
         return;
     }
+    qr_scan_snapshot_t state;
+    qr_scanner_snapshot(&state);
+    if (state.state != QR_SCAN_SCANNING || atomic_load(&wifi_cancelled)) return;
     int64_t now = esp_timer_get_time();
     if (now < g.next_scan_us) {
         return;
@@ -518,10 +675,16 @@ void qr_scanner_poll(void)
         ESP_LOGD(TAG, "qr decode result=not_found image=%dx%d", gray_w, gray_h);
         return;
     }
+    if (!scan_available()) return;
 
     ESP_LOGI(TAG, "QR decoded (%u bytes; payload redacted)", (unsigned)strlen(payload));
     qr_provision_t prov = {0};
+    wifi_qr_t wifi = {0};
+    if (wifi_qr_parse(payload, &wifi)) {
+        strcpy(prov.ssid, wifi.ssid); strcpy(prov.psw, wifi.password); prov.has_wifi = true;
+    } else
     if (!parse_payload(payload, &prov)) {
+        scan_result(QR_SCAN_ERROR, "This is not a supported Wi-Fi setup code. Use NyxID in Settings to sign in.");
         ESP_LOGW(TAG, "qr decode result=unsupported payload_len=%u", (unsigned)strlen(payload));
         return;
     }

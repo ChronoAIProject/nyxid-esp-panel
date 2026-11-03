@@ -1,4 +1,7 @@
 #include "WlanPage.hpp"
+extern "C" {
+#include "lcd_renderer.h"
+}
 #include "../Settings.hpp"
 
 #define ESP_UTILS_LOG_TAG "BS:WlanPage"
@@ -232,6 +235,11 @@ namespace esp_brookesia::apps
             (void)e;
         }, LV_EVENT_CLICKED, nullptr);
 
+        lv_obj_t *scan_button = lv_list_add_button(list1, LV_SYMBOL_IMAGE, "Scan Wi-Fi QR");
+        lv_obj_add_style(scan_button, &style_list_btn, 0);
+        lv_obj_add_event_cb(scan_button, [](lv_event_t *) {
+            lcd_renderer_navigate("scan");
+        }, LV_EVENT_CLICKED, nullptr);
         lv_obj_t *text_obj = lv_list_add_text(list1, "Status");
         lv_obj_add_style(text_obj, &style_list_text, 0);
 

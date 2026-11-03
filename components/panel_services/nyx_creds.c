@@ -15,6 +15,62 @@ static char s_node_id[96];
 static char s_signing_secret[80];
 static char s_slug[80];
 
+bool nyx_creds_read_binding(nyx_binding_t *binding)
+{
+    if (!binding) return false;
+    nvs_handle_t h;
+    size_t len = sizeof(*binding);
+    if (nvs_open("nyx", NVS_READONLY, &h) != ESP_OK) return false;
+    esp_err_t err = nvs_get_blob(h, "binding_v1", binding, &len);
+    nvs_close(h);
+    return err == ESP_OK && len == sizeof(*binding) &&
+        memchr(binding->auth_token, 0, sizeof(binding->auth_token)) &&
+        memchr(binding->node_id, 0, sizeof(binding->node_id)) &&
+        memchr(binding->signing_secret, 0, sizeof(binding->signing_secret)) &&
+        memchr(binding->slug, 0, sizeof(binding->slug));
+}
+
+static void apply_binding(const nyx_binding_t *binding)
+{
+    memcpy(s_api_key, binding->auth_token, sizeof(s_api_key));
+    memcpy(s_http_api_key, binding->auth_token, sizeof(s_http_api_key));
+    memcpy(s_node_id, binding->node_id, sizeof(s_node_id));
+    memcpy(s_signing_secret, binding->signing_secret, sizeof(s_signing_secret));
+    memcpy(s_slug, binding->slug, sizeof(s_slug));
+}
+
+int nyx_creds_store_binding(const nyx_binding_t *binding)
+{
+    if (!binding || !memchr(binding->auth_token, 0, sizeof(binding->auth_token)) ||
+        !memchr(binding->node_id, 0, sizeof(binding->node_id)) ||
+        !memchr(binding->signing_secret, 0, sizeof(binding->signing_secret)) ||
+        !memchr(binding->slug, 0, sizeof(binding->slug))) return -1;
+    nvs_handle_t h;
+    if (nvs_open("nyx", NVS_READWRITE, &h) != ESP_OK) return -1;
+    esp_err_t err = nvs_set_blob(h, "binding_v1", binding, sizeof(*binding));
+    if (err == ESP_OK) err = nvs_commit(h);
+    nvs_close(h);
+    return err == ESP_OK ? 0 : -1;
+}
+
+// Legacy UART/QR setters also update an identity created by the new login flow.
+static int update_binding(const char *field, const char *value)
+{
+    nyx_binding_t binding = {0};
+    if (!nyx_creds_read_binding(&binding)) return 1;
+    char *dst = NULL;
+    size_t cap = 0;
+    if (!strcmp(field, "api_key")) { dst = binding.auth_token; cap = sizeof(binding.auth_token); }
+    else if (!strcmp(field, "node_id")) { dst = binding.node_id; cap = sizeof(binding.node_id); }
+    else if (!strcmp(field, "signing_secret")) { dst = binding.signing_secret; cap = sizeof(binding.signing_secret); }
+    else if (!strcmp(field, "slug")) { dst = binding.slug; cap = sizeof(binding.slug); }
+    if (!dst || strlen(value) >= cap) return -1;
+    snprintf(dst, cap, "%s", value);
+    int result = nyx_creds_store_binding(&binding);
+    if (!result) apply_binding(&binding);
+    return result;
+}
+
 static const char *baked(const char *s)
 {
     return s ? s : "";
@@ -59,6 +115,8 @@ static bool strings_usable(const char *api_key, const char *http_api_key, const 
 
 bool nyx_creds_have_nvs_credentials(void)
 {
+    nyx_binding_t binding = {0};
+    if (nyx_creds_read_binding(&binding)) return binding.auth_token[0] && binding.node_id[0];
     nvs_handle_t h = 0;
     esp_err_t err = nvs_open("nyx", NVS_READONLY, &h);
     if (err != ESP_OK) {
@@ -83,6 +141,11 @@ bool nyx_creds_have_nvs_credentials(void)
 
 bool nyx_creds_load(void)
 {
+    nyx_binding_t binding = {0};
+    if (nyx_creds_read_binding(&binding)) {
+        apply_binding(&binding);
+        return creds_usable();
+    }
     const device_config_t *self = devices_self();
     const char *fallback_api      = self ? baked(self->nyx_api_key)        : "";
     const char *fallback_http     = self ? baked(self->nyx_api_key_http)   : "";
@@ -146,6 +209,8 @@ int nyx_creds_save_api_key(const char *api_key)
     if (!api_key || api_key[0] == '\0') {
         return -1;
     }
+    int updated = update_binding("api_key", api_key);
+    if (updated != 1) return updated;
     ESP_LOGI(TAG, "write namespace=nyx key=api_key value=<redacted> len=%u", (unsigned)strlen(api_key));
 
     nvs_handle_t h = 0;
@@ -179,6 +244,8 @@ int nyx_creds_save_node_id(const char *node_id)
     if (!node_id || node_id[0] == '\0') {
         return -1;
     }
+    int updated = update_binding("node_id", node_id);
+    if (updated != 1) return updated;
     ESP_LOGI(TAG, "write namespace=nyx key=node_id value=%s", node_id);
 
     nvs_handle_t h = 0;
@@ -208,6 +275,8 @@ int nyx_creds_save_signing_secret(const char *secret)
     if (!secret || secret[0] == '\0') {
         return -1;
     }
+    int updated = update_binding("signing_secret", secret);
+    if (updated != 1) return updated;
     ESP_LOGI(TAG, "write namespace=nyx key=signing_secret value=<redacted> len=%u",
              (unsigned)strlen(secret));
 
@@ -238,6 +307,8 @@ int nyx_creds_save_slug(const char *slug)
     if (!slug || slug[0] == '\0') {
         return -1;
     }
+    int updated = update_binding("slug", slug);
+    if (updated != 1) return updated;
     ESP_LOGI(TAG, "write namespace=nyx key=slug value=%s", slug);
 
     nvs_handle_t h = 0;

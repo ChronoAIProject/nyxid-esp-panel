@@ -7,6 +7,8 @@ class Camera : public systems::phone::App {
 public:
     static Camera *requestInstance(bool use_status_bar = true, bool use_navigation_bar = true);
     ~Camera() override = default;
+    void setScanMode(bool enabled, const char *return_target = "settings");
+    bool scanning() const { return _scanning; }
 protected:
     Camera(bool status, bool navigation);
     bool run() override;
@@ -23,6 +25,11 @@ private:
     lv_timer_t *_timer = nullptr;
     lv_image_dsc_t _frame = {};
     uint32_t _sequence = 0;
+    bool _scanning = false;
+    char _return_target[24] = "settings";
+    lv_obj_t *_scan_action = nullptr;
+    lv_obj_t *_scan_action_text = nullptr;
+    lv_obj_t *_exit_button = nullptr;
     static void tick(lv_timer_t *timer);
 };
 }

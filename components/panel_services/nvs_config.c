@@ -1,6 +1,7 @@
 #include "nvs_config.h"
 
 #include "devices.h"
+#include "nyx_creds.h"
 #include "settings.h"
 
 #include "nvs.h"
@@ -333,6 +334,8 @@ esp_err_t nvs_config_factory_reset_preserve(void)
     ESP_LOGW(TAG, "factory reset preserve wifi and nyx namespaces");
     cfg_wifi_t wifi = {0};
     nvs_config_get_wifi(&wifi);
+    nyx_binding_t binding = {0};
+    bool have_binding = nyx_creds_read_binding(&binding);
 
     char legacy_ssid[CFG_WIFI_SSID_MAX] = "";
     char legacy_psw[CFG_WIFI_PSW_MAX] = "";
@@ -406,6 +409,7 @@ esp_err_t nvs_config_factory_reset_preserve(void)
             nvs_close(nh);
         }
     }
+    if (err == ESP_OK && have_binding && nyx_creds_store_binding(&binding) != 0) err = ESP_FAIL;
     return err;
 }
 

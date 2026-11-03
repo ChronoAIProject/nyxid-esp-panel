@@ -26,6 +26,7 @@
 #include "network.h"
 #include "panel_ota.h"
 #include "panel_flash.h"
+#include "device_code.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -1262,6 +1263,67 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
     return 202;
 }
 
+static int h_nyx_login_status(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                              char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)req; (void)user;
+    snprintf(ct, ct_cap, "application/json");
+    device_login_snapshot_t state;
+    device_code_snapshot(&state);
+    static const char *names[] = {"idle", "requesting", "waiting", "registering", "service", "ready", "cancelled", "failed"};
+    cJSON *json = cJSON_CreateObject();
+    if (!json) return 503;
+    cJSON_AddStringToObject(json, "state", names[state.state]);
+    cJSON_AddBoolToObject(json, "busy", state.busy);
+    cJSON_AddStringToObject(json, "message", state.message);
+    cJSON_AddStringToObject(json, "user_code", state.user_code);
+    cJSON_AddStringToObject(json, "verification_uri", state.verification_uri);
+    cJSON_AddStringToObject(json, "verification_uri_complete", state.verification_uri_complete);
+    cJSON_AddNumberToObject(json, "seconds_remaining", state.seconds_remaining);
+    return object_response(json, resp, cap, resp_len);
+}
+
+static int h_nyx_login_start(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                             char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;
+    esp_err_t err = lcd_renderer_navigate("device_bind");
+    if (err == ESP_OK) err = device_code_start_if_needed();
+    if (err != ESP_OK) {
+        snprintf(ct, ct_cap, "application/json");
+        snprintf(resp, cap, "{\"error\":\"network_unavailable_or_sign_in_busy\"}");
+        json_response_len(resp, resp_len);
+        return 409;
+    }
+    (void)h_nyx_login_status(req, resp, cap, ct, ct_cap, resp_len, NULL);
+    return 202;
+}
+
+static int h_nyx_login_cancel(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                              char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    device_code_cancel();
+    (void)h_nyx_login_status(req, resp, cap, ct, ct_cap, resp_len, user);
+    return 202;
+}
+
+static int h_wifi_qr(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                      char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;
+    if (!strcmp(req->method, "POST")) qr_scanner_confirm();
+    qr_scan_snapshot_t state;
+    qr_scanner_snapshot(&state);
+    static const char *names[] = {"scanning", "confirm", "connecting", "connected", "error"};
+    snprintf(ct, ct_cap, "application/json");
+    cJSON *json = cJSON_CreateObject();
+    if (!json) return 503;
+    cJSON_AddStringToObject(json, "state", names[state.state]);
+    cJSON_AddStringToObject(json, "ssid", state.ssid);
+    cJSON_AddStringToObject(json, "message", state.message);
+    return object_response(json, resp, cap, resp_len);
+}
+
 #if HA_CAM_DEV_QR_INJECT
 static int h_dev_inject_qr_jpeg(const nyx_proxy_request_t *req, char *resp, size_t cap,
                                 char *ct, size_t ct_cap, size_t *resp_len, void *user)
@@ -1281,7 +1343,10 @@ static int h_dev_inject_qr_jpeg(const nyx_proxy_request_t *req, char *resp, size
         return err == ESP_ERR_NOT_FOUND ? 404 : 400;
     }
 
-    snprintf(resp, cap, "{\"ok\":true,\"rebooting\":true}");
+    qr_scan_snapshot_t scan;
+    qr_scanner_snapshot(&scan);
+    snprintf(resp, cap, "{\"ok\":true,\"confirmation_required\":%s}",
+        scan.state == QR_SCAN_CONFIRM ? "true" : "false");
     json_response_len(resp, resp_len);
     return 202;
 }
@@ -1289,6 +1354,11 @@ static int h_dev_inject_qr_jpeg(const nyx_proxy_request_t *req, char *resp, size
 
 static const nyx_route_t s_routes[] = {
     { .path = "/status", .method = "GET", .fn = h_status, .user = NULL },
+    { .path = "/nyx/login", .method = "GET", .fn = h_nyx_login_status, .user = NULL },
+    { .path = "/nyx/login", .method = "POST", .fn = h_nyx_login_start, .user = NULL },
+    { .path = "/nyx/login/cancel", .method = "POST", .fn = h_nyx_login_cancel, .user = NULL },
+    { .path = "/wifi/qr", .method = "GET", .fn = h_wifi_qr, .user = NULL },
+    { .path = "/wifi/qr", .method = "POST", .fn = h_wifi_qr, .user = NULL },
     { .path = "/lcd/image", .method = "POST", .fn = h_lcd_image, .user = NULL },
     { .path = "/lcd/text", .method = "POST", .fn = h_lcd_text, .user = NULL },
     { .path = "/lcd/clear", .method = "POST", .fn = h_lcd_clear, .user = NULL },

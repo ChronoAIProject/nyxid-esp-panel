@@ -1,613 +1,460 @@
+/* NyxID account device login, used only to provision a WSS control node.
+ * User-session tokens stay in RAM. A hardware client API key is never a node token.
+ */
 #include "device_code.h"
-
-#include "cjson_tiny.h"
-#include "esp_crt_bundle.h"
-#include "esp_check.h"
-#include "esp_http_client.h"
-#include "esp_log.h"
-#include "esp_mac.h"
-#include "esp_random.h"
-#include "esp_timer.h"
-#include "mbedtls/sha512.h"
+#include "device_login_proto.h"
+#include "devices.h"
+#include "net_manager.h"
 #include "nyx_creds.h"
+#include "nyx_proto.h"
 #include "settings.h"
-#include "nvs.h"
-
+#include "cJSON.h"
+#include "esp_app_desc.h"
+#include "esp_crt_bundle.h"
+#include "esp_http_client.h"
+#include "esp_timer.h"
+#include "esp_websocket_client.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
 #include "freertos/task.h"
-
-#include <inttypes.h>
+#include "nvs.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdatomic.h>
 
-#ifdef CONFIG_HA_CAM_DEVICE_CODE
-static const char *TAG = "haCam.devcode";
-static const char *NYX_NVS_NS = "nyx";
-static const uint32_t DEFAULT_EXPIRES_IN_SEC = 900u;
-static const uint32_t DEFAULT_POLL_INTERVAL_SEC = 5u;
+#define RESPONSE_CAP 16384
+static portMUX_TYPE state_lock = portMUX_INITIALIZER_UNLOCKED;
+static device_login_snapshot_t state;
+static int64_t deadline_us;
+static atomic_bool cancelled;
 
-static struct {
-    uint8_t pub[32];
-    uint8_t priv[64];
-    bool loaded;
-    bool in_progress;
-    bool task_started;
-    bool approved;
-    char device_code[96];
-    char user_code[16];
-    char verification_uri[192];
-    char api_key[128];
-    char node_id[96];
-    uint32_t expires_in;
-    uint32_t poll_interval;
-    uint32_t poll_attempts;
-    int64_t request_us;
-    int64_t last_poll_us;
-} g;
-
-#ifndef CONFIG_HA_CAM_DEVICE_CODE_MOCK
-typedef struct {
-    char *buf;
-    size_t len;
-    size_t cap;
-} response_buf_t;
-
-static esp_err_t http_event_handler(esp_http_client_event_t *evt)
+static void erase(void *data, size_t size)
 {
-    response_buf_t *resp = (response_buf_t *)evt->user_data;
-    if (evt->event_id != HTTP_EVENT_ON_DATA || !resp || !evt->data || evt->data_len <= 0) {
-        return ESP_OK;
-    }
+    volatile unsigned char *p = data;
+    while (size--) *p++ = 0;
+}
 
-    size_t available = (resp->cap > resp->len) ? (resp->cap - resp->len - 1u) : 0u;
-    size_t copy_len = (size_t)evt->data_len;
-    if (copy_len > available) {
-        copy_len = available;
+static void set_state(device_login_state_t next, const char *message)
+{
+    portENTER_CRITICAL(&state_lock);
+    state.state = next;
+    snprintf(state.message, sizeof(state.message), "%s", message);
+    if (next != DEVICE_LOGIN_WAITING) {
+        state.user_code[0] = 0;
+        state.verification_uri[0] = 0;
+        state.verification_uri_complete[0] = 0;
+        deadline_us = 0;
     }
-    if (copy_len > 0u) {
-        memcpy(resp->buf + resp->len, evt->data, copy_len);
-        resp->len += copy_len;
-        resp->buf[resp->len] = '\0';
+    portEXIT_CRITICAL(&state_lock);
+}
+
+void device_code_snapshot(device_login_snapshot_t *out)
+{
+    if (!out) return;
+    portENTER_CRITICAL(&state_lock);
+    *out = state;
+    int64_t left = deadline_us ? deadline_us - esp_timer_get_time() : 0;
+    out->seconds_remaining = left > 0 ? (uint32_t)((left + 999999) / 1000000) : 0;
+    portEXIT_CRITICAL(&state_lock);
+}
+
+void device_code_cancel(void) { atomic_store(&cancelled, true); }
+
+static bool wait_seconds(uint32_t seconds)
+{
+    for (uint32_t i = 0; i < seconds * 10; ++i) {
+        if (atomic_load(&cancelled)) return false;
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+    return !atomic_load(&cancelled);
+}
+
+typedef struct { char *data; size_t len; bool overflow; } response_t;
+static esp_err_t http_event(esp_http_client_event_t *event)
+{
+    response_t *response = event->user_data;
+    if (event->event_id == HTTP_EVENT_ON_DATA && event->data_len > 0) {
+        size_t len = (size_t)event->data_len;
+        if (len >= RESPONSE_CAP - response->len) response->overflow = true;
+        else if (!response->overflow) {
+            memcpy(response->data + response->len, event->data, len);
+            response->len += len;
+            response->data[response->len] = 0;
+        }
     }
     return ESP_OK;
 }
 
-static int json_copy(cJSON *root, const char *key, char *dst, size_t cap)
+static int request(esp_http_client_method_t method, const char *path,
+                   const char *access_token, const cJSON *body, char *response)
 {
-    cJSON *item = cJSON_GetObjectItemCaseSensitive(root, key);
-    if (!cJSON_IsString(item) || !item->valuestring || !dst || cap == 0u) {
-        return -1;
-    }
-    snprintf(dst, cap, "%s", item->valuestring);
-    return 0;
-}
-
-static uint32_t json_u32(cJSON *root, const char *key, uint32_t fallback)
-{
-    cJSON *item = cJSON_GetObjectItemCaseSensitive(root, key);
-    if (!cJSON_IsNumber(item) || item->valuedouble < 0.0) {
-        return fallback;
-    }
-    return (uint32_t)item->valuedouble;
-}
-
-static esp_err_t http_post_json(const char *path, const char *body, char *resp_storage,
-                                size_t resp_cap, int *status_out)
-{
-    if (!path || !body || !resp_storage || resp_cap == 0u) {
-        return ESP_ERR_INVALID_ARG;
-    }
-    resp_storage[0] = '\0';
-
-    char url[256];
-    snprintf(url, sizeof(url), "%s/api/v1/devices/code/%s",
-             CONFIG_HA_CAM_DEVICE_CODE_NYX_BASE, path);
-
-    response_buf_t resp = {
-        .buf = resp_storage,
-        .len = 0,
-        .cap = resp_cap,
+    erase(response, RESPONSE_CAP);
+    char url[384];
+    if (snprintf(url, sizeof(url), "%s/api/v1%s", HA_CAM_NYX_BASE_URL, path) >= sizeof(url)) return 0;
+    response_t data = {.data = response};
+    esp_http_client_config_t config = {
+        .url = url, .method = method, .timeout_ms = 12000,
+        .disable_auto_redirect = true, .crt_bundle_attach = esp_crt_bundle_attach,
+        .event_handler = http_event, .user_data = &data,
     };
-    esp_http_client_config_t cfg = {
-        .url = url,
-        .method = HTTP_METHOD_POST,
-        .timeout_ms = 10000,
-        .event_handler = http_event_handler,
-        .user_data = &resp,
-        .crt_bundle_attach = esp_crt_bundle_attach,
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&cfg);
-    if (!client) {
-        return ESP_ERR_NO_MEM;
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+    if (!client) return 0;
+    char *authorization = NULL;
+    if (access_token) {
+        authorization = malloc(strlen(access_token) + 8);
+        if (!authorization) { esp_http_client_cleanup(client); return 0; }
+        sprintf(authorization, "Bearer %s", access_token);
+        esp_http_client_set_header(client, "Authorization", authorization);
     }
-
+    char *json = body ? cJSON_PrintUnformatted(body) : NULL;
+    if (body && !json) {
+        if (authorization) { erase(authorization, strlen(authorization)); free(authorization); }
+        esp_http_client_cleanup(client);
+        return 0;
+    }
     esp_http_client_set_header(client, "Content-Type", "application/json");
-    esp_http_client_set_post_field(client, body, strlen(body));
-
-    esp_err_t err = esp_http_client_perform(client);
-    if (err == ESP_OK && status_out) {
-        *status_out = esp_http_client_get_status_code(client);
-    }
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "device-code HTTP POST %s failed: %s", url, esp_err_to_name(err));
-    }
+    if (json) esp_http_client_set_post_field(client, json, strlen(json));
+    esp_err_t error = esp_http_client_perform(client);
+    int status = error == ESP_OK && !data.overflow ? esp_http_client_get_status_code(client) : 0;
     esp_http_client_cleanup(client);
-    return err;
+    if (json) { erase(json, strlen(json)); free(json); }
+    if (authorization) { erase(authorization, strlen(authorization)); free(authorization); }
+    return status;
 }
 
-static esp_err_t parse_request_response(const char *json, device_code_request_result_t *out)
+static bool json_copy(const cJSON *json, const char *key, char *out, size_t cap)
 {
-    if (!json || !out) {
-        return ESP_ERR_INVALID_ARG;
-    }
-    cJSON *root = cJSON_Parse(json);
-    if (!cJSON_IsObject(root)) {
-        cJSON_Delete(root);
-        return ESP_ERR_INVALID_RESPONSE;
-    }
-
-    esp_err_t err = ESP_OK;
-    if (json_copy(root, "device_code", out->device_code, sizeof(out->device_code)) != 0 ||
-        json_copy(root, "user_code", out->user_code, sizeof(out->user_code)) != 0 ||
-        json_copy(root, "verification_uri", out->verification_uri, sizeof(out->verification_uri)) != 0) {
-        err = ESP_ERR_INVALID_RESPONSE;
-    }
-    out->expires_in = json_u32(root, "expires_in", DEFAULT_EXPIRES_IN_SEC);
-    out->poll_interval = json_u32(root, "poll_interval", DEFAULT_POLL_INTERVAL_SEC);
-    if (out->poll_interval == 0u) {
-        out->poll_interval = DEFAULT_POLL_INTERVAL_SEC;
-    }
-    cJSON_Delete(root);
-    return err;
+    const cJSON *item = cJSON_GetObjectItemCaseSensitive(json, key);
+    if (!cJSON_IsString(item) || !item->valuestring[0] || strlen(item->valuestring) >= cap) return false;
+    strcpy(out, item->valuestring);
+    return true;
 }
 
-static esp_err_t parse_poll_response(const char *json, device_code_poll_result_t *out)
+static bool valid_node(const char *id)
 {
-    if (!json || !out) {
-        return ESP_ERR_INVALID_ARG;
+    if (strlen(id) != 36) return false;
+    for (size_t i = 0; i < 36; ++i) {
+        if (i == 8 || i == 13 || i == 18 || i == 23) { if (id[i] != '-') return false; }
+        else if (!isxdigit((unsigned char)id[i])) return false;
     }
-    cJSON *root = cJSON_Parse(json);
-    if (!cJSON_IsObject(root)) {
-        cJSON_Delete(root);
-        return ESP_ERR_INVALID_RESPONSE;
-    }
-
-    out->status = DEVICE_CODE_POLL_PENDING;
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(root, "status");
-    if (cJSON_IsString(status) && status->valuestring) {
-        if (strcmp(status->valuestring, "approved") == 0 ||
-            strcmp(status->valuestring, "success") == 0) {
-            out->status = DEVICE_CODE_POLL_APPROVED;
-        } else if (strcmp(status->valuestring, "expired") == 0) {
-            out->status = DEVICE_CODE_POLL_EXPIRED;
-        }
-    }
-
-    esp_err_t err = ESP_OK;
-    if (out->status == DEVICE_CODE_POLL_APPROVED) {
-        if (json_copy(root, "api_key", out->api_key, sizeof(out->api_key)) != 0 ||
-            json_copy(root, "node_id", out->node_id, sizeof(out->node_id)) != 0) {
-            err = ESP_ERR_INVALID_RESPONSE;
-        }
-        (void)json_copy(root, "refresh_token", out->refresh_token, sizeof(out->refresh_token));
-    }
-    cJSON_Delete(root);
-    return err;
-}
-#endif
-
-static void bytes_to_hex(const uint8_t *bytes, size_t len, char *out, size_t cap)
-{
-    static const char chars[] = "0123456789abcdef";
-    if (!out || cap == 0u) {
-        return;
-    }
-    if (!bytes || cap < len * 2u + 1u) {
-        out[0] = '\0';
-        return;
-    }
-    for (size_t i = 0; i < len; ++i) {
-        out[i * 2u] = chars[(bytes[i] >> 4) & 0x0f];
-        out[i * 2u + 1u] = chars[bytes[i] & 0x0f];
-    }
-    out[len * 2u] = '\0';
+    return true;
 }
 
-static void copy_string(char *dst, size_t cap, const char *src)
+static bool valid_credentials(const nyx_binding_t *binding)
 {
-    if (!dst || cap == 0u) {
-        return;
-    }
-    snprintf(dst, cap, "%s", src ? src : "");
+    if (!valid_node(binding->node_id) || strncmp(binding->auth_token, "nyx_nauth_", 10) ||
+        strlen(binding->signing_secret) != 64) return false;
+    for (size_t i = 0; i < 64; ++i) if (!isxdigit((unsigned char)binding->signing_secret[i])) return false;
+    return true;
 }
 
-static void random_bytes(uint8_t *dst, size_t len)
+static bool save_stage(const nyx_binding_t *binding)
 {
-    size_t off = 0u;
-    while (off < len) {
-        uint32_t r = esp_random();
-        size_t copy = len - off;
-        if (copy > sizeof(r)) {
-            copy = sizeof(r);
-        }
-        memcpy(dst + off, &r, copy);
-        off += copy;
-    }
-}
-
-static void derive_public_key(void)
-{
-    uint8_t digest[64];
-    (void)mbedtls_sha512(g.priv, 32, digest, 0);
-    memcpy(g.pub, digest, sizeof(g.pub));
-}
-
-static esp_err_t load_keypair_from_nvs(nvs_handle_t h)
-{
-    size_t pub_len = sizeof(g.pub);
-    size_t priv_len = sizeof(g.priv);
-    esp_err_t err = nvs_get_blob(h, "dc_pub", g.pub, &pub_len);
-    if (err != ESP_OK) {
-        return err;
-    }
-    err = nvs_get_blob(h, "dc_priv", g.priv, &priv_len);
-    if (err != ESP_OK) {
-        return err;
-    }
-    if (pub_len != sizeof(g.pub) || priv_len != sizeof(g.priv)) {
-        return ESP_ERR_INVALID_SIZE;
-    }
-    return ESP_OK;
-}
-
-static esp_err_t generate_and_save_keypair(nvs_handle_t h)
-{
-    random_bytes(g.priv, sizeof(g.priv));
-    derive_public_key();
-
-    esp_err_t err = nvs_set_blob(h, "dc_pub", g.pub, sizeof(g.pub));
-    if (err == ESP_OK) {
-        err = nvs_set_blob(h, "dc_priv", g.priv, sizeof(g.priv));
-    }
-    if (err == ESP_OK) {
-        err = nvs_commit(h);
-    }
-    if (err != ESP_OK) {
-        return err;
-    }
-    ESP_LOGI(TAG, "generated device-code keypair namespace=%s keys=dc_pub,dc_priv", NYX_NVS_NS);
-    return ESP_OK;
-}
-
-static esp_err_t ensure_keypair(void)
-{
-    if (g.loaded) {
-        return ESP_OK;
-    }
-
-    nvs_handle_t h = 0;
-    ESP_RETURN_ON_ERROR(nvs_open(NYX_NVS_NS, NVS_READWRITE, &h), TAG, "nvs_open(%s)", NYX_NVS_NS);
-
-    esp_err_t err = load_keypair_from_nvs(h);
-    if (err == ESP_ERR_NVS_NOT_FOUND || err == ESP_ERR_INVALID_SIZE) {
-        ESP_LOGI(TAG, "device-code keypair missing or invalid; generating");
-        err = generate_and_save_keypair(h);
-    }
+    nvs_handle_t h;
+    if (nvs_open("nyx_setup", NVS_READWRITE, &h) != ESP_OK) return false;
+    esp_err_t err = nvs_set_blob(h, "pending_v1", binding, sizeof(*binding));
+    if (err == ESP_OK) err = nvs_commit(h);
     nvs_close(h);
-    ESP_RETURN_ON_ERROR(err, TAG, "device-code keypair load/generate failed");
-
-    g.loaded = true;
-    return ESP_OK;
+    return err == ESP_OK;
 }
 
-static void device_code_poll_task(void *arg)
+static void load_stage(nyx_binding_t *binding)
+{
+    memset(binding, 0, sizeof(*binding));
+    nvs_handle_t h;
+    if (nvs_open("nyx_setup", NVS_READONLY, &h) != ESP_OK) return;
+    size_t size = sizeof(*binding);
+    esp_err_t err = nvs_get_blob(h, "pending_v1", binding, &size);
+    nvs_close(h);
+    if (err != ESP_OK || size != sizeof(*binding) ||
+        !memchr(binding->node_id, 0, sizeof(binding->node_id)) ||
+        !memchr(binding->auth_token, 0, sizeof(binding->auth_token)) ||
+        !memchr(binding->signing_secret, 0, sizeof(binding->signing_secret)) ||
+        !memchr(binding->slug, 0, sizeof(binding->slug)) || !valid_node(binding->node_id))
+        memset(binding, 0, sizeof(*binding));
+}
+
+typedef struct {
+    EventGroupHandle_t events;
+    char message[4096];
+} registration_t;
+
+static void websocket_event(void *arg, esp_event_base_t base, int32_t id, void *data)
+{
+    (void)base;
+    registration_t *registration = arg;
+    esp_websocket_event_data_t *event = data;
+    if (id == WEBSOCKET_EVENT_CONNECTED) xEventGroupSetBits(registration->events, 1);
+    else if (id == WEBSOCKET_EVENT_ERROR || id == WEBSOCKET_EVENT_DISCONNECTED)
+        xEventGroupSetBits(registration->events, 4);
+    else if (id == WEBSOCKET_EVENT_DATA && event && (event->op_code == 1 || event->op_code == 0)) {
+        if (event->payload_len <= 0 || event->payload_len >= sizeof(registration->message) ||
+            event->payload_offset < 0 || event->data_len < 0 ||
+            event->payload_offset + event->data_len > event->payload_len) {
+            xEventGroupSetBits(registration->events, 4);
+            return;
+        }
+        memcpy(registration->message + event->payload_offset, event->data_ptr, event->data_len);
+        if (event->payload_offset + event->data_len == event->payload_len) {
+            registration->message[event->payload_len] = 0;
+            xEventGroupSetBits(registration->events, 2);
+        }
+    }
+}
+
+static bool wait_event(registration_t *registration, EventBits_t bit)
+{
+    for (int i = 0; i < 20 && !atomic_load(&cancelled); ++i) {
+        EventBits_t flags = xEventGroupWaitBits(registration->events, bit | 4, pdFALSE, pdFALSE, pdMS_TO_TICKS(1000));
+        if (flags & bit) return true;
+        if (flags & 4) return false;
+    }
+    return false;
+}
+
+static bool register_node(const char *registration_token, nyx_binding_t *binding)
+{
+    registration_t *registration = calloc(1, sizeof(*registration));
+    if (!registration) return false;
+    registration->events = xEventGroupCreate();
+    if (!registration->events) { free(registration); return false; }
+    esp_websocket_client_config_t config = {
+        .uri = HA_CAM_NYX_WSS_URL, .disable_auto_reconnect = true,
+        .network_timeout_ms = 10000, .buffer_size = 2048, .crt_bundle_attach = esp_crt_bundle_attach,
+    };
+    esp_websocket_client_handle_t ws = esp_websocket_client_init(&config);
+    bool ok = false;
+    if (ws) {
+        esp_websocket_register_events(ws, WEBSOCKET_EVENT_ANY, websocket_event, registration);
+        if (esp_websocket_client_start(ws) == ESP_OK && wait_event(registration, 1)) {
+            char frame[512];
+            size_t size = nyx_proto_build_register_token(frame, sizeof(frame), registration_token);
+            if (size && !atomic_load(&cancelled) &&
+                esp_websocket_client_send_text(ws, frame, size, pdMS_TO_TICKS(3000)) >= 0 && wait_event(registration, 2)) {
+                cJSON *json = cJSON_Parse(registration->message);
+                const cJSON *type = cJSON_GetObjectItemCaseSensitive(json, "type");
+                char node[96];
+                ok = cJSON_IsString(type) && !strcmp(type->valuestring, "register_ok") &&
+                    json_copy(json, "node_id", node, sizeof(node)) && !strcmp(node, binding->node_id) &&
+                    json_copy(json, "auth_token", binding->auth_token, sizeof(binding->auth_token)) &&
+                    json_copy(json, "signing_secret", binding->signing_secret, sizeof(binding->signing_secret)) &&
+                    valid_credentials(binding);
+                cJSON_Delete(json);
+            }
+            erase(frame, sizeof(frame));
+        }
+        esp_websocket_client_stop(ws);
+        esp_websocket_client_destroy(ws);
+    }
+    vEventGroupDelete(registration->events);
+    erase(registration, sizeof(*registration));
+    free(registration);
+    return ok;
+}
+
+static bool setup_node(const char *access, char *response, nyx_binding_t *binding)
+{
+    load_stage(binding);
+    char path[160];
+    if (!binding->node_id[0] && nyx_creds_have_nvs_credentials()) {
+        // Reauthorizing the same account reuses the existing board and service.
+        snprintf(path, sizeof(path), "/nodes/%s", nyx_creds_node_id());
+        if (request(HTTP_METHOD_GET, path, access, NULL, response) == 200) {
+            snprintf(binding->node_id, sizeof(binding->node_id), "%s", nyx_creds_node_id());
+            snprintf(binding->auth_token, sizeof(binding->auth_token), "%s", nyx_creds_api_key());
+            snprintf(binding->signing_secret, sizeof(binding->signing_secret), "%s", nyx_creds_signing_secret());
+            snprintf(binding->slug, sizeof(binding->slug), "%s", nyx_creds_service_slug());
+            if (!valid_credentials(binding)) memset(binding, 0, sizeof(*binding));
+        }
+    }
+    if (binding->node_id[0]) {
+        snprintf(path, sizeof(path), "/nodes/%s", binding->node_id);
+        int status = request(HTTP_METHOD_GET, path, access, NULL, response);
+        if (status == 404) memset(binding, 0, sizeof(*binding));
+        else if (status != 200) return false;
+        else if (!valid_credentials(binding)) {
+            // token_id survives a lost register_ok; a fresh human grant recovers it.
+            snprintf(path, sizeof(path), "/nodes/%s/rotate-token", binding->node_id);
+            if (request(HTTP_METHOD_POST, path, access, NULL, response) != 200) return false;
+            cJSON *json = cJSON_Parse(response);
+            bool ok = json_copy(json, "auth_token", binding->auth_token, sizeof(binding->auth_token)) &&
+                json_copy(json, "signing_secret", binding->signing_secret, sizeof(binding->signing_secret)) &&
+                valid_credentials(binding);
+            cJSON_Delete(json);
+            if (!ok || !save_stage(binding)) return false;
+        }
+    }
+    if (binding->node_id[0]) return valid_credentials(binding);
+    if (atomic_load(&cancelled)) return false;
+    cJSON *body = cJSON_CreateObject();
+    if (!body) return false;
+    cJSON_AddStringToObject(body, "name", devices_self()->label);
+    int status = request(HTTP_METHOD_POST, "/nodes/register-token", access, body, response);
+    cJSON_Delete(body);
+    if (status != 200) return false;
+    char token[256] = "";
+    cJSON *json = cJSON_Parse(response);
+    bool ok = json_copy(json, "token_id", binding->node_id, sizeof(binding->node_id)) &&
+        valid_node(binding->node_id) && json_copy(json, "token", token, sizeof(token)) && save_stage(binding);
+    cJSON_Delete(json);
+    if (ok) ok = register_node(token, binding) && save_stage(binding);
+    erase(token, sizeof(token));
+    return ok;
+}
+
+static bool service_matches(const char *response, nyx_binding_t *binding)
+{
+    cJSON *json = cJSON_Parse(response);
+    char node[96], slug[80], method[16], status[24], endpoint[128];
+    bool ok = json_copy(json, "node_id", node, sizeof(node)) && !strcmp(node, binding->node_id) &&
+        json_copy(json, "slug", slug, sizeof(slug)) &&
+        json_copy(json, "auth_method", method, sizeof(method)) && !strcmp(method, "none") &&
+        json_copy(json, "status", status, sizeof(status)) && !strcmp(status, "active") &&
+        json_copy(json, "endpoint_url", endpoint, sizeof(endpoint)) && !strcmp(endpoint, "http://127.0.0.1:80");
+    if (ok) strcpy(binding->slug, slug);
+    cJSON_Delete(json);
+    return ok;
+}
+
+static bool setup_service(const char *access, char *response, nyx_binding_t *binding)
+{
+    if (!binding->slug[0]) snprintf(binding->slug, sizeof(binding->slug), "%s-%.8s", devices_self()->label, binding->node_id);
+    char path[192];
+    snprintf(path, sizeof(path), "/keys/%s", binding->slug);
+    int status = request(HTTP_METHOD_GET, path, access, NULL, response);
+    if (status == 200) return service_matches(response, binding);
+    if (status != 404 || atomic_load(&cancelled)) return false;
+    cJSON *body = cJSON_CreateObject();
+    if (!body) return false;
+    cJSON_AddStringToObject(body, "label", "Nyx Panel");
+    cJSON_AddStringToObject(body, "slug", binding->slug);
+    cJSON_AddStringToObject(body, "endpoint_url", "http://127.0.0.1:80");
+    cJSON_AddStringToObject(body, "auth_method", "none");
+    cJSON_AddStringToObject(body, "auth_key_name", "");
+    cJSON_AddStringToObject(body, "node_id", binding->node_id);
+    status = request(HTTP_METHOD_POST, "/keys", access, body, response);
+    cJSON_Delete(body);
+    if (status != 200 && status != 201 && status != 409) return false;
+    // Verify the stored routing and ownership, including after a slug conflict.
+    return request(HTTP_METHOD_GET, path, access, NULL, response) == 200 && service_matches(response, binding);
+}
+
+static void login_task(void *arg)
 {
     (void)arg;
-    ESP_LOGI(TAG, "device-code polling task started");
-
-    esp_err_t err = device_code_request();
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "device-code request failed: %s", esp_err_to_name(err));
-        g.in_progress = false;
-        vTaskDelete(NULL);
-        return;
-    }
-
-    while (g.in_progress && !g.approved) {
-        uint32_t interval = g.poll_interval ? g.poll_interval : DEFAULT_POLL_INTERVAL_SEC;
-        vTaskDelay(pdMS_TO_TICKS(interval * 1000u));
-        err = device_code_poll();
-        if (err == ESP_ERR_NOT_FINISHED) {
-            continue;
-        }
-        if (err == ESP_ERR_TIMEOUT) {
-            ESP_LOGW(TAG, "device-code expired; rotating request");
-            err = device_code_request();
-            if (err != ESP_OK) {
-                ESP_LOGE(TAG, "device-code rotate request failed: %s", esp_err_to_name(err));
-                g.in_progress = false;
-                break;
-            }
-            continue;
-        }
-        if (err != ESP_OK) {
-            ESP_LOGW(TAG, "device-code poll failed: %s", esp_err_to_name(err));
-            continue;
-        }
-
-        if (nyx_creds_save_api_key(g.api_key) != 0 ||
-            nyx_creds_save_node_id(g.node_id) != 0) {
-            ESP_LOGE(TAG, "device-code credentials save failed");
-            g.in_progress = false;
+    char *response = calloc(1, RESPONSE_CAP);
+    char *access = NULL;
+    device_login_request_t login = {0};
+    nyx_binding_t binding = {0};
+    bool ready = false;
+    const char *failure = "Could not start sign-in. Check the network and try again.";
+    if (!response) goto done;
+    cJSON *body = cJSON_CreateObject();
+    if (!body) goto done;
+    cJSON_AddStringToObject(body, "client_label", devices_self()->label);
+    cJSON_AddStringToObject(body, "client_app", "nyxid-esp-panel");
+    cJSON_AddStringToObject(body, "client_platform", "esp32p4");
+    cJSON_AddStringToObject(body, "client_model", "Waveshare ESP32-P4 10.1");
+    int status = request(HTTP_METHOD_POST, "/auth/device/request", NULL, body, response);
+    cJSON_Delete(body);
+    if (status != 200 || !device_login_parse_request(response, &login)) goto done;
+    if (atomic_load(&cancelled)) goto done;
+    int64_t expires_at = esp_timer_get_time() + (int64_t)login.expires_in * 1000000;
+    portENTER_CRITICAL(&state_lock);
+    state.state = DEVICE_LOGIN_WAITING;
+    strcpy(state.user_code, login.user_code);
+    strcpy(state.verification_uri, login.verification_uri);
+    strcpy(state.verification_uri_complete, login.verification_uri_complete);
+    strcpy(state.message, "Scan with your phone, then approve this panel in NyxID.");
+    deadline_us = expires_at;
+    portEXIT_CRITICAL(&state_lock);
+    uint32_t interval = login.interval;
+    while (!atomic_load(&cancelled)) {
+        if (!wait_seconds(interval)) break;
+        if (esp_timer_get_time() >= expires_at) { failure = "This code expired. Start again for a new code."; break; }
+        body = cJSON_CreateObject();
+        if (!body) break;
+        cJSON_AddStringToObject(body, "device_code", login.device_code);
+        status = request(HTTP_METHOD_POST, "/auth/device/poll", NULL, body, response);
+        cJSON_Delete(body);
+        device_login_poll_t poll = device_login_parse_poll(status, response);
+        if (poll == LOGIN_POLL_APPROVED) {
+            cJSON *json = cJSON_Parse(response);
+            const cJSON *value = cJSON_GetObjectItemCaseSensitive(json, "access_token");
+            if (cJSON_IsString(value) && strlen(value->valuestring) <= 8192) access = strdup(value->valuestring);
+            if (cJSON_IsString(value)) erase(value->valuestring, strlen(value->valuestring));
+            value = cJSON_GetObjectItemCaseSensitive(json, "refresh_token");
+            if (cJSON_IsString(value)) erase(value->valuestring, strlen(value->valuestring));
+            cJSON_Delete(json);
             break;
         }
-        ESP_LOGI(TAG, "device-code approved; saved credentials and rebooting");
-        vTaskDelay(pdMS_TO_TICKS(500));
-        esp_restart();
+        if (poll == LOGIN_POLL_PENDING) continue;
+        if (!status || status >= 500 || poll == LOGIN_POLL_RATE_LIMITED || poll == LOGIN_POLL_SLOW_DOWN) {
+            interval = device_login_backoff(interval);
+            continue;
+        }
+        failure = poll == LOGIN_POLL_DENIED ? "Sign-in was declined. You can start again." :
+            poll == LOGIN_POLL_EXPIRED ? "This code expired. Start again for a new code." :
+            poll == LOGIN_POLL_DELIVERED ? "Sign-in delivery was lost. Please request a new code." :
+            "NyxID could not complete sign-in. Please start again.";
+        break;
     }
-
-    g.task_started = false;
+    if (!access || atomic_load(&cancelled)) goto done;
+    set_state(DEVICE_LOGIN_REGISTERING, "Registering this panel with NyxID...");
+    failure = "Device setup is unfinished. Sign in again to resume safely.";
+    if (!setup_node(access, response, &binding) || atomic_load(&cancelled)) goto done;
+    set_state(DEVICE_LOGIN_SERVICE, "Setting up remote access...");
+    if (!setup_service(access, response, &binding) || atomic_load(&cancelled)) goto done;
+    if (nyx_creds_store_binding(&binding) != 0) { failure = "Could not save the connection. Please try again."; goto done; }
+    nvs_handle_t h;
+    if (nvs_open("nyx_setup", NVS_READWRITE, &h) == ESP_OK) {
+        nvs_erase_key(h, "pending_v1"); nvs_commit(h); nvs_close(h);
+    }
+    ready = true;
+done:
+    if (access && response) {
+        // Revoke only this temporary account session; never store it in NVS.
+        for (int attempt = 0; attempt < 2; ++attempt) {
+            int logout = request(HTTP_METHOD_POST, "/auth/logout", access, NULL, response);
+            if ((logout >= 200 && logout < 300) || logout == 401) break;
+        }
+        erase(access, strlen(access)); free(access);
+    }
+    if (response) { erase(response, RESPONSE_CAP); free(response); }
+    erase(&login, sizeof(login)); erase(&binding, sizeof(binding));
+    set_state(ready ? DEVICE_LOGIN_READY : atomic_load(&cancelled) ? DEVICE_LOGIN_CANCELLED : DEVICE_LOGIN_FAILED,
+        ready ? "Connection saved. Restart the panel to activate it." :
+        atomic_load(&cancelled) ? "Sign-in cancelled." : failure);
+    portENTER_CRITICAL(&state_lock);
+    state.busy = false;
+    portEXIT_CRITICAL(&state_lock);
     vTaskDelete(NULL);
 }
 
 esp_err_t device_code_start_if_needed(void)
 {
-    ESP_RETURN_ON_ERROR(ensure_keypair(), TAG, "keypair unavailable");
-    if (g.task_started) {
-        g.in_progress = true;
-        return ESP_OK;
-    }
-    g.in_progress = true;
-    g.approved = false;
-    BaseType_t ok = xTaskCreate(device_code_poll_task, "devcode_poll", 8192, NULL, 5, NULL);
-    if (ok != pdPASS) {
-        g.in_progress = false;
-        return ESP_ERR_NO_MEM;
-    }
-    g.task_started = true;
-    return ESP_OK;
-}
-
-void device_code_cancel(void)
-{
-    g.in_progress = false;
-    ESP_LOGI(TAG, "device-code flow canceled");
-}
-
-bool device_code_in_progress(void)
-{
-    return g.in_progress;
-}
-
-void device_code_get_user_code(char out[16])
-{
-    if (out) {
-        snprintf(out, 16, "%s", g.user_code);
-    }
-}
-
-void device_code_get_verification_uri(char *out, size_t cap)
-{
-    if (out && cap > 0u) {
-        snprintf(out, cap, "%s", g.verification_uri);
-    }
-}
-
-uint32_t device_code_seconds_until_rotate(void)
-{
-    if (!g.in_progress || g.request_us == 0 || g.expires_in == 0u) {
-        return 0u;
-    }
-    uint64_t elapsed = (uint64_t)((esp_timer_get_time() - g.request_us) / 1000000LL);
-    if (elapsed >= g.expires_in) {
-        return 0u;
-    }
-    return g.expires_in - (uint32_t)elapsed;
-}
-
-uint32_t device_code_last_poll_age_seconds(void)
-{
-    if (g.last_poll_us == 0) {
-        return 0u;
-    }
-    int64_t age = (esp_timer_get_time() - g.last_poll_us) / 1000000LL;
-    return age > 0 ? (uint32_t)age : 0u;
-}
-
-uint32_t device_code_poll_attempts(void)
-{
-    return g.poll_attempts;
-}
-
-esp_err_t device_code_sign(const uint8_t *msg, size_t len, uint8_t out[64])
-{
-    if (!msg || !out) {
-        return ESP_ERR_INVALID_ARG;
-    }
-    ESP_RETURN_ON_ERROR(ensure_keypair(), TAG, "keypair unavailable");
-
-    mbedtls_sha512_context ctx;
-    mbedtls_sha512_init(&ctx);
-    int rc = mbedtls_sha512_starts(&ctx, 0);
-    if (rc == 0) {
-        rc = mbedtls_sha512_update(&ctx, g.priv, sizeof(g.priv));
-    }
-    if (rc == 0) {
-        rc = mbedtls_sha512_update(&ctx, msg, len);
-    }
-    if (rc == 0) {
-        rc = mbedtls_sha512_finish(&ctx, out);
-    }
-    mbedtls_sha512_free(&ctx);
-    return rc == 0 ? ESP_OK : ESP_FAIL;
-}
-
-esp_err_t device_code_get_public_key_hex(char out[65])
-{
-    if (!out) {
-        return ESP_ERR_INVALID_ARG;
-    }
-    ESP_RETURN_ON_ERROR(ensure_keypair(), TAG, "keypair unavailable");
-    bytes_to_hex(g.pub, sizeof(g.pub), out, 65);
-    return ESP_OK;
-}
-
-esp_err_t device_code_request(void)
-{
-    device_code_request_result_t result = {0};
-    char pub_hex[65];
-    ESP_RETURN_ON_ERROR(device_code_get_public_key_hex(pub_hex), TAG, "pubkey unavailable");
-
-    uint8_t mac[6] = {0};
-    if (esp_read_mac(mac, ESP_MAC_WIFI_STA) != ESP_OK) {
-        random_bytes(mac, sizeof(mac));
-    }
-    char hw_id[40];
-    snprintf(hw_id, sizeof(hw_id), "esp32p4-%02x%02x%02x%02x%02x%02x",
-             mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-
-    esp_err_t err = device_code_client_request(pub_hex, hw_id, HA_CAM_DEFAULT_LABEL, &result);
-    if (err != ESP_OK) {
-        return err;
-    }
-
-    copy_string(g.device_code, sizeof(g.device_code), result.device_code);
-    copy_string(g.user_code, sizeof(g.user_code), result.user_code);
-    copy_string(g.verification_uri, sizeof(g.verification_uri), result.verification_uri);
-    g.expires_in = result.expires_in ? result.expires_in : DEFAULT_EXPIRES_IN_SEC;
-    g.poll_interval = result.poll_interval ? result.poll_interval : DEFAULT_POLL_INTERVAL_SEC;
-    g.poll_attempts = 0u;
-    g.last_poll_us = 0;
-    g.request_us = esp_timer_get_time();
-    ESP_LOGI(TAG, "device-code requested user_code=%s verification_uri=%s poll_interval=%lu expires_in=%lu",
-             g.user_code, g.verification_uri, (unsigned long)g.poll_interval,
-             (unsigned long)g.expires_in);
-    return ESP_OK;
-}
-
-esp_err_t device_code_poll(void)
-{
-    if (!g.device_code[0]) {
+    bool online = net_manager_connected();
+    portENTER_CRITICAL(&state_lock);
+    if (state.busy) { portEXIT_CRITICAL(&state_lock); return ESP_ERR_INVALID_STATE; }
+    memset(&state, 0, sizeof(state));
+    deadline_us = 0;
+    if (!online) {
+        state.state = DEVICE_LOGIN_FAILED;
+        strcpy(state.message, "Connect to Wi-Fi in Settings before signing in.");
+        portEXIT_CRITICAL(&state_lock);
         return ESP_ERR_INVALID_STATE;
     }
-
-    char msg[160];
-    int64_t ts = esp_timer_get_time() / 1000000LL;
-    snprintf(msg, sizeof(msg), "%s:%" PRId64, g.device_code, ts);
-    uint8_t sig[64];
-    ESP_RETURN_ON_ERROR(device_code_sign((const uint8_t *)msg, strlen(msg), sig), TAG, "sign failed");
-    char sig_hex[129];
-    bytes_to_hex(sig, sizeof(sig), sig_hex, sizeof(sig_hex));
-
-    device_code_poll_result_t result = {0};
-    g.poll_attempts++;
-    g.last_poll_us = esp_timer_get_time();
-    esp_err_t err = device_code_client_poll(g.device_code, ts, sig_hex, &result);
-    if (err != ESP_OK) {
-        return err;
+    state.busy = true;
+    state.state = DEVICE_LOGIN_REQUESTING;
+    strcpy(state.message, "Getting a sign-in code...");
+    atomic_store(&cancelled, false);
+    portEXIT_CRITICAL(&state_lock);
+    if (xTaskCreate(login_task, "nyx_setup", 12288, NULL, 4, NULL) != pdPASS) {
+        set_state(DEVICE_LOGIN_FAILED, "Not enough memory to start sign-in.");
+        portENTER_CRITICAL(&state_lock); state.busy = false; portEXIT_CRITICAL(&state_lock);
+        return ESP_ERR_NO_MEM;
     }
-    if (result.status == DEVICE_CODE_POLL_PENDING) {
-        return ESP_ERR_NOT_FINISHED;
-    }
-    if (result.status == DEVICE_CODE_POLL_EXPIRED) {
-        return ESP_ERR_TIMEOUT;
-    }
-
-    copy_string(g.api_key, sizeof(g.api_key), result.api_key);
-    copy_string(g.node_id, sizeof(g.node_id), result.node_id);
-    g.approved = g.api_key[0] && g.node_id[0];
-    return g.approved ? ESP_OK : ESP_ERR_INVALID_RESPONSE;
-}
-
-esp_err_t device_code_get_credentials(char *api_key_out, char *node_id_out, size_t cap)
-{
-    if (!api_key_out || !node_id_out || cap == 0u) {
-        return ESP_ERR_INVALID_ARG;
-    }
-    if (!g.approved || !g.api_key[0] || !g.node_id[0]) {
-        return ESP_ERR_INVALID_STATE;
-    }
-    copy_string(api_key_out, cap, g.api_key);
-    copy_string(node_id_out, cap, g.node_id);
     return ESP_OK;
 }
-
-#ifndef CONFIG_HA_CAM_DEVICE_CODE_MOCK
-esp_err_t device_code_client_request(const char *device_pubkey_hex,
-                                     const char *hw_id,
-                                     const char *suggested_label,
-                                     device_code_request_result_t *out)
-{
-    if (!device_pubkey_hex || !hw_id || !suggested_label || !out) {
-        return ESP_ERR_INVALID_ARG;
-    }
-
-    cJSON *body = cJSON_CreateObject();
-    if (!body) {
-        return ESP_ERR_NO_MEM;
-    }
-    cJSON_AddStringToObject(body, "device_pubkey", device_pubkey_hex);
-    cJSON_AddStringToObject(body, "hw_id", hw_id);
-    cJSON_AddStringToObject(body, "suggested_label", suggested_label);
-    char *printed = cJSON_PrintUnformatted(body);
-    cJSON_Delete(body);
-    if (!printed) {
-        return ESP_ERR_NO_MEM;
-    }
-
-    char resp[768];
-    int status = 0;
-    esp_err_t err = http_post_json("request", printed, resp, sizeof(resp), &status);
-    free(printed);
-    if (err != ESP_OK) {
-        return err;
-    }
-    if (status < 200 || status >= 300) {
-        ESP_LOGW(TAG, "device-code request HTTP status=%d body=%.200s", status, resp);
-        return ESP_FAIL;
-    }
-    return parse_request_response(resp, out);
-}
-
-esp_err_t device_code_client_poll(const char *device_code,
-                                  int64_t ts,
-                                  const char *ts_sig_hex,
-                                  device_code_poll_result_t *out)
-{
-    if (!device_code || !ts_sig_hex || !out) {
-        return ESP_ERR_INVALID_ARG;
-    }
-
-    cJSON *body = cJSON_CreateObject();
-    if (!body) {
-        return ESP_ERR_NO_MEM;
-    }
-    cJSON_AddStringToObject(body, "device_code", device_code);
-    cJSON_AddNumberToObject(body, "ts", (double)ts);
-    cJSON_AddStringToObject(body, "ts_sig", ts_sig_hex);
-    char *printed = cJSON_PrintUnformatted(body);
-    cJSON_Delete(body);
-    if (!printed) {
-        return ESP_ERR_NO_MEM;
-    }
-
-    char resp[768];
-    int status = 0;
-    esp_err_t err = http_post_json("poll", printed, resp, sizeof(resp), &status);
-    free(printed);
-    if (err != ESP_OK) {
-        return err;
-    }
-    if (status == 202 || status == 204) {
-        out->status = DEVICE_CODE_POLL_PENDING;
-        return ESP_OK;
-    }
-    if (status < 200 || status >= 300) {
-        ESP_LOGW(TAG, "device-code poll HTTP status=%d body=%.200s", status, resp);
-        return ESP_FAIL;
-    }
-    return parse_poll_response(resp, out);
-}
-#endif
-#endif

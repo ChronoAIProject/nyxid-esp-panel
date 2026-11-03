@@ -1,6 +1,40 @@
 # Hardware acceptance, 2026-11-03
 
-The acceptance target is the attached ESP32-P4 v1.3 / 16 MiB board, 32 MiB
+## v0.2.0 native onboarding
+
+The independent upstream/deployed NyxID audit is in
+[NYXID_FEATURE_AUDIT.md](NYXID_FEATURE_AUDIT.md); implemented behavior is in
+[ONBOARDING.md](ONBOARDING.md).
+
+- All 14 host test executables pass. New coverage checks real account-login
+  response/error/backoff semantics and rejection of client identities; standard
+  Wi-Fi QR escaping/Unicode/open/hidden/bounds; legacy identity migration,
+  failed binding writes, delayed activation and identity-preserving reset.
+  The NVS API substitute does not establish physical power-loss durability.
+- ESP-IDF v5.5.4 firmware build passes. Application size is `0x673bc0`
+  (6,765,504 bytes), within each `0x690000` slot with 115,776 bytes spare.
+  SHA256: `7868f4f85f73ab2544cadb976e302444b23464dfe39827e118887119654a0b37`.
+- `git diff --check` and Python compilation/help checks pass. The hardware tool
+  adds `--onboarding` for scan/back and a real login request/cancellation, plus
+  optional `--wifi-qr-image` for decoder/confirmation checks without connecting.
+  Preparing that tool is not live acceptance evidence.
+- The original-board OTA attempt stopped at its initial status preflight;
+  no OTA upload or reboot occurred. The operator moved to the company network
+  and attached a different, same-model board. Public NyxID/CLI access recovered.
+- New target: ESP32-P4 v1.3, 16 MiB, MAC `80:f1:b2:d2:ee:ad`. Its full flash was
+  backed up privately under `20261103-d2eead`; SHA256:
+  `9c0a43240e0b9690f82493a9b6eeaa55f385f6cb4de4443bbb2401381fb7b3e6`.
+  Its own NVS was extracted from `0x9000`, size `0x6000`, padded to the new
+  `0xd2000` partition. Namespaces are `storage`, `wifi-set`, `stream`; it has
+  no existing Nyx identity. No original-board credentials were imported.
+
+New-target flashing and live onboarding acceptance are in progress. Real phone
+approval, node/service registration, optical Wi-Fi scanning and network
+transitions are not established by the local tests or historical results below.
+
+## v0.1.14 original-board evidence (historical)
+
+The original acceptance target is an ESP32-P4 v1.3 / 16 MiB board, 32 MiB
 PSRAM, OV5647, JD9365, GT911 and ES8311. Raw logs, registration credentials,
 flash backups and camera images remain private outside the repository, under
 the operator's dated `nyxid-esp-panel/20261103` output directory. Artifact names

@@ -50,6 +50,29 @@ The unused SquareLine demonstration app is excluded. Bundled music contains
 BGM 1, For Elise and Something; BGM 2 and Waka Waka are omitted for flash space.
 Native music, drawing, calculator, Settings, camera and spectrum apps remain.
 
+## Native menus and NyxID sign-in
+
+Nyx Panel is the message/image app. Network, NyxID connection and device status
+live in native Settings; the content app has no duplicate system menu.
+
+- **Settings → WLAN → Scan Wi-Fi QR** opens the shared camera scanner. Standard
+  `WIFI:` personal WPA/WPA2/WPA3 and open-network codes, escaped fields and
+  Unicode SSIDs are supported, along with legacy `nyxprov://wifi` codes. The
+  panel shows the SSID and asks before connecting. Failed/cancelled connections
+  restore the previous network; successful connections are saved without reboot.
+- **Settings → NyxID → Sign in to NyxID** displays a real account device code and
+  QR. Approve the panel on your phone. It registers a WSS control node and custom
+  service, then saves the node identity atomically. Restart using the page's
+  button to activate it. Account access/refresh tokens are never stored in NVS;
+  the temporary account session is logged out after provisioning.
+- **Settings → Device status** shows firmware, network, NyxID, media and update
+  status. Scanning returns to the Settings page that opened it.
+
+Existing provisioned panels keep their identity on upgrade and do not start a
+new login automatically. See [onboarding details](docs/ONBOARDING.md) and the
+[upstream feature audit](docs/NYXID_FEATURE_AUDIT.md) for the protocol, recovery
+behavior and capabilities intentionally left for later.
+
 ## Back up and migrate an existing board
 
 Do this once when moving from a vendor/legacy partition table. Keep backups
@@ -85,7 +108,9 @@ python -m esptool --chip esp32p4 --port "$PORT" --baud 921600 \
 
 ## Provision NyxID
 
-Register a Nyx node and a custom service using the NyxID CLI. Route that service
+Open **Settings → NyxID** for account device login and automatic node/service
+setup. To import an existing node instead, register a node and custom service
+using the NyxID CLI. Route that service
 via the new node with endpoint `http://127.0.0.1:80`, auth method `none`, and a
 unique service slug. Node authentication belongs to the WSS connection; no
 service credential is embedded in firmware. A device without credentials still
@@ -100,6 +125,10 @@ nyx-node <node_uuid>
 nyx-secret <64-character_signing_secret>
 nyx-slug <service_slug>
 nyx-status
+screen device_bind
+nyx-login start
+nyx-login status
+nyx-login cancel
 reboot
 ```
 
@@ -108,7 +137,9 @@ while typing credentials: the console echoes input. Node credentials can also
 be provisioned from QR codes using `nyxprov://nyx?token=...&node=...&secret=...` or
 `nyxprov://full?ssid=...&psw=...&token=...&node=...&secret=...` (URL encode values).
 Use native Settings → WLAN for Wi-Fi, or remote screen `scan` for QR setup.
-The optional device-code client is disabled by default; mock mode is explicit.
+The account device-login flow in Settings provisions actual control-node
+credentials. Hardware client device-code/bootstrap identities are different and
+are not accepted as WSS credentials.
 UART `factory-reset` erases P4 NVS including Nyx identity; the C6 station driver
 has separate storage and can retain its Wi-Fi settings. Back up current NVS
 before using it. The authenticated reset API preserves both Wi-Fi and Nyx.
@@ -157,7 +188,7 @@ a 60-second clock window and a bounded replay guard. NTP must be synchronized.
 Legacy credentials without a signing secret authenticate their WSS session but
 do not enable binary uploads. Remote `home` opens Nyx Panel; `settings`/`wifi`
 open native Settings, `camera`/`scan` use the shared camera, and
-`info`/`operator`/`device_bind` show device status/provisioning. `back` invokes
+`info`/`operator`/`device_bind` open native Settings status/NyxID pages. `back` invokes
 native navigation; unsupported targets return an error.
 
 ## OTA
@@ -191,6 +222,12 @@ python tools/accept_hardware.py --ip "$PANEL_IP" --slug "$SLUG" \
   --image /private/hello-lexa.jpg --output-dir /private/panel-acceptance \
   --camera --native-pages
 ```
+
+On v0.2.0, add `--onboarding` to check scan/back navigation and a real login
+request followed by cancellation. It never approves a login. Optional
+`--wifi-qr-image /private/wifi-qr.jpg` verifies decoding and SSID confirmation
+without connecting to that network. Actual phone approval, physical camera
+scanning and successful Wi-Fi switching require separate checks.
 
 `tools/accept_media.py` checks a real MediaMTX WHIP/RTSP receiver for sustained
 H.264 decoding, Nyx responsiveness and Camera preview/publisher recovery. Run
