@@ -9,6 +9,7 @@
 #include "esp_timer.h"
 #include "driver/jpeg_encode.h"
 #include "esp_log.h"
+#include "esp_rom_crc.h"
 #include <array>
 #include <cstring>
 #include <cstdio>
@@ -23,6 +24,7 @@ extern "C" {
 #include "panel_dpi_compat.h"
 #include "nvs_config.h"
 #include "provisioning.h"
+#include "panel_voice.h"
 }
 LV_IMAGE_DECLARE(nyx_panel_icon);
 extern "C" { static esp_err_t navigate_now(const char *target); }
@@ -36,8 +38,11 @@ NyxPanel *app;
 lv_obj_t *image_widget;
 lcd_image_t image{};
 int64_t image_expiry;
+size_t image_jpeg_bytes;
+uint32_t image_crc32;
 struct Message {
-    char text[1025]{};
+    char text[1026]{};
+    uint16_t reply_offset{};
     int64_t expiry{};
     uint32_t color{0xffffff}, bg{NYX_BG};
     lcd_text_size_t size{LCD_TEXT_SIZE_MEDIUM};
@@ -59,17 +64,20 @@ extern const uint8_t builtin_end[] asm("_binary_nyxbot_default_jpg_end");
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
+bool pending_voice;
 
 // The bundled Chinese font contains bitmap glyphs. LVGL's vector-font outline
 // styles do not stroke them, so render the same wrapped text at eight offsets.
 // Labels stay transparent and share the same bounds, including for long text.
-void caption(lv_obj_t *parent, const Message &message) {
+int caption(lv_obj_t *parent, const Message &message, int bottom = 56, int height_limit = 0) {
+    if (!message.text[0]) return 0;
     constexpr int stroke = 2;
     constexpr int margin = 40;
-    constexpr int bottom = 56; // Keep the native bottom-edge gesture accessible.
     lv_obj_update_layout(parent);
     int width = lv_obj_get_content_width(parent) - 2 * margin;
     int max_height = lv_obj_get_content_height(parent) - 2 * bottom;
+    if (height_limit > 0) max_height = height_limit;
+    int height = 0;
     auto layer = [&](int x, int y, uint32_t color) {
         auto label = lv_label_create(parent);
         lv_obj_set_width(label, width);
@@ -78,11 +86,24 @@ void caption(lv_obj_t *parent, const Message &message) {
         lcd_text_apply(label, &style);
         lv_obj_set_style_bg_opa(label, LV_OPA_TRANSP, 0);
         lv_obj_align(label, LV_ALIGN_BOTTOM_MID, x, -bottom + y);
+        lv_obj_update_layout(label);
+        height = lv_obj_get_height(label);
     };
     for (int y = -stroke; y <= stroke; y += stroke)
         for (int x = -stroke; x <= stroke; x += stroke)
             if (x || y) layer(x, y, message.bg);
     layer(0, 0, message.color);
+    return height;
+}
+
+Message &next_message() {
+    if (count == messages.size()) {
+        for (size_t i = 1; i < count; ++i) messages[i - 1] = messages[i];
+        --count;
+    }
+    auto &message = messages[count++];
+    message = {};
+    return message;
 }
 
 
@@ -107,6 +128,8 @@ void remove_image() {
     lv_image_cache_drop(&image.dsc);
     lcd_image_free(&image);
     image_expiry = 0;
+    image_jpeg_bytes = 0;
+    image_crc32 = 0;
 }
 void expire(lv_timer_t *) {
     int64_t now = esp_timer_get_time();
@@ -129,6 +152,10 @@ void expire(lv_timer_t *) {
         if (err!=ESP_OK) ESP_LOGE("panel.gui","Native navigation failed: %s",esp_err_to_name(err));
     }
     if ((changed || dirty) && app) { dirty=false; app->render(); }
+    if (app) app->refreshVoice();
+    if(pending_voice && app){
+        if(navigate_now("home")==ESP_OK){app->showVoiceControls();pending_voice=false;}
+    }
 }
 }
 namespace esp_brookesia::apps {
@@ -144,21 +171,156 @@ bool NyxPanel::run() {
     lv_obj_set_style_radius(root, 0, 0);
     lv_obj_set_style_pad_all(root, 0, 0);
     lv_obj_remove_flag(root, LV_OBJ_FLAG_SCROLLABLE);
+    content = lv_obj_create(root);
+    lv_obj_remove_style_all(content);
+    lv_obj_set_size(content, lv_pct(100), lv_pct(100));
+    lv_obj_remove_flag(content, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    voice_toggle = lv_button_create(root);
+    lv_obj_set_size(voice_toggle, 64, 64);
+    lv_obj_align(voice_toggle, LV_ALIGN_TOP_RIGHT, -24, 24);
+    lv_obj_set_style_radius(voice_toggle, LV_RADIUS_CIRCLE, 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRIMARY), 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRESSED), LV_STATE_PRESSED);
+    lv_obj_set_style_pad_all(voice_toggle, 0, 0);
+    // A small microphone drawn with native shapes stays sharp at panel resolution.
+    auto mic_shape = [&](int width, int height, int y, int radius) {
+        auto shape = lv_obj_create(voice_toggle);
+        lv_obj_remove_style_all(shape);
+        lv_obj_set_size(shape, width, height);
+        lv_obj_set_style_radius(shape, radius, 0);
+        lv_obj_set_style_bg_color(shape, lv_color_white(), 0);
+        lv_obj_set_style_bg_opa(shape, LV_OPA_COVER, 0);
+        lv_obj_align(shape, LV_ALIGN_CENTER, 0, y);
+        lv_obj_remove_flag(shape, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    };
+    mic_shape(10, 22, -8, 5);
+    auto arc = lv_arc_create(voice_toggle);
+    lv_obj_set_size(arc, 26, 26);
+    lv_obj_align(arc, LV_ALIGN_CENTER, 0, -8);
+    lv_arc_set_bg_angles(arc, 0, 180);
+    lv_arc_set_angles(arc, 0, 180);
+    lv_obj_set_style_arc_opa(arc, LV_OPA_TRANSP, LV_PART_MAIN);
+    lv_obj_set_style_arc_color(arc, lv_color_white(), LV_PART_INDICATOR);
+    lv_obj_set_style_arc_width(arc, 2, LV_PART_INDICATOR);
+    lv_obj_set_style_bg_opa(arc, LV_OPA_TRANSP, LV_PART_KNOB);
+    lv_obj_remove_flag(arc, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    mic_shape(2, 9, 10, 0);
+    mic_shape(14, 2, 15, 1);
+    voice_indicator = lv_obj_create(voice_toggle);
+    lv_obj_remove_style_all(voice_indicator);
+    lv_obj_set_size(voice_indicator, 9, 9);
+    lv_obj_align(voice_indicator, LV_ALIGN_TOP_RIGHT, -3, 3);
+    lv_obj_set_style_radius(voice_indicator, LV_RADIUS_CIRCLE, 0);
+    lv_obj_set_style_bg_opa(voice_indicator, LV_OPA_COVER, 0);
+    lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_event_cb(voice_toggle, [](lv_event_t *event) {
+        auto self = static_cast<NyxPanel *>(lv_event_get_user_data(event));
+        if (lv_obj_has_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN))
+            lv_obj_remove_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
+    }, LV_EVENT_CLICKED, this);
+    voice_controls = lv_obj_create(root);
+    auto controls = voice_controls;
+    lv_obj_set_size(controls, 330, 218);
+    lv_obj_align(controls, LV_ALIGN_TOP_RIGHT, -24, 104);
+    lv_obj_add_flag(controls, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_set_style_bg_color(controls, lv_color_hex(NYX_SURFACE), 0);
+    lv_obj_set_style_bg_opa(controls, LV_OPA_90, 0);
+    lv_obj_set_style_border_color(controls, lv_color_hex(NYX_BORDER), 0);
+    lv_obj_set_style_border_width(controls, 1, 0);
+    lv_obj_set_style_radius(controls, 20, 0);
+    lv_obj_set_style_pad_all(controls, 12, 0);
+    lv_obj_remove_flag(controls, LV_OBJ_FLAG_SCROLLABLE);
+    voice_status = lv_label_create(controls);
+    lv_obj_set_width(voice_status, lv_pct(100));
+    lv_label_set_long_mode(voice_status, LV_LABEL_LONG_WRAP);
+    lv_obj_set_style_text_font(voice_status, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(voice_status, lv_color_hex(NYX_TEXT), 0);
+    mode_select = lv_dropdown_create(controls);
+    lv_obj_set_size(mode_select, 304, 44);
+    lv_obj_align(mode_select, LV_ALIGN_TOP_LEFT, 0, 60);
+    lv_obj_set_style_text_font(mode_select, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lv_dropdown_get_list(mode_select), &lv_font_montserrat_16, 0);
+    lv_dropdown_set_options(mode_select, "Hold to talk\nAuto conversation");
+    lv_obj_add_event_cb(mode_select, [](lv_event_t *event) {
+        auto select = static_cast<lv_obj_t *>(lv_event_get_target(event));
+        (void)panel_voice_input_mode_set(static_cast<panel_voice_input_mode_t>(lv_dropdown_get_selected(select)));
+    }, LV_EVENT_VALUE_CHANGED, nullptr);
+    auto button = [&](int x, int width, const char *text) {
+        auto obj = lv_button_create(controls);
+        lv_obj_set_size(obj, width, 64);
+        lv_obj_align(obj, LV_ALIGN_BOTTOM_LEFT, x, 0);
+        lv_obj_set_style_bg_color(obj, lv_color_hex(NYX_PRIMARY), 0);
+        lv_obj_set_style_bg_color(obj, lv_color_hex(NYX_PRESSED), LV_STATE_PRESSED);
+        auto label = lv_label_create(obj);
+        lv_label_set_text(label, text);
+        lv_obj_set_style_text_font(label, &lv_font_montserrat_16, 0);
+        lv_obj_center(label);
+        return obj;
+    };
+    call_button = button(0, 118, "Call");
+    call_label = lv_obj_get_child(call_button, 0);
+    hold_button = button(130, 174, "Hold to talk");
+    lv_obj_add_event_cb(call_button, [](lv_event_t *) {
+        panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+        if (voice.busy) panel_voice_stop(); else (void)panel_voice_start();
+    }, LV_EVENT_CLICKED, nullptr);
+    lv_obj_add_event_cb(hold_button, [](lv_event_t *event) {
+        auto code = lv_event_get_code(event);
+        panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+        if (voice.input_mode == PANEL_VOICE_INPUT_AUTOMATIC) {
+            if (code == LV_EVENT_CLICKED && voice.active)
+                panel_voice_microphone_mute(!voice.microphone_muted);
+        } else if (code == LV_EVENT_PRESSED) panel_voice_hold(true);
+        else if (code == LV_EVENT_RELEASED || code == LV_EVENT_PRESS_LOST || code == LV_EVENT_DELETE)
+            panel_voice_hold(false);
+    }, LV_EVENT_ALL, nullptr);
     render();
+    refreshVoice();
     return true;
 }
 bool NyxPanel::close() {
+    panel_voice_stop();
     image_widget = nullptr;
     if (root) { lv_obj_delete(root); root = nullptr; }
+    content = voice_status = call_button = call_label = hold_button = mode_select = nullptr;
+    voice_controls = voice_toggle = voice_indicator = nullptr;
     return true;
 }
+void NyxPanel::showVoiceControls() {
+    if(voice_controls)lv_obj_remove_flag(voice_controls,LV_OBJ_FLAG_HIDDEN);
+}
+void NyxPanel::refreshVoice() {
+    if (!voice_status) return;
+    panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+    if (voice.busy) {
+        lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_style_bg_color(voice_indicator, lv_color_hex(
+            voice.microphone_muted ? NYX_WARNING : voice.active ? NYX_SUCCESS : NYX_TINT), 0);
+    } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
+    const char *text = voice.message[0] ? voice.message : "Voice is not configured";
+    if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
+    const char *action = voice.busy ? "Hang up" : "Call";
+    if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
+    if (voice.configured || voice.busy) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
+    else lv_obj_add_state(call_button, LV_STATE_DISABLED);
+    lv_dropdown_set_selected(mode_select, static_cast<uint32_t>(voice.input_mode));
+    if (voice.busy) lv_obj_add_state(mode_select, LV_STATE_DISABLED);
+    else lv_obj_remove_state(mode_select, LV_STATE_DISABLED);
+    auto hold_label = lv_obj_get_child(hold_button, 0);
+    const char *hold_text = voice.input_mode == PANEL_VOICE_INPUT_AUTOMATIC ?
+        (voice.microphone_muted ? "Unmute mic" : "Mute mic") : "Hold to talk";
+    if (strcmp(lv_label_get_text(hold_label), hold_text)) lv_label_set_text(hold_label, hold_text);
+    if (voice.active) lv_obj_remove_state(hold_button, LV_STATE_DISABLED);
+    else { panel_voice_hold(false); lv_obj_add_state(hold_button, LV_STATE_DISABLED); }
+}
 void NyxPanel::render() {
-    if (!root) return;
+    if (!content) return;
     image_widget = nullptr;
-    lv_obj_clean(root);
+    lv_obj_clean(content);
     const auto &visible = image.dsc.data ? image : background;
     if (visible.dsc.data) {
-        image_widget = lv_image_create(root);
+        image_widget = lv_image_create(content);
         lv_image_set_src(image_widget, &visible.dsc);
         lv_obj_update_layout(root);
         // Round cover scaling up: LVGL's built-in COVER rounds down and can
@@ -170,9 +332,21 @@ void NyxPanel::render() {
     }
     // Show only the latest unexpired caption. Keeping the bounded history lets
     // a temporary caption expire back to the previous one without hiding art.
-    if (count) caption(root, messages[count - 1]);
+    if (count) {
+        const auto &message = messages[count - 1];
+        if (message.reply_offset) {
+            int limit = (lv_obj_get_content_height(content) - 124) / 2;
+            Message line{};
+            line.color = 0xd8b4fe; // Light violet stays legible over the Nyx artwork.
+            snprintf(line.text, sizeof(line.text), "%s", message.text + message.reply_offset);
+            int reply_height = caption(content, line, 56, limit);
+            line.color = 0xbae6fd;
+            snprintf(line.text, sizeof(line.text), "%s", message.text);
+            caption(content, line, 56 + (reply_height ? reply_height + 12 : 0), limit);
+        } else caption(content, message);
+    }
     if (!count && !visible.dsc.data) {
-        auto label = lv_label_create(root);
+        auto label = lv_label_create(content);
         lv_obj_set_style_text_font(label, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
         lv_obj_set_style_text_color(label, lv_color_hex(NYX_SECONDARY), 0);
         lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
@@ -285,29 +459,35 @@ void lcd_renderer_note_qr_decoded(const char *kind) {
     bsp_display_unlock();
 }
 esp_err_t lcd_renderer_push_image(const uint8_t *jpeg, size_t len, uint32_t duration) {
-    if (!jpeg || !len || len > 65536) return ESP_ERR_INVALID_SIZE;
+    // Network uploads retain their 64 KiB limit in local_api. Native camera
+    // JPEGs stay on the board and may be larger; decoded dimensions are bounded.
+    if (!jpeg || !len || len > 1024 * 1024) return ESP_ERR_INVALID_SIZE;
     lcd_image_t decoded{};
     esp_err_t err = lcd_image_decode_jpeg(jpeg, len, &decoded);
     if (err != ESP_OK) return err;
     if (bsp_display_lock(2000) != ESP_OK) { lcd_image_free(&decoded); return ESP_ERR_TIMEOUT; }
     remove_image();
     image = decoded;
+    image_jpeg_bytes = len;
+    image_crc32 = esp_rom_crc32_le(0, jpeg, len);
     image_expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
     err = lcd_renderer_navigate("home");
     dirty=true;
     bsp_display_unlock();
     return err;
 }
+esp_err_t lcd_renderer_temporary_image_info(lcd_temporary_image_info_t *info) {
+    if (!info) return ESP_ERR_INVALID_ARG;
+    if (bsp_display_lock(1000) != ESP_OK) return ESP_ERR_TIMEOUT;
+    *info = {image.dsc.data != nullptr, image.width, image.height, image_jpeg_bytes, image_crc32};
+    bsp_display_unlock();
+    return ESP_OK;
+}
 esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char *color,
                                   const char *bg, const char *align, uint32_t duration) {
     if (!text || !*text || strlen(text) > 1024) return ESP_ERR_INVALID_ARG;
     if (bsp_display_lock(2000) != ESP_OK) return ESP_ERR_TIMEOUT;
-    if (count == messages.size()) {
-        for (size_t i = 1; i < count; ++i) messages[i - 1] = messages[i];
-        --count;
-    }
-    auto &msg = messages[count++];
-    msg = {};
+    auto &msg = next_message();
     snprintf(msg.text, sizeof(msg.text), "%s", text);
     msg.expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
     msg.color = parse_color(color, 0xffffff);
@@ -317,6 +497,20 @@ esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char 
         align && !strcmp(align, "center") ? LCD_TEXT_ALIGN_CENTER : LCD_TEXT_ALIGN_LEFT;
     esp_err_t err = lcd_renderer_navigate("home");
     dirty=true;
+    bsp_display_unlock();
+    return err;
+}
+esp_err_t lcd_renderer_push_voice_captions(const char *user, const char *bot, uint32_t duration) {
+    if (!user || !bot || (!*user && !*bot) || strlen(user) > 512 || strlen(bot) > 512)
+        return ESP_ERR_INVALID_ARG;
+    if (bsp_display_lock(2000) != ESP_OK) return ESP_ERR_TIMEOUT;
+    auto &message = next_message();
+    message.reply_offset = strlen(user) + 1;
+    memcpy(message.text, user, message.reply_offset);
+    memcpy(message.text + message.reply_offset, bot, strlen(bot) + 1);
+    message.expiry = duration ? esp_timer_get_time() + int64_t(duration) * 1000 : 0;
+    esp_err_t err = lcd_renderer_navigate("home");
+    dirty = true;
     bsp_display_unlock();
     return err;
 }
@@ -379,6 +573,11 @@ esp_err_t lcd_renderer_navigate(const char *target) {
     return err;
 }
 esp_err_t lcd_renderer_show_device_bind(void) { return lcd_renderer_navigate("device_bind"); }
+esp_err_t lcd_renderer_show_voice(void) {
+    if(bsp_display_lock(1000)!=ESP_OK)return ESP_ERR_TIMEOUT;
+    pending_voice=true;
+    bsp_display_unlock();return ESP_OK;
+}
 esp_err_t lcd_renderer_show_unregistered_mac(const char *, const char *) { return lcd_renderer_show_device_bind(); }
 esp_err_t lcd_renderer_current_screen(const char **target, size_t *depth) {
     if (!phone || !target || !depth) return ESP_ERR_INVALID_ARG;

@@ -46,8 +46,7 @@ constexpr bool EXAMPLE_SHOW_MEM_INFO = true;
 
 static bool is_wifi_connected()
 {
-    wifi_ap_record_t ap_info;
-    return (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK);
+    return network_is_connected();
 }
 
 extern "C" void app_main(void)
@@ -62,7 +61,6 @@ extern "C" void app_main(void)
     ESP_ERROR_CHECK(err);
 
     ESP_ERROR_CHECK(lcd_renderer_prepare());
-    ESP_ERROR_CHECK(network_init(nullptr, nullptr, nullptr));
 
     ESP_ERROR_CHECK(bsp_spiffs_mount());
     ESP_LOGI(ESP_UTILS_LOG_TAG, "SPIFFS mount successfully");

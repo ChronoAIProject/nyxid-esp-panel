@@ -13,7 +13,8 @@ set(CONFIG_LV_USE_THORVG_INTERNAL OFF CACHE BOOL "" FORCE)
 add_subdirectory("${LVGL_SOURCE_DIR}" lvgl)
 find_package(Threads REQUIRED)
 add_executable(font_decode_probe probe.c
-    "${PANEL_ROOT}/components/panel_services/fonts/lv_font_noto_sans_sc_med_20.c")
+    "${PANEL_ROOT}/components/panel_services/fonts/lv_font_noto_sans_sc_med_20.c"
+    "${PANEL_ROOT}/components/panel_services/fonts/lv_font_noto_sans_sc_speech_20.c")
 target_link_libraries(font_decode_probe lvgl Threads::Threads m)
 enable_testing()
 add_test(NAME serialized_font_decode COMMAND font_decode_probe)

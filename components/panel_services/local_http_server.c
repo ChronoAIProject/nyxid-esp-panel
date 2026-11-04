@@ -479,7 +479,7 @@ static esp_err_t local_api_dispatch(httpd_req_t *req)
     if (strcmp(path, "/lcd/image") == 0 || strcmp(path, "/lcd/clear") == 0) {
         ESP_LOGI(TAG, "dispatch route call path=%s", path);
     }
-    int status = local_api_route_with_logging(route, &api_req, resp, resp_cap,
+    int status = local_api_lan_route_with_logging(route, &api_req, resp, resp_cap,
                                               resp_type, sizeof(resp_type), &resp_len);
     free(body);
     if (strcmp(path, "/lcd/image") == 0 || strcmp(path, "/lcd/clear") == 0) {

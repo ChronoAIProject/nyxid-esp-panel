@@ -8,6 +8,8 @@ public:
     NyxPanel();
     static void attach(systems::phone::Phone *phone, NyxPanel *app);
     void render();
+    void refreshVoice();
+    void showVoiceControls();
 protected:
     bool run() override;
     bool back() override { return notifyCoreClosed(); }
@@ -18,5 +20,14 @@ protected:
     bool resume() override { return run(); }
 private:
     lv_obj_t *root = nullptr;
+    lv_obj_t *content = nullptr;
+    lv_obj_t *voice_status = nullptr;
+    lv_obj_t *call_button = nullptr;
+    lv_obj_t *call_label = nullptr;
+    lv_obj_t *hold_button = nullptr;
+    lv_obj_t *mode_select = nullptr;
+    lv_obj_t *voice_controls = nullptr;
+    lv_obj_t *voice_toggle = nullptr;
+    lv_obj_t *voice_indicator = nullptr;
 };
 }

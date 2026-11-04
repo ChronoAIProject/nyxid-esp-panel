@@ -61,6 +61,9 @@ SpecAnalyzer::~SpecAnalyzer()
 bool SpecAnalyzer::run(void)
 {
     ESP_UTILS_LOGD("Run");
+    if (product_audio_claim() != ESP_OK) return false;
+    _owns_audio = true;
+    if (product_codec_dev_resume() != ESP_OK) { close(); return false; }
 
     lv_obj_t *scr = lv_scr_act();
     lv_obj_set_style_bg_color(scr, lv_color_hex(NYX_BG), LV_PART_MAIN);
@@ -77,6 +80,7 @@ bool SpecAnalyzer::run(void)
     
     if (!_draw_buf) {
         ESP_UTILS_LOGE("Canvas buffer allocation failed!");
+        close();
         return false;
     }
     
@@ -87,6 +91,7 @@ bool SpecAnalyzer::run(void)
         ESP_UTILS_LOGE("Canvas creation failed!");
         free(_draw_buf);
         _draw_buf = nullptr;
+        close();
         return false;
     }
     lv_obj_set_size(_canvas, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -188,6 +193,7 @@ bool SpecAnalyzer::close(void)
         free(_draw_buf);
         _draw_buf = nullptr;
     }
+    if (_owns_audio) { product_audio_release(); _owns_audio = false; }
     
     return true;
 }

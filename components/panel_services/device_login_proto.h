@@ -24,5 +24,12 @@ typedef enum {
 } device_login_poll_t;
 
 bool device_login_parse_request(const char *json, device_login_request_t *out);
+bool device_login_parse_request_at(const char *json, const char *verification_uri,
+                                  device_login_request_t *out);
 device_login_poll_t device_login_parse_poll(int status, const char *json);
 uint32_t device_login_backoff(uint32_t interval);
+
+bool device_agent_parse_request(const char *json, device_login_request_t *out);
+bool device_agent_parse_request_at(const char *json, const char *verification_uri,
+                                   device_login_request_t *out);
+device_login_poll_t device_agent_parse_poll(int status, const char *json);

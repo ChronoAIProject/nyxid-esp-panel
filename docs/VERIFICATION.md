@@ -1,4 +1,52 @@
-# Hardware acceptance, 2026-11-03
+# Firmware and hardware verification
+
+## v0.6.15 standalone voice and service scopes, 2026-11-05
+
+The home panel runs v0.6.15 against local NyxID with
+[NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169). Its own child
+Agent Key is limited to the selected Bot's published Voice. That Bot separately
+has the board's daily service and no management service. No Mac identity or
+audio bridge is part of the device call. Production use requires those backend
+changes, the default-off `assistant:voice-agent-key` feature enabled, and the
+owner's explicit publication/grants; firmware publication alone does not enable
+them.
+
+Physical checks completed with that installed firmware:
+
+- Remote voice: **33 checks passed**, covering open, opening notification and
+  received audio, microphone mute, duplicate/conflicting IDs, hangup, saved-mode
+  preservation and idempotent retries after hangup.
+- Configuration and permission boundaries: **89 checks passed**, covering
+  volume/gain, brightness, input mode, invalid/unknown/duplicate fields, daily
+  denial of management operations, camera return/display identity, persistent
+  fallback across reboot and restoration of the original settings. Requests
+  were paced at 0.7 seconds; faster initial batches hit the existing replay
+  guard. Its 128-entry cache was not disabled for the passing run.
+- Real microphone input: one compound Chinese request captured, described and
+  displayed one photo without asking for repetition. The JPEG supplied to the
+  model and shown on the panel had matching byte counts and CRC. Reply playback
+  was non-silent. A follow-up changed brightness; the original value was restored.
+- Final read-only state: voice idle, built-in NyxBot fallback with no temporary
+  image, brightness 80, volume 95, voice gain 4 and saved automatic input mode.
+  Camera was idle, continuous publishing disabled and the test calls settled.
+
+The associated backend audit retained `voice-remote-validation.json`,
+`daily-config-validation.json`, `camera-display-voice-validation-round-1.json`
+and `final-device-readonly-check.json` in its private local evidence directory.
+Device identities, credentials and camera images are not repository fixtures.
+These are functional checks, not a long-duration acoustic or display soak test.
+
+Before publishing this firmware source, all **20 host test executables** and the
+real-font serialized decode probe passed. A separate clean production profile
+build with ESP-IDF **v5.5.4**, the default legacy P4/16 MiB configuration and all
+development overrides cleared also passed. Its application was **6,375,248
+bytes** (`0x614750`), leaving **506,032 bytes** in each `0x690000` app slot.
+Binary SHA256:
+`8e9f035c89173faa19df9763b1446438ac8d289c77ee3abee212410ce06eb01b`.
+The compile commands contain no development voice origin override and the
+binary contains neither the active local server address nor the documented
+example address. This production artifact was built for publication validation;
+it was not flashed over the board's working local-development configuration.
 
 ## v0.5.0 startup, persistent background and NyxID colors
 

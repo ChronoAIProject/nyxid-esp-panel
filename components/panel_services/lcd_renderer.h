@@ -20,6 +20,13 @@ void lcd_renderer_note_qr_decoded(const char *payload_type);
 esp_err_t lcd_renderer_show_device_bind(void);
 esp_err_t lcd_renderer_show_unregistered_mac(const char *mac, const char *reason);
 esp_err_t lcd_renderer_push_image(const uint8_t *jpeg, size_t jpeg_len, uint32_t duration_ms);
+typedef struct {
+    bool active;
+    uint16_t width, height;
+    size_t jpeg_bytes;
+    uint32_t crc32;
+} lcd_temporary_image_info_t;
+esp_err_t lcd_renderer_temporary_image_info(lcd_temporary_image_info_t *info);
 // Persistent fallback, independent of temporary image TTL and /lcd/clear.
 // These mutators run on service tasks, outside the GUI lock.
 esp_err_t lcd_renderer_set_default_image(const uint8_t *jpeg, size_t jpeg_len);
@@ -32,6 +39,9 @@ typedef struct {
 esp_err_t lcd_renderer_default_image_info(lcd_default_image_info_t *info);
 esp_err_t lcd_renderer_push_text(const char *text, const char *size, const char *color,
                                  const char *bg, const char *align, uint32_t duration_ms);
+// Separate colors and layout for the two voice speakers, without textual role prefixes.
+esp_err_t lcd_renderer_push_voice_captions(const char *user, const char *bot, uint32_t duration_ms);
+esp_err_t lcd_renderer_show_voice(void);
 void lcd_renderer_clear(void);
 
 // Capture the current LCD framebuffer and JPEG-encode it into out.

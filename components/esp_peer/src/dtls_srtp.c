@@ -29,7 +29,8 @@ static int dtls_srtp_selfsign_cert(dtls_srtp_t *dtls_srtp, bool export_for_cache
         ESP_LOGE(TAG, "mbedtls_pk_setup(RSA) failed, ret=%d", ret);
         goto _exit;
     }
-    ret = mbedtls_rsa_gen_key(mbedtls_pk_rsa(dtls_srtp->pkey), mbedtls_ctr_drbg_random, &dtls_srtp->ctr_drbg, 1024,
+    // Modern WebRTC endpoints reject 1024-bit client certificates.
+    ret = mbedtls_rsa_gen_key(mbedtls_pk_rsa(dtls_srtp->pkey), mbedtls_ctr_drbg_random, &dtls_srtp->ctr_drbg, 2048,
                               65537);
     if (ret != 0) {
         ESP_LOGE(TAG, "mbedtls_rsa_gen_key failed, ret=%d", ret);

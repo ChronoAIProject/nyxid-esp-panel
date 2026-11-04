@@ -44,6 +44,7 @@ namespace esp_brookesia::apps
         lv_timer_t *_timer;
         TaskHandle_t _audio_task_handle;
         bool _audio_task_running;
+        bool _owns_audio = false;
 
         // Single-microphone visualization buffers.
         __attribute__((aligned(16))) int16_t _raw_data[N_SAMPLES * I2S_CHANNELS]; // Raw BSP interleaved samples

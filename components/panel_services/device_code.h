@@ -26,10 +26,13 @@ typedef struct {
     char message[160];
     uint32_t seconds_remaining;
     bool busy;
+    bool node_setup;
 } device_login_snapshot_t;
 
 // Explicitly initiated from Settings. Never starts automatically on an upgrade.
 esp_err_t device_code_start_if_needed(void);
+// Separate first-party setup for a new remote-control node.
+esp_err_t device_code_start_node_setup(void);
 void device_code_cancel(void);
 void device_code_snapshot(device_login_snapshot_t *snapshot);
 

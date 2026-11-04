@@ -1,0 +1,162 @@
+# Standalone NyxID voice
+
+The panel signs in through NyxID Agent Key login and stores its own child
+credential. In NyxID, publish Device voice from the intended Bot's details and
+select only that Bot's Voice connection when assigning the panel's Key. Refresh
+Bots in the panel settings and select that Bot. The provider key stays on NyxID.
+Voice uses the account's saved provider selection and the Bot's existing grants.
+
+Agent Key voice and typed camera-tool discovery require
+[NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169), the server-side
+`assistant:voice-agent-key` feature enabled, and an explicitly published/granted
+Bot Voice connection. v0.6.15 was validated against local NyxID with those
+changes. A firmware merge alone does not deploy or enable the backend feature.
+
+The firmware supports NyxID's `openai_live` WebRTC transport with Opus audio.
+Tap the microphone icon in Nyx Panel to open the voice controls; tap it again to
+collapse them. The controls start collapsed at boot. A dot on the icon indicates
+connecting, active microphone or local mute while the controls are hidden.
+Choose **Hold to talk** or **Auto conversation** in the dropdown before starting
+a call. The choice persists for the current server profile. Automatic
+mode sends the echo-cancelled microphone while the call is active; NyxID's
+existing Live conversation handles pauses and responses. Its button toggles
+local microphone mute. Hang up before changing modes. Playback remains audible
+while Talk is held. A 16 kHz full-duplex
+AEC processes the microphone against a bounded playback reference before Opus
+encoding; codec and AEC frame sizes are adapted without dropping samples. MusicPlayer and SpecAnalyzer release the shared codec before voice
+claims it. Ending a call releases the codec. A call is started explicitly; the
+panel does not continuously stream microphone audio in the background.
+
+## Local NyxID development
+
+Production builds use the default HTTPS NyxID URLs. For local development:
+
+```sh
+NYX_DEV_HOST=192.168.1.100 # Replace with your reachable LAN server address.
+idf.py \
+  -DNYX_PANEL_AGENT_DEV_API_URL="http://${NYX_DEV_HOST}:3001" \
+  -DNYX_PANEL_AGENT_DEV_LOGIN_URL="http://${NYX_DEV_HOST}:3000/login/agent-key" \
+  build
+```
+
+These overrides accept a private LAN HTTP origin and verification page on the
+same host. Agent credentials and voice selection use namespaces derived from
+the URL pair. Production credentials are never sent to the development server.
+Wi-Fi and background keep their existing configuration. By default the node
+connection remains on production. Add `-DNYX_PANEL_NODE_DEV_MODE=ON` to also
+onboard a separate node and board service against local NyxID. That mode uses
+separate node and pending-setup namespaces and disables baked node credentials;
+it never sends production node credentials to the local server. Use
+`nyx-login node-setup`, approve its local device code, then restart after setup.
+Board Key → Bot Voice and Bot → board service are independent grants.
+
+A preserving factory reset clears configuration and custom artwork in place,
+retaining Wi-Fi, all active/inactive identity profiles and pending setup. It does
+not erase and reconstruct the NVS partition. Explicit full reset still erases it.
+
+Clear all overrides when building for production:
+
+```sh
+idf.py -DNYX_PANEL_NODE_DEV_MODE=OFF \
+  -DNYX_PANEL_AGENT_DEV_API_URL= -DNYX_PANEL_AGENT_DEV_LOGIN_URL= build
+```
+
+USB diagnostic commands carry no credentials:
+
+```text
+nyx-login start
+nyx-login status
+nyx-voice refresh
+nyx-voice list
+nyx-voice select <Bot UUID>
+nyx-voice mode hold
+nyx-voice mode automatic
+nyx-voice start
+nyx-voice status
+nyx-voice hold
+nyx-voice release
+nyx-voice mute
+nyx-voice unmute
+nyx-voice stop
+```
+
+Only the panel may poll its login request. An administrator can approve its
+displayed user code through the normal NyxID flow. Serial `hold` and `release`
+simulate the panel's push-to-talk button for physical microphone checks.
+
+Opus task budgets include Espressif's documented codec stack requirements:
+48 KiB for the microphone encoder and 24 KiB for the speaker decoder. The first
+encoded/decoded frame reports unused stack bytes for hardware validation.
+
+The bundled peer component uses a 2048-bit RSA DTLS client certificate for
+compatibility with modern WebRTC endpoints. Media still requires the negotiated
+SDP fingerprint; this change does not relax HTTPS or credential validation.
+
+Initial WebRTC offers normalize only SDP `a=setup` lines to `actpass` (RFC 5763).
+The peer library's `passive` initial offer conflicts with endpoints that answer
+`passive`. ICE secrets and fingerprints are preserved byte for byte; malformed
+or oversized offers are rejected before contacting NyxID.
+
+Provider readiness events may include the full session configuration; the parser
+accepts bounded messages up to 96 KiB with a 128 KiB SCTP receive cache. It logs
+only lengths and readiness flags. A lost control socket stops capture/playback
+and reports an error; an intentional hangup remains idempotent.
+
+The real provider startup event measured 4,369 bytes in local board validation;
+the previous 4 KiB guard silently discarded it although RTP audio was already
+flowing. Both encoder and decoder stack high-water marks are recorded in the
+local validation artifact.
+
+Unmuting the ES8311 restores the Settings output volume, matching MusicPlayer.
+Voice does not override the user's selected volume or mute the speaker while the
+Talk button is held. In Hold mode the microphone gate closes on button release.
+Server mute, lost control authority and hangup close it in both modes.
+
+Both input modes require the same active control authority, connected media and
+provider readiness. Local and server microphone mute override both modes.
+Automatic mode is enabled only during an explicitly started call; it does not
+start listening at boot. The mode is sent as a per-call preference and does not
+change the account's saved provider, billing source or input preference.
+
+On-screen captions retain the latest user and Bot segments separately, using the
+authenticated NyxID snapshot's `speaker` field. User speech is pale blue and Bot
+speech light violet, stacked above the bottom gesture area with dark outlines
+and no role prefixes. Unknown roles are ignored and long Chinese text is
+truncated on UTF-8 boundaries. The shared bounded caption history retains each
+pair together. A small Noto Sans SC fallback supplies common spoken fillers
+missing from the main subset, including 嗯、呃、噢、欸、诶. These captions
+are presentation only; NyxID's authoritative sideband still controls transcript
+persistence and tool admission. AEC reduces physical loudspeaker echo; speaker
+labels themselves are not acoustic speaker recognition.
+
+Voice playback applies a default 4× digital gain with a soft limiter. The actual
+post-gain samples feed the AEC reference. Settings still controls hardware output
+volume. USB `nyx-voice gain <1-8>` adjusts and persists the voice gain for this
+server profile, including during a call. Status reports pre/post peak sample
+levels; raw PCM and provider event contents are never logged.
+
+NyxID ends calls after its existing inactivity/time limits. A server-confirmed
+closed call with a known normal end reason returns to Ready even if socket close
+races the final snapshot; lost/revoked authorization remains an error.
+
+
+## Remote calls and settings
+
+See [API.md](API.md#daily-and-management-services-v0615) for the separately
+permissioned daily and management services. `POST /voice/open` starts automatic
+two-way voice with the selected Bot, using the panel's own login Key; it shows the
+controls and optionally queues an opening notification. It does not change the
+saved input mode. `/voice/say`, `/voice/microphone` and `/voice/stop` control that
+call. Remote retries use persistent bounded request-ID deduplication. The
+notification channel is distinct from user utterances and never authorizes a
+Bot action. `/voice` and `/status.voice` expose call and resource progress.
+
+Daily access can change saved input mode, hardware volume and digital gain;
+mode changes require an idle call. Only management can change Bot selection.
+Both services are ordinary UserServices on the same node;
+voice access from the board Key remains a separate per-Bot grant in NyxID.
+
+
+Software restart validation uses the configured C6 reset GPIO before Hosted SDIO
+setup. The live Panel and USB recovery console initialize before the network
+transport so Wi-Fi hardware setup cannot hold the picture page offscreen.

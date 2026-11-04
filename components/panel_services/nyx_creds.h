@@ -24,3 +24,15 @@ int nyx_creds_save_api_key(const char *api_key);
 int nyx_creds_save_node_id(const char *node_id);
 int nyx_creds_save_signing_secret(const char *secret);
 int nyx_creds_save_slug(const char *slug);
+
+// Outbound Agent Key login is independent of the inbound node identity.
+typedef struct {
+    char credential[128];
+    char credential_id[40];
+    char key_id[40];
+    char owner_id[40];
+    char label[80];
+} nyx_agent_credential_t;
+bool nyx_creds_read_agent(nyx_agent_credential_t *out);
+bool nyx_creds_have_agent(void);
+int nyx_creds_store_agent(const nyx_agent_credential_t *value);

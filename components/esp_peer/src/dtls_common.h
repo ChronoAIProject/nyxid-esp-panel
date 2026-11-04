@@ -201,7 +201,16 @@ static int dtls_srtp_handshake_client(dtls_srtp_t *dtls_srtp)
 {
     int ret = dtls_srtp_do_handshake(dtls_srtp);
     if (ret != 0) {
-        ESP_LOGE(TAG, "CLient handshake fail ret -0x%.4x", (unsigned int)-ret);
+        ESP_LOGE(TAG, "Client handshake failed ret=-0x%.4x state=%d", (unsigned int)-ret,
+                 dtls_srtp->ssl.MBEDTLS_PRIVATE(state));
+        if (ret == MBEDTLS_ERR_SSL_FATAL_ALERT_MESSAGE &&
+            dtls_srtp->ssl.MBEDTLS_PRIVATE(in_msgtype) == MBEDTLS_SSL_MSG_ALERT &&
+            dtls_srtp->ssl.MBEDTLS_PRIVATE(in_msglen) >= 2) {
+            // Protocol alert numbers only; never dump handshake or key material.
+            ESP_LOGE(TAG, "Remote DTLS alert level=%u description=%u",
+                     dtls_srtp->ssl.MBEDTLS_PRIVATE(in_msg)[0],
+                     dtls_srtp->ssl.MBEDTLS_PRIVATE(in_msg)[1]);
+        }
         return -1;
     }
     int flags;

@@ -1,7 +1,8 @@
 # nyxid-esp-panel
 
 An ESP32-P4 panel that combines the Waveshare ESP-Brookesia desktop with NyxID
-remote control, pushed text and images, on-demand camera capture and provisioning.
+remote control, pushed text and images, on-demand camera capture, provisioning
+and standalone two-way voice with a selected NyxBot.
 Continuous H.264/WHIP publishing was retired in v0.3.0.
 
 The hardware target is the attached legacy ESP32-P4 v1.3 board: 16 MiB flash,
@@ -68,11 +69,15 @@ navigation gesture remains available to exit the app.
   Unicode SSIDs are supported, along with legacy `nyxprov://wifi` codes. The
   panel shows the SSID and asks before connecting. Failed/cancelled connections
   restore the previous network; successful connections are saved without reboot.
-- **Settings → NyxID → Sign in to NyxID** displays a real account device code and
-  QR. Approve the panel on your phone. It registers a WSS control node and custom
-  service, then saves the node identity atomically. Restart using the page's
-  button to activate it. Account access/refresh tokens are never stored in NVS;
-  the temporary account session is logged out after provisioning.
+- **Settings → NyxID → Sign in / choose panel Key** displays an Agent Key login
+  code and QR. On your phone, select an existing Key or create one for the panel.
+  The panel stores its own child credential. Publish Device voice on the intended
+  Bot in NyxID, grant that Voice connection to the panel Key, then refresh and
+  select the Bot in Settings. The provider key stays on NyxID.
+- **Settings → NyxID → Set up remote control connection** separately provisions
+  a WSS node and daily/management services. Approve the account device code on
+  your phone, then restart using the page's button. The temporary account session
+  is logged out; its access/refresh tokens are never stored in NVS.
 - **Settings → Device status** shows firmware, network, NyxID, media and update
   status. Scanning returns to the Settings page that opened it.
 
@@ -80,6 +85,31 @@ Existing provisioned panels keep their identity on upgrade and do not start a
 new login automatically. See [onboarding details](docs/ONBOARDING.md) and the
 [upstream feature audit](docs/NYXID_FEATURE_AUDIT.md) for the protocol, recovery
 behavior and capabilities intentionally left for later.
+
+## Voice and service permissions
+
+Tap the microphone icon to open voice controls. Calls support **Hold to talk**
+and **Auto conversation**, with echo cancellation, adjustable output gain and
+separate user/Bot caption colors. The controls start collapsed and no microphone
+stream starts at boot. Remote daily-service calls can open two-way voice, queue
+an opening notification and control microphone mute or hangup. Voice connects
+directly from the board to NyxID and the provider; it needs no Mac bridge.
+
+The panel Key's grant to one Bot's Voice is independent of that Bot's grant to
+the panel's services. The daily service permits camera/display, persistent
+background, calls, volume/gain, input mode and brightness. Management also
+permits Bot selection, credentials, networking and system operations. Grant
+each service separately. Camera capture can return and display the same JPEG;
+the Bot can use its existing daily grant to inspect and show that photo.
+
+This firmware's Agent Key voice and typed camera-tool discovery require the
+NyxID changes in [NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169).
+The server must enable `assistant:voice-agent-key` and publish/grant the intended
+Voice connection. Physical validation used local NyxID with those changes;
+merging firmware does not deploy or enable the backend feature in production.
+See [docs/VOICE.md](docs/VOICE.md) for setup, isolated local profiles and audio
+behavior, and [docs/API.md](docs/API.md#daily-and-management-services-v0615)
+for remote operations.
 
 ## Back up and migrate an existing board
 
@@ -116,8 +146,9 @@ python -m esptool --chip esp32p4 --port "$PORT" --baud 921600 \
 
 ## Provision NyxID
 
-Open **Settings → NyxID** for account device login and automatic node/service
-setup. To import an existing node instead, register a node and custom service
+Open **Settings → NyxID → Set up remote control connection** for account device
+login and automatic node/service setup. To import an existing node instead,
+register a node and custom service
 using the NyxID CLI. Route that service
 via the new node with endpoint `http://127.0.0.1:80`, auth method `none`, and a
 unique service slug. Node authentication belongs to the WSS connection; no

@@ -4,6 +4,7 @@
 #include "devices.h"
 #include "nvs.h"
 #include "nvs_flash.h"
+#include "settings.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -11,7 +12,7 @@
 // establish physical flash durability or replace real power-loss acceptance.
 static char namespaces[16][32];
 static struct { unsigned ns; char key[32]; unsigned char data[512]; size_t size; } values[64];
-static bool fail_blob;
+static bool fail_blob, fail_erase;
 
 const device_config_t *devices_self(void) { return NULL; }
 esp_err_t nvs_flash_init(void) { return ESP_OK; }
@@ -32,6 +33,13 @@ esp_err_t nvs_open(const char *name, int mode, nvs_handle_t *handle)
 }
 void nvs_close(nvs_handle_t handle) { (void)handle; }
 esp_err_t nvs_commit(nvs_handle_t handle) { (void)handle; return ESP_OK; }
+esp_err_t nvs_erase_all(nvs_handle_t handle)
+{
+    if (fail_erase) { fail_erase = false; return ESP_FAIL; }
+    for (unsigned i = 0; i < 64; ++i)
+        if (values[i].ns == handle) memset(&values[i], 0, sizeof(values[i]));
+    return ESP_OK;
+}
 static esp_err_t put(nvs_handle_t handle, const char *key, const void *data, size_t size)
 {
     unsigned slot = 64;
@@ -70,7 +78,7 @@ NUMBER(8)
 NUMBER(16)
 NUMBER(32)
 
-void setUp(void) { nvs_flash_erase(); fail_blob = false; (void)nyx_creds_load(); }
+void setUp(void) { nvs_flash_erase(); fail_blob = fail_erase = false; (void)nyx_creds_load(); }
 void tearDown(void) {}
 static nyx_binding_t binding(void)
 {
@@ -122,10 +130,128 @@ void test_failed_write_retains_legacy_and_uart_updates_new_format(void)
     TEST_ASSERT_EQUAL_STRING(next.auth_token, nyx_creds_api_key());
 }
 
+void test_agent_key_is_independent_atomic_and_preserved_with_identity(void)
+{
+    nyx_binding_t node = binding();
+    TEST_ASSERT_EQUAL_INT(0, nyx_creds_store_binding(&node));
+    nyx_agent_credential_t agent = {0}, restored = {0};
+    strcpy(agent.credential, "nyxid_ag_"); memset(agent.credential + 9, 'a', 64);
+    strcpy(agent.credential_id, "11111111-2222-3333-4444-555555555555");
+    strcpy(agent.key_id, "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
+    strcpy(agent.owner_id, "aaaaaaaa-1111-2222-3333-444444444444");
+    strcpy(agent.label, "Panel at home");
+    TEST_ASSERT_FALSE(nyx_creds_have_agent());
+    TEST_ASSERT_EQUAL_INT(0, nyx_creds_store_agent(&agent));
+    TEST_ASSERT_TRUE(nyx_creds_read_agent(&restored));
+    TEST_ASSERT_EQUAL_STRING(agent.credential, restored.credential);
+    fail_blob = true;
+    agent.credential[9] = 'b';
+    TEST_ASSERT_EQUAL_INT(-1, nyx_creds_store_agent(&agent));
+    TEST_ASSERT_TRUE(nyx_creds_read_agent(&restored));
+    TEST_ASSERT_EQUAL_INT('a', restored.credential[9]);
+    strcpy(agent.credential, "temporary-account-session");
+    TEST_ASSERT_EQUAL_INT(-1, nyx_creds_store_agent(&agent));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_factory_reset_preserve());
+    TEST_ASSERT_TRUE(nyx_creds_read_agent(&agent));
+    TEST_ASSERT_EQUAL_STRING(restored.credential, agent.credential);
+    TEST_ASSERT_TRUE(nyx_creds_read_binding(&node));
+    TEST_ASSERT_EQUAL_STRING("nyx_nauth_new", node.auth_token);
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_factory_reset_all());
+    TEST_ASSERT_FALSE(nyx_creds_have_agent());
+}
+
+void test_preserving_reset_keeps_inactive_profiles_wifi_and_pending_setup(void)
+{
+    const char *const profiles[] = {
+        "nyx", "nyx_agent", "nyx_setup", "nn_other", "na_other", "ns_other", "pv_other",
+    };
+    for (unsigned i = 0; i < sizeof(profiles) / sizeof(profiles[0]); ++i) {
+        nvs_handle_t h;
+        TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_open(profiles[i], NVS_READWRITE, &h));
+        TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_set_str(h, "sentinel", profiles[i]));
+        nvs_close(h);
+    }
+    cfg_wifi_t wifi = {0}, restored_wifi = {0};
+    strcpy(wifi.ssid_1, "retained-network"); strcpy(wifi.psw_1, "test-password");
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_set_wifi(&wifi));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_set_legacy_wifi_primary(&wifi));
+    cfg_lcd_t lcd = {.brightness=12, .rotation=1};
+    strcpy(lcd.idle_mode, "image");
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_set_lcd(&lcd));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_factory_reset_preserve());
+    for (unsigned i = 0; i < sizeof(profiles) / sizeof(profiles[0]); ++i) {
+        nvs_handle_t h; char value[32] = {0}; size_t size=sizeof(value);
+        TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_open(profiles[i], NVS_READONLY, &h));
+        TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_get_str(h, "sentinel", value, &size));
+        TEST_ASSERT_EQUAL_STRING(profiles[i], value); nvs_close(h);
+    }
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_get_wifi(&restored_wifi));
+    TEST_ASSERT_EQUAL_STRING(wifi.ssid_1, restored_wifi.ssid_1);
+    TEST_ASSERT_EQUAL_STRING(wifi.psw_1, restored_wifi.psw_1);
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_get_lcd(&lcd));
+    TEST_ASSERT_EQUAL_INT(80, lcd.brightness);
+    TEST_ASSERT_EQUAL_STRING("qr", lcd.idle_mode);
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_factory_reset_preserve());
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_factory_reset_all());
+    nvs_handle_t h;
+    TEST_ASSERT_EQUAL_INT(ESP_ERR_NVS_NOT_FOUND, nvs_open("nyx", NVS_READONLY, &h));
+    TEST_ASSERT_EQUAL_INT(ESP_ERR_NVS_NOT_FOUND, nvs_open("wifi", NVS_READONLY, &h));
+}
+
+void test_failed_config_reset_reports_error_without_losing_identity(void)
+{
+    nyx_binding_t node = binding();
+    TEST_ASSERT_EQUAL_INT(0, nyx_creds_store_binding(&node));
+    cfg_lcd_t lcd = {.brightness=12};
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_config_set_lcd(&lcd));
+    fail_erase = true;
+    TEST_ASSERT_EQUAL_INT(ESP_FAIL, nvs_config_factory_reset_preserve());
+    TEST_ASSERT_TRUE(nyx_creds_read_binding(&node));
+    TEST_ASSERT_EQUAL_STRING("nyx_nauth_new", node.auth_token);
+}
+
+void test_node_profile_never_reads_or_overwrites_other_server(void)
+{
+    nvs_handle_t h;
+    const char *other = strcmp(NYX_NODE_NVS_NAMESPACE, "nyx") ? "nyx" : "nn_other";
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_open(other, NVS_READWRITE, &h));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_set_str(h, "api_key", "other-server-token"));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_set_str(h, "node_id", "other-server-node"));
+    TEST_ASSERT_FALSE(nyx_creds_load());
+    nyx_binding_t node = binding();
+    TEST_ASSERT_EQUAL_INT(0, nyx_creds_store_binding(&node));
+    TEST_ASSERT_TRUE(nyx_creds_load());
+    TEST_ASSERT_EQUAL_STRING(node.auth_token, nyx_creds_api_key());
+    char value[64]={0}; size_t size=sizeof(value);
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_get_str(h, "api_key", value, &size));
+    TEST_ASSERT_EQUAL_STRING("other-server-token", value);
+    nvs_close(h);
+}
+
+void test_corrupt_agent_blob_is_not_reported_as_signed_in(void)
+{
+    nvs_handle_t h;
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_open(NYX_AGENT_NVS_NAMESPACE, NVS_READWRITE, &h));
+    nyx_agent_credential_t corrupt;
+    memset(&corrupt, 'x', sizeof(corrupt));
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_set_blob(h, "credential_v1", &corrupt, sizeof(corrupt)));
+    TEST_ASSERT_FALSE(nyx_creds_have_agent());
+    TEST_ASSERT_FALSE(nyx_creds_read_agent(&corrupt));
+    TEST_ASSERT_EQUAL_INT(0, corrupt.credential[0]);
+    TEST_ASSERT_EQUAL_INT(ESP_OK, nvs_set_blob(h, "credential_v1", "short", 6));
+    TEST_ASSERT_FALSE(nyx_creds_have_agent());
+    nvs_close(h);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_identity_activates_on_reload_and_survives_preserving_reset);
     RUN_TEST(test_failed_write_retains_legacy_and_uart_updates_new_format);
+    RUN_TEST(test_agent_key_is_independent_atomic_and_preserved_with_identity);
+    RUN_TEST(test_preserving_reset_keeps_inactive_profiles_wifi_and_pending_setup);
+    RUN_TEST(test_failed_config_reset_reports_error_without_losing_identity);
+    RUN_TEST(test_node_profile_never_reads_or_overwrites_other_server);
+    RUN_TEST(test_corrupt_agent_blob_is_not_reported_as_signed_in);
     return UNITY_END();
 }

@@ -31,6 +31,8 @@
 #include "provisioning.h"
 #include "qr_scanner.h"
 #include "panel_runtime.h"
+#include "panel_voice.h"
+#include "product_support.h"
 #include <stdatomic.h>
 
 #include <ctype.h>
@@ -261,13 +263,13 @@ static int screen_cli(int argc, char **argv)
 
 static int nyx_login_cli(int argc, char **argv)
 {
-    if (argc != 2 || (strcmp(argv[1], "start") && strcmp(argv[1], "status") && strcmp(argv[1], "cancel"))) {
-        printf("Usage: nyx-login <start|status|cancel>\n");
+    if (argc != 2 || (strcmp(argv[1], "start") && strcmp(argv[1], "node-setup") && strcmp(argv[1], "status") && strcmp(argv[1], "cancel"))) {
+        printf("Usage: nyx-login <start|node-setup|status|cancel>\n");
         return -1;
     }
-    if (!strcmp(argv[1], "start")) {
+    if (!strcmp(argv[1], "start") || !strcmp(argv[1], "node-setup")) {
         esp_err_t err = lcd_renderer_navigate("device_bind");
-        if (err == ESP_OK) err = device_code_start_if_needed();
+        if (err == ESP_OK) err = !strcmp(argv[1], "node-setup") ? device_code_start_node_setup() : device_code_start_if_needed();
         if (err != ESP_OK) { printf("Sign-in: %s\n", esp_err_to_name(err)); return -1; }
     } else if (!strcmp(argv[1], "cancel")) device_code_cancel();
     device_login_snapshot_t login;
@@ -373,6 +375,61 @@ static int loglevel_cli(int argc, char **argv)
     return 0;
 }
 
+static int nyx_voice_cli(int argc, char **argv)
+{
+    esp_err_t action=ESP_OK;
+    if (argc==2 && !strcmp(argv[1],"refresh")) action=panel_voice_refresh_agents();
+    else if (argc==3 && !strcmp(argv[1],"select")) action=panel_voice_configure(argv[2]);
+    else if (argc==3 && !strcmp(argv[1],"gain")) {
+        char *end=NULL;long gain=strtol(argv[2],&end,10);
+        action=end && !*end && gain>=1 && gain<=8 ? panel_voice_gain_set((unsigned)gain) : ESP_ERR_INVALID_ARG;
+    }
+    else if (argc==3 && !strcmp(argv[1],"mode")) {
+        action=!strcmp(argv[2],"hold") ? panel_voice_input_mode_set(PANEL_VOICE_INPUT_HOLD) :
+            !strcmp(argv[2],"automatic") ? panel_voice_input_mode_set(PANEL_VOICE_INPUT_AUTOMATIC) : ESP_ERR_INVALID_ARG;
+    }
+    else if (argc==2 && !strcmp(argv[1],"mute")) panel_voice_microphone_mute(true);
+    else if (argc==2 && !strcmp(argv[1],"unmute")) panel_voice_microphone_mute(false);
+    else if (argc==2 && !strcmp(argv[1],"start")) action=panel_voice_start();
+    else if (argc==2 && !strcmp(argv[1],"stop")) panel_voice_stop();
+    else if (argc==2 && !strcmp(argv[1],"hold")) panel_voice_hold(true);
+    else if (argc==2 && !strcmp(argv[1],"release")) panel_voice_hold(false);
+    else if (argc==2 && !strcmp(argv[1],"list")) {
+        panel_voice_bot_t *rows=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*rows));
+        if (!rows) return -1;
+        size_t count=panel_voice_bots(rows,PANEL_VOICE_MAX_BOTS);
+        for(size_t i=0;i<count;i++) printf("Voice Bot %s %s\n",rows[i].agent_id,rows[i].name);
+        free(rows);
+        return 0;
+    } else if (!(argc==2 && (!strcmp(argv[1],"status") || !strcmp(argv[1],"peer-test")))) {
+        printf("Usage: nyx-voice status|refresh|list|select <bot-id>|gain <1-8>|mode <hold|automatic>|mute|unmute|start|stop|hold|release|peer-test\n");
+        return -1;
+    }
+    if (action!=ESP_OK) {
+        printf("Voice action: %s\n",esp_err_to_name(action));
+        return -1;
+    }
+    if (argc == 2 && strcmp(argv[1], "peer-test") == 0) {
+        char result[256] = {0};
+        esp_err_t err = panel_voice_peer_test(result, sizeof(result));
+        printf("Voice peer test: %s %s\n", esp_err_to_name(err), result);
+        return err == ESP_OK ? 0 : -1;
+    }
+    {
+        panel_voice_snapshot_t snapshot = {0};
+        panel_voice_snapshot(&snapshot);
+        printf("Voice state=%s configured=%d busy=%d active=%d\n", snapshot.state,
+               snapshot.configured, snapshot.busy, snapshot.active);
+        printf("Voice audio sent=%u received=%u playback_ms=%u\n",snapshot.sent_packets,
+               snapshot.received_packets,snapshot.playback_ms);
+        printf("Voice level gain=%u codec_volume=%d peak_in=%u peak_out=%u\n",snapshot.playback_gain,
+            product_codec_volume_get(),snapshot.source_peak,snapshot.output_peak);
+        printf("Voice input mode=%s local_muted=%d\n",panel_voice_input_mode_name(snapshot.input_mode),snapshot.microphone_muted);
+        printf("Voice detail: %s\n",snapshot.message);
+        return 0;
+    }
+}
+
 static int init_console(void)
 {
     esp_console_repl_t *repl = NULL;
@@ -401,7 +458,8 @@ static int init_console(void)
         { .command = "nyx-slug",      .help = "nyx-slug service_slug\r\n",   .func = nyx_slug_cli },
         { .command = "nyx-status",    .help = "Print reprovisioning status", .func = nyx_status_cli },
         { .command = "screen",        .help = "Open a native screen", .func = screen_cli },
-        { .command = "nyx-login",     .help = "Account sign-in start/status/cancel; no secret tokens", .func = nyx_login_cli },
+        { .command = "nyx-login",     .help = "Panel Agent Key login start/status/cancel; no secret tokens", .func = nyx_login_cli },
+        { .command = "nyx-voice",     .help = "Voice status or local SDP test; no provider call", .func = nyx_voice_cli },
         { .command = "provision-mode", .help = "Enter provisioning mode",     .func = provision_mode_cli },
         { .command = "exit-provision", .help = "Exit provisioning mode",      .func = exit_provision_cli },
         { .command = "factory-reset", .help = "Wipe all NVS config",         .func = factory_reset_cli },
@@ -470,12 +528,16 @@ static void service_task(void *arg)
     init_console();
     (void)devices_find_self();
     (void)nyx_creds_load();
+    panel_voice_init();
     size_t count = 0;
     const nyx_route_t *routes = local_api_routes(&count);
     nyx_node_init();
     nyx_node_set_routes(routes, count);
     nyx_node_set_route_wrapper(local_api_route_with_logging);
     local_api_init();
+    // Hosted transport initialization may wait for the C6. The live Panel UI
+    // and recovery console are already running before that hardware dependency.
+    ESP_ERROR_CHECK(network_init(NULL,NULL,NULL));
     net_manager_subscribe(on_net_manager_event, NULL);
     net_manager_init();
     (void)network_init(NULL, NULL, network_event_handler);
