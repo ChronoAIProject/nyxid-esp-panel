@@ -5,8 +5,9 @@
 
 #define PANEL_VOICE_MAX_BOTS 32
 typedef struct {
-    char agent_id[40], conversation_id[80], name[164];
+    char service_id[40], agent_id[40], conversation_id[80], name[164];
 } panel_voice_bot_t;
+typedef struct { char id[40]; } panel_voice_service_t;
 typedef enum {
     PANEL_VOICE_INPUT_HOLD = 0,
     PANEL_VOICE_INPUT_AUTOMATIC = 1,
@@ -19,7 +20,16 @@ bool panel_voice_capture_allowed(panel_voice_input_mode_t mode, bool held,
 
 bool panel_voice_uuid(const char *value);
 bool panel_voice_conversation(const char *value);
-bool panel_voice_parse_agents(const cJSON *root, panel_voice_bot_t *bots, size_t *count);
+// Inventory is metadata only. Credentials always go to the configured NyxID origin.
+bool panel_voice_parse_services(const cJSON *root, panel_voice_service_t *services, size_t *count);
+bool panel_voice_parse_service_bot(const cJSON *root, const char *service_id, panel_voice_bot_t *bot);
+bool panel_voice_bot_valid(const panel_voice_bot_t *bot, bool legacy);
+// A legacy selection has no service ID; it must match exactly one current binding.
+bool panel_voice_reconcile_bot(const panel_voice_bot_t *saved, const char *saved_key,
+    const char *current_key, const panel_voice_bot_t *bots, size_t count, panel_voice_bot_t *out);
+bool panel_voice_keys_url(char *out, size_t cap, const char *base);
+bool panel_voice_service_url(char *out, size_t cap, const char *base,
+    const char *service_id, const char *operation, bool websocket);
 // Uses the account's explicit selection; never silently switches provider or billing source.
 cJSON *panel_voice_preferences(const cJSON *discovery, const cJSON *options,
     panel_voice_input_mode_t mode);

@@ -6,11 +6,34 @@ select only that Bot's Voice connection when assigning the panel's Key. Refresh
 Bots in the panel settings and select that Bot. The provider key stays on NyxID.
 Voice uses the account's saved provider selection and the Bot's existing grants.
 
+The board discovers authorized connections with `GET /api/v1/keys` using that
+same stored Agent Key. Only active `nyxbot-voice` catalog entries with an exact
+`/api/v1/proxy/nyxbot-voice/{service_id}` endpoint path qualify. Each connection's
+`/voice/agents` response must contain its one fixed Bot and the matching service
+ID. Bot names are display labels, never routing or authorization inputs.
+
+All Voice HTTP operations and the session WebSocket use
+`{configured_nyxid_base}/api/v1/proxy/nyxbot-voice/{service_id}` with the existing
+`/voice/options`, `/voice/sessions`, `/voice/sessions/{id}/control`, `/stream`
+and `/announcements` tails. The board constructs this URL from its configured
+NyxID origin and the verified ID; it never follows the inventory endpoint's
+host or redirects with the credential. There is no native web Voice route
+fallback or additional Voice token.
+
+Saved selection version 2 binds the panel Key, Voice service ID, Bot UUID and
+conversation ID. An existing version 1 selection is upgraded after refresh only
+when the same Key, Bot and conversation identify exactly one authorized Voice
+connection. A replaced service ID requires selecting the Bot again. Ambiguous
+or mismatched discovery responses are rejected. The local Voice status and Bot
+list expose the exact `service_id` for diagnostics.
+
 Agent Key voice and typed camera-tool discovery require
 [NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169), the server-side
 `assistant:voice-agent-key` feature enabled, and an explicitly published/granted
-Bot Voice connection. v0.6.15 was validated against local NyxID with those
-changes. A firmware merge alone does not deploy or enable the backend feature.
+Bot Voice connection with the dedicated service proxy routes. The v0.6.15 audio
+baseline was validated against local NyxID; the service transport migration
+still requires matching backend and hardware validation. A firmware merge alone
+does not deploy or enable the backend feature.
 
 The firmware supports NyxID's `openai_live` WebRTC transport with Opus audio.
 Tap the microphone icon in Nyx Panel to open the voice controls; tap it again to

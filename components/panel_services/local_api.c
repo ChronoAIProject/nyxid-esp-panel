@@ -149,6 +149,7 @@ static cJSON *voice_json(void)
     cJSON_AddNumberToObject(j,"playback_gain",v.playback_gain);
     cJSON_AddNumberToObject(j,"volume",product_codec_volume_get());
     cJSON_AddStringToObject(j,"state",v.state);cJSON_AddStringToObject(j,"message",v.message);
+    cJSON_AddStringToObject(j,"service_id",v.service_id);
     cJSON_AddStringToObject(j,"agent_id",v.agent_id);cJSON_AddStringToObject(j,"agent_name",v.agent_name);
     cJSON_AddStringToObject(j,"session_id",v.session_id);
     cJSON_AddBoolToObject(j,"remote_initiated",v.remote_initiated);
@@ -1562,6 +1563,7 @@ static int h_voice(const nyx_proxy_request_t *req, char *resp, size_t cap,
         cJSON *root=cJSON_CreateObject(),*rows=cJSON_AddArrayToObject(root,"agents");
         for(size_t i=0;i<count;++i){
             cJSON *item=cJSON_CreateObject();cJSON_AddStringToObject(item,"agent_id",bots[i].agent_id);
+            cJSON_AddStringToObject(item,"service_id",bots[i].service_id);
             cJSON_AddStringToObject(item,"name",bots[i].name);cJSON_AddItemToArray(rows,item);
         }
         free(bots);return object_response(root,resp,cap,resp_len);

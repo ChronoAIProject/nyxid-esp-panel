@@ -45,6 +45,9 @@
 #define DONE_MIC 2
 #define DONE_SPEAKER 4
 typedef struct { char key_id[40]; panel_voice_bot_t bot; } voice_config_t;
+// Preserve the old blob layout until discovery can resolve its exact service.
+typedef struct { char key_id[40], agent_id[40], conversation_id[80], name[164]; } voice_config_v1_t;
+_Static_assert(sizeof(voice_config_v1_t)==324,"Keep the saved selection_v1 layout");
 typedef struct { unsigned len; uint8_t bytes[1500]; } audio_packet_t;
 typedef struct { char session[48]; panel_voice_remote_t request; } remote_message_t;
 typedef struct { char id[40]; unsigned char digest[32]; } remote_record_t;
@@ -98,7 +101,8 @@ void panel_voice_snapshot(panel_voice_snapshot_t *out)
     if (!state_lock) return;
     xSemaphoreTake(state_lock,portMAX_DELAY);
     *out=status;
-    out->configured=configuration.bot.agent_id[0]!=0;
+    snprintf(out->service_id,sizeof(out->service_id),"%s",configuration.bot.service_id);
+    out->configured=panel_voice_bot_valid(&configuration.bot,false);
     xSemaphoreGive(state_lock);
     out->configured=out->configured && nyx_creds_have_agent();
     out->busy=atomic_load(&busy);
@@ -111,11 +115,22 @@ void panel_voice_snapshot(panel_voice_snapshot_t *out)
 static bool valid_config(const voice_config_t *cfg)
 {
     return memchr(cfg->key_id,0,sizeof(cfg->key_id)) &&
-        memchr(cfg->bot.agent_id,0,sizeof(cfg->bot.agent_id)) &&
-        memchr(cfg->bot.conversation_id,0,sizeof(cfg->bot.conversation_id)) &&
-        memchr(cfg->bot.name,0,sizeof(cfg->bot.name)) &&
-        panel_voice_uuid(cfg->key_id) && panel_voice_uuid(cfg->bot.agent_id) &&
-        panel_voice_conversation(cfg->bot.conversation_id);
+        panel_voice_uuid(cfg->key_id) && panel_voice_bot_valid(&cfg->bot,false);
+}
+static esp_err_t save_config(const voice_config_t *cfg)
+{
+    nvs_handle_t h;
+    esp_err_t err=nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READWRITE,&h);
+    if (err==ESP_OK) {
+        err=nvs_set_blob(h,"selection_v2",cfg,sizeof(*cfg));
+        if (err==ESP_OK) {
+            esp_err_t erased=nvs_erase_key(h,"selection_v1");
+            if (erased!=ESP_OK && erased!=ESP_ERR_NVS_NOT_FOUND) err=erased;
+        }
+        if (err==ESP_OK) err=nvs_commit(h);
+        nvs_close(h);
+    }
+    return err;
 }
 void panel_voice_init(void)
 {
@@ -128,8 +143,21 @@ void panel_voice_init(void)
     nvs_handle_t h;
     if (nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READONLY,&h)==ESP_OK) {
         size_t len=sizeof(configuration);
-        if (nvs_get_blob(h,"selection_v1",&configuration,&len)!=ESP_OK || len!=sizeof(configuration) ||
-            !valid_config(&configuration)) memset(&configuration,0,sizeof(configuration));
+        esp_err_t selected=nvs_get_blob(h,"selection_v2",&configuration,&len);
+        if (selected!=ESP_OK || len!=sizeof(configuration) || !valid_config(&configuration))
+            memset(&configuration,0,sizeof(configuration));
+        if (selected==ESP_ERR_NVS_NOT_FOUND) {
+            voice_config_v1_t legacy={0};len=sizeof(legacy);
+            if (nvs_get_blob(h,"selection_v1",&legacy,&len)==ESP_OK && len==sizeof(legacy)) {
+                memcpy(configuration.key_id,legacy.key_id,sizeof(legacy.key_id));
+                memcpy(configuration.bot.agent_id,legacy.agent_id,sizeof(legacy.agent_id));
+                memcpy(configuration.bot.conversation_id,legacy.conversation_id,sizeof(legacy.conversation_id));
+                memcpy(configuration.bot.name,legacy.name,sizeof(legacy.name));
+                if (!memchr(configuration.key_id,0,sizeof(configuration.key_id)) ||
+                    !panel_voice_uuid(configuration.key_id) || !panel_voice_bot_valid(&configuration.bot,true))
+                    memset(&configuration,0,sizeof(configuration));
+            }
+        }
         uint8_t gain=0;
         if(nvs_get_u8(h,"output_gain",&gain)==ESP_OK && gain>=1 && gain<=8)
             atomic_store(&playback_gain,gain);
@@ -151,7 +179,8 @@ void panel_voice_init(void)
     snprintf(status.agent_id,sizeof(status.agent_id),"%s",configuration.bot.agent_id);
     snprintf(status.agent_name,sizeof(status.agent_name),"%s",configuration.bot.name);
     state("idle",!nyx_creds_have_agent()?"Sign in to NyxID in Settings":
-        configuration.bot.agent_id[0]?"Ready":"Select a Bot in Settings");
+        valid_config(&configuration)?"Ready":configuration.bot.agent_id[0]?
+        "Refresh Bots in Settings to update voice access":"Select a Bot in Settings");
 }
 size_t panel_voice_bots(panel_voice_bot_t *out,size_t cap)
 {
@@ -175,13 +204,7 @@ esp_err_t panel_voice_configure(const char *agent)
     }
     xSemaphoreGive(state_lock);
     if (!valid_config(&cfg) || !nyx_creds_read_agent(&credential) || strcmp(cfg.key_id,credential.key_id)) goto done;
-    nvs_handle_t h;
-    err=nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READWRITE,&h);
-    if (err==ESP_OK) {
-        err=nvs_set_blob(h,"selection_v1",&cfg,sizeof(cfg));
-        if (err==ESP_OK) err=nvs_commit(h);
-        nvs_close(h);
-    }
+    err=save_config(&cfg);
     if (err==ESP_OK) {
         xSemaphoreTake(state_lock,portMAX_DELAY);configuration=cfg;
         snprintf(status.agent_id,sizeof(status.agent_id),"%s",cfg.bot.agent_id);
@@ -248,10 +271,9 @@ static esp_err_t http_event(esp_http_client_event_t *event)
     }
     return ESP_OK;
 }
-static cJSON *http(voice_call_t *c,const char *suffix,cJSON *body)
+static cJSON *http_request(voice_call_t *c,const char *url,cJSON *body)
 {
-    char url[512],auth[160];
-    snprintf(url,sizeof(url),"%s/api/v1/assistant/nyxagent%s",NYX_AGENT_BASE_URL,suffix);
+    char auth[160];
     snprintf(auth,sizeof(auth),"Bearer %s",c->credential.credential);
     http_buffer_t b={.data=calloc(1,MAX_CONTROL_BYTES),.size=MAX_CONTROL_BYTES};
     if (!b.data) return NULL;
@@ -285,27 +307,57 @@ static cJSON *http(voice_call_t *c,const char *suffix,cJSON *body)
     free(b.data);
     return result;
 }
+static cJSON *http(voice_call_t *c,const char *suffix,cJSON *body)
+{
+    char url[512];
+    if (!panel_voice_service_url(url,sizeof(url),NYX_AGENT_BASE_URL,c->config.bot.service_id,suffix,false)) {
+        state("error","Invalid voice connection. Refresh Bots in Settings");return NULL;
+    }
+    return http_request(c,url,body);
+}
 static void refresh_task(void *arg)
 {
     voice_call_t *c=arg;
-    cJSON *reply=http(c,"/voice/agents",NULL);
+    char url[512];
+    cJSON *reply=panel_voice_keys_url(url,sizeof(url),NYX_AGENT_BASE_URL)?http_request(c,url,NULL):NULL;
+    panel_voice_service_t *services=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*services));
     panel_voice_bot_t *found=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*found));size_t count=0;
-    if (found && reply && panel_voice_parse_agents(reply,found,&count)) {
+    bool parsed=services && found && reply && panel_voice_parse_services(reply,services,&count);
+    cJSON_Delete(reply);
+    for (size_t i=0;parsed && i<count;++i) {
+        snprintf(c->config.bot.service_id,sizeof(c->config.bot.service_id),"%s",services[i].id);
+        reply=http(c,"/voice/agents",NULL);
+        parsed=reply && panel_voice_parse_service_bot(reply,services[i].id,&found[i]);
+        cJSON_Delete(reply);
+        // The public selection API chooses a Bot UUID, so duplicate bindings are ambiguous.
+        for (size_t j=0;parsed && j<i;++j) if (!strcmp(found[j].agent_id,found[i].agent_id)) parsed=false;
+    }
+    if (parsed) {
+        voice_config_t selected_config={0};
+        xSemaphoreTake(state_lock,portMAX_DELAY);
+        bool selected=panel_voice_reconcile_bot(&configuration.bot,configuration.key_id,
+            c->credential.key_id,found,count,&selected_config.bot);
+        bool changed=selected && memcmp(&configuration.bot,&selected_config.bot,sizeof(selected_config.bot));
+        xSemaphoreGive(state_lock);
+        if (selected) snprintf(selected_config.key_id,sizeof(selected_config.key_id),"%s",c->credential.key_id);
+        if (changed && save_config(&selected_config)!=ESP_OK) {
+            state("error","Could not save the updated voice selection");goto done;
+        }
         xSemaphoreTake(state_lock,portMAX_DELAY);
         memcpy(bots,found,count*sizeof(*bots));bot_count=count;
         snprintf(bots_key_id,sizeof(bots_key_id),"%s",c->credential.key_id);
-        bool selected=false;
-        for(size_t i=0;i<count;i++) if (!strcmp(configuration.key_id,bots_key_id) &&
-            !strcmp(configuration.bot.agent_id,bots[i].agent_id) &&
-            !strcmp(configuration.bot.conversation_id,bots[i].conversation_id)) selected=true;
-        if (!selected) {
-            memset(&configuration,0,sizeof(configuration));status.agent_id[0]=status.agent_name[0]=0;
-        }
+        configuration=selected_config;
+        snprintf(status.agent_id,sizeof(status.agent_id),"%s",configuration.bot.agent_id);
+        snprintf(status.agent_name,sizeof(status.agent_name),"%s",configuration.bot.name);
         status.bots_revision++;
         xSemaphoreGive(state_lock);
         state("idle",selected?"Ready":count?"Choose a Bot below":"Create a Bot voice connection in NyxID, then allow it on this Key");
-    } else if (reply) state("error","Could not read the Bot list");
-    free(found);cJSON_Delete(reply);memset(c,0,sizeof(*c));free(c);
+    } else {
+        xSemaphoreTake(state_lock,portMAX_DELAY);bool failed=!strcmp(status.state,"error");xSemaphoreGive(state_lock);
+        if (!failed) state("error","Could not verify the Bot voice connections in NyxID");
+    }
+done:
+    free(services);free(found);memset(c,0,sizeof(*c));free(c);
     atomic_store(&busy,false);vTaskDelete(NULL);
 }
 esp_err_t panel_voice_refresh_agents(void)
@@ -648,12 +700,9 @@ static void call_task(void *arg)
     cJSON *discovery=http(c,"/voice/agents",NULL),*preferences=NULL;
     char path[256];
     if (!discovery) goto done;
-    panel_voice_bot_t *found=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*found));size_t count=0;bool selected=false;
-    if (found && panel_voice_parse_agents(discovery,found,&count)) {
-        for(size_t i=0;i<count;i++) if (!strcmp(found[i].agent_id,c->config.bot.agent_id) &&
-            !strcmp(found[i].conversation_id,c->config.bot.conversation_id)) selected=true;
-    }
-    free(found);
+    panel_voice_bot_t found={0};
+    bool selected=panel_voice_parse_service_bot(discovery,c->config.bot.service_id,&found) &&
+        !strcmp(found.agent_id,c->config.bot.agent_id) && !strcmp(found.conversation_id,c->config.bot.conversation_id);
     if (!selected) {cJSON_Delete(discovery);state("error","Selected Bot is no longer available. Refresh Bots in Settings");goto done;}
     snprintf(path,sizeof(path),"/voice/options?conversation_id=%s",c->config.bot.conversation_id);
     cJSON *options=http(c,path,NULL);
@@ -677,13 +726,14 @@ static void call_task(void *arg)
     if (!sdp || atomic_load(&stopping)) goto done;
     log_sdp_shape("offer",sdp);
     char request[37];uuid(request);
-    cJSON *body=cJSON_CreateObject();cJSON_AddStringToObject(body,"agent_id",c->config.bot.agent_id);cJSON_AddStringToObject(body,"client_request_id",request);cJSON_AddStringToObject(body,"sdp_offer",sdp);
+    cJSON *body=cJSON_CreateObject();cJSON_AddStringToObject(body,"service_id",c->config.bot.service_id);
+    cJSON_AddStringToObject(body,"agent_id",c->config.bot.agent_id);cJSON_AddStringToObject(body,"client_request_id",request);cJSON_AddStringToObject(body,"sdp_offer",sdp);
     cJSON_AddItemToObject(body,"preferences",preferences);preferences=NULL;
     snprintf(path,sizeof(path),"/voice/sessions");
     cJSON *reply=http(c,path,body);cJSON_Delete(body);free(sdp);sdp=NULL;
     cJSON *session=cJSON_GetObjectItemCaseSensitive(reply,"session"),*id=cJSON_GetObjectItemCaseSensitive(session,"id");
     cJSON *answer=cJSON_GetObjectItemCaseSensitive(reply,"sdp_answer");
-    if (!cJSON_IsString(id) || strlen(id->valuestring)>=sizeof(c->session) || !cJSON_IsString(answer)) {cJSON_Delete(reply);goto done;}
+    if (!cJSON_IsString(id) || !panel_voice_uuid(id->valuestring) || !cJSON_IsString(answer)) {cJSON_Delete(reply);goto done;}
     strcpy(c->session,id->valuestring);
     xSemaphoreTake(state_lock,portMAX_DELAY);
     snprintf(status.session_id,sizeof(status.session_id),"%s",c->session);
@@ -695,10 +745,8 @@ static void call_task(void *arg)
     xSemaphoreTake(c->peer_lock,portMAX_DELAY);int err=esp_peer_send_msg(c->peer,&msg);xSemaphoreGive(c->peer_lock);cJSON_Delete(reply);
     if (err || atomic_load(&stopping)) goto done;
     char url[512],headers[192];
-    const char *base=NYX_AGENT_BASE_URL;
-    bool secure=!strncmp(base,"https://",8);
-    snprintf(url,sizeof(url),"%s%s/api/v1/assistant/nyxagent/voice/sessions/%s/stream",
-        secure?"wss":"ws",base+(secure?5:4),c->session);
+    snprintf(path,sizeof(path),"/voice/sessions/%s/stream",c->session);
+    if (!panel_voice_service_url(url,sizeof(url),NYX_AGENT_BASE_URL,c->config.bot.service_id,path,true)) goto done;
     snprintf(headers,sizeof(headers),"Authorization: Bearer %s\r\n",c->credential.credential);
     esp_websocket_client_config_t ws={.uri=url,.headers=headers,.crt_bundle_attach=esp_crt_bundle_attach,
         .disable_auto_reconnect=true,.buffer_size=8192,.task_stack=8192,.network_timeout_ms=10000};
