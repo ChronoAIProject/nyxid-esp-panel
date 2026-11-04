@@ -94,6 +94,10 @@ separate user/Bot caption colors. The controls start collapsed and no microphone
 stream starts at boot. Remote daily-service calls can open two-way voice, queue
 an opening notification and control microphone mute or hangup. Voice connects
 directly from the board to NyxID and the provider; it needs no Mac bridge.
+The existing panel Key discovers active Bot Voice services through `/api/v1/keys`.
+Voice HTTP and WebSocket traffic uses the selected connection's dedicated
+`/api/v1/proxy/nyxbot-voice/{service_id}` route on the configured NyxID server.
+The saved selection retains the exact service ID and Bot binding across reboots.
 
 The panel Key's grant to one Bot's Voice is independent of that Bot's grant to
 the panel's services. The daily service permits camera/display, persistent
@@ -104,9 +108,11 @@ the Bot can use its existing daily grant to inspect and show that photo.
 
 This firmware's Agent Key voice and typed camera-tool discovery require the
 NyxID changes in [NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169).
-The server must enable `assistant:voice-agent-key` and publish/grant the intended
-Voice connection. Physical validation used local NyxID with those changes;
-merging firmware does not deploy or enable the backend feature in production.
+The server must enable `assistant:voice-agent-key`, publish/grant the intended
+Voice connection, and support the dedicated service proxy route. Physical audio
+baseline validation used local NyxID; the service transport migration requires
+matching backend and hardware validation.
+Merging firmware does not deploy or enable the backend feature in production.
 See [docs/VOICE.md](docs/VOICE.md) for setup, isolated local profiles and audio
 behavior, and [docs/API.md](docs/API.md#daily-and-management-services-v0615)
 for remote operations.

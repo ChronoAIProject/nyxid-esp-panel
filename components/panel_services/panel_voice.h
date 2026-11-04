@@ -7,7 +7,7 @@
 typedef struct {
     bool configured, busy, active, holding;
     unsigned sent_packets, received_packets, playback_ms;
-    char state[24], message[128], agent_id[40], agent_name[164];
+    char state[24], message[128], service_id[40], agent_id[40], agent_name[164];
     unsigned bots_revision, playback_gain, source_peak, output_peak;
     panel_voice_input_mode_t input_mode;
     panel_voice_input_mode_t preferred_input_mode;

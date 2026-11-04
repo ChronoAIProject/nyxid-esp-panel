@@ -1,6 +1,7 @@
 #include "panel_voice_proto.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 const char *panel_voice_input_mode_name(panel_voice_input_mode_t mode)
 {
@@ -94,7 +95,7 @@ const char *panel_voice_error_message(const cJSON *root, int http_status)
 {
     if (http_status == 401) return "Key expired or revoked. Sign in again in Settings";
     if (http_status == 403) return "Allow this Bot's voice connection on the panel Key in NyxID";
-    if (http_status == 404) return "NyxID voice API is not available on this server yet";
+    if (http_status == 404) return "Bot voice connection is unavailable. Refresh Bots in Settings";
     const cJSON *details = cJSON_GetObjectItemCaseSensitive(root, "details");
     const char *stage = string(details, "stage"), *code = string(details, "provider_code");
     const char *type = string(details, "provider_type");
@@ -112,26 +113,121 @@ const char *panel_voice_error_message(const cJSON *root, int http_status)
     if (http_status == 409) return "End the current voice call in NyxID, then try again";
     return NULL;
 }
-bool panel_voice_parse_agents(const cJSON *root, panel_voice_bot_t *bots, size_t *count)
+// Only an origin is accepted; callers cannot redirect a stored Agent Key with a path.
+static size_t origin_length(const char *url)
 {
-    if (!bots || !count) return false;
+    if (!url) return 0;
+    size_t scheme = !strncmp(url,"https://",8) ? 8 : !strncmp(url,"http://",7) ? 7 : 0;
+    if (!scheme) return 0;
+    const char *p=url+scheme;
+    for (; *p && *p!='/'; ++p)
+        if ((unsigned char)*p<=32 || (unsigned char)*p>=127 || strchr("@?#\\",*p)) return 0;
+    if (p==url+scheme || (*p && strcmp(p,"/"))) return 0;
+    return (size_t)(p-url);
+}
+static bool formatted(int size, size_t cap) { return size>=0 && (size_t)size<cap; }
+bool panel_voice_keys_url(char *out, size_t cap, const char *base)
+{
+    size_t n=origin_length(base);
+    if (!out || !cap || !n || n>400) return false;
+    return formatted(snprintf(out,cap,"%.*s/api/v1/keys",(int)n,base),cap);
+}
+static bool voice_operation(const char *operation)
+{
+    if (!operation) return false;
+    if (!strcmp(operation,"") || !strcmp(operation,"/voice/agents") ||
+        !strcmp(operation,"/voice/options") || !strcmp(operation,"/voice/sessions")) return true;
+    const char *query="/voice/options?conversation_id=";
+    if (!strncmp(operation,query,strlen(query))) return panel_voice_conversation(operation+strlen(query));
+    const char *prefix="/voice/sessions/";
+    if (strncmp(operation,prefix,strlen(prefix))) return false;
+    const char *session=operation+strlen(prefix);
+    if (strlen(session)<36) return false;
+    char id[37];memcpy(id,session,36);id[36]=0;
+    return panel_voice_uuid(id) && (!strcmp(session+36,"") || !strcmp(session+36,"/stream") ||
+        !strcmp(session+36,"/control") || !strcmp(session+36,"/announcements"));
+}
+bool panel_voice_service_url(char *out, size_t cap, const char *base,
+    const char *service_id, const char *operation, bool websocket)
+{
+    size_t n=origin_length(base);
+    if (!out || !cap || !n || n>400 || !panel_voice_uuid(service_id) || !voice_operation(operation)) return false;
+    bool secure=!strncmp(base,"https://",8);
+    size_t skip=websocket?(secure?5:4):0;
+    return formatted(snprintf(out,cap,"%s%.*s/api/v1/proxy/nyxbot-voice/%s%s",
+        websocket?(secure?"wss":"ws"):"",(int)(n-skip),base+skip,service_id,operation),cap);
+}
+static bool service_endpoint(const char *endpoint, const char *id)
+{
+    if (!endpoint) return false;
+    const char *path=strstr(endpoint,"://");
+    if (!path) return false;
+    path=strchr(path+3,'/');
+    if (!path) return false;
+    size_t n=(size_t)(path-endpoint);
+    if (n>=400) return false;
+    char origin[400];memcpy(origin,endpoint,n);origin[n]=0;
+    if (!origin_length(origin)) return false;
+    char expected[96];snprintf(expected,sizeof(expected),"/api/v1/proxy/nyxbot-voice/%s",id);
+    return !strcmp(path,expected);
+}
+bool panel_voice_parse_services(const cJSON *root, panel_voice_service_t *services, size_t *count)
+{
+    if (!services || !count) return false;
     *count = 0;
-    const cJSON *rows = cJSON_GetObjectItemCaseSensitive(root, "agents");
-    if (!cJSON_IsArray(rows) || cJSON_GetArraySize(rows) > PANEL_VOICE_MAX_BOTS) return false;
-    const cJSON *row;
-    cJSON_ArrayForEach(row, rows) {
-        const char *id = string(row, "agent_id"), *thread = string(row, "conversation_id");
-        const char *name = string(row, "display_name");
-        if (!name || !*name) name = string(row, "name");
-        if (!panel_voice_uuid(id) || !panel_voice_conversation(thread) || !name || !*name ||
-            strlen(name) >= sizeof(bots[0].name)) return false;
-        for (size_t i = 0; i < *count; ++i) if (!strcmp(bots[i].agent_id, id)) return false;
-        panel_voice_bot_t *bot = &bots[(*count)++];
-        memset(bot, 0, sizeof(*bot));
-        strcpy(bot->agent_id, id); strcpy(bot->conversation_id, thread); strcpy(bot->name, name);
-        // One visible dropdown item per Bot, regardless of its display name.
-        for (char *p = bot->name; *p; ++p) if (*p == '\n' || *p == '\r') *p = ' ';
+    const cJSON *rows=cJSON_GetObjectItemCaseSensitive(root,"keys"), *row;
+    if (!cJSON_IsArray(rows)) return false;
+    cJSON_ArrayForEach(row,rows) {
+        const char *slug=string(row,"catalog_service_slug");
+        if (!slug || strcmp(slug,"nyxbot-voice") || !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(row,"is_active"))) continue;
+        const char *id=string(row,"id");
+        if (!panel_voice_uuid(id) || !service_endpoint(string(row,"endpoint_url"),id) ||
+            *count==PANEL_VOICE_MAX_BOTS) return false;
+        for (size_t i=0;i<*count;++i) if (!strcmp(services[i].id,id)) return false;
+        snprintf(services[(*count)++].id,sizeof(services[0].id),"%s",id);
     }
+    return true;
+}
+bool panel_voice_bot_valid(const panel_voice_bot_t *bot, bool legacy)
+{
+    return bot && memchr(bot->service_id,0,sizeof(bot->service_id)) &&
+        memchr(bot->agent_id,0,sizeof(bot->agent_id)) &&
+        memchr(bot->conversation_id,0,sizeof(bot->conversation_id)) &&
+        memchr(bot->name,0,sizeof(bot->name)) &&
+        ((legacy && !bot->service_id[0]) || panel_voice_uuid(bot->service_id)) &&
+        panel_voice_uuid(bot->agent_id) && panel_voice_conversation(bot->conversation_id);
+}
+bool panel_voice_parse_service_bot(const cJSON *root, const char *service_id, panel_voice_bot_t *bot)
+{
+    if (!bot || !panel_voice_uuid(service_id)) return false;
+    const cJSON *rows = cJSON_GetObjectItemCaseSensitive(root, "agents");
+    if (!cJSON_IsArray(rows) || cJSON_GetArraySize(rows)!=1) return false;
+    const cJSON *row=cJSON_GetArrayItem(rows,0);
+    const char *service=string(row,"service_id"), *id=string(row,"agent_id"), *thread=string(row,"conversation_id");
+    const char *name=string(row,"display_name");
+    if (!name || !*name) name=string(row,"name");
+    if (!service || strcmp(service,service_id) || !panel_voice_uuid(id) || !panel_voice_conversation(thread) ||
+        !name || !*name || strlen(name)>=sizeof(bot->name)) return false;
+    memset(bot,0,sizeof(*bot));
+    strcpy(bot->service_id,service);strcpy(bot->agent_id,id);strcpy(bot->conversation_id,thread);strcpy(bot->name,name);
+    for (char *p=bot->name;*p;++p) if (*p=='\n' || *p=='\r') *p=' ';
+    return true;
+}
+bool panel_voice_reconcile_bot(const panel_voice_bot_t *saved, const char *saved_key,
+    const char *current_key, const panel_voice_bot_t *bots, size_t count, panel_voice_bot_t *out)
+{
+    if (!out || !bots || count>PANEL_VOICE_MAX_BOTS || !panel_voice_bot_valid(saved,true) ||
+        !panel_voice_uuid(saved_key) || !panel_voice_uuid(current_key) || strcmp(saved_key,current_key)) return false;
+    const panel_voice_bot_t *match=NULL;
+    for (size_t i=0;i<count;++i) {
+        if (!panel_voice_bot_valid(&bots[i],false) || strcmp(saved->agent_id,bots[i].agent_id) ||
+            strcmp(saved->conversation_id,bots[i].conversation_id) ||
+            (saved->service_id[0] && strcmp(saved->service_id,bots[i].service_id))) continue;
+        if (match) return false;
+        match=&bots[i];
+    }
+    if (!match) return false;
+    *out=*match;
     return true;
 }
 static bool same(const cJSON *a, const cJSON *b, const char *field)

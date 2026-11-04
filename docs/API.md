@@ -144,7 +144,7 @@ unknown, duplicate, combined, out-of-range or fractional fields are rejected.
 | POST | `/voice/start` | Starts with saved input mode and opens controls |
 | POST | `/voice/stop` | Asynchronous hangup; poll until `busy:false` |
 | POST | `/voice/hold?pressed=1` | Hold-mode microphone gate; 0 releases |
-| GET | `/voice/agents` | Bots currently discovered using this board's own Key |
+| GET | `/voice/agents` | Bots currently discovered using this board's own Key; includes each exact Voice `service_id` |
 | POST | `/voice/agents/refresh` | Refresh authorized Bots asynchronously |
 | GET, POST | `/voice/config` | Management: POST exactly one `agent_id`, `input_mode` (`automatic`/`push_to_talk`) or `playback_gain` (integer 1..8) |
 | GET, POST | `/config/audio` | Daily: POST exactly one `volume` (integer 0..100) or `playback_gain` (integer 1..8); persisted for this profile |
