@@ -141,6 +141,10 @@ esp_err_t product_codec_init(void);
 esp_codec_dev_handle_t product_codec_speaker(void);
 esp_codec_dev_handle_t product_codec_microphone(void);
 
+// One native app or voice call owns the shared codec format and DMA at a time.
+esp_err_t product_audio_claim(void);
+void product_audio_release(void);
+
 /**
  * @brief Initialize audio player task.
  *

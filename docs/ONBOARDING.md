@@ -1,7 +1,7 @@
-# Native onboarding (v0.2.0)
+# Native onboarding (v0.6.15)
 
-The [NyxID audit](NYXID_FEATURE_AUDIT.md) records upstream and deployed behavior
-before this integration. The deployed API was checked at commit
+The [NyxID audit](NYXID_FEATURE_AUDIT.md) records the historical upstream and
+deployed behavior before this integration. The deployed API was checked at commit
 `2c0d66d66f25cb591682fb2bc778238248a33343`; latest upstream main at the time
 was `ff302d5ecfe8d188cf0f167995e87bc08c722296`.
 
@@ -15,13 +15,29 @@ returns to the Settings page that opened it. No status JSON or UART instructions
 appear in the content app.
 
 For an unbound board's USB bring-up, UART `screen <target>` opens the same native
-pages, and `nyx-login start|status|cancel` controls the same login worker without
+pages, and `nyx-login start|node-setup|status|cancel` controls the same login worker without
 exposing account tokens or secret device codes. `nyx-status` reads the active
 identity and does not activate a newly saved binding.
 
-## Account device login
+## Panel Key login
 
-Open **Settings → NyxID → Sign in to NyxID**. A phone opens the trusted
+Open **Settings → NyxID → Sign in / choose panel Key**. The trusted phone page
+is `https://nyxid.ai/login/agent-key`; choose an existing Key or create one for
+the panel. The board requests and polls `/api/v1/auth/agent-key/request` and
+`/api/v1/auth/agent-key/poll`, then stores the delivered child credential in one
+atomic `nyx_agent/credential_v1` blob. It never imports a computer's Key or uses
+an account session as its voice identity. Pending, denial, expiry, slow-down,
+rate limiting and already-delivered responses have distinct handling.
+
+Publish Device voice on the desired Bot in NyxID and allow that connection on
+the panel's selected Key. Refresh available Bots and select one in Settings.
+This only grants the board access to that Bot's Voice; separately grant the
+Bot the panel's daily service if it should use camera/display or daily controls.
+See [VOICE.md](VOICE.md), including the required NyxID backend feature.
+
+## Remote control setup with account device login
+
+Open **Settings → NyxID → Set up remote control connection**. A phone opens the trusted
 `https://nyxid.ai/login/device` link and explicitly approves the displayed code.
 The panel calls `/api/v1/auth/device/request`, waits the advertised interval,
 polls `/auth/device/poll`, and accepts only `auth_kind=account_session`.
@@ -33,7 +49,10 @@ Cancel/back stops further work; a late-delivered account token is revoked.
 With the temporary account bearer, a worker creates `/nodes/register-token`,
 sends WSS `register`, and validates `register_ok`. It creates/verifies a custom
 `/keys` service with `auth_method=none`, endpoint `http://127.0.0.1:80`, and the
-expected `node_id`. An existing same-account panel/service is reused; a
+expected `node_id`. It creates the daily `<board-slug>` service and separate
+`<board-slug>-admin` management service on that node; the daily service advertises
+the Nyx Panel catalog OpenAPI schema for typed tool discovery. An existing
+same-account panel/service is reused; a
 conflicting service on another node is never overwritten.
 
 The reserved node ID and returned node credentials are staged in NVS namespace
@@ -51,9 +70,14 @@ are cleared. Offline logout cannot be guaranteed; the server session retains
 its normal expiry. NyxID logout also closes that user's unauthenticated MCP
 fallback sessions; the approving browser session is separate.
 
-These are NyxID first-party APIs. Separate `/devices/code` and bootstrap flows
-deliver restricted client API keys. The panel has no cloud API consumer and
-does not redeem those identities; they cannot authenticate a control-node WSS.
+These are distinct NyxID first-party login flows. The outbound voice child Key
+cannot authenticate a control-node WSS; temporary account sessions are used
+only to provision that node and its services. Separate `/devices/code` and
+bootstrap flows are not used for either identity.
+
+Local development profiles use separate URL-derived namespaces for the Key,
+voice selection, node and pending setup, as documented in [VOICE.md](VOICE.md).
+An identity-preserving reset leaves active and inactive profiles intact.
 
 ## Wi-Fi QR
 
@@ -69,8 +93,8 @@ The camera shows the SSID without revealing the password. **Connect to this
 network** confirms the change. A worker tries the shared station network for
 up to 25 seconds, saving the primary configuration only after connection.
 Cancellation/failure restores the prior station and saved configuration. The
-UI stays responsive; success does not reboot. Existing media ownership still
-serializes Camera and WHIP access.
+UI stays responsive; success does not reboot. Existing media ownership
+serializes camera preview, snapshots and QR access; continuous publishing is disabled.
 
 Authenticated `/wifi/qr` exposes the same state and confirmation action. The
 development JPEG-injection route uses the real decoder and now reports

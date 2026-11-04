@@ -5,9 +5,41 @@ extern "C" {
 #endif
 
 // NyxID server
+#ifndef HA_CAM_NYX_BASE_URL
 #define HA_CAM_NYX_BASE_URL    "https://nyx-api.chrono-ai.fun"
+#endif
+#ifndef HA_CAM_NYX_WSS_URL
 #define HA_CAM_NYX_WSS_URL     "wss://nyx-api.chrono-ai.fun/api/v1/nodes/ws"
+#endif
 #define HA_CAM_DEFAULT_LABEL   "esp32-cam"
+
+// Outbound Agent Key login/voice can target a development NyxID independently
+// of the production control node. Development builds provide origin-specific
+// NVS namespaces so credentials never cross between servers.
+#ifndef NYX_AGENT_BASE_URL
+#define NYX_AGENT_BASE_URL HA_CAM_NYX_BASE_URL
+#endif
+#ifndef NYX_AGENT_VERIFICATION_URI
+#define NYX_AGENT_VERIFICATION_URI "https://nyxid.ai/login/agent-key"
+#endif
+#ifndef NYX_AGENT_NVS_NAMESPACE
+#define NYX_AGENT_NVS_NAMESPACE "nyx_agent"
+#endif
+#ifndef NYX_VOICE_NVS_NAMESPACE
+#define NYX_VOICE_NVS_NAMESPACE "panel_voice"
+#endif
+#ifndef NYX_NODE_NVS_NAMESPACE
+#define NYX_NODE_NVS_NAMESPACE "nyx"
+#endif
+#ifndef NYX_NODE_SETUP_NVS_NAMESPACE
+#define NYX_NODE_SETUP_NVS_NAMESPACE "nyx_setup"
+#endif
+#ifndef NYX_NODE_VERIFICATION_URI
+#define NYX_NODE_VERIFICATION_URI "https://nyxid.ai/login/device"
+#endif
+#ifndef NYX_NODE_ALLOW_BAKED_CREDENTIALS
+#define NYX_NODE_ALLOW_BAKED_CREDENTIALS 1
+#endif
 
 // Defensive HMAC support for node -> NyxID frames. The server currently signs
 // proxy_request frames to nodes but does not document verification for auth or

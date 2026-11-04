@@ -4,6 +4,9 @@
 #include "esp_crt_bundle.h"
 #include "esp_heap_caps.h"
 #include "esp_http_client.h"
+#include "panel_voice.h"
+#include "panel_access.h"
+#include "product_support.h"
 #include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_partition.h"
@@ -134,6 +137,28 @@ static int object_response(cJSON *root, char *resp, size_t cap, size_t *resp_len
     return ok ? 200 : 500;
 }
 
+static cJSON *voice_json(void)
+{
+    panel_voice_snapshot_t v;panel_voice_snapshot(&v);
+    cJSON *j=cJSON_CreateObject();
+    cJSON_AddBoolToObject(j,"configured",v.configured);cJSON_AddBoolToObject(j,"busy",v.busy);
+    cJSON_AddBoolToObject(j,"active",v.active);cJSON_AddBoolToObject(j,"holding",v.holding);
+    cJSON_AddStringToObject(j,"input_mode",panel_voice_input_mode_name(v.input_mode));
+    cJSON_AddStringToObject(j,"preferred_input_mode",panel_voice_input_mode_name(v.preferred_input_mode));
+    cJSON_AddBoolToObject(j,"microphone_muted",v.microphone_muted);
+    cJSON_AddNumberToObject(j,"playback_gain",v.playback_gain);
+    cJSON_AddNumberToObject(j,"volume",product_codec_volume_get());
+    cJSON_AddStringToObject(j,"state",v.state);cJSON_AddStringToObject(j,"message",v.message);
+    cJSON_AddStringToObject(j,"agent_id",v.agent_id);cJSON_AddStringToObject(j,"agent_name",v.agent_name);
+    cJSON_AddStringToObject(j,"session_id",v.session_id);
+    cJSON_AddBoolToObject(j,"remote_initiated",v.remote_initiated);
+    cJSON_AddStringToObject(j,"remote_request_id",v.remote_request_id);cJSON_AddStringToObject(j,"remote_state",v.remote_state);
+    cJSON_AddNumberToObject(j,"sent_packets",v.sent_packets);cJSON_AddNumberToObject(j,"received_packets",v.received_packets);
+    cJSON_AddNumberToObject(j,"playback_ms",v.playback_ms);
+    cJSON_AddNumberToObject(j,"source_peak",v.source_peak);cJSON_AddNumberToObject(j,"output_peak",v.output_peak);
+    return j;
+}
+
 size_t local_api_format_status_json(char *resp, size_t cap)
 {
     if (!resp || cap == 0u) {
@@ -176,6 +201,9 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON *node = cJSON_AddObjectToObject(root, "nyx");
     cJSON_AddStringToObject(node, "state", nyx);
     cJSON_AddStringToObject(node, "slug", nyx_creds_service_slug());
+    char management[80];
+    if(panel_management_slug(nyx_creds_service_slug(),management,sizeof(management)))
+        cJSON_AddStringToObject(node,"management_slug",management);
     cJSON_AddStringToObject(node, "last_error", nyx_node_last_error());
     cJSON *ota = cJSON_AddObjectToObject(root, "ota");
     cJSON_AddStringToObject(ota, "running", running ? running->label : "");
@@ -207,6 +235,15 @@ size_t local_api_format_status_json(char *resp, size_t cap)
         cJSON_AddStringToObject(lcd, "default_image", art.stored ? "stored" : "builtin");
         cJSON_AddNumberToObject(lcd, "default_image_bytes", art.jpeg_bytes);
     }
+    lcd_temporary_image_info_t temporary = {0};
+    if (lcd_renderer_temporary_image_info(&temporary) == ESP_OK) {
+        cJSON *visible = cJSON_AddObjectToObject(lcd, "temporary_image");
+        cJSON_AddBoolToObject(visible, "active", temporary.active);
+        cJSON_AddNumberToObject(visible, "jpeg_bytes", temporary.jpeg_bytes);
+        cJSON_AddNumberToObject(visible, "crc32", temporary.crc32);
+        cJSON_AddNumberToObject(visible, "width", temporary.width);
+        cJSON_AddNumberToObject(visible, "height", temporary.height);
+    }
     cJSON *mqtt = cJSON_AddObjectToObject(root, "mqtt");
     cJSON_AddStringToObject(mqtt, "state", "disabled");
     cJSON *media = cJSON_AddObjectToObject(root, "media");
@@ -224,6 +261,7 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddNumberToObject(heap, "dma_largest_free", heap_caps_get_largest_free_block(MALLOC_CAP_DMA));
     cJSON_AddNumberToObject(heap, "internal_free", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
     cJSON_AddNumberToObject(heap, "internal_largest_free", heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+    cJSON_AddItemToObject(root,"voice",voice_json());
     bool ok = cJSON_PrintPreallocated(root, resp, cap, false);
     cJSON_Delete(root);
     if (!ok) snprintf(resp, cap, "{\"error\":\"status_buffer_too_small\"}");
@@ -663,25 +701,102 @@ static int h_camera_status(const nyx_proxy_request_t *req, char *resp, size_t ca
 static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t cap,
     char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
-    (void)req; (void)user;
-    snprintf(ct, ct_cap, "application/json");
-    snprintf(resp, cap,
-        "{\"openapi\":\"3.0.3\",\"info\":{\"title\":\"Nyx Panel Camera\",\"version\":\"1.0.0\"},"
-        "\"paths\":{\"/camera/snapshot.jpg\":{\"get\":{\"operationId\":\"camera_take_photo\","
-        "\"summary\":\"Take a fresh camera photo\","
-        "\"description\":\"Captures a native 800x1280 JPEG on demand. RGB565 capture uses the system Camera profile. Releases CSI and buffers after capture unless the native Camera or QR preview is open. Leaves the LCD unchanged. Concurrent capture returns 503.\","
-        "\"responses\":{\"200\":{\"description\":\"Fresh JPEG\",\"content\":{\"image/jpeg\":{\"schema\":{\"type\":\"string\",\"format\":\"binary\"}}}},"
-        "\"503\":{\"description\":\"Camera busy or unavailable; no cached image returned\"}}}},"
-        "\"/camera\":{\"get\":{\"operationId\":\"camera_get_status\",\"summary\":\"Get camera availability and capture statistics\","
-        "\"responses\":{\"200\":{\"description\":\"Camera status\",\"content\":{\"application/json\":{\"schema\":{\"type\":\"object\"}}}}}}}}}");
-    json_response_len(resp, resp_len);
-    return 200;
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    cJSON *root=cJSON_CreateObject();cJSON_AddStringToObject(root,"openapi","3.0.3");
+    cJSON *info=cJSON_AddObjectToObject(root,"info");
+    cJSON_AddStringToObject(info,"title",!strcmp(req->service_slug,nyx_creds_service_slug())?"Nyx Panel Daily":"Nyx Panel Management");
+    cJSON_AddStringToObject(info,"version",esp_app_get_description()->version);
+    cJSON_AddStringToObject(info,"description","Daily actions and management settings are separately authorized NyxID services. Voice uses the board's own Key and selected Bot. Speech notifications never grant permission to tools.");
+    cJSON *paths=cJSON_AddObjectToObject(root,"paths");
+    size_t count=0;const nyx_route_t *routes=local_api_routes(&count);
+    for(size_t i=0;i<count;++i){
+        const nyx_route_t *r=&routes[i];
+        if(!strcmp(r->path,"/openapi.json") || !panel_service_can_call(nyx_creds_service_slug(),req->service_slug,r->method,r->path))continue;
+        cJSON *path=cJSON_GetObjectItemCaseSensitive(paths,r->path);
+        if(!path)path=cJSON_AddObjectToObject(paths,r->path);
+        char method[16],operation[128];snprintf(method,sizeof(method),"%s",r->method);
+        for(char *p=method;*p;++p)if(*p>='A' && *p<='Z')*p+=32;
+        snprintf(operation,sizeof(operation),"%s_%s",method,r->path+1);
+        for(char *p=operation;*p;++p)if(*p=='/' || *p=='.' || *p=='-')*p='_';
+        cJSON *op=cJSON_AddObjectToObject(path,method);
+        cJSON_AddStringToObject(op,"operationId",operation);
+        const char *description=r->path;
+        if(!strcmp(r->path,"/voice/open"))description="Open the selected Bot in automatic two-way conversation and show voice controls. Optional text is a spoken remote notification. microphone_muted defaults false. Does not change the saved input mode. Reuse the same request_id to retry safely; last 8 remote requests survive reboot. A different call while busy returns 409.";
+        else if(!strcmp(r->path,"/voice/say"))description="Queue a spoken notification in the active call. Not user input or tool authorization. Use a unique request_id; retries never repeat speech. accepted means provider acknowledgement, not proof of playback.";
+        else if(!strcmp(r->path,"/voice/microphone"))description="Mute or unmute microphone input for the current call. Does not mute Bot audio.";
+        else if(!strcmp(r->path,"/voice/stop"))description="End the current call and release microphone, speaker and WebRTC resources.";
+        else if(!strcmp(r->path,"/voice/start"))description="Start a call with the saved input mode. Use /voice/open for remote automatic two-way conversation.";
+        else if(!strcmp(r->path,"/voice") || !strcmp(r->path,"/status"))description="Read live device state including selected Bot, call state, microphone mute, media counters, remote request stage, resources and service scopes. No credentials are returned.";
+        else if(!strcmp(r->path,"/voice/config"))description="Manage saved voice selection. POST exactly one of agent_id (from /voice/agents), input_mode (automatic or push_to_talk), playback_gain (integer 1..8). Selection and mode require idle. Persists in this server profile.";
+        else if(!strcmp(r->path,"/config/audio"))description="Adjust saved audio output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). GET returns current audio and voice state. Does not change Bot selection.";
+        else if(!strcmp(r->path,"/voice/input-mode"))description="Set saved input_mode to automatic or push_to_talk while idle. Exactly one field. Does not change the selected Bot or grants.";
+        else if(!strcmp(r->path,"/lcd/brightness"))description="Read or set saved screen brightness (integer 0..100). POST exactly one brightness field; preserves other display settings.";
+        else if(!strcmp(r->path,"/lcd/default-image"))description="Manage the persistent JPEG fallback used when no temporary image is present. POST image/jpeg up to 65536 bytes. DELETE restores bundled NyxBot. GET returns metadata.";
+        else if(!strcmp(r->path,"/lcd/image"))description="Show a temporary fullscreen JPEG, image/jpeg up to 65536 bytes; query duration_ms=0 is sticky until cleared, positive TTL returns to fallback.";
+        else if(!strcmp(r->path,"/lcd/text"))description="Overlay text on the image. JSON text, size small|medium|large, color and bg #RRGGBB, align left|center|right, duration_ms. bg sets outline color.";
+        else if(!strcmp(r->path,"/lcd/clear"))description="Clear temporary images and captions, keep the persistent fallback.";
+        else if(!strcmp(r->path,"/camera/capture"))description="Take one camera photo, show the same photo fullscreen on Nyx Panel for two minutes, and return that JPEG for visual understanding. Keep voice controls and captions. Does not change the saved fallback image. No continuous stream.";
+        else if(!strcmp(r->path,"/camera/snapshot.jpg") || !strcmp(r->path,"/snapshot.jpg"))description="Take a fresh native 800x1280 JPEG without changing the display. Use POST /camera/capture for a user-facing photo that is also shown on the panel. Release camera resources afterwards. Concurrent capture returns 503. No continuous stream.";
+        else if(!strcmp(r->path,"/lcd/snapshot.jpg"))description="Read a JPEG screenshot of the current LCD.";
+        cJSON_AddStringToObject(op,"summary",description);
+        cJSON *responses=cJSON_AddObjectToObject(op,"responses");
+        cJSON *ok=cJSON_AddObjectToObject(responses,"200");cJSON_AddStringToObject(ok,"description","Success");
+        if(!strcmp(r->path,"/camera/capture") || !strcmp(r->path,"/camera/snapshot.jpg") ||
+            !strcmp(r->path,"/snapshot.jpg") || !strcmp(r->path,"/lcd/snapshot.jpg")){
+            cJSON *content=cJSON_AddObjectToObject(ok,"content");
+            cJSON *media=cJSON_AddObjectToObject(content,"image/jpeg");
+            cJSON_AddStringToObject(cJSON_AddObjectToObject(media,"schema"),"type","string");
+        }
+        cJSON *denied=cJSON_AddObjectToObject(responses,"403");cJSON_AddStringToObject(denied,"description","Service permission required");
+        if(!strcmp(r->method,"POST")){
+            cJSON *bad=cJSON_AddObjectToObject(responses,"400");cJSON_AddStringToObject(bad,"description","Invalid payload");
+            cJSON *busy=cJSON_AddObjectToObject(responses,"409");cJSON_AddStringToObject(busy,"description","Conflict or busy");
+            if(!strcmp(r->path,"/camera/capture"))continue;
+            cJSON *body=cJSON_AddObjectToObject(op,"requestBody");
+            cJSON *content=cJSON_AddObjectToObject(body,"content");
+            bool jpeg=!strcmp(r->path,"/lcd/image") || !strcmp(r->path,"/lcd/default-image");
+            cJSON *media=cJSON_AddObjectToObject(content,jpeg?"image/jpeg":"application/json");
+            cJSON *schema=cJSON_AddObjectToObject(media,"schema");cJSON_AddStringToObject(schema,"type",jpeg?"string":"object");
+            if(jpeg)cJSON_AddStringToObject(schema,"format","binary");
+            else if(!strcmp(r->path,"/voice/open") || !strcmp(r->path,"/voice/say")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON *properties=cJSON_AddObjectToObject(schema,"properties");
+                cJSON *id=cJSON_AddObjectToObject(properties,"request_id");cJSON_AddStringToObject(id,"type","string");cJSON_AddStringToObject(id,"format","uuid");
+                cJSON *text=cJSON_AddObjectToObject(properties,"text");cJSON_AddStringToObject(text,"type","string");cJSON_AddStringToObject(text,"description","Nonblank UTF-8, max 300 bytes; no control characters.");
+                cJSON *required=cJSON_AddArrayToObject(schema,"required");cJSON_AddItemToArray(required,cJSON_CreateString("request_id"));
+                if(!strcmp(r->path,"/voice/say"))cJSON_AddItemToArray(required,cJSON_CreateString("text"));
+                else{cJSON *mute=cJSON_AddObjectToObject(properties,"microphone_muted");cJSON_AddStringToObject(mute,"type","boolean");cJSON_AddBoolToObject(mute,"default",false);}
+                cJSON *queued=cJSON_AddObjectToObject(responses,"202");cJSON_AddStringToObject(queued,"description","Queued asynchronously; inspect /voice for actual state");
+            }else if(!strcmp(r->path,"/voice/microphone")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON *props=cJSON_AddObjectToObject(schema,"properties");
+                cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"muted"),"type","boolean");
+                cJSON_AddItemToArray(cJSON_AddArrayToObject(schema,"required"),cJSON_CreateString("muted"));
+            }else if(!strcmp(r->path,"/voice/input-mode") || !strcmp(r->path,"/lcd/brightness") || !strcmp(r->path,"/config/audio")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON *props=cJSON_AddObjectToObject(schema,"properties");
+                if(!strcmp(r->path,"/voice/input-mode")){
+                    cJSON *mode=cJSON_AddObjectToObject(props,"input_mode");cJSON_AddStringToObject(mode,"type","string");
+                    cJSON *values=cJSON_AddArrayToObject(mode,"enum");
+                    cJSON_AddItemToArray(values,cJSON_CreateString("automatic"));cJSON_AddItemToArray(values,cJSON_CreateString("push_to_talk"));
+                    cJSON_AddItemToArray(cJSON_AddArrayToObject(schema,"required"),cJSON_CreateString("input_mode"));
+                }else if(!strcmp(r->path,"/lcd/brightness")){
+                    cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"brightness"),"type","integer");
+                    cJSON_AddItemToArray(cJSON_AddArrayToObject(schema,"required"),cJSON_CreateString("brightness"));
+                }else{
+                    cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"volume"),"type","integer");
+                    cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"playback_gain"),"type","integer");
+                    cJSON_AddStringToObject(schema,"description","Exactly one field: volume 0..100 or playback_gain 1..8.");
+                }
+            }
+        }
+    }
+    return object_response(root,resp,cap,resp_len);
 }
 
 static int h_snapshot(const nyx_proxy_request_t *req, char *resp, size_t cap,
                       char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
-    (void)req;
     (void)user;
     snprintf(ct, ct_cap, "image/jpeg");
     size_t len = 0;
@@ -691,6 +806,15 @@ static int h_snapshot(const nyx_proxy_request_t *req, char *resp, size_t cap,
         snprintf(resp, cap, "{\"error\":\"camera_unavailable\",\"reason\":\"%s\"}", esp_err_to_name(err));
         json_response_len(resp, resp_len);
         return 503;
+    }
+    if (!strcmp(req->path, "/camera/capture")) {
+        err = lcd_renderer_push_image((const uint8_t *)resp, len, 120000);
+        if (err != ESP_OK) {
+            snprintf(ct, ct_cap, "application/json");
+            snprintf(resp, cap, "{\"error\":\"photo_captured_but_display_failed\",\"reason\":\"%s\"}", esp_err_to_name(err));
+            json_response_len(resp, resp_len);
+            return 503;
+        }
     }
     if (resp_len) {
         *resp_len = len;
@@ -1281,6 +1405,7 @@ static int h_nyx_login_status(const nyx_proxy_request_t *req, char *resp, size_t
     if (!json) return 503;
     cJSON_AddStringToObject(json, "state", names[state.state]);
     cJSON_AddBoolToObject(json, "busy", state.busy);
+    cJSON_AddStringToObject(json, "login_kind", state.node_setup ? "remote_control_setup" : "agent_key");
     cJSON_AddStringToObject(json, "message", state.message);
     cJSON_AddStringToObject(json, "user_code", state.user_code);
     cJSON_AddStringToObject(json, "verification_uri", state.verification_uri);
@@ -1358,7 +1483,126 @@ static int h_dev_inject_qr_jpeg(const nyx_proxy_request_t *req, char *resp, size
 }
 #endif
 
+// Strict small JSON objects for configuration/control: no trailing input, NULs or duplicate keys.
+static cJSON *control_object(const nyx_proxy_request_t *req)
+{
+    if(!req->body || !req->body_len || req->body_len>1024 || memchr(req->body,0,req->body_len))return NULL;
+    for(size_t i=0;i+6<=req->body_len;++i)if(!memcmp(req->body+i,"\\u0000",6))return NULL;
+    const char *end=NULL,*raw=(const char *)req->body;
+    cJSON *j=cJSON_ParseWithLengthOpts(raw,req->body_len,&end,false);
+    if(end)while((size_t)(end-raw)<req->body_len && strchr(" \t\r\n",*end))++end;
+    bool ok=cJSON_IsObject(j) && end && (size_t)(end-raw)==req->body_len;
+    const cJSON *x,*y;
+    cJSON_ArrayForEach(x,j)for(y=x->next;y;y=y->next)if(!strcmp(x->string,y->string))ok=false;
+    if(!ok){cJSON_Delete(j);return NULL;}return j;
+}
+static bool uint_field(const cJSON *v,unsigned low,unsigned high)
+{
+    return cJSON_IsNumber(v) && v->valuedouble>=low && v->valuedouble<=high && floor(v->valuedouble)==v->valuedouble;
+}
+static int h_brightness(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                        char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    cJSON *j=NULL,*value=NULL;
+    bool update=!strcmp(req->method,"POST");
+    if(update){
+        j=control_object(req);value=cJSON_GetObjectItemCaseSensitive(j,"brightness");
+        if(cJSON_GetArraySize(j)!=1 || !uint_field(value,0,100)){
+            cJSON_Delete(j);snprintf(resp,cap,"{\"error\":\"brightness_must_be_integer_0_to_100\"}");
+            json_response_len(resp,resp_len);return 400;
+        }
+    }
+    cfg_lcd_t cfg={0};
+    esp_err_t err=nvs_config_get_lcd(&cfg);
+    if(err==ESP_OK && update){
+        cfg.brightness=(uint8_t)value->valueint;
+        err=nvs_config_set_lcd(&cfg);
+        if(err==ESP_OK){(void)bsp_display_brightness_set(cfg.brightness);lcd_renderer_reload_config();}
+    }
+    cJSON_Delete(j);
+    if(err!=ESP_OK){
+        snprintf(resp,cap,"{\"error\":\"%s\"}",esp_err_to_name(err));json_response_len(resp,resp_len);return 500;
+    }
+    cJSON *result=cJSON_CreateObject();cJSON_AddNumberToObject(result,"brightness",cfg.brightness);
+    return object_response(result,resp,cap,resp_len);
+}
+static int h_voice(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                  char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    esp_err_t err=ESP_OK;bool duplicate=false,remote=false;
+    panel_voice_remote_t request={0};
+    if(!strcmp(req->path,"/voice/open") || !strcmp(req->path,"/voice/say")){
+        remote=true;bool open=!strcmp(req->path,"/voice/open");
+        if(!panel_voice_parse_remote(req->body,req->body_len,open,&request))err=ESP_ERR_INVALID_ARG;
+        else err=open?panel_voice_remote_open(&request,&duplicate):panel_voice_remote_say(&request,&duplicate);
+    }else if(!strcmp(req->path,"/voice/microphone")){
+        cJSON *j=control_object(req),*v=cJSON_GetObjectItemCaseSensitive(j,"muted");
+        if(cJSON_GetArraySize(j)!=1 || !cJSON_IsBool(v))err=ESP_ERR_INVALID_ARG;
+        else panel_voice_microphone_mute(cJSON_IsTrue(v));
+        cJSON_Delete(j);
+    }else if((!strcmp(req->path,"/voice/config") || !strcmp(req->path,"/config/audio") || !strcmp(req->path,"/voice/input-mode")) && !strcmp(req->method,"POST")){
+        cJSON *j=control_object(req),*v=j?j->child:NULL;
+        if(cJSON_GetArraySize(j)!=1 || !v)err=ESP_ERR_INVALID_ARG;
+        else if(!strcmp(req->path,"/voice/config") && !strcmp(v->string,"agent_id") && cJSON_IsString(v))err=panel_voice_configure(v->valuestring);
+        else if((!strcmp(req->path,"/voice/config") || !strcmp(req->path,"/voice/input-mode")) && !strcmp(v->string,"input_mode") && cJSON_IsString(v)){
+            if(!strcmp(v->valuestring,"automatic"))err=panel_voice_input_mode_set(PANEL_VOICE_INPUT_AUTOMATIC);
+            else if(!strcmp(v->valuestring,"push_to_talk"))err=panel_voice_input_mode_set(PANEL_VOICE_INPUT_HOLD);
+            else err=ESP_ERR_INVALID_ARG;
+        }else if(strcmp(req->path,"/voice/input-mode") && !strcmp(v->string,"playback_gain") && uint_field(v,1,8))err=panel_voice_gain_set((unsigned)v->valueint);
+        else if(!strcmp(req->path,"/config/audio") && !strcmp(v->string,"volume") && uint_field(v,0,100))err=panel_voice_volume_set((unsigned)v->valueint);
+        else err=ESP_ERR_INVALID_ARG;
+        cJSON_Delete(j);
+    }else if(!strcmp(req->path,"/voice/agents/refresh"))err=panel_voice_refresh_agents();
+    else if(!strcmp(req->path,"/voice/agents")){
+        panel_voice_bot_t *bots=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*bots));
+        if(!bots)return 503;
+        size_t count=panel_voice_bots(bots,PANEL_VOICE_MAX_BOTS);
+        cJSON *root=cJSON_CreateObject(),*rows=cJSON_AddArrayToObject(root,"agents");
+        for(size_t i=0;i<count;++i){
+            cJSON *item=cJSON_CreateObject();cJSON_AddStringToObject(item,"agent_id",bots[i].agent_id);
+            cJSON_AddStringToObject(item,"name",bots[i].name);cJSON_AddItemToArray(rows,item);
+        }
+        free(bots);return object_response(root,resp,cap,resp_len);
+    }else if(!strcmp(req->path,"/voice/start")){
+        err=panel_voice_start();if(err==ESP_OK)(void)lcd_renderer_show_voice();
+    }else if(!strcmp(req->path,"/voice/stop"))panel_voice_stop();
+    else if(!strcmp(req->path,"/voice/hold"))panel_voice_hold(query_u32(req->query,"pressed",0)!=0);
+    else if(!strcmp(req->path,"/voice/peer-test")){
+        err=panel_voice_peer_test(resp,cap);if(err==ESP_OK){json_response_len(resp,resp_len);return 200;}
+    }else if(!strcmp(req->path,"/voice/test")){
+        err=panel_voice_test(resp,cap);if(err==ESP_OK){json_response_len(resp,resp_len);return 200;}
+    }
+    if(err!=ESP_OK){
+        snprintf(resp,cap,"{\"ok\":false,\"error\":\"%s\"}",esp_err_to_name(err));json_response_len(resp,resp_len);
+        return err==ESP_ERR_INVALID_ARG?400:err==ESP_ERR_NO_MEM?503:409;
+    }
+    cJSON *j=voice_json();
+    if(remote){cJSON_AddStringToObject(j,"request_id",request.request_id);cJSON_AddBoolToObject(j,"duplicate",duplicate);}
+    int result=object_response(j,resp,cap,resp_len);
+    return result==200 && remote && !duplicate?202:result;
+}
+
 static const nyx_route_t s_routes[] = {
+    { .path = "/lcd/brightness", .method = "GET", .fn = h_brightness },
+    { .path = "/lcd/brightness", .method = "POST", .fn = h_brightness },
+    { .path = "/voice/input-mode", .method = "POST", .fn = h_voice },
+    { .path = "/voice", .method = "GET", .fn = h_voice },
+    { .path = "/voice/config", .method = "POST", .fn = h_voice },
+    { .path = "/voice/config", .method = "GET", .fn = h_voice },
+    { .path = "/config/audio", .method = "GET", .fn = h_voice },
+    { .path = "/config/audio", .method = "POST", .fn = h_voice },
+    { .path = "/voice/open", .method = "POST", .fn = h_voice },
+    { .path = "/voice/say", .method = "POST", .fn = h_voice },
+    { .path = "/voice/microphone", .method = "POST", .fn = h_voice },
+    { .path = "/voice/agents", .method = "GET", .fn = h_voice },
+    { .path = "/voice/agents/refresh", .method = "POST", .fn = h_voice },
+    { .path = "/voice/start", .method = "POST", .fn = h_voice },
+    { .path = "/voice/stop", .method = "POST", .fn = h_voice },
+    { .path = "/voice/hold", .method = "POST", .fn = h_voice },
+    { .path = "/voice/test", .method = "POST", .fn = h_voice },
+    { .path = "/voice/peer-test", .method = "POST", .fn = h_voice },
     { .path = "/status", .method = "GET", .fn = h_status, .user = NULL },
     { .path = "/nyx/login", .method = "GET", .fn = h_nyx_login_status, .user = NULL },
     { .path = "/nyx/login", .method = "POST", .fn = h_nyx_login_start, .user = NULL },
@@ -1374,6 +1618,7 @@ static const nyx_route_t s_routes[] = {
     { .path = "/lcd/snapshot.jpg", .method = "GET", .fn = h_lcd_snapshot, .user = NULL },
     { .path = "/snapshot.jpg", .method = "GET", .fn = h_snapshot, .user = NULL },
     { .path = "/camera/snapshot.jpg", .method = "GET", .fn = h_snapshot, .user = NULL },
+    { .path = "/camera/capture", .method = "POST", .fn = h_snapshot, .user = NULL },
     { .path = "/camera", .method = "GET", .fn = h_camera_status, .user = NULL },
     { .path = "/openapi.json", .method = "GET", .fn = h_camera_openapi, .user = NULL },
     { .path = "/stream/start", .method = "POST", .fn = h_stream_removed, .user = NULL },
@@ -1439,9 +1684,25 @@ int local_api_route_with_logging(const nyx_route_t *route,
                                  char *content_type, size_t ct_cap,
                                  size_t *resp_len)
 {
+    if (!req || !panel_service_can_call(nyx_creds_service_slug(),req->service_slug,req->method,req->path)) {
+        snprintf(content_type,ct_cap,"application/json");
+        snprintf(resp_body,resp_cap,"{\"error\":\"management_service_required_or_unknown_service\"}");
+        json_response_len(resp_body,resp_len);
+        return log_route_result(req,403,content_type,resp_len?*resp_len:0u);
+    }
     if (!route || !route->fn) {
         return log_route_result(req, 404, content_type, resp_len ? *resp_len : 0u);
     }
     int status = route->fn(req, resp_body, resp_cap, content_type, ct_cap, resp_len, route->user);
     return log_route_result(req, status, content_type, resp_len ? *resp_len : 0u);
+}
+
+int local_api_lan_route_with_logging(const nyx_route_t *route,const nyx_proxy_request_t *req,
+    char *body,size_t cap,char *ct,size_t ct_cap,size_t *len)
+{
+    // LAN has its own fixed, limited recovery routes. It cannot select a service scope.
+    bool allowed=false;
+    for(size_t i=0;i<sizeof(s_lan_routes)/sizeof(*s_lan_routes);++i)if(route==&s_lan_routes[i])allowed=true;
+    int code=allowed && route->fn?route->fn(req,body,cap,ct,ct_cap,len,route->user):404;
+    return log_route_result(req,code,ct,len?*len:0u);
 }

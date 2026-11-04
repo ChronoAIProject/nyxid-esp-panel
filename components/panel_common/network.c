@@ -17,6 +17,11 @@
 #include "esp_netif.h"
 #include "esp_event.h"
 #include "network.h"
+#if defined(CONFIG_ESP_HOSTED_SDIO_GPIO_RESET_SLAVE) && !defined(CONFIG_NETWORK_USE_ETHERNET)
+#include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#endif
 
 #ifdef CONFIG_NETWORK_USE_ETHERNET
 #include "esp_eth.h"
@@ -118,6 +123,21 @@ int network_init(const char *ssid, const char *password, network_connect_cb cb)
 {
     if (cb) connect_cb = cb;
     if (initialized) return ESP_OK;
+#if defined(CONFIG_ESP_HOSTED_SDIO_GPIO_RESET_SLAVE)
+    // A P4 software restart leaves the C6 powered. Reset it before Hosted
+    // allocates/probes SDIO, so stale slave traffic cannot poison card setup.
+    const gpio_num_t reset=CONFIG_ESP_HOSTED_SDIO_GPIO_RESET_SLAVE;
+#if CONFIG_ESP_HOSTED_SDIO_RESET_ACTIVE_HIGH
+    const int run_level=1;
+#else
+    const int run_level=0;
+#endif
+    ESP_ERROR_CHECK(gpio_set_level(reset,!run_level));
+    ESP_ERROR_CHECK(gpio_set_direction(reset,GPIO_MODE_OUTPUT));
+    vTaskDelay(pdMS_TO_TICKS(50));
+    ESP_ERROR_CHECK(gpio_set_level(reset,run_level));
+    vTaskDelay(pdMS_TO_TICKS(50));
+#endif
     ESP_ERROR_CHECK(esp_netif_init());
     esp_err_t loop_err = esp_event_loop_create_default();
     if (loop_err != ESP_OK && loop_err != ESP_ERR_INVALID_STATE) return loop_err;

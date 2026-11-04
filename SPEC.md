@@ -1,11 +1,12 @@
 # NyxID ESP Panel — migration specification
 
-Status: v0.2.2 native onboarding is installed and verified on the replacement
-board; v0.3.0 retires continuous streaming in favor of on-demand Camera service.
-v0.3.1 restores the system Camera profile and synchronizes full-frame display
-buffer reuse with actual DMA completion on IDF 5.5.
-Current evidence is tracked in docs/VERIFICATION.md.
-Known transport and verification limits are recorded below. Date: 2026-11-03.
+Status: v0.6.15 is installed on the home board and verified against local NyxID.
+It adds standalone Agent Key voice, remote two-way calls, per-service daily and
+management access, and same-frame camera return/display. Earlier releases add
+native onboarding, on-demand capture, synchronized scanout, serialized font
+decoding, boot into Nyx Panel, persistent artwork and the NyxID theme.
+Current evidence and backend rollout requirements are tracked in
+docs/VERIFICATION.md and docs/VOICE.md. Date: 2026-11-05.
 
 ## 1. Outcome
 
@@ -53,6 +54,8 @@ Never commit that backup or restore a raw NVS image from another device.
 | R13 | Diagnostics | Firmware/BSP identity, heap, active media mode, Wi-Fi/Ethernet IP, Nyx state, stream state, screen state and meaningful last errors; UART status and provisioning commands. |
 | R14 | Disabled MQTT compatibility | Keep configuration/status compatibility but leave the old MQTT bridge disabled, as it was in v0.3.1. Do not invent an active MQTT input surface. |
 | R15 | Reproducibility | Standalone repository, pinned dependency lock, hardware profile defaults, documented build/flash/backup/restore and CI that builds the actual firmware and runs host protocol/state tests. |
+| R16 | Standalone voice | Store the panel's own child Agent Key, discover only authorized Bot Voice connections and use the selected one with NyxID's saved provider/billing selection. Support automatic and hold modes, full-duplex playback/AEC, colored role captions and explicit call/mute/hangup controls. Captions never admit tools or define utterance boundaries. No call starts at boot. |
+| R17 | Service scopes | Keep device → Bot Voice and Bot → panel service grants independent. Daily access covers camera/display, calls, volume/gain, input mode and brightness; management additionally covers Bot selection, identity, networking and system operations. Reject unknown service identities before handlers; preserve LAN's fixed recovery routes. Remote open/say retries use bounded persisted request-ID deduplication. |
 
 ## 4. Architecture and ownership
 

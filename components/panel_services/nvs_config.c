@@ -1,7 +1,6 @@
 #include "nvs_config.h"
 
 #include "devices.h"
-#include "nyx_creds.h"
 #include "settings.h"
 
 #include "nvs.h"
@@ -331,86 +330,27 @@ esp_err_t nvs_config_set_legacy_wifi_primary(const cfg_wifi_t *i)
 
 esp_err_t nvs_config_factory_reset_preserve(void)
 {
-    ESP_LOGW(TAG, "factory reset preserve wifi and nyx namespaces");
-    cfg_wifi_t wifi = {0};
-    nvs_config_get_wifi(&wifi);
-    nyx_binding_t binding = {0};
-    bool have_binding = nyx_creds_read_binding(&binding);
-
-    char legacy_ssid[CFG_WIFI_SSID_MAX] = "";
-    char legacy_psw[CFG_WIFI_PSW_MAX] = "";
-    char nyx_api_key[128] = "";
-    char nyx_http_api_key[128] = "";
-    char nyx_node_id[96] = "";
-    char nyx_signing_secret[80] = "";
-    char nyx_slug[80] = "";
-
-    nvs_handle_t h = 0;
-    if (nvs_open("wifi-set", NVS_READONLY, &h) == ESP_OK) {
-        get_str_default(h, "ssid", legacy_ssid, sizeof(legacy_ssid));
-        get_str_default(h, "psw", legacy_psw, sizeof(legacy_psw));
+    // Erase configuration in place. Erasing the partition and restoring only the
+    // active identity loses inactive server profiles and risks credentials on a
+    // failed restore. Wi-Fi, every identity profile and pending setup stay intact.
+    static const char *const reset_namespaces[] = {
+        "stream", "lcd", "dev", "lan", "mqtt", "panel_art",
+    };
+    ESP_LOGW(TAG, "factory reset configuration; preserve wifi and all identities");
+    for (size_t i = 0; i < sizeof(reset_namespaces) / sizeof(reset_namespaces[0]); ++i) {
+        nvs_handle_t h = 0;
+        esp_err_t err = nvs_open(reset_namespaces[i], NVS_READONLY, &h);
+        if (err == ESP_ERR_NVS_NOT_FOUND) continue;
+        if (err != ESP_OK) return err;
         nvs_close(h);
-    }
-    if (nvs_open("nyx", NVS_READONLY, &h) == ESP_OK) {
-        get_str_default(h, "api_key", nyx_api_key, sizeof(nyx_api_key));
-        get_str_default(h, "http_api_key", nyx_http_api_key, sizeof(nyx_http_api_key));
-        get_str_default(h, "node_id", nyx_node_id, sizeof(nyx_node_id));
-        get_str_default(h, "signing_secret", nyx_signing_secret, sizeof(nyx_signing_secret));
-        get_str_default(h, "slug", nyx_slug, sizeof(nyx_slug));
+        err = nvs_open(reset_namespaces[i], NVS_READWRITE, &h);
+        if (err != ESP_OK) return err;
+        err = nvs_erase_all(h);
+        if (err == ESP_OK) err = nvs_commit(h);
         nvs_close(h);
+        if (err != ESP_OK) return err;
     }
-
-    nvs_flash_deinit();
-    esp_err_t err = nvs_flash_erase();
-    if (err == ESP_OK) {
-        err = nvs_flash_init();
-    }
-    if (err != ESP_OK) {
-        return err;
-    }
-
-    err = nvs_config_set_wifi(&wifi);
-    if (err == ESP_OK) {
-        if (legacy_ssid[0] != '\0') {
-            nvs_handle_t wh = 0;
-            err = nvs_open("wifi-set", NVS_READWRITE, &wh);
-            if (err == ESP_OK) {
-                err = nvs_set_str(wh, "ssid", legacy_ssid);
-                if (err == ESP_OK) err = nvs_set_str(wh, "psw", legacy_psw);
-                if (err == ESP_OK) err = nvs_commit(wh);
-                nvs_close(wh);
-            }
-        } else {
-            err = nvs_config_set_legacy_wifi_primary(&wifi);
-        }
-    }
-    if (err == ESP_OK && (nyx_api_key[0] != '\0' ||
-                          nyx_http_api_key[0] != '\0' ||
-                          nyx_node_id[0] != '\0' ||
-                          nyx_signing_secret[0] != '\0' ||
-                          nyx_slug[0] != '\0')) {
-        nvs_handle_t nh = 0;
-        err = nvs_open("nyx", NVS_READWRITE, &nh);
-        if (err == ESP_OK) {
-            if (nyx_api_key[0] != '\0') err = nvs_set_str(nh, "api_key", nyx_api_key);
-            if (err == ESP_OK && nyx_http_api_key[0] != '\0') {
-                err = nvs_set_str(nh, "http_api_key", nyx_http_api_key);
-            }
-            if (err == ESP_OK && nyx_node_id[0] != '\0') {
-                err = nvs_set_str(nh, "node_id", nyx_node_id);
-            }
-            if (err == ESP_OK && nyx_signing_secret[0] != '\0') {
-                err = nvs_set_str(nh, "signing_secret", nyx_signing_secret);
-            }
-            if (err == ESP_OK && nyx_slug[0] != '\0') {
-                err = nvs_set_str(nh, "slug", nyx_slug);
-            }
-            if (err == ESP_OK) err = nvs_commit(nh);
-            nvs_close(nh);
-        }
-    }
-    if (err == ESP_OK && have_binding && nyx_creds_store_binding(&binding) != 0) err = ESP_FAIL;
-    return err;
+    return ESP_OK;
 }
 
 esp_err_t nvs_config_factory_reset_all(void)

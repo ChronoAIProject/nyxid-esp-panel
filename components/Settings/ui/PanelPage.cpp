@@ -12,6 +12,8 @@ extern "C" {
 #include "nyx_creds.h"
 #include "nyx_node.h"
 #include "panel_ota.h"
+#include "panel_voice.h"
+#include "lcd_text.h"
 }
 #include <cstring>
 
@@ -44,6 +46,8 @@ void PanelPage::run(bool show_nyx)
 {
     close();
     nyx = show_nyx;
+    bots_revision = ~0u;
+    login_ready = false;
     root = lv_obj_create(lv_screen_active());
     lv_obj_add_event_cb(root, [](lv_event_t *event) {
         auto self = static_cast<PanelPage *>(lv_event_get_user_data(event));
@@ -79,7 +83,7 @@ void PanelPage::run(bool show_nyx)
         lv_obj_set_style_bg_opa(qr, LV_OPA_COVER, 0);
         lv_obj_set_style_align(qr, LV_ALIGN_CENTER, 0);
         remaining = label(root, "");
-        action = button(root, "Sign in to NyxID");
+        action = button(root, "Sign in / choose panel Key");
         action_text = lv_obj_get_child(action, 0);
         lv_obj_add_event_cb(action, [](lv_event_t *event) {
             auto self = static_cast<PanelPage *>(lv_event_get_user_data(event));
@@ -91,6 +95,25 @@ void PanelPage::run(bool show_nyx)
         }, LV_EVENT_CLICKED, this);
         restart = button(root, "Restart to activate connection");
         lv_obj_add_event_cb(restart, [](lv_event_t *) { esp_restart(); }, LV_EVENT_CLICKED, nullptr);
+        label(root, "Voice Bot");
+        voice_status = label(root, "");
+        lv_obj_set_style_text_font(voice_status, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+        bot_refresh = button(root, "Refresh available Bots");
+        lv_obj_add_event_cb(bot_refresh, [](lv_event_t *) { (void)panel_voice_refresh_agents(); }, LV_EVENT_CLICKED, nullptr);
+        bot_select = lv_dropdown_create(root);
+        lv_obj_set_style_text_font(bot_select, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+        lv_obj_set_style_text_font(lv_dropdown_get_list(bot_select), lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+        lv_obj_set_width(bot_select, lv_pct(100));
+        lv_dropdown_set_options(bot_select, "Refresh Bots first");
+        lv_obj_add_state(bot_select, LV_STATE_DISABLED);
+        lv_obj_add_event_cb(bot_select, [](lv_event_t *event) {
+            auto self = static_cast<PanelPage *>(lv_event_get_user_data(event));
+            size_t index = lv_dropdown_get_selected(self->bot_select);
+            if (index > 0 && index <= self->bot_count)
+                (void)panel_voice_configure(self->bots[index - 1].agent_id);
+        }, LV_EVENT_VALUE_CHANGED, this);
+        node_setup = button(root, "Set up remote control connection");
+        lv_obj_add_event_cb(node_setup, [](lv_event_t *) { (void)device_code_start_node_setup(); }, LV_EVENT_CLICKED, nullptr);
         auto scan = button(root, "Scan Wi-Fi QR code");
         lv_obj_add_event_cb(scan, [](lv_event_t *) { lcd_renderer_navigate("scan"); }, LV_EVENT_CLICKED, nullptr);
     }
@@ -118,8 +141,8 @@ void PanelPage::refresh()
     device_login_snapshot_t state{};
     device_code_snapshot(&state);
     if (state.state == DEVICE_LOGIN_IDLE) {
-        lv_label_set_text_fmt(summary, "Remote access: %s\n%s\n\nSign in on your phone to connect this panel. Your current connection stays available until setup is complete.",
-            connection, nyx_creds_service_slug());
+        lv_label_set_text_fmt(summary, "Remote access: %s\n%s\n\nPanel Key: %s\nSign in to select a Key for this panel, then choose your voice Bot below.",
+            connection, nyx_creds_service_slug(), nyx_creds_have_agent() ? "Saved" : "Not signed in");
     } else lv_label_set_text(summary, state.message);
     bool waiting = state.state == DEVICE_LOGIN_WAITING;
     for (auto obj : {code, qr, remaining}) {
@@ -135,14 +158,39 @@ void PanelPage::refresh()
                 strcpy(qr_value, state.verification_uri_complete);
         }
     }
-    lv_label_set_text(action_text, state.busy ? "Cancel sign-in" : "Sign in to NyxID");
-    if (state.state == DEVICE_LOGIN_READY) {
+    lv_label_set_text(action_text, state.busy ? "Cancel sign-in" : "Sign in / choose panel Key");
+    if (state.state == DEVICE_LOGIN_READY && state.node_setup) {
         lv_obj_remove_flag(restart, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(action, LV_OBJ_FLAG_HIDDEN);
     } else {
         lv_obj_add_flag(restart, LV_OBJ_FLAG_HIDDEN);
         lv_obj_remove_flag(action, LV_OBJ_FLAG_HIDDEN);
     }
+    if (state.busy) lv_obj_add_state(node_setup, LV_STATE_DISABLED);
+    else lv_obj_remove_state(node_setup, LV_STATE_DISABLED);
+    if (state.state == DEVICE_LOGIN_READY && !state.node_setup && !login_ready) {
+        login_ready = true;
+        (void)panel_voice_refresh_agents();
+    } else if (state.state != DEVICE_LOGIN_READY) login_ready = false;
+    panel_voice_snapshot_t voice{};
+    panel_voice_snapshot(&voice);
+    lv_label_set_text_fmt(voice_status, "%s\n%s", voice.agent_name[0] ? voice.agent_name : "No Bot selected", voice.message);
+    if (voice.busy || !nyx_creds_have_agent()) lv_obj_add_state(bot_refresh, LV_STATE_DISABLED);
+    else lv_obj_remove_state(bot_refresh, LV_STATE_DISABLED);
+    if (voice.bots_revision != bots_revision) {
+        bots_revision = voice.bots_revision;
+        bot_count = panel_voice_bots(bots, PANEL_VOICE_MAX_BOTS);
+        lv_dropdown_clear_options(bot_select);
+        lv_dropdown_add_option(bot_select, "Choose a Bot", LV_DROPDOWN_POS_LAST);
+        size_t selected = 0;
+        for (size_t i = 0; i < bot_count; ++i) {
+            lv_dropdown_add_option(bot_select, bots[i].name, LV_DROPDOWN_POS_LAST);
+            if (!strcmp(bots[i].agent_id, voice.agent_id)) selected = i + 1;
+        }
+        lv_dropdown_set_selected(bot_select, selected);
+    }
+    if (!bot_count || voice.busy) lv_obj_add_state(bot_select, LV_STATE_DISABLED);
+    else lv_obj_remove_state(bot_select, LV_STATE_DISABLED);
 }
 
 void PanelPage::close()

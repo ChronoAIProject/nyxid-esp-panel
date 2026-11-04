@@ -7,6 +7,8 @@
 #include "net_manager.h"
 #include "nyx_creds.h"
 #include "nyx_proto.h"
+#include "panel_voice.h"
+#include "panel_access.h"
 #include "settings.h"
 #include "cJSON.h"
 #include "esp_app_desc.h"
@@ -24,7 +26,7 @@
 #include <string.h>
 #include <stdatomic.h>
 
-#define RESPONSE_CAP 16384
+#define RESPONSE_CAP 65536
 static portMUX_TYPE state_lock = portMUX_INITIALIZER_UNLOCKED;
 static device_login_snapshot_t state;
 static int64_t deadline_us;
@@ -92,7 +94,8 @@ static int request(esp_http_client_method_t method, const char *path,
 {
     erase(response, RESPONSE_CAP);
     char url[384];
-    if (snprintf(url, sizeof(url), "%s/api/v1%s", HA_CAM_NYX_BASE_URL, path) >= sizeof(url)) return 0;
+    const char *base = !strncmp(path, "/auth/agent-key/", 16) ? NYX_AGENT_BASE_URL : HA_CAM_NYX_BASE_URL;
+    if (snprintf(url, sizeof(url), "%s/api/v1%s", base, path) >= sizeof(url)) return 0;
     response_t data = {.data = response};
     esp_http_client_config_t config = {
         .url = url, .method = method, .timeout_ms = 12000,
@@ -156,7 +159,7 @@ static bool valid_credentials(const nyx_binding_t *binding)
 static bool save_stage(const nyx_binding_t *binding)
 {
     nvs_handle_t h;
-    if (nvs_open("nyx_setup", NVS_READWRITE, &h) != ESP_OK) return false;
+    if (nvs_open(NYX_NODE_SETUP_NVS_NAMESPACE, NVS_READWRITE, &h) != ESP_OK) return false;
     esp_err_t err = nvs_set_blob(h, "pending_v1", binding, sizeof(*binding));
     if (err == ESP_OK) err = nvs_commit(h);
     nvs_close(h);
@@ -167,7 +170,7 @@ static void load_stage(nyx_binding_t *binding)
 {
     memset(binding, 0, sizeof(*binding));
     nvs_handle_t h;
-    if (nvs_open("nyx_setup", NVS_READONLY, &h) != ESP_OK) return;
+    if (nvs_open(NYX_NODE_SETUP_NVS_NAMESPACE, NVS_READONLY, &h) != ESP_OK) return;
     size_t size = sizeof(*binding);
     esp_err_t err = nvs_get_blob(h, "pending_v1", binding, &size);
     nvs_close(h);
@@ -307,46 +310,72 @@ static bool setup_node(const char *access, char *response, nyx_binding_t *bindin
     return ok;
 }
 
-static bool service_matches(const char *response, nyx_binding_t *binding)
+static bool service_matches(const char *response, const nyx_binding_t *binding, const char *expected_slug)
 {
     cJSON *json = cJSON_Parse(response);
     char node[96], slug[80], method[16], status[24], endpoint[128];
     bool ok = json_copy(json, "node_id", node, sizeof(node)) && !strcmp(node, binding->node_id) &&
-        json_copy(json, "slug", slug, sizeof(slug)) &&
+        json_copy(json, "slug", slug, sizeof(slug)) && !strcmp(slug,expected_slug) &&
         json_copy(json, "auth_method", method, sizeof(method)) && !strcmp(method, "none") &&
         json_copy(json, "status", status, sizeof(status)) && !strcmp(status, "active") &&
         json_copy(json, "endpoint_url", endpoint, sizeof(endpoint)) && !strcmp(endpoint, "http://127.0.0.1:80");
-    if (ok) strcpy(binding->slug, slug);
     cJSON_Delete(json);
     return ok;
 }
 
-static bool setup_service(const char *access, char *response, nyx_binding_t *binding)
+static bool setup_one_service(const char *access, char *response, const nyx_binding_t *binding,
+                              const char *slug, const char *label, bool daily)
 {
-    if (!binding->slug[0]) snprintf(binding->slug, sizeof(binding->slug), "%s-%.8s", devices_self()->label, binding->node_id);
-    char path[192];
-    snprintf(path, sizeof(path), "/keys/%s", binding->slug);
+    char path[192], spec_url[384];
+    if (daily && snprintf(spec_url, sizeof(spec_url),
+        "%s/api/v1/catalog-specs/nyx-panel/openapi.json", HA_CAM_NYX_BASE_URL) >= sizeof(spec_url)) return false;
+    snprintf(path, sizeof(path), "/keys/%s", slug);
     int status = request(HTTP_METHOD_GET, path, access, NULL, response);
-    if (status == 200) return service_matches(response, binding);
+    if (status == 200) {
+        if (!service_matches(response, binding, slug)) return false;
+        if (!daily) return true;
+        cJSON *stored = cJSON_Parse(response);
+        const cJSON *spec = cJSON_GetObjectItemCaseSensitive(stored, "openapi_spec_url");
+        bool has_spec = cJSON_IsString(spec) && spec->valuestring[0];
+        cJSON_Delete(stored);
+        // Preserve an owner-supplied schema. Resume older registrations that
+        // predate typed tool discovery through the normal connection API.
+        if (has_spec) return true;
+        cJSON *update = cJSON_CreateObject();
+        if (!update) return false;
+        cJSON_AddStringToObject(update, "openapi_spec_url", spec_url);
+        status = request(HTTP_METHOD_PUT, path, access, update, response);
+        cJSON_Delete(update);
+        return status == 200;
+    }
     if (status != 404 || atomic_load(&cancelled)) return false;
     cJSON *body = cJSON_CreateObject();
     if (!body) return false;
-    cJSON_AddStringToObject(body, "label", "Nyx Panel");
-    cJSON_AddStringToObject(body, "slug", binding->slug);
+    cJSON_AddStringToObject(body, "label", label);
+    cJSON_AddStringToObject(body, "slug", slug);
     cJSON_AddStringToObject(body, "endpoint_url", "http://127.0.0.1:80");
     cJSON_AddStringToObject(body, "auth_method", "none");
     cJSON_AddStringToObject(body, "auth_key_name", "");
     cJSON_AddStringToObject(body, "node_id", binding->node_id);
+    if (daily) cJSON_AddStringToObject(body, "openapi_spec_url", spec_url);
     status = request(HTTP_METHOD_POST, "/keys", access, body, response);
     cJSON_Delete(body);
     if (status != 200 && status != 201 && status != 409) return false;
     // Verify the stored routing and ownership, including after a slug conflict.
-    return request(HTTP_METHOD_GET, path, access, NULL, response) == 200 && service_matches(response, binding);
+    return request(HTTP_METHOD_GET, path, access, NULL, response) == 200 && service_matches(response, binding, slug);
+}
+static bool setup_service(const char *access, char *response, nyx_binding_t *binding)
+{
+    if(!binding->slug[0])snprintf(binding->slug,sizeof(binding->slug),"%s-%.8s",devices_self()->label,binding->node_id);
+    char management[80];
+    if(!panel_management_slug(binding->slug,management,sizeof(management)))return false;
+    return setup_one_service(access,response,binding,binding->slug,"Nyx Panel",true) &&
+        !atomic_load(&cancelled) && setup_one_service(access,response,binding,management,"Nyx Panel Management",false);
 }
 
 static void login_task(void *arg)
 {
-    (void)arg;
+    bool node_setup = (uintptr_t)arg != 0;
     char *response = calloc(1, RESPONSE_CAP);
     char *access = NULL;
     device_login_request_t login = {0};
@@ -360,9 +389,10 @@ static void login_task(void *arg)
     cJSON_AddStringToObject(body, "client_app", "nyxid-esp-panel");
     cJSON_AddStringToObject(body, "client_platform", "esp32p4");
     cJSON_AddStringToObject(body, "client_model", "Waveshare ESP32-P4 10.1");
-    int status = request(HTTP_METHOD_POST, "/auth/device/request", NULL, body, response);
+    int status = request(HTTP_METHOD_POST, node_setup ? "/auth/device/request" : "/auth/agent-key/request", NULL, body, response);
     cJSON_Delete(body);
-    if (status != 200 || !device_login_parse_request(response, &login)) goto done;
+    if (status != 200 || !(node_setup ? device_login_parse_request_at(response, NYX_NODE_VERIFICATION_URI, &login) :
+        device_agent_parse_request_at(response, NYX_AGENT_VERIFICATION_URI, &login))) goto done;
     if (atomic_load(&cancelled)) goto done;
     int64_t expires_at = esp_timer_get_time() + (int64_t)login.expires_in * 1000000;
     portENTER_CRITICAL(&state_lock);
@@ -370,7 +400,7 @@ static void login_task(void *arg)
     strcpy(state.user_code, login.user_code);
     strcpy(state.verification_uri, login.verification_uri);
     strcpy(state.verification_uri_complete, login.verification_uri_complete);
-    strcpy(state.message, "Scan with your phone, then approve this panel in NyxID.");
+    snprintf(state.message,sizeof(state.message),"%s",node_setup ? "Approve remote control setup in NyxID." : "Open NyxID and select an existing Key or create a Key for this panel.");
     deadline_us = expires_at;
     portEXIT_CRITICAL(&state_lock);
     uint32_t interval = login.interval;
@@ -380,11 +410,27 @@ static void login_task(void *arg)
         body = cJSON_CreateObject();
         if (!body) break;
         cJSON_AddStringToObject(body, "device_code", login.device_code);
-        status = request(HTTP_METHOD_POST, "/auth/device/poll", NULL, body, response);
+        status = request(HTTP_METHOD_POST, node_setup ? "/auth/device/poll" : "/auth/agent-key/poll", NULL, body, response);
         cJSON_Delete(body);
-        device_login_poll_t poll = device_login_parse_poll(status, response);
+        device_login_poll_t poll = node_setup ? device_login_parse_poll(status, response) : device_agent_parse_poll(status, response);
         if (poll == LOGIN_POLL_APPROVED) {
             cJSON *json = cJSON_Parse(response);
+            if (!node_setup) {
+                nyx_agent_credential_t agent={0};
+                const cJSON *key=cJSON_GetObjectItemCaseSensitive(json,"api_key");
+                bool ok=json_copy(json,"credential",agent.credential,sizeof(agent.credential)) &&
+                    json_copy(json,"credential_id",agent.credential_id,sizeof(agent.credential_id)) &&
+                    json_copy(key,"id",agent.key_id,sizeof(agent.key_id)) &&
+                    json_copy(key,"owner_id",agent.owner_id,sizeof(agent.owner_id));
+                (void)json_copy(json,"label",agent.label,sizeof(agent.label));
+                const cJSON *secret=cJSON_GetObjectItemCaseSensitive(json,"credential");
+                if(cJSON_IsString(secret))erase(secret->valuestring,strlen(secret->valuestring));
+                cJSON_Delete(json);
+                if (ok && !atomic_load(&cancelled)) ready=nyx_creds_store_agent(&agent)==0;
+                erase(&agent,sizeof(agent));
+                failure="Could not save the selected Key. Please sign in again.";
+                goto done;
+            }
             const cJSON *value = cJSON_GetObjectItemCaseSensitive(json, "access_token");
             if (cJSON_IsString(value) && strlen(value->valuestring) <= 8192) access = strdup(value->valuestring);
             if (cJSON_IsString(value)) erase(value->valuestring, strlen(value->valuestring));
@@ -412,7 +458,7 @@ static void login_task(void *arg)
     if (!setup_service(access, response, &binding) || atomic_load(&cancelled)) goto done;
     if (nyx_creds_store_binding(&binding) != 0) { failure = "Could not save the connection. Please try again."; goto done; }
     nvs_handle_t h;
-    if (nvs_open("nyx_setup", NVS_READWRITE, &h) == ESP_OK) {
+    if (nvs_open(NYX_NODE_SETUP_NVS_NAMESPACE, NVS_READWRITE, &h) == ESP_OK) {
         nvs_erase_key(h, "pending_v1"); nvs_commit(h); nvs_close(h);
     }
     ready = true;
@@ -428,7 +474,7 @@ done:
     if (response) { erase(response, RESPONSE_CAP); free(response); }
     erase(&login, sizeof(login)); erase(&binding, sizeof(binding));
     set_state(ready ? DEVICE_LOGIN_READY : atomic_load(&cancelled) ? DEVICE_LOGIN_CANCELLED : DEVICE_LOGIN_FAILED,
-        ready ? "Connection saved. Restart the panel to activate it." :
+        ready ? (node_setup ? "Connection saved. Restart the panel to activate it." : "Key saved. Refresh the Bot list and select a Bot for voice.") :
         atomic_load(&cancelled) ? "Sign-in cancelled." : failure);
     portENTER_CRITICAL(&state_lock);
     state.busy = false;
@@ -436,12 +482,13 @@ done:
     vTaskDelete(NULL);
 }
 
-esp_err_t device_code_start_if_needed(void)
+static esp_err_t start_login(bool node_setup)
 {
     bool online = net_manager_connected();
     portENTER_CRITICAL(&state_lock);
     if (state.busy) { portEXIT_CRITICAL(&state_lock); return ESP_ERR_INVALID_STATE; }
     memset(&state, 0, sizeof(state));
+    state.node_setup = node_setup;
     deadline_us = 0;
     if (!online) {
         state.state = DEVICE_LOGIN_FAILED;
@@ -454,10 +501,13 @@ esp_err_t device_code_start_if_needed(void)
     strcpy(state.message, "Getting a sign-in code...");
     atomic_store(&cancelled, false);
     portEXIT_CRITICAL(&state_lock);
-    if (xTaskCreate(login_task, "nyx_setup", 12288, NULL, 4, NULL) != pdPASS) {
+    if (xTaskCreate(login_task, "nyx_setup", 12288, (void *)(uintptr_t)node_setup, 4, NULL) != pdPASS) {
         set_state(DEVICE_LOGIN_FAILED, "Not enough memory to start sign-in.");
         portENTER_CRITICAL(&state_lock); state.busy = false; portEXIT_CRITICAL(&state_lock);
         return ESP_ERR_NO_MEM;
     }
     return ESP_OK;
 }
+
+esp_err_t device_code_start_if_needed(void) { return start_login(false); }
+esp_err_t device_code_start_node_setup(void) { return start_login(true); }

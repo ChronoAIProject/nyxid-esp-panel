@@ -1,4 +1,5 @@
 #include "nyx_creds.h"
+#include "settings.h"
 
 #include "devices.h"
 #include "esp_log.h"
@@ -20,7 +21,7 @@ bool nyx_creds_read_binding(nyx_binding_t *binding)
     if (!binding) return false;
     nvs_handle_t h;
     size_t len = sizeof(*binding);
-    if (nvs_open("nyx", NVS_READONLY, &h) != ESP_OK) return false;
+    if (nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READONLY, &h) != ESP_OK) return false;
     esp_err_t err = nvs_get_blob(h, "binding_v1", binding, &len);
     nvs_close(h);
     return err == ESP_OK && len == sizeof(*binding) &&
@@ -46,7 +47,7 @@ int nyx_creds_store_binding(const nyx_binding_t *binding)
         !memchr(binding->signing_secret, 0, sizeof(binding->signing_secret)) ||
         !memchr(binding->slug, 0, sizeof(binding->slug))) return -1;
     nvs_handle_t h;
-    if (nvs_open("nyx", NVS_READWRITE, &h) != ESP_OK) return -1;
+    if (nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READWRITE, &h) != ESP_OK) return -1;
     esp_err_t err = nvs_set_blob(h, "binding_v1", binding, sizeof(*binding));
     if (err == ESP_OK) err = nvs_commit(h);
     nvs_close(h);
@@ -118,7 +119,7 @@ bool nyx_creds_have_nvs_credentials(void)
     nyx_binding_t binding = {0};
     if (nyx_creds_read_binding(&binding)) return binding.auth_token[0] && binding.node_id[0];
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READONLY, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READONLY, &h);
     if (err != ESP_OK) {
         return false;
     }
@@ -146,7 +147,7 @@ bool nyx_creds_load(void)
         apply_binding(&binding);
         return creds_usable();
     }
-    const device_config_t *self = devices_self();
+    const device_config_t *self = NYX_NODE_ALLOW_BAKED_CREDENTIALS ? devices_self() : NULL;
     const char *fallback_api      = self ? baked(self->nyx_api_key)        : "";
     const char *fallback_http     = self ? baked(self->nyx_api_key_http)   : "";
     const char *fallback_node     = self ? baked(self->nyx_node_id)        : "";
@@ -154,7 +155,7 @@ bool nyx_creds_load(void)
     const char *fallback_slug     = self ? baked(self->slug)               : "";
 
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READONLY, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READONLY, &h);
     if (err == ESP_ERR_NVS_NOT_FOUND) {
         ESP_LOGW(TAG, "Nyx credentials unset; runtime provisioning is available");
         copy_string(s_api_key,        sizeof(s_api_key),        fallback_api);
@@ -214,7 +215,7 @@ int nyx_creds_save_api_key(const char *api_key)
     ESP_LOGI(TAG, "write namespace=nyx key=api_key value=<redacted> len=%u", (unsigned)strlen(api_key));
 
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READWRITE, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READWRITE, &h);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "nvs_open(nyx) failed while saving api key: %s", esp_err_to_name(err));
         return -1;
@@ -249,7 +250,7 @@ int nyx_creds_save_node_id(const char *node_id)
     ESP_LOGI(TAG, "write namespace=nyx key=node_id value=%s", node_id);
 
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READWRITE, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READWRITE, &h);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "nvs_open(nyx) failed while saving node id: %s", esp_err_to_name(err));
         return -1;
@@ -281,7 +282,7 @@ int nyx_creds_save_signing_secret(const char *secret)
              (unsigned)strlen(secret));
 
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READWRITE, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READWRITE, &h);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "nvs_open(nyx) failed while saving signing secret: %s", esp_err_to_name(err));
         return -1;
@@ -312,7 +313,7 @@ int nyx_creds_save_slug(const char *slug)
     ESP_LOGI(TAG, "write namespace=nyx key=slug value=%s", slug);
 
     nvs_handle_t h = 0;
-    esp_err_t err = nvs_open("nyx", NVS_READWRITE, &h);
+    esp_err_t err = nvs_open(NYX_NODE_NVS_NAMESPACE, NVS_READWRITE, &h);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "nvs_open(nyx) failed while saving slug: %s", esp_err_to_name(err));
         return -1;
@@ -331,4 +332,45 @@ int nyx_creds_save_slug(const char *slug)
 
     copy_string(s_slug, sizeof(s_slug), slug);
     return 0;
+}
+
+static bool agent_valid(const nyx_agent_credential_t *value)
+{
+    if (!value || !memchr(value->credential,0,sizeof(value->credential)) ||
+        !memchr(value->credential_id,0,sizeof(value->credential_id)) ||
+        !memchr(value->key_id,0,sizeof(value->key_id)) ||
+        !memchr(value->owner_id,0,sizeof(value->owner_id)) ||
+        !memchr(value->label,0,sizeof(value->label))) return false;
+    // Login always delivers a child Agent Key, even when the selected parent
+    // is a primary key. Never accept a JWT or a node token here.
+    if (strlen(value->credential)!=73 || strncmp(value->credential,"nyxid_ag_",9) ||
+        strlen(value->credential_id)!=36 || strlen(value->key_id)!=36 || strlen(value->owner_id)!=36) return false;
+    for (const char *p=value->credential+9;*p;p++) if (!strchr("0123456789abcdef",*p)) return false;
+    return true;
+}
+bool nyx_creds_read_agent(nyx_agent_credential_t *out)
+{
+    if (!out) return false;
+    memset(out,0,sizeof(*out));
+    nvs_handle_t h;
+    if (nvs_open(NYX_AGENT_NVS_NAMESPACE,NVS_READONLY,&h)!=ESP_OK) return false;
+    size_t len=sizeof(*out);esp_err_t err=nvs_get_blob(h,"credential_v1",out,&len);nvs_close(h);
+    if (err!=ESP_OK || len!=sizeof(*out) || !agent_valid(out)) {memset(out,0,sizeof(*out));return false;}
+    return true;
+}
+bool nyx_creds_have_agent(void)
+{
+    nyx_agent_credential_t value;
+    bool valid = nyx_creds_read_agent(&value);
+    memset(&value, 0, sizeof(value));
+    return valid;
+}
+int nyx_creds_store_agent(const nyx_agent_credential_t *value)
+{
+    if (!agent_valid(value)) return -1;
+    nvs_handle_t h;
+    if (nvs_open(NYX_AGENT_NVS_NAMESPACE,NVS_READWRITE,&h)!=ESP_OK) return -1;
+    esp_err_t err=nvs_set_blob(h,"credential_v1",value,sizeof(*value));
+    if (err==ESP_OK) err=nvs_commit(h);
+    nvs_close(h);return err==ESP_OK?0:-1;
 }

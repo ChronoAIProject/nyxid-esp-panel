@@ -21,6 +21,7 @@
 
 #include "bsp/esp-bsp.h"
 #include "product_support.h"
+#include "freertos/semphr.h"
 
 static const char *TAG = "product_support";
 
@@ -29,6 +30,17 @@ static esp_codec_dev_handle_t record_dev_handle;
 
 static bool _is_audio_init = false;
 static bool _is_player_init = false;
+static SemaphoreHandle_t audio_owner;
+
+esp_err_t product_audio_claim(void)
+{
+    return audio_owner && xSemaphoreTake(audio_owner, 0) == pdTRUE ? ESP_OK : ESP_ERR_INVALID_STATE;
+}
+
+void product_audio_release(void)
+{
+    if (audio_owner) xSemaphoreGive(audio_owner);
+}
 static int _vloume_intensity = PRODUCT_CODEC_DEFAULT_VOLUME;
 
 static audio_player_cb_t audio_idle_callback = NULL;
@@ -169,6 +181,10 @@ esp_err_t product_codec_mute_set(bool enable)
 {
     esp_err_t ret = ESP_OK;
     ret = esp_codec_dev_set_out_mute(play_dev_handle, enable);
+    // ES8311 mute/reopen resets its output attenuation. Match MusicPlayer's
+    // unmute path so the Settings volume also applies to direct voice playback.
+    if (ret == ESP_OK && !enable)
+        ret = esp_codec_dev_set_out_vol(play_dev_handle, _vloume_intensity);
     return ret;
 }
 
@@ -197,6 +213,9 @@ esp_err_t product_codec_init(void)
         return ESP_OK;
     }
 
+    audio_owner = xSemaphoreCreateBinary();
+    if (!audio_owner) return ESP_ERR_NO_MEM;
+    xSemaphoreGive(audio_owner);
     play_dev_handle = bsp_audio_codec_speaker_init();
     assert((play_dev_handle) && "play_dev_handle not initialized");
 
@@ -215,13 +234,15 @@ esp_err_t product_player_init(void)
     if (_is_player_init) {
         return ESP_OK;
     }
+    ESP_RETURN_ON_ERROR(product_audio_claim(), TAG, "Audio is busy");
 
     audio_player_config_t config = { .mute_fn = audio_mute_function,
                                      .write_fn = product_i2s_write,
                                      .clk_set_fn = product_codec_set_fs,
                                      .priority = 5
                                    };
-    ESP_RETURN_ON_ERROR(audio_player_new(config), TAG, "audio_player_init failed");
+    esp_err_t err = audio_player_new(config);
+    if (err != ESP_OK) { product_audio_release(); return err; }
     audio_player_callback_register(audio_callback, NULL);
 
     _is_player_init = true;
@@ -231,10 +252,10 @@ esp_err_t product_player_init(void)
 
 esp_err_t product_player_del(void)
 {
-    _is_player_init = false;
-
+    if (!_is_player_init) return ESP_OK;
     ESP_RETURN_ON_ERROR(audio_player_delete(), TAG, "audio_player_delete failed");
-
+    _is_player_init = false;
+    product_audio_release();
     return ESP_OK;
 }
 
