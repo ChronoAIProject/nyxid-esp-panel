@@ -262,7 +262,7 @@ bool NyxPanel::run() {
     voice_status = lv_label_create(controls);
     lv_obj_set_width(voice_status, lv_pct(100));
     lv_label_set_long_mode(voice_status, LV_LABEL_LONG_WRAP);
-    lv_obj_set_style_text_font(voice_status, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+    lv_obj_set_style_text_font(voice_status, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(voice_status, lv_color_hex(NYX_TEXT), 0);
     mode_select = lv_dropdown_create(controls);
     lv_obj_set_size(mode_select, 304, 44);
@@ -342,9 +342,7 @@ void NyxPanel::refreshVoice() {
         lv_obj_set_style_bg_color(voice_indicator, lv_color_hex(
             voice.microphone_muted ? NYX_WARNING : voice.active ? NYX_SUCCESS : NYX_TINT), 0);
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
-    char text[320];
-    snprintf(text, sizeof(text), "%s%s%s", voice.agent_name,
-        voice.agent_name[0] ? "\n" : "", voice.message[0] ? voice.message : "Voice is not configured");
+    const char *text = voice.message[0] ? voice.message : "Voice is not configured";
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
     const char *action = voice.busy ? "Hang up" : "Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
