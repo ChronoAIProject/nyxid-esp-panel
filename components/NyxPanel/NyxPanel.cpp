@@ -251,7 +251,7 @@ bool NyxPanel::run() {
     }, LV_EVENT_CLICKED, this);
     voice_controls = lv_obj_create(root);
     auto controls = voice_controls;
-    lv_obj_set_size(controls, 330, 218);
+    lv_obj_set_size(controls, 330, 280);
     lv_obj_align(controls, LV_ALIGN_TOP_RIGHT, -24, 104);
     lv_obj_add_flag(controls, LV_OBJ_FLAG_HIDDEN);
     lv_obj_set_style_bg_color(controls, lv_color_hex(NYX_SURFACE), 0);
@@ -261,14 +261,34 @@ bool NyxPanel::run() {
     lv_obj_set_style_radius(controls, 20, 0);
     lv_obj_set_style_pad_all(controls, 12, 0);
     lv_obj_remove_flag(controls, LV_OBJ_FLAG_SCROLLABLE);
+    const auto bot_font = lcd_text_font(LCD_TEXT_SIZE_MEDIUM);
+    const int connection_y = bot_font->line_height + 4;
+    voice_bot = lv_label_create(controls);
+    lv_obj_set_size(voice_bot, lv_pct(100), bot_font->line_height);
+    lv_label_set_long_mode(voice_bot, LV_LABEL_LONG_DOT);
+    lv_obj_set_style_text_font(voice_bot, bot_font, 0);
+    lv_obj_set_style_text_color(voice_bot, lv_color_hex(NYX_TEXT), 0);
+    voice_connection = lv_label_create(controls);
+    lv_obj_set_size(voice_connection, 268, 28);
+    lv_obj_align(voice_connection, LV_ALIGN_TOP_LEFT, 0, connection_y);
+    lv_obj_set_style_text_font(voice_connection, &lv_font_montserrat_20, 0);
+    voice_spinner = lv_spinner_create(controls);
+    lv_spinner_set_anim_params(voice_spinner, 1000, 270);
+    lv_obj_set_size(voice_spinner, 24, 24);
+    lv_obj_align(voice_spinner, LV_ALIGN_TOP_RIGHT, 0, connection_y);
+    lv_obj_set_style_arc_width(voice_spinner, 3, LV_PART_MAIN);
+    lv_obj_set_style_arc_width(voice_spinner, 3, LV_PART_INDICATOR);
+    lv_obj_set_style_arc_color(voice_spinner, lv_color_hex(NYX_WARNING), LV_PART_INDICATOR);
+    lv_obj_add_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
     voice_status = lv_label_create(controls);
-    lv_obj_set_width(voice_status, lv_pct(100));
+    lv_obj_set_size(voice_status, lv_pct(100), 44);
+    lv_obj_align(voice_status, LV_ALIGN_TOP_LEFT, 0, connection_y + 36);
     lv_label_set_long_mode(voice_status, LV_LABEL_LONG_WRAP);
     lv_obj_set_style_text_font(voice_status, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(voice_status, lv_color_hex(NYX_TEXT), 0);
     mode_select = lv_dropdown_create(controls);
     lv_obj_set_size(mode_select, 304, 44);
-    lv_obj_align(mode_select, LV_ALIGN_TOP_LEFT, 0, 60);
+    lv_obj_align(mode_select, LV_ALIGN_TOP_LEFT, 0, connection_y + 88);
     lv_obj_set_style_text_font(mode_select, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_font(lv_dropdown_get_list(mode_select), &lv_font_montserrat_16, 0);
     lv_dropdown_set_options(mode_select, "Hold to talk\nAuto conversation");
@@ -317,6 +337,7 @@ bool NyxPanel::close() {
     if (root) { lv_obj_delete(root); root = nullptr; }
     content = voice_status = call_button = call_label = hold_button = mode_select = nullptr;
     voice_controls = voice_toggle = voice_indicator = nullptr;
+    voice_bot = voice_connection = voice_spinner = nullptr;
     bot_notice = bot_name = bot_description = background_hint = nullptr;
     return true;
 }
@@ -350,14 +371,29 @@ void NyxPanel::refreshVoice() {
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
     const bool loading = voice.busy && !strcmp(voice.state, "loading");
     const bool calling = voice.busy && !loading;
+    const bool ending = calling && !strcmp(voice.state, "ending");
+    char connection[64];
+    const char *title = voice.agent_name[0] ? voice.agent_name : "Voice";
+    if (strcmp(lv_label_get_text(voice_bot), title)) lv_label_set_text(voice_bot, title);
+    if (ending) snprintf(connection, sizeof(connection), "Ending call...");
+    else if (voice.active) snprintf(connection, sizeof(connection), "Connected %02u:%02u", voice.call_seconds / 60, voice.call_seconds % 60);
+    else snprintf(connection, sizeof(connection), "%s", loading ? "Loading Bots..." : calling ? "Connecting..." :
+        !strcmp(voice.state, "error") ? (voice.call_seconds ? "Call disconnected" : "Couldn't connect") :
+        voice.session_id[0] ? "Call ended" : "Ready to call");
+    if (strcmp(lv_label_get_text(voice_connection), connection)) lv_label_set_text(voice_connection, connection);
+    lv_obj_set_style_text_color(voice_connection, lv_color_hex(ending ? NYX_MUTED : voice.active ? NYX_SUCCESS :
+        calling || loading ? NYX_WARNING : !strcmp(voice.state, "error") ? NYX_ERROR : NYX_TEXT), 0);
+    if (loading || (calling && (!voice.active || ending))) lv_obj_remove_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
+    else lv_obj_add_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
     const auto call_color = lv_color_hex(loading ? NYX_BORDER : calling ? NYX_ERROR : NYX_SUCCESS);
-    for (auto button : {call_button, voice_toggle}) {
-        lv_obj_set_style_bg_color(button, call_color, 0);
-        lv_obj_set_style_bg_color(button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
-    }
-    const char *action = calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
+    lv_obj_set_style_bg_color(call_button, call_color, 0);
+    lv_obj_set_style_bg_color(call_button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
+    const auto icon_color = lv_color_hex(loading ? NYX_BORDER : calling && !voice.active ? NYX_WARNING : calling ? NYX_ERROR : NYX_SUCCESS);
+    lv_obj_set_style_bg_color(voice_toggle, icon_color, 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(icon_color, LV_OPA_20), LV_STATE_PRESSED);
+    const char *action = ending ? "Ending..." : calling && !voice.active ? LV_SYMBOL_CLOSE " Cancel" : calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
-    if (!loading && (voice.configured || calling)) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
+    if (!ending && !loading && (voice.configured || calling)) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
     else lv_obj_add_state(call_button, LV_STATE_DISABLED);
     lv_dropdown_set_selected(mode_select, static_cast<uint32_t>(voice.input_mode));
     if (voice.busy) lv_obj_add_state(mode_select, LV_STATE_DISABLED);

@@ -23,6 +23,7 @@ bool panel_service_can_call(const char *daily, const char *slug, const char *met
         {"GET","/lcd/default-image"},{"POST","/lcd/default-image"},{"DELETE","/lcd/default-image"},
         {"GET","/lcd/brightness"},{"POST","/lcd/brightness"},
         {"GET","/config/audio"},{"POST","/config/audio"},{"POST","/voice/input-mode"},
+        {"GET","/voice/greeting"},{"POST","/voice/greeting"},
         {"GET","/voice"},{"GET","/voice/agents"},{"POST","/voice/agents/refresh"},
         {"POST","/voice/open"},{"POST","/voice/start"},{"POST","/voice/stop"},
         {"POST","/voice/say"},{"POST","/voice/hold"},{"POST","/voice/microphone"},

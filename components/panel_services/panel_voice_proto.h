@@ -43,6 +43,10 @@ bool panel_voice_parse_captions(const cJSON *snapshot, panel_voice_captions_t *o
 
 typedef struct { char request_id[40], text[301]; bool microphone_muted; } panel_voice_remote_t;
 bool panel_voice_parse_remote(const void *json, size_t size, bool open, panel_voice_remote_t *out);
+typedef struct { bool enabled; } panel_voice_greeting_t;
+// Partial device settings update; validate the complete result before committing.
+bool panel_voice_parse_greeting(const void *json, size_t size,
+    const panel_voice_greeting_t *current, panel_voice_greeting_t *out);
 // Returns fixed local text for recognized server errors; never reflects remote prose.
 const char *panel_voice_error_message(const cJSON *root, int http_status);
 

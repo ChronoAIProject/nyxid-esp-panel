@@ -49,6 +49,28 @@ Tap the icon again to collapse them. The controls start collapsed at boot.
 Green means call, and red means hang up; loading Bot metadata is shown in gray
 and cannot be mistaken for a live call. A dot on the icon indicates
 connecting, active microphone or local mute while the controls are hidden.
+The expanded controls show the selected Bot, an animated **Connecting...**
+state with preparation progress, then **Connected mm:ss** only once media,
+provider readiness and NyxID control are all ready. Dialing offers **Cancel**;
+an active call offers **Hang up**. Ending and failed calls have distinct states.
+Local ringback plays during setup and stops before Bot playback, on connection,
+or on cancellation/failure. It is not counted as provider audio or call duration.
+
+`GET/POST /voice/greeting` configures an optional greeting on this panel only.
+New panels leave it disabled. POST `{"enabled":true}` to enable it, or
+`{"enabled":false}` to disable it. The panel stores only the switch, not a
+script or language. After connection it asks NyxID to let the selected Bot greet
+naturally using that call's configured identity, persona and language.
+Updates persist atomically, apply to the next call and retain the selected Bot
+and Key. The existing authenticated announcement queue carries a typed greeting
+signal, not a user utterance or tool request. An explicit opening text in a
+remote `/voice/open` takes priority; a failed or uncertain greeting is not replayed.
+Servers advertise `greetings:true` in authorized Bot discovery. Older servers
+can still make calls; the greeting is skipped with `greeting_state:unavailable`,
+without turning it into a remote notification. Upgrade NyxID API/Voice workers
+to enable generated greetings. v0.6.18's saved switch is retained and its script
+is discarded on the next settings save.
+
 Choose **Hold to talk** or **Auto conversation** in the dropdown before starting
 a call. The choice persists for the current server profile. Automatic
 mode sends the echo-cancelled microphone while the call is active; NyxID's

@@ -14,7 +14,7 @@ static void test_daily_and_management_are_separate_services(void){
         TEST_ASSERT_FALSE(panel_service_can_call("my-board","my-board","POST",denied[i]));
         TEST_ASSERT_TRUE(panel_service_can_call("my-board",slug,"POST",denied[i]));
     }
-    const char *daily[]={"/config/audio","/lcd/brightness","/voice/input-mode","/lcd/default-image"};
+    const char *daily[]={"/config/audio","/lcd/brightness","/voice/input-mode","/voice/greeting","/lcd/default-image"};
     for(size_t i=0;i<sizeof(daily)/sizeof(*daily);++i){
         TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","POST",daily[i]));
         TEST_ASSERT_TRUE(panel_service_can_call("my-board",slug,"POST",daily[i]));
@@ -23,6 +23,7 @@ static void test_daily_and_management_are_separate_services(void){
     }
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","GET","/lcd/brightness"));
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","GET","/config/audio"));
+    TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","GET","/voice/greeting"));
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","GET","/lcd/default-image"));
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","DELETE","/lcd/default-image"));
     TEST_ASSERT_FALSE(panel_service_can_call("my-board","my-board","GET","/voice/config"));

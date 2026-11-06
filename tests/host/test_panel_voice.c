@@ -347,6 +347,26 @@ void test_remote_requests_validate_full_payload_and_utf8_boundaries(void)
     TEST_ASSERT_FALSE(panel_voice_parse_remote(embedded,sizeof(embedded)-1,true,&out));
 }
 
+void test_greeting_updates_are_atomic_and_only_control_the_switch(void)
+{
+    panel_voice_greeting_t current={0},out={0};
+    const char *enable="{\"enabled\":true}";
+    TEST_ASSERT_TRUE(panel_voice_parse_greeting(enable,strlen(enable),&current,&out));
+    TEST_ASSERT_TRUE(out.enabled);current=out;
+    const char *disable="{\"enabled\":false}";
+    TEST_ASSERT_TRUE(panel_voice_parse_greeting(disable,strlen(disable),&current,&out));
+    TEST_ASSERT_FALSE(out.enabled);
+    const char *bad[]={"{}","[]","{\"enabled\":1}","{\"text\":\"Hello\"}",
+        "{\"enabled\":true,\"enabled\":false}","{\"enabled\":true,\"agent_id\":\"other\"}",
+        "{\"enabled\":false,\"text\":\"script\"}","{\"enabled\":false} trailing",
+        "{\"enabled\":true,\"enabled\\u0000\":false}"};
+    for(size_t i=0;i<sizeof(bad)/sizeof(*bad);++i) {
+        out=current;
+        TEST_ASSERT_FALSE(panel_voice_parse_greeting(bad[i],strlen(bad[i]),&current,&out));
+        TEST_ASSERT_EQUAL_INT(current.enabled,out.enabled);
+    }
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -355,6 +375,7 @@ int main(void)
     RUN_TEST(test_bot_discovery_requires_one_bot_bound_to_the_discovered_service);
     RUN_TEST(test_voice_selection_migrates_only_unique_current_key_binding);
     RUN_TEST(test_bot_introduction_is_optional_bounded_and_keeps_chinese_characters);
+    RUN_TEST(test_greeting_updates_are_atomic_and_only_control_the_switch);
     RUN_TEST(test_voice_urls_pin_configured_origin_service_and_bounded_operation);
     RUN_TEST(test_voice_uses_saved_billing_binding_and_requires_available_supported_provider);
     RUN_TEST(test_voice_errors_explain_provider_credits_without_reflecting_remote_text);

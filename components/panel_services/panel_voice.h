@@ -15,6 +15,9 @@ typedef struct {
     bool microphone_muted;
     char session_id[48], remote_request_id[40], remote_state[24];
     bool remote_initiated;
+    bool dialing_tone, greeting_enabled;
+    unsigned call_seconds;
+    char greeting_state[24];
 } panel_voice_snapshot_t;
 
 void panel_voice_init(void);
@@ -29,6 +32,8 @@ esp_err_t panel_voice_gain_set(unsigned gain);
 esp_err_t panel_voice_volume_set(unsigned volume);
 // Mode changes require an idle call and persist in this server's profile.
 esp_err_t panel_voice_input_mode_set(panel_voice_input_mode_t mode);
+void panel_voice_greeting_get(panel_voice_greeting_t *out);
+esp_err_t panel_voice_greeting_update(const void *json, size_t size);
 void panel_voice_microphone_mute(bool muted);
 esp_err_t panel_voice_remote_open(const panel_voice_remote_t *request, bool *duplicate);
 esp_err_t panel_voice_remote_say(const panel_voice_remote_t *request, bool *duplicate);

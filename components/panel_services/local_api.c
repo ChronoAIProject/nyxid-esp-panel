@@ -157,6 +157,10 @@ static cJSON *voice_json(void)
     cJSON_AddStringToObject(j,"remote_request_id",v.remote_request_id);cJSON_AddStringToObject(j,"remote_state",v.remote_state);
     cJSON_AddNumberToObject(j,"sent_packets",v.sent_packets);cJSON_AddNumberToObject(j,"received_packets",v.received_packets);
     cJSON_AddNumberToObject(j,"playback_ms",v.playback_ms);
+    cJSON_AddNumberToObject(j,"call_seconds",v.call_seconds);
+    cJSON_AddBoolToObject(j,"dialing_tone",v.dialing_tone);
+    cJSON_AddBoolToObject(j,"greeting_enabled",v.greeting_enabled);
+    cJSON_AddStringToObject(j,"greeting_state",v.greeting_state);
     cJSON_AddNumberToObject(j,"source_peak",v.source_peak);cJSON_AddNumberToObject(j,"output_peak",v.output_peak);
     return j;
 }
@@ -732,6 +736,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         else if(!strcmp(r->path,"/voice/config"))description="Manage saved voice selection. POST exactly one of agent_id (from /voice/agents), input_mode (automatic or push_to_talk), playback_gain (integer 1..8). Selection and mode require idle. Persists in this server profile.";
         else if(!strcmp(r->path,"/config/audio"))description="Adjust saved audio output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). GET returns current audio and voice state. Does not change Bot selection.";
         else if(!strcmp(r->path,"/voice/input-mode"))description="Set saved input_mode to automatic or push_to_talk while idle. Exactly one field. Does not change the selected Bot or grants.";
+        else if(!strcmp(r->path,"/voice/greeting"))description="Read or configure this panel's automatic spoken greeting for future calls. POST enabled (boolean). The selected Bot generates its greeting from its NyxID identity, persona and language; there is no scripted text. Persists in this server profile. An explicit remote opening message takes priority. Never a user utterance or tool permission.";
         else if(!strcmp(r->path,"/lcd/brightness"))description="Read or set saved screen brightness (integer 0..100). POST exactly one brightness field; preserves other display settings.";
         else if(!strcmp(r->path,"/lcd/default-image"))description="Manage the persistent JPEG fallback used when no temporary image is present. POST image/jpeg up to 65536 bytes. DELETE restores bundled NyxBot. GET returns metadata.";
         else if(!strcmp(r->path,"/lcd/image"))description="Show a temporary fullscreen JPEG, image/jpeg up to 65536 bytes; query duration_ms=0 is sticky until cleared, positive TTL returns to fallback.";
@@ -769,6 +774,12 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
                 if(!strcmp(r->path,"/voice/say"))cJSON_AddItemToArray(required,cJSON_CreateString("text"));
                 else{cJSON *mute=cJSON_AddObjectToObject(properties,"microphone_muted");cJSON_AddStringToObject(mute,"type","boolean");cJSON_AddBoolToObject(mute,"default",false);}
                 cJSON *queued=cJSON_AddObjectToObject(responses,"202");cJSON_AddStringToObject(queued,"description","Queued asynchronously; inspect /voice for actual state");
+            }else if(!strcmp(r->path,"/voice/greeting")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON *required=cJSON_AddArrayToObject(schema,"required");
+                cJSON_AddItemToArray(required,cJSON_CreateString("enabled"));
+                cJSON *props=cJSON_AddObjectToObject(schema,"properties");
+                cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"enabled"),"type","boolean");
             }else if(!strcmp(r->path,"/voice/microphone")){
                 cJSON_AddBoolToObject(schema,"additionalProperties",false);
                 cJSON *props=cJSON_AddObjectToObject(schema,"properties");
@@ -1529,6 +1540,22 @@ static int h_brightness(const nyx_proxy_request_t *req, char *resp, size_t cap,
     cJSON *result=cJSON_CreateObject();cJSON_AddNumberToObject(result,"brightness",cfg.brightness);
     return object_response(result,resp,cap,resp_len);
 }
+static int h_voice_greeting(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                  char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    if(!strcmp(req->method,"POST")) {
+        esp_err_t err=panel_voice_greeting_update(req->body,req->body_len);
+        if(err!=ESP_OK) {
+            snprintf(resp,cap,"{\"error\":\"%s\"}",err==ESP_ERR_INVALID_ARG?
+                "expected_only_enabled_boolean":esp_err_to_name(err));
+            json_response_len(resp,resp_len);return err==ESP_ERR_INVALID_ARG?400:503;
+        }
+    }
+    panel_voice_greeting_t settings;panel_voice_greeting_get(&settings);
+    cJSON *j=cJSON_CreateObject();cJSON_AddBoolToObject(j,"enabled",settings.enabled);
+    return object_response(j,resp,cap,resp_len);
+}
 static int h_voice(const nyx_proxy_request_t *req, char *resp, size_t cap,
                   char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
@@ -1594,6 +1621,8 @@ static const nyx_route_t s_routes[] = {
     { .path = "/voice", .method = "GET", .fn = h_voice },
     { .path = "/voice/config", .method = "POST", .fn = h_voice },
     { .path = "/voice/config", .method = "GET", .fn = h_voice },
+    { .path = "/voice/greeting", .method = "GET", .fn = h_voice_greeting },
+    { .path = "/voice/greeting", .method = "POST", .fn = h_voice_greeting },
     { .path = "/config/audio", .method = "GET", .fn = h_voice },
     { .path = "/config/audio", .method = "POST", .fn = h_voice },
     { .path = "/voice/open", .method = "POST", .fn = h_voice },
