@@ -13,6 +13,11 @@ jobs:
     container: espressif/idf:v5.5.4
     steps:
       - uses: actions/checkout@v4
+      - name: Install build Python dependencies
+        shell: bash
+        run: |
+          . "$IDF_PATH/export.sh"
+          python -m pip install -r tools/requirements-build.txt
       - name: Build legacy P4 profile and verify partition capacity
         shell: bash
         run: |
