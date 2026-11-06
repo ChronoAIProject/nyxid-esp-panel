@@ -29,5 +29,9 @@ private:
     lv_obj_t *voice_controls = nullptr;
     lv_obj_t *voice_toggle = nullptr;
     lv_obj_t *voice_indicator = nullptr;
+    lv_obj_t *bot_notice = nullptr;
+    lv_obj_t *bot_name = nullptr;
+    lv_obj_t *bot_description = nullptr;
+    lv_obj_t *background_hint = nullptr;
 };
 }

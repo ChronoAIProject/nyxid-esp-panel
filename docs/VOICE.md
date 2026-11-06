@@ -27,6 +27,13 @@ connection. A replaced service ID requires selecting the Bot again. Ambiguous
 or mismatched discovery responses are rejected. The local Voice status and Bot
 list expose the exact `service_id` for diagnostics.
 
+Discovery's optional `description` supplies the selected Bot's introduction.
+The panel caches it for the next boot without changing the saved voice binding.
+Nyx Panel briefly shows the Bot name and introduction at startup, then hides the
+notice after ten seconds. Servers that omit `description` still work and show
+the name alone. A missing custom default background adds a setup hint to this
+notice; the background is device-wide, independent of the selected Bot.
+
 Agent Key voice and typed camera-tool discovery require
 [NyxID #2169](https://github.com/ChronoAIProject/NyxID/pull/2169), the server-side
 `assistant:voice-agent-key` feature enabled, and an explicitly published/granted

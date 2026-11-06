@@ -151,6 +151,7 @@ static cJSON *voice_json(void)
     cJSON_AddStringToObject(j,"state",v.state);cJSON_AddStringToObject(j,"message",v.message);
     cJSON_AddStringToObject(j,"service_id",v.service_id);
     cJSON_AddStringToObject(j,"agent_id",v.agent_id);cJSON_AddStringToObject(j,"agent_name",v.agent_name);
+    cJSON_AddStringToObject(j,"agent_description",v.agent_description);
     cJSON_AddStringToObject(j,"session_id",v.session_id);
     cJSON_AddBoolToObject(j,"remote_initiated",v.remote_initiated);
     cJSON_AddStringToObject(j,"remote_request_id",v.remote_request_id);cJSON_AddStringToObject(j,"remote_state",v.remote_state);

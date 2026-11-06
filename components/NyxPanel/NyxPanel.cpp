@@ -65,6 +65,8 @@ bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
 bool pending_voice;
+char noticed_bot[40]{};
+int64_t bot_notice_until;
 
 // The bundled Chinese font contains bitmap glyphs. LVGL's vector-font outline
 // styles do not stroke them, so render the same wrapped text at eight offsets.
@@ -175,6 +177,32 @@ bool NyxPanel::run() {
     lv_obj_remove_style_all(content);
     lv_obj_set_size(content, lv_pct(100), lv_pct(100));
     lv_obj_remove_flag(content, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    bot_notice = lv_obj_create(root);
+    lv_obj_set_width(bot_notice, 632);
+    lv_obj_set_height(bot_notice, LV_SIZE_CONTENT);
+    lv_obj_align(bot_notice, LV_ALIGN_TOP_LEFT, 24, 24);
+    lv_obj_set_style_bg_color(bot_notice, lv_color_hex(NYX_SURFACE), 0);
+    lv_obj_set_style_bg_opa(bot_notice, LV_OPA_90, 0);
+    lv_obj_set_style_border_width(bot_notice, 0, 0);
+    lv_obj_set_style_radius(bot_notice, 20, 0);
+    lv_obj_set_style_pad_all(bot_notice, 18, 0);
+    lv_obj_set_style_pad_row(bot_notice, 10, 0);
+    lv_obj_set_flex_flow(bot_notice, LV_FLEX_FLOW_COLUMN);
+    lv_obj_remove_flag(bot_notice, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_add_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
+    auto notice_label = [&](uint32_t color, int max_height) {
+        auto label = lv_label_create(bot_notice);
+        lv_obj_set_width(label, lv_pct(100));
+        lv_obj_set_style_max_height(label, max_height, 0);
+        lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);
+        lv_obj_set_style_text_font(label, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(color), 0);
+        return label;
+    };
+    bot_name = notice_label(NYX_TEXT, 56);
+    bot_description = notice_label(NYX_SECONDARY, 84);
+    background_hint = notice_label(NYX_TINT, 56);
+    lv_label_set_text(background_hint, "可让 Bot 设置默认背景，替换这张内置图片");
     voice_toggle = lv_button_create(root);
     lv_obj_set_size(voice_toggle, 64, 64);
     lv_obj_align(voice_toggle, LV_ALIGN_TOP_RIGHT, -24, 24);
@@ -234,7 +262,7 @@ bool NyxPanel::run() {
     voice_status = lv_label_create(controls);
     lv_obj_set_width(voice_status, lv_pct(100));
     lv_label_set_long_mode(voice_status, LV_LABEL_LONG_WRAP);
-    lv_obj_set_style_text_font(voice_status, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(voice_status, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
     lv_obj_set_style_text_color(voice_status, lv_color_hex(NYX_TEXT), 0);
     mode_select = lv_dropdown_create(controls);
     lv_obj_set_size(mode_select, 304, 44);
@@ -285,6 +313,7 @@ bool NyxPanel::close() {
     if (root) { lv_obj_delete(root); root = nullptr; }
     content = voice_status = call_button = call_label = hold_button = mode_select = nullptr;
     voice_controls = voice_toggle = voice_indicator = nullptr;
+    bot_notice = bot_name = bot_description = background_hint = nullptr;
     return true;
 }
 void NyxPanel::showVoiceControls() {
@@ -293,12 +322,29 @@ void NyxPanel::showVoiceControls() {
 void NyxPanel::refreshVoice() {
     if (!voice_status) return;
     panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+    if (voice.configured && voice.agent_id[0] && strcmp(noticed_bot, voice.agent_id)) {
+        snprintf(noticed_bot, sizeof(noticed_bot), "%s", voice.agent_id);
+        bot_notice_until = esp_timer_get_time() + 10000000;
+    }
+    if (voice.configured && esp_timer_get_time() < bot_notice_until && !image.dsc.data) {
+        lv_obj_remove_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
+        if (strcmp(lv_label_get_text(bot_name), voice.agent_name))
+            lv_label_set_text(bot_name, voice.agent_name);
+        if (strcmp(lv_label_get_text(bot_description), voice.agent_description))
+            lv_label_set_text(bot_description, voice.agent_description);
+        if (voice.agent_description[0]) lv_obj_remove_flag(bot_description, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(bot_description, LV_OBJ_FLAG_HIDDEN);
+        if (background_stored) lv_obj_add_flag(background_hint, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_remove_flag(background_hint, LV_OBJ_FLAG_HIDDEN);
+    } else lv_obj_add_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
     if (voice.busy) {
         lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
         lv_obj_set_style_bg_color(voice_indicator, lv_color_hex(
             voice.microphone_muted ? NYX_WARNING : voice.active ? NYX_SUCCESS : NYX_TINT), 0);
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
-    const char *text = voice.message[0] ? voice.message : "Voice is not configured";
+    char text[320];
+    snprintf(text, sizeof(text), "%s%s%s", voice.agent_name,
+        voice.agent_name[0] ? "\n" : "", voice.message[0] ? voice.message : "Voice is not configured");
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
     const char *action = voice.busy ? "Hang up" : "Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);

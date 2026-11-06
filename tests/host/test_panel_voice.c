@@ -102,6 +102,26 @@ void test_voice_selection_migrates_only_unique_current_key_binding(void)
     TEST_ASSERT_FALSE(panel_voice_bot_valid(&saved,true));
     TEST_ASSERT_FALSE(panel_voice_reconcile_bot(&saved,key_id,key_id,bots,1,&result));
 }
+void test_bot_introduction_is_optional_bounded_and_keeps_chinese_characters(void)
+{
+    char text[PANEL_VOICE_DESCRIPTION_BYTES];
+    cJSON *root=cJSON_Parse("{\"agents\":[{\"description\":\"你好\\nI help with your panel.\"}]}");
+    panel_voice_parse_description(root,text);
+    TEST_ASSERT_EQUAL_STRING("你好 I help with your panel.",text);
+    cJSON *row=cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(root,"agents"),0);
+    cJSON_DeleteItemFromObjectCaseSensitive(row,"description");
+    panel_voice_parse_description(root,text);TEST_ASSERT_EQUAL_STRING("",text);
+    cJSON_AddNullToObject(row,"description");
+    panel_voice_parse_description(root,text);TEST_ASSERT_EQUAL_STRING("",text);
+    char long_text[1200];strcpy(long_text,"x");
+    for (unsigned i=0;i<300;++i) strcat(long_text,"好");
+    cJSON_ReplaceItemInObjectCaseSensitive(row,"description",cJSON_CreateString(long_text));
+    panel_voice_parse_description(root,text);
+    TEST_ASSERT_EQUAL_UINT(766,strlen(text));
+    TEST_ASSERT_EQUAL_STRING("好",text+strlen(text)-3);
+    cJSON_Delete(root);
+    panel_voice_parse_description(NULL,text);TEST_ASSERT_EQUAL_STRING("",text);
+}
 void test_voice_urls_pin_configured_origin_service_and_bounded_operation(void)
 {
     char url[512],operation[160],expected[512];
@@ -334,6 +354,7 @@ int main(void)
     RUN_TEST(test_voice_inventory_requires_active_catalog_and_exact_service_path);
     RUN_TEST(test_bot_discovery_requires_one_bot_bound_to_the_discovered_service);
     RUN_TEST(test_voice_selection_migrates_only_unique_current_key_binding);
+    RUN_TEST(test_bot_introduction_is_optional_bounded_and_keeps_chinese_characters);
     RUN_TEST(test_voice_urls_pin_configured_origin_service_and_bounded_operation);
     RUN_TEST(test_voice_uses_saved_billing_binding_and_requires_available_supported_provider);
     RUN_TEST(test_voice_errors_explain_provider_credits_without_reflecting_remote_text);
