@@ -31,6 +31,7 @@ Use ESP-IDF **v5.5.4**, its Python environment and the P4 toolchain:
 
 ```sh
 . /path/to/esp-idf/export.sh
+python -m pip install -r tools/requirements-build.txt
 idf.py build
 cmake -S tests/host -B build-host
 cmake --build build-host -j8
@@ -43,6 +44,11 @@ Host signing tests require OpenSSL development headers (`libssl-dev` on Linux,
 `brew install openssl` on macOS). The dependency lock and fail-closed managed
 component patches are part of the build. Run `idf.py reconfigure` after changing
 component source lists. CI builds the same hardware profile.
+
+The Python requirements pin Component Manager 2.4.11, which fixes false
+missing-Kconfig errors when the solver considers newer, unselected dependency
+versions. The ESP-IDF image's older manager can fail even with the checked-in
+dependency lock. Install the build requirements before the first configure.
 
 The 16 MiB layout retains 840 KiB NVS, two **6.5625 MiB** application slots and
 2 MiB SPIFFS. The native MP3 player remains available. Camera service startup does not allocate
