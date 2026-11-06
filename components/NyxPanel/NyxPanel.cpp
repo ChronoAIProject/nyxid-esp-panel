@@ -202,13 +202,13 @@ bool NyxPanel::run() {
     bot_name = notice_label(NYX_TEXT, 56);
     bot_description = notice_label(NYX_SECONDARY, 84);
     background_hint = notice_label(NYX_TINT, 56);
-    lv_label_set_text(background_hint, "可让 Bot 设置默认背景，替换这张内置图片");
+    lv_label_set_text(background_hint, "Ask your Bot to set a default background.");
     voice_toggle = lv_button_create(root);
     lv_obj_set_size(voice_toggle, 64, 64);
     lv_obj_align(voice_toggle, LV_ALIGN_TOP_RIGHT, -24, 24);
     lv_obj_set_style_radius(voice_toggle, LV_RADIUS_CIRCLE, 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRIMARY), 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRESSED), LV_STATE_PRESSED);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_SUCCESS), 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(lv_color_hex(NYX_SUCCESS), LV_OPA_20), LV_STATE_PRESSED);
     lv_obj_set_style_pad_all(voice_toggle, 0, 0);
     // A small microphone drawn with native shapes stays sharp at panel resolution.
     auto mic_shape = [&](int width, int height, int y, int radius) {
@@ -243,9 +243,11 @@ bool NyxPanel::run() {
     lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(voice_toggle, [](lv_event_t *event) {
         auto self = static_cast<NyxPanel *>(lv_event_get_user_data(event));
-        if (lv_obj_has_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN))
+        if (lv_obj_has_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN)) {
             lv_obj_remove_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
-        else lv_obj_add_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
+            panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+            if (!voice.busy) (void)panel_voice_start();
+        } else lv_obj_add_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
     }, LV_EVENT_CLICKED, this);
     voice_controls = lv_obj_create(root);
     auto controls = voice_controls;
@@ -291,7 +293,9 @@ bool NyxPanel::run() {
     hold_button = button(130, 174, "Hold to talk");
     lv_obj_add_event_cb(call_button, [](lv_event_t *) {
         panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
-        if (voice.busy) panel_voice_stop(); else (void)panel_voice_start();
+        if (voice.busy) {
+            if (strcmp(voice.state, "loading")) panel_voice_stop();
+        } else (void)panel_voice_start();
     }, LV_EVENT_CLICKED, nullptr);
     lv_obj_add_event_cb(hold_button, [](lv_event_t *event) {
         auto code = lv_event_get_code(event);
@@ -344,9 +348,16 @@ void NyxPanel::refreshVoice() {
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
     const char *text = voice.message[0] ? voice.message : "Voice is not configured";
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
-    const char *action = voice.busy ? "Hang up" : "Call";
+    const bool loading = voice.busy && !strcmp(voice.state, "loading");
+    const bool calling = voice.busy && !loading;
+    const auto call_color = lv_color_hex(loading ? NYX_BORDER : calling ? NYX_ERROR : NYX_SUCCESS);
+    for (auto button : {call_button, voice_toggle}) {
+        lv_obj_set_style_bg_color(button, call_color, 0);
+        lv_obj_set_style_bg_color(button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
+    }
+    const char *action = calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
-    if (voice.configured || voice.busy) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
+    if (!loading && (voice.configured || calling)) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
     else lv_obj_add_state(call_button, LV_STATE_DISABLED);
     lv_dropdown_set_selected(mode_select, static_cast<uint32_t>(voice.input_mode));
     if (voice.busy) lv_obj_add_state(mode_select, LV_STATE_DISABLED);

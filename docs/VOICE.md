@@ -43,8 +43,11 @@ still requires matching backend and hardware validation. A firmware merge alone
 does not deploy or enable the backend feature.
 
 The firmware supports NyxID's `openai_live` WebRTC transport with Opus audio.
-Tap the microphone icon in Nyx Panel to open the voice controls; tap it again to
-collapse them. The controls start collapsed at boot. A dot on the icon indicates
+Tap the microphone icon in Nyx Panel to start a call and open the voice controls;
+if a call is already connecting or active, the tap only opens its controls.
+Tap the icon again to collapse them. The controls start collapsed at boot.
+Green means call, and red means hang up; loading Bot metadata is shown in gray
+and cannot be mistaken for a live call. A dot on the icon indicates
 connecting, active microphone or local mute while the controls are hidden.
 Choose **Hold to talk** or **Auto conversation** in the dropdown before starting
 a call. The choice persists for the current server profile. Automatic
