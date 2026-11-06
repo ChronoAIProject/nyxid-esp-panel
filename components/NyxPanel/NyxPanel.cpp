@@ -207,8 +207,8 @@ bool NyxPanel::run() {
     lv_obj_set_size(voice_toggle, 64, 64);
     lv_obj_align(voice_toggle, LV_ALIGN_TOP_RIGHT, -24, 24);
     lv_obj_set_style_radius(voice_toggle, LV_RADIUS_CIRCLE, 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_SUCCESS), 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(lv_color_hex(NYX_SUCCESS), LV_OPA_20), LV_STATE_PRESSED);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRIMARY), 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(lv_color_hex(NYX_PRIMARY), LV_OPA_20), LV_STATE_PRESSED);
     lv_obj_set_style_pad_all(voice_toggle, 0, 0);
     // A small microphone drawn with native shapes stays sharp at panel resolution.
     auto mic_shape = [&](int width, int height, int y, int radius) {
@@ -388,7 +388,7 @@ void NyxPanel::refreshVoice() {
     const auto call_color = lv_color_hex(loading ? NYX_BORDER : calling ? NYX_ERROR : NYX_SUCCESS);
     lv_obj_set_style_bg_color(call_button, call_color, 0);
     lv_obj_set_style_bg_color(call_button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
-    const auto icon_color = lv_color_hex(loading ? NYX_BORDER : calling && !voice.active ? NYX_WARNING : calling ? NYX_ERROR : NYX_SUCCESS);
+    const auto icon_color = lv_color_hex(loading ? NYX_BORDER : calling && !voice.active ? NYX_WARNING : calling ? NYX_ERROR : NYX_PRIMARY);
     lv_obj_set_style_bg_color(voice_toggle, icon_color, 0);
     lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(icon_color, LV_OPA_20), LV_STATE_PRESSED);
     const char *action = ending ? "Ending..." : calling && !voice.active ? LV_SYMBOL_CLOSE " Cancel" : calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
