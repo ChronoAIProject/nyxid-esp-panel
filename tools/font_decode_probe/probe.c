@@ -9,7 +9,7 @@
 #include <string.h>
 
 LV_FONT_DECLARE(lv_font_noto_sans_sc_med_20);
-enum { GLYPHS = 64, ITERATIONS = 3000 };
+enum { GLYPHS = 70, ITERATIONS = 3000 };
 static lv_font_glyph_dsc_t glyphs[GLYPHS];
 static unsigned char expected[GLYPHS][4096];
 static size_t sizes[GLYPHS];
@@ -46,7 +46,8 @@ int main(int argc, char **argv)
         return 2;
     }
     const uint32_t cjk[] = {0x56fe, 0x7247, 0x5168, 0x5c4f, 0x6587, 0x5b57, 0x63cf, 0x8fb9,
-                            0x6b22, 0x8fce, 0x56de, 0x5bb6, 0x6d4b, 0x8bd5, 0x76f8, 0x673a};
+                            0x6b22, 0x8fce, 0x56de, 0x5bb6, 0x6d4b, 0x8bd5, 0x76f8, 0x673a,
+                            0x55ef, 0x5443, 0x5662, 0x6b38, 0x8bf6, 0x55e8};
     lv_init();
     lv_draw_buf_t *buf = lv_draw_buf_create(64, 64, LV_COLOR_FORMAT_A8, LV_STRIDE_AUTO);
     for(unsigned i = 0; i < GLYPHS; i++) {
