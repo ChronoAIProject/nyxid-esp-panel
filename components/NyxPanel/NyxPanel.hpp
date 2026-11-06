@@ -22,6 +22,9 @@ private:
     lv_obj_t *root = nullptr;
     lv_obj_t *content = nullptr;
     lv_obj_t *voice_status = nullptr;
+    lv_obj_t *voice_bot = nullptr;
+    lv_obj_t *voice_connection = nullptr;
+    lv_obj_t *voice_spinner = nullptr;
     lv_obj_t *call_button = nullptr;
     lv_obj_t *call_label = nullptr;
     lv_obj_t *hold_button = nullptr;
@@ -29,5 +32,9 @@ private:
     lv_obj_t *voice_controls = nullptr;
     lv_obj_t *voice_toggle = nullptr;
     lv_obj_t *voice_indicator = nullptr;
+    lv_obj_t *bot_notice = nullptr;
+    lv_obj_t *bot_name = nullptr;
+    lv_obj_t *bot_description = nullptr;
+    lv_obj_t *background_hint = nullptr;
 };
 }

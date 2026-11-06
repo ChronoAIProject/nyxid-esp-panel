@@ -248,6 +248,10 @@ whenever no temporary image is active. `POST /lcd/default-image` saves a JPEG
 through NyxID in NVS; `GET` reports its metadata and `DELETE` restores the embedded
 NyxBot image. Temporary image expiry and clear reveal the default; reboot
 and app updates preserve a saved image. See [API details](docs/API.md).
+At startup, the selected Bot's name and optional introduction appear for ten
+seconds over the image. If no custom default image is saved, the same notice
+suggests asking the Bot to set one. The notice then hides automatically;
+the default image remains device-wide and does not change with Bot selection.
 The system uses NyxID's black surfaces and purple controls, with a shared
 [brand palette](components/panel_common/nyx_theme.h).
 

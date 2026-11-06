@@ -549,8 +549,12 @@ static void service_task(void *arg)
     on_net_manager_event(&snapshot, NULL);
     atomic_store(&ready, http_err == ESP_OK);
     bool applied_preview = false;
+    bool refreshed_bots = false;
     while (1) {
         start_clock_if_connected();
+        // Refresh display metadata in the background after the live UI is up.
+        if (!refreshed_bots && network_is_connected() && nyx_creds_have_agent())
+            refreshed_bots = panel_voice_refresh_agents() == ESP_OK;
         if (atomic_exchange(&fallback_requested, false) && !provisioning_mode_active() &&
             !atomic_load(&wifi_fallback_tried) && !network_is_connected()) {
             atomic_store(&wifi_fallback_tried, true);

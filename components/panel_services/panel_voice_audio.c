@@ -1,5 +1,6 @@
 #include "panel_voice_audio.h"
 #include <string.h>
+#include <math.h>
 
 void panel_voice_reference_push(panel_voice_reference_t *ref, const int16_t *pcm, size_t samples)
 {
@@ -41,4 +42,23 @@ int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain)
         magnitude=knee+(excess*headroom)/(excess+headroom);
     }
     return (int16_t)(value<0 ? -magnitude : magnitude);
+}
+
+void panel_voice_ringback(uint32_t *position, int16_t *pcm, size_t samples)
+{
+    if(!position || !pcm)return;
+    uint32_t tick=*position%48000;
+    for(size_t i=0;i<samples;++i) {
+        float envelope=0;
+        if(tick<16000) {
+            uint32_t edge=tick<80?tick:tick>15920?16000-tick:80;
+            envelope=(float)edge/80;
+        }
+        if(envelope>0) {
+            float t=(float)tick*(6.28318530718f/16000);
+            pcm[i]=(int16_t)(envelope*1800*(sinf(t*440)+sinf(t*480)));
+        }else pcm[i]=0;
+        if(++tick==48000)tick=0;
+    }
+    *position=tick;
 }

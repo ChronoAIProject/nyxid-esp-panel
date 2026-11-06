@@ -21,6 +21,7 @@
 #include "esp_timer.h"
 #include "esp_random.h"
 #include "esp_app_desc.h"
+#include "esp_log.h"
 #include "mbedtls/sha256.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -44,7 +45,10 @@
 #define DONE_PEER 1
 #define DONE_MIC 2
 #define DONE_SPEAKER 4
+#define DONE_TONE 8
 typedef struct { char key_id[40]; panel_voice_bot_t bot; } voice_config_t;
+// Display-only cache. Keep the existing selection_v2 authority layout intact.
+typedef struct { char key_id[40], agent_id[40], text[PANEL_VOICE_DESCRIPTION_BYTES]; } voice_description_t;
 // Preserve the old blob layout until discovery can resolve its exact service.
 typedef struct { char key_id[40], agent_id[40], conversation_id[80], name[164]; } voice_config_v1_t;
 _Static_assert(sizeof(voice_config_v1_t)==324,"Keep the saved selection_v1 layout");
@@ -55,6 +59,7 @@ typedef struct {
     voice_config_t config;
     panel_voice_input_mode_t input_mode;
     panel_voice_remote_t remote;
+    char greeting_request[40];
     nyx_agent_credential_t credential;
     esp_peer_handle_t peer;
     esp_websocket_client_handle_t socket;
@@ -63,6 +68,8 @@ typedef struct {
     QueueHandle_t audio, offers, messages;
     EventGroupHandle_t done;
     atomic_bool running, connected, controls, provider_ready, muted;
+    atomic_bool tone_stopped;
+    bool tone_started;
     atomic_uint played_samples;
     atomic_int_fast64_t last_audio_us, last_speech_us;
     char session[48];
@@ -75,7 +82,10 @@ typedef struct {
 static SemaphoreHandle_t state_lock;
 static voice_config_t configuration;
 static panel_voice_snapshot_t status;
+static panel_voice_greeting_t greeting;
+static char greeting_request_id[40];
 static panel_voice_bot_t bots[PANEL_VOICE_MAX_BOTS];
+static char (*bot_descriptions)[PANEL_VOICE_DESCRIPTION_BYTES];
 static size_t bot_count;
 static char bots_key_id[40];
 static atomic_bool busy, stopping, holding, microphone_muted;
@@ -90,6 +100,9 @@ static remote_record_t remote_records[8];
 static void state(const char *name, const char *message)
 {
     xSemaphoreTake(state_lock, portMAX_DELAY);
+    if(atomic_load(&stopping) && (!strcmp(name,"connecting") || !strcmp(name,"active"))) {
+        xSemaphoreGive(state_lock);return;
+    }
     snprintf(status.state,sizeof(status.state),"%s",name);
     snprintf(status.message,sizeof(status.message),"%s",message);
     xSemaphoreGive(state_lock);
@@ -132,11 +145,28 @@ static esp_err_t save_config(const voice_config_t *cfg)
     }
     return err;
 }
+static void cache_description(const voice_config_t *cfg, const char *text)
+{
+    voice_description_t saved={0};
+    snprintf(saved.key_id,sizeof(saved.key_id),"%s",cfg->key_id);
+    snprintf(saved.agent_id,sizeof(saved.agent_id),"%s",cfg->bot.agent_id);
+    snprintf(saved.text,sizeof(saved.text),"%s",text);
+    nvs_handle_t h;
+    esp_err_t err=nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READWRITE,&h);
+    if (err==ESP_OK) {
+        err=nvs_set_blob(h,"bot_intro_v1",&saved,sizeof(saved));
+        if (err==ESP_OK) err=nvs_commit(h);
+        nvs_close(h);
+    }
+    if (err!=ESP_OK) ESP_LOGW("panel.voice","Bot introduction cache: %s",esp_err_to_name(err));
+}
 void panel_voice_init(void)
 {
     if (state_lock) return;
     state_lock=xSemaphoreCreateMutex();
     if (!state_lock) return;
+    bot_descriptions=heap_caps_calloc(PANEL_VOICE_MAX_BOTS,PANEL_VOICE_DESCRIPTION_BYTES,
+        MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     remote_messages=xQueueCreate(4,sizeof(remote_message_t));
     remote_lock=xSemaphoreCreateMutex();
     media_lib_add_default_adapter();
@@ -158,6 +188,12 @@ void panel_voice_init(void)
                     memset(&configuration,0,sizeof(configuration));
             }
         }
+        voice_description_t intro={0};len=sizeof(intro);
+        if (nvs_get_blob(h,"bot_intro_v1",&intro,&len)==ESP_OK && len==sizeof(intro) &&
+            memchr(intro.key_id,0,sizeof(intro.key_id)) && memchr(intro.agent_id,0,sizeof(intro.agent_id)) &&
+            memchr(intro.text,0,sizeof(intro.text)) &&
+            !strcmp(intro.key_id,configuration.key_id) && !strcmp(intro.agent_id,configuration.bot.agent_id))
+            snprintf(status.agent_description,sizeof(status.agent_description),"%s",intro.text);
         uint8_t gain=0;
         if(nvs_get_u8(h,"output_gain",&gain)==ESP_OK && gain>=1 && gain<=8)
             atomic_store(&playback_gain,gain);
@@ -166,6 +202,19 @@ void panel_voice_init(void)
             atomic_store(&input_mode,mode);
         uint8_t volume=0;
         if(nvs_get_u8(h,"volume",&volume)==ESP_OK && volume<=100)(void)product_codec_volume_set(volume,NULL);
+        uint8_t greeting_on=0;
+        esp_err_t greeting_err=nvs_get_u8(h,"greeting_on",&greeting_on);
+        if(greeting_err==ESP_OK && greeting_on<=1)greeting.enabled=greeting_on;
+        else if(greeting_err==ESP_ERR_NVS_NOT_FOUND) {
+            // v0.6.18 stored a script. Preserve only the user's switch.
+            char old[1025];len=sizeof(old);
+            if(nvs_get_str(h,"greeting_v1",old,&len)==ESP_OK) {
+                cJSON *j=cJSON_Parse(old),*enabled=cJSON_GetObjectItemCaseSensitive(j,"enabled");
+                greeting.enabled=cJSON_IsTrue(enabled);cJSON_Delete(j);
+            }
+        }
+        status.greeting_enabled=greeting.enabled;
+        snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",greeting.enabled?"ready":"off");
         len=sizeof(remote_records);
         if(nvs_get_blob(h,"remote_ids_v1",remote_records,&len)!=ESP_OK || len!=sizeof(remote_records))
             memset(remote_records,0,sizeof(remote_records));
@@ -197,18 +246,24 @@ esp_err_t panel_voice_configure(const char *agent)
     bool expected=false;
     if (!atomic_compare_exchange_strong(&busy,&expected,true)) return ESP_ERR_INVALID_STATE;
     voice_config_t cfg={0};nyx_agent_credential_t credential={0};
+    char description[PANEL_VOICE_DESCRIPTION_BYTES]={0};
     esp_err_t err=ESP_ERR_INVALID_ARG;
     xSemaphoreTake(state_lock,portMAX_DELAY);
     for (size_t i=0;i<bot_count;i++) if (!strcmp(bots[i].agent_id,agent)) {
-        cfg.bot=bots[i];snprintf(cfg.key_id,sizeof(cfg.key_id),"%s",bots_key_id);break;
+        cfg.bot=bots[i];snprintf(cfg.key_id,sizeof(cfg.key_id),"%s",bots_key_id);
+        if (bot_descriptions) snprintf(description,sizeof(description),"%s",bot_descriptions[i]);
+        break;
     }
     xSemaphoreGive(state_lock);
     if (!valid_config(&cfg) || !nyx_creds_read_agent(&credential) || strcmp(cfg.key_id,credential.key_id)) goto done;
     err=save_config(&cfg);
     if (err==ESP_OK) {
+        cache_description(&cfg,description);
         xSemaphoreTake(state_lock,portMAX_DELAY);configuration=cfg;
         snprintf(status.agent_id,sizeof(status.agent_id),"%s",cfg.bot.agent_id);
-        snprintf(status.agent_name,sizeof(status.agent_name),"%s",cfg.bot.name);xSemaphoreGive(state_lock);
+        snprintf(status.agent_name,sizeof(status.agent_name),"%s",cfg.bot.name);
+        snprintf(status.agent_description,sizeof(status.agent_description),"%s",description);
+        xSemaphoreGive(state_lock);
         state("idle","Ready");
     }
 done:
@@ -216,9 +271,49 @@ done:
     atomic_store(&busy,false);
     return err;
 }
-void panel_voice_stop(void) { atomic_store(&holding,false);atomic_store(&stopping,true); }
+void panel_voice_stop(void)
+{
+    atomic_store(&holding,false);atomic_store(&stopping,true);
+    if(state_lock && atomic_load(&busy)) {
+        xSemaphoreTake(state_lock,portMAX_DELAY);
+        if(strcmp(status.state,"loading")) {
+            snprintf(status.state,sizeof(status.state),"ending");
+            snprintf(status.message,sizeof(status.message),"Ending call");
+        }
+        xSemaphoreGive(state_lock);
+    }
+}
 void panel_voice_hold(bool pressed) { atomic_store(&holding,pressed && atomic_load(&busy)); }
 void panel_voice_microphone_mute(bool muted) { atomic_store(&microphone_muted,muted); }
+
+void panel_voice_greeting_get(panel_voice_greeting_t *out)
+{
+    if(!out)return;
+    memset(out,0,sizeof(*out));
+    if(!state_lock)return;
+    xSemaphoreTake(state_lock,portMAX_DELAY);*out=greeting;xSemaphoreGive(state_lock);
+}
+esp_err_t panel_voice_greeting_update(const void *json,size_t size)
+{
+    if(!state_lock)return ESP_ERR_INVALID_STATE;
+    xSemaphoreTake(state_lock,portMAX_DELAY);
+    panel_voice_greeting_t next;
+    if(!panel_voice_parse_greeting(json,size,&greeting,&next)) {
+        xSemaphoreGive(state_lock);return ESP_ERR_INVALID_ARG;
+    }
+    nvs_handle_t h;esp_err_t err=nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READWRITE,&h);
+    if(err==ESP_OK) {
+        err=nvs_set_u8(h,"greeting_on",next.enabled);
+        if(err==ESP_OK) {
+            esp_err_t erased=nvs_erase_key(h,"greeting_v1");
+            if(erased!=ESP_OK && erased!=ESP_ERR_NVS_NOT_FOUND)err=erased;
+        }
+        if(err==ESP_OK)err=nvs_commit(h);
+        nvs_close(h);
+    }
+    if(err==ESP_OK){greeting=next;status.greeting_enabled=next.enabled;}
+    xSemaphoreGive(state_lock);return err;
+}
 
 esp_err_t panel_voice_input_mode_set(panel_voice_input_mode_t mode)
 {
@@ -322,12 +417,15 @@ static void refresh_task(void *arg)
     cJSON *reply=panel_voice_keys_url(url,sizeof(url),NYX_AGENT_BASE_URL)?http_request(c,url,NULL):NULL;
     panel_voice_service_t *services=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*services));
     panel_voice_bot_t *found=calloc(PANEL_VOICE_MAX_BOTS,sizeof(*found));size_t count=0;
+    char (*descriptions)[PANEL_VOICE_DESCRIPTION_BYTES]=heap_caps_calloc(PANEL_VOICE_MAX_BOTS,
+        PANEL_VOICE_DESCRIPTION_BYTES,MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     bool parsed=services && found && reply && panel_voice_parse_services(reply,services,&count);
     cJSON_Delete(reply);
     for (size_t i=0;parsed && i<count;++i) {
         snprintf(c->config.bot.service_id,sizeof(c->config.bot.service_id),"%s",services[i].id);
         reply=http(c,"/voice/agents",NULL);
         parsed=reply && panel_voice_parse_service_bot(reply,services[i].id,&found[i]);
+        if (parsed && descriptions) panel_voice_parse_description(reply,descriptions[i]);
         cJSON_Delete(reply);
         // The public selection API chooses a Bot UUID, so duplicate bindings are ambiguous.
         for (size_t j=0;parsed && j<i;++j) if (!strcmp(found[j].agent_id,found[i].agent_id)) parsed=false;
@@ -338,17 +436,27 @@ static void refresh_task(void *arg)
         bool selected=panel_voice_reconcile_bot(&configuration.bot,configuration.key_id,
             c->credential.key_id,found,count,&selected_config.bot);
         bool changed=selected && memcmp(&configuration.bot,&selected_config.bot,sizeof(selected_config.bot));
+        const char *description="";
+        for (size_t i=0;selected && descriptions && i<count;++i)
+            if (!strcmp(found[i].agent_id,selected_config.bot.agent_id)) description=descriptions[i];
+        bool description_changed=selected && (changed || strcmp(status.agent_description,description));
         xSemaphoreGive(state_lock);
         if (selected) snprintf(selected_config.key_id,sizeof(selected_config.key_id),"%s",c->credential.key_id);
         if (changed && save_config(&selected_config)!=ESP_OK) {
             state("error","Could not save the updated voice selection");goto done;
         }
+        if (description_changed) cache_description(&selected_config,description);
         xSemaphoreTake(state_lock,portMAX_DELAY);
         memcpy(bots,found,count*sizeof(*bots));bot_count=count;
+        if (bot_descriptions) {
+            memset(bot_descriptions,0,PANEL_VOICE_MAX_BOTS*PANEL_VOICE_DESCRIPTION_BYTES);
+            if (descriptions) memcpy(bot_descriptions,descriptions,count*PANEL_VOICE_DESCRIPTION_BYTES);
+        }
         snprintf(bots_key_id,sizeof(bots_key_id),"%s",c->credential.key_id);
         configuration=selected_config;
         snprintf(status.agent_id,sizeof(status.agent_id),"%s",configuration.bot.agent_id);
         snprintf(status.agent_name,sizeof(status.agent_name),"%s",configuration.bot.name);
+        snprintf(status.agent_description,sizeof(status.agent_description),"%s",description);
         status.bots_revision++;
         xSemaphoreGive(state_lock);
         state("idle",selected?"Ready":count?"Choose a Bot below":"Create a Bot voice connection in NyxID, then allow it on this Key");
@@ -357,7 +465,7 @@ static void refresh_task(void *arg)
         if (!failed) state("error","Could not verify the Bot voice connections in NyxID");
     }
 done:
-    free(services);free(found);memset(c,0,sizeof(*c));free(c);
+    free(services);free(found);free(descriptions);memset(c,0,sizeof(*c));free(c);
     atomic_store(&busy,false);vTaskDelete(NULL);
 }
 esp_err_t panel_voice_refresh_agents(void)
@@ -411,16 +519,19 @@ static void remote_state(const char *request,const char *value)
 {
     xSemaphoreTake(state_lock,portMAX_DELAY);
     if(!strcmp(status.remote_request_id,request))snprintf(status.remote_state,sizeof(status.remote_state),"%s",value);
+    if(greeting_request_id[0] && !strcmp(greeting_request_id,request))
+        snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",value);
     xSemaphoreGive(state_lock);
 }
-static void send_announcement(voice_call_t *c,const panel_voice_remote_t *request)
+static void send_speech(voice_call_t *c,const char *request_id,const char *text)
 {
+    if(atomic_load(&stopping))return;
     char path[160];snprintf(path,sizeof(path),"/voice/sessions/%s/announcements",c->session);
-    cJSON *body=cJSON_CreateObject();cJSON_AddStringToObject(body,"request_id",request->request_id);
-    cJSON_AddStringToObject(body,"text",request->text);
+    cJSON *body=cJSON_CreateObject();cJSON_AddStringToObject(body,"request_id",request_id);
+    if(text)cJSON_AddStringToObject(body,"text",text);else cJSON_AddBoolToObject(body,"greeting",true);
     cJSON *reply=http(c,path,body);cJSON_Delete(body);
     cJSON *value=cJSON_GetObjectItemCaseSensitive(reply,"state");
-    remote_state(request->request_id,cJSON_IsString(value)?value->valuestring:reply?"queued":"failed");
+    remote_state(request_id,cJSON_IsString(value)?value->valuestring:reply?"queued":"failed");
     cJSON_Delete(reply);
 }
 static int on_state(esp_peer_state_t value,void *ctx)
@@ -567,6 +678,9 @@ static void speaker_task(void *arg)
             atomic_store(&c->running,false);break;
         }
         if (first_frame) {printf("Voice codec stack free: decoder=%u bytes\n",(unsigned)uxTaskGetStackHighWaterMark(NULL));first_frame=false;}
+        // Release the output device from local ringback before writing Bot audio.
+        atomic_store(&c->tone_stopped,true);
+        if(c->tone_started)xEventGroupWaitBits(c->done,DONE_TONE,pdFALSE,pdTRUE,portMAX_DELAY);
         size_t samples=output.decoded_size/2;
         unsigned gain=atomic_load(&playback_gain),source_peak=0,output_peak=0;
         for (size_t i=0;i<samples;i++) {
@@ -693,22 +807,48 @@ done:
     atomic_store(&busy,false);return err;
 }
 
+static void tone_task(void *arg)
+{
+    voice_call_t *c=arg;uint32_t position=0;
+    int16_t mono[FRAME_SAMPLES],stereo[FRAME_SAMPLES*2];
+    xSemaphoreTake(state_lock,portMAX_DELAY);status.dialing_tone=true;xSemaphoreGive(state_lock);
+    while(atomic_load(&c->running) && !atomic_load(&stopping) && !atomic_load(&c->tone_stopped) &&
+        !(atomic_load(&c->connected) && atomic_load(&c->controls) && atomic_load(&c->provider_ready))) {
+        panel_voice_ringback(&position,mono,FRAME_SAMPLES);
+        for(size_t i=0;i<FRAME_SAMPLES;++i)stereo[2*i]=stereo[2*i+1]=mono[i];
+        xSemaphoreTake(c->reference_lock,portMAX_DELAY);
+        panel_voice_reference_push(&c->reference,mono,FRAME_SAMPLES);
+        xSemaphoreGive(c->reference_lock);
+        size_t written=0;
+        if(product_i2s_write(stereo,sizeof(stereo),&written,1000)!=ESP_OK || written!=sizeof(stereo))break;
+    }
+    xSemaphoreTake(state_lock,portMAX_DELAY);status.dialing_tone=false;xSemaphoreGive(state_lock);
+    xEventGroupSetBits(c->done,DONE_TONE);vTaskDelete(NULL);
+}
+
 static void call_task(void *arg)
 {
-    voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;
-    state("connecting","Connecting through NyxID");
+    voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;int64_t connected_at=0;
+    state("connecting","Finding your Bot");
     cJSON *discovery=http(c,"/voice/agents",NULL),*preferences=NULL;
     char path[256];
     if (!discovery) goto done;
     panel_voice_bot_t found={0};
+    if(c->greeting_request[0] && !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(discovery,"greetings"))) {
+        c->greeting_request[0]=0;remote_state(greeting_request_id,"unavailable");
+    }
     bool selected=panel_voice_parse_service_bot(discovery,c->config.bot.service_id,&found) &&
         !strcmp(found.agent_id,c->config.bot.agent_id) && !strcmp(found.conversation_id,c->config.bot.conversation_id);
     if (!selected) {cJSON_Delete(discovery);state("error","Selected Bot is no longer available. Refresh Bots in Settings");goto done;}
+    if(atomic_load(&stopping)){cJSON_Delete(discovery);goto done;}
+    state("connecting","Loading voice settings");
     snprintf(path,sizeof(path),"/voice/options?conversation_id=%s",c->config.bot.conversation_id);
     cJSON *options=http(c,path,NULL);
     if (options) preferences=panel_voice_preferences(discovery,options,c->input_mode);
     cJSON_Delete(options);cJSON_Delete(discovery);
     if (!preferences) {state("error","Select an available WebRTC voice in NyxID voice settings");goto done;}
+    if(atomic_load(&stopping))goto done;
+    state("connecting","Preparing audio");
     if (product_audio_claim()!=ESP_OK) {state("error","Close the music or spectrum app first");goto done;}
     owns=true;
     if (product_codec_dev_resume()!=ESP_OK || product_codec_mute_set(false)!=ESP_OK) {state("error","Audio codec is unavailable");goto done;}
@@ -717,6 +857,9 @@ static void call_task(void *arg)
     if (!c->peer_lock || !c->reference_lock || !c->audio || !c->offers || !c->messages || !c->done) goto done;
     if (open_peer(c)!=ESP_OK) {state("error","Voice peer setup failed");goto done;}
     atomic_store(&c->running,true);
+    if(xTaskCreate(tone_task,"voice_tone",6144,c,3,NULL)==pdPASS){c->tone_started=true;tasks|=DONE_TONE;}
+    else ESP_LOGW("panel.voice","Dialing tone task unavailable");
+    state("connecting","Preparing call");
     if (esp_peer_new_connection(c->peer)) {state("error","Voice peer setup failed");goto done;}
     if (xTaskCreate(peer_task,"voice_rtc",12288,c,4,NULL)!=pdPASS) goto done;
     tasks|=DONE_PEER;
@@ -724,6 +867,7 @@ static void call_task(void *arg)
     while (!atomic_load(&stopping) && atomic_load(&c->running) && !sdp && esp_timer_get_time()<deadline)
         xQueueReceive(c->offers,&sdp,pdMS_TO_TICKS(100));
     if (!sdp || atomic_load(&stopping)) goto done;
+    state("connecting","Calling your Bot");
     log_sdp_shape("offer",sdp);
     char request[37];uuid(request);
     cJSON *body=cJSON_CreateObject();cJSON_AddStringToObject(body,"service_id",c->config.bot.service_id);
@@ -735,6 +879,7 @@ static void call_task(void *arg)
     cJSON *answer=cJSON_GetObjectItemCaseSensitive(reply,"sdp_answer");
     if (!cJSON_IsString(id) || !panel_voice_uuid(id->valuestring) || !cJSON_IsString(answer)) {cJSON_Delete(reply);goto done;}
     strcpy(c->session,id->valuestring);
+    state("connecting","Connecting audio");
     xSemaphoreTake(state_lock,portMAX_DELAY);
     snprintf(status.session_id,sizeof(status.session_id),"%s",c->session);
     xSemaphoreGive(state_lock);
@@ -758,6 +903,7 @@ static void call_task(void *arg)
     tasks|=DONE_MIC;
     if (xTaskCreate(speaker_task,"voice_spk",SPEAKER_STACK_BYTES,c,4,NULL)!=pdPASS) goto done;
     tasks|=DONE_SPEAKER;
+    if(!atomic_load(&stopping))state("connecting","Waiting for audio");
     int64_t heartbeat=0;deadline=esp_timer_get_time()+25000000;
     while (atomic_load(&c->running) && !atomic_load(&stopping)) {
         char *text=NULL;
@@ -765,7 +911,10 @@ static void call_task(void *arg)
             bool live=snapshot(c,text);free(text);if (!live) break;
         }
         bool active=atomic_load(&c->connected) && atomic_load(&c->controls) && atomic_load(&c->provider_ready);
-        xSemaphoreTake(state_lock,portMAX_DELAY);status.active=active;status.playback_ms=atomic_load(&c->played_samples)/16;xSemaphoreGive(state_lock);
+        if(active && !connected_at)connected_at=esp_timer_get_time();
+        xSemaphoreTake(state_lock,portMAX_DELAY);status.active=active;status.playback_ms=atomic_load(&c->played_samples)/16;
+        if(connected_at)status.call_seconds=(unsigned)((esp_timer_get_time()-connected_at)/1000000);
+        xSemaphoreGive(state_lock);
         if (active) {
             bool muted=atomic_load(&microphone_muted) || atomic_load(&c->muted);
             bool speaking=atomic_load(&c->last_speech_us)>0 &&
@@ -773,14 +922,18 @@ static void call_task(void *arg)
             state("active",muted ? "Microphone muted" : speaking ? "Bot speaking" :
                 c->input_mode==PANEL_VOICE_INPUT_AUTOMATIC ? "Listening - automatic" :
                 atomic_load(&holding) ? "Listening" : "Hold to talk");
+            if(c->greeting_request[0]) {
+                send_speech(c,c->greeting_request,NULL);
+                c->greeting_request[0]=0;
+            }
             if(c->remote.request_id[0]) {
-                if(c->remote.text[0])send_announcement(c,&c->remote);
+                if(c->remote.text[0])send_speech(c,c->remote.request_id,c->remote.text);
                 else remote_state(c->remote.request_id,"active");
                 memset(&c->remote,0,sizeof(c->remote));
             }
             remote_message_t notice;
             if(remote_messages && xQueueReceive(remote_messages,&notice,0)==pdTRUE && !strcmp(notice.session,c->session))
-                send_announcement(c,&notice.request);
+                send_speech(c,notice.request.request_id,notice.request.text);
         }
         else if (esp_timer_get_time()>deadline) {state("error","Voice connection timed out");break;}
         if (atomic_load(&c->controls) && esp_timer_get_time()-heartbeat>1000000) {
@@ -792,8 +945,10 @@ static void call_task(void *arg)
         }
     }
 done:
-    atomic_store(&holding,false);atomic_store(&c->running,false);
+    atomic_store(&holding,false);atomic_store(&c->running,false);atomic_store(&c->tone_stopped,true);
     xSemaphoreTake(state_lock,portMAX_DELAY);status.active=false;
+    if(!strcmp(status.greeting_state,"waiting"))
+        snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",atomic_load(&stopping)?"cancelled":"failed");
     if(!strcmp(status.remote_state,"connecting") || !strcmp(status.remote_state,"queued"))
         snprintf(status.remote_state,sizeof(status.remote_state),"%s",atomic_load(&stopping)?"cancelled":"failed");
     remote_message_t discarded;
@@ -829,7 +984,15 @@ static esp_err_t start_call(const panel_voice_remote_t *remote)
     if (!atomic_compare_exchange_strong(&busy,&expected,true)) return ESP_ERR_INVALID_STATE;
     voice_call_t *c=calloc(1,sizeof(*c));
     if (!c) {atomic_store(&busy,false);return ESP_ERR_NO_MEM;}
-    xSemaphoreTake(state_lock,portMAX_DELAY);c->config=configuration;status.sent_packets=status.received_packets=status.playback_ms=status.source_peak=status.output_peak=0;xSemaphoreGive(state_lock);
+    xSemaphoreTake(state_lock,portMAX_DELAY);c->config=configuration;
+    status.sent_packets=status.received_packets=status.playback_ms=status.source_peak=status.output_peak=status.call_seconds=0;
+    status.dialing_tone=false;greeting_request_id[0]=0;
+    bool greet=greeting.enabled && !(remote && remote->text[0]);
+    if(greet) {
+        uuid(c->greeting_request);snprintf(greeting_request_id,sizeof(greeting_request_id),"%s",c->greeting_request);
+    }
+    snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",greet?"waiting":remote && remote->text[0]?"overridden":"off");
+    xSemaphoreGive(state_lock);
     if (!valid_config(&c->config) || !nyx_creds_read_agent(&c->credential) || strcmp(c->config.key_id,c->credential.key_id)) {
         memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);
         state("error","Sign in and select a Bot in Settings");return ESP_ERR_INVALID_STATE;

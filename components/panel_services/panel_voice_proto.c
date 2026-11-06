@@ -69,6 +69,21 @@ bool panel_voice_parse_remote(const void *json, size_t size, bool open, panel_vo
     cJSON_Delete(root);return ok;
 }
 
+bool panel_voice_parse_greeting(const void *json, size_t size,
+    const panel_voice_greeting_t *current, panel_voice_greeting_t *out)
+{
+    if (!json || !current || !out || !size || size>1024 || memchr(json,0,size)) return false;
+    const char *raw=json,*end=NULL;
+    cJSON *root=cJSON_ParseWithLengthOpts(raw,size,&end,false);
+    if(end)while((size_t)(end-raw)<size && strchr(" \t\r\n",*end))++end;
+    const cJSON *value=cJSON_GetObjectItemCaseSensitive(root,"enabled");
+    bool ok=cJSON_IsObject(root) && cJSON_GetArraySize(root)==1 && cJSON_IsBool(value) &&
+        end && (size_t)(end-raw)==size;
+    for(size_t i=0;i+6<=size;++i)if(!memcmp(raw+i,"\\u0000",6))ok=false;
+    if(ok){*out=*current;out->enabled=cJSON_IsTrue(value);}
+    cJSON_Delete(root);return ok;
+}
+
 bool panel_voice_uuid(const char *value)
 {
     if (!value || strlen(value) != 36) return false;
@@ -284,6 +299,18 @@ static size_t utf8_prefix(const char *text, size_t limit)
     n = limit;
     while (n && ((unsigned char)text[n] & 0xc0) == 0x80) --n;
     return n;
+}
+
+void panel_voice_parse_description(const cJSON *root, char out[PANEL_VOICE_DESCRIPTION_BYTES])
+{
+    out[0]=0;
+    const cJSON *rows=cJSON_GetObjectItemCaseSensitive(root,"agents");
+    if (!cJSON_IsArray(rows) || cJSON_GetArraySize(rows)!=1) return;
+    const char *text=string(cJSON_GetArrayItem(rows,0),"description");
+    if (!text) return;
+    size_t n=utf8_prefix(text,PANEL_VOICE_DESCRIPTION_BYTES-1);
+    memcpy(out,text,n);out[n]=0;
+    for (size_t i=0;i<n;++i) if ((unsigned char)out[i]<32 || out[i]==127) out[i]=' ';
 }
 bool panel_voice_parse_captions(const cJSON *snapshot, panel_voice_captions_t *out)
 {

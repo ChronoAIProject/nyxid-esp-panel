@@ -50,11 +50,35 @@ void test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale(void)
     TEST_ASSERT_TRUE(panel_voice_amplify_sample(-32768,4)>-32768);
 }
 
+void test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks(void)
+{
+    int16_t *whole=malloc(48000*sizeof(int16_t)),*chunks=malloc(48000*sizeof(int16_t));
+    TEST_ASSERT_NOT_NULL(whole);TEST_ASSERT_NOT_NULL(chunks);
+    uint32_t position=0;panel_voice_ringback(&position,whole,48000);
+    TEST_ASSERT_EQUAL_UINT(0,position);
+    unsigned audible=0;
+    for(size_t i=0;i<48000;++i) {
+        TEST_ASSERT_TRUE(abs(whole[i])<=3600);
+        if(i>=16000)TEST_ASSERT_EQUAL_INT(0,whole[i]);
+        else if(abs(whole[i])>100)++audible;
+    }
+    TEST_ASSERT_TRUE(audible>12000);
+    TEST_ASSERT_EQUAL_INT(0,whole[0]);
+    TEST_ASSERT_TRUE(abs(whole[15999])<50);
+    for(size_t at=0;at<48000;) {
+        size_t n=48000-at<317?48000-at:317;
+        panel_voice_ringback(&position,chunks+at,n);at+=n;
+    }
+    for(size_t i=0;i<48000;++i)TEST_ASSERT_EQUAL_INT(whole[i],chunks[i]);
+    free(whole);free(chunks);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_reference_preserves_pcm_across_different_codec_and_aec_frame_sizes);
     RUN_TEST(test_reference_overflow_keeps_recent_playback_and_underflow_is_silence);
     RUN_TEST(test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale);
+    RUN_TEST(test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks);
     return UNITY_END();
 }

@@ -149,12 +149,22 @@ unknown, duplicate, combined, out-of-range or fractional fields are rejected.
 | GET, POST | `/voice/config` | Management: POST exactly one `agent_id`, `input_mode` (`automatic`/`push_to_talk`) or `playback_gain` (integer 1..8) |
 | GET, POST | `/config/audio` | Daily: POST exactly one `volume` (integer 0..100) or `playback_gain` (integer 1..8); persisted for this profile |
 | POST | `/voice/input-mode` | Daily: exactly one `input_mode` (`automatic`/`push_to_talk`); requires idle, preserves selected Bot |
+| GET, POST | `/voice/greeting` | Daily: device-only `enabled` (boolean). The selected Bot generates the greeting using its NyxID identity, persona and language. No text/script is accepted. Updates apply to the next call and persist for this server profile. Default disabled. |
 | GET, POST | `/lcd/brightness` | Daily: exactly one integer `brightness` (0..100); preserves rotation and idle behavior |
 | GET, POST, DELETE | `/lcd/default-image` | Daily: read metadata, save persistent JPEG fallback, or restore the bundled NyxBot picture |
 
 `/status.voice` mirrors live voice state; `/status.nyx.management_slug` identifies
 the separately grantable management service. State includes network/display/media,
 heap, firmware and OTA diagnostics without credentials.
+Voice state also includes `call_seconds` (starts only when connected),
+`dialing_tone`, `greeting_enabled` (saved preference for the next call) and
+`greeting_state` (the current/last call's delivery stage). A greeting is skipped as `unavailable` on servers without generated-greeting support; normal voice calls remain available.
+
+```sh
+nyxid proxy request "$DAILY_SLUG" /voice/greeting -m POST \
+  -d '{"enabled":true}'
+nyxid proxy request "$DAILY_SLUG" /voice/greeting -m POST -d '{"enabled":false}'
+```
 
 Remote open uses the selected Bot and the panel's own login credential. It uses
 an automatic per-call mode without replacing the saved mode. No call starts at

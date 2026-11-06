@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 #define PANEL_VOICE_MAX_BOTS 32
+#define PANEL_VOICE_DESCRIPTION_BYTES 769
 typedef struct {
     char service_id[40], agent_id[40], conversation_id[80], name[164];
 } panel_voice_bot_t;
@@ -23,6 +24,9 @@ bool panel_voice_conversation(const char *value);
 // Inventory is metadata only. Credentials always go to the configured NyxID origin.
 bool panel_voice_parse_services(const cJSON *root, panel_voice_service_t *services, size_t *count);
 bool panel_voice_parse_service_bot(const cJSON *root, const char *service_id, panel_voice_bot_t *bot);
+// Optional display metadata, read only after verifying the exact Bot binding.
+// Older servers can omit it. Bound at a complete UTF-8 character.
+void panel_voice_parse_description(const cJSON *root, char out[PANEL_VOICE_DESCRIPTION_BYTES]);
 bool panel_voice_bot_valid(const panel_voice_bot_t *bot, bool legacy);
 // A legacy selection has no service ID; it must match exactly one current binding.
 bool panel_voice_reconcile_bot(const panel_voice_bot_t *saved, const char *saved_key,
@@ -39,6 +43,10 @@ bool panel_voice_parse_captions(const cJSON *snapshot, panel_voice_captions_t *o
 
 typedef struct { char request_id[40], text[301]; bool microphone_muted; } panel_voice_remote_t;
 bool panel_voice_parse_remote(const void *json, size_t size, bool open, panel_voice_remote_t *out);
+typedef struct { bool enabled; } panel_voice_greeting_t;
+// Partial device settings update; validate the complete result before committing.
+bool panel_voice_parse_greeting(const void *json, size_t size,
+    const panel_voice_greeting_t *current, panel_voice_greeting_t *out);
 // Returns fixed local text for recognized server errors; never reflects remote prose.
 const char *panel_voice_error_message(const cJSON *root, int http_status);
 

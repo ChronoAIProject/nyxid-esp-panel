@@ -65,6 +65,8 @@ bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
 bool pending_voice;
+char noticed_bot[40]{};
+int64_t bot_notice_until;
 
 // The bundled Chinese font contains bitmap glyphs. LVGL's vector-font outline
 // styles do not stroke them, so render the same wrapped text at eight offsets.
@@ -175,12 +177,38 @@ bool NyxPanel::run() {
     lv_obj_remove_style_all(content);
     lv_obj_set_size(content, lv_pct(100), lv_pct(100));
     lv_obj_remove_flag(content, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    bot_notice = lv_obj_create(root);
+    lv_obj_set_width(bot_notice, 632);
+    lv_obj_set_height(bot_notice, LV_SIZE_CONTENT);
+    lv_obj_align(bot_notice, LV_ALIGN_TOP_LEFT, 24, 24);
+    lv_obj_set_style_bg_color(bot_notice, lv_color_hex(NYX_SURFACE), 0);
+    lv_obj_set_style_bg_opa(bot_notice, LV_OPA_90, 0);
+    lv_obj_set_style_border_width(bot_notice, 0, 0);
+    lv_obj_set_style_radius(bot_notice, 20, 0);
+    lv_obj_set_style_pad_all(bot_notice, 18, 0);
+    lv_obj_set_style_pad_row(bot_notice, 10, 0);
+    lv_obj_set_flex_flow(bot_notice, LV_FLEX_FLOW_COLUMN);
+    lv_obj_remove_flag(bot_notice, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_add_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
+    auto notice_label = [&](uint32_t color, int max_height) {
+        auto label = lv_label_create(bot_notice);
+        lv_obj_set_width(label, lv_pct(100));
+        lv_obj_set_style_max_height(label, max_height, 0);
+        lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);
+        lv_obj_set_style_text_font(label, lcd_text_font(LCD_TEXT_SIZE_MEDIUM), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(color), 0);
+        return label;
+    };
+    bot_name = notice_label(NYX_TEXT, 56);
+    bot_description = notice_label(NYX_SECONDARY, 84);
+    background_hint = notice_label(NYX_TINT, 56);
+    lv_label_set_text(background_hint, "Ask your Bot to set a default background.");
     voice_toggle = lv_button_create(root);
     lv_obj_set_size(voice_toggle, 64, 64);
     lv_obj_align(voice_toggle, LV_ALIGN_TOP_RIGHT, -24, 24);
     lv_obj_set_style_radius(voice_toggle, LV_RADIUS_CIRCLE, 0);
     lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRIMARY), 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_hex(NYX_PRESSED), LV_STATE_PRESSED);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(lv_color_hex(NYX_PRIMARY), LV_OPA_20), LV_STATE_PRESSED);
     lv_obj_set_style_pad_all(voice_toggle, 0, 0);
     // A small microphone drawn with native shapes stays sharp at panel resolution.
     auto mic_shape = [&](int width, int height, int y, int radius) {
@@ -215,13 +243,15 @@ bool NyxPanel::run() {
     lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_event_cb(voice_toggle, [](lv_event_t *event) {
         auto self = static_cast<NyxPanel *>(lv_event_get_user_data(event));
-        if (lv_obj_has_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN))
+        if (lv_obj_has_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN)) {
             lv_obj_remove_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
-        else lv_obj_add_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
+            panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+            if (!voice.busy) (void)panel_voice_start();
+        } else lv_obj_add_flag(self->voice_controls, LV_OBJ_FLAG_HIDDEN);
     }, LV_EVENT_CLICKED, this);
     voice_controls = lv_obj_create(root);
     auto controls = voice_controls;
-    lv_obj_set_size(controls, 330, 218);
+    lv_obj_set_size(controls, 330, 280);
     lv_obj_align(controls, LV_ALIGN_TOP_RIGHT, -24, 104);
     lv_obj_add_flag(controls, LV_OBJ_FLAG_HIDDEN);
     lv_obj_set_style_bg_color(controls, lv_color_hex(NYX_SURFACE), 0);
@@ -231,14 +261,34 @@ bool NyxPanel::run() {
     lv_obj_set_style_radius(controls, 20, 0);
     lv_obj_set_style_pad_all(controls, 12, 0);
     lv_obj_remove_flag(controls, LV_OBJ_FLAG_SCROLLABLE);
+    const auto bot_font = lcd_text_font(LCD_TEXT_SIZE_MEDIUM);
+    const int connection_y = bot_font->line_height + 4;
+    voice_bot = lv_label_create(controls);
+    lv_obj_set_size(voice_bot, lv_pct(100), bot_font->line_height);
+    lv_label_set_long_mode(voice_bot, LV_LABEL_LONG_DOT);
+    lv_obj_set_style_text_font(voice_bot, bot_font, 0);
+    lv_obj_set_style_text_color(voice_bot, lv_color_hex(NYX_TEXT), 0);
+    voice_connection = lv_label_create(controls);
+    lv_obj_set_size(voice_connection, 268, 28);
+    lv_obj_align(voice_connection, LV_ALIGN_TOP_LEFT, 0, connection_y);
+    lv_obj_set_style_text_font(voice_connection, &lv_font_montserrat_20, 0);
+    voice_spinner = lv_spinner_create(controls);
+    lv_spinner_set_anim_params(voice_spinner, 1000, 270);
+    lv_obj_set_size(voice_spinner, 24, 24);
+    lv_obj_align(voice_spinner, LV_ALIGN_TOP_RIGHT, 0, connection_y);
+    lv_obj_set_style_arc_width(voice_spinner, 3, LV_PART_MAIN);
+    lv_obj_set_style_arc_width(voice_spinner, 3, LV_PART_INDICATOR);
+    lv_obj_set_style_arc_color(voice_spinner, lv_color_hex(NYX_WARNING), LV_PART_INDICATOR);
+    lv_obj_add_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
     voice_status = lv_label_create(controls);
-    lv_obj_set_width(voice_status, lv_pct(100));
+    lv_obj_set_size(voice_status, lv_pct(100), 44);
+    lv_obj_align(voice_status, LV_ALIGN_TOP_LEFT, 0, connection_y + 36);
     lv_label_set_long_mode(voice_status, LV_LABEL_LONG_WRAP);
     lv_obj_set_style_text_font(voice_status, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(voice_status, lv_color_hex(NYX_TEXT), 0);
     mode_select = lv_dropdown_create(controls);
     lv_obj_set_size(mode_select, 304, 44);
-    lv_obj_align(mode_select, LV_ALIGN_TOP_LEFT, 0, 60);
+    lv_obj_align(mode_select, LV_ALIGN_TOP_LEFT, 0, connection_y + 88);
     lv_obj_set_style_text_font(mode_select, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_font(lv_dropdown_get_list(mode_select), &lv_font_montserrat_16, 0);
     lv_dropdown_set_options(mode_select, "Hold to talk\nAuto conversation");
@@ -263,7 +313,9 @@ bool NyxPanel::run() {
     hold_button = button(130, 174, "Hold to talk");
     lv_obj_add_event_cb(call_button, [](lv_event_t *) {
         panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
-        if (voice.busy) panel_voice_stop(); else (void)panel_voice_start();
+        if (voice.busy) {
+            if (strcmp(voice.state, "loading")) panel_voice_stop();
+        } else (void)panel_voice_start();
     }, LV_EVENT_CLICKED, nullptr);
     lv_obj_add_event_cb(hold_button, [](lv_event_t *event) {
         auto code = lv_event_get_code(event);
@@ -285,6 +337,8 @@ bool NyxPanel::close() {
     if (root) { lv_obj_delete(root); root = nullptr; }
     content = voice_status = call_button = call_label = hold_button = mode_select = nullptr;
     voice_controls = voice_toggle = voice_indicator = nullptr;
+    voice_bot = voice_connection = voice_spinner = nullptr;
+    bot_notice = bot_name = bot_description = background_hint = nullptr;
     return true;
 }
 void NyxPanel::showVoiceControls() {
@@ -293,6 +347,21 @@ void NyxPanel::showVoiceControls() {
 void NyxPanel::refreshVoice() {
     if (!voice_status) return;
     panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+    if (voice.configured && voice.agent_id[0] && strcmp(noticed_bot, voice.agent_id)) {
+        snprintf(noticed_bot, sizeof(noticed_bot), "%s", voice.agent_id);
+        bot_notice_until = esp_timer_get_time() + 10000000;
+    }
+    if (voice.configured && esp_timer_get_time() < bot_notice_until && !image.dsc.data) {
+        lv_obj_remove_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
+        if (strcmp(lv_label_get_text(bot_name), voice.agent_name))
+            lv_label_set_text(bot_name, voice.agent_name);
+        if (strcmp(lv_label_get_text(bot_description), voice.agent_description))
+            lv_label_set_text(bot_description, voice.agent_description);
+        if (voice.agent_description[0]) lv_obj_remove_flag(bot_description, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(bot_description, LV_OBJ_FLAG_HIDDEN);
+        if (background_stored) lv_obj_add_flag(background_hint, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_remove_flag(background_hint, LV_OBJ_FLAG_HIDDEN);
+    } else lv_obj_add_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
     if (voice.busy) {
         lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
         lv_obj_set_style_bg_color(voice_indicator, lv_color_hex(
@@ -300,9 +369,31 @@ void NyxPanel::refreshVoice() {
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
     const char *text = voice.message[0] ? voice.message : "Voice is not configured";
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
-    const char *action = voice.busy ? "Hang up" : "Call";
+    const bool loading = voice.busy && !strcmp(voice.state, "loading");
+    const bool calling = voice.busy && !loading;
+    const bool ending = calling && !strcmp(voice.state, "ending");
+    char connection[64];
+    const char *title = voice.agent_name[0] ? voice.agent_name : "Voice";
+    if (strcmp(lv_label_get_text(voice_bot), title)) lv_label_set_text(voice_bot, title);
+    if (ending) snprintf(connection, sizeof(connection), "Ending call...");
+    else if (voice.active) snprintf(connection, sizeof(connection), "Connected %02u:%02u", voice.call_seconds / 60, voice.call_seconds % 60);
+    else snprintf(connection, sizeof(connection), "%s", loading ? "Loading Bots..." : calling ? "Connecting..." :
+        !strcmp(voice.state, "error") ? (voice.call_seconds ? "Call disconnected" : "Couldn't connect") :
+        voice.session_id[0] ? "Call ended" : "Ready to call");
+    if (strcmp(lv_label_get_text(voice_connection), connection)) lv_label_set_text(voice_connection, connection);
+    lv_obj_set_style_text_color(voice_connection, lv_color_hex(ending ? NYX_MUTED : voice.active ? NYX_SUCCESS :
+        calling || loading ? NYX_WARNING : !strcmp(voice.state, "error") ? NYX_ERROR : NYX_TEXT), 0);
+    if (loading || (calling && (!voice.active || ending))) lv_obj_remove_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
+    else lv_obj_add_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
+    const auto call_color = lv_color_hex(loading ? NYX_BORDER : calling ? NYX_ERROR : NYX_SUCCESS);
+    lv_obj_set_style_bg_color(call_button, call_color, 0);
+    lv_obj_set_style_bg_color(call_button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
+    const auto icon_color = lv_color_hex(loading ? NYX_BORDER : calling && !voice.active ? NYX_WARNING : calling ? NYX_ERROR : NYX_PRIMARY);
+    lv_obj_set_style_bg_color(voice_toggle, icon_color, 0);
+    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(icon_color, LV_OPA_20), LV_STATE_PRESSED);
+    const char *action = ending ? "Ending..." : calling && !voice.active ? LV_SYMBOL_CLOSE " Cancel" : calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
-    if (voice.configured || voice.busy) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
+    if (!ending && !loading && (voice.configured || calling)) lv_obj_remove_state(call_button, LV_STATE_DISABLED);
     else lv_obj_add_state(call_button, LV_STATE_DISABLED);
     lv_dropdown_set_selected(mode_select, static_cast<uint32_t>(voice.input_mode));
     if (voice.busy) lv_obj_add_state(mode_select, LV_STATE_DISABLED);

@@ -14,3 +14,7 @@ void panel_voice_reference_read(panel_voice_reference_t *ref, int16_t *pcm, size
 
 // Voice gain with a soft knee; bounded input never wraps or hard clips.
 int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain);
+
+// 16 kHz local ringback, one second on and two seconds off, with soft edges.
+// Independent of provider playback timing and its gain setting.
+void panel_voice_ringback(uint32_t *position, int16_t *pcm, size_t samples);
