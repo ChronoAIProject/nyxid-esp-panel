@@ -226,6 +226,27 @@ void test_provider_readiness_accepts_large_session_without_trusting_other_events
     TEST_ASSERT_FALSE(panel_voice_provider_started("x",96*1024+1));
 }
 
+void test_snapshot_validation_does_not_turn_bad_packets_into_hangups(void)
+{
+    const char *id="11111111-2222-3333-4444-555555555555";
+    cJSON *root=cJSON_Parse("{\"type\":\"snapshot\",\"session\":{\"id\":\"11111111-2222-3333-4444-555555555555\",\"state\":\"active\",\"generation\":1,\"control_revision\":0,\"muted\":false,\"input_muted\":false}}");
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_LIVE,panel_voice_snapshot_result(root,id));
+    cJSON *session=cJSON_GetObjectItemCaseSensitive(root,"session");
+    cJSON_ReplaceItemInObjectCaseSensitive(session,"control_revision",cJSON_CreateNumber(-1));
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_INVALID,panel_voice_snapshot_result(root,id));
+    cJSON_ReplaceItemInObjectCaseSensitive(session,"control_revision",cJSON_CreateNumber(0));
+    cJSON_DeleteItemFromObjectCaseSensitive(session,"muted");
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_INVALID,panel_voice_snapshot_result(root,id));
+    cJSON_ReplaceItemInObjectCaseSensitive(cJSON_GetObjectItemCaseSensitive(root,"session"),"state",cJSON_CreateString("closing"));
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_TERMINAL,panel_voice_snapshot_result(root,id));
+    cJSON_ReplaceItemInObjectCaseSensitive(cJSON_GetObjectItemCaseSensitive(root,"session"),"state",cJSON_CreateString("future_state"));
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_INVALID,panel_voice_snapshot_result(root,id));
+    cJSON_ReplaceItemInObjectCaseSensitive(cJSON_GetObjectItemCaseSensitive(root,"session"),"id",cJSON_CreateString("other"));
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_INVALID,panel_voice_snapshot_result(root,id));
+    TEST_ASSERT_EQUAL_INT(PANEL_VOICE_SNAPSHOT_INVALID,panel_voice_snapshot_result(NULL,id));
+    cJSON_Delete(root);
+}
+
 void test_normal_server_end_requires_closed_state_and_a_known_reason(void)
 {
     cJSON *row=cJSON_Parse("{\"state\":\"closed\",\"end_reason\":\"idle\"}");
@@ -381,6 +402,7 @@ int main(void)
     RUN_TEST(test_voice_errors_explain_provider_credits_without_reflecting_remote_text);
     RUN_TEST(test_initial_sdp_offer_negotiates_dtls_without_changing_credentials);
     RUN_TEST(test_provider_readiness_accepts_large_session_without_trusting_other_events);
+    RUN_TEST(test_snapshot_validation_does_not_turn_bad_packets_into_hangups);
     RUN_TEST(test_normal_server_end_requires_closed_state_and_a_known_reason);
     RUN_TEST(test_input_modes_keep_authority_mute_and_hold_boundaries);
     RUN_TEST(test_caption_roles_survive_interleaved_and_reordered_fragments);

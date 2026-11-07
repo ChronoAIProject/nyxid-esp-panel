@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 const char *panel_voice_input_mode_name(panel_voice_input_mode_t mode)
 {
@@ -380,6 +381,37 @@ bool panel_voice_provider_started(const char *json, size_t size)
     const cJSON *type=cJSON_GetObjectItemCaseSensitive(event,"type");
     bool started=cJSON_IsString(type) && !strcmp(type->valuestring,"session.started");
     cJSON_Delete(event);return started;
+}
+
+panel_voice_snapshot_result_t panel_voice_snapshot_result(const cJSON *root,
+    const char *session_id)
+{
+    if (!cJSON_IsObject(root) || !session_id) return PANEL_VOICE_SNAPSHOT_INVALID;
+    const cJSON *type=cJSON_GetObjectItemCaseSensitive(root,"type");
+    if (!cJSON_IsString(type) || strcmp(type->valuestring,"snapshot"))
+        return PANEL_VOICE_SNAPSHOT_INVALID;
+    const cJSON *session=cJSON_GetObjectItemCaseSensitive(root,"session");
+    if (!cJSON_IsObject(session)) return PANEL_VOICE_SNAPSHOT_INVALID;
+    const cJSON *id=cJSON_GetObjectItemCaseSensitive(session,"id");
+    const cJSON *state=cJSON_GetObjectItemCaseSensitive(session,"state");
+    if (!cJSON_IsString(id) ||
+        strcmp(id->valuestring,session_id) || !cJSON_IsString(state))
+        return PANEL_VOICE_SNAPSHOT_INVALID;
+    if (!strcmp(state->valuestring,"closed") || !strcmp(state->valuestring,"failed") ||
+        !strcmp(state->valuestring,"closing")) return PANEL_VOICE_SNAPSHOT_TERMINAL;
+    if (strcmp(state->valuestring,"starting") && strcmp(state->valuestring,"active"))
+        return PANEL_VOICE_SNAPSHOT_INVALID;
+    const char *numbers[]={"generation","control_revision"};
+    for (size_t i=0;i<2;i++) {
+        const cJSON *n=cJSON_GetObjectItemCaseSensitive(session,numbers[i]);
+        if (!cJSON_IsNumber(n) || !(n->valuedouble>=(i?0:1) && n->valuedouble<=UINT_MAX) ||
+            n->valuedouble!=(double)(unsigned)n->valuedouble)
+            return PANEL_VOICE_SNAPSHOT_INVALID;
+    }
+    if (!cJSON_IsBool(cJSON_GetObjectItemCaseSensitive(session,"muted")) ||
+        !cJSON_IsBool(cJSON_GetObjectItemCaseSensitive(session,"input_muted")))
+        return PANEL_VOICE_SNAPSHOT_INVALID;
+    return PANEL_VOICE_SNAPSHOT_LIVE;
 }
 
 bool panel_voice_normal_end(const cJSON *session)
