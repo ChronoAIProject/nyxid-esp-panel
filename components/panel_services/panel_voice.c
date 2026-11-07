@@ -711,31 +711,36 @@ static void socket_event(void *arg,esp_event_base_t base,int32_t id,void *data)
     (void)base;voice_call_t *c=arg;
     if (id==WEBSOCKET_EVENT_DISCONNECTED || id==WEBSOCKET_EVENT_ERROR) {
         atomic_store(&c->controls,false);
-        if (atomic_exchange(&c->running,false) && !atomic_load(&stopping))
-            state("error","Voice control connection was lost. Start a new call");
+        if (atomic_load(&c->running) && !atomic_load(&stopping))
+            state("connecting","Reconnecting voice controls");
         return;
     }
     if (id!=WEBSOCKET_EVENT_DATA) return;
     esp_websocket_event_data_t *e=data;
     if (e->op_code!=0 && e->op_code!=1) return;
     if (e->payload_len<=0 || e->payload_len>=MAX_CONTROL_BYTES || e->payload_offset<0 || e->data_len<0 ||
-        e->payload_offset+e->data_len>e->payload_len) {atomic_store(&c->running,false);return;}
+        e->payload_offset+e->data_len>e->payload_len) return;
     if (!e->payload_offset) {
         free(c->socket_text);c->socket_text=malloc(e->payload_len+1);c->socket_size=e->payload_len;c->socket_used=0;
     }
-    if (!c->socket_text || c->socket_size!=(size_t)e->payload_len || c->socket_used!=(size_t)e->payload_offset) {atomic_store(&c->running,false);return;}
+    if (!c->socket_text || c->socket_size!=(size_t)e->payload_len || c->socket_used!=(size_t)e->payload_offset) return;
     memcpy(c->socket_text+c->socket_used,e->data_ptr,e->data_len);c->socket_used+=e->data_len;
     if (c->socket_used==c->socket_size) {
         c->socket_text[c->socket_used]=0;char *text=c->socket_text;c->socket_text=NULL;
-        if (xQueueSend(c->messages,&text,0)!=pdTRUE) {free(text);atomic_store(&c->running,false);}
+        if (xQueueSend(c->messages,&text,0)!=pdTRUE) free(text);
     }
 }
 static bool snapshot(voice_call_t *c,const char *text)
 {
-    cJSON *root=cJSON_Parse(text),*session=cJSON_GetObjectItemCaseSensitive(root,"session");
-    const cJSON *id=cJSON_GetObjectItemCaseSensitive(session,"id"),*value=cJSON_GetObjectItemCaseSensitive(session,"state");
-    if (!cJSON_IsString(id) || strcmp(id->valuestring,c->session) || !cJSON_IsString(value)) {cJSON_Delete(root);return false;}
-    c->control_revision=(unsigned)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(session,"control_revision"));
+    cJSON *root=cJSON_Parse(text);
+    panel_voice_snapshot_result_t result=panel_voice_snapshot_result(root,c->session);
+    if (result==PANEL_VOICE_SNAPSHOT_INVALID) { cJSON_Delete(root); return true; }
+    cJSON *session=cJSON_GetObjectItemCaseSensitive(root,"session");
+    const cJSON *value=cJSON_GetObjectItemCaseSensitive(session,"state");
+    if (result==PANEL_VOICE_SNAPSHOT_LIVE) {
+        c->generation=(unsigned)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(session,"generation"));
+        c->control_revision=(unsigned)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(session,"control_revision"));
+    }
     bool active=!strcmp(value->valuestring,"active");
     atomic_store(&c->controls,active);
     atomic_store(&c->muted,cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(session,"muted")) || cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(session,"input_muted")));
@@ -750,7 +755,7 @@ static bool snapshot(voice_call_t *c,const char *text)
         const cJSON *stage=cJSON_GetObjectItemCaseSensitive(notice,"state");
         if(cJSON_IsString(request) && cJSON_IsString(stage))remote_state(request->valuestring,stage->valuestring);
     }
-    bool live=strcmp(value->valuestring,"closed") && strcmp(value->valuestring,"failed") && strcmp(value->valuestring,"closing");
+    bool live=result==PANEL_VOICE_SNAPSHOT_LIVE;
     if (!live && !atomic_load(&stopping) &&
         (!strcmp(value->valuestring,"failed") || !atomic_load(&c->provider_ready)))
         state("error","Voice ended before audio was ready. Start a new call");
@@ -894,7 +899,8 @@ static void call_task(void *arg)
     if (!panel_voice_service_url(url,sizeof(url),NYX_AGENT_BASE_URL,c->config.bot.service_id,path,true)) goto done;
     snprintf(headers,sizeof(headers),"Authorization: Bearer %s\r\n",c->credential.credential);
     esp_websocket_client_config_t ws={.uri=url,.headers=headers,.crt_bundle_attach=esp_crt_bundle_attach,
-        .disable_auto_reconnect=true,.buffer_size=8192,.task_stack=8192,.network_timeout_ms=10000};
+        .disable_auto_reconnect=false,.reconnect_timeout_ms=1000,
+        .buffer_size=8192,.task_stack=8192,.network_timeout_ms=10000};
     c->socket=esp_websocket_client_init(&ws);memset(headers,0,sizeof(headers));
     if (!c->socket) goto done;
     esp_websocket_register_events(c->socket,WEBSOCKET_EVENT_ANY,socket_event,c);
@@ -916,6 +922,8 @@ static void call_task(void *arg)
         if(connected_at)status.call_seconds=(unsigned)((esp_timer_get_time()-connected_at)/1000000);
         xSemaphoreGive(state_lock);
         if (active) {
+            // Give a recovered control stream its own bounded grace period.
+            deadline=esp_timer_get_time()+25000000;
             bool muted=atomic_load(&microphone_muted) || atomic_load(&c->muted);
             bool speaking=atomic_load(&c->last_speech_us)>0 &&
                 esp_timer_get_time()-atomic_load(&c->last_speech_us)<250000;
@@ -940,7 +948,10 @@ static void call_task(void *arg)
             char event[256];snprintf(event,sizeof(event),"{\"type\":\"heartbeat\",\"generation\":%u,\"revision\":%u,\"playback_ms\":%u,\"playback_audible\":%s}",
                 c->generation,++c->heartbeat_revision,atomic_load(&c->played_samples)/16,
                 esp_timer_get_time()-atomic_load(&c->last_audio_us)<200000 && product_codec_volume_get()>0?"true":"false");
-            if (esp_websocket_client_send_text(c->socket,event,strlen(event),pdMS_TO_TICKS(2000))<0) break;
+            if (esp_websocket_client_send_text(c->socket,event,strlen(event),pdMS_TO_TICKS(2000))<0) {
+                atomic_store(&c->controls,false);
+                state("connecting","Reconnecting voice controls");
+            }
             heartbeat=esp_timer_get_time();
         }
     }
@@ -954,12 +965,13 @@ done:
     remote_message_t discarded;
     while(remote_messages && xQueueReceive(remote_messages,&discarded,0)==pdTRUE){}
     xSemaphoreGive(state_lock);
-    if (c->session[0]) {
+    // Transport, codec and parser failures must not be turned into an
+    // implicit `action=end`. The server can expire a lost client and preserve
+    // already-started work. Only the explicit local Stop action owns hang-up.
+    if (c->session[0] && atomic_load(&stopping)) {
         char command[37];uuid(command);snprintf(path,sizeof(path),"/voice/sessions/%s/control",c->session);
         cJSON *end=cJSON_CreateObject();cJSON_AddStringToObject(end,"command_id",command);cJSON_AddNumberToObject(end,"expected_revision",c->control_revision);cJSON_AddStringToObject(end,"action","end");
         cJSON *reply=http(c,path,end);
-        if (!atomic_load(&stopping) && panel_voice_normal_end(reply))
-            state("idle","Call ended");
         cJSON_Delete(reply);cJSON_Delete(end);
     }
     if (c->socket) {esp_websocket_client_stop(c->socket);esp_websocket_client_destroy(c->socket);}

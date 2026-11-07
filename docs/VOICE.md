@@ -82,6 +82,13 @@ encoding; codec and AEC frame sizes are adapted without dropping samples. MusicP
 claims it. Ending a call releases the codec. A call is started explicitly; the
 panel does not continuously stream microphone audio in the background.
 
+Control WebSocket interruptions pause microphone input and reconnect within a
+25-second grace period, retaining the existing media session. Invalid,
+incomplete or unknown snapshots are ignored. Transport and codec failures
+release local audio without sending a user hangup command; NyxID expires a
+lost client's heartbeat while already accepted work keeps running. The local
+Hang up action still explicitly ends the call.
+
 ## Local NyxID development
 
 Production builds use the default HTTPS NyxID URLs. For local development:

@@ -56,5 +56,14 @@ char *panel_voice_prepare_offer(const char *sdp, size_t size);
 // Accept the bounded provider readiness event, which may include a large session.
 bool panel_voice_provider_started(const char *json, size_t size);
 
+typedef enum {
+    PANEL_VOICE_SNAPSHOT_INVALID = 0,
+    PANEL_VOICE_SNAPSHOT_LIVE = 1,
+    PANEL_VOICE_SNAPSHOT_TERMINAL = 2,
+} panel_voice_snapshot_result_t;
+// Distinguish malformed/foreign snapshots from an authenticated terminal state.
+panel_voice_snapshot_result_t panel_voice_snapshot_result(const cJSON *root,
+    const char *session_id);
+
 // Normal server termination must not become a transport error on socket close.
 bool panel_voice_normal_end(const cJSON *session);
