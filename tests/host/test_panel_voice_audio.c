@@ -4,35 +4,73 @@
 #include <limits.h>
 void setUp(void) {}
 void tearDown(void) {}
-void test_reference_preserves_pcm_across_different_codec_and_aec_frame_sizes(void)
+void test_preroll_preserves_speech_at_detection_boundary_including_wrap(void)
 {
-    panel_voice_reference_t ref={0};int16_t input[320],output[256];
-    for(int i=0;i<320;i++)input[i]=(int16_t)(i-160);
-    panel_voice_reference_push(&ref,input,320);
-    panel_voice_reference_read(&ref,output,256);
-    for(int i=0;i<256;i++)TEST_ASSERT_EQUAL_INT(input[i],output[i]);
-    panel_voice_reference_push(&ref,input,320);
-    panel_voice_reference_read(&ref,output,256);
-    for(int i=0;i<64;i++)TEST_ASSERT_EQUAL_INT(input[i+256],output[i]);
-    for(int i=64;i<256;i++)TEST_ASSERT_EQUAL_INT(input[i-64],output[i]);
-    panel_voice_reference_read(&ref,output,256);
-    for(int i=0;i<128;i++)TEST_ASSERT_EQUAL_INT(input[i+192],output[i]);
-    for(int i=128;i<256;i++)TEST_ASSERT_EQUAL_INT(0,output[i]);
-    TEST_ASSERT_EQUAL_INT(0,ref.count);
+    int16_t tail[500],recording[2000],input[160],output[160];
+    panel_voice_pcm_t lookback={.samples=tail,.capacity=500};
+    panel_voice_pcm_t call={.samples=recording,.capacity=2000};
+    for(int start=0;start<1600;start+=160) {
+        for(int i=0;i<160;++i)input[i]=(int16_t)(start+i);
+        panel_voice_pcm_preroll_push(&lookback,input,160);
+    }
+    TEST_ASSERT_EQUAL_UINT(500,lookback.count);
+    size_t first=lookback.count<lookback.capacity-lookback.head?lookback.count:lookback.capacity-lookback.head;
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&call,lookback.samples+lookback.head,first));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&call,lookback.samples,lookback.count-first));
+    for(int i=0;i<160;++i)input[i]=(int16_t)(1600+i);
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&call,input,160));
+    for(int expected=1100;expected<1760;) {
+        size_t n=1760-expected<160?(size_t)(1760-expected):160;
+        TEST_ASSERT_TRUE(panel_voice_pcm_pop(&call,output,n));
+        for(size_t i=0;i<n;++i)TEST_ASSERT_EQUAL_INT(expected+(int)i,output[i]);
+        expected+=(int)n;
+    }
+    TEST_ASSERT_EQUAL_UINT(0,call.count);
 }
-void test_reference_overflow_keeps_recent_playback_and_underflow_is_silence(void)
+void test_connecting_audio_and_live_audio_are_one_lossless_ordered_stream(void)
 {
-    panel_voice_reference_t ref={0};int16_t in[2049],out[2048];
-    for(int i=0;i<2049;i++)in[i]=(int16_t)i;
-    panel_voice_reference_push(&ref,in,2048);
-    panel_voice_reference_push(&ref,in+2048,1);
-    panel_voice_reference_read(&ref,out,2048);
-    for(int i=0;i<2048;i++)TEST_ASSERT_EQUAL_INT(i+1,out[i]);
-    panel_voice_reference_push(&ref,in,2049);
-    panel_voice_reference_read(&ref,out,2048);
-    for(int i=0;i<2048;i++)TEST_ASSERT_EQUAL_INT(i+1,out[i]);
-    panel_voice_reference_read(&ref,out,2048);
-    for(int i=0;i<2048;i++)TEST_ASSERT_EQUAL_INT(0,out[i]);
+    // Different AEC/Opus block sizes, a connection delay, and 4x replay while
+    // capture continues. The queue wraps repeatedly after catching up.
+    int16_t memory[16000*3],in[160],out[320];
+    panel_voice_pcm_t fifo={.samples=memory,.capacity=16000*3};
+    size_t captured=0,sent=0;
+    for(unsigned tick=0;tick<3000;++tick) {
+        for(unsigned i=0;i<160;++i)in[i]=(int16_t)((captured+i)%32749);
+        TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,160));captured+=160;
+        if(tick<150 || tick%2)continue;
+        for(unsigned frame=0;frame<4 && fifo.count>=320;++frame) {
+            TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+            for(unsigned i=0;i<320;++i)TEST_ASSERT_EQUAL_INT((sent+i)%32749,out[i]);
+            sent+=320;
+        }
+    }
+    while(fifo.count>=320) {
+        TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+        for(unsigned i=0;i<320;++i)TEST_ASSERT_EQUAL_INT((sent+i)%32749,out[i]);
+        sent+=320;
+    }
+    TEST_ASSERT_EQUAL_UINT(captured,sent);
+    TEST_ASSERT_EQUAL_UINT(0,fifo.count);
+}
+void test_recording_overflow_never_discards_old_speech_and_clear_removes_it(void)
+{
+    int16_t memory[640],in[320],out[320];
+    panel_voice_pcm_t fifo={.samples=memory,.capacity=640};
+    for(unsigned i=0;i<320;++i)in[i]=(int16_t)(i+1);
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_FALSE(panel_voice_pcm_push(&fifo,in,1));
+    TEST_ASSERT_EQUAL_UINT(640,fifo.count);
+    TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+    for(unsigned i=0;i<320;++i)TEST_ASSERT_EQUAL_INT(in[i],out[i]);
+    TEST_ASSERT_FALSE(panel_voice_pcm_pop(&fifo,out,321));
+    TEST_ASSERT_EQUAL_UINT(320,fifo.count);
+    panel_voice_pcm_clear(&fifo);
+    TEST_ASSERT_FALSE(panel_voice_pcm_pop(&fifo,out,1));
+    for(unsigned i=0;i<640;++i)TEST_ASSERT_EQUAL_INT(0,memory[i]);
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+    for(unsigned i=0;i<320;++i)TEST_ASSERT_EQUAL_INT(in[i],out[i]);
 }
 void test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale(void)
 {
@@ -76,8 +114,9 @@ void test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks(void)
 int main(void)
 {
     UNITY_BEGIN();
-    RUN_TEST(test_reference_preserves_pcm_across_different_codec_and_aec_frame_sizes);
-    RUN_TEST(test_reference_overflow_keeps_recent_playback_and_underflow_is_silence);
+    RUN_TEST(test_preroll_preserves_speech_at_detection_boundary_including_wrap);
+    RUN_TEST(test_connecting_audio_and_live_audio_are_one_lossless_ordered_stream);
+    RUN_TEST(test_recording_overflow_never_discards_old_speech_and_clear_removes_it);
     RUN_TEST(test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale);
     RUN_TEST(test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks);
     return UNITY_END();

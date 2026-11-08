@@ -45,7 +45,21 @@ idf_component_register(
         esp_https_ota esp_http_client esp_http_server app_update
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
         json lvgl nvs_flash spi_flash quirc
-        waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp-sr)
+        waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib)
+
+# Embed weights in each app slot: an OTA update must not depend on a separately
+# flashed model partition, or change any existing board's partition layout.
+idf_component_get_property(_sr_dir espressif__esp-sr COMPONENT_DIR)
+set(_wake_source "${_sr_dir}/model/wakenet_model/wn9_hiesp")
+set(_wake_binary "${CMAKE_CURRENT_BINARY_DIR}/panel-hi-esp.bin")
+add_custom_command(OUTPUT "${_wake_binary}"
+    COMMAND ${PYTHON} "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/embed_wake_model.py" "${_wake_source}" "${_wake_binary}"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/embed_wake_model.py"
+        "${_wake_source}/_MODEL_INFO_" "${_wake_source}/wn9_index" "${_wake_source}/wn9_data"
+    VERBATIM)
+add_custom_target(panel_wake_model DEPENDS "${_wake_binary}")
+add_dependencies(${COMPONENT_LIB} panel_wake_model)
+target_add_binary_data(${COMPONENT_LIB} "${_wake_binary}" BINARY)
 
 set(NYX_PANEL_AGENT_DEV_API_URL "" CACHE STRING "LAN NyxID API origin for Agent Key development")
 set(NYX_PANEL_AGENT_DEV_LOGIN_URL "" CACHE STRING "LAN Agent Key verification page")

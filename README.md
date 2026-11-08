@@ -97,7 +97,11 @@ behavior and capabilities intentionally left for later.
 Tap the microphone icon to open voice controls. Calls support **Hold to talk**
 and **Auto conversation**, with echo cancellation, adjustable output gain and
 separate user/Bot caption colors. The controls start collapsed and no microphone
-stream starts at boot. Remote daily-service calls can open two-way voice, queue
+audio is uploaded at boot. Local **Hi ESP** wake-word detection is enabled by
+default and can be disabled in the voice panel. Say the wake word and continue
+speaking: the panel records during connection and sends that speech before live
+audio, without switching microphone readers or sending an opening greeting.
+Remote daily-service calls can open two-way voice, queue
 an opening notification and control microphone mute or hangup. Voice connects
 directly from the board to NyxID and the provider; it needs no Mac bridge.
 The existing panel Key discovers active Bot Voice services through `/api/v1/keys`.

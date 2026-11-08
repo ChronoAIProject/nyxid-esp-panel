@@ -29,6 +29,7 @@ private:
     lv_obj_t *call_label = nullptr;
     lv_obj_t *hold_button = nullptr;
     lv_obj_t *mode_select = nullptr;
+    lv_obj_t *wake_switch = nullptr;
     lv_obj_t *voice_controls = nullptr;
     lv_obj_t *voice_toggle = nullptr;
     lv_obj_t *voice_indicator = nullptr;

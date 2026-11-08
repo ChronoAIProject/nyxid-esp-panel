@@ -145,6 +145,15 @@ static cJSON *voice_json(void)
     cJSON_AddStringToObject(j,"input_mode",panel_voice_input_mode_name(v.input_mode));
     cJSON_AddStringToObject(j,"preferred_input_mode",panel_voice_input_mode_name(v.preferred_input_mode));
     cJSON_AddBoolToObject(j,"microphone_muted",v.microphone_muted);
+    cJSON *wake=cJSON_AddObjectToObject(j,"wake");
+    cJSON_AddBoolToObject(wake,"enabled",v.wake_enabled);
+    cJSON_AddBoolToObject(wake,"listening",v.wake_listening);
+    cJSON_AddStringToObject(wake,"word","Hi ESP");
+    cJSON_AddStringToObject(wake,"state",v.wake_state);
+    cJSON_AddNumberToObject(wake,"detections",v.wake_detections);
+    cJSON_AddBoolToObject(wake,"initiated_call",v.wake_initiated);
+    cJSON_AddNumberToObject(wake,"buffered_ms",v.buffered_ms);
+    cJSON_AddNumberToObject(wake,"transmitted_ms",v.replayed_ms);
     cJSON_AddNumberToObject(j,"playback_gain",v.playback_gain);
     cJSON_AddNumberToObject(j,"volume",product_codec_volume_get());
     cJSON_AddStringToObject(j,"state",v.state);cJSON_AddStringToObject(j,"message",v.message);
@@ -730,6 +739,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         else if(!strcmp(r->path,"/config/audio"))description="Adjust saved audio output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). GET returns current audio and voice state. Does not change Bot selection.";
         else if(!strcmp(r->path,"/voice/input-mode"))description="Set saved input_mode to automatic or push_to_talk while idle. Exactly one field. Does not change the selected Bot or grants.";
         else if(!strcmp(r->path,"/voice/greeting"))description="Read or configure this panel's automatic spoken greeting for future calls. POST enabled (boolean). The selected Bot generates its greeting from its NyxID identity, persona and language; there is no scripted text. Persists in this server profile. An explicit remote opening message takes priority. Never a user utterance or tool permission.";
+        else if(!strcmp(r->path,"/voice/wake"))description="Enable or disable local Hi ESP wake-word listening. POST exactly enabled (boolean); persists in this server profile. Wake opens automatic conversation, records immediately while connecting, and sends buffered speech before live audio. Skips the opening greeting. Disabling affects future wake-ups, not the current call. Listening pauses for microphone mute, other audio apps and OTA. /voice reports detection and buffer state.";
         else if(!strcmp(r->path,"/lcd/brightness"))description="Read or set saved screen brightness (integer 0..100). POST exactly one brightness field; preserves other display settings.";
         else if(!strcmp(r->path,"/lcd/default-image"))description="Manage the persistent JPEG fallback used when no temporary image is present. POST image/jpeg up to 65536 bytes. DELETE restores bundled NyxBot. GET returns metadata.";
         else if(!strcmp(r->path,"/lcd/image"))description="Show a temporary fullscreen JPEG, image/jpeg up to 65536 bytes; query duration_ms=0 is sticky until cleared, positive TTL returns to fallback.";
@@ -779,7 +789,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
                 cJSON_AddItemToArray(values,cJSON_CreateString("check"));cJSON_AddItemToArray(values,cJSON_CreateString("install"));
                 cJSON *queued=cJSON_AddObjectToObject(responses,"202");
                 cJSON_AddStringToObject(queued,"description","Queued; poll /status update and ota for completion");
-            }else if(!strcmp(r->path,"/voice/greeting")){
+            }else if(!strcmp(r->path,"/voice/greeting") || !strcmp(r->path,"/voice/wake")){
                 cJSON_AddBoolToObject(schema,"additionalProperties",false);
                 cJSON *required=cJSON_AddArrayToObject(schema,"required");
                 cJSON_AddItemToArray(required,cJSON_CreateString("enabled"));
@@ -1461,6 +1471,27 @@ static int h_voice_greeting(const nyx_proxy_request_t *req, char *resp, size_t c
     cJSON *j=cJSON_CreateObject();cJSON_AddBoolToObject(j,"enabled",settings.enabled);
     return object_response(j,resp,cap,resp_len);
 }
+static int h_voice_wake(const nyx_proxy_request_t *req, char *resp, size_t cap,
+                  char *ct, size_t ct_cap, size_t *resp_len, void *user)
+{
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    if(!strcmp(req->method,"POST")) {
+        cJSON *j=req->body?cJSON_ParseWithLength((const char *)req->body,req->body_len):NULL;
+        cJSON *enabled=cJSON_GetObjectItemCaseSensitive(j,"enabled");
+        bool valid=cJSON_IsObject(j) && cJSON_GetArraySize(j)==1 && cJSON_IsBool(enabled);
+        esp_err_t err=valid?panel_voice_wake_set(cJSON_IsTrue(enabled)):ESP_ERR_INVALID_ARG;
+        cJSON_Delete(j);
+        if(err!=ESP_OK) {
+            snprintf(resp,cap,"{\"error\":\"%s\"}",err==ESP_ERR_INVALID_ARG?"expected_only_enabled_boolean":esp_err_to_name(err));
+            json_response_len(resp,resp_len);return err==ESP_ERR_INVALID_ARG?400:503;
+        }
+    }
+    panel_voice_snapshot_t v;panel_voice_snapshot(&v);
+    cJSON *j=cJSON_CreateObject();cJSON_AddBoolToObject(j,"enabled",v.wake_enabled);
+    cJSON_AddStringToObject(j,"word","Hi ESP");cJSON_AddBoolToObject(j,"listening",v.wake_listening);
+    cJSON_AddStringToObject(j,"state",v.wake_state);
+    return object_response(j,resp,cap,resp_len);
+}
 static int h_voice(const nyx_proxy_request_t *req, char *resp, size_t cap,
                   char *ct, size_t ct_cap, size_t *resp_len, void *user)
 {
@@ -1528,6 +1559,8 @@ static const nyx_route_t s_routes[] = {
     { .path = "/voice/config", .method = "GET", .fn = h_voice },
     { .path = "/voice/greeting", .method = "GET", .fn = h_voice_greeting },
     { .path = "/voice/greeting", .method = "POST", .fn = h_voice_greeting },
+    { .path = "/voice/wake", .method = "GET", .fn = h_voice_wake },
+    { .path = "/voice/wake", .method = "POST", .fn = h_voice_wake },
     { .path = "/config/audio", .method = "GET", .fn = h_voice },
     { .path = "/config/audio", .method = "POST", .fn = h_voice },
     { .path = "/voice/open", .method = "POST", .fn = h_voice },

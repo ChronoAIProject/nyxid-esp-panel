@@ -4,6 +4,9 @@
 #include "panel_voice_audio.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
+#include "esp_wn_models.h"
+#include "model_path.h"
+#include "zlib.h"
 #include "esp_heap_caps.h"
 #include "product_support.h"
 #include "nyx_creds.h"
@@ -48,6 +51,8 @@
 #define DONE_MIC 2
 #define DONE_SPEAKER 4
 #define DONE_TONE 8
+#define WAKE_BUFFER_SAMPLES (16000 * 60)
+#define WAKE_LOOKBACK_SAMPLES (16000 / 2)
 typedef struct { char key_id[40]; panel_voice_bot_t bot; } voice_config_t;
 // Display-only cache. Keep the existing selection_v2 authority layout intact.
 typedef struct { char key_id[40], agent_id[40], text[PANEL_VOICE_DESCRIPTION_BYTES]; } voice_description_t;
@@ -65,8 +70,8 @@ typedef struct {
     nyx_agent_credential_t credential;
     esp_peer_handle_t peer;
     esp_websocket_client_handle_t socket;
-    SemaphoreHandle_t peer_lock, reference_lock;
-    panel_voice_reference_t reference;
+    esp_http_client_handle_t http_client;
+    SemaphoreHandle_t peer_lock;
     QueueHandle_t audio, offers, messages;
     EventGroupHandle_t done;
     atomic_bool running, connected, controls, provider_ready, muted;
@@ -79,9 +84,13 @@ typedef struct {
     char *socket_text;
     size_t socket_used, socket_size;
     panel_voice_captions_t last_captions;
+    panel_voice_pcm_t capture;
+    unsigned replayed_samples;
+    bool wake_initiated;
 } voice_call_t;
 
 static SemaphoreHandle_t state_lock;
+static SemaphoreHandle_t certificate_lock;
 static voice_config_t configuration;
 static panel_voice_snapshot_t status;
 static panel_voice_greeting_t greeting;
@@ -98,6 +107,33 @@ static QueueHandle_t remote_messages;
 static SemaphoreHandle_t remote_lock;
 // Bounded, persisted retry protection. Records are written before any side effect.
 static remote_record_t remote_records[8];
+static SemaphoreHandle_t wake_lock;
+static voice_call_t *wake_call;
+static panel_voice_pcm_t wake_tail;
+static atomic_bool wake_enabled=true, wake_listening;
+static atomic_int_fast64_t wake_yield_until;
+static void wake_task(void *arg);
+static esp_err_t open_peer(voice_call_t *c);
+static esp_err_t start_call(const panel_voice_remote_t *remote, bool wake);
+
+static aec_handle_t *create_voice_aec(void)
+{
+    aec_config_t cfg={.mic_num=1,.ref_num=1,.out_num=1,.filter_length=8,.sample_rate=16000,
+        .caps=MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT,.mode=AEC_MODE_VOIP_HIGH_PERF,.nlp_level=AEC_NLP_LEVEL_AGGR};
+    return aec_create_from_config(&cfg);
+}
+
+static void prepare_certificate_task(void *arg)
+{
+    (void)arg;
+    xSemaphoreTake(certificate_lock,portMAX_DELAY);
+    int64_t started=esp_timer_get_time();
+    int err=esp_peer_pre_generate_cert();
+    ESP_LOGI("panel.voice","DTLS certificate prepared in %u ms: %d",
+        (unsigned)((esp_timer_get_time()-started)/1000),err);
+    xSemaphoreGive(certificate_lock);
+    vTaskDelete(NULL);
+}
 
 static void state(const char *name, const char *message)
 {
@@ -105,9 +141,11 @@ static void state(const char *name, const char *message)
     if(atomic_load(&stopping) && (!strcmp(name,"connecting") || !strcmp(name,"active"))) {
         xSemaphoreGive(state_lock);return;
     }
+    bool changed=strcmp(status.state,name) || strcmp(status.message,message);
     snprintf(status.state,sizeof(status.state),"%s",name);
     snprintf(status.message,sizeof(status.message),"%s",message);
     xSemaphoreGive(state_lock);
+    if(changed && strcmp(name,"active"))ESP_LOGI("panel.voice","%s: %s",name,message);
 }
 void panel_voice_snapshot(panel_voice_snapshot_t *out)
 {
@@ -126,6 +164,8 @@ void panel_voice_snapshot(panel_voice_snapshot_t *out)
     out->input_mode=(panel_voice_input_mode_t)atomic_load(&active_mode);
     out->preferred_input_mode=(panel_voice_input_mode_t)atomic_load(&input_mode);
     out->microphone_muted=atomic_load(&microphone_muted);
+    out->wake_enabled=atomic_load(&wake_enabled);
+    out->wake_listening=atomic_load(&wake_listening);
 }
 static bool valid_config(const voice_config_t *cfg)
 {
@@ -167,11 +207,19 @@ void panel_voice_init(void)
     if (state_lock) return;
     state_lock=xSemaphoreCreateMutex();
     if (!state_lock) return;
+    certificate_lock=xSemaphoreCreateMutex();
+    wake_lock=xSemaphoreCreateMutex();
+    wake_tail.capacity=WAKE_LOOKBACK_SAMPLES;
+    wake_tail.samples=heap_caps_calloc(wake_tail.capacity,sizeof(int16_t),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
     bot_descriptions=heap_caps_calloc(PANEL_VOICE_MAX_BOTS,PANEL_VOICE_DESCRIPTION_BYTES,
         MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     remote_messages=xQueueCreate(4,sizeof(remote_message_t));
     remote_lock=xSemaphoreCreateMutex();
     media_lib_add_default_adapter();
+    // Warm the vendor's certificate cache while the UI/network start. This
+    // never delays the default screen or opens a provider session.
+    if(certificate_lock && xTaskCreate(prepare_certificate_task,"voice_cert",16384,NULL,1,NULL)!=pdPASS)
+        ESP_LOGW("panel.voice","DTLS certificate will be prepared on first call");
     nvs_handle_t h;
     if (nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READONLY,&h)==ESP_OK) {
         size_t len=sizeof(configuration);
@@ -202,6 +250,9 @@ void panel_voice_init(void)
         uint8_t mode=0;
         if(nvs_get_u8(h,"input_mode",&mode)==ESP_OK && panel_voice_input_mode_name(mode))
             atomic_store(&input_mode,mode);
+        uint8_t wake=1;
+        if(nvs_get_u8(h,"wake_enabled",&wake)==ESP_OK && wake<=1)
+            atomic_store(&wake_enabled,wake);
         uint8_t volume=0;
         if(nvs_get_u8(h,"volume",&volume)==ESP_OK && volume<=100)(void)product_codec_volume_set(volume,NULL);
         uint8_t greeting_on=0;
@@ -232,6 +283,8 @@ void panel_voice_init(void)
     state("idle",!nyx_creds_have_agent()?"Sign in to NyxID in Settings":
         valid_config(&configuration)?"Ready":configuration.bot.agent_id[0]?
         "Refresh Bots in Settings to update voice access":"Select a Bot in Settings");
+    if(wake_lock && xTaskCreate(wake_task,"voice_wake",16384,NULL,4,NULL)!=pdPASS)
+        ESP_LOGE("panel.wake","Wake listener task unavailable");
 }
 size_t panel_voice_bots(panel_voice_bot_t *out,size_t cap)
 {
@@ -287,6 +340,22 @@ void panel_voice_stop(void)
 }
 void panel_voice_hold(bool pressed) { atomic_store(&holding,pressed && atomic_load(&busy)); }
 void panel_voice_microphone_mute(bool muted) { atomic_store(&microphone_muted,muted); }
+
+esp_err_t panel_voice_wake_set(bool enabled)
+{
+    if (!state_lock) return ESP_ERR_INVALID_STATE;
+    xSemaphoreTake(state_lock,portMAX_DELAY);
+    nvs_handle_t h;
+    esp_err_t err=nvs_open(NYX_VOICE_NVS_NAMESPACE,NVS_READWRITE,&h);
+    if (err==ESP_OK) {
+        err=nvs_set_u8(h,"wake_enabled",enabled);
+        if (err==ESP_OK) err=nvs_commit(h);
+        nvs_close(h);
+    }
+    if (err==ESP_OK) atomic_store(&wake_enabled,enabled);
+    xSemaphoreGive(state_lock);
+    return err;
+}
 
 void panel_voice_greeting_get(panel_voice_greeting_t *out)
 {
@@ -378,17 +447,24 @@ static cJSON *http_request(voice_call_t *c,const char *url,cJSON *body)
     esp_http_client_config_t cfg={.url=url,.crt_bundle_attach=esp_crt_bundle_attach,
         .timeout_ms=15000,.buffer_size=8192,.buffer_size_tx=8192,.disable_auto_redirect=true,
         .event_handler=http_event,.user_data=&b};
-    esp_http_client_handle_t client=esp_http_client_init(&cfg);
+    if(!c->http_client)c->http_client=esp_http_client_init(&cfg);
+    esp_http_client_handle_t client=c->http_client;
     esp_err_t err=ESP_ERR_NO_MEM;int code=0;
     if (client && (!body || encoded)) {
+        // All requests use this call's exact service/credential and run on its
+        // one control task. Reuse TLS for discovery, options, start and control;
+        // reset request state so a GET cannot inherit an earlier POST body.
+        esp_http_client_set_url(client,url);
+        esp_http_client_set_user_data(client,&b);
+        esp_http_client_set_method(client,body?HTTP_METHOD_POST:HTTP_METHOD_GET);
+        esp_http_client_set_post_field(client,encoded,encoded?strlen(encoded):0);
         esp_http_client_set_header(client,"Authorization",auth);
         esp_http_client_set_header(client,"Content-Type","application/json");
         char agent[64];snprintf(agent,sizeof(agent),"nyx-panel/%s",esp_app_get_description()->version);
         esp_http_client_set_header(client,"User-Agent",agent);
-        if (body) {esp_http_client_set_method(client,HTTP_METHOD_POST);esp_http_client_set_post_field(client,encoded,strlen(encoded));}
         err=esp_http_client_perform(client);code=esp_http_client_get_status_code(client);
     }
-    if (client) esp_http_client_cleanup(client);
+    if (client) esp_http_client_set_user_data(client,NULL);
     free(encoded);memset(auth,0,sizeof(auth));
     cJSON *result=NULL;
     if (err==ESP_OK && !b.overflow && code>=200 && code<300) result=cJSON_ParseWithLength(b.data,b.used);
@@ -467,6 +543,7 @@ static void refresh_task(void *arg)
         if (!failed) state("error","Could not verify the Bot voice connections in NyxID");
     }
 done:
+    if(c->http_client)esp_http_client_cleanup(c->http_client);
     free(services);free(found);free(descriptions);memset(c,0,sizeof(*c));free(c);
     atomic_store(&busy,false);vTaskDelete(NULL);
 }
@@ -602,6 +679,11 @@ static int on_channel(esp_peer_data_channel_info_t *channel,void *ctx)
 static void peer_task(void *arg)
 {
     voice_call_t *c=arg;
+    // Certificate generation inside peer creation is expensive on the P4.
+    // Keep the whole local setup off the task doing NyxID HTTP requests.
+    if(open_peer(c)!=ESP_OK || esp_peer_new_connection(c->peer)) {
+        state("error","Voice peer setup failed");atomic_store(&c->running,false);
+    }
     while (atomic_load(&c->running)) {
         xSemaphoreTake(c->peer_lock,portMAX_DELAY);esp_peer_main_loop(c->peer);xSemaphoreGive(c->peer_lock);
         vTaskDelay(pdMS_TO_TICKS(10));
@@ -614,11 +696,59 @@ static void mic_task(void *arg)
     esp_opus_enc_config_t cfg=ESP_OPUS_ENC_CONFIG_DEFAULT();
     cfg.sample_rate=16000;cfg.channel=1;cfg.bitrate=24000;cfg.complexity=0;cfg.enable_vbr=true;
     int16_t mono[FRAME_SAMPLES],adjusted[FRAME_SAMPLES];uint8_t encoded[2048];unsigned pts=0;
-    // Match the factory speech-recognition path. Audio remains continuous;
-    // neither wake-word detection nor local turn segmentation gates capture.
-    aec_config_t config={.mic_num=1,.ref_num=1,.out_num=1,.filter_length=8,.sample_rate=16000,
-        .caps=MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT,.mode=AEC_MODE_SR_HIGH_PERF,.nlp_level=AEC_NLP_LEVEL_NORMAL};
-    aec_handle_t *aec=aec_create_from_config(&config);
+    if (c->wake_initiated) {
+        // The wake task remains the sole I2S reader. This consumer drains one
+        // ordered FIFO, so connecting/replay/live have no microphone handoff.
+        if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
+            state("error","Voice microphone encoding could not start");atomic_store(&c->running,false);
+        }
+        while (atomic_load(&c->running)) {
+            bool ready=panel_voice_capture_allowed(c->input_mode,true,
+                atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
+                atomic_load(&c->provider_ready),atomic_load(&c->muted));
+            // Bound bursts, but do not sleep a wall-clock audio frame after
+            // encoding/transmitting one. The FIFO's sample clock paces live
+            // audio; queued speech must be allowed to catch up independently.
+            size_t remaining=0;
+            for (unsigned burst=0;burst<(ready?4u:1u);++burst) {
+                if(ready && !panel_voice_capture_allowed(c->input_mode,true,
+                    atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
+                    atomic_load(&c->provider_ready),atomic_load(&c->muted)))break;
+                bool have=false;
+                xSemaphoreTake(wake_lock,portMAX_DELAY);
+                if (ready) have=panel_voice_pcm_pop(&c->capture,mono,FRAME_SAMPLES);
+                remaining=c->capture.count;
+                xSemaphoreGive(wake_lock);
+                if (ready && !have) break;
+                if (!have) memset(mono,0,sizeof(mono));
+                esp_audio_enc_in_frame_t input={.buffer=(uint8_t *)mono,.len=sizeof(mono)};
+                esp_audio_enc_out_frame_t output={.buffer=encoded,.len=sizeof(encoded)};
+                if (esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
+                    state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
+                }
+                if (atomic_load(&c->connected)) {
+                    esp_peer_audio_frame_t frame={.data=encoded,.size=output.encoded_bytes,.pts=pts};
+                    xSemaphoreTake(c->peer_lock,portMAX_DELAY);
+                    int err=esp_peer_send_audio(c->peer,&frame);
+                    xSemaphoreGive(c->peer_lock);
+                    if (err) {state("error","Voice microphone send failed");atomic_store(&c->running,false);break;}
+                    if(have)c->replayed_samples+=FRAME_SAMPLES;
+                    xSemaphoreTake(state_lock,portMAX_DELAY);
+                    status.sent_packets++;status.buffered_ms=remaining/16;
+                    status.replayed_ms=c->replayed_samples/16;
+                    xSemaphoreGive(state_lock);
+                }
+                pts+=20;
+            }
+            if(ready && remaining>=FRAME_SAMPLES)taskYIELD();
+            else vTaskDelay(pdMS_TO_TICKS(ready?10:20));
+        }
+        if (encoder) esp_opus_enc_close(encoder);
+        xEventGroupSetBits(c->done,DONE_MIC);vTaskDelete(NULL);return;
+    }
+    // Communication AEC with the board's synchronous hardware playback
+    // reference. Audio remains continuous, including during Bot playback.
+    aec_handle_t *aec=create_voice_aec();
     void *agc=esp_agc_open(AGC_MODE_2,16000);
     // Calibrated capture gain with a limiter and a -3 dBFS target.
     if (agc) set_agc_config(agc,15,1,3);
@@ -633,16 +763,13 @@ static void mic_task(void *arg)
     if (!agc || !capture || !mic || !ref || !clean ||
         esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
         state("error","Voice microphone processing could not start");atomic_store(&c->running,false);
-    } else printf("Voice microphone ready: AEC=SR_HIGH_PERF AGC=15dB chunk=%d rate=16000 volume=%d\n",chunk,product_codec_volume_get());
+    } else printf("Voice microphone ready: AEC=VOIP_HIGH_PERF AGC=15dB chunk=%d rate=16000 volume=%d\n",chunk,product_codec_volume_get());
     while (atomic_load(&c->running)) {
         size_t got=0;
         if (product_i2s_read(capture,chunk*4,&got,1000)!=ESP_OK || got!=(size_t)chunk*4) {
             state("error","Voice microphone read failed");atomic_store(&c->running,false);break;
         }
-        for (int i=0;i<chunk;i++) mic[i]=capture[2*i];
-        xSemaphoreTake(c->reference_lock,portMAX_DELAY);
-        panel_voice_reference_read(&c->reference,ref,chunk);
-        xSemaphoreGive(c->reference_lock);
+        for (int i=0;i<chunk;i++) {mic[i]=capture[2*i];ref[i]=capture[2*i+1];}
         aec_process(aec,mic,ref,clean);
         for (int i=0;i<chunk && atomic_load(&c->running);i++) {
             mono[used++]=clean[i];
@@ -677,6 +804,181 @@ static void mic_task(void *arg)
     free(capture);free(mic);free(ref);free(clean);
     xEventGroupSetBits(c->done,DONE_MIC);vTaskDelete(NULL);
 }
+
+static void wake_status(const char *name)
+{
+    xSemaphoreTake(state_lock,portMAX_DELAY);
+    snprintf(status.wake_state,sizeof(status.wake_state),"%s",name);
+    xSemaphoreGive(state_lock);
+}
+static bool wake_yield(void)
+{
+    xSemaphoreTake(wake_lock,portMAX_DELAY);
+    bool idle=wake_call==NULL;
+    if(idle)atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);
+    xSemaphoreGive(wake_lock);
+    return idle;
+}
+static bool wake_available(void)
+{
+    if (!atomic_load(&wake_enabled) || atomic_load(&microphone_muted) || atomic_load(&busy) ||
+        panel_ota_busy() || !network_is_connected() || esp_timer_get_time()<atomic_load(&wake_yield_until)) return false;
+    xSemaphoreTake(state_lock,portMAX_DELAY);bool configured=valid_config(&configuration);xSemaphoreGive(state_lock);
+    return configured;
+}
+static void prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,int16_t *scratch,int chunk)
+{
+    // Initialize the model's rolling feature history before advertising a new
+    // listener. A keyword can then begin with the first actual microphone frame.
+    memset(scratch,0,chunk*sizeof(*scratch));
+    for(int samples=0;samples<2*wn->get_samp_rate(model);samples+=chunk)
+        (void)wn->detect(model,scratch);
+}
+static void wake_task(void *arg)
+{
+    (void)arg;
+    if(!wake_tail.samples){wake_status("unavailable");vTaskDelete(NULL);return;}
+    extern const uint8_t wake_model_start[] asm("_binary_panel_hi_esp_bin_start");
+    extern const uint8_t wake_model_end[] asm("_binary_panel_hi_esp_bin_end");
+    // ESP-SR's generic name dispatcher links every WakeNet generation, including
+    // WakeNet10's DL runtime. This firmware ships only pinned WakeNet9 weights.
+    extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
+    const esp_wn_iface_t *wn=NULL;model_iface_data_t *model=NULL;
+    const char *model_name=NULL;bool model_dirty=false;
+    aec_handle_t *aec=NULL;void *agc=NULL;
+    int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL,*adjusted=NULL,*detect=NULL;
+    size_t wn_used=0,agc_used=0;int chunk=0,wn_chunk=0;
+    int16_t agc_input[160],agc_output[160];
+    for (;;) {
+        atomic_store(&wake_listening,false);
+        if (!wake_available()) {
+            wake_status(!atomic_load(&wake_enabled)?"disabled":atomic_load(&microphone_muted)?"muted":"suspended");
+            vTaskDelay(pdMS_TO_TICKS(100));continue;
+        }
+        if (product_audio_claim_background(wake_yield)!=ESP_OK) {
+            wake_status("audio_busy");vTaskDelay(pdMS_TO_TICKS(100));continue;
+        }
+        if (!model) {
+            // Weights travel in the app's OTA image, compressed in flash and
+            // expanded once into PSRAM. Both existing OTA slots keep their size.
+            uint32_t size=(uint32_t)wake_model_start[0] | (uint32_t)wake_model_start[1]<<8 |
+                (uint32_t)wake_model_start[2]<<16 | (uint32_t)wake_model_start[3]<<24;
+            void *root=size>=1024 && size<=512*1024 ? heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT) : NULL;
+            uLongf expanded=size;
+            bool unpacked=root && uncompress(root,&expanded,wake_model_start+4,wake_model_end-wake_model_start-4)==Z_OK && expanded==size;
+            srmodel_list_t *models=unpacked?srmodel_load(root):NULL;
+            char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,"hiesp");
+            model_name=name;
+            wn=name?&esp_sr_wakenet9_quantized:NULL;
+            model=wn?wn->create(name,DET_MODE_95):NULL;
+            wn_chunk=model?wn->get_samp_chunksize(model):0;
+            aec=create_voice_aec();chunk=aec?aec_get_chunksize(aec):0;
+            agc=esp_agc_open(AGC_MODE_2,16000);
+            if(agc)set_agc_config(agc,15,1,3);
+            if(chunk>0 && chunk<=1024 && wn_chunk>0 && wn_chunk<=2048) {
+                capture=heap_caps_aligned_alloc(16,chunk*4,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                mic=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                ref=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                clean=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                adjusted=heap_caps_aligned_alloc(16,(chunk+160)*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                detect=heap_caps_aligned_alloc(16,wn_chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+            }
+            if(!model || !aec || !agc || !capture || !mic || !ref || !clean || !adjusted || !detect ||
+                wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1) {
+                wake_status("unavailable");product_audio_release();
+                if(model)wn->destroy(model);
+                if(aec)aec_destroy(aec);
+                if(agc)esp_agc_close(agc);
+                if(models)srmodel_host_deinit(models);
+                free(root);
+                free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
+                ESP_LOGE("panel.wake","Hi ESP listener initialization failed");vTaskDelete(NULL);return;
+            }
+            prime_wake_model(wn,model,detect,wn_chunk);
+            ESP_LOGI("panel.wake","Hi ESP ready: WakeNet chunk=%d AEC chunk=%d",wn_chunk,chunk);
+        }
+        esp_err_t err=product_codec_dev_resume();
+        if(err==ESP_OK)err=product_codec_mute_set(false);
+        // The pinned WakeNet9 clean() dereferences unallocated lazy queues on
+        // P4. Recreate at rearm boundaries using the supported create/destroy
+        // lifecycle; never reset the microphone or active-call audio FIFO.
+        if(model_dirty) {
+            wn->destroy(model);model=wn->create(model_name,DET_MODE_95);model_dirty=false;
+            if(!model){wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;}
+            prime_wake_model(wn,model,detect,wn_chunk);
+        }
+        wn_used=agc_used=0;
+        // Idle listening and each call have separate adaptive filter state,
+        // just as the original microphone task constructs a fresh AEC per call.
+        aec_destroy(aec);aec=create_voice_aec();
+        if(!aec){wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;}
+        xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
+        wake_status("listening");
+        while(err==ESP_OK) {
+            size_t got=0;err=product_i2s_read(capture,chunk*4,&got,1000);
+            xSemaphoreTake(wake_lock,portMAX_DELAY);
+            voice_call_t *c=wake_call;
+            if(!c && !wake_available()) {
+                xSemaphoreGive(wake_lock);break;
+            }
+            // Keep audio ownership until the call's speaker/tone tasks join.
+            if(c && (!atomic_load(&c->running) || atomic_load(&stopping))) {
+                xSemaphoreGive(wake_lock);continue;
+            }
+            atomic_store(&wake_listening,c==NULL);
+            if(err!=ESP_OK || got!=(size_t)chunk*4) {
+                if(c){state("error","Voice microphone read failed");atomic_store(&c->running,false);}
+                xSemaphoreGive(wake_lock);break;
+            }
+            // M/R are sampled by the same I2S clock, as in the factory MR
+            // input format. Queued outgoing PCM is not a playback clock.
+            for(int i=0;i<chunk;++i){mic[i]=capture[2*i];ref[i]=c?capture[2*i+1]:0;}
+            aec_process(aec,mic,ref,clean);
+            size_t produced=0;
+            for(int at=0;at<chunk;++at) {
+                agc_input[agc_used++]=clean[at];
+                if(agc_used==160) {
+                    agc_used=0;
+                    if(esp_agc_process(agc,agc_input,agc_output,160,16000)!=ESP_AGC_SUCCESS)err=ESP_FAIL;
+                    memcpy(adjusted+produced,agc_output,sizeof(agc_output));produced+=160;
+                }
+            }
+            bool triggered=false;
+            if(c) {
+                if(atomic_load(&microphone_muted) || atomic_load(&c->muted)) {
+                    if(c->capture.count)panel_voice_pcm_clear(&c->capture);
+                }
+                else if(err!=ESP_OK || !panel_voice_pcm_push(&c->capture,adjusted,produced)) {
+                    state("error",err==ESP_OK?"Voice connection buffer full. Please try again":"Voice microphone processing failed");
+                    atomic_store(&c->running,false);err=ESP_FAIL;
+                }
+                xSemaphoreTake(state_lock,portMAX_DELAY);status.buffered_ms=c->capture.count/16;xSemaphoreGive(state_lock);
+            } else if(err==ESP_OK) {
+                panel_voice_pcm_preroll_push(&wake_tail,adjusted,produced);
+                for(size_t at=0;at<produced;++at) {
+                    detect[wn_used++]=adjusted[at];
+                    if(wn_used==(size_t)wn_chunk) {
+                        wn_used=0;
+                        model_dirty=true;
+                        if(wn->detect(model,detect)>0)triggered=true;
+                    }
+                }
+            }
+            xSemaphoreGive(wake_lock);
+            if(triggered) {
+                if(!wake_available())break;
+                ESP_LOGI("panel.wake","Hi ESP detected; recording while connecting");
+                xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
+                if(start_call(NULL,true)==ESP_OK)(void)lcd_renderer_show_voice();
+                else {atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);break;}
+            }
+        }
+        atomic_store(&wake_listening,false);
+        product_audio_release();
+        atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+}
 static void speaker_task(void *arg)
 {
     voice_call_t *c=arg;void *decoder=NULL;
@@ -709,9 +1011,6 @@ static void speaker_task(void *arg)
         if(source_peak>status.source_peak)status.source_peak=source_peak;
         if(output_peak>status.output_peak)status.output_peak=output_peak;
         xSemaphoreGive(state_lock);
-        xSemaphoreTake(c->reference_lock,portMAX_DELAY);
-        panel_voice_reference_push(&c->reference,mono,samples);
-        xSemaphoreGive(c->reference_lock);
         size_t written=0;
         if (product_i2s_write(stereo,samples*4,&written,1000)!=ESP_OK) {atomic_store(&c->running,false);break;}
         atomic_fetch_add(&c->played_samples,samples);atomic_store(&c->last_audio_us,esp_timer_get_time());
@@ -785,8 +1084,12 @@ static esp_err_t open_peer(voice_call_t *c)
         .audio_dir=ESP_PEER_MEDIA_DIR_SEND_RECV,.video_dir=ESP_PEER_MEDIA_DIR_NONE,.enable_data_channel=true,.manual_ch_create=true,
         .no_auto_reconnect=true,.extra_cfg=&extra,.extra_size=sizeof(extra),.on_state=on_state,.on_msg=on_offer,.on_audio_data=on_audio,
         .on_data=on_data,.on_channel_open=on_channel,.ctx=c};
-    if (esp_peer_open(&cfg,esp_peer_get_default_impl(),&c->peer)) return ESP_FAIL;
-    return ESP_OK;
+    // The cache is shared inside esp_peer. Do not read it while the background
+    // preparer is writing it, including foreground diagnostic peers.
+    if(certificate_lock)xSemaphoreTake(certificate_lock,portMAX_DELAY);
+    int err=esp_peer_open(&cfg,esp_peer_get_default_impl(),&c->peer);
+    if(certificate_lock)xSemaphoreGive(certificate_lock);
+    return err?ESP_FAIL:ESP_OK;
 }
 
 esp_err_t panel_voice_peer_test(char *json,size_t cap)
@@ -836,9 +1139,6 @@ static void tone_task(void *arg)
         !(atomic_load(&c->connected) && atomic_load(&c->controls) && atomic_load(&c->provider_ready))) {
         panel_voice_ringback(&position,mono,FRAME_SAMPLES);
         for(size_t i=0;i<FRAME_SAMPLES;++i)stereo[2*i]=stereo[2*i+1]=mono[i];
-        xSemaphoreTake(c->reference_lock,portMAX_DELAY);
-        panel_voice_reference_push(&c->reference,mono,FRAME_SAMPLES);
-        xSemaphoreGive(c->reference_lock);
         size_t written=0;
         if(product_i2s_write(stereo,sizeof(stereo),&written,1000)!=ESP_OK || written!=sizeof(stereo))break;
     }
@@ -849,10 +1149,21 @@ static void tone_task(void *arg)
 static void call_task(void *arg)
 {
     voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;int64_t connected_at=0;
+    cJSON *preferences=NULL;char path[256];
+    // Gather local ICE/SDP while NyxID checks the binding and loads settings.
+    // This is local preparation only: provider creation still waits for both
+    // authoritative responses and the completed offer.
+    c->peer_lock=xSemaphoreCreateMutex();
+    c->audio=xQueueCreate(24,sizeof(audio_packet_t));
+    c->offers=xQueueCreate(2,sizeof(char *));c->messages=xQueueCreate(4,sizeof(char *));c->done=xEventGroupCreate();
+    if (!c->peer_lock || !c->audio || !c->offers || !c->messages || !c->done) goto done;
+    if(!c->wake_initiated)atomic_store(&c->running,true);
+    if (xTaskCreate(peer_task,"voice_rtc",12288,c,4,NULL)!=pdPASS) goto done;
+    tasks|=DONE_PEER;
     state("connecting","Finding your Bot");
-    cJSON *discovery=http(c,"/voice/agents",NULL),*preferences=NULL;
-    char path[256];
+    cJSON *discovery=http(c,"/voice/agents",NULL);
     if (!discovery) goto done;
+    if(!atomic_load(&c->running)) {cJSON_Delete(discovery);goto done;}
     panel_voice_bot_t found={0};
     if(c->greeting_request[0] && !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(discovery,"greetings"))) {
         c->greeting_request[0]=0;remote_state(greeting_request_id,"unavailable");
@@ -867,22 +1178,21 @@ static void call_task(void *arg)
     if (options) preferences=panel_voice_preferences(discovery,options,c->input_mode);
     cJSON_Delete(options);cJSON_Delete(discovery);
     if (!preferences) {state("error","Select an available WebRTC voice in NyxID voice settings");goto done;}
-    if(atomic_load(&stopping))goto done;
+    if(atomic_load(&stopping) || !atomic_load(&c->running))goto done;
     state("connecting","Preparing audio");
-    if (product_audio_claim()!=ESP_OK) {state("error","Close the music or spectrum app first");goto done;}
-    owns=true;
-    if (product_codec_dev_resume()!=ESP_OK || product_codec_mute_set(false)!=ESP_OK) {state("error","Audio codec is unavailable");goto done;}
-    c->peer_lock=xSemaphoreCreateMutex();c->reference_lock=xSemaphoreCreateMutex();c->audio=xQueueCreate(24,sizeof(audio_packet_t));
-    c->offers=xQueueCreate(2,sizeof(char *));c->messages=xQueueCreate(4,sizeof(char *));c->done=xEventGroupCreate();
-    if (!c->peer_lock || !c->reference_lock || !c->audio || !c->offers || !c->messages || !c->done) goto done;
-    if (open_peer(c)!=ESP_OK) {state("error","Voice peer setup failed");goto done;}
-    atomic_store(&c->running,true);
-    if(xTaskCreate(tone_task,"voice_tone",6144,c,3,NULL)==pdPASS){c->tone_started=true;tasks|=DONE_TONE;}
-    else ESP_LOGW("panel.voice","Dialing tone task unavailable");
+    if (!c->wake_initiated) {
+        if (product_audio_claim()!=ESP_OK) {state("error","Close the music or spectrum app first");goto done;}
+        owns=true;
+        if (product_codec_dev_resume()!=ESP_OK || product_codec_mute_set(false)!=ESP_OK) {state("error","Audio codec is unavailable");goto done;}
+    }
+    // A wake caller is already speaking. Ringback would be recorded over that
+    // initial request, especially now that setup is faster. Explicit dial/open
+    // calls keep the existing dialing sound.
+    if(!c->wake_initiated) {
+        if(xTaskCreate(tone_task,"voice_tone",6144,c,3,NULL)==pdPASS){c->tone_started=true;tasks|=DONE_TONE;}
+        else ESP_LOGW("panel.voice","Dialing tone task unavailable");
+    }
     state("connecting","Preparing call");
-    if (esp_peer_new_connection(c->peer)) {state("error","Voice peer setup failed");goto done;}
-    if (xTaskCreate(peer_task,"voice_rtc",12288,c,4,NULL)!=pdPASS) goto done;
-    tasks|=DONE_PEER;
     int64_t deadline=esp_timer_get_time()+20000000;
     while (!atomic_load(&stopping) && atomic_load(&c->running) && !sdp && esp_timer_get_time()<deadline)
         xQueueReceive(c->offers,&sdp,pdMS_TO_TICKS(100));
@@ -908,7 +1218,7 @@ static void call_task(void *arg)
     log_sdp_shape("answer",answer->valuestring);
     esp_peer_msg_t msg={.type=ESP_PEER_MSG_TYPE_SDP,.data=(uint8_t *)answer->valuestring,.size=strlen(answer->valuestring)};
     xSemaphoreTake(c->peer_lock,portMAX_DELAY);int err=esp_peer_send_msg(c->peer,&msg);xSemaphoreGive(c->peer_lock);cJSON_Delete(reply);
-    if (err || atomic_load(&stopping)) goto done;
+    if (err || atomic_load(&stopping) || (c->wake_initiated && !atomic_load(&c->running))) goto done;
     char url[512],headers[192];
     snprintf(path,sizeof(path),"/voice/sessions/%s/stream",c->session);
     if (!panel_voice_service_url(url,sizeof(url),NYX_AGENT_BASE_URL,c->config.bot.service_id,path,true)) goto done;
@@ -992,19 +1302,27 @@ done:
     if (c->socket) {esp_websocket_client_stop(c->socket);esp_websocket_client_destroy(c->socket);}
     if (tasks) xEventGroupWaitBits(c->done,tasks,pdFALSE,pdTRUE,portMAX_DELAY);
     if (c->peer) esp_peer_close(c->peer);
+    if(c->wake_initiated) {
+        xSemaphoreTake(wake_lock,portMAX_DELAY);
+        if(wake_call==c)wake_call=NULL;
+        panel_voice_pcm_clear(&c->capture);
+        xSemaphoreGive(wake_lock);
+        atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);
+    }
     if (c->audio) vQueueDelete(c->audio);
     for (int i=0;i<2;i++) {QueueHandle_t q=i?c->offers:c->messages;char *text; if(q){while(xQueueReceive(q,&text,0)==pdTRUE)free(text);vQueueDelete(q);}}
     if (c->done) vEventGroupDelete(c->done);
     if (c->peer_lock) vSemaphoreDelete(c->peer_lock);
-    if (c->reference_lock) vSemaphoreDelete(c->reference_lock);
-    free(sdp);free(c->socket_text);cJSON_Delete(preferences);
+    if(c->http_client)esp_http_client_cleanup(c->http_client);
+    free(sdp);free(c->socket_text);free(c->capture.samples);cJSON_Delete(preferences);
     if (owns) {product_codec_dev_resume();product_audio_release();}
-    xSemaphoreTake(state_lock,portMAX_DELAY);status.active=false;bool failed=!strcmp(status.state,"error");xSemaphoreGive(state_lock);
+    xSemaphoreTake(state_lock,portMAX_DELAY);status.active=false;status.buffered_ms=0;
+    bool failed=!strcmp(status.state,"error");xSemaphoreGive(state_lock);
     if (!failed || atomic_load(&stopping)) state("idle","Ready");
     atomic_store(&active_mode,atomic_load(&input_mode));
     memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);vTaskDelete(NULL);
 }
-static esp_err_t start_call(const panel_voice_remote_t *remote)
+static esp_err_t start_call(const panel_voice_remote_t *remote, bool wake)
 {
     if (!state_lock || !network_is_connected() || panel_ota_busy()) return ESP_ERR_INVALID_STATE;
     bool expected=false;
@@ -1015,45 +1333,70 @@ static esp_err_t start_call(const panel_voice_remote_t *remote)
     xSemaphoreTake(state_lock,portMAX_DELAY);c->config=configuration;
     status.sent_packets=status.received_packets=status.playback_ms=status.source_peak=status.output_peak=status.call_seconds=0;
     status.dialing_tone=false;greeting_request_id[0]=0;
-    bool greet=greeting.enabled && !(remote && remote->text[0]);
+    bool greet=greeting.enabled && !wake && !(remote && remote->text[0]);
     if(greet) {
         uuid(c->greeting_request);snprintf(greeting_request_id,sizeof(greeting_request_id),"%s",c->greeting_request);
     }
-    snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",greet?"waiting":remote && remote->text[0]?"overridden":"off");
+    snprintf(status.greeting_state,sizeof(status.greeting_state),"%s",greet?"waiting":wake?"user_speaking":remote && remote->text[0]?"overridden":"off");
     xSemaphoreGive(state_lock);
     if (!valid_config(&c->config) || !nyx_creds_read_agent(&c->credential) || strcmp(c->config.key_id,c->credential.key_id)) {
         memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);
         state("error","Sign in and select a Bot in Settings");return ESP_ERR_INVALID_STATE;
     }
-    c->input_mode=remote?PANEL_VOICE_INPUT_AUTOMATIC:(panel_voice_input_mode_t)atomic_load(&input_mode);
+    c->input_mode=remote || wake?PANEL_VOICE_INPUT_AUTOMATIC:(panel_voice_input_mode_t)atomic_load(&input_mode);
     if(remote){
         bool duplicate=false;esp_err_t err=remote_record(remote,true,true,&duplicate);
         if(err!=ESP_OK){memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);return err;}
         c->remote=*remote;
     }
     xSemaphoreTake(state_lock,portMAX_DELAY);
+    status.wake_initiated=wake;status.buffered_ms=status.replayed_ms=0;
     status.session_id[0]=status.remote_request_id[0]=status.remote_state[0]=0;status.remote_initiated=remote!=NULL;
     if(remote){snprintf(status.remote_request_id,sizeof(status.remote_request_id),"%s",remote->request_id);
         snprintf(status.remote_state,sizeof(status.remote_state),"connecting");}
     xSemaphoreGive(state_lock);
     atomic_store(&active_mode,c->input_mode);
     atomic_store(&stopping,false);atomic_store(&holding,false);atomic_store(&microphone_muted,remote && remote->microphone_muted);
+    if(wake) {
+        c->wake_initiated=true;
+        c->capture.samples=heap_caps_calloc(WAKE_BUFFER_SAMPLES,sizeof(int16_t),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+        c->capture.capacity=WAKE_BUFFER_SAMPLES;
+        if(!c->capture.samples) {
+            free(c->capture.samples);
+            atomic_store(&active_mode,atomic_load(&input_mode));
+            memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);
+            state("error","Voice recording buffer unavailable");return ESP_ERR_NO_MEM;
+        }
+        xSemaphoreTake(wake_lock,portMAX_DELAY);
+        size_t first=wake_tail.count<wake_tail.capacity-wake_tail.head?wake_tail.count:wake_tail.capacity-wake_tail.head;
+        (void)panel_voice_pcm_push(&c->capture,wake_tail.samples+wake_tail.head,first);
+        (void)panel_voice_pcm_push(&c->capture,wake_tail.samples,wake_tail.count-first);
+        panel_voice_pcm_clear(&wake_tail);
+        atomic_store(&c->running,true);wake_call=c;
+        atomic_store(&wake_listening,false);
+        xSemaphoreGive(wake_lock);
+        wake_status("recording");
+    }
     state("connecting","Connecting through NyxID");
     if (xTaskCreate(call_task,"voice_call",16384,c,3,NULL)!=pdPASS) {
         if(remote)remote_state(remote->request_id,"failed");
+        if(wake) {
+            xSemaphoreTake(wake_lock,portMAX_DELAY);wake_call=NULL;panel_voice_pcm_clear(&c->capture);xSemaphoreGive(wake_lock);
+            free(c->capture.samples);
+        }
         atomic_store(&active_mode,atomic_load(&input_mode));
         memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);
         state("error","Voice resources unavailable. Try again");return ESP_ERR_NO_MEM;
     }
     return ESP_OK;
 }
-esp_err_t panel_voice_start(void){return start_call(NULL);}
+esp_err_t panel_voice_start(void){return start_call(NULL,false);}
 esp_err_t panel_voice_remote_open(const panel_voice_remote_t *r,bool *duplicate)
 {
     if(!remote_lock || !remote_messages || !r || !duplicate || !panel_voice_uuid(r->request_id))return ESP_ERR_INVALID_ARG;
     xSemaphoreTake(remote_lock,portMAX_DELAY);
     esp_err_t err=remote_record(r,true,false,duplicate);
-    if(err==ESP_OK && !*duplicate)err=start_call(r);
+    if(err==ESP_OK && !*duplicate)err=start_call(r,false);
     if(err==ESP_OK && !*duplicate)(void)lcd_renderer_show_voice();
     xSemaphoreGive(remote_lock);return err;
 }

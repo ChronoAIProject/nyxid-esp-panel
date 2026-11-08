@@ -144,6 +144,10 @@ esp_codec_dev_handle_t product_codec_microphone(void);
 // One native app or voice call owns the shared codec format and DMA at a time.
 esp_err_t product_audio_claim(void);
 void product_audio_release(void);
+// An idle listener yields cooperatively before foreground apps change the codec.
+// Return false while an active call owns its microphone and speaker.
+typedef bool (*product_audio_yield_fn_t)(void);
+esp_err_t product_audio_claim_background(product_audio_yield_fn_t yield);
 
 /**
  * @brief Initialize audio player task.

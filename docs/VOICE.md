@@ -77,13 +77,52 @@ mode sends the echo-cancelled microphone while the call is active; NyxID's
 existing Live conversation handles pauses and responses. Its button toggles
 local microphone mute. Hang up before changing modes. Playback remains audible
 while Talk is held. A 16 kHz full-duplex
-AEC processes the microphone against a bounded playback reference before Opus
-encoding, using the factory speech-recognition AEC mode. Continuous digital AGC
+AEC processes the microphone against the board's synchronous I2S playback
+reference before Opus encoding. It uses the voice-communication mode and the
+vendor's default aggressive residual-echo suppression. A software playback
+queue cannot provide the same capture/playback alignment. Continuous digital AGC
 adds 15 dB compression gain with a limiter and a -3 dBFS target; it does not add
 local voice activity detection or turn segmentation. Codec and AEC frame sizes
 are adapted without dropping samples. MusicPlayer and SpecAnalyzer release the shared codec before voice
-claims it. Ending a call releases the codec. A call is started explicitly; the
-panel does not continuously stream microphone audio in the background.
+claims it. Ending a call releases the codec to idle wake listening when enabled.
+The panel does not upload microphone audio while waiting for its wake word.
+
+## Hi ESP wake-up and speech during connection
+
+Local WakeNet9 **Hi ESP** detection is enabled by default. The voice panel has
+a wake switch, and the daily service exposes `GET/POST /voice/wake`:
+
+```json
+{"enabled":true}
+```
+
+The switch persists in the current NyxID server profile. The listener pauses
+for microphone mute, missing network/Bot configuration, foreground audio apps
+and OTA. MusicPlayer and SpecAnalyzer can claim the codec without disabling
+the saved wake preference. An active call keeps exclusive audio ownership.
+
+After detection, the same microphone task keeps reading AEC/AGC-processed
+16 kHz mono samples while NyxID connects. A 500 ms local lookback protects speech
+at the detection boundary. Connection audio and subsequent live audio enter one
+PCM FIFO; there is no codec reopen or second I2S reader at the transition.
+After the provider, media and controls are ready, Opus packets carry the FIFO's
+oldest samples first, with continuous 20 ms timestamps. Bounded bursts catch up
+while recording continues. No local sentence detection or speech segmentation
+is added. Wake-initiated calls use automatic conversation without changing the
+saved input mode, and skip the automatic greeting and dialing tone so neither
+can interrupt the user's initial request. Manual and remote calls retain the
+existing greeting preference and dialing tone.
+
+The PSRAM FIFO holds at most 60 seconds. Overflow fails the call explicitly;
+it never silently overwrites earlier speech. Hangup and failure erase queued
+samples. Microphone mute clears pending samples rather than sending them after
+unmute. Disabling wake during a call affects later wake-ups, not the active call.
+`GET /voice` reports `wake.enabled`, `listening`, `state`, `detections`,
+`initiated_call`, `buffered_ms` and `transmitted_ms` for diagnosis.
+
+The pinned Hi ESP model is compressed inside each OTA application image and
+expanded into PSRAM once. Existing partitions, login and stored pictures stay
+compatible; no separate model partition or model flashing step is needed.
 
 Control WebSocket interruptions pause microphone input and reconnect within a
 25-second grace period, retaining the existing media session. Invalid,
