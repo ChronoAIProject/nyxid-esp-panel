@@ -78,7 +78,10 @@ existing Live conversation handles pauses and responses. Its button toggles
 local microphone mute. Hang up before changing modes. Playback remains audible
 while Talk is held. A 16 kHz full-duplex
 AEC processes the microphone against a bounded playback reference before Opus
-encoding; codec and AEC frame sizes are adapted without dropping samples. MusicPlayer and SpecAnalyzer release the shared codec before voice
+encoding, using the factory speech-recognition AEC mode. Continuous digital AGC
+adds 15 dB compression gain with a limiter and a -3 dBFS target; it does not add
+local voice activity detection or turn segmentation. Codec and AEC frame sizes
+are adapted without dropping samples. MusicPlayer and SpecAnalyzer release the shared codec before voice
 claims it. Ending a call releases the codec. A call is started explicitly; the
 panel does not continuously stream microphone audio in the background.
 
