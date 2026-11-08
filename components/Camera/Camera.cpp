@@ -41,6 +41,7 @@ extern "C" {
 #include "lcd_renderer.h"
 #include "lcd_text.h"
 #include "camera_capture.h"
+#include "media_mode.h"
 }
 
 LV_IMG_DECLARE(img_app_camera);
@@ -182,6 +183,11 @@ namespace esp_brookesia::apps
             return true;
         }
 
+        if (media_mode_claim_direct_preview() != ESP_OK) {
+            ESP_LOGW(ESP_UTILS_LOG_TAG, "Camera is busy or firmware update is active");
+            return false;
+        }
+
         _preview_running = true;
         BaseType_t ret = xTaskCreatePinnedToCore(
             directPreviewTaskEntry,
@@ -195,6 +201,7 @@ namespace esp_brookesia::apps
         if (ret != pdPASS) {
             _preview_running = false;
             _preview_task_handle = nullptr;
+            media_mode_release_direct_preview();
             ESP_LOGE(ESP_UTILS_LOG_TAG, "Create camera preview task failed");
             return false;
         }
@@ -585,6 +592,8 @@ namespace esp_brookesia::apps
 
         stopDirectDummyPreview();
         releaseDirectCameraBuffers();
+
+        media_mode_release_direct_preview();
 
         _preview_running = false;
         _preview_task_handle = nullptr;

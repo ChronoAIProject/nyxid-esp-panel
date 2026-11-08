@@ -15,6 +15,10 @@ typedef struct {
 void media_mode_init(void);
 esp_err_t media_mode_request_idle(const char *reason);
 esp_err_t media_mode_request_preview(const char *reason);
+// Native LCD preview owns its own driver. Claim before starting it and release
+// only after its DMA/buffers have stopped; shared capture must not use that driver.
+esp_err_t media_mode_claim_direct_preview(void);
+void media_mode_release_direct_preview(void);
 media_mode_t media_mode_current(void);
 const char *media_mode_name(media_mode_t mode);
 bool media_mode_is_preview(void);

@@ -53,7 +53,7 @@ void setUp(void) {
     media_mode_request_idle("test setup");
     starts = closes = encodes = 0;
 }
-void tearDown(void) { close_error = ESP_OK; media_mode_request_idle("test cleanup"); }
+void tearDown(void) { close_error = ESP_OK; media_mode_release_direct_preview(); media_mode_request_idle("test cleanup"); }
 static void test_idle_capture_releases_and_lan_cannot_start(void) {
     uint8_t buf[16]; size_t len = 99;
     TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE, media_mode_snapshot(buf, sizeof(buf), &len, false));
@@ -123,6 +123,7 @@ static void test_concurrent_capture_rejected_and_preview_serialized(void) {
 static void test_update_blocks_new_camera_work(void) {
     uint8_t buf[16];size_t len=99;
     ota_busy=true;
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_claim_direct_preview());
     TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_request_preview("native"));
     TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_snapshot(buf,sizeof(buf),&len,true));
     TEST_ASSERT_EQUAL(0,len);TEST_ASSERT_EQUAL(0,starts);
@@ -131,8 +132,26 @@ static void test_update_blocks_new_camera_work(void) {
     TEST_ASSERT_EQUAL(ESP_OK,media_mode_snapshot(buf,sizeof(buf),&len,true));
     TEST_ASSERT_EQUAL(1,starts);
 }
+static void test_direct_preview_owns_camera_until_cleanup(void) {
+    uint8_t buf[16]; size_t len=99;
+    TEST_ASSERT_EQUAL(ESP_OK,media_mode_claim_direct_preview());
+    TEST_ASSERT_EQUAL(MEDIA_MODE_PREVIEW,media_mode_current());
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_claim_direct_preview());
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_request_idle("shared close"));
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_request_preview("shared preview"));
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_snapshot(buf,sizeof(buf),&len,true));
+    TEST_ASSERT_EQUAL(0,len); TEST_ASSERT_EQUAL(0,starts); TEST_ASSERT_EQUAL(0,closes);
+    media_mode_release_direct_preview();
+    TEST_ASSERT_EQUAL(MEDIA_MODE_IDLE,media_mode_current());
+    TEST_ASSERT_EQUAL(ESP_OK,media_mode_snapshot(buf,sizeof(buf),&len,true));
+    TEST_ASSERT_EQUAL(ESP_OK,media_mode_request_preview("shared preview"));
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_claim_direct_preview());
+    media_mode_release_direct_preview();
+    TEST_ASSERT_EQUAL(MEDIA_MODE_PREVIEW,media_mode_current());
+}
 int main(void) {
     UNITY_BEGIN();
+    RUN_TEST(test_direct_preview_owns_camera_until_cleanup);
     RUN_TEST(test_update_blocks_new_camera_work);
     RUN_TEST(test_idle_capture_releases_and_lan_cannot_start);
     RUN_TEST(test_snapshot_preserves_native_preview);

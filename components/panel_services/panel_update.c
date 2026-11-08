@@ -119,6 +119,7 @@ static esp_err_t fetch_release(panel_release_t *release)
         if (err!=ESP_OK) break;
         length=esp_http_client_fetch_headers(http);
         int code=esp_http_client_get_status_code(http);
+        ESP_LOGI(TAG,"Release metadata HTTP status=%d bytes=%lld",code,(long long)length);
         if (code==200) break;
         if (redirects>=3 || (code!=301 && code!=302 && code!=303 && code!=307 && code!=308)) {
             err=ESP_ERR_INVALID_RESPONSE;break;
