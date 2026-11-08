@@ -32,6 +32,7 @@
 #include "qr_scanner.h"
 #include "panel_runtime.h"
 #include "panel_voice.h"
+#include "panel_update.h"
 #include "product_support.h"
 #include <stdatomic.h>
 
@@ -430,6 +431,22 @@ static int nyx_voice_cli(int argc, char **argv)
     }
 }
 
+static int panel_update_cli(int argc,char **argv)
+{
+    esp_err_t err=ESP_OK;
+    if (argc==2 && !strcmp(argv[1],"check")) err=panel_update_check(false);
+    else if (argc==2 && !strcmp(argv[1],"install")) err=panel_update_check(true);
+    else if (argc==3 && !strcmp(argv[1],"auto") && (!strcmp(argv[2],"on") || !strcmp(argv[2],"off")))
+        err=panel_update_set_automatic(!strcmp(argv[2],"on"));
+    else if (!(argc==2 && !strcmp(argv[1],"status"))) {
+        printf("Usage: panel-update status|check|install|auto on|off\n");return -1;
+    }
+    panel_update_snapshot_t update;panel_update_snapshot(&update);
+    printf("Update: action=%s profile=%s automatic=%d state=%s latest=%s blocked=%s\n",
+        esp_err_to_name(err),panel_update_profile(),update.automatic,update.state,update.latest_version,update.blocked_version);
+    return err==ESP_OK ? 0 : -1;
+}
+
 static int init_console(void)
 {
     esp_console_repl_t *repl = NULL;
@@ -448,6 +465,7 @@ static int init_console(void)
 #endif
 
     esp_console_cmd_t cmds[] = {
+        { .command = "panel-update", .help = "Stable firmware status/check/install/automatic", .func = panel_update_cli },
         { .command = "stop",          .help = "Stop camera preview\n",               .func = stop_cli },
         { .command = "i",             .help = "System status\r\n",           .func = sys_cli },
         { .command = "wifi",          .help = "wifi ssid psw\r\n",           .func = wifi_cli },
@@ -548,6 +566,7 @@ static void service_task(void *arg)
     net_manager_snapshot_t snapshot = net_manager_snapshot();
     on_net_manager_event(&snapshot, NULL);
     atomic_store(&ready, http_err == ESP_OK);
+    panel_update_init();
     bool applied_preview = false;
     bool refreshed_bots = false;
     while (1) {

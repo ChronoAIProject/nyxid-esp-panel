@@ -12,6 +12,7 @@ extern "C" {
 #include "nyx_creds.h"
 #include "nyx_node.h"
 #include "panel_ota.h"
+#include "panel_update.h"
 #include "panel_voice.h"
 #include "lcd_text.h"
 }
@@ -117,6 +118,10 @@ void PanelPage::run(bool show_nyx)
         auto scan = button(root, "Scan Wi-Fi QR code");
         lv_obj_add_event_cb(scan, [](lv_event_t *) { lcd_renderer_navigate("scan"); }, LV_EVENT_CLICKED, nullptr);
     }
+    if (!nyx) {
+        auto check = button(root, "Check for updates");
+        lv_obj_add_event_cb(check, [](lv_event_t *) { (void)panel_update_check(false); }, LV_EVENT_CLICKED, nullptr);
+    }
     refresh();
     timer = lv_timer_create([](lv_timer_t *timer) {
         static_cast<PanelPage *>(lv_timer_get_user_data(timer))->refresh();
@@ -131,11 +136,19 @@ void PanelPage::refresh()
     const char *connection = nyx_node_state() == NYX_NODE_UP ? "Connected" :
         nyx_node_state() == NYX_NODE_CONNECTING ? "Connecting" : "Not connected";
     if (!nyx) {
+        panel_update_snapshot_t update{};panel_update_snapshot(&update);
+        const char *update_text = !strcmp(update.state,"up_to_date") ? "Up to date" :
+            !strcmp(update.state,"checking") ? "Checking for updates" :
+            !strcmp(update.state,"update_available") ? "Update available" :
+            !strcmp(update.state,"waiting_for_idle") ? "Waiting until the panel is idle" :
+            !strcmp(update.state,"check_failed") ? "Unable to check for updates" :
+            !strcmp(update.state,"rolled_back") ? "Previous version restored" :
+            !strcmp(update.state,"development") ? "Development mode" : "Ready";
         lv_label_set_text_fmt(summary,
             "Device\n%s\n\nFirmware\n%s\n\nNetwork\n%s\n\nNyxID\n%s\n\nCamera\n%s\n\nUpdate\n%s",
             devices_self()->label, esp_app_get_description()->version, ip, connection,
             media_mode_is_preview() ? "Preview / scanning" : "Remote photos on request",
-            panel_ota_busy() ? "Installing update" : panel_ota_error() != ESP_OK ? "Last update failed" : "Ready");
+            panel_ota_busy() ? "Installing update" : panel_ota_error() != ESP_OK ? "Last update failed" : update_text);
         return;
     }
     device_login_snapshot_t state{};

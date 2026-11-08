@@ -61,3 +61,5 @@ haCam_add_test(test_media_mode ../../components/panel_services/media_mode.c)
 target_include_directories(test_media_mode PRIVATE camera_shim platform_shim)
 target_link_libraries(test_media_mode Threads::Threads)
 set_tests_properties(test_media_mode PROPERTIES TIMEOUT 20)
+
+haCam_add_test(test_panel_update ../../components/panel_services/panel_update_policy.c third_party/cjson/cJSON.c)

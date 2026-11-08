@@ -9,6 +9,8 @@
 #include <time.h>
 
 static int starts, closes, encodes;
+static bool ota_busy;
+bool panel_ota_busy(void) {return ota_busy;}
 static esp_err_t start_error, encode_error, close_error;
 static bool block_encode, in_encode, release_encode;
 static pthread_mutex_t gate = PTHREAD_MUTEX_INITIALIZER;
@@ -44,6 +46,7 @@ esp_err_t media_sys_preview_snapshot_encode(uint8_t *dst, size_t cap, size_t *le
     return encode_error;
 }
 void setUp(void) {
+    ota_busy=false;
     start_error = encode_error = close_error = ESP_OK;
     block_encode = in_encode = release_encode = false;
     media_mode_init();
@@ -117,8 +120,20 @@ static void test_concurrent_capture_rejected_and_preview_serialized(void) {
     TEST_ASSERT_EQUAL(2, starts); TEST_ASSERT_EQUAL(1, closes);
     TEST_ASSERT_EQUAL(MEDIA_MODE_PREVIEW, media_mode_current());
 }
+static void test_update_blocks_new_camera_work(void) {
+    uint8_t buf[16];size_t len=99;
+    ota_busy=true;
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_request_preview("native"));
+    TEST_ASSERT_EQUAL(ESP_ERR_INVALID_STATE,media_mode_snapshot(buf,sizeof(buf),&len,true));
+    TEST_ASSERT_EQUAL(0,len);TEST_ASSERT_EQUAL(0,starts);
+    TEST_ASSERT_EQUAL(MEDIA_MODE_IDLE,media_mode_current());
+    ota_busy=false;
+    TEST_ASSERT_EQUAL(ESP_OK,media_mode_snapshot(buf,sizeof(buf),&len,true));
+    TEST_ASSERT_EQUAL(1,starts);
+}
 int main(void) {
     UNITY_BEGIN();
+    RUN_TEST(test_update_blocks_new_camera_work);
     RUN_TEST(test_idle_capture_releases_and_lan_cannot_start);
     RUN_TEST(test_snapshot_preserves_native_preview);
     RUN_TEST(test_failed_capture_never_returns_previous_image);

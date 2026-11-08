@@ -1,5 +1,6 @@
 /* Standalone voice using the Agent Key delivered by this panel's login. */
 #include "panel_voice.h"
+#include "panel_ota.h"
 #include "panel_voice_audio.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
@@ -471,9 +472,10 @@ done:
 }
 esp_err_t panel_voice_refresh_agents(void)
 {
-    if (!state_lock || !network_is_connected()) return ESP_ERR_INVALID_STATE;
+    if (!state_lock || !network_is_connected() || panel_ota_busy()) return ESP_ERR_INVALID_STATE;
     bool expected=false;
     if (!atomic_compare_exchange_strong(&busy,&expected,true)) return ESP_ERR_INVALID_STATE;
+    if (panel_ota_busy()) {atomic_store(&busy,false);return ESP_ERR_INVALID_STATE;}
     voice_call_t *c=calloc(1,sizeof(*c));
     if (!c) {atomic_store(&busy,false);return ESP_ERR_NO_MEM;}
     if (!nyx_creds_read_agent(&c->credential)) {
@@ -791,6 +793,7 @@ esp_err_t panel_voice_peer_test(char *json,size_t cap)
 {
     bool expected=false;
     if (!atomic_compare_exchange_strong(&busy,&expected,true)) return ESP_ERR_INVALID_STATE;
+    if (panel_ota_busy()) {atomic_store(&busy,false);return ESP_ERR_INVALID_STATE;}
     voice_call_t *c=calloc(1,sizeof(*c));char *offer=NULL;esp_err_t err=ESP_ERR_NO_MEM;
     if (!c) goto done;
     c->offers=xQueueCreate(2,sizeof(char *));
@@ -1003,9 +1006,10 @@ done:
 }
 static esp_err_t start_call(const panel_voice_remote_t *remote)
 {
-    if (!state_lock || !network_is_connected()) return ESP_ERR_INVALID_STATE;
+    if (!state_lock || !network_is_connected() || panel_ota_busy()) return ESP_ERR_INVALID_STATE;
     bool expected=false;
     if (!atomic_compare_exchange_strong(&busy,&expected,true)) return ESP_ERR_INVALID_STATE;
+    if (panel_ota_busy()) {atomic_store(&busy,false);return ESP_ERR_INVALID_STATE;}
     voice_call_t *c=calloc(1,sizeof(*c));
     if (!c) {atomic_store(&busy,false);return ESP_ERR_NO_MEM;}
     xSemaphoreTake(state_lock,portMAX_DELAY);c->config=configuration;

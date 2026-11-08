@@ -1,9 +1,7 @@
 #include "local_api.h"
 
 #include "esp_app_desc.h"
-#include "esp_crt_bundle.h"
 #include "esp_heap_caps.h"
-#include "esp_http_client.h"
 #include "panel_voice.h"
 #include "panel_access.h"
 #include "product_support.h"
@@ -27,13 +25,13 @@
 #include "settings.h"
 #include "network.h"
 #include "panel_ota.h"
+#include "panel_update.h"
 #include "panel_flash.h"
 #include "device_code.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#include "mbedtls/sha256.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -50,6 +48,7 @@
 #define WIFI_TEST_TIMEOUT_MS    60000u
 
 static const char *TAG = "haCam.api";
+static cJSON *update_json(void);
 
 static const char *header_value(const nyx_proxy_request_t *req, const char *name)
 {
@@ -211,6 +210,7 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     if(panel_management_slug(nyx_creds_service_slug(),management,sizeof(management)))
         cJSON_AddStringToObject(node,"management_slug",management);
     cJSON_AddStringToObject(node, "last_error", nyx_node_last_error());
+    cJSON_AddItemToObject(root,"update",update_json());
     cJSON *ota = cJSON_AddObjectToObject(root, "ota");
     cJSON_AddStringToObject(ota, "running", running ? running->label : "");
     const esp_partition_t *next = esp_ota_get_next_update_partition(NULL);
@@ -479,14 +479,7 @@ static bool parse_hex_sha256(const char *hex, uint8_t out[32])
     return true;
 }
 
-static bool sha256_matches(const uint8_t a[32], const uint8_t b[32])
-{
-    uint8_t diff = 0u;
-    for (size_t i = 0; i < 32u; ++i) {
-        diff |= (uint8_t)(a[i] ^ b[i]);
-    }
-    return diff == 0u;
-}
+
 
 static int h_status(const nyx_proxy_request_t *req, char *resp, size_t cap,
                     char *ct, size_t ct_cap, size_t *resp_len, void *user)
@@ -742,6 +735,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         else if(!strcmp(r->path,"/lcd/image"))description="Show a temporary fullscreen JPEG, image/jpeg up to 65536 bytes; query duration_ms=0 is sticky until cleared, positive TTL returns to fallback.";
         else if(!strcmp(r->path,"/lcd/text"))description="Overlay text on the image. JSON text, size small|medium|large, color and bg #RRGGBB, align left|center|right, duration_ms. bg sets outline color.";
         else if(!strcmp(r->path,"/lcd/clear"))description="Clear temporary images and captions, keep the persistent fallback.";
+        else if(!strcmp(r->path,"/system/update"))description="Manage stable firmware updates for this panel. GET reads version, automatic, available, state and blocked_version. POST exactly one field: automatic (boolean), or action (check or install). Asynchronous: 202 queues work; poll /status update and ota. Installation waits for idle. A rolled-back version is blocked. Management service only.";
         else if(!strcmp(r->path,"/camera/capture"))description="Take one camera photo, show the same photo fullscreen on Nyx Panel for two minutes, and return that JPEG for visual understanding. Keep voice controls and captions. Does not change the saved fallback image. No continuous stream.";
         else if(!strcmp(r->path,"/camera/snapshot.jpg") || !strcmp(r->path,"/snapshot.jpg"))description="Take a fresh native 800x1280 JPEG without changing the display. Use POST /camera/capture for a user-facing photo that is also shown on the panel. Release camera resources afterwards. Concurrent capture returns 503. No continuous stream.";
         else if(!strcmp(r->path,"/lcd/snapshot.jpg"))description="Read a JPEG screenshot of the current LCD.";
@@ -774,6 +768,17 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
                 if(!strcmp(r->path,"/voice/say"))cJSON_AddItemToArray(required,cJSON_CreateString("text"));
                 else{cJSON *mute=cJSON_AddObjectToObject(properties,"microphone_muted");cJSON_AddStringToObject(mute,"type","boolean");cJSON_AddBoolToObject(mute,"default",false);}
                 cJSON *queued=cJSON_AddObjectToObject(responses,"202");cJSON_AddStringToObject(queued,"description","Queued asynchronously; inspect /voice for actual state");
+            }else if(!strcmp(r->path,"/system/update")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON_AddNumberToObject(schema,"minProperties",1);
+                cJSON_AddNumberToObject(schema,"maxProperties",1);
+                cJSON *props=cJSON_AddObjectToObject(schema,"properties");
+                cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"automatic"),"type","boolean");
+                cJSON *action=cJSON_AddObjectToObject(props,"action");cJSON_AddStringToObject(action,"type","string");
+                cJSON *values=cJSON_AddArrayToObject(action,"enum");
+                cJSON_AddItemToArray(values,cJSON_CreateString("check"));cJSON_AddItemToArray(values,cJSON_CreateString("install"));
+                cJSON *queued=cJSON_AddObjectToObject(responses,"202");
+                cJSON_AddStringToObject(queued,"description","Queued; poll /status update and ota for completion");
             }else if(!strcmp(r->path,"/voice/greeting")){
                 cJSON_AddBoolToObject(schema,"additionalProperties",false);
                 cJSON *required=cJSON_AddArrayToObject(schema,"required");
@@ -1230,128 +1235,44 @@ static int h_system_factory_reset(const nyx_proxy_request_t *req, char *resp, si
     return 200;
 }
 
-typedef struct {
-    char *url;
-    uint8_t expected[32];
-    const esp_partition_t *update;
-} url_ota_job_t;
 
-static void url_ota_task(void *arg)
+static cJSON *update_json(void)
 {
-    url_ota_job_t *job = arg;
-    // URLs may contain signed query credentials; log only the target partition.
-    ESP_LOGI(TAG, "URL OTA downloading target=%s", job->update->label);
-    panel_ota_progress("downloading", ESP_OK);
-    esp_http_client_config_t http_cfg = {
-        .url = job->url,
-        .crt_bundle_attach = esp_crt_bundle_attach,
-        .timeout_ms = 15000,
-        .keep_alive_enable = true,
-        // Use the same bounded flash write path as the raw OTA endpoint.
-        .buffer_size = 4096,
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&http_cfg);
-    esp_err_t err = client ? ESP_OK : ESP_ERR_NO_MEM;
-    int64_t image_len = 0;
-    for (unsigned redirects = 0; err == ESP_OK; ++redirects) {
-        err = esp_http_client_open(client, 0);
-        if (err != ESP_OK) break;
-        ESP_LOGI(TAG, "URL OTA HTTP connected");
-        image_len = esp_http_client_fetch_headers(client);
-        int status = esp_http_client_get_status_code(client);
-        ESP_LOGI(TAG, "URL OTA HTTP status=%d bytes=%lld", status, (long long)image_len);
-        if (status == 200) break;
-        if (redirects >= 3 || (status != 301 && status != 302 && status != 303 &&
-                               status != 307 && status != 308)) {
-            err = ESP_ERR_INVALID_RESPONSE;
-            break;
-        }
-        err = esp_http_client_set_redirection(client);
-        esp_http_client_close(client);
+    panel_update_snapshot_t update;panel_update_snapshot(&update);
+    cJSON *json=cJSON_CreateObject();
+    cJSON_AddStringToObject(json,"current_version",esp_app_get_description()->version);
+    cJSON_AddStringToObject(json,"profile",panel_update_profile());
+    cJSON_AddBoolToObject(json,"automatic",update.automatic);
+    cJSON_AddBoolToObject(json,"checking",update.checking);
+    cJSON_AddBoolToObject(json,"available",update.available);
+    cJSON_AddStringToObject(json,"latest_version",update.latest_version);
+    cJSON_AddStringToObject(json,"blocked_version",update.blocked_version);
+    cJSON_AddStringToObject(json,"state",update.state);
+    cJSON_AddStringToObject(json,"last_error",update.last_error==ESP_OK ? "" : esp_err_to_name(update.last_error));
+    return json;
+}
+static int h_system_update(const nyx_proxy_request_t *req,char *resp,size_t cap,
+                           char *ct,size_t ct_cap,size_t *resp_len,void *user)
+{
+    (void)user;snprintf(ct,ct_cap,"application/json");
+    if (!strcmp(req->method,"GET")) return object_response(update_json(),resp,cap,resp_len);
+    int status=0;cJSON *root=parse_json_body(req,resp,cap,resp_len,&status);
+    if (!root) return status;
+    cJSON *enabled=cJSON_GetObjectItemCaseSensitive(root,"automatic");
+    cJSON *action=cJSON_GetObjectItemCaseSensitive(root,"action");
+    esp_err_t err=ESP_ERR_INVALID_ARG;
+    if (cJSON_GetArraySize(root)==1) {
+        if (cJSON_IsBool(enabled)) err=panel_update_set_automatic(cJSON_IsTrue(enabled));
+        else if (cJSON_IsString(action) && (!strcmp(action->valuestring,"check") || !strcmp(action->valuestring,"install")))
+            err=panel_update_check(!strcmp(action->valuestring,"install"));
     }
-    if (err == ESP_OK && (image_len <= 0 || image_len > job->update->size)) {
-        err = ESP_ERR_INVALID_SIZE;
+    cJSON_Delete(root);
+    if (err!=ESP_OK) {
+        snprintf(resp,cap,"{\"error\":\"%s\"}",esp_err_to_name(err));json_response_len(resp,resp_len);
+        return err==ESP_ERR_INVALID_ARG ? 400 : err==ESP_ERR_INVALID_STATE ? 409 : 503;
     }
-    uint8_t *buffer = heap_caps_malloc(4096, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
-    if (!buffer) err = ESP_ERR_NO_MEM;
-    uint8_t *image = err == ESP_OK ? heap_caps_malloc((size_t)image_len, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT) : NULL;
-    if (err == ESP_OK && !image) err = ESP_ERR_NO_MEM;
-    esp_ota_handle_t handle = 0;
-    mbedtls_sha256_context hash;
-    mbedtls_sha256_init(&hash);
-    if (mbedtls_sha256_starts(&hash, 0) != 0) err = ESP_FAIL;
-    size_t received = 0;
-    int64_t deadline = esp_timer_get_time() + 300000000LL;
-    while (err == ESP_OK && received < (size_t)image_len) {
-        size_t wanted = (size_t)image_len - received;
-        if (wanted > 4096) wanted = 4096;
-        int count = esp_http_client_read(client, (char *)buffer, wanted);
-        if (count <= 0 || esp_timer_get_time() > deadline) {
-            err = ESP_ERR_TIMEOUT;
-            break;
-        }
-        if (mbedtls_sha256_update(&hash, buffer, count) != 0) {
-            err = ESP_FAIL;
-            break;
-        }
-        memcpy(image + received, buffer, count);
-        received += count;
-        vTaskDelay(1);
-    }
-    uint8_t actual[32] = {0};
-    if (err == ESP_OK) {
-        panel_ota_progress("verifying", ESP_OK);
-        if (mbedtls_sha256_finish(&hash, actual) != 0) err = ESP_FAIL;
-        else if (!sha256_matches(job->expected, actual)) err = ESP_ERR_INVALID_CRC;
-    }
-    mbedtls_sha256_free(&hash);
-    if (client) esp_http_client_cleanup(client);
-    // Close the download transport and verify its complete body before flash I/O.
-    // The buffer is bounded by the inactive slot and available PSRAM.
-    if (err == ESP_OK) {
-        panel_ota_progress("writing", ESP_OK);
-        // Bound each erase to the next 4 KiB write, rather than blocking in
-        // one multi-megabyte erase on the legacy P4 while the UI is running.
-        ESP_LOGI(TAG, "URL OTA download verified; starting sector writes");
-        panel_flash_lock();
-        err = esp_ota_begin(job->update, OTA_WITH_SEQUENTIAL_WRITES, &handle);
-        panel_flash_unlock();
-        if (err == ESP_OK) ESP_LOGI(TAG, "URL OTA writer ready");
-    }
-    for (size_t offset = 0; err == ESP_OK && offset < received;) {
-        size_t count = received - offset;
-        if (count > 4096) count = 4096;
-        memcpy(buffer, image + offset, count);
-        err = esp_ota_write(handle, buffer, count);
-        offset += count;
-        if (err == ESP_OK && ((offset % (1024 * 1024)) == 0 || offset == received)) {
-            ESP_LOGI(TAG, "URL OTA written %u/%u bytes", (unsigned)offset, (unsigned)received);
-        }
-        vTaskDelay(1);
-    }
-    free(buffer);
-    free(image);
-    if (err == ESP_OK) {
-        panel_flash_lock();
-        err = esp_ota_end(handle);
-        handle = 0;
-        if (err == ESP_OK) err = esp_ota_set_boot_partition(job->update);
-        panel_flash_unlock();
-    }
-    if (handle) esp_ota_abort(handle);
-    free(job->url);
-    free(job);
-    if (err == ESP_OK) {
-        panel_ota_progress("rebooting", ESP_OK);
-        ESP_LOGI(TAG, "URL OTA verified; rebooting");
-        // Keep the update lock until reboot so no request can overwrite this slot.
-        schedule_reboot();
-    } else {
-        panel_ota_progress("failed", err);
-        panel_ota_unlock();
-        ESP_LOGE(TAG, "URL OTA failed error=%s", esp_err_to_name(err));
-    }
-    vTaskDelete(NULL);
+    int result=object_response(update_json(),resp,cap,resp_len);
+    return result==200 ? 202 : result;
 }
 
 static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
@@ -1376,28 +1297,12 @@ static int h_system_ota(const nyx_proxy_request_t *req, char *resp, size_t cap,
         json_response_len(resp, resp_len);
         return 400;
     }
-    const esp_partition_t *update = esp_ota_get_next_update_partition(NULL);
-    if (!update || !panel_ota_try_lock()) {
-        free(url);
-        snprintf(resp, cap, "{\"error\":\"ota_slot_unavailable_or_busy\"}");
+    esp_err_t err = panel_ota_start_url(url, expected, NULL, 0);
+    free(url);
+    if (err != ESP_OK) {
+        snprintf(resp, cap, "{\"error\":\"ota_unavailable\"}");
         json_response_len(resp, resp_len);
-        return 409;
-    }
-    url_ota_job_t *job = calloc(1, sizeof(*job));
-    if (job) {
-        job->url = url;
-        job->update = update;
-        memcpy(job->expected, expected, sizeof(expected));
-        panel_ota_progress("queued", ESP_OK);
-    }
-    if (!job || xTaskCreate(url_ota_task, "url_ota", 16 * 1024, job, 5, NULL) != pdPASS) {
-        free(job);
-        free(url);
-        panel_ota_progress("failed", ESP_ERR_NO_MEM);
-        panel_ota_unlock();
-        snprintf(resp, cap, "{\"error\":\"ota_worker_unavailable\"}");
-        json_response_len(resp, resp_len);
-        return 503;
+        return err == ESP_ERR_INVALID_STATE ? 409 : 503;
     }
     // Nyx proxies have a finite response deadline. Download in a separate worker;
     // 202 acknowledges acceptance, and /status reports completion or failure.
@@ -1672,6 +1577,8 @@ static const nyx_route_t s_routes[] = {
     { .path = "/config/mqtt", .method = "POST", .fn = h_post_config_mqtt, .user = NULL },
     { .path = "/system/reboot", .method = "POST", .fn = h_system_reboot, .user = NULL },
     { .path = "/system/factory_reset", .method = "POST", .fn = h_system_factory_reset, .user = NULL },
+    { .path = "/system/update", .method = "GET", .fn = h_system_update, .user = NULL },
+    { .path = "/system/update", .method = "POST", .fn = h_system_update, .user = NULL },
     { .path = "/system/ota", .method = "POST", .fn = h_system_ota, .user = NULL },
 #if HA_CAM_DEV_QR_INJECT
     { .path = "/_dev/qr/inject_jpeg", .method = "POST", .fn = h_dev_inject_qr_jpeg, .user = NULL },

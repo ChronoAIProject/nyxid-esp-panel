@@ -1,35 +1,56 @@
 name: Firmware
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+permissions:
+  contents: read
 jobs:
   host:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
       - run: sudo apt-get update && sudo apt-get install -y libssl-dev
       - run: cmake -S tests/host -B build-host && cmake --build build-host -j2
       - run: ctest --test-dir build-host --output-on-failure
+      - run: python3 -m unittest discover -s tests/release -v
   esp32p4:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: p4-rev1-16mb
+            revision: rev1_3
+          - profile: p4-rev3-16mb
+            revision: rev3_x
     container: espressif/idf:v5.5.4
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
       - name: Install build Python dependencies
         shell: bash
         run: |
           . "$IDF_PATH/export.sh"
           python -m pip install -r tools/requirements-build.txt
-      - name: Build legacy P4 profile and verify partition capacity
+      - name: Build P4 profile and verify partition capacity
         shell: bash
         run: |
           . "$IDF_PATH/export.sh"
-          idf.py build
+          idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.${{ matrix.revision }}.defaults;sdkconfig.board-16mb.defaults" build
+      - name: Package production OTA and factory images
+        run: python3 tools/package_release.py --build build --output dist --profile '${{ matrix.profile }}'
       - uses: actions/upload-artifact@v4
         with:
-          name: nyxid-esp-panel-esp32p4-rev1
-          path: |
-            build/nyxid-esp-panel.bin
-            build/bootloader/bootloader.bin
-            build/partition_table/partition-table.bin
-            build/ota_data_initial.bin
-            build/storage.bin
-            build/flash_args
+          name: firmware-${{ matrix.profile }}
+          path: dist/*
+          if-no-files-found: error

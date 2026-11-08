@@ -296,6 +296,11 @@ native navigation; unsupported targets return an error.
 
 ## OTA
 
+Production firmware checks stable GitHub Releases automatically when idle.
+See [firmware releases and automatic OTA](docs/UPDATES.md) for publishing,
+hardware profiles, remote configuration and rollback behavior.
+
+
 Nyx `POST /system/ota` takes `{"url":"...","sha256":"..."}` and promptly returns
 202 accepted. A worker downloads and verifies the image, then reboots. Poll
 `/status` → `ota.busy`, `ota.stage`, `ota.last_error` for progress/failure;
