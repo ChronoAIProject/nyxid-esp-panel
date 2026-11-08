@@ -108,7 +108,10 @@ static esp_err_t fetch_release(panel_release_t *release)
     char url[256];
     snprintf(url,sizeof(url),PANEL_RELEASE_ROOT "latest/download/update-%s.json",UPDATE_PROFILE);
     esp_http_client_config_t config={.url=url,.crt_bundle_attach=esp_crt_bundle_attach,
-        .timeout_ms=15000,.disable_auto_redirect=true,.buffer_size=2048};
+        .timeout_ms=15000,.disable_auto_redirect=true,.buffer_size=2048,
+        // GitHub asset redirects carry a signed query longer than IDF's
+        // default 512-byte request-line buffer.
+        .buffer_size_tx=4096};
     esp_http_client_handle_t http=esp_http_client_init(&config);
     if (!http) return ESP_ERR_NO_MEM;
     esp_http_client_set_header(http,"User-Agent","nyxid-esp-panel-updater");
