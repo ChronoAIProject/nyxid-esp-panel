@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: firmware-release-${{ inputs.tag || github.ref_name }}
+  group: firmware-release
   cancel-in-progress: false
 jobs:
   verify-tag:
@@ -67,6 +67,21 @@ jobs:
           RELEASE_TAG: ${{ needs.verify-tag.outputs.tag }}
           RELEASE_SHA: ${{ needs.verify-tag.outputs.sha }}
         run: |
+          python3 - <<'PY_CHECK'
+          import json, os, urllib.error, urllib.request
+          candidate = tuple(map(int, os.environ['RELEASE_TAG'][1:].split('.')))
+          request = urllib.request.Request(
+              'https://api.github.com/repos/' + os.environ['GH_REPO'] + '/releases/latest',
+              headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  latest = json.load(response)['tag_name']
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise
+          else:
+              assert candidate > tuple(map(int, latest.removeprefix('v').split('.'))), 'Refusing to move latest backwards'
+          PY_CHECK
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             echo 'Release already exists; refusing to replace OTA assets.' >&2
             exit 1
