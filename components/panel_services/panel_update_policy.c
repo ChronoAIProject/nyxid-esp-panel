@@ -33,8 +33,12 @@ bool panel_update_download_url_allowed(const char *url)
 {
     if (!url || strlen(url)>2048) return false;
     // GitHub may redirect release downloads to either of these asset hosts.
-    const char *prefixes[]={PANEL_RELEASE_ROOT,"https://release-assets.githubusercontent.com/",
-                            "https://objects.githubusercontent.com/"};
+    // ESP-IDF's get_url() renders the default HTTPS port explicitly when
+    // inspecting redirects. Admit that equivalent origin as well.
+    const char *prefixes[]={PANEL_RELEASE_ROOT,
+        "https://github.com:443/ChronoAIProject/nyxid-esp-panel/releases/",
+        "https://release-assets.githubusercontent.com/", "https://release-assets.githubusercontent.com:443/",
+        "https://objects.githubusercontent.com/", "https://objects.githubusercontent.com:443/"};
     for (size_t i=0;i<sizeof(prefixes)/sizeof(*prefixes);++i)
         if (!strncmp(url,prefixes[i],strlen(prefixes[i]))) return true;
     return false;

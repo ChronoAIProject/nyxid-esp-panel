@@ -63,7 +63,10 @@ static void redirects_cannot_downgrade_tls_or_leave_github(void)
 {
     TEST_ASSERT_TRUE(panel_update_download_url_allowed(url));
     TEST_ASSERT_TRUE(panel_update_download_url_allowed("https://release-assets.githubusercontent.com/path?signature=x"));
-    const char *bad[]={"http://github.com/file","https://github.com.evil.example/","https://github.com@evil.example/","https://release-assets.githubusercontent.com.evil.example/","https://evil.example/","https://github.com/other/repo/"};
+    TEST_ASSERT_TRUE(panel_update_download_url_allowed("https://github.com:443/ChronoAIProject/nyxid-esp-panel/releases/download/v0.6.24/update-p4-rev1-16mb.json"));
+    TEST_ASSERT_TRUE(panel_update_download_url_allowed("https://release-assets.githubusercontent.com:443/path"));
+    TEST_ASSERT_TRUE(panel_update_download_url_allowed("https://objects.githubusercontent.com:443/path"));
+    const char *bad[]={"http://github.com/file","https://github.com.evil.example/","https://github.com@evil.example/","https://release-assets.githubusercontent.com.evil.example/","https://evil.example/","https://github.com/other/repo/","https://github.com:443/other/repo/","https://release-assets.githubusercontent.com:444/path","https://release-assets.githubusercontent.com:443@evil.example/"};
     for(size_t i=0;i<sizeof(bad)/sizeof(*bad);++i) TEST_ASSERT_FALSE(panel_update_download_url_allowed(bad[i]));
 }
 int main(void)

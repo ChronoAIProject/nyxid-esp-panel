@@ -7,6 +7,7 @@
 #include <stdatomic.h>
 
 static SemaphoreHandle_t owner;
+static bool direct_preview;
 static atomic_int current;
 static atomic_uint completed, failed, last_capture_ms;
 static atomic_int last_error;
@@ -57,11 +58,39 @@ static esp_err_t start_camera(void)
     return err;
 }
 
+esp_err_t media_mode_claim_direct_preview(void)
+{
+    if (!owner) return ESP_ERR_INVALID_STATE;
+    if (xSemaphoreTake(owner, 0) != pdTRUE) return ESP_ERR_TIMEOUT;
+    esp_err_t err = ESP_ERR_INVALID_STATE;
+    if (media_mode_current() == MEDIA_MODE_IDLE) {
+        // Publish the claim before checking OTA so its reciprocal idle check
+        // cannot admit an update concurrently with native camera startup.
+        atomic_store(&current, MEDIA_MODE_PREVIEW);
+        if (panel_ota_busy()) atomic_store(&current, MEDIA_MODE_IDLE);
+        else { direct_preview = true; err = ESP_OK; }
+    }
+    xSemaphoreGive(owner);
+    return err;
+}
+
+void media_mode_release_direct_preview(void)
+{
+    if (!owner) return;
+    xSemaphoreTake(owner, portMAX_DELAY);
+    if (direct_preview) {
+        direct_preview = false;
+        atomic_store(&current, MEDIA_MODE_IDLE);
+    }
+    xSemaphoreGive(owner);
+}
+
 esp_err_t media_mode_request_idle(const char *reason)
 {
     (void)reason;
     if (!owner) return ESP_ERR_NO_MEM;
     xSemaphoreTake(owner, portMAX_DELAY);
+    if (direct_preview) { xSemaphoreGive(owner); return ESP_ERR_INVALID_STATE; }
     esp_err_t err = media_mode_current() == MEDIA_MODE_IDLE ? ESP_OK : close_camera();
     atomic_store(&last_error, err);
     xSemaphoreGive(owner);
@@ -73,6 +102,7 @@ esp_err_t media_mode_request_preview(const char *reason)
     (void)reason;
     if (!owner) return ESP_ERR_NO_MEM;
     xSemaphoreTake(owner, portMAX_DELAY);
+    if (direct_preview) { xSemaphoreGive(owner); return ESP_ERR_INVALID_STATE; }
     esp_err_t err = ESP_OK;
     if (!media_mode_is_preview()) {
         media_mode_t previous=media_mode_current();
@@ -95,6 +125,7 @@ esp_err_t media_mode_snapshot(uint8_t *dst, size_t cap, size_t *out_len, bool al
     if (!owner) return ESP_ERR_INVALID_STATE;
     // No unbounded queue of camera work or response buffers.
     if (xSemaphoreTake(owner, 0) != pdTRUE) return ESP_ERR_TIMEOUT;
+    if (direct_preview) { xSemaphoreGive(owner); return ESP_ERR_INVALID_STATE; }
     bool preview = media_mode_is_preview();
     if (!preview && !allow_start) {
         xSemaphoreGive(owner);
