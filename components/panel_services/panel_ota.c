@@ -66,6 +66,8 @@ static void url_ota_task(void *arg)
         .keep_alive_enable = true,
         // Use the same bounded flash write path as the raw OTA endpoint.
         .buffer_size = 4096,
+        // Signed release-asset queries must fit the HTTP request line too.
+        .buffer_size_tx = 4096,
     };
     if (job->version[0]) http_cfg.disable_auto_redirect = true;
     esp_http_client_handle_t client = esp_http_client_init(&http_cfg);
