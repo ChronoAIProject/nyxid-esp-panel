@@ -7,6 +7,7 @@ JSON endpoints use `Content-Type: application/json`; JPEG endpoints use
 
 | Method | Path | LAN | Body / behavior |
 | --- | --- | --- | --- |
+| GET/POST | `/system/update` | management only | Stable release status, automatic switch, asynchronous check/install |
 | GET | `/status` | yes | Firmware, ELF hash, network, Nyx, actual native screen, media, heap and OTA slots/state |
 | GET, POST | `/nyx/login` | no | Sanitized account device-login status; POST starts login and opens Settings; no secret device code or tokens returned |
 | POST | `/nyx/login/cancel` | no | Cancel login; a late account-session delivery is revoked before further registration |

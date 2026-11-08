@@ -1,0 +1,76 @@
+name: Release firmware
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing stable tag matching VERSION (vX.Y.Z)'
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: firmware-release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  verify-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      sha: ${{ steps.tag.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref_name }}
+      - id: tag
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, re, subprocess
+          tag = os.environ['RELEASE_TAG']
+          version = pathlib.Path('VERSION').read_text().strip()
+          assert re.fullmatch(r'v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', tag), 'Stable version required'
+          assert tag == 'v' + version, 'Tag must match VERSION'
+          sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          assert subprocess.check_output(['git', 'rev-parse', tag + '^{commit}'], text=True).strip() == sha
+          subprocess.run(['git', 'merge-base', '--is-ancestor', sha, 'origin/main'], check=True)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'tag={tag}\nsha={sha}\n')
+          PY
+  # Reuse exactly the same checks and packaging as normal pull requests.
+  build:
+    needs: verify-tag
+    uses: ./.github/workflows/firmware.yml
+    with:
+      ref: ${{ needs.verify-tag.outputs.sha }}
+  publish:
+    needs: [verify-tag, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: firmware-*
+          path: dist
+          merge-multiple: true
+      - name: Verify release checksums
+        working-directory: dist
+        run: sha256sum -c checksums-*.txt
+      - name: Publish stable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.verify-tag.outputs.tag }}
+          RELEASE_SHA: ${{ needs.verify-tag.outputs.sha }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo 'Release already exists; refusing to replace OTA assets.' >&2
+            exit 1
+          fi
+          gh release create "$RELEASE_TAG" dist/* --verify-tag --target "$RELEASE_SHA" \
+            --title "Nyx Panel $RELEASE_TAG" --generate-notes --draft
+          gh release edit "$RELEASE_TAG" --draft=false --latest

@@ -9,7 +9,7 @@ static void test_daily_and_management_are_separate_services(void){
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","POST","/voice/open"));
     TEST_ASSERT_TRUE(panel_service_can_call("my-board","my-board","POST","/camera/capture"));
     TEST_ASSERT_FALSE(panel_service_can_call("my-board","other-board","POST","/camera/capture"));
-    const char *denied[]={"/config/wifi","/config/lcd","/voice/config","/config/device","/config/lan_server","/system/reboot","/system/factory_reset","/system/ota","/nyx/login"};
+    const char *denied[]={"/config/wifi","/config/lcd","/voice/config","/config/device","/config/lan_server","/system/reboot","/system/factory_reset","/system/ota","/system/update","/nyx/login"};
     for(size_t i=0;i<sizeof(denied)/sizeof(*denied);++i){
         TEST_ASSERT_FALSE(panel_service_can_call("my-board","my-board","POST",denied[i]));
         TEST_ASSERT_TRUE(panel_service_can_call("my-board",slug,"POST",denied[i]));

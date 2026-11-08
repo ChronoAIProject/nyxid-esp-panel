@@ -24,6 +24,8 @@ set(panel_sources
     nyx_upload.c
     nyx_ws_rx.c
     panel_ota.c
+    panel_update.c
+    panel_update_policy.c
     panel_flash.c
     panel_runtime.c
     panel_access.c
@@ -65,6 +67,7 @@ if(NYX_PANEL_AGENT_DEV_API_URL OR NYX_PANEL_AGENT_DEV_LOGIN_URL)
     string(SHA256 _agent_profile "${NYX_PANEL_AGENT_DEV_API_URL}|${NYX_PANEL_AGENT_DEV_LOGIN_URL}")
     string(SUBSTRING "${_agent_profile}" 0 10 _agent_profile)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE
+        NYX_PANEL_UPDATE_DISABLED=1
         NYX_AGENT_BASE_URL="${NYX_PANEL_AGENT_DEV_API_URL}"
         NYX_AGENT_VERIFICATION_URI="${NYX_PANEL_AGENT_DEV_LOGIN_URL}"
         NYX_AGENT_NVS_NAMESPACE="na_${_agent_profile}"
