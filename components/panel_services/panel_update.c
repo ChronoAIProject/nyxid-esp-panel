@@ -151,14 +151,23 @@ static void update_task(void *arg)
         size_t cap=sizeof(pending);nvs_get_str(h,"pending",pending,&cap);nvs_close(h);
     }
     panel_flash_unlock();
-    if (pending[0] && strcmp(pending,esp_app_get_description()->version)) {
-        save_string("blocked",pending);
-        portENTER_CRITICAL(&lock);
-        snprintf(snapshot.blocked_version,sizeof(snapshot.blocked_version),"%s",pending);
-        portEXIT_CRITICAL(&lock);
-        state("rolled_back",ESP_FAIL);
+    while (pending[0]) {
+        esp_err_t err=ESP_OK;
+        if (strcmp(pending,esp_app_get_description()->version)) {
+            err=save_string("blocked",pending);
+            if (err==ESP_OK) {
+                portENTER_CRITICAL(&lock);
+                snprintf(snapshot.blocked_version,sizeof(snapshot.blocked_version),"%s",pending);
+                portEXIT_CRITICAL(&lock);
+                state("rolled_back",ESP_FAIL);
+            }
+        }
+        if (err==ESP_OK) err=save_string("pending","");
+        if (err==ESP_OK) break;
+        state("storage_error",err);
+        // Keep the durable target until rollback suppression has been saved.
+        vTaskDelay(pdMS_TO_TICKS(15000));
     }
-    if (pending[0]) save_string("pending","");
     int64_t next_check=0;
     panel_release_t release={0};bool want_install=false,manual_install=false;
     for (;;) {
@@ -191,12 +200,17 @@ static void update_task(void *arg)
         }
         panel_update_snapshot(&s);
         if (want_install && !s.automatic && !manual_install) want_install=false;
+        if (!strcmp(s.state,"installing") && !panel_ota_busy() && panel_ota_error()!=ESP_OK) {
+            state("install_failed",panel_ota_error());
+            next_check=esp_timer_get_time()+15LL*60*1000000;
+        }
         if (want_install && online && idle()) {
             want_install=false;
             if (!strcmp(release.version,s.blocked_version)) state("rolled_back",ESP_ERR_INVALID_VERSION);
             else {
                 esp_err_t err=panel_ota_start_url(release.url,release.sha256,release.version,release.size);
-                state(err==ESP_OK ? "installing" : "install_failed",err);
+                if (err==ESP_ERR_INVALID_STATE) {want_install=true;state("waiting_for_idle",ESP_OK);}
+                else state(err==ESP_OK ? "installing" : "install_failed",err);
             }
         }
         vTaskDelay(pdMS_TO_TICKS(1000));

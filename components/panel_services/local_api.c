@@ -768,6 +768,17 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
                 if(!strcmp(r->path,"/voice/say"))cJSON_AddItemToArray(required,cJSON_CreateString("text"));
                 else{cJSON *mute=cJSON_AddObjectToObject(properties,"microphone_muted");cJSON_AddStringToObject(mute,"type","boolean");cJSON_AddBoolToObject(mute,"default",false);}
                 cJSON *queued=cJSON_AddObjectToObject(responses,"202");cJSON_AddStringToObject(queued,"description","Queued asynchronously; inspect /voice for actual state");
+            }else if(!strcmp(r->path,"/system/update")){
+                cJSON_AddBoolToObject(schema,"additionalProperties",false);
+                cJSON_AddNumberToObject(schema,"minProperties",1);
+                cJSON_AddNumberToObject(schema,"maxProperties",1);
+                cJSON *props=cJSON_AddObjectToObject(schema,"properties");
+                cJSON_AddStringToObject(cJSON_AddObjectToObject(props,"automatic"),"type","boolean");
+                cJSON *action=cJSON_AddObjectToObject(props,"action");cJSON_AddStringToObject(action,"type","string");
+                cJSON *values=cJSON_AddArrayToObject(action,"enum");
+                cJSON_AddItemToArray(values,cJSON_CreateString("check"));cJSON_AddItemToArray(values,cJSON_CreateString("install"));
+                cJSON *queued=cJSON_AddObjectToObject(responses,"202");
+                cJSON_AddStringToObject(queued,"description","Queued; poll /status update and ota for completion");
             }else if(!strcmp(r->path,"/voice/greeting")){
                 cJSON_AddBoolToObject(schema,"additionalProperties",false);
                 cJSON *required=cJSON_AddArrayToObject(schema,"required");

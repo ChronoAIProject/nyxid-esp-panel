@@ -51,6 +51,11 @@ static void malformed_or_unbounded_metadata_is_rejected(void)
     release("p4-rev1-16mb","0.6.24",url,hash);
     char *size=strstr(manifest,"123456");memcpy(size,"999999",6);
     TEST_ASSERT_TRUE(panel_update_parse_release(manifest,strlen(manifest),"p4-rev1-16mb",&parsed));
+    release("p4-rev1-16mb","0.6.24",url,hash);
+    char *schema=strstr(manifest,"\"schema\":1");schema[9]='2';
+    TEST_ASSERT_FALSE(panel_update_parse_release(manifest,strlen(manifest),"p4-rev1-16mb",&parsed));
+    release("p4-rev1-16mb","0.6.24",url,hash);
+    size=strstr(manifest,"123456");
     memcpy(size,"000000",6);
     TEST_ASSERT_FALSE(panel_update_parse_release(manifest,strlen(manifest),"p4-rev1-16mb",&parsed));
 }
