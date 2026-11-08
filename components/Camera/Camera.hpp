@@ -11,6 +11,7 @@
 #include "lvgl.h"
 #include "sdkconfig.h"
 #include "camera_profile.h"
+#include <atomic>
 
 namespace esp_brookesia::apps {
 class Camera : public systems::phone::App {
@@ -19,6 +20,9 @@ public:
     ~Camera();
     void setScanMode(bool enabled, const char *return_target = "settings");
     bool scanning() const { return _scanning; }
+    // Native preview pauses LVGL; wake it through task cleanup so queued
+    // navigation can run on the LVGL thread after the camera has stopped.
+    void stopPreviewForNavigation() { _preview_running = false; }
 protected:
     Camera(bool use_status_bar, bool use_navigation_bar);
     bool run() override;
@@ -47,7 +51,7 @@ private:
     TaskHandle_t _close_wait_task = nullptr;
     int _video_fd = -1;
     bool _video_driver_initialized = false;
-    bool _preview_running = false;
+    std::atomic_bool _preview_running{false};
     bool _dummy_enabled = false;
     bool _lvgl_paused = false;
     bool _touch_active = false;

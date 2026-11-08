@@ -655,9 +655,17 @@ esp_err_t lcd_renderer_navigate(const char *target) {
     for (auto name:known) if (!strcmp(name,target)) valid=true;
     if (!valid) return ESP_ERR_NOT_FOUND;
     if (bsp_display_lock(1000)!=ESP_OK) return ESP_ERR_TIMEOUT;
+    auto active = phone->getManager().getActiveApp();
+    auto camera = active && !strcmp(active->getName(), "Camera") ?
+        esp_brookesia::apps::Camera::requestInstance() : nullptr;
+    if (camera && !camera->scanning() && !strcmp(target, "camera")) {
+        bsp_display_unlock();
+        return ESP_OK;
+    }
     esp_err_t err=ESP_ERR_NO_MEM;
     if (navigation_count<4) {
         snprintf(pending_navigation[navigation_count++],24,"%s",target);
+        if (camera && !camera->scanning()) camera->stopPreviewForNavigation();
         err=ESP_OK;
     }
     bsp_display_unlock();
