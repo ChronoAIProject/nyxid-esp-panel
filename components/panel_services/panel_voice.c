@@ -2,6 +2,7 @@
 #include "panel_voice.h"
 #include "panel_voice_audio.h"
 #include "esp_aec.h"
+#include "esp_agc.h"
 #include "esp_heap_caps.h"
 #include "product_support.h"
 #include "nyx_creds.h"
@@ -610,10 +611,15 @@ static void mic_task(void *arg)
     voice_call_t *c=arg;void *encoder=NULL;size_t used=0;
     esp_opus_enc_config_t cfg=ESP_OPUS_ENC_CONFIG_DEFAULT();
     cfg.sample_rate=16000;cfg.channel=1;cfg.bitrate=24000;cfg.complexity=0;cfg.enable_vbr=true;
-    int16_t mono[FRAME_SAMPLES];uint8_t encoded[2048];unsigned pts=0;
+    int16_t mono[FRAME_SAMPLES],adjusted[FRAME_SAMPLES];uint8_t encoded[2048];unsigned pts=0;
+    // Match the factory speech-recognition path. Audio remains continuous;
+    // neither wake-word detection nor local turn segmentation gates capture.
     aec_config_t config={.mic_num=1,.ref_num=1,.out_num=1,.filter_length=8,.sample_rate=16000,
-        .caps=MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT,.mode=AEC_MODE_FD_LOW_COST,.nlp_level=AEC_NLP_LEVEL_NORMAL};
+        .caps=MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT,.mode=AEC_MODE_SR_HIGH_PERF,.nlp_level=AEC_NLP_LEVEL_NORMAL};
     aec_handle_t *aec=aec_create_from_config(&config);
+    void *agc=esp_agc_open(AGC_MODE_2,16000);
+    // Calibrated capture gain with a limiter and a -3 dBFS target.
+    if (agc) set_agc_config(agc,15,1,3);
     int chunk=aec ? aec_get_chunksize(aec) : 0;
     int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL;
     if (chunk>0 && chunk<=1024) {
@@ -622,10 +628,10 @@ static void mic_task(void *arg)
         ref=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
         clean=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
     }
-    if (!capture || !mic || !ref || !clean ||
+    if (!agc || !capture || !mic || !ref || !clean ||
         esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
-        state("error","Voice echo cancellation could not start");atomic_store(&c->running,false);
-    } else printf("Voice AEC ready: chunk=%d rate=16000 filter=8 volume=%d\n",chunk,product_codec_volume_get());
+        state("error","Voice microphone processing could not start");atomic_store(&c->running,false);
+    } else printf("Voice microphone ready: AEC=SR_HIGH_PERF AGC=15dB chunk=%d rate=16000 volume=%d\n",chunk,product_codec_volume_get());
     while (atomic_load(&c->running)) {
         size_t got=0;
         if (product_i2s_read(capture,chunk*4,&got,1000)!=ESP_OK || got!=(size_t)chunk*4) {
@@ -640,6 +646,11 @@ static void mic_task(void *arg)
             mono[used++]=clean[i];
             if (used!=FRAME_SAMPLES) continue;
             used=0;
+            if (esp_agc_process(agc,mono,adjusted,160,16000)!=ESP_AGC_SUCCESS ||
+                esp_agc_process(agc,mono+160,adjusted+160,160,16000)!=ESP_AGC_SUCCESS) {
+                state("error","Voice microphone gain processing failed");atomic_store(&c->running,false);break;
+            }
+            memcpy(mono,adjusted,sizeof(mono));
             bool transmit=panel_voice_capture_allowed(c->input_mode,atomic_load(&holding),
                 atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
                 atomic_load(&c->provider_ready),atomic_load(&c->muted));
@@ -660,6 +671,7 @@ static void mic_task(void *arg)
     }
     if (encoder) esp_opus_enc_close(encoder);
     if (aec) aec_destroy(aec);
+    if (agc) esp_agc_close(agc);
     free(capture);free(mic);free(ref);free(clean);
     xEventGroupSetBits(c->done,DONE_MIC);vTaskDelete(NULL);
 }
