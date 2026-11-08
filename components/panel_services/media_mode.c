@@ -1,4 +1,5 @@
 #include "media_mode.h"
+#include "panel_ota.h"
 #include "camera_capture.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
@@ -74,6 +75,11 @@ esp_err_t media_mode_request_preview(const char *reason)
     xSemaphoreTake(owner, portMAX_DELAY);
     esp_err_t err = ESP_OK;
     if (!media_mode_is_preview()) {
+        media_mode_t previous=media_mode_current();
+        atomic_store(&current,MEDIA_MODE_PREVIEW);
+        if (panel_ota_busy()) {
+            atomic_store(&current,previous);xSemaphoreGive(owner);return ESP_ERR_INVALID_STATE;
+        }
         err = start_camera();
         if (err == ESP_OK) atomic_store(&current, MEDIA_MODE_PREVIEW);
     }
@@ -94,10 +100,14 @@ esp_err_t media_mode_snapshot(uint8_t *dst, size_t cap, size_t *out_len, bool al
         xSemaphoreGive(owner);
         return ESP_ERR_INVALID_STATE;
     }
+    if (!preview) atomic_store(&current,MEDIA_MODE_CAPTURE);
+    if (panel_ota_busy()) {
+        if (!preview) atomic_store(&current,MEDIA_MODE_IDLE);
+        xSemaphoreGive(owner);return ESP_ERR_INVALID_STATE;
+    }
     int64_t started = esp_timer_get_time();
     esp_err_t err = ESP_OK;
     if (!preview) {
-        atomic_store(&current, MEDIA_MODE_CAPTURE);
         err = start_camera();
     }
     if (err == ESP_OK) err = media_sys_preview_snapshot_encode(dst, cap, out_len);
