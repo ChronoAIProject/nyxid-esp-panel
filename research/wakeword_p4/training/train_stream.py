@@ -22,20 +22,38 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=12000)
     parser.add_argument("--eval-interval", type=int, default=3000)
-    parser.add_argument("--architecture", choices=("compact", "official64", "wide128"), default="compact")
+    parser.add_argument("--architecture", choices=("compact", "official64", "wide128", "transfer60"), default="compact")
+    parser.add_argument("--pretrained-model", type=Path,
+                        help="Reviewed ESPHome v2 encoder for transfer60; final classifier is reset")
+    parser.add_argument("--learning-rate", type=float, default=1e-3)
+    parser.add_argument("--initial-weights", type=Path,
+                        help="Warm-start matching float weights in a fresh run; optimizer state is reset")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
+    parser.add_argument("--hard-negative-fraction", type=float, default=0.,
+                        help="Experimental fraction of each negative source batch selected by current-model score; training split only")
+    parser.add_argument("--hard-negative-pool", type=int, default=4,
+                        help="Candidate pool multiplier when hard-negative mining is enabled")
+    parser.add_argument("--hard-negative-start-step", type=int, default=1000)
     parser.add_argument("--specaugment", action="store_true")
     parser.add_argument("--pooling", choices=("none", "max", "average"), default="none")
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
     frames = args.input_frames
-    if frames < 180 or args.negative_weight <= 0:
-        parser.error("Input must have at least 180 frames and negative weight must be positive")
+    minimum_frames = 149 if args.architecture == "transfer60" else 180
+    if frames < minimum_frames or args.negative_weight <= 0 or args.learning_rate <= 0:
+        parser.error("Input context is too short or weight/learning rate is not positive")
+    if args.pretrained_model and args.architecture != "transfer60":
+        parser.error("--pretrained-model requires --architecture transfer60")
+    if args.pretrained_model and args.initial_weights:
+        parser.error("Choose a pretrained encoder or learned initial weights, not both")
+    if not 0 <= args.hard_negative_fraction <= 1 or args.hard_negative_pool < 1 or args.hard_negative_start_step < 0:
+        parser.error("Invalid hard-negative mining settings")
+    initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
     root = args.output
@@ -92,13 +110,30 @@ def main():
             output.append(data[end-frames:end])
         return np.asarray(output)
 
-    def batch():
+    current_step = 0
+
+    def negative_sample(data, count):
+        if len(data) == count:
+            return data
+        values = np.asarray(infer(scale(data))).reshape(-1)
+        hard_count = int(round(count*args.hard_negative_fraction))
+        # Keep source types balanced and retain ordinary random windows.
+        # Both pools contain training data only. No PCM speed or labels change.
+        hard = np.argsort(values, kind="stable")[-hard_count:] if hard_count else np.array([], dtype=int)
+        remaining = np.setdiff1d(np.arange(len(data)), hard)
+        random = rng.choice(remaining, count-hard_count, replace=False)
+        return data[np.concatenate((hard, random))]
+
+    def batch(mine=True):
+        multiplier = (args.hard_negative_pool
+                      if mine and args.hard_negative_fraction and current_step >= args.hard_negative_start_step else 1)
         noise = []
-        for _ in range(48):
+        for _ in range(48*multiplier):
             _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
-        x = scale(np.concatenate((sample(1, 32), sample(0, 48), np.asarray(noise))))
+        x = scale(np.concatenate((sample(1, 32), negative_sample(sample(0, 48*multiplier), 48),
+                                  negative_sample(np.asarray(noise), 48))))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -128,9 +163,21 @@ def main():
                               "--first_conv_filters", "32", "--first_conv_kernel_size", "5"]
     if args.pooling != "none":
         architecture_args += ["--pooled", "1", "--max_pool", "1" if args.pooling == "max" else "0"]
+    if args.architecture == "transfer60":
+        if args.pooling != "none":
+            parser.error("transfer60 uses the reviewed source topology without pooling")
+        architecture_args += ["--pointwise_filters", "60,60,60,60", "--first_conv_filters", "30",
+                              "--first_conv_kernel_size", "5"]
     flags = architecture.parse_args(architecture_args)
-    model = mixednet.model(flags, (frames, 40), None)
-    model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
+    transfer_metadata = None
+    if args.architecture == "transfer60":
+        from transfer import build_model
+        model, transfer_metadata = build_model(frames, args.pretrained_model)
+    else:
+        model = mixednet.model(flags, (frames, 40), None)
+    if args.initial_weights:
+        model.load_weights(args.initial_weights)
+    model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss="binary_crossentropy")
 
     @tf.function(input_signature=[tf.TensorSpec([None, frames, 40], tf.float32)])
     def infer(x):
@@ -188,8 +235,9 @@ def main():
     started = time.monotonic()
     with (root/"progress.jsonl").open("w") as log:
         for step in range(1, args.steps+1):
-            if step == int(args.steps*.5): model.optimizer.learning_rate.assign(3e-4)
-            if step == int(args.steps*.8): model.optimizer.learning_rate.assign(1e-4)
+            current_step = step
+            if step == int(args.steps*.5): model.optimizer.learning_rate.assign(args.learning_rate*.3)
+            if step == int(args.steps*.8): model.optimizer.learning_rate.assign(args.learning_rate*.1)
             x, y, weights = batch()
             loss = float(model.train_on_batch(x, y, sample_weight=weights))
             if step % 500 == 0:
@@ -197,7 +245,11 @@ def main():
             if step % args.eval_interval == 0 or step == args.steps:
                 selected, rank, grid = validate()
                 item = {"step": step, "selected": selected, "grid": grid,
+                        "checkpoint": f"step-{step}.weights.h5",
                         "seconds": round(time.monotonic()-started, 1)}
+                # Keep the measured checkpoints. A later audit of selection
+                # criteria must not require recreating discarded weights.
+                model.save_weights(root/item["checkpoint"])
                 history.append(item)
                 log.write(json.dumps(item)+"\n"); log.flush()
                 print(json.dumps({"step": step, **selected, "seconds": item["seconds"]}), flush=True)
@@ -213,7 +265,9 @@ def main():
         yield [np.zeros((1, 3, 40), dtype=np.float32)]
         yield [np.full((1, 3, 40), 26, dtype=np.float32)]
         for _ in range(100):
-            x, _, _ = batch()
+            # Quantization calibration keeps the ordinary training distribution,
+            # independent of the optional optimization-time mining policy.
+            x, _, _ = batch(mine=False)
             for at in range(0, frames-2, 3):
                 yield [x[:1, at:at+3]]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
@@ -229,8 +283,14 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "input_frames": frames, "negative_weight": args.negative_weight,
               "source_sampling": args.source_sampling,
+              "hard_negative_mining": {"fraction": args.hard_negative_fraction,
+                                       "pool_multiplier": args.hard_negative_pool,
+                                       "start_step": args.hard_negative_start_step,
+                                       "scope": "Training split only; separately balanced TTS and ambient pools"},
               "specaugment": args.specaugment, "align_stream": args.align_stream,
               "pooling": args.pooling,
+              "initial_learning_rate": args.learning_rate, "transfer": transfer_metadata,
+              "initial_weights_sha256": initial_weights_hash,
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),

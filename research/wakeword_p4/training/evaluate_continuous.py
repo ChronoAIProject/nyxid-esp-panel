@@ -37,13 +37,16 @@ def main():
         data = np.load(path, mmap_mode="r")
         if data.shape != (record["frames"], 40) or data.dtype != np.dtype("<u2"):
             raise ValueError("Continuous feature identity mismatch")
+        feature_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        if record.get("feature_sha256") and record["feature_sha256"] != feature_hash:
+            raise ValueError("Continuous feature checksum mismatch")
         detector.reset()
         scores = smooth(detector.predict(data))
         np.save(args.output/f"scores-{index:03d}.npy", scores)
         count = events(scores, threshold)
         rows.append({"speaker": record["speaker"], "seconds": record["seconds"],
             "speech_seconds": record["speech_seconds"], "events": count,
-            "feature_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "feature_sha256": feature_hash,
             "pcm_sha256": record["pcm_sha256"]})
         print(json.dumps({"completed": index+1, "total": len(corpus["records"]), "events": count,
                           "seconds": round(time.monotonic()-started, 1)}), flush=True)
@@ -57,6 +60,8 @@ def main():
     total_seconds = sum(r["seconds"] for r in rows)
     result = {"model_sha256": model_hash, "threshold": threshold,
         "calibration_sha256": hashlib.sha256(args.calibration.read_bytes()).hexdigest(),
+        "calibration_scope": calibration.get("selection_scope"),
+        "validation_operating_point": calibration.get("viable_operating_point"),
         "corpus_manifest_sha256": hashlib.sha256(corpus_path.read_bytes()).hexdigest(),
         "hey_nyx": summary(sum(r["events"] for r in rows), total_seconds),
         "speech_hours": sum(r["speech_seconds"] for r in rows)/3600,

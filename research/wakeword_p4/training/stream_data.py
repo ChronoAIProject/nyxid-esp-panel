@@ -12,10 +12,11 @@ import soundfile as sf
 from features import FRAMES, RATE, background, features
 
 
-def render_stream(item, dataset, rng, variant, backgrounds):
+def render_stream(item, dataset, rng, variant, backgrounds, lead_seconds=2.):
     pcm, rate = sf.read(Path(dataset) / item["path"], dtype="float32")
     assert rate == RATE and pcm.ndim == 1
     lead = 32000 if variant == 0 else int(rng.uniform(1.8, 4.5)*RATE)
+    lead += int(round((lead_seconds-2.)*RATE))
     size = lead + len(pcm) + 16000
     signal = np.zeros(size, dtype=np.float32)
     signal[lead:lead+len(pcm)] = pcm
@@ -46,9 +47,9 @@ def render_stream(item, dataset, rng, variant, backgrounds):
 
 
 def worker(job):
-    item, dataset, variant, backgrounds = job
+    item, dataset, variant, backgrounds, lead_seconds = job
     seed = int(hashlib.sha256(item["path"].encode()).hexdigest()[:8], 16)+variant
-    pcm, lead = render_stream(item, dataset, np.random.default_rng(seed), variant, backgrounds)
+    pcm, lead = render_stream(item, dataset, np.random.default_rng(seed), variant, backgrounds, lead_seconds)
     raw = features(pcm)
     record = {**item, "variant": variant, "lead_frame": lead//160,
               "keyword_frame": (lead+item["keyword_end"])//160-2 if item["label"] else None}
@@ -62,7 +63,11 @@ def main():
     parser.add_argument("--human-features", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--lead-seconds", type=float, default=2.,
+                        help="Quiet-render lead; noisy leads retain the existing jitter around this value")
     args = parser.parse_args()
+    if args.lead_seconds < 2:
+        parser.error("Keep at least the original two seconds of frontend history")
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"features.json").exists(), "Use a fresh feature directory"
@@ -94,7 +99,10 @@ def main():
                 item["keyword_end_method"] = "Last 10 ms RMS frame above -46 dB of peak, plus 60 ms; PCM retained"
             entries.append(item)
     (dataset/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in entries))
-    (dataset/"generation.json").write_text(json.dumps({"sources": [p.name for p in args.source]})+"\n")
+    (dataset/"generation.json").write_text(json.dumps({"sources": [p.name for p in args.source],
+        "lead_seconds": args.lead_seconds,
+        "source_manifest_sha256": {p.name: hashlib.sha256((p/"manifest.jsonl").read_bytes()).hexdigest()
+                                   for p in args.source}})+"\n")
     bg_rows = json.loads((args.backgrounds/"manifest.json").read_text())["records"]
     backgrounds = {s: [str(args.backgrounds/r["path"]) for r in bg_rows if r["split"] == s]
                    for s in ("training", "validation", "testing")}
@@ -104,7 +112,7 @@ def main():
         for split in backgrounds:
             group = [r for r in entries if r["split"] == split]
             variants = 4  # same rendering regimes in every split
-            jobs = [(r, str(dataset), v, backgrounds[split]) for r in group for v in range(variants)]
+            jobs = [(r, str(dataset), v, backgrounds[split], args.lead_seconds) for r in group for v in range(variants)]
             for count, (record, raw) in enumerate(pool.map(worker, jobs, chunksize=10), 1):
                 handle.write(raw.astype("<u2").tobytes())
                 index.append({**record, "offset": offset, "frames": len(raw)})

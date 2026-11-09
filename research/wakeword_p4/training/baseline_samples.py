@@ -36,7 +36,7 @@ def main():
         plan += [(r, "hi_esp", r["text"].replace("Hey", "Hi").replace("Nicks", "E S P").replace("Nix", "E S P")) for r in positive]
         plan += [(r, "none", None) for r in group if not r["label"] and r["text"] != "Hi ESP."]
         plan += [({"voice": voice, "text": text, "path": f"new-{i}.wav"}, "none", text)
-                 for i, text in enumerate(("Hi SP.", "Hi ESB.", "Hi ASP.", "Hi EST.", "I see ESP.", "High speed."))]
+                 for i, text in enumerate(("Hi S P.", "Hi E S B.", "Hi A S P.", "Hi E S T.", "I see E S P.", "High speed."))]
         for index, (row, target, text) in enumerate(plan):
             if text is not None:
                 aiff = source/f"{voice}-{index}.aiff"
@@ -68,7 +68,10 @@ def main():
                                 "sha256":hashlib.sha256(output.read_bytes()).hexdigest()})
         print(json.dumps({"voice":voice,"rendered":len(records)}),flush=True)
     (args.output/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in records))
-    (args.output/"generation.json").write_text(json.dumps({"clips":len(records),"disclosure":"All speech is AI-generated Mac system TTS.",
+    (args.output/"generation.json").write_text(json.dumps({"clips":len(records),
+        "recipe":"Explicit letters for both ESP positives and near words, v3",
+        "generator_sha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "disclosure":"All speech is AI-generated Mac system TTS.",
         "scope":"Paired development regression, not human acceptance. Existing Mac fixtures have informed model development. Quiet and noise/RIR renders are correlated."},indent=2)+"\n")
 
 

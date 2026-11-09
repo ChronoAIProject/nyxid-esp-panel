@@ -19,6 +19,8 @@ def main():
     parser.add_argument("--source", type=Path, action="append", required=True)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--split", choices=("training", "validation", "testing"), action="append",
+                        help="Only inspect these splits; omit for legacy all-split behavior")
     parser.add_argument("--limit", type=int, default=0,
                         help="Deterministic balanced pilot; zero reviews the complete corpus")
     args = parser.parse_args()
@@ -33,6 +35,8 @@ def main():
             previous = {r["path"]: r for r in map(json.loads, (root/"audit.jsonl").read_text().splitlines())}
         rows = list(map(json.loads, (source/"manifest.jsonl").read_text().splitlines()))
         total = len(rows)
+        if args.split:
+            rows = [r for r in rows if r["split"] in args.split]
         if args.limit:
             rng = np.random.default_rng(726)
             selected = []
@@ -80,6 +84,7 @@ def main():
         report = {"engine": "faster-whisper tiny.en (CPU INT8)", "source": source.name,
                   "reviewed": len(rows), "retained": len(accepted),
                   "source_clips": total, "pilot_only": bool(args.limit),
+                  "inspected_splits": args.split or ["training", "validation", "testing"],
                   "retained_positive": sum(r["label"] for r in accepted),
                   "retained_negative": sum(not r["label"] for r in accepted),
                   "limits": "ASR is an imperfect consistency screen, not proof of correct phonetics or a human listening evaluation. Rejected clips are quarantined, never relabeled."}

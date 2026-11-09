@@ -1,0 +1,380 @@
+{
+  "scope": "Paired Mac synthetic development regression, not acoustic acceptance.",
+  "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+  "hey_nyx_model_sha256": "c8f058e833eeb4f86a40ae38785fba738e0bb8cdb3e6adac26024e1b2656ee50",
+  "hey_nyx_calibration_sha256": "786f1de977e38b2e665762af5a2789aeb7245cf42b1493a2ce8e0ea3bfb28c22",
+  "hey_nyx_validation_selected_threshold": 0.7,
+  "hey_nyx_validation_operating_point": false,
+  "hey_nyx_calibration_scope": "Separate diagnostic policy: maximize validation macro recall with <=0.5 observed ambient events/hour; confusing-word results remain reported and fail the original 1% guardrail. Frozen before paired/long-negative evaluation. This does not replace the original calibration or establish acceptance.",
+  "limits": [
+    "Synthetic variants of one source phrase are correlated; these are not independent human trials.",
+    "Keyword endpoints are RMS estimates, not phonetic alignment. Report any-event and fixed-window recall separately.",
+    "The phrase-specific negative texts differ; do not equate the two near-word distributions.",
+    "Mac pronunciation diagnostics are imperfect. Older bare ESP samples were rejected for abbreviation expansion.",
+    "No long continuous-negative, real-user, microphone/AEC or full-app load acceptance is established here.",
+    "This calibration does not pass the original validation operating constraints. Paired results are diagnostic, not candidate acceptance.",
+    "Hey Nyx here uses host BUILTIN_REF INT8 inference; P4 numeric and timing verification is separate."
+  ],
+  "hey_nyx_paired": {
+    "positives_any_event": {
+      "clips": 50,
+      "clips_with_event": 48,
+      "events": 48
+    },
+    "positives_in_estimated_end_window": {
+      "clips": 50,
+      "detected": 48,
+      "window_ms": [
+        -100,
+        800
+      ]
+    },
+    "ordinary_and_near_word_negatives": {
+      "clips": 250,
+      "clips_with_event": 15,
+      "events": 15
+    },
+    "shared_negative_texts": {
+      "clips": 190,
+      "clips_with_event": 15,
+      "events": 15
+    },
+    "shared_ordinary_sentences": {
+      "clips": 100,
+      "clips_with_event": 2,
+      "events": 2
+    },
+    "nyx_specific_near_words": {
+      "clips": 90,
+      "clips_with_event": 13,
+      "events": 13
+    },
+    "negative_events_by_text": {
+      "He connects the next two cables.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hello, can you hear me?": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Alex.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Max.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Mix.": {
+        "clips": 10,
+        "clips_with_event": 7,
+        "events": 7
+      },
+      "Hey Next.": {
+        "clips": 10,
+        "clips_with_event": 4,
+        "events": 4
+      },
+      "Hey Nexus.": {
+        "clips": 10,
+        "clips_with_event": 2,
+        "events": 2
+      },
+      "Hey Nice.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Nick.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Siri.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Six.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hi ASP.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hi ESB.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hi EST.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hi SP.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "High speed.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "How can I help you?": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I heard Nick speaking.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I mixed the ingredients.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I see ESP.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I will be back in six minutes.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Please check the volume.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Thanks, that is all.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "The next thing is ready.": {
+        "clips": 10,
+        "clips_with_event": 2,
+        "events": 2
+      },
+      "The television is playing.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      }
+    },
+    "hi_esp_specific_near_words_unvalidated_pronunciation": {
+      "clips": 60,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "other_wake_phrase": {
+      "clips": 50,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "latency_ms_from_estimated_end_median": 61.84375,
+    "latency_ms_from_estimated_end_range": [
+      -26.75,
+      219.125
+    ]
+  },
+  "hi_esp_paired": {
+    "positives_any_event": {
+      "clips": 50,
+      "clips_with_event": 48,
+      "events": 48
+    },
+    "positives_in_estimated_end_window": {
+      "clips": 50,
+      "detected": 32,
+      "window_ms": [
+        -100,
+        800
+      ]
+    },
+    "ordinary_and_near_word_negatives": {
+      "clips": 250,
+      "clips_with_event": 14,
+      "events": 14
+    },
+    "shared_negative_texts": {
+      "clips": 190,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "shared_ordinary_sentences": {
+      "clips": 100,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "nyx_specific_near_words": {
+      "clips": 90,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "negative_events_by_text": {
+      "He connects the next two cables.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hello, can you hear me?": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Alex.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Max.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Mix.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Next.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Nexus.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Nice.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Nick.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Siri.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hey Six.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Hi ASP.": {
+        "clips": 10,
+        "clips_with_event": 2,
+        "events": 2
+      },
+      "Hi ESB.": {
+        "clips": 10,
+        "clips_with_event": 9,
+        "events": 9
+      },
+      "Hi EST.": {
+        "clips": 10,
+        "clips_with_event": 1,
+        "events": 1
+      },
+      "Hi SP.": {
+        "clips": 10,
+        "clips_with_event": 1,
+        "events": 1
+      },
+      "High speed.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "How can I help you?": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I heard Nick speaking.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I mixed the ingredients.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "I see ESP.": {
+        "clips": 10,
+        "clips_with_event": 1,
+        "events": 1
+      },
+      "I will be back in six minutes.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Please check the volume.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "Thanks, that is all.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "The next thing is ready.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "The television is playing.": {
+        "clips": 10,
+        "clips_with_event": 0,
+        "events": 0
+      }
+    },
+    "hi_esp_specific_near_words_unvalidated_pronunciation": {
+      "clips": 60,
+      "clips_with_event": 14,
+      "events": 14
+    },
+    "other_wake_phrase": {
+      "clips": 50,
+      "clips_with_event": 0,
+      "events": 0
+    },
+    "latency_ms_from_estimated_end_median": -18.4375,
+    "latency_ms_from_estimated_end_range": [
+      -99.5,
+      126.9375
+    ]
+  },
+  "hey_nyx_continuous": {
+    "events": 13,
+    "hours_including_separators": 5.549022395833333,
+    "false_per_hour": 2.342755006676758,
+    "false_per_hour_upper_95": 3.724722590997899
+  },
+  "continuous_corpus_manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+  "decision": "Rejected. 48/50 synthetic positives do not outweigh 15/190 shared negatives and 13 false events in 5.549 hours. Diagnostic threshold failed the original per-source guardrail before these regressions. No acoustic or full-app acceptance."
+}

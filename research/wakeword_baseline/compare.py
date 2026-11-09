@@ -15,8 +15,12 @@ import sys
 def summarize(rows, target):
     positives = [r for r in rows if r["target"] == target]
     ordinary = [r for r in rows if r["target"] == "none"]
-    esp_near_texts = {"Hi SP.", "Hi ESB.", "Hi ASP.", "Hi EST.", "I see ESP.", "High speed."}
+    esp_near_texts = {"Hi SP.", "Hi ESB.", "Hi ASP.", "Hi EST.", "I see ESP.", "High speed.",
+                      "Hi S P.", "Hi E S B.", "Hi A S P.", "Hi E S T.", "I see E S P."}
     other = [r for r in rows if r["target"] not in (target, "none")]
+    nyx_near_texts = {"Hey Nick.", "Hey Next.", "Hey Mix.", "Hey Six.", "Hey Max.",
+                      "Hey Nice.", "Hey Nexus.", "Hey Alex.", "Hey Siri.",
+                      "Hey Nick, turn on the light.", "Hey Next, what time is it?"}
     latency = []
     timed_hits = 0
     for row in positives:
@@ -38,6 +42,10 @@ def summarize(rows, target):
                 "detected": timed_hits, "window_ms": [-100, 800]},
             "ordinary_and_near_word_negatives": count(ordinary),
             "shared_negative_texts": count([r for r in ordinary if r["text"] not in esp_near_texts]),
+            "shared_ordinary_sentences": count([r for r in ordinary if r["text"] not in (esp_near_texts | nyx_near_texts)]),
+            "nyx_specific_near_words": count([r for r in ordinary if r["text"] in nyx_near_texts]),
+            "negative_events_by_text": {text: count([r for r in ordinary if r["text"] == text])
+                                        for text in sorted({r["text"] for r in ordinary})},
             "hi_esp_specific_near_words_unvalidated_pronunciation": count(
                 [r for r in ordinary if r["text"] in esp_near_texts]),
             "other_wake_phrase": count(other),
@@ -129,6 +137,10 @@ def main():
         result["hey_nyx_model_sha256"] = hashlib.sha256(args.model.read_bytes()).hexdigest()
         result["hey_nyx_calibration_sha256"] = hashlib.sha256(args.calibration.read_bytes()).hexdigest()
         result["hey_nyx_validation_selected_threshold"] = threshold
+        result["hey_nyx_calibration_scope"] = calibration.get("selection_scope")
+        result["hey_nyx_validation_operating_point"] = calibration.get("viable_operating_point")
+        if not calibration.get("viable_operating_point"):
+            result["limits"].append("This calibration does not pass the original validation operating constraints. Paired results are diagnostic, not candidate acceptance.")
         result["limits"].append("Hey Nyx here uses host BUILTIN_REF INT8 inference; P4 numeric and timing verification is separate.")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2)+"\n")

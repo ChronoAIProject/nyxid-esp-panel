@@ -16,7 +16,7 @@ import numpy as np
 from scipy.signal import resample_poly
 import soundfile as sf
 
-from phrases import HARD_NEGATIVES
+from phrases import HARD_NEGATIVES, PARTIAL_WAKE_NEGATIVES
 
 POSITIVES = ("Hey Nicks.", "Hey, Nicks.", "Hey Nicks!", "Hey Nicks?",
              "Hey Nix.", "Hey, Nix!", "Hey Nyx.", "Hey, Nyx.")
@@ -26,6 +26,8 @@ async def generate(args):
     if args.output.exists():
         raise ValueError("Use a fresh output directory")
     voices = json.loads(args.voices_json.read_text())
+    positives = () if args.partials_only else POSITIVES
+    negatives = PARTIAL_WAKE_NEGATIVES if args.partials_only else HARD_NEGATIVES
     voices = [r for r in voices if r["Locale"].startswith("en-")]
     # Multilingual and ordinary variants of one named voice share a split.
     def family(row):
@@ -41,8 +43,8 @@ async def generate(args):
     (args.output/"voices.json").write_text(json.dumps(voices, indent=2)+"\n")
     (args.output/"plan.json").write_text(json.dumps({"family_partitions": partitions,
         "catalogue_sha256": hashlib.sha256(args.voices_json.read_bytes()).hexdigest(),
-        "rate": "+0%", "pitch": "+0Hz", "volume": "+0%", "positive_texts": POSITIVES,
-        "negative_texts": HARD_NEGATIVES}, indent=2)+"\n")
+        "rate": "+0%", "pitch": "+0Hz", "volume": "+0%", "positive_texts": positives,
+        "negative_texts": negatives}, indent=2)+"\n")
     semaphore = asyncio.Semaphore(2)
     completed = 0
 
@@ -70,7 +72,7 @@ async def generate(args):
             sf.write(wav, pcm, 16000, subtype="PCM_16")
             completed += 1
             if completed % 28 == 0:
-                print(json.dumps({"completed": completed, "total": len(voices)*(len(POSITIVES)+len(HARD_NEGATIVES))}), flush=True)
+                print(json.dumps({"completed": completed, "total": len(voices)*(len(positives)+len(negatives))}), flush=True)
             return {"path": str(wav.relative_to(args.output)), "engine": "edge-tts", "split": split,
                     "speakers": [family(voice)], "preset": voice["ShortName"], "locale": voice["Locale"],
                     "text": text, "label": label, "samples": len(pcm), "keyword_end": len(pcm) if label else None,
@@ -79,12 +81,12 @@ async def generate(args):
     jobs = [one(voice, split, text, label, index)
             for split, group in partitions.items()
             for voice in sorted(voices, key=lambda r: r["ShortName"]) if family(voice) in group
-            for index, (text, label) in enumerate([(t, 1) for t in POSITIVES]+[(t, 0) for t in HARD_NEGATIVES])]
+            for index, (text, label) in enumerate([(t, 1) for t in positives]+[(t, 0) for t in negatives])]
     records = await asyncio.gather(*jobs)
     (args.output/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in records))
     (args.output/"generation.json").write_text(json.dumps({"engine": "edge-tts", "package_version": "7.2.3",
         "source": "https://github.com/rany2/edge-tts", "clips": len(records), "voice_families": len(families),
-        "presets": len(voices), "family_partitions": partitions,
+        "presets": len(voices), "family_partitions": partitions, "partials_only": args.partials_only,
         "disclosure": "All speech is AI-generated Microsoft Edge TTS. Corpus is private research input, not published audio.",
         "limits": "Fixed named-voice families, not verified independent human speakers. Neutral normal-speed synthesis; no PCM speed transformation. MP3 synthesis resampled to 16 kHz. Split precedes synthesis and augmentation."}, indent=2)+"\n")
 
@@ -93,6 +95,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--voices-json", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--partials-only", action="store_true",
+                        help="Separate experiment: isolated Hey/Nicks components and ordinary uses, without a full Hey Nyx alias")
     asyncio.run(generate(parser.parse_args()))
 
 

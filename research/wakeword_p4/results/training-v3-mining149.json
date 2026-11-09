@@ -1,0 +1,75 @@
+{
+  "experiment": "149-frame warm-start, matched 10000-step mining diagnostic",
+  "candidates": [
+    {
+      "name": "control",
+      "model_sha256": "bf09929cc067810e610f2d73862b87baadc83f5bc852231e21f2c2e02b669258",
+      "initial_weights_sha256": "3a120687f9ad492e3bb0910d8e996ed41c71870cd1b87a3fe7d9f3d959f9468d",
+      "hard_negative_mining": {
+        "fraction": 0.0,
+        "pool_multiplier": 4,
+        "start_step": 1000,
+        "scope": "Training split only; separately balanced TTS and ambient pools"
+      },
+      "input_frames": 149,
+      "steps": 10000,
+      "selected_quantized_validation": {
+        "threshold": 0.994,
+        "positive_variants": 2392,
+        "recall": 0.5464046822742475,
+        "macro_recall": 0.6710168650793651,
+        "recall_by_engine": {
+          "piper": 0.5114583333333333,
+          "openai-tts": 0.6111111111111112,
+          "kokoro": 0.7291666666666666,
+          "edge-tts": 0.5580357142857143,
+          "macos-say": 0.9453125
+        },
+        "hard_negative_variants": 3216,
+        "hard_negative_false_rate": 0.013681592039800995,
+        "max_source_false_rate": 0.041666666666666664,
+        "ambient_hours": 1.2335916666666666,
+        "ambient_false_events": 2,
+        "ambient_false_per_hour": 1.6212820287642453,
+        "ambient_false_per_hour_upper_95": 5.103628527974807
+      },
+      "viable_operating_point": false
+    },
+    {
+      "name": "mined",
+      "model_sha256": "e7e0665e3d7830f254ff50345c8fc1d98c129d93c7fec72da8682441bbf95708",
+      "initial_weights_sha256": "3a120687f9ad492e3bb0910d8e996ed41c71870cd1b87a3fe7d9f3d959f9468d",
+      "hard_negative_mining": {
+        "fraction": 0.5,
+        "pool_multiplier": 4,
+        "start_step": 0,
+        "scope": "Training split only; separately balanced TTS and ambient pools"
+      },
+      "input_frames": 149,
+      "steps": 10000,
+      "selected_quantized_validation": {
+        "threshold": 0.99,
+        "positive_variants": 2392,
+        "recall": 0.45944816053511706,
+        "macro_recall": 0.6043501984126984,
+        "recall_by_engine": {
+          "piper": 0.41770833333333335,
+          "kokoro": 0.5833333333333334,
+          "openai-tts": 0.6111111111111112,
+          "edge-tts": 0.4642857142857143,
+          "macos-say": 0.9453125
+        },
+        "hard_negative_variants": 3216,
+        "hard_negative_false_rate": 0.011504975124378109,
+        "max_source_false_rate": 0.041666666666666664,
+        "ambient_hours": 1.2335916666666666,
+        "ambient_false_events": 1,
+        "ambient_false_per_hour": 0.8106410143821227,
+        "ambient_false_per_hour_upper_95": 3.8455711452794974
+      },
+      "viable_operating_point": false
+    }
+  ],
+  "decision": "Both rejected. Mining reduces observed validation ambient events from 2 to 1 at separately selected thresholds, with lower recall. This does not establish an overall improvement or Hi ESP equivalence. No test/Mac evaluation performed.",
+  "scope": "Same initial weights, context, source balance and schedule; mining also changes which random samples are drawn. Correlated renderings; short ambient validation exposure."
+}

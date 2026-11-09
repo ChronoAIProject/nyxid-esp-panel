@@ -12,10 +12,9 @@ import re
 import wave
 
 import numpy as np
-from pymicro_features import MicroFrontend
 import soundfile as sf
 
-from features import features
+from features import continuous_wav_features
 
 ALIASES = re.compile(r"\b(?:nyx|nix|nicks|esp)\b|\bhi\s+e\s+s\s+p\b", re.I)
 
@@ -23,8 +22,7 @@ ALIASES = re.compile(r"\b(?:nyx|nix|nicks|esp)\b|\bhi\s+e\s+s\s+p\b", re.I)
 def worker(job):
     speaker, records, root = job
     root = Path(root)
-    frontend = MicroFrontend()
-    parts, sources = [], []
+    sources = []
     speech_samples = 0
     wav_path = root/"pcm"/f"{speaker}.wav"
     feature_path = root/"features"/f"{speaker}.npy"
@@ -38,19 +36,20 @@ def worker(job):
             if rate != 16000 or pcm.ndim != 1:
                 raise ValueError("Expected 16 kHz mono speech")
             speech_samples += len(pcm)
-            # Keep frontend state across utterances, counting all separators.
+            # Count every separator in the actual WAV sent to both detectors.
             joined = np.concatenate((pcm, np.zeros(3200, dtype=np.int16)))
             wav.writeframes(joined.astype("<i2").tobytes())
-            parts.append(features(joined, frontend))
             sources.append({"utterance": record["utterance"], "samples": len(pcm),
                 "flac_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
                 "transcript_sha256": record["transcript_sha256"]})
-    raw = np.concatenate(parts)
+    raw, padding = continuous_wav_features(wav_path)
     np.save(feature_path, raw)
     return {"speaker": speaker, "split": "evaluation_only", "path": str(feature_path.relative_to(root)),
             "pcm_path": str(wav_path.relative_to(root)), "frames": len(raw),
             "seconds": (speech_samples+3200*len(records))/16000,
             "speech_seconds": speech_samples/16000, "separator_seconds": .2*len(records),
+            "final_feature_padding_samples": padding,
+            "feature_sha256": hashlib.sha256(feature_path.read_bytes()).hexdigest(),
             "pcm_sha256": hashlib.sha256(wav_path.read_bytes()).hexdigest(), "sources": sources}
 
 
@@ -102,6 +101,8 @@ def main():
               "excluded": excluded, "records": records,
               "hours": sum(r["seconds"] for r in records)/3600,
               "speech_hours": sum(r["speech_seconds"] for r in records)/3600,
+              "feature_method": "One frontend over exact WAV, whole-hop blocks, padding only the final incomplete 10 ms hop",
+              "feature_code_sha256": hashlib.sha256(Path(__file__).with_name("features.py").read_bytes()).hexdigest(),
               "limits": ["Public audiobook speech, not household/TV/music or real-user positive acceptance.",
                          "Transcript alias screening cannot guarantee acoustic absence of a wake phrase.",
                          "Added 200 ms zero separators are counted and reported separately.",

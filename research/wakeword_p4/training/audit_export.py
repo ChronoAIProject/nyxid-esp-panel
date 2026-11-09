@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--upstream", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
+    parser.add_argument("--tflite", type=Path, help="Explicit INT8 artifact; defaults to model/hey_nyx.tflite")
     parser.add_argument("--features", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--per-group", type=int, default=6)
@@ -32,7 +33,11 @@ def main():
     frames = report.get("input_frames", 180)
     stride = flags.stride
     effective_frames = (frames-flags.first_conv_kernel_size)//stride*stride+flags.first_conv_kernel_size
-    model = mixednet.model(flags, (frames, 40), None)
+    if report.get("architecture") == "transfer60":
+        from transfer import build_model
+        model, _ = build_model(frames)
+    else:
+        model = mixednet.model(flags, (frames, 40), None)
     model.load_weights(args.model/"best.weights.h5")
     saved = tf.saved_model.load(str(args.model/"saved_model"))
     function = saved.signatures["serving_default"]
@@ -61,7 +66,7 @@ def main():
             # Select distinct original clips, not just four correlated variants.
             group = [r for r in records if r["split"] == "validation" and r["engine"] == engine and r["label"] == label and r["variant"] == 0]
             selected.extend(group[:args.per_group])
-    detector = Detector(args.model/"hey_nyx.tflite")
+    detector = Detector(args.tflite or args.model/"hey_nyx.tflite")
     details = []
     for row in selected:
         source = raw[row["offset"]:row["offset"]+row["frames"]]

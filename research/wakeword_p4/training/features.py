@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import time
+import wave
 
 import numpy as np
 from pymicro_features import MicroFrontend
@@ -26,6 +27,27 @@ def features(pcm, frontend=None):
         if frame.features:
             result.append(np.rint(np.asarray(frame.features) * 25.6).astype(np.uint16))
     return np.asarray(result, dtype=np.uint16).reshape(-1, 40)
+
+
+def continuous_wav_features(path):
+    """One frontend over the exact WAV; only the final partial hop is padded.
+
+    Calling features() separately on arbitrary utterance boundaries inserts up
+    to 159 silent samples at every boundary. Blocks here are whole 10 ms hops,
+    so the input agrees with a detector reading the original PCM continuously.
+    """
+    frontend = MicroFrontend()
+    parts = []
+    with wave.open(str(path), "rb") as wav:
+        if (wav.getframerate(), wav.getnchannels(), wav.getsampwidth(), wav.getcomptype()) != (RATE, 1, 2, "NONE"):
+            raise ValueError("Expected exact 16 kHz mono PCM16 WAV")
+        samples = wav.getnframes()
+        while data := wav.readframes(RATE*10):
+            parts.append(features(np.frombuffer(data, dtype="<i2"), frontend))
+    raw = np.concatenate(parts) if parts else np.empty((0, 40), dtype=np.uint16)
+    if len(raw) != max(0, (samples+159)//160-2):
+        raise ValueError("Continuous frontend frame count differs from PCM length")
+    return raw, (-samples) % 160
 
 
 def human_worker(job):

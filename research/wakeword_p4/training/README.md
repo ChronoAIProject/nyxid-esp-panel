@@ -232,6 +232,17 @@ including 0.146 h of explicit 200 ms utterance separators (5.403 h of speech).
 No transcript aliases were found in this archive. This source is evaluation
 only; it is never silently added to training.
 
+An audit found that the first continuous feature preparation padded each
+utterance to a 10 ms hop, while its WAV contained only the explicit 200 ms
+separators. The corrected preparer reads the complete WAV in whole-hop blocks,
+with one frontend state and padding only the final incomplete hop. Existing
+WAV/Hi ESP measurements remain valid. `rebuild_continuous_features.py --corpus
+<old> --output <new>` rechecks WAV hashes, rebuilds features, and preserves the
+exact benchmark manifest bytes in a new corpus. Use that corrected corpus for
+matched comparisons. Whole-array versus blocked extraction was bit-exact on a
+495.86 s file; the old feature stream had 17 additional frames. This does not
+establish a cause for poor classifier recall.
+
 ```sh
 "$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/continuous_negatives.py \
   --corpus "$WAKE_DATA/LibriSpeech/test-clean" --archive "$WAKE_DATA/test-clean.tar.gz" \
@@ -247,6 +258,98 @@ Optional `--baseline` accepts a completed Hi ESP report for the exact same PCM,
 requiring verified app restoration. Any result used to change a model makes
 subsequent measurements on that audio a regression. Confidence bounds cover
 the measured distribution, not all real household noise.
+
+### Pretrained encoder experiment
+
+The separate `transfer60` experiment reconstructs the ESPHome v2 Hey Jarvis
+30/60-channel convolutional encoder from its quantized weights. Quantized
+weights already contain folded batch normalization, so the float reconstruction
+uses convolution biases and **does not apply batch normalization again**.
+The source classifier is preserved only for numerical audits; Hey Nyx training
+always resets it. An otherwise identical run without `--pretrained-model`
+provides the random-initialization control.
+
+Reviewed source: [micro-wake-word-models at 40ff33f](https://github.com/esphome/micro-wake-word-models/tree/40ff33f57f8fc6ad71a75ef085abbf742495b225),
+`models/v2/hey_jarvis.tflite`, SHA-256
+`21a7976add39ee24ec96c63d96b7aaa18e24d1d9824b963e451da8feb4b78b77`.
+Its pinned README, LICENSE and NOTICE explicitly cover the model weights under
+Apache-2.0. Attribution: Copyright 2024–2026 Open Home Foundation,
+https://www.openhomefoundation.org/. Preserve that notice with distributed
+derivative artifacts. The source model's training utterances/speaker partitions
+are not available here, so this experiment cannot claim that pretraining is
+speaker-disjoint from our synthetic sources.
+
+```sh
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/audit_transfer.py \
+  --upstream "$WAKE_WORK/microWakeWord" --source-model "$PRETRAINED_JARVIS" \
+  --features "$WAKE_DATA/features-five" --output "$WAKE_DATA/transfer-import-audit" \
+  --mac-controls
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/train_stream.py \
+  --upstream "$WAKE_WORK/microWakeWord" --features "$WAKE_DATA/features-six" \
+  --output "$WAKE_DATA/model-transfer6" --steps 20000 --eval-interval 5000 \
+  --architecture transfer60 --input-frames 149 --negative-weight 5 \
+  --align-stream --source-sampling uniform --threads 2 --learning-rate 0.0001 \
+  --pretrained-model "$PRETRAINED_JARVIS"
+```
+
+The import audit compares aligned float windows, float streaming and the exact
+original INT8 artifact. It also tests three synthetic **Hey Jarvis** controls,
+plus six Nyx/Mix negatives, to avoid checking only zero-output examples.
+Float window/stream outputs agree to about `1.13e-6` on these controls; the
+maximum dequantized-float/original-INT8 difference is about `0.043`. These
+results validate this import, not Hey Nyx recognition. The one-step smoke also
+completed training and streaming INT8 export. Full training/calibration and
+board acceptance remain separate requirements.
+
+Training-only duration diagnostics found that some OpenAI utterances span up to
+2.89 s. A 149-frame model with a post-keyword crop offset cannot retain all of
+those phrases. The next experiment uses `stream_data.py --lead-seconds 4` and
+`train_stream.py --input-frames 335`, preserving every original-speed sample.
+The longer lead keeps the frontend/model warm before the phrase. Because both
+history and model context change, an improvement would not isolate one cause.
+`--lead-seconds` defaults to the unchanged original 2 s rendering. Quiet and
+noisy fixture reproduction was checked sample-for-sample after this extension.
+
+Each new measured checkpoint is saved as `step-N.weights.h5` before selection.
+`--initial-weights` can warm-start matching float weights in a fresh output
+directory; this preserves the learned classifier and resets the optimizer.
+Its SHA-256 is recorded. It is not an exact optimizer-state resume. Keep all
+run histories and calibrate new exports on validation in fresh directories.
+
+For new experiments use `run_training.py` with the same arguments as
+`train_stream.py`. It requires a new output directory, copies the Python
+sources and dependency locks into `output/source`, records source hashes and
+the checkout revision in `launch.json`, then executes that private copy. This
+prevents checkout edits from confusing TensorFlow's runtime source inspection.
+One-step training, validation and INT8 export passed through this launcher;
+this smoke is not a recognition result.
+
+The optional `--hard-negative-fraction 0.5 --hard-negative-pool 4` experiment
+scores larger **training-only** candidate pools. It takes half of each negative
+batch from the highest-scoring candidates and half randomly from the remaining
+pool. TTS and real ambient pools retain their original 48/48 balance. Mining
+starts at step 1,000 by default; `--hard-negative-start-step 0` is suitable for
+the controlled warm-start diagnostic. Positives, labels and PCM speed are
+unchanged. Quantization calibration still samples the ordinary, unmined
+training distribution. A two-step mined training/export smoke passed, and a
+matched run without mining is required before attributing an improvement to
+this option. No validation/test false wake is added to training.
+
+`edge_samples.py --partials-only` and `kokoro_samples.py --partials-only`
+generate isolated wake components and ordinary uses as a separate experiment.
+The target is the **complete Hey Nyx phrase**: its full Nyx/Nix/Nicks aliases
+stay positive, while `Hey` or `Nicks` alone does not contain that phrase.
+Original generator defaults and voice partitions are preserved. Add these
+separate corpora with `stream_data.py --source`; never overwrite prior data.
+
+`training_negatives.py --archive <train-clean-100.tar.gz> --existing-features
+<features> --output <new>` verifies OpenSLR's published MD5
+`2a93770f6d5c6c964bc36631d331a522` before safe extraction. It selects up to 64
+speaker IDs deterministically, rejects overlap with every existing human
+speaker partition, and screens transcript wake aliases. These records are
+**training only**. The manifest retains CC BY 4.0 attribution, source hashes,
+speech/separator exposure and final-hop feature padding. This is independent
+of the test-clean continuous evaluation source.
 
 ## Rejected/diagnostic paths
 

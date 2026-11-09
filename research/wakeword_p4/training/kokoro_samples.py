@@ -12,7 +12,7 @@ import onnxruntime as ort
 from scipy.signal import resample_poly
 import soundfile as sf
 
-from phrases import HARD_NEGATIVES
+from phrases import HARD_NEGATIVES, PARTIAL_WAKE_NEGATIVES
 
 MODEL_SHA = "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a"
 VOICES_SHA = "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--assets", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--partials-only", action="store_true")
     args = parser.parse_args()
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
@@ -64,6 +65,8 @@ def main():
                 # substitute for source-engine and held-out-speaker diversity.
                 texts = [("Hey Nicks.", 1), ("Hey Nix!", 1), ("Hey Nyx.", 1)]
                 texts += [(text, 0) for text in HARD_NEGATIVES]
+                if args.partials_only:
+                    texts = [(text, 0) for text in PARTIAL_WAKE_NEGATIVES]
                 for index, (text, label) in enumerate(texts):
                     pcm, rate = kokoro.create(text, voice=voice, speed=1.0,
                                               lang="en-gb" if voice.startswith("b") else "en-us")
@@ -83,7 +86,7 @@ def main():
                                   "seconds": round(time.monotonic()-started, 1)}), flush=True)
     (root / "generation.json").write_text(json.dumps({"engine": "kokoro-onnx 0.4.9",
         "model_sha256": MODEL_SHA, "voices_sha256": VOICES_SHA,
-        "voice_partitions": splits, "clips": count,
+        "voice_partitions": splits, "clips": count, "partials_only": args.partials_only,
         "keyword_end": "End of synthesized standalone wake clip; no phone timing available.",
         "seconds": round(time.monotonic()-started, 1)}, indent=2)+"\n")
 
