@@ -767,6 +767,11 @@ static void mic_task(void *arg)
             if(esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
                 state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
             }
+            // Prepare the next frame during the interval, then pace the send.
+            // A late encoder/peer step has already spent that time; sleeping
+            // another full interval afterwards would slow the media clock.
+            TickType_t elapsed=xTaskGetTickCount()-scheduled;
+            if(elapsed<pdMS_TO_TICKS(20))vTaskDelay(pdMS_TO_TICKS(20)-elapsed);
             if(atomic_load(&c->connected)) {
                 esp_peer_audio_frame_t frame={.data=encoded,.size=output.encoded_bytes,.pts=pts};
                 xSemaphoreTake(c->peer_lock,portMAX_DELAY);
@@ -779,16 +784,13 @@ static void mic_task(void *arg)
                 status.replayed_ms=c->replayed_samples/16;
                 xSemaphoreGive(state_lock);
             }
+            scheduled=xTaskGetTickCount();
             if(have)filled=0;
             if(!logged && have) {
                 printf("Voice codec stack free: wake encoder=%u bytes\n",(unsigned)uxTaskGetStackHighWaterMark(NULL));
                 logged=true;
             }
             pts+=20;
-            // Never compensate for a late frame with another packet burst.
-            TickType_t now=xTaskGetTickCount();
-            if((TickType_t)(now-scheduled)>pdMS_TO_TICKS(20))scheduled=now;
-            xTaskDelayUntil(&scheduled,pdMS_TO_TICKS(20));
         }
         if(sonic)esp_ae_sonic_close(sonic);
         if(encoder)esp_opus_enc_close(encoder);
