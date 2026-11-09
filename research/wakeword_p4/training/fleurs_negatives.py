@@ -23,6 +23,7 @@ REVISION = "168de341b3db6859a9bac1c50a2ef5e3b47647e0"
 SHARDS = {
     "validation": (287985961, "18698ffdd46c36c54af641821684d3f0313a7b64e0a49615597ec61a98f2b57e"),
     "test": (695674033, "87c0aebbe183f3a36ac87b5c3421b6ab57036824744ff695029a3f858e7622fd"),
+    "train": (2214262858, "b7310d1e78afe209a1cbc40412d0de18a218ac614bbff0d2d1b87aba2c066b3d"),
 }
 
 
@@ -50,17 +51,33 @@ def main():
                         help="Pinned validation.parquet and test.parquet; raw data remains outside git")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=2)
+    parser.add_argument("--training-only", action="store_true",
+                        help="Prepare only the official train shard in a separate corpus")
+    parser.add_argument("--reserved-corpus", type=Path,
+                        help="Previously prepared validation/testing root; required with --training-only to reject duplicate held-out audio")
     args = parser.parse_args()
     if args.output.exists() or args.workers < 1:
         parser.error("Use a fresh output directory and a positive worker count")
-    for split, (size, sha) in SHARDS.items():
+    if args.training_only and args.reserved_corpus is None:
+        parser.error("--training-only requires --reserved-corpus")
+    selected_splits = ("train",) if args.training_only else ("validation", "test")
+    for split in selected_splits:
+        size, sha = SHARDS[split]
         path = args.assets/f"{split}.parquet"
         if path.stat().st_size != size or digest(path) != sha:
             raise ValueError("Pinned FLEURS shard checksum mismatch")
     args.output.mkdir(parents=True)
     seen = {}
-    for official_split in SHARDS:
-        split = "testing" if official_split == "test" else official_split
+    if args.training_only:
+        for split in ("validation", "testing"):
+            reserved = json.loads((args.reserved_corpus/split/"manifest.json").read_text())
+            official = "test" if split == "testing" else split
+            if reserved["shard_sha256"] != SHARDS[official][1] or reserved["revision"] != REVISION:
+                raise ValueError("Reserved corpus provenance mismatch")
+            seen.update({source["audio_sha256"]: split for group in reserved["records"] for source in group["sources"]})
+            seen.update({row["sha256"]: split for row in reserved["excluded"]})
+    for official_split in selected_splits:
+        split = {"test": "testing", "train": "training"}.get(official_split, official_split)
         root = args.output/split
         (root/"pcm").mkdir(parents=True)
         (root/"features").mkdir()
@@ -119,6 +136,7 @@ def main():
                 print(json.dumps({"split": split, "groups": len(records), "total": len(groups)}), flush=True)
         report = {"dataset": "google/fleurs cmn_hans_cn", "license": "CC BY 4.0", "revision": REVISION,
                   "source": "https://huggingface.co/datasets/google/fleurs", "official_split": official_split,
+                  "data_use": "training_only" if args.training_only else "evaluation_only",
                   "shard_sha256": SHARDS[official_split][1], "records": records, "excluded": excluded,
                   "hours": sum(r["seconds"] for r in records)/3600,
                   "speech_hours": sum(r["speech_seconds"] for r in records)/3600,

@@ -250,6 +250,19 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   An eight-fixture short/long regression preserves exact historical PCM and
   expected detection offsets. Hardware execution still waits for the original
   long baseline's restoration; its 1.5 Mbaud run is unchanged.
+- The frozen old INT8 long335 model also fails on Mandarin validation: one
+  event / 1.294 h (0.773/h, upper 95% 3.667/h). Its English/Chinese long-audio
+  events all occur after model warmup, so an initial decision delay does not
+  explain them. Testing remains unread. See
+  `../results/mandarin-long335-diagnostic-v3.json`.
+- Preparation now optionally supports the official, separately checksum-pinned
+  Mandarin training shard, rejecting duplicates against both held-out groups.
+  Its download is in progress; the active runs are unchanged. Chaining human
+  feature extensions exposed a reference bug: reusing `additional-human` could
+  redirect the earlier corpus's rows into the newer one. Prior rows are now
+  anchored through their original feature view. A two-layer byte-level
+  regression verifies both corpora, preserves explicit group versus speaker
+  identities and rejects duplicates. No running training source was edited.
 
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen

@@ -23,10 +23,17 @@ def main():
     manifest_path = source/"manifest.json"
     corpus = json.loads(manifest_path.read_text())
     records = corpus["records"]
-    existing_ids = {str(r["speaker"]) for r in existing}
-    new_ids = [str(r["speaker"]) for r in records]
+    def identity(row):
+        if "speaker" in row:
+            return "speaker:"+str(row["speaker"])
+        return "record:"+str(row["id"])
+
+    existing_ids = {identity(r) for r in existing}
+    new_ids = [identity(r) for r in records]
     if len(set(new_ids)) != len(new_ids) or existing_ids.intersection(new_ids):
-        raise ValueError("Additional human speaker IDs overlap existing partitions or one another")
+        raise ValueError("Additional human source identities overlap existing partitions or one another")
+    if corpus.get("speaker_identity_available") is False and any("speaker" in row for row in records):
+        raise ValueError("Source does not provide individual speaker IDs")
     additions = []
     for row in records:
         if row["split"] not in ("training", "validation", "testing"):
@@ -36,7 +43,7 @@ def main():
             raise ValueError("Expected a source-relative feature path")
         if hashlib.sha256((source/path).read_bytes()).hexdigest() != row["feature_sha256"]:
             raise ValueError("Additional human feature checksum mismatch")
-        additions.append({**row, "path": str(Path("additional-human")/path)})
+        additions.append({**row, "source_type": "speech", "path": str(Path("additional-human")/path)})
     args.output.mkdir(parents=True)
     for name in ("features.bin", "features.json", "dataset", "ambient", "ambient.json", "human-source"):
         path = base/name
@@ -44,11 +51,17 @@ def main():
             raise ValueError(f"Missing original feature component: {name}")
         (args.output/name).symlink_to(path.resolve(), target_is_directory=path.is_dir())
     (args.output/"additional-human").symlink_to(source, target_is_directory=True)
-    (args.output/"human.json").write_text(json.dumps(existing+additions, indent=2)+"\n")
+    # Anchor all previous rows to their previous feature view. Reusing the
+    # additional-human name alone would redirect an earlier extension's rows
+    # into the latest corpus, silently breaking chained feature views.
+    (args.output/"base-human").symlink_to(base, target_is_directory=True)
+    preserved = [{**row, "path": str(Path("base-human")/row["path"])} for row in existing]
+    (args.output/"human.json").write_text(json.dumps(preserved+additions, indent=2)+"\n")
     report = {"scope": "Feature view only; original synthetic features and new human split assignments unchanged",
               "base_feature_index_sha256": hashlib.sha256((base/"features.json").read_bytes()).hexdigest(),
               "base_human_index_sha256": hashlib.sha256((base/"human.json").read_bytes()).hexdigest(),
               "additional_human_manifest_sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+              "additional_speaker_identity_available": corpus.get("speaker_identity_available", True),
               "additional_hours": {split: sum(r["seconds"] for r in additions if r["split"] == split)/3600
                                    for split in ("training", "validation", "testing")}}
     (args.output/"generation.json").write_text(json.dumps(report, indent=2)+"\n")

@@ -58,7 +58,7 @@ def main():
             values = smooth(detector.predict(data))
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
             ambient.append({"hours": len(data)*.01/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
-                            "source_type": "speech" if "speaker" in row else "environment"})
+                            "source_type": row.get("source_type", "speech" if "speaker" in row else "environment")})
             print(json.dumps({"phase": split+"_ambient", "completed": len(ambient),
                               "hours": sum(r["hours"] for r in ambient)}), flush=True)
         return clips, ambient

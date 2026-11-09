@@ -400,6 +400,17 @@ to training. Freeze the model/threshold before scoring testing. These recordings
 extend language coverage; they do not substitute for TV/music, actual room
 audio, or real-user positive wake tests.
 
+For a later training experiment, download the same revision's
+`cmn_hans_cn/train/0000.parquet` as `train.parquet` and use a **new** output:
+`fleurs_negatives.py --training-only --reserved-corpus "$PRIVATE_FLEURS_CORPUS"`.
+Also provide `--assets` and `--output` as above. This verifies the train shard
+and rejects audio duplicates against both reserved partitions. It neither
+relabels validation errors nor changes an already running experiment.
+`extend_human_features.py` accepts these explicitly identified continuous
+groups as well as speaker-ID corpora. Chained extensions preserve previous
+feature references through their original view; group IDs do not establish
+speaker independence when the source lacks individual identities.
+
 ## Rejected/diagnostic paths
 
 - OmniVoice's tested MLX configuration generated waveform-valid files, but all
