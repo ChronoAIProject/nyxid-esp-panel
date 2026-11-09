@@ -3,7 +3,7 @@ import importlib.util
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 
 spec = importlib.util.spec_from_file_location(
@@ -50,6 +50,24 @@ class VoiceCleanupTests(unittest.TestCase):
         run.cleanup()
         run.proxy.assert_not_called()
         self.assertTrue(run.report['passed'])
+
+    def test_previous_error_does_not_abort_before_wake_detection(self):
+        run = self.harness()
+        run.session = None
+        run.status.side_effect = [
+            {'state': 'error', 'active': False, 'wake': {'detections': 1}},
+            {'state': 'active', 'active': True, 'wake': {'detections': 2}},
+        ]
+        with patch.object(voice.time, 'sleep'):
+            self.assertTrue(run.wait(lambda v: v['active'])['active'])
+
+    def test_current_attempt_error_is_reported(self):
+        run = self.harness()
+        run.session = None
+        run.status.return_value = {'state': 'error', 'active': False,
+                                   'message': 'provider rejected', 'wake': {'detections': 2}}
+        with self.assertRaisesRegex(RuntimeError, 'provider rejected'):
+            run.wait(lambda v: v['active'])
 
 
 if __name__ == '__main__':

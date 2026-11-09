@@ -73,7 +73,10 @@ class Acceptance:
             value = self.status()
             if predicate(value):
                 return value
-            if check_error and value['state'] == 'error':
+            our_attempt = (self.session or
+                           (self.remote_id and value.get('remote_request_id') == self.remote_id) or
+                           (self.initial and value['wake']['detections'] > self.initial['wake']['detections']))
+            if check_error and our_attempt and value['state'] == 'error':
                 raise RuntimeError(value['message'])
             time.sleep(.25 if self.args.status_url else 1.1)
         raise TimeoutError('Board state did not converge')
