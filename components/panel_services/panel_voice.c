@@ -23,7 +23,6 @@
 #include "media_lib_adapter.h"
 #include "esp_opus_enc.h"
 #include "esp_opus_dec.h"
-#include "esp_ae_sonic.h"
 #include "esp_timer.h"
 #include "esp_random.h"
 #include "esp_app_desc.h"
@@ -53,7 +52,9 @@
 #define DONE_SPEAKER 4
 #define DONE_TONE 8
 #define WAKE_BUFFER_SAMPLES (16000 * 60)
-#define WAKE_LOOKBACK_SAMPLES (16000 / 2)
+// WakeNet can confirm the keyword after the next words have already begun.
+// Preserve that detection latency as well as the capture-frame boundary.
+#define WAKE_LOOKBACK_SAMPLES (16000 * 2)
 typedef struct { char key_id[40]; panel_voice_bot_t bot; } voice_config_t;
 // Display-only cache. Keep the existing selection_v2 authority layout intact.
 typedef struct { char key_id[40], agent_id[40], text[PANEL_VOICE_DESCRIPTION_BYTES]; } voice_description_t;
@@ -702,98 +703,53 @@ static void mic_task(void *arg)
     cfg.sample_rate=16000;cfg.channel=1;cfg.bitrate=24000;cfg.complexity=0;cfg.enable_vbr=true;
     int16_t mono[FRAME_SAMPLES],adjusted[FRAME_SAMPLES];uint8_t encoded[2048];unsigned pts=0;
     if (c->wake_initiated) {
-        // The wake task remains the sole I2S reader. Keep RTP on its 20 ms
-        // clock: bursting queued packets can overrun the receiver's jitter
-        // buffer. Sonic catches up the PCM without changing pitch or dropping
-        // queued speech; capture and hardware-reference AEC remain continuous.
-        esp_ae_sonic_handle_t sonic=NULL;
-        esp_ae_sonic_cfg_t rate={.sample_rate=16000,.channel=1,.bits_per_sample=16};
-        int16_t quiet[FRAME_SAMPLES]={0};
-        size_t pending=0,offset=0,filled=0;
-        bool catching_up=false,logged=false;
-        if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK ||
-            esp_ae_sonic_open(&rate,&sonic)!=ESP_AE_ERR_OK ||
-            esp_ae_sonic_set_speed(sonic,1.0f)!=ESP_AE_ERR_OK ||
-            esp_ae_sonic_set_pitch(sonic,1.0f)!=ESP_AE_ERR_OK) {
-            state("error","Voice microphone processing could not start");atomic_store(&c->running,false);
+        // The wake task remains the sole I2S reader. Consume the recorded
+        // samples in order without reopening capture or changing speech speed.
+        if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
+            state("error","Voice microphone encoding could not start");atomic_store(&c->running,false);
         }
-        TickType_t scheduled=xTaskGetTickCount();
         while (atomic_load(&c->running)) {
-            bool muted=atomic_load(&microphone_muted) || atomic_load(&c->muted);
-            bool ready=panel_voice_capture_allowed(c->input_mode,true,muted,
-                atomic_load(&c->controls),atomic_load(&c->connected),
-                atomic_load(&c->provider_ready),false);
-            if(muted) {
-                // Erase the processor's pending speech as well as the FIFO.
-                pending=offset=filled=0;catching_up=false;
-                if(esp_ae_sonic_reset(sonic)!=ESP_AE_ERR_OK ||
-                    esp_ae_sonic_set_speed(sonic,1.0f)!=ESP_AE_ERR_OK) {
-                    state("error","Voice microphone processing failed");atomic_store(&c->running,false);break;
-                }
-            }
+            bool ready=panel_voice_capture_allowed(c->input_mode,true,
+                atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
+                atomic_load(&c->provider_ready),atomic_load(&c->muted));
+            // Bound bursts, but do not sleep a wall-clock audio frame after
+            // encoding/transmitting one. The FIFO's sample clock paces live
+            // audio; queued speech must be allowed to catch up independently.
             size_t remaining=0;
-            xSemaphoreTake(wake_lock,portMAX_DELAY);remaining=c->capture.count;xSemaphoreGive(wake_lock);
-            if(ready) {
-                // Hysteresis keeps ordinary live-frame jitter at normal speed.
-                bool accelerate=catching_up?remaining>FRAME_SAMPLES*2:remaining>=8000;
-                if(accelerate!=catching_up) {
-                    if(esp_ae_sonic_set_speed(sonic,accelerate?1.5f:1.0f)!=ESP_AE_ERR_OK) {
-                        state("error","Voice microphone processing failed");atomic_store(&c->running,false);break;
-                    }
-                    catching_up=accelerate;
+            for (unsigned burst=0;burst<(ready?4u:1u);++burst) {
+                if(ready && !panel_voice_capture_allowed(c->input_mode,true,
+                    atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
+                    atomic_load(&c->provider_ready),atomic_load(&c->muted)))break;
+                bool have=false;
+                xSemaphoreTake(wake_lock,portMAX_DELAY);
+                if (ready) have=panel_voice_pcm_pop(&c->capture,mono,FRAME_SAMPLES);
+                remaining=c->capture.count;
+                xSemaphoreGive(wake_lock);
+                if (ready && !have) break;
+                if (!have) memset(mono,0,sizeof(mono));
+                esp_audio_enc_in_frame_t input={.buffer=(uint8_t *)mono,.len=sizeof(mono)};
+                esp_audio_enc_out_frame_t output={.buffer=encoded,.len=sizeof(encoded)};
+                if (esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
+                    state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
                 }
-                for(unsigned pull=0;filled<FRAME_SAMPLES && pull<8;++pull) {
-                    if(!pending) {
-                        xSemaphoreTake(wake_lock,portMAX_DELAY);
-                        if(panel_voice_pcm_pop(&c->capture,adjusted,FRAME_SAMPLES))pending=FRAME_SAMPLES;
-                        remaining=c->capture.count;
-                        xSemaphoreGive(wake_lock);
-                        offset=0;
-                    }
-                    esp_ae_sonic_in_data_t in={.samples=adjusted+offset,.num=pending};
-                    esp_ae_sonic_out_data_t out={.samples=mono+filled,.needed_num=FRAME_SAMPLES-filled};
-                    if(esp_ae_sonic_process(sonic,&in,&out)!=ESP_AE_ERR_OK ||
-                        in.consume_num>pending || out.out_num>FRAME_SAMPLES-filled) {
-                        state("error","Voice microphone processing failed");atomic_store(&c->running,false);break;
-                    }
-                    pending-=in.consume_num;offset+=in.consume_num;filled+=out.out_num;
-                    if(!in.consume_num && !out.out_num)break;
+                if (atomic_load(&c->connected)) {
+                    esp_peer_audio_frame_t frame={.data=encoded,.size=output.encoded_bytes,.pts=pts};
+                    xSemaphoreTake(c->peer_lock,portMAX_DELAY);
+                    int err=esp_peer_send_audio(c->peer,&frame);
+                    xSemaphoreGive(c->peer_lock);
+                    if (err) {state("error","Voice microphone send failed");atomic_store(&c->running,false);break;}
+                    if(have)c->replayed_samples+=FRAME_SAMPLES;
+                    xSemaphoreTake(state_lock,portMAX_DELAY);
+                    status.sent_packets++;status.buffered_ms=remaining/16;
+                    status.replayed_ms=c->replayed_samples/16;
+                    xSemaphoreGive(state_lock);
                 }
+                pts+=20;
             }
-            if(!atomic_load(&c->running))break;
-            bool have=ready && filled==FRAME_SAMPLES;
-            esp_audio_enc_in_frame_t input={.buffer=(uint8_t *)(have?mono:quiet),.len=sizeof(mono)};
-            esp_audio_enc_out_frame_t output={.buffer=encoded,.len=sizeof(encoded)};
-            if(esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
-                state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
-            }
-            // Prepare the next frame during the interval, then pace the send.
-            // A late encoder/peer step has already spent that time; sleeping
-            // another full interval afterwards would slow the media clock.
-            TickType_t elapsed=xTaskGetTickCount()-scheduled;
-            if(elapsed<pdMS_TO_TICKS(20))vTaskDelay(pdMS_TO_TICKS(20)-elapsed);
-            if(atomic_load(&c->connected)) {
-                esp_peer_audio_frame_t frame={.data=encoded,.size=output.encoded_bytes,.pts=pts};
-                xSemaphoreTake(c->peer_lock,portMAX_DELAY);
-                int err=esp_peer_send_audio(c->peer,&frame);
-                xSemaphoreGive(c->peer_lock);
-                if(err) {state("error","Voice microphone send failed");atomic_store(&c->running,false);break;}
-                if(have)c->replayed_samples+=FRAME_SAMPLES;
-                xSemaphoreTake(state_lock,portMAX_DELAY);
-                status.sent_packets++;status.buffered_ms=(remaining+pending+filled)/16;
-                status.replayed_ms=c->replayed_samples/16;
-                xSemaphoreGive(state_lock);
-            }
-            scheduled=xTaskGetTickCount();
-            if(have)filled=0;
-            if(!logged && have) {
-                printf("Voice codec stack free: wake encoder=%u bytes\n",(unsigned)uxTaskGetStackHighWaterMark(NULL));
-                logged=true;
-            }
-            pts+=20;
+            if(ready && remaining>=FRAME_SAMPLES)taskYIELD();
+            else vTaskDelay(pdMS_TO_TICKS(ready?10:20));
         }
-        if(sonic)esp_ae_sonic_close(sonic);
-        if(encoder)esp_opus_enc_close(encoder);
+        if (encoder) esp_opus_enc_close(encoder);
         xEventGroupSetBits(c->done,DONE_MIC);vTaskDelete(NULL);return;
     }
     // Communication AEC with the board's synchronous hardware playback
@@ -1019,8 +975,9 @@ static void wake_task(void *arg)
                 if(!wake_available())break;
                 ESP_LOGI("panel.wake","Hi ESP detected; recording while connecting");
                 xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
-                if(start_call(NULL,true)==ESP_OK)(void)lcd_renderer_show_voice();
-                else {atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);break;}
+                if(start_call(NULL,true)!=ESP_OK) {
+                    atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);break;
+                }
             }
         }
         atomic_store(&wake_listening,false);
@@ -1200,6 +1157,8 @@ static void call_task(void *arg)
 {
     voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;int64_t connected_at=0;
     cJSON *preferences=NULL;char path[256];
+    // The display lock must never stall the wake task's continuous I2S reader.
+    if(c->wake_initiated)(void)lcd_renderer_show_voice();
     // Gather local ICE/SDP while NyxID loads current settings. The session
     // start endpoint resolves this exact saved binding and authority live.
     c->peer_lock=xSemaphoreCreateMutex();

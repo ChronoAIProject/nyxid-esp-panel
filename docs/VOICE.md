@@ -102,16 +102,16 @@ and OTA. MusicPlayer and SpecAnalyzer can claim the codec without disabling
 the saved wake preference. An active call keeps exclusive audio ownership.
 
 After detection, the same microphone task keeps reading AEC/AGC-processed
-16 kHz mono samples while NyxID connects. A 500 ms local lookback protects speech
-at the detection boundary. Connection audio and subsequent live audio enter one
+16 kHz mono samples while NyxID connects. A two-second local lookback protects
+speech that starts before WakeNet has confirmed the keyword. Display updates run
+on the call task so the display lock cannot stall the microphone reader.
+Connection audio and subsequent live audio enter one
 PCM FIFO; there is no codec reopen or second I2S reader at the transition.
 After the provider, media and controls are ready, Opus packets carry the FIFO's
-oldest samples first, with continuous 20 ms timestamps and one packet per 20 ms.
-The existing Espressif Sonic processor preserves pitch while playing a backlog
-at 1.5x speed, then returns to normal speed as the queue empties. This catches up
-without flooding the receiver with future RTP packets. Its pending audio is
-also reset on microphone mute. No local sentence detection or speech segmentation
-is added. Wake-initiated calls use automatic conversation without changing the
+oldest samples first, with continuous 20 ms timestamps. Bounded batches drain
+the connection backlog before live samples without changing the speech itself.
+No local sentence detection or speech segmentation is added.
+Wake-initiated calls use automatic conversation without changing the
 saved input mode, and skip the automatic greeting and dialing tone so neither
 can interrupt the user's initial request. Manual and remote calls retain the
 existing greeting preference and dialing tone.
