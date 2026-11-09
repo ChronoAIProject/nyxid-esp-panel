@@ -44,7 +44,8 @@ def main():
         scores = smooth(detector.predict(data))
         np.save(args.output/f"scores-{index:03d}.npy", scores)
         count = events(scores, threshold)
-        rows.append({"speaker": record["speaker"], "seconds": record["seconds"],
+        identity = {"speaker": record["speaker"]} if "speaker" in record else {"id": record["id"]}
+        rows.append({**identity, "seconds": record["seconds"],
             "speech_seconds": record["speech_seconds"], "events": count,
             "feature_sha256": feature_hash,
             "pcm_sha256": record["pcm_sha256"]})

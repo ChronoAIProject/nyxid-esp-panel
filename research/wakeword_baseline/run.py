@@ -33,7 +33,7 @@ def main():
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--baud", type=int, choices=(115200,921600,1500000,3000000,6000000), default=1500000)
+    parser.add_argument("--baud", type=int, choices=(115200,921600,1500000,3000000), default=1500000)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     if (args.output/"report.json").exists():

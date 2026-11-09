@@ -364,6 +364,42 @@ does not require the full phrase on those synthetic examples. This does not
 prove that every long-audio false wake has the same cause. See
 `../results/partial-vocabulary-before-training-v3.json`.
 
+Quantized `evaluate_stream.py --validation-only --separate-negative-corpora`
+also requires each engine/corpus negative group to meet the 1% criterion.
+For example, `edge-corpus` confusing phrases and `edge-partials` component
+words remain separate even though both use Edge TTS. Added easy clips cannot
+hide errors in the old corpus. The historical default is unchanged; freeze
+the intended policy before comparing new candidates. This option establishes
+a validation operating point, not human or production acceptance.
+
+### Mandarin continuous evaluation data
+
+`fleurs_negatives.py` prepares public read Mandarin from
+[google/fleurs](https://huggingface.co/datasets/google/fleurs), CC BY 4.0. It
+pins Parquet revision `168de341b3db6859a9bac1c50a2ef5e3b47647e0`, verifies
+the original LFS SHA-256/byte counts, and retains the official validation/test
+partitions. Download `cmn_hans_cn/validation/0000.parquet` and
+`cmn_hans_cn/test/0000.parquet` from that revision as `validation.parquet` and
+`test.parquet` in a private asset directory. Use a separate data environment:
+
+```sh
+uv venv --python 3.12 "$WAKE_WORK/data-env"
+uv pip sync --python "$WAKE_WORK/data-env/bin/python" research/wakeword_p4/training/requirements-data.lock
+"$WAKE_WORK/data-env/bin/python" research/wakeword_p4/training/fleurs_negatives.py \
+  --assets "$PRIVATE_FLEURS_ASSETS" --output "$PRIVATE_FLEURS_CORPUS" --workers 2
+```
+
+Each output split contains PCM16 WAVs, exact continuous features and a Hi ESP
+UART manifest for the same PCM. Original float WAVs are quantized once without
+gain or speed changes. Explicit 200 ms separators and actual speech exposure
+are recorded separately. Groups are bounded near ten minutes for transfer;
+they are **not speaker IDs**, which this export does not provide. Duplicate
+audio hashes are rejected within/across splits, and transcript aliases are
+screened before features. Preparation does not score a detector or append data
+to training. Freeze the model/threshold before scoring testing. These recordings
+extend language coverage; they do not substitute for TV/music, actual room
+audio, or real-user positive wake tests.
+
 ## Rejected/diagnostic paths
 
 - OmniVoice's tested MLX configuration generated waveform-valid files, but all

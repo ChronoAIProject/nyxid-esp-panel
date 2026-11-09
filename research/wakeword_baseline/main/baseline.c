@@ -55,7 +55,7 @@ void app_main(void) {
         command[used]=0;
         unsigned id=0,samples=0;
         unsigned baud=0;
-        if(sscanf(command,"BAUD %u",&baud)==1 && (baud==115200 || baud==921600 || baud==1500000 || baud==3000000 || baud==6000000)) {
+        if(sscanf(command,"BAUD %u",&baud)==1 && (baud==115200 || baud==921600 || baud==1500000 || baud==3000000)) {
             printf("WAKE_BENCH_BAUD {\"baud\":%u}\n",baud);
             ESP_ERROR_CHECK(uart_wait_tx_done(UART_NUM_0,pdMS_TO_TICKS(1000)));
             vTaskDelay(pdMS_TO_TICKS(100));

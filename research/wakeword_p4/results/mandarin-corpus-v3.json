@@ -1,0 +1,39 @@
+{
+  "dataset": "google/fleurs cmn_hans_cn",
+  "license": "CC BY 4.0",
+  "source": "https://huggingface.co/datasets/google/fleurs",
+  "revision": "168de341b3db6859a9bac1c50a2ef5e3b47647e0",
+  "speaker_identity_available": false,
+  "partitions": {
+    "validation": {
+      "hours": 1.2938333333333334,
+      "speech_hours": 1.271111111111111,
+      "shard_sha256": "18698ffdd46c36c54af641821684d3f0313a7b64e0a49615597ec61a98f2b57e",
+      "continuous_groups": 8,
+      "utterances": 409,
+      "excluded": 0
+    },
+    "testing": {
+      "hours": 3.126161111111111,
+      "speech_hours": 3.0736611111111114,
+      "shard_sha256": "87c0aebbe183f3a36ac87b5c3421b6ab57036824744ff695029a3f858e7622fd",
+      "continuous_groups": 19,
+      "utterances": 945,
+      "excluded": 0
+    }
+  },
+  "checks": [
+    "Original Parquet LFS SHA-256 and byte count verified before decoding",
+    "No duplicate source audio SHA-256 within/across partitions",
+    "No screened transcript wake aliases",
+    "Every PCM and feature checksum verified after preparation",
+    "Every sample count agrees with speech plus explicit separators",
+    "Independent frontend-prefix extraction agrees exactly in all 27 continuous groups"
+  ],
+  "limits": [
+    "No model scores were read; testing remains reserved.",
+    "Official partitions retained; exported schema does not expose individual speaker identities.",
+    "Read Mandarin does not represent household/TV/music or real-user wake positives.",
+    "No gain or speed change; float source WAV is quantized to PCM16 once."
+  ]
+}

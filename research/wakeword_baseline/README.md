@@ -43,7 +43,7 @@ Start with `--limit 14` for a transfer/reset smoke check. Console startup is
 message. `--baud 115200` retains the slow rate for diagnostics. A truncated or
 corrupted transfer is an error, never a counted recognition miss.
 
-The research protocol also accepts `--baud 3000000` or `--baud 6000000` for
+The research protocol also accepts `--baud 3000000` for
 subsequent runs; the default remains 1500000. Higher rates are not yet verified
 on the current USB connection. Start with CRC-verified short fixtures, then a
 long continuous clip and verified original-app restoration before relying on
@@ -51,6 +51,13 @@ a faster long run. Keep the exact previous probe binary/hash with historical
 measurements. Baud changes affect transfer scheduling, not WAV samples or
 detector configuration. Do not open another serial owner to change a running
 benchmark's speed.
+
+The earlier experimental 6 Mbaud option was removed before hardware use:
+512 PCM samples take about 2.13 ms of detector time on this probe, so an
+unthrottled 6 Mbaud stream can outrun inference and overflow its finite RX
+buffer. A short clip passing CRC would not establish long-clip safety.
+3 Mbaud has throughput headroom on the measured detector; it still requires
+the short/long CRC checks above on the actual USB connection.
 
 `training/baseline_samples.py` in the sibling `wakeword_p4` project generates
 paired Hi ESP / Hey Nyx Mac TTS fixtures with identical random augmentation

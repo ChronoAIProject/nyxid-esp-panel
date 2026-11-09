@@ -221,6 +221,35 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   and firmware-error paths both restore and verify the original app. Actual
   execution is still pending the existing long Hi ESP baseline's restoration;
   no second USB owner was opened.
+- The warm-start run's 10,000-step float checkpoint is not viable: at its
+  selected fallback 0.992 threshold it has 69.87% mean-engine recall, 7.29%
+  maximum-engine confusing-clip false rate, and one event in 7.324 validation
+  hours. A targeted validation diagnostic finds 4/528 partial-word variants
+  above the fixed diagnostic 0.7 threshold, but OpenAI `Hey Mix` and `Hey Next`
+  remain saturated confusions. These are float results; the older partial-word
+  report used INT8 inference and is not a controlled comparison. Unprompted
+  tiny.en transcribes those validation source phrases as expected; it does not
+  certify phonetic correctness. Full training and its scratch control continue.
+  See `../results/fullphrase10k-diagnostic-v3.json`.
+- The same-topology scratch control's 10,000-step float checkpoint also fails:
+  fallback 0.97 has 56.62% mean-engine recall, 5.21% maximum-engine confusing
+  false clips and one event in 7.324 validation hours. Both runs continue their
+  fixed schedules; do not infer final quantized performance from these points.
+- A separate Mandarin evaluation corpus is now prepared from the pinned,
+  CC BY 4.0 Google FLEURS source: 409 validation utterances / 1.294 h and 945
+  testing utterances / 3.126 h, explicit separators included. Official
+  partitions are retained. The export has no individual speaker IDs, so its
+  8/19 continuous groups must not be reported as independent speakers. Original
+  LFS hashes, duplicate/alias checks, all PCM/feature hashes, sample accounting
+  and frontend-prefix equality passed. No detector scores were read; testing
+  remains reserved. See `../results/mandarin-corpus-v3.json` and
+  `fleurs_negatives.py`. This data is not added to the active training runs.
+- Reviewing the untested UART speed option found that 6 Mbaud can outrun the
+  measured ~2.13 ms/512-sample inference without flow control. It was removed
+  before hardware use; 3 Mbaud remains experimental and rebuilt successfully.
+  An eight-fixture short/long regression preserves exact historical PCM and
+  expected detection offsets. Hardware execution still waits for the original
+  long baseline's restoration; its 1.5 Mbaud run is unchanged.
 
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
