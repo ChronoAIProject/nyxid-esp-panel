@@ -141,7 +141,9 @@ class Acceptance:
         self.play('count-en')
         self.wait(lambda v: v['message'] == 'Bot speaking', 45)
         time.sleep(.8)
-        assert self.status()['message'] == 'Bot speaking', 'Count ended before interruption; no barge-in tested'
+        # Numbered speech can pause between chunks. Start the interruption in
+        # an actual playback window, rather than treating a short gap as failure.
+        self.wait(lambda v: v['message'] == 'Bot speaking', 45)
         self.event('interrupt_during_playback')
         self.play('interrupt-en')
         self.reply(r'purple.*elephant', after)
@@ -198,6 +200,49 @@ class Acceptance:
         assert not self.wait(lambda v: not v['busy'])['active']
         self.event('repeated_hangup_safe')
 
+    def cleanup(self):
+        errors = []
+        try:
+            if self.player and self.player.poll() is None:
+                self.player.terminate()
+                self.player.wait(timeout=10)
+        except Exception as error:
+            errors.append(f'player: {error}')
+        # Losing history access must not skip hangup or restoration.
+        try:
+            if self.session:
+                self.report['messages'] = [{k: m.get(k) for k in ['seq', 'role', 'text', 'voice']}
+                                           for m in self.rows()]
+        except Exception as error:
+            errors.append(f'history: {error}')
+        try:
+            value = self.status()
+            owns = ((self.session and value.get('session_id') == self.session)
+                    or (self.remote_id and value.get('remote_request_id') == self.remote_id)
+                    or (self.args.scenario != 'remote' and value['wake']['initiated_call']
+                        and value['wake']['detections'] > self.initial['wake']['detections']))
+            if owns and value['busy']:
+                try:
+                    if value['microphone_muted']:
+                        self.proxy('/voice/microphone', {'muted': self.initial['microphone_muted']})
+                finally:
+                    self.proxy('/voice/stop', {})
+                self.wait(lambda v: not v['busy'], check_error=False)
+        except Exception as error:
+            errors.append(f'hangup: {error}')
+        try:
+            if self.args.scenario == 'boundaries':
+                self.proxy('/voice/wake', {'enabled': self.initial['wake']['enabled']})
+        except Exception as error:
+            errors.append(f'wake restore: {error}')
+        try:
+            self.report['final_voice'] = self.status()
+        except Exception as error:
+            errors.append(f'final status: {error}')
+        if errors:
+            self.report['cleanup_error'] = errors
+            self.report['passed'] = False
+
     def run(self):
         self.args.output.parent.mkdir(parents=True, exist_ok=True)
         self.initial = self.wait(lambda v: not v['busy'], check_error=False)
@@ -212,29 +257,7 @@ class Acceptance:
             self.report['error'] = f'{type(error).__name__}: {error}'
             raise
         finally:
-            if self.player and self.player.poll() is None:
-                self.player.terminate()
-                self.player.wait(timeout=10)
-            try:
-                value = self.status()
-                owns = ((self.session and value.get('session_id') == self.session)
-                        or (self.remote_id and value.get('remote_request_id') == self.remote_id)
-                        or (self.args.scenario != 'remote' and value['wake']['initiated_call']
-                            and value['wake']['detections'] > self.initial['wake']['detections']))
-                if self.session:
-                    self.report['messages'] = [{k: m.get(k) for k in ['seq', 'role', 'text', 'voice']}
-                                               for m in self.rows()]
-                if owns and value['busy']:
-                    if value['microphone_muted']:
-                        self.proxy('/voice/microphone', {'muted': self.initial['microphone_muted']})
-                    self.proxy('/voice/stop', {})
-                    self.wait(lambda v: not v['busy'], check_error=False)
-                if self.args.scenario == 'boundaries':
-                    self.proxy('/voice/wake', {'enabled': self.initial['wake']['enabled']})
-                self.report['final_voice'] = self.status()
-            except Exception as error:
-                self.report['cleanup_error'] = f'{type(error).__name__}: {error}'
-                self.report['passed'] = False
+            self.cleanup()
             self.args.output.write_text(json.dumps(self.report, ensure_ascii=False, indent=2) + '\n')
             self.args.output.chmod(0o600)
         if not self.report.get('passed'):
