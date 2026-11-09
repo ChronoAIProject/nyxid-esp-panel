@@ -1,0 +1,149 @@
+{
+  "initial": {
+    "PROBE_FRONTEND": {
+      "frames": 198,
+      "mismatches": 1,
+      "max_delta": 1,
+      "total_us": 57745
+    },
+    "models": [
+      {
+        "name": "okay_nabu",
+        "calls": 256,
+        "arena_used": 25788,
+        "var_arena_allocated": 4096,
+        "p50_us": 620,
+        "p95_us": 629,
+        "max_us": 2073,
+        "mismatches": 0,
+        "max_output_delta": 0
+      },
+      {
+        "name": "mac_smoke",
+        "calls": 256,
+        "arena_used": 18492,
+        "var_arena_allocated": 4096,
+        "p50_us": 417,
+        "p95_us": 420,
+        "max_us": 1113,
+        "mismatches": 5,
+        "max_output_delta": 1
+      }
+    ],
+    "P4_WAKE_PROBE_DONE": {
+      "frontend": false,
+      "pretrained_model": true,
+      "mac_exported_model": true,
+      "stack_free": 11844
+    }
+  },
+  "quantized": {
+    "PROBE_FRONTEND": {
+      "frames": 198,
+      "mismatches": 1,
+      "max_delta": 1,
+      "quantized_mismatches": 1,
+      "total_us": 57622
+    },
+    "models": [
+      {
+        "name": "okay_nabu",
+        "calls": 256,
+        "arena_used": 25788,
+        "var_arena_allocated": 4096,
+        "p50_us": 620,
+        "p95_us": 628,
+        "max_us": 2067,
+        "mismatches": 0,
+        "max_output_delta": 0
+      },
+      {
+        "name": "mac_smoke",
+        "calls": 256,
+        "arena_used": 18492,
+        "var_arena_allocated": 4096,
+        "p50_us": 415,
+        "p95_us": 422,
+        "max_us": 1127,
+        "mismatches": 5,
+        "max_output_delta": 1
+      }
+    ],
+    "P4_WAKE_PROBE_DONE": {
+      "frontend": false,
+      "pretrained_model": true,
+      "mac_exported_model": true,
+      "stack_free": 11828
+    }
+  },
+  "xnnpack": {
+    "PROBE_FRONTEND": {
+      "frames": 198,
+      "mismatches": 1,
+      "max_delta": 1,
+      "quantized_mismatches": 1,
+      "quantized_max_delta": 1,
+      "bit_exact": false,
+      "total_us": 57752
+    },
+    "models": [
+      {
+        "name": "okay_nabu",
+        "board_frontend": false,
+        "calls": 976,
+        "arena_used": 25788,
+        "var_arena_allocated": 4096,
+        "p50_us": 621,
+        "p95_us": 628,
+        "max_us": 2083,
+        "mismatches": 47,
+        "max_output_delta": 10
+      },
+      {
+        "name": "mac_smoke",
+        "board_frontend": false,
+        "calls": 976,
+        "arena_used": 18492,
+        "var_arena_allocated": 4096,
+        "p50_us": 417,
+        "p95_us": 420,
+        "max_us": 1157,
+        "mismatches": 19,
+        "max_output_delta": 1
+      },
+      {
+        "name": "okay_nabu",
+        "board_frontend": true,
+        "calls": 976,
+        "arena_used": 25788,
+        "var_arena_allocated": 4096,
+        "p50_us": 621,
+        "p95_us": 628,
+        "max_us": 1682,
+        "mismatches": 47,
+        "max_output_delta": 10
+      },
+      {
+        "name": "mac_smoke",
+        "board_frontend": true,
+        "calls": 976,
+        "arena_used": 18492,
+        "var_arena_allocated": 4096,
+        "p50_us": 416,
+        "p95_us": 419,
+        "max_us": 1086,
+        "mismatches": 19,
+        "max_output_delta": 1
+      }
+    ],
+    "P4_WAKE_PROBE_DONE": {
+      "frontend": true,
+      "pretrained_model": false,
+      "mac_exported_model": true,
+      "frontend_to_pretrained": false,
+      "frontend_to_mac_exported": true,
+      "stack_free": 13844
+    }
+  },
+  "explanation": "Strict frontend checks first failed on one LSB. High-score fixtures then exposed XNNPACK vs BUILTIN_REF rounding. Final probe uses canonical BUILTIN_REF and reports bounded, non-bit-exact frontend results explicitly."
+}

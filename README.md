@@ -16,6 +16,9 @@ feature.
 See [debugging and physical acceptance](docs/DEBUGGING.md) for local/production
 profiles, preserving USB updates, UART, natural acoustic fixtures, repeatable
 voice scenarios, service discovery, camera/display diagnosis and cleanup.
+Custom **Hey Nyx** wake-word research, native Mac reproduction steps and P4
+numeric results are in [the standalone research notes](research/wakeword_p4/README.md).
+This experiment does not replace the production **Hi ESP** detector.
 
 ## Provenance
 
