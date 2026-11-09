@@ -22,7 +22,15 @@ def main():
                         help="Calibrate on validation without reading test or Mac regression audio")
     parser.add_argument("--separate-negative-corpora", action="store_true",
                         help="Also require <=1%% false clips in each engine/corpus group; prevents new easy negatives diluting earlier errors")
+    parser.add_argument("--selection-policy", choices=("strict", "continuous"), default="strict",
+                        help="Continuous diagnostic: maximize recall at <=0.5 ambient events/h; still report all near-word errors and the strict gate")
+    parser.add_argument("--threshold-grid", type=float, nargs="+",
+                        help="Explicit validation-only sweep in (0,1); omitted retains the historical grid")
     args = parser.parse_args()
+    thresholds = args.threshold_grid if args.threshold_grid is not None else THRESHOLDS
+    if len(set(thresholds)) != len(thresholds) or any(not np.isfinite(t) or not 0 < t < 1 for t in thresholds):
+        parser.error("Thresholds must be unique finite values in (0,1)")
+    thresholds = sorted(thresholds)
     if not args.validation_only and args.mac_eval is None:
         parser.error("--mac-eval is required unless --validation-only is used")
     root = args.output
@@ -57,7 +65,7 @@ def main():
             detector.reset()
             values = smooth(detector.predict(data))
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
-            ambient.append({"hours": len(data)*.01/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
+            ambient.append({"hours": len(data)*.01/3600, "events": {str(t): events(values, t) for t in thresholds},
                             "source_type": row.get("source_type", "speech" if "speaker" in row else "environment")})
             print(json.dumps({"phase": split+"_ambient", "completed": len(ambient),
                               "hours": sum(r["hours"] for r in ambient)}), flush=True)
@@ -90,19 +98,27 @@ def main():
                 "ambient_false_per_hour_upper_95": float(.5*chi2.ppf(.95, 2*(count+1))/hours)}
 
     val, va = measure("validation")
-    grid = [summarize(val, va, t) for t in THRESHOLDS]
+    grid = [summarize(val, va, t) for t in thresholds]
     negative_metric = "max_corpus_false_rate" if args.separate_negative_corpora else "max_source_false_rate"
-    eligible = [r for r in grid if r["ambient_false_per_hour"] <= .5 and r["max_source_false_rate"] <= .01
-                and r[negative_metric] <= .01]
+    def strict_viable(row):
+        return row["ambient_false_per_hour"] <= .5 and row["max_source_false_rate"] <= .01 and row[negative_metric] <= .01
+    eligible = [r for r in grid if (r["ambient_false_per_hour"] <= .5
+                if args.selection_policy == "continuous" else strict_viable(r))]
     selected = max(eligible, key=lambda r: (r["macro_recall"], -r["ambient_false_per_hour"])) if eligible else min(
-        grid, key=lambda r: (r["ambient_false_per_hour"], r[negative_metric], -r["macro_recall"]))
+        grid, key=lambda r: ((r["ambient_false_per_hour"], -r["macro_recall"], r[negative_metric])
+                            if args.selection_policy == "continuous" else
+                            (r["ambient_false_per_hour"], r[negative_metric], -r["macro_recall"])))
     (root/"threshold.json").write_text(json.dumps({"selected": selected, "grid": grid,
         "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
         "feature_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
         "selection_scope": "Validation only; threshold frozen before reading test/Mac audio",
+        "selection_policy": args.selection_policy,
+        "threshold_grid": thresholds,
+        "policy_operating_point": bool(eligible),
         "negative_selection_metric": negative_metric,
-        "viable_operating_point": bool(eligible)}, indent=2)+"\n")
-    print(json.dumps({"validation": selected, "viable_operating_point": bool(eligible)}), flush=True)
+        "viable_operating_point": strict_viable(selected)}, indent=2)+"\n")
+    print(json.dumps({"validation": selected, "selection_policy": args.selection_policy,
+                      "policy_operating_point": bool(eligible), "viable_operating_point": strict_viable(selected)}), flush=True)
     if args.validation_only:
         (root/"validation-details.json").write_text(json.dumps({"validation": val, "ambient": va})+"\n")
         return
@@ -125,6 +141,9 @@ def main():
     mn = [r for r in mac if not r["label"]]
     report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
               "sliding_window": 5, "threshold": threshold, "validation": selected,
+              "selection_policy": args.selection_policy, "policy_operating_point": bool(eligible),
+              "threshold_grid": thresholds,
+              "strict_validation_operating_point": strict_viable(selected),
               "testing_regression": summarize(test, ta, threshold),
               "mac_regression": {"positive_variants": len(mp), "negative_variants": len(mn),
                                  "recall": float(np.mean([r["max_score"] >= threshold for r in mp])),

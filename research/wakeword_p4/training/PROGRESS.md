@@ -348,6 +348,48 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   `../results/cross-engine-phonemes-v3.json`. A future data-quality ablation
   must be recorded separately and leave the running recipe unchanged.
 
+- Saved checkpoints can now be exported explicitly with `--export-only`,
+  `--steps 0` and matching `--initial-weights`. This performs no optimization
+  or checkpoint selection. All 20 model-weight arrays are bit-exact for the
+  old fullphrase96 20k and current style 10k/20k/30k exports. Fresh seed-726
+  training-only representative sampling can change INT8 quantization; every
+  resulting model hash therefore receives a new validation calibration.
+  An aligned ten-clip float window/stream audit of the old 20k export differs
+  by at most 4.21e-6, while INT8/float differences reach 0.329. Export fidelity
+  alone is not recognition acceptance. Invalid export-only CLI combinations
+  are rejected before creating output or reading weights.
+- Quantized calibration now supports an explicit threshold grid and a
+  `continuous` diagnostic policy: maximize mean-engine validation recall with
+  observed ambient FAR <=0.5/h. The default historical grid and strict policy
+  remain. `viable_operating_point` continues to mean that the original strict
+  near-word constraints pass, even when the continuous policy is used. The
+  full old-model/default-policy regression preserves selected metrics, counts,
+  per-engine recalls and identities exactly; four grid macro means differ by
+  1.11e-16 from unordered floating-point summation. Invalid/nonfinite/duplicate
+  threshold inputs are rejected before audio/output access.
+- Re-exporting the old fullphrase96 20k checkpoint with its own newly frozen
+  0.9 continuous-policy threshold improves mean-engine validation recall to
+  87.95%, but paired Mac recall is only 32/50 versus Hi ESP's 48/50. English
+  and Mandarin negatives each have one event, versus zero for the reference.
+  It is rejected. Different checkpoint and fresh INT8 quantization prevent
+  interpreting this as a threshold-only causal comparison. See
+  `../results/fullphrase96-20k-continuous-v3.json`.
+- The style/multilingual 30k training schedule has completed. Explicit 10k,
+  20k and 30k exports use a prespecified 19-threshold validation sweep, including
+  thresholds below 0.5: weighted BCE outputs are not calibrated probabilities.
+  The first two exports reach 85.04%/88.39% mean-engine validation recall at
+  0.15/0.1, with 2/3 events in 7.324 h. Their longest above-threshold ambient
+  runs are 0.72/0.93 s, ruling out an always-high/latch artifact on these scores.
+  Near-word subgroup errors remain about 10.42% maximum, and the strict gate
+  fails. The 30k sweep completes at 84.53% mean-engine recall, so the
+  validation-only policy fixes the 20k export and 0.1 threshold. Its paired
+  regression improves to 44/50 versus Hi ESP's 48/50, but shared ordinary
+  sentences trigger 2/100 versus zero. Identical long English and Mandarin
+  PCM produce five and two events respectively, versus zero for Hi ESP.
+  Reject this replacement; recall/FAR remain worse. See
+  `../results/style-multilingual-checkpoints-v3.json`. Newly reserved testing
+  and full-app/acoustic acceptance remain unmeasured.
+
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
 voices/conditions and real recordings for subsequent acceptance.

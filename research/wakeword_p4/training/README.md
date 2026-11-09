@@ -324,6 +324,15 @@ prevents checkout edits from confusing TensorFlow's runtime source inspection.
 One-step training, validation and INT8 export passed through this launcher;
 this smoke is not a recognition result.
 
+An already saved checkpoint can also be exported with `--export-only --steps 0
+--initial-weights <checkpoint>`, keeping its matching architecture, context and
+feature arguments. Use a fresh run directory through `run_training.py`. No
+optimizer steps or checkpoint selection occur. Model weights are saved as
+`best.weights.h5`; INT8 calibration samples the unchanged ordinary training
+distribution from a fresh seed726 sampler. This does not recreate the original
+end-of-training RNG state, so the resulting INT8 hash needs fresh validation
+calibration. Record the checkpoint choice and checksum before its regressions.
+
 The optional `--hard-negative-fraction 0.5 --hard-negative-pool 4` experiment
 scores larger **training-only** candidate pools. It takes half of each negative
 batch from the highest-scoring candidates and half randomly from the remaining
@@ -371,6 +380,26 @@ words remain separate even though both use Edge TTS. Added easy clips cannot
 hide errors in the old corpus. The historical default is unchanged; freeze
 the intended policy before comparing new candidates. This option establishes
 a validation operating point, not human or production acceptance.
+
+`--selection-policy continuous` is a separately recorded diagnostic policy:
+maximize mean-engine validation recall under <=0.5 observed continuous ambient
+events/hour. It still reports every near-word subgroup error, and
+`viable_operating_point` still means that the selected threshold also passes
+the original strict near-word gate. `policy_operating_point` reports only the
+chosen policy's constraint. The default `strict` policy is unchanged. Keep
+both reports rather than silently replacing a failed calibration. Hi ESP's
+measured near-word tolerance makes the strict 1% gate an additional research
+constraint, not a substitute for the user's matched false-wake, acoustic
+recall, latency and full-app stability objective.
+
+An explicit `--threshold-grid <values...>` freezes a validation sweep, including
+values below the historical minimum 0.5 when investigating weighted BCE score
+calibration. Values must be unique, finite and strictly between zero and one;
+the exact grid is recorded. Inspect activation occupancy and longest high-score
+runs on the saved continuous validation scores: an always-high output can look
+artificially quiet under a rising-edge latch. Keep those diagnostics alongside
+false events/hour, and freeze model/threshold before fresh testing. The default
+historical grid and existing frozen calibrations are unchanged.
 
 ### Mandarin continuous evaluation data
 

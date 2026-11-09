@@ -28,6 +28,8 @@ def main():
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--initial-weights", type=Path,
                         help="Warm-start matching float weights in a fresh run; optimizer state is reset")
+    parser.add_argument("--export-only", action="store_true",
+                        help="Export matching --initial-weights without optimization; requires --steps 0")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
@@ -43,6 +45,11 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.export_only:
+        if not args.initial_weights or args.steps != 0:
+            parser.error("--export-only requires --initial-weights and --steps 0")
+    elif args.steps < 1:
+        parser.error("Training requires positive --steps; use --export-only for a saved checkpoint")
     frames = args.input_frames
     minimum_frames = 149 if args.architecture == "transfer60" else 180
     if frames < minimum_frames or args.negative_weight <= 0 or args.learning_rate <= 0:
@@ -256,7 +263,10 @@ def main():
                 if best is None or rank > best:
                     best = rank
                     model.save_weights(root/"best.weights.h5")
-    model.load_weights(root/"best.weights.h5")
+    if args.export_only:
+        model.save_weights(root/"best.weights.h5")
+    else:
+        model.load_weights(root/"best.weights.h5")
     streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))
@@ -291,12 +301,15 @@ def main():
               "pooling": args.pooling,
               "initial_learning_rate": args.learning_rate, "transfer": transfer_metadata,
               "initial_weights_sha256": initial_weights_hash,
+              "checkpoint_export_only": args.export_only,
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),
               "source_files_sha256": source_hashes,
               "sources": {label: {e: len(rs) for e, rs in groups['training'][label].items()} for label in (0, 1)},
-              "selection": "Float continuous validation <=0.5 ambient events/h and <=1% confusing clips per source; then maximize mean source recall. Quantized validation must be recalibrated.",
+              "selection": ("Explicit saved checkpoint; no checkpoint selection or optimization in this export. Fresh seed726 training-only representative sampling; recalibrate the new INT8 hash on validation."
+                            if args.export_only else
+                            "Float continuous validation <=0.5 ambient events/h and <=1% confusing clips per source; then maximize mean source recall. Quantized validation must be recalibrated."),
               "scope": "Research candidate. Same v1 evaluation sets are development regressions; real-user acceptance remains unmeasured."}
     (root/"training.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps({k: v for k, v in report.items() if k != "history"}), flush=True)
