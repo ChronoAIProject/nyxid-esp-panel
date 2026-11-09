@@ -13,6 +13,10 @@ Implementation is governed by [SPEC.md](SPEC.md). Feature migration and hardware
 acceptance are tracked there; an imported source file alone is not a completed
 feature.
 
+See [debugging and physical acceptance](docs/DEBUGGING.md) for local/production
+profiles, preserving USB updates, UART, natural acoustic fixtures, repeatable
+voice scenarios, service discovery, camera/display diagnosis and cleanup.
+
 ## Provenance
 
 - UI/BSP baseline: `waveshareteam/ESP32-P4-Platform`, commit

@@ -138,6 +138,10 @@ Hang up action still explicitly ends the call.
 
 ## Local NyxID development
 
+The complete reproducible workflow, acoustic fixture tools, full/remote/boundary
+acceptance commands and rejected diagnostic hypotheses are in
+[DEBUGGING.md](DEBUGGING.md).
+
 Production builds use the default HTTPS NyxID URLs. For local development:
 
 ```sh
