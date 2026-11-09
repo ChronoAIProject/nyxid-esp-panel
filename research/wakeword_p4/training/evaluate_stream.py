@@ -18,10 +18,13 @@ def main():
     parser.add_argument("--features", type=Path, required=True)
     parser.add_argument("--mac-eval", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--validation-only", action="store_true",
+                        help="Calibrate on validation without reading test or Mac regression audio")
     args = parser.parse_args()
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"report.json").exists(), "Use a fresh evaluation directory"
+    assert not (root/"threshold.json").exists(), "Do not overwrite an existing calibration"
     detector = Detector(args.model)
     raw = np.memmap(args.features/"features.bin", mode="r", dtype="<u2").reshape(-1, 40)
     records = json.loads((args.features/"features.json").read_text())
@@ -78,6 +81,9 @@ def main():
     (root/"threshold.json").write_text(json.dumps({"selected": selected, "grid": grid,
                                                   "viable_operating_point": bool(eligible)}, indent=2)+"\n")
     print(json.dumps({"validation": selected, "viable_operating_point": bool(eligible)}), flush=True)
+    if args.validation_only:
+        (root/"validation-details.json").write_text(json.dumps({"validation": val})+"\n")
+        return
     # Quantized threshold is frozen before regression/test data is evaluated.
     test, ta = measure("testing")
     threshold = selected["threshold"]

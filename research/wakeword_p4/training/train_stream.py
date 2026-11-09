@@ -22,9 +22,17 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=12000)
     parser.add_argument("--eval-interval", type=int, default=3000)
-    parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
+    parser.add_argument("--architecture", choices=("compact", "official64", "wide128"), default="compact")
     parser.add_argument("--threads", type=int, default=6)
+    parser.add_argument("--input-frames", type=int, default=FRAMES)
+    parser.add_argument("--negative-weight", type=float, default=20.)
+    parser.add_argument("--specaugment", action="store_true")
+    parser.add_argument("--align-stream", action="store_true",
+                        help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    frames = args.input_frames
+    if frames < 180 or args.negative_weight <= 0:
+        parser.error("Input must have at least 180 frames and negative weight must be positive")
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
     root = args.output
@@ -74,44 +82,57 @@ def main():
             else:
                 # Cover prefixes, full confusing phrases, suffixes and quiet
                 # boundaries, rather than only one phrase-end crop.
-                lo = max(FRAMES, row["lead_frame"]-25)
+                lo = max(frames, row["lead_frame"]-25)
                 end = int(rng.integers(lo, len(data)+1))
-            end = min(len(data), max(FRAMES, end))
-            output.append(data[end-FRAMES:end])
+            end = min(len(data), max(frames, end))
+            output.append(data[end-frames:end])
         return np.asarray(output)
 
     def batch():
         noise = []
         for _ in range(48):
             _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
-            at = int(rng.integers(0, len(data)-FRAMES+1))
-            noise.append(data[at:at+FRAMES])
+            at = int(rng.integers(0, len(data)-frames+1))
+            noise.append(data[at:at+frames])
         x = scale(np.concatenate((sample(1, 32), sample(0, 48), np.asarray(noise))))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
-        weights = np.array([1.]*32+[20.]*96, dtype=np.float32)
+        weights = np.array([1.]*32+[args.negative_weight]*96, dtype=np.float32)
+        if args.specaugment:
+            # Feature-domain masking changes neither PCM speed nor transport.
+            for item in x:
+                if rng.random() < .5:
+                    width = int(rng.integers(1, 5))
+                    at = int(rng.integers(0, 41-width))
+                    item[:, at:at+width] = 0
+                if rng.random() < .3:
+                    width = int(rng.integers(1, 4))
+                    at = int(rng.integers(0, frames-width+1))
+                    item[at:at+width] = 0
         order = rng.permutation(len(x))
         return x[order], y[order], weights[order]
 
     architecture = argparse.ArgumentParser()
     mixednet.model_parameters(architecture)
     architecture_args = ["--residual_connection", "0,0,0,0", "--stride", "3"]
-    if args.architecture == "official64":
-        architecture_args += ["--pointwise_filters", "64,64,64,64",
+    if args.architecture in ("official64", "wide128"):
+        filters = "64,64,64,64" if args.architecture == "official64" else "128,128,128,128"
+        architecture_args += ["--pointwise_filters", filters,
                               "--repeat_in_block", "1,1,1,1",
                               "--mixconv_kernel_sizes", "[5], [7,11], [9,15], [23]",
                               "--first_conv_filters", "32", "--first_conv_kernel_size", "5"]
     flags = architecture.parse_args(architecture_args)
-    model = mixednet.model(flags, (FRAMES, 40), None)
+    model = mixednet.model(flags, (frames, 40), None)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
 
-    @tf.function(input_signature=[tf.TensorSpec([None, FRAMES, 40], tf.float32)])
+    @tf.function(input_signature=[tf.TensorSpec([None, frames, 40], tf.float32)])
     def infer(x):
         return model(x, training=False)
 
     def score(data):
-        windows = np.lib.stride_tricks.sliding_window_view(data, FRAMES, axis=0)[::3].transpose(0, 2, 1)
+        phase = validation_phase
+        windows = np.lib.stride_tricks.sliding_window_view(data, frames, axis=0)[phase::3].transpose(0, 2, 1)
         outputs = []
         for at in range(0, len(windows), 512):
             outputs.append(np.asarray(infer(scale(windows[at:at+512]))).reshape(-1))
@@ -124,7 +145,8 @@ def main():
                 continue
             values = score(sequence(row))
             if row["label"]:
-                times = (FRAMES+2+3*(np.arange(len(values))+4))*.01
+                end_frames = validation_phase + effective_frames if args.align_stream else frames
+                times = (end_frames+2+3*(np.arange(len(values))+4))*.01
                 end = (row["keyword_frame"]+2)*.01
                 valid = (times >= end-.10) & (times <= end+.80)
                 positives.append((row["engine"], float(values[valid].max()) if valid.any() else 0.))
@@ -153,6 +175,8 @@ def main():
             rank = (0, -selected["ambient_faph"], -selected["max_source_false_rate"], selected["macro_recall"])
         return selected, rank, grid
 
+    effective_frames = (frames-flags.first_conv_kernel_size)//flags.stride*flags.stride+flags.first_conv_kernel_size
+    validation_phase = (-effective_frames)%flags.stride if args.align_stream else 0
     history = []
     best = None
     started = time.monotonic()
@@ -175,7 +199,7 @@ def main():
                     best = rank
                     model.save_weights(root/"best.weights.h5")
     model.load_weights(root/"best.weights.h5")
-    streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": FRAMES}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
+    streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))
 
@@ -184,7 +208,7 @@ def main():
         yield [np.full((1, 3, 40), 26, dtype=np.float32)]
         for _ in range(100):
             x, _, _ = batch()
-            for at in range(0, FRAMES, 3):
+            for at in range(0, frames-2, 3):
                 yield [x[:1, at:at+3]]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
@@ -197,7 +221,9 @@ def main():
     (root/"hey_nyx.tflite").write_bytes(data)
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "architecture": args.architecture, "architecture_args": architecture_args,
-              "batch_size": 128, "negative_weight": 20, "history": history,
+              "input_frames": frames, "negative_weight": args.negative_weight,
+              "specaugment": args.specaugment, "align_stream": args.align_stream,
+              "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),
               "source_files_sha256": source_hashes,

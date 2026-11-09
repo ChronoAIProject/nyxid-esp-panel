@@ -4,6 +4,9 @@ Read [BEST_PRACTICES.md](BEST_PRACTICES.md) for primary sources and the rejected
 first candidate. This is training research, not a production wake-engine update.
 All generated speech is AI-generated audio, not human recordings.
 
+The continuing Hi ESP comparison goal and current evidence are tracked in
+[PROGRESS.md](PROGRESS.md).
+
 ## Data used in the four-engine experiment
 
 | Generator | Train positive / negative | Validation positive / negative | Test positive / negative |
