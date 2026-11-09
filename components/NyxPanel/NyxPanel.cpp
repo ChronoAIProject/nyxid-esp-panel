@@ -11,6 +11,7 @@
 #include "esp_log.h"
 #include "esp_rom_crc.h"
 #include <array>
+#include <atomic>
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
@@ -64,7 +65,7 @@ extern const uint8_t builtin_end[] asm("_binary_nyxbot_default_jpg_end");
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
-bool pending_voice;
+std::atomic<bool> pending_voice{false};
 char noticed_bot[40]{};
 int64_t bot_notice_until;
 
@@ -155,8 +156,9 @@ void expire(lv_timer_t *) {
     }
     if ((changed || dirty) && app) { dirty=false; app->render(); }
     if (app) app->refreshVoice();
-    if(pending_voice && app){
-        if(navigate_now("home")==ESP_OK){app->showVoiceControls();pending_voice=false;}
+    if(app && pending_voice.exchange(false)){
+        if(navigate_now("home")==ESP_OK)app->showVoiceControls();
+        else pending_voice.store(true);
     }
 }
 }
@@ -695,9 +697,10 @@ esp_err_t lcd_renderer_navigate(const char *target) {
 }
 esp_err_t lcd_renderer_show_device_bind(void) { return lcd_renderer_navigate("device_bind"); }
 esp_err_t lcd_renderer_show_voice(void) {
-    if(bsp_display_lock(1000)!=ESP_OK)return ESP_ERR_TIMEOUT;
-    pending_voice=true;
-    bsp_display_unlock();return ESP_OK;
+    // The LVGL timer owns navigation and widgets. Starting a call only posts
+    // an idempotent request, so display rendering cannot delay its network work.
+    pending_voice.store(true);
+    return ESP_OK;
 }
 esp_err_t lcd_renderer_show_unregistered_mac(const char *, const char *) { return lcd_renderer_show_device_bind(); }
 esp_err_t lcd_renderer_current_screen(const char **target, size_t *depth) {

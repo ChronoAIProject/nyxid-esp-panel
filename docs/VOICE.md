@@ -103,8 +103,10 @@ the saved wake preference. An active call keeps exclusive audio ownership.
 
 After detection, the same microphone task keeps reading AEC/AGC-processed
 16 kHz mono samples while NyxID connects. A two-second local lookback protects
-speech that starts before WakeNet has confirmed the keyword. Display updates run
-on the call task so the display lock cannot stall the microphone reader.
+speech that starts before WakeNet has confirmed the keyword. The call task posts
+an idempotent request to the LVGL timer to expand the controls; it does not wait
+for the display lock. Rendering cannot stall the microphone reader or delay
+network preparation.
 Connection audio and subsequent live audio enter one
 PCM FIFO; there is no codec reopen or second I2S reader at the transition.
 After the provider, media and controls are ready, Opus packets carry the FIFO's
