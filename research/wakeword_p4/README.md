@@ -101,6 +101,25 @@ The actual flash/restore procedure was:
 4. In a `finally` block, close UART, flash the original app back to the same offset, and verify `/status.app_sha256`, local service `up`, unchanged voice service selection and wake `listening`.
 5. Preserve failed results as well as the final result. Do not leave the standalone numeric probe installed.
 
+`run_probe.py` automates those checks with the IDF Python environment (esptool
+and pyserial). Keep a stable probe binary and its matching vector manifest
+outside the build directory so a later rebuild cannot change an experiment.
+The binary hash is an explicit input. Use a fresh private output directory:
+
+```sh
+python research/wakeword_p4/run_probe.py \
+  --port "$DEV_PORT" --expected-mac "$DEV_MAC" --status-url "$DEV_STATUS_URL" \
+  --restore-app "$ORIGINAL_APP" --expected-app-sha256 "$ORIGINAL_ELF_SHA" \
+  --app-offset "$VERIFIED_OFFSET" --slot "$VERIFIED_SLOT" --slot-bytes "$VERIFIED_BYTES" \
+  --probe-bin "$SAVED_PROBE" --expected-probe-sha256 "$SAVED_PROBE_SHA" \
+  --vectors-manifest "$SAVED_VECTORS_MANIFEST" --output "$PRIVATE_NUMERIC_RESULTS"
+```
+
+Never run it while another probe owns USB. Normal SIGTERM enters restoration;
+SIGKILL or power removal cannot. The runner requires exact model outputs for
+shared host features; the separately reported frontend chain retains the
+documented one-unit frontend tolerance. Neither result measures wake accuracy.
+
 ## Production integration still to do
 
 The current standalone numeric probe uses each model's own input scale and zero

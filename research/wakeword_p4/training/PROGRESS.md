@@ -208,6 +208,20 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   longer negative baseline on the development board; original-app restoration
   is required when it finishes. Never open a second owner of its USB port.
 
+- Quantized calibration can now explicitly enforce each engine/corpus negative
+  group with `evaluate_stream.py --separate-negative-corpora`. This keeps old
+  confusing words and newly added component negatives separate even when both
+  use the same TTS engine. Historical default selection is unchanged. A small
+  deterministic harness verified that 100 easy clips cannot hide a false wake
+  in the original corpus. Current fullphrase96 quantized candidates will use
+  this option, fixed before their export/calibration; no new test speakers have
+  been scored. Calibration also reports progress through clips and long audio.
+- `../run_probe.py` now makes the numeric app-only flash/capture/restore
+  procedure reproducible without committed device identities. Mocked success
+  and firmware-error paths both restore and verify the original app. Actual
+  execution is still pending the existing long Hi ESP baseline's restoration;
+  no second USB owner was opened.
+
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
 voices/conditions and real recordings for subsequent acceptance.
