@@ -330,6 +330,23 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   settings. Only the balanced training TTS and disjoint Mandarin training data
   are added. Quantized validation, frozen-threshold regressions and full-app
   acoustic/resource/AEC tests remain outstanding. This run is not acceptance.
+- Frozen fullphrase96 regressions now use the exact completed Hi ESP PCM
+  baselines. At its unchanged validation-selected 0.992 threshold, English
+  continuous false wakes fall from old long335's 13 to one / 5.549 h; Hi ESP
+  has zero. Mandarin has zero / 1.294 h for both. However, paired Mac any-event
+  recall is only 22/50 versus Hi ESP's 48/50. Shared ordinary sentences are
+  0/100 for each, and Hey Nyx's own near-word subset triggers 2/90. These
+  correlated synthetic regressions show a remaining voice-generalization gap,
+  not acceptance. Newly reserved testing remains unread. See
+  `../results/fullphrase96-matched-regressions-v3.json`.
+- A further phoneme pilot inspected 12 training positives and 12 negatives per
+  existing engine, 144 clips total. It retains raw phones and source hashes,
+  including uncertain vowel/consonant predictions. Piper command suffixes use
+  the original duration-derived keyword metadata; other sources here are
+  standalone phrases. The small, differently worded groups do not establish an
+  engine quality ranking or justify automatic relabeling/filtering. See
+  `../results/cross-engine-phonemes-v3.json`. A future data-quality ablation
+  must be recorded separately and leave the running recipe unchanged.
 
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
