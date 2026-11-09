@@ -196,9 +196,10 @@ The bundled peer component uses an ECDSA P-256 DTLS client certificate for
 compatibility with modern WebRTC endpoints. Media still requires the negotiated
 SDP fingerprint; this change does not relax HTTPS or credential validation.
 The certificate is prepared in the background and reused for this boot.
-On servers returning saved `preferences` in `/voice/options`, each call loads
-current provider choices and settings in one request. Older servers fall back
-to `/voice/agents` for settings. Neither path caches permission decisions;
+After a server has returned saved `preferences` in `/voice/options`, later calls load
+current provider choices and settings in one request. The first call and older
+servers keep the established `/voice/agents` then `/voice/options` order. Only
+the response capability is remembered in RAM. Neither path caches permission decisions;
 NyxID checks the saved service/Bot binding again when creating the session.
 
 Initial WebRTC offers normalize only SDP `a=setup` lines to `actpass` (RFC 5763).

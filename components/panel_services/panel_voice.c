@@ -100,6 +100,10 @@ static char (*bot_descriptions)[PANEL_VOICE_DESCRIPTION_BYTES];
 static size_t bot_count;
 static char bots_key_id[40];
 static atomic_bool busy, stopping, holding, microphone_muted;
+// Only a protocol capability, never saved preferences or authorization. Keep
+// the established discovery-first bootstrap until this server has returned
+// combined options once; old servers retain that request order on every call.
+static bool options_include_preferences;
 static atomic_uint playback_gain=4;
 static atomic_uint input_mode=PANEL_VOICE_INPUT_HOLD;
 static atomic_uint active_mode=PANEL_VOICE_INPUT_HOLD;
@@ -1159,20 +1163,28 @@ static void call_task(void *arg)
     if(!c->wake_initiated)atomic_store(&c->running,true);
     if (xTaskCreate(peer_task,"voice_rtc",12288,c,4,NULL)!=pdPASS) goto done;
     tasks|=DONE_PEER;
-    state("connecting","Loading voice settings");
     int64_t settings_started=esp_timer_get_time();
+    cJSON *discovery=NULL;
+    if(!options_include_preferences) {
+        state("connecting","Finding your Bot");
+        discovery=http(c,"/voice/agents",NULL);
+        if(!discovery)goto done;
+    }
+    if(atomic_load(&stopping) || !atomic_load(&c->running)){cJSON_Delete(discovery);goto done;}
+    state("connecting","Loading voice settings");
     snprintf(path,sizeof(path),"/voice/options?conversation_id=%s",c->config.bot.conversation_id);
     cJSON *options=http(c,path,NULL);
-    if (!options) goto done;
-    if(atomic_load(&stopping) || !atomic_load(&c->running)){cJSON_Delete(options);goto done;}
-    cJSON *discovery=NULL;
-    const cJSON *settings=options;
+    if (!options) {cJSON_Delete(discovery);goto done;}
+    if(atomic_load(&stopping) || !atomic_load(&c->running)){cJSON_Delete(options);cJSON_Delete(discovery);goto done;}
     // Servers predating combined settings still need discovery. A present
     // null/invalid preference is authoritative, never a reason to downgrade.
     bool combined=cJSON_HasObjectItem(options,"preferences");
-    if(!combined) {
-        discovery=http(c,"/voice/agents",NULL);settings=discovery;
+    options_include_preferences=combined;
+    if(!combined && !discovery) {
+        discovery=http(c,"/voice/agents",NULL);
         if(!discovery){cJSON_Delete(options);goto done;}
+    }
+    if(discovery) {
         panel_voice_bot_t found={0};
         bool selected=panel_voice_parse_service_bot(discovery,c->config.bot.service_id,&found) &&
             !strcmp(found.agent_id,c->config.bot.agent_id) && !strcmp(found.conversation_id,c->config.bot.conversation_id);
@@ -1181,6 +1193,7 @@ static void call_task(void *arg)
             state("error","Selected Bot is no longer available. Refresh Bots in Settings");goto done;
         }
     }
+    const cJSON *settings=combined?options:discovery;
     if(c->greeting_request[0] && !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(settings,"greetings"))) {
         c->greeting_request[0]=0;remote_state(greeting_request_id,"unavailable");
     }
