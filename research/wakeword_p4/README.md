@@ -4,6 +4,11 @@ Validated on 2026-11-10 using an Apple Silicon Mac and a development ESP32-P4 re
 
 The selected phrase is **Hey Nyx**, pronounced **Hey Nicks**. `Hey Nix` and `Hey Nicks` are acoustic equivalents, not hard negatives. Candidate near-word negatives include `Hey Nick`, `Hey Next`, and `Hey Mix`, alongside ordinary conversation, Chinese speech, television, music, and room noise.
 
+Actual Hey Nyx training, multi-engine sample generation, failed candidates and
+reproduction steps are now recorded in [training/README.md](training/README.md).
+The compatibility smoke model in the table below remains a separate random-data
+experiment; do not confuse it with a trained recognizer.
+
 ## What was actually verified
 
 | Stage | Evidence | Limit |

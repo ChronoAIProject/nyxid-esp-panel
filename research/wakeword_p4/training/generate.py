@@ -11,15 +11,9 @@ import numpy as np
 import torch
 import torchaudio
 
+from phrases import HARD_NEGATIVES
+
 CHECKPOINT_SHA = "e95ee53770bf598c354a6e6dbfc95ccb259aeeb501d35a86be8a767429ab0ff6"
-HARD_NEGATIVES = [
-    "Hey Nick.", "Hey Next.", "Hey Mix.", "Hey Six.", "Hey Max.",
-    "Hey Nice.", "Hey Nexus.", "Hey Alex.", "Hi ESP.", "Hey Siri.",
-    "Hey Nick, turn on the light.", "Hey Next, what time is it?",
-    "The next thing is ready.", "I mixed the ingredients.",
-    "I heard Nick speaking.", "Take the next exit.", "Hello, can you hear me?",
-    "How can I help you?", "Please check the volume.", "Thanks, that is all.",
-]
 SUFFIXES = ["", "", "", ", what time is it?", ", turn on the light.",
             ", can you hear me?", ", check the volume."]
 

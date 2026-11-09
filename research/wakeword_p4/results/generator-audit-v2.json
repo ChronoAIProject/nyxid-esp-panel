@@ -1,0 +1,125 @@
+{
+  "kokoro-corpus": {
+    "engine": "kokoro-onnx 0.4.9",
+    "voice_partitions": {
+      "training": [
+        "af_bella",
+        "af_nicole",
+        "af_nova",
+        "af_kore",
+        "af_alloy",
+        "af_river",
+        "af_jessica",
+        "af_heart",
+        "af_aoede",
+        "am_onyx",
+        "am_fenrir",
+        "am_santa",
+        "am_michael",
+        "am_eric",
+        "am_adam",
+        "am_echo",
+        "bf_isabella",
+        "bf_lily",
+        "bm_fable",
+        "bm_lewis"
+      ],
+      "validation": [
+        "af_sky",
+        "am_liam",
+        "bf_alice",
+        "bm_george"
+      ],
+      "testing": [
+        "af_sarah",
+        "am_puck",
+        "bf_emma",
+        "bm_daniel"
+      ]
+    },
+    "clips": 644
+  },
+  "qwen-corpus": {
+    "engine": "qwen",
+    "accepted": 480,
+    "planned": 480,
+    "waveform_rejected": 0,
+    "asr_pilot": {
+      "engine": "faster-whisper tiny.en (CPU INT8)",
+      "reviewed": 24,
+      "retained": 17,
+      "source_clips": 480,
+      "pilot_only": true,
+      "retained_positive": 5,
+      "retained_negative": 12,
+      "limits": "ASR is an imperfect consistency screen, not proof of correct phonetics or a human listening evaluation. Rejected clips are quarantined, never relabeled."
+    }
+  },
+  "openai-corpus": {
+    "engine": "OpenAI gpt-4o-mini-tts",
+    "voices": {
+      "training": [
+        "shimmer",
+        "onyx",
+        "nova",
+        "cedar",
+        "ballad",
+        "marin",
+        "alloy",
+        "verse",
+        "fable"
+      ],
+      "validation": [
+        "sage",
+        "echo"
+      ],
+      "testing": [
+        "coral",
+        "ash"
+      ]
+    },
+    "clips": 273,
+    "asr_pilot": {
+      "engine": "faster-whisper tiny.en (CPU INT8)",
+      "reviewed": 24,
+      "retained": 14,
+      "source_clips": 273,
+      "pilot_only": true,
+      "retained_positive": 2,
+      "retained_negative": 12,
+      "limits": "ASR is an imperfect consistency screen, not proof of correct phonetics or a human listening evaluation. Rejected clips are quarantined, never relabeled."
+    }
+  },
+  "omni-corpus": {
+    "engine": "omni",
+    "accepted": 240,
+    "planned": 240,
+    "waveform_rejected": 0,
+    "asr_pilot": {
+      "engine": "faster-whisper tiny.en (CPU INT8)",
+      "reviewed": 24,
+      "retained": 0,
+      "source_clips": 240,
+      "pilot_only": true,
+      "retained_positive": 0,
+      "retained_negative": 0,
+      "limits": "ASR is an imperfect consistency screen, not proof of correct phonetics or a human listening evaluation. Rejected clips are quarantined, never relabeled."
+    }
+  },
+  "moss-mono-corpus": {
+    "engine": "moss",
+    "accepted": 12,
+    "planned": 20,
+    "waveform_rejected": 8,
+    "asr_pilot": {
+      "engine": "faster-whisper tiny.en (CPU INT8)",
+      "reviewed": 10,
+      "retained": 3,
+      "source_clips": 12,
+      "pilot_only": true,
+      "retained_positive": 0,
+      "retained_negative": 3,
+      "limits": "ASR is an imperfect consistency screen, not proof of correct phonetics or a human listening evaluation. Rejected clips are quarantined, never relabeled."
+    }
+  }
+}
