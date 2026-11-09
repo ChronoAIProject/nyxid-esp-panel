@@ -106,8 +106,11 @@ After detection, the same microphone task keeps reading AEC/AGC-processed
 at the detection boundary. Connection audio and subsequent live audio enter one
 PCM FIFO; there is no codec reopen or second I2S reader at the transition.
 After the provider, media and controls are ready, Opus packets carry the FIFO's
-oldest samples first, with continuous 20 ms timestamps. Bounded bursts catch up
-while recording continues. No local sentence detection or speech segmentation
+oldest samples first, with continuous 20 ms timestamps and one packet per 20 ms.
+The existing Espressif Sonic processor preserves pitch while playing a backlog
+at 1.5x speed, then returns to normal speed as the queue empties. This catches up
+without flooding the receiver with future RTP packets. Its pending audio is
+also reset on microphone mute. No local sentence detection or speech segmentation
 is added. Wake-initiated calls use automatic conversation without changing the
 saved input mode, and skip the automatic greeting and dialing tone so neither
 can interrupt the user's initial request. Manual and remote calls retain the

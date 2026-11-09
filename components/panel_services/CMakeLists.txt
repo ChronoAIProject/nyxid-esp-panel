@@ -45,7 +45,7 @@ idf_component_register(
         esp_https_ota esp_http_client esp_http_server app_update
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
         json lvgl nvs_flash spi_flash quirc
-        waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib)
+        waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp_audio_effects esp-sr espressif__zlib)
 
 # Embed weights in each app slot: an OTA update must not depend on a separately
 # flashed model partition, or change any existing board's partition layout.
