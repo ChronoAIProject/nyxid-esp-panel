@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
     parser.add_argument("--specaugment", action="store_true")
+    parser.add_argument("--pooling", choices=("none", "max", "average"), default="none")
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
@@ -122,6 +123,8 @@ def main():
                               "--repeat_in_block", "1,1,1,1",
                               "--mixconv_kernel_sizes", "[5], [7,11], [9,15], [23]",
                               "--first_conv_filters", "32", "--first_conv_kernel_size", "5"]
+    if args.pooling != "none":
+        architecture_args += ["--pooled", "1", "--max_pool", "1" if args.pooling == "max" else "0"]
     flags = architecture.parse_args(architecture_args)
     model = mixednet.model(flags, (frames, 40), None)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
@@ -223,6 +226,7 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "input_frames": frames, "negative_weight": args.negative_weight,
               "specaugment": args.specaugment, "align_stream": args.align_stream,
+              "pooling": args.pooling,
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),
