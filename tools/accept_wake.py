@@ -68,7 +68,7 @@ def accept(proxy, history, audio, output, expected_input=None, expected_reply=No
                     if quiet_since is None:
                         quiet_since = time.monotonic()
                     if time.monotonic()-quiet_since < 8:
-                        time.sleep(.3)
+                        time.sleep(1)
                         continue
                     report = {"session_id": session, "samples": samples,
                               "messages": [{"role": m["role"], "text": m.get("text"), "voice": m.get("voice")} for m in messages],
@@ -83,7 +83,9 @@ def accept(proxy, history, audio, output, expected_input=None, expected_reply=No
                     return
                 else:
                     quiet_since = None
-            time.sleep(.3)
+            # Signed panel requests retain replay nonces for 60 seconds.
+            # Leave capacity for ordinary service calls during acceptance.
+            time.sleep(1)
         output.write_text(json.dumps({"session_id": session, "samples": samples,
             "messages": [{"role": m["role"], "text": m.get("text"), "voice": m.get("voice")} for m in history()
                          if m["seq"] > before and (m.get("voice") or {}).get("session_id") == session]},
