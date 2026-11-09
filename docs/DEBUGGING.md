@@ -313,6 +313,7 @@ holding, and red Hang up. A remote open is not a physical touch test.
 | No active call | Board's own profile/grants, fresh discovery/options, certificate/ICE/DTLS/data-channel events, error and session ID |
 | Bot asks for repetition | Compare source and received user speech before changing prompts or subtitles; captions only display server speech |
 | Extra user turn while room is silent | Correlate actual speaker output, mic/reference capture and timestamps; do not assume echo from transcript words alone |
+| Delay or extra speech after control reconnect | Check the same session/generation, live-session count, and FIFO depth during the gap; initial wake buffering must not restart after readiness |
 | Wrong device or “volume unavailable” | Discoverable connection name, operation descriptions, exact granted service and actual read route |
 | 403 during a test | Signed polling cadence/nonce cache and live Key scope; distinguish these from provider media errors |
 | Device works but Web fails | Browser microphone permission, selected source, WebRTC stats/RTP and native Web route tests |
@@ -331,6 +332,53 @@ I2S/AEC/AGC producer and an ordered FIFO. Do not add a second reader, record the
 same lookback twice, reopen capture at handover, locally segment sentences or
 change playback speed to make a timing test pass. Sonic/time-compression and
 experimental packet pacing were tried, failed acceptance, and were removed.
+
+### Reconnection fault test
+
+Use a separate local NyxID/Mongo profile and a development board with its own
+restricted Key. Leave production devices and collections untouched. Start a
+physical wake call, verify the complete initial directive/reply, wait for the
+initial FIFO backlog to drain, and record its session ID and generation. Keep
+the room quiet except for the documented test source.
+
+To interrupt only the control socket while preserving provider/WebRTC audio,
+temporarily replace this exact session's `control_socket_id` with a unique test
+marker and set `control_socket_until` to eight seconds in the future in the
+local `assistant_voice_sessions` collection. Match `_id`, the observed
+`generation`, and `live_slot:true`; require exactly one matched document. The
+old socket fails its lease refresh and reconnect retries are rejected until the
+temporary lease expires. Do not clear the provider lease, create another session,
+or disable authentication. Stop the owned call in `finally`, including failures.
+
+Sample read-only LAN `/status` roughly twice per second and save the monotonic
+time, `voice.active`, `busy`, session ID, `wake.buffered_ms`, and
+`wake.transmitted_ms`. A control interruption should temporarily report
+connecting while retaining `busy` and the same session. Verify that the local
+owner still has exactly one `live_slot:true` session with an unchanged generation.
+After the first readiness, the microphone FIFO should remain empty during the
+gap and resume with fresh samples. It must not grow by the outage duration and
+then drain after recovery. Repeat during short Bot speech and check for extra
+user turns in the subsequent quiet period. Also speak a distinct validated
+fixture wholly inside the gap: it must not appear after recovery. A separate
+fixture after recovery must produce the expected reply. This tests stale replay;
+absence of extra transcript rows alone does not establish acoustic cancellation.
+
+The 2026-11-10 baseline reached FIFO depths of 7.88–8.46 seconds in three
+eight-second control interruptions, then took another 19–25 seconds to drain. No duplicate session or
+extra user turn was observed in that baseline; delayed PCM replay was established,
+but the owner's reported self-echo was not reproduced by those three trials.
+Keep private raw microphone/reference/AEC recordings if investigating remaining
+acoustic failures. A test fixture spoken while capture is intentionally paused
+is expected to be lost; preserving the initial wake request is a separate check.
+
+For a long-call soak, include actual spoken follow-ups inside NyxID's reported
+`idle_seconds` limit. Bot announcements alone do not count as user activity;
+record the session's `end_reason` before calling a normal idle end a disconnect.
+One physical request may span several caption segments. Wait for sealed output
+and compare the complete text within the fixture's playback window. The short
+fixture tool's row-count assertions are narrower checks, not a general mapping
+from rows to spoken turns. Preserve any failed trace and inspect it; never change
+product segmentation or filter transcripts to make those assertions pass.
 
 For a genuinely unresolved capture/codec issue, use an **uncommitted diagnostic
 build** that copies the exact PCM immediately before Opus encoding and the

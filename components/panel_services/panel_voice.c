@@ -87,6 +87,7 @@ typedef struct {
     size_t socket_used, socket_size;
     panel_voice_captions_t last_captions;
     panel_voice_pcm_t capture;
+    bool capture_started; // Serialized with capture by wake_lock.
     unsigned replayed_samples;
     bool wake_initiated;
 } voice_call_t;
@@ -709,19 +710,19 @@ static void mic_task(void *arg)
             state("error","Voice microphone encoding could not start");atomic_store(&c->running,false);
         }
         while (atomic_load(&c->running)) {
-            bool ready=panel_voice_capture_allowed(c->input_mode,true,
-                atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
-                atomic_load(&c->provider_ready),atomic_load(&c->muted));
+            bool ready=false;
             // Bound bursts, but do not sleep a wall-clock audio frame after
             // encoding/transmitting one. The FIFO's sample clock paces live
             // audio; queued speech must be allowed to catch up independently.
             size_t remaining=0;
-            for (unsigned burst=0;burst<(ready?4u:1u);++burst) {
-                if(ready && !panel_voice_capture_allowed(c->input_mode,true,
-                    atomic_load(&microphone_muted),atomic_load(&c->controls),atomic_load(&c->connected),
-                    atomic_load(&c->provider_ready),atomic_load(&c->muted)))break;
+            for (unsigned burst=0;burst<4;++burst) {
                 bool have=false;
                 xSemaphoreTake(wake_lock,portMAX_DELAY);
+                bool connected=atomic_load(&c->controls) && atomic_load(&c->connected) &&
+                    atomic_load(&c->provider_ready);
+                bool muted=atomic_load(&microphone_muted) || atomic_load(&c->muted);
+                (void)panel_voice_pcm_gate(&c->capture,&c->capture_started,connected,muted);
+                ready=connected && !muted;
                 if (ready) have=panel_voice_pcm_pop(&c->capture,mono,FRAME_SAMPLES);
                 remaining=c->capture.count;
                 xSemaphoreGive(wake_lock);
@@ -745,6 +746,7 @@ static void mic_task(void *arg)
                     xSemaphoreGive(state_lock);
                 }
                 pts+=20;
+                if(!ready)break;
             }
             if(ready && remaining>=FRAME_SAMPLES)taskYIELD();
             else vTaskDelay(pdMS_TO_TICKS(ready?10:20));
@@ -951,10 +953,11 @@ static void wake_task(void *arg)
             }
             bool triggered=false;
             if(c) {
-                if(atomic_load(&microphone_muted) || atomic_load(&c->muted)) {
-                    if(c->capture.count)panel_voice_pcm_clear(&c->capture);
-                }
-                else if(err!=ESP_OK || !panel_voice_pcm_push(&c->capture,adjusted,produced)) {
+                bool ready=atomic_load(&c->controls) && atomic_load(&c->connected) &&
+                    atomic_load(&c->provider_ready);
+                bool muted=atomic_load(&microphone_muted) || atomic_load(&c->muted);
+                bool admit=panel_voice_pcm_gate(&c->capture,&c->capture_started,ready,muted);
+                if(err!=ESP_OK || (admit && !panel_voice_pcm_push(&c->capture,adjusted,produced))) {
                     state("error",err==ESP_OK?"Voice connection buffer full. Please try again":"Voice microphone processing failed");
                     atomic_store(&c->running,false);err=ESP_FAIL;
                 }
