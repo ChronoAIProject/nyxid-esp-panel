@@ -192,9 +192,14 @@ Opus task budgets include Espressif's documented codec stack requirements:
 48 KiB for the microphone encoder and 24 KiB for the speaker decoder. The first
 encoded/decoded frame reports unused stack bytes for hardware validation.
 
-The bundled peer component uses a 2048-bit RSA DTLS client certificate for
+The bundled peer component uses an ECDSA P-256 DTLS client certificate for
 compatibility with modern WebRTC endpoints. Media still requires the negotiated
 SDP fingerprint; this change does not relax HTTPS or credential validation.
+The certificate is prepared in the background and reused for this boot.
+On servers returning saved `preferences` in `/voice/options`, each call loads
+current provider choices and settings in one request. Older servers fall back
+to `/voice/agents` for settings. Neither path caches permission decisions;
+NyxID checks the saved service/Bot binding again when creating the session.
 
 Initial WebRTC offers normalize only SDP `a=setup` lines to `actpass` (RFC 5763).
 The peer library's `passive` initial offer conflicts with endpoints that answer

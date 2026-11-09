@@ -1150,9 +1150,8 @@ static void call_task(void *arg)
 {
     voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;int64_t connected_at=0;
     cJSON *preferences=NULL;char path[256];
-    // Gather local ICE/SDP while NyxID checks the binding and loads settings.
-    // This is local preparation only: provider creation still waits for both
-    // authoritative responses and the completed offer.
+    // Gather local ICE/SDP while NyxID loads current settings. The session
+    // start endpoint resolves this exact saved binding and authority live.
     c->peer_lock=xSemaphoreCreateMutex();
     c->audio=xQueueCreate(24,sizeof(audio_packet_t));
     c->offers=xQueueCreate(2,sizeof(char *));c->messages=xQueueCreate(4,sizeof(char *));c->done=xEventGroupCreate();
@@ -1160,23 +1159,35 @@ static void call_task(void *arg)
     if(!c->wake_initiated)atomic_store(&c->running,true);
     if (xTaskCreate(peer_task,"voice_rtc",12288,c,4,NULL)!=pdPASS) goto done;
     tasks|=DONE_PEER;
-    state("connecting","Finding your Bot");
-    cJSON *discovery=http(c,"/voice/agents",NULL);
-    if (!discovery) goto done;
-    if(!atomic_load(&c->running)) {cJSON_Delete(discovery);goto done;}
-    panel_voice_bot_t found={0};
-    if(c->greeting_request[0] && !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(discovery,"greetings"))) {
-        c->greeting_request[0]=0;remote_state(greeting_request_id,"unavailable");
-    }
-    bool selected=panel_voice_parse_service_bot(discovery,c->config.bot.service_id,&found) &&
-        !strcmp(found.agent_id,c->config.bot.agent_id) && !strcmp(found.conversation_id,c->config.bot.conversation_id);
-    if (!selected) {cJSON_Delete(discovery);state("error","Selected Bot is no longer available. Refresh Bots in Settings");goto done;}
-    if(atomic_load(&stopping)){cJSON_Delete(discovery);goto done;}
     state("connecting","Loading voice settings");
+    int64_t settings_started=esp_timer_get_time();
     snprintf(path,sizeof(path),"/voice/options?conversation_id=%s",c->config.bot.conversation_id);
     cJSON *options=http(c,path,NULL);
-    if (options) preferences=panel_voice_preferences(discovery,options,c->input_mode);
+    if (!options) goto done;
+    if(atomic_load(&stopping) || !atomic_load(&c->running)){cJSON_Delete(options);goto done;}
+    cJSON *discovery=NULL;
+    const cJSON *settings=options;
+    // Servers predating combined settings still need discovery. A present
+    // null/invalid preference is authoritative, never a reason to downgrade.
+    bool combined=cJSON_HasObjectItem(options,"preferences");
+    if(!combined) {
+        discovery=http(c,"/voice/agents",NULL);settings=discovery;
+        if(!discovery){cJSON_Delete(options);goto done;}
+        panel_voice_bot_t found={0};
+        bool selected=panel_voice_parse_service_bot(discovery,c->config.bot.service_id,&found) &&
+            !strcmp(found.agent_id,c->config.bot.agent_id) && !strcmp(found.conversation_id,c->config.bot.conversation_id);
+        if(!selected) {
+            cJSON_Delete(options);cJSON_Delete(discovery);
+            state("error","Selected Bot is no longer available. Refresh Bots in Settings");goto done;
+        }
+    }
+    if(c->greeting_request[0] && !cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(settings,"greetings"))) {
+        c->greeting_request[0]=0;remote_state(greeting_request_id,"unavailable");
+    }
+    preferences=panel_voice_preferences(settings,options,c->input_mode);
     cJSON_Delete(options);cJSON_Delete(discovery);
+    ESP_LOGI("panel.voice","Voice settings loaded in %u ms (%s)",
+        (unsigned)((esp_timer_get_time()-settings_started)/1000),combined?"combined":"legacy");
     if (!preferences) {state("error","Select an available WebRTC voice in NyxID voice settings");goto done;}
     if(atomic_load(&stopping) || !atomic_load(&c->running))goto done;
     state("connecting","Preparing audio");
