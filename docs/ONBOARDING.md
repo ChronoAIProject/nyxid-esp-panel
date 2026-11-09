@@ -55,6 +55,15 @@ the Nyx Panel catalog OpenAPI schema for typed tool discovery. An existing
 same-account panel/service is reused; a
 conflicting service on another node is never overwritten.
 
+New service names identify the device as a voice tablet / board (平板 / 板子).
+NyxID's custom connections currently expose no separate service description,
+so these names also make ordinary device terms searchable in tool discovery.
+The OpenAPI description identifies the touchscreen, camera, microphone and
+speaker; audio operations explain the speaker volume and gain separately.
+Existing owner-supplied names are preserved. Rename an older connection with
+`nyxid service update <board-slug> --label '<device name and common aliases>'`;
+the service ID, routing, Bot binding and grants stay attached to that connection.
+
 The reserved node ID and returned node credentials are staged in NVS namespace
 `nyx_setup`, blob `pending_v1`. Interrupted setup resumes after another explicit
 account authorization. A lost register response can be recovered using the saved

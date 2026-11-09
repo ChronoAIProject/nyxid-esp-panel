@@ -369,8 +369,10 @@ static bool setup_service(const char *access, char *response, nyx_binding_t *bin
     if(!binding->slug[0])snprintf(binding->slug,sizeof(binding->slug),"%s-%.8s",devices_self()->label,binding->node_id);
     char management[80];
     if(!panel_management_slug(binding->slug,management,sizeof(management)))return false;
-    return setup_one_service(access,response,binding,binding->slug,"Nyx Panel",true) &&
-        !atomic_load(&cancelled) && setup_one_service(access,response,binding,management,"Nyx Panel Management",false);
+    return setup_one_service(access,response,binding,binding->slug,
+        "Nyx Panel (voice tablet / board / 平板 / 板子)",true) &&
+        !atomic_load(&cancelled) && setup_one_service(access,response,binding,management,
+            "Nyx Panel Management (voice tablet / board / 平板 / 板子)",false);
 }
 
 static void login_task(void *arg)

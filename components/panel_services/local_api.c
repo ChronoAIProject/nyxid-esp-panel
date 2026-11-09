@@ -714,7 +714,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
     cJSON *info=cJSON_AddObjectToObject(root,"info");
     cJSON_AddStringToObject(info,"title",!strcmp(req->service_slug,nyx_creds_service_slug())?"Nyx Panel Daily":"Nyx Panel Management");
     cJSON_AddStringToObject(info,"version",esp_app_get_description()->version);
-    cJSON_AddStringToObject(info,"description","Daily actions and management settings are separately authorized NyxID services. Voice uses the board's own Key and selected Bot. Speech notifications never grant permission to tools.");
+    cJSON_AddStringToObject(info,"description","Nyx Panel is a standalone ESP32-P4 voice tablet with a touchscreen, camera, microphone and speaker. Users may call this device the panel, tablet, board, 平板 or 板子. Daily actions and management settings are separately authorized NyxID services. Voice uses the board's own Key and selected Bot. Speech notifications never grant permission to tools.");
     cJSON *paths=cJSON_AddObjectToObject(root,"paths");
     size_t count=0;const nyx_route_t *routes=local_api_routes(&count);
     for(size_t i=0;i<count;++i){
@@ -736,7 +736,9 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         else if(!strcmp(r->path,"/voice/start"))description="Start a call with the saved input mode. Use /voice/open for remote automatic two-way conversation.";
         else if(!strcmp(r->path,"/voice") || !strcmp(r->path,"/status"))description="Read live device state including selected Bot, call state, microphone mute, media counters, remote request stage, resources and service scopes. No credentials are returned.";
         else if(!strcmp(r->path,"/voice/config"))description="Manage saved voice selection. POST exactly one of agent_id (from /voice/agents), input_mode (automatic or push_to_talk), playback_gain (integer 1..8). Selection and mode require idle. Persists in this server profile.";
-        else if(!strcmp(r->path,"/config/audio"))description="Adjust saved audio output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). GET returns current audio and voice state. Does not change Bot selection.";
+        else if(!strcmp(r->path,"/config/audio"))description=!strcmp(r->method,"GET")?
+            "Read this Nyx Panel voice tablet's speaker volume (integer 0..100), playback_gain (integer 1..8) and live call state. Use for questions about the tablet or board's current volume.":
+            "Adjust this Nyx Panel voice tablet's saved speaker output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). Does not change Bot selection.";
         else if(!strcmp(r->path,"/voice/input-mode"))description="Set saved input_mode to automatic or push_to_talk while idle. Exactly one field. Does not change the selected Bot or grants.";
         else if(!strcmp(r->path,"/voice/greeting"))description="Read or configure this panel's automatic spoken greeting for future calls. POST enabled (boolean). The selected Bot generates its greeting from its NyxID identity, persona and language; there is no scripted text. Persists in this server profile. An explicit remote opening message takes priority. Never a user utterance or tool permission.";
         else if(!strcmp(r->path,"/voice/wake"))description="Enable or disable local Hi ESP wake-word listening. POST exactly enabled (boolean); persists in this server profile. Wake opens automatic conversation, records immediately while connecting, and sends buffered speech before live audio. Skips the opening greeting. Disabling affects future wake-ups, not the current call. Listening pauses for microphone mute, other audio apps and OTA. /voice reports detection and buffer state.";
