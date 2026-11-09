@@ -161,13 +161,23 @@ static void dtls_srtp_key_derivation(void *context, mbedtls_ssl_key_export_type 
     dtls_srtp->state = DTLS_SRTP_STATE_CONNECTED;
 }
 
+static int dtls_srtp_recv(void *ctx, unsigned char *buf, size_t len)
+{
+    dtls_srtp_t *dtls_srtp = ctx;
+    int ret = dtls_srtp->udp_recv(ctx, buf, len);
+    // The bundled peer callback reports its receive timeout as CLOSE_NOTIFY.
+    // UDP has no EOF: preserve handshake state and let the DTLS timer retry.
+    // A real close_notify alert is still decoded by mbedTLS from the datagram.
+    return ret == MBEDTLS_ERR_SSL_PEER_CLOSE_NOTIFY ? MBEDTLS_ERR_SSL_WANT_READ : ret;
+}
+
 static int dtls_srtp_do_handshake(dtls_srtp_t *dtls_srtp)
 {
     int ret;
     static mbedtls_timing_delay_context timer;
     mbedtls_ssl_set_timer_cb(&dtls_srtp->ssl, &timer, mbedtls_timing_set_delay, mbedtls_timing_get_delay);
     mbedtls_ssl_set_export_keys_cb(&dtls_srtp->ssl, dtls_srtp_key_derivation, dtls_srtp);
-    mbedtls_ssl_set_bio(&dtls_srtp->ssl, dtls_srtp, dtls_srtp->udp_send, dtls_srtp->udp_recv, NULL);
+    mbedtls_ssl_set_bio(&dtls_srtp->ssl, dtls_srtp, dtls_srtp->udp_send, dtls_srtp_recv, NULL);
 
     do {
         ret = mbedtls_ssl_handshake(&dtls_srtp->ssl);
