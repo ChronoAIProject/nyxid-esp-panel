@@ -1,0 +1,39 @@
+{
+  "dataset": "Additional LibriSpeech train-clean-100 speakers, CC BY4.0",
+  "source": "https://www.openslr.org/12",
+  "archive_md5": "2a93770f6d5c6c964bc36631d331a522",
+  "archive_sha256": "d4ddd1d5a6ab303066f14971d768ee43278a5f2a0aa43dc716b0e64ecbbbf6e2",
+  "preparation_code_sha256": "aff5a6a539b1ee13de8ee08fa78693d9e98f9a4839175e18a65a62c9f2a598b4",
+  "identity_checks": {
+    "new_training_speakers": 155,
+    "new_training_hours": 63.08540864583334,
+    "new_training_speech_hours": 62.11396420138889,
+    "existing_human_rows_preserved": 195,
+    "all_previous_feature_targets_identical": true,
+    "synthetic_features_labels_partitions_unchanged": true,
+    "new_speakers_disjoint_all_existing_and_continuous_evaluation": true,
+    "old_indexed_flac_hash_count": 11053,
+    "new_indexed_flac_hash_count": 17486,
+    "no_indexed_flac_overlap": true,
+    "new_pcm_and_feature_hashes_verified": true,
+    "manifest_sha256": "22fe52491ff2afc3340356ea6778b51c8fe2c3b889562df14c9217f93c1f401f"
+  },
+  "temporary_fixture_checks": {
+    "default_overlap_rejected": true,
+    "explicit_extension_excludes_existing_and_evaluation_speakers": true,
+    "mixed_speaker_and_group_identity_input_accepted": true,
+    "alias_utterance_excluded": true,
+    "remaining_records_training_only": true,
+    "feature_checksums_verified": true,
+    "source_sha256": "aff5a6a539b1ee13de8ee08fa78693d9e98f9a4839175e18a65a62c9f2a598b4",
+    "scope": "Temporary tiny archive with real FLAC/WAV/frontend extraction; archive checksum pinned to fixture within isolated test process. Production checksum constant unchanged."
+  },
+  "selection": "All155 source speakers remaining after explicit exclusion of every previously indexed speaker and40-speaker continuous evaluation corpus; all training-only. Existing synthetic/human/environmental feature targets, labels and partitions are preserved.",
+  "boundary_check": "Default overlap rejection remains. Explicit extension skips both existing and evaluation speakers; mixed recording-group IDs are not treated as LibriSpeech speaker IDs. Real FLAC/frontend extraction and checksums passed.",
+  "recognition_result": null,
+  "limits": [
+    "More speech hours and partition checks do not establish a better detector.",
+    "Audiobooks do not cover real household/music/TV conditions or actual-user positives.",
+    "Paired same-initial-weight fine-tuning runs are in progress; new holdout scores remain unread."
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "scope": "Controlled INT8 representative-corpus experiment. Same20k learned weights, architecture, feature data and seed; only100 versus1000 calibration sequences. No optimization.",
+  "checkpoint_weights_sha256": "e389df8eabe59aa6a55dc4c8b6b450d005b0b63ff03c569207425fb0c5603966",
+  "all20_model_weight_arrays_bit_exact": true,
+  "results": [
+    {
+      "representative_training_sequences": 100,
+      "model_sha256": "1c3a75ae08f68cf85c3781df5c1c587fa38cc0419ba14f20510a1ac07313a6fe",
+      "calibration_sha256": "3e45a76b36522e4385ad6202b330cda1d03e48f4338b95772699f38dca1b13ab",
+      "validation": {
+        "threshold": 0.1,
+        "positive_variants": 2392,
+        "recall": 0.9661371237458194,
+        "macro_recall": 0.8839484126984127,
+        "recall_by_engine": {
+          "macos-say": 0.9921875,
+          "edge-tts": 0.8482142857142857,
+          "openai-tts": 0.7777777777777778,
+          "kokoro": 0.8125,
+          "piper": 0.9890625
+        },
+        "hard_negative_variants": 3744,
+        "hard_negative_false_rate": 0.06330128205128205,
+        "max_source_false_rate": 0.10416666666666667,
+        "negative_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 560,
+            "false_clips": 57,
+            "false_rate": 0.10178571428571428
+          },
+          "edge-tts:edge-partials": {
+            "variants": 336,
+            "false_clips": 6,
+            "false_rate": 0.017857142857142856
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 320,
+            "false_clips": 12,
+            "false_rate": 0.0375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 192,
+            "false_clips": 2,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 320,
+            "false_clips": 7,
+            "false_rate": 0.021875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 96,
+            "false_clips": 10,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 1920,
+            "false_clips": 143,
+            "false_rate": 0.07447916666666667
+          }
+        },
+        "max_corpus_false_rate": 0.10416666666666667,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour": 0.40962217664121947,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346
+      },
+      "activation_occupancy": {
+        "seconds_above": 1.3499999999999999,
+        "longest_run_seconds": 0.9299999999999999
+      },
+      "numerical_audit": {
+        "distinct_validation_clips": 60,
+        "max_float_window_stream_delta": 5.066394805908203e-06,
+        "max_int8_float_delta": 0.4370272159576416,
+        "mean_of_clip_mean_int8_float_delta": 0.006959019960527554
+      }
+    },
+    {
+      "representative_training_sequences": 1000,
+      "model_sha256": "a0f757d29979382b5774929528f16be9ea0ae46657f3700a8ecd4032ba4df59a",
+      "calibration_sha256": "2e142eac356ecf8bb7f741ebc5014505c1df3b84bb8eee7d94bb61705f75e43d",
+      "validation": {
+        "threshold": 0.1,
+        "positive_variants": 2392,
+        "recall": 0.9627926421404682,
+        "macro_recall": 0.8650992063492063,
+        "recall_by_engine": {
+          "piper": 0.9890625,
+          "macos-say": 0.9921875,
+          "kokoro": 0.75,
+          "edge-tts": 0.8303571428571429,
+          "openai-tts": 0.7638888888888888
+        },
+        "hard_negative_variants": 3744,
+        "hard_negative_false_rate": 0.06436965811965811,
+        "max_source_false_rate": 0.11458333333333333,
+        "negative_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 560,
+            "false_clips": 58,
+            "false_rate": 0.10357142857142858
+          },
+          "edge-tts:edge-partials": {
+            "variants": 336,
+            "false_clips": 7,
+            "false_rate": 0.020833333333333332
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 320,
+            "false_clips": 10,
+            "false_rate": 0.03125
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 192,
+            "false_clips": 2,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 320,
+            "false_clips": 7,
+            "false_rate": 0.021875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 96,
+            "false_clips": 11,
+            "false_rate": 0.11458333333333333
+          },
+          "piper:synthetic": {
+            "variants": 1920,
+            "false_clips": 146,
+            "false_rate": 0.07604166666666666
+          }
+        },
+        "max_corpus_false_rate": 0.11458333333333333,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour": 0.40962217664121947,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346
+      },
+      "activation_occupancy": {
+        "seconds_above": 1.3199999999999998,
+        "longest_run_seconds": 0.9299999999999999
+      },
+      "numerical_audit": {
+        "distinct_validation_clips": 60,
+        "max_float_window_stream_delta": 5.066394805908203e-06,
+        "max_int8_float_delta": 0.6579501032829285,
+        "mean_of_clip_mean_int8_float_delta": 0.009789651034460493
+      }
+    }
+  ],
+  "decision": "1000 sequences do not improve validation mean-engine recall or numerical agreement. Retain rejected100-sequence control as the comparison; do not score reserved/paired tests on this inferior export.",
+  "accepted": false,
+  "limits": [
+    "Absolute float/INT8 differences on selected clips do not prove their causal contribution to aggregate recall/FAR.",
+    "Validation has informed these experiments. Reserved testing scores remain unread.",
+    "No P4 or full-app acceptance of either candidate."
+  ]
+}

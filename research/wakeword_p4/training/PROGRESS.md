@@ -390,6 +390,36 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   `../results/style-multilingual-checkpoints-v3.json`. Newly reserved testing
   and full-app/acoustic acceptance remain unmeasured.
 
+- A controlled PTQ experiment kept the style20k weights bit-exact and increased
+  representative training sequences from 100 to 1,000. Mean-engine validation
+  recall decreases from 88.39% to 86.51%, with three ambient events in both
+  cases. A 60-source-clip aligned float/stream audit still agrees within
+  5.07e-6, while selected maximum float/INT8 deltas grow from 0.437 to 0.658.
+  More representative samples do not repair this candidate. These differences
+  alone do not establish their causal contribution to overall recognition.
+  The inferior export does not proceed to testing. See
+  `../results/representative-corpus-ablation-v3.json`. The historical default
+  remains 100; nonpositive/noninteger CLI values fail before data/output access.
+- The original checksum-pinned training archive contains another 155 eligible
+  speakers, after excluding every existing partition and continuous regression
+  speaker. Their 63.085 h (62.114 h actual speech) are now training-only.
+  Every new PCM/feature checksum passes, no indexed FLAC hashes overlap, and
+  the chained feature view preserves all 195 previous human rows plus original
+  synthetic/environmental targets and partitions. A temporary real-FLAC
+  fixture exercises both default overlap rejection and explicit exclusion,
+  including group IDs without speaker identities and alias screening. See
+  `../results/expanded-human-training-data-v3.json`.
+- Two prespecified same-initial-weight fine-tunes are running from private
+  source snapshots: current data versus the 155-speaker extension, each with
+  feature masking enabled, 20k steps, learning rate 1e-4, negative weight 5,
+  existing 50%/pool4 training-only mining, uniform generators, 335 frames and
+  100 representative calibration sequences. Explicit 10k/20k exports will
+  receive the same 19-threshold quantized validation sweep. This pair isolates
+  additional human data within the new augmentation recipe; it does not
+  isolate the effect of masking versus earlier training. No newly reserved
+  testing scores or production-board changes occurred. Development-board
+  status still verifies the original app, service and Hi ESP listener.
+
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
 voices/conditions and real recordings for subsequent acceptance.

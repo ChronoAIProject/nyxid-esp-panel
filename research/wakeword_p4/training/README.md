@@ -333,6 +333,13 @@ distribution from a fresh seed726 sampler. This does not recreate the original
 end-of-training RNG state, so the resulting INT8 hash needs fresh validation
 calibration. Record the checkpoint choice and checksum before its regressions.
 
+`--representative-samples` controls the number of training-only sequences used
+for INT8 calibration (default 100, preserving the historical export). Increasing
+it is an experiment, not an automatic improvement: the same20k weights exported
+with1000 samples had worse validation mean-engine recall and larger selected
+float/INT8 differences. See `../results/representative-corpus-ablation-v3.json`.
+Recalibrate each exported model hash; never select this count on testing data.
+
 The optional `--hard-negative-fraction 0.5 --hard-negative-pool 4` experiment
 scores larger **training-only** candidate pools. It takes half of each negative
 batch from the highest-scoring candidates and half randomly from the remaining
@@ -363,6 +370,17 @@ existing continuous evaluation corpus. Do not append those held-out rows to a
 training partition. The manifest retains CC BY 4.0 attribution, source hashes,
 speech/separator exposure and final-hop feature padding. This is independent
 of the test-clean continuous evaluation source.
+
+To reuse the verified training archive without reusing any already partitioned
+speaker, add `--exclude-existing-speakers --max-speakers 0`. This explicitly
+skips every indexed/evaluation speaker and selects all remaining eligible
+speakers; the manifest records exclusions. The default still rejects overlaps.
+Chained views can contain recording/group IDs without speaker identities;
+these are not confused with LibriSpeech speaker IDs. Merge using
+`extend_human_features.py` and verify preserved paths, metadata, hashes and
+training-only additions before launching training. The completed extension
+adds155 speakers /63.085h, with zero new validation/testing rows; recognition
+quality remains unproven. See `../results/expanded-human-training-data-v3.json`.
 
 `audit_negative_vocabulary.py` checks selected **validation-only** source
 prefixes at an existing model-hash-bound threshold. It does not recalibrate or

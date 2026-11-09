@@ -30,6 +30,8 @@ def main():
                         help="Warm-start matching float weights in a fresh run; optimizer state is reset")
     parser.add_argument("--export-only", action="store_true",
                         help="Export matching --initial-weights without optimization; requires --steps 0")
+    parser.add_argument("--representative-samples", type=int, default=100,
+                        help="Training-only sequences used for INT8 calibration; historical default is 100")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
@@ -50,6 +52,8 @@ def main():
             parser.error("--export-only requires --initial-weights and --steps 0")
     elif args.steps < 1:
         parser.error("Training requires positive --steps; use --export-only for a saved checkpoint")
+    if args.representative_samples < 1:
+        parser.error("--representative-samples must be positive")
     frames = args.input_frames
     minimum_frames = 149 if args.architecture == "transfer60" else 180
     if frames < minimum_frames or args.negative_weight <= 0 or args.learning_rate <= 0:
@@ -274,7 +278,7 @@ def main():
     def representative():
         yield [np.zeros((1, 3, 40), dtype=np.float32)]
         yield [np.full((1, 3, 40), 26, dtype=np.float32)]
-        for _ in range(100):
+        for _ in range(args.representative_samples):
             # Quantization calibration keeps the ordinary training distribution,
             # independent of the optional optimization-time mining policy.
             x, _, _ = batch(mine=False)
@@ -302,6 +306,7 @@ def main():
               "initial_learning_rate": args.learning_rate, "transfer": transfer_metadata,
               "initial_weights_sha256": initial_weights_hash,
               "checkpoint_export_only": args.export_only,
+              "representative_samples": args.representative_samples,
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),

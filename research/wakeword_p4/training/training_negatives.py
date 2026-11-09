@@ -33,6 +33,8 @@ def main():
     parser.add_argument("--testing-speakers", type=int, default=0)
     parser.add_argument("--evaluation-corpus", type=Path,
                         help="Also reject speaker overlap with an existing continuous evaluation manifest")
+    parser.add_argument("--exclude-existing-speakers", action="store_true",
+                        help="Extend a previously used archive with only unused speakers; default rejects any source overlap")
     parser.add_argument("--workers", type=int, default=2)
     args = parser.parse_args()
     if min(args.max_speakers, args.validation_speakers, args.testing_speakers) < 0:
@@ -51,15 +53,20 @@ def main():
     with tarfile.open(args.archive, "r:gz") as archive:
         archive.extractall(extracted, filter="data")
     existing = json.loads((args.existing_features/"human.json").read_text())
-    forbidden = {str(r["speaker"]) for r in existing}
+    # Chained views may also contain corpora with recording/group IDs rather
+    # than speaker identities. Those IDs do not name LibriSpeech speakers.
+    forbidden = {str(r["speaker"]) for r in existing if "speaker" in r}
     if args.evaluation_corpus:
         forbidden.update(str(r["speaker"]) for r in json.loads((args.evaluation_corpus/"manifest.json").read_text())["records"])
-    groups, excluded = {}, []
+    groups, excluded, excluded_speakers = {}, [], set()
     for path in sorted((extracted/"LibriSpeech/train-clean-100").rglob("*.trans.txt")):
         for line in path.read_text().splitlines():
             utterance, text = line.split(" ", 1)
             speaker = utterance.split("-")[0]
             if speaker in forbidden:
+                if args.exclude_existing_speakers:
+                    excluded_speakers.add(speaker)
+                    continue
                 raise ValueError("New training source overlaps an existing speaker partition")
             if ALIASES.search(text):
                 excluded.append({"utterance": utterance, "reason": "wake_alias_in_transcript"})
@@ -97,6 +104,9 @@ def main():
               "speaker_partitions": splits,
               "alias_pattern": ALIASES.pattern,
               "existing_speaker_index_sha256": hashlib.sha256((args.existing_features/"human.json").read_bytes()).hexdigest(),
+              "existing_speaker_policy": "exclude" if args.exclude_existing_speakers else "reject",
+              "excluded_existing_speakers": sorted(excluded_speakers),
+              "preparation_code_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "hours": sum(r["seconds"] for r in rows)/3600,
               "speech_hours": sum(r["speech_seconds"] for r in rows)/3600,
               "feature_method": "One frontend over exact WAV; padding only the final partial hop",
