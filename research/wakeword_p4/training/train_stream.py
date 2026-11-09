@@ -26,6 +26,8 @@ def main():
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
+    parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
+                        help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--specaugment", action="store_true")
     parser.add_argument("--pooling", choices=("none", "max", "average"), default="none")
     parser.add_argument("--align-stream", action="store_true",
@@ -71,7 +73,8 @@ def main():
     def sample(label, count):
         sources = groups["training"][label]
         engines = list(sources)
-        probabilities = np.sqrt([len(sources[e]) for e in engines])
+        probabilities = (np.sqrt([len(sources[e]) for e in engines])
+                         if args.source_sampling == "sqrt" else np.ones(len(engines)))
         probabilities /= probabilities.sum()
         output = []
         for _ in range(count):
@@ -225,6 +228,7 @@ def main():
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "input_frames": frames, "negative_weight": args.negative_weight,
+              "source_sampling": args.source_sampling,
               "specaugment": args.specaugment, "align_stream": args.align_stream,
               "pooling": args.pooling,
               "batch_size": 128, "history": history,

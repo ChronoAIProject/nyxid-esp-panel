@@ -170,6 +170,84 @@ These short negative exposures cannot certify <=0.5 false activations/hour.
 Keep event counts, measured hours and confidence bounds. Fresh real household
 and user-positive recordings plus full-app P4 integration are release gates.
 
+## Continuing Hi ESP comparison
+
+[PROGRESS.md](PROGRESS.md) records the active goal and current acceptance gaps.
+The standalone [Hi ESP benchmark](../../wakeword_baseline/README.md) runs the
+shipped engine on identical PCM, verifies every UART transfer by CRC, and
+restores the original development app. Its paired Mac baseline reached 48/50
+positive renderings and 0/190 shared negative renderings. These are correlated
+synthetic regressions, not real-user recall. ESP-specific near words have
+pronunciation uncertainty and are reported separately.
+
+`mac_corpus.py --output` creates a new source with voice-family splits, excluding
+the five old Mac regression voices. `edge_samples.py` adds Microsoft Edge TTS
+as a sixth engine, using only public fixed phrases. Install
+`requirements-edge.lock` in its own Python 3.12 environment and save a voice
+catalogue before generation. The catalogue used by the experiment has 46
+English presets; normal/multilingual variants of a named voice share a split.
+
+```sh
+"$WAKE_WORK/edge-env/bin/python" - <<'PY'
+import asyncio, json, os
+from pathlib import Path
+import edge_tts
+voices = asyncio.run(edge_tts.list_voices())
+Path(os.environ["WAKE_DATA"], "edge-voices.json").write_text(json.dumps(voices))
+PY
+"$WAKE_WORK/edge-env/bin/python" research/wakeword_p4/training/edge_samples.py \
+  --voices-json "$WAKE_DATA/edge-voices.json" --output "$WAKE_DATA/edge-corpus"
+```
+
+Append completed corpora with additional `stream_data.py --source` arguments.
+Never overwrite previous feature/model directories. `--source-sampling uniform`
+selects engines equally instead of the unchanged default square-root-size
+sampling. Current controlled runs compare four- and five-engine data with:
+
+```sh
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/train_stream.py \
+  --upstream "$WAKE_WORK/microWakeWord" --features "$WAKE_DATA/features-five" \
+  --output "$WAKE_DATA/model-uniform5" --steps 20000 --eval-interval 5000 \
+  --architecture official64 --input-frames 203 --negative-weight 5 \
+  --specaugment --align-stream --source-sampling uniform --threads 2
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/evaluate_stream.py \
+  --model "$WAKE_DATA/model-uniform5/hey_nyx.tflite" --features "$WAKE_DATA/features-five" \
+  --mac-eval "$WAKE_DATA/mac-regression" --output "$WAKE_DATA/validation-uniform5" \
+  --validation-only
+```
+
+Validation-only calibration returns before reading testing/Mac audio and now
+binds the selected threshold to the model SHA-256. The context/wide/max-pooling
+diagnostics are in `../results/training-v3-contexts.json`; none has sufficient
+validation recall to be accepted. Their test sets were not opened.
+
+For longer continuous negatives, LibriSpeech **test-clean** is separate from
+the earlier dev-clean corpus. Verify the archive against OpenSLR's official
+`md5sum.txt`: `32fa31d27d2e1cad72775fee3f4849a9`. The tested archive SHA-256 is
+`39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23`.
+`continuous_negatives.py` verifies the archive checksum again, screens
+transcript wake aliases, preserves a continuous frontend per speaker, and
+exports both exact PCM and features for the two detectors. It generated 5.549 h
+including 0.146 h of explicit 200 ms utterance separators (5.403 h of speech).
+No transcript aliases were found in this archive. This source is evaluation
+only; it is never silently added to training.
+
+```sh
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/continuous_negatives.py \
+  --corpus "$WAKE_DATA/LibriSpeech/test-clean" --archive "$WAKE_DATA/test-clean.tar.gz" \
+  --expected-md5 32fa31d27d2e1cad72775fee3f4849a9 \
+  --output "$WAKE_DATA/continuous-test-clean"
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/evaluate_continuous.py \
+  --model "$WAKE_DATA/model-uniform5/hey_nyx.tflite" \
+  --calibration "$WAKE_DATA/validation-uniform5/threshold.json" \
+  --corpus "$WAKE_DATA/continuous-test-clean" --output "$WAKE_DATA/continuous-uniform5"
+```
+
+Optional `--baseline` accepts a completed Hi ESP report for the exact same PCM,
+requiring verified app restoration. Any result used to change a model makes
+subsequent measurements on that audio a regression. Confidence bounds cover
+the measured distribution, not all real household noise.
+
 ## Rejected/diagnostic paths
 
 - OmniVoice's tested MLX configuration generated waveform-valid files, but all

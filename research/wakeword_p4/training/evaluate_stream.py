@@ -79,7 +79,10 @@ def main():
     selected = max(eligible, key=lambda r: (r["macro_recall"], -r["ambient_false_per_hour"])) if eligible else min(
         grid, key=lambda r: (r["ambient_false_per_hour"], r["max_source_false_rate"], -r["macro_recall"]))
     (root/"threshold.json").write_text(json.dumps({"selected": selected, "grid": grid,
-                                                  "viable_operating_point": bool(eligible)}, indent=2)+"\n")
+        "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
+        "feature_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
+        "selection_scope": "Validation only; threshold frozen before reading test/Mac audio",
+        "viable_operating_point": bool(eligible)}, indent=2)+"\n")
     print(json.dumps({"validation": selected, "viable_operating_point": bool(eligible)}), flush=True)
     if args.validation_only:
         (root/"validation-details.json").write_text(json.dumps({"validation": val})+"\n")

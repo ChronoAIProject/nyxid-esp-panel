@@ -31,7 +31,9 @@ def main():
         group = [r for r in originals if r["voice"] == voice]
         positive = [r for r in group if r["label"]]
         plan = [(r, "hey_nyx", None) for r in positive]
-        plan += [(r, "hi_esp", r["text"].replace("Hey", "Hi").replace("Nicks", "ESP").replace("Nix", "ESP")) for r in positive]
+        # Spell the letters explicitly: macOS abbreviation expansion makes a
+        # bare "ESP" inconsistent (the diagnostic ASR heard "especially").
+        plan += [(r, "hi_esp", r["text"].replace("Hey", "Hi").replace("Nicks", "E S P").replace("Nix", "E S P")) for r in positive]
         plan += [(r, "none", None) for r in group if not r["label"] and r["text"] != "Hi ESP."]
         plan += [({"voice": voice, "text": text, "path": f"new-{i}.wav"}, "none", text)
                  for i, text in enumerate(("Hi SP.", "Hi ESB.", "Hi ASP.", "Hi EST.", "I see ESP.", "High speed."))]
