@@ -14,7 +14,7 @@ spec.loader.exec_module(voice)
 
 class VoiceCleanupTests(unittest.TestCase):
     def harness(self, scenario='full'):
-        run = voice.Acceptance(SimpleNamespace(scenario=scenario))
+        run = voice.Acceptance(SimpleNamespace(scenario=scenario, status_url=None))
         run.initial = {'wake': {'enabled': True, 'detections': 1}, 'microphone_muted': False}
         run.session = 'our-test-session'
         run.status = Mock(return_value={'session_id': run.session, 'busy': True,
@@ -53,6 +53,7 @@ class VoiceCleanupTests(unittest.TestCase):
 
     def test_previous_error_does_not_abort_before_wake_detection(self):
         run = self.harness()
+        del run.wait  # Exercise the real wait loop, not the cleanup-only stub.
         run.session = None
         run.status.side_effect = [
             {'state': 'error', 'active': False, 'wake': {'detections': 1}},
@@ -63,6 +64,7 @@ class VoiceCleanupTests(unittest.TestCase):
 
     def test_current_attempt_error_is_reported(self):
         run = self.harness()
+        del run.wait
         run.session = None
         run.status.return_value = {'state': 'error', 'active': False,
                                    'message': 'provider rejected', 'wake': {'detections': 2}}
