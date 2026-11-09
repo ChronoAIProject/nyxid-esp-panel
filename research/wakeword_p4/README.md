@@ -103,6 +103,16 @@ The actual flash/restore procedure was:
 
 ## Production integration still to do
 
+The current standalone numeric probe uses each model's own input scale and zero
+point for frontend and speech vectors. Its board chain quantizes the actual
+P4 frontend values with those same parameters before comparing outputs against
+host BUILTIN_REF inference. Do not use a fixed approximate frontend-to-INT8
+coefficient for a new export. The variable-state arena is now 16 KiB (the tensor
+arena remains 64 KiB), accommodating longer-context research models; historical
+4 KiB probe measurements still describe their original smaller models. The
+335-frame probe builds successfully, but its new P4 runtime measurements are
+pending completion and restoration of the separate Hi ESP long baseline.
+
 Use microWakeWord on Mac for training and Espressif TFLM on P4 for inference. WakeNet9 weights cannot be replaced with a TFLite file: these are different runtimes. The existing WakeNet engine must be replaced or selected at build time, not simply supplemented without accounting for flash.
 
 The fixed development app is 6,811,664 bytes in a 6,881,280-byte OTA slot (69,616 bytes free). Its compressed Hi ESP weights occupy 183,729 bytes. The standalone probe links about 106,863 flash bytes in TFLM/frontend/ESP-NN archives, plus its models, registrations, C++ support and test code. These archive figures are not a final firmware delta. Build and measure the full replacement on both P4 revisions before claiming it fits. No partition-layout or OTA compatibility change is needed for the research probe.
@@ -112,7 +122,7 @@ Feed the new frontend from the **existing single continuous 16 kHz I2S → AEC �
 Before enabling Hey Nyx by default:
 
 1. Build a substantially larger positive set with broad independent speaker/voice coverage, keyword followed immediately by a request, volume/distance variations, and room impulse/noise augmentation. Listen to samples; waveform validity and phoneme spelling alone are insufficient.
-2. Split by source speaker/generator/room before augmentation. Reserve human recordings and separate environments for evaluation. Include Nyx/Nicks/Nix as equivalent positives rather than contradictory labels.
+2. Split by source speaker/generator/room before augmentation. Reserve human recordings and separate environments for evaluation. Treat full Hey Nyx/Hey Nicks/Hey Nix phrases as equivalent positives. Keep isolated components in an explicitly separate partial-word negative experiment; never relabel a full wake alias as negative.
 3. Use ordinary speech, near words, Chinese speech, background and Bot speaker audio as negatives. Keep training, threshold tuning and final evaluation separate. Report missed wakes and false activations per hour on continuous held-out audio, including confidence intervals and actual hours.
 4. Keep one feature specification across all splits: 16 kHz, 30 ms window, 10 ms hop, 40 channels, 125–7500 Hz, matching noise reduction/PCAN/log settings and quantization. The legacy precomputed dataset card describes a **20 ms** hop: do not silently mix it with this 10 ms frontend.
 5. Validate full GUI, camera, Wi-Fi, AEC, long calls, short Bot replies, reconnects, wake immediately followed by speech, volume/mute and automatic/hands-on modes. Measure stack, internal RAM, CPU and flash in the real app, not just this probe.

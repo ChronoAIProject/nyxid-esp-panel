@@ -1,7 +1,9 @@
-"""Prepare new, training-only human negatives from LibriSpeech train-clean-100.
+"""Prepare new human negatives from LibriSpeech train-clean-100.
 
 Verify the archive before extraction, keep speaker IDs disjoint from all
 existing evaluation speakers, screen wake aliases, and preserve provenance.
+By default all selected speakers are training-only. Optional held-out groups
+are reserved before extraction/scoring, never sampled as training negatives.
 This command does not read evaluation scores or change existing artifacts.
 """
 import argparse
@@ -27,10 +29,14 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--max-speakers", type=int, default=64,
                         help="Select this many speaker IDs before feature extraction; zero selects all")
+    parser.add_argument("--validation-speakers", type=int, default=0)
+    parser.add_argument("--testing-speakers", type=int, default=0)
+    parser.add_argument("--evaluation-corpus", type=Path,
+                        help="Also reject speaker overlap with an existing continuous evaluation manifest")
     parser.add_argument("--workers", type=int, default=2)
     args = parser.parse_args()
-    if args.max_speakers < 0:
-        parser.error("Speaker limit cannot be negative")
+    if min(args.max_speakers, args.validation_speakers, args.testing_speakers) < 0:
+        parser.error("Speaker counts cannot be negative")
     if args.output.exists():
         parser.error("Use a fresh output directory")
     md5, sha256 = hashlib.md5(), hashlib.sha256()
@@ -46,6 +52,8 @@ def main():
         archive.extractall(extracted, filter="data")
     existing = json.loads((args.existing_features/"human.json").read_text())
     forbidden = {str(r["speaker"]) for r in existing}
+    if args.evaluation_corpus:
+        forbidden.update(str(r["speaker"]) for r in json.loads((args.evaluation_corpus/"manifest.json").read_text())["records"])
     groups, excluded = {}, []
     for path in sorted((extracted/"LibriSpeech/train-clean-100").rglob("*.trans.txt")):
         for line in path.read_text().splitlines():
@@ -63,23 +71,30 @@ def main():
                 "transcript_sha256": hashlib.sha256(text.encode()).hexdigest()})
     speakers = sorted(groups)
     np.random.default_rng(726).shuffle(speakers)
-    if args.max_speakers:
-        speakers = speakers[:args.max_speakers]
-    if not speakers:
+    holdouts = args.validation_speakers+args.testing_speakers
+    training_count = args.max_speakers or len(speakers)-holdouts
+    if training_count <= 0 or training_count+holdouts > len(speakers):
+        raise ValueError("Requested speaker partitions do not fit eligible source")
+    splits = {"training": speakers[:training_count],
+              "validation": speakers[training_count:training_count+args.validation_speakers],
+              "testing": speakers[training_count+args.validation_speakers:training_count+holdouts]}
+    speaker_split = {speaker: split for split, group in splits.items() for speaker in group}
+    if not speaker_split:
         raise ValueError("No eligible training speaker")
     (args.output/"pcm").mkdir()
     (args.output/"features").mkdir()
     rows = []
-    jobs = [(speaker, groups[speaker], str(args.output)) for speaker in sorted(speakers)]
+    jobs = [(speaker, groups[speaker], str(args.output)) for speaker in sorted(speaker_split)]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         for record in pool.map(worker, jobs):
-            rows.append({**record, "split": "training"})
+            rows.append({**record, "split": speaker_split[record["speaker"]]})
             print(json.dumps({"speakers": len(rows), "total": len(jobs),
                               "hours": sum(r["seconds"] for r in rows)/3600}), flush=True)
     report = {"dataset": "LibriSpeech train-clean-100", "license": "CC BY 4.0",
               "source": "https://www.openslr.org/12", "archive_md5": md5.hexdigest(),
               "archive_sha256": sha256.hexdigest(), "records": rows, "excluded": excluded,
-              "selection": "Deterministic speaker permutation (seed 726), before feature extraction; training only",
+              "selection": "Deterministic speaker permutation (seed 726); source-disjoint partitions fixed before feature extraction/scoring",
+              "speaker_partitions": splits,
               "alias_pattern": ALIASES.pattern,
               "existing_speaker_index_sha256": hashlib.sha256((args.existing_features/"human.json").read_bytes()).hexdigest(),
               "hours": sum(r["seconds"] for r in rows)/3600,

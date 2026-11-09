@@ -27,8 +27,9 @@ def frontend_features(pcm):
     return np.array(features)
 
 
-def quantize(raw):
-    return np.clip((raw.astype(np.int32) * 256 + 333) // 666 - 128, -128, 127).astype(np.int8)
+def quantize(raw, scale, zero):
+    values = np.clip(raw.astype(np.float32)/25.6, 0, 26)
+    return np.clip(np.rint(values/scale)+zero, -128, 127).astype(np.int8)
 
 
 def declaration(name, dtype, values):
@@ -40,9 +41,9 @@ def declaration(name, dtype, values):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--smoke-model", type=Path, required=True,
-                        help="Random-data compatibility model from the native Mac smoke check")
+                        help="Native Mac streaming INT8 export, either a random-data smoke or trained research candidate")
     parser.add_argument("--speech-dir", type=Path,
-                        help="Optional synthetic Okay Nabu WAVs, 16 kHz mono PCM16, for high output scores")
+                        help="Optional synthetic validation WAVs, 16 kHz mono PCM16, to exercise speech/high output scores")
     args = parser.parse_args()
     root = Path(__file__).resolve().parent / "generated"
     root.mkdir(exist_ok=True)
@@ -58,11 +59,8 @@ def main():
     raw = frontend_features(pcm)
     assert raw.shape == (198, 40), raw.shape
     frames = rng.integers(-128, 128, size=(256, 1, 3, 40), dtype=np.int8)
-    # Begin with real frontend values, then exercise the rest of the INT8 range.
-    quantized = quantize(raw)
-    for i in range(len(raw) // 3):
-        frames[i, 0] = quantized[i * 3:i * 3 + 3]
     speech_manifest = []
+    speech_raw = None
     if args.speech_dir:
         chunks = []
         for path in sorted(args.speech_dir.glob("*.wav")):
@@ -74,15 +72,13 @@ def main():
         assert chunks, "No speech WAVs found"
         speech = np.concatenate(chunks)
         speech = np.pad(speech, (0, (-len(speech)) % 160))
-        speech_features = quantize(frontend_features(speech))
-        usable = len(speech_features) // 3 * 3
-        frames = np.concatenate((frames, speech_features[:usable].reshape(-1, 1, 3, 40)))
+        speech_raw = frontend_features(speech)
     header = "#pragma once\n#include <stdint.h>\n"
-    header += f"static constexpr unsigned test_step_count = {len(frames)};\n"
+    step_count = len(frames)+(len(speech_raw)//3 if speech_raw is not None else 0)
+    header += f"static constexpr unsigned test_step_count = {step_count};\n"
     header += declaration("test_pcm", "int16_t", pcm)
     header += declaration("expected_features", "uint16_t", raw)
-    header += declaration("test_frames", "int8_t", frames)
-    manifest = {"model_revision": MODEL_REVISION, "frames": len(frames),
+    manifest = {"model_revision": MODEL_REVISION, "frames": step_count,
                 "frontend_frames": len(raw), "models": {},
                 "synthetic_speech_fixtures": speech_manifest,
                 "host_kernel": "BUILTIN_REF (XNNPACK disabled)",
@@ -97,14 +93,30 @@ def main():
         inp, output = interpreter.get_input_details()[0], interpreter.get_output_details()[0]
         assert inp["shape"].tolist() == [1, 3, 40] and inp["dtype"] == np.int8
         assert output["dtype"] == np.uint8
+        scale, zero = inp["quantization"]
+        if scale <= 0:
+            raise ValueError("Model has no valid input quantization")
+        model_frames = frames.copy()
+        # Each model uses its own quantization, including the true frontend
+        # prefix and speech vectors. The remaining vectors stress INT8 range.
+        prefix = quantize(raw, scale, zero)
+        for i in range(len(raw)//3):
+            model_frames[i, 0] = prefix[i*3:i*3+3]
+        if speech_raw is not None:
+            speech_features = quantize(speech_raw, scale, zero)
+            usable = len(speech_features)//3*3
+            model_frames = np.concatenate((model_frames, speech_features[:usable].reshape(-1, 1, 3, 40)))
+        assert len(model_frames) == step_count
+        header += declaration("test_frames_"+name, "int8_t", model_frames)
         scores = []
-        for frame in frames:
+        for frame in model_frames:
             interpreter.set_tensor(inp["index"], frame)
             interpreter.invoke()
             scores.append(int(interpreter.get_tensor(output["index"])[0, 0]))
         header += declaration("expected_" + name, "uint8_t", scores)
         manifest["models"][name] = {"sha256": hashlib.sha256(model.read_bytes()).hexdigest(),
                                     "bytes": model.stat().st_size,
+                                    "input_quantization": {"scale": scale, "zero_point": zero},
                                     "score_min": min(scores), "score_max": max(scores)}
     (root / "vectors.h").write_text(header)
     (root / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

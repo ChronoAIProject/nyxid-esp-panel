@@ -1,5 +1,6 @@
 // Numeric probe only: no I2S, networking, credentials, NVS writes or wake decisions.
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
@@ -20,7 +21,12 @@ extern "C" {
 
 extern const uint8_t nabu_model[] asm("_binary_okay_nabu_tflite_start");
 extern const uint8_t smoke_model[] asm("_binary_smoke_tflite_start");
-static int8_t board_frontend_frames[198*40];
+static uint16_t board_frontend_features[198*40];
+
+static int8_t quantize_feature(unsigned raw,float scale,int zero) {
+    float value=std::clamp(raw/25.6f,0.f,26.f);
+    return std::clamp(int(std::nearbyint(value/scale))+zero,-128,127);
+}
 
 static bool frontend_probe() {
     FrontendConfig config{};
@@ -37,10 +43,7 @@ static bool frontend_probe() {
     config.log_scale.enable_log=1; config.log_scale.scale_shift=6;
     FrontendState state{};
     if(!FrontendPopulateState(&config,&state,16000))return false;
-    unsigned frames=0,mismatches=0,max_delta=0,quantized_mismatches=0,quantized_max_delta=0;
-    auto quantize=[](unsigned raw) {
-        return std::clamp(int((raw*256+333)/666)-128,-128,127);
-    };
+    unsigned frames=0,mismatches=0,max_delta=0;
     int64_t total_us=0;
     for(size_t at=0;at<sizeof(test_pcm)/sizeof(test_pcm[0]);) {
         size_t consumed=0;
@@ -55,33 +58,28 @@ static bool frontend_probe() {
                 unsigned expected=expected_features[frames*40+i];
                 unsigned delta=abs(int(result.values[i])-int(expected));
                 if(delta) {
-                    if(mismatches<8)printf("PROBE_FRONTEND_DIFFERENCE {\"frame\":%u,\"channel\":%u,\"actual\":%u,\"expected\":%u,\"quantized_actual\":%d,\"quantized_expected\":%d}\n",
-                        frames,unsigned(i),unsigned(result.values[i]),expected,
-                        quantize(result.values[i]),quantize(expected));
+                    if(mismatches<8)printf("PROBE_FRONTEND_DIFFERENCE {\"frame\":%u,\"channel\":%u,\"actual\":%u,\"expected\":%u}\n",
+                        frames,unsigned(i),unsigned(result.values[i]),expected);
                     ++mismatches;
                 }
-                auto actual_quantized=quantize(result.values[i]);
-                unsigned quantized_delta=abs(actual_quantized-quantize(expected));
-                if(quantized_delta)++quantized_mismatches;
-                quantized_max_delta=std::max(quantized_max_delta,quantized_delta);
-                board_frontend_frames[frames*40+i]=actual_quantized;
+                board_frontend_features[frames*40+i]=result.values[i];
                 max_delta=std::max(max_delta,delta);
             }
             ++frames;
         }
     }
     FrontendFreeStateContents(&state);
-    printf("PROBE_FRONTEND {\"frames\":%u,\"mismatches\":%u,\"max_delta\":%u,\"quantized_mismatches\":%u,\"quantized_max_delta\":%u,\"bit_exact\":%s,\"total_us\":%lld}\n",
-           frames,mismatches,max_delta,quantized_mismatches,quantized_max_delta,
+    printf("PROBE_FRONTEND {\"frames\":%u,\"mismatches\":%u,\"max_delta\":%u,\"bit_exact\":%s,\"total_us\":%lld}\n",
+           frames,mismatches,max_delta,
            mismatches==0?"true":"false",(long long)total_us);
     // Report cross-platform rounding explicitly. Also test these board-produced
     // features through each model below; this is bounded numeric compatibility,
     // not bit-exact equivalence or wake-word accuracy validation.
-    return frames==198 && max_delta<=1 && quantized_max_delta<=1;
+    return frames==198 && max_delta<=1;
 }
 
-static bool model_probe(const char *name,const uint8_t *data,const uint8_t *expected,bool board_frontend=false) {
-    constexpr size_t arena_size=64*1024,var_size=4096;
+static bool model_probe(const char *name,const uint8_t *data,const int8_t *test_frames,const uint8_t *expected,bool board_frontend=false) {
+    constexpr size_t arena_size=64*1024,var_size=16*1024;
     auto *arena=(uint8_t *)heap_caps_aligned_alloc(16,arena_size,MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
     auto *var_arena=(uint8_t *)heap_caps_aligned_alloc(16,var_size,MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
     if(!arena || !var_arena){free(arena);free(var_arena);return false;}
@@ -97,13 +95,21 @@ static bool model_probe(const char *name,const uint8_t *data,const uint8_t *expe
         tflite::MicroInterpreter interpreter(tflite::GetModel(data),ops,arena,arena_size,variables);
         if(interpreter.AllocateTensors()==kTfLiteOk) {
             auto *input=interpreter.input(0);auto *output=interpreter.output(0);
-            if(input->type==kTfLiteInt8 && input->bytes==120 && output->type==kTfLiteUInt8) {
+            if(input->type==kTfLiteInt8 && input->bytes==120 && input->params.scale>0 && output->type==kTfLiteUInt8) {
                 std::vector<int64_t> times(test_step_count);
-                unsigned mismatches=0,max_delta=0;
+                unsigned mismatches=0,max_delta=0,quantized_mismatches=0,quantized_max_delta=0;
                 passed=true;
                 for(size_t i=0;i<test_step_count;++i) {
-                    auto *frame=(board_frontend && i<66)?board_frontend_frames+120*i:test_frames+120*i;
-                    memcpy(input->data.int8,frame,120);
+                    memcpy(input->data.int8,test_frames+120*i,120);
+                    if(board_frontend && i<66) {
+                        for(unsigned k=0;k<120;++k) {
+                            int8_t actual=quantize_feature(board_frontend_features[120*i+k],input->params.scale,input->params.zero_point);
+                            unsigned delta=abs(int(actual)-int(test_frames[120*i+k]));
+                            if(delta)++quantized_mismatches;
+                            quantized_max_delta=std::max(quantized_max_delta,delta);
+                            input->data.int8[k]=actual;
+                        }
+                    }
                     int64_t start=esp_timer_get_time();
                     if(interpreter.Invoke()!=kTfLiteOk){passed=false;break;}
                     times[i]=esp_timer_get_time()-start;
@@ -113,11 +119,12 @@ static bool model_probe(const char *name,const uint8_t *data,const uint8_t *expe
                 }
                 if(passed) {
                     std::sort(times.begin(),times.end());
-                    printf("PROBE_MODEL {\"name\":\"%s\",\"board_frontend\":%s,\"calls\":%u,\"arena_used\":%u,\"var_arena_allocated\":%u,\"p50_us\":%lld,\"p95_us\":%lld,\"max_us\":%lld,\"mismatches\":%u,\"max_output_delta\":%u}\n",
+                    printf("PROBE_MODEL {\"name\":\"%s\",\"board_frontend\":%s,\"calls\":%u,\"arena_used\":%u,\"var_arena_allocated\":%u,\"p50_us\":%lld,\"p95_us\":%lld,\"max_us\":%lld,\"mismatches\":%u,\"max_output_delta\":%u,\"input_quantized_mismatches\":%u,\"input_quantized_max_delta\":%u,\"input_scale\":%.10f,\"input_zero\":%d}\n",
                         name,board_frontend?"true":"false",test_step_count,
                         unsigned(interpreter.arena_used_bytes()),unsigned(var_size),
-                        (long long)times[test_step_count/2],(long long)times[test_step_count*95/100],(long long)times.back(),mismatches,max_delta);
-                    passed=max_delta<=1;
+                        (long long)times[test_step_count/2],(long long)times[test_step_count*95/100],(long long)times.back(),mismatches,max_delta,
+                        quantized_mismatches,quantized_max_delta,double(input->params.scale),int(input->params.zero_point));
+                    passed=max_delta<=1 && quantized_max_delta<=1;
                 }
             }
         }
@@ -127,10 +134,10 @@ static bool model_probe(const char *name,const uint8_t *data,const uint8_t *expe
 
 extern "C" void app_main() {
     bool frontend=frontend_probe();
-    bool nabu=model_probe("okay_nabu",nabu_model,expected_okay_nabu);
-    bool smoke=model_probe("mac_smoke",smoke_model,expected_smoke);
-    bool nabu_chain=model_probe("okay_nabu",nabu_model,expected_okay_nabu,true);
-    bool smoke_chain=model_probe("mac_smoke",smoke_model,expected_smoke,true);
+    bool nabu=model_probe("okay_nabu",nabu_model,test_frames_okay_nabu,expected_okay_nabu);
+    bool smoke=model_probe("mac_smoke",smoke_model,test_frames_smoke,expected_smoke);
+    bool nabu_chain=model_probe("okay_nabu",nabu_model,test_frames_okay_nabu,expected_okay_nabu,true);
+    bool smoke_chain=model_probe("mac_smoke",smoke_model,test_frames_smoke,expected_smoke,true);
     printf("P4_WAKE_PROBE_DONE {\"frontend\":%s,\"pretrained_model\":%s,\"mac_exported_model\":%s,\"frontend_to_pretrained\":%s,\"frontend_to_mac_exported\":%s,\"stack_free\":%u}\n",
            frontend?"true":"false",nabu?"true":"false",smoke?"true":"false",
            nabu_chain?"true":"false",smoke_chain?"true":"false",

@@ -163,12 +163,36 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   and ordinary uses without the full wake phrase. Full Hey Nyx/Nix/Nicks aliases
   remain positive. Generator voice-family partitions and normal speed are
   unchanged. No test scores are used to create this vocabulary. Fresh long-lead
-  features including these corpora are being generated; these are two more
+  features are complete: 48,660 sequences / 34,366,706 frames; these are two more
   corpora from existing engines, not two new engines.
+- Before training on them, the old long335 model at its frozen 0.7 diagnostic
+  threshold triggered on 130/528 validation partial-word variants. Standalone
+  `Nicks/Nix/Nyx` accounts for most of these errors: this model demonstrably
+  does not require the full wake phrase on those synthetic examples. See
+  `../results/partial-vocabulary-before-training-v3.json`. It does not prove
+  that every long-audio false event has the same cause.
 - Downloading the official LibriSpeech train-clean-100 source for more varied,
   training-only human negatives. Preparation verifies its published MD5,
   rejects overlap with all existing speaker partitions, screens wake aliases
-  and records actual WAV/features/provenance. Data is not training-ready yet.
+  and records actual WAV/features/provenance. The 6,387,309,499-byte archive now
+  passes official MD5 `2a93770f6d5c6c964bc36631d331a522`, SHA-256
+  `d4ddd1d5a6ab303066f14971d768ee43278a5f2a0aa43dc716b0e64ecbbbf6e2`.
+  Preparation reserves 64 training, 16 validation and 16 testing speaker IDs
+  before feature extraction; all must be disjoint from existing dev-clean and
+  continuous test-clean speakers. Newly reserved testing scores remain unread.
+- The new human preparation completed: 26.546 h training, 6.090 h validation
+  and 6.455 h testing (explicit separators included), with 64/16/16 speaker IDs.
+  No transcript aliases or overlaps were found. A fresh feature view preserves
+  all original synthetic features and these human split assignments. The next
+  335-frame full-phrase warm-start recipe was fixed before scoring the new
+  holdouts. It combines isolated-component negatives, more human negatives and
+  optional training-only mining; any improvement cannot be attributed to only
+  one of these changes without another controlled ablation.
+- The longer-context P4 numeric probe now builds with per-model input
+  quantization and 16 KiB variable-state storage. A 1,054-step vector set includes
+  validation speech and spans the candidate's complete 0..255 output range.
+  Board execution is pending: the Hi ESP long-baseline runner still owns USB,
+  and must restore the original app before any subsequent probe.
 - LibriSpeech test-clean (CC BY 4.0) passed the official MD5 checksum and has
   recorded SHA-256 `39fde525e59672dc6d1551919b1478f724438a95aa55f874b576be21967e6c23`.
   Transcript alias screening found no exclusions. It provides 5.403 h of public

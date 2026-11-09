@@ -347,9 +347,22 @@ separate corpora with `stream_data.py --source`; never overwrite prior data.
 `2a93770f6d5c6c964bc36631d331a522` before safe extraction. It selects up to 64
 speaker IDs deterministically, rejects overlap with every existing human
 speaker partition, and screens transcript wake aliases. These records are
-**training only**. The manifest retains CC BY 4.0 attribution, source hashes,
+**training only by default**. `--validation-speakers 16 --testing-speakers 16`
+reserves additional disjoint groups from the same fixed permutation before
+extraction or scoring. `--evaluation-corpus` also rejects overlap with an
+existing continuous evaluation corpus. Do not append those held-out rows to a
+training partition. The manifest retains CC BY 4.0 attribution, source hashes,
 speech/separator exposure and final-hop feature padding. This is independent
 of the test-clean continuous evaluation source.
+
+`audit_negative_vocabulary.py` checks selected **validation-only** source
+prefixes at an existing model-hash-bound threshold. It does not recalibrate or
+read testing audio. Before new training, the rejected long335 model at its
+separately frozen 0.7 diagnostic threshold triggered on 130/528 partial-word
+renderings. Most were standalone `Nicks/Nix/Nyx`, confirming that this model
+does not require the full phrase on those synthetic examples. This does not
+prove that every long-audio false wake has the same cause. See
+`../results/partial-vocabulary-before-training-v3.json`.
 
 ## Rejected/diagnostic paths
 
