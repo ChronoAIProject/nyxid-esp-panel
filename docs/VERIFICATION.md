@@ -1,5 +1,57 @@
 # Firmware and hardware verification
 
+## Unreleased reconnect correction, 2026-11-10
+
+A separate revision-1 development board was backed up and updated app-only,
+retaining its Wi-Fi/storage and using its own restricted local NyxID Key. The
+existing dining-room production board was inspected read-only and left unchanged.
+The tested development image has no temporary audio-export probe; its running
+ELF SHA256 matches the built ELF:
+`0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8`.
+This is an untagged correction on the v0.6.27 baseline, not an OTA release.
+
+- Three eight-second control-socket interruptions reproduced stale microphone
+  buffering in wake calls: FIFO peaks were 7,880–8,460 ms, with another 19–25 s
+  needed to drain after reconnection. The same session/generation remained live;
+  no second live owner session or extra user transcript was observed.
+- With initial-connect buffering separated from later interruptions, the same
+  three trials kept the FIFO at zero during each gap. Normal capture around
+  recovery peaked at 20–60 ms. The full initial wake directive and reply remained
+  intact, and each subsequent quiet check retained exactly one real user turn.
+- A separate twelve-second outage contained an entire physical spoken request.
+  It did not appear after recovery; a fresh request then produced its complete
+  transcript and expected reply. Playback interruption and mute/play/unmute
+  completed with exactly four real user turns and no replay of muted speech.
+  Disabled wake, cancellation while connecting, erased queued capture, wake
+  rearming and repeated hangup also passed the existing boundary scenario.
+  These tests use the original 16 kHz mono / 24 kbps Opus / 20 ms path, with the
+  same single hardware-reference AEC/AGC capture task throughout the call.
+- A further six-minute soak completed twelve short announcements containing
+  Chinese, two eight-second control interruptions, and five complete physical
+  fixture inputs including a fresh request after the soak. All user segments
+  belonged to the known playback windows; none appeared during quiet checks.
+  Both interruptions recovered without queued gap audio or a second call.
+- 21 host suites and 11 release/model/tool tests pass. Both revision profiles
+  build, and revision-3 production packaging passes; only revision 1 was flashed.
+
+The owner's reported self-echo after a stall was not reproduced in these
+controlled trials. Stale replay is a verified defect, not proof of every acoustic
+failure's cause. Two synthetic wake attempts missed detection during follow-up
+testing. After an existing codec self-test, wake worked again, and two subsequent
+call/rearm cycles detected the keyword and captured the complete directive.
+The second cycle failed its strict expected-reply check because the model replied
+in Spanish to the correctly captured English repeat request. Neither the missed
+wakes nor that reply are counted as full acceptance; no threshold, persona,
+language filter or AEC tuning was added to hide them. Raw audio/history and test
+failures remain private evidence outside the repository.
+
+Two initial long-soak scripts also stopped early: one correctly reached NyxID's
+180-second user-idle limit during Bot-only announcements; the other incorrectly
+asserted against an unsealed partial caption and then hung up. The latter
+request's tail was present in a separate segment after shutdown. Neither trial
+is evidence of microphone loss or a successful long soak. The corrected harness
+includes physical user follow-ups and waits for full text across sealed segments.
+
 ## v0.6.27 wake/connect acceptance, 2026-11-09
 
 The final original-speed audio implementation was tested against local NyxID

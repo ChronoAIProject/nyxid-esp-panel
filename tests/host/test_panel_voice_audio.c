@@ -72,6 +72,58 @@ void test_recording_overflow_never_discards_old_speech_and_clear_removes_it(void
     TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
     for(unsigned i=0;i<320;++i)TEST_ASSERT_EQUAL_INT(in[i],out[i]);
 }
+void test_reconnect_discards_pending_and_gap_audio_but_preserves_first_connection(void)
+{
+    int16_t memory[640],first[320],fresh[320],out[320];
+    panel_voice_pcm_t fifo={.samples=memory,.capacity=640};
+    bool started=false;
+    for(unsigned i=0;i<320;++i){first[i]=(int16_t)(i+1);fresh[i]=(int16_t)(i+1001);}
+    // Readiness can fluctuate before the first connection, with either task
+    // observing it first. The entire initial request remains ordered.
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,false,false));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,first,320));
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,false,false));
+    TEST_ASSERT_EQUAL_UINT(320,fifo.count);
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,true,false));
+    TEST_ASSERT_TRUE(started);
+    TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+    TEST_ASSERT_EQUAL_INT16_ARRAY(first,out,320);
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,first,320));
+    // A later control interruption must clear even previously queued speech.
+    // Repeated gap capture must not refill the queue or overflow a long call.
+    for(unsigned tick=0;tick<2000;++tick) {
+        TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,false,false));
+        TEST_ASSERT_EQUAL_UINT(0,fifo.count);
+    }
+    for(unsigned i=0;i<640;++i)TEST_ASSERT_EQUAL_INT(0,memory[i]);
+    TEST_ASSERT_TRUE(started);
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,true,false));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,fresh,320));
+    TEST_ASSERT_TRUE(panel_voice_pcm_pop(&fifo,out,320));
+    TEST_ASSERT_EQUAL_INT16_ARRAY(fresh,out,320);
+    // Repeated reconnects never return to initial-recording behavior.
+    TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,false,false));
+}
+void test_mute_clears_initial_and_live_recordings_without_resetting_connection_history(void)
+{
+    int16_t memory[320],in[320]={1};
+    panel_voice_pcm_t fifo={.samples=memory,.capacity=320};
+    bool started=false;
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,false,true));
+    TEST_ASSERT_EQUAL_UINT(0,fifo.count);
+    TEST_ASSERT_FALSE(started);
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,false,false));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,true,true));
+    TEST_ASSERT_TRUE(started);
+    TEST_ASSERT_EQUAL_UINT(0,fifo.count);
+    TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,false,false));
+    TEST_ASSERT_TRUE(panel_voice_pcm_gate(&fifo,&started,true,false));
+    TEST_ASSERT_TRUE(panel_voice_pcm_push(&fifo,in,320));
+    TEST_ASSERT_FALSE(panel_voice_pcm_gate(&fifo,&started,true,true));
+    TEST_ASSERT_EQUAL_UINT(0,fifo.count);
+}
 void test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale(void)
 {
     TEST_ASSERT_EQUAL_INT(0,panel_voice_amplify_sample(0,4));
@@ -117,6 +169,8 @@ int main(void)
     RUN_TEST(test_preroll_preserves_speech_at_detection_boundary_including_wrap);
     RUN_TEST(test_connecting_audio_and_live_audio_are_one_lossless_ordered_stream);
     RUN_TEST(test_recording_overflow_never_discards_old_speech_and_clear_removes_it);
+    RUN_TEST(test_reconnect_discards_pending_and_gap_audio_but_preserves_first_connection);
+    RUN_TEST(test_mute_clears_initial_and_live_recordings_without_resetting_connection_history);
     RUN_TEST(test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale);
     RUN_TEST(test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks);
     return UNITY_END();

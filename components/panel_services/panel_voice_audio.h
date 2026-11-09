@@ -16,6 +16,12 @@ void panel_voice_pcm_clear(panel_voice_pcm_t *fifo);
 // use the lossless push above; this policy must never overwrite call speech.
 void panel_voice_pcm_preroll_push(panel_voice_pcm_t *fifo, const int16_t *pcm, size_t samples);
 
+// Capture and sender share this gate under the FIFO lock. Preserve speech while
+// first connecting; after readiness has been reached, discard queued/gap audio
+// on interruption. Muting always discards it, including before first readiness.
+// Returns whether capture may append; the sender still needs ready to pop.
+bool panel_voice_pcm_gate(panel_voice_pcm_t *fifo, bool *started, bool ready, bool muted);
+
 // Voice gain with a soft knee; bounded input never wraps or hard clips.
 int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain);
 

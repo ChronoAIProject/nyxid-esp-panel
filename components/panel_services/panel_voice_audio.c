@@ -37,6 +37,15 @@ void panel_voice_pcm_preroll_push(panel_voice_pcm_t *fifo, const int16_t *pcm, s
     (void)panel_voice_pcm_push(fifo,pcm,samples);
 }
 
+bool panel_voice_pcm_gate(panel_voice_pcm_t *fifo, bool *started, bool ready, bool muted)
+{
+    if (!fifo || !started) return false;
+    if (ready) *started=true;
+    bool admit=!muted && (ready || !*started);
+    if (!admit && fifo->count) panel_voice_pcm_clear(fifo);
+    return admit;
+}
+
 int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain)
 {
     if (gain>8) gain=8;
