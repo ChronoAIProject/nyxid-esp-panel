@@ -1,5 +1,54 @@
 # Firmware and hardware verification
 
+## v0.6.27 wake/connect acceptance, 2026-11-09
+
+The final original-speed audio implementation was tested against local NyxID
+and production on a physical revision-1 board. The panel used its own separate
+saved credentials, with independently granted access in both directions.
+Revision 3 is build/package validation only. Reproduction commands and failure
+isolation methods are now in [DEBUGGING.md](DEBUGGING.md).
+
+- Local: complete Chinese first directive/reply, follow-up, playback interruption,
+  actual selected-Bot service read (HTTP 200 / volume 80), exactly four real user
+  turns with quiet checks, and mute/play/unmute without replay. A separate full
+  English first directive/reply passed. Remote greeting/opening, disabled wake,
+  connecting cancellation, repeated hangup and cleared saved preferences also
+  passed. The audio path was unchanged by the later service-description update.
+- Production: natural normal-speed English acoustic playback passed complete
+  initial directive/reply, continuation, interruption during playback, current
+  speaker-volume read (95), exactly four user turns, and mute recovery without
+  replay. Remote two-way opening completed the natural greeting without echo,
+  then the same generic tablet-volume request read 95 with one real user turn.
+  Both device audio reads were observed as HTTP 200 in UART route logs.
+- Discovery initially returned no tools for `tablet`; the custom service had no
+  description and its name did not identify a tablet. An existing configurable
+  device label made audio read/write tools discoverable; the unchanged generic
+  request then passed. No Bot-specific prompt or extra grant was added.
+- The owner permitted English-only final acceptance because old synthetic
+  Chinese pronunciation was inaccurate. Earlier Chinese exact-phrase failures,
+  an English wrong-device selection, and withdrawn Sonic/pacing experiments
+  remain recorded as failures, not successful hardware validation. Independent
+  source transcription is required before blaming firmware for missing words.
+- Final firmware builds, 21 host suites and 6 release/model tests pass. The
+  final production app is 6,816,608 bytes in the existing 0x690000 app slot.
+  Running ELF SHA256 is
+  `b1faaff1db4e47819cc69339fed2d0f544d54a8dbb8abb0bf06cf077e19d1be6`.
+  Both revision profiles passed CI on the service-metadata commit. This record
+  does not publish firmware or assert unlimited acoustic reliability.
+
+P-256 generation measured 20–38 ms versus recorded RSA samples of 3.160 s and
+13.191 s. Three local command-to-active samples had medians 5.385 s before and
+4.709 s after the combined firmware/server changes. These include proxy,
+provider and network variation; the first baseline waited for its boot
+certificate. They are not an isolated server speedup or production guarantee.
+
+The final production check preserves the selected CookieBot/Voice service,
+network, automatic input, volume 95, gain 4, greeting, wake listening, unmuted
+microphone and the stored 4013-byte default image. Local backend/Mongo and the
+UART recorder were stopped, and the panel was left idle on production. Raw
+history, audio, camera images, credentials and per-device IDs are private
+evidence rather than repository fixtures.
+
 ## v0.6.15 standalone voice and service scopes, 2026-11-05
 
 The home panel runs v0.6.15 against local NyxID with

@@ -2,33 +2,39 @@
 #include <string.h>
 #include <math.h>
 
-void panel_voice_reference_push(panel_voice_reference_t *ref, const int16_t *pcm, size_t samples)
+bool panel_voice_pcm_push(panel_voice_pcm_t *fifo, const int16_t *pcm, size_t samples)
 {
-    if (!ref || !pcm) return;
-    if (samples >= PANEL_VOICE_REFERENCE_SAMPLES) {
-        pcm += samples - PANEL_VOICE_REFERENCE_SAMPLES;
-        samples = PANEL_VOICE_REFERENCE_SAMPLES;
-        ref->head = ref->count = 0;
-    }
-    for (size_t i=0; i<samples; ++i) {
-        if (ref->count == PANEL_VOICE_REFERENCE_SAMPLES) {
-            ref->head = (ref->head + 1) % PANEL_VOICE_REFERENCE_SAMPLES;
-            --ref->count;
-        }
-        ref->samples[(ref->head + ref->count++) % PANEL_VOICE_REFERENCE_SAMPLES] = pcm[i];
-    }
+    if (!fifo || !fifo->samples || !fifo->capacity || !pcm || samples>fifo->capacity-fifo->count) return false;
+    size_t tail=(fifo->head+fifo->count)%fifo->capacity;
+    size_t first=samples<fifo->capacity-tail?samples:fifo->capacity-tail;
+    memcpy(fifo->samples+tail,pcm,first*sizeof(*pcm));
+    memcpy(fifo->samples,pcm+first,(samples-first)*sizeof(*pcm));
+    fifo->count+=samples;
+    return true;
 }
-
-void panel_voice_reference_read(panel_voice_reference_t *ref, int16_t *pcm, size_t samples)
+bool panel_voice_pcm_pop(panel_voice_pcm_t *fifo, int16_t *pcm, size_t samples)
 {
-    if (!pcm) return;
-    memset(pcm, 0, samples * sizeof(*pcm));
-    if (!ref) return;
-    for (size_t i=0; i<samples && ref->count; ++i) {
-        pcm[i] = ref->samples[ref->head];
-        ref->head = (ref->head + 1) % PANEL_VOICE_REFERENCE_SAMPLES;
-        --ref->count;
-    }
+    if (!fifo || !fifo->samples || !fifo->capacity || !pcm || samples>fifo->count) return false;
+    size_t first=samples<fifo->capacity-fifo->head?samples:fifo->capacity-fifo->head;
+    memcpy(pcm,fifo->samples+fifo->head,first*sizeof(*pcm));
+    memcpy(pcm+first,fifo->samples,(samples-first)*sizeof(*pcm));
+    fifo->head=(fifo->head+samples)%fifo->capacity;
+    fifo->count-=samples;
+    return true;
+}
+void panel_voice_pcm_clear(panel_voice_pcm_t *fifo)
+{
+    if (!fifo) return;
+    if (fifo->samples) memset(fifo->samples,0,fifo->capacity*sizeof(*fifo->samples));
+    fifo->head=fifo->count=0;
+}
+void panel_voice_pcm_preroll_push(panel_voice_pcm_t *fifo, const int16_t *pcm, size_t samples)
+{
+    if(!fifo || !fifo->samples || !fifo->capacity || !pcm)return;
+    if(samples>fifo->capacity){pcm+=samples-fifo->capacity;samples=fifo->capacity;}
+    size_t discard=samples>fifo->capacity-fifo->count?samples-(fifo->capacity-fifo->count):0;
+    fifo->head=(fifo->head+discard)%fifo->capacity;fifo->count-=discard;
+    (void)panel_voice_pcm_push(fifo,pcm,samples);
 }
 
 int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain)

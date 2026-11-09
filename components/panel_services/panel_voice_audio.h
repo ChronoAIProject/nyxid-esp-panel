@@ -1,16 +1,20 @@
 #pragma once
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-// Bounded playback reference for the 16 kHz acoustic echo canceller. The caller
-// serializes push/read; old samples are discarded when playback gets ahead.
-#define PANEL_VOICE_REFERENCE_SAMPLES 2048
+// Lossless PCM FIFO, serialized by its caller. A full write fails atomically:
+// connection delays must never silently discard the start of an utterance.
 typedef struct {
-    int16_t samples[PANEL_VOICE_REFERENCE_SAMPLES];
-    size_t head, count;
-} panel_voice_reference_t;
-void panel_voice_reference_push(panel_voice_reference_t *ref, const int16_t *pcm, size_t samples);
-void panel_voice_reference_read(panel_voice_reference_t *ref, int16_t *pcm, size_t samples);
+    int16_t *samples;
+    size_t capacity, head, count;
+} panel_voice_pcm_t;
+bool panel_voice_pcm_push(panel_voice_pcm_t *fifo, const int16_t *pcm, size_t samples);
+bool panel_voice_pcm_pop(panel_voice_pcm_t *fifo, int16_t *pcm, size_t samples);
+void panel_voice_pcm_clear(panel_voice_pcm_t *fifo);
+// Idle-only lookback: retain the newest samples before wake detection. Calls
+// use the lossless push above; this policy must never overwrite call speech.
+void panel_voice_pcm_preroll_push(panel_voice_pcm_t *fifo, const int16_t *pcm, size_t samples);
 
 // Voice gain with a soft knee; bounded input never wraps or hard clips.
 int16_t panel_voice_amplify_sample(int16_t sample, unsigned gain);

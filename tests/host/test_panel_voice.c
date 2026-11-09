@@ -167,6 +167,16 @@ void test_voice_uses_saved_billing_binding_and_requires_available_supported_prov
     TEST_ASSERT_EQUAL_STRING("chosen-live-model", cJSON_GetObjectItemCaseSensitive(p, "model")->valuestring);
     cJSON_Delete(p);
     TEST_ASSERT_NULL(panel_voice_preferences(discovery, options, (panel_voice_input_mode_t)99));
+    // New servers return both pieces in one response. It must retain exact
+    // provider matching and treat cleared settings as unavailable.
+    cJSON_AddItemToObject(options,"preferences",cJSON_Duplicate(cJSON_GetObjectItemCaseSensitive(discovery,"preferences"),true));
+    p=panel_voice_preferences(options,options,PANEL_VOICE_INPUT_AUTOMATIC);
+    TEST_ASSERT_NOT_NULL(p);
+    TEST_ASSERT_EQUAL_STRING("chosen-live-model",cJSON_GetObjectItemCaseSensitive(p,"model")->valuestring);
+    TEST_ASSERT_EQUAL_STRING("automatic",cJSON_GetObjectItemCaseSensitive(p,"input_mode")->valuestring);
+    cJSON_Delete(p);
+    cJSON_ReplaceItemInObjectCaseSensitive(options,"preferences",cJSON_CreateNull());
+    TEST_ASSERT_NULL(panel_voice_preferences(options,options,PANEL_VOICE_INPUT_AUTOMATIC));
     cJSON *option = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(options, "options"), 0);
     cJSON_ReplaceItemInObjectCaseSensitive(option, "available", cJSON_CreateBool(false));
     TEST_ASSERT_NULL(panel_voice_preferences(discovery, options, PANEL_VOICE_INPUT_HOLD));

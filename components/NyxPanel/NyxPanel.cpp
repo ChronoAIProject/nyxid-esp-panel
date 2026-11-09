@@ -11,6 +11,7 @@
 #include "esp_log.h"
 #include "esp_rom_crc.h"
 #include <array>
+#include <atomic>
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
@@ -64,7 +65,7 @@ extern const uint8_t builtin_end[] asm("_binary_nyxbot_default_jpg_end");
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
-bool pending_voice;
+std::atomic<bool> pending_voice{false};
 char noticed_bot[40]{};
 int64_t bot_notice_until;
 
@@ -155,8 +156,9 @@ void expire(lv_timer_t *) {
     }
     if ((changed || dirty) && app) { dirty=false; app->render(); }
     if (app) app->refreshVoice();
-    if(pending_voice && app){
-        if(navigate_now("home")==ESP_OK){app->showVoiceControls();pending_voice=false;}
+    if(app && pending_voice.exchange(false)){
+        if(navigate_now("home")==ESP_OK)app->showVoiceControls();
+        else pending_voice.store(true);
     }
 }
 }
@@ -251,7 +253,7 @@ bool NyxPanel::run() {
     }, LV_EVENT_CLICKED, this);
     voice_controls = lv_obj_create(root);
     auto controls = voice_controls;
-    lv_obj_set_size(controls, 330, 280);
+    lv_obj_set_size(controls, 330, 324);
     lv_obj_align(controls, LV_ALIGN_TOP_RIGHT, -24, 104);
     lv_obj_add_flag(controls, LV_OBJ_FLAG_HIDDEN);
     lv_obj_set_style_bg_color(controls, lv_color_hex(NYX_SURFACE), 0);
@@ -296,6 +298,19 @@ bool NyxPanel::run() {
         auto select = static_cast<lv_obj_t *>(lv_event_get_target(event));
         (void)panel_voice_input_mode_set(static_cast<panel_voice_input_mode_t>(lv_dropdown_get_selected(select)));
     }, LV_EVENT_VALUE_CHANGED, nullptr);
+    auto wake_label = lv_label_create(controls);
+    lv_label_set_text(wake_label, "Wake: Hi ESP");
+    lv_obj_set_style_text_font(wake_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(wake_label, lv_color_hex(NYX_TEXT), 0);
+    lv_obj_align(wake_label, LV_ALIGN_TOP_LEFT, 0, connection_y + 149);
+    wake_switch = lv_switch_create(controls);
+    lv_obj_set_size(wake_switch, 48, 28);
+    lv_obj_align(wake_switch, LV_ALIGN_TOP_RIGHT, 0, connection_y + 142);
+    lv_obj_set_style_bg_color(wake_switch, lv_color_hex(NYX_PRIMARY), static_cast<lv_style_selector_t>(LV_PART_INDICATOR) | LV_STATE_CHECKED);
+    lv_obj_add_event_cb(wake_switch, [](lv_event_t *event) {
+        auto obj = static_cast<lv_obj_t *>(lv_event_get_target(event));
+        (void)panel_voice_wake_set(lv_obj_has_state(obj, LV_STATE_CHECKED));
+    }, LV_EVENT_VALUE_CHANGED, nullptr);
     auto button = [&](int x, int width, const char *text) {
         auto obj = lv_button_create(controls);
         lv_obj_set_size(obj, width, 64);
@@ -335,7 +350,7 @@ bool NyxPanel::close() {
     panel_voice_stop();
     image_widget = nullptr;
     if (root) { lv_obj_delete(root); root = nullptr; }
-    content = voice_status = call_button = call_label = hold_button = mode_select = nullptr;
+    content = voice_status = call_button = call_label = hold_button = mode_select = wake_switch = nullptr;
     voice_controls = voice_toggle = voice_indicator = nullptr;
     voice_bot = voice_connection = voice_spinner = nullptr;
     bot_notice = bot_name = bot_description = background_hint = nullptr;
@@ -347,6 +362,10 @@ void NyxPanel::showVoiceControls() {
 void NyxPanel::refreshVoice() {
     if (!voice_status) return;
     panel_voice_snapshot_t voice{}; panel_voice_snapshot(&voice);
+    if (wake_switch) {
+        if (voice.wake_enabled) lv_obj_add_state(wake_switch, LV_STATE_CHECKED);
+        else lv_obj_remove_state(wake_switch, LV_STATE_CHECKED);
+    }
     if (voice.configured && voice.agent_id[0] && strcmp(noticed_bot, voice.agent_id)) {
         snprintf(noticed_bot, sizeof(noticed_bot), "%s", voice.agent_id);
         bot_notice_until = esp_timer_get_time() + 10000000;
@@ -368,6 +387,11 @@ void NyxPanel::refreshVoice() {
             voice.microphone_muted ? NYX_WARNING : voice.active ? NYX_SUCCESS : NYX_TINT), 0);
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
     const char *text = voice.message[0] ? voice.message : "Voice is not configured";
+    char recording_status[160];
+    if(voice.wake_initiated && !strcmp(voice.state,"connecting")) {
+        snprintf(recording_status,sizeof(recording_status),"Recording - %s",text);
+        text=recording_status;
+    }
     if (strcmp(lv_label_get_text(voice_status), text)) lv_label_set_text(voice_status, text);
     const bool loading = voice.busy && !strcmp(voice.state, "loading");
     const bool calling = voice.busy && !loading;
@@ -673,9 +697,10 @@ esp_err_t lcd_renderer_navigate(const char *target) {
 }
 esp_err_t lcd_renderer_show_device_bind(void) { return lcd_renderer_navigate("device_bind"); }
 esp_err_t lcd_renderer_show_voice(void) {
-    if(bsp_display_lock(1000)!=ESP_OK)return ESP_ERR_TIMEOUT;
-    pending_voice=true;
-    bsp_display_unlock();return ESP_OK;
+    // The LVGL timer owns navigation and widgets. Starting a call only posts
+    // an idempotent request, so display rendering cannot delay its network work.
+    pending_voice.store(true);
+    return ESP_OK;
 }
 esp_err_t lcd_renderer_show_unregistered_mac(const char *, const char *) { return lcd_renderer_show_device_bind(); }
 esp_err_t lcd_renderer_current_screen(const char **target, size_t *depth) {

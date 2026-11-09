@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdatomic.h>
 #include <string.h>
 #include "esp_log.h"
 #include "esp_check.h"
@@ -31,14 +32,27 @@ static esp_codec_dev_handle_t record_dev_handle;
 static bool _is_audio_init = false;
 static bool _is_player_init = false;
 static SemaphoreHandle_t audio_owner;
+static _Atomic(product_audio_yield_fn_t) background_yield;
 
 esp_err_t product_audio_claim(void)
 {
-    return audio_owner && xSemaphoreTake(audio_owner, 0) == pdTRUE ? ESP_OK : ESP_ERR_INVALID_STATE;
+    if (!audio_owner) return ESP_ERR_INVALID_STATE;
+    if (xSemaphoreTake(audio_owner,0)==pdTRUE) return ESP_OK;
+    product_audio_yield_fn_t yield=atomic_load(&background_yield);
+    return yield && yield() && xSemaphoreTake(audio_owner,pdMS_TO_TICKS(1000))==pdTRUE ?
+        ESP_OK : ESP_ERR_INVALID_STATE;
+}
+
+esp_err_t product_audio_claim_background(product_audio_yield_fn_t yield)
+{
+    if (!yield || !audio_owner || xSemaphoreTake(audio_owner,0)!=pdTRUE) return ESP_ERR_INVALID_STATE;
+    atomic_store(&background_yield,yield);
+    return ESP_OK;
 }
 
 void product_audio_release(void)
 {
+    atomic_store(&background_yield,NULL);
     if (audio_owner) xSemaphoreGive(audio_owner);
 }
 static int _vloume_intensity = PRODUCT_CODEC_DEFAULT_VOLUME;

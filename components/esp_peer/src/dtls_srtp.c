@@ -24,16 +24,17 @@ static int dtls_srtp_selfsign_cert(dtls_srtp_t *dtls_srtp, bool export_for_cache
         ESP_LOGE(TAG, "mbedtls_ctr_drbg_seed failed, ret=%d", ret);
         goto _exit;
     }
-    ret = mbedtls_pk_setup(&dtls_srtp->pkey, mbedtls_pk_info_from_type(MBEDTLS_PK_RSA));
+    ret = mbedtls_pk_setup(&dtls_srtp->pkey, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));
     if (ret != 0) {
-        ESP_LOGE(TAG, "mbedtls_pk_setup(RSA) failed, ret=%d", ret);
+        ESP_LOGE(TAG, "mbedtls_pk_setup(EC) failed, ret=%d", ret);
         goto _exit;
     }
-    // Modern WebRTC endpoints reject 1024-bit client certificates.
-    ret = mbedtls_rsa_gen_key(mbedtls_pk_rsa(dtls_srtp->pkey), mbedtls_ctr_drbg_random, &dtls_srtp->ctr_drbg, 2048,
-                              65537);
+    // WebRTC supports P-256 certificates; the P4 accelerates this curve and
+    // avoids the expensive RSA key generation and handshake signature.
+    ret = mbedtls_ecp_gen_key(MBEDTLS_ECP_DP_SECP256R1, mbedtls_pk_ec(dtls_srtp->pkey),
+                              mbedtls_ctr_drbg_random, &dtls_srtp->ctr_drbg);
     if (ret != 0) {
-        ESP_LOGE(TAG, "mbedtls_rsa_gen_key failed, ret=%d", ret);
+        ESP_LOGE(TAG, "mbedtls_ecp_gen_key failed, ret=%d", ret);
         goto _exit;
     }
 
