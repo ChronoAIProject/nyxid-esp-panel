@@ -44,10 +44,12 @@ message. `--baud 115200` retains the slow rate for diagnostics. A truncated or
 corrupted transfer is an error, never a counted recognition miss.
 
 The research protocol also accepts `--baud 3000000` for
-subsequent runs; the default remains 1500000. Higher rates are not yet verified
-on the current USB connection. Start with CRC-verified short fixtures, then a
-long continuous clip and verified original-app restoration before relying on
-a faster long run. Keep the exact previous probe binary/hash with historical
+subsequent runs; the default remains 1500000. The development connection passed
+eight short/long fixtures at 3 Mbaud, including a 495.86 s continuous clip:
+CRC, sample/call counts, events and exact offsets match the historical 1.5 Mbaud
+run. The 1.294 h Mandarin baseline also completed at 3 Mbaud and restored the
+original app. Verify another USB connection with short/long CRC checks before
+relying on it. Keep the exact previous probe binary/hash with historical
 measurements. Baud changes affect transfer scheduling, not WAV samples or
 detector configuration. Do not open another serial owner to change a running
 benchmark's speed.

@@ -1,0 +1,106 @@
+{
+  "probe_bin_sha256": "bb84e8c7b778913a917ee2f15cd346dd9279ee50566ecd4a950c0141d1d425bd",
+  "probe_bin_bytes": 798800,
+  "vectors_manifest_sha256": "ab23080ad7afa7dc00b1336f8a0c57c65ecee8ee1869d395356dd0e3314f7c75",
+  "PROBE_FRONTEND": {
+    "frames": 198,
+    "mismatches": 1,
+    "max_delta": 1,
+    "bit_exact": false,
+    "total_us": 57760
+  },
+  "models": [
+    {
+      "name": "okay_nabu",
+      "board_frontend": false,
+      "calls": 1054,
+      "arena_used": 25788,
+      "var_arena_allocated": 16384,
+      "p50_us": 621,
+      "p95_us": 630,
+      "max_us": 2091,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "input_quantized_mismatches": 0,
+      "input_quantized_max_delta": 0,
+      "input_scale": 0.1019607857,
+      "input_zero": -128
+    },
+    {
+      "name": "mac_smoke",
+      "board_frontend": false,
+      "calls": 1054,
+      "arena_used": 31788,
+      "var_arena_allocated": 16384,
+      "p50_us": 708,
+      "p95_us": 716,
+      "max_us": 1944,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "input_quantized_mismatches": 0,
+      "input_quantized_max_delta": 0,
+      "input_scale": 0.1019607857,
+      "input_zero": -128
+    },
+    {
+      "name": "okay_nabu",
+      "board_frontend": true,
+      "calls": 1054,
+      "arena_used": 25788,
+      "var_arena_allocated": 16384,
+      "p50_us": 620,
+      "p95_us": 629,
+      "max_us": 1727,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "input_quantized_mismatches": 0,
+      "input_quantized_max_delta": 0,
+      "input_scale": 0.1019607857,
+      "input_zero": -128
+    },
+    {
+      "name": "mac_smoke",
+      "board_frontend": true,
+      "calls": 1054,
+      "arena_used": 31788,
+      "var_arena_allocated": 16384,
+      "p50_us": 708,
+      "p95_us": 716,
+      "max_us": 1905,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "input_quantized_mismatches": 0,
+      "input_quantized_max_delta": 0,
+      "input_scale": 0.1019607857,
+      "input_zero": -128
+    }
+  ],
+  "P4_WAKE_PROBE_DONE": {
+    "frontend": true,
+    "pretrained_model": true,
+    "mac_exported_model": true,
+    "frontend_to_pretrained": true,
+    "frontend_to_mac_exported": true,
+    "stack_free": 13756
+  },
+  "candidate_model_sha256": "c8f058e833eeb4f86a40ae38785fba738e0bb8cdb3e6adac26024e1b2656ee50",
+  "candidate_runtime_label": "mac_smoke is the historical probe label; here it embeds the rejected trained long335 candidate, not the earlier random smoke model",
+  "input_vector_steps": 1054,
+  "candidate_golden_output_range": [
+    0,
+    255
+  ],
+  "original_app_restoration_verified": true,
+  "tensor_arena_allocated_bytes": 65536,
+  "variable_arena_allocated_bytes": 16384,
+  "main_stack_allocated_bytes": 16384,
+  "host_kernel": "BUILTIN_REF",
+  "limits": [
+    "Numeric compatibility and standalone performance only; candidate remains rejected for recognition.",
+    "P4 frontend processed a deterministic 2 s chirp/noise fixture; speech steps use host-generated features.",
+    "Shared-feature model outputs match exactly; raw frontend is not bit exact (one value differs by one unit).",
+    "Actual per-model quantization creates no input/output differences in this fixture.",
+    "Tensor arena used bytes are not total engine RAM; both arena allocations and frontend/task overhead also count.",
+    "No full GUI/AEC/Wi-Fi resource or acoustic acceptance result."
+  ]
+}

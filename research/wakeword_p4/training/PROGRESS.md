@@ -263,6 +263,73 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   anchored through their original feature view. A two-layer byte-level
   regression verifies both corpora, preserves explicit group versus speaker
   identities and rejects duplicates. No running training source was edited.
+- Hi ESP's full exact-PCM English baseline completed: 40 speakers / 5.549 h,
+  zero events, every transfer CRC verified, and original app/local service/
+  wake listening restored. The rejected old long335 model has 13 events on
+  the identical PCM. The zero-event reference's one-sided 95% upper bound is
+  0.540/h, not proof of zero production false wakes. See
+  `../results/continuous-hiesp-vs-long335-v3.json`.
+- Long335 P4 numeric/resource checks passed on 1,054 steps: exact output
+  matches, 31,788 tensor bytes used, 64+16 KiB arenas allocated, median 708 us,
+  and 13,756 stack bytes free. One raw frontend value differs by one unit;
+  actual quantized inputs/outputs match. Original app restored. See
+  `../results/p4-long335-probe-v3.json`. This is not recognition acceptance.
+- 3 Mbaud now passes an eight-fixture short/long regression, including 495.86 s
+  continuous PCM: CRC, sample/call counts, events and exact offsets agree with
+  historical 1.5 Mbaud results. Original app restoration passed. Fully spelled
+  Hi ESP near words then completed and restored: 31/60 clips triggered,
+  predominantly `Hi E S B`, `Hi E S T` and `Hi A S P`. ASR remains uncertain
+  about some consonants; preserve this limit. The earlier self-imposed 1%
+  near-word gate is stricter than the measured reference. Report it separately
+  from matched ordinary-speech false wakes and actual acoustic acceptance;
+  do not declare equivalence from different near-word vocabularies alone.
+- Fullphrase96 warm training/export finished. Its validation-selected INT8
+  fallback 0.992 has 74.99% mean-engine recall, 7.29% maximum-corpus confusing
+  false rate, 0/528 component negatives and one event / 7.324 h. Reject it;
+  newly reserved testing speakers remain unread. The event's source transcript
+  contains no full wake phrase. See `../results/fullphrase96-validation-v3.json`.
+- The Mandarin training shard completed: 3,246 utterances / 9.906 h including
+  separators, 9.726 h actual speech, and no duplicate source audio against
+  reserved validation/testing. A chained feature view verifies every original
+  file reference and adds only training groups. A new 945-utterance OpenAI
+  corpus balances positive/negative prosody across existing training voices;
+  synthesis and all WAV hashes passed. Original sources plus these additions
+  are rebuilding with unchanged 4 s leads. Verify old feature bytes before
+  launching the separately recorded next recipe. A combined-data improvement
+  cannot be attributed to one addition without an ablation.
+- Hi ESP Mandarin validation completed all eight groups / 1.294 h with zero
+  events. Every PCM identity matches the rejected old long335 diagnostic,
+  which has one event. The reference's short-exposure upper 95% bound is
+  2.315/h, so this does not establish low production risk. The original app,
+  Nyx connection and Hi ESP listener were restored; the runner exited normally
+  and released USB. See `../results/mandarin-hiesp-vs-long335-v3.json`.
+- The matching fullphrase96 random-initialization control completed 30k steps
+  and INT8 validation. Its fallback 0.97 has 56.84% mean-engine recall versus
+  the warm run's 74.99% at its own fallback 0.992. The scratch model has one
+  event / 7.324 h and 5.21% maximum-corpus confusing false rate; both models
+  fail the strict near-phrase gate. Neither is accepted or installed. New
+  testing scores remain unread. See
+  `../results/fullphrase96-scratch-validation-v3.json`.
+- The combined-data feature rebuild finished. All 48,660 original synthetic
+  sequences compare byte-for-byte by source/variant; original labels, metadata
+  and partitions agree. All 136 old human feature targets and metadata are
+  preserved, and 77 environmental feature files are bit-exact. The 3,780 new
+  TTS variants and 59 Mandarin groups are training-only. Source hashes and
+  the full identity check are retained privately.
+- The balanced OpenAI 72-clip tiny.en pilot strictly recognized only 6/36
+  positives, with 28 Next substitutions. A separate, pinned multilingual
+  wav2vec2 phoneme CTC diagnostic instead yields canonical `h eɪ n ɪ k s` on
+  11/36 and `h eː n ɪ k s` on 5/36, alongside other vowel variants and a few
+  m/final-t confusions. This argues against treating the lexical transcripts
+  as direct phonetic labels, while leaving real pronunciation uncertain.
+  Generator labels remain unchanged. See
+  `../results/style-phoneme-diagnostic-v3.json` and `audit_phonemes.py`.
+- The pre-recorded style/multilingual335 recipe is now training from a private
+  immutable source snapshot: transfer60, 335 frames, warm initialization from
+  fullphrase96, 30k steps, six CPU threads, unchanged sampling/weight/mining
+  settings. Only the balanced training TTS and disjoint Mandarin training data
+  are added. Quantized validation, frozen-threshold regressions and full-app
+  acoustic/resource/AEC tests remain outstanding. This run is not acceptance.
 
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen

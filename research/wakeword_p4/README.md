@@ -128,9 +128,18 @@ P4 frontend values with those same parameters before comparing outputs against
 host BUILTIN_REF inference. Do not use a fixed approximate frontend-to-INT8
 coefficient for a new export. The variable-state arena is now 16 KiB (the tensor
 arena remains 64 KiB), accommodating longer-context research models; historical
-4 KiB probe measurements still describe their original smaller models. The
-335-frame probe builds successfully, but its new P4 runtime measurements are
-pending completion and restoration of the separate Hi ESP long baseline.
+4 KiB probe measurements still describe their original smaller models.
+
+The subsequent long335 run is now complete; see
+`results/p4-long335-probe-v3.json`. All 1,054 shared-feature steps and the
+frontend-chain runs match host BUILTIN_REF outputs exactly. The trained
+candidate uses 31,788 tensor bytes, with 64 KiB tensor and 16 KiB variable
+arenas allocated. Median inference is 708 us per 30 ms input step; main task
+stack has 13,756 bytes free. The frontend still has one raw value differing by
+one unit, but the actual model quantization produces identical input values
+in this fixture. Original app/service/wake restoration passed. This is the
+rejected older recognizer, measured for compatibility rather than acceptance;
+full-app memory/load and acoustic tests remain necessary.
 
 Use microWakeWord on Mac for training and Espressif TFLM on P4 for inference. WakeNet9 weights cannot be replaced with a TFLite file: these are different runtimes. The existing WakeNet engine must be replaced or selected at build time, not simply supplemented without accounting for flash.
 

@@ -1,0 +1,216 @@
+{
+  "model_sha256": "52bba14c13126c7e25f0baa1a5c40a8cb3458621c9d41e618faf2924f8b8a01b",
+  "architecture": "transfer60",
+  "input_frames": 335,
+  "steps": 30000,
+  "model_bytes": 61712,
+  "training_seconds": 2553.5,
+  "float_checkpoints": [
+    {
+      "step": 10000,
+      "selected": {
+        "threshold": 0.992,
+        "recall": 0.5409698996655519,
+        "macro_recall": 0.6986607142857142,
+        "recall_by_engine": {
+          "kokoro": 0.75,
+          "edge-tts": 0.6964285714285714,
+          "macos-say": 0.890625,
+          "piper": 0.4895833333333333,
+          "openai-tts": 0.6666666666666666
+        },
+        "hard_negative_false_rate": 0.016292735042735044,
+        "max_source_false_rate": 0.07291666666666667,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 1,
+        "ambient_faph": 0.13654072554707317
+      }
+    },
+    {
+      "step": 20000,
+      "selected": {
+        "threshold": 0.97,
+        "recall": 0.8110367892976589,
+        "macro_recall": 0.822906746031746,
+        "recall_by_engine": {
+          "kokoro": 0.8125,
+          "edge-tts": 0.7544642857142857,
+          "macos-say": 0.9609375,
+          "piper": 0.8088541666666667,
+          "openai-tts": 0.7777777777777778
+        },
+        "hard_negative_false_rate": 0.017094017094017096,
+        "max_source_false_rate": 0.08333333333333333,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 1,
+        "ambient_faph": 0.13654072554707317
+      }
+    },
+    {
+      "step": 30000,
+      "selected": {
+        "threshold": 0.99,
+        "recall": 0.7454013377926422,
+        "macro_recall": 0.7584325396825397,
+        "recall_by_engine": {
+          "kokoro": 0.6666666666666666,
+          "edge-tts": 0.7366071428571429,
+          "macos-say": 0.9296875,
+          "piper": 0.7369791666666666,
+          "openai-tts": 0.7222222222222222
+        },
+        "hard_negative_false_rate": 0.013087606837606838,
+        "max_source_false_rate": 0.07291666666666667,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 1,
+        "ambient_faph": 0.13654072554707317
+      }
+    }
+  ],
+  "quantized_validation": {
+    "threshold": 0.992,
+    "positive_variants": 2392,
+    "recall": 0.7307692307692307,
+    "macro_recall": 0.7498660714285714,
+    "recall_by_engine": {
+      "macos-say": 0.921875,
+      "edge-tts": 0.7321428571428571,
+      "piper": 0.7203125,
+      "openai-tts": 0.7083333333333334,
+      "kokoro": 0.6666666666666666
+    },
+    "hard_negative_variants": 3744,
+    "hard_negative_false_rate": 0.013354700854700854,
+    "max_source_false_rate": 0.07291666666666667,
+    "negative_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 560,
+        "false_clips": 21,
+        "false_rate": 0.0375
+      },
+      "edge-tts:edge-partials": {
+        "variants": 336,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 320,
+        "false_clips": 5,
+        "false_rate": 0.015625
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 192,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 320,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 96,
+        "false_clips": 7,
+        "false_rate": 0.07291666666666667
+      },
+      "piper:synthetic": {
+        "variants": 1920,
+        "false_clips": 17,
+        "false_rate": 0.008854166666666666
+      }
+    },
+    "max_corpus_false_rate": 0.07291666666666667,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 1,
+    "ambient_false_per_hour": 0.13654072554707317,
+    "ambient_false_per_hour_upper_95": 0.6477307032380661
+  },
+  "viable_operating_point": false,
+  "selection_metric": "max_corpus_false_rate",
+  "feature_index_sha256": "f518fcfa652ef010aee4ab0cd952ba0ef79704092d31dc5cba7736731fab726d",
+  "threshold_grid": [
+    {
+      "threshold": 0.5,
+      "macro_recall": 0.8745734126984127,
+      "max_source_false_rate": 0.09375,
+      "max_corpus_false_rate": 0.09375,
+      "ambient_false_events": 4
+    },
+    {
+      "threshold": 0.7,
+      "macro_recall": 0.8524057539682539,
+      "max_source_false_rate": 0.09375,
+      "max_corpus_false_rate": 0.09375,
+      "ambient_false_events": 4
+    },
+    {
+      "threshold": 0.8,
+      "macro_recall": 0.8480753968253968,
+      "max_source_false_rate": 0.09375,
+      "max_corpus_false_rate": 0.09375,
+      "ambient_false_events": 4
+    },
+    {
+      "threshold": 0.9,
+      "macro_recall": 0.8292559523809523,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 2
+    },
+    {
+      "threshold": 0.95,
+      "macro_recall": 0.8125198412698413,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.97,
+      "macro_recall": 0.7979811507936508,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.98,
+      "macro_recall": 0.7825496031746032,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.985,
+      "macro_recall": 0.7711557539682541,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.99,
+      "macro_recall": 0.7540922619047619,
+      "max_source_false_rate": 0.08333333333333333,
+      "max_corpus_false_rate": 0.08333333333333333,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.992,
+      "macro_recall": 0.7498660714285714,
+      "max_source_false_rate": 0.07291666666666667,
+      "max_corpus_false_rate": 0.07291666666666667,
+      "ambient_false_events": 1
+    },
+    {
+      "threshold": 0.994,
+      "macro_recall": 0.7452232142857143,
+      "max_source_false_rate": 0.07291666666666667,
+      "max_corpus_false_rate": 0.07291666666666667,
+      "ambient_false_events": 1
+    }
+  ],
+  "decision": "Rejected; no newly reserved testing speakers scored.",
+  "limits": [
+    "Correlated synthetic variants, not real-user wake recall.",
+    "English human/environmental validation only; Mandarin comparison is separate.",
+    "No full-app custom-model integration or microphone/AEC acceptance."
+  ]
+}

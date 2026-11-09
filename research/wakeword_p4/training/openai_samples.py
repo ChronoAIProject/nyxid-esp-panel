@@ -18,7 +18,7 @@ import numpy as np
 from scipy.signal import resample_poly
 import soundfile as sf
 
-from phrases import HARD_NEGATIVES
+from phrases import HARD_NEGATIVES, PARTIAL_WAKE_NEGATIVES
 
 VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova",
           "onyx", "sage", "shimmer", "verse", "marin", "cedar"]
@@ -29,16 +29,12 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--key-file", type=Path)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--balanced-styles", action="store_true",
+                        help="Give full/partial confusing negatives the same neutral/warm/direct styles as positives")
+    parser.add_argument("--training-only", action="store_true",
+                        help="Use only the existing training voice IDs; reserve validation/testing voices")
+    parser.add_argument("--plan-only", action="store_true", help="Write the generation plan without loading a key or calling TTS")
     args = parser.parse_args()
-    key = os.environ.get("OPENAI_API_KEY")
-    if args.key_file:
-        for line in args.key_file.read_text().splitlines():
-            match = re.match(r"^\s*(?:export\s+)?OPENAI_API_KEY\s*=\s*(.*)$", line)
-            if match:
-                fields = shlex.split(match.group(1), comments=True)
-                key = fields[0] if fields else None
-    if not key:
-        raise SystemExit("OPENAI_API_KEY is not configured")
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"generation.json").exists(), "Use a fresh completed-run directory"
@@ -49,14 +45,37 @@ def main():
     splits = {"training": ids[:9], "validation": ids[9:11], "testing": ids[11:]}
     plan = []
     for split, voices in splits.items():
+        if args.training_only and split != "training":
+            continue
         for voice in voices:
             samples = [(text, 1, style) for style in ("neutral", "warm", "direct")
                        for text in ("Hey Nicks.", "Hey Nix!", "Hey Nicks?")]
-            samples += [(s, 0, "neutral") for s in HARD_NEGATIVES[:8]+HARD_NEGATIVES[-4:]]
+            samples += ([(s, 0, style) for style in ("neutral", "warm", "direct")
+                         for s in HARD_NEGATIVES+PARTIAL_WAKE_NEGATIVES] if args.balanced_styles else
+                        [(s, 0, "neutral") for s in HARD_NEGATIVES[:8]+HARD_NEGATIVES[-4:]])
             for number, (text, label, style) in enumerate(samples):
                 plan.append({"path": f"{split}/{voice}/{number:03d}.wav", "split": split,
                              "speakers": [voice], "engine": "openai-tts", "text": text,
                              "label": label, "style": style})
+    planned = {"model": "gpt-4o-mini-tts", "speed": 1., "voice_partitions": splits,
+               "training_only": args.training_only, "balanced_styles": args.balanced_styles, "rows": plan}
+    plan_path = root/"plan.json"
+    if plan_path.exists() and json.loads(plan_path.read_text()) != planned:
+        raise ValueError("Existing generation plan differs; use a fresh output directory")
+    plan_path.write_text(json.dumps(planned, indent=2)+"\n")
+    if args.plan_only:
+        print(json.dumps({"planned_calls": len(plan), "training_only": args.training_only,
+                          "balanced_styles": args.balanced_styles}), flush=True)
+        return
+    key = os.environ.get("OPENAI_API_KEY")
+    if args.key_file:
+        for line in args.key_file.read_text().splitlines():
+            match = re.match(r"^\s*(?:export\s+)?OPENAI_API_KEY\s*=\s*(.*)$", line)
+            if match:
+                fields = shlex.split(match.group(1), comments=True)
+                key = fields[0] if fields else None
+    if not key:
+        raise SystemExit("OPENAI_API_KEY is not configured")
     def generate(row):
         if row["path"] in completed:
             return completed[row["path"]]
@@ -99,6 +118,7 @@ def main():
                 print(json.dumps({"clips": number, "total": len(plan),
                                   "seconds": round(time.monotonic()-started, 1)}), flush=True)
     report = {"engine": "OpenAI gpt-4o-mini-tts", "voices": splits,
+              "training_only": args.training_only, "balanced_styles": args.balanced_styles,
               "clips": len(completed), "generated_at": datetime.now(timezone.utc).isoformat(),
               "disclosure": "All fixture audio is AI-generated speech, not human recordings.",
               "docs": "https://developers.openai.com/api/docs/guides/text-to-speech",

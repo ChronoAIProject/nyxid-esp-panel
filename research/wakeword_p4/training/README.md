@@ -411,6 +411,51 @@ groups as well as speaker-ID corpora. Chained extensions preserve previous
 feature references through their original view; group IDs do not establish
 speaker independence when the source lacks individual identities.
 
+### Balanced synthesis styles
+
+The original OpenAI corpus gives positives neutral/warm/direct delivery but
+uses only neutral negatives. `openai_samples.py --balanced-styles
+--training-only` supplies the same three styles to each positive and each
+full/partial confusing negative, using only the original nine training voice
+IDs. It plans 945 source utterances; held-out voice IDs are preserved. The
+default legacy plan remains 273 utterances. `--plan-only` writes the full plan
+without loading a key or calling TTS. Resume requires an identical saved plan.
+
+The existing `gpt-4o-mini-tts` Speech API supports delivery instructions and WAV
+output ([official OpenAI documentation](https://developers.openai.com/api/docs/guides/text-to-speech)).
+Synthesis stays at speed 1.0 and resamples once to 16 kHz; it does not time-stretch
+audio or change the panel's audio format. Keep the corpus and its key file
+outside git. Prosody is a potential shortcut, not a proven cause of the earlier
+false wakes; this experiment must still pass independently frozen evaluation.
+
+### Independent phoneme diagnostic
+
+`audit_phonemes.py` checks selected **training-only** clips with an unprompted
+phoneme CTC recognizer, without a word lexicon or language model. This helps
+investigate tiny.en's frequent `Nicks` → `Next` substitutions without assuming
+that lexical ASR is a phonetic label. It does not filter or relabel the corpus.
+Raw vowel/consonant differences remain uncertain until reviewed acoustically.
+
+Use a separate Python 3.12 environment with `requirements-phonemes.lock`.
+Download [facebook/wav2vec2-lv-60-espeak-cv-ft](https://huggingface.co/facebook/wav2vec2-lv-60-espeak-cv-ft/tree/ae45363bf3413b374fecd9dc8bc1df0e24c3b7f4)
+at revision `ae45363bf3413b374fecd9dc8bc1df0e24c3b7f4` into a private directory.
+The Apache-2.0 model's `pytorch_model.bin` is 1,263,535,127 bytes, SHA-256
+`3173bde9e9ce490fa0f989e413c42f25bc1820c020adc1e6b9b87025b3cfcc5e`.
+Keep its pinned config, preprocessor and vocabulary alongside it. Save those
+`repo`, `revision`, `model_sha256` and `bytes` fields in `identity.json`; the
+runner verifies the weight checksum before loading with `weights_only=True`.
+
+```sh
+"$WAKE_WORK/phoneme-env/bin/python" research/wakeword_p4/training/audit_phonemes.py \
+  --source "$PRIVATE_BALANCED_TTS" --selection "$PRIVATE_ASR_PILOT/audit.jsonl" \
+  --model "$PRIVATE_PHONEME_MODEL" --output "$PRIVATE_PHONEME_RESULTS" --threads 2
+```
+
+The 72-clip pilot found canonical Nicks phones in many positives despite
+tiny.en's Next transcriptions, as well as vowel variation and a few final-t/m
+confusions. Neither recognizer establishes human pronunciation acceptance.
+See `../results/style-phoneme-diagnostic-v3.json`. No testing audio was read.
+
 ## Rejected/diagnostic paths
 
 - OmniVoice's tested MLX configuration generated waveform-valid files, but all

@@ -1,0 +1,142 @@
+{
+  "scope": "Random-initialization control on the fullphrase96 data/topology/recipe; validation only, no fresh testing scored",
+  "model_sha256": "b0280ee9644f6334e3c6c156ae182c852162e256f462b02f716ed54071977e03",
+  "architecture": "transfer60",
+  "input_frames": 335,
+  "steps": 30000,
+  "model_bytes": 61712,
+  "training_seconds": 3429.9,
+  "float_checkpoints": [
+    {
+      "step": 10000,
+      "selected": {
+        "threshold": 0.97,
+        "recall": 0.41262541806020064,
+        "macro_recall": 0.566155753968254,
+        "recall_by_engine": {
+          "openai-tts": 0.5972222222222222,
+          "kokoro": 0.4791666666666667,
+          "edge-tts": 0.5267857142857143,
+          "piper": 0.36041666666666666,
+          "macos-say": 0.8671875
+        },
+        "hard_negative_false_rate": 0.009615384615384616,
+        "max_source_false_rate": 0.052083333333333336,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 1,
+        "ambient_faph": 0.13654072554707317
+      }
+    },
+    {
+      "step": 20000,
+      "selected": {
+        "threshold": 0.98,
+        "recall": 0.6254180602006689,
+        "macro_recall": 0.680967261904762,
+        "recall_by_engine": {
+          "openai-tts": 0.6666666666666666,
+          "kokoro": 0.5416666666666666,
+          "edge-tts": 0.6741071428571429,
+          "piper": 0.6005208333333333,
+          "macos-say": 0.921875
+        },
+        "hard_negative_false_rate": 0.016292735042735044,
+        "max_source_false_rate": 0.0625,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 2,
+        "ambient_faph": 0.27308145109414633
+      }
+    },
+    {
+      "step": 30000,
+      "selected": {
+        "threshold": 0.992,
+        "recall": 0.584866220735786,
+        "macro_recall": 0.6603025793650794,
+        "recall_by_engine": {
+          "openai-tts": 0.6527777777777778,
+          "kokoro": 0.5208333333333334,
+          "edge-tts": 0.6607142857142857,
+          "piper": 0.553125,
+          "macos-say": 0.9140625
+        },
+        "hard_negative_false_rate": 0.01282051282051282,
+        "max_source_false_rate": 0.052083333333333336,
+        "ambient_hours": 7.323822222222223,
+        "ambient_events": 2,
+        "ambient_faph": 0.27308145109414633
+      }
+    }
+  ],
+  "quantized_validation": {
+    "threshold": 0.97,
+    "positive_variants": 2392,
+    "recall": 0.4218227424749164,
+    "macro_recall": 0.5684474206349207,
+    "recall_by_engine": {
+      "kokoro": 0.4791666666666667,
+      "piper": 0.371875,
+      "macos-say": 0.8671875,
+      "edge-tts": 0.5267857142857143,
+      "openai-tts": 0.5972222222222222
+    },
+    "hard_negative_variants": 3744,
+    "hard_negative_false_rate": 0.009348290598290598,
+    "max_source_false_rate": 0.052083333333333336,
+    "negative_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 560,
+        "false_clips": 15,
+        "false_rate": 0.026785714285714284
+      },
+      "edge-tts:edge-partials": {
+        "variants": 336,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 320,
+        "false_clips": 5,
+        "false_rate": 0.015625
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 192,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 320,
+        "false_clips": 0,
+        "false_rate": 0.0
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 96,
+        "false_clips": 5,
+        "false_rate": 0.052083333333333336
+      },
+      "piper:synthetic": {
+        "variants": 1920,
+        "false_clips": 10,
+        "false_rate": 0.005208333333333333
+      }
+    },
+    "max_corpus_false_rate": 0.052083333333333336,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 1,
+    "ambient_false_per_hour": 0.13654072554707317,
+    "ambient_false_per_hour_upper_95": 0.6477307032380661
+  },
+  "viable_operating_point": false,
+  "accepted": false,
+  "comparison": {
+    "warm_model_sha256": "52bba14c13126c7e25f0baa1a5c40a8cb3458621c9d41e618faf2924f8b8a01b",
+    "warm_macro_recall": 0.7498660714285714,
+    "scratch_macro_recall": 0.5684474206349207,
+    "scope": "Separate validation-selected fallback thresholds; neither satisfies the strict near-phrase gate."
+  },
+  "limits": [
+    "Synthetic rendering variants are correlated, not independent voices.",
+    "Continuous speech/near-phrase validation does not substitute for acoustic or human acceptance.",
+    "The scratch model is rejected and not installed."
+  ]
+}
