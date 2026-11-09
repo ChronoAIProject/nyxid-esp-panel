@@ -33,7 +33,7 @@ def main():
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--baud", type=int, choices=(115200,921600,1500000), default=1500000)
+    parser.add_argument("--baud", type=int, choices=(115200,921600,1500000,3000000,6000000), default=1500000)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     if (args.output/"report.json").exists():
@@ -78,6 +78,7 @@ def main():
     report = {"probe_sha256":hashlib.sha256(args.probe_bin.read_bytes()).hexdigest(),
               "manifest_sha256":hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
               "engine":"wn9_hiesp", "mode":"DET_MODE_95", "sample_rate":16000,
+              "uart_baud":args.baud,
               "scope":"Offline PCM detector benchmark, not acoustic/full-app acceptance.", "clips":[]}
     def interrupted(_signum, _frame):
         raise KeyboardInterrupt("Benchmark interrupted; restoring original app")

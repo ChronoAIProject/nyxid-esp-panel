@@ -188,6 +188,13 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   holdouts. It combines isolated-component negatives, more human negatives and
   optional training-only mining; any improvement cannot be attributed to only
   one of these changes without another controlled ablation.
+- Two 30,000-step, 335-frame runs are now active on this feature view: one
+  warm-starts the old 15,000-step float checkpoint, the other uses random
+  initialization of the same `transfer60` topology. Data, learning rate 3e-4,
+  negative weight 5 and 50% training-only mining match; host thread limits are
+  6 and 3 respectively. This is not a timing comparison. Select candidates on
+  validation only, and inspect original confusing words and new component
+  negatives separately so additional easy negatives cannot hide old errors.
 - The longer-context P4 numeric probe now builds with per-model input
   quantization and 16 KiB variable-state storage. A 1,054-step vector set includes
   validation speech and spans the candidate's complete 0..255 output range.
