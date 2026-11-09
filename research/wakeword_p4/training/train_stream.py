@@ -22,13 +22,15 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=12000)
     parser.add_argument("--eval-interval", type=int, default=3000)
+    parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
+    parser.add_argument("--threads", type=int, default=6)
     args = parser.parse_args()
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"training.json").exists(), "Use a fresh output directory"
-    tf.config.threading.set_intra_op_parallelism_threads(6)
+    tf.config.threading.set_intra_op_parallelism_threads(args.threads)
     tf.config.threading.set_inter_op_parallelism_threads(2)
     tf.keras.utils.set_random_seed(726)
     rng = np.random.default_rng(726)
@@ -94,7 +96,13 @@ def main():
 
     architecture = argparse.ArgumentParser()
     mixednet.model_parameters(architecture)
-    flags = architecture.parse_args(["--residual_connection", "0,0,0,0", "--stride", "3"])
+    architecture_args = ["--residual_connection", "0,0,0,0", "--stride", "3"]
+    if args.architecture == "official64":
+        architecture_args += ["--pointwise_filters", "64,64,64,64",
+                              "--repeat_in_block", "1,1,1,1",
+                              "--mixconv_kernel_sizes", "[5], [7,11], [9,15], [23]",
+                              "--first_conv_filters", "32", "--first_conv_kernel_size", "5"]
+    flags = architecture.parse_args(architecture_args)
     model = mixednet.model(flags, (FRAMES, 40), None)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
 
@@ -188,6 +196,7 @@ def main():
     data = converter.convert()
     (root/"hey_nyx.tflite").write_bytes(data)
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
+              "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),

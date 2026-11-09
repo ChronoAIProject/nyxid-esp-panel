@@ -3,6 +3,13 @@
 Reviewed 2026-11-10. The phrase is **Hey Nyx**, pronounced **Hey Nicks**.
 `Hey Nix` and `Hey Nicks` are positive spellings of the same sound.
 
+The subsequent four-engine experiment is complete. Its selected quantized
+model reached 62.11% synthetic regression recall and 0/50 on the Mac voice
+regression set, so it is rejected for production. See [RESULTS.md](RESULTS.md)
+for the complete metrics, comparison and limits. More TTS diversity is useful
+training input; the number of engines or clips does not demonstrate a usable
+recognizer.
+
 ## Recommended stack
 
 Use the Apache-2.0 **microWakeWord** trainer and MicroFrontend on Apple Silicon,
@@ -41,6 +48,17 @@ The Apple trainer's example configuration uses 40,000 steps, batch 128, negative
 class weight 20 and an ambient-aware model-selection metric. These are starting
 points for that recipe, not universal requirements. The official microWakeWord
 project itself warns that producing a usable custom model remains difficult.
+
+Architecture also matters. The official notebook uses 64-channel pointwise
+blocks with mixed temporal kernels, while the inspected Apple trainer uses
+128-channel blocks and a stride of two. Our initial 16,225-parameter numeric
+prototype is smaller. The new `official64` experiment adopts the official
+notebook's layer arguments, with the research pipeline's existing 180-feature
+input; it is **not a complete replication** of the notebook recipe. Upstream
+`model_train_eval.py` adds convolution-dropped frames to the configured
+final-layer clip duration, so its `clip_duration_ms=1500` does not mean a total
+1.5-second receptive field. Keep this distinction when comparing models and
+before adopting a full production-training configuration.
 
 ## Other routes
 

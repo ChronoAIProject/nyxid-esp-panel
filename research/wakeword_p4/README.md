@@ -6,6 +6,8 @@ The selected phrase is **Hey Nyx**, pronounced **Hey Nicks**. `Hey Nix` and `Hey
 
 Actual Hey Nyx training, multi-engine sample generation, failed candidates and
 reproduction steps are now recorded in [training/README.md](training/README.md).
+The completed four-engine experiment and why its model is unsuitable for
+production are documented in [training/RESULTS.md](training/RESULTS.md).
 The compatibility smoke model in the table below remains a separate random-data
 experiment; do not confuse it with a trained recognizer.
 

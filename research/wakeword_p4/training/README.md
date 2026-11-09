@@ -108,8 +108,22 @@ matched this experiment.
 "$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/train_stream.py \
   --upstream "$WAKE_WORK/microWakeWord" --features "$WAKE_DATA/features-four" \
   --output "$WAKE_DATA/model-four" --steps 40000 --eval-interval 10000
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/train_stream.py \
+  --upstream "$WAKE_WORK/microWakeWord" --features "$WAKE_DATA/features-four" \
+  --output "$WAKE_DATA/model-official64" --steps 20000 --eval-interval 10000 \
+  --architecture official64 --threads 3
+"$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/compare_candidates.py \
+  --candidate "$WAKE_DATA/model-four" --candidate "$WAKE_DATA/model-official64" \
+  --output "$WAKE_DATA/candidate-comparison.json"
+```
+
+Read the saved `selected` field before evaluating. The recorded four-engine run
+selected `model-official64` from float validation. Evaluate that one candidate;
+do not use test scores to choose between the two exports.
+
+```sh
 "$WAKE_WORK/tf-env/bin/python" research/wakeword_p4/training/evaluate_stream.py \
-  --model "$WAKE_DATA/model-four/hey_nyx.tflite" --features "$WAKE_DATA/features-four" \
+  --model "$WAKE_DATA/model-official64/hey_nyx.tflite" --features "$WAKE_DATA/features-four" \
   --mac-eval "$WAKE_DATA/mac-regression" --output "$WAKE_DATA/evaluation-four"
 ```
 
@@ -132,6 +146,22 @@ and <=1% confusing clip variants **for every validation source**, then maximizes
 mean source recall. If nothing qualifies, the fallback is explicitly reported.
 The exported INT8 streaming model is recalibrated on validation before the test
 sets are read. P4/host numeric comparisons must use BUILTIN_REF, not XNNPACK.
+
+The `--architecture official64` comparison uses the official notebook's layer
+arguments with the same 180-feature research window. It was trained for 20,000
+steps with `--eval-interval 10000 --threads 3`. This explores a different layer
+configuration; it does not reproduce the upstream final-layer-duration/total
+receptive-field recipe. The different step budgets also prevent attributing
+the result solely to layer capacity.
+The compact candidate runs for 40,000 steps. Candidate choice uses float
+validation only and is saved before quantized test/regression scoring. Keep
+the candidate comparison and both training histories, even if neither meets
+the operating target.
+
+Recorded metrics, artifact hashes and the acceptance decision are in
+[RESULTS.md](RESULTS.md). Candidate comparison reproduces the original choice
+from saved float validation histories and checks each model hash. It does not
+read quantized evaluation, test audio or test scores.
 
 These short negative exposures cannot certify <=0.5 false activations/hour.
 Keep event counts, measured hours and confidence bounds. Fresh real household

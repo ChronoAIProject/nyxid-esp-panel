@@ -1,0 +1,433 @@
+{
+  "recipe": "stream-v2",
+  "parameters": 25537,
+  "steps": 20000,
+  "architecture": "official64",
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "64,64,64,64",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [7,11], [9,15], [23]",
+    "--first_conv_filters",
+    "32",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "batch_size": 128,
+  "negative_weight": 20,
+  "history": [
+    {
+      "step": 10000,
+      "selected": {
+        "threshold": 0.95,
+        "recall": 0.7637254901960784,
+        "macro_recall": 0.6473958333333333,
+        "recall_by_engine": {
+          "kokoro": 0.625,
+          "openai-tts": 0.5416666666666666,
+          "piper": 0.7755208333333333
+        },
+        "hard_negative_false_rate": 0.004708904109589041,
+        "max_source_false_rate": 0.00625,
+        "ambient_hours": 1.2335916666666666,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "grid": [
+        {
+          "threshold": 0.5,
+          "recall": 0.9362745098039216,
+          "macro_recall": 0.8455439814814815,
+          "recall_by_engine": {
+            "kokoro": 0.8958333333333334,
+            "openai-tts": 0.6944444444444444,
+            "piper": 0.9463541666666667
+          },
+          "hard_negative_false_rate": 0.03638698630136986,
+          "max_source_false_rate": 0.052083333333333336,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 5,
+          "ambient_faph": 4.053205071910614
+        },
+        {
+          "threshold": 0.7,
+          "recall": 0.9049019607843137,
+          "macro_recall": 0.8053819444444444,
+          "recall_by_engine": {
+            "kokoro": 0.875,
+            "openai-tts": 0.625,
+            "piper": 0.9161458333333333
+          },
+          "hard_negative_false_rate": 0.025256849315068493,
+          "max_source_false_rate": 0.03125,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 1,
+          "ambient_faph": 0.8106410143821227
+        },
+        {
+          "threshold": 0.8,
+          "recall": 0.8759803921568627,
+          "macro_recall": 0.7794560185185185,
+          "recall_by_engine": {
+            "kokoro": 0.8541666666666666,
+            "openai-tts": 0.5972222222222222,
+            "piper": 0.8869791666666667
+          },
+          "hard_negative_false_rate": 0.017123287671232876,
+          "max_source_false_rate": 0.018229166666666668,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 1,
+          "ambient_faph": 0.8106410143821227
+        },
+        {
+          "threshold": 0.9,
+          "recall": 0.8269607843137254,
+          "macro_recall": 0.7237847222222222,
+          "recall_by_engine": {
+            "kokoro": 0.75,
+            "openai-tts": 0.5833333333333334,
+            "piper": 0.8380208333333333
+          },
+          "hard_negative_false_rate": 0.01113013698630137,
+          "max_source_false_rate": 0.011979166666666667,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.95,
+          "recall": 0.7637254901960784,
+          "macro_recall": 0.6473958333333333,
+          "recall_by_engine": {
+            "kokoro": 0.625,
+            "openai-tts": 0.5416666666666666,
+            "piper": 0.7755208333333333
+          },
+          "hard_negative_false_rate": 0.004708904109589041,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.97,
+          "recall": 0.7073529411764706,
+          "macro_recall": 0.6072916666666667,
+          "recall_by_engine": {
+            "kokoro": 0.6041666666666666,
+            "openai-tts": 0.5,
+            "piper": 0.7177083333333333
+          },
+          "hard_negative_false_rate": 0.0025684931506849314,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.98,
+          "recall": 0.6607843137254902,
+          "macro_recall": 0.5795717592592592,
+          "recall_by_engine": {
+            "kokoro": 0.5833333333333334,
+            "openai-tts": 0.4861111111111111,
+            "piper": 0.6692708333333334
+          },
+          "hard_negative_false_rate": 0.0025684931506849314,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.985,
+          "recall": 0.6318627450980392,
+          "macro_recall": 0.5693287037037037,
+          "recall_by_engine": {
+            "kokoro": 0.5833333333333334,
+            "openai-tts": 0.4861111111111111,
+            "piper": 0.6385416666666667
+          },
+          "hard_negative_false_rate": 0.0025684931506849314,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.99,
+          "recall": 0.5769607843137254,
+          "macro_recall": 0.5386574074074074,
+          "recall_by_engine": {
+            "kokoro": 0.5625,
+            "openai-tts": 0.4722222222222222,
+            "piper": 0.58125
+          },
+          "hard_negative_false_rate": 0.0017123287671232876,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.992,
+          "recall": 0.5480392156862746,
+          "macro_recall": 0.5216435185185185,
+          "recall_by_engine": {
+            "kokoro": 0.5416666666666666,
+            "openai-tts": 0.4722222222222222,
+            "piper": 0.5510416666666667
+          },
+          "hard_negative_false_rate": 0.0017123287671232876,
+          "max_source_false_rate": 0.00625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.994,
+          "recall": 0.5049019607843137,
+          "macro_recall": 0.4974537037037037,
+          "recall_by_engine": {
+            "kokoro": 0.5416666666666666,
+            "openai-tts": 0.4444444444444444,
+            "piper": 0.50625
+          },
+          "hard_negative_false_rate": 0.0012842465753424657,
+          "max_source_false_rate": 0.003125,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        }
+      ],
+      "seconds": 345.6
+    },
+    {
+      "step": 20000,
+      "selected": {
+        "threshold": 0.992,
+        "recall": 0.8181372549019608,
+        "macro_recall": 0.7746527777777779,
+        "recall_by_engine": {
+          "kokoro": 0.875,
+          "openai-tts": 0.625,
+          "piper": 0.8239583333333333
+        },
+        "hard_negative_false_rate": 0.009417808219178082,
+        "max_source_false_rate": 0.041666666666666664,
+        "ambient_hours": 1.2335916666666666,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "grid": [
+        {
+          "threshold": 0.5,
+          "recall": 0.9583333333333334,
+          "macro_recall": 0.8802662037037038,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.7361111111111112,
+            "piper": 0.9671875
+          },
+          "hard_negative_false_rate": 0.030393835616438356,
+          "max_source_false_rate": 0.11458333333333333,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 3,
+          "ambient_faph": 2.431923043146368
+        },
+        {
+          "threshold": 0.7,
+          "recall": 0.9470588235294117,
+          "macro_recall": 0.8718171296296297,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.7222222222222222,
+            "piper": 0.9557291666666666
+          },
+          "hard_negative_false_rate": 0.02440068493150685,
+          "max_source_false_rate": 0.08333333333333333,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 2,
+          "ambient_faph": 1.6212820287642453
+        },
+        {
+          "threshold": 0.8,
+          "recall": 0.9362745098039216,
+          "macro_recall": 0.8635416666666668,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.7083333333333334,
+            "piper": 0.9447916666666667
+          },
+          "hard_negative_false_rate": 0.02226027397260274,
+          "max_source_false_rate": 0.08333333333333333,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 2,
+          "ambient_faph": 1.6212820287642453
+        },
+        {
+          "threshold": 0.9,
+          "recall": 0.9102941176470588,
+          "macro_recall": 0.8543402777777779,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.7083333333333334,
+            "piper": 0.9171875
+          },
+          "hard_negative_false_rate": 0.018407534246575343,
+          "max_source_false_rate": 0.07291666666666667,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 2,
+          "ambient_faph": 1.6212820287642453
+        },
+        {
+          "threshold": 0.95,
+          "recall": 0.8872549019607843,
+          "macro_recall": 0.8283564814814813,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.6527777777777778,
+            "piper": 0.8947916666666667
+          },
+          "hard_negative_false_rate": 0.015839041095890412,
+          "max_source_false_rate": 0.07291666666666667,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 1,
+          "ambient_faph": 0.8106410143821227
+        },
+        {
+          "threshold": 0.97,
+          "recall": 0.8686274509803922,
+          "macro_recall": 0.8173032407407407,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.6388888888888888,
+            "piper": 0.8755208333333333
+          },
+          "hard_negative_false_rate": 0.014554794520547944,
+          "max_source_false_rate": 0.07291666666666667,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 1,
+          "ambient_faph": 0.8106410143821227
+        },
+        {
+          "threshold": 0.98,
+          "recall": 0.8539215686274509,
+          "macro_recall": 0.8120949074074074,
+          "recall_by_engine": {
+            "kokoro": 0.9375,
+            "openai-tts": 0.6388888888888888,
+            "piper": 0.8598958333333333
+          },
+          "hard_negative_false_rate": 0.011986301369863013,
+          "max_source_false_rate": 0.0625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 1,
+          "ambient_faph": 0.8106410143821227
+        },
+        {
+          "threshold": 0.985,
+          "recall": 0.8397058823529412,
+          "macro_recall": 0.7958333333333333,
+          "recall_by_engine": {
+            "kokoro": 0.9166666666666666,
+            "openai-tts": 0.625,
+            "piper": 0.8458333333333333
+          },
+          "hard_negative_false_rate": 0.011558219178082191,
+          "max_source_false_rate": 0.0625,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.99,
+          "recall": 0.825,
+          "macro_recall": 0.7838541666666666,
+          "recall_by_engine": {
+            "kokoro": 0.8958333333333334,
+            "openai-tts": 0.625,
+            "piper": 0.8307291666666666
+          },
+          "hard_negative_false_rate": 0.010702054794520547,
+          "max_source_false_rate": 0.052083333333333336,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.992,
+          "recall": 0.8181372549019608,
+          "macro_recall": 0.7746527777777779,
+          "recall_by_engine": {
+            "kokoro": 0.875,
+            "openai-tts": 0.625,
+            "piper": 0.8239583333333333
+          },
+          "hard_negative_false_rate": 0.009417808219178082,
+          "max_source_false_rate": 0.041666666666666664,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.994,
+          "recall": 0.8058823529411765,
+          "macro_recall": 0.7635416666666667,
+          "recall_by_engine": {
+            "kokoro": 0.8541666666666666,
+            "openai-tts": 0.625,
+            "piper": 0.8114583333333333
+          },
+          "hard_negative_false_rate": 0.007705479452054794,
+          "max_source_false_rate": 0.041666666666666664,
+          "ambient_hours": 1.2335916666666666,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        }
+      ],
+      "seconds": 558.0
+    }
+  ],
+  "seconds": 560.3,
+  "model_bytes": 63032,
+  "model_sha256": "089cc964636749b549840cdb4202719bf394ca215f59f5e0a2414f8acb5b1614",
+  "source_files_sha256": {
+    "stream_data.py": "2cf2d92c9f274d84cf615825b684bd901bc1c2d5869caa06fe0443f354d6bb5e",
+    "mac_eval_samples.py": "41b8c6d96b16363d5696d656f6cd32ee55e369ea47b4597646e11b627419b597",
+    "phrases.py": "959d2b8e0351ceea777f753b7f16d7481a9eb55792c2961d9c8f75371ef28fdf",
+    "backgrounds.py": "caf5a6b72134671b5deeb1ae8359f8924f5b42350fa4c6d9b3ae86af66df6938",
+    "train_stream.py": "af67f9390da8c18285940225eacd25621f55d503d87235f96377b0ba99c04d88",
+    "audit_speech.py": "f16076fee9ae63cc718d4c85a08086356277b2d6aa67c800d835b26ab17a773e",
+    "generate.py": "747e7b0102c159776ed721b4d8cb60f4f02d7aa3e4d875bdbd53c5c90c88053f",
+    "features.py": "b3ecf3a4c3fd152eaabda6a4b650005da27eae5a3d103d9cb812a93e43eb9f13",
+    "openai_samples.py": "5c28b9b4fd44297e2d12d2d73866f62dc9afaa13aa5254e8fa9f4c7eabd76ec9",
+    "mlx_samples.py": "d44980214fb4b00c467c6181250db5412b8c527c073970804cded91f2d42b34f",
+    "evaluate_stream.py": "e24b567703145a4c5ef9e28bd7c5d1832ef06ca2a2c72afcee6d5857d934dfd1",
+    "train.py": "173f921b25e25ec3811aa4521c8ddb6f5207d4fa5abeb98fe5f8e4f61ab03b0c",
+    "evaluate.py": "88b7edf72fc1fd2dcf29284c70add4a7bc890bd9e4cddf3a65a6922a69bfd48e",
+    "kokoro_samples.py": "c87a60e47e95f9c90b56bbd89804f0d592a9e9b931df57b9cfbd487c72830527"
+  },
+  "sources": {
+    "0": {
+      "piper": 12000,
+      "kokoro": 1600,
+      "qwen": 1536,
+      "openai-tts": 432
+    },
+    "1": {
+      "piper": 12000,
+      "kokoro": 240,
+      "qwen": 384,
+      "openai-tts": 324
+    }
+  },
+  "selection": "Float continuous validation <=0.5 ambient events/h and <=1% confusing clips per source; then maximize mean source recall. Quantized validation must be recalibrated.",
+  "scope": "Research candidate. Same v1 evaluation sets are development regressions; real-user acceptance remains unmeasured."
+}

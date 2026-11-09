@@ -1,0 +1,104 @@
+{
+  "model_sha256": "089cc964636749b549840cdb4202719bf394ca215f59f5e0a2414f8acb5b1614",
+  "sliding_window": 5,
+  "threshold": 0.985,
+  "validation": {
+    "threshold": 0.985,
+    "positive_variants": 2040,
+    "recall": 0.6240196078431373,
+    "macro_recall": 0.5508680555555555,
+    "recall_by_engine": {
+      "piper": 0.6317708333333333,
+      "openai-tts": 0.4583333333333333,
+      "kokoro": 0.5625
+    },
+    "hard_negative_variants": 2336,
+    "hard_negative_false_rate": 0.0017123287671232876,
+    "max_source_false_rate": 0.003125,
+    "ambient_hours": 1.2335916666666666,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.428463449051069
+  },
+  "testing_regression": {
+    "threshold": 0.985,
+    "positive_variants": 2040,
+    "recall": 0.621078431372549,
+    "macro_recall": 0.5202546296296297,
+    "recall_by_engine": {
+      "piper": 0.6302083333333334,
+      "openai-tts": 0.5138888888888888,
+      "kokoro": 0.4166666666666667
+    },
+    "hard_negative_variants": 2336,
+    "hard_negative_false_rate": 0.0029965753424657533,
+    "max_source_false_rate": 0.0036458333333333334,
+    "ambient_hours": 1.3896388888888889,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.1557631248714424
+  },
+  "mac_regression": {
+    "positive_variants": 50,
+    "negative_variants": 200,
+    "recall": 0.0,
+    "false_rate": 0.0
+  },
+  "by_engine": {
+    "kokoro": {
+      "threshold": 0.985,
+      "positive_variants": 48,
+      "recall": 0.4166666666666667,
+      "macro_recall": 0.4166666666666667,
+      "recall_by_engine": {
+        "kokoro": 0.4166666666666667
+      },
+      "hard_negative_variants": 320,
+      "hard_negative_false_rate": 0.0,
+      "max_source_false_rate": 0.0,
+      "ambient_hours": 1.3896388888888889,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.1557631248714424
+    },
+    "openai-tts": {
+      "threshold": 0.985,
+      "positive_variants": 72,
+      "recall": 0.5138888888888888,
+      "macro_recall": 0.5138888888888888,
+      "recall_by_engine": {
+        "openai-tts": 0.5138888888888888
+      },
+      "hard_negative_variants": 96,
+      "hard_negative_false_rate": 0.0,
+      "max_source_false_rate": 0.0,
+      "ambient_hours": 1.3896388888888889,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.1557631248714424
+    },
+    "piper": {
+      "threshold": 0.985,
+      "positive_variants": 1920,
+      "recall": 0.6302083333333334,
+      "macro_recall": 0.6302083333333334,
+      "recall_by_engine": {
+        "piper": 0.6302083333333334
+      },
+      "hard_negative_variants": 1920,
+      "hard_negative_false_rate": 0.0036458333333333334,
+      "max_source_false_rate": 0.0036458333333333334,
+      "ambient_hours": 1.3896388888888889,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.1557631248714424
+    }
+  },
+  "limits": [
+    "v1 test/Mac sets informed development; these are regression results, not untouched final holdouts.",
+    "Four render variants share source utterances and are not independent trial counts.",
+    "MS-SNSD files are blob-disjoint; original room/recording session identities are unavailable.",
+    "No real-user positive wake-word recordings or Chinese/TV/music negative evaluation.",
+    "Not production acceptance; confidence bounds apply only to the measured audio distribution."
+  ]
+}
