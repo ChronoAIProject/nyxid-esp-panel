@@ -13,7 +13,7 @@ import soundfile as sf
 from features import FRAMES, RATE, background, features
 
 
-def render_stream(item, dataset, rng, variant, backgrounds):
+def render_stream(item, dataset, rng, variant, backgrounds, augmentation=None):
     pcm, rate = sf.read(Path(dataset) / item["path"], dtype="float32")
     assert rate == RATE and pcm.ndim == 1
     lead = 32000 if variant == 0 else int(rng.uniform(1.8, 4.5)*RATE)
@@ -23,35 +23,65 @@ def render_stream(item, dataset, rng, variant, backgrounds):
     level = float(rng.uniform(.015, .35))
     signal *= level / max(.01, float(np.sqrt(np.mean(pcm**2))))
     if variant >= 2:
-        ir = np.zeros(6400, dtype=np.float32)
-        ir[0] = 1
-        taps = rng.integers(60, len(ir), size=60)
-        ir[taps] += rng.normal(0, .15, len(taps))*np.exp(-taps/rng.uniform(500, 2400))
+        if augmentation:
+            ir, ir_rate = sf.read(augmentation["rir_path"], dtype="float32")
+            if ir_rate != RATE or ir.ndim != 1 or not np.isfinite(ir).all():
+                raise ValueError("Invalid room response")
+            onset = np.flatnonzero(np.abs(ir) >= float(np.abs(ir).max())*.1)
+            if not len(onset):
+                raise ValueError("Silent room response")
+            # Remove propagation delay; retain the measured reverberation tail.
+            ir = ir[onset[0]:]
+            ir /= max(1e-12, float(np.sqrt(np.sum(ir**2))))
+        else:
+            ir = np.zeros(6400, dtype=np.float32)
+            ir[0] = 1
+            taps = rng.integers(60, len(ir), size=60)
+            ir[taps] += rng.normal(0, .15, len(taps))*np.exp(-taps/rng.uniform(500, 2400))
         signal = fftconvolve(signal, ir)[:size]
+        if augmentation:
+            signal *= level/max(1e-8, float(np.sqrt(np.mean(signal[lead:lead+len(pcm)]**2))))
     # Zero is genuinely quiet. One covers sub-audible microphone floors. Two
     # covers colored noise; three uses a real source-disjoint background file.
     if variant == 0:
         noise = np.zeros(size, dtype=np.float32)
     elif variant == 1:
         noise = rng.normal(0, rng.uniform(.5, 25)/32768, size).astype(np.float32)
-    elif variant == 3 and backgrounds:
+    elif (variant == 3 or augmentation and variant % 2 == 1) and backgrounds:
         noise, rate = sf.read(str(rng.choice(backgrounds)), dtype="float32")
         assert rate == RATE and noise.ndim == 1
         offset = int(rng.integers(0, max(1, len(noise))))
         noise = np.resize(np.roll(noise, -offset), size)
         rms = max(1e-6, float(np.sqrt(np.mean(noise**2))))
-        noise *= level * 10**(-rng.uniform(5, 25)/20) / rms
+        snr = rng.uniform(*augmentation["snr_db"]) if augmentation else rng.uniform(5, 25)
+        noise *= level * 10**(-snr/20) / rms
     else:
-        noise = background(rng, size)*level*10**(-rng.uniform(5, 35)/20)
+        if augmentation:
+            snr = rng.uniform(*augmentation["snr_db"])
+            noise = background(rng, size)*level*10**(-snr/20)
+        else:
+            noise = background(rng, size)*level*10**(-rng.uniform(5, 35)/20)
     return np.clip(signal+noise, -1, 1)*32767, lead
 
 
 def worker(job):
-    item, dataset, variant, backgrounds = job
+    item, dataset, variant, backgrounds, *extra = job
     seed = int(hashlib.sha256(item["path"].encode()).hexdigest()[:8], 16)+variant
-    pcm, lead = render_stream(item, dataset, np.random.default_rng(seed), variant, backgrounds)
+    rng = np.random.default_rng(seed)
+    augmentation = None
+    metadata = {}
+    if extra:
+        if item["split"] != "training":
+            raise ValueError("Real-room augmentation is training-only")
+        config = extra[0]
+        rir = config["rirs"][int(rng.integers(len(config["rirs"])))]
+        augmentation = {"rir_path": rir["absolute_path"], "snr_db": config["snr_db"]}
+        metadata = {"rir_path": rir["path"], "rir_sha256": rir["sha256"],
+                    "augmentation": "measured-rir-noise", "snr_range_db": config["snr_db"],
+                    "rir_onset": "Trim before first sample within 20 dB of peak; L2 normalization"}
+    pcm, lead = render_stream(item, dataset, rng, variant, backgrounds, augmentation)
     raw = features(pcm)
-    record = {**item, "variant": variant, "lead_frame": lead//160,
+    record = {**item, **metadata, "variant": variant, "lead_frame": lead//160,
               "keyword_frame": (lead+item["keyword_end"])//160-2 if item["label"] else None}
     return record, raw
 

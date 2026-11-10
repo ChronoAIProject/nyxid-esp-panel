@@ -313,3 +313,71 @@ revision `b824a1ef2821f112fda0b9cb26e4278c62b425bb`; 270 mono 16 kHz WAVs passed
 upstream hash, format, finite-sample and nonzero-energy checks
 (`4090-mit-rir-audit.json`). They are prepared for training augmentation and
 have not yet been applied to a candidate. This is no new recognition result.
+
+## Measured-room experiment v4: rejected on validation
+
+`append_room_features.py` appended 28,600 training-only renderings to the
+unchanged v2 feature set. Both new variants convolve a measured MIT RIR;
+one uses colored noise and one a training-source background, at -5 to 10 dB
+SNR. All 270 audited responses were sampled. The RIR onset before the first
+sample within 20 dB of peak is removed, followed by L2 normalization; the
+reverberant speech level is normalized over the source-utterance interval.
+This is a combined room/noise intervention, not an isolated RIR experiment.
+No new speaker identities or original source WAVs are introduced.
+
+The audit covers 97,160 sequences and 48,549,947 frames, binary SHA-256
+`ae5d8fe17542569b2de97b239245c71ad33a33356529a65c951025dd6c3639ad`.
+`4090-v4-base-preservation.json` verifies the entire v2 binary prefix and
+existing index records byte-for-byte; additions are exclusively training.
+A 16-case comparison against commit `6a3b08b` confirms the renderer's
+original four variants still produce bit-identical PCM. The first comparison
+detected a changed RNG call order in the original colored-noise branch;
+that default path was corrected before the passing regression report.
+
+The same official64, 40,000-step, equal-engine, event-validation recipe on
+RTX 4090 selected step 40,000. INT8 model SHA-256 is
+`54b92ea0c149eab1f617a3068531b8a3886dd3d6df6ec87f110c2436c74669d3`.
+At quantized validation threshold 0.99, source-mean event recall is
+**49.974%** (Piper 64.531%, Kokoro 35.417%), versus v2 validation's 57.109%.
+Pooled recall is 1,324/2,160 correlated variants (61.296%); confusing-negative
+false detections are 0.4545%, maximum source 0.875%. Zero continuous events
+in 1.20481 source hours still gives a one-sided 95% upper bound of
+**2.4865/hour**, not acceptance. Hit latency is median 130 ms, p95 200 ms.
+No regression or final challenge scores were computed for this candidate.
+The eight-clip float/INT8 diagnostic passed reset reproducibility; mean score
+error is 0.00406 and float/quantized keyword hits are 4/3 of four positives.
+That small subset does not establish general equivalence. Reports use the
+`4090-*-v4-room*` names. Training reruns are not bit-exact, so the observed
+decline is not a causal estimate of RIR augmentation's effect.
+
+## Expanded negative source and controlled v5 candidate
+
+MUSAN original audio was obtained from the pinned `corypaik/musan` mirror
+revision `76f9882cfa4475efe11508ac9aa32722f84ca5b7`, with every selected parquet
+verified against its upstream LFS SHA-256. The official 11 GB archive transfer
+was stopped after measuring slow progress; the partial archive remains local,
+was not extracted and was not used for training. No equivalence of the whole
+mirror to that official archive is asserted.
+
+`prepare_musan.py` decoded the two declared music shards and both noise shards,
+then extracted actual 16 kHz waveform features through our common **10 ms**
+MicroFrontend. This avoids the incompatible 20 ms precomputed feature source.
+The result is 132 music recordings / **8.54676 source hours** and 930 noise
+recordings / **6.22631 source hours**. Music selection is the first two shards,
+not random genre-balanced sampling. Short clips are repeated to six seconds
+for training windows; exposure counts the original source duration only.
+The speech category was not imported, and vocal/ambient speech has not been
+exhaustively transcribed. Ten upstream README/license mapping files are
+retained locally; provenance hashes are in `4090-musan-licenses.json`.
+No audio or model weights are redistributed in git.
+
+`attach_training_negatives.py` verified prepared indices, feature arrays and
+source WAV hashes and screened exact WAV/decoded-PCM duplication against
+existing environment audio. None was found. Re-encoded/cropped source
+independence is not proven. The resulting v5 set reuses v4's generated
+feature binary and all evaluation records, adding only training ambient
+features. Combined continuous negative training exposure is **18.7485 hours**,
+up from 3.97543. Hashes/config are frozen in `4090-v5-training-protocol.json`;
+the normal feature audit passed. Candidate v5 uses the same architecture,
+40,000 steps and source sampling as v4, first evaluating quantized validation.
+At this milestone v5 training is in progress; no quality improvement is claimed.
