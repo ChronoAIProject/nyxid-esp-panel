@@ -35,7 +35,8 @@ def main():
     metadata = defaultdict(list)
     for row in json.loads(metadata_path.read_text()):
         if row['variant'] == 0:
-            metadata[row['sha256']].append(row)
+            source = (metadata_path.resolve().parent / 'dataset' / row['path']).resolve()
+            metadata[source].append(row)
     jobs_path = base / 'head-features-tts-v1/jobs-private.json'
     if sha(jobs_path) != plan['source_jobs_sha256']:
         raise ValueError('Source jobs differ')
@@ -44,6 +45,11 @@ def main():
     if len(chosen) != len(plan['sources']):
         raise ValueError('Repeated source in frozen sample')
     selected, heldout = [], set()
+    selected_ids = defaultdict(set)
+    for row in plan['selected_rows']:
+        if row['id'] in selected_ids[row['directory']]:
+            raise ValueError('Duplicate selected feature row')
+        selected_ids[row['directory']].add(row['id'])
     for directory, binding in plan['feature_inputs'].items():
         for file, key in [('index.jsonl', 'index_sha256'), ('complete.json', 'complete_sha256')]:
             if sha(base / directory / file) != binding[key]:
@@ -52,7 +58,7 @@ def main():
             row = json.loads(line)
             if row['split'] != 'training':
                 heldout.add(row['source_sha256'])
-            if row['source_sha256'] in chosen:
+            if row['id'] in selected_ids[directory]:
                 if row['split'] != 'training' or row['kind'] != 'tts':
                     raise ValueError('Only training TTS rows are allowed')
                 expected = chosen[row['source_sha256']]
@@ -61,6 +67,8 @@ def main():
                 selected.append(row)
     if heldout.intersection(chosen):
         raise ValueError('Held-out source overlaps selected training')
+    if {r['id'] for r in selected} != {r['id'] for r in plan['selected_rows']}:
+        raise ValueError('Selected feature coverage differs')
     variants = defaultdict(set)
     for row in selected:
         variants[row['source_sha256']].add(row['variant'])
@@ -79,14 +87,15 @@ def main():
         job = jobs[chosen_row['variant0_id']]
         if job['split'] != 'training' or job['source_sha256'] != source:
             raise ValueError('Source job is not the frozen training sample')
-        entries = metadata[source]
-        if not entries or any(e['split'] != 'training' or e['label'] != job['label'] for e in entries):
+        source_path = Path(job['source']).resolve()
+        entries = metadata[source_path]
+        if not entries or any(e['split'] != 'training' or e['label'] != job['label']
+                              or e['sha256'] != source for e in entries):
             raise ValueError('Source text role differs')
         unique_texts = {e['text'] for e in entries}
         if len(unique_texts) != 1:
             raise ValueError('Ambiguous source text metadata')
         texts[source] = next(iter(unique_texts))
-        source_path = Path(job['source']).resolve()
         if not source_path.is_relative_to(metadata_path.resolve().parent / 'dataset'):
             raise ValueError('Source outside the verified synthetic dataset')
         if sha(source_path) != source:

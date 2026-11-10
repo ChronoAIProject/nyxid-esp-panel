@@ -165,5 +165,12 @@
   ],
   "source_audio_hash_label_conflicts": 0,
   "next": "Retain the exact frozen384 audio hashes and canonical variant0 job IDs. Bind one canonical source path and its four variant IDs before scoring; use matching source-path text metadata rather than assuming audio hashes uniquely identify spelling.",
-  "accepted": false
+  "accepted": false,
+  "second_pre_scoring_attempt": {
+    "plan_sha256": "468e92a859c233586fb05d3c76c1a8b676f513bfc3505f254a90f3c14b2c495e",
+    "failure": "Source outside the verified synthetic dataset",
+    "cause": "Original verified dataset contains symlinks to source corpora. Requiring every resolved source to remain under the logical dataset directory is an invalid layout assumption.",
+    "detector_scores_computed": false,
+    "fix": "Use exact pinned metadata source-path, split, label and waveform hash bindings; retain source aliases instead of assuming one spelling per physical file."
+  }
 }
