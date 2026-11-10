@@ -1697,3 +1697,17 @@ v23已在4090开始训练；初始权重和随机分类头SHA与v19一致，BN f
 发布 `4090-librispeech100-training-features.json`、
 `4090-v23-librispeech100-feature-addition.json`、
 `4090-v23-librispeech100-initialization.json`。尚无最终训练/INT8评分结论。
+
+### v23训练与原验证结果：召回退化，正在核查误唤醒
+
+40k完成426.4s、选40k，BN统计/仿射哈希均不变。INT8模型SHA
+`061c4a4a378b8dac2d0e13a8e6d53739b469fcb889565f5c1e7db9fdb6695236`。
+密集INT8验证阈值0.94140625、source-macro71.171875%（Piper81.9271%、
+Kokoro60.4167%），早触发1，延迟中位120/P95190ms，原ambient零事件
+但只有1.2048h，上界2.486/h；不合格。低于v19密集验证81.6146%。
+小验证子集流式/整窗相位对齐、float/INT8显式重置通过；平均score漂移
+0.00145534、最大0.152816，仅诊断。该probe采用训练浮点验证0.95，
+不是后续INT8工作点，不据其4个正例宣称召回。
+为检验新增负语音是否消除v19的饱和误报，仍在冻结INT8阈值运行
+dev-other/Mandarin/DiPCo验证；这检验本轮负数据假设，不改变成功标准。
+未运行开发回归或最终集。
