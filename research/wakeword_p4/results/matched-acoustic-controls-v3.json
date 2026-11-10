@@ -1,0 +1,88 @@
+{
+  "scope": "Real Mac-speaker to development-panel-microphone diagnostic; original Hi ESP full application. No custom model acceptance.",
+  "phrases": [
+    "Hi E S P",
+    "Hey Nicks"
+  ],
+  "request": "Please repeat exactly: purple elephant.",
+  "engine": "gpt-4o-mini-tts",
+  "speed": 1.0,
+  "source_files": "AI-generated private fixtures; hashes retained below",
+  "fixtures": [
+    {
+      "voice": "marin",
+      "phrase": "hiesp",
+      "text": "Hi, E S P. Please repeat exactly: purple elephant.",
+      "sha256": "e6acb398ecab06597a44bd6affb4ca5022e36d9f0358db74b3679356fe024c9a",
+      "sample_rate": 16000,
+      "speed": 1.0
+    },
+    {
+      "voice": "marin",
+      "phrase": "hey-nyx",
+      "text": "Hey Nicks. Please repeat exactly: purple elephant.",
+      "sha256": "ea3b02ce55e0ec88241fa18fc031d6dffba176cac42fdfa1e2798aacc3389e3f",
+      "sample_rate": 16000,
+      "speed": 1.0
+    },
+    {
+      "voice": "echo",
+      "phrase": "hiesp",
+      "text": "Hi, E S P. Please repeat exactly: purple elephant.",
+      "sha256": "d06cb1d45f5e771d2eeb22708ea9944da829f42e707946ab3bf727e484e5fd7e",
+      "sample_rate": 16000,
+      "speed": 1.0
+    },
+    {
+      "voice": "echo",
+      "phrase": "hey-nyx",
+      "text": "Hey Nicks. Please repeat exactly: purple elephant.",
+      "sha256": "3771b79378b24cafa58ff60ccbf9b1c1c4d41becac382f959d3b3ca7af641d3c",
+      "sample_rate": 16000,
+      "speed": 1.0
+    },
+    {
+      "voice": "sage",
+      "phrase": "hiesp",
+      "text": "Hi, E S P. Please repeat exactly: purple elephant.",
+      "sha256": "b8892b0c16224519fd60e2bcfed53a5bc17a6226ae92db8a2dc2bb7b9ab31317",
+      "sample_rate": 16000,
+      "speed": 1.0
+    },
+    {
+      "voice": "sage",
+      "phrase": "hey-nyx",
+      "text": "Hey Nicks. Please repeat exactly: purple elephant.",
+      "sha256": "284ee0642cb8fce7efa2557d87da2eb21f0591acbb137120468018235002aa10",
+      "sample_rate": 16000,
+      "speed": 1.0
+    }
+  ],
+  "hi_esp": [
+    {
+      "voice": "marin",
+      "passed": true,
+      "exit_code": 0,
+      "wake_observed": true
+    },
+    {
+      "voice": "echo",
+      "passed": false,
+      "exit_code": 1,
+      "wake_observed": false
+    },
+    {
+      "voice": "sage",
+      "passed": false,
+      "exit_code": 1,
+      "wake_observed": false
+    }
+  ],
+  "quiet_seconds_for_passing_tests": 8,
+  "limits": [
+    "Marin is an existing training voice; echo/sage are existing validation voices. These are correlated synthetic development diagnostics.",
+    "Echo and Sage do not wake the reference. Retain failed controls; do not report matched cross-engine acoustic recall from these trials.",
+    "Source tiny.en ASR hears the intended phrase in all six files, but cannot establish phonetic pronunciation acceptance.",
+    "Production panel and new reserved voices/tests remain untouched."
+  ]
+}

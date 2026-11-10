@@ -503,6 +503,43 @@ tiny.en's Next transcriptions, as well as vowel variation and a few final-t/m
 confusions. Neither recognizer establishes human pronunciation acceptance.
 See `../results/style-phoneme-diagnostic-v3.json`. No testing audio was read.
 
+For a separately planned pronunciation-screen ablation, audit **all** training
+positives and training negatives beginning with `Hey `, then create a fresh
+feature view. Keep the selection and screening rule fixed before the complete
+audit is inspected. The current experimental rule searches the first twelve
+greedy phones for optional `h`, `eɪ/eː/e/ɛ`, `n`, `ɪ/i/iː`, `k`, `s`.
+It quarantines positives lacking that pattern and ambiguous negatives containing
+it. This imperfect recognizer can exclude legitimate accents: its predictions
+do not establish pronunciation truth or justify replacing source labels.
+
+```sh
+python research/wakeword_p4/training/quarantine_pronunciation.py \
+  --base-features "$PRIVATE_BASE_FEATURES" --audit "$PRIVATE_PHONEME_RESULTS" \
+  --selection "$PRIVATE_PHONEME_SELECTION" --output "$PRIVATE_FILTERED_FEATURES"
+python -m unittest discover -s research/wakeword_p4/training \
+  -p test_quarantine_pronunciation.py -v
+```
+
+The helper requires a complete audit bound to the exact source manifest and
+selection. It retains original audio and binary features, excludes only selected
+training index rows, preserves every validation/testing row exactly, and anchors
+chained human-feature paths to their original targets. Emptying a positive
+training engine fails before creating output. `generation.json` records source
+hashes, excluded counts, retained source counts and preservation checks; source
+labels and original files remain intact. A new training run and quantized
+validation comparison are necessary to find out whether screening helps.
+
+`train_stream.py --representative-bounds pixels` is a separate export-only
+calibration experiment: ensure the 0/26 input range using two pixels in the
+first real training sequence, following upstream `utils.py`, instead of two
+constant boundary frames. The default `full-frame` convention is unchanged.
+For the frozen style20k weights and 100 representative sequences, the exported
+TFLite bytes are identical, so this convention does not repair that candidate.
+Redundant scoring was stopped once identity was verified; see
+`../results/representative-input-bounds-v3.json`. Other checkpoints are untested.
+`audit_export.py --tflite` records the actual supplied INT8 file's checksum
+separately from the float training report and weights.
+
 ## Rejected/diagnostic paths
 
 - OmniVoice's tested MLX configuration generated waveform-valid files, but all

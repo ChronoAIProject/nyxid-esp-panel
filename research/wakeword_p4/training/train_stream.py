@@ -32,6 +32,8 @@ def main():
                         help="Export matching --initial-weights without optimization; requires --steps 0")
     parser.add_argument("--representative-samples", type=int, default=100,
                         help="Training-only sequences used for INT8 calibration; historical default is 100")
+    parser.add_argument("--representative-bounds", choices=("full-frame", "pixels"), default="full-frame",
+                        help="Calibration boundary ablation: historical constant frames or upstream-style two pixels in a real sample")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
@@ -276,12 +278,20 @@ def main():
     streaming.export(str(root/"saved_model"))
 
     def representative():
-        yield [np.zeros((1, 3, 40), dtype=np.float32)]
-        yield [np.full((1, 3, 40), 26, dtype=np.float32)]
-        for _ in range(args.representative_samples):
+        if args.representative_bounds == "full-frame":
+            yield [np.zeros((1, 3, 40), dtype=np.float32)]
+            yield [np.full((1, 3, 40), 26, dtype=np.float32)]
+        for number in range(args.representative_samples):
             # Quantization calibration keeps the ordinary training distribution,
             # independent of the optional optimization-time mining policy.
             x, _, _ = batch(mine=False)
+            if args.representative_bounds == "pixels" and number == 0:
+                # Match the upstream boundary convention without presenting an
+                # unrealistic all-maximum frame to every activation calibrator.
+                # Only the first representative sample changes; no training,
+                # validation, source feature or audio record is modified.
+                x[0, 0, 0] = 0.
+                x[0, 0, 1] = 26.
             for at in range(0, frames-2, 3):
                 yield [x[:1, at:at+3]]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
@@ -307,6 +317,7 @@ def main():
               "initial_weights_sha256": initial_weights_hash,
               "checkpoint_export_only": args.export_only,
               "representative_samples": args.representative_samples,
+              "representative_bounds": args.representative_bounds,
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),

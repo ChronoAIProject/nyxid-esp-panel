@@ -1,0 +1,277 @@
+{
+  "scope": "Fixed official64/335 recipe on expanded human data; validation-selected checkpoint followed by existing development regressions. No production acceptance.",
+  "plan_sha256": "86c86d79a7a56f36e7f8363f6b2463e9e525e1355542b6db5a5ce1a41130e7d9",
+  "selection": {
+    "scope": "Three prespecified checkpoints chosen on quantized validation before existing regressions. No new reserved tests scored. Full-app/human acceptance remains required.",
+    "candidates": [
+      {
+        "name": "official64-expanded335-10k",
+        "model_sha256": "b5f2479beeda80aa6cecafd4ed83226eb24b7ef0f95dabc92c99269203aa1aec",
+        "calibration_sha256": "6d7c77d5cb691344b59d9488cae2ee8eb181b520d0356e682c4a2a3d6c8cf455",
+        "selected": {
+          "threshold": 0.5,
+          "positive_variants": 2392,
+          "recall": 0.9184782608695652,
+          "macro_recall": 0.8749801587301587,
+          "recall_by_engine": {
+            "openai-tts": 0.8055555555555556,
+            "edge-tts": 0.8214285714285714,
+            "kokoro": 0.8541666666666666,
+            "macos-say": 0.9609375,
+            "piper": 0.9328125
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.043536324786324784,
+          "max_source_false_rate": 0.0625,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 38,
+              "false_rate": 0.06785714285714285
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 8,
+              "false_rate": 0.023809523809523808
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 12,
+              "false_rate": 0.0375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 2,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 3,
+              "false_rate": 0.009375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 6,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 94,
+              "false_rate": 0.04895833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.06785714285714285,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 3,
+          "ambient_false_per_hour": 0.40962217664121947,
+          "ambient_false_per_hour_upper_95": 1.0586898879667346
+        },
+        "policy_operating_point": true,
+        "strict_operating_point": false
+      },
+      {
+        "name": "official64-expanded335-20k",
+        "model_sha256": "37b92e5c9a50af4e16090bf59e24aa25a63b860add5d05d2de3f23b3958c3a19",
+        "calibration_sha256": "ad00b69e4dfca75cc5f963d35b46ca5a0e10bc15ae2b697e449cb70d676f74e0",
+        "selected": {
+          "threshold": 0.15,
+          "positive_variants": 2392,
+          "recall": 0.9226588628762542,
+          "macro_recall": 0.8453373015873016,
+          "recall_by_engine": {
+            "piper": 0.9453125,
+            "macos-say": 0.9609375,
+            "openai-tts": 0.8055555555555556,
+            "kokoro": 0.7291666666666666,
+            "edge-tts": 0.7857142857142857
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.04487179487179487,
+          "max_source_false_rate": 0.07291666666666667,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 41,
+              "false_rate": 0.07321428571428572
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 5,
+              "false_rate": 0.01488095238095238
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 8,
+              "false_rate": 0.025
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 4,
+              "false_rate": 0.020833333333333332
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 9,
+              "false_rate": 0.028125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 7,
+              "false_rate": 0.07291666666666667
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 94,
+              "false_rate": 0.04895833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.07321428571428572,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 3,
+          "ambient_false_per_hour": 0.40962217664121947,
+          "ambient_false_per_hour_upper_95": 1.0586898879667346
+        },
+        "policy_operating_point": true,
+        "strict_operating_point": false
+      },
+      {
+        "name": "official64-expanded335-30k",
+        "model_sha256": "aaf9381f6970ff0a5f2ae0aa9f8bd2b366026eda6b0b80cb6ef73f5f121b6c52",
+        "calibration_sha256": "9d7ba04b308b453e7895e0b73e0f72d7ca9be05fcbcceed42fe4e9599391503d",
+        "selected": {
+          "threshold": 0.15,
+          "positive_variants": 2392,
+          "recall": 0.9443979933110368,
+          "macro_recall": 0.8596874999999999,
+          "recall_by_engine": {
+            "kokoro": 0.7083333333333334,
+            "piper": 0.9677083333333333,
+            "edge-tts": 0.8125,
+            "macos-say": 0.9765625,
+            "openai-tts": 0.8333333333333334
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.0531517094017094,
+          "max_source_false_rate": 0.07291666666666667,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 52,
+              "false_rate": 0.09285714285714286
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 7,
+              "false_rate": 0.020833333333333332
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 10,
+              "false_rate": 0.03125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 4,
+              "false_rate": 0.020833333333333332
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 9,
+              "false_rate": 0.028125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 7,
+              "false_rate": 0.07291666666666667
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 110,
+              "false_rate": 0.057291666666666664
+            }
+          },
+          "max_corpus_false_rate": 0.09285714285714286,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 3,
+          "ambient_false_per_hour": 0.40962217664121947,
+          "ambient_false_per_hour_upper_95": 1.0586898879667346
+        },
+        "policy_operating_point": true,
+        "strict_operating_point": false
+      }
+    ],
+    "selected_name": "official64-expanded335-10k",
+    "accepted": false
+  },
+  "paired": {
+    "hey_nyx": {
+      "positives_any_event": {
+        "clips": 50,
+        "clips_with_event": 41,
+        "events": 41
+      },
+      "shared_ordinary_sentences": {
+        "clips": 100,
+        "clips_with_event": 1,
+        "events": 1
+      },
+      "nyx_specific_near_words": {
+        "clips": 90,
+        "clips_with_event": 8,
+        "events": 8
+      }
+    },
+    "hi_esp": {
+      "positives_any_event": {
+        "clips": 50,
+        "clips_with_event": 48,
+        "events": 48
+      },
+      "shared_ordinary_sentences": {
+        "clips": 100,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "nyx_specific_near_words": {
+        "clips": 90,
+        "clips_with_event": 0,
+        "events": 0
+      }
+    }
+  },
+  "english": {
+    "hey_nyx": {
+      "events": 7,
+      "hours_including_separators": 5.549022395833333,
+      "false_per_hour": 1.2614834651336388,
+      "false_per_hour_upper_95": 2.369446879923357
+    },
+    "hi_esp": {
+      "events": 0,
+      "hours_including_separators": 5.549022395833333,
+      "false_per_hour": 0.0,
+      "false_per_hour_upper_95": 0.539866675579366
+    }
+  },
+  "mandarin": {
+    "hey_nyx": {
+      "events": 1,
+      "hours_including_separators": 1.2938333333333334,
+      "false_per_hour": 0.7728970758727296,
+      "false_per_hour_upper_95": 3.6665190146004716
+    },
+    "hi_esp": {
+      "events": 0,
+      "hours_including_separators": 1.2938333333333334,
+      "false_per_hour": 0.0,
+      "false_per_hour_upper_95": 2.315392714327443
+    }
+  },
+  "accepted": false,
+  "conclusion": "Reject replacement:41/50 paired recall versus48/50,7 English events/5.549h and1 Mandarin/1.294h versus zero reference events.",
+  "limits": [
+    "Different initialization and topology from transfer60 warm lineage; not a causal width-only experiment.",
+    "Synthetic/regression corpora have informed development. No new reserved English/Mandarin test scores read.",
+    "No model-bound P4 numeric/full-application/human acceptance for this new topology."
+  ]
+}

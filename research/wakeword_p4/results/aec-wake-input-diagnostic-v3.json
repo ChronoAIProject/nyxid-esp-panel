@@ -1,0 +1,183 @@
+{
+  "scope": "One matched Marin acoustic fixture; copies of the existing single I2S/AEC/AGC producer, with independent transport sample indexes and no missing samples. Fixed rejected style20k diagnostic, not recognition acceptance.",
+  "model_sha256": "1c3a75ae08f68cf85c3781df5c1c587fa38cc0419ba14f20510a1ac07313a6fe",
+  "threshold": 0.1,
+  "prime_samples": 85920,
+  "capture_sha256": {
+    "mic-ref-clean.wav": "871d051ed2820968ff192b4ac0e17fe1da7e965168a08cb6bdef56bd47b93aaf",
+    "agc.wav": "911a8dbe9c5ea749f81759bd7e3c0add6a2e4c3a785f89a9054ee58c343d016c"
+  },
+  "source_sha256": "ea3b02ce55e0ec88241fa18fc031d6dffba176cac42fdfa1e2798aacc3389e3f",
+  "transport": {
+    "base_samples": [
+      0,
+      0
+    ],
+    "next_samples": [
+      480000,
+      480000
+    ],
+    "packets": [
+      3750,
+      3000
+    ],
+    "missing_samples": [
+      0,
+      0
+    ],
+    "captured_audio_seconds_per_stage": 30
+  },
+  "reference_channel_peak": 0,
+  "results": [
+    {
+      "stage": "source",
+      "samples": 99200,
+      "peak": 19228,
+      "rms": 1755.940492630452,
+      "maximum_smoothed_score": 0.9687500000000001,
+      "events_at_frozen_threshold": 1
+    },
+    {
+      "stage": "raw_mic",
+      "samples": 480000,
+      "peak": 1990,
+      "rms": 69.85821755825629,
+      "maximum_smoothed_score": 0.99609375,
+      "events_at_frozen_threshold": 1
+    },
+    {
+      "stage": "aec_clean",
+      "samples": 480000,
+      "peak": 2135,
+      "rms": 68.33561111041104,
+      "maximum_smoothed_score": 0.0,
+      "events_at_frozen_threshold": 0
+    },
+    {
+      "stage": "agc_detector_input",
+      "samples": 480000,
+      "peak": 4283,
+      "rms": 134.6421960698057,
+      "maximum_smoothed_score": 0.0,
+      "events_at_frozen_threshold": 0
+    }
+  ],
+  "phase_diagnostic": {
+    "scope": "Offline phase diagnostic only; existing capture, frozen threshold, no board or original wave changes.",
+    "results": [
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 0,
+        "max_smoothed_score": 0.99609375,
+        "events": 1
+      },
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 80,
+        "max_smoothed_score": 0.99609375,
+        "events": 1
+      },
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 160,
+        "max_smoothed_score": 0.99609375,
+        "events": 1
+      },
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 240,
+        "max_smoothed_score": 0.99609375,
+        "events": 1
+      },
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 320,
+        "max_smoothed_score": 0.9945312500000001,
+        "events": 1
+      },
+      {
+        "stage": "raw_mic",
+        "leading_shift_samples": 400,
+        "max_smoothed_score": 0.99609375,
+        "events": 1
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 0,
+        "max_smoothed_score": 0.0,
+        "events": 0
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 80,
+        "max_smoothed_score": 0.0023437500000000003,
+        "events": 0
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 160,
+        "max_smoothed_score": 0.0023437500000000003,
+        "events": 0
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 240,
+        "max_smoothed_score": 0.0046875,
+        "events": 0
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 320,
+        "max_smoothed_score": 0.0,
+        "events": 0
+      },
+      {
+        "stage": "aec_clean",
+        "leading_shift_samples": 400,
+        "max_smoothed_score": 0.0,
+        "events": 0
+      }
+    ]
+  },
+  "temporary_experiment": {
+    "scope": "Temporary full-app development experiment; not a production release",
+    "experimental_bin_sha256": "3a5aa881aa6e291f7b087d9846d82b0e0851d6865d797f14fd69a29b988ba69a",
+    "experimental_elf_sha256": "42b72100145a9bc2324aba465ecd2e5589b6b8a781ff21836b0893d57a2272f9",
+    "restored": true,
+    "acceptance_exit_code": 1
+  },
+  "conclusion": "For this same real acoustic phrase, raw mic input triggers robustly across six sub-hop/stride phases, whereas communication-AEC output and later AGC fail. The reference is silent. Detection is lost at that preprocessing stage; this does not establish a defect in communication AEC or a general recall rate.",
+  "implementation": "Experimental idle detector receives raw samples from the existing single I2S producer and uses MicroFrontend NR/PCAN. AEC/AGC preroll, active-call FIFO, codec, PCM speed, default Hi ESP input and service permissions stay as before. No second microphone reader.",
+  "physical_fix_verification": {
+    "scope": "Old rejected style20k model, matched Marin speaker fixture; integration evidence only",
+    "experiment": {
+      "scope": "Temporary full-app development experiment; not a production release",
+      "experimental_bin_sha256": "f15cc12cda8750aafdd6355ca93f155faf2bbe69bce32a1daf773e5069c7d6b2",
+      "experimental_elf_sha256": "46b2d205ddfd36c24d2d8ff8332c4ec6d6b2d6ff8ee6e472d0c9b70a38a93cdf",
+      "restored": true,
+      "acceptance_exit_code": 0
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "passed": true,
+        "user_turns": 1,
+        "assistant_turns": 1,
+        "owned_call_stopped": true
+      },
+      {
+        "round": 2,
+        "passed": true,
+        "user_turns": 1,
+        "assistant_turns": 1,
+        "owned_call_stopped": true
+      }
+    ],
+    "quiet_seconds_each": 8,
+    "complete_immediate_request_each": true,
+    "wakeup_after_hangup": true,
+    "no_extra_conversation_turns": true
+  },
+  "accepted": false,
+  "privacy": "Raw audio, packet-capture code, network endpoints and UART/account logs stay private. Temporary capture code removed; clean firmware rebuilt; original app restored."
+}

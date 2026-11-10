@@ -66,7 +66,8 @@ def main():
             # Select distinct original clips, not just four correlated variants.
             group = [r for r in records if r["split"] == "validation" and r["engine"] == engine and r["label"] == label and r["variant"] == 0]
             selected.extend(group[:args.per_group])
-    detector = Detector(args.tflite or args.model/"hey_nyx.tflite")
+    quantized_path = args.tflite or args.model/"hey_nyx.tflite"
+    detector = Detector(quantized_path)
     details = []
     for row in selected:
         source = raw[row["offset"]:row["offset"]+row["frames"]]
@@ -89,7 +90,10 @@ def main():
                         "float_stream_int8_mean_delta": float(np.mean(np.abs(fs-qs))),
                         "float_max": float(fs.max()), "int8_max": float(qs.max())})
         print(json.dumps(details[-1]), flush=True)
-    result = {"model_sha256": report["model_sha256"], "input_frames": frames,
+    result = {"model_sha256": hashlib.sha256(quantized_path.read_bytes()).hexdigest(),
+              "float_training_report_sha256": hashlib.sha256((args.model/"training.json").read_bytes()).hexdigest(),
+              "float_weights_sha256": hashlib.sha256((args.model/"best.weights.h5").read_bytes()).hexdigest(),
+              "input_frames": frames,
               "effective_frames": effective_frames, "stride": stride, "details": details,
               "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "scope": "Selected validation clips only; aligned numerical diagnostic, not a recognition or real-user acceptance result."}

@@ -1,0 +1,72 @@
+{
+  "scope": "Preliminary shared-embedding MCU feasibility inspection only; no training, P4 runtime, accuracy or license provenance acceptance",
+  "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/embedding_model.tflite",
+  "sha256": "c0aea21eb84a4ce90a08c870da41b7a7173b45269e6a3207c71d67c40f3a59d8",
+  "bytes": 1330312,
+  "input_shape": [
+    1,
+    76,
+    32,
+    1
+  ],
+  "output_shape": [
+    1,
+    1,
+    1,
+    96
+  ],
+  "float32": true,
+  "conv_dense_macs_per_invoke": 41955840,
+  "at80ms_macs_per_second": 524448000.0,
+  "operators": {
+    "PAD": 1,
+    "CONV_2D": 20,
+    "LEAKY_RELU": 19,
+    "MAXIMUM": 19,
+    "MAX_POOL_2D": 5
+  },
+  "constraints": [
+    "Float embedding alone1.33MB exceeds remaining space of current app slot; quantization/native frontend would need evaluation.",
+    "42million conv/dense MACs each80ms require an actual P4 benchmark before choosing this runtime. Host operation count is not device latency.",
+    "Mel frontend successfully allocates/invokes after resizing its default [1,1] dynamic audio input to [1,1280]. Native frontend equivalence and P4 cost remain unmeasured.",
+    "Do not assume the included wake-classifier model license applies to the Google Apache2.0 embedding; exact artifact provenance still needs verification."
+  ],
+  "mel_dynamic_input_check": {
+    "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/melspectrogram.tflite",
+    "bytes": 1092516,
+    "sha256": "96fa0adccb6e8cf95cb14465409a1a2898ee4a96a85bb9ed3c7eb0e68bf163e8",
+    "default_shape": [
+      1,
+      1
+    ],
+    "shape_signature": [
+      -1,
+      -1
+    ],
+    "resized_shape": [
+      1,
+      1280
+    ],
+    "output_shape": [
+      1,
+      1,
+      5,
+      32
+    ],
+    "allocate_and_silence_invoke_passed": true,
+    "operators": {
+      "EXPAND_DIMS": 4,
+      "TRANSPOSE": 5,
+      "CONV_2D": 2,
+      "SQUEEZE": 2,
+      "MUL": 4,
+      "ADD": 1,
+      "BATCH_MATMUL": 1,
+      "MINIMUM": 2,
+      "MAXIMUM": 2,
+      "LOG": 1,
+      "REDUCE_MAX": 1,
+      "SUB": 1
+    }
+  }
+}

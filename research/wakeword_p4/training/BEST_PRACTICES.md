@@ -71,6 +71,16 @@ openWakeWord is useful for data and evaluation practices; its larger embedding
 runtime is not the chosen MCU implementation. The panel keeps its original
 16 kHz mono audio, 24 kbps Opus, 20 ms transport frames and speech speed.
 
+A preliminary inspection of the v0.5.1 float embedding finds 1,330,312 bytes
+and 41,955,840 convolution/dense MACs per invocation (about 524 million/s at
+80 ms intervals), before its frontend/classifier. It does not fit the current
+app's remaining OTA-slot space in that form. These counts do not establish P4
+latency: quantization, native mel features, memory placement and a real board
+benchmark would need evaluation before choosing this route. The default-shape
+mel model needs its dynamic `[1,1]` audio input resized: reference allocation and
+silence inference pass at `[1,1280]`. No classifier, P4 runtime or license-provenance acceptance is
+claimed. See `../results/embedding-feasibility-v3.json`.
+
 ## First trained candidate: rejected
 
 The first experiment generated 7,920 Piper clips with disjoint source-speaker

@@ -420,6 +420,139 @@ transcripts to hide echo. Measure full-app flash, CPU, RAM and AEC stability.
   testing scores or production-board changes occurred. Development-board
   status still verifies the original app, service and Hi ESP listener.
 
+- Both prespecified 20k fine-tunes and all four 10k/20k INT8 exports/calibrations
+  completed. The expanded-human 10k export is frozen by validation only:
+  threshold 0.7, 88.67% mean-engine recall, three events / 7.324 h. Its 20k
+  checkpoint lowers recall to 84.08%; additional steps do not improve this
+  selection. The current-data control's 10k/20k recalls are 88.09%/86.57% at
+  their own 0.4 thresholds. New reserved testing remains unread.
+- The frozen expanded10k candidate improves the old style20k long-negative
+  regression from five English/two Mandarin events to one English event /
+  5.549 h and zero Mandarin events / 1.294 h. Hi ESP has zero on both exact
+  PCM baselines. Paired Mac recall is 42/50 versus Hi ESP's 48/50, with one
+  ordinary-sentence false wake / 100 versus zero. Reject it as a replacement:
+  this is a recall/FAR tradeoff, not achievement of Hi ESP performance. See
+  `../results/specaug-controlled-finetunes-v3.json`. An initial paired launcher
+  used the wrong manifest and was rejected before scoring; the corrected run
+  uses the completed 352-clip baseline's exact manifest including two controls.
+- A separate full-application research adapter now builds with the pinned
+  release dependencies, matching model/training/calibration hashes and the
+  existing single I2S/AEC/AGC producer and ordered FIFO. The old style20k model
+  was used for integration diagnostics only, not candidate acceptance. Its
+  6,608,784-byte app boots, selects the original service and reports Hey Nyx
+  listening; a synthetic Daniel wake-plus-request fails to trigger. Its exact
+  source WAV triggers host INT8 inference (maximum smoothed score 0.95625 at
+  frozen threshold 0.1), so microphone/domain/runtime diagnostics are needed.
+  A new Daniel Hi ESP control also fails, while the previously verified Hi ESP
+  source passes the real wake/request/reply/quiet/cleanup test. Do not attribute
+  the failure solely to the custom model or claim matched acoustic recall.
+  The original app, service and Hi ESP listener were restored and verified
+  after the unsuccessful experimental command. Diagnostic UART progress and
+  resource measurements are being added in the separate runtime checkout.
+
+- The current full-app diagnostic records nonzero microphone peaks up to 17,742
+  while every five-second maximum smoothed score remains zero. Its inference
+  progresses at the expected real-time rate, mean about 2.6 ms / 30 ms step,
+  with at least 11,748 bytes of wake-task stack free. These are diagnostic
+  observations, not final CPU/latency acceptance. A bounded exact-PCM startup
+  self-test now compares 132 host output bytes, spanning 0..247, through the
+  complete firmware's own frontend and model. It is model-bound and optional,
+  and its detector is discarded before microphone listening. Hardware result
+  is pending. Eight runtime artifact/self-test boundary tests pass.
+- A new prespecified official64/335-frame run is active on the completed
+  expanded-human corpus: 30k steps, 10k checkpoints, learning rate 3e-4,
+  negative weight 5, uniform engines, 50%/pool4 mining, feature masking and
+  100 representative sequences. This changes topology/initialization from the
+  transfer60 warm-start lineage and is not a causal width-only comparison.
+  Keep the same quantized validation policy and freeze the choice before
+  existing regressions. New reserved test scores remain unread.
+
+- The complete-firmware numeric startup self-test passes: 132/132 output bytes
+  match, including scores 0..247. The test detector is destroyed before live
+  listening. A temporary 30-second copy of the existing detector input then
+  captured exactly 480,000 microphone-path samples, 3,000 packets from sample
+  zero with no missing samples. Replaying that PCM on the host with the exact
+  85,920-sample rounded prime also produces all-zero scores. Offline gain
+  factors 1/2/4/8/16 do not repair it. This case is not established runtime
+  numerical divergence; the received acoustic/input distribution is failing.
+  Tiny.en hears `Hey mix` in both source and capture, so pronunciation remains
+  uncertain and the failed new Daniel Hi ESP control must not be ignored.
+  No speed, board gain, AEC or buffering change was made. All four full-app
+  experiments restored and verified the original app/service/Hi ESP listener.
+  Temporary audio-copy code was removed from working source. See
+  `../results/full-app-runtime-diagnostic-v3.json`.
+- The official64 run has saved its 10k checkpoint and continues the fixed 30k
+  schedule. A separate private checkpoint workflow exports and calibrates each
+  prespecified 10k/20k/30k artifact as it becomes available, then freezes the
+  quantized validation choice before the existing paired/English/Mandarin
+  regressions. It never scores newly reserved tests or declares acceptance.
+
 Keep each run in a fresh private artifact directory. Record source hashes and
 failed results. Choose candidates from validation only; reserve new unseen
 voices/conditions and real recordings for subsequent acceptance.
+
+- The training-only pronunciation audit now covers all 6,851 prespecified
+  positive/Hey-negative source clips. It is still running. A fresh feature-view
+  helper implements the frozen screening ablation, with no label changes and
+  exact validation/testing record and chained-human-target preservation. Six
+  boundary tests pass, including incomplete audits, label tampering, held-out
+  selections and empty positive engines. No screened training has begun.
+- Six matched natural-speed synthetic acoustic fixtures have been generated
+  with three OpenAI voices for both Hi ESP and Hey Nyx plus the same immediate
+  request. Marin is an existing training voice; echo/sage are existing validation
+  voices, so this is a development diagnostic, not independent holdout recall.
+  Physical Hi ESP wake/request/reply checks are running on the restored original
+  development app before trying a newly selected candidate. No production board
+  or reserved test voice is involved.
+- Physical Hi ESP controls complete: Marin passes wake, immediate request,
+  complete reply and eight quiet seconds; Echo and Sage do not wake. Tiny.en
+  hears the intended source phrases in all six files, which does not establish
+  phonetic acceptance or remove the failed controls. The existing rejected
+  style20k app is now being measured with the matched Marin fixture for a
+  diagnostic full-app comparison. See `../results/matched-acoustic-controls-v3.json`.
+- A fixed-weight calibration-boundary experiment follows upstream's two-pixel
+  min/max convention instead of artificial constant frames. All 22 stored H5
+  arrays and the complete exported TFLite bytes match the historical style20k
+  control exactly. Redundant validation/fidelity/regression scoring was stopped:
+  this convention does not explain or fix that artifact's recognition failure.
+  The historical default is unchanged. `audit_export.py` now identifies an
+  explicitly supplied INT8 artifact separately from its float weights/report.
+  See `../results/representative-input-bounds-v3.json`.
+- Before completing the phoneme audit, a matched follow-up plan was recorded:
+  unfiltered versus screened training data, both initialized from expanded10k,
+  identical 10k-step recipes and prespecified 5k/10k checkpoints. It launches
+  only after the complete identity/preservation checks and nonempty positive
+  engine check. Quantized validation selects across four exports before the
+  existing development regressions. No fresh testing or acceptance is implied.
+- Official64/335 training and all three INT8 calibrations/regressions completed.
+  Validation freezes 10k: mean-engine recall87.50% at0.5 versus84.53%/85.97%
+  for20k/30k. Paired recall41/50 is below Hi ESP48/50, with seven English
+  events/5.549h and one Mandarin event/1.294h versus zero reference events.
+  Reject the replacement. See `../results/official64-expanded-v3.json`.
+- All6,851 pronunciation audits completed. The frozen view excludes1,883
+  positive and three ambiguous-negative sources, preserving every held-out row
+  and original feature target. It retains very few Mac/Kokoro positives, so the
+  screen may discard legitimate accents. Both matched10k fine-tunes are active;
+  four5k/10k INT8 exports are selected only by unchanged validation. See
+  `../results/training-pronunciation-screen-v3.json`.
+- A development-only30s stage capture locates the matched Marin failure:
+  source0.96875 and raw mic0.99609375 each trigger; communication-AEC clean
+  and subsequent AGC both score zero. Both transports start at sample0 and
+  finish at480,000 with no loss; playback reference peak is zero. Across six
+  leading phase shifts0..400samples, raw mic always triggers and AEC output
+  never does (max0.0046875). This demonstrates loss at the preprocessing stage
+  for this phrase, not defective communication AEC or population-level recall.
+  Private capture code is removed, clean build passes and original app restores.
+- The opt-in runtime now feeds idle custom detection from raw mic samples of
+  the existing single I2S producer, using its own MicroFrontend NR/PCAN. The
+  processed preroll/call FIFO and communication AEC/AGC, Opus and normal speed
+  are unchanged; default Hi ESP keeps its original input. Two real acoustic
+  wake/request/reply/hangup/rearm rounds are running with the diagnostic old
+  style20k artifact. Its rejected offline metrics still prevent acceptance.
+  See `../results/aec-wake-input-diagnostic-v3.json`.
+- Both raw-input full-app Marin rounds pass: each records the complete immediate
+  request, exactly one user turn and one reply, eight quiet seconds without
+  another turn, own-call cleanup and successful rearming for the next wake.
+  The runner restores/verifies the original app. This fixes the demonstrated
+  input-path integration failure; the old style20k model remains rejected for
+  its offline recall/FAR. No human/production acceptance is claimed.

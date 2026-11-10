@@ -1,0 +1,25 @@
+{
+  "scope": "Fixed-weight PTQ boundary convention experiment; not model acceptance",
+  "plan_sha256": "4c4bfa0a01b714562c1f6313a2fc9c45747a7376c6ba1d675a477f459c1a67a3",
+  "question": "Does upstream-style input-bound pixel calibration improve INT8 fidelity compared with historical constant minimum/maximum frames?",
+  "fixed": "Same selected style20k float checkpoint, architecture, seed726, representative100 ordinary training sequences, source data and normal PCM speed. No optimization.",
+  "change": "Remove two artificial constant boundary frames; set two pixels in the first real sequence to0 and26, following pinned upstream utils.py. Changes initial calibration history as well as input examples.",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "weight_identity": {
+    "arrays": 22,
+    "all_float_weights_bit_exact": true,
+    "control_model_sha256": "1c3a75ae08f68cf85c3781df5c1c587fa38cc0419ba14f20510a1ac07313a6fe",
+    "new_model_sha256": "1c3a75ae08f68cf85c3781df5c1c587fa38cc0419ba14f20510a1ac07313a6fe"
+  },
+  "outcome": {
+    "same_model_bytes": true,
+    "repeated_evaluation_cancelled": "Exact byte identity to historical control established. No new validation, float/INT8 audit or regression needed for identical executable artifact. Partial redundant validation output retained.",
+    "accepted": false,
+    "conclusion": "Changing the representative input-bound convention does not change this export; it does not explain or repair its recognition failure."
+  },
+  "historical_default_unchanged": true,
+  "limits": [
+    "Only this fixed checkpoint and representative sample selection were measured. Other checkpoints may produce different ranges.",
+    "No new reserved testing audio or detector scores were inspected."
+  ]
+}
