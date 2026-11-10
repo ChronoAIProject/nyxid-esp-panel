@@ -613,3 +613,19 @@ restricted to command-followed clips, and no single spelling group explains
 Kokoro behavior. These remain validation diagnostics, not independent trials.
 `audit_embedding_confusions.py --label 1` uses the same smoothed event policy
 and keyword hit window; default label0 preserves the negative phrase audit.
+
+The v3 mining run completed40k steps in214.4s; validation selects20k/threshold0.9.
+Source-macro recall51.380% (Piper22.344%, Kokoro80.417%), pooled622/2160;
+zero ambient events/1.20481h, upper95%2.48647/h; max confusing-source false0.9375%.
+Latency median224.375ms/p95312.909ms. This remains rejected and is not better
+than the existing v6 MCU candidate on source-macro validation recall. The
+reference gains primarily occur in Kokoro; Piper recall is worse than v2.
+Single runs with changed RNG consumption do not establish statistical effects.
+No regression or independent final fixture was scored in any of these runs.
+
+Next optimization control should address another concrete upstream deviation:
+`auto_train` uses target LR1e-4 with20% warmup, one-third hold and cosine decay,
+whereas these diagnostics used constant1e-3. Upstream also ramps negative weight
+and filters low-loss samples; these remain separate factors to investigate,
+not claims of a reproduced recipe. Preserve the existing validation criteria
+rather than relaxing the confusing-negative cap to make a candidate pass.
