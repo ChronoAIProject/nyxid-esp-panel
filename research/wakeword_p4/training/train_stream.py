@@ -13,6 +13,7 @@ import tensorflow as tf
 
 from features import FRAMES
 from evaluate import events, smooth, THRESHOLDS
+from near_word_windows import key as near_word_key, load_windows, map_end
 
 
 def main():
@@ -39,6 +40,8 @@ def main():
     parser.add_argument("--negative-weight", type=float, default=20.)
     parser.add_argument("--negative-focus-gain", type=float, default=0.,
                         help="Training only: multiply negative BCE by 1 + gain * stop_gradient(score^2)")
+    parser.add_argument("--near-word-windows", type=Path,
+                        help="Reschedule half of selected standalone negative draws after phrase end")
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--hard-negative-fraction", type=float, default=0.,
@@ -70,6 +73,8 @@ def main():
         parser.error("Choose a pretrained encoder or learned initial weights, not both")
     if not 0 <= args.hard_negative_fraction <= 1 or args.hard_negative_pool < 1 or args.hard_negative_start_step < 0:
         parser.error("Invalid hard-negative mining settings")
+    if args.near_word_windows and (args.export_only or args.hard_negative_fraction):
+        parser.error("Near-word rescheduling requires training without hard-negative mining")
     initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
@@ -85,7 +90,10 @@ def main():
     from microwakeword.layers import modes
 
     raw = np.memmap(args.features/"features.bin", mode="r", dtype="<u2").reshape(-1, 40)
-    records = json.loads((args.features/"features.json").read_text())
+    index_bytes = (args.features/"features.json").read_bytes()
+    records = json.loads(index_bytes)
+    windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
+    scheduled = changed = 0
     groups = {}
     for split in ("training", "validation", "testing"):
         groups[split] = {}
@@ -105,14 +113,15 @@ def main():
     def sequence(row):
         return raw[row["offset"]:row["offset"]+row["frames"]]
 
-    def sample(label, count):
+    def sample(label, count, reschedule=False):
+        nonlocal scheduled, changed
         sources = groups["training"][label]
         engines = list(sources)
         probabilities = (np.sqrt([len(sources[e]) for e in engines])
                          if args.source_sampling == "sqrt" else np.ones(len(engines)))
         probabilities /= probabilities.sum()
         output = []
-        for _ in range(count):
+        for slot in range(count):
             rows = sources[str(rng.choice(engines, p=probabilities))]
             row = rows[int(rng.integers(len(rows)))]
             data = sequence(row)
@@ -123,6 +132,13 @@ def main():
                 # boundaries, rather than only one phrase-end crop.
                 lo = max(frames, row["lead_frame"]-25)
                 end = int(rng.integers(lo, len(data)+1))
+                if reschedule and (slot + current_step) % 2 == 0:
+                    bounds = windows.get(near_word_key(row))
+                    if bounds is not None:
+                        remapped = map_end(end, lo, len(data), bounds)
+                        scheduled += 1
+                        changed += remapped != end
+                        end = remapped
             end = min(len(data), max(frames, end))
             output.append(data[end-frames:end])
         return np.asarray(output)
@@ -149,7 +165,7 @@ def main():
             _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
-        x = scale(np.concatenate((sample(1, 32), negative_sample(sample(0, 48*multiplier), 48),
+        x = scale(np.concatenate((sample(1, 32), negative_sample(sample(0, 48*multiplier, bool(windows) and mine), 48),
                                   negative_sample(np.asarray(noise), 48))))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
@@ -292,6 +308,8 @@ def main():
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))
 
+    representative_digest = hashlib.sha256()
+
     def representative():
         if args.representative_bounds == "full-frame":
             yield [np.zeros((1, 3, 40), dtype=np.float32)]
@@ -308,7 +326,9 @@ def main():
                 x[0, 0, 0] = 0.
                 x[0, 0, 1] = 26.
             for at in range(0, frames-2, 3):
-                yield [x[:1, at:at+3]]
+                item = x[:1, at:at+3]
+                representative_digest.update(item.astype("<f4", copy=False).tobytes())
+                yield [item]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
     converter._experimental_variable_quantization = True
@@ -322,6 +342,7 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "input_frames": frames, "negative_weight": args.negative_weight,
               "negative_focus_gain": args.negative_focus_gain,
+              "near_word_windows": {"sha256": windows_hash, "scheduled": scheduled, "changed": changed},
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
                                        "pool_multiplier": args.hard_negative_pool,
@@ -334,6 +355,7 @@ def main():
               "checkpoint_export_only": args.export_only,
               "representative_samples": args.representative_samples,
               "representative_bounds": args.representative_bounds,
+              "representative_training_inputs_sha256": representative_digest.hexdigest(),
               "batch_size": 128, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),

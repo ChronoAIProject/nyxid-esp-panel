@@ -1,0 +1,99 @@
+{
+  "scope": "Matched control and whole-phrase negative rescheduling; same training source/render draws and reused validation. No held-out scoring or playback.",
+  "hypothesis": "Fixed positive/negative labels with more post-phrase near-word windows can teach the same compact detector to use the distinct phones without relying on speaker or render.",
+  "intervention": "For half of ordinary sampled near-word negatives, deterministically map the existing uniform end draw to the end band bound by the source WAV RMS anchor and full-context geometry. Keep every draw, weight, augmentation decision, layer and PTQ sequence; leave long clips that cannot fit on the ordinary draw.",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "10a494115fbb2c1b4b3a2ebcb04b2b0bf34a42440756e8124e053ff78e8627c4",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "preparation": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "context_frames": 335,
+    "sources": 2010,
+    "views": 8040,
+    "sources_by_engine": {
+      "edge-tts": 224,
+      "kokoro": 140,
+      "macos-say": 119,
+      "openai-tts": 252,
+      "qwen": 224,
+      "piper": 1051
+    },
+    "views_unchanged_due_to_source_length": 4,
+    "unweighted_mean_uniform_draw_fraction_inside_scheduled_band": 0.11413209785599951
+  },
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "model-quality-control335",
+    "file": "step-5000.weights.h5",
+    "sha256": "923fd6833c7d906b147ec3c00caa9be942e3b7f2f66f635c02f94ecd91d853c0"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "arms": {
+    "control": [],
+    "whole_phrase": [
+      "--near-word-windows",
+      "windows.json"
+    ]
+  },
+  "advance": "Both representative input hashes must match. Candidate requires observed zero continuous events, <=1% maximum engine and engine/corpus false fractions, and >=3 percentage point macro recall improvement over best matching strict control. If control lacks strict point, require candidate to beat best control at zero events / <=2% groups by 3 points; if neither passes do not promote. Report full grid and phrase counts at the preexisting .97 reference for diagnosis.",
+  "limits": "This ablation uses the existing synthetic labels and a broad RMS band, not phoneme boundary truth or a solution for any unscored room. The reused validation set is not acceptance evidence."
+}
