@@ -797,3 +797,41 @@ this inferior recipe a usable replacement. Per-source private traces are
 hash-bound by the public aggregate
 [`lexical-binary-native-events-v1.json`](../results/lexical-binary-native-events-v1.json).
 These are cached policy replays, not P4/acoustic timing or real-user recall.
+
+### Export-only lexical probability gate
+
+`plans/lexical-product-v1.json` freezes an inference-graph experiment using
+the original lexical-CE treatment weights, not the inferior extra-binary-loss
+weights. No model fitting or source/threshold-grid selection is added. The
+single shared trunk feeds the original binary sigmoid and the existing
+six-class classifier; final probability is binary times lexical target-class0
+posterior. The390classifier parameters now remain at inference, with new
+softmax/slice/product operators. Their MCU cost and support require separate
+verification; this is not a claim of identical runtime resources.
+
+`compose_lexical_gate.py build` checks every source artifact identity, exact
+shared layer types/weights and parameter count. All512original training-only
+representatives must reproduce the separately computed float product within
+1e-6. The source's10000step recipe is provenance; this composition runs zero
+new training steps. Actual output quantization is recorded rather than assumed
+to match a standalone sigmoid. Original PTQ arrays and validation grid stay
+fixed. Product<=binary in pointwise float arithmetic does not prove fewer
+latched events; inspect complete continuous counters and policy replay.
+
+```sh
+python research/wakeword_p4/embedding/compose_lexical_gate.py build \
+  --source "$ORIGINAL_LEXICAL_TREATMENT" \
+  --plan research/wakeword_p4/embedding/plans/lexical-product-v1.json \
+  --output "$NEW_PRIVATE_PRODUCT_OUTPUT"
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --data-root "$WAKE_DATA" --training "$NEW_PRIVATE_PRODUCT_OUTPUT" \
+  --plan research/wakeword_p4/embedding/plans/lexical-product-v1.json
+python research/wakeword_p4/embedding/compose_lexical_gate.py compare \
+  --source "$ORIGINAL_LEXICAL_TREATMENT" --output "$NEW_PRIVATE_PRODUCT_OUTPUT" \
+  --report "$FRESH_PRIVATE_COMPARISON"
+```
+
+Retain the entire confidence/confuser tradeoff and original source result;
+no reserved-final or physical benchmark is authorized by export checks alone.
+Source speed, original audio producer/AEC/AGC/FIFO and dining-room board stay
+untouched. No microphone or speaker access is used by this experiment.

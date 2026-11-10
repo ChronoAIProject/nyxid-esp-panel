@@ -1,0 +1,116 @@
+{
+  "scope": "Frozen export-only product of the existing binary probability and existing six-class target posterior. No new fitting, labels, feature extraction, threshold grid or source selection.",
+  "model_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "model_choice": "Quiet-bound8bit export frozen by numeric/fidelity only, not detector scores.6bit grid failed prespecifiedcosinegate and is rejected.",
+  "frontend": "Exact512FFT window and257x32melmatrix,160samplehop,80dBfloor per1760sample block;8newframes per1280PCM/80ms. Native host versus source graph verified training-only.",
+  "data": "Existing source/voice partitions; training+validation only.2normal-speed TTS variants: original quiet and room/gain/noise augmentation. Same human/environment source partitions, only training for fitting; no reserved testing read.",
+  "labels": "Positive whole-phrase end uses existing synthesis/RMS metadata. Random head end .03.. .32seconds after label; reportendpointuncertainty. Negatives sample across all source windows.",
+  "head": "One shared dense64/LayerNorm trunk; existing sigmoid and existing Dense6/Softmax, target0 slice, then probability product. No second trunk or audio producer.",
+  "recipe": {
+    "seed": 741,
+    "steps": 10000,
+    "checkpoints": [
+      10000
+    ],
+    "batch": 128,
+    "positive": 32,
+    "tts_negative": 48,
+    "ambient_negative": 48,
+    "negative_weight": 5,
+    "learning_rate": 0.0001,
+    "learning_rate_half_factor": 0.3,
+    "learning_rate_eighty_percent_factor": 0.1
+  },
+  "event_policy": {
+    "threshold_grid": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      0.97,
+      0.98,
+      0.99,
+      0.995,
+      0.999
+    ],
+    "score_average_steps": 3,
+    "step_ms": 80,
+    "refractory_steps": 25,
+    "rearm_fraction": 0.5,
+    "min_history_frames": 25,
+    "positive_window_seconds": [
+      -0.1,
+      0.8
+    ],
+    "selection_order": "Original strict validation policy, one fixed final checkpoint; no new temporal window or detector-side change."
+  },
+  "architecture": "dnn64-layernorm-lexical-product",
+  "upstream_reference": {
+    "url": "https://raw.githubusercontent.com/dscripka/openWakeWord/main/openwakeword/train.py",
+    "sha256": "8d559e4c1bc9b5523bae50e7ec8f642756a63a7bb5f323620d069a2d03db2972",
+    "bytes": 46290
+  },
+  "upstream_match_scope": "Same DNN topology and LayerNorm epsilon, adapted to Keras, with v1 fixed training recipe rather than claiming identical upstream optimization.",
+  "interface_fidelity_gate": {
+    "scope": "New composed graph requires its own fidelity evidence; historical source pilot is not a pass. Output quantization is measured, not assumed to be the original sigmoid grid.",
+    "current_model_passed": null
+  },
+  "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+  "selection_policy": "strict",
+  "extra_training_features": [
+    {
+      "directory": "head-features-environment-v2",
+      "index_sha256": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+      "complete_sha256": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c"
+    }
+  ],
+  "hypothesis": "Does retaining the already-trained lexical posterior as a product gate separate target and near-word sources better than the same source weights with only binary output?",
+  "initial_weights_path": "head-environment-expanded-v2/step-10000/head.keras",
+  "auxiliary_loss_weight": 0.2,
+  "auxiliary_manifest_sha256": "1610d74f9c0c227c1484729c33f33f33d899903d12c372734f1f451e1885c2b1",
+  "script_files": {
+    "lexical_auxiliary.py": "edfb2bd8a2c665bad2d392786488586a807b41292c0bac300e999857f1a87b98",
+    "train_head.py": "ce852b0850ff92619aabbd2d9d330be7b2b142ee45aa812fba5b283eab34fb4f",
+    "training_endpoints.py": "73a00a7084e6054627d894b55c84f749bddcef91e63140055a9b498341f4ed65",
+    "evaluate_head.py": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c"
+  },
+  "feature_indexes": {
+    "head-features-tts-v1": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "head-features-negatives-v1": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6",
+    "head-features-environment-v2": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426"
+  },
+  "decision_gate": "Retain original strict calibration and entire fixed grid. Also report highest macro proxy-window hits at continuous_upper95<=.5/h and worst confusing-corpus false fraction<=.01, or null if no point. Advance only on a clear improvement at these fixed joint constraints; no physical/final scoring of inferior candidates.",
+  "limits": "Runtime now retains the390parameter classifier and adds softmax/slice/product operators. No claim of unchanged runtime cost or P4 compatibility. Product bounds alone do not guarantee event-rate reduction under latch/rearm. Proxy endpoint and synthetic-source limitations remain.",
+  "speaker_playback": false,
+  "audio_speed_changed": false,
+  "accepted": false,
+  "source_files": {
+    "complete.json": "b44b61ec7de3b8c60446f9ce6b4c78b1cc6805627661a06bbc4dbcfc23023628",
+    "step-10000/head.keras": "c4c64442f6db01ebd7fbce276a20c39753a1f6d4e456f32d4e7f8dcd691c4b5d",
+    "training-only-auxiliary.keras": "e3d199bd3e7bf80422c134acce85bb44f061c4872a4d658d9ae2bd3050d29fdf",
+    "step-10000/head.tflite": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+    "representatives-training-only.npy": "29f7a355f577e90f2bfbe22f022a4cd4121d2777d0487ad5bef5670bd2b15a95",
+    "step-10000/validation/calibration.json": "db5c2f8d28edb958a293230a827aaaac28925fe5e5f2d5dd41c7315c2d7eae41"
+  },
+  "scripts": {
+    "compose_lexical_gate.py": "b6cf07442938d427b7e83a2a3974811773b9e91788a624bacd5680073004d60e",
+    "train_head.py": "ce852b0850ff92619aabbd2d9d330be7b2b142ee45aa812fba5b283eab34fb4f",
+    "evaluate_head.py": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c",
+    "compare_lexical_auxiliary.py": "0612cebb041a6613bedd64a804ce28846c1ed086f1cd65e4273e6380c6ed42e2",
+    "audit_head_events.py": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb"
+  },
+  "source_training_reference": "lexical-auxiliary-treatment-v1.json at36b27da; the10000step recipe below is source provenance, not new training.",
+  "new_training_steps": 0,
+  "pre_validation_gate": "Require all shared source layer types/weights exact, parameter count equal to one original trunk+390classifier parameters,512training-only float product identities within1e-6, original PTQ arrays exact. Export actual int8 graph and record its own output quantization/operators/errors before calibration.",
+  "comparison": "Use the exact original source-model calibration and unchanged validation score grid. Report both confidence-only and confidence+confuser constraints. No weighting or threshold selection from development/final audio. Replay native event policy at frozen selected points before any physical follow-up."
+}
