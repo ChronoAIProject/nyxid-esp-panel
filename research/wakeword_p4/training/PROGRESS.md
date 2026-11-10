@@ -822,3 +822,15 @@ failed because the upstream clone tried to deserialize the training-only
 loss. Resetting the compile metadata for export reproduced the first
 training checkpoint byte for byte and completed quantized validation.
 No hardware or reserved evaluation corpus was used.
+
+The [terminal-sound counterfactual](../results/microwake-terminal-support-v1.json)
+probes both retained INT8 artifacts on 141 distinct training WAVs. The
+unmodified clips activate 138/137 (control/focus); fading the clip to silence
+40 ms before the independent CTC terminal /s/ support reduces activation to
+3/0. Cutting 60 ms after the same support retains 134/134, and no unmodified
+clip triggers before the early cut point. The result shows dependence on
+late acoustic evidence in this cohort, even though the two models still
+confuse similar complete words. The crop is a manipulation of a broad tail
+region, and CTC support is approximate; neither isolates the /s/ phoneme nor
+proves the training label or real-room timing. No PCM speed, original WAV,
+training label, threshold, or firmware changed.
