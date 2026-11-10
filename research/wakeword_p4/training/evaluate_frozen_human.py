@@ -68,7 +68,7 @@ def main():
                   exposure_policy='Original WAV seconds; exclude utterance gaps/alignment padding',
                   seconds=round(time.monotonic()-started, 1), speakers=results,
                   positive_recall_measured=False, testing_or_independent_final_scored=False,
-                  limits='Development read Mandarin only; Poisson event-count bound assumes stationary rate and does not establish far-field/TV/music coverage, positive recall, deployment performance, or Hi ESP equivalence.')
+                  limits=f'Development {a.corpus_name} negative audio only; Poisson event-count bound assumes stationary rate and does not establish general acoustic coverage, positive recall, deployment performance, or Hi ESP equivalence.')
     (a.output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report), flush=True)
 
 
