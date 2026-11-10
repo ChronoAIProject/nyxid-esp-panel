@@ -143,7 +143,7 @@ def main():
                   classifiers_scored=False, reserved_audio_accessed=False, reserved_transcripts_parsed=False,
                   independent_final_audio_accessed=False, existing_training_data_changed=False,
                   expected_audio_hashes_verified=bool(expected),
-                  limits='Four distinct training meetings, one distant microphone each; selection is not population-representative. Metadata namespacing does not prove cross-corpus biometric identity disjointness. Literal transcript screen is not exhaustive phonetic truth. First download hashes are local integrity records, not publisher-provided checksums; use expected-audit on reproduction. Full annotation archive includes reserved text, but only selected training word files and shared meeting metadata are parsed. No wake detector or final audio accessed.')
+                  limits=f'{len(rows)} distinct training meetings, one distant microphone each; selection is not population-representative. Metadata namespacing does not prove cross-corpus biometric identity disjointness. Literal transcript screen is not exhaustive phonetic truth. First download hashes are local integrity records, not publisher-provided checksums; use expected-audit on reproduction. Full annotation archive includes reserved text, but only selected training word files and shared meeting metadata are parsed. No wake detector or final audio accessed.')
     (a.output/'audit.json').write_text(json.dumps(report, indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('records', 'training_transcripts', 'metadata_sources')}), flush=True)
 
