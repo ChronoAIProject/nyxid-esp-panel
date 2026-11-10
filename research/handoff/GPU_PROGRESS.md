@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`e3ca18d`:
+`a9756cc`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,11 +14,11 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5 and Qwen-v6 runs complete | None accepted; duration-weighted ambient control prepared |
+| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5 and Qwen-v6 runs complete | None accepted; duration-weighted ambient control launched |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
 | Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
 | Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
-| Official pretrained-feature desktop reference | Corrected batched mel/embedding consistency, complete CUDA cache, and three rejected trained heads | Learning-rate control pending; no MCU export or accepted detector |
+| Official pretrained-feature desktop reference | Corrected batched mel/embedding consistency, complete CUDA cache, and four rejected trained heads | No MCU export or accepted detector |
 | Reserved negative exposure | 10.745 source hours / 73 speakers, archive/source audit | No model scores read; independent positive holdout still needed |
 | Unscored paired challenge | Corrected 468 WAVs / 26 unused international Kokoro presets; pairing/isolation/ASR screens | Pronunciation uncertainty, acoustic and matched Hi ESP scores |
 
@@ -174,18 +174,33 @@ Phrase attribution identifies Hey Nick / Next / Mix among confusing negatives.
 The positive-phrase audit does not isolate all misses to command-followed
 speech or one spelling. A v4 learning-rate control uses the pinned upstream
 1e-4 target with warmup/hold/cosine; all 40,000 schedule values agree within
-1.3553e-20. No completed v4 result is published at this snapshot. Negative
-weight scheduling and low-loss filtering remain separate recipe deviations.
+1.3553e-20. The completed v4 control selects step40k/threshold.992 and reaches
+50.781% validation macro recall (Piper28.229%, Kokoro73.333%), below v3's
+51.380%. Zero events/1.20481h still gives upper95%2.48647/h; it remains
+rejected and regression/final fixtures are unscored. Negative weight
+scheduling and low-loss filtering remain separate recipe deviations.
 
 The latest audit finds a concrete ambient-sampling coverage imbalance in both
 GPU trainers: uniform row sampling gives human speech only 2.12% of draws
 despite 17.20% of source duration, while short noise rows receive 82.23% of
 draws despite 33.21% of duration. The optional duration-weighted sampler passes
 a 100,000-draw coverage check (17.163% human, expected 17.201%). Its forthcoming
-MCU-architecture control changes only this sampling choice against v6. No
+MCU-architecture v7 control has launched and changes only this sampling choice
+against v6. No
 recognition gain or universal preference for duration weighting is established.
 These GPU checks do not justify changing the Mac detector or mixing 10 ms
 MicroFrontend arrays, desktop float arrays and local 80 ms INT8 embeddings.
+
+For matched development comparison, this branch now exports all350 unchanged
+paired Mac synthetic WAVs plus their already measured standalone-P4 Hi ESP
+numeric results as `paired-mac-regression-v1.tar.gz`. It includes50 Hey Nyx,
+50 Hi ESP and250 ordinary/near-word negatives across the same five voices and
+two correlated normal-speed variants. Every WAV hash, decoded PCM CRC,
+512sample inference coverage and source/result identity is checked. The two
+unrelated previous acoustic controls are excluded. This enables GPU models
+to use the exact existing development comparison without needing WakeNet on
+Linux; it is not the independent final challenge or a new acceptance set.
+See the [portable comparison instructions](README.md#portable-paired-pcm-baseline).
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research

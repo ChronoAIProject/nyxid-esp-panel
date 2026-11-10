@@ -519,6 +519,59 @@ the plan checks both WAV hashes and all model/helper identities:
 The private capture is deliberately absent from the public handoff. A new
 pair requires a separately frozen plan and cannot reproduce this exact result.
 
+### Portable paired PCM baseline
+
+`paired-mac-regression-v1.tar.gz` supplies the complete previously scored
+350-clip paired synthetic development set and its measured standalone-P4
+Hi ESP results. It contains50 Hey Nyx,50 fully spelled Hi ESP and250
+ordinary/near-word negatives, using Daniel, Karen, Moira, Samantha and Tessa
+with the two existing normal-speed variants0/3. Variant renderings are
+correlated; they are not new speakers or independent acceptance trials.
+
+The exporter binds the original352-row manifest and restored Hi ESP report
+by SHA256. It checks every selected WAV/header/sample count, decoded PCM CRC,
+512sample inference coverage, event offsets and source/result match. Only
+350 paired rows are selected; the two prior acoustic controls are not opened
+or exported. Numeric results and WAV bytes stay exact, paths become relative,
+and only explicit metadata/result fields are retained. No microphone audio,
+UART/account/device state, provisioned firmware or frontend arrays are read.
+
+```sh
+python3 research/handoff/fetch_assets.py --output .local/paired-comparison \
+  --asset paired-mac-regression-v1.tar.gz
+export WAKE_PAIRED="$PWD/.local/paired-comparison/workspace/hey-nyx-training-v3/paired-mac-regression-v1"
+python3 research/wakeword_baseline/compare.py \
+  --manifest "$WAKE_PAIRED/manifest.jsonl" \
+  --baseline "$WAKE_PAIRED/baseline.json" \
+  --output .local/paired-hiesp-summary.json
+```
+
+The baseline is `wn9_hiesp`, `DET_MODE_95`, threshold.63:48/50 positive clips
+trigger at any time,32/50 trigger in the approximate[-100,+800]ms keyword-end
+window, shared ordinary sentences0/100, Nyx-specific near words0/90. Keep
+these metrics separate. Hi ESP-specific near words retain pronunciation
+uncertainty and are a different phonetic distribution. Standalone numeric
+inference timing is not whole-app CPU or microphone/AEC acceptance.
+
+GPU models should run their own frozen frontend/model/event protocol on the
+same unchanged WAVs. A50-clip Hey Nyx count should be compared with the
+50 Hi ESP positives; ordinary/shared phrase groups can use identical PCM.
+Do not transfer any local80ms embedding cache or keyword-frame coordinates
+to a10ms frontend. This is the reused development set; its outcomes must not
+select thresholds or replace the independent final challenge. The public
+download is archive/member-verified and the normalized Hi ESP summary is
+replayed; see
+[`embedding-portable-paired-baseline-v3.json`](../wakeword_p4/results/embedding-portable-paired-baseline-v3.json).
+
+To rebuild the export on the original machine:
+
+```sh
+python3 research/handoff/export_paired_baseline.py \
+  --manifest "$ORIGINAL_PAIRED_MANIFEST" --baseline "$ORIGINAL_HIESP_REPORT" \
+  --plan research/handoff/plans/paired-mac-regression-export-v1.json \
+  --output .local/new-paired-export
+```
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before

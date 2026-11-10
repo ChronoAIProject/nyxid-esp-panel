@@ -1,0 +1,21 @@
+{
+  "scope": "Export existing synthetic development direct-PCM fixtures and numeric Hi ESP results. No new detector scoring, private capture, hardware operation or final evaluation.",
+  "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+  "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+  "scope_counts": {
+    "paired_mac_regression": 350,
+    "previous_acoustic_fixture_control": 2
+  },
+  "selected_scope": "paired_mac_regression",
+  "target_counts": {"hey_nyx": 50, "hi_esp": 50, "none": 250},
+  "voices": ["Daniel", "Karen", "Moira", "Samantha", "Tessa"],
+  "variants": [0, 3],
+  "limits": [
+    "Previously scored synthetic development fixtures, not independent final acceptance or human speaker trials.",
+    "Variant0 and variant3 are correlated existing normal-speed renderings. Keep their original bytes and source-voice grouping.",
+    "Hi ESP was measured by a standalone development-P4 direct-PCM probe. Numeric timing is not whole-application CPU or microphone/AEC acceptance.",
+    "Keyword endpoints are synthesis/RMS estimates, not phonetic ground truth. Keep any-event recall separate from the fixed estimated-end window.",
+    "Near-word distributions are phrase-specific; report shared ordinary sentences and Nyx-specific and ESP-specific groups separately. ESP near-word pronunciation retains uncertainty.",
+    "Two previous acoustic fixture controls outside this paired population are excluded and not opened. Account/device/UART state is never exported."
+  ]
+}
