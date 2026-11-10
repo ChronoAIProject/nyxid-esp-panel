@@ -2711,3 +2711,9 @@ INT8代表校准仍关闭挖掘。shell语法检查通过。
 只下载源WAV、核验格式/PCM/非静音并记录哈希，不导入任何唤醒引擎。
 选择results/4090-ami-independent-source-selection-v1.json推送后才下载。
 本记录不授权模型评分：未来先用开发数据固定候选，再单独推送评分预注册。
+
+v31方案c734ef5推送后已在RTX4090启动。实际完成10500/120000步，
+尚无运行错误；初始化全部JSON字段与v30完全相同，文件SHA均为
+0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94。
+审计results/4090-v31-initialization-audit.json。此时尚无训练完成或INT8质量结果。
+新AMI来源选择e12ba31推送后已启动下载；未进行分类器评分。
