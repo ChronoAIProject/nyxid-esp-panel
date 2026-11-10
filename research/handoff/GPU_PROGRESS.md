@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `097d396`; see the dated snapshots below.
+Latest observed GPU commit: `3b52402`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -842,3 +842,21 @@ weights were identified in the branch or release asset inventory. The Mac
 [near-word audit](../wakeword_p4/results/microwake-near-word-errors-v1.json)
 is a distinct synthetic development diagnostic; its phone evidence does not
 classify the AMI false event or establish a repair for v30.
+
+### GPU snapshot through `8af6271`
+
+The official Hi ESP run on the exact same 9.0623 h of AMI dialogue also
+completed 16/16 streams, with one event in a different meeting. Both engines
+observed 0.1103 events/h, with the same nominal 95% upper bound of 0.5235/h.
+Both miss the preregistered confidence limit of 0.5/h. Matching observed
+counts in this corpus do not establish equal population false-wake rates.
+See [the audited comparison](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/8af6271/research/wakeword_p4/results/4090-v30-hiesp-ami-independent-comparison-v1.json).
+The branch's usage ledger records the three already-scored independent
+datasets. None can be used to select or accept a new model.
+
+`3b52402` adds the GPU-side
+[acceptance gaps](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/3b52402/research/wakeword_p4/ACCEPTANCE_BLOCKERS.md).
+The two listening pages have no human annotation exports yet; their
+development review is separate from future independent real-speaker recall,
+end-of-word latency, and P4 resource and call acceptance. The Mac-side
+whole-phrase training comparison has completed without a viable new model.

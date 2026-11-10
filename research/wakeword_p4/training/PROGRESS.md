@@ -850,3 +850,30 @@ across render conditions rather than assuming longer smoothing will solve
 them. Phoneme decoder outputs remain diagnostic and are never used as new
 wake labels. These are development results for the Mac models; no reserved
 audio, device, or GPU model was scored.
+
+The [whole-phrase training comparison](plans/microwake-near-word-windows-v1.json)
+uses 2,010 original standalone near-word WAVs from six engines. The
+preparation checks source SHA/splits and covers all 8,040 views; four long
+views keep their ordinary sampling. For half of eligible training draws it
+moves the sample window to a band just after the phrase's RMS tail, retaining
+the complete onset and the same sources, labels, RNG draws and PTQ inputs.
+The paired 1,000-step control reproduces the previous checkpoint and INT8
+bytes; both new runs have identical representative input hashes. The
+treatment reschedules 8,030 draws and changes 7,983 sampled endpoints.
+
+The [INT8 screen](../results/microwake-near-word-windows-v1.json) rejects the
+change. At the fixed .97 reference both see 0 events / 7.3238 h of continuous
+development audio. "Hey Mix" false views fall 32/136 to 25/136 and "Hey Next"
+falls 17/160 to 16/160, but macro proxy recall falls 81.82% to 78.85% and the
+worst engine/corpus false fraction is still 4.17%. Neither arm reaches the
+1% gate anywhere in the frozen grid. There is no board promotion.
+
+To reproduce, run `near_word_windows.py --features <feature-dir> --frames 335
+--output <study>/windows.json`, then use the plan's common arguments and
+per-arm overrides with `train_stream.py`, writing `model-control` and
+`model-whole_phrase`. Run `evaluate_stream.py` with the plan's validation
+arguments and threshold grid, writing `validation-control` and
+`validation-whole_phrase`. `compare_near_word_windows.py --plan <plan>
+--artifacts <study> --output <new-report>` verifies the matched exports and
+summarizes the original validation stream counts. No playback, board change,
+or independent final set was used.
