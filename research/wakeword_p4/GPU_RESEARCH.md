@@ -1935,3 +1935,24 @@ v26继续运行，扩展验证脚本experiments/v26_validate_expanded.sh
 v26与v24初始化JSON内容及哈希一致，显式记录在
 results/4090-v26-initialization-audit.json。本轮未改变运行中的训练代码、
 样本或验证协议，尚无v26最终识别质量结果。
+
+
+## 训练专用远场麦克风视角补充（2026-11-10）
+
+固定选择既有训练会话S02/S04的U02.CH1和U03.CH1，
+从原固定DiPCo revision下载4条通道，共2.531006944小时通道波形。
+原LFS大小/SHA、16k单声道PCM16、解码PCM哈希、会话持续时间、
+原转写及参与者训练划分全部核验。未访问验证/回归/最终音频。
+这些是同两场对话的相关麦克风视角：新增物理说话人0、新增独立对话小时0。
+不能将通道数或通道小时当作独立训练/验收覆盖。
+
+同一10ms MicroFrontend连续提取完成，911156帧，逐流前两块连续性核验通过。
+元数据保留same_conversation_as/independent_conversation，
+另建features-gpu-spatial-v1候选缓存；关键词特征及validation/testing行不变。
+原v26数据没有修改，当前尚未用此缓存训练或评分。
+后续若试验，应保持远场类别总采样质量固定，仅在类别内增加位置多样性，
+是否有效仍需受控流式评估。
+
+results/4090-spatial-training-*.json保存源、缓存、组合和相关性审计。
+通用追加报告的added_speakers是流ID，不代表新增真人；
+added_original_hours为原通道波形小时，不代表独立对话小时。

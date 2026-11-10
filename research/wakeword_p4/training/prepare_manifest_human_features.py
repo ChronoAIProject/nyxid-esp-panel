@@ -54,7 +54,8 @@ def worker(job):
     first = rows[0]; relative = Path('human')/first['split']/(first['speaker']+'.npy')
     target = output/relative; target.parent.mkdir(parents=True, exist_ok=True); np.save(target, data)
     return dict(path=str(relative), split=first['split'], speaker=first['speaker'], language=first['language'],
-                **{key: first[key] for key in ('category', 'participants', 'session', 'channel') if key in first},
+                **{key: first[key] for key in ('category', 'participants', 'session', 'channel',
+                                             'same_conversation_as', 'independent_conversation') if key in first},
                 frames=len(data), files=len(rows), seconds=total_samples/16000,
                 source_seconds=source_samples/16000, inserted_silence_seconds=(total_samples-source_samples)/16000,
                 stream_pcm_sha256=digest.hexdigest(), feature_sha256=sha(target),
