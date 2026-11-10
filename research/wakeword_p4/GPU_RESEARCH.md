@@ -2602,3 +2602,35 @@ Nyx统计显著优于官方或同总体误触率的召回/时延排名。
 逐流比较results/4090-v30-hiesp-independent-negative-comparison-v1.json，
 审计工具training/compare_independent_negative_engines.py；
 官方原始UART/每流report与输入PCM保留/tmp/nyx-hiesp-final-neg-v1。
+
+
+## 独立端点盲审工具：准备完成，尚无人工标签（2026-11-10）
+
+当前负例独立数值证据完整，但正例真实末音素延迟仍缺独立参考。
+既有能量规则和MFA已存在实际反例，不能用自动输出自行验收。
+为24条既有开发目标和2条官方控制准备独立盲审包：
+所有WAV/PCM哈希核验、原始音频不变，匿名ID固定、随机顺序固定；
+HTML内嵌音频，可直接离线打开，不包含模型分数、触发时刻或自动边界。
+支持完整/慢速试听、波形放大、末端上下限（16kHz样本坐标）、
+错读/无法判断与备注、浏览器进度保存、JSON部分或完整导出。
+区间大于20ms时明确保留不确定性，不强迫缩窄；未完成部分不标作完整。
+这只是获取独立标签的工具，不是已经验证的金标准。
+
+生成器training/prepare_blind_endpoint_review.py、模板blind_endpoint_review.html，
+实际包.local/wakeword/blind-endpoint-review-v3/index.html（全部音频内嵌），
+审计results/4090-blind-endpoint-review-inputs-v1.json。
+复现生成器仅需--alignment-inputs .local/wakeword/mfa-development-inputs-v1
+及全新--output；旧评分窗口/标签不改。
+
+内置浏览器因容器无display不可用，另建隔离review-browser-env安装Playwright1.65.0、
+Chrome Headless Shell158.0.8127.18，补齐实际缺少的系统库和fontconfig后实测。
+音频真实播放/解码、上下限颠倒校验、翻页/刷新保存、10ms区间精确导出8000..8160样本、
+部分导出review_complete=false、无自动边界/分数、无pageerror均通过。
+测试使用临时浏览器context和AUTOMATED_UI_TEST_NOT_HUMAN_LABELS身份，
+导出fixture销毁、context销毁；没有生成或填充任何人工真值。
+测试源码check_blind_endpoint_review_ui.py，证据
+results/4090-blind-endpoint-review-ui-check-v1.json。
+
+下一步仍需要本人或独立标注者实际试听与标注，并独立核验标注可靠性；
+开发盲审通过也不能自动推定最终正例端点准确。已向用户请求这项缺失参考，
+未将未答复当作人工标签。独立正例最终集仍未评分，v30模型/阈值不变。

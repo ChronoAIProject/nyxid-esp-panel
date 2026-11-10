@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>语音末端独立标注</title>
+<style>
+body{font:16px system-ui;max-width:1100px;margin:32px auto;padding:0 20px;color:#17232c;background:#f4f7fa}h1{font-size:25px}section{background:white;border:1px solid #d4dde5;border-radius:10px;padding:20px;margin:18px 0}button,input,select,textarea{font:inherit;padding:8px;margin:5px;border:1px solid #adbcc8;border-radius:5px}button{cursor:pointer;background:#eaf2fa}audio{width:100%;margin:12px 0}canvas{width:100%;height:240px;display:block;background:#f7fafc;touch-action:none}label{display:inline-block}textarea{width:90%;min-height:55px}.muted{color:#526574}#message{min-height:24px;color:#8b390a}#plot{position:relative}#loading{padding:12px}input[type=number]{width:130px}.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+</style>
+<h1>语音末端独立标注</h1>
+<p>先听完整录音，核对发音，再标出目标短语<strong>末音素结束位置的可能区间</strong>。这里不显示模型触发时间或自动边界。不要将回响、静音结束或某个振幅阈值直接当作末音素。</p>
+<section><label>标注者 <input id="reviewer" placeholder="填写姓名或代号"></label><p class="muted">下限和上限表达不确定性。无法判断、错读或发音不清时如实记录；不要为了得到窄区间而猜测。结果可部分导出，不会自动成为金标准。</p></section>
+<section>
+<div class="row"><button id="previous">上一条</button><strong id="position"></strong><button id="next">下一条</button><span id="completed"></span></div>
+<p id="prompt"></p><audio id="audio" controls preload="metadata"></audio>
+<div class="row"><label>播放速度 <select id="speed"><option value="1">正常</option><option value="0.75">0.75×</option><option value="0.5">0.5×</option></select></label><button id="nearby">试听所选区间附近</button><button id="zoom">放大所选区间附近</button><button id="full">显示全片</button></div>
+<p class="muted">在波形上点击设置下限，Shift + 点击设置上限；也可直接输入秒数。标记与波形均不提供自动声学判断。</p>
+<div id="plot"><canvas id="wave" width="1100" height="240"></canvas><div id="loading"></div></div>
+<div class="row"><label>下限（秒）<input id="lower" type="number" min="0" step="0.0000625"></label><label>上限（秒）<input id="upper" type="number" min="0" step="0.0000625"></label><span id="width"></span></div>
+<label>发音核验 <select id="status"><option value="">尚未核验</option><option value="matches">目标发音正确</option><option value="mismatch">错读 / 目标发音不符</option><option value="uncertain">无法判断</option></select></label>
+<p><label>备注<br><textarea id="notes" placeholder="例如：末音素被噪声或回响遮挡，无法可靠区分"></textarea></label></p><p id="message" role="status"></p>
+</section>
+<section><button id="export">导出标注 JSON</button><p class="muted">进度保存在本浏览器；请导出文件留存。这里的人工结果只用于后续独立核验，不会更改历史评测边界。</p></section>
+<script>
+const DATA=/* REVIEW_DATA */null;
+const $=id=>document.getElementById(id), key='endpoint-review:'+DATA.pack_id;
+let index=0, decoded=null, view=[0,1], generation=0, stopAt=null;
+let answers={}, reviewer='';
+try{const saved=JSON.parse(localStorage.getItem(key)||'{}');answers=saved.answers||{};reviewer=saved.reviewer||'';}catch(e){}
+$('reviewer').value=reviewer;
+const audioContext=new (window.AudioContext||window.webkitAudioContext)();
+function current(){return DATA.records[index];}
+function valid(a,r){if(!a||!['matches','mismatch','uncertain'].includes(a.status))return false;const absent=(a.lower_sample===null||a.lower_sample===undefined)&&(a.upper_sample===null||a.upper_sample===undefined),bounds=Number.isInteger(a.lower_sample)&&Number.isInteger(a.upper_sample)&&a.lower_sample>=0&&a.upper_sample>=a.lower_sample&&a.upper_sample<=r.samples;if(a.status==='matches')return bounds;return Boolean(a.notes.trim())&&(absent||bounds);}
+function persist(){try{localStorage.setItem(key,JSON.stringify({answers,reviewer:$('reviewer').value}));}catch(e){$('message').textContent='浏览器无法保存进度，请及时导出。';}}
+function save(){const r=current();answers[r.id]={status:$('status').value,lower_sample:$('lower').value===''?null:Math.round(Number($('lower').value)*r.rate),upper_sample:$('upper').value===''?null:Math.round(Number($('upper').value)*r.rate),notes:$('notes').value,updated_at:new Date().toISOString()};persist();draw();progress();}
+function progress(){const n=DATA.records.filter(r=>valid(answers[r.id],r)).length;$('completed').textContent='已有效记录 '+n+' / '+DATA.records.length;}
+function draw(){const c=$('wave'),ctx=c.getContext('2d'),r=current(),a=answers[r.id]||{};ctx.clearRect(0,0,c.width,c.height);if(!decoded)return;const data=decoded.getChannelData(0),start=Math.floor(view[0]*decoded.sampleRate),end=Math.min(data.length,Math.ceil(view[1]*decoded.sampleRate));ctx.strokeStyle='#285d82';ctx.beginPath();for(let x=0;x<c.width;x++){let lo=1,hi=-1;const left=start+Math.floor((end-start)*x/c.width),right=Math.min(end,start+Math.ceil((end-start)*(x+1)/c.width));for(let j=left;j<right;j++){lo=Math.min(lo,data[j]);hi=Math.max(hi,data[j]);}ctx.moveTo(x,120-hi*100);ctx.lineTo(x,120-lo*100);}ctx.stroke();for(const [field,color] of [['lower_sample','#a05d00'],['upper_sample','#198355']]){if(a[field]!==null&&a[field]!==undefined){const x=(a[field]/r.rate-view[0])/(view[1]-view[0])*c.width;ctx.strokeStyle=color;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke();}}ctx.fillStyle='#334';ctx.fillText(view[0].toFixed(3)+' 秒',8,230);ctx.fillText(view[1].toFixed(3)+' 秒',c.width-85,230);const width=Number.isInteger(a.lower_sample)&&Number.isInteger(a.upper_sample)?(a.upper_sample-a.lower_sample)/r.rate*1000:null;$('width').textContent=width===null?'':('区间宽度 '+width.toFixed(2)+'ms');$('message').textContent=width!==null&&width<0?'上限不能早于下限。':width!==null&&width>20?'区间超过 20ms：请保留真实的不确定性，不要人为缩窄。':'';}
+async function show(){const ticket=++generation,r=current(),a=answers[r.id]||{};decoded=null;stopAt=null;$('audio').pause();$('position').textContent=(index+1)+' / '+DATA.records.length;$('prompt').textContent='预期短语：'+r.intended_text+'　匿名编号：'+r.id;$('audio').src=r.audio;$('audio').playbackRate=Number($('speed').value);for(const [id,field] of [['lower','lower_sample'],['upper','upper_sample']]){$(id).value=a[field]===null||a[field]===undefined?'':(a[field]/r.rate).toFixed(7);$(id).max=r.samples/r.rate;}$('status').value=a.status||'';$('notes').value=a.notes||'';view=[0,r.samples/r.rate];$('loading').textContent='正在载入波形…';draw();progress();try{const bytes=Uint8Array.from(atob(r.audio.split(',')[1]),c=>c.charCodeAt(0));const buffer=await audioContext.decodeAudioData(bytes.buffer);if(ticket!==generation)return;decoded=buffer;$('loading').textContent='';draw();}catch(e){if(ticket===generation)$('loading').textContent='波形无法载入，请使用音频控件试听并记录错误。';}}
+for(const id of ['lower','upper','status','notes'])$(id).addEventListener('input',save);
+$('reviewer').addEventListener('input',persist);
+$('previous').onclick=()=>{save();index=Math.max(0,index-1);show();};$('next').onclick=()=>{save();index=Math.min(DATA.records.length-1,index+1);show();};
+$('speed').onchange=()=>{$('audio').playbackRate=Number($('speed').value);};
+$('wave').onclick=e=>{const rect=e.currentTarget.getBoundingClientRect(),t=Math.max(0,Math.min(current().samples/current().rate,view[0]+(e.clientX-rect.left)/rect.width*(view[1]-view[0])));$(e.shiftKey?'upper':'lower').value=(Math.round(t*current().rate)/current().rate).toFixed(7);save();};
+function selected(){const a=answers[current().id]||{};return Number.isInteger(a.lower_sample)&&Number.isInteger(a.upper_sample)&&a.upper_sample>=a.lower_sample?[Math.max(0,a.lower_sample/current().rate-.2),Math.min(current().samples/current().rate,a.upper_sample/current().rate+.2)]:null;}
+$('nearby').onclick=()=>{const span=selected();if(!span){$('message').textContent='请先设置有效的下限和上限。';return;}$('audio').currentTime=span[0];stopAt=span[1];$('audio').play().catch(()=>{});};$('audio').ontimeupdate=()=>{if(stopAt!==null&&$('audio').currentTime>=stopAt){$('audio').pause();stopAt=null;}};
+$('zoom').onclick=()=>{const span=selected();if(span&&span[1]>span[0]){view=span;draw();}};$('full').onclick=()=>{view=[0,current().samples/current().rate];draw();};
+$('export').onclick=()=>{save();const who=$('reviewer').value.trim();if(!who){$('message').textContent='请先填写标注者姓名或代号。';return;}const rows=DATA.records.map(r=>({id:r.id,wav_sha256:r.wav_sha256,pcm_sha256:r.pcm_sha256,samples:r.samples,...answers[r.id]}));const result={protocol:DATA.protocol,pack_id:DATA.pack_id,parent_manifest_sha256:DATA.parent_manifest_sha256,annotator:who,exported_at:new Date().toISOString(),review_complete:DATA.records.every(r=>valid(answers[r.id],r)),detector_outputs_shown:false,automatic_boundaries_shown:false,records:rows};const url=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='endpoint-review-'+DATA.pack_id.slice(0,8)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+show();
+</script></html>
