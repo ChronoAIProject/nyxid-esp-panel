@@ -15,6 +15,7 @@ def main():
     p.add_argument("--dataset", type=Path, required=True)
     p.add_argument("--asr-details", type=Path, required=True)
     p.add_argument("--asr-report", type=Path, required=True)
+    p.add_argument("--exclude-manifest", type=Path, help="Emit only new source rows not already retained")
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
     if a.output.exists():
@@ -29,6 +30,9 @@ def main():
     indexed = {r["path"]: r for r in details}
     if len(indexed) != len(details) or set(indexed) != {r["path"] for r in rows}:
         raise ValueError("ASR details do not cover each source exactly once")
+    previous_rows = list(map(json.loads, a.exclude_manifest.read_text().splitlines())) if a.exclude_manifest else []
+    previous = {r["path"]: r["sha256"] for r in previous_rows}
+    previous_hashes = set(previous.values())
     selected, excluded = [], []
     for row in rows:
         detail = indexed[row["path"]]
@@ -37,7 +41,13 @@ def main():
             raise ValueError("Only training-only source WAVs may be selected")
         if sha(path) != row["sha256"] or detail["sha256"] != row["sha256"] or detail["expected"] != row["text"]:
             raise ValueError("Changed audio or expected text")
-        if detail["text_agreement"] is True:
+        if row["path"] in previous:
+            if previous[row["path"]] != row["sha256"]:
+                raise ValueError("Existing source path changed")
+            excluded.append({"path": row["path"], "label": row["label"], "sha256": row["sha256"], "reason": "Already retained; preserve existing corpus"})
+        elif detail["text_agreement"] is True:
+            if row["sha256"] in previous_hashes:
+                raise ValueError("New path duplicates previously retained WAV")
             selected.append(row)
         else:
             excluded.append({"path": row["path"], "label": row["label"],
@@ -50,7 +60,10 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(a.dataset/row["path"], destination)
     (a.output/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in selected))
-    report = {"parent_manifest_sha256": sha(a.dataset/"manifest.jsonl"),
+    report = {"exclude_manifest_sha256": sha(a.exclude_manifest) if a.exclude_manifest else None,
+              "previous_rows": len(previous),
+              "source_sha256": sha(Path(__file__)),
+              "parent_manifest_sha256": sha(a.dataset/"manifest.jsonl"),
               "parent_generation_sha256": sha(a.dataset/"generation.json"),
               "asr_report_sha256": sha(a.asr_report), "asr_details_sha256": sha(a.asr_details),
               "selected": len(selected), "selected_positives": sum(r["label"] for r in selected),

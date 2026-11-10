@@ -740,3 +740,29 @@ the actual runtime device, and hashes its own source. The same pinned small.en
 is now auditing all360 original Qwen training clips, because the existing
 30-positive subset was selected with tiny.en and may unnecessarily limit
 training diversity. No revised subset or additional training run yet exists.
+
+## Qwen audit recovery and v8 data control
+
+The small.en check on all360 original training clips agrees with62/72 positives
+and270/288 negatives. Relative to the existing tiny-selected30+/268- subset,
+34 positive and10 negative additional WAVs pass. Two old positives and eight
+old negatives disagree with small.en; they are preserved, not removed or
+relabeled. The union is64+/278- Qwen source clips. This preserves earlier
+training behavior while testing expanded coverage; ASR agreement remains an
+imperfect screen and24 synthesis description conditions are not24 humans.
+
+`select_training_asr.py --exclude-manifest` emits only newly agreeing source
+rows, verifies hashes and rejects exact duplicate WAVs from the previous subset.
+The v8 feature set adds264 training renderings (four existing regimes plus two
+measured-RIR regimes) from44 WAVs. Exact byte comparison verifies the complete
+old binary prefix and index rows; human/ambient indices and all validation/
+regression rows are unchanged. Added WAV hashes are disjoint from all base WAVs.
+Full audit:99,212 sequences,49,605,057 frames,17,482 source waveforms;
+voice/source split checks pass. Independent final fixtures remain untouched.
+
+The v8-small MCU training run is launched for40k steps on4090, comparing against
+v6 with the same rows ambient policy, official64 architecture, equal-engine
+sampling, negative weight20 and event validation. Only the recovered training
+source addition changes. v7-duration remains a rejected separate sampling
+control. Next: validate actual INT8 export, quantify float/INT8 drift, then
+consider development regression only if validation evidence warrants it.
