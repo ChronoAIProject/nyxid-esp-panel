@@ -12,6 +12,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--url', required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--expected-clips', type=int, default=26)
     a = p.parse_args()
     if a.output.exists():
         p.error('Fresh output required')
@@ -23,9 +24,9 @@ def main():
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.goto(a.url)
         page.wait_for_function('decoded !== null')
-        assert page.locator('#completed').inner_text() == '已有效记录 0 / 26'
+        assert page.locator('#completed').inner_text() == f'已有效记录 0 / {a.expected_clips}'
         assert page.locator('#width').inner_text() == ''
-        assert page.evaluate('DATA.records.length') == 26
+        assert page.evaluate('DATA.records.length') == a.expected_clips
         assert page.evaluate('DATA.records.every(r => !Object.keys(r).some(k => /score|event|boundary|keyword_end/.test(k)))')
         page.locator('#audio').evaluate('(audio) => audio.play()')
         page.wait_for_function('document.getElementById("audio").currentTime > .1')
@@ -36,10 +37,10 @@ def main():
         page.locator('#lower').fill('0.5')
         page.locator('#upper').fill('0.49')
         page.select_option('#status', 'matches')
-        assert page.locator('#completed').inner_text() == '已有效记录 0 / 26'
+        assert page.locator('#completed').inner_text() == f'已有效记录 0 / {a.expected_clips}'
         assert '上限不能早于下限' in page.locator('#message').inner_text()
         page.locator('#upper').fill('0.51')
-        assert page.locator('#completed').inner_text() == '已有效记录 1 / 26'
+        assert page.locator('#completed').inner_text() == f'已有效记录 1 / {a.expected_clips}'
         page.click('#zoom')
         assert page.evaluate('Math.abs(view[0]-.3)<1e-9 && Math.abs(view[1]-.71)<1e-9')
         page.click('#full')
@@ -50,7 +51,7 @@ def main():
         assert float(page.locator('#lower').input_value()) == .5
         page.reload()
         page.wait_for_function('decoded !== null')
-        assert page.locator('#completed').inner_text() == '已有效记录 1 / 26'
+        assert page.locator('#completed').inner_text() == f'已有效记录 1 / {a.expected_clips}'
         assert page.locator('#reviewer').input_value() == 'AUTOMATED_UI_TEST_NOT_HUMAN_LABELS'
         with page.expect_download() as info:
             page.click('#export')
@@ -61,7 +62,7 @@ def main():
         assert exported['review_complete'] is False
         assert exported['detector_outputs_shown'] is False
         assert exported['automatic_boundaries_shown'] is False
-        assert len(exported['records']) == 26
+        assert len(exported['records']) == a.expected_clips
         assert exported['records'][0]['lower_sample'] == 8000
         assert exported['records'][0]['upper_sample'] == 8160
         assert not errors, errors
@@ -70,7 +71,7 @@ def main():
         browser.close()
     result = dict(role='Automated UI checks only; no human endpoint labels generated',
                   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                  browser=version, clips=26, audio_playback_and_decode_passed=True,
+                  browser=version, clips=a.expected_clips, audio_playback_and_decode_passed=True,
                   invalid_interval_rejected=True, sample_exact_export_passed=True,
                   navigation_persistence_and_reload_passed=True, partial_export_not_marked_complete=True,
                   no_detector_or_automatic_boundaries=True, browser_errors=errors,
