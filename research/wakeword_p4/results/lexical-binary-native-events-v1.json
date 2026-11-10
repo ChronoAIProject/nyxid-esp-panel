@@ -1,0 +1,299 @@
+{
+  "scope": "Latched-event replay at the already selected original thresholds. No rescoring, threshold/window change, physical execution or final acceptance.",
+  "script_sha256": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+  "runtime_event_policy_reference": {
+    "path": "research/panel_wake_runtime/embedding_runtime.cpp",
+    "sha256": "628305040a9e215d426030749f80ad3f8697ed5ee50707b025e2e201693a9fa3",
+    "scope": "Same3-score mean,25step refractory and half-threshold rearm policy. The existing runtime still has its own two-head model bundle; this does not establish integration of either new single head."
+  },
+  "arms": {
+    "control": {
+      "script_sha256": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+      "model_sha256": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+      "calibration_sha256": "785244354b387c1cf74c7ed1f5569ea6e6bb7bc110ec733182c8d4b8462523d2",
+      "details_sha256": "b73765d4d83157b4cd183ccaa63b056fc916c7a838793b66468972e6bb251b99",
+      "threshold": 0.98,
+      "event_policy": {
+        "threshold_grid": [
+          0.05,
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.85,
+          0.9,
+          0.95,
+          0.97,
+          0.98,
+          0.99,
+          0.995,
+          0.999
+        ],
+        "score_average_steps": 3,
+        "step_ms": 80,
+        "refractory_steps": 25,
+        "rearm_fraction": 0.5,
+        "min_history_frames": 25,
+        "positive_window_seconds": [
+          -0.1,
+          0.8
+        ],
+        "selection_order": "Original strict validation policy, one fixed final checkpoint; no new temporal window or detector-side change."
+      },
+      "threshold_or_window_reselected": false,
+      "groups": [
+        {
+          "label": 0,
+          "engine": "edge-tts",
+          "variants": 448,
+          "original_peak_hits": 2,
+          "native_event_sources_anywhere": 2,
+          "native_events": 2
+        },
+        {
+          "label": 0,
+          "engine": "kokoro",
+          "variants": 256,
+          "original_peak_hits": 1,
+          "native_event_sources_anywhere": 1,
+          "native_events": 1
+        },
+        {
+          "label": 0,
+          "engine": "macos-say",
+          "variants": 160,
+          "original_peak_hits": 0,
+          "native_event_sources_anywhere": 0,
+          "native_events": 0
+        },
+        {
+          "label": 0,
+          "engine": "openai-tts",
+          "variants": 48,
+          "original_peak_hits": 0,
+          "native_event_sources_anywhere": 0,
+          "native_events": 0
+        },
+        {
+          "label": 0,
+          "engine": "piper",
+          "variants": 960,
+          "original_peak_hits": 1,
+          "native_event_sources_anywhere": 1,
+          "native_events": 1
+        },
+        {
+          "label": 1,
+          "engine": "edge-tts",
+          "variants": 112,
+          "original_peak_hits": 58,
+          "native_event_sources_anywhere": 58,
+          "native_events": 58,
+          "native_event_in_original_proxy_window": 58,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "kokoro",
+          "variants": 24,
+          "original_peak_hits": 16,
+          "native_event_sources_anywhere": 16,
+          "native_events": 16,
+          "native_event_in_original_proxy_window": 16,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "macos-say",
+          "variants": 64,
+          "original_peak_hits": 42,
+          "native_event_sources_anywhere": 42,
+          "native_events": 42,
+          "native_event_in_original_proxy_window": 42,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "openai-tts",
+          "variants": 36,
+          "original_peak_hits": 15,
+          "native_event_sources_anywhere": 18,
+          "native_events": 18,
+          "native_event_in_original_proxy_window": 10,
+          "native_event_before_original_proxy_window": 8,
+          "peak_hit_without_native_event_in_proxy_window": 5
+        },
+        {
+          "label": 1,
+          "engine": "piper",
+          "variants": 960,
+          "original_peak_hits": 381,
+          "native_event_sources_anywhere": 381,
+          "native_events": 381,
+          "native_event_in_original_proxy_window": 381,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        }
+      ],
+      "continuous_events": 0,
+      "continuous_evaluated_hours": 7.303777777777778,
+      "accepted": false,
+      "complete_private_audit_sha256": "f1cd4ef7b0eb9e4410b8ad8a10394dbe04a5b4de571779f3cefd5571b8fdc593",
+      "complete_private_records_retained": 3068
+    },
+    "treatment": {
+      "script_sha256": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+      "model_sha256": "a2c36dcefc07d1bd2e1ba25e5e871d4ceb540064d3c36c844b027ee4ec045df5",
+      "calibration_sha256": "c317806570b1ed292827a1b886617582cf723b1adb58ed49afc023a0c9aa7952",
+      "details_sha256": "640d7f8866fdc8b09482e834557ec6552d4f1c769801d02586e3a3c6ac79192f",
+      "threshold": 0.95,
+      "event_policy": {
+        "threshold_grid": [
+          0.05,
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.85,
+          0.9,
+          0.95,
+          0.97,
+          0.98,
+          0.99,
+          0.995,
+          0.999
+        ],
+        "score_average_steps": 3,
+        "step_ms": 80,
+        "refractory_steps": 25,
+        "rearm_fraction": 0.5,
+        "min_history_frames": 25,
+        "positive_window_seconds": [
+          -0.1,
+          0.8
+        ],
+        "selection_order": "Original strict validation policy, one fixed final checkpoint; no new temporal window or detector-side change."
+      },
+      "threshold_or_window_reselected": false,
+      "groups": [
+        {
+          "label": 0,
+          "engine": "edge-tts",
+          "variants": 448,
+          "original_peak_hits": 1,
+          "native_event_sources_anywhere": 1,
+          "native_events": 1
+        },
+        {
+          "label": 0,
+          "engine": "kokoro",
+          "variants": 256,
+          "original_peak_hits": 1,
+          "native_event_sources_anywhere": 1,
+          "native_events": 1
+        },
+        {
+          "label": 0,
+          "engine": "macos-say",
+          "variants": 160,
+          "original_peak_hits": 0,
+          "native_event_sources_anywhere": 0,
+          "native_events": 0
+        },
+        {
+          "label": 0,
+          "engine": "openai-tts",
+          "variants": 48,
+          "original_peak_hits": 0,
+          "native_event_sources_anywhere": 0,
+          "native_events": 0
+        },
+        {
+          "label": 0,
+          "engine": "piper",
+          "variants": 960,
+          "original_peak_hits": 0,
+          "native_event_sources_anywhere": 0,
+          "native_events": 0
+        },
+        {
+          "label": 1,
+          "engine": "edge-tts",
+          "variants": 112,
+          "original_peak_hits": 52,
+          "native_event_sources_anywhere": 52,
+          "native_events": 52,
+          "native_event_in_original_proxy_window": 52,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "kokoro",
+          "variants": 24,
+          "original_peak_hits": 13,
+          "native_event_sources_anywhere": 13,
+          "native_events": 13,
+          "native_event_in_original_proxy_window": 13,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "macos-say",
+          "variants": 64,
+          "original_peak_hits": 44,
+          "native_event_sources_anywhere": 44,
+          "native_events": 44,
+          "native_event_in_original_proxy_window": 44,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        },
+        {
+          "label": 1,
+          "engine": "openai-tts",
+          "variants": 36,
+          "original_peak_hits": 19,
+          "native_event_sources_anywhere": 20,
+          "native_events": 20,
+          "native_event_in_original_proxy_window": 12,
+          "native_event_before_original_proxy_window": 8,
+          "peak_hit_without_native_event_in_proxy_window": 7
+        },
+        {
+          "label": 1,
+          "engine": "piper",
+          "variants": 960,
+          "original_peak_hits": 240,
+          "native_event_sources_anywhere": 240,
+          "native_events": 240,
+          "native_event_in_original_proxy_window": 240,
+          "native_event_before_original_proxy_window": 0,
+          "peak_hit_without_native_event_in_proxy_window": 0
+        }
+      ],
+      "continuous_events": 0,
+      "continuous_evaluated_hours": 7.303777777777778,
+      "accepted": false,
+      "complete_private_audit_sha256": "10e18a178ab8fb562a9d4a2402e47d9a9433097dc5c28ad4034f7ee4a2584671",
+      "complete_private_records_retained": 3068
+    }
+  },
+  "accepted": false,
+  "interpretation": "Five control and seven treatment positive variants have a proxy-window peak but no latched event in that same window, all from OpenAI. Preserve earlier native events; uncertain source markers do not establish that those early events are false. New auxiliary-binary recipe is inferior under original and replayed metrics; no physical/final advance."
+}

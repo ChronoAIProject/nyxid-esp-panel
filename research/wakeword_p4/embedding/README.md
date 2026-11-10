@@ -758,3 +758,42 @@ The sixth focused test checks actual loss-gradient polarity and the original
 negative weight across all six auxiliary classes. Historical interface-pilot
 success is explicitly not a new model fidelity pass. No physical/reserved
 benchmark or production replacement follows from this preparation alone.
+
+Both frozen runs complete, with exact replication of the previous lexical
+treatment in the new zero-added-binary-loss control. The final model bytes,
+all main/auxiliary batches, PTQ representatives, source inputs and initial
+weights match. See
+[`lexical-binary-replication-v1.json`](../results/lexical-binary-replication-v1.json).
+New treatment SHA256 is
+`a2c36dcefc07d1bd2e1ba25e5e871d4ceb540064d3c36c844b027ee4ec045df5`.
+
+The added complete-word binary loss **regresses** the fixed joint-constraint
+macro proxy metric from53.0863% at.98to49.4246% at.95. Pooled hits fall from
+512/1196to368/1196; worst confusing-corpus false fractions are.7143%/.6250%.
+Both have0events /7.303778h, upper95%.410162/h. Retain the entire fixed grids
+and reject this setting without new acoustic or reserved-final scoring. See
+[`lexical-binary-validation-v1.json`](../results/lexical-binary-validation-v1.json).
+
+`audit_head_events.py` separately replays all retained score streams using
+the existing25step refractory and half-threshold rearm rule. No model, label,
+threshold or original proxy window changes. All continuous counters reproduce;
+three focused tests verify plateau/rearm behavior, agreement with the existing
+event counter and invalid-score rejection. Existing production code is only
+read as a policy reference, not changed or executed by this replay.
+
+| Positive variants, all1196retained | Control | Added binary loss |
+| --- | --- | --- |
+| Original proxy-window peaks | 512 | 368 |
+| Variants with any latched event anywhere | 515 | 369 |
+| Latched event in the original proxy window | 507 | 361 |
+| Event before the original proxy window | 8 | 8 |
+| Peak in proxy window without an event there | 5 | 7 |
+
+The peak/event discrepancies are all OpenAI synthetic sources. Early events
+are preserved; uncertain original markers do not prove those early events are
+false wakes. Keep unfiltered traces and window membership separate, rather
+than shifting windows to improve counts. No event-based interpretation makes
+this inferior recipe a usable replacement. Per-source private traces are
+hash-bound by the public aggregate
+[`lexical-binary-native-events-v1.json`](../results/lexical-binary-native-events-v1.json).
+These are cached policy replays, not P4/acoustic timing or real-user recall.
