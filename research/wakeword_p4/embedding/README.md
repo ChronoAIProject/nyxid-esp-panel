@@ -967,3 +967,64 @@ row; an inferior setting gets no acoustic/final test. Preparation, training
 and validation use no speaker, microphone or board. Historical frozen helper
 hashes require their original source commits for reproduction; do not rewrite
 prior plans to accommodate the added training-metadata instrumentation.
+
+Preparation at `7d013d3` verifies 1959 standalone target source recordings.
+3846 feature views from 1879 sources change integer bounds; all other record
+fields, negatives and commanded positives remain identical. See
+[`lexical-rms-preparation-v1.json`](../results/lexical-rms-preparation-v1.json).
+Actual manifest SHA256 is
+`8c0887603646990be98b1ada9a2dcaf3e784b71ef5c44eea089d18ef03f53c0c`.
+The two training plans freeze before fitting at `869d1e4`.
+
+For each arm, set `RMS_ARM_PLAN` to its control/treatment plan and
+`RMS_ARM_MANIFEST` to the corresponding original/prepared private manifest.
+Use fresh output directories, the existing initial weights and the same
+private feature root:
+
+```sh
+python research/wakeword_p4/embedding/lexical_auxiliary.py train \
+  --data-root "$WAKE_DATA" --initial-weights "$ORIGINAL_INITIAL_WEIGHTS" \
+  --auxiliary-manifest "$RMS_ARM_MANIFEST" --plan "$RMS_ARM_PLAN" \
+  --output "$NEW_PRIVATE_ARM_OUTPUT"
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --data-root "$WAKE_DATA" --training "$NEW_PRIVATE_ARM_OUTPUT" \
+  --plan "$RMS_ARM_PLAN"
+python research/wakeword_p4/embedding/lexical_rms_alignment.py compare \
+  --control "$NEW_PRIVATE_CONTROL" --treatment "$NEW_PRIVATE_TREATMENT" \
+  --reference-complete "$ORIGINAL_CE_TREATMENT_COMPLETE" \
+  --report "$NEW_PRIVATE_COMPARISON_REPORT"
+python research/wakeword_p4/embedding/audit_head_events.py \
+  --checkpoint "$NEW_PRIVATE_ARM_OUTPUT/step-10000" \
+  --output "$NEW_PRIVATE_NATIVE_EVENT_REPORT"
+```
+
+Both runs finish. The new control exactly reproduces retained CE-only model
+bytes and both full main/auxiliary batch digests. Actual main draws, PTQ arrays
+and auxiliary source/class draw digests also match across arms, while auxiliary
+history bytes change as intended. Source/class draw SHA256 is
+`ffa458c69815ce1b7eef25fecb036bfca03f2beacd3e5b4bb1b66fa8934e8a1d`.
+Thirteen lexical/probe tests pass, including original source-role guards,
+command preservation, bound rejection and source/class sequence invariance.
+
+The fixed validation **rejects this auxiliary-only RMS setting**. Joint-qualified
+macro proxy-window hits decrease from 53.0863% to 52.6161%; pooled hits fall
+from 512 to 497/1196. Both select 0.98, with worst confusing-corpus false
+fraction 0.7143% and 0 events over the same 7.303778 h (upper 95% 0.410162/h).
+Treatment model SHA256 is
+`b94dc1f6f4d47dfbf1b84b6532b13ff73de99ec5438b4c82c62ed225a7e12f66`.
+The exported graph retains 114464 bytes, 31 operators and the original external
+INT8 interface. Same graph shape is not actual MCU numeric/resource proof.
+See every fixed-grid row and comparison check in
+[`lexical-rms-validation-v1.json`](../results/lexical-rms-validation-v1.json).
+
+Latched replay has 515/501 positive variants with any event and 507/493 with an
+event in the unchanged proxy window, control/treatment respectively. Both
+retain 8 earlier-event variants; 5/4 peak hits lack an event in that window.
+Those discrepancies remain OpenAI synthetic sources and are not relabelled
+from uncertain markers. Continuous counters reproduce 0. Full private traces
+are hash-bound by
+[`lexical-rms-native-events-v1.json`](../results/lexical-rms-native-events-v1.json).
+No P4, acoustic or reserved-final evaluation follows this inferior candidate.
+This tests one auxiliary metadata intervention; it does not rule out every
+endpoint effect or explain the broader source-transfer deficit. The retained
+CE-only setting and the full Hi ESP parity goal remain unchanged.
