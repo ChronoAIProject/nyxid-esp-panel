@@ -16,7 +16,7 @@ def sha(path):
 
 
 def worker(job):
-    source, output, rows = job
+    source, output, rows, continuous = job
     source, output = Path(source), Path(output)
     frontend, chunks, prefix, digest = MicroFrontend(), [], [], hashlib.sha256()
     source_samples, total_samples = 0, 0
@@ -30,13 +30,21 @@ def worker(job):
         if hashlib.sha256(pcm.astype('<i2').tobytes()).hexdigest() != row['pcm_sha256']:
             raise ValueError('Changed decoded PCM')
         source_samples += len(pcm)
-        # Explicit alignment padding is counted as inserted silence, never exposure.
-        gap = 3200+(-len(pcm)-3200) % 160
-        signal = np.concatenate((pcm, np.zeros(gap, dtype=np.int16)))
-        digest.update(signal.astype('<i2').tobytes()); total_samples += len(signal)
-        chunks.append(features(signal, frontend))
-        if len(prefix) < 2:
-            prefix.append(signal)
+        # Long recordings keep every existing pause and overlap. Aligned chunks
+        # share one frontend, with only a final <10ms pad, never inserted gaps.
+        if continuous:
+            if len(rows) != 1:
+                raise ValueError('Continuous-recording mode requires one WAV per stream')
+            signals = [pcm[at:at+160000] for at in range(0, len(pcm), 160000)]
+        else:
+            gap = 3200+(-len(pcm)-3200) % 160
+            signals = [np.concatenate((pcm, np.zeros(gap, dtype=np.int16)))]
+        for signal in signals:
+            signal = np.pad(signal, (0, (-len(signal)) % 160))
+            digest.update(signal.astype('<i2').tobytes()); total_samples += len(signal)
+            chunks.append(features(signal, frontend))
+            if len(prefix) < 2:
+                prefix.append(signal)
     if len(prefix) != 2:
         raise ValueError('Need two utterances for continuity audit')
     np.testing.assert_array_equal(np.concatenate(chunks[:2]), features(np.concatenate(prefix)))
@@ -46,6 +54,7 @@ def worker(job):
     first = rows[0]; relative = Path('human')/first['split']/(first['speaker']+'.npy')
     target = output/relative; target.parent.mkdir(parents=True, exist_ok=True); np.save(target, data)
     return dict(path=str(relative), split=first['split'], speaker=first['speaker'], language=first['language'],
+                **{key: first[key] for key in ('category', 'participants', 'session', 'channel') if key in first},
                 frames=len(data), files=len(rows), seconds=total_samples/16000,
                 source_seconds=source_samples/16000, inserted_silence_seconds=(total_samples-source_samples)/16000,
                 stream_pcm_sha256=digest.hexdigest(), feature_sha256=sha(target),
@@ -57,6 +66,8 @@ def main():
     p.add_argument('--source', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--workers', type=int, default=8)
+    p.add_argument('--continuous-recordings', action='store_true',
+                   help='One long WAV per stream; no artificial inter-utterance gaps')
     a = p.parse_args()
     if a.output.exists():
         p.error('Use a fresh output directory')
@@ -64,13 +75,17 @@ def main():
     if sha(a.source/'manifest.jsonl') != audit['manifest_sha256']:
         raise ValueError('Changed audited corpus manifest')
     rows = [json.loads(x) for x in (a.source/'manifest.jsonl').read_text().splitlines()]
-    groups, splits = defaultdict(list), {}
+    groups, splits, participant_splits = defaultdict(list), {}, {}
     for row in rows:
         if row['speaker'] in splits and splits[row['speaker']] != row['split']:
             raise ValueError('Speaker crosses splits')
         splits[row['speaker']] = row['split']; groups[row['speaker']].append(row)
+        for participant in row.get('participants', []):
+            if participant in participant_splits and participant_splits[participant] != row['split']:
+                raise ValueError('Conversation participant crosses splits')
+            participant_splits[participant] = row['split']
     a.output.mkdir(parents=True)
-    jobs = [(str(a.source), str(a.output), rows) for _, rows in sorted(groups.items())]
+    jobs = [(str(a.source), str(a.output), rows, a.continuous_recordings) for _, rows in sorted(groups.items())]
     result = []
     with ProcessPoolExecutor(a.workers) as pool:
         for row in pool.map(worker, jobs):
@@ -81,7 +96,8 @@ def main():
                   source_sha256=sha(Path(__file__)), frontend_source_sha256=sha(Path(__file__).with_name('features.py')),
                   index_sha256=sha(a.output/'human.json'), streams=len(result),
                   frames=sum(r['frames'] for r in result), split_hours={s:sum(r['source_seconds']/3600 for r in result if r['split']==s) for s in sorted(set(splits.values()))},
-                  boundary_policy='200ms zero gap plus 0..159 alignment samples; continuous frontend state; exposure excludes all inserted silence',
+                  boundary_policy=('No inserted gaps; 10-second aligned chunks share frontend state; only final 0..159 alignment samples excluded from exposure'
+                                   if a.continuous_recordings else '200ms zero gap plus 0..159 alignment samples; continuous frontend state; exposure excludes all inserted silence'),
                   chunk_continuity_checks_passed=True, classifiers_scored=False,
                   independent_final_audio_accessed=False)
     (a.output/'cache.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report), flush=True)

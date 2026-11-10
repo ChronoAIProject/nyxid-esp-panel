@@ -19,6 +19,8 @@ def main():
     p.add_argument('--frozen-report', type=Path, required=True)
     p.add_argument('--features', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--corpus-name', default='Mandarin',
+                   help='Descriptive corpus label only; does not alter evaluation')
     a = p.parse_args()
     if a.output.exists():
         p.error('Use a fresh evaluation directory')
@@ -55,7 +57,7 @@ def main():
                               completed=len(results), planned=len(rows))), flush=True)
     hours = sum(r['source_seconds'] for r in results)/3600
     count = sum(r['false_events'] for r in results)
-    report = dict(role='New Mandarin development validation at frozen prior English calibration',
+    report = dict(role=f'{a.corpus_name} development validation at frozen prior English calibration',
                   model_sha256=frozen['model_sha256'], threshold=threshold, threshold_reselected=False,
                   frozen_report_sha256=sha(a.frozen_report), feature_cache_sha256=sha(a.features/'cache.json'),
                   feature_index_sha256=cache['index_sha256'], source_sha256=sha(Path(__file__)),
