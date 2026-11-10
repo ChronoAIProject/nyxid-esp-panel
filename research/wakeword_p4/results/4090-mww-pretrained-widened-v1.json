@@ -1,0 +1,502 @@
+{
+  "role": "Function-preserving capacity expansion diagnostic; not Nyx recognition evidence",
+  "source_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+  "source_sha256": "370a17cd5909666d6b4358f60f726e05a84265215e7efc566c631595b7c1e786",
+  "widened_weights_sha256": "f00bd48d5a7dde94eaac64cd108fd9db68792b0bdcc6af87e1d05a07367f4337",
+  "probe_manifest_sha256": "9c884a9c6f1179bb2fc782fae245ae1f140567abffd73afbbd347538412e3e60",
+  "teacher_parameters": 22801,
+  "widened_parameters": 70801,
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "120,120,120,120",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [9], [13], [21]",
+    "--first_conv_filters",
+    "60",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "context_frames": 150,
+  "mapped_layers": [
+    {
+      "source": "stream",
+      "target": "stream_6",
+      "source_shapes": [
+        [
+          5,
+          1,
+          40,
+          30
+        ]
+      ],
+      "target_shapes": [
+        [
+          5,
+          1,
+          40,
+          60
+        ]
+      ]
+    },
+    {
+      "source": "depthwise_conv2d",
+      "target": "depthwise_conv2d_4",
+      "source_shapes": [
+        [
+          5,
+          1,
+          30,
+          1
+        ],
+        [
+          30
+        ]
+      ],
+      "target_shapes": [
+        [
+          5,
+          1,
+          60,
+          1
+        ],
+        [
+          60
+        ]
+      ]
+    },
+    {
+      "source": "conv2d_1",
+      "target": "conv2d_6",
+      "source_shapes": [
+        [
+          1,
+          1,
+          30,
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          1,
+          1,
+          60,
+          120
+        ]
+      ]
+    },
+    {
+      "source": "batch_normalization",
+      "target": "batch_normalization_4",
+      "source_shapes": [
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "depthwise_conv2d_1",
+      "target": "depthwise_conv2d_5",
+      "source_shapes": [
+        [
+          9,
+          1,
+          60,
+          1
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          9,
+          1,
+          120,
+          1
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "conv2d_2",
+      "target": "conv2d_7",
+      "source_shapes": [
+        [
+          1,
+          1,
+          60,
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          1,
+          1,
+          120,
+          120
+        ]
+      ]
+    },
+    {
+      "source": "batch_normalization_1",
+      "target": "batch_normalization_5",
+      "source_shapes": [
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "depthwise_conv2d_2",
+      "target": "depthwise_conv2d_6",
+      "source_shapes": [
+        [
+          13,
+          1,
+          60,
+          1
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          13,
+          1,
+          120,
+          1
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "conv2d_3",
+      "target": "conv2d_8",
+      "source_shapes": [
+        [
+          1,
+          1,
+          60,
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          1,
+          1,
+          120,
+          120
+        ]
+      ]
+    },
+    {
+      "source": "batch_normalization_2",
+      "target": "batch_normalization_6",
+      "source_shapes": [
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "depthwise_conv2d_3",
+      "target": "depthwise_conv2d_7",
+      "source_shapes": [
+        [
+          21,
+          1,
+          60,
+          1
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          21,
+          1,
+          120,
+          1
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "conv2d_4",
+      "target": "conv2d_9",
+      "source_shapes": [
+        [
+          1,
+          1,
+          60,
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          1,
+          1,
+          120,
+          120
+        ]
+      ]
+    },
+    {
+      "source": "batch_normalization_3",
+      "target": "batch_normalization_7",
+      "source_shapes": [
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ],
+        [
+          60
+        ]
+      ],
+      "target_shapes": [
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ],
+        [
+          120
+        ]
+      ]
+    },
+    {
+      "source": "dense",
+      "target": "dense_1",
+      "source_shapes": [
+        [
+          300,
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "target_shapes": [
+        [
+          600,
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "mean_absolute_error": 6.3383050183875565e-09,
+  "max_absolute_error": 5.364418029785156e-07,
+  "passed": true,
+  "clips": [
+    {
+      "path": "000.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9999540448188782,
+      "widened_max": 0.9999540448188782,
+      "max_absolute_error": 5.364418029785156e-07
+    },
+    {
+      "path": "001.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9999948143959045,
+      "widened_max": 0.9999948143959045,
+      "max_absolute_error": 8.940696716308594e-08
+    },
+    {
+      "path": "002.wav",
+      "teacher_target_text": false,
+      "teacher_max": 1.272478675673483e-05,
+      "widened_max": 1.27248231365229e-05,
+      "max_absolute_error": 3.637978807091713e-11
+    },
+    {
+      "path": "003.wav",
+      "teacher_target_text": false,
+      "teacher_max": 4.781756433658302e-05,
+      "widened_max": 4.781747338711284e-05,
+      "max_absolute_error": 1.0913936421275139e-10
+    },
+    {
+      "path": "004.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9999990463256836,
+      "widened_max": 0.9999990463256836,
+      "max_absolute_error": 2.980232238769531e-07
+    },
+    {
+      "path": "005.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9974197745323181,
+      "widened_max": 0.9974197745323181,
+      "max_absolute_error": 4.172325134277344e-07
+    },
+    {
+      "path": "006.wav",
+      "teacher_target_text": false,
+      "teacher_max": 5.582665471592918e-05,
+      "widened_max": 5.582681478699669e-05,
+      "max_absolute_error": 1.6007106751203537e-10
+    },
+    {
+      "path": "007.wav",
+      "teacher_target_text": false,
+      "teacher_max": 1.2103202607249841e-05,
+      "widened_max": 1.2103202607249841e-05,
+      "max_absolute_error": 2.7284841053187847e-11
+    },
+    {
+      "path": "008.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9999958872795105,
+      "widened_max": 0.9999958872795105,
+      "max_absolute_error": 2.384185791015625e-07
+    },
+    {
+      "path": "009.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9997859597206116,
+      "widened_max": 0.9997859597206116,
+      "max_absolute_error": 3.5762786865234375e-07
+    },
+    {
+      "path": "010.wav",
+      "teacher_target_text": false,
+      "teacher_max": 0.00017288970411755145,
+      "widened_max": 0.00017289005336351693,
+      "max_absolute_error": 3.4924596548080444e-10
+    },
+    {
+      "path": "011.wav",
+      "teacher_target_text": false,
+      "teacher_max": 0.0005775124300271273,
+      "widened_max": 0.0005775124300271273,
+      "max_absolute_error": 2.3283064365386963e-10
+    },
+    {
+      "path": "012.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9999967813491821,
+      "widened_max": 0.9999967813491821,
+      "max_absolute_error": 2.980232238769531e-07
+    },
+    {
+      "path": "013.wav",
+      "teacher_target_text": true,
+      "teacher_max": 0.9991502165794373,
+      "widened_max": 0.9991502165794373,
+      "max_absolute_error": 2.384185791015625e-07
+    },
+    {
+      "path": "014.wav",
+      "teacher_target_text": false,
+      "teacher_max": 0.0013298928970471025,
+      "widened_max": 0.0013298973208293319,
+      "max_absolute_error": 4.423782229423523e-09
+    },
+    {
+      "path": "015.wav",
+      "teacher_target_text": false,
+      "teacher_max": 0.0006347385351546109,
+      "widened_max": 0.0006347378948703408,
+      "max_absolute_error": 1.4551915228366852e-09
+    }
+  ],
+  "validation_or_final_accessed": false,
+  "reference": "https://arxiv.org/abs/1511.05641",
+  "limits": "Duplicate channels preserve initial teacher function in floating point on these probes. Original BN statistics remain unavailable. No fine tuning, INT8 export, streaming parity, device resources or Nyx quality is established; Nyx training must reset classifier head."
+}
