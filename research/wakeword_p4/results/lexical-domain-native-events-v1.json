@@ -1,0 +1,820 @@
+{
+  "scope": "Cached validation event-policy replay for the rejected engine adversary; no new threshold, window or model inference.",
+  "control": {
+    "scope": "Trace existing calibrated validation scores without changing model or windows.\n\nCounts actual latched threshold events separately from the legacy peak metric.\nThis is score-policy replay, not microphone/P4 execution or phonetic timing.\n",
+    "script_sha256": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+    "model_sha256": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+    "calibration_sha256": "35e14762b06232e601f32a6092417201869a4972f468dc9a0f08b0fb1fb72655",
+    "details_sha256": "b73765d4d83157b4cd183ccaa63b056fc916c7a838793b66468972e6bb251b99",
+    "threshold": 0.98,
+    "event_policy": {
+      "threshold_grid": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        0.97,
+        0.98,
+        0.99,
+        0.995,
+        0.999
+      ],
+      "score_average_steps": 3,
+      "step_ms": 80,
+      "refractory_steps": 25,
+      "rearm_fraction": 0.5,
+      "min_history_frames": 25,
+      "positive_window_seconds": [
+        -0.1,
+        0.8
+      ],
+      "selection_order": "Original strict validation policy, one fixed final checkpoint; no new temporal window or detector-side change."
+    },
+    "threshold_or_window_reselected": false,
+    "groups": [
+      {
+        "label": 0,
+        "engine": "edge-tts",
+        "variants": 448,
+        "original_peak_hits": 2,
+        "native_event_sources_anywhere": 2,
+        "native_events": 2
+      },
+      {
+        "label": 0,
+        "engine": "kokoro",
+        "variants": 256,
+        "original_peak_hits": 1,
+        "native_event_sources_anywhere": 1,
+        "native_events": 1
+      },
+      {
+        "label": 0,
+        "engine": "macos-say",
+        "variants": 160,
+        "original_peak_hits": 0,
+        "native_event_sources_anywhere": 0,
+        "native_events": 0
+      },
+      {
+        "label": 0,
+        "engine": "openai-tts",
+        "variants": 48,
+        "original_peak_hits": 0,
+        "native_event_sources_anywhere": 0,
+        "native_events": 0
+      },
+      {
+        "label": 0,
+        "engine": "piper",
+        "variants": 960,
+        "original_peak_hits": 1,
+        "native_event_sources_anywhere": 1,
+        "native_events": 1
+      },
+      {
+        "label": 1,
+        "engine": "edge-tts",
+        "variants": 112,
+        "original_peak_hits": 58,
+        "native_event_sources_anywhere": 58,
+        "native_events": 58,
+        "native_event_in_original_proxy_window": 58,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "kokoro",
+        "variants": 24,
+        "original_peak_hits": 16,
+        "native_event_sources_anywhere": 16,
+        "native_events": 16,
+        "native_event_in_original_proxy_window": 16,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "macos-say",
+        "variants": 64,
+        "original_peak_hits": 42,
+        "native_event_sources_anywhere": 42,
+        "native_events": 42,
+        "native_event_in_original_proxy_window": 42,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "openai-tts",
+        "variants": 36,
+        "original_peak_hits": 15,
+        "native_event_sources_anywhere": 18,
+        "native_events": 18,
+        "native_event_in_original_proxy_window": 10,
+        "native_event_before_original_proxy_window": 8,
+        "peak_hit_without_native_event_in_proxy_window": 5
+      },
+      {
+        "label": 1,
+        "engine": "piper",
+        "variants": 960,
+        "original_peak_hits": 381,
+        "native_event_sources_anywhere": 381,
+        "native_events": 381,
+        "native_event_in_original_proxy_window": 381,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      }
+    ],
+    "continuous": [
+      {
+        "id": "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696",
+        "scores_sha256": "9f0b84c3f34b5172967ec227df0108c5504fb674fb4916cfe678bbde26049314",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13928888888888888
+      },
+      {
+        "id": "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5",
+        "scores_sha256": "3be1a71196e05a27ca11ef516d589ef0cbd9ac5adbe584b274cb037dfd5edde6",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.1375777777777778
+      },
+      {
+        "id": "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b",
+        "scores_sha256": "d50229f893e700b821ae86bba9d77892e0ec88fc32c7f12961c04e0582b5a6a6",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.1370888888888889
+      },
+      {
+        "id": "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788",
+        "scores_sha256": "e9492aab31986db31ef56c859970634cb6b26e54c553fe97ab5634379f7821d1",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13673333333333335
+      },
+      {
+        "id": "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab",
+        "scores_sha256": "4ba1057110a96f87d01eb216c3bd675e0f385c47af295d757b429847ee62c9fe",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13673333333333335
+      },
+      {
+        "id": "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3",
+        "scores_sha256": "ea2f6aaca428dd59970573996bcd373aaf820a3a6e6a1beb373ffd5a2f313fc1",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13746666666666665
+      },
+      {
+        "id": "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994",
+        "scores_sha256": "7598a560134b35b9245ca6241ad978e2316b644d63a6a58e311d15dcb94456b0",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13711111111111113
+      },
+      {
+        "id": "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b",
+        "scores_sha256": "d47667e9630e82e213a86cb33c2413ab4d930bea116796d70b348f704b7938b3",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13922222222222222
+      },
+      {
+        "id": "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0",
+        "scores_sha256": "4b59a3e82ef028d74d7d89d933e09c4f7e153fa1a62a5734ee638282329a8f10",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.16504444444444444
+      },
+      {
+        "id": "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2",
+        "scores_sha256": "e64607b61819839863baada5898b8471163fca129073440990dc253bff04afac",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.36006666666666665
+      },
+      {
+        "id": "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4",
+        "scores_sha256": "04a0f815a0dbd75dc7946d794664774713f826efd81b390dba07f56e95175743",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4253777777777778
+      },
+      {
+        "id": "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b",
+        "scores_sha256": "b95377bb3fd7d9bd2e5158d058be17498a0de2148cab735ba6aa47800f71ca53",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.41755555555555557
+      },
+      {
+        "id": "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a",
+        "scores_sha256": "071f3857e315db2bc311e88115c4819db36d73ae4be253ed851dcdc7bfd517fb",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4242
+      },
+      {
+        "id": "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6",
+        "scores_sha256": "df292de19db2e9f18f0006913b533595aac192b30b618182882158d0a2dbe055",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.18746666666666667
+      },
+      {
+        "id": "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138",
+        "scores_sha256": "15b3047ca52d2c3c981727ba837a1e7cf327aa4780f79ecf4f24f9a03ae6122d",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42591111111111113
+      },
+      {
+        "id": "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4",
+        "scores_sha256": "fbada60788c5b0ea3275a7f5c1b7f821e862447d4c05ee4096e202fc6f2e941d",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4258222222222222
+      },
+      {
+        "id": "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22",
+        "scores_sha256": "2570736a2b3019ce39a78f169994bbc12a074f55da573751d7a8f1c7bbcc0497",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.3050222222222222
+      },
+      {
+        "id": "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018",
+        "scores_sha256": "d96a5c8f560de7eb6e81fd1104d148d3c2bc07e8cf2bd7f723cdc00d3e906337",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4245555555555556
+      },
+      {
+        "id": "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96",
+        "scores_sha256": "66ba40c6c7f1759f3979eb73b8a6d82b905509642d0936ed4ecaee9eefae585e",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4248
+      },
+      {
+        "id": "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5",
+        "scores_sha256": "169a20b0ed08c64f7da3eb0d103f22a4a10233cf0f5712db35c0a4051bc577a4",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42515555555555556
+      },
+      {
+        "id": "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357",
+        "scores_sha256": "dde0d707214dab2571661c24667d641b491d43c06f5ec01cf99b92055401df43",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4270444444444445
+      },
+      {
+        "id": "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3",
+        "scores_sha256": "9d224d982b3e94fd3ba965eeb1dfcf7217aab2fdb293f113c5df8ae26e6c91a6",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4238
+      },
+      {
+        "id": "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9",
+        "scores_sha256": "29399a9e437d34d90dbecef27ced905e9789ab701259374f1f033b44826f764f",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42275555555555555
+      },
+      {
+        "id": "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c",
+        "scores_sha256": "7f37693678b55045f6bddb5a026c3d13493821303fba4cb146cffaaddcbc78a9",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.39664444444444447
+      },
+      {
+        "id": "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3",
+        "scores_sha256": "37f48a05b5640cf23e9ae464f339cfd307974ee6760ff9d7df50696f5a562377",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005244444444444444
+      },
+      {
+        "id": "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1",
+        "scores_sha256": "58f40952a71478e82975a1a5bdaaf440d85795b52809be1c8322c60039eed96f",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.0386
+      },
+      {
+        "id": "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6",
+        "scores_sha256": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008555555555555556
+      },
+      {
+        "id": "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335",
+        "scores_sha256": "bc09adea85b59cdf139784454736a5f717835de10696189b778bcb011e8456db",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005533333333333334
+      },
+      {
+        "id": "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a",
+        "scores_sha256": "eadfa5e576c8fe3bf7cac94aae7caeb2877320c16e34d5c95c20bc1b40f82c5a",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.010088888888888889
+      },
+      {
+        "id": "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501",
+        "scores_sha256": "13d7599044076505cf43c5151548ce6071ccb5a2cdd8be79375b2f67d7fb72d2",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008088888888888889
+      },
+      {
+        "id": "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317",
+        "scores_sha256": "66fb27f68e986b9515f92a2c663fc1a3bd8c8aa071b9714b3b91414b50a1864a",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008666666666666666
+      },
+      {
+        "id": "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a",
+        "scores_sha256": "57f38da53318718be47af2824d7629b4d065cd6c1ea404a6606bd2bcdd4dd353",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.011044444444444444
+      },
+      {
+        "id": "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93",
+        "scores_sha256": "f6b430dd4d171d78eef37029605344663e812cfd9440533c707a0a649f1bca38",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.012511111111111112
+      },
+      {
+        "id": "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048",
+        "scores_sha256": "1671164fad8e6dde6b0f4948ab748132ef36d3263832a95c9e2dba8ebf346f35",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.0074222222222222215
+      },
+      {
+        "id": "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae",
+        "scores_sha256": "ac0660f3e2e846c77da3052fac0cfef545e72585292f38c8c98e54fb5d2ca341",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005577777777777779
+      }
+    ],
+    "continuous_events": 0,
+    "continuous_evaluated_hours": 7.303777777777778,
+    "limits": [
+      "Latched-policy replay uses already calibrated reused validation scores, not P4 or acoustic execution.",
+      "Any event is unfiltered and may precede the intended word; original proxy-window membership is kept separately.",
+      "Do not promote any-event or proxy counts to real-user recall or phonetic latency.",
+      "No new threshold, labels, source windows, audio or runtime behavior is fitted."
+    ],
+    "accepted": false,
+    "private_trace_sha256": "823b6af9af3cfd99ef54b67448b61a96c7fbc3ab0f0e3793ec7a3047e5fd3108",
+    "trace_records": 3068,
+    "positive_totals": {
+      "variants": 1196,
+      "original_peak_hits": 512,
+      "native_event_sources_anywhere": 515,
+      "native_events": 515,
+      "native_event_in_original_proxy_window": 507,
+      "native_event_before_original_proxy_window": 8,
+      "peak_hit_without_native_event_in_proxy_window": 5
+    }
+  },
+  "treatment": {
+    "scope": "Trace existing calibrated validation scores without changing model or windows.\n\nCounts actual latched threshold events separately from the legacy peak metric.\nThis is score-policy replay, not microphone/P4 execution or phonetic timing.\n",
+    "script_sha256": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+    "model_sha256": "8813c8faa35ee8724a053130eafb1721ffff65353230871beecca793695bc8e5",
+    "calibration_sha256": "26c28738cc1470dcd135085f1243ffbe318b657649926b781184d7b45e3eddc2",
+    "details_sha256": "a995d7046a7023898bae6464dc765e1673d30681fe895c7815092214cc852791",
+    "threshold": 0.98,
+    "event_policy": {
+      "threshold_grid": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        0.97,
+        0.98,
+        0.99,
+        0.995,
+        0.999
+      ],
+      "score_average_steps": 3,
+      "step_ms": 80,
+      "refractory_steps": 25,
+      "rearm_fraction": 0.5,
+      "min_history_frames": 25,
+      "positive_window_seconds": [
+        -0.1,
+        0.8
+      ],
+      "selection_order": "Original strict validation policy, one fixed final checkpoint; no new temporal window or detector-side change."
+    },
+    "threshold_or_window_reselected": false,
+    "groups": [
+      {
+        "label": 0,
+        "engine": "edge-tts",
+        "variants": 448,
+        "original_peak_hits": 2,
+        "native_event_sources_anywhere": 2,
+        "native_events": 2
+      },
+      {
+        "label": 0,
+        "engine": "kokoro",
+        "variants": 256,
+        "original_peak_hits": 1,
+        "native_event_sources_anywhere": 1,
+        "native_events": 1
+      },
+      {
+        "label": 0,
+        "engine": "macos-say",
+        "variants": 160,
+        "original_peak_hits": 0,
+        "native_event_sources_anywhere": 0,
+        "native_events": 0
+      },
+      {
+        "label": 0,
+        "engine": "openai-tts",
+        "variants": 48,
+        "original_peak_hits": 0,
+        "native_event_sources_anywhere": 0,
+        "native_events": 0
+      },
+      {
+        "label": 0,
+        "engine": "piper",
+        "variants": 960,
+        "original_peak_hits": 1,
+        "native_event_sources_anywhere": 1,
+        "native_events": 1
+      },
+      {
+        "label": 1,
+        "engine": "edge-tts",
+        "variants": 112,
+        "original_peak_hits": 54,
+        "native_event_sources_anywhere": 54,
+        "native_events": 54,
+        "native_event_in_original_proxy_window": 54,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "kokoro",
+        "variants": 24,
+        "original_peak_hits": 13,
+        "native_event_sources_anywhere": 13,
+        "native_events": 13,
+        "native_event_in_original_proxy_window": 13,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "macos-say",
+        "variants": 64,
+        "original_peak_hits": 38,
+        "native_event_sources_anywhere": 38,
+        "native_events": 38,
+        "native_event_in_original_proxy_window": 38,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      },
+      {
+        "label": 1,
+        "engine": "openai-tts",
+        "variants": 36,
+        "original_peak_hits": 15,
+        "native_event_sources_anywhere": 19,
+        "native_events": 19,
+        "native_event_in_original_proxy_window": 11,
+        "native_event_before_original_proxy_window": 8,
+        "peak_hit_without_native_event_in_proxy_window": 4
+      },
+      {
+        "label": 1,
+        "engine": "piper",
+        "variants": 960,
+        "original_peak_hits": 330,
+        "native_event_sources_anywhere": 330,
+        "native_events": 330,
+        "native_event_in_original_proxy_window": 330,
+        "native_event_before_original_proxy_window": 0,
+        "peak_hit_without_native_event_in_proxy_window": 0
+      }
+    ],
+    "continuous": [
+      {
+        "id": "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696",
+        "scores_sha256": "a33ddbf061809e7dc85ec26c39a6927f7524789a10088eda97572e04bc3d8884",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13928888888888888
+      },
+      {
+        "id": "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5",
+        "scores_sha256": "3ca0dfd4113b3724a5d810d18c48b869beec0299bdfb6fdeef012596e6c6dde8",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.1375777777777778
+      },
+      {
+        "id": "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b",
+        "scores_sha256": "3039d349e89c206b3b26d22cc45a92fe1decc7274ba54a2a22322ba3ea06fddc",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.1370888888888889
+      },
+      {
+        "id": "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788",
+        "scores_sha256": "acda4b0c358198df9c0ac9dc8f73efb775d631e1b61a3b36da08c9cadc4022ca",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13673333333333335
+      },
+      {
+        "id": "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab",
+        "scores_sha256": "9ead271a868623757b18145e4e2c80f3d50e403534242a3d7ebcfd6bd3deaa54",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13673333333333335
+      },
+      {
+        "id": "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3",
+        "scores_sha256": "e1f34ea015e48c3e621d01e08b341f1df4bf64acf1b19127df0a885e88fb6a6c",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13746666666666665
+      },
+      {
+        "id": "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994",
+        "scores_sha256": "ba4858b6bf6fae161fd07c79006f73effc11f1ef8c46ef35789fcbc28ed47edb",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13711111111111113
+      },
+      {
+        "id": "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b",
+        "scores_sha256": "56a2007b2913c28a590b69be48479b4c3e677617d0cb498e90ef57587fab5573",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.13922222222222222
+      },
+      {
+        "id": "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0",
+        "scores_sha256": "fd8b057f74fc31bec14c491cd587d5ead21e2a8719c2a43fb0bad02f03eaf73a",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.16504444444444444
+      },
+      {
+        "id": "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2",
+        "scores_sha256": "1ba3a79950e948097f488a02c61b4831cf714212a1c14d69f700d949d5ecb5f7",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.36006666666666665
+      },
+      {
+        "id": "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4",
+        "scores_sha256": "b5917e0521a308c499042fdff2210793c9d255444866314c8710d37df66646bf",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4253777777777778
+      },
+      {
+        "id": "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b",
+        "scores_sha256": "b1d25a0545fe33dc51ef566934dce72eadd7fb7bf6b956f48893b3cbe11b154a",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.41755555555555557
+      },
+      {
+        "id": "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a",
+        "scores_sha256": "d8cf9a7fcfc84b4577ddcb6d7a226db01a4f841dbe7ffd51265c17ddd25ec1bc",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4242
+      },
+      {
+        "id": "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6",
+        "scores_sha256": "429787efeb355496e57474885875996dd03f942e6ecc43f8bc61d130e95172b5",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.18746666666666667
+      },
+      {
+        "id": "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138",
+        "scores_sha256": "2268bf3a4b01820ed2f78769f3bf8366e0405e4a7b6235ceae289fb45c236ae5",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42591111111111113
+      },
+      {
+        "id": "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4",
+        "scores_sha256": "84e6b6522bb5440fc9a2a31fa7490012e5d48da94498ae247e17d11c4bb938ab",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4258222222222222
+      },
+      {
+        "id": "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22",
+        "scores_sha256": "c80eccdf31f39ca76f854abf13896835b29208aa5603a5dc8cf1cb6adcfc81e3",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.3050222222222222
+      },
+      {
+        "id": "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018",
+        "scores_sha256": "bc429b44302818d5689b443f3ead41be3d46ca80d4100ac5bf3474e61b379600",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4245555555555556
+      },
+      {
+        "id": "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96",
+        "scores_sha256": "e3c6dc866dbea0cea0a6ee667e6437c4c33a6de8039668ae68f545224a55d6da",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4248
+      },
+      {
+        "id": "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5",
+        "scores_sha256": "d179f5c44350bbc09483955863801c4974264998715dee1c323d380d8cb0f85f",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42515555555555556
+      },
+      {
+        "id": "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357",
+        "scores_sha256": "d85dbf80f65309658c47be4a0c189eb76892d4bf77c94d6381550971efcd2468",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4270444444444445
+      },
+      {
+        "id": "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3",
+        "scores_sha256": "29755b4d9a3cc69cbf48a54b392a40c3a9f5635d23abc7d3324b4a5c1b53bf8c",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.4238
+      },
+      {
+        "id": "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9",
+        "scores_sha256": "6dc8bd33e8f25bc4d5b93aa5aa4ca7028d060e52a0533a12e43a172799f8f8e4",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.42275555555555555
+      },
+      {
+        "id": "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c",
+        "scores_sha256": "eef3bc31ff51d5bd9b7012f25a6c2a2f09f9ce37bfc9e9f480f36e274896a377",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.39664444444444447
+      },
+      {
+        "id": "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3",
+        "scores_sha256": "1f7000fc084d6c885453cdc95b0bb4ecb1af43c28ac6ae194033efc00d8e7950",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005244444444444444
+      },
+      {
+        "id": "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1",
+        "scores_sha256": "bf5ad75ed9e5b2d8800b4ce7d70eed3e3773d02110bf8e91fb5dec02e75777d4",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.0386
+      },
+      {
+        "id": "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6",
+        "scores_sha256": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008555555555555556
+      },
+      {
+        "id": "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335",
+        "scores_sha256": "de565640f7da5d6ec50f35151f38b9fd03a0fd82249788862f6653b8cab31861",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005533333333333334
+      },
+      {
+        "id": "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a",
+        "scores_sha256": "1aaf2aaf648d6b630f695d5aac14fed8938615566e725b0a0d886e80bb4a58a0",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.010088888888888889
+      },
+      {
+        "id": "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501",
+        "scores_sha256": "1771b7ca3682a6d91a888c2053fa0b39fbef5f7e81006c51840dbee38a120251",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008088888888888889
+      },
+      {
+        "id": "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317",
+        "scores_sha256": "efbe4c9cfcfaf18b4638a6dcac4c2e4a140269f62f10e7eed78995bff817d81c",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.008666666666666666
+      },
+      {
+        "id": "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a",
+        "scores_sha256": "49e1e10717654fff8b57c2c5dfe8fbfb7634193f9153e369e0d01106a267f91c",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.011044444444444444
+      },
+      {
+        "id": "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93",
+        "scores_sha256": "dd8318795f87a0f0ee1eb3165d5cec1dd1f66bf7fd7cc4c5e0929471b8def1c4",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.012511111111111112
+      },
+      {
+        "id": "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048",
+        "scores_sha256": "fa0d99c3fa2a8a01eb5091fc0db5b67bf646e97453a29763a1e813109bb24677",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.0074222222222222215
+      },
+      {
+        "id": "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae",
+        "scores_sha256": "0a0d9197669024441f92e87b7176b369c105a172728081a78b19d60ad1b2f794",
+        "events": 0,
+        "event_indices": [],
+        "evaluated_hours": 0.005577777777777779
+      }
+    ],
+    "continuous_events": 0,
+    "continuous_evaluated_hours": 7.303777777777778,
+    "limits": [
+      "Latched-policy replay uses already calibrated reused validation scores, not P4 or acoustic execution.",
+      "Any event is unfiltered and may precede the intended word; original proxy-window membership is kept separately.",
+      "Do not promote any-event or proxy counts to real-user recall or phonetic latency.",
+      "No new threshold, labels, source windows, audio or runtime behavior is fitted."
+    ],
+    "accepted": false,
+    "private_trace_sha256": "938bee1e4bd3d01b93d9be26d2fbdf158ad8a92137ee77f6a1a6a3323bdd63e3",
+    "trace_records": 3068,
+    "positive_totals": {
+      "variants": 1196,
+      "original_peak_hits": 450,
+      "native_event_sources_anywhere": 454,
+      "native_events": 454,
+      "native_event_in_original_proxy_window": 446,
+      "native_event_before_original_proxy_window": 8,
+      "peak_hit_without_native_event_in_proxy_window": 4
+    }
+  },
+  "speaker_playback": false,
+  "microphone_access": false,
+  "audio_speed_changed": false,
+  "accepted": false,
+  "interpretation": "Preserve unfiltered latched events and membership in original uncertain proxy windows separately. Both arms retain8earlier-event positive variants; do not relabel them as false wakes from proxy markers. This does not establish MCU integration, hardware or acoustic/voice stability. The historical runtime uses a different two-head bundle."
+}

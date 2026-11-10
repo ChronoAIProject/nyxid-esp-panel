@@ -84,3 +84,29 @@ existing allowlist would discard the distinction that needs checking.
    Do not target the dining-room production panel. Human/room, continuous
    negatives, immediate speech, long-call/echo/reconnect and latency evidence
    remain necessary for overall acceptance.
+
+## Observed artifact availability, 2026-11-11
+
+The GPU source/report branch was inspected through `5740561`; its v28 and
+ongoing v29 are summarized in [GPU progress](GPU_PROGRESS.md). A read-only
+GitHub release inventory at this snapshot lists `research-hey-nyx-20261110`
+and firmware releases through v0.6.28. The research prerelease has 18 assets,
+including the earlier Mac model/checkpoint, feature, audio and paired-PCM
+handoff archives. No separately identified GPU model/report/INT8-fixture
+handoff bundle is published in that inventory. This is not an inspection of
+every archive member or a claim that the remote GPU filesystem lacks weights.
+Do not infer download availability from published model SHA256 values.
+
+Recheck before a future physical GPU probe:
+
+```sh
+gh release list --repo ChronoAIProject/nyxid-esp-panel --limit 8 \
+  --json tagName,isPrerelease,name
+gh release view research-hey-nyx-20261110 \
+  --repo ChronoAIProject/nyxid-esp-panel --json assets \
+  --jq '.assets | map({name,size,updatedAt})'
+```
+
+No weights were reconstructed, renamed as an approved architecture or flashed
+from metadata. Local training research can continue independently; none of
+the preceding numerical or synthetic reports establishes deployment readiness.

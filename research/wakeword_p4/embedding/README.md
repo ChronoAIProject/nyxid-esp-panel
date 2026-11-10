@@ -1073,3 +1073,34 @@ information is only a hypothesis: synthesis domains are not real speakers,
 and confusing an engine classifier does not establish real microphone
 generalization. No speaker, microphone, board or reserved-final access occurs
 in this experiment. An inferior candidate receives no physical/final test.
+
+Both frozen runs at `2240ffa` complete. The control reproduces the retained
+CE-only model bytes and full main/auxiliary batch digests exactly. Main,
+auxiliary history, source/class, engine-label and PTQ digests match across arms.
+The engine-label batch SHA256 is
+`35dbd92458c4483a04ac1e94e24103e993c20f95f230732b6558847ac38aa67c`.
+The treatment has 390 extra training-only parameters; its exported binary
+graph still has 114464 bytes, 31 operators, input scale 1/128 and output
+scale 1/256. No engine/lexical softmax remains in that graph. Treatment SHA256:
+`8813c8faa35ee8724a053130eafb1721ffff65353230871beecca793695bc8e5`.
+
+The original validation **rejects this fixed engine adversary**: joint-qualified
+macro proxy hits decrease from 53.0863% to 47.5595%, pooled hits from 512 to
+450/1196. Both points use 0.98, worst confusing-corpus fraction 0.7143%, and
+0 continuous events / 7.303778 h (upper 95% 0.410162/h). Retain every grid row
+and full pairing evidence in
+[`lexical-domain-validation-v1.json`](../results/lexical-domain-validation-v1.json).
+Improved representative float/INT8 fidelity is not recognition improvement.
+This one negative result does not rule out all domain-invariance approaches,
+prove successful invariance, or identify the cause of the transfer deficit.
+
+Cached latched replay gives 515/454 positive variants with any event and
+507/446 with an event inside the original uncertain proxy window. Both arms
+retain 8 earlier-event variants; 5/4 proxy-window peak hits lack an event there.
+Those discrepancies stay OpenAI synthetic cases, not automatically relabelled
+false wakes. Continuous event counters reproduce 0. The full private traces
+are hash-bound by
+[`lexical-domain-native-events-v1.json`](../results/lexical-domain-native-events-v1.json).
+No P4, acoustic or reserved-final scoring follows this inferior setting.
+The retained lexical reference remains unchanged and is not accepted as
+Hi ESP parity; the stock board firmware and audio chain were not touched.
