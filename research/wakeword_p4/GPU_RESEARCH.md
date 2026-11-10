@@ -1724,3 +1724,19 @@ v23末段浮点macro25k57.9167%、30k62.5%、35k64.5313%、40k69.375%，
 沿用相对LR计划（降点20k/32k改为60k/96k），其余数据/架构/采样/
 验证间隔相同。这测试更长训练及对应LR计划，不是固定LR下的纯步数消融。
 不保证改善，不改变误唤醒及Hi ESP目标。
+
+### Hi ESP无板运行突破：经典ESP32实际完成detect
+
+官方Xtensa QEMU同版esp-develop-9.2.2-20261109包含esp32目标和PSRAM设备。
+ESP-SR2.6.1的esp32/libwakenet.a实际包含wn9/9l/9s符号，虽然HiESP菜单
+依赖仅S3/P4/S31，官方ESP_SR_EXTERNAL_MODEL_PATH可原样打包wn9_hiesp。
+新探针用经典ESP32构建，不改模型/推理库，无P4寄存器RAM或FPU补丁。
+
+正常探测4MB模拟PSRAM、初始化wn9_hiesp：512samples、16kHz、mono、
+threshold0.63(DET_MODE_95)。两次独立启动均完成100次真正detect(零PCM)，
+所有返回0，monitor读回stage104验证destroy/deinit已完成，flashSHA一致。
+发布qemu_esp32_probe源码、两次UART与报告、库/模型/镜像哈希。
+
+这解决经典ESP32路径的零音频推理兼容，不解决P4 PIE。尚未输入真实
+语音波形，不是召回/误唤醒证据；模拟器host耗时不作为硬件延迟。
+HiESP质量比较仍未完成，但已有可执行引擎，可继续建设真实PCM回放协议。
