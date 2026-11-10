@@ -12,6 +12,14 @@ from evaluate import Detector, THRESHOLDS, events, event_indices, smooth
 from features import features
 
 
+def sha_file(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(8 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
@@ -25,6 +33,10 @@ def main():
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"report.json").exists(), "Use a fresh evaluation directory"
+    provenance = {"evaluation_source_sha256": sha_file(Path(__file__)),
+                  "feature_metadata_sha256": {name: sha_file(args.features/name)
+                    for name in ("features.json", "human.json", "ambient.json")},
+                  "feature_binary_sha256": sha_file(args.features/"features.bin")}
     detector = Detector(args.model)
     raw = np.memmap(args.features/"features.bin", mode="r", dtype="<u2").reshape(-1, 40)
     records = json.loads((args.features/"features.json").read_text())
@@ -90,7 +102,8 @@ def main():
                                                   "viable_operating_point": bool(eligible)}, indent=2)+"\n")
     print(json.dumps({"validation": selected, "viable_operating_point": bool(eligible)}), flush=True)
     if args.validation_only:
-        report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
+        (root/"clip-details.json").write_text(json.dumps({"validation": val, "testing": None, "mac": None})+"\n")
+        report = {**provenance, "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
                   "threshold": selected["threshold"], "validation": selected,
                   "testing_regression": None, "validation_only": True,
                   "viable_operating_point": bool(eligible),
@@ -114,7 +127,7 @@ def main():
             mac.append({**item, "variant": variant, "max_score": float(values.max())})
     mp = [r for r in mac if r["label"]]
     mn = [r for r in mac if not r["label"]]
-    report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
+    report = {**provenance, "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
               "sliding_window": 5, "threshold": threshold, "validation": selected,
               "testing_regression": summarize(test, ta, threshold),
               "event_policy": "Five-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",

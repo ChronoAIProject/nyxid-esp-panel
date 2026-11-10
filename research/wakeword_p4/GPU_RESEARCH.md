@@ -674,3 +674,25 @@ event-based validation and negative weight20, changing only environmental
 source selection from uniform rows to original-duration weights. Its actual
 INT8 export must pass quantized validation separately before any further
 regression evaluation. No data were added and final fixtures stay frozen.
+
+## v7 training export and raw-waveform pronunciation pilot
+
+v7 completed40k steps on4090 in392.7s, selected40k, exported63,032-byte INT8
+SHA256`2bee3fb56c05c288e4f8f8677ed412c9e583f50ca08b0cb5cd2314174cdc4a16`.
+Float validation source-macro recall66.406% at0.98 (Piper71.979%, Kokoro60.833%).
+Quantized validation is running separately; this is not acceptance or regression.
+
+A training-only deterministic Piper pilot selects100 positive and100 negative
+raw WAVs by SHA256(path), with no waveform filtering or relabeling. The reusable
+selection script reproduced the exact initial manifest hash. Independent
+Whisper tiny.en CPU INT8 initially reports19/100 positive text agreement, but
+that scorer only applies wake aliases to standalone clips. A separate recount
+preserving command suffixes gives32/100 positive agreement (19/40 standalone,
+13/60 command-followed), versus75/100 negatives. Both original and corrected
+counts remain published.45/100 positive transcripts start "hey next", a phrase
+explicitly labeled negative elsewhere. This is a serious consistency concern,
+not proof of acoustic mispronunciation: small ASR lexical bias and errors may
+explain it. Before filtering or synthesizing more from the same recipe, seek
+an independent stronger ASR check and inspect intended phonemes. Current
+validation/final waveforms and labels remain unchanged. No wake model scores
+were used to select this pilot. Source/ASR model hashes are in the pilot reports.
