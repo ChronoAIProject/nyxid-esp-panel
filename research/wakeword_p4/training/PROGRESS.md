@@ -640,3 +640,51 @@ voices/conditions and real recordings for subsequent acceptance.
   held-out rows, modified indexes and invalid paths; baseline512 PTQ histories
   must remain identical. A matched warm64 recipe is frozen before new model
   scores. This is a data-domain experiment, not a recognition improvement claim.
+- All20,140 environmental views and matched training/calibration complete.
+  Control reproduces four prior INT8 artifacts exactly. Expanded paired43/50
+  versus41/50, ordinary false1/100 versus3/100, English1 versus6 events and
+  Mandarin0 versus2. HiESP remains48/50 and0/0/0; reject replacement. The float
+  head diagnostic scores42/50 versus INT8 41/50, so head quantization is only
+  part of the gap. New reserved scores remain unread and original board stays
+  restored. See the environment and head-quantization result JSONs.
+- Local Qwen expansion generates960/960 normal-speed clips from64 remaining
+  age/gender/accent/texture conditions, with192 positives and no waveform-QA
+  rejects. Source formats/hashes and disjointness from existing head sources
+  pass. An independent32clip pilot finds uncertain Nicks/Next pronunciation.
+  Source labels are preserved. Full phoneme/ASR diagnostics and new feature
+  extraction are running; a control/full/screen recipe is frozen before scores.
+- All960 phoneme/ASR audits and3,840 extra feature views complete. The frozen
+  consistency union keeps88/192 new positives and all768 negatives;104 uncertain
+  positives remain intact outside a3,424-row screened view. The32-source pipeline
+  pilot preserves92 retained rows exactly and rejects held-out/audit-mismatched
+  inputs before output. Three matched same-init10k-step control/full/screen
+  trainers finish; calibration is completing. No new reserved scores or board
+  candidate flash. See `../results/embedding-qwen-extension-data-v3.json`.
+
+- Qwen extension final calibrations and all nine development regressions complete:
+  control/full/screen paired39/43/41 of50 versus HiESP48; English2/2/2 and
+  Mandarin1/1/1 false events versus reference0/0. None exceeds the previous
+  environmental43/50, English1, Mandarin0 candidate. Reject all three. More
+  synthetic conditions alone did not establish improvement. No reserved scores
+  read, no candidate installed. Next is a numerical/resource-only P4 head
+  diagnostic, with original-app restoration; see the final Qwen result JSON.
+
+- Temporal32 ordered-convolution/BN comparison completes all training, calibration
+  and six development regressions. Plain42/50, ordinary0, English1, Mandarin0;
+  dropout44/50, ordinary1, English6, Mandarin1. Neither matches HiESP48/50 and
+  zero shared false events. Reject replacements; see the temporal result JSON.
+- Current-best DNN64 head standalone P4 tests uncover an optimized FC per-channel
+  dispatch bug, then a host-single/MCU-double-rounding mismatch. A local
+  registration preserves channel scales and explicitly matches host rounding.
+  All299cases x3placements now match every byte; median2.87..2.98ms, tensor
+  arena7532used bytes. Five device probes restore and verify original app/slot/
+  service/HiESP. No shared dependency source changed. See `embedding-head-p4-v3.json`.
+- A fixed two-member equal mean (environmental DNN64 and temporal dropout) is
+  frozen before combined validation scores. No fitted weights; exact score
+  numerator on1/1536 grid. This is a diagnostic hypothesis, not acceptance.
+
+- Equal-mean validation freezes threshold.4, then existing development regressions
+  finish46/50 paired, ordinary1/100, English1/5.549h, Mandarin0/1.294h. This
+  improves previous43/50 but still differs from HiESP48/50 and zero shared
+  false counts. Keep as next research candidate only. Original board restored;
+  no reserved scores read or release. Next actual whole-app slot/CPU/heap fit.

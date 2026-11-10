@@ -1,0 +1,46 @@
+{
+  "scope": "Same frozen environmental/room/EQ policies applied only to completed new training-only Qwen sources; no heldout scoring or speed transformation.",
+  "model": "embedding-stream-int8-quiet.tflite",
+  "model_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "window": "native-fft-window.npy",
+  "mel_filter": "native-mel-filter.npy",
+  "input_files": {
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a",
+    "head-features-tts-v1/jobs-private.json": "fc9b2f25ea06806b9ae72c9cfbaeb7bdd6e08b54e673f8104d96899017b44800",
+    "head-features-tts-v1/index.jsonl": "de7213a30b61191dfe980f0445ec8d996c6c1b562bf904dbe1c4f2ab99466d68",
+    "head-features-negatives-v1/jobs-private.json": "3f56106a037d7bc36282ec025eaf648e4221241306cf74e397a8b71ca4bdb69b",
+    "head-features-negatives-v1/index.jsonl": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6",
+    "new-source-audit.json": "8b303f1b55514a9205c14f300b54227114742275d5b13011068076dbd1f4f9f1"
+  },
+  "extractor_sha256": "2ef5edbe7f628ec2347b9d9638571854a452fd67bc9c2eeb6c42d627dad95288",
+  "base_extractor_sha256": "ed63c33c9acd3a1e779a35bd8303c2515cedc0bcd4f70abe75257109a8403b65",
+  "frontend_sha256": "724436b5880d07c170bb5c5843f1da34383c31a7b1c9714c4048cb38267724d0",
+  "variants": [
+    2,
+    3
+  ],
+  "policy": {
+    "snr_db": [
+      8,
+      25
+    ],
+    "speech_rms_fraction": [
+      0.04,
+      0.2
+    ],
+    "highpass_hz": [
+      60,
+      180
+    ],
+    "lowpass_hz": [
+      2500,
+      7500
+    ]
+  },
+  "backgrounds": "All45existing training environmental sources only, no validation/testing audio. Uniform source then uniform same-length offset; retry truly quiet intervals.",
+  "room": "Second-order rectangular image-source reflections; direct arrival aligned to0; limited synthetic rooms, no measured-room claim. Variant2real backgrounds;variant3room and2nd-orderbandpass plus real backgrounds.",
+  "heldout_scoring": false,
+  "external_source_disjointness": "All new-source hashes verified disjoint from both original head feature indexes before base extraction; bound in new-source-audit.json."
+}

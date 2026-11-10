@@ -24,8 +24,16 @@ def main():
     parser.add_argument("--references", type=Path)
     parser.add_argument("--codec", type=Path)
     parser.add_argument("--profiles", type=int, default=24)
+    parser.add_argument("--profile-start", type=int, default=0,
+                        help="Generate later entries of the same fixed condition grid without duplicating earlier audio")
     parser.add_argument("--batch", type=int, default=4)
     args = parser.parse_args()
+    if args.batch < 1 or args.profiles < 1 or args.profile_start < 0:
+        parser.error("Batch/profile counts must be positive and profile-start nonnegative")
+    if args.engine == "moss" and args.profile_start:
+        parser.error("profile-start is only supported for text-designed voices")
+    if args.engine != "moss" and not args.profile_start < args.profiles <= 96:
+        parser.error("Expected 0 <= profile-start < profiles <= 96")
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"generation.json").exists(), "Use a fresh completed-run directory"
@@ -60,10 +68,12 @@ def main():
         # No provable fixed speaker identity for text-designed/random voices.
         # Use these sources only for training; do not claim speaker-disjoint
         # validation merely because instruction strings or seeds differ.
+        texts = [("Hey Nicks.", 1), ("Hey Nix!", 1), ("Hey Nicks?", 1)]
+        texts += [(text, 0) for text in HARD_NEGATIVES[:8]+HARD_NEGATIVES[-4:]]
         for profile, (age, gender, accent, texture) in enumerate(conditions[:args.profiles]):
+            if profile < args.profile_start:
+                continue
             description = f"A {age} {gender} voice, {texture}, speaking English with an {accent} accent. Natural conversational delivery."
-            texts = [("Hey Nicks.", 1), ("Hey Nix!", 1), ("Hey Nicks?", 1)]
-            texts += [(text, 0) for text in HARD_NEGATIVES[:8]+HARD_NEGATIVES[-4:]]
             for number, (text, label) in enumerate(texts):
                 plan.append({"path": f"training/profile_{profile:03d}/{number:03d}.wav",
                              "split": "training", "speakers": [f"condition_{profile:03d}"],
@@ -74,7 +84,7 @@ def main():
     with (root/"manifest.jsonl").open("a") as log:
         for at in range(0, len(pending), args.batch if args.engine != "moss" else 1):
             batch = pending[at:at+(args.batch if args.engine != "moss" else 1)]
-            seed = 726+at
+            seed = 726+at+(args.profile_start*len(texts) if args.engine != "moss" else 0)
             mx.random.seed(seed)
             if args.engine == "qwen":
                 results = list(model.batch_generate(texts=[r["text"] for r in batch],
@@ -137,6 +147,7 @@ def main():
     model_files = {str(p.relative_to(args.model)): hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in args.model.rglob("*") if p.is_file() and ".cache" not in p.parts}
     report = {"engine": args.engine, "accepted": len(completed), "planned": len(plan),
+              "profile_start": args.profile_start, "profile_end_exclusive": args.profiles,
               "rejected": rejected, "model_files": model_files,
               "limits": ["Waveform QA only; generated-word correctness still needs phonetic/ASR/listening review.",
                          "Qwen/Omni description conditions do not prove independent speaker IDs; these sources are training-only.",

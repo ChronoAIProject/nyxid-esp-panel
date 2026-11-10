@@ -1,0 +1,334 @@
+{
+  "scope": "Matched same-init64-wide environmental expansion, original validation and PTQ histories; existing development regression only",
+  "control_all_four_artifacts_exact_reproduction": true,
+  "representatives_all512_identical_sha256": "c32f3572e4e716253dc564a212d352d98890f765b60d555b55ba0a7aa90a07f8",
+  "arms": {
+    "control": {
+      "plan_sha256": "e318ca8b240a6f97ae9ae2a4c56899dc9200453a1f571c6e4cfa7d528677f736",
+      "selected": {
+        "selected_step": 10000,
+        "selected_head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "selected": {
+          "threshold": 0.25,
+          "positive_variants": 1196,
+          "recall": 0.9724080267558528,
+          "macro_recall": 0.935188492063492,
+          "recall_by_engine": {
+            "edge-tts": 0.8839285714285714,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8055555555555556,
+            "piper": 0.9864583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 42,
+              "false_rate": 0.15
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 13,
+              "false_rate": 0.07738095238095238
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 15,
+              "false_rate": 0.09375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 1,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 27,
+              "false_rate": 0.16875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 8,
+              "false_rate": 0.16666666666666666
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 142,
+              "false_rate": 0.14791666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.16875,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 3,
+          "continuous_events_per_hour": 0.41074634131499677,
+          "continuous_events_per_hour_upper_95": 1.0615953502205029,
+          "positive_latency_median_ms": 94.31250000000003,
+          "positive_latency_p95_ms": 206.56250000000043
+        },
+        "strict_operating_point": false
+      },
+      "paired": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+        "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 48,
+            "events": 48
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 32,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": -18.4375
+        },
+        "hey_nyx": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 41,
+            "events": 41
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 41,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 3,
+            "events": 3
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 20,
+            "events": 20
+          },
+          "latency_ms_from_estimated_end_median": 88.6875
+        },
+        "priming_events": 0,
+        "reused_identical_model_regression": true
+      },
+      "english": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+        "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 5.549022395833333
+        },
+        "hey_nyx": {
+          "events": 6,
+          "evaluated_hours": 5.5485999999999995,
+          "false_per_hour": 1.0813538550264932
+        },
+        "priming_events": 0,
+        "reused_identical_model_regression": true
+      },
+      "mandarin": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+        "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 1.2938333333333334
+        },
+        "hey_nyx": {
+          "events": 2,
+          "evaluated_hours": 1.2937555555555558,
+          "false_per_hour": 1.545887081536955
+        },
+        "priming_events": 0,
+        "reused_identical_model_regression": true
+      }
+    },
+    "expanded": {
+      "plan_sha256": "0c14d237daf7201ecfdcd23208c7395c7f202a85482badb6fd65e38a461a7b8e",
+      "selected": {
+        "selected_step": 10000,
+        "selected_head_sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+        "selected": {
+          "threshold": 0.6,
+          "positive_variants": 1196,
+          "recall": 0.9406354515050167,
+          "macro_recall": 0.9278869047619048,
+          "recall_by_engine": {
+            "edge-tts": 0.8571428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8333333333333334,
+            "piper": 0.9489583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 30,
+              "false_rate": 0.10714285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 3,
+              "false_rate": 0.017857142857142856
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 13,
+              "false_rate": 0.08125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 1,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 14,
+              "false_rate": 0.0875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 7,
+              "false_rate": 0.14583333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 92,
+              "false_rate": 0.09583333333333334
+            }
+          },
+          "max_corpus_false_rate": 0.14583333333333334,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 2,
+          "continuous_events_per_hour": 0.27383089420999784,
+          "continuous_events_per_hour_upper_95": 0.8619913986194038,
+          "positive_latency_median_ms": 187.18749999999983,
+          "positive_latency_p95_ms": 300.60000000000014
+        },
+        "strict_operating_point": false
+      },
+      "paired": {
+        "plan_sha256": "24a6c8d97eef748fe4e53b8293d0421f42c5230e63c4fff4f9eb5b37941cd8e4",
+        "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+        "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+        "head_sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+        "threshold": 0.6,
+        "hi_esp": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 48,
+            "events": 48
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 32,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": -18.4375
+        },
+        "hey_nyx": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 43,
+            "events": 43
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 43,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 17,
+            "events": 17
+          },
+          "latency_ms_from_estimated_end_median": 172.375
+        },
+        "priming_events": 0
+      },
+      "english": {
+        "plan_sha256": "24a6c8d97eef748fe4e53b8293d0421f42c5230e63c4fff4f9eb5b37941cd8e4",
+        "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+        "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+        "head_sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+        "threshold": 0.6,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 5.549022395833333
+        },
+        "hey_nyx": {
+          "events": 1,
+          "evaluated_hours": 5.5485999999999995,
+          "false_per_hour": 0.18022564250441556
+        },
+        "priming_events": 0
+      },
+      "mandarin": {
+        "plan_sha256": "24a6c8d97eef748fe4e53b8293d0421f42c5230e63c4fff4f9eb5b37941cd8e4",
+        "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+        "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+        "head_sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+        "threshold": 0.6,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 1.2938333333333334
+        },
+        "hey_nyx": {
+          "events": 0,
+          "evaluated_hours": 1.2937555555555558,
+          "false_per_hour": 0.0
+        },
+        "priming_events": 0
+      }
+    }
+  },
+  "accepted": false,
+  "fresh_testing_scores_read": false,
+  "full_app_candidate_flashing": false,
+  "decision": "Environmental training improves paired41to43/50, ordinary false3to1/100, English6to1/5.549h, Mandarin2to0/1.294h, but still below HiESP48/50 and0/0/0 false counts. Reject replacement; continue data-domain work."
+}

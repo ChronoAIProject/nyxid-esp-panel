@@ -1,0 +1,126 @@
+{
+  "scope": "Same frozen classifier: standalone exact P4 arithmetic and memory placement after pinned-kernel compatibility correction; no recognition or full-app acceptance",
+  "probe_bin_sha256": "e12b831f8478f1bab7015d3a82f06fc738b272a83f4ab3ea9180766b0c5d2f77",
+  "vectors_manifest_sha256": "559b52f4f4670476f2d7a80b43d383cfcf72e8cbe739a8d812255d8db044b21b",
+  "vectors": {
+    "scope": "Standalone head numerical/resources only; no recognition acceptance",
+    "model_sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+    "model_bytes": 114464,
+    "representatives_sha256": "c32f3572e4e716253dc564a212d352d98890f765b60d555b55ba0a7aa90a07f8",
+    "cases": 299,
+    "real_training_histories": 256,
+    "synthetic_numeric_cases": 43,
+    "input_bytes_per_case": 1536,
+    "output_bytes_per_case": 1,
+    "inputs_sha256": "770b1a48385957cb0777d20f2d8176585c12ca0aa3856b6626237d22d07f9967",
+    "expected_sha256": "fb0c957892cacb736cd4b795c2108f7bc2675d9efd31afe3b8bc9ea590c2ad1d",
+    "resolver": "LiteRT BUILTIN_REF",
+    "seed": 726,
+    "expected_modes": [
+      "internal64k_model_flash",
+      "internal64k_model_psram",
+      "psram64k_model_psram"
+    ],
+    "gate": "Each mode completes every case with zero byte mismatches; no tolerance relaxation"
+  },
+  "heads": [
+    {
+      "name": "internal64k_model_flash",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 7532,
+      "p50_us": 2867,
+      "p95_us": 2885,
+      "max_us": 3496,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    },
+    {
+      "name": "internal64k_model_psram",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 7532,
+      "p50_us": 2893,
+      "p95_us": 2914,
+      "max_us": 3355,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    },
+    {
+      "name": "psram64k_model_psram",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 7532,
+      "p50_us": 2977,
+      "p95_us": 3013,
+      "max_us": 3434,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    }
+  ],
+  "done": {
+    "completed": true,
+    "numeric_passed": true
+  },
+  "numeric_passed": true,
+  "restored": {
+    "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+    "original_service_verified": true,
+    "nyx_state": "up",
+    "hi_esp_listening": true
+  },
+  "accepted": false,
+  "prior_failures": {
+    "unmodified_esp_nn": {
+      "internal_mismatches": 236,
+      "psram_mismatches": 299,
+      "cases_per_mode": 299,
+      "max_output_delta": 255
+    },
+    "per_channel_dispatch_only": {
+      "mismatches_per_mode": 1,
+      "max_output_delta": 1,
+      "synthetic_case": 269
+    },
+    "generic_reference_fc": {
+      "same_case269_delta1": true
+    },
+    "first_different_operator": "Final per-tensor FC on case269; all earlier traced outputs identical",
+    "root_causes": [
+      "ESP-NN evaluator ignores prepared per-channel scales and reads uninitialized scalar requantization fields",
+      "Pinned MCU generic reference uses double rounding; host uses single rounding"
+    ]
+  },
+  "arithmetic_audit": {
+    "scope": "Same299 numeric fixture FC requantization audit; each kernel sees exact host intermediate inputs, not a complete alternative execution",
+    "tensor_results": {
+      "15": {
+        "single_mismatches": 0,
+        "double_mismatches": 0,
+        "values": 19136
+      },
+      "29": {
+        "single_mismatches": 0,
+        "double_mismatches": 27,
+        "values": 19136
+      },
+      "43": {
+        "single_mismatches": 0,
+        "double_mismatches": 1,
+        "values": 299
+      }
+    }
+  },
+  "all897_outputs_exact": true,
+  "input_signature": "int8[1,16,96,1],scale1/128,zero0",
+  "output_signature": "int8[1,1],scale1/256,zero-128",
+  "limits": [
+    "Model recall is still43/50 versus HiESP48/50; numerical repair does not improve offline recognition",
+    "Native frontend2.813ms+backbone~70ms+head~2.9ms is a sum of standalone measurements, not measured whole-app scheduling",
+    "Existing app slot and actual whole-app memory/CPU/audio behavior remain unverified",
+    "No shared dependency source or production board changed"
+  ]
+}

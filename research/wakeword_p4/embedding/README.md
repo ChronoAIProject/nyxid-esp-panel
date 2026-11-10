@@ -259,7 +259,59 @@ rows. Calibration still loads the original validation directories, and all512
 PTQ representatives still come from original training views in both arms.
 The24-view six-engine replay and source-timebase/shape checks pass, as do
 modified-index/held-out-row/path rejection and unchanged representative checks.
-Batch extraction and matched classification results remain pending.
+All 20,140 added views pass checksums, shapes, timebase and source/background
+split checks. The matched control reproduces all four prior model artifacts
+exactly. Added environments improve paired recall from41 to43/50, ordinary
+false clips from3 to1/100, English false events from6 to1/5.549h and Mandarin
+from2 to0/1.294h. This is still below Hi ESP48/50 with zero shared ordinary
+false events. See `../results/embedding-head-environment-v3.json`.
+
+The same64-wide float and INT8 heads on frozen paired features score42/50
+and41/50 respectively, with26 negative events each. The maximum smoothed
+score difference is.0800. Head quantization loses one wake clip here but does
+not explain the whole recognition gap. This says nothing about the separate
+backbone quantization effect. See `../results/embedding-head-quantization-v3.json`.
+
+The next training-only extension fills the remaining64 entries of the existing
+local Qwen age/gender/accent/texture grid. In `training/mlx_samples.py`,
+`--profile-start 32 --profiles 96 --batch 8` skips the already generated first32
+conditions and creates960 new normal-speed source clips. These descriptions
+are not verified independent human identities. Initial waveform checks pass,
+but32-clip independent phoneme/ASR diagnostics show pronunciation uncertainty;
+source labels and recordings remain intact. A frozen three-arm recipe compares
+control, all new views and a consistency-screened view on unchanged validation.
+No reserved scoring or classifier acceptance follows from synthesis alone.
+
+All960 source recordings finish with waveform checks and no source-hash
+overlap with existing head data. The same four acoustic views produce3,840
+new histories. Complete phoneme/ASR diagnostics support88 of192 new positives
+under the frozen union rule;104 uncertain positives remain outside the separate
+screened view. This is not a proof that those104 are mispronounced. All768
+new negatives remain, yielding3,424 screened histories. Original labels,
+recordings, feature arrays and held-out rows are preserved.
+
+`screen_tts_features.py` requires complete hash/label-matched audits and
+training-only source/features. It keeps a positive when the first12 greedy
+phones contain optional-h/eɪ-or-eː-or-e-or-ɛ/n/ɪ-or-i-or-iː/k/s, **or** ASR
+normalizes to `hey nicks`, `hey nix`, `hey nyx` or `hey knicks`. It excludes a
+negative if either recognizer predicts a canonical wake. The new view refers
+to the exact original arrays. Supply matching repeated `--features`/`--name`
+arguments, plus `--source`, `--phonemes`, `--asr`, `--plan`, `--output-root`
+and a new `--report` path. Invalid audit identities or held-out sources fail
+before output. The32-source pilot retains92 feature rows byte-for-byte.
+
+The subsequent control/full/screen10k-step comparison shares the environmental
+candidate's initial float weights, LR.0001, seed726, original validation and
+all512 original PTQ histories. Final feature-index/completion hashes are bound
+before fitting. Data evidence is in `../results/embedding-qwen-extension-data-v3.json`;
+all three calibrations and nine development regressions now complete. Control/full/
+screen score39/43/41 of50 paired wakes, versus Hi ESP48/50. Each has two
+English and one Mandarin false event, versus zero for Hi ESP. None exceeds
+the preceding environmental candidate (43/50, English1, Mandarin0). Reject
+all three follow-ups; more synthesized conditions did not establish improvement.
+See `../results/embedding-head-qwen-extension-v3.json`. Reserved scores remain
+unread. A standalone P4 classifier-head numerical/timing diagnostic follows;
+it is not recognition or whole-application acceptance.
 
 Remaining gates include recognition, human/acoustic comparison to Hi ESP,
 actual whole-app flash/heap/CPU fit, immediate speech continuity, rearming,
@@ -274,3 +326,44 @@ and Hi ESP listener. Never run these tests on the dining-room production
 board. Credentials, generated model binaries, PCM and private captures belong
 outside git. No upstream model binaries are bundled here; release-asset
 provenance still needs resolution before distributing a replacement.
+
+### Head compatibility and temporal-order follow-up
+
+`head_probe/` and `prepare_head_probe.py` build a private standalone classifier
+probe. `run_head_probe.py` verifies the development app/USB identity, tests all
+three placements, rejects partial or mismatched results and restores the original
+app/service/Hi ESP. See `head_probe/README.md` for fixed dependencies, numerical
+fixtures, per-operator traces and the local upstream-FC compatibility shim.
+
+A separately frozen two-arm20k-step experiment uses two32-channel temporal
+convolutions, each spanning five embeddings, followed by positional max pooling.
+Its nine-embedding receptive field retains time order before pooling, unlike
+the earlier three-embedding Conv24 pool. Both new arms share original512 PTQ
+histories, training draws, data, initial inference weights, BatchNorm and schedule;
+one adds training-only dropout.15 after pooling. BatchNorm folds into the export.
+This changes neither audio speed nor PCM/Opus configuration. The20,769-parameter
+models finish fitting/calibration. Frozen validation selects plain5k at.3 and
+dropout20k at.3 (macro recall90.46%/95.26%,2/3 events in7.304h). Existing
+development paired/English/Mandarin regressions are running; validation and
+topology rationale are not recognition acceptance evidence.
+No reserved scores or whole-application replacement are authorized by synthesis
+or a numerical probe alone.
+
+The temporal plain/dropout development regressions finish42/44 of50 with
+English1/6 and Mandarin0/1 false events. Neither replaces Hi ESP. The fixed
+equal mean then selects.4 on original validation, before development scores:
+46/50 paired, ordinary1/100, English1/5.549h, Mandarin0/1.294h. This improves
+on the previous43/50 research baseline but remains below Hi ESP48/50 and
+zero shared false counts. `evaluate_equal_mean.py` checks frozen member/model/
+score identities and equal timebases; an exact1/1536 numerator matches sums
+of six raw sigmoid bytes in22 streamed arithmetic checks. Invalid shapes,
+NaN, off-grid and out-of-range scores reject. It fits no ensemble weights.
+See `../results/embedding-head-equal-mean-v3.json`. This is the next research
+candidate, pending actual unchanged-slot whole-app feasibility and acoustic/
+reserved evaluation, not a release.
+
+The nontracing classifier-head P4 probe passes299cases in all three placements
+(897exact outputs). Medians are2.867/2.893/2.977ms and tensor arena use7532bytes.
+The original app, slot, service and Hi ESP listener restore after each of the
+five hardware probes, including failures. Full intermediate/rounding evidence
+and limitations are in `../results/embedding-head-p4-v3.json`.

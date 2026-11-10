@@ -1,0 +1,90 @@
+{
+  "scope": "Prespecified temporal-order/position-invariance experiment after repeated data-only follow-ups fail; no reserved scores or acceptance",
+  "model_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "model_choice": "Quiet-bound8bit export frozen by numeric/fidelity only, not detector scores.6bit grid failed prespecifiedcosinegate and is rejected.",
+  "frontend": "Exact512FFT window and257x32melmatrix,160samplehop,80dBfloor per1760sample block;8newframes per1280PCM/80ms. Native host versus source graph verified training-only.",
+  "data": "Existing source/voice partitions; training+validation only.2normal-speed TTS variants: original quiet and room/gain/noise augmentation. Same human/environment source partitions, only training for fitting; no reserved testing read.",
+  "labels": "Positive whole-phrase end uses existing synthesis/RMS metadata. Random head end .03.. .32seconds after label; reportendpointuncertainty. Negatives sample across all source windows.",
+  "head": "Conv32(5,96)/BN/ReLU -> Conv32(5,1)/BN/ReLU -> GlobalMaxPool -> Dense1 sigmoid; BN folds into Conv",
+  "recipe": {
+    "seed": 726,
+    "steps": 20000,
+    "checkpoints": [
+      5000,
+      10000,
+      15000,
+      20000
+    ],
+    "batch": 128,
+    "positive": 32,
+    "tts_negative": 48,
+    "ambient_negative": 48,
+    "negative_weight": 5,
+    "learning_rate": 0.0003,
+    "learning_rate_half_factor": 0.3,
+    "learning_rate_eighty_percent_factor": 0.1
+  },
+  "selection": "Select highest macro recall on validation at <=.5 continuous false events/hour, tie lower FAR then lower confusing rate then earlier checkpoint. Retain strict/near-phrase diagnostics; freeze before existing paired/long regression. No reserved scores, no acceptance without physical/resource/voice-chain tests.",
+  "event_policy": {
+    "threshold_grid": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      0.97,
+      0.98,
+      0.99,
+      0.995,
+      0.999
+    ],
+    "score_average_steps": 3,
+    "step_ms": 80,
+    "refractory_steps": 25,
+    "rearm_fraction": 0.5,
+    "min_history_frames": 25,
+    "positive_window_seconds": [
+      -0.1,
+      0.8
+    ],
+    "selection_order": "Select highest macro recall on validation at <=.5 continuous false events/hour, tie lower FAR then lower confusing rate then earlier checkpoint. Retain strict/near-phrase diagnostics; freeze before existing paired/long regression. No reserved scores, no acceptance without physical/resource/voice-chain tests."
+  },
+  "architecture": "temporal32-bn",
+  "upstream_reference": {
+    "url": "https://raw.githubusercontent.com/dscripka/openWakeWord/main/openwakeword/train.py",
+    "sha256": "8d559e4c1bc9b5523bae50e7ec8f642756a63a7bb5f323620d069a2d03db2972",
+    "bytes": 46290
+  },
+  "upstream_match_scope": "Same DNN topology and LayerNorm epsilon, adapted to Keras, with v1 fixed training recipe rather than claiming identical upstream optimization.",
+  "initial_weights_sha256": "ff335ecc30417febca03b734df0a8f7b85fc4e67f55e02e126409039bc4889cb",
+  "selection_policy": "continuous",
+  "comparison": {
+    "arms": [
+      "plain",
+      "dropout"
+    ],
+    "same_initial_weights": true,
+    "same_training_draws": true,
+    "same512original_representatives": true,
+    "only_intended_difference": "Training-only dropout.15 after pooled temporal features; both retain ordered nine-embedding receptive field before positional pooling",
+    "baseline": "Previous DNN64 environmental candidate is fixed as historical comparator; no claim of isolating a single topology difference",
+    "selection": "Original validation only; freeze complete schedule/threshold before old development regression; reserved scores remain unread"
+  },
+  "arm": "plain",
+  "extra_training_features": [
+    {
+      "directory": "head-features-environment-v2",
+      "index_sha256": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+      "complete_sha256": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c"
+    }
+  ]
+}

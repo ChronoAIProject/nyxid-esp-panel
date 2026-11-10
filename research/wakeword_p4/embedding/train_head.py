@@ -80,6 +80,18 @@ def make_model(architecture='conv24'):
         y = tf.keras.layers.MaxPool2D((14, 1))(y)
         y = tf.keras.layers.Flatten()(y)
         y = tf.keras.layers.Dense(16, activation='relu')(y)
+    elif architecture in ('temporal32-bn', 'temporal32-bn-dropout'):
+        # Preserve order through a nine-embedding receptive field before
+        # pooling positions. BatchNorm folds into the exported convolution.
+        y = tf.keras.layers.Conv2D(32, (5, 96), use_bias=False)(x)
+        y = tf.keras.layers.BatchNormalization(epsilon=1e-3)(y)
+        y = tf.keras.layers.ReLU()(y)
+        y = tf.keras.layers.Conv2D(32, (5, 1), use_bias=False)(y)
+        y = tf.keras.layers.BatchNormalization(epsilon=1e-3)(y)
+        y = tf.keras.layers.ReLU()(y)
+        y = tf.keras.layers.GlobalMaxPool2D()(y)
+        if architecture.endswith('-dropout'):
+            y = tf.keras.layers.Dropout(.15)(y)
     else:
         raise ValueError('Unsupported frozen head architecture')
     y = tf.keras.layers.Dense(1, activation='sigmoid')(y)
