@@ -1,0 +1,169 @@
+{
+  "scope": "Pre-scoring training-audit invariant failure; no detector scores or fitting occurred.",
+  "plan_sha256": "ce4d39235c73f389eec0e5b866533b5e8dbd467252311c95ec9af2c00ea13f9a",
+  "failure": "Assumed one source path for each source audio hash.12 of384 selected unique audio hashes have2 or3 same-role source paths, producing8 or12 correlated rows instead of4.",
+  "coverage": {
+    "four_rows": 372,
+    "eight_rows": 8,
+    "twelve_rows": 4
+  },
+  "source_file_cohorts": [
+    {
+      "split": "training",
+      "engine": "edge-tts",
+      "label": 0,
+      "source_rows": 1024,
+      "unique_audio_hashes": 1017
+    },
+    {
+      "split": "training",
+      "engine": "edge-tts",
+      "label": 1,
+      "source_rows": 256,
+      "unique_audio_hashes": 256
+    },
+    {
+      "split": "training",
+      "engine": "kokoro",
+      "label": 0,
+      "source_rows": 640,
+      "unique_audio_hashes": 640
+    },
+    {
+      "split": "training",
+      "engine": "kokoro",
+      "label": 1,
+      "source_rows": 60,
+      "unique_audio_hashes": 60
+    },
+    {
+      "split": "training",
+      "engine": "macos-say",
+      "label": 0,
+      "source_rows": 340,
+      "unique_audio_hashes": 340
+    },
+    {
+      "split": "training",
+      "engine": "macos-say",
+      "label": 1,
+      "source_rows": 136,
+      "unique_audio_hashes": 87
+    },
+    {
+      "split": "training",
+      "engine": "openai-tts",
+      "label": 0,
+      "source_rows": 972,
+      "unique_audio_hashes": 972
+    },
+    {
+      "split": "training",
+      "engine": "openai-tts",
+      "label": 1,
+      "source_rows": 162,
+      "unique_audio_hashes": 162
+    },
+    {
+      "split": "training",
+      "engine": "piper",
+      "label": 0,
+      "source_rows": 3000,
+      "unique_audio_hashes": 3000
+    },
+    {
+      "split": "training",
+      "engine": "piper",
+      "label": 1,
+      "source_rows": 3000,
+      "unique_audio_hashes": 3000
+    },
+    {
+      "split": "training",
+      "engine": "qwen",
+      "label": 0,
+      "source_rows": 384,
+      "unique_audio_hashes": 384
+    },
+    {
+      "split": "training",
+      "engine": "qwen",
+      "label": 1,
+      "source_rows": 96,
+      "unique_audio_hashes": 96
+    },
+    {
+      "split": "validation",
+      "engine": "edge-tts",
+      "label": 0,
+      "source_rows": 224,
+      "unique_audio_hashes": 224
+    },
+    {
+      "split": "validation",
+      "engine": "edge-tts",
+      "label": 1,
+      "source_rows": 56,
+      "unique_audio_hashes": 56
+    },
+    {
+      "split": "validation",
+      "engine": "kokoro",
+      "label": 0,
+      "source_rows": 128,
+      "unique_audio_hashes": 128
+    },
+    {
+      "split": "validation",
+      "engine": "kokoro",
+      "label": 1,
+      "source_rows": 12,
+      "unique_audio_hashes": 12
+    },
+    {
+      "split": "validation",
+      "engine": "macos-say",
+      "label": 0,
+      "source_rows": 80,
+      "unique_audio_hashes": 80
+    },
+    {
+      "split": "validation",
+      "engine": "macos-say",
+      "label": 1,
+      "source_rows": 32,
+      "unique_audio_hashes": 20
+    },
+    {
+      "split": "validation",
+      "engine": "openai-tts",
+      "label": 0,
+      "source_rows": 24,
+      "unique_audio_hashes": 24
+    },
+    {
+      "split": "validation",
+      "engine": "openai-tts",
+      "label": 1,
+      "source_rows": 18,
+      "unique_audio_hashes": 18
+    },
+    {
+      "split": "validation",
+      "engine": "piper",
+      "label": 0,
+      "source_rows": 480,
+      "unique_audio_hashes": 480
+    },
+    {
+      "split": "validation",
+      "engine": "piper",
+      "label": 1,
+      "source_rows": 480,
+      "unique_audio_hashes": 480
+    }
+  ],
+  "source_audio_hash_label_conflicts": 0,
+  "next": "Retain the exact frozen384 audio hashes and canonical variant0 job IDs. Bind one canonical source path and its four variant IDs before scoring; use matching source-path text metadata rather than assuming audio hashes uniquely identify spelling.",
+  "accepted": false
+}
