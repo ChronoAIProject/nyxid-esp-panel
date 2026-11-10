@@ -1,0 +1,211 @@
+{
+  "scope": "Equivalent graph dispatch optimization; no recognition improvement claim",
+  "source_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "unfolded_sha256": "7742b6a39b06795bb2157a44fece581b74869bf9774001b66bd7e0d27aa60a04",
+  "output_sha256": "d931ca9399cd91d4cdb3e977bf8d9779aa57e6bb85cdf86215726df9fac1c28b",
+  "inputs_sha256": "4b7ce0024b13b5fdca2f3fb9778ddc809e093a0ff25773a8fa5f6e15f856d2cb",
+  "expected_sha256": "38e0eeb4b593197548b2f18d8cb056eafcfdf10582ac0553e670dd9d2d9f5a2f",
+  "cases": 114,
+  "output_values": 10944,
+  "source_mismatches": 0,
+  "rewritten_mismatches": 0,
+  "existing_constant_buffers_unchanged": true,
+  "accumulator_bound_safe": true,
+  "sample_rate_or_cadence_changed": false,
+  "changes": [
+    {
+      "subgraph": 0,
+      "operator": 30,
+      "input_shape": [
+        1,
+        8,
+        32,
+        24
+      ],
+      "padded_shape": [
+        1,
+        8,
+        34,
+        24
+      ],
+      "padding_byte": -125
+    },
+    {
+      "subgraph": 0,
+      "operator": 40,
+      "input_shape": [
+        1,
+        4,
+        16,
+        24
+      ],
+      "padded_shape": [
+        1,
+        4,
+        18,
+        24
+      ],
+      "padding_byte": -126
+    },
+    {
+      "subgraph": 0,
+      "operator": 49,
+      "input_shape": [
+        1,
+        4,
+        16,
+        48
+      ],
+      "padded_shape": [
+        1,
+        4,
+        18,
+        48
+      ],
+      "padding_byte": -125
+    },
+    {
+      "subgraph": 0,
+      "operator": 59,
+      "input_shape": [
+        1,
+        4,
+        8,
+        48
+      ],
+      "padded_shape": [
+        1,
+        4,
+        10,
+        48
+      ],
+      "padding_byte": -124
+    },
+    {
+      "subgraph": 0,
+      "operator": 68,
+      "input_shape": [
+        1,
+        4,
+        8,
+        72
+      ],
+      "padded_shape": [
+        1,
+        4,
+        10,
+        72
+      ],
+      "padding_byte": -121
+    },
+    {
+      "subgraph": 0,
+      "operator": 78,
+      "input_shape": [
+        1,
+        2,
+        4,
+        72
+      ],
+      "padded_shape": [
+        1,
+        2,
+        6,
+        72
+      ],
+      "padding_byte": -122
+    },
+    {
+      "subgraph": 0,
+      "operator": 87,
+      "input_shape": [
+        1,
+        2,
+        4,
+        96
+      ],
+      "padded_shape": [
+        1,
+        2,
+        6,
+        96
+      ],
+      "padding_byte": -119
+    },
+    {
+      "subgraph": 0,
+      "operator": 97,
+      "input_shape": [
+        1,
+        2,
+        2,
+        96
+      ],
+      "padded_shape": [
+        1,
+        2,
+        4,
+        96
+      ],
+      "padding_byte": -119
+    },
+    {
+      "subgraph": 0,
+      "operator": 106,
+      "input_shape": [
+        1,
+        2,
+        2,
+        96
+      ],
+      "padded_shape": [
+        1,
+        2,
+        4,
+        96
+      ],
+      "padding_byte": -121
+    }
+  ],
+  "p4_verified": false,
+  "accepted": false,
+  "p4_models": [
+    {
+      "name": "internal96k_model_flash",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 36968,
+      "p95_us": 37084,
+      "max_us": 37129,
+      "mismatches": 0,
+      "max_output_delta": 0
+    },
+    {
+      "name": "internal96k_model_psram",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 35996,
+      "p95_us": 36090,
+      "max_us": 36129,
+      "mismatches": 0,
+      "max_output_delta": 0
+    },
+    {
+      "name": "psram96k_model_psram",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 36466,
+      "p95_us": 36563,
+      "max_us": 36607,
+      "mismatches": 0,
+      "max_output_delta": 0
+    }
+  ],
+  "p4_output_values": 32832,
+  "p4_mismatches": 0,
+  "original_app_service_and_hiesp_restored": true,
+  "whole_application_verified": false
+}

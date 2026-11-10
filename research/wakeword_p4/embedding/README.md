@@ -383,3 +383,23 @@ original app/service/Hi ESP restores afterward. This removes the scratch-memory
 blocker without retraining or changing any recognition score. See
 `../results/embedding-temporal-layout-p4-v3.json`. Complete-app fit/scheduling
 and physical recognition remain separate measurements.
+
+
+The first complete-app equal-mean builds fit the existing OTA slot at
+6,445,840bytes, but fail real-time processing: approximately118ms per80ms
+input step. Moving the backbone arena into internal memory and pinning the
+listener to core0 did not fix it. A whole-app stage/operator profile attributes
+about106ms to the backbone, mostly convolution. See
+`../results/embedding-full-app-resources-v3.json`; these are failed resource
+experiments, not wake-recognition acceptance.
+
+`explicit_same_padding.py` rewrites the nine unit-stride horizontal SAME
+convolutions as explicit zero-point PAD followed by VALID convolution.
+ESP-NN1.1.2 dispatches implicit padding to its slower generic path; the explicit
+graph permits the existing P4 vector implementation. It preserves every
+existing constant buffer, quantization, output shape, sample rate and cadence,
+and checks int32 accumulator bounds. Before LUT folding, both source and
+rewritten graphs must reproduce the114frozen streaming fixtures exactly.
+The folded graph must then pass P4 numerical checks independently. This is
+a dispatch optimization and does not improve the classifier's46/50 paired
+recall or change its frozen threshold.

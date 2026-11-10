@@ -1,0 +1,356 @@
+{
+  "scope": "Actual full-application flash fit and idle scheduling; failed resource experiment, no recognition acceptance",
+  "image_bytes": 6445840,
+  "slot_bytes": 6881280,
+  "slot_free_bytes": 435440,
+  "partition_layout_unchanged": true,
+  "audio_sample_rate": 16000,
+  "audio_speed_changed": false,
+  "opus_format_changed": false,
+  "normal_release_config_unchanged": true,
+  "research_optimization": "Private CONFIG_COMPILER_OPTIMIZATION_SIZE with adapter/calculator retainingO2; TFLM/ESP-NN retain their pinned component flags",
+  "locked_dependency_versions_retained": true,
+  "model_policy_changed_between_placements": false,
+  "placements": [
+    {
+      "name": "all_model_tensor_arenas_psram",
+      "image_sha256": "e2b0ae5ab5911b65a339416c0e11d5bd7bbf1cf3b6b696bb698aea152610680d",
+      "elf_sha256": "82f1269b274b7f71b000df56a8246160eadd578fff8e6403dfa134dbd8dc8d10",
+      "allocated_tensor_psram_bytes": 139264,
+      "allocated_variable_internal_bytes": 16384,
+      "used_tensor_bytes": [
+        76604,
+        7532,
+        18956
+      ],
+      "idle_measurement_seconds": 30.944442917010747,
+      "idle_snapshots": 28,
+      "timings": [
+        {
+          "step": 100,
+          "mean_us": 118599,
+          "p50_us": 113179,
+          "p95_us": 159031,
+          "max_us": 168953,
+          "over80ms": 96
+        },
+        {
+          "step": 200,
+          "mean_us": 118987,
+          "p50_us": 120765,
+          "p95_us": 156066,
+          "max_us": 168953,
+          "over80ms": 196
+        }
+      ],
+      "cadence_gate_us": 80000,
+      "cadence_passed": false,
+      "restored": true
+    },
+    {
+      "name": "internal_backbone_unpinned",
+      "image_sha256": "180063f5b25ff1aff68102738329ddac25417cb53ed264583d83ef5ce468e050",
+      "elf_sha256": "7f91a755ed1b6fe85b5ac2b3a7a1139c2d8b41a3184a57d5d5168488ff31b194",
+      "allocated_internal_bytes": 114688,
+      "allocated_psram_bytes": 40960,
+      "idle_measurement_seconds": 31.049056667019613,
+      "timings": [
+        {
+          "step": 100,
+          "mean_us": 117084,
+          "p50_us": 111320,
+          "p95_us": 165504,
+          "max_us": 172057,
+          "over80ms": 92
+        },
+        {
+          "step": 200,
+          "mean_us": 118202,
+          "p50_us": 118772,
+          "p95_us": 159557,
+          "max_us": 184231,
+          "over80ms": 192
+        }
+      ],
+      "cadence_windows": [],
+      "cadence_passed": false,
+      "restored": true
+    },
+    {
+      "name": "internal_backbone_core0",
+      "image_sha256": "631906381b1090170ed4226d2234f5ff9eafd73f48b39a31b6f004ae62495702",
+      "elf_sha256": "6739380e7b706ad16f69ee63e59f7c40b5ee3743ef0ef9b39d9cbc8f1388a6b0",
+      "allocated_internal_bytes": 114688,
+      "allocated_psram_bytes": 40960,
+      "idle_measurement_seconds": 30.757745207985863,
+      "timings": [
+        {
+          "board_ms": 28085,
+          "step": 100,
+          "mean_us": 115558,
+          "p50_us": 111957,
+          "p95_us": 158823,
+          "max_us": 163107,
+          "over80ms": 91
+        },
+        {
+          "board_ms": 43000,
+          "step": 200,
+          "mean_us": 117141,
+          "p50_us": 117114,
+          "p95_us": 159403,
+          "max_us": 163107,
+          "over80ms": 191
+        }
+      ],
+      "cadence_windows": [
+        {
+          "steps": 100,
+          "elapsed_ms": 14915,
+          "expected_ms": 8000
+        }
+      ],
+      "cadence_passed": false,
+      "restored": true
+    }
+  ],
+  "fresh_acoustic_control": {
+    "reference": "Original Hi ESP",
+    "source": "Previously successful Marin phrase plus immediate request",
+    "playback_volume_percent": 69,
+    "default_output": "Mac built-in speakers",
+    "muted": false,
+    "wakes": 0,
+    "outcome": "Failed control. No inference about custom wake accuracy; setup/distance clarification pending."
+  },
+  "production_board_modified": false,
+  "accepted_as_replacement": false,
+  "conclusion": "Moving the backbone arena to internal memory and explicitly pinning the wake task to core0 did not resolve the real-time failure. Whole pipeline100steps took14,915ms versus8,000ms of input audio in core0 test. Scheduling or memory location alone are not established causes.",
+  "operator_profile": {
+    "image_sha256": "ec49dc98916284f8944f332ccb8a9ccdd3be6021280f6a6dbc797b74a344454d",
+    "timings": [
+      {
+        "board_ms": 27763,
+        "step": 100,
+        "mean_us": 116302,
+        "p50_us": 111781,
+        "p95_us": 156980,
+        "max_us": 168505,
+        "over80ms": 94
+      },
+      {
+        "board_ms": 42703,
+        "step": 200,
+        "mean_us": 117004,
+        "p50_us": 107002,
+        "p95_us": 159675,
+        "max_us": 168505,
+        "over80ms": 194
+      }
+    ],
+    "cadence_windows": [
+      {
+        "steps": 100,
+        "elapsed_ms": 14940,
+        "expected_ms": 8000
+      }
+    ],
+    "stages": [
+      {
+        "step": 100,
+        "frontend_us": 4595,
+        "backbone_us": 105984,
+        "dense_us": 4100,
+        "temporal_us": 1537,
+        "core": 0
+      },
+      {
+        "step": 200,
+        "frontend_us": 4614,
+        "backbone_us": 105966,
+        "dense_us": 4624,
+        "temporal_us": 1706,
+        "core": 0
+      }
+    ],
+    "operators": [
+      {
+        "step": 100,
+        "name": "VAR_HANDLE",
+        "mean_us": 50
+      },
+      {
+        "step": 100,
+        "name": "ASSIGN_VARIABLE",
+        "mean_us": 156
+      },
+      {
+        "step": 100,
+        "name": "CALL_ONCE",
+        "mean_us": 21
+      },
+      {
+        "step": 100,
+        "name": "READ_VARIABLE",
+        "mean_us": 187
+      },
+      {
+        "step": 100,
+        "name": "PAD",
+        "mean_us": 65
+      },
+      {
+        "step": 100,
+        "name": "CONCATENATION",
+        "mean_us": 403
+      },
+      {
+        "step": 100,
+        "name": "STRIDED_SLICE",
+        "mean_us": 416
+      },
+      {
+        "step": 100,
+        "name": "CONV_2D",
+        "mean_us": 101005
+      },
+      {
+        "step": 100,
+        "name": "NYX_INT8_LUT",
+        "mean_us": 2240
+      },
+      {
+        "step": 100,
+        "name": "MAX_POOL_2D",
+        "mean_us": 1153
+      },
+      {
+        "step": 200,
+        "name": "VAR_HANDLE",
+        "mean_us": 47
+      },
+      {
+        "step": 200,
+        "name": "ASSIGN_VARIABLE",
+        "mean_us": 152
+      },
+      {
+        "step": 200,
+        "name": "CALL_ONCE",
+        "mean_us": 20
+      },
+      {
+        "step": 200,
+        "name": "READ_VARIABLE",
+        "mean_us": 180
+      },
+      {
+        "step": 200,
+        "name": "PAD",
+        "mean_us": 64
+      },
+      {
+        "step": 200,
+        "name": "CONCATENATION",
+        "mean_us": 390
+      },
+      {
+        "step": 200,
+        "name": "STRIDED_SLICE",
+        "mean_us": 397
+      },
+      {
+        "step": 200,
+        "name": "CONV_2D",
+        "mean_us": 101041
+      },
+      {
+        "step": 200,
+        "name": "NYX_INT8_LUT",
+        "mean_us": 2229
+      },
+      {
+        "step": 200,
+        "name": "MAX_POOL_2D",
+        "mean_us": 1178
+      }
+    ],
+    "restored": true,
+    "conclusion": "Backbone accounts for~106ms/117ms total, mostly CONV_2D. Graph padding rewrite proposed from dispatcher source audit; not yet proven on P4."
+  },
+  "explicit_padding_whole_app": {
+    "image_bytes": 6447760,
+    "image_sha256": "701a413392596718846c7d13f05827baa53d9099bd72fd9920f03a7f6f6b3da6",
+    "elf_sha256": "235f159e4b7f56506f03886f5d16943cdf30ab7ad341fd60b92960756fce40f2",
+    "timings": [
+      {
+        "board_ms": 23351,
+        "step": 100,
+        "mean_us": 71127,
+        "p50_us": 50929,
+        "p95_us": 126219,
+        "max_us": 142310,
+        "over80ms": 32
+      },
+      {
+        "board_ms": 33779,
+        "step": 200,
+        "mean_us": 71130,
+        "p50_us": 51785,
+        "p95_us": 126117,
+        "max_us": 142310,
+        "over80ms": 63
+      },
+      {
+        "board_ms": 44383,
+        "step": 300,
+        "mean_us": 72080,
+        "p50_us": 52610,
+        "p95_us": 133483,
+        "max_us": 148717,
+        "over80ms": 98
+      }
+    ],
+    "stages": [
+      {
+        "step": 100,
+        "frontend_us": 4522,
+        "backbone_us": 61476,
+        "dense_us": 3807,
+        "temporal_us": 1242,
+        "core": 0
+      },
+      {
+        "step": 200,
+        "frontend_us": 4694,
+        "backbone_us": 60316,
+        "dense_us": 4500,
+        "temporal_us": 1531,
+        "core": 0
+      },
+      {
+        "step": 300,
+        "frontend_us": 4693,
+        "backbone_us": 60767,
+        "dense_us": 4870,
+        "temporal_us": 1657,
+        "core": 0
+      }
+    ],
+    "cadence_windows": [
+      {
+        "steps": 100,
+        "elapsed_ms": 10428,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 10604,
+        "expected_ms": 8000
+      }
+    ],
+    "cadence_passed": false,
+    "restored": true,
+    "conclusion": "Equivalent backbone dispatch cuts mean inference~118ms to~72ms and100-step wall~14.9s to~10.5s. Still fails80ms p95 and complete pipeline cadence. No classifier/recognition acceptance."
+  }
+}
