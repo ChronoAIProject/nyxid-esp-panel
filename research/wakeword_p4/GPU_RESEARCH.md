@@ -381,3 +381,44 @@ up from 3.97543. Hashes/config are frozen in `4090-v5-training-protocol.json`;
 the normal feature audit passed. Candidate v5 uses the same architecture,
 40,000 steps and source sampling as v4, first evaluating quantized validation.
 At this milestone v5 training is in progress; no quality improvement is claimed.
+
+### Completed v5 validation: still not an acceptance candidate
+
+The 40,000-step run completed in 366.1 seconds and selected step 20,000.
+INT8 SHA-256 is
+`0912d1730aa5bc57fd1e77d82844edd357b401bc0b13ef3a5ca4a86104d7b130`.
+At validation-only threshold **0.95**, mean source event recall is **59.010%**
+(Piper 75.521%, Kokoro 42.500%), pooled 1,552/2,160 variants (71.852%).
+Confusing-negative detections are 0.6534%, maximum source 1%; 17 premature
+positive events were recorded. Hit latency is median 120 ms, p95 210 ms.
+Zero continuous events in the unchanged 1.20481 validation source hours still
+has the same **2.4865/hour** one-sided 95% upper bound. No regression or final
+fixture was scored for v5. See `4090-training-v5-negatives.json`,
+`4090-threshold-v5-negatives.json` and `4090-validation-v5-negatives.json`.
+The eight-clip numeric diagnostic passed explicit reset reproducibility and
+both paths detected 3/4 positive clips. Mean absolute score drift is 0.00348,
+but the maximum reaches 0.40455; this is not general numerical equivalence.
+The full INT8 validation result, rather than this small check, governs recall
+(`4090-streaming-v5-negatives-comparison.json`).
+
+On the identical validation population, v2/v4/v5 mean source recalls are
+57.109% / 49.974% / 59.010%. This does not establish statistical improvement:
+GPU training is not bit-exact, checkpoints and thresholds differ, and source
+renderings are correlated. In particular v5's Kokoro recall is still lower
+than v2's 46.667%. Broader negative coverage alone has not solved the core
+cross-source positive generalization problem. These candidates do not justify
+consuming the independent final reserve or claiming Hi ESP parity.
+
+`4090-v5-base-preservation.json` separately verifies reused binary/index files,
+unchanged human features and original ambient records, plus 1,062 training-only
+ambient additions. The next priority is positive-source/phonetic quality and
+training generalization, including a controlled additional-source experiment
+and a pretrained-feature desktop diagnostic baseline if needed. That baseline
+would be a diagnostic, not evidence of MCU footprint or WakeNet equivalence.
+
+For future runs, `train_stream.py` now records hashes for human and ambient
+indices and available augmentation provenance as well as the generated index.
+This matters because v4 and v5 intentionally share the generated index but
+have different ambient training inputs. The already completed v5 run retains
+its original source hash; `4090-v5-training-protocol.json` binds its ambient
+and human indices explicitly instead of rewriting historical training output.

@@ -55,6 +55,11 @@ def main():
 
     raw = np.memmap(args.features/"features.bin", mode="r", dtype="<u2").reshape(-1, 40)
     records = json.loads((args.features/"features.json").read_text())
+    feature_metadata_hashes = {
+        name: hashlib.sha256((args.features/name).read_bytes()).hexdigest()
+        for name in ("features.json", "human.json", "ambient.json", "augmentation.json",
+                     "negative-additions.json", "base-provenance.json")
+        if (args.features/name).is_file()}
     groups = {}
     for split in ("training", "validation", "testing"):
         groups[split] = {}
@@ -231,6 +236,7 @@ def main():
               "source_exponent": args.source_exponent,
               "validation_detection": "latched events after full receptive-field warmup" if args.event_validation else "window peak",
               "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
+              "feature_metadata_sha256": feature_metadata_hashes,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
