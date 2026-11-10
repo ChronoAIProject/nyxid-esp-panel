@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-10",
+  "status": "failed_before_first_clip",
+  "requested_speeds": [0.75, 0.9, 1.0, 1.1, 1.25],
+  "engine": "kokoro-onnx 0.4.9",
+  "error": "ONNX Loop/Expand: tensor shape.Size() must be >= 0",
+  "diagnosis": "For input_ids models, kokoro-onnx constructs speed as int32 before the session wrapper runs. 0.75 becomes zero. Casting that value to the model's float32 schema cannot recover it.",
+  "fix": "Preserve the caller's requested speed and construct the session speed tensor from it with the model-declared dtype.",
+  "limits": "No audio from this failed run is included in training. The earlier speed=1.0 corpus is unaffected by fractional truncation. A fresh output directory is used for the retry."
+}

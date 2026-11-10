@@ -101,3 +101,46 @@ The rebuilt test voices and dev-clean data are **regression** sets because
 prior experiments used them. A fresh final positive holdout and >=5.992 hours
 of independent-source negative exposure still need to be frozen. No candidate
 has yet passed the goal's final acceptance gates.
+
+## Executed candidate v1: rejected
+
+RTX 4090 training completed 40,000 steps in 368.7 seconds including export.
+Validation selected step 30,000; the INT8 model is 63,032 bytes, SHA-256
+`06a05930d1d8a36f6c6de535ebb14781c270204587a50aa431ce992606365383`.
+Quantized validation froze threshold 0.992 before regression scoring. No
+threshold in the grid met both validation constraints; this is a reported
+fallback, not a viable operating point. See `results/4090-training-v1.json`,
+`4090-threshold-v1.json` and `4090-quantized-v1.json`.
+
+| INT8 regression measurement | Result |
+| --- | ---: |
+| Mean recall across two TTS sources | 57.32% |
+| Piper recall | 87.55% |
+| Kokoro recall | 27.08% |
+| Pooled recall (dominated by Piper) | 86.08% (1,694/1,968 variants) |
+| Confusing-negative clip false detections | 0.714% |
+| Continuous source audio exposure | 1.3582 hours |
+| Continuous false events | 1 |
+| Observed events/hour | 0.7363 |
+| One-sided 95% upper bound | 3.4929/hour |
+| Detection latency among hits, median / p95 | 120 / 200 ms |
+
+These are synthetic/regression measurements, not real-user acceptance.
+Correlated render variants do not establish independent trial counts.
+The latency annotation is approximate and includes no capture/network delay.
+Historical Mac voice fixtures were unavailable here and are **unmeasured**.
+Hi ESP comparison remains unverified; see `4090-hiesp-comparison-status.json`.
+
+The float-vs-INT8 validation diagnostic (`4090-streaming-v1-comparison.json`)
+passed repeated-reset reproducibility on eight clips. Mean absolute score
+drift was 0.000564, maximum 0.06168; one Kokoro event shifted by one 30 ms step.
+This does not establish whole-corpus equivalence or target-device numerics.
+Poor float-window vs quantized-streaming recall must not be attributed to
+quantization alone without isolating context, state and scoring effects.
+
+Next experiments expand Kokoro speed coverage with the same whole-voice
+partitions. The first fractional-speed attempt failed before generating audio
+because the library truncated speed 0.75 to integer zero; the corrected
+adapter preserves the caller's fractional speed. This failure and its scope
+are retained in `4090-kokoro-speed-failure.json`. New generation/training
+remains in progress. More correlated speed variants are not new speakers.

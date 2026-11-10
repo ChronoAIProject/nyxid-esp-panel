@@ -1,0 +1,126 @@
+{
+  "model_sha256": "06a05930d1d8a36f6c6de535ebb14781c270204587a50aa431ce992606365383",
+  "feature_index_sha256": "5b2942f5bde23a96fec8329360229848f15ddcaffae8d684df81e0799173fd38",
+  "tensorflow": "2.21.0",
+  "split": "validation",
+  "threshold": 0.992,
+  "state_buffers": [
+    "streaming/stream/states:0",
+    "streaming/stream_1/states:0",
+    "streaming/stream_2/states:0",
+    "streaming/stream_3/states:0",
+    "streaming/stream_4/states:0",
+    "streaming/stream_5/states:0"
+  ],
+  "reset_reproducibility_passed": true,
+  "mean_absolute_error": 0.0005642608607234077,
+  "p95_absolute_error": 0.003904390335083008,
+  "max_absolute_error": 0.061682283878326416,
+  "clips": [
+    {
+      "source": "piper-gpu/validation/1/00203.wav",
+      "engine": "piper",
+      "label": 1,
+      "steps": 156,
+      "mean_absolute_error": 0.001265907204963503,
+      "max_absolute_error": 0.061682283878326416,
+      "float_event_steps": [
+        88
+      ],
+      "quantized_event_steps": [
+        88
+      ],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "piper-gpu/validation/0/00245.wav",
+      "engine": "piper",
+      "label": 0,
+      "steps": 135,
+      "mean_absolute_error": 1.8760180054646508e-06,
+      "max_absolute_error": 0.0002142000012099743,
+      "float_event_steps": [],
+      "quantized_event_steps": [],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "piper-gpu/validation/1/00157.wav",
+      "engine": "piper",
+      "label": 1,
+      "steps": 156,
+      "mean_absolute_error": 0.000590074527356455,
+      "max_absolute_error": 0.03243446350097656,
+      "float_event_steps": [
+        77
+      ],
+      "quantized_event_steps": [
+        77
+      ],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "piper-gpu/validation/0/00314.wav",
+      "engine": "piper",
+      "label": 0,
+      "steps": 137,
+      "mean_absolute_error": 2.93134707178548e-06,
+      "max_absolute_error": 0.0002142000012099743,
+      "float_event_steps": [],
+      "quantized_event_steps": [],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "kokoro/validation/af_sky/000.wav",
+      "engine": "kokoro",
+      "label": 1,
+      "steps": 135,
+      "mean_absolute_error": 0.0013425841816871195,
+      "max_absolute_error": 0.053858548402786255,
+      "float_event_steps": [
+        94
+      ],
+      "quantized_event_steps": [
+        95
+      ],
+      "exact_event_steps_match": false
+    },
+    {
+      "source": "kokoro/validation/af_sky/001.wav",
+      "engine": "kokoro",
+      "label": 1,
+      "steps": 135,
+      "mean_absolute_error": 0.0011466869025676687,
+      "max_absolute_error": 0.021522581577301025,
+      "float_event_steps": [
+        95
+      ],
+      "quantized_event_steps": [
+        95
+      ],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "kokoro/validation/af_sky/003.wav",
+      "engine": "kokoro",
+      "label": 0,
+      "steps": 133,
+      "mean_absolute_error": 2.1987664345357594e-05,
+      "max_absolute_error": 0.0006087959045544267,
+      "float_event_steps": [],
+      "quantized_event_steps": [],
+      "exact_event_steps_match": true
+    },
+    {
+      "source": "kokoro/validation/af_sky/004.wav",
+      "engine": "kokoro",
+      "label": 0,
+      "steps": 138,
+      "mean_absolute_error": 4.079351710158681e-05,
+      "max_absolute_error": 0.0014207246713340282,
+      "float_event_steps": [],
+      "quantized_event_steps": [],
+      "exact_event_steps_match": true
+    }
+  ],
+  "limits": "Small deterministic validation subset, not final test. Score drift is expected; full quantized evaluation governs recognition. No MCU numeric equivalence or Hi ESP comparison is established."
+}
