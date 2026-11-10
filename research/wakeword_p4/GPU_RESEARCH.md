@@ -2770,3 +2770,21 @@ results/4090-ami-independent-source-v1.json记录来源/许可/完整原manifest
 本地原音频ami-independent-final-source-v1、输入ami-independent-final-inputs-v1。
 输入准备并非识别验收；须在候选通过开发检验并固定后另推评分预注册。
 v31原训练仍运行，已完成57000/120000步，未发布中途分数为最终识别质量。
+
+## 独立远场Nyx固定工作点评分器准备（2026-11-10）
+
+training/evaluate_independent_dialogue.py仅接受另行预注册的模型/阈值/代码/
+完整16场PCM与feature哈希、源audit/manifest与固定原始曝光；不选择阈值。
+检测器在全部输入核验后才构造，每场独立reset，前300帧重复检查后再全流评分。
+检查全流分数长度与有限性，保存分数与原始事件；单流失败保留并继续剩余流，
+有任何失败就不输出质量汇总。逐四个会议组报告时长/事件/名义Poisson95%上界，
+明确重复参与者/会话相关性与总体分布失配不被名义区间覆盖。
+此工具不测正例召回、音素延迟或硬件性能。
+
+可复现拒绝检查check_independent_dialogue_guards.py使用明确无效的临时fixture，
+改模型/非有限阈值/缺会议/缓存前端版本不符/路径越界五项均在输出创建和
+模型构造前按预期分支拒绝；没有最终推理。
+最终代码哈希与检查见results/4090-ami-independent-nyx-evaluator-guards-v3.json。
+语法检查通过。早期开发检查留本地ami-evaluator-guard-development，不作为最终识别证据。
+新的独立AMI最终集仍未评分，尚未选择用于该验收的候选工作点。
+v31原训练已完成75500/120000步，继续既定计划；尚无完整新候选质量结论。

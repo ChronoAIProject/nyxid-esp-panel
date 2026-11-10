@@ -1,0 +1,34 @@
+{
+  "role": "Invalid dialogue evaluator guard checks; no final model inference",
+  "source_sha256": "a215e78a91fff15cbf0e9d077c5dc7ccf8e1a72268dcbbc8de905d82ab2e21df",
+  "evaluator_source_sha256": "ffd110b5a9c69126effbdf4ee114354f63205b6dce51c5d48f4d6f8e24396ace",
+  "guards": [
+    {
+      "case": "changed-model",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed preregistered model, code, PCM population or source audit"
+    },
+    {
+      "case": "nonfinite-threshold",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed frozen test population, exposure or operating point"
+    },
+    {
+      "case": "missing-session",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed frozen test population, exposure or operating point"
+    },
+    {
+      "case": "changed-cached-frontend",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed preregistered model, code, PCM population or source audit"
+    },
+    {
+      "case": "escaped-input",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed or escaped final input"
+    }
+  ],
+  "independent_final_scored": false,
+  "limits": "All ephemeral fixtures deliberately invalid and deleted. Expected rejection branches checked before detector construction/output. Not recognition quality evidence."
+}
