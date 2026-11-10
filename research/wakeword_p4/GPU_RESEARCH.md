@@ -766,3 +766,15 @@ sampling, negative weight20 and event validation. Only the recovered training
 source addition changes. v7-duration remains a rejected separate sampling
 control. Next: validate actual INT8 export, quantify float/INT8 drift, then
 consider development regression only if validation evidence warrants it.
+
+## v7 attribution while v8 trains
+
+The validation trace attribution independently reproduces1584 positive hits
+and20 confusing-negative triggered variants at the frozen threshold0.97.
+Piper per-variant recall:81.458% quiet,84.167% microphone-floor noise,
+66.250% colored noise+synthetic reverb,67.708% real background+synthetic reverb.
+Kokoro per-variant recall stays58.333–63.333%, including61.667% quiet.
+All12 premature events are Kokoro. These show separate acoustic-condition and
+source generalization deficits; they do not establish causes. Variants remain
+correlated, and inference/thresholds were not recomputed. The attribution tool
+accepts only validation-only traces and does not read other audio.
