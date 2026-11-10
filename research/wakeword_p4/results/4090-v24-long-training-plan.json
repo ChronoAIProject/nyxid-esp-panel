@@ -1,0 +1,20 @@
+{
+  "role": "v24 prospective extended-training experiment, not acceptance evidence",
+  "reason": "v23 best checkpoint is its last step and source-macro float validation rises from 57.9167% at25k to62.5% at30k to64.53125% at35k to69.375% at40k; test whether larger training corpus needs longer optimization",
+  "baseline": "v23-librispeech100, rejected: INT8 macro71.171875%, negative events4/3/2, no viable expanded threshold",
+  "changed": "Total steps40000 to120000; existing relative learning-rate schedule consequently moves drops from20k/32k to60k/96k. This tests training duration plus its standard schedule, not pure number of updates at fixed rates.",
+  "unchanged": [
+    "v23 audited features",
+    "teacher60/context150",
+    "pretrained weights reset head seed726",
+    "frozen BN",
+    "prefix16",
+    "six equal ambient strata",
+    "eval every5000",
+    "original validation selection and INT8 dense grid"
+  ],
+  "negative_hypothesis": "Need eventual improvement on expanded validation, not merely original synthetic recall",
+  "final_audio": "Never accessed by this experiment",
+  "expected_english_overlap_hours": 400.0,
+  "limitations": "Overlapping crops and repeated synthetic positives do not create independent observations; longer training can overfit and is not guaranteed to help."
+}
