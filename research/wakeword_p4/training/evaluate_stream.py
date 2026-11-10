@@ -19,6 +19,8 @@ def main():
     parser.add_argument("--mac-eval", type=Path,
                         help="Optional historical Mac regression WAVs; omitted is unmeasured, never zero errors")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--validation-only", action="store_true",
+                        help="Calibrate and report validation without scoring any regression or final fixtures")
     args = parser.parse_args()
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
@@ -87,6 +89,14 @@ def main():
     (root/"threshold.json").write_text(json.dumps({"selected": selected, "grid": grid,
                                                   "viable_operating_point": bool(eligible)}, indent=2)+"\n")
     print(json.dumps({"validation": selected, "viable_operating_point": bool(eligible)}), flush=True)
+    if args.validation_only:
+        report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
+                  "threshold": selected["threshold"], "validation": selected,
+                  "testing_regression": None, "validation_only": True,
+                  "viable_operating_point": bool(eligible),
+                  "limits": "Validation calibration only; no regression/final challenge scores computed. Does not establish acceptance or Hi ESP equivalence."}
+        (root/"report.json").write_text(json.dumps(report, indent=2)+"\n")
+        return
     # Quantized threshold is frozen before regression/test data is evaluated.
     test, ta = measure("testing")
     threshold = selected["threshold"]

@@ -4,6 +4,7 @@ from concurrent.futures import ProcessPoolExecutor
 import hashlib
 import json
 from pathlib import Path
+import shutil
 
 import numpy as np
 from scipy.signal import fftconvolve
@@ -62,6 +63,8 @@ def main():
     parser.add_argument("--human-features", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--base-features", type=Path,
+                        help="Copy a frozen feature set unchanged; append training-only sources")
     args = parser.parse_args()
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -69,13 +72,24 @@ def main():
     dataset = root/"dataset"
     dataset.mkdir(exist_ok=True)
     entries = []
+    base_index, base_entries = [], []
+    if args.base_features:
+        base = args.base_features.resolve()
+        base_index = json.loads((base/"features.json").read_text())
+        base_entries = list(map(json.loads, (base/"dataset/manifest.jsonl").read_text().splitlines()))
+        for name in {Path(r["path"]).parts[0] for r in base_entries}:
+            (dataset/name).symlink_to((base/"dataset"/name).resolve(), target_is_directory=True)
     for source in args.source:
         assert (source/"generation.json").exists(), f"Generation incomplete: {source.name}"
         link = dataset/source.name
+        if args.base_features and link.exists():
+            raise ValueError(f"Source already present in base: {source.name}")
         if not link.exists():
             link.symlink_to(source.resolve(), target_is_directory=True)
         for line in (source/"manifest.jsonl").read_text().splitlines():
             item = json.loads(line)
+            if args.base_features and item["split"] != "training":
+                raise ValueError("Appended source must be training-only")
             item["path"] = str(Path(source.name)/item["path"])
             item.setdefault("engine", "piper")
             if item["label"] and item["engine"] != "piper":
@@ -93,14 +107,18 @@ def main():
                 item["keyword_end"] = min(len(pcm), (int(active[-1])+1)*160+960)
                 item["keyword_end_method"] = "Last 10 ms RMS frame above -46 dB of peak, plus 60 ms; PCM retained"
             entries.append(item)
-    (dataset/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in entries))
-    (dataset/"generation.json").write_text(json.dumps({"sources": [p.name for p in args.source]})+"\n")
+    (dataset/"manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in base_entries+entries))
+    (dataset/"generation.json").write_text(json.dumps({"sources": sorted({Path(r["path"]).parts[0] for r in base_entries+entries})})+"\n")
     bg_rows = json.loads((args.backgrounds/"manifest.json").read_text())["records"]
     backgrounds = {s: [str(args.backgrounds/r["path"]) for r in bg_rows if r["split"] == s]
                    for s in ("training", "validation", "testing")}
-    index = []
-    offset = 0
-    with (root/"features.bin").open("wb") as handle, ProcessPoolExecutor(max_workers=args.workers) as pool:
+    index = list(base_index)
+    offset = sum(r["frames"] for r in base_index)
+    if args.base_features:
+        if (base/"features.bin").stat().st_size != offset*40*2:
+            raise ValueError("Base binary size mismatch")
+        shutil.copyfile(base/"features.bin", root/"features.bin")
+    with (root/"features.bin").open("ab" if args.base_features else "wb") as handle, ProcessPoolExecutor(max_workers=args.workers) as pool:
         for split in backgrounds:
             group = [r for r in entries if r["split"] == split]
             variants = 4  # same rendering regimes in every split
@@ -112,6 +130,19 @@ def main():
                 if count % 500 == 0:
                     print(json.dumps({"split": split, "clips": count, "total": len(jobs)}), flush=True)
     (root/"features.json").write_text(json.dumps(index)+"\n")
+    if args.base_features:
+        for name in ("human.json", "ambient.json"):
+            shutil.copyfile(base/name, root/name)
+        for name in ("human-source", "ambient"):
+            (root/name).symlink_to((base/name).resolve(), target_is_directory=True)
+        (root/"base-provenance.json").write_text(json.dumps({
+            "base_index_sha256": hashlib.sha256((base/"features.json").read_bytes()).hexdigest(),
+            "base_sequences": len(base_index), "base_frames": offset-sum(r["frames"] for r in index[len(base_index):]),
+            "added_training_sequences": len(index)-len(base_index),
+            "evaluation_records_unchanged": True}, indent=2)+"\n")
+        print(json.dumps({"sequences": len(index), "frames": offset,
+                          "sources": sorted({r["engine"] for r in index})}), flush=True)
+        return
     ambient = []
     for number, item in enumerate(bg_rows):
         pcm, rate = sf.read(args.backgrounds/item["path"], dtype="int16")

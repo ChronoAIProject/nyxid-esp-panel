@@ -21,15 +21,21 @@ def main():
     p.add_argument("--model-source", type=Path, required=True)
     p.add_argument("--details", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--training-source", action="store_true",
+                   help="Audit a training-only synthesis manifest instead of the paired challenge")
     a = p.parse_args()
     if a.details.exists() or a.output.exists():
         p.error("Use fresh audit outputs")
     model = WhisperModel(str(a.model), device="cpu", compute_type="int8", cpu_threads=4)
     counts, by_voice = Counter(), defaultdict(Counter)
     rows = list(map(json.loads, (a.dataset/"manifest.jsonl").read_text().splitlines()))
+    if a.training_source and any(r["split"] != "training" for r in rows):
+        raise ValueError("Training-source mode requires exclusively training clips")
     a.details.parent.mkdir(parents=True, exist_ok=True)
     with a.details.open("w") as log:
         for index, row in enumerate(rows, 1):
+            target = ("hey_nyx" if row["label"] else "negative") if a.training_source else row["target"]
+            voice = "/".join(map(str, row["speakers"])) if a.training_source else row["voice"]
             path = a.dataset/row["path"]
             if hashlib.sha256(path.read_bytes()).hexdigest() != row["sha256"]:
                 raise ValueError("Frozen audio changed")
@@ -43,19 +49,19 @@ def main():
             words = normalized(text)
             expected = normalized(row["text"])
             aliases = {expected}
-            if row["target"] == "hey_nyx":
+            if target == "hey_nyx":
                 aliases |= {"hey nicks", "hey nix", "hey nyx", "hey knicks", "hey nick s"}
-            if row["target"] == "hi_esp":
+            if target == "hi_esp":
                 aliases |= {"hi esp", "hi e s p"}
             match = words in aliases
-            target = str(row["target"])
+            target = str(target)
             counts[f"{target}/clips"] += 1
             counts[f"{target}/text_agreements"] += int(match)
-            by_voice[row["voice"]]["clips"] += 1
-            by_voice[row["voice"]]["text_agreements"] += int(match)
+            by_voice[voice]["clips"] += 1
+            by_voice[voice]["text_agreements"] += int(match)
             log.write(json.dumps({"path": row["path"], "sha256": row["sha256"],
                                   "expected": row["text"], "transcript": text,
-                                  "text_agreement": match, "target": row["target"]})+"\n")
+                                  "text_agreement": match, "target": target})+"\n")
             log.flush()
             if index % 50 == 0:
                 print(json.dumps({"reviewed": index, "total": len(rows)}), flush=True)
@@ -67,6 +73,7 @@ def main():
               "asr_source": json.loads(a.model_source.read_text()), "asr_files_sha256": files,
               "manifest_sha256": hashlib.sha256((a.dataset/"manifest.jsonl").read_bytes()).hexdigest(),
               "clips": len(rows), "counts": dict(counts),
+              "training_source": a.training_source,
               "by_voice": {v: dict(c) for v,c in by_voice.items()},
               "clips_removed_or_relabeled": 0, "wake_classifier_scores_computed": False,
               "limits": "Text agreement is not proof of phonetic accuracy; mismatches may be ASR errors. All frozen WAVs and labels are retained unchanged. This screen is not wake recognition, human listening review, or Hi ESP evaluation."}

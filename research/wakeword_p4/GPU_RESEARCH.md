@@ -246,3 +246,70 @@ at pinned revision `5ecdb67327fd37bb2e042aab12ff7391903235d3` in an isolated
 environment. Torch/TorchAudio imports and RTX 4090 detection succeeded; model
 download and actual synthesis have not yet been verified. No Qwen quality or
 new independent speaker-count claim is made.
+
+## CUDA VoiceDesign source (training only)
+
+`training/qwen_samples.py` completed **360/360** waveform-QA-accepted clips
+(72 positives, 288 confusing/common negatives), 430.88 seconds of standalone
+audio, from 24 shuffled description conditions. These conditions and seeds
+are not established speaker identities and are exclusively training data.
+The pinned model's main safetensors SHA-256 is
+`391e8db219f292c515297cdceeb43e4eae67cdde35fa57e79a6a8a532fca0522`;
+all model/config hashes, generation parameters, source/plan/manifest hashes,
+and runtime versions are in `4090-qwen-v1-generation.json`.
+RTX 4090 BF16/SDPA synthesis took 511.2 seconds, including model loading but
+excluding weight hashing and download. The initial run reported a missing
+Python header during optional Triton compilation, then continued successfully;
+`python3.11-dev` and `sox` were subsequently installed. These successful WAVs
+are evidence of CUDA synthesis, not wake recognition quality.
+
+The first three positive smoke clips all passed waveform QA, but independent
+Whisper tiny.en text agreement was only 1/3 (two transcribed as Hey Next).
+This cannot distinguish ASR errors from synthesis pronunciation errors.
+Before examining full-source ASR results or training a classifier, the
+training selection policy was declared: use only independent ASR text
+agreement, including the audit's explicit Nyx/Nix/Nicks aliases. Preserve
+all original WAVs and labels, retain excluded paths/hashes, and do not select
+or filter evaluation data. `select_training_asr.py` enforces training-only
+input, exact manifest coverage and unchanged waveform/text hashes. Agreement
+is not phonetic ground truth and can bias accent coverage.
+
+Reproduction (the environment inherits global Torch; use the Qwen-specific
+lock for the actual full environment, not as a replacement for GPU wheel
+index configuration):
+
+```bash
+virtualenv --system-site-packages .local/wakeword/qwen-env
+.local/wakeword/qwen-env/bin/pip install qwen-tts==0.1.1
+OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 USE_TF=0 \
+  .local/wakeword/qwen-env/bin/python research/wakeword_p4/training/qwen_samples.py \
+  --model .local/wakeword/qwen3-design --source .local/wakeword/qwen-source.json \
+  --output .local/wakeword/hey-nyx/qwen-cuda-v1 --profiles 24
+```
+
+`stream_data.py --base-features` appends training-only sources while copying
+the existing binary feature prefix and evaluation records unchanged. Its
+output must pass the normal feature audit and explicit base-prefix equality
+checks before training. The prepared source-comparison experiment retains v2's architecture,
+40,000-step budget, equal-engine sampling and event validation, and adds only
+the screened training source. GPU reruns are not bit-exact, so this remains
+an experiment rather than a proven causal attribution. It will first use
+`evaluate_stream.py --validation-only`; independent final fixtures remain
+unscored until a defensible candidate is frozen.
+
+The completed ASR screen agrees on 30/72 positives and 268/288 negatives.
+The training-only selection therefore contains 298 clips; all parent audio
+and labels are retained. The resulting v3 feature set passed its audit and
+an explicit byte-for-byte comparison of the entire v2 binary prefix and
+record list (`4090-v3-base-preservation.json`). Existing validation/regression
+features are unchanged. No v3 training has started.
+
+The subsequent primary-source review in `BEST_PRACTICES.md` changes the next
+priority: expand realistic room/noise/negative coverage before running the
+source-only experiment. Official precomputed negative features advertise
+20 ms steps while our frontend uses 10 ms; they have not been imported.
+The official-notebook MIT environmental RIR source was downloaded at pinned
+revision `b824a1ef2821f112fda0b9cb26e4278c62b425bb`; 270 mono 16 kHz WAVs passed
+upstream hash, format, finite-sample and nonzero-energy checks
+(`4090-mit-rir-audit.json`). They are prepared for training augmentation and
+have not yet been applied to a candidate. This is no new recognition result.
