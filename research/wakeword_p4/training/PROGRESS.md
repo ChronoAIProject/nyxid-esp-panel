@@ -801,3 +801,14 @@ the advancement gate, so do not train a student from this pair. The
 [full grid](../results/microwake-equal-mean-v1.json) is reused synthetic and
 continuous validation only. No speaker, microphone, board, or reserved
 evaluation data was used.
+
+A [paired error audit](../results/microwake-error-overlap-v1.json) then used
+the fixed zero-event member points and the two reported equal-mean points.
+Of the conservative member's 1,050 positive variant hits, 1,036 also hit
+with the other model; 12 of its 13 negative hits overlapped too. The five
+strict equal-mean errors are three "Hey Mix" and two "Hey Next" variants.
+This indicates limited complementary coverage at those thresholds and
+shared near-word errors. It does not say whether the synthetic utterances
+were pronounced as intended. The [next matched training plan](plans/microwake-negative-focus-v1.json)
+therefore varies only the penalty for high-scoring training negatives and
+leaves the training input choices intact.
