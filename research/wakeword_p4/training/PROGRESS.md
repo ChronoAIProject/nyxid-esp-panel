@@ -760,3 +760,12 @@ voices/conditions and real recordings for subsequent acceptance.
   `../embedding/plans/all-training-endpoint-continuation-v1.json`; see
   `../results/embedding-training-endpoints-v1.json`. Training has not started
   at this commit; validation/development/physical improvement remains unproven.
+
+- Both all-training endpoint continuations now complete 10k steps and all four
+  original-validation checks. Actual exported PTQ examples retain the exact
+  control hashes. Dense selects 2.5k/.6 at 92.3214% macro; temporal selects
+  2.5k/.2 at 94.4692%; each has 3 continuous events/7.303778h at its own
+  selected point. The two selected models and their cached validation score
+  hashes are frozen in `head-equal-mean-all-endpoints-v1-plan.json` before
+  the single planned equal-mean calibration. No combined score, development
+  regression, new physical playback or acceptance at this commit.
