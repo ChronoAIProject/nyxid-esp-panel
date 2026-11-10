@@ -839,16 +839,16 @@ as inserted silence, excluded from exposure. Cache and index hashes are publishe
 
 v6 was scored only on the16 new Chinese validation speakers at its previously
 frozen0.8 threshold; model SHA matched the old calibration report. Result:
-**zero false events in6.913985h; one-sided95% Poisson upper0.43329/h**.
+**one false event in6.913985h; observed0.144634/h, one-sided95% Poisson upper0.686126/h**.
 Three-second feature-prefix inference reproduced exactly after explicit state
 reset for every stream. All events, including startup, are counted. The run
 reads no new training/development-regression or independent final audio.
 
-This meets the numerical false-event bound on this read-Mandarin development
-population at the frozen English-calibrated threshold. It does not repair the
-existing English regression (one event/1.35816h, upper3.4929/h), low positive
-recall, absent far-field/TV testing, or missing matched WakeNet comparison.
-Do not pool easy/new exposure to conceal the failed population. No model was
-retrained or threshold adjusted for this result. This evidence reduces the
-priority of Chinese-specific hard-negative retraining relative to the existing
-near-English-word and cross-TTS positive-generalization deficits.
+This fails the numerical false-event upper-bound target on this read-Mandarin
+development population. The existing English regression also failed (one
+event/1.35816h, upper3.4929/h). Low positive recall, absent far-field/TV testing
+and missing matched WakeNet comparison remain unresolved. Do not pool exposure
+to conceal failed populations. No model was retrained or threshold adjusted.
+The initial prose mistakenly inferred zero total events from the final three
+speaker log lines; the authoritative JSON always recorded one event. This
+correction uses the summed per-speaker events and full report, not the log tail.
