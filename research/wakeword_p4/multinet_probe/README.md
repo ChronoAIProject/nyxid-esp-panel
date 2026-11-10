@@ -276,3 +276,28 @@ all89,658decoded bytes; an independent extraction of the generated fixtures
 also verifies that both source slices retain the original PCM SHA and that
 their full307,712sample buffers match their declared CRCs. No recognition
 result is implied by those input/build checks.
+
+The frozen reference-v1 build (`0cd249c`) now completes4cases /2,404calls, all
+consumed-input CRCs and both source placements verified. Neither stock nor mixed
+grammar detects either placement at.9. Both terminal raw strings are
+` TfL Mm cbK`. No cleanup warning remains, and original app/service/Hi ESP are
+restored. See [`multinet-reference-v1-p4.json`](../results/multinet-reference-v1-p4.json).
+Thus adding the long quiet tail or omitting the2.4s prefix did not make the
+original source control pass in this configuration. It does not establish the
+cause or intrinsic Nyx recognition quality.
+
+The active-command logs also expose a distinct configuration difference:
+original stock joke is `TfL Mm c qbK`, while automatic uppercase-text G2P in
+the mixed arm produces `TfL Mm d qbK`. Retain that observed discrepancy without
+declaring it the cause: the stock grammar misses too. A future phoneme-policy
+change needs its own source-bound control, rather than quietly rewriting the
+frozen grammar from the failed audio.
+
+`../multinet_reference_plan_v2.json` now freezes a **single threshold change**
+from.9to.1, the latter explicitly used in the same upstream SDK-config test
+at line237. Model/fixture blobs, source rows,601blocks,500,000ms timeout,
+grammars and template stay byte-identical to v1. The checked build/vector
+identities are `../results/multinet-reference-v2-{build,vectors}.json`.
+This is a source-backed compatibility diagnostic, not an always-listening
+Nyx threshold selection. It combines that test's threshold with the preceding
+CPU-test window, and is not claimed to reproduce one upstream test exactly.
