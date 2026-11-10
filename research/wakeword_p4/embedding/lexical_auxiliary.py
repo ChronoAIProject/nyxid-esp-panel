@@ -275,6 +275,8 @@ def train(args):
     main_hash, aux_hash, auxiliary_source_hash = hashlib.sha256(), hashlib.sha256(), hashlib.sha256()
     engine_hash = hashlib.sha256()
     main_source_hash, unmodified_hash = hashlib.sha256(), hashlib.sha256()
+    fallback_hash = hashlib.sha256()
+    fallback_windows = 0
     activity_counts = Counter()
     recipe = plan['recipe']
     for number in range(1, recipe['steps'] + 1):
@@ -286,11 +288,15 @@ def train(args):
         main_source_hash.update(json.dumps([draw[:3] for draw in sampler.last_draws], separators=(',', ':')).encode())
         for value in (x[~sampler.last_activity_mask], y[~sampler.last_activity_mask]):
             unmodified_hash.update(value.tobytes())
+        for value in (x[sampler.last_uniform_fallback_mask], y[sampler.last_uniform_fallback_mask]):
+            fallback_hash.update(value.tobytes())
+        fallback_windows += int(sampler.last_uniform_fallback_mask.sum())
         if activity_records:
             for identity, _, kind, end in sampler.last_draws:
                 if kind == 'tts_negative':
                     low, high = sampler.activity[identity]
-                    activity_counts[(by_id[identity]['engine'], low <= end <= high)] += 1
+                    inside = low <= end <= high if identity not in sampler.activity_fallback else None
+                    activity_counts[(by_id[identity]['engine'], inside)] += 1
         ax, ay = aux_sampler.batch()
         auxiliary_source_hash.update(json.dumps(aux_sampler.last_source_draws, separators=(',', ':')).encode())
         ae = engine_labels(aux_sampler.last_source_draws, by_id)
@@ -320,9 +326,11 @@ def train(args):
     summary['engine_labels_batches_sha256'] = engine_hash.hexdigest()
     summary['main_sources_batches_sha256'] = main_source_hash.hexdigest()
     summary['main_unmodified_batches_sha256'] = unmodified_hash.hexdigest()
+    summary['main_uniform_fallback_batches_sha256'] = fallback_hash.hexdigest()
+    summary['main_uniform_fallback_windows'] = fallback_windows
     summary['tts_negative_endpoint_interval_counts'] = [
-        {'engine': engine, 'inside_interval': inside, 'sampled_windows': count}
-        for (engine, inside), count in sorted(activity_counts.items())]
+        {'engine': engine, 'activity_defined': inside is not None, 'inside_interval': inside, 'sampled_windows': count}
+        for (engine, inside), count in sorted(activity_counts.items(), key=lambda item: (item[0][0], str(item[0][1])))]
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     (args.output / 'complete.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps({'phase': 'completed', 'seconds': summary['seconds'],

@@ -2,6 +2,8 @@ import unittest
 
 import numpy as np
 from negative_activity import interval_map, rms_span
+from negative_activity_fallback import uniform_fallback_ids
+from audit_negative_activity import energy_statistics
 
 
 class NegativeActivityTest(unittest.TestCase):
@@ -36,6 +38,28 @@ class NegativeActivityTest(unittest.TestCase):
             interval_map([row], [record, record], 25)
         with self.assertRaisesRegex(ValueError, 'cover every'):
             interval_map([row, row | {'id': 'missing'}], [record], 25)
+
+    def test_nonzero_below_floor_is_distinguished_from_all_zero(self):
+        pcm = np.zeros(4800, np.int16)
+        pcm[300] = 1
+        stats = energy_statistics(pcm)
+        self.assertEqual(stats['active_blocks'], 0)
+        self.assertEqual(stats['nonzero_samples'], 1)
+        self.assertEqual(stats['sample_peak_absolute'], 1)
+        self.assertLess(stats['peak_10ms_rms'], 1)
+        self.assertIsNone(stats['activity_start_seconds'])
+        self.assertEqual(energy_statistics(np.zeros(4800, np.int16))['nonzero_samples'], 0)
+
+    def test_fallback_requires_explicit_full_original_range(self):
+        row, record = self.fixture()
+        fallback = record | {'minimum_end': 25, 'maximum_end': 60, 'activity_defined': False,
+                             'sampling_policy': 'retain_original_uniform_endpoint'}
+        self.assertEqual(uniform_fallback_ids([row], [fallback], 25), {'n'})
+        self.assertEqual(uniform_fallback_ids([row], [record], 25), set())
+        for change in ({'minimum_end': 26}, {'maximum_end': 59}, {'activity_defined': True},
+                       {'sampling_policy': 'filter_source'}, {'sampling_policy': 'source_activity'}):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                uniform_fallback_ids([row], [fallback | change], 25)
 
 
 if __name__ == '__main__':

@@ -26,6 +26,7 @@ def main():
     if control['plan']['activity_stride'] != 4:
         raise ValueError('Expected one quarter of TTS negative windows')
     for key in ('main_sources_batches_sha256', 'main_unmodified_batches_sha256',
+                'main_uniform_fallback_batches_sha256', 'main_uniform_fallback_windows',
                 'auxiliary_batches_sha256', 'auxiliary_source_batches_sha256', 'engine_labels_batches_sha256',
                 'initial_weights_sha256', 'auxiliary_manifest_sha256', 'negative_activity_manifest_sha256',
                 'feature_inputs', 'parameters', 'training_sources', 'training_frames'):
@@ -46,6 +47,7 @@ def main():
         raise ValueError('New control does not reproduce retained model bytes')
     for side, complete in [(left, control), (right, treatment)]:
         for key in ('main_sources_batches_sha256', 'main_unmodified_batches_sha256',
+                    'main_uniform_fallback_batches_sha256', 'main_uniform_fallback_windows',
                     'auxiliary_source_batches_sha256', 'engine_labels_batches_sha256',
                     'negative_activity_manifest_sha256', 'tts_negative_endpoint_interval_counts'):
             side[key] = complete[key]
@@ -61,6 +63,7 @@ def main():
               'limits': ['Energy-span endpoint membership is not speech occupancy or phonetic truth; history can retain earlier speech outside that interval.',
                          'Keep both original joint and confidence-only diagnostic rows. The1%confuser gate is an additional research constraint, not Hi ESP parity.',
                          'Repeated synthetic views and reused validation do not prove real-user recall, latency or population false-wake equality.',
+                         'Undefined source-energy cases retain their exact original uniform endpoints, including environmental views; interval counts report them separately.',
                          'No new runtime VAD, detector policy, microphone/audio producer, AEC/AGC/FIFO or waveform processing.']}
     with args.report.open('x') as out:
         out.write(json.dumps(result, indent=2) + '\n')

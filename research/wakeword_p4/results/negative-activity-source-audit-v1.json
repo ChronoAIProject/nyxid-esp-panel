@@ -1,0 +1,67 @@
+{
+  "scope": "Audit original training-negative energy without scoring or dropping sources.",
+  "script_sha256": "bade760e4a29410d55be0c82d2af7403818695a4261ca6be5c131807492e714d",
+  "preparation_plan_sha256": "2be5fc334a650952fd884c2a09a1614c8f5f996c6317f6edf252601cc8523d08",
+  "v1_failure_sha256": "cb4b6ef9d08d7e732a0c7e03b459a826273873e69804f4bc265e2f87b50d9a57",
+  "all_source_hashes_checked": true,
+  "all_sources_training_negative_only": true,
+  "heldout_and_positive_disjoint": true,
+  "source_audio_unchanged": true,
+  "speaker_playback": false,
+  "microphone_access": false,
+  "accepted": false,
+  "manifest_sha256": "f6f54f8c9d186700768c5d049a1700c08ff1cf8c137526014ffef5b7ed3090b0",
+  "original_sources": 6353,
+  "feature_views": 25440,
+  "undefined_activity_sources": 2,
+  "undefined_activity_views": 8,
+  "all_zero_sources": 0,
+  "nonzero_below_rms_floor_sources": 2,
+  "affected_cohorts": [
+    {
+      "engine": "openai-tts",
+      "feature_directory": "head-features-environment-v2",
+      "views": 4
+    },
+    {
+      "engine": "openai-tts",
+      "feature_directory": "head-features-tts-v1",
+      "views": 4
+    }
+  ],
+  "affected_sources": [
+    {
+      "source_sha256": "3709085fe7853134b452d676bfbacbd6acf215c7bd840a28f328f3f64aa4c0c8",
+      "samples": 4800,
+      "seconds": 0.3,
+      "nonzero_samples": 89,
+      "sample_peak_absolute": 1,
+      "whole_source_rms": 0.13616778865306828,
+      "peak_10ms_rms": 0.6519202405202649,
+      "activity_threshold": 1.0,
+      "active_blocks": 0,
+      "activity_start_seconds": null,
+      "activity_stop_seconds": null,
+      "feature_views": 4
+    },
+    {
+      "source_sha256": "8e1e4be79af510deab79223a78b62655383b2136fb3401e7587861de2483cc75",
+      "samples": 4800,
+      "seconds": 0.3,
+      "nonzero_samples": 90,
+      "sample_peak_absolute": 1,
+      "whole_source_rms": 0.13693063937629152,
+      "peak_10ms_rms": 0.6471089552772392,
+      "activity_threshold": 1.0,
+      "active_blocks": 0,
+      "activity_start_seconds": null,
+      "activity_stop_seconds": null,
+      "feature_views": 4
+    }
+  ],
+  "limits": [
+    "No detector inference, text/pronunciation judgment, data filtering, label changes or fitting.",
+    "Undefined activity means no 10ms block reaches max(peak_RMS*.01,1); not necessarily all-zero PCM.",
+    "A follow-up policy must be frozen explicitly; v1 remains a failed preparation, not a training result."
+  ]
+}

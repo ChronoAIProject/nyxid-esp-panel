@@ -1151,3 +1151,35 @@ Verify the actual all-source hash and the remaining 116 histories per batch
 after the original shuffle. Twenty-five focused tests pass, including source/
 role/coverage/bound guards and preservation of the original RNG state, labels,
 source choices and every unscheduled history across the sampling change.
+
+V1 preparation at `6bf333f` **fails before training**: no 10 ms block meets
+the fixed RMS floor in two original OpenAI-TTS training negatives. The audit
+checks all 6353 original negative WAV hashes and all 25440 feature views;
+neither affected 0.3 s WAV is all-zero (sample peak1, peak block RMS below1).
+They account for eight original/environmental views. No sources, labels or
+waveforms are removed or changed. Public evidence is
+[`negative-activity-source-audit-v1.json`](../results/negative-activity-source-audit-v1.json)
+and [`negative-activity-preparation-failure-v1.json`](../results/negative-activity-preparation-failure-v1.json).
+The original preparation helper/plan are unchanged; no training or validation
+result is attributed to this failed v1 preparation.
+
+`plans/negative-activity-preparation-v2.json` explicitly binds that audit and
+failure before further preparation. `negative_activity_fallback.py` retains
+the **exact original uniform endpoint**, without consuming the separate
+activity RNG, whenever original source energy is undefined. This applies to
+every environmental view too. All other scheduled views use the original v1
+interval rule; full source/view identity coverage is required. Undefined cases
+are counted separately, with no claimed energy-span membership. Both arms
+also hash every fallback history to prove preservation. Twenty-nine focused
+tests pass, including mixed/undefined activity, full original ranges and RNG
+preservation. This explicit exception does not loosen the RMS rule, clamp
+invalid intervals or filter sources. No detector scores motivated it.
+
+```sh
+python research/wakeword_p4/embedding/negative_activity_fallback.py \
+  --data-root "$WAKE_DATA" \
+  --plan research/wakeword_p4/embedding/plans/negative-activity-preparation-v2.json \
+  --audit "$FROZEN_PRIVATE_TRAINING_SOURCE_AUDIT" \
+  --output "$FRESH_PRIVATE_ACTIVITY_MANIFEST_V2" \
+  --report "$FRESH_PRIVATE_ACTIVITY_PREPARATION_V2"
+```

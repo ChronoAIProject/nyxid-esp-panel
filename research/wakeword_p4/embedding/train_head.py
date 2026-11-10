@@ -16,6 +16,7 @@ import tensorflow as tf
 from ai_edge_litert.interpreter import Interpreter, OpResolverType
 from training_endpoints import endpoint_map
 from negative_activity import interval_map
+from negative_activity_fallback import uniform_fallback_ids
 
 HISTORY = 16
 MIN_END = 25  # First nine embeddings are cold; every sampled history is warm.
@@ -139,6 +140,7 @@ class Sampler:
         if mined is not None and negative_intervals:
             raise ValueError('Keep mining and source-activity interventions separate')
         self.activity = interval_map(rows, negative_intervals, MIN_END)
+        self.activity_fallback = uniform_fallback_ids(rows, negative_intervals, MIN_END)
         self.focus_negative_activity = focus_negative_activity
         self.activity_stride = activity_stride
         if focus_negative_activity and not self.activity:
@@ -177,7 +179,7 @@ class Sampler:
                 raise ValueError('Both mined negative categories must be populated')
 
     def batch(self):
-        examples, labels, draws, activity_mask = [], [], [], []
+        examples, labels, draws, activity_mask, fallback_mask = [], [], [], [], []
         for kind, count in [('positive', 32), ('tts_negative', 48), ('ambient_negative', 48)]:
             for _ in range(count):
                 if kind == 'ambient_negative':
@@ -201,11 +203,13 @@ class Sampler:
                     group = self.hard[(kind, engine)]
                     row, end = group[int(self.hard_rng.integers(len(group)))]
                 scheduled_activity = kind == 'tts_negative' and _ % self.activity_stride == 0
-                if self.focus_negative_activity and scheduled_activity:
+                uniform_fallback = kind == 'tts_negative' and row.get('id') in self.activity_fallback
+                if self.focus_negative_activity and scheduled_activity and not uniform_fallback:
                     low, high = self.activity[row['id']]
                     end = int(self.activity_rng.integers(low, high + 1))
                 draws.append((row.get('id', ''), row.get('source_sha256', ''), kind, end))
                 activity_mask.append(scheduled_activity)
+                fallback_mask.append(uniform_fallback)
                 examples.append(row['array'][end-HISTORY:end])
                 labels.append(kind == 'positive')
         x = np.asarray(examples, np.float32)[:, :, :, None]/128
@@ -213,6 +217,7 @@ class Sampler:
         order = self.rng.permutation(len(y))
         self.last_draws = [draws[index] for index in order]
         self.last_activity_mask = np.asarray(activity_mask, np.bool_)[order]
+        self.last_uniform_fallback_mask = np.asarray(fallback_mask, np.bool_)[order]
         return x[order], y[order]
 
 

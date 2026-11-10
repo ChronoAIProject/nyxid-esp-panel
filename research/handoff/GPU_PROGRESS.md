@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `463a544`; see the dated snapshots below.
+Latest observed GPU commit: `5dce765`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -766,3 +766,27 @@ source choices and all unscheduled/auxiliary/PTQ histories fixed; no new audio
 or teacher-score mining is used. Endpoint-span coverage is not speech occupancy.
 External playback stays paused; original speed, audio producer/AEC/AGC/FIFO
 and the dining-room production panel remain unchanged.
+
+### GPU snapshot through `5dce765`
+
+Read on 2026-11-11. V30 remains ongoing; two further v29 diagnostics do not
+change its original results. Reconstructing the Mandarin false-trigger stream
+from original WAVs reproduces the PCM and event. Its local 1.7 s context lies
+inside one sentence, rather than across a source splice. Replaying that sentence
+at 0/10/20 ms initial zero padding gives events/no event/events. This shows
+phase sensitivity in this case; it does not isolate the cause or justify
+discarding the original event or changing validation boundaries.
+
+A separate quantized-score mean audit fixes floating-point boundary rounding
+only as a diagnostic. At the three frozen v29 operating points it leaves all
+confuser/continuous event sequences unchanged. A few positive events advance
+one 30 ms step without changing event/interval-hit totals. It therefore cannot
+explain the false-trigger/recall problem, and is not yet MCU timing equivalence.
+The original v29 trigger and ongoing v30 are not silently rewritten.
+
+On Mac the quarter-TTS v1 preparation fails explicitly on two nonzero but
+sub-floor sources, covering eight original/environmental negative views.
+All 6353 original training-negative WAV hashes are audited without scoring.
+The new v2 preparation preserves those exact original uniform endpoints;
+it does not drop data or invent speech intervals. The original v1 helper,
+plan and failure provenance remain available. Playback stays paused.

@@ -88,6 +88,50 @@ class MiningComparabilityTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             Sampler(self.rows, 727, self.mined)
 
+    def test_undefined_activity_retains_exact_original_endpoints_and_rng(self):
+        intervals = [{key: row[key] for key in
+                      ('id', 'source_sha256', 'features_sha256', 'engine', 'variant', 'frames')} |
+                     {'feature_directory': row['_feature_directory'], 'minimum_end': 25, 'maximum_end': 60,
+                      'activity_defined': False, 'sampling_policy': 'retain_original_uniform_endpoint'}
+                     for row in self.rows if row['kind'] == 'tts' and not row['label']]
+        original = Sampler(self.rows, 741)
+        fallback = Sampler(self.rows, 741, negative_intervals=intervals, focus_negative_activity=True)
+        for _ in range(10):
+            x, y = original.batch()
+            other, labels = fallback.batch()
+            np.testing.assert_array_equal(x, other)
+            np.testing.assert_array_equal(y, labels)
+            self.assertEqual(original.last_draws, fallback.last_draws)
+            self.assertEqual(int(fallback.last_uniform_fallback_mask.sum()), 48)
+            self.assertEqual(original.rng.bit_generator.state, fallback.rng.bit_generator.state)
+            self.assertEqual(original.activity_rng.bit_generator.state, fallback.activity_rng.bit_generator.state)
+
+    def test_mixed_activity_fallback_preserves_all_ineligible_histories(self):
+        intervals = []
+        for row in self.rows:
+            if row['kind'] != 'tts' or row['label']:
+                continue
+            undefined = row['engine'] == 'a'
+            intervals.append({key: row[key] for key in
+                ('id', 'source_sha256', 'features_sha256', 'engine', 'variant', 'frames')} |
+                {'feature_directory': row['_feature_directory'], 'minimum_end': 25 if undefined else 45,
+                 'maximum_end': 60 if undefined else 50, 'activity_defined': not undefined,
+                 'sampling_policy': 'retain_original_uniform_endpoint' if undefined else 'source_activity'})
+        control = Sampler(self.rows, 741, negative_intervals=intervals)
+        treatment = Sampler(self.rows, 741, negative_intervals=intervals, focus_negative_activity=True)
+        for _ in range(10):
+            x, y = control.batch()
+            other, labels = treatment.batch()
+            np.testing.assert_array_equal(y, labels)
+            mask = ~treatment.last_activity_mask | treatment.last_uniform_fallback_mask
+            np.testing.assert_array_equal(x[mask], other[mask])
+            self.assertEqual([d[:3] for d in control.last_draws], [d[:3] for d in treatment.last_draws])
+            for same, original, actual in zip(mask, control.last_draws, treatment.last_draws):
+                if same:
+                    self.assertEqual(original, actual)
+                else:
+                    self.assertTrue(45 <= actual[3] <= 50)
+
     def endpoint_record(self, row):
         record = {key: row[key] for key in ('id', 'source_sha256', 'features_sha256', 'engine', 'variant')}
         record.update(feature_directory=row['_feature_directory'], old_keyword_end=row['keyword_end'],
