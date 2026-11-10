@@ -110,3 +110,39 @@ gh release view research-hey-nyx-20261110 \
 No weights were reconstructed, renamed as an approved architecture or flashed
 from metadata. Local training research can continue independently; none of
 the preceding numerical or synthetic reports establishes deployment readiness.
+
+## Frozen v30 intake
+
+`24c93258fbf2ce88e2f7b71d3219c29941dfafd8` contains the original v30
+training, expanded calibration and independent negative reports. The later
+`2b940fff128ff342f512b53929b606905ea9bb69` compares the official Hi ESP model
+against v30 on exactly the same 73 independent negative streams. On
+10.745014097 h of source PCM, v30 has 0 observed events (95% upper bound
+0.278802079/h) and official Hi ESP has 1 (upper bound 0.441494490/h). Both pass
+the fixed negative bound for this distribution. Neither these counts nor
+the reused synthetic positive proxy scores establish real-speaker parity.
+
+The existing build helper now accepts this precise `teacher60` export only
+with the original report bytes pinned in
+[`gpu-v30-runtime-v1.json`](../panel_wake_runtime/plans/gpu-v30-runtime-v1.json).
+No generic `teacher60` admission or changes to the detector/audio path are
+needed. Fetch the original files from that commit, use the original model
+weights, and generate a fixture using `prepare_runtime_selftest.py` on
+normal-speed synthetic mono PCM. The build requires the bound fixture for
+v30. As before, the development test must compare actual MCU output bytes,
+reset behavior and event steps; the host's convolution and device's
+arithmetic mean can differ at a floating-point threshold boundary.
+
+The training, calibration, preregistration and negative result bytes were
+verified against the profile. Twelve configuration tests pass, including
+rejection of modified reports and insufficient diagnostic outputs. On the
+existing local long335 model, the updated fixture generator verifies 2
+subgraphs and reproduces all 123 host output bytes over 59520 samples after
+reset. The legacy configuration accepts that actual model, calibration and
+fixture. The test fixture and model are not v30 substitutes.
+
+At this snapshot the GitHub research prerelease inventory contains no named
+GPU/v30 model or fixture asset, and no 54440-byte TFLite file was found under
+the local output and research worktree. The upstream branch publishes reports,
+but not the v30 model bytes in its tree. The v30 build and MCU runs still
+require the original binary; no board, speaker or microphone was accessed.

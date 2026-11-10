@@ -7,6 +7,9 @@ import struct
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
+
+import prepare_runtime
 
 
 class PrepareRuntime(unittest.TestCase):
@@ -113,6 +116,62 @@ class PrepareRuntime(unittest.TestCase):
             with self.subTest(size=len(fixture)):
                 self.assertNotEqual(self.run_prepare(fixture).returncode, 0)
                 self.assertFalse((self.root / "output").exists())
+
+    def test_unreviewed_teacher60_rejected_with_consistent_generic_reports(self):
+        self.training.update(architecture="teacher60", input_frames=150)
+        self.assert_rejected()
+
+    def test_gpu_profile_requires_exact_reports_and_informative_fixture(self):
+        # Exercise file generation only. These fixture bytes aren't an actual
+        # model, and the production profile is never substituted in a build.
+        profile = json.loads(prepare_runtime.GPU_PROFILE.read_bytes())
+        profile.update(model_sha256=self.digest, model_bytes=self.model.stat().st_size)
+        fields = ("model_sha256", "model_bytes", "architecture", "architecture_args",
+                  "selected_step", "validation_window_phase")
+        training = {key: profile[key] for key in fields} | {"context_frames": 150}
+        calibration = {"model_sha256": self.digest, "threshold": .91796875,
+                       "selected": {"english": {"threshold": .91796875}},
+                       "sliding_window": 5, "validation_only": True,
+                       "viable_operating_point": True, "independent_final_scored": False}
+        training_path = self.root / "training.json"
+        calibration_path = self.root / "calibration.json"
+        for path, data, key in ((training_path, training, "training_report_sha256"),
+                                (calibration_path, calibration, "calibration_sha256")):
+            path.write_text(json.dumps(data))
+            profile[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+        profile_path = self.root / "profile.json"
+        profile_path.write_text(json.dumps(profile))
+        output = self.root / "output"
+        argv = ["prepare_runtime.py", "--model", str(self.model), "--calibration", str(calibration_path),
+                "--output", str(output)]
+        fixture_path = self.root / "fixture.bin"
+        outputs = 55
+        samples = (outputs + 1) * 480
+        fixture = (b"NYXKWS01" + bytes.fromhex(self.digest) + struct.pack("<II", samples, outputs)
+                   + bytes(samples * 2) + bytes(range(outputs)))
+        with patch.object(prepare_runtime, "GPU_PROFILE", profile_path):
+            with patch.object(sys, "argv", argv), self.assertRaisesRegex(ValueError, "requires an exact-PCM"):
+                prepare_runtime.main()
+            self.assertFalse(output.exists())
+            argv += ["--selftest", str(fixture_path)]
+            with patch.object(sys, "argv", argv):
+                fixture_path.write_bytes(fixture[:-outputs] + bytes(outputs))
+                with self.assertRaisesRegex(ValueError, "varied outputs"):
+                    prepare_runtime.main()
+                self.assertFalse(output.exists())
+                fixture_path.write_bytes(fixture)
+                calibration_path.write_text(json.dumps(calibration) + "\n")
+                with self.assertRaisesRegex(ValueError, "original GPU v30"):
+                    prepare_runtime.main()
+                self.assertFalse(output.exists())
+                calibration_path.write_text(json.dumps(calibration))
+                prepare_runtime.main()
+        manifest = json.loads((output / "manifest.json").read_bytes())
+        self.assertEqual(manifest["architecture"], "teacher60")
+        self.assertEqual(manifest["threshold"], .91796875)
+        self.assertEqual(manifest["input_frames"], 150)
+        self.assertEqual(manifest["gpu_source_commit"], profile["source_commit"])
+        self.assertEqual((output / "wake_selftest.bin").read_bytes(), fixture)
 
 
 if __name__ == "__main__":

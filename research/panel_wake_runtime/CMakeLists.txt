@@ -99,7 +99,8 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
     "${NYX_PANEL_EXPERIMENTAL_WAKE_MODEL}"
     "${_model_directory}/training.json"
     "${NYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION}"
-    "${CMAKE_CURRENT_LIST_DIR}/prepare_runtime.py")
+    "${CMAKE_CURRENT_LIST_DIR}/prepare_runtime.py"
+    "${CMAKE_CURRENT_LIST_DIR}/plans/gpu-v30-runtime-v1.json")
 target_add_binary_data(${COMPONENT_LIB} "${_generated}/hey_nyx_model.bin" BINARY)
 if(NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST)
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST}")

@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `5dce765`; see the dated snapshots below.
+Latest observed GPU commit: `2b940ff`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -801,3 +801,26 @@ Its exported graph has the same size/interface; the representative float/INT8
 maximum error increases to.132689 and is not a numerical fidelity pass.
 No acoustic, board or reserved-final test is performed. Full grids, comparison
 checks and cached event replay are under the Mac results directory.
+
+### GPU snapshot through `2b940ff`
+
+V30's added AMI training background produces a 54440-byte model at frozen
+threshold 0.91796875. The development proxy macro hit fraction is 82.5521%,
+with 0 events across the 12.7897 h expanded development negatives. The
+subsequent independent read-speech test keeps the model and threshold fixed
+and completes 73/73 speakers. On 10.7450 h of verified identical PCM,
+Nyx v30 observes 0 events and official Hi ESP observes 1; the pooled
+one-sided 95% upper bounds are 0.278802/h and 0.441494/h respectively.
+The GPU result includes CRC, padding, source exposure and frozen detector
+checks. See `4090-v30-hiesp-independent-negative-comparison-v1.json` on
+that branch. This negative distribution passes both engines' fixed bound.
+Independent positive recall, end-of-word latency, deployment conditions and
+actual MCU/resource/call measurements remain open.
+
+The Mac worktree now validates the original frozen GPU training/calibration
+reports for opt-in P4 builds and requires a model-bound PCM fixture. The
+updated fixture generator has been exercised with the real legacy model;
+the GPU weights were not yet available locally or as a named release asset.
+See [GPU model handoff](GPU_MODEL_HANDOFF.md). No board or audio device was
+accessed. The Mac float/INT8 head investigation is separate from this GPU
+candidate and cannot establish numerical compatibility for v30.

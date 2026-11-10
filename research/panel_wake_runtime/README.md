@@ -69,6 +69,18 @@ diagnostic detector is destroyed before creating the live microphone detector;
 test audio never enters a call. A mismatch leaves wake unavailable and is
 reported in UART. Omit this option for ordinary acoustic/resource measurements.
 
+The frozen GPU `teacher60` v30 development build requires the self-test.
+Keep the original v30 `training.json` beside the exported model and pass the
+original `4090-v30-expanded-calibration.json` as `WAKE_CALIBRATION`. The
+[intake profile](plans/gpu-v30-runtime-v1.json) pins their bytes, the model
+bytes, the 150-frame context, threshold 0.91796875 and five-score window. No
+report contents need rewriting.
+The self-test must have varied output bytes and cover the complete context.
+The fixture generator checks both TFLite subgraphs against the existing P4
+operator list, validates the streaming tensors, and regenerates the frontend
+and output bytes after reset. These host checks do not prove board arithmetic
+or resource fit. See [GPU model handoff](../handoff/GPU_MODEL_HANDOFF.md).
+
 ## Temporary board test
 
 Use a USB-connected development board with a known MAC, current app ELF hash,
