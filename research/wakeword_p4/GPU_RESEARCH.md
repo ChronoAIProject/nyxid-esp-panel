@@ -2076,3 +2076,18 @@ results/4090-mfa-development-alignment-v1.json完整保留词/音素区间、
 复现脚本experiments/mfa_development_alignment.sh、CPU显式锁、
 模型下载器和输入/工具来源报告均已保存。后续需要独立质量核验，
 尤其字母词发音及短音素，才可决定可用于什么级别的时延比较。
+
+
+## 成熟实践复核及 MFA 平移失败（2026-11-10）
+
+一手依据及具体差距见 [BEST_PRACTICES_EVALUATION.md](BEST_PRACTICES_EVALUATION.md)，固定来源与响应哈希
+见 results/4090-best-practice-sources-v1.json。TTS 训练/MCU 流式/INT8 路线已有成熟实现，
+但不意味着任意新词自动达到商业引擎；上游也明确提醒定制模型仍需大量实验。
+优先使用代表性连续负音频、同误唤醒点比较、独立标注与冻结最终评测，
+不把更多训练步数、同数值阈值或自动能量端点当作质量证据。
+
+固定 500ms 零前缀与 20ms 容差，26/26 MFA 复跑完成；
+3 段末端/末音素边界超容差（-80、-30、-40ms）。
+最大 80ms，失败保留；没有改旧窗口、读唤醒分数或最终集。
+完整输入、对齐与审计见 results/4090-mfa-*shift500* / 4090-mfa-shift500-*。
+自动对齐尚不能视为音素真值，也未据此重新发布延迟胜负。

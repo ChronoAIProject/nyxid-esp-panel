@@ -1,3 +1,5 @@
+> 当前评测与标注复核见 [BEST_PRACTICES_EVALUATION.md](BEST_PRACTICES_EVALUATION.md)。下文保留历史状态：v25 已完成且失败，Hi ESP 配对评分已完成但端点只属代理；最新结论以 GPU_RESEARCH.md 及新复核为准。
+
 > 最新状态以本节为准，正文后续保留历史研究记录。
 >
 > 2026-11-10 再次在线核查 microWakeWord、openWakeWord、Howl 和乐鑫官方资料，均 HTTP 200；来源哈希见 `results/4090-best-practices-v25-sources.json`。

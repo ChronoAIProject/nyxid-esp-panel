@@ -1,0 +1,65 @@
+# 自定义唤醒词：成熟实践与当前研究差距
+
+调研日期：2026-11-10。直接检索并阅读八项一手项目文档/论文；不是新的模型验收结果。
+来源 URL、固定 Git revision、实际响应 SHA256 见
+`results/4090-best-practice-sources-v1.json`。网页 latest 地址会变化，Git 文档已固定版本。
+
+## 结论
+
+无需开发板即可用合成语音训练、导出和离线流式评估，这条路线已有成熟实现。
+目前不能说 Hey Nyx 已达到 Hi ESP。主要缺口是部署分布的数据覆盖、可相信的正例标注，
+以及独立且匹配误唤醒工作点的比较；不应继续只靠增加训练步数或调阈值判断进步。
+microWakeWord 上游也明确提醒：训练可用的新词仍需要大量实验，示例 notebook 的产物通常不可用。
+
+## 一手依据
+
+| 来源 | 实际建议/证据 | 对本项目的意义 |
+|---|---|---|
+| [microWakeWord](https://github.com/kahrendt/microWakeWord/blob/4665173cd35f1cff9a61e06fc427f124766c488e/README.md) | 16k 单声道；30ms 特征窗口、10ms 步进；MixConv 流式推理；先约束 ambient false accepts，再优化准确率；合成与真实 ambient 分开验证；INT8 导出。100ms 滑窗训练估计并不等同真实流式误唤醒。 | 保留当前适合 MCU 的路线；最终使用完整波形、实际状态和触发器复放。训练指标只用于选候选。 |
+| [openWakeWord](https://github.com/dscripka/openWakeWord/blob/368c03716d1e92591906a84949bc477f3a834455/README.md) | 支持 100% TTS 正例训练；建议至少数千正例；其内置模型用了约 30,000 小时语音/噪声/音乐负数据。评测使用真实环境正例或 5–10dB SNR+RIR 增强，DiPCo 连续远场对话评估误唤醒。 | TTS 可行，但重复同一批合成声音无法替代人群与负音频覆盖；30,000 小时是该项目实例，不是本项目必须照抄的最低配额。 |
+| [Picovoice benchmark](https://github.com/Picovoice/wake-word-benchmark/blob/84919190fb1891bf0936dcb577d9268e467f876f/README.md) | 在相同误唤醒率（其图为每 10 小时 1 次）比较漏检；使用 50 多位说话人正例、LibriSpeech 负例及 10dB DEMAND 噪声。 | 不能对比相同数值阈值或孤立 accuracy；每个引擎单独标定工作点，在相同音频上比较。该厂商基准也不能自动代表家庭分布。 |
+| [Google kws_streaming](https://github.com/google-research/google-research/blob/03ac4dca9776084a3a002d4513a55dc7348f680e/kws_streaming/README.md) | 区分非流式训练、内部/外部状态流式推理；分别评估 TF、TFLite、量化、reset0/reset1；保持状态与每段重置语义不同。 | 检查实际部署状态、相位和量化；每窗口重置的准确率不能代替连续运行。无需为此换成大模型。 |
+| [Hey Snips 数据说明](https://github.com/sonos/keyword-spotting-research-datasets/blob/00c05491c139d31f816b2b8d4077072693018031/README.md) | 同域正负录音覆盖口音和环境；开发/测试正例人工检查错读；其中 Dataset 2 明确按不同用户划分 train/dev/test。数据需要申请且有使用条款。 | 保持说话人/来源隔离；意图文本和 ASR 字符串不等于正确发音。当前无需申请该数据来训练另一个目标词。 |
+| [Coucke et al., ICASSP 2019](https://arxiv.org/abs/1811.07684) | 小型膨胀卷积、门控及关键词末端的帧标签，用于端到端唤醒检测。 | 末端标注是任务的一部分，不宜把能量消失点默认为关键词末音素。论文也不证明本项目的能量规则正确。 |
+| [MFA 官方评测](https://montreal-forced-aligner.readthedocs.io/en/latest/user_guide/implementations/alignment_evaluation.html) | 自动对齐与 gold-standard TextGrid 比较，评估音素边界与 phone error。 | MFA 是自动候选标注工具，需独立参考核验；对齐成功、似然高、平移稳定均不等于音素边界正确。 |
+| [Espressif WakeNet](https://docs.espressif.com/projects/esp-sr/en/latest/esp32/wake_word_engine/README.html) | 16k PCM16、卷积模型及多帧分数平滑后阈值触发。 | 比较的是带触发策略的完整系统。现有 QEMU 实际 WakeNet9 复放可用于算法比较；不代表 P4 实测周期、麦克风前端或真实硬件功耗。 |
+
+openWakeWord 还提供 VAD/降噪及针对已知说话人的二级 verifier：
+VAD 主要减少非语音误触，不能据此解决连续英语对话误触；已知说话人 verifier 会牺牲新用户泛化。
+因此暂不把这些开关当作当前饱和语音误触的通用解法。
+其共享预训练 embedding 路线可作服务器侧参照，但上游不推荐直接用于 ESP32-S3；
+当前 MCU 目标继续采用 microWakeWord，不因文档指标更高就替换部署架构。
+
+## 按证据执行的优先次序
+
+1. **先修正评测语义。** 保留原有代理窗口历史结果及警告。将“目标片段内是否触发”的开发诊断
+   与“相对真实关键词末端的时延”分开报告；前者不能证明在指定时间窗正确识别。
+   不从模型触发时间倒推窗口。端点需独立于分类器，保留错读与边界不确定性。
+   没有核验参考之前不发布音素延迟优胜结论。不同目标词的比较也有固有词汇难度差异，不能解释为纯架构排名。
+2. **完成现有单变量 v27。** 对话混音只使用既有训练 S02/S04；不挪用验证/最终音频。
+   记录原工作点、扩展负语料工作点及所有失败；不看到某一子集改善就改验收条件。
+3. **优先覆盖真实背景分布。** 后续扩展应增加独立对话、电视/音乐、口音、房间与录音条件，
+   对关键词和混淆词都做对话/SNR/RIR 增强；按会话/人/来源先划分再增强。
+   同一会话增加通道只增加声学条件，不增加独立小时或说话人数。
+   难负例仅从训练集挖掘，并限制采样份额，避免 v25 那样替换后整体退化。
+4. **阈值与统计。** 验证集扫描完整系统的 FRR–FA/hour 曲线；分别列语料事件数、有效小时和置信上界。
+   当前零事件候选门槛与 Hi ESP 事件预算诊断保持各自原定义。
+   同误触比较不能被“所有子语料零事件”取代；相同有限样本事件数也不证明总体误触率相等。
+   在固定工作点、Poisson 假设下，零事件单侧 95% 上界为 `-ln(.05)/hours`，
+   要低于 0.5/h 至少需约 5.992 小时；这是曝光下限，不补偿分布失配、相关性或反复调参。
+5. **冻结后才做最终检验。** 现有独立最终负例与配对合成集继续不评分。
+   目前缺少真实目标人群正例及电视/远场验收证据；全模拟结果只能支撑限定的离线结论。
+   不需要接板才能推进这些工作，但麦克风/AFE 和硬件资源结论需要相应实测证据。
+
+## 本次独立标注诊断
+
+给既有 24 条目标开发 WAV 及 2 条官方控制加精确 8000 个零样本（500ms）；
+原始 PCM 完整保留，MFA 模型、文本及配置不变，预先固定 20ms 容差。
+26/26 完成。扣除新增静音后，3/26 末端超容差，偏差分别 -80、-30、-40ms；
+末音素边界同样 3 段超容差。其余样本保留，不筛选、不改旧窗口，也未读唤醒分数或最终集。
+这只检验平移一致性，不能替代金标准确性评估。实际证据：
+`results/4090-mfa-shift500-stability-v1.json`、完整新对齐报告及输入 manifest。
+
+复现：先使用 `training/prepare_alignment_shift.py` 生成静音平移输入，
+用与基础诊断相同的 MFA 环境执行 align，再用 `collect_alignment_development.py` 收集，
+最后执行 `audit_alignment_shift.py --help` 所列审计参数。

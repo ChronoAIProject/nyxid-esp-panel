@@ -1,0 +1,3192 @@
+{
+  "role": "Detector-independent automatic MFA development alignments, not phonetic ground truth",
+  "source_sha256": "57d396badb72cdefcb1952b0c93213137294a438a0b91de9097e8f3b1bc9d371",
+  "input_manifest_sha256": "0f304c3705c5426f5e5cc4d78606842b78b5a36706fe91a097ac92e20d096c75",
+  "analysis_sha256": "01c82352c3576f19f10c5adcf474dee9b9708a1adc778aa0517948faf438d3ed",
+  "mfa_version": "3.4.3",
+  "model_sources": [
+    {
+      "kind": "acoustic",
+      "tag": "acoustic-english_us_arpa-v3.0.0",
+      "asset_id": 153269118,
+      "url": "https://github.com/MontrealCorpusTools/mfa-models/releases/download/acoustic-english_us_arpa-v3.0.0/english_us_arpa.zip",
+      "bytes": 91928208,
+      "sha256": "d35ce271ded357d833d2f4b8d1041dc3748b9538567ba13f2c697f4e4126711b",
+      "metadata_sha256": "d004e99b3058f472c9efbef80a1981fa69f2c5d356482b9f20efdd56f0446265",
+      "upstream_digest": null
+    },
+    {
+      "kind": "dictionary",
+      "tag": "dictionary-english_us_arpa-v3.0.0",
+      "asset_id": 153269572,
+      "url": "https://github.com/MontrealCorpusTools/mfa-models/releases/download/dictionary-english_us_arpa-v3.0.0/english_us_arpa.dict",
+      "bytes": 7186498,
+      "sha256": "e8c6c7b036ae2b7c78d2768b8dc6b1f9359175b842956d00b48c53c9c332e6b0",
+      "metadata_sha256": "1c464ed1b71ea4e420c5946b8a2be7533a70fa02bd3bb92306b938c063d48dec",
+      "upstream_digest": null
+    }
+  ],
+  "records": [
+    {
+      "source": {
+        "path": "af_sky/paired_0.9-0.wav",
+        "source_path": "af_sky/0.9-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "569ca96a0a9eaa463c3263362eb3a8994b9b1da2bb42d7de0a9caa2b21b59563",
+        "pcm_sha256": "fd73667fa20de1aa2baecbbb908662407e18566f4cc3088533018b1fd01b9ca7",
+        "samples": 71232,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "c9fc58948c8dabb1682196871bf260d7af119ff5395798e31f694bbeaae48997",
+        "parent_pcm_sha256": "e2efbd4c5db961014488e02adb5aa67a7f30f6a74d1e537792d6feb0ad238452",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "b8f4fb33460aa470b951c3f66778ea1c776b0bf3411d45e2435b4e876c7e6388",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.47,
+            "label": ""
+          },
+          {
+            "start": 2.47,
+            "end": 2.76,
+            "label": "hey"
+          },
+          {
+            "start": 2.76,
+            "end": 3.28,
+            "label": "nicks"
+          },
+          {
+            "start": 3.28,
+            "end": 4.452,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.47,
+            "label": ""
+          },
+          {
+            "start": 2.47,
+            "end": 2.65,
+            "label": "HH"
+          },
+          {
+            "start": 2.65,
+            "end": 2.76,
+            "label": "EY1"
+          },
+          {
+            "start": 2.76,
+            "end": 2.85,
+            "label": "N"
+          },
+          {
+            "start": 2.85,
+            "end": 3.01,
+            "label": "IH1"
+          },
+          {
+            "start": 3.01,
+            "end": 3.09,
+            "label": "K"
+          },
+          {
+            "start": 3.09,
+            "end": 3.28,
+            "label": "S"
+          },
+          {
+            "start": 3.28,
+            "end": 4.452,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-0",
+        "begin": "0.0",
+        "end": "4.452",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-41.39733146067416",
+        "speech_log_likelihood": "-81.45782661437988",
+        "phone_duration_deviation": "1.163762757984346",
+        "max_running_short_interval": "0",
+        "snr": "23.646743592983675",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.47,
+      "automatic_word_end_seconds": 3.28,
+      "automatic_last_phone": {
+        "start": 3.09,
+        "end": 3.28,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "af_sky/paired_0.9-1.wav",
+        "source_path": "af_sky/0.9-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "64b73cda2fe6790251174a1a64ab86d354df398ea2482740a9a0cbbac88241ba",
+        "pcm_sha256": "1c9fe3480bfcd33f232501d262962f6c4deaf71d6c48d42c1c83f9c36048d3e4",
+        "samples": 82496,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "c4f232ebcf2e038616f4c89c3db0da5d638b80b1f17194d466355dea166ed568",
+        "parent_pcm_sha256": "3ec17af1b3b570b201d570d29ef5e4ae014cd716e814ff6645d3bb4d8b1625ff",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "7cba885fc34611dae0d38526793f8a52d499757471e54bc0b811e2ff649ee889",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.45,
+            "label": ""
+          },
+          {
+            "start": 2.45,
+            "end": 2.87,
+            "label": "hi"
+          },
+          {
+            "start": 2.87,
+            "end": 3.0,
+            "label": ""
+          },
+          {
+            "start": 3.0,
+            "end": 3.12,
+            "label": "e"
+          },
+          {
+            "start": 3.12,
+            "end": 3.43,
+            "label": "s"
+          },
+          {
+            "start": 3.43,
+            "end": 3.76,
+            "label": "p"
+          },
+          {
+            "start": 3.76,
+            "end": 5.156,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.45,
+            "label": ""
+          },
+          {
+            "start": 2.45,
+            "end": 2.84,
+            "label": "HH"
+          },
+          {
+            "start": 2.84,
+            "end": 2.87,
+            "label": "AY1"
+          },
+          {
+            "start": 2.87,
+            "end": 3.0,
+            "label": ""
+          },
+          {
+            "start": 3.0,
+            "end": 3.12,
+            "label": "IY1"
+          },
+          {
+            "start": 3.12,
+            "end": 3.17,
+            "label": "EH1"
+          },
+          {
+            "start": 3.17,
+            "end": 3.43,
+            "label": "S"
+          },
+          {
+            "start": 3.43,
+            "end": 3.55,
+            "label": "P"
+          },
+          {
+            "start": 3.55,
+            "end": 3.76,
+            "label": "IY1"
+          },
+          {
+            "start": 3.76,
+            "end": 5.156,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-1",
+        "begin": "0.0",
+        "end": "5.156",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-44.105003179505815",
+        "speech_log_likelihood": "-79.67852456229073",
+        "phone_duration_deviation": "3.1044590833244623",
+        "max_running_short_interval": "0",
+        "snr": "14.31273234011142",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.45,
+      "automatic_word_end_seconds": 3.76,
+      "automatic_last_phone": {
+        "start": 3.55,
+        "end": 3.76,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "af_sky/paired_1.0-0.wav",
+        "source_path": "af_sky/1.0-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "e008bd32dbb2c0c9a33c5e85508763a033528939544f62275a1a5d44de88f387",
+        "pcm_sha256": "aee04bbb1c38965a826f390219de39f7cb52198def58b594f8e5b7b174600305",
+        "samples": 69867,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "b725dc4ddce999491fb76045167666676b36df5fb871bf69d28b5e5ab9a11cdb",
+        "parent_pcm_sha256": "c0212d6cadf6960c2e7c2a4994e2d507b8ad0e779496031e7bb52d65f77ff613",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "9d58e8171bd9e9db3934bb2c2b3f7f021f8e03f7553598f7fba2158d911adedc",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.47,
+            "label": ""
+          },
+          {
+            "start": 2.47,
+            "end": 2.71,
+            "label": "hey"
+          },
+          {
+            "start": 2.71,
+            "end": 3.19,
+            "label": "nicks"
+          },
+          {
+            "start": 3.19,
+            "end": 4.366688,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.47,
+            "label": ""
+          },
+          {
+            "start": 2.47,
+            "end": 2.58,
+            "label": "HH"
+          },
+          {
+            "start": 2.58,
+            "end": 2.71,
+            "label": "EY1"
+          },
+          {
+            "start": 2.71,
+            "end": 2.8,
+            "label": "N"
+          },
+          {
+            "start": 2.8,
+            "end": 2.93,
+            "label": "IH1"
+          },
+          {
+            "start": 2.93,
+            "end": 3.02,
+            "label": "K"
+          },
+          {
+            "start": 3.02,
+            "end": 3.19,
+            "label": "S"
+          },
+          {
+            "start": 3.19,
+            "end": 4.366688,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-0",
+        "begin": "0.0",
+        "end": "4.3666875",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-40.129567720251714",
+        "speech_log_likelihood": "-81.76261138916016",
+        "phone_duration_deviation": "1.9825511632820099",
+        "max_running_short_interval": "0",
+        "snr": "23.184168208891162",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.47,
+      "automatic_word_end_seconds": 3.19,
+      "automatic_last_phone": {
+        "start": 3.02,
+        "end": 3.19,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "af_sky/paired_1.0-1.wav",
+        "source_path": "af_sky/1.0-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "23186f39d3f9583c60078dc6f1b6af7abce9769d538d138390ae6914fd37475b",
+        "pcm_sha256": "c56ffa38869dc96776e413f23958db2e8e6f3ba171c5f1dd5f0c76f866c0174e",
+        "samples": 79424,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "779ebcd151d47f694478b8a5610566e229fb980edc11caad5d3335ef333e9afd",
+        "parent_pcm_sha256": "f33bfd4cfaf47381f19bf98c7e7e0d90da5c216a17e341728ef2b9df46fd6985",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "e1ae44099490f71e0a674e8a4c840f2b7e00379e005f4ea07ff71a82f25cc52c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.44,
+            "label": ""
+          },
+          {
+            "start": 2.44,
+            "end": 2.92,
+            "label": "hi"
+          },
+          {
+            "start": 2.92,
+            "end": 3.02,
+            "label": "e"
+          },
+          {
+            "start": 3.02,
+            "end": 3.28,
+            "label": "s"
+          },
+          {
+            "start": 3.28,
+            "end": 3.35,
+            "label": ""
+          },
+          {
+            "start": 3.35,
+            "end": 3.58,
+            "label": "p"
+          },
+          {
+            "start": 3.58,
+            "end": 4.964,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.44,
+            "label": ""
+          },
+          {
+            "start": 2.44,
+            "end": 2.89,
+            "label": "HH"
+          },
+          {
+            "start": 2.89,
+            "end": 2.92,
+            "label": "AY1"
+          },
+          {
+            "start": 2.92,
+            "end": 3.02,
+            "label": "IY1"
+          },
+          {
+            "start": 3.02,
+            "end": 3.15,
+            "label": "EH1"
+          },
+          {
+            "start": 3.15,
+            "end": 3.28,
+            "label": "S"
+          },
+          {
+            "start": 3.28,
+            "end": 3.35,
+            "label": ""
+          },
+          {
+            "start": 3.35,
+            "end": 3.4,
+            "label": "P"
+          },
+          {
+            "start": 3.4,
+            "end": 3.58,
+            "label": "IY1"
+          },
+          {
+            "start": 3.58,
+            "end": 4.964,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-1",
+        "begin": "0.0",
+        "end": "4.964",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-43.16179435483871",
+        "speech_log_likelihood": "-79.70212772914341",
+        "phone_duration_deviation": "0.8833420888939099",
+        "max_running_short_interval": "0",
+        "snr": "15.82596028479693",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.44,
+      "automatic_word_end_seconds": 3.58,
+      "automatic_last_phone": {
+        "start": 3.4,
+        "end": 3.58,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "af_sky/paired_1.1-0.wav",
+        "source_path": "af_sky/1.1-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "01e874233f3627a25a52d77871c76799f2eb1c924f6a2962e1ad2aa3c33bc494",
+        "pcm_sha256": "e89358fc6fffe40835c96196ea6d893971e9a2edf1ae3fe3e4d6aa4708016438",
+        "samples": 68843,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "60b47ffb0f9f4a53019f8f5061ff542e5dc39edfca66662fe02c0f4d487b55eb",
+        "parent_pcm_sha256": "ce752d852e396b214384eb8875178e82f7e13735989fa133b4bb055d0e179ecb",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "40123941d2b4932c4801498b7096bab49f5218dc5dc07bfc3424394a732b0dee",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.44,
+            "label": ""
+          },
+          {
+            "start": 2.44,
+            "end": 2.68,
+            "label": "hey"
+          },
+          {
+            "start": 2.68,
+            "end": 3.17,
+            "label": "nicks"
+          },
+          {
+            "start": 3.17,
+            "end": 4.302688,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.44,
+            "label": ""
+          },
+          {
+            "start": 2.44,
+            "end": 2.55,
+            "label": "HH"
+          },
+          {
+            "start": 2.55,
+            "end": 2.68,
+            "label": "EY1"
+          },
+          {
+            "start": 2.68,
+            "end": 2.77,
+            "label": "N"
+          },
+          {
+            "start": 2.77,
+            "end": 2.91,
+            "label": "IH1"
+          },
+          {
+            "start": 2.91,
+            "end": 2.99,
+            "label": "K"
+          },
+          {
+            "start": 2.99,
+            "end": 3.17,
+            "label": "S"
+          },
+          {
+            "start": 3.17,
+            "end": 4.302688,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-0",
+        "begin": "0.0",
+        "end": "4.3026875",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-39.6933957122093",
+        "speech_log_likelihood": "-81.17713864644368",
+        "phone_duration_deviation": "1.163762757984346",
+        "max_running_short_interval": "0",
+        "snr": "27.217294247281284",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.44,
+      "automatic_word_end_seconds": 3.17,
+      "automatic_last_phone": {
+        "start": 2.99,
+        "end": 3.17,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "af_sky/paired_1.1-1.wav",
+        "source_path": "af_sky/1.1-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "273406a7470e819e77a1e193cbe09b2e940f4b885c8e89d3a7a6412f17389ea0",
+        "pcm_sha256": "72ba53f8df2ab84c1e8955b18436f25fe61cb61361c124b4b907dfae97f1d32d",
+        "samples": 77376,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "a52315d45a409e519866203cc95be7e7b6ac3efb8f03100ddeb2c050a4aed3aa",
+        "parent_pcm_sha256": "c319fd9c05565d815b35ae99be3896941f8631ec4ae3e01a2021c73dfbdebf4a",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "73530edc4918823f4744512da774c5543a13e4585d825f20fe40ef34682e99b4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.43,
+            "label": ""
+          },
+          {
+            "start": 2.43,
+            "end": 2.93,
+            "label": "hi"
+          },
+          {
+            "start": 2.93,
+            "end": 2.96,
+            "label": "e"
+          },
+          {
+            "start": 2.96,
+            "end": 3.01,
+            "label": ""
+          },
+          {
+            "start": 3.01,
+            "end": 3.21,
+            "label": "s"
+          },
+          {
+            "start": 3.21,
+            "end": 3.27,
+            "label": ""
+          },
+          {
+            "start": 3.27,
+            "end": 3.48,
+            "label": "p"
+          },
+          {
+            "start": 3.48,
+            "end": 4.836,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.43,
+            "label": ""
+          },
+          {
+            "start": 2.43,
+            "end": 2.9,
+            "label": "HH"
+          },
+          {
+            "start": 2.9,
+            "end": 2.93,
+            "label": "AY1"
+          },
+          {
+            "start": 2.93,
+            "end": 2.96,
+            "label": "IY1"
+          },
+          {
+            "start": 2.96,
+            "end": 3.01,
+            "label": ""
+          },
+          {
+            "start": 3.01,
+            "end": 3.08,
+            "label": "EH1"
+          },
+          {
+            "start": 3.08,
+            "end": 3.21,
+            "label": "S"
+          },
+          {
+            "start": 3.21,
+            "end": 3.27,
+            "label": ""
+          },
+          {
+            "start": 3.27,
+            "end": 3.32,
+            "label": "P"
+          },
+          {
+            "start": 3.32,
+            "end": 3.48,
+            "label": "IY1"
+          },
+          {
+            "start": 3.48,
+            "end": 4.836,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-1",
+        "begin": "0.0",
+        "end": "4.836",
+        "speaker": "af_sky",
+        "overall_log_likelihood": "-42.46518675748967",
+        "speech_log_likelihood": "-80.34471893310547",
+        "phone_duration_deviation": "2.254834928909998",
+        "max_running_short_interval": "0",
+        "snr": "15.06674940287744",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.43,
+      "automatic_word_end_seconds": 3.48,
+      "automatic_last_phone": {
+        "start": 3.32,
+        "end": 3.48,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_0.9-0.wav",
+        "source_path": "am_liam/0.9-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "7eb575a6535d6ea57295b6d876723396e81ebbdb3f8ff0b8eee79a6cf946cf5b",
+        "pcm_sha256": "e0a3e1f033840cd71ab0cf994bdd83ea6181241ec7d7ff103e102c0ba32b4bdc",
+        "samples": 69526,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "98156ec23498f7e63739b18b30f83338bb13f1d45ef2eeb1f338934ddd1547a2",
+        "parent_pcm_sha256": "692d0343b8b90c0da7da6010f2bc89f989dd5b4d1e1aad9328be23a23120a8d9",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "36b8fbacba98688abc331e4a74e5e60136c93350cb84954529b9f6ec8da6760c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.66,
+            "label": "hey"
+          },
+          {
+            "start": 2.66,
+            "end": 2.87,
+            "label": ""
+          },
+          {
+            "start": 2.87,
+            "end": 3.1,
+            "label": "nicks"
+          },
+          {
+            "start": 3.1,
+            "end": 4.345375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.49,
+            "label": "HH"
+          },
+          {
+            "start": 2.49,
+            "end": 2.66,
+            "label": "EY1"
+          },
+          {
+            "start": 2.66,
+            "end": 2.87,
+            "label": ""
+          },
+          {
+            "start": 2.87,
+            "end": 2.9,
+            "label": "N"
+          },
+          {
+            "start": 2.9,
+            "end": 2.95,
+            "label": "IH1"
+          },
+          {
+            "start": 2.95,
+            "end": 3.01,
+            "label": "K"
+          },
+          {
+            "start": 3.01,
+            "end": 3.1,
+            "label": "S"
+          },
+          {
+            "start": 3.1,
+            "end": 4.345375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-0",
+        "begin": "0.0",
+        "end": "4.345375",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-42.39375897988506",
+        "speech_log_likelihood": "-90.80250295003255",
+        "phone_duration_deviation": "2.9142843521784036",
+        "max_running_short_interval": "0",
+        "snr": "10.513607479937875",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.33,
+      "automatic_word_end_seconds": 3.1,
+      "automatic_last_phone": {
+        "start": 3.01,
+        "end": 3.1,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_0.9-1.wav",
+        "source_path": "am_liam/0.9-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "68b87ab784bb9939669facb262006527bd6fc359f18750b3b958dc5f7d1a1f52",
+        "pcm_sha256": "0be3c47ad208d669c2fe4f4506ee6f96abc84af725e2bd7c578fd96704e26b44",
+        "samples": 79083,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "85ce30b0897405661a2644bec4b26caf82cce98a8ce435428a69152e0743d857",
+        "parent_pcm_sha256": "62217b36c46edaa451cfe95e335239c9ac68d54fff0ce8a72da9f404941928b5",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "82053caf2bc2f3f28d0622493c36782bdb6556ef796b2638087c716ffa8920c7",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.7,
+            "label": "hi"
+          },
+          {
+            "start": 2.7,
+            "end": 2.9,
+            "label": "e"
+          },
+          {
+            "start": 2.9,
+            "end": 3.26,
+            "label": "s"
+          },
+          {
+            "start": 3.26,
+            "end": 3.33,
+            "label": ""
+          },
+          {
+            "start": 3.33,
+            "end": 3.62,
+            "label": "p"
+          },
+          {
+            "start": 3.62,
+            "end": 4.942687,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.67,
+            "label": "HH"
+          },
+          {
+            "start": 2.67,
+            "end": 2.7,
+            "label": "AY1"
+          },
+          {
+            "start": 2.7,
+            "end": 2.9,
+            "label": "IY1"
+          },
+          {
+            "start": 2.9,
+            "end": 2.94,
+            "label": "EH1"
+          },
+          {
+            "start": 2.94,
+            "end": 3.26,
+            "label": "S"
+          },
+          {
+            "start": 3.26,
+            "end": 3.33,
+            "label": ""
+          },
+          {
+            "start": 3.33,
+            "end": 3.38,
+            "label": "P"
+          },
+          {
+            "start": 3.38,
+            "end": 3.62,
+            "label": "IY1"
+          },
+          {
+            "start": 3.62,
+            "end": 4.942687,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-1",
+        "begin": "0.0",
+        "end": "4.9426875",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-45.17310855263158",
+        "speech_log_likelihood": "-79.35060664585659",
+        "phone_duration_deviation": "1.950829579954627",
+        "max_running_short_interval": "0",
+        "snr": "15.304804785745423",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.33,
+      "automatic_word_end_seconds": 3.62,
+      "automatic_last_phone": {
+        "start": 3.38,
+        "end": 3.62,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_1.0-0.wav",
+        "source_path": "am_liam/1.0-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "7024ee23c6c69e6c41a7b7427d9dc89a92b6e5c6c1513df886cfc4987d847e6a",
+        "pcm_sha256": "38555c8f5cc69ac99a8f865aeb2f264be382717b61a22d17f2e9f8059f932062",
+        "samples": 68160,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "718b52b8f5a50639e848e2668ad58c73f1bac557f13bbad0047f23101810e4bd",
+        "parent_pcm_sha256": "3af77645648f405924164de133a58a315e65ef6e108e83df30c091099eefe629",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "2d0526c0071dffcd2c33566d4f380c45fe65e1b195ddfd379052613abad4bfa3",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.37,
+            "label": ""
+          },
+          {
+            "start": 2.37,
+            "end": 2.61,
+            "label": "hey"
+          },
+          {
+            "start": 2.61,
+            "end": 2.69,
+            "label": ""
+          },
+          {
+            "start": 2.69,
+            "end": 3.03,
+            "label": "nicks"
+          },
+          {
+            "start": 3.03,
+            "end": 4.26,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.37,
+            "label": ""
+          },
+          {
+            "start": 2.37,
+            "end": 2.46,
+            "label": "HH"
+          },
+          {
+            "start": 2.46,
+            "end": 2.61,
+            "label": "EY1"
+          },
+          {
+            "start": 2.61,
+            "end": 2.69,
+            "label": ""
+          },
+          {
+            "start": 2.69,
+            "end": 2.72,
+            "label": "N"
+          },
+          {
+            "start": 2.72,
+            "end": 2.87,
+            "label": "IH1"
+          },
+          {
+            "start": 2.87,
+            "end": 2.93,
+            "label": "K"
+          },
+          {
+            "start": 2.93,
+            "end": 3.03,
+            "label": "S"
+          },
+          {
+            "start": 3.03,
+            "end": 4.26,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-0",
+        "begin": "0.0",
+        "end": "4.26",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-41.10270870011737",
+        "speech_log_likelihood": "-89.2822494506836",
+        "phone_duration_deviation": "1.0969537916850118",
+        "max_running_short_interval": "0",
+        "snr": "13.48725627202499",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.37,
+      "automatic_word_end_seconds": 3.03,
+      "automatic_last_phone": {
+        "start": 2.93,
+        "end": 3.03,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_1.0-1.wav",
+        "source_path": "am_liam/1.0-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "818d15f6c69008e12636a61dc7e498d29d8fcfabc6c3cef734ca8e82145e7ff9",
+        "pcm_sha256": "89b3a8a657861f3f85b83c1e5264cdb04d327efa090a31db6e046d30adda5478",
+        "samples": 77035,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "d1b099c36867b29173863305870e0fada057ccf0794060da09b65223b82bf6a9",
+        "parent_pcm_sha256": "85f4c581dcfb1c4499046ee6eaa12c56b8de143387f0284e5ca491ebd9d110b3",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "6fb9d089fb6f3b7c8e2cd769f0980d30f1f49978dce0cf125775e10188e24c32",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.32,
+            "label": ""
+          },
+          {
+            "start": 2.32,
+            "end": 3.0,
+            "label": "hi"
+          },
+          {
+            "start": 3.0,
+            "end": 3.03,
+            "label": "e"
+          },
+          {
+            "start": 3.03,
+            "end": 3.18,
+            "label": "s"
+          },
+          {
+            "start": 3.18,
+            "end": 3.24,
+            "label": ""
+          },
+          {
+            "start": 3.24,
+            "end": 3.49,
+            "label": "p"
+          },
+          {
+            "start": 3.49,
+            "end": 4.814687,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.32,
+            "label": ""
+          },
+          {
+            "start": 2.32,
+            "end": 2.97,
+            "label": "HH"
+          },
+          {
+            "start": 2.97,
+            "end": 3.0,
+            "label": "AY1"
+          },
+          {
+            "start": 3.0,
+            "end": 3.03,
+            "label": "IY1"
+          },
+          {
+            "start": 3.03,
+            "end": 3.06,
+            "label": "EH1"
+          },
+          {
+            "start": 3.06,
+            "end": 3.18,
+            "label": "S"
+          },
+          {
+            "start": 3.18,
+            "end": 3.24,
+            "label": ""
+          },
+          {
+            "start": 3.24,
+            "end": 3.29,
+            "label": "P"
+          },
+          {
+            "start": 3.29,
+            "end": 3.49,
+            "label": "IY1"
+          },
+          {
+            "start": 3.49,
+            "end": 4.814687,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-1",
+        "begin": "0.0",
+        "end": "4.8146875",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-44.55248262084199",
+        "speech_log_likelihood": "-85.07752009800502",
+        "phone_duration_deviation": "2.254834928909998",
+        "max_running_short_interval": "0",
+        "snr": "15.09286065732593",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.32,
+      "automatic_word_end_seconds": 3.49,
+      "automatic_last_phone": {
+        "start": 3.29,
+        "end": 3.49,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_1.1-0.wav",
+        "source_path": "am_liam/1.1-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "02db80ece7013e12dacf8c4e9d4708ca1194aea86d85fbe429ab49b895581d17",
+        "pcm_sha256": "f9252065c53365d08040a5b71f67f8a969f9fa6907cde88dd8fd541e79978d5f",
+        "samples": 67478,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "599db3fe40b7d4ac16518866f46ecd3079aef8d01fc86d72fbc47859cfb7ab4e",
+        "parent_pcm_sha256": "1ac49cc5e1be0d011ff65af2a23257a9f7fe7f929f5628561cb21e7de6d0ea1c",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "a6f03aad6f909ba5c8a1c9ed41f834bb82e261ea6edaa5d8722d2361d6c5cbea",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.59,
+            "label": "hey"
+          },
+          {
+            "start": 2.59,
+            "end": 2.66,
+            "label": ""
+          },
+          {
+            "start": 2.66,
+            "end": 3.0,
+            "label": "nicks"
+          },
+          {
+            "start": 3.0,
+            "end": 4.217375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.44,
+            "label": "HH"
+          },
+          {
+            "start": 2.44,
+            "end": 2.59,
+            "label": "EY1"
+          },
+          {
+            "start": 2.59,
+            "end": 2.66,
+            "label": ""
+          },
+          {
+            "start": 2.66,
+            "end": 2.69,
+            "label": "N"
+          },
+          {
+            "start": 2.69,
+            "end": 2.84,
+            "label": "IH1"
+          },
+          {
+            "start": 2.84,
+            "end": 2.91,
+            "label": "K"
+          },
+          {
+            "start": 2.91,
+            "end": 3.0,
+            "label": "S"
+          },
+          {
+            "start": 3.0,
+            "end": 4.217375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-0",
+        "begin": "0.0",
+        "end": "4.217375",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-40.36205013329384",
+        "speech_log_likelihood": "-87.28046798706055",
+        "phone_duration_deviation": "1.0969537916850118",
+        "max_running_short_interval": "0",
+        "snr": "13.919750069873345",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.35,
+      "automatic_word_end_seconds": 3.0,
+      "automatic_last_phone": {
+        "start": 2.91,
+        "end": 3.0,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "am_liam/paired_1.1-1.wav",
+        "source_path": "am_liam/1.1-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "059a6abc0e9e1ad69b2817eca14ce532a664e8ca022681aa2c42347f3007c53c",
+        "pcm_sha256": "b6fc4b04d78738378a0012646892a9a5f3630f7f7ed19ea8bd4422f1446237d1",
+        "samples": 75328,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "556aec5a28b3fa4681027066f18654c118cfef4b081d8a9dc711936c153026e2",
+        "parent_pcm_sha256": "75afc77cefd5275f24135dcdde834b7717b0ab73c26853577ba53ae0b970454f",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "212890937bee3f365c27514f5c447541d8f050d49e1a493bb23ecbc403930d2f",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.93,
+            "label": "hi"
+          },
+          {
+            "start": 2.93,
+            "end": 2.96,
+            "label": "e"
+          },
+          {
+            "start": 2.96,
+            "end": 3.1,
+            "label": "s"
+          },
+          {
+            "start": 3.1,
+            "end": 3.16,
+            "label": ""
+          },
+          {
+            "start": 3.16,
+            "end": 3.41,
+            "label": "p"
+          },
+          {
+            "start": 3.41,
+            "end": 4.708,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.9,
+            "label": "HH"
+          },
+          {
+            "start": 2.9,
+            "end": 2.93,
+            "label": "AY1"
+          },
+          {
+            "start": 2.93,
+            "end": 2.96,
+            "label": "IY1"
+          },
+          {
+            "start": 2.96,
+            "end": 2.99,
+            "label": "EH1"
+          },
+          {
+            "start": 2.99,
+            "end": 3.1,
+            "label": "S"
+          },
+          {
+            "start": 3.1,
+            "end": 3.16,
+            "label": ""
+          },
+          {
+            "start": 3.16,
+            "end": 3.21,
+            "label": "P"
+          },
+          {
+            "start": 3.21,
+            "end": 3.41,
+            "label": "IY1"
+          },
+          {
+            "start": 3.41,
+            "end": 4.708,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-1",
+        "begin": "0.0",
+        "end": "4.708",
+        "speaker": "am_liam",
+        "overall_log_likelihood": "-43.48713674363057",
+        "speech_log_likelihood": "-86.10634504045758",
+        "phone_duration_deviation": "2.254834928909998",
+        "max_running_short_interval": "0",
+        "snr": "15.841271046257694",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.41,
+      "automatic_last_phone": {
+        "start": 3.21,
+        "end": 3.41,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_0.9-0.wav",
+        "source_path": "bf_alice/0.9-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "8d783ac4df8595e0d745f22ef27e000446ad15f1a348329a8daf4e56c9c1d889",
+        "pcm_sha256": "5cdc4607ddd76e52ebfee8385107623f9ce43bd0cf27833c14852d58685707f5",
+        "samples": 72256,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "cc057c0bdfd903e2050d25963638dd0d192c728e2e0a0f08770c16ab1fbc79b3",
+        "parent_pcm_sha256": "9402c31686e245625f6b41de1dd7a88c163146fbe33830d2099c1934225baf06",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "08dc4955f8e774359dcf89f72a03b2205e83089d92b59d00aebc92ab133156ad",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.7,
+            "label": "hey"
+          },
+          {
+            "start": 2.7,
+            "end": 3.19,
+            "label": "nicks"
+          },
+          {
+            "start": 3.19,
+            "end": 4.516,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.54,
+            "label": "HH"
+          },
+          {
+            "start": 2.54,
+            "end": 2.7,
+            "label": "EY1"
+          },
+          {
+            "start": 2.7,
+            "end": 2.82,
+            "label": "N"
+          },
+          {
+            "start": 2.82,
+            "end": 3.02,
+            "label": "IH1"
+          },
+          {
+            "start": 3.02,
+            "end": 3.08,
+            "label": "K"
+          },
+          {
+            "start": 3.08,
+            "end": 3.19,
+            "label": "S"
+          },
+          {
+            "start": 3.19,
+            "end": 4.516,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-0",
+        "begin": "0.0",
+        "end": "4.516",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-39.994905454922566",
+        "speech_log_likelihood": "-80.53928120930989",
+        "phone_duration_deviation": "1.1636204103706536",
+        "max_running_short_interval": "0",
+        "snr": "16.91957515375576",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.35,
+      "automatic_word_end_seconds": 3.19,
+      "automatic_last_phone": {
+        "start": 3.08,
+        "end": 3.19,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_0.9-1.wav",
+        "source_path": "bf_alice/0.9-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "4f8ef10a5841941db88d11bd2215704d7561c2158650301969a46ab6bb6ec664",
+        "pcm_sha256": "877defbcdae326ae2f10f2f7926b24fb3ada01a11ea79393e52a8c7392ffa5a6",
+        "samples": 82838,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "fa74d152661f4e4d4d5397d007410c50d23de8153c75192a93e684ae6004af40",
+        "parent_pcm_sha256": "fffdc5ac1ac10ca4bfbcba745cc9738967b55adee6d143719e885a116ea5acb6",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "fc3dcf3d36c632ada9c2fa64a5c790567319f15d0b27ccb21fb986a5af4ca26c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.83,
+            "label": "hi"
+          },
+          {
+            "start": 2.83,
+            "end": 2.94,
+            "label": "e"
+          },
+          {
+            "start": 2.94,
+            "end": 3.34,
+            "label": "s"
+          },
+          {
+            "start": 3.34,
+            "end": 3.42,
+            "label": ""
+          },
+          {
+            "start": 3.42,
+            "end": 3.8,
+            "label": "p"
+          },
+          {
+            "start": 3.8,
+            "end": 5.177375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.8,
+            "label": "HH"
+          },
+          {
+            "start": 2.8,
+            "end": 2.83,
+            "label": "AY1"
+          },
+          {
+            "start": 2.83,
+            "end": 2.94,
+            "label": "IY1"
+          },
+          {
+            "start": 2.94,
+            "end": 3.2,
+            "label": "EH1"
+          },
+          {
+            "start": 3.2,
+            "end": 3.34,
+            "label": "S"
+          },
+          {
+            "start": 3.34,
+            "end": 3.42,
+            "label": ""
+          },
+          {
+            "start": 3.42,
+            "end": 3.48,
+            "label": "P"
+          },
+          {
+            "start": 3.48,
+            "end": 3.8,
+            "label": "IY1"
+          },
+          {
+            "start": 3.8,
+            "end": 5.177375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-1",
+        "begin": "0.0",
+        "end": "5.177375",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-43.934562771476834",
+        "speech_log_likelihood": "-73.46361705235073",
+        "phone_duration_deviation": "1.548460183324601",
+        "max_running_short_interval": "0",
+        "snr": "16.32937089773332",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.8,
+      "automatic_last_phone": {
+        "start": 3.48,
+        "end": 3.8,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_1.0-0.wav",
+        "source_path": "bf_alice/1.0-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "38e9c7067509ce70e9a3b6bf109a32804ca9fb10a0a55659b473310e64bae171",
+        "pcm_sha256": "df0a89a1822b9864a980649abf2fed881e769e0671f74cb6bf5c614394878c55",
+        "samples": 71232,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "8229cc445bb1856cf160c8daf4ed50278ca8f7f220a19f8fe0a29d3c4813575d",
+        "parent_pcm_sha256": "d8222bfce6c15bb48dd38757e599d4b7c7ac601f799f4617b52d4ce42f742e05",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "5c13857af5afaa2dde81504891358f8402c557af2a57b9521302c2ccf9ca6666",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.67,
+            "label": "hey"
+          },
+          {
+            "start": 2.67,
+            "end": 3.16,
+            "label": "nicks"
+          },
+          {
+            "start": 3.16,
+            "end": 4.452,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.49,
+            "label": "HH"
+          },
+          {
+            "start": 2.49,
+            "end": 2.67,
+            "label": "EY1"
+          },
+          {
+            "start": 2.67,
+            "end": 2.79,
+            "label": "N"
+          },
+          {
+            "start": 2.79,
+            "end": 3.0,
+            "label": "IH1"
+          },
+          {
+            "start": 3.0,
+            "end": 3.06,
+            "label": "K"
+          },
+          {
+            "start": 3.06,
+            "end": 3.16,
+            "label": "S"
+          },
+          {
+            "start": 3.16,
+            "end": 4.452,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-0",
+        "begin": "0.0",
+        "end": "4.452",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-40.00061007724719",
+        "speech_log_likelihood": "-81.1916275024414",
+        "phone_duration_deviation": "1.1636204103706536",
+        "max_running_short_interval": "0",
+        "snr": "19.25371471928169",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.35,
+      "automatic_word_end_seconds": 3.16,
+      "automatic_last_phone": {
+        "start": 3.06,
+        "end": 3.16,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_1.0-1.wav",
+        "source_path": "bf_alice/1.0-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "430bbbb84def929011f8bce6eb15dafece41be41a2f1f1e995651bb5a66ec1c0",
+        "pcm_sha256": "a4131ed6c17923dd17075dcb659820158df018b4099d31e85f0cca2b57a225f2",
+        "samples": 81472,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "ea3e4282c02a25bc68c2959b898c002cf0b2c45e501e34989f2b4af3ec9ba0dc",
+        "parent_pcm_sha256": "16e1c61fb7754fa05ab4691e749f35aa578cdabd335bad525b2b28deffda1369",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "0770735f41bd4237a6cfb9fc7ffaa600637670ac47afe5acfa03f8eb295b461d",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.8,
+            "label": "hi"
+          },
+          {
+            "start": 2.8,
+            "end": 2.92,
+            "label": "e"
+          },
+          {
+            "start": 2.92,
+            "end": 3.27,
+            "label": "s"
+          },
+          {
+            "start": 3.27,
+            "end": 3.34,
+            "label": ""
+          },
+          {
+            "start": 3.34,
+            "end": 3.7,
+            "label": "p"
+          },
+          {
+            "start": 3.7,
+            "end": 5.092,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.35,
+            "label": ""
+          },
+          {
+            "start": 2.35,
+            "end": 2.77,
+            "label": "HH"
+          },
+          {
+            "start": 2.77,
+            "end": 2.8,
+            "label": "AY1"
+          },
+          {
+            "start": 2.8,
+            "end": 2.92,
+            "label": "IY1"
+          },
+          {
+            "start": 2.92,
+            "end": 3.15,
+            "label": "EH1"
+          },
+          {
+            "start": 3.15,
+            "end": 3.27,
+            "label": "S"
+          },
+          {
+            "start": 3.27,
+            "end": 3.34,
+            "label": ""
+          },
+          {
+            "start": 3.34,
+            "end": 3.4,
+            "label": "P"
+          },
+          {
+            "start": 3.4,
+            "end": 3.7,
+            "label": "IY1"
+          },
+          {
+            "start": 3.7,
+            "end": 5.092,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-1",
+        "begin": "0.0",
+        "end": "5.092",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-42.87301234037328",
+        "speech_log_likelihood": "-75.40571648733956",
+        "phone_duration_deviation": "1.3732484191686438",
+        "max_running_short_interval": "0",
+        "snr": "17.310844044945505",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.35,
+      "automatic_word_end_seconds": 3.7,
+      "automatic_last_phone": {
+        "start": 3.4,
+        "end": 3.7,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_1.1-0.wav",
+        "source_path": "bf_alice/1.1-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "2c7de7b85e8f4ea3057b9c8a3616ad7f92affd057a3ab0cfb42b8a47e24dc43a",
+        "pcm_sha256": "816f15ba94cad3eaa8477bc5c2318341747477339c5349eb4a48ee3308fcef9f",
+        "samples": 69867,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "ddbe4d125e5312b154230d0bd85e63e2f4743f8e175eae17eb331c36cb7dad4e",
+        "parent_pcm_sha256": "8e66965c595e3d432dc4b6cf864d50b115643af451edecf168a87c1bf9cf0a6a",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "fd911095fa3ac2f564cd90fa290fc1fb75e55163bef9ef9e58f6a7d52c24d29e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.65,
+            "label": "hey"
+          },
+          {
+            "start": 2.65,
+            "end": 3.11,
+            "label": "nicks"
+          },
+          {
+            "start": 3.11,
+            "end": 4.366688,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.46,
+            "label": "HH"
+          },
+          {
+            "start": 2.46,
+            "end": 2.65,
+            "label": "EY1"
+          },
+          {
+            "start": 2.65,
+            "end": 2.77,
+            "label": "N"
+          },
+          {
+            "start": 2.77,
+            "end": 2.95,
+            "label": "IH1"
+          },
+          {
+            "start": 2.95,
+            "end": 3.01,
+            "label": "K"
+          },
+          {
+            "start": 3.01,
+            "end": 3.11,
+            "label": "S"
+          },
+          {
+            "start": 3.11,
+            "end": 4.366688,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-0",
+        "begin": "0.0",
+        "end": "4.3666875",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-39.10801630434783",
+        "speech_log_likelihood": "-80.53462473551433",
+        "phone_duration_deviation": "1.1636204103706536",
+        "max_running_short_interval": "0",
+        "snr": "20.929611540919474",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.11,
+      "automatic_last_phone": {
+        "start": 3.01,
+        "end": 3.11,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bf_alice/paired_1.1-1.wav",
+        "source_path": "bf_alice/1.1-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "0d56ab7b91b3d5c6ed6e94f0458949a73d9b34d9feebecc2810035661a383df8",
+        "pcm_sha256": "7aac841df89ba9b28b6018dfe8fc1f323107abd406a35a29ea14fef78c7b0840",
+        "samples": 78742,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "cd955c9bc84971c065c5680ce8919d5e61887765a7f3e09a5b670b2b36bfaab0",
+        "parent_pcm_sha256": "44a564613b58e1654c7a47864f6c1ce3266b0b04f39712cb5fbf0391ac08d269",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "53488feaa6155e1dcaffece66679c289e1f6c3f79dc4e0b76f3496df76509ce2",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.75,
+            "label": "hi"
+          },
+          {
+            "start": 2.75,
+            "end": 2.87,
+            "label": "e"
+          },
+          {
+            "start": 2.87,
+            "end": 3.2,
+            "label": "s"
+          },
+          {
+            "start": 3.2,
+            "end": 3.26,
+            "label": ""
+          },
+          {
+            "start": 3.26,
+            "end": 3.58,
+            "label": "p"
+          },
+          {
+            "start": 3.58,
+            "end": 4.921375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.72,
+            "label": "HH"
+          },
+          {
+            "start": 2.72,
+            "end": 2.75,
+            "label": "AY1"
+          },
+          {
+            "start": 2.75,
+            "end": 2.87,
+            "label": "IY1"
+          },
+          {
+            "start": 2.87,
+            "end": 3.08,
+            "label": "EH1"
+          },
+          {
+            "start": 3.08,
+            "end": 3.2,
+            "label": "S"
+          },
+          {
+            "start": 3.2,
+            "end": 3.26,
+            "label": ""
+          },
+          {
+            "start": 3.26,
+            "end": 3.31,
+            "label": "P"
+          },
+          {
+            "start": 3.31,
+            "end": 3.58,
+            "label": "IY1"
+          },
+          {
+            "start": 3.58,
+            "end": 4.921375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-1",
+        "begin": "0.0",
+        "end": "4.921375",
+        "speaker": "bf_alice",
+        "overall_log_likelihood": "-42.19658282520325",
+        "speech_log_likelihood": "-76.63678850446429",
+        "phone_duration_deviation": "1.2432400822282723",
+        "max_running_short_interval": "0",
+        "snr": "18.13863602434642",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.58,
+      "automatic_last_phone": {
+        "start": 3.31,
+        "end": 3.58,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_0.9-0.wav",
+        "source_path": "bm_george/0.9-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "69c1d5c636277522123630cf22fe1d1a216cb203a0f76184cb7fcc663ee5a699",
+        "pcm_sha256": "dd52e78980932a729155d36d6fe8bf306098815ed1d3b612e6f74ad4576acad1",
+        "samples": 70208,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "763e3d03fe3411d3432f167621c2e0f0037ec1695b1a41f5086b838c034c0b45",
+        "parent_pcm_sha256": "813d7d0d4e3a38a0fba4c85efd6ec265d788882bd3715506bfe137a5a9aafac0",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "ffd0593836d505339db49cc543609e53b4817629448210af64f0e2a35cde969d",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.31,
+            "label": ""
+          },
+          {
+            "start": 2.31,
+            "end": 2.38,
+            "label": "hey"
+          },
+          {
+            "start": 2.38,
+            "end": 2.71,
+            "label": ""
+          },
+          {
+            "start": 2.71,
+            "end": 3.07,
+            "label": "nicks"
+          },
+          {
+            "start": 3.07,
+            "end": 4.388,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.31,
+            "label": ""
+          },
+          {
+            "start": 2.31,
+            "end": 2.34,
+            "label": "HH"
+          },
+          {
+            "start": 2.34,
+            "end": 2.38,
+            "label": "EY1"
+          },
+          {
+            "start": 2.38,
+            "end": 2.71,
+            "label": ""
+          },
+          {
+            "start": 2.71,
+            "end": 2.74,
+            "label": "N"
+          },
+          {
+            "start": 2.74,
+            "end": 2.92,
+            "label": "IH1"
+          },
+          {
+            "start": 2.92,
+            "end": 2.99,
+            "label": "K"
+          },
+          {
+            "start": 2.99,
+            "end": 3.07,
+            "label": "S"
+          },
+          {
+            "start": 3.07,
+            "end": 4.388,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-0",
+        "begin": "0.0",
+        "end": "4.388",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-40.57006780324601",
+        "speech_log_likelihood": "-83.93797302246094",
+        "phone_duration_deviation": "2.9494787514275873",
+        "max_running_short_interval": "0",
+        "snr": "6.786104412348202",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.31,
+      "automatic_word_end_seconds": 3.07,
+      "automatic_last_phone": {
+        "start": 2.99,
+        "end": 3.07,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_0.9-1.wav",
+        "source_path": "bm_george/0.9-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "ccb3e70cc47fc275af78816669e92864eb819461d47d78403c953730b7d46aa6",
+        "pcm_sha256": "ebef60c1808673dc577dee7e7b982df563229c02b467c2ec4edd04020d269baf",
+        "samples": 83179,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "b77531df6876bdf097c5ba71e0a062e2d2ed6290c3032cf318e0e55699012ae8",
+        "parent_pcm_sha256": "91471e1e48e5d4055326ed24f80d4f9b4706194e42d454fef04d7668ed956e9a",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "4c43f6255d1f0379b73504214587d7a3c376c7b7921a875bbff3923b9914cad8",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.87,
+            "label": "hi"
+          },
+          {
+            "start": 2.87,
+            "end": 3.01,
+            "label": "e"
+          },
+          {
+            "start": 3.01,
+            "end": 3.26,
+            "label": ""
+          },
+          {
+            "start": 3.26,
+            "end": 3.52,
+            "label": "s"
+          },
+          {
+            "start": 3.52,
+            "end": 3.6,
+            "label": ""
+          },
+          {
+            "start": 3.6,
+            "end": 3.96,
+            "label": "p"
+          },
+          {
+            "start": 3.96,
+            "end": 5.198688,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.84,
+            "label": "HH"
+          },
+          {
+            "start": 2.84,
+            "end": 2.87,
+            "label": "AY1"
+          },
+          {
+            "start": 2.87,
+            "end": 3.01,
+            "label": "IY1"
+          },
+          {
+            "start": 3.01,
+            "end": 3.26,
+            "label": ""
+          },
+          {
+            "start": 3.26,
+            "end": 3.36,
+            "label": "EH1"
+          },
+          {
+            "start": 3.36,
+            "end": 3.52,
+            "label": "S"
+          },
+          {
+            "start": 3.52,
+            "end": 3.6,
+            "label": ""
+          },
+          {
+            "start": 3.6,
+            "end": 3.67,
+            "label": "P"
+          },
+          {
+            "start": 3.67,
+            "end": 3.96,
+            "label": "IY1"
+          },
+          {
+            "start": 3.96,
+            "end": 5.198688,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_0.9-1",
+        "begin": "0.0",
+        "end": "5.1986875",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-45.19990234375",
+        "speech_log_likelihood": "-74.97138105119977",
+        "phone_duration_deviation": "1.01298051093913",
+        "max_running_short_interval": "0",
+        "snr": "11.947249222659934",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.96,
+      "automatic_last_phone": {
+        "start": 3.67,
+        "end": 3.96,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_1.0-0.wav",
+        "source_path": "bm_george/1.0-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "aa56d2d7ea12f0ca005c18c812bef97486f5fa115ba73c2f8bbb86e59a06cadf",
+        "pcm_sha256": "52edb7e96aabd29010e74efa4e6a0fb1a83a1176326a0274fa64dfc9435000e3",
+        "samples": 69526,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "2d560b929ef94e3db1778b85d3acd996178190535fbd205a3b00b93c0230d2ef",
+        "parent_pcm_sha256": "1298f9bb339356de88f0b17d0e22ae01f5aff0a31d3e42102b1494a60d097ac8",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "e2a5b140cc6e6276789d9cd724d11d8e22695edf87818f7546d89d69f09aad16",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.58,
+            "label": "hey"
+          },
+          {
+            "start": 2.58,
+            "end": 2.7,
+            "label": ""
+          },
+          {
+            "start": 2.7,
+            "end": 3.02,
+            "label": "nicks"
+          },
+          {
+            "start": 3.02,
+            "end": 4.345375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.42,
+            "label": "HH"
+          },
+          {
+            "start": 2.42,
+            "end": 2.58,
+            "label": "EY1"
+          },
+          {
+            "start": 2.58,
+            "end": 2.7,
+            "label": ""
+          },
+          {
+            "start": 2.7,
+            "end": 2.73,
+            "label": "N"
+          },
+          {
+            "start": 2.73,
+            "end": 2.9,
+            "label": "IH1"
+          },
+          {
+            "start": 2.9,
+            "end": 2.96,
+            "label": "K"
+          },
+          {
+            "start": 2.96,
+            "end": 3.02,
+            "label": "S"
+          },
+          {
+            "start": 3.02,
+            "end": 4.345375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-0",
+        "begin": "0.0",
+        "end": "4.345375",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-40.56188936781609",
+        "speech_log_likelihood": "-82.70633316040039",
+        "phone_duration_deviation": "1.241876955922375",
+        "max_running_short_interval": "0",
+        "snr": "11.129674159773057",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.02,
+      "automatic_last_phone": {
+        "start": 2.96,
+        "end": 3.02,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_1.0-1.wav",
+        "source_path": "bm_george/1.0-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "89b5d22932147b989bc1850184239546a462b901191c137ddca6b27879bb95c5",
+        "pcm_sha256": "527fe990c4708411af68d520ae60e7e19a319423340e8911fe946d9443d2369f",
+        "samples": 79766,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "d92bc1450da5f69c339256eb4732f891dc9027518c6a3e2ac4667ad9d6144188",
+        "parent_pcm_sha256": "65a5574d3ac130186797a63365ba8846f43ce1ca8995523360b6281d3fafe685",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "8da910606a3f6c2e9b864966d795cbef546566ab17156d92f5d630e8bcbd37c8",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.77,
+            "label": "hi"
+          },
+          {
+            "start": 2.77,
+            "end": 2.91,
+            "label": "e"
+          },
+          {
+            "start": 2.91,
+            "end": 3.16,
+            "label": ""
+          },
+          {
+            "start": 3.16,
+            "end": 3.39,
+            "label": "s"
+          },
+          {
+            "start": 3.39,
+            "end": 3.47,
+            "label": ""
+          },
+          {
+            "start": 3.47,
+            "end": 3.78,
+            "label": "p"
+          },
+          {
+            "start": 3.78,
+            "end": 4.985375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.33,
+            "label": ""
+          },
+          {
+            "start": 2.33,
+            "end": 2.74,
+            "label": "HH"
+          },
+          {
+            "start": 2.74,
+            "end": 2.77,
+            "label": "AY1"
+          },
+          {
+            "start": 2.77,
+            "end": 2.91,
+            "label": "IY1"
+          },
+          {
+            "start": 2.91,
+            "end": 3.16,
+            "label": ""
+          },
+          {
+            "start": 3.16,
+            "end": 3.26,
+            "label": "EH1"
+          },
+          {
+            "start": 3.26,
+            "end": 3.39,
+            "label": "S"
+          },
+          {
+            "start": 3.39,
+            "end": 3.47,
+            "label": ""
+          },
+          {
+            "start": 3.47,
+            "end": 3.52,
+            "label": "P"
+          },
+          {
+            "start": 3.52,
+            "end": 3.78,
+            "label": "IY1"
+          },
+          {
+            "start": 3.78,
+            "end": 4.985375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.0-1",
+        "begin": "0.0",
+        "end": "4.985375",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-43.866459481462925",
+        "speech_log_likelihood": "-76.58318655831474",
+        "phone_duration_deviation": "0.7688011319356362",
+        "max_running_short_interval": "0",
+        "snr": "12.331716320876987",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.33,
+      "automatic_word_end_seconds": 3.78,
+      "automatic_last_phone": {
+        "start": 3.52,
+        "end": 3.78,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_1.1-0.wav",
+        "source_path": "bm_george/1.1-0.wav",
+        "source_kind": "paired",
+        "target": "hey_nyx",
+        "sha256": "3587ea1422ec36595dc85d0151a71ea6c54561dd114e39a41f06028be3c2c313",
+        "pcm_sha256": "dd0d0150040bd69277cbbe56cf671e0e0bfe31bacb34e64caecfd9fcea872d2c",
+        "samples": 67819,
+        "transcript": "HEY NICKS",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "85c2ef9afc3177c7e97823d04df2348ae4e578db11a05dc009e990a16742270f",
+        "parent_pcm_sha256": "dd3bcd049659e4ac639edb01031ad5a579e7ed2813814868a68e68ecd381c71d",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "d06aba46d8eb834ede3ab543bc916ea9a5476e0373ed310a5f2a3dee72f98cdf",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.32,
+            "label": ""
+          },
+          {
+            "start": 2.32,
+            "end": 2.54,
+            "label": "hey"
+          },
+          {
+            "start": 2.54,
+            "end": 2.65,
+            "label": ""
+          },
+          {
+            "start": 2.65,
+            "end": 2.94,
+            "label": "nicks"
+          },
+          {
+            "start": 2.94,
+            "end": 4.238688,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.32,
+            "label": ""
+          },
+          {
+            "start": 2.32,
+            "end": 2.4,
+            "label": "HH"
+          },
+          {
+            "start": 2.4,
+            "end": 2.54,
+            "label": "EY1"
+          },
+          {
+            "start": 2.54,
+            "end": 2.65,
+            "label": ""
+          },
+          {
+            "start": 2.65,
+            "end": 2.68,
+            "label": "N"
+          },
+          {
+            "start": 2.68,
+            "end": 2.82,
+            "label": "IH1"
+          },
+          {
+            "start": 2.82,
+            "end": 2.89,
+            "label": "K"
+          },
+          {
+            "start": 2.89,
+            "end": 2.94,
+            "label": "S"
+          },
+          {
+            "start": 2.94,
+            "end": 4.238688,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-0",
+        "begin": "0.0",
+        "end": "4.2386875",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-39.358430682488205",
+        "speech_log_likelihood": "-82.89092508951823",
+        "phone_duration_deviation": "1.4341612912421433",
+        "max_running_short_interval": "0",
+        "snr": "11.934614010431012",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.32,
+      "automatic_word_end_seconds": 2.94,
+      "automatic_last_phone": {
+        "start": 2.89,
+        "end": 2.94,
+        "label": "S"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "bm_george/paired_1.1-1.wav",
+        "source_path": "bm_george/1.1-1.wav",
+        "source_kind": "paired",
+        "target": "hi_esp",
+        "sha256": "ef3d8d99d3bc2e996beea81dff450530a839bb60bc14becc0385730dd34df62c",
+        "pcm_sha256": "a1d03ed061faa97371a9166d82736ccede572c6bc851d6aa68f13002ff414f9b",
+        "samples": 77718,
+        "transcript": "HI E S P",
+        "transcript_source": "Synthesis intent",
+        "parent_wav_sha256": "a8a7fc1c647f25172dc6825c82ff31f669f78f06ed425c670a9c0fbc9fca88ca",
+        "parent_pcm_sha256": "3e830bae9f1f9b0a7e4993784d4718929558c9d543380505532d5704adc46539",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "ce16e75e6142540ad2c0ac60ce2dc53ab143ec16f89d99862ce0eed7f4d8805e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.51,
+            "label": "hi"
+          },
+          {
+            "start": 2.51,
+            "end": 2.87,
+            "label": "e"
+          },
+          {
+            "start": 2.87,
+            "end": 3.07,
+            "label": ""
+          },
+          {
+            "start": 3.07,
+            "end": 3.3,
+            "label": "s"
+          },
+          {
+            "start": 3.3,
+            "end": 3.35,
+            "label": ""
+          },
+          {
+            "start": 3.35,
+            "end": 3.7,
+            "label": "p"
+          },
+          {
+            "start": 3.7,
+            "end": 4.857375,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.34,
+            "label": ""
+          },
+          {
+            "start": 2.34,
+            "end": 2.48,
+            "label": "HH"
+          },
+          {
+            "start": 2.48,
+            "end": 2.51,
+            "label": "AY1"
+          },
+          {
+            "start": 2.51,
+            "end": 2.87,
+            "label": "IY1"
+          },
+          {
+            "start": 2.87,
+            "end": 3.07,
+            "label": ""
+          },
+          {
+            "start": 3.07,
+            "end": 3.17,
+            "label": "EH1"
+          },
+          {
+            "start": 3.17,
+            "end": 3.3,
+            "label": "S"
+          },
+          {
+            "start": 3.3,
+            "end": 3.35,
+            "label": ""
+          },
+          {
+            "start": 3.35,
+            "end": 3.41,
+            "label": "P"
+          },
+          {
+            "start": 3.41,
+            "end": 3.7,
+            "label": "IY1"
+          },
+          {
+            "start": 3.7,
+            "end": 4.857375,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "paired_1.1-1",
+        "begin": "0.0",
+        "end": "4.857375",
+        "speaker": "bm_george",
+        "overall_log_likelihood": "-43.04153002829218",
+        "speech_log_likelihood": "-78.40279824393136",
+        "phone_duration_deviation": "1.1757345946921438",
+        "max_running_short_interval": "0",
+        "snr": "13.111391272216087",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.34,
+      "automatic_word_end_seconds": 3.7,
+      "automatic_last_phone": {
+        "start": 3.41,
+        "end": 3.7,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "official_unknown/official_official-lead0.wav",
+        "source_path": "official-lead0.wav",
+        "source_kind": "official",
+        "target": "hi_esp",
+        "sha256": "8b94611793f6c36cbc806a8dfecef5632509fa128e23f531a67409e132f9725e",
+        "pcm_sha256": "ceecfc5196254e4fed1bb756c49533834d2191bf960fccd886d1b7ba2eea014b",
+        "samples": 55232,
+        "transcript": "HI E S P",
+        "transcript_source": "Official test fixture wake-word identity",
+        "parent_wav_sha256": "dd2d1d721916ded8f54ffd890da1bc827e97e1e65aa8b50044599aa2d56e4127",
+        "parent_pcm_sha256": "25f6a6232c0115f700dab8909c42057e0b43d187b4bf01a343f7958d26943754",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "ec74cb4af10200147b194efc48b826a2dee0780a0935c0bfe8dbcc21fc30d06c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.5,
+            "label": ""
+          },
+          {
+            "start": 0.5,
+            "end": 0.98,
+            "label": "hi"
+          },
+          {
+            "start": 0.98,
+            "end": 1.06,
+            "label": "e"
+          },
+          {
+            "start": 1.06,
+            "end": 1.18,
+            "label": "s"
+          },
+          {
+            "start": 1.18,
+            "end": 1.66,
+            "label": ""
+          },
+          {
+            "start": 1.66,
+            "end": 2.04,
+            "label": "p"
+          },
+          {
+            "start": 2.04,
+            "end": 3.452,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.5,
+            "label": ""
+          },
+          {
+            "start": 0.5,
+            "end": 0.95,
+            "label": "HH"
+          },
+          {
+            "start": 0.95,
+            "end": 0.98,
+            "label": "AY1"
+          },
+          {
+            "start": 0.98,
+            "end": 1.06,
+            "label": "IY1"
+          },
+          {
+            "start": 1.06,
+            "end": 1.15,
+            "label": "EH1"
+          },
+          {
+            "start": 1.15,
+            "end": 1.18,
+            "label": "S"
+          },
+          {
+            "start": 1.18,
+            "end": 1.66,
+            "label": ""
+          },
+          {
+            "start": 1.66,
+            "end": 1.71,
+            "label": "P"
+          },
+          {
+            "start": 1.71,
+            "end": 2.04,
+            "label": "IY1"
+          },
+          {
+            "start": 2.04,
+            "end": 3.452,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "official_official-lead0",
+        "begin": "0.0",
+        "end": "3.452",
+        "speaker": "official_unknown",
+        "overall_log_likelihood": "-53.73109148550725",
+        "speech_log_likelihood": "-70.38431113106864",
+        "phone_duration_deviation": "3.474396145160205",
+        "max_running_short_interval": "0",
+        "snr": "5.751500807642945",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 0.5,
+      "automatic_word_end_seconds": 2.04,
+      "automatic_last_phone": {
+        "start": 1.71,
+        "end": 2.04,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    },
+    {
+      "source": {
+        "path": "official_unknown/official_official-lead28800.wav",
+        "source_path": "official-lead28800.wav",
+        "source_kind": "official",
+        "target": "hi_esp",
+        "sha256": "64ca8924cbca04044231ac7e40ecf5b7405b797671336d14a1ca2f563783384c",
+        "pcm_sha256": "ac826fbeae78069f0967d0390630c13bb39088529a0134a222b583e386773786",
+        "samples": 84032,
+        "transcript": "HI E S P",
+        "transcript_source": "Official test fixture wake-word identity",
+        "parent_wav_sha256": "579b307956e9b1f73a72ee207034c840e214d46287113c8cb55488eaf76b6c0a",
+        "parent_pcm_sha256": "1bb7eaf9ae25bc97da15aeae8ae0d4d2ca4c72622b9ee354ba3b8c030552ad60",
+        "added_lead_samples": 8000
+      },
+      "textgrid_sha256": "94dd6c0b3ee47a04bc2a3c8d7ba9e2b7b3d620f999e22bae4206e03bee7695d9",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 2.3,
+            "label": ""
+          },
+          {
+            "start": 2.3,
+            "end": 2.78,
+            "label": "hi"
+          },
+          {
+            "start": 2.78,
+            "end": 2.86,
+            "label": "e"
+          },
+          {
+            "start": 2.86,
+            "end": 2.98,
+            "label": "s"
+          },
+          {
+            "start": 2.98,
+            "end": 3.46,
+            "label": ""
+          },
+          {
+            "start": 3.46,
+            "end": 3.84,
+            "label": "p"
+          },
+          {
+            "start": 3.84,
+            "end": 5.252,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 2.3,
+            "label": ""
+          },
+          {
+            "start": 2.3,
+            "end": 2.75,
+            "label": "HH"
+          },
+          {
+            "start": 2.75,
+            "end": 2.78,
+            "label": "AY1"
+          },
+          {
+            "start": 2.78,
+            "end": 2.86,
+            "label": "IY1"
+          },
+          {
+            "start": 2.86,
+            "end": 2.95,
+            "label": "EH1"
+          },
+          {
+            "start": 2.95,
+            "end": 2.98,
+            "label": "S"
+          },
+          {
+            "start": 2.98,
+            "end": 3.46,
+            "label": ""
+          },
+          {
+            "start": 3.46,
+            "end": 3.51,
+            "label": "P"
+          },
+          {
+            "start": 3.51,
+            "end": 3.84,
+            "label": "IY1"
+          },
+          {
+            "start": 3.84,
+            "end": 5.252,
+            "label": ""
+          }
+        ]
+      },
+      "quality": {
+        "file": "official_official-lead28800",
+        "begin": "0.0",
+        "end": "5.252",
+        "speaker": "official_unknown",
+        "overall_log_likelihood": "-47.580412946428574",
+        "speech_log_likelihood": "-70.27689525059291",
+        "phone_duration_deviation": "2.3656601067203584",
+        "max_running_short_interval": "0",
+        "snr": "8.147794901750864",
+        "intensity_deviation": ""
+      },
+      "expected_words_preserved": true,
+      "automatic_word_start_seconds": 2.3,
+      "automatic_word_end_seconds": 3.84,
+      "automatic_last_phone": {
+        "start": 3.51,
+        "end": 3.84,
+        "label": "IY1"
+      },
+      "alignment_accepted_as_phonetic_ground_truth": false
+    }
+  ],
+  "files": 26,
+  "all_expected_words_preserved": true,
+  "wake_scores_accessed": false,
+  "independent_final_audio_accessed": false,
+  "old_windows_or_labels_changed": false,
+  "command_policy": "MFA align with english_us_arpa3.0.0 acoustic/dictionary;single_speaker disables speaker adaptation;SQLite;4jobs. No transcript correction or ASR filtering.",
+  "limits": "Intended text forced onto imperfect TTS/unknown official-fixture speech. Likelihood/duration diagnostics are uncalibrated and not proof of pronunciation. No manual phonetic audit, new recall/latency score, altered success window or final acceptance. Preserve every word/phone interval and all quality rows."
+}
