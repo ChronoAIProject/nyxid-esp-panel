@@ -206,3 +206,43 @@ These are English phrases through international carrier voices, not recordings
 of 26 independently established human speakers. No recognition scores have
 been computed on this challenge; pronunciation review and matched acoustic
 rendering are still pending. It does not establish a Hi ESP comparison.
+
+## Balanced multispeed v2: rejected
+
+The completed 40,000-step RTX 4090 run selected step 10,000 and validation
+threshold 0.97. Its INT8 model SHA-256 is
+`2a163828374e68860f434332683f34a2dc80a3c3c3de68bd2db172f3a5304ddc`.
+Regression mean source recall is **57.604%** (Piper 65.625%, Kokoro 49.583%);
+pooled recall is 1,379/2,160 correlated variants (63.843%). Confusing-negative
+false detections are 0.7386%. Zero continuous events in 1.35816 source hours
+still gives a one-sided 95% upper bound of **2.2057/hour**, failing the goal.
+Hit latency is median 130 ms, p95 230 ms; 90 premature positive events were
+also recorded. Expanded speed coverage changes the regression population,
+so this is not a controlled comparison with earlier candidates.
+See `4090-training-v2-balanced.json`, `4090-threshold-v2-balanced.json`, and
+`4090-quantized-v2-balanced.json`. The small validation-only float/INT8 check
+passed reset reproducibility and matched event steps on eight clips, with
+mean absolute score error 0.00137; this does not establish general equivalence
+(`4090-streaming-v2-comparison.json`).
+
+## Paired challenge pronunciation correction
+
+Before any wake-classifier scoring, tokenizer inspection found that `Hi ESP.`
+renders ESP as a word. The original challenge is retained but withdrawn from
+the intended spelled-letter comparison. Protocol 2 explicitly uses
+`Hi E S P.` and records phonemes. Its 468 clips passed waveform/hash/pairing
+audits; manifest SHA-256 is
+`40b4ed9e88a4c8c7d7a1b5d6ec94522c15cfc39a91ed763ffcadd996d2f468eb`.
+Independent pinned Whisper tiny.en screening found text agreement on 32/78
+Hey Nyx clips, 28/78 Hi ESP clips, and 236/312 negatives. Original Hi ESP
+agreement was 0/78. ASR mismatch can reflect ASR error, and agreement is not
+phonetic ground truth. No clips were removed or relabeled; acoustic quality
+remains unresolved. These reports are consistency screens, not recognition
+scores or evidence of Hi ESP parity. Both the corrected challenge and the
+10.745-hour independent negative reserve remain unscored by wake classifiers.
+
+Qwen3-TTS VoiceDesign is being prepared as an additional training-only source
+at pinned revision `5ecdb67327fd37bb2e042aab12ff7391903235d3` in an isolated
+environment. Torch/TorchAudio imports and RTX 4090 detection succeeded; model
+download and actual synthesis have not yet been verified. No Qwen quality or
+new independent speaker-count claim is made.

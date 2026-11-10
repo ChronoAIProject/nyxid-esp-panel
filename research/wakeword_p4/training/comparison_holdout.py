@@ -46,7 +46,7 @@ def main():
     session = Session(str(a.assets/"kokoro-v1.0.onnx"), options, providers=["CPUExecutionProvider"])
     engine = Kokoro.from_session(session, str(a.assets/"voices-v1.0.bin"))
     voices = sorted(v for v in engine.get_voices() if not v.startswith(("af_", "am_", "bf_", "bm_")))
-    plan = [("Hey Nicks.", "hey_nyx"), ("Hi ESP.", "hi_esp"),
+    plan = [("Hey Nicks.", "hey_nyx"), ("Hi E S P.", "hi_esp"),
             ("Hey Nick.", None), ("Hey Next.", None), ("Hey Mix.", None),
             ("Please check the volume.", None)]
     a.output.mkdir(parents=True)
@@ -64,12 +64,13 @@ def main():
                     (a.output/path).parent.mkdir(parents=True, exist_ok=True)
                     sf.write(a.output/path, pcm, 16000, subtype="PCM_16")
                     row = {"path": str(path), "text": text, "target": target,
+                           "phonemes": engine.tokenizer.phonemize(text, "en-us"),
                            "voice": voice, "speed": speed, "samples": len(pcm),
                            "sha256": hashlib.sha256((a.output/path).read_bytes()).hexdigest()}
                     records.append(row)
                     log.write(json.dumps(row)+"\n"); log.flush()
             print(json.dumps({"voice": voice, "clips": len(records)}), flush=True)
-    report = {"voice_ids": voices, "clips": len(records), "model_sha256": MODEL_SHA,
+    report = {"protocol_version": 2, "voice_ids": voices, "clips": len(records), "model_sha256": MODEL_SHA,
               "voices_sha256": VOICES_SHA, "generator_sha256": source_hash,
               "manifest_sha256": hashlib.sha256((a.output/"manifest.jsonl").read_bytes()).hexdigest(),
               "targets": {str(t): sum(r["target"] == t for r in records) for t in ("hey_nyx", "hi_esp", None)},
