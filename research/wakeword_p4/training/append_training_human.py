@@ -30,6 +30,12 @@ def main():
         raise ValueError("Human feature index differs from audited cache")
     additions = []
     speakers = {str(r["speaker"]) for r in old}
+    participant_splits = {}
+    for row in old + candidates:
+        for participant in row.get("participants", []):
+            if participant in participant_splits and participant_splits[participant] != row["split"]:
+                raise ValueError("Conversation participant crosses splits")
+            participant_splits[participant] = row["split"]
     for row in candidates:
         if row["split"] != "training":
             continue
@@ -49,7 +55,7 @@ def main():
         if not row["first_two_chunk_continuity_checked"] or row["source_seconds"] <= 0:
             raise ValueError("Missing frontend continuity/exposure audit")
         additions.append({**row, "path": "human-additions/" + row["path"],
-                          "category": "mandarin"})
+                          "category": row.get("category", "mandarin")})
         speakers.add(str(row["speaker"]))
     if not additions:
         raise ValueError("No training streams")
@@ -63,7 +69,7 @@ def main():
     for split in ("validation", "testing"):
         assert [r for r in old if r["split"] == split] == [r for r in combined if r["split"] == split]
     report = {
-        "role": "Training-only Mandarin ambient feature addition; not classifier evidence",
+        "role": "Training-only human ambient feature addition; not classifier evidence",
         "base_human_index_sha256": sha(base / "human.json"),
         "base_feature_index_sha256": sha(base / "features.json"),
         "base_feature_binary_sha256": sha(base / "features.bin"),
