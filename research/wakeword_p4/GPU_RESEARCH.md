@@ -605,3 +605,11 @@ validation rows and is not hard-negative mining input. This supports the
 phonetic-confusion diagnosis; adding generic silence or an unrelated noise
 filter would not specifically address these errors. Counts are correlated
 renderings, not independent human trials. See `4090-embedding-v2-confusions.json`.
+
+The v2 positive phrase audit independently reproduces all689 detected variants.
+Piper standalone recall is32.97%; command-followed groups range20.07–33.19%.
+Kokoro spelling groups (Nyx/Nicks/Nix) are53.75–57.5%. Thus Piper misses are not
+restricted to command-followed clips, and no single spelling group explains
+Kokoro behavior. These remain validation diagnostics, not independent trials.
+`audit_embedding_confusions.py --label 1` uses the same smoothed event policy
+and keyword hit window; default label0 preserves the negative phrase audit.
