@@ -1,0 +1,38 @@
+{
+  "role": "Prospective v25 training-only hard-negative bootstrapping, not results",
+  "baseline": "v24-long-librispeech100",
+  "hypothesis": "Focus some negative updates on real training speech that produced high fixed-v24 scores, while retaining broad coverage",
+  "changed": "Replace4 of48 ambient batch slots by audited real-speech hard windows with +/-12frame jitter; independent RNG30726; preserve original draws before replacement",
+  "unchanged": [
+    "same v23-combined features",
+    "teacher60 context150 frozen BN",
+    "same pretrained and reset classifier initialization",
+    "120000steps and5000eval interval",
+    "same relative LR schedule",
+    "prefix16",
+    "original validation selection and INT8 dense grid"
+  ],
+  "mining": {
+    "original_hours": 100.59087965277783,
+    "training_speakers_scanned": 251,
+    "selected_windows": 157,
+    "candidate_speakers": 105,
+    "verified_source_files": 199,
+    "quarantined": 0,
+    "min_score": 0.5,
+    "separation_steps": 67,
+    "model_sha256": "21e605dfc061fdc0823b4ab75a5be593955dd747103f33b0ccedea2e673ba825"
+  },
+  "sampling": {
+    "batch_size": 128,
+    "hard_windows": 4,
+    "broad_ambient_windows": 44,
+    "positive_windows": 32,
+    "total_negative_windows": 96,
+    "hard_window_batch_fraction": 0.03125,
+    "english_ambient_slot_probability": 0.2361111111111111,
+    "other_stratum_ambient_slot_probability": 0.15277777777777776
+  },
+  "limits": "Changes English mixture intentionally; do not describe this as unchanged stratum mass. Mining scores and improved performance on mined windows are not evaluation. Labels inherit human corpus transcripts with literal alias screen, not independent phonetic proof.",
+  "final_audio": "Unaccessed; no development regression selection"
+}

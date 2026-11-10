@@ -12,6 +12,7 @@ import numpy as np
 import tensorflow as tf
 
 from batchnorm_policy import apply_policy, snapshot
+from hard_ambient import HardAmbient
 from ambient_sampling import probabilities, coverage, stratified_probabilities
 from negative_sampling import candidate_ends
 from spec_augment import mask_spectrograms
@@ -35,6 +36,9 @@ def main():
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     parser.add_argument("--prefix-negatives", type=int, default=0,
                         help="Replace this many of 48 confusing negatives with training-positive prefixes")
+    parser.add_argument("--hard-ambient-index", type=Path)
+    parser.add_argument("--hard-ambient-count", type=int, default=0,
+                        help="Replace this many of48 ambient slots with audited training-only real-speech hard windows")
     parser.add_argument("--negative-candidates", type=int, default=1)
     parser.add_argument("--time-mask-width", type=int, default=0)
     parser.add_argument("--frequency-mask-width", type=int, default=0)
@@ -54,6 +58,8 @@ def main():
         parser.error("reconstructed weights require teacher60/teacher120, context150 and fixed batchnorm statistics")
     if not 0 <= args.prefix_negatives <= 48:
         parser.error("prefix negatives must be 0..48")
+    if not 0 <= args.hard_ambient_count <= 48 or bool(args.hard_ambient_index) != (args.hard_ambient_count > 0):
+        parser.error("hard ambient index and count1..48 must be supplied together")
     if args.negative_candidates < 1:
         parser.error("negative candidates must be positive")
     if not 0 <= args.time_mask_width <= frames or not 0 <= args.frequency_mask_width <= 40:
@@ -80,6 +86,7 @@ def main():
     mining_rng = np.random.default_rng(4726)
     augmentation_rng = np.random.default_rng(10726)
     prefix_rng = np.random.default_rng(20726)
+    hard_ambient_rng = np.random.default_rng(30726)
     sys.path.insert(0, str(args.upstream.resolve()))
     from microwakeword import mixednet, utils
     from microwakeword.layers import modes
@@ -103,6 +110,8 @@ def main():
     ambient_rows += json.loads((args.features/"ambient.json").read_text())
     ambient = {s: [(r, np.load(args.features/r["path"], mmap_mode="r")) for r in ambient_rows if r["split"] == s]
                for s in groups}
+    hard_ambient = (HardAmbient(args.hard_ambient_index, args.features, frames)
+                    if args.hard_ambient_index else None)
 
     ambient_weights = probabilities([r for r, _ in ambient["training"]])
     ambient_coverage = coverage([r for r, _ in ambient["training"]])
@@ -115,6 +124,12 @@ def main():
     for (row, _), weight in zip(ambient["training"], effective_weights):
         key = ('human' if 'speaker' in row or row.get('kind') == 'human' else 'ambient')+':'+str(row.get('category', 'unspecified'))
         ambient_coverage[key]["effective_probability"] += float(weight)
+    for key, group in ambient_coverage.items():
+        hard_fraction = args.hard_ambient_count/48
+        group["effective_probability_after_hard_replacement"] = (
+            group["effective_probability"]*(1-hard_fraction)
+            + (hard_ambient.report["category_probabilities"].get(key, 0.)*hard_fraction
+               if hard_ambient is not None else 0.))
 
     def scale(data):
         return np.clip(np.asarray(data, dtype=np.float32)/25.6, 0, 26)
@@ -183,6 +198,9 @@ def main():
             # Keep baseline RNG and all original draws unchanged. Only replace
             # the selected confusing-negative slots before the same permutation.
             x[32:32+args.prefix_negatives] = scale(prefix_sample(args.prefix_negatives))
+        if hard_ambient is not None and mine:
+            # Keep all original draws; independently replace only the ambient slots.
+            x[80:80+args.hard_ambient_count] = scale(hard_ambient.sample(args.hard_ambient_count, hard_ambient_rng))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -364,6 +382,10 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
+              "hard_ambient": ({**hard_ambient.report, "count_per_batch": args.hard_ambient_count,
+                                "seed": 30726, "remaining_broad_ambient_slots": 48-args.hard_ambient_count,
+                                "policy": "Audited training-only mined windows; replace ambient slots after original draws; label0 weight20; disabled for INT8 calibration; no new independent exposure."}
+                               if hard_ambient is not None else None),
               "prefix_negatives": {"count_per_batch": args.prefix_negatives, "seed": 20726,
                                    "gap_frames_inclusive": [15, 35],
                                    "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."},
