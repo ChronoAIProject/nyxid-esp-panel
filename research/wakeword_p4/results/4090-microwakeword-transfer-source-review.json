@@ -1,0 +1,287 @@
+{
+  "repo": "https://github.com/esphome/micro-wake-word-models.git",
+  "revision": "40ff33f57f8fc6ad71a75ef085abbf742495b225",
+  "files": [
+    {
+      "path": "models/v2/hey_jarvis.tflite",
+      "bytes": 52272,
+      "sha256": "21a7976add39ee24ec96c63d96b7aaa18e24d1d9824b963e451da8feb4b78b77",
+      "url": "https://raw.githubusercontent.com/esphome/micro-wake-word-models/40ff33f57f8fc6ad71a75ef085abbf742495b225/models/v2/hey_jarvis.tflite"
+    },
+    {
+      "path": "models/v2/hey_jarvis.json",
+      "bytes": 388,
+      "sha256": "b153867d818675d8abcc9dace474afe7f83551ae0d5a9b1d71a98681320185af",
+      "url": "https://raw.githubusercontent.com/esphome/micro-wake-word-models/40ff33f57f8fc6ad71a75ef085abbf742495b225/models/v2/hey_jarvis.json"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "url": "https://raw.githubusercontent.com/esphome/micro-wake-word-models/40ff33f57f8fc6ad71a75ef085abbf742495b225/LICENSE"
+    }
+  ],
+  "role": "Pinned official MCU pretrained model source and architecture inspection only",
+  "architecture_inspection": [
+    {
+      "name": "official_hey_jarvis",
+      "input": [
+        1,
+        3,
+        40
+      ],
+      "weights": [
+        {
+          "op": "CONV_2D",
+          "name": "model/stream/conv2d/Conv2D",
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "per_channel": 30
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "model/depthwise_conv2d/depthwise1",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "per_channel": 30
+        },
+        {
+          "op": "CONV_2D",
+          "name": "model/conv2d_1/Conv2D",
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "model/depthwise_conv2d_1/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "CONV_2D",
+          "name": "model/conv2d_2/Conv2D",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "model/depthwise_conv2d_2/depthwise",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "CONV_2D",
+          "name": "model/conv2d_3/Conv2D",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "model/depthwise_conv2d_3/depthwise",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "CONV_2D",
+          "name": "model/conv2d_4/Conv2D",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "per_channel": 60
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "name": "model/dense/MatMul",
+          "shape": [
+            1,
+            300
+          ],
+          "per_channel": 1
+        }
+      ]
+    },
+    {
+      "name": "nyx_v6",
+      "input": [
+        1,
+        3,
+        40
+      ],
+      "weights": [
+        {
+          "op": "CONV_2D",
+          "name": "functional_1/stream_1/conv2d_1/convolution",
+          "shape": [
+            32,
+            5,
+            1,
+            40
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_1/depthwise",
+          "shape": [
+            1,
+            5,
+            1,
+            32
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "CONV_2D",
+          "name": "functional_1/conv2d_1_1/convolution",
+          "shape": [
+            64,
+            1,
+            1,
+            32
+          ],
+          "per_channel": 64
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_2_1/depthwise",
+          "shape": [
+            1,
+            11,
+            1,
+            32
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_1_2/depthwise",
+          "shape": [
+            1,
+            7,
+            1,
+            32
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "CONV_2D",
+          "name": "functional_1/conv2d_2_1/convolution",
+          "shape": [
+            64,
+            1,
+            1,
+            64
+          ],
+          "per_channel": 64
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_3_1/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            32
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_4_1/depthwise",
+          "shape": [
+            1,
+            15,
+            1,
+            32
+          ],
+          "per_channel": 32
+        },
+        {
+          "op": "CONV_2D",
+          "name": "functional_1/conv2d_3_1/convolution",
+          "shape": [
+            64,
+            1,
+            1,
+            64
+          ],
+          "per_channel": 64
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "name": "functional_1/depthwise_conv2d_5_1/depthwise",
+          "shape": [
+            1,
+            23,
+            1,
+            64
+          ],
+          "per_channel": 64
+        },
+        {
+          "op": "CONV_2D",
+          "name": "functional_1/conv2d_4_1/convolution",
+          "shape": [
+            64,
+            1,
+            1,
+            64
+          ],
+          "per_channel": 64
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "name": "functional_1/dense_1/MatMul",
+          "shape": [
+            1,
+            576
+          ],
+          "per_channel": 1
+        }
+      ]
+    }
+  ],
+  "inference_or_transfer_training_performed": false,
+  "conclusion": "Same 10ms frontend cadence and [1,3,40] streaming input, but 30/60 channels and single depthwise kernels differ from our 32/64 MixConv network. Direct weight loading is invalid; any transfer requires a matching reconstruction and real-feature numerical parity before retraining."
+}
