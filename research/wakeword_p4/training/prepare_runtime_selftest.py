@@ -15,6 +15,7 @@ import soundfile as sf
 from ai_edge_litert import schema_py_generated as schema
 
 from evaluate import Detector
+from detector_policy import smooth
 from features import features
 
 
@@ -45,23 +46,68 @@ def inspect_model(data, detector):
             "output_shape": [1, 1], "output_quantization": [detector.output_scale, detector.output_zero]}
 
 
+def events(averages, threshold, window):
+    armed, last, result = True, -1000, []
+    # UART steps are one-based raw-score indices, not convolution offsets.
+    for step, value in enumerate(averages, window):
+        if value < threshold * .5 and step - last >= 67:
+            armed = True
+        if armed and value >= threshold and step - last >= 67:
+            armed, last = False, step
+            result.append(step)
+    return result
+
+
+def prime_policy(model, digest, calibration_path):
+    training = json.loads((model.parent / 'training.json').read_bytes())
+    calibration_bytes = calibration_path.read_bytes()
+    calibration = json.loads(calibration_bytes)
+    if training['model_sha256'] != digest or calibration['model_sha256'] != digest:
+        raise ValueError('Original model, training and calibration identities differ')
+    gpu = training['architecture'] == 'teacher60'
+    frames = training['context_frames'] if gpu else training['input_frames']
+    threshold = calibration['threshold'] if gpu else calibration['selected']['threshold']
+    window = calibration['sliding_window'] if gpu else calibration.get('smoothing_steps', 5)
+    if (type(frames) is not int or not 149 <= frames <= 335 or type(window) is not int
+            or window not in (3, 5, 7) or type(threshold) not in (int, float) or not 0 < threshold < 1):
+        raise ValueError('Unsupported firmware prime or calibrated event policy')
+    requested = (frames + 200) * 160
+    return {'training_context_frames': frames, 'requested_prime_samples': requested,
+            'rounded_prime_samples': requested + (-requested) % 480,
+            'threshold': threshold, 'smoothing_steps': window, 'refractory_steps': 67,
+            'calibration_sha256': hashlib.sha256(calibration_bytes).hexdigest()}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--audio", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--app-prime-calibration", type=Path,
+                        help="Include the exact application silence prime and compare frozen event steps")
     args = parser.parse_args()
     if args.output.exists() or args.output.with_suffix(".json").exists():
         parser.error("Use fresh private output paths")
     pcm, rate = sf.read(args.audio, dtype="int16")
     if rate != 16000 or pcm.ndim != 1:
         raise ValueError("Expected original 16 kHz mono PCM; do not change speech speed")
-    # Bound firmware flash use and retain complete detector input chunks.
-    samples = min(len(pcm), 4 * 16000) // 480 * 480
-    if samples < 960:
-        raise ValueError("Audio is too short")
-    pcm = np.asarray(pcm[:samples], dtype="<i2")
     model = args.model.read_bytes()
+    digest = hashlib.sha256(model).digest()
+    prime = prime_policy(args.model, digest.hex(), args.app_prime_calibration) if args.app_prime_calibration else None
+    if prime:
+        # Preserve the source; only append enough silence for a complete call.
+        source_samples = len(pcm)
+        padding = (-source_samples) % 480
+        samples = prime['rounded_prime_samples'] + source_samples + padding
+        if source_samples < 960 or samples > 16000 * 8:
+            raise ValueError('Prime plus complete audio must fit the eight-second self-test limit')
+        pcm = np.pad(pcm, (prime['rounded_prime_samples'], padding)).astype('<i2', copy=False)
+        prime.update(source_samples=source_samples, tail_pad_samples=padding)
+    else:
+        samples = min(len(pcm), 4 * 16000) // 480 * 480
+        if samples < 960:
+            raise ValueError("Audio is too short")
+        pcm = np.asarray(pcm[:samples], dtype="<i2")
     detector = Detector(args.model)
     interface = inspect_model(model, detector)
     raw = features(pcm)
@@ -74,7 +120,14 @@ def main():
     if (len(expected) != samples // 480 - 1 or not np.isfinite(expected).all()
             or expected.min() < 0 or expected.max() > 255 or expected.min() == expected.max()):
         raise ValueError("Uninformative or invalid diagnostic outputs")
-    digest = hashlib.sha256(model).digest()
+    if prime:
+        window = prime['smoothing_steps']
+        original = smooth(scores, window)
+        # Same dyadic UINT8 scores and summation as the runtime, including its
+        # float32 threshold constant. Do not change either policy to make them agree.
+        device = np.lib.stride_tricks.sliding_window_view(scores.astype(np.float64), window).sum(axis=1) / window
+        prime.update(host_event_steps=events(original, prime['threshold'], window),
+                     expected_device_event_steps=events(device, float(np.float32(prime['threshold'])), window))
     data = (b"NYXKWS01" + digest + struct.pack("<II", samples, len(expected))
             + pcm.tobytes() + expected.astype(np.uint8).tobytes())
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -89,7 +142,7 @@ def main():
               "maximum_output": int(expected.max()),
               "host_interpreter": "BUILTIN_REF", "ai_edge_litert": version("ai-edge-litert"),
               "pymicro_features": version("pymicro-features"), "reset_reproducible": True,
-              "interface": interface,
+              "interface": interface, "app_prime": prime,
               "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     args.output.with_suffix(".json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report), flush=True)

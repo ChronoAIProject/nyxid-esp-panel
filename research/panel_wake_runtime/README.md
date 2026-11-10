@@ -75,9 +75,16 @@ successful build does not imply recognition acceptance.
 For an inference diagnostic, the training checkout's
 `research/wakeword_p4/training/prepare_runtime_selftest.py` creates a private
 model-bound binary from an existing 16 kHz mono WAV and host INT8 outputs.
-It keeps at most the first four seconds, without changing sample speed. Pass
-the resulting path as `-DNYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST=...` to include
-the optional startup check. Configuration rejects another model's fixture,
+By default it keeps at most the first four seconds. With
+`--app-prime-calibration <threshold.json>` it instead adds the same
+silence prime as the live listener and preserves the complete WAV, padding
+only the last chunk. Use a short diagnostic WAV so everything fits in eight
+seconds. The report gives expected one-based activation steps for the board's
+arithmetic and for the original host convolution. Compare the former with
+the UART `activation … step=` lines before the `exact-PCM selftest` result.
+Neither mode changes sample speed. Pass the resulting binary path as
+`-DNYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST=...` to include the optional startup
+check. Configuration rejects another model's fixture,
 truncated data and invalid sample/output counts. The complete firmware then
 compares every output byte through its own frontend and inference path. The
 diagnostic detector is destroyed before creating the live microphone detector;

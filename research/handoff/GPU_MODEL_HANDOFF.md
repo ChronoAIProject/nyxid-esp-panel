@@ -128,8 +128,10 @@ with the original report bytes pinned in
 No generic `teacher60` admission or changes to the detector/audio path are
 needed. Fetch the original files from that commit, use the original model
 weights, and generate a fixture using `prepare_runtime_selftest.py` on
-normal-speed synthetic mono PCM. The build requires the bound fixture for
-v30. As before, the development test must compare actual MCU output bytes,
+normal-speed synthetic mono PCM. Pass the original calibration to
+`--app-prime-calibration` to include the 56,160 samples of silence consumed
+before the v30 listener starts, then replay the unchanged WAV. The build
+requires the bound fixture for v30. The development test must compare MCU output bytes,
 reset behavior and event steps; the host's convolution and device's
 arithmetic mean can differ at a floating-point threshold boundary.
 
@@ -146,3 +148,22 @@ GPU/v30 model or fixture asset, and no 54440-byte TFLite file was found under
 the local output and research worktree. The upstream branch publishes reports,
 but not the v30 model bytes in its tree. The v30 build and MCU runs still
 require the original binary; no board, speaker or microphone was accessed.
+
+GPU commit `04dc65fca8e49d2e765ebf1d3804f85f07fea90f` reports the
+preregistered independent paired TTS replay at the frozen thresholds.
+Intended target clips with detections: v30 42/78, Hi ESP 45/78.
+Common negative clips with detections: v30 4/312, Hi ESP 0/312.
+The four v30 events came from TTS intending “Hey Mix” (three) or “Hey Nick”
+(one).
+Neither engine detected the other engine's intended target clips.
+These are clip results for synthesis intent; the recordings do not supply
+verified pronunciation or keyword endpoints. They show a gap on shared
+hard negatives despite both engines passing the separate read-speech gate.
+Do not use these clips to tune a threshold or to infer acoustic parity.
+
+The prime-aware self-test was exercised on the USB P4 using a legacy
+149-frame model. The MCU matched all 256 expected output bytes and the
+single activation at step 226. It stayed in idle listen for the 40-second
+resource check, and the original app and Hi ESP listener were restored.
+See [the procedure check](../wakeword_p4/results/legacy-app-prime-selftest-v1.json).
+This validates the diagnostic procedure; v30 still needs its own test.

@@ -1,0 +1,139 @@
+{
+  "scope": "Full-app P4 self-test with a legacy model; validates procedure only, not v30 or acoustic acceptance.",
+  "app": {
+    "experimental_elf_sha256": "bacb236dd8659481b8c15781782d7b70392519e93e5170cbb8d7aec149cd2ca2",
+    "experimental_bin_sha256": "8a55c40cd8fca95f22369ce7233b9263f698e471a09b59d0bd683a2d070bab50"
+  },
+  "fixture": {
+    "scope": "Known-PCM numeric regression inside the complete firmware; not acoustic acceptance",
+    "model_sha256": "bf09929cc067810e610f2d73862b87baadc83f5bc852231e21f2c2e02b669258",
+    "fixture_sha256": "fd40dcdad4675e6f68b681e2f5251bee95aa76ece6c6afaf80442273d13cde54",
+    "source_audio_sha256": "74c51b49b1ef281d5d92785ee6a72031ac20ca259f7ad5c6433a0cec4d287848",
+    "pcm_sha256": "71774160dc28cf11868b8bf5ccf3420ff69c653d84a97e739f683bda1cc4e2c4",
+    "expected_outputs_sha256": "eca78f795f7ea30db72ed2cfeea5b70ecfc07e1196da30d77ec6413a80fcd25e",
+    "sample_rate": 16000,
+    "samples": 123360,
+    "chunk_samples": 480,
+    "expected_outputs": 256,
+    "minimum_output": 0,
+    "maximum_output": 255,
+    "host_interpreter": "BUILTIN_REF",
+    "ai_edge_litert": "2.3.0",
+    "pymicro_features": "2.0.2",
+    "reset_reproducible": true,
+    "interface": {
+      "operators": [
+        "ASSIGN_VARIABLE",
+        "CALL_ONCE",
+        "CONCATENATION",
+        "CONV_2D",
+        "DEPTHWISE_CONV_2D",
+        "EXPAND_DIMS",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "QUANTIZE",
+        "READ_VARIABLE",
+        "RESHAPE",
+        "STRIDED_SLICE",
+        "VAR_HANDLE"
+      ],
+      "subgraphs": 2,
+      "input_shape": [
+        1,
+        3,
+        40
+      ],
+      "input_quantization": [
+        0.10196078568696976,
+        -128
+      ],
+      "output_shape": [
+        1,
+        1
+      ],
+      "output_quantization": [
+        0.00390625,
+        0
+      ]
+    },
+    "app_prime": {
+      "training_context_frames": 149,
+      "requested_prime_samples": 55840,
+      "rounded_prime_samples": 56160,
+      "threshold": 0.994,
+      "smoothing_steps": 5,
+      "refractory_steps": 67,
+      "calibration_sha256": "e6b9e9e22e4cc41540c7bed131f462e24f9567c1a887f014e37ff34dcfc2b87f",
+      "source_samples": 67061,
+      "tail_pad_samples": 139,
+      "host_event_steps": [
+        226
+      ],
+      "expected_device_event_steps": [
+        226
+      ]
+    },
+    "source_sha256": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef"
+  },
+  "mcu_selftest": {
+    "outputs": 256,
+    "mismatches": 0,
+    "activation_steps": [
+      226
+    ]
+  },
+  "idle": {
+    "status_samples": 41,
+    "measure_seconds": 40,
+    "heap_summary_bytes": {
+      "free": {
+        "min": 20738504,
+        "median": 20738584,
+        "max": 20742016
+      },
+      "spiram_free": {
+        "min": 20651300,
+        "median": 20652900,
+        "max": 20652932
+      },
+      "dma_free": {
+        "min": 176195,
+        "median": 176195,
+        "max": 179627
+      },
+      "dma_largest_free": {
+        "min": 126976,
+        "median": 126976,
+        "max": 126976
+      },
+      "internal_free": {
+        "min": 215807,
+        "median": 215807,
+        "max": 219239
+      },
+      "internal_largest_free": {
+        "min": 126976,
+        "median": 126976,
+        "max": 126976
+      }
+    },
+    "timing_windows": 8,
+    "detector_calls": 1336,
+    "sample_duration_seconds": 40.08,
+    "wall_seconds": 40.050973,
+    "mean_detector_call_us": 2538.98877245509,
+    "max_detector_call_us": 8732,
+    "detector_wall_fraction": 0.08469429694005187,
+    "minimum_wake_stack_free_bytes": 11856
+  },
+  "uart_sha256": "345e486965dae21cdb8a052e31a86b8e1c24154cbfa4fe95b754ebbe1739229f",
+  "original_app_and_voice_service_restored_and_rechecked": true,
+  "speaker_playback": false,
+  "microphone_pcm_recorded": false,
+  "production_board_modified": false,
+  "limits": [
+    "Diagnostic input goes directly to a disposable detector before live listening.",
+    "Idle timing is detector wall time, not CPU use or phonetic latency.",
+    "No v30 model, acoustic wake accuracy or active call stability was measured."
+  ]
+}
