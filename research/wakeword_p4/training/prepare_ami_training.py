@@ -33,11 +33,17 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--metadata', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--sessions', nargs='+', default=SESSIONS,
+                   help='Prospectively fixed meeting IDs; all participant/split guards remain')
+    p.add_argument('--exclude-audit', type=Path,
+                   help='Existing AMI source audit whose participants must not be repeated')
     p.add_argument('--expected-audit', type=Path,
                    help='Optional previously published audit to pin audio download hashes')
     a = p.parse_args()
     if a.output.exists():
         p.error('Fresh output required; preserve partial failures')
+    if len(set(a.sessions)) != len(a.sessions):
+        p.error('Duplicate requested meetings')
     a.metadata.mkdir(parents=True, exist_ok=True)
     provenance = []
     for name, (url, digest) in METADATA.items():
@@ -57,12 +63,21 @@ def main():
     # Original AMI and Kaldi splits differ: exclude either scheme's reserved people.
     reserved |= {n for n, m in meetings.items() if m.attrib.get('seen_type') in ('development', 'evaluation')}
     reserved_people = {s.attrib['global_name'] for n in reserved for s in meetings[n]}
+    excluded_people = set()
+    if a.exclude_audit:
+        previous = json.loads(a.exclude_audit.read_text())
+        if (sha(a.exclude_audit.parent/'manifest.jsonl') != previous['manifest_sha256']
+                or not previous['both_split_schemes_reserved_participants_excluded']
+                or previous['reserved_audio_accessed'] or previous['classifiers_scored']
+                or any(r['split'] != 'training' for r in previous['records'])):
+            raise ValueError('Invalid previous training source audit')
+        excluded_people = {p.removeprefix('ami_') for r in previous['records'] for p in r['participants']}
     selected_people, jobs, transcripts = set(), [], []
-    for session in SESSIONS:
+    for session in a.sessions:
         m = meetings[session]
         people = {s.attrib['global_name'] for s in m}
         if (session not in train or session in reserved or m.attrib.get('seen_type') != 'training'
-                or people & reserved_people or people & selected_people or len(people) != 4):
+                or people & reserved_people or people & selected_people or people & excluded_people or len(people) != 4):
             raise ValueError('Reserved or repeated meeting participants: ' + session)
         selected_people |= people
         for speaker in m:
@@ -77,10 +92,10 @@ def main():
     expected = {}
     if a.expected_audit:
         old = json.loads(a.expected_audit.read_text())
-        if tuple(old['sessions']) != SESSIONS or old['channel'] != CHANNEL:
+        if tuple(old['sessions']) != tuple(a.sessions) or old['channel'] != CHANNEL:
             raise ValueError('Expected audit uses a different selection')
         expected = {r['session']: r for r in old['records']}
-        if set(expected) != set(SESSIONS):
+        if set(expected) != set(a.sessions):
             raise ValueError('Incomplete expected audio hashes')
     a.output.mkdir(parents=True)
 
@@ -118,7 +133,9 @@ def main():
                   attribution='AMI Meeting Corpus, https://groups.inf.ed.ac.uk/ami/corpus/',
                   license='CC BY 4.0', license_url='https://groups.inf.ed.ac.uk/ami/corpus/license.shtml',
                   source_sha256=sha(Path(__file__)), kaldi_revision=REVISION, metadata_sources=provenance,
-                  meetings_xml_sha256=hashlib.sha256(meetings_bytes).hexdigest(), sessions=SESSIONS, channel=CHANNEL,
+                  meetings_xml_sha256=hashlib.sha256(meetings_bytes).hexdigest(), sessions=a.sessions, channel=CHANNEL,
+                  excluded_previous_audit_sha256=sha(a.exclude_audit) if a.exclude_audit else None,
+                  previous_participants_excluded=len(excluded_people),
                   selected_before_wake_scoring=True, files=len(rows), unique_participants=len(selected_people),
                   independent_conversation_hours=sum(r['seconds'] for r in rows)/3600,
                   both_split_schemes_reserved_participants_excluded=True, training_transcripts=transcripts,
