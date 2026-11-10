@@ -148,7 +148,7 @@ static cJSON *voice_json(void)
     cJSON *wake=cJSON_AddObjectToObject(j,"wake");
     cJSON_AddBoolToObject(wake,"enabled",v.wake_enabled);
     cJSON_AddBoolToObject(wake,"listening",v.wake_listening);
-    cJSON_AddStringToObject(wake,"word","Hi ESP");
+    cJSON_AddStringToObject(wake,"word",panel_voice_wake_word());
     cJSON_AddStringToObject(wake,"state",v.wake_state);
     cJSON_AddNumberToObject(wake,"detections",v.wake_detections);
     cJSON_AddBoolToObject(wake,"initiated_call",v.wake_initiated);
@@ -741,7 +741,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
             "Adjust this Nyx Panel voice tablet's saved speaker output. POST exactly one of volume (integer 0..100) or playback_gain (integer 1..8). Does not change Bot selection.";
         else if(!strcmp(r->path,"/voice/input-mode"))description="Set saved input_mode to automatic or push_to_talk while idle. Exactly one field. Does not change the selected Bot or grants.";
         else if(!strcmp(r->path,"/voice/greeting"))description="Read or configure this panel's automatic spoken greeting for future calls. POST enabled (boolean). The selected Bot generates its greeting from its NyxID identity, persona and language; there is no scripted text. Persists in this server profile. An explicit remote opening message takes priority. Never a user utterance or tool permission.";
-        else if(!strcmp(r->path,"/voice/wake"))description="Enable or disable local Hi ESP wake-word listening. POST exactly enabled (boolean); persists in this server profile. Wake opens automatic conversation, records immediately while connecting, and sends buffered speech before live audio. Skips the opening greeting. Disabling affects future wake-ups, not the current call. Listening pauses for microphone mute, other audio apps and OTA. /voice reports detection and buffer state.";
+        else if(!strcmp(r->path,"/voice/wake"))description="Enable or disable local wake-word listening. GET reports its configured phrase. POST exactly enabled (boolean); persists in this server profile. Wake opens automatic conversation, records immediately while connecting, and sends buffered speech before live audio. Skips the opening greeting. Disabling affects future wake-ups, not the current call. Listening pauses for microphone mute, other audio apps and OTA. /voice reports detection and buffer state.";
         else if(!strcmp(r->path,"/lcd/brightness"))description="Read or set saved screen brightness (integer 0..100). POST exactly one brightness field; preserves other display settings.";
         else if(!strcmp(r->path,"/lcd/default-image"))description="Manage the persistent JPEG fallback used when no temporary image is present. POST image/jpeg up to 65536 bytes. DELETE restores bundled NyxBot. GET returns metadata.";
         else if(!strcmp(r->path,"/lcd/image"))description="Show a temporary fullscreen JPEG, image/jpeg up to 65536 bytes; query duration_ms=0 is sticky until cleared, positive TTL returns to fallback.";
@@ -1490,7 +1490,7 @@ static int h_voice_wake(const nyx_proxy_request_t *req, char *resp, size_t cap,
     }
     panel_voice_snapshot_t v;panel_voice_snapshot(&v);
     cJSON *j=cJSON_CreateObject();cJSON_AddBoolToObject(j,"enabled",v.wake_enabled);
-    cJSON_AddStringToObject(j,"word","Hi ESP");cJSON_AddBoolToObject(j,"listening",v.wake_listening);
+    cJSON_AddStringToObject(j,"word",panel_voice_wake_word());cJSON_AddBoolToObject(j,"listening",v.wake_listening);
     cJSON_AddStringToObject(j,"state",v.wake_state);
     return object_response(j,resp,cap,resp_len);
 }

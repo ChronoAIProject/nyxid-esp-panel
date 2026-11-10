@@ -130,7 +130,11 @@ expanded into PSRAM once. Existing partitions, login and stored pictures stay
 compatible; no separate model partition or model flashing step is needed.
 
 Control WebSocket interruptions pause microphone input and reconnect within a
-25-second grace period, retaining the existing media session. Invalid,
+25-second grace period, retaining the existing media session. Only the first
+connection buffers the wake request. Once audio has become ready, an interruption
+clears queued microphone samples and discards capture during the gap; recovery
+resumes with fresh audio. AEC/AGC and the sole I2S reader keep running throughout.
+Reconnection must not replay seconds of old speech as a new live utterance. Invalid,
 incomplete or unknown snapshots are ignored. Transport and codec failures
 release local audio without sending a user hangup command; NyxID expires a
 lost client's heartbeat while already accepted work keeps running. The local

@@ -69,6 +69,18 @@ std::atomic<bool> pending_voice{false};
 char noticed_bot[40]{};
 int64_t bot_notice_until;
 
+// LVGL invalidates styles even when a setter repeats the same value.
+// The 250 ms voice timer must only repaint colors when call state changes.
+void set_color_if_changed(lv_obj_t *object, lv_style_prop_t property, lv_color_t color,
+                          lv_style_selector_t selector = 0) {
+    lv_style_value_t current{};
+    if (lv_obj_get_local_style_prop(object, property, &current, selector) == LV_STYLE_RES_FOUND &&
+            lv_color_eq(current.color, color)) return;
+    lv_style_value_t value{};
+    value.color = color;
+    lv_obj_set_local_style_prop(object, property, value, selector);
+}
+
 // The bundled Chinese font contains bitmap glyphs. LVGL's vector-font outline
 // styles do not stroke them, so render the same wrapped text at eight offsets.
 // Labels stay transparent and share the same bounds, including for long text.
@@ -299,7 +311,7 @@ bool NyxPanel::run() {
         (void)panel_voice_input_mode_set(static_cast<panel_voice_input_mode_t>(lv_dropdown_get_selected(select)));
     }, LV_EVENT_VALUE_CHANGED, nullptr);
     auto wake_label = lv_label_create(controls);
-    lv_label_set_text(wake_label, "Wake: Hi ESP");
+    lv_label_set_text_fmt(wake_label, "Wake: %s", panel_voice_wake_word());
     lv_obj_set_style_text_font(wake_label, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(wake_label, lv_color_hex(NYX_TEXT), 0);
     lv_obj_align(wake_label, LV_ALIGN_TOP_LEFT, 0, connection_y + 149);
@@ -383,7 +395,7 @@ void NyxPanel::refreshVoice() {
     } else lv_obj_add_flag(bot_notice, LV_OBJ_FLAG_HIDDEN);
     if (voice.busy) {
         lv_obj_remove_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_set_style_bg_color(voice_indicator, lv_color_hex(
+        set_color_if_changed(voice_indicator, LV_STYLE_BG_COLOR, lv_color_hex(
             voice.microphone_muted ? NYX_WARNING : voice.active ? NYX_SUCCESS : NYX_TINT), 0);
     } else lv_obj_add_flag(voice_indicator, LV_OBJ_FLAG_HIDDEN);
     const char *text = voice.message[0] ? voice.message : "Voice is not configured";
@@ -405,16 +417,16 @@ void NyxPanel::refreshVoice() {
         !strcmp(voice.state, "error") ? (voice.call_seconds ? "Call disconnected" : "Couldn't connect") :
         voice.session_id[0] ? "Call ended" : "Ready to call");
     if (strcmp(lv_label_get_text(voice_connection), connection)) lv_label_set_text(voice_connection, connection);
-    lv_obj_set_style_text_color(voice_connection, lv_color_hex(ending ? NYX_MUTED : voice.active ? NYX_SUCCESS :
+    set_color_if_changed(voice_connection, LV_STYLE_TEXT_COLOR, lv_color_hex(ending ? NYX_MUTED : voice.active ? NYX_SUCCESS :
         calling || loading ? NYX_WARNING : !strcmp(voice.state, "error") ? NYX_ERROR : NYX_TEXT), 0);
     if (loading || (calling && (!voice.active || ending))) lv_obj_remove_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
     else lv_obj_add_flag(voice_spinner, LV_OBJ_FLAG_HIDDEN);
     const auto call_color = lv_color_hex(loading ? NYX_BORDER : calling ? NYX_ERROR : NYX_SUCCESS);
-    lv_obj_set_style_bg_color(call_button, call_color, 0);
-    lv_obj_set_style_bg_color(call_button, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
+    set_color_if_changed(call_button, LV_STYLE_BG_COLOR, call_color, 0);
+    set_color_if_changed(call_button, LV_STYLE_BG_COLOR, lv_color_darken(call_color, LV_OPA_20), LV_STATE_PRESSED);
     const auto icon_color = lv_color_hex(loading ? NYX_BORDER : calling && !voice.active ? NYX_WARNING : calling ? NYX_ERROR : NYX_PRIMARY);
-    lv_obj_set_style_bg_color(voice_toggle, icon_color, 0);
-    lv_obj_set_style_bg_color(voice_toggle, lv_color_darken(icon_color, LV_OPA_20), LV_STATE_PRESSED);
+    set_color_if_changed(voice_toggle, LV_STYLE_BG_COLOR, icon_color, 0);
+    set_color_if_changed(voice_toggle, LV_STYLE_BG_COLOR, lv_color_darken(icon_color, LV_OPA_20), LV_STATE_PRESSED);
     const char *action = ending ? "Ending..." : calling && !voice.active ? LV_SYMBOL_CLOSE " Cancel" : calling ? LV_SYMBOL_CALL " Hang up" : LV_SYMBOL_CALL " Call";
     if (strcmp(lv_label_get_text(call_label), action)) lv_label_set_text(call_label, action);
     if (!ending && !loading && (voice.configured || calling)) lv_obj_remove_state(call_button, LV_STATE_DISABLED);

@@ -46,9 +46,20 @@ idf_component_register(
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
         json lvgl nvs_flash spi_flash quirc
         waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib)
+idf_component_optional_requires(PRIVATE panel_wake_runtime)
 
 # Embed weights in each app slot: an OTA update must not depend on a separately
 # flashed model partition, or change any existing board's partition layout.
+if(NYX_PANEL_EXPERIMENTAL_WAKE_MODEL)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME=1)
+    if(DEFINED NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE)
+        if(NOT "${NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE}" MATCHES "^[01]$")
+            message(FATAL_ERROR "Experimental wake task core must be 0 or 1")
+        endif()
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE
+            NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE=${NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE})
+    endif()
+else()
 idf_component_get_property(_sr_dir espressif__esp-sr COMPONENT_DIR)
 set(_wake_source "${_sr_dir}/model/wakenet_model/wn9_hiesp")
 set(_wake_binary "${CMAKE_CURRENT_BINARY_DIR}/panel-hi-esp.bin")
@@ -60,6 +71,7 @@ add_custom_command(OUTPUT "${_wake_binary}"
 add_custom_target(panel_wake_model DEPENDS "${_wake_binary}")
 add_dependencies(${COMPONENT_LIB} panel_wake_model)
 target_add_binary_data(${COMPONENT_LIB} "${_wake_binary}" BINARY)
+endif()
 
 set(NYX_PANEL_AGENT_DEV_API_URL "" CACHE STRING "LAN NyxID API origin for Agent Key development")
 set(NYX_PANEL_AGENT_DEV_LOGIN_URL "" CACHE STRING "LAN Agent Key verification page")
