@@ -27,6 +27,21 @@ The adapter owns only feature extraction and inference. It reports the configure
 through the existing wake status and panel label. It does not change service
 permissions, Bot selection or provider credentials.
 
+For a matched idle resource comparison, enable `NYX_PANEL_RESEARCH_WAKE_TIMING`
+in both isolated development builds. It times `detect()` at the same point
+in the wake loop and logs one aggregate per approximately five seconds of
+detector input. `measure_idle_headroom.py` samples the board's status without
+playing or reading audio and verifies the app, OTA slot, voice service and
+idle listener throughout. Use the raw Hi ESP research arm for comparisons
+with the experimental raw idle input, with the same sdkconfig and pin set.
+
+The [measured Hi ESP baseline](../wakeword_p4/results/hiesp-idle-timing-baseline-v1.json)
+contains 1,256 detector calls on the USB development board. At 512 samples
+per call, average/max elapsed time is 2.917/16.104 ms, and the calls account
+for 9.12% of the 40.17 s observed wall time. The measurement includes
+scheduling and is not CPU utilization. The original app and voice service
+were restored and rechecked; the resource comparison with v30 remains open.
+
 ## Build
 
 Use the release's ESP-IDF 5.5.4 environment and dependency versions. Set the
