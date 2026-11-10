@@ -31,6 +31,8 @@ def main():
     parser.add_argument("--freeze-batchnorm", action="store_true")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
+    parser.add_argument("--prefix-negatives", type=int, default=0,
+                        help="Replace this many of 48 confusing negatives with training-positive prefixes")
     parser.add_argument("--negative-candidates", type=int, default=1)
     parser.add_argument("--time-mask-width", type=int, default=0)
     parser.add_argument("--frequency-mask-width", type=int, default=0)
@@ -45,6 +47,8 @@ def main():
         parser.error("context frames must be >=150 and divisible by 3")
     if args.initial_weights and (args.architecture != "teacher60" or frames != 150 or not args.freeze_batchnorm):
         parser.error("reconstructed weights require teacher60, context150 and frozen batchnorm")
+    if not 0 <= args.prefix_negatives <= 48:
+        parser.error("prefix negatives must be 0..48")
     if args.negative_candidates < 1:
         parser.error("negative candidates must be positive")
     if not 0 <= args.time_mask_width <= frames or not 0 <= args.frequency_mask_width <= 40:
@@ -70,6 +74,7 @@ def main():
     rng = np.random.default_rng(726)
     mining_rng = np.random.default_rng(4726)
     augmentation_rng = np.random.default_rng(10726)
+    prefix_rng = np.random.default_rng(20726)
     sys.path.insert(0, str(args.upstream.resolve()))
     from microwakeword import mixednet, utils
     from microwakeword.layers import modes
@@ -143,6 +148,23 @@ def main():
             output = output[np.arange(count), scores.argmax(axis=1)]
         return output
 
+    def prefix_sample(count):
+        sources = groups["training"][1]
+        engines = list(sources)
+        weights = np.asarray([len(sources[e]) for e in engines], dtype=float)**args.source_exponent
+        weights /= weights.sum()
+        output = []
+        for _ in range(count):
+            rows = sources[str(prefix_rng.choice(engines, p=weights))]
+            row = rows[int(prefix_rng.integers(len(rows)))]
+            # Supervise incomplete training positives, not evaluation utterances.
+            # Existing endpoint labels are proxies, not phonetic ground truth.
+            end = int(row["keyword_frame"])-int(prefix_rng.integers(15, 36))
+            if end < frames or row["split"] != "training" or row["label"] != 1:
+                raise ValueError("Invalid prefix crop; never clamp across the negative boundary")
+            output.append(sequence(row)[end-frames:end])
+        return np.asarray(output)
+
     def batch(mine=True, augment=True):
         noise = []
         for _ in range(48):
@@ -152,6 +174,10 @@ def main():
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
         x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))
+        if args.prefix_negatives:
+            # Keep baseline RNG and all original draws unchanged. Only replace
+            # the selected confusing-negative slots before the same permutation.
+            x[32:32+args.prefix_negatives] = scale(prefix_sample(args.prefix_negatives))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -321,6 +347,9 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
+              "prefix_negatives": {"count_per_batch": args.prefix_negatives, "seed": 20726,
+                                   "gap_frames_inclusive": [15, 35],
+                                   "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."},
               "spec_augment": {"time_mask_width": args.time_mask_width,
                                "frequency_mask_width": args.frequency_mask_width,
                                "seed": 10726, "fill": 0,
