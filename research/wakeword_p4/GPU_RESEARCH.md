@@ -1843,3 +1843,20 @@ v25继续训练，新增experiments/v25_validate_expanded.sh用于训练及密�
 重建摘要见results/4090-hiesp-aishell-reconstruction-v1.json。
 官方Hi ESP请求阈值0.63的QEMU回放已启动，当前尚无完成分数；
 不得将重建成功当作零误触或验收通过。
+
+
+## Hi ESP中文回放完成与同PCM审计（2026-11-10）
+
+16/16说话人完成，全部CRC和stage104通过，0运行失败。6.913985191小时
+源音频出现1次Hi ESP事件：aishell_S0044，流内261.792秒；
+误触率0.144634386/h，单侧95%上界0.686125930/h。
+相同PCM审计、原特征哈希和Nyx分数哈希/事件重计数全部通过；
+Nyx v19原阈值0.95为0事件，v23阈值0.94140625为3事件，
+v24阈值0.9765625为0事件。Nyx零事件上界0.433285897/h。
+这些是既有中文朗读验证结果，不能外推一般场景或证明Nyx达到Hi ESP；
+各模型工作点并未按一般误触率匹配，正样本比较和独立验收仍未完成。
+
+证据：results/4090-hiesp-aishell-validation-v1.json和
+results/4090-hiesp-nyx-aishell-pcm-audit-v1.json。
+审计工具同时识别早期报告显式validation角色及combined exclusion flag，
+未知/回归/最终报告布局仍拒绝；未改变原分数或阈值。

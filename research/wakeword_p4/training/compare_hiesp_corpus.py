@@ -63,7 +63,14 @@ def main():
     models = []
     for path in a.nyx_report:
         r = json.loads(path.read_text())
-        require(r['split'] == 'validation' and not r['independent_final_scored'] and not r['development_regression_scored'], 'Invalid Nyx evaluation split')
+        # Older frozen-validation reports encode the split in the role and a
+        # combined exclusion flag; reject unknown layouts instead of guessing.
+        modern = (r.get('split') == 'validation'
+                  and r.get('independent_final_scored') is False
+                  and r.get('development_regression_scored') is False)
+        legacy = ('split' not in r and 'development validation' in r['role']
+                  and r.get('testing_or_independent_final_scored') is False)
+        require(modern or legacy, 'Invalid Nyx evaluation split')
         require(r['feature_index_sha256'] == index and r['feature_cache_sha256'] == sha(a.features/'cache.json'), 'Different Nyx provenance')
         speakers = keyed(r['speakers'])
         require(speakers.keys() == features.keys(), 'Incomplete Nyx coverage')
