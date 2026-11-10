@@ -80,7 +80,8 @@ def make_model(architecture='conv24'):
         y = tf.keras.layers.MaxPool2D((14, 1))(y)
         y = tf.keras.layers.Flatten()(y)
         y = tf.keras.layers.Dense(16, activation='relu')(y)
-    elif architecture in ('temporal32-bn', 'temporal32-bn-dropout'):
+    elif architecture in ('temporal32-bn', 'temporal32-bn-dropout', 'temporal32-bn-mean-dropout',
+                          'temporal32-bn-fixed-pool-dropout', 'temporal32-bn-learned-pool-dropout'):
         # Preserve order through a nine-embedding receptive field before
         # pooling positions. BatchNorm folds into the exported convolution.
         y = tf.keras.layers.Conv2D(32, (5, 96), use_bias=False)(x)
@@ -89,7 +90,18 @@ def make_model(architecture='conv24'):
         y = tf.keras.layers.Conv2D(32, (5, 1), use_bias=False)(y)
         y = tf.keras.layers.BatchNormalization(epsilon=1e-3)(y)
         y = tf.keras.layers.ReLU()(y)
-        y = tf.keras.layers.GlobalMaxPool2D()(y)
+        if architecture == 'temporal32-bn-mean-dropout':
+            y = tf.keras.layers.GlobalAveragePooling2D()(y)
+        elif architecture in ('temporal32-bn-fixed-pool-dropout', 'temporal32-bn-learned-pool-dropout'):
+            # Eight temporal positions remain. A uniform frozen filter is the
+            # matched control; its trainable twin can learn where each feature
+            # belongs in the whole phrase, instead of pooling positions away.
+            y = tf.keras.layers.DepthwiseConv2D((8, 1), use_bias=False,
+                depthwise_initializer=tf.keras.initializers.Constant(1 / 8),
+                trainable=architecture == 'temporal32-bn-learned-pool-dropout')(y)
+            y = tf.keras.layers.Flatten()(y)
+        else:
+            y = tf.keras.layers.GlobalMaxPool2D()(y)
         if architecture.endswith('-dropout'):
             y = tf.keras.layers.Dropout(.15)(y)
     else:
@@ -114,7 +126,10 @@ def weighted_loss(labels, predictions, recipe):
 
 
 class Sampler:
-    def __init__(self, rows, seed, mined=None):
+    def __init__(self, rows, seed, mined=None, hard_negative_stride=2):
+        if type(hard_negative_stride) is not int or hard_negative_stride < 2:
+            raise ValueError('Hard-negative stride must be an integer of at least two')
+        self.hard_negative_stride = hard_negative_stride
         self.rng = np.random.default_rng(seed)
         self.hard_rng = np.random.default_rng(seed+1_000_000)
         self.hard = {}
@@ -163,9 +178,9 @@ class Sampler:
                         raise ValueError('Positive endpoint lies outside a warmed history')
                 else:
                     end = int(self.rng.integers(MIN_END, row['frames']+1))
-                if self.hard and kind != 'positive' and _ % 2 == 0:
+                if self.hard and kind != 'positive' and _ % self.hard_negative_stride == 0:
                     # Consume the original random draws first. The separate
-                    # hard RNG keeps positives/random halves identical to control.
+                    # hard RNG keeps positives/unreplaced negatives identical to control.
                     engines = sorted(key[1] for key in self.hard if key[0] == kind)
                     engine = self.hard_rng.choice(engines)
                     group = self.hard[(kind, engine)]
@@ -261,7 +276,8 @@ def main():
         assert mined['backbone_sha256'] == plan['model_sha256']
         for name, digest in mined['feature_indexes'].items():
             assert hashlib.sha256((args.data_root/name/'index.jsonl').read_bytes()).hexdigest() == digest
-    sampler = Sampler(rows, plan['recipe']['seed'], mined['records'] if mined else None)
+    sampler = Sampler(rows, plan['recipe']['seed'], mined['records'] if mined else None,
+                      recipe.get('hard_negative_stride', 2))
     representative_rows = [row for row in rows if row['_feature_directory'] in
                            ('head-features-tts-v1', 'head-features-negatives-v1')]
     representative_sampler = Sampler(representative_rows, plan['recipe']['seed']+1)

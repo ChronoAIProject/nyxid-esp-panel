@@ -1,0 +1,519 @@
+{
+  "scope": "Prespecified training-only quarter hard-negative temporal continuation, original validation and existing development regression; no reserved/physical acceptance.",
+  "teacher_sha256": "616bfbbae5ac4b86694e7a536fc6a1415efc078c8d350bb9ec3593ec337c3a47",
+  "mined_windows": 5268,
+  "hard_negative_stride": 4,
+  "ptq_representatives_byte_identical_to_control": true,
+  "sampler_comparability_tests": 3,
+  "temporal_selected": {
+    "selected_step": 2500,
+    "selected_head_sha256": "98c7a5eccb6e23aa8bd6917b547228861d84deafe211bcde60e1147a26d8b915",
+    "selected": {
+      "threshold": 0.05,
+      "positive_variants": 1196,
+      "recall": 0.9531772575250836,
+      "macro_recall": 0.9279960317460318,
+      "recall_by_engine": {
+        "edge-tts": 0.9017857142857143,
+        "kokoro": 0.9166666666666666,
+        "macos-say": 1.0,
+        "openai-tts": 0.8611111111111112,
+        "piper": 0.9604166666666667
+      },
+      "negative_variants": 1872,
+      "confusing_corpora": {
+        "edge-tts:edge-corpus": {
+          "variants": 280,
+          "false_variants": 33,
+          "false_rate": 0.11785714285714285
+        },
+        "edge-tts:edge-partials": {
+          "variants": 168,
+          "false_variants": 4,
+          "false_rate": 0.023809523809523808
+        },
+        "kokoro:kokoro-corpus": {
+          "variants": 160,
+          "false_variants": 16,
+          "false_rate": 0.1
+        },
+        "kokoro:kokoro-partials": {
+          "variants": 96,
+          "false_variants": 2,
+          "false_rate": 0.020833333333333332
+        },
+        "macos-say:mac-corpus": {
+          "variants": 160,
+          "false_variants": 15,
+          "false_rate": 0.09375
+        },
+        "openai-tts:openai-corpus": {
+          "variants": 48,
+          "false_variants": 3,
+          "false_rate": 0.0625
+        },
+        "piper:synthetic": {
+          "variants": 960,
+          "false_variants": 85,
+          "false_rate": 0.08854166666666667
+        }
+      },
+      "max_corpus_false_rate": 0.11785714285714285,
+      "continuous_hours": 7.303777777777778,
+      "continuous_events": 1,
+      "continuous_events_per_hour": 0.13691544710499892,
+      "continuous_events_per_hour_upper_95": 0.6495083315409862,
+      "positive_latency_median_ms": 94.31250000000003,
+      "positive_latency_p95_ms": 219.50000000000003
+    }
+  },
+  "equal_mean": {
+    "plan_sha256": "33050daca8aec8d2805d01cb21ce3c3a4109504ba1c75491232bba40dd5448d6",
+    "selected": {
+      "threshold": 0.3,
+      "positive_variants": 1196,
+      "recall": 0.9581939799331104,
+      "macro_recall": 0.9417261904761904,
+      "recall_by_engine": {
+        "edge-tts": 0.9107142857142857,
+        "kokoro": 1.0,
+        "macos-say": 1.0,
+        "openai-tts": 0.8333333333333334,
+        "piper": 0.9645833333333333
+      },
+      "negative_variants": 1872,
+      "confusing_corpora": {
+        "edge-tts:edge-corpus": {
+          "variants": 280,
+          "false_variants": 39,
+          "false_rate": 0.1392857142857143
+        },
+        "edge-tts:edge-partials": {
+          "variants": 168,
+          "false_variants": 4,
+          "false_rate": 0.023809523809523808
+        },
+        "kokoro:kokoro-corpus": {
+          "variants": 160,
+          "false_variants": 14,
+          "false_rate": 0.0875
+        },
+        "kokoro:kokoro-partials": {
+          "variants": 96,
+          "false_variants": 1,
+          "false_rate": 0.010416666666666666
+        },
+        "macos-say:mac-corpus": {
+          "variants": 160,
+          "false_variants": 16,
+          "false_rate": 0.1
+        },
+        "openai-tts:openai-corpus": {
+          "variants": 48,
+          "false_variants": 7,
+          "false_rate": 0.14583333333333334
+        },
+        "piper:synthetic": {
+          "variants": 960,
+          "false_variants": 101,
+          "false_rate": 0.10520833333333333
+        }
+      },
+      "max_corpus_false_rate": 0.14583333333333334,
+      "continuous_hours": 7.303777777777778,
+      "continuous_events": 2,
+      "continuous_events_per_hour": 0.27383089420999784,
+      "continuous_events_per_hour_upper_95": 0.8619913986194038,
+      "positive_latency_median_ms": 140.75000000000014,
+      "positive_latency_p95_ms": 255.56249999999991
+    },
+    "development": {
+      "paired": {
+        "hi_esp": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 48,
+            "events": 48
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 32,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "ordinary_and_near_word_negatives": {
+            "clips": 250,
+            "clips_with_event": 14,
+            "events": 14
+          },
+          "shared_negative_texts": {
+            "clips": 190,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "negative_events_by_text": {
+            "He connects the next two cables.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hello, can you hear me?": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Alex.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Max.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Mix.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Next.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Nexus.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Nice.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Nick.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Siri.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Six.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hi ASP.": {
+              "clips": 10,
+              "clips_with_event": 2,
+              "events": 2
+            },
+            "Hi ESB.": {
+              "clips": 10,
+              "clips_with_event": 9,
+              "events": 9
+            },
+            "Hi EST.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "Hi SP.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "High speed.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "How can I help you?": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I heard Nick speaking.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I mixed the ingredients.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I see ESP.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "I will be back in six minutes.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Please check the volume.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Thanks, that is all.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "The next thing is ready.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "The television is playing.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            }
+          },
+          "hi_esp_specific_near_words_unvalidated_pronunciation": {
+            "clips": 60,
+            "clips_with_event": 14,
+            "events": 14
+          },
+          "other_wake_phrase": {
+            "clips": 50,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": -18.4375,
+          "latency_ms_from_estimated_end_range": [
+            -99.5,
+            126.9375
+          ]
+        },
+        "hey_nyx": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 45,
+            "events": 45
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 44,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "ordinary_and_near_word_negatives": {
+            "clips": 250,
+            "clips_with_event": 21,
+            "events": 21
+          },
+          "shared_negative_texts": {
+            "clips": 190,
+            "clips_with_event": 21,
+            "events": 21
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 20,
+            "events": 20
+          },
+          "negative_events_by_text": {
+            "He connects the next two cables.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hello, can you hear me?": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Alex.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "Hey Max.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "Hey Mix.": {
+              "clips": 10,
+              "clips_with_event": 6,
+              "events": 6
+            },
+            "Hey Next.": {
+              "clips": 10,
+              "clips_with_event": 7,
+              "events": 7
+            },
+            "Hey Nexus.": {
+              "clips": 10,
+              "clips_with_event": 3,
+              "events": 3
+            },
+            "Hey Nice.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Nick.": {
+              "clips": 10,
+              "clips_with_event": 2,
+              "events": 2
+            },
+            "Hey Siri.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hey Six.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hi ASP.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hi ESB.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hi EST.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Hi SP.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "High speed.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "How can I help you?": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I heard Nick speaking.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I mixed the ingredients.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I see ESP.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "I will be back in six minutes.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Please check the volume.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "Thanks, that is all.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            },
+            "The next thing is ready.": {
+              "clips": 10,
+              "clips_with_event": 1,
+              "events": 1
+            },
+            "The television is playing.": {
+              "clips": 10,
+              "clips_with_event": 0,
+              "events": 0
+            }
+          },
+          "hi_esp_specific_near_words_unvalidated_pronunciation": {
+            "clips": 60,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "other_wake_phrase": {
+            "clips": 50,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": 119.5625,
+          "latency_ms_from_estimated_end_range": [
+            -82.5,
+            321.4375
+          ]
+        },
+        "threshold": 0.3,
+        "plan_sha256": "daa0608d08fcf2447f462d976a06929adef54519dd955e82a7022be9f4941185"
+      },
+      "english": {
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 5.549022395833333
+        },
+        "hey_nyx": {
+          "events": 1,
+          "evaluated_hours": 5.5485999999999995,
+          "false_per_hour": 0.18022564250441556
+        },
+        "threshold": 0.3,
+        "plan_sha256": "daa0608d08fcf2447f462d976a06929adef54519dd955e82a7022be9f4941185"
+      },
+      "mandarin": {
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 1.2938333333333334
+        },
+        "hey_nyx": {
+          "events": 0,
+          "evaluated_hours": 1.2937555555555558,
+          "false_per_hour": 0.0
+        },
+        "threshold": 0.3,
+        "plan_sha256": "daa0608d08fcf2447f462d976a06929adef54519dd955e82a7022be9f4941185"
+      }
+    }
+  },
+  "accepted": false,
+  "decision": "Reject replacement: paired45/50 below frozen original46/50 andHiESP48/50, ordinary1/100, English1/5.549h andMandarin0/1.294h unchanged from frozen original. No independent/reserved data scored, no threshold retuning."
+}

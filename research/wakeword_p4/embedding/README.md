@@ -210,6 +210,12 @@ the mining index/backbone, training-only labels, feature hashes and warmed
 window boundaries. Separate RNG streams consume identical ordinary draws
 before replacing half of each negative category. Positives, the other random
 halves and all512 PTQ representatives stay identical to control.
+The optional recipe field `hard_negative_stride` can replace a smaller share:
+`4` replaces one quarter of each negative category; the historical default
+remains`2`. The same original draws are consumed before replacement. Run
+`python -m unittest test_head_sampler.py` from this directory to check that
+labels, positives and the unmodified draws remain comparable, invalid strides
+and held-out mining are rejected, and the default half-mining path is unchanged.
 
 The5,238-window matched experiment fails: control41/50 versus mined35/50
 paired recall; English false events6 versus1, Mandarin2 versus2. The smaller
@@ -403,3 +409,46 @@ rewritten graphs must reproduce the114frozen streaming fixtures exactly.
 The folded graph must then pass P4 numerical checks independently. This is
 a dispatch optimization and does not improve the classifier's46/50 paired
 recall or change its frozen threshold.
+
+### Controlled follow-ups that did not improve recognition
+
+The temporal Qwen control/screen continuations use identical initial weights,
+seed727, original validation and PTQ representatives. The screened equal mean
+still detects46/50 paired wakes, with6 English and2 Mandarin false events.
+Reject it; adding screened synthetic conditions did not improve the frozen
+46/50 candidate. See `../results/embedding-temporal-qwen-v3.json`.
+
+Quarter-hard temporal continuation replaces only one quarter of negative
+training draws with5268 training-only mined windows. Its PTQ representatives
+remain byte-identical to control. The equal mean falls to45/50, with ordinary
+1/100, English1/5.549h and Mandarin0/1.294h false events. Reject it; reducing
+training mining intensity did not recover the recognition gap. See
+`../results/embedding-temporal-hard-quarter-v3.json`.
+
+Replacing positional maximum with an average preserves all original learned
+tensor shapes and initialization. Original validation freezes step7500 and
+threshold.5; the fixed Dense/temporal equal mean freezes.4 before development
+scoring. It remains46/50, ordinary1/100, English1/5.549h, Mandarin0/1.294h.
+There is no measured improvement over the prior equal mean. See
+`../results/embedding-temporal-mean-pool-v3.json`. Reserved scores stay unread.
+
+The next prespecified positional-pooling comparison uses a bias-free8x1
+depthwise filter over the32 temporal channels. Both arms start with exactly
+uniform1/8 weights and identical original convolution/BatchNorm/Dense tensors.
+One freezes the filter; the other lets it learn feature positions. This tests
+whether pooling away position loses phrase-order information. It adds neither
+a microphone stream nor an audio transformation. It is a research hypothesis,
+not established improvement or MCU compatibility.
+
+`prepare_positional_pool.py --source <verified-temporal.keras>
+--source-sha256 <sha> --representatives <training-only.npy>
+--representatives-sha256 <sha> --output <fresh-private-directory>` prepares
+the two initial models and a hash/equivalence report. All512 training fixtures
+must have identical arm predictions and agree with average pooling within
+3e-6 on both pre-Dense features and output probabilities. The current fixtures
+are exactly equal. Bind the resulting model hashes in the two frozen arm
+plans before running the existing `train_head.py` and `evaluate_head.py`.
+The common schedule, source partitions and selection rule are in
+`head-positional-pool-comparison-plan-v1.json`; no reserved data may be used
+to fit or select. A promising result still needs frozen development regression,
+separate P4 depthwise numeric/layout checks and the whole-app/voice gates.

@@ -1,0 +1,41 @@
+{
+  "scope": "Controlled upstream ESP-NN follow-up with the same explicit-padding graph; not adopted",
+  "upstream_revision": "902dfeb2a2240f05d17ce630024c37442a5cfd1d",
+  "models": [
+    {
+      "name": "internal96k_model_flash",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 151533,
+      "p95_us": 151558,
+      "max_us": 151638,
+      "mismatches": 0,
+      "max_output_delta": 0
+    },
+    {
+      "name": "internal96k_model_psram",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 151587,
+      "p95_us": 151613,
+      "max_us": 151685,
+      "mismatches": 0,
+      "max_output_delta": 0
+    },
+    {
+      "name": "psram96k_model_psram",
+      "calls": 114,
+      "arena_allocated": 98304,
+      "arena_used": 77676,
+      "p50_us": 151969,
+      "p95_us": 151995,
+      "max_us": 152003,
+      "mismatches": 0,
+      "max_output_delta": 0
+    }
+  ],
+  "restored": true,
+  "conclusion": "Exact outputs but151..152ms versus36..37ms with pinned1.1.2. Reject upgrade for this candidate; release dependency pins unchanged."
+}

@@ -1,0 +1,47 @@
+{
+  "scope": "Prespecified matched positional-pooling ablation; frozen before training/scores. Same original training/validation data and seed; reserved scores excluded.",
+  "hypothesis": "Whole-phrase temporal order may be lost by global pooling. A small depthwise filter over the eight remaining temporal positions may improve discrimination without changing the backbone, PCM, cadence or using a second stream. No improvement assumed.",
+  "arms": {
+    "control": {
+      "architecture": "temporal32-bn-fixed-pool-dropout",
+      "pool_trainable": false
+    },
+    "learned": {
+      "architecture": "temporal32-bn-learned-pool-dropout",
+      "pool_trainable": true
+    }
+  },
+  "initialization": {
+    "source_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+    "all_original_learned_tensors_copied_exactly": true,
+    "new_pool_weights": "8x1x32x1 each exactly1/8; no bias",
+    "inference_equivalence_gate": "On fixed training representatives, frozen and learnable initial heads identical; within3e-6 of average-pooling topology. Export quantization remains a separate check."
+  },
+  "recipe": {
+    "seed": 727,
+    "steps": 10000,
+    "checkpoints": [
+      2500,
+      5000,
+      7500,
+      10000
+    ],
+    "batch": 128,
+    "positive": 32,
+    "tts_negative": 48,
+    "ambient_negative": 48,
+    "negative_weight": 5,
+    "learning_rate": 0.0001,
+    "learning_rate_half_factor": 0.3,
+    "learning_rate_eighty_percent_factor": 0.1
+  },
+  "feature_inputs": [
+    {
+      "directory": "head-features-environment-v2",
+      "index_sha256": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+      "complete_sha256": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c"
+    }
+  ],
+  "selection": "Select highest macro recall on validation at <=.5 continuous false events/hour, tie lower FAR then lower confusing rate then earlier checkpoint. Retain strict/near-phrase diagnostics; freeze before existing paired/long regression. No reserved scores, no acceptance without physical/resource/voice-chain tests.",
+  "followup_gate": "Compare original-validation checkpoint/threshold, then freeze before old development regression. New depthwise topology requires separate MCU numerical/resource proof if promising. No acceptance from training or validation alone."
+}

@@ -1,5 +1,5 @@
 {
-  "scope": "Actual full-application flash fit and idle scheduling; failed resource experiment, no recognition acceptance",
+  "scope": "Actual full-application flash fit, resource bottleneck attribution and controlled fixes; no recognition acceptance",
   "image_bytes": 6445840,
   "slot_bytes": 6881280,
   "slot_free_bytes": 435440,
@@ -352,5 +352,1354 @@
     "cadence_passed": false,
     "restored": true,
     "conclusion": "Equivalent backbone dispatch cuts mean inference~118ms to~72ms and100-step wall~14.9s to~10.5s. Still fails80ms p95 and complete pipeline cadence. No classifier/recognition acceptance."
+  },
+  "scheduler_profile": {
+    "restored": true,
+    "tasks": [
+      {
+        "step": 200,
+        "task": "voice_wake",
+        "core": 0,
+        "priority": 4,
+        "cpu_us": 9444251,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "IDLE0",
+        "core": 0,
+        "priority": 0,
+        "cpu_us": 277082,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "IDLE1",
+        "core": 1,
+        "priority": 0,
+        "cpu_us": 6136621,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "lvgl",
+        "core": 1,
+        "priority": 10,
+        "cpu_us": 297533,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "httpd",
+        "core": 0,
+        "priority": 5,
+        "cpu_us": 156645,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "sdio_read",
+        "core": 0,
+        "priority": 23,
+        "cpu_us": 156779,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "swdraw",
+        "core": 2147483647,
+        "priority": 3,
+        "cpu_us": 4003719,
+        "wall_us": 10496404
+      },
+      {
+        "step": 200,
+        "task": "esp_timer",
+        "core": 0,
+        "priority": 22,
+        "cpu_us": 318169,
+        "wall_us": 10496404
+      },
+      {
+        "step": 300,
+        "task": "voice_wake",
+        "core": 0,
+        "priority": 4,
+        "cpu_us": 9505930,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "swdraw",
+        "core": 2147483647,
+        "priority": 3,
+        "cpu_us": 4131980,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "IDLE0",
+        "core": 0,
+        "priority": 0,
+        "cpu_us": 330916,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "IDLE1",
+        "core": 1,
+        "priority": 0,
+        "cpu_us": 6277648,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "sdio_read",
+        "core": 0,
+        "priority": 23,
+        "cpu_us": 262869,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "httpd",
+        "core": 0,
+        "priority": 5,
+        "cpu_us": 166455,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "lvgl",
+        "core": 1,
+        "priority": 10,
+        "cpu_us": 310909,
+        "wall_us": 10808171
+      },
+      {
+        "step": 300,
+        "task": "esp_timer",
+        "core": 0,
+        "priority": 22,
+        "cpu_us": 334510,
+        "wall_us": 10808171
+      }
+    ],
+    "conclusion": "Synchronous voice_wake uses~9.45s CPU in10.5s wall for8s of audio. It is computation-bound on one core; separating the existing single producer from ordered model consumption is a proposed experiment, not yet an accepted pipeline."
+  },
+  "asynchronous_consumer": {
+    "timings": [
+      {
+        "board_ms": 22807,
+        "step": 100,
+        "mean_us": 73189,
+        "p50_us": 60871,
+        "p95_us": 122791,
+        "max_us": 130446,
+        "over80ms": 36
+      },
+      {
+        "board_ms": 30803,
+        "step": 200,
+        "mean_us": 74724,
+        "p50_us": 66037,
+        "p95_us": 113983,
+        "max_us": 130446,
+        "over80ms": 77
+      },
+      {
+        "board_ms": 38807,
+        "step": 300,
+        "mean_us": 75236,
+        "p50_us": 73223,
+        "p95_us": 113530,
+        "max_us": 130446,
+        "over80ms": 115
+      },
+      {
+        "board_ms": 46805,
+        "step": 400,
+        "mean_us": 75504,
+        "p50_us": 68719,
+        "p95_us": 117627,
+        "max_us": 130446,
+        "over80ms": 153
+      },
+      {
+        "board_ms": 54818,
+        "step": 500,
+        "mean_us": 75765,
+        "p50_us": 68515,
+        "p95_us": 115739,
+        "max_us": 130446,
+        "over80ms": 191
+      },
+      {
+        "board_ms": 62889,
+        "step": 600,
+        "mean_us": 76275,
+        "p50_us": 71232,
+        "p95_us": 115555,
+        "max_us": 193215,
+        "over80ms": 234
+      },
+      {
+        "board_ms": 71000,
+        "step": 700,
+        "mean_us": 76699,
+        "p50_us": 74491,
+        "p95_us": 117303,
+        "max_us": 193215,
+        "over80ms": 278
+      }
+    ],
+    "stages": [
+      {
+        "step": 100,
+        "frontend_us": 4140,
+        "backbone_us": 63004,
+        "dense_us": 4359,
+        "temporal_us": 1565,
+        "core": 1
+      },
+      {
+        "step": 200,
+        "frontend_us": 4284,
+        "backbone_us": 63593,
+        "dense_us": 5024,
+        "temporal_us": 1704,
+        "core": 1
+      },
+      {
+        "step": 300,
+        "frontend_us": 4304,
+        "backbone_us": 63804,
+        "dense_us": 5220,
+        "temporal_us": 1789,
+        "core": 1
+      },
+      {
+        "step": 400,
+        "frontend_us": 4301,
+        "backbone_us": 63902,
+        "dense_us": 5348,
+        "temporal_us": 1835,
+        "core": 1
+      },
+      {
+        "step": 500,
+        "frontend_us": 4347,
+        "backbone_us": 64036,
+        "dense_us": 5390,
+        "temporal_us": 1871,
+        "core": 1
+      },
+      {
+        "step": 600,
+        "frontend_us": 4396,
+        "backbone_us": 64383,
+        "dense_us": 5473,
+        "temporal_us": 1902,
+        "core": 1
+      },
+      {
+        "step": 700,
+        "frontend_us": 4436,
+        "backbone_us": 64700,
+        "dense_us": 5513,
+        "temporal_us": 1930,
+        "core": 1
+      }
+    ],
+    "cadence_windows": [
+      {
+        "steps": 100,
+        "elapsed_ms": 7996,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8004,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7998,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8013,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8071,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8111,
+        "expected_ms": 8000
+      }
+    ],
+    "queue_windows": [
+      {
+        "consumed": 100,
+        "highwater": 2,
+        "max_delay_us": 103397,
+        "mean_delay_us": 30159
+      },
+      {
+        "consumed": 200,
+        "highwater": 2,
+        "max_delay_us": 150143,
+        "mean_delay_us": 35433
+      },
+      {
+        "consumed": 300,
+        "highwater": 2,
+        "max_delay_us": 152927,
+        "mean_delay_us": 38991
+      },
+      {
+        "consumed": 400,
+        "highwater": 2,
+        "max_delay_us": 152927,
+        "mean_delay_us": 39783
+      },
+      {
+        "consumed": 500,
+        "highwater": 3,
+        "max_delay_us": 174398,
+        "mean_delay_us": 40991
+      },
+      {
+        "consumed": 600,
+        "highwater": 3,
+        "max_delay_us": 234393,
+        "mean_delay_us": 54387
+      }
+    ],
+    "inference_margin_passed": false,
+    "pipeline_cadence_passed": true,
+    "uart_failure": true,
+    "restored": true,
+    "pcm_sequence_and_crc_checked": true,
+    "queue_capacity_blocks": 4,
+    "sample_rate_changed": false,
+    "second_microphone_stream_created": false,
+    "accepted": false,
+    "conclusion": "Initially sustains8s/100steps but queue drifts and overflows after~54s. Fail; do not increase capacity or skip/overwrite PCM to hide real-time failure."
+  },
+  "hot_code_internal_memory": {
+    "scope": "Idle whole-app resources/scheduling only; no recognition acceptance",
+    "timings": [
+      {
+        "board_ms": 21569,
+        "step": 100,
+        "mean_us": 73121,
+        "p50_us": 66705,
+        "p95_us": 120378,
+        "max_us": 125619,
+        "over80ms": 37
+      },
+      {
+        "board_ms": 29567,
+        "step": 200,
+        "mean_us": 75385,
+        "p50_us": 71988,
+        "p95_us": 113176,
+        "max_us": 125619,
+        "over80ms": 80
+      },
+      {
+        "board_ms": 37572,
+        "step": 300,
+        "mean_us": 75576,
+        "p50_us": 70619,
+        "p95_us": 112628,
+        "max_us": 125619,
+        "over80ms": 121
+      },
+      {
+        "board_ms": 45568,
+        "step": 400,
+        "mean_us": 75637,
+        "p50_us": 71229,
+        "p95_us": 112549,
+        "max_us": 125619,
+        "over80ms": 162
+      },
+      {
+        "board_ms": 53573,
+        "step": 500,
+        "mean_us": 75686,
+        "p50_us": 70621,
+        "p95_us": 113709,
+        "max_us": 125619,
+        "over80ms": 203
+      },
+      {
+        "board_ms": 61606,
+        "step": 600,
+        "mean_us": 76151,
+        "p50_us": 76124,
+        "p95_us": 113032,
+        "max_us": 175354,
+        "over80ms": 246
+      },
+      {
+        "board_ms": 69603,
+        "step": 700,
+        "mean_us": 76428,
+        "p50_us": 71596,
+        "p95_us": 113788,
+        "max_us": 175354,
+        "over80ms": 288
+      },
+      {
+        "board_ms": 77642,
+        "step": 800,
+        "mean_us": 76638,
+        "p50_us": 76008,
+        "p95_us": 110824,
+        "max_us": 181801,
+        "over80ms": 336
+      },
+      {
+        "board_ms": 85655,
+        "step": 900,
+        "mean_us": 76821,
+        "p50_us": 71125,
+        "p95_us": 115843,
+        "max_us": 181801,
+        "over80ms": 378
+      },
+      {
+        "board_ms": 93640,
+        "step": 1000,
+        "mean_us": 76940,
+        "p50_us": 71736,
+        "p95_us": 115063,
+        "max_us": 188026,
+        "over80ms": 422
+      },
+      {
+        "board_ms": 101614,
+        "step": 1100,
+        "mean_us": 77021,
+        "p50_us": 73565,
+        "p95_us": 115181,
+        "max_us": 188026,
+        "over80ms": 464
+      },
+      {
+        "board_ms": 109599,
+        "step": 1200,
+        "mean_us": 77056,
+        "p50_us": 75903,
+        "p95_us": 112383,
+        "max_us": 188026,
+        "over80ms": 508
+      },
+      {
+        "board_ms": 117627,
+        "step": 1300,
+        "mean_us": 77151,
+        "p50_us": 71415,
+        "p95_us": 116274,
+        "max_us": 188026,
+        "over80ms": 550
+      },
+      {
+        "board_ms": 125624,
+        "step": 1400,
+        "mean_us": 77139,
+        "p50_us": 70995,
+        "p95_us": 113921,
+        "max_us": 188026,
+        "over80ms": 590
+      },
+      {
+        "board_ms": 133664,
+        "step": 1500,
+        "mean_us": 77224,
+        "p50_us": 73208,
+        "p95_us": 115072,
+        "max_us": 188026,
+        "over80ms": 632
+      }
+    ],
+    "passed": false,
+    "stages": [
+      {
+        "step": 100,
+        "frontend_us": 4052,
+        "backbone_us": 62955,
+        "dense_us": 4474,
+        "temporal_us": 1549,
+        "core": 1
+      },
+      {
+        "step": 200,
+        "frontend_us": 4272,
+        "backbone_us": 64202,
+        "dense_us": 5147,
+        "temporal_us": 1663,
+        "core": 1
+      },
+      {
+        "step": 300,
+        "frontend_us": 4282,
+        "backbone_us": 64110,
+        "dense_us": 5359,
+        "temporal_us": 1721,
+        "core": 1
+      },
+      {
+        "step": 400,
+        "frontend_us": 4252,
+        "backbone_us": 64056,
+        "dense_us": 5477,
+        "temporal_us": 1744,
+        "core": 1
+      },
+      {
+        "step": 500,
+        "frontend_us": 4269,
+        "backbone_us": 64062,
+        "dense_us": 5485,
+        "temporal_us": 1762,
+        "core": 1
+      },
+      {
+        "step": 600,
+        "frontend_us": 4294,
+        "backbone_us": 64440,
+        "dense_us": 5515,
+        "temporal_us": 1793,
+        "core": 1
+      },
+      {
+        "step": 700,
+        "frontend_us": 4322,
+        "backbone_us": 64583,
+        "dense_us": 5572,
+        "temporal_us": 1840,
+        "core": 1
+      },
+      {
+        "step": 800,
+        "frontend_us": 4363,
+        "backbone_us": 64727,
+        "dense_us": 5585,
+        "temporal_us": 1851,
+        "core": 1
+      },
+      {
+        "step": 900,
+        "frontend_us": 4389,
+        "backbone_us": 64841,
+        "dense_us": 5609,
+        "temporal_us": 1869,
+        "core": 1
+      },
+      {
+        "step": 1000,
+        "frontend_us": 4461,
+        "backbone_us": 64858,
+        "dense_us": 5636,
+        "temporal_us": 1873,
+        "core": 1
+      },
+      {
+        "step": 1100,
+        "frontend_us": 4481,
+        "backbone_us": 64876,
+        "dense_us": 5658,
+        "temporal_us": 1892,
+        "core": 1
+      },
+      {
+        "step": 1200,
+        "frontend_us": 4481,
+        "backbone_us": 64897,
+        "dense_us": 5678,
+        "temporal_us": 1887,
+        "core": 1
+      },
+      {
+        "step": 1300,
+        "frontend_us": 4481,
+        "backbone_us": 64964,
+        "dense_us": 5694,
+        "temporal_us": 1899,
+        "core": 1
+      },
+      {
+        "step": 1400,
+        "frontend_us": 4478,
+        "backbone_us": 64944,
+        "dense_us": 5701,
+        "temporal_us": 1902,
+        "core": 1
+      },
+      {
+        "step": 1500,
+        "frontend_us": 4480,
+        "backbone_us": 65012,
+        "dense_us": 5715,
+        "temporal_us": 1902,
+        "core": 1
+      }
+    ],
+    "cadence_windows": [
+      {
+        "steps": 100,
+        "elapsed_ms": 7998,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8005,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7996,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8005,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8033,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7997,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8039,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8013,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7985,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7974,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7985,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8028,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7997,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8040,
+        "expected_ms": 8000
+      }
+    ],
+    "queue_windows": [
+      {
+        "consumed": 100,
+        "highwater": 2,
+        "max_delay_us": 97841,
+        "mean_delay_us": 35515
+      },
+      {
+        "consumed": 200,
+        "highwater": 2,
+        "max_delay_us": 163693,
+        "mean_delay_us": 39046
+      },
+      {
+        "consumed": 300,
+        "highwater": 3,
+        "max_delay_us": 168031,
+        "mean_delay_us": 40951
+      },
+      {
+        "consumed": 400,
+        "highwater": 3,
+        "max_delay_us": 168031,
+        "mean_delay_us": 41848
+      },
+      {
+        "consumed": 500,
+        "highwater": 3,
+        "max_delay_us": 169524,
+        "mean_delay_us": 42929
+      },
+      {
+        "consumed": 600,
+        "highwater": 3,
+        "max_delay_us": 193968,
+        "mean_delay_us": 51990
+      },
+      {
+        "consumed": 700,
+        "highwater": 3,
+        "max_delay_us": 237639,
+        "mean_delay_us": 60367
+      },
+      {
+        "consumed": 800,
+        "highwater": 3,
+        "max_delay_us": 238461,
+        "mean_delay_us": 67419
+      },
+      {
+        "consumed": 900,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 75081
+      },
+      {
+        "consumed": 1000,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 79892
+      },
+      {
+        "consumed": 1100,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 80762
+      },
+      {
+        "consumed": 1200,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 80327
+      },
+      {
+        "consumed": 1300,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 82326
+      },
+      {
+        "consumed": 1400,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 81998
+      },
+      {
+        "consumed": 1500,
+        "highwater": 4,
+        "max_delay_us": 240708,
+        "mean_delay_us": 85071
+      }
+    ],
+    "inference_margin_passed": false,
+    "pipeline_cadence_passed": true,
+    "uart_failure": false,
+    "failure": "Inference does not fit the 80 ms audio cadence with scheduling margin",
+    "elapsed_seconds": 120.55722087493632,
+    "restored": true,
+    "conclusion": "No material inference speedup: mean77ms andp95~115ms;120s pipeline cadence preserved but4-block queue reachescapacity. Original margin gate fails; not adopted as solution."
+  },
+  "conditional_style_async_iram": {
+    "image_sha256": "eccd1cc3d79c45f7e8052cca95a44b09ff27530984ece572667347ffcb2a5cd3",
+    "elf_sha256": "e2bc425850d4b77805f7afcb211d76e44925d65349ed65862a0f1627ce6fac8e",
+    "image_bytes": 6450944,
+    "seconds": 120.55876020796131,
+    "original_gate_passed": true,
+    "timings": [
+      {
+        "board_ms": 21030,
+        "step": 100,
+        "mean_us": 52529,
+        "p50_us": 51709,
+        "p95_us": 62637,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 29024,
+        "step": 200,
+        "mean_us": 52315,
+        "p50_us": 51896,
+        "p95_us": 55216,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 37019,
+        "step": 300,
+        "mean_us": 52308,
+        "p50_us": 52045,
+        "p95_us": 54654,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 45030,
+        "step": 400,
+        "mean_us": 52282,
+        "p50_us": 51877,
+        "p95_us": 56067,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 53025,
+        "step": 500,
+        "mean_us": 52335,
+        "p50_us": 52256,
+        "p95_us": 55787,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 61017,
+        "step": 600,
+        "mean_us": 52322,
+        "p50_us": 52146,
+        "p95_us": 54663,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 69029,
+        "step": 700,
+        "mean_us": 52309,
+        "p50_us": 51994,
+        "p95_us": 54526,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 77024,
+        "step": 800,
+        "mean_us": 52299,
+        "p50_us": 51909,
+        "p95_us": 55507,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 85019,
+        "step": 900,
+        "mean_us": 52289,
+        "p50_us": 51956,
+        "p95_us": 55169,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 93031,
+        "step": 1000,
+        "mean_us": 52268,
+        "p50_us": 51946,
+        "p95_us": 54531,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 101026,
+        "step": 1100,
+        "mean_us": 52256,
+        "p50_us": 52061,
+        "p95_us": 54356,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 109019,
+        "step": 1200,
+        "mean_us": 52252,
+        "p50_us": 51997,
+        "p95_us": 55907,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 117029,
+        "step": 1300,
+        "mean_us": 52262,
+        "p50_us": 52186,
+        "p95_us": 54903,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 125024,
+        "step": 1400,
+        "mean_us": 52258,
+        "p50_us": 52120,
+        "p95_us": 54373,
+        "max_us": 129361,
+        "over80ms": 4
+      },
+      {
+        "board_ms": 133017,
+        "step": 1500,
+        "mean_us": 52251,
+        "p50_us": 51979,
+        "p95_us": 55708,
+        "max_us": 129361,
+        "over80ms": 4
+      }
+    ],
+    "pipeline_aggregate": {
+      "elapsed_ms": 111987,
+      "expected_ms": 112000
+    },
+    "pipeline_cadence_passed": true,
+    "inference_margin_passed": true,
+    "uart_failure": false,
+    "capture_hardware_loss_measured": false,
+    "minimum_heap": {
+      "free": 19954268,
+      "spiram_free": 19843672,
+      "dma_free": 101263,
+      "dma_largest_free": 61440,
+      "internal_free": 140875,
+      "internal_largest_free": 61440
+    },
+    "restored": true
+  },
+  "conditional_style_synchronous_verbose": {
+    "image_sha256": "3d8ddf54bef6c1dc634936e000a91fa8678e08f713b74bc342ff9eaa16239d36",
+    "elf_sha256": "ed59f6e594b918c13cde49553a519826897664c8ad00ff44225873df83d8997b",
+    "image_bytes": 6448688,
+    "seconds": 120.16347849997692,
+    "original_gate_passed": true,
+    "timings": [
+      {
+        "board_ms": 21214,
+        "step": 100,
+        "mean_us": 51417,
+        "p50_us": 48788,
+        "p95_us": 64436,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 29346,
+        "step": 200,
+        "mean_us": 50736,
+        "p50_us": 48739,
+        "p95_us": 61582,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 37520,
+        "step": 300,
+        "mean_us": 50444,
+        "p50_us": 48863,
+        "p95_us": 53095,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 45696,
+        "step": 400,
+        "mean_us": 50161,
+        "p50_us": 48371,
+        "p95_us": 52357,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 53884,
+        "step": 500,
+        "mean_us": 50146,
+        "p50_us": 48737,
+        "p95_us": 65113,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 62075,
+        "step": 600,
+        "mean_us": 50178,
+        "p50_us": 49111,
+        "p95_us": 63591,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 70265,
+        "step": 700,
+        "mean_us": 50085,
+        "p50_us": 48619,
+        "p95_us": 53025,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 78470,
+        "step": 800,
+        "mean_us": 50024,
+        "p50_us": 48443,
+        "p95_us": 61465,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 86660,
+        "step": 900,
+        "mean_us": 50025,
+        "p50_us": 48917,
+        "p95_us": 61654,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 94851,
+        "step": 1000,
+        "mean_us": 50019,
+        "p50_us": 49100,
+        "p95_us": 53088,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 103040,
+        "step": 1100,
+        "mean_us": 49991,
+        "p50_us": 48713,
+        "p95_us": 54083,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 111230,
+        "step": 1200,
+        "mean_us": 49970,
+        "p50_us": 48385,
+        "p95_us": 63303,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 119405,
+        "step": 1300,
+        "mean_us": 49980,
+        "p50_us": 48794,
+        "p95_us": 63578,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 127625,
+        "step": 1400,
+        "mean_us": 50012,
+        "p50_us": 49015,
+        "p95_us": 64317,
+        "max_us": 148417,
+        "over80ms": 3
+      },
+      {
+        "board_ms": 135816,
+        "step": 1500,
+        "mean_us": 49996,
+        "p50_us": 48941,
+        "p95_us": 52519,
+        "max_us": 148417,
+        "over80ms": 3
+      }
+    ],
+    "pipeline_aggregate": {
+      "elapsed_ms": 114602,
+      "expected_ms": 112000
+    },
+    "pipeline_cadence_passed": false,
+    "inference_margin_passed": true,
+    "uart_failure": false,
+    "capture_hardware_loss_measured": false,
+    "minimum_heap": {
+      "free": 19879876,
+      "spiram_free": 19826992,
+      "dma_free": 143411,
+      "dma_largest_free": 126976,
+      "internal_free": 183023,
+      "internal_largest_free": 126976
+    },
+    "restored": true
+  },
+  "conditional_style_synchronous_quiet": {
+    "image_sha256": "6a95bab2e119611f7d31ec4d718d81eb3ac3c4218a7df9030689fbbbded25fa1",
+    "elf_sha256": "59578dcdbe65ff6f3b5036d15df66547fc5017001d4f75184ba7fddf625f0ddd",
+    "image_bytes": 6446880,
+    "seconds": 120.30096316698473,
+    "original_gate_passed": true,
+    "timings": [
+      {
+        "board_ms": 21262,
+        "step": 100,
+        "mean_us": 49207,
+        "p50_us": 48051,
+        "p95_us": 61422,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 29346,
+        "step": 200,
+        "mean_us": 49403,
+        "p50_us": 48014,
+        "p95_us": 64533,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 37389,
+        "step": 300,
+        "mean_us": 49369,
+        "p50_us": 48181,
+        "p95_us": 61053,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 45444,
+        "step": 400,
+        "mean_us": 49443,
+        "p50_us": 48680,
+        "p95_us": 54502,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 53483,
+        "step": 500,
+        "mean_us": 49485,
+        "p50_us": 48723,
+        "p95_us": 52708,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 61551,
+        "step": 600,
+        "mean_us": 49465,
+        "p50_us": 48226,
+        "p95_us": 62875,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 69621,
+        "step": 700,
+        "mean_us": 49495,
+        "p50_us": 47924,
+        "p95_us": 64775,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 77679,
+        "step": 800,
+        "mean_us": 49569,
+        "p50_us": 48811,
+        "p95_us": 63211,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 85732,
+        "step": 900,
+        "mean_us": 49598,
+        "p50_us": 48379,
+        "p95_us": 63549,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 93772,
+        "step": 1000,
+        "mean_us": 49532,
+        "p50_us": 48041,
+        "p95_us": 52274,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 101841,
+        "step": 1100,
+        "mean_us": 49528,
+        "p50_us": 48125,
+        "p95_us": 63556,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 109896,
+        "step": 1200,
+        "mean_us": 49540,
+        "p50_us": 48335,
+        "p95_us": 60687,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 117966,
+        "step": 1300,
+        "mean_us": 49595,
+        "p50_us": 48602,
+        "p95_us": 63818,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 126007,
+        "step": 1400,
+        "mean_us": 49591,
+        "p50_us": 48476,
+        "p95_us": 62867,
+        "max_us": 114664,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 134077,
+        "step": 1500,
+        "mean_us": 49593,
+        "p50_us": 48257,
+        "p95_us": 62924,
+        "max_us": 114664,
+        "over80ms": 2
+      }
+    ],
+    "pipeline_aggregate": {
+      "elapsed_ms": 112815,
+      "expected_ms": 112000
+    },
+    "pipeline_cadence_passed": true,
+    "inference_margin_passed": true,
+    "uart_failure": false,
+    "capture_hardware_loss_measured": false,
+    "minimum_heap": {
+      "free": 19884012,
+      "spiram_free": 19831092,
+      "dma_free": 143427,
+      "dma_largest_free": 126976,
+      "internal_free": 183039,
+      "internal_largest_free": 126976
+    },
+    "restored": true
+  },
+  "ui_fix": "refreshVoice250ms repeats identical local color writes; LVGL setters invalidate even equal values. Compare exact property/selector before writes; same visible state transitions and colors. Async/IRAM controlled pair mean77\u219252ms,p95~115\u219255ms. Synchronous noIRAM mean50ms; verbose task/operator logs cause2.3%aggregate drift. Quiet follow-up recorded; subsequent hardware byte-conservation test passes only in the async/IRAM configuration. Synchronous capture-loss diagnostic remains rejected.",
+  "stricter_gate": "Original per-window3% cadence gate admitted persistent2.3%drift. Added aggregate1%limit without relaxing per-window or80ms inference limits. Preserve historical original-gate result and report stricter recomputation. No sample-rate/speed changes or queue expansion.",
+  "hardware_observed_synchronous": {
+    "image_sha256": "91d2a22195d50986473048ba280ef513f9842da9c49267103e619a0aa19f449d",
+    "elf_sha256": "b569c5eebde5c05a6b93ec127a79838d70a30e82dc7dd14906b0becc979e9298",
+    "elapsed_seconds": 300.2824,
+    "measured_steps": 3600,
+    "unaccounted_bytes": 131520,
+    "unaccounted_pcm_ms": 2055.0,
+    "verified_backlog_bound_bytes": 6784,
+    "new_rx_queue_overflows": 0,
+    "inference_margin_passed": true,
+    "pipeline_cadence_passed": true,
+    "capture_loss_passed": false,
+    "restored": true,
+    "accepted": false,
+    "explanation": "IDF5.5.4 i2s_channel_read can replace a partially consumed DMA buffer when queue is nearly full, without incrementing its overflow callback. Positive byte imbalance far exceeds all DMA/current-block capacity. Queue overflow alone is insufficient; require prefix byte-conservation bound across whole measurement. No changes to IDF/codec/DMA configuration.",
+    "harness_limit": "Outer300s command timeout expired at resource-only completion; recovery passed. Subsequent acoustic/UI stages did not run. Later composite uses explicit900s deadline and graceful process-group cleanup."
+  },
+  "async_noiram_startup_failure": {
+    "image_sha256": "6e9f3c64a9a579579266a366658dfe5c4dda1b465943d1cc9db2c6d69abfc8ea",
+    "elf_sha256": "1bbba869d72451a9a289ef5795dba245c22dd8df3331980c8a5c80eef8e85dd7",
+    "boot_success": false,
+    "crash": "Load access fault core0 during first AEC processing; MEPC maps to dl_fft_table_release, RA to dl_rfft_f32_run after its optimized FFT call.",
+    "root_cause": "Unproven. The embedding frontend uses its own FFT and does not share dl_fft tables. Do not attribute this crash to shared FFT or model concurrency without further evidence.",
+    "restored": true,
+    "accepted": false
+  },
+  "fresh_acoustic_control_update": {
+    "original_app_remote_microphone_request_reply": true,
+    "hi_esp_immediate_request_reply_and_quiet": true,
+    "custom_acoustic_fullchain": "Physical Hey Nyx detection confirmed. Call blocked by retained idle-model internal memory; explicit49152byte task allocation fails against31744largest block. Full request/reply not accepted.",
+    "scope": "Successful new physical control; previously failed control preserved. Original app restored/no production changes."
+  },
+  "hardware_observed_async_iram": {
+    "image_bytes": 6449856,
+    "elf_sha256": "26b8bfec9fde4fd4599dfffa22227fda4f4f139a85aed7e2c647d293cdbeea04",
+    "seconds": 300.52892816707026,
+    "capture_report_sha256": "578bb5ff2b0a5274501cd0b3d1df2d78157519706be781b5e32f021e52728ef9",
+    "timing_windows": 37,
+    "final_timing": {
+      "board_ms": 309072,
+      "step": 3700,
+      "mean_us": 51894,
+      "p50_us": 51704,
+      "p95_us": 54716,
+      "max_us": 126764,
+      "over80ms": 3
+    },
+    "p95_range_us": [
+      53350,
+      56897
+    ],
+    "pipeline_aggregate": {
+      "elapsed_ms": 287999,
+      "expected_ms": 288000
+    },
+    "initial_rx_overflows": 826,
+    "new_rx_overflows": 0,
+    "capture_prefix_unaccounted_range_bytes": [
+      -640,
+      320
+    ],
+    "verified_backlog_bound_bytes": 27264,
+    "queue_final": {
+      "consumed": 3700,
+      "highwater": 1,
+      "max_delay_us": 24978,
+      "mean_delay_us": 293
+    },
+    "all_idle_resource_gates_passed": true,
+    "restored": true,
+    "full_acoustic_gate_passed": false,
+    "scope": "Five-minute steady-state idle audio conservation and scheduling only; startup priming and call are separate."
+  },
+  "physical_wake_call_memory_failure": {
+    "elf_sha256": "26b8bfec9fde4fd4599dfffa22227fda4f4f139a85aed7e2c647d293cdbeea04",
+    "physical_wake_events": 1,
+    "call_started": true,
+    "audio_connected": false,
+    "complete_utterance_or_reply_observed": false,
+    "ui_idle_ended_snapshots_visually_checked": true,
+    "diagnostic_control": {
+      "elf_sha256": "d70bae673f227a505a544be13412817b65f73c1a7a50105db3686c0bc16e937a",
+      "only_change": "Explicit task allocation error reporting. Same model placement/lifecycle.",
+      "observed_error": "Microphone task allocation failed",
+      "stack_required_bytes": 49152,
+      "largest_internal_free_bytes": 31744,
+      "original_app_restored": true
+    },
+    "proposed_fix": "Destroy/join experimental idle classifier before call stacks are created. Rebuild at rearm. Preserve I2S/AEC/AGC/preroll/callFIFO and original audio formats.",
+    "fix_verified": false
   }
 }
