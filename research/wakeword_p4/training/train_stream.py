@@ -37,6 +37,8 @@ def main():
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--input-frames", type=int, default=FRAMES)
     parser.add_argument("--negative-weight", type=float, default=20.)
+    parser.add_argument("--negative-focus-gain", type=float, default=0.,
+                        help="Training only: multiply negative BCE by 1 + gain * stop_gradient(score^2)")
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--hard-negative-fraction", type=float, default=0.,
@@ -60,6 +62,8 @@ def main():
     minimum_frames = 149 if args.architecture == "transfer60" else 180
     if frames < minimum_frames or args.negative_weight <= 0 or args.learning_rate <= 0:
         parser.error("Input context is too short or weight/learning rate is not positive")
+    if not 0 <= args.negative_focus_gain <= 2 or (args.export_only and args.negative_focus_gain):
+        parser.error("Negative focus gain must be in [0, 2] and used only during optimization")
     if args.pretrained_model and args.architecture != "transfer60":
         parser.error("--pretrained-model requires --architecture transfer60")
     if args.pretrained_model and args.initial_weights:
@@ -190,7 +194,14 @@ def main():
         model = mixednet.model(flags, (frames, 40), None)
     if args.initial_weights:
         model.load_weights(args.initial_weights)
-    model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss="binary_crossentropy")
+    def focused_negative_loss(y_true, y_pred):
+        binary = tf.keras.losses.binary_crossentropy(y_true, y_pred)
+        focus = tf.stop_gradient(tf.square(y_pred))
+        multiplier = 1. + args.negative_focus_gain * (1. - tf.cast(y_true, y_pred.dtype)) * focus
+        return binary * tf.squeeze(multiplier, axis=-1)
+
+    model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5),
+                  loss=focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
 
     @tf.function(input_signature=[tf.TensorSpec([None, frames, 40], tf.float32)])
     def infer(x):
@@ -306,6 +317,7 @@ def main():
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "input_frames": frames, "negative_weight": args.negative_weight,
+              "negative_focus_gain": args.negative_focus_gain,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
                                        "pool_multiplier": args.hard_negative_pool,

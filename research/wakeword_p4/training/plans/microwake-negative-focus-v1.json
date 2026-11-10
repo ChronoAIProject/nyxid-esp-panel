@@ -1,0 +1,71 @@
+{
+  "scope": "Matched training-only loss intervention followed by reused validation; no final corpus or board.",
+  "hypothesis": "Can bounded pressure on high-confidence negative predictions reduce shared similar-word mistakes without starving ordinary negatives or making positive recall worse?",
+  "training_source_sha256": "38a94ee351eb862724aa48d46c917835a0baa1709dd7a58fc59cca4726e05f3b",
+  "quantized_validation_source_sha256": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "model-quality-control335",
+    "file": "step-5000.weights.h5",
+    "sha256": "923fd6833c7d906b147ec3c00caa9be942e3b7f2f66f635c02f94ecd91d853c0"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "arms": {
+    "control": 0,
+    "focus": 2
+  },
+  "change": "For negative examples only, keep binary cross-entropy and multiply by 1 + gain * stop_gradient(p^2). This does not change the examples, architecture, score cadence or audio.",
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "advance": "Use the strict validation selection policy; focus must qualify and beat control macro recall by at least 0.03. If control cannot qualify, require focus to qualify and beat the best control zero-event, <=2% per-group macro recall by 0.03. No promotion from float or failed fallback.",
+  "notes": "1000-step continuation screens direction only. Both exports use identical training representative draws. No final or room performance inferred."
+}
