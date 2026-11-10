@@ -1,0 +1,13 @@
+{
+  "scope": "Prespecified alternative validation operating point for original frozen equal-mean weights. Confidence-bound target from existing acceptance goal; no threshold selection from microphone/development outcomes. No in-flight acoustic settings change.",
+  "script_sha256": "3d95d045eebd5e08ec2b82e6dca1bc0be320aba8e1e865a3891dcfcbbb645db1",
+  "parent_plan": "head-equal-mean-plan-v1.json",
+  "parent_plan_sha256": "74b56e9bf821a5d46f8d8302f58f134b5dbe1aeb9968ddf2cd4e24c9e10bcd57",
+  "parent_calibration": "head-equal-mean-validation-v1/calibration.json",
+  "parent_calibration_sha256": "927e98674386fbbf2d8ade53e58ae9484ef19b3ad4e7e8ce7cd6966b2086eece",
+  "confidence": 0.95,
+  "max_continuous_upper95_per_hour": 0.5,
+  "selection_rule": "Among unchanged original validation grid rows with one-sided95% Poisson upper bound <=0.5 events/source-hour, maximize engine-macro recall; ties lower upper bound, lower max confusing-corpus rate, lower threshold. No fallback if none eligible.",
+  "invariants": "Original two quantized heads, equal weights,3score-step average,80ms step,refractory and rearm rules unchanged. No retraining or audio transformation.",
+  "gate": "Freeze this candidate threshold before existing development evaluation. Reject inferior quality; no final reserve or physical/production replacement until justified. Current .4 acoustic experiment remains separate and unchanged."
+}

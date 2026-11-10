@@ -1,0 +1,137 @@
+{
+  "scope": "Select a confidence-constrained threshold from an immutable validation grid.\n\nNo audio, development regression, microphone trials or new model scores are\nread. Members, score averaging, event policy and original grid remain frozen.\nThis operating-point diagnostic does not establish replacement acceptance.\n",
+  "plan_sha256": "8b1f89a26dd7a2b86ec755b260be918528646c3d4c194100f39794f9b37b4b43",
+  "parent_calibration_sha256": "927e98674386fbbf2d8ade53e58ae9484ef19b3ad4e7e8ce7cd6966b2086eece",
+  "original_selected": {
+    "threshold": 0.4,
+    "positive_variants": 1196,
+    "recall": 0.9724080267558528,
+    "macro_recall": 0.9468452380952381,
+    "recall_by_engine": {
+      "edge-tts": 0.9196428571428571,
+      "kokoro": 1.0,
+      "macos-say": 1.0,
+      "openai-tts": 0.8333333333333334,
+      "piper": 0.98125
+    },
+    "negative_variants": 1872,
+    "confusing_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 280,
+        "false_variants": 37,
+        "false_rate": 0.13214285714285715
+      },
+      "edge-tts:edge-partials": {
+        "variants": 168,
+        "false_variants": 4,
+        "false_rate": 0.023809523809523808
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 160,
+        "false_variants": 16,
+        "false_rate": 0.1
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 96,
+        "false_variants": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 160,
+        "false_variants": 16,
+        "false_rate": 0.1
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 48,
+        "false_variants": 5,
+        "false_rate": 0.10416666666666667
+      },
+      "piper:synthetic": {
+        "variants": 960,
+        "false_variants": 122,
+        "false_rate": 0.12708333333333333
+      }
+    },
+    "max_corpus_false_rate": 0.13214285714285715,
+    "continuous_hours": 7.303777777777778,
+    "continuous_events": 2,
+    "continuous_events_per_hour": 0.27383089420999784,
+    "continuous_events_per_hour_upper_95": 0.8619913986194038,
+    "positive_latency_median_ms": 130.37499999999991,
+    "positive_latency_p95_ms": 233.62499999999997
+  },
+  "selected": {
+    "threshold": 0.6,
+    "positive_variants": 1196,
+    "recall": 0.9464882943143813,
+    "macro_recall": 0.9280059523809525,
+    "recall_by_engine": {
+      "edge-tts": 0.8660714285714286,
+      "kokoro": 1.0,
+      "macos-say": 0.984375,
+      "openai-tts": 0.8333333333333334,
+      "piper": 0.95625
+    },
+    "negative_variants": 1872,
+    "confusing_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 280,
+        "false_variants": 22,
+        "false_rate": 0.07857142857142857
+      },
+      "edge-tts:edge-partials": {
+        "variants": 168,
+        "false_variants": 2,
+        "false_rate": 0.011904761904761904
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 160,
+        "false_variants": 10,
+        "false_rate": 0.0625
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 96,
+        "false_variants": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 160,
+        "false_variants": 9,
+        "false_rate": 0.05625
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 48,
+        "false_variants": 3,
+        "false_rate": 0.0625
+      },
+      "piper:synthetic": {
+        "variants": 960,
+        "false_variants": 94,
+        "false_rate": 0.09791666666666667
+      }
+    },
+    "max_corpus_false_rate": 0.09791666666666667,
+    "continuous_hours": 7.303777777777778,
+    "continuous_events": 0,
+    "continuous_events_per_hour": 0.0,
+    "continuous_events_per_hour_upper_95": 0.41016202364051946,
+    "positive_latency_median_ms": 175.56249999999983,
+    "positive_latency_p95_ms": 274.8406250000001
+  },
+  "max_continuous_upper95_per_hour": 0.5,
+  "members_and_grid_unchanged": true,
+  "audio_or_test_scores_read": false,
+  "accepted": false,
+  "limits": [
+    "A validation-selected bound is not an independent test guarantee; threshold-grid selection and repeated experiments add selection effects.",
+    "Poisson bounds assume the evaluated exposure represents use. Read speech/environment coverage remains limited.",
+    "No checkpoint retraining or source change. New operating point still requires frozen development, acoustic, resource and voice-chain tests."
+  ],
+  "policy_timing": "Alternative policy chosen after inspecting the existing original validation grid, before any new candidate development/acoustic score. Validation selection is not an independent confidence guarantee.",
+  "regression_plan_sha256": "e092fe60f49489777e8eb2bd32153964a907a3917650cf1c26b6bc387a491860",
+  "verification": {
+    "unit_tests_passed": 3,
+    "public_snapshot_calibration_byte_exact": true,
+    "calibration_sha256": "ee58fd1178a7973ff2a0f60a5ef3d6208b1062396edc90b479d4eb6b971f67e7"
+  }
+}

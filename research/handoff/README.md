@@ -345,6 +345,48 @@ Build caches, installed dependencies, redundant old derived features, NVS,
 credentials, device snapshots, private microphone captures and provisioned
 firmware backups stay local.
 
+### Confidence-bound operating-point diagnostic
+
+A separate validation-only operating point keeps both original heads, equal
+weights, three-step score averaging and all event timings unchanged. The
+original rule constrained the observed continuous false-event rate to .5/h;
+the alternative constrains its one-sided 95% Poisson upper bound to .5/h.
+The rule was chosen after reviewing the existing original validation grid and
+frozen before any new candidate development/acoustic score. The ongoing .4
+physical experiment is a separate measurement and is unchanged.
+
+| Original validation, same 7.304 source hours | Original point-estimate rule | Confidence-bound rule |
+| --- | --- | --- |
+| Threshold | .4 | .6 |
+| Engine-macro positive recall | 94.685% | 92.801% |
+| Continuous false events | 2 | 0 |
+| One-sided95% upper bound, events/hour | .862 | .410 |
+| Positive hit latency median / p95 | 130 / 234 ms | 176 / 275 ms |
+
+This is a recall/latency tradeoff, not a proven improvement or independent
+test guarantee. Threshold-grid selection, repeated experiments and limited
+speech/environment coverage constrain the interpretation of the validation
+bound. The candidate is not accepted or flashed. Existing development
+regression, physical acceptance and resource/voice-chain gates remain pending.
+No threshold was selected from microphone trials or development regression.
+The complete original confusion-group metrics remain in
+[`embedding-confidence-operating-point-v3.json`](../wakeword_p4/results/embedding-confidence-operating-point-v3.json).
+
+Reproduce the post-selection using the unchanged original public snapshot:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/select_confidence_threshold.py \
+  --data-root "$WAKE_DATA" \
+  --plan research/wakeword_p4/embedding/plans/equal-mean-confidence-v1.json \
+  --output .local/new-confidence-calibration
+```
+
+The frozen regression protocol is
+`embedding/plans/head-equal-mean-confidence-regression-v1.json`. It retains
+the original corpus/helper identities and differs only in the validation
+operating point and its explicit candidate identity. Preserve all old results
+and use fresh output directories for this diagnostic.
+
 ### Matched physical five-voice pilot
 
 The frozen original equal-mean app (threshold .4) was tested through the Mac
