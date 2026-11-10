@@ -9,6 +9,7 @@ import numpy as np
 from scipy.stats import chi2
 
 from evaluate import Detector, events, smooth
+from detector_policy import calibrated_smoothing_steps
 
 
 def main():
@@ -22,6 +23,7 @@ def main():
     if args.output.exists():
         parser.error("Use a fresh output directory")
     calibration = json.loads(args.calibration.read_text())
+    smoothing_steps = calibrated_smoothing_steps(calibration)
     model_hash = hashlib.sha256(args.model.read_bytes()).hexdigest()
     if calibration.get("model_sha256") != model_hash:
         raise ValueError("Calibration does not identify this frozen model")
@@ -41,7 +43,7 @@ def main():
         if record.get("feature_sha256") and record["feature_sha256"] != feature_hash:
             raise ValueError("Continuous feature checksum mismatch")
         detector.reset()
-        scores = smooth(detector.predict(data))
+        scores = smooth(detector.predict(data), smoothing_steps)
         np.save(args.output/f"scores-{index:03d}.npy", scores)
         count = events(scores, threshold)
         identity = {"speaker": record["speaker"]} if "speaker" in record else {"id": record["id"]}
@@ -60,6 +62,7 @@ def main():
 
     total_seconds = sum(r["seconds"] for r in rows)
     result = {"model_sha256": model_hash, "threshold": threshold,
+        "smoothing_steps": smoothing_steps,
         "calibration_sha256": hashlib.sha256(args.calibration.read_bytes()).hexdigest(),
         "calibration_scope": calibration.get("selection_scope"),
         "validation_operating_point": calibration.get("viable_operating_point"),

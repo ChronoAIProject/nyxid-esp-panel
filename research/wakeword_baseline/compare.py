@@ -104,9 +104,11 @@ def main():
         import numpy as np
         import soundfile as sf
         sys.path.insert(0, str(Path(__file__).resolve().parents[1]/"wakeword_p4"/"training"))
-        from evaluate import Detector, SMOOTH, smooth
+        from evaluate import Detector, smooth
+        from detector_policy import calibrated_smoothing_steps
         from features import features
         calibration = json.loads(args.calibration.read_text())
+        smoothing_steps = calibrated_smoothing_steps(calibration)
         if calibration.get("model_sha256") != hashlib.sha256(args.model.read_bytes()).hexdigest():
             raise ValueError("Calibration does not identify this frozen model; recalibrate in a fresh directory")
         selected = calibration["selected"]
@@ -121,14 +123,14 @@ def main():
             if rate != 16000 or pcm.ndim != 1 or len(pcm) != fixture["samples"]:
                 raise ValueError("Expected exact mono 16 kHz PCM fixture")
             detector.reset()
-            values = smooth(detector.predict(features(pcm)))
+            values = smooth(detector.predict(features(pcm)), smoothing_steps)
             offsets = []
             armed, last = True, -1000
             for index, value in enumerate(values):
                 if value < threshold*.5 and index-last >= 67:
                     armed = True
                 if armed and value >= threshold and index-last >= 67:
-                    offsets.append(int((3*(index+SMOOTH-1)+5)*160))
+                    offsets.append(int((3*(index+smoothing_steps-1)+5)*160))
                     last, armed = index, False
             rows.append({**fixture, "result": {"events": len(offsets), "offsets": offsets}})
             if number % 50 == 0:
@@ -137,6 +139,7 @@ def main():
         result["hey_nyx_model_sha256"] = hashlib.sha256(args.model.read_bytes()).hexdigest()
         result["hey_nyx_calibration_sha256"] = hashlib.sha256(args.calibration.read_bytes()).hexdigest()
         result["hey_nyx_validation_selected_threshold"] = threshold
+        result["hey_nyx_smoothing_steps"] = smoothing_steps
         result["hey_nyx_calibration_scope"] = calibration.get("selection_scope")
         result["hey_nyx_validation_operating_point"] = calibration.get("viable_operating_point")
         if not calibration.get("viable_operating_point"):

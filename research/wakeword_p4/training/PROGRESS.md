@@ -19,7 +19,9 @@ tests are development regressions, not proof of real-user performance.
 Production acceptance requires real acoustic tests on the development panel,
 including the user's voice, distance/noise variations, immediate post-wake
 requests, playback echo, repeated rearm, reconnect and long calls. Compare Hi
-ESP and Hey Nyx using the same microphone/AEC/AGC path. Report failures and
+ESP and Hey Nyx using the same physical microphone and conditions, documenting
+each detector's preprocessing. The opt-in custom detector now reads raw idle
+mic samples; both retain the same AEC/AGC processed call path. Report failures and
 uncertainty; do not equate a low synthetic false rate with Hi ESP quality.
 Long continuous negatives must provide enough exposure to assess the desired
 <=0.5/hour range; zero events in about six measured hours only bounds that
@@ -556,3 +558,27 @@ voices/conditions and real recordings for subsequent acceptance.
   The runner restores/verifies the original app. This fixes the demonstrated
   input-path integration failure; the old style20k model remains rejected for
   its offline recall/FAR. No human/production acceptance is claimed.
+
+- Matched pronunciation-control/screen training and all four INT8 validations
+  finished. Validation freezes screen5k, but its paired recall is43/50 versus
+  reference48/50. English has1event/5.549h and Mandarin2/1.294h versus0/0.
+  Reject this replacement. All reserved testing remains unread.
+- The prespecified fixed-weight3/5/7-step smoothing ablation selects7steps
+  at0.15 by validation. Mean-engine recall90.64% versus89.93% for5steps is
+  a modest gain; paired recall43/50 and long false counts1/2 are unchanged.
+  Metadata now binds smoothing in both regression consumers and opt-in firmware;
+  old calibrations retain5steps, invalid explicit fields fail. Public calibration
+  reproduces the private snapshot (only two floating means differ <=2.3e-16).
+  See `../results/quality-screen-smoothing-v3.json`.
+- New quality/smooth7 complete-app numeric startup check matches132/132 bytes.
+  Two physical Marin wake/immediate-request/reply/quiet/hangup/rearm rounds pass,
+  with one user and one assistant turn each. Original development app, service
+  and Hi ESP listener are restored/verified. This is integration evidence only:
+  the classifier still fails recognition acceptance. No production board touched.
+  See `../results/full-app-quality-smooth7-v3.json`.
+- A distinct pretrained speech-embedding route is being assessed before another
+  tiny-model fine-tune. Exact float reconstruction agrees within5.34e-5 on28
+  training-only/control sequences. INT8 export is390,560bytes from1,330,312;
+  mean embedding cosine.9743/min.938 is a feasibility diagnostic, not wake recall.
+  A bounded standalone P4 memory/timing probe is building. No classifier, native
+  frontend, whole-app fit or release provenance acceptance is established.

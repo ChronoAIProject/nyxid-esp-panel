@@ -10,6 +10,7 @@ import soundfile as sf
 
 from evaluate import Detector, THRESHOLDS, events, smooth
 from features import features
+from detector_policy import DEFAULT_SMOOTHING_STEPS, SUPPORTED_SMOOTHING_STEPS
 
 
 def main():
@@ -26,6 +27,9 @@ def main():
                         help="Continuous diagnostic: maximize recall at <=0.5 ambient events/h; still report all near-word errors and the strict gate")
     parser.add_argument("--threshold-grid", type=float, nargs="+",
                         help="Explicit validation-only sweep in (0,1); omitted retains the historical grid")
+    parser.add_argument("--smoothing-steps", type=int, choices=SUPPORTED_SMOOTHING_STEPS,
+                        default=DEFAULT_SMOOTHING_STEPS,
+                        help="Freeze this score average in calibration; historical default is five")
     args = parser.parse_args()
     thresholds = args.threshold_grid if args.threshold_grid is not None else THRESHOLDS
     if len(set(thresholds)) != len(thresholds) or any(not np.isfinite(t) or not 0 < t < 1 for t in thresholds):
@@ -48,8 +52,8 @@ def main():
         selected_rows = [r for r in records if r["split"] == split]
         for number, row in enumerate(selected_rows):
             detector.reset()
-            values = smooth(detector.predict(raw[row["offset"]:row["offset"]+row["frames"]]))
-            times = (3*(np.arange(len(values))+4)+5)*.01
+            values = smooth(detector.predict(raw[row["offset"]:row["offset"]+row["frames"]]), args.smoothing_steps)
+            times = (3*(np.arange(len(values))+args.smoothing_steps-1)+5)*.01
             end = (row["keyword_frame"]+2)*.01 if row["label"] else None
             valid = (times >= end-.10) & (times <= end+.80) if row["label"] else np.ones(len(values), dtype=bool)
             clips.append({"source": row["path"], "engine": row["engine"], "variant": row["variant"],
@@ -63,7 +67,7 @@ def main():
                 continue
             data = np.load(args.features/row["path"], mmap_mode="r")
             detector.reset()
-            values = smooth(detector.predict(data))
+            values = smooth(detector.predict(data), args.smoothing_steps)
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
             ambient.append({"hours": len(data)*.01/3600, "events": {str(t): events(values, t) for t in thresholds},
                             "source_type": row.get("source_type", "speech" if "speaker" in row else "environment")})
@@ -109,6 +113,7 @@ def main():
                             if args.selection_policy == "continuous" else
                             (r["ambient_false_per_hour"], r[negative_metric], -r["macro_recall"])))
     (root/"threshold.json").write_text(json.dumps({"selected": selected, "grid": grid,
+        "smoothing_steps": args.smoothing_steps,
         "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
         "feature_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
         "selection_scope": "Validation only; threshold frozen before reading test/Mac audio",
@@ -135,12 +140,12 @@ def main():
                 rng = np.random.default_rng(int(hashlib.sha256(item['path'].encode()).hexdigest()[:8], 16))
                 wave = wave*.3+rng.normal(0, 300, len(wave))
             detector.reset()
-            values = smooth(detector.predict(features(wave)))
+            values = smooth(detector.predict(features(wave)), args.smoothing_steps)
             mac.append({**item, "variant": variant, "max_score": float(values.max())})
     mp = [r for r in mac if r["label"]]
     mn = [r for r in mac if not r["label"]]
     report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
-              "sliding_window": 5, "threshold": threshold, "validation": selected,
+              "sliding_window": args.smoothing_steps, "threshold": threshold, "validation": selected,
               "selection_policy": args.selection_policy, "policy_operating_point": bool(eligible),
               "threshold_grid": thresholds,
               "strict_validation_operating_point": strict_viable(selected),

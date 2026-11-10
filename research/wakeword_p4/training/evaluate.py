@@ -11,9 +11,9 @@ from scipy.stats import chi2
 import soundfile as sf
 
 from features import features, render
+from detector_policy import DEFAULT_SMOOTHING_STEPS as SMOOTH, smooth
 
 THRESHOLDS = [.50, .70, .80, .90, .95, .97, .98, .985, .99, .992, .994]
-SMOOTH = 5
 
 
 class Detector:
@@ -41,12 +41,8 @@ class Detector:
         return np.asarray(result, dtype=np.float32)
 
 
-def smooth(scores):
-    return np.convolve(scores, np.ones(SMOOTH)/SMOOTH, mode='valid') if len(scores)>=SMOOTH else np.array([])
-
-
 def events(scores, threshold):
-    # Five consecutive 30 ms scores, rising-edge latch, and >=2 s refractory.
+    # Averaged 30 ms scores, rising-edge latch, and >=2 s refractory.
     count = 0
     armed = True
     last = -1000
