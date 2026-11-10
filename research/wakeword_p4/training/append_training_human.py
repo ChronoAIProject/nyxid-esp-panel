@@ -28,6 +28,7 @@ def main():
     cache = json.loads((human / "cache.json").read_text())
     if sha(human / "human.json") != cache["index_sha256"]:
         raise ValueError("Human feature index differs from audited cache")
+    addition_dir = "human-additions-" + sha(human / "human.json")[:12]
     additions = []
     speakers = {str(r["speaker"]) for r in old}
     participant_splits = {}
@@ -54,7 +55,7 @@ def main():
             raise ValueError("Unexpected MicroFrontend array")
         if not row["first_two_chunk_continuity_checked"] or row["source_seconds"] <= 0:
             raise ValueError("Missing frontend continuity/exposure audit")
-        additions.append({**row, "path": "human-additions/" + row["path"],
+        additions.append({**row, "path": addition_dir + "/" + row["path"],
                           "category": row.get("category", "mandarin")})
         speakers.add(str(row["speaker"]))
     if not additions:
@@ -63,7 +64,7 @@ def main():
     for entry in base.iterdir():
         if entry.name not in ("human.json", "base-provenance.json"):
             (out / entry.name).symlink_to(entry.resolve())
-    (out / "human-additions").symlink_to(human, target_is_directory=True)
+    (out / addition_dir).symlink_to(human, target_is_directory=True)
     combined = old + additions
     (out / "human.json").write_text(json.dumps(combined, indent=2) + "\n")
     for split in ("validation", "testing"):

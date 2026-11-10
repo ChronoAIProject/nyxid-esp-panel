@@ -21,3 +21,14 @@ def coverage(rows):
         g['row_probability'] += 1/len(rows)
         g['duration_probability'] += float(w)
     return dict(groups)
+
+
+def stratified_probabilities(rows):
+    """Equal source-category mass; original-duration weighting inside each stratum."""
+    duration = probabilities(rows)
+    keys = [('human' if 'speaker' in r or r.get('kind') == 'human' else 'ambient',
+             str(r.get('category', 'unspecified'))) for r in rows]
+    totals = defaultdict(float)
+    for key, weight in zip(keys, duration):
+        totals[key] += float(weight)
+    return np.asarray([w / totals[k] / len(totals) for k, w in zip(keys, duration)])

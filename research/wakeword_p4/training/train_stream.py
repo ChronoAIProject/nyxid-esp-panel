@@ -11,7 +11,7 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 import numpy as np
 import tensorflow as tf
 
-from ambient_sampling import probabilities, coverage
+from ambient_sampling import probabilities, coverage, stratified_probabilities
 from negative_sampling import candidate_ends
 from spec_augment import mask_spectrograms
 from features import FRAMES
@@ -34,7 +34,7 @@ def main():
     parser.add_argument("--negative-candidates", type=int, default=1)
     parser.add_argument("--time-mask-width", type=int, default=0)
     parser.add_argument("--frequency-mask-width", type=int, default=0)
-    parser.add_argument("--ambient-sampling", choices=("rows", "duration"), default="rows")
+    parser.add_argument("--ambient-sampling", choices=("rows", "duration", "stratified"), default="rows")
     parser.add_argument("--source-exponent", type=float, default=.5,
                         help="Engine sampling: .5=sqrt clip counts, 0=equal engines")
     parser.add_argument("--event-validation", action="store_true",
@@ -96,6 +96,15 @@ def main():
 
     ambient_weights = probabilities([r for r, _ in ambient["training"]])
     ambient_coverage = coverage([r for r, _ in ambient["training"]])
+    if args.ambient_sampling == "stratified":
+        ambient_weights = stratified_probabilities([r for r, _ in ambient["training"]])
+    effective_weights = (np.full(len(ambient_weights), 1/len(ambient_weights))
+                         if args.ambient_sampling == "rows" else ambient_weights)
+    for group in ambient_coverage.values():
+        group["effective_probability"] = 0.
+    for (row, _), weight in zip(ambient["training"], effective_weights):
+        key = ('human' if 'speaker' in row or row.get('kind') == 'human' else 'ambient')+':'+str(row.get('category', 'unspecified'))
+        ambient_coverage[key]["effective_probability"] += float(weight)
 
     def scale(data):
         return np.clip(np.asarray(data, dtype=np.float32)/25.6, 0, 26)
@@ -138,7 +147,7 @@ def main():
         noise = []
         for _ in range(48):
             index = (int(rng.choice(len(ambient["training"]), p=ambient_weights))
-                     if args.ambient_sampling == "duration" else int(rng.integers(len(ambient["training"]))))
+                     if args.ambient_sampling != "rows" else int(rng.integers(len(ambient["training"]))))
             _, data = ambient["training"][index]
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
