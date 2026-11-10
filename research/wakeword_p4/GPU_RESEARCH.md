@@ -1198,3 +1198,24 @@ v14 随机初始化，v15 加载经过目标词/逐层探针检查的官方模�
 初始化记录见 `4090-v14-teacher-initialization.json`、
 `4090-v15-teacher-initialization.json`。流式/窗口数值检查也改为读取训练上下文。
 两个 GPU 训练进程已实际启动；当前尚无完整训练或 INT8 验证结论。
+
+
+### v14/v15 训练与 INT8 验证完成
+
+两组均完成 40,000 步；v14 425.2 秒，v15 432.4 秒。训练报告见
+`4090-training-v14-teacher-scratch.json`、`4090-training-v15-teacher-transfer.json`。
+v14 选择 35,000 步，INT8 52,584 字节，SHA256
+`3663193972558120c25e41dd684606a9fe355f3b8f6483133c8eec42352dbee7`；
+v15 选择 30,000 步，54,440 字节，SHA256
+`d527fda86027d532d896af0f0ac1ee03bdfd6ab71c4b4ce2f18f9407cde3abe8`。
+
+完整 INT8 事件验证：v14 阈值 0.97，来源平均 77.8125%，Piper78.9583%、
+Kokoro76.6667%，1700/2160；提前事件14，中位延迟130ms、P95 200ms。
+v15 阈值0.95，来源平均75.7292%，Piper81.4583%、Kokoro70.0%，
+1732/2160；提前事件3，中位延迟130ms、P95 240ms。两组均超过v6的验证来源平均，
+但迁移没有超过同架构随机初始化，且单次种子实验不构成普遍结论。
+
+两组环境均0/1.204811h，单侧95%上界2.48647/h，尚未满足0.5/h。
+验证报告见 `4090-quantized-v14-teacher-validation.json` 与
+`4090-quantized-v15-teacher-validation.json`。两组已启动开发回归与小样本
+流式/窗口/量化比较，独立最终集未评分。
