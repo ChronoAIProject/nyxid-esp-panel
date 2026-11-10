@@ -2055,3 +2055,24 @@ results/4090-hiesp-official-control-*.json；
 下一项v27与v24只差训练对话混音数据，仍为原BCE、无hard ambient/
 无标签平滑/无新增空间通道负例。两项干预分开比较，
 预定计划与runner已保存，仍按同一验证流程判断。
+
+
+## 独立于唤醒分数的MFA对齐诊断（2026-11-10）
+
+为处理能量代理端点反证，按官方方法安装CPU MFA3.4.3、
+Kaldi5.5.1172 CPU版本，使用SQLite、4作业、single_speaker禁用说话人自适应。
+显式包锁含289个固定包URL/MD5；未改全局PyTorch或当前v27数据。
+固定MFA english_us_arpa v3.0.0声学模型及词典（下载SHA已保存），
+输入仅24条既有配对开发目标和2条官方控制，意图文本固定HEY NICKS/HI E S P，
+没有读取唤醒分数、ASR筛除样本或修改旧窗口。
+
+26/26生成TextGrid及alignment_analysis.csv，词序列均完整，耗时43.181s。
+results/4090-mfa-development-alignment-v1.json完整保留词/音素区间、
+原始质量指标及各文件SHA；不将未标定似然或自动边界当作人工音素真值。
+当前没有基于这些边界重算/宣布召回或延迟，也未触碰最终集。
+官方控制首条自动末词p结束1.52s，原能量代理2.01s；
+这支持继续检查端点协议，但不自动使任何旧触发成为正确命中。
+
+复现脚本experiments/mfa_development_alignment.sh、CPU显式锁、
+模型下载器和输入/工具来源报告均已保存。后续需要独立质量核验，
+尤其字母词发音及短音素，才可决定可用于什么级别的时延比较。
