@@ -30,6 +30,8 @@ def main():
     p.add_argument("--label", type=int, choices=(0, 1), action="append")
     p.add_argument("--variants", type=int, nargs="+", default=[0])
     p.add_argument("--upstream", type=Path, help="Also isolate non-stream window phase alignment")
+    p.add_argument("--float-reset-policy", choices=("zeros", "exported"), default="zeros",
+                   help="Compare explicit zero buffers or the initial states saved in the export")
     a = p.parse_args()
     tf.config.set_visible_devices([], "GPU")
     tf.config.threading.set_intra_op_parallelism_threads(2)
@@ -54,9 +56,10 @@ def main():
     states = [v for v in loaded.variables if "states" in v.name]
     if not states:
         raise ValueError("No float stream buffers found; cannot verify reset")
+    exported_states = [v.numpy().copy() for v in states]
     def predict_float(raw):
-        for state in states:
-            state.assign(tf.zeros_like(state))
+        for state, initial in zip(states, exported_states):
+            state.assign(initial if a.float_reset_policy == "exported" else tf.zeros_like(state))
         x = np.clip(raw.astype(np.float32)/25.6, 0, 26)
         out = []
         for at in range(0, len(x)-2, 3):
@@ -72,6 +75,10 @@ def main():
     groups = Counter()
     results = []
     deltas = []
+    mature_deltas = []
+    # First step whose complete window, including the trained phase, is present.
+    # This is a diagnostic partition only: no samples/events are discarded.
+    complete_context_step = (frames + phase + 2)//3 - 1
     for row in rows:
         if row["split"] != "validation" or row["variant"] not in a.variants:
             continue
@@ -94,6 +101,8 @@ def main():
             raise ValueError("Invalid export scores/lengths")
         delta = np.abs(f-q)
         deltas.extend(delta.tolist())
+        mature = delta[complete_context_step:]
+        mature_deltas.extend(mature.tolist())
         fe = event_indices(smooth(f), a.threshold)
         qe = event_indices(smooth(q), a.threshold)
         end = (row["keyword_frame"]+2)*.01 if row["label"] else None
@@ -116,17 +125,33 @@ def main():
                         "window_context": context,
                         "steps": len(f), "mean_absolute_error": float(delta.mean()),
                         "max_absolute_error": float(delta.max()),
+                        "drift_peak_step": int(np.argmax(delta)),
+                        "drift_peak_audio_seconds": float((3*np.argmax(delta)+5)*.01),
+                        "initial_context_max_absolute_error": float(delta[:complete_context_step].max()) if complete_context_step else None,
+                        "complete_context_mean_absolute_error": float(mature.mean()) if len(mature) else None,
+                        "complete_context_max_absolute_error": float(mature.max()) if len(mature) else None,
+                        "initial_float_scores": f[:complete_context_step].tolist(),
+                        "initial_quantized_scores": q[:complete_context_step].tolist(),
                         "float_event_steps": fe, "quantized_event_steps": qe,
                         "exact_event_steps_match": fe == qe})
     if not results:
         raise ValueError("No validation speech found")
     report = {"model_sha256": hashlib.sha256(model.read_bytes()).hexdigest(),
+              "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "feature_index_sha256": hashlib.sha256((a.features/"features.json").read_bytes()).hexdigest(),
               "tensorflow": tf.__version__, "split": "validation", "threshold": a.threshold,
+              "float_reset_policy": a.float_reset_policy,
+              "exported_state_initial_values": [dict(name=v.name, nonzero=int(np.count_nonzero(x)),
+                                                     sha256=hashlib.sha256(x.tobytes()).hexdigest())
+                                                for v, x in zip(states, exported_states)],
               "state_buffers": [v.name for v in states], "reset_reproducibility_passed": True,
               "mean_absolute_error": float(np.mean(deltas)),
               "p95_absolute_error": float(np.quantile(deltas,.95)),
               "max_absolute_error": float(np.max(deltas)), "clips": results,
+              "complete_context_first_step": complete_context_step,
+              "complete_context_mean_absolute_error": float(np.mean(mature_deltas)) if mature_deltas else None,
+              "complete_context_max_absolute_error": float(np.max(mature_deltas)) if mature_deltas else None,
+              "all_initial_scores_and_events_retained": True,
               "positive_clips": sum(r["label"] == 1 for r in results),
               "float_keyword_hits": sum(r["float_keyword_hit"] is True for r in results),
               "quantized_keyword_hits": sum(r["quantized_keyword_hit"] is True for r in results),
