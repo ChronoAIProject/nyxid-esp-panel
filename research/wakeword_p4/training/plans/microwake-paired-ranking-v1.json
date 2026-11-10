@@ -1,0 +1,83 @@
+{
+  "scope": "Matched training-only same-voice comparison; reused development validation, no new holdout or board.",
+  "hypothesis": "Training the score gap within a same-voice pair may help distinguish the acoustic contrast while retaining ordinary wake sensitivity.",
+  "parent_plan_sha256": "8ef5f3dba409ae5fdb75413c00d9808e26497ae34bde9df94c715fcc31235d61",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "2c5858045746f084ae52ffca819d5d2c7e67baf78093b1edb518f89324610f7c",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "fad639d43bb51a82d5d29e67832f5ea6d00c64bb35e9ae00980f8428b43b08f7"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "model-quality-control335",
+    "file": "step-5000.weights.h5",
+    "sha256": "923fd6833c7d906b147ec3c00caa9be942e3b7f2f66f635c02f94ecd91d853c0"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs replace eight positive and eight TTS negative slots in each 128-row training batch in both arms. Same engine, corpus, fixed voice/preset, delivery metadata and rendering variant; exclude voice-description-only Qwen and multi-voice Piper. Independent seed 381 and same within-band phase draw; original representative inputs remain unchanged.",
+  "pair_objective": "Both arms keep per-example weighted BCE. Treatment adds 0.5 * softplus(4 + negative log odds - positive log odds) per paired positive slot. This branch is removed before INT8 export.",
+  "arms": {
+    "paired_control": 0.0,
+    "paired_rank": 0.5
+  },
+  "advance": "Require identical pair schedules and representative input bytes. The candidate needs zero continuous development events and <=1% worst engine/corpus and engine false fraction. To attribute improvement to ranking require at least 3 recall points over paired control at the same gate, or over the paired control at the 2% limit if it has no strict point. Report the whole grid and .97 fixed reference regardless. No promotion based only on reduced scores or low recall.",
+  "limits": "These are synthetic voice presets; identity matching does not substitute for new speakers. A paired objective with a limited corpus is an exploratory screen, not acoustic acceptance."
+}

@@ -14,6 +14,7 @@ import tensorflow as tf
 from features import FRAMES
 from evaluate import events, smooth, THRESHOLDS
 from near_word_windows import key as near_word_key, load_windows, map_end
+from paired_training import PAIRS_PER_BATCH, Sampler as PairSampler, training_loss as pair_training_loss
 
 
 def main():
@@ -42,6 +43,10 @@ def main():
                         help="Training only: multiply negative BCE by 1 + gain * stop_gradient(score^2)")
     parser.add_argument("--near-word-windows", type=Path,
                         help="Reschedule half of selected standalone negative draws after phrase end")
+    parser.add_argument("--paired-near-words", action="store_true",
+                        help="Use the supplied near-word bounds for same-voice pairs instead of rescheduling")
+    parser.add_argument("--paired-near-word-gain", type=float, default=0.,
+                        help="Training-only ranking penalty for the same-voice pairs")
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--hard-negative-fraction", type=float, default=0.,
@@ -75,6 +80,10 @@ def main():
         parser.error("Invalid hard-negative mining settings")
     if args.near_word_windows and (args.export_only or args.hard_negative_fraction):
         parser.error("Near-word rescheduling requires training without hard-negative mining")
+    if ((args.paired_near_words and (not args.near_word_windows or args.negative_focus_gain))
+            or not 0 <= args.paired_near_word_gain <= 2
+            or (args.paired_near_word_gain and not args.paired_near_words)):
+        parser.error("Paired training requires near-word bounds, no focus loss, and gain in [0, 2]")
     initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
@@ -93,6 +102,7 @@ def main():
     index_bytes = (args.features/"features.json").read_bytes()
     records = json.loads(index_bytes)
     windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
+    pair_sampler = PairSampler(records, windows, frames) if args.paired_near_words else None
     scheduled = changed = 0
     groups = {}
     for split in ("training", "validation", "testing"):
@@ -165,9 +175,16 @@ def main():
             _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
-        x = scale(np.concatenate((sample(1, 32), negative_sample(sample(0, 48*multiplier, bool(windows) and mine), 48),
-                                  negative_sample(np.asarray(noise), 48))))
+        samples = np.concatenate((sample(1, 32),
+                                  negative_sample(sample(0, 48*multiplier, bool(windows) and not pair_sampler and mine), 48),
+                                  negative_sample(np.asarray(noise), 48)))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
+        if mine and pair_sampler:
+            pair_sampler.apply(samples, sequence)
+            ids = np.zeros_like(y)
+            ids[:PAIRS_PER_BATCH, 0] = ids[32:32+PAIRS_PER_BATCH, 0] = np.arange(1, PAIRS_PER_BATCH + 1)
+            y = np.concatenate((y, ids), axis=1)
+        x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
         weights = np.array([1.]*32+[args.negative_weight]*96, dtype=np.float32)
@@ -216,8 +233,9 @@ def main():
         multiplier = 1. + args.negative_focus_gain * (1. - tf.cast(y_true, y_pred.dtype)) * focus
         return binary * tf.squeeze(multiplier, axis=-1)
 
-    model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5),
-                  loss=focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
+    loss_fn = (pair_training_loss(args.paired_near_word_gain) if pair_sampler
+               else focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
+    model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
 
     @tf.function(input_signature=[tf.TensorSpec([None, frames, 40], tf.float32)])
     def infer(x):
@@ -300,7 +318,7 @@ def main():
         model.save_weights(root/"best.weights.h5")
     else:
         model.load_weights(root/"best.weights.h5")
-    if args.negative_focus_gain:
+    if args.negative_focus_gain or pair_sampler:
         # The upstream inference clone copies Keras compile metadata. Use the
         # stock loss for that clone; this neither trains nor changes weights.
         model.compile(loss="binary_crossentropy")
@@ -343,6 +361,8 @@ def main():
               "input_frames": frames, "negative_weight": args.negative_weight,
               "negative_focus_gain": args.negative_focus_gain,
               "near_word_windows": {"sha256": windows_hash, "scheduled": scheduled, "changed": changed},
+              "paired_near_words": None if not pair_sampler else {
+                  "gain": args.paired_near_word_gain, **pair_sampler.metadata()},
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
                                        "pool_multiplier": args.hard_negative_pool,
