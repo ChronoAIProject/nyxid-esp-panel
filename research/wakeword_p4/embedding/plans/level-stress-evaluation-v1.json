@@ -1,0 +1,52 @@
+{
+  "scope": "Post-training validation-only stress diagnostic. Prespecify factors and all original-selected thresholds before reading new scores. No new fitting/calibration/acceptance; no private microphone capture enters this evaluation.",
+  "factors": [
+    1,
+    0.05,
+    0.1
+  ],
+  "validation_jobs": 1534,
+  "models": {
+    "original": {
+      "calibration": "head-equal-mean-validation-v1/calibration.json",
+      "details": "head-equal-mean-validation-v1/details-private.json",
+      "threshold": 0.4
+    },
+    "control": {
+      "calibration": "head-equal-mean-both-control-validation-v1/calibration.json",
+      "details": "head-equal-mean-both-control-validation-v1/details-private.json",
+      "threshold": 0.4
+    },
+    "level": {
+      "calibration": "head-equal-mean-both-level-validation-v1/calibration.json",
+      "details": "head-equal-mean-both-level-validation-v1/details-private.json",
+      "threshold": 0.4
+    }
+  },
+  "backbone": "embedding-stream-int8-quiet.tflite",
+  "window": "native-fft-window.npy",
+  "mel_filter": "native-mel-filter.npy",
+  "inputs": {
+    "head-features-tts-v1/jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a",
+    "head-equal-mean-validation-v1/calibration.json": "927e98674386fbbf2d8ade53e58ae9484ef19b3ad4e7e8ce7cd6966b2086eece",
+    "head-equal-mean-validation-v1/details-private.json": "ec872f9c43c7ec07992ef857a2101f581ac1e2b0909e792116135fdc093c8e88",
+    "head-equal-mean-both-control-validation-v1/calibration.json": "b9b45e0f729985fd9c05a0c6ac09300f1de7109bc4a38e829be3ddf990fdc94d",
+    "head-equal-mean-both-control-validation-v1/details-private.json": "2a805ad66059721d4338dc0b27671185afcab98638492da670b350595ee31806",
+    "head-equal-mean-both-level-validation-v1/calibration.json": "4413aba46ea774b627b8300ed4b7344bc780104205294016c3fedfdbd965bd43",
+    "head-equal-mean-both-level-validation-v1/details-private.json": "86d9da4a872bae73ac35aa1fd07a1a73a4750bb512b615ff47f6323fb348d653"
+  },
+  "helpers": {
+    "evaluate_level_stress.py": "cf54d1b3f13c90bf087de7e522a4049ec7d5850db9d7ed94115e090a13d638ed",
+    "prepare_head_features.py": "ed63c33c9acd3a1e779a35bd8303c2515cedc0bcd4f70abe75257109a8403b65",
+    "native_mel.py": "724436b5880d07c170bb5c5843f1da34383c31a7b1c9714c4048cb38267724d0",
+    "evaluate_equal_mean.py": "21fe60fb2c9c04d55c957739210b60f5a09e1a57f4970ae9bf2d6b8de1524e45",
+    "evaluate_head.py": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c",
+    "train_head.py": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958"
+  },
+  "nonportable_prior_plan_sha256": "067babb8e5f84f70691514ffc1d8636639f64f11e2506cccdf510c924b6a01e9",
+  "portability": "Optional explicit source-path rebasing only; source WAV hashes,render,factors,heads,thresholds and scores stay unchanged."
+}

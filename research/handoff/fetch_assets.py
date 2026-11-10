@@ -31,16 +31,22 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--include-audio', action='store_true')
     p.add_argument('--include-history', action='store_true')
+    p.add_argument('--asset', action='append',
+                   help='Download only this named asset; repeat for incremental snapshots')
     args = p.parse_args()
     manifest = json.loads(Path(__file__).with_name('assets.json').read_text())
+    if args.asset and set(args.asset) - {entry['name'] for entry in manifest['assets']}:
+        p.error('Unknown requested asset')
     args.output.mkdir(parents=True, exist_ok=False)
     downloads = args.output / 'downloads'
     downloads.mkdir()
     for entry in manifest['assets']:
         name = entry['name']
-        if name == 'synthetic-training-audio.tar.gz' and not args.include_audio:
+        if args.asset and name not in args.asset:
             continue
-        if name == 'historical-experiment-source.tar.gz' and not args.include_history:
+        if name == 'synthetic-training-audio.tar.gz' and not (args.include_audio or args.asset):
+            continue
+        if name == 'historical-experiment-source.tar.gz' and not (args.include_history or args.asset):
             continue
         if Path(name).name != name:
             raise ValueError('Invalid asset name')

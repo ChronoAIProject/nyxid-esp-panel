@@ -25,7 +25,9 @@ and BUILTIN_REF execution. It does not measure wake recognition. Install a
 host driver compatible with the locked CUDA 12 packages. Native Windows should
 use WSL2/Linux for TensorFlow GPU.
 
-The complete asset set is 1.19 GB compressed (about 1.11 GiB). All downloads have archive and per-file SHA256 verification. Default download
+The original asset set is 1.19 GB compressed (about 1.11 GiB); the subsequent
+low-level feature and model extensions add about 129 MB. All downloads have
+archive and per-file SHA256 verification. Default download
 contains features/models; `--include-audio` also retrieves the synthetic source
 WAVs, and `--include-history` retrieves historical experiment source. No key is
 needed to continue fitting from these features. The historical filename
@@ -34,7 +36,7 @@ export; it contains no device credentials or private room recordings.
 
 ## Continue fitting from an existing checkpoint
 
-The last controlled experiment adds training-only 1..1279-sample phase offsets
+The completed phase experiment adds training-only 1..1279-sample phase offsets
 without changing speed, duration, original sources, class/engine sampling or
 the held-out splits. Its matched control and treatment are fully trained and
 calibrated. Reproduce the treatment from its original warm start:
@@ -83,7 +85,8 @@ to the downloaded workspace or public datasets retrieved from their manifests.
 | Latest fixed Hey Nyx full-app acoustic repeats | 3/5 wakes; all 3 complete request/reply/quiet and rearm | Two misses remain; no replacement acceptance |
 | Five-minute whole-app resource test | Mean 51.3 ms / 80 ms step; no new RX overflows; byte balance -640..0 | Passed these capture/resource gates only |
 | Phase continuation control vs treatment | Validation macro recall 94.05% vs 94.29% | Small validation difference; no new regression/physical result |
-| Phase continuation equal mean | Validation macro recall 94.73%, threshold .3 | Original frozen mean was 95.26%; no demonstrated improvement |
+| Phase continuation equal mean | Validation macro recall 94.73%, threshold .3 | Original frozen mean 94.68%; +0.0417 percentage points, without new physical acceptance |
+| Low-level continuation, both heads | Validation macro recall 94.16%, threshold .4 | Matched continuation control 94.68%; both 1 false event / 7.304 h; rejected |
 
 Detailed reports: [`../wakeword_p4/results/`](../wakeword_p4/results/), especially
 `embedding-full-app-resources-v3.json`, `embedding-head-equal-mean-v3.json` and
@@ -113,12 +116,71 @@ about acoustic robustness, not a proven cause. Original room, background, SNR
 and RNG draws must match the completed reference index. The input PCM speed,
 source/held-out partitions and existing views remain unchanged. Plans under
 `embedding/plans/level-*.json` freeze extraction and the fitting comparison.
-The initial4090 snapshot does **not** include these newly generated features;
-use its existing assets until a later asset manifest explicitly includes them.
-New extraction requires the original source paths to be rebased locally as
-described above. No new classifier or production wake replacement is accepted.
+All 20,140 training-only low-level views are complete. Every feature hash and
+paired source/background draw was checked; the 24-view pilot agrees exactly
+with the corresponding full extraction. The temporal-only continuation yields
+94.10% validation macro recall in combination with the original dense head.
+Continuing both heads yields 94.16%, compared with the matched control's 94.68%.
+The fixed original selection policy chooses threshold .4 for both combinations;
+both produce one false event in 7.304 h of validation audio. These results do
+not establish an improvement, so these candidates were not flashed. No new
+classifier or production wake replacement is accepted. The prior 95.26% figure
+in this document referred to the temporal head alone, not the original equal
+mean; the original result JSONs were already correct.
 
-The 4090 bundle includes all completed `head-*` model checkpoints (DNN,
+The asset manifest now includes these new features, all four temporal
+checkpoints and both dense continuation arms. An existing snapshot can fetch
+only the extensions into a **fresh staging directory**:
+
+```sh
+python3 research/handoff/fetch_assets.py --output .local/level-update \
+  --asset level-continuation-v1.tar.gz --asset level-dense-checkpoints-v1.tar.gz
+```
+
+After verification, merge its `workspace/` into the existing snapshot. Extension
+paths do not replace original feature/model directories. For new fitting use
+`portable-plans/head-temporal-level-plan-v1.json` or
+`portable-plans/head-dense-level-plan-v1.json` and the same initial weights as
+their corresponding frozen comparison plans. New raw-feature extraction still
+requires the original source paths to be rebased as described above. Detailed
+results are in `embedding-level-continuation-v3.json`.
+
+### Matched low-level stress diagnostic
+
+The low-level continuation has a local gain at one stress level, without
+consistent improvement over the original model. The diagnostic uses the 1,534
+existing variant-1 validation clips: 598 positive and 936 confusing negative
+sources. Every scale-1 feature and all three models' score sequences reproduce
+the original stored values exactly. Scaling the complete rendered signal keeps
+its original speed, room response and SNR; all thresholds stay .4.
+
+| Signal multiplier | Original frozen mean | Matched continuation control | Low-level continuation |
+| --- | --- | --- | --- |
+| 1 | 93.02% | 93.02% | 92.10% |
+| .05 | 89.80% | 87.92% | 90.90% |
+| .1 | 91.28% | 89.49% | 90.76% |
+
+These are macro recall percentages across TTS engines, not independent human
+success rates. Confusing-negative clip results remain in the report; this
+short-clip test does not measure continuous false events/hour. The scale-1 row
+covers only variant 1, so it differs from the full validation metrics above.
+No checkpoint or threshold is selected from this diagnostic. Replay it from the
+downloaded snapshot (including synthetic audio) without changing bound files:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/evaluate_level_stress.py \
+  --data-root "$WAKE_DATA" \
+  --plan research/wakeword_p4/embedding/plans/level-stress-evaluation-v1.json \
+  --source-prefix /Users/auric/tmp/output \
+  --source-root "$PWD/.local/research-snapshot/workspace" \
+  --output .local/new-level-stress --workers 3
+```
+
+The original corpus prefix is audit metadata. Only path resolution changes;
+every source WAV must retain its bound SHA256. See
+`embedding-level-stress-v3.json` for the complete fixed-threshold comparison.
+
+The original 4090 bundle includes all then-completed `head-*` model checkpoints (DNN,
 temporal, mining, Qwen, environmental, pooling and phase variants), original
 MicroWakeWord model/weight artifacts from training v1/v2/v3, 61,064 indexed
 embedding histories across eight completed feature views, synthetic source
