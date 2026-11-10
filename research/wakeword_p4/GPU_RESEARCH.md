@@ -642,3 +642,21 @@ The initial bit-exact assertion failed only at that floating-point precision;
 no training source was changed to alter the live run. The reusable verifier
 and `4090-embedding-lr-parity.json` record the comparison. Negative-weight
 scheduling and low-loss filtering are still not reproduced.
+
+## Ambient sampling coverage defect
+
+The current uniform-row ambient sampler gives24 human speaker streams only2.12%
+of environmental-negative sampling opportunities although they contain17.20%
+of original negative exposure (3.22486h). Conversely930 short noise rows receive
+82.23% of draws despite33.21% of exposure. Music receives11.67% of draws versus
+45.59% of hours. This occurs in both the reference and MCU trainers; adding hours
+alone did not proportionally expose the model to them.
+
+`ambient_sampling.py` supplies an optional duration-weighted policy based on
+original source seconds, excluding repetitions and inserted silence. A100,000
+draw audit observes17.163% human draws (expected17.201%). This is a coverage
+check, not proof of improved recognition; duration weighting is an explicit
+experimental choice rather than a universal best-practice requirement.
+`train_stream.py --ambient-sampling duration` will test only this change against
+v6 on the same actual MicroFrontend waveforms and MCU architecture. Default rows
+preserves prior sampling behavior. No final fixtures enter training.

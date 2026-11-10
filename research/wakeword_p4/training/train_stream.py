@@ -11,6 +11,7 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 import numpy as np
 import tensorflow as tf
 
+from ambient_sampling import probabilities, coverage
 from features import FRAMES
 from evaluate import events, event_indices, smooth, THRESHOLDS
 
@@ -25,6 +26,7 @@ def main():
     parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
+    parser.add_argument("--ambient-sampling", choices=("rows", "duration"), default="rows")
     parser.add_argument("--source-exponent", type=float, default=.5,
                         help="Engine sampling: .5=sqrt clip counts, 0=equal engines")
     parser.add_argument("--event-validation", action="store_true",
@@ -73,6 +75,9 @@ def main():
     ambient = {s: [(r, np.load(args.features/r["path"], mmap_mode="r")) for r in ambient_rows if r["split"] == s]
                for s in groups}
 
+    ambient_weights = probabilities([r for r, _ in ambient["training"]])
+    ambient_coverage = coverage([r for r, _ in ambient["training"]])
+
     def scale(data):
         return np.clip(np.asarray(data, dtype=np.float32)/25.6, 0, 26)
 
@@ -103,7 +108,9 @@ def main():
     def batch():
         noise = []
         for _ in range(48):
-            _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
+            index = (int(rng.choice(len(ambient["training"]), p=ambient_weights))
+                     if args.ambient_sampling == "duration" else int(rng.integers(len(ambient["training"]))))
+            _, data = ambient["training"][index]
             at = int(rng.integers(0, len(data)-FRAMES+1))
             noise.append(data[at:at+FRAMES])
         x = scale(np.concatenate((sample(1, 32), sample(0, 48), np.asarray(noise))))
@@ -234,6 +241,7 @@ def main():
               "selected_step": selected_step,
               "validation_window_phase": window_phase,
               "source_exponent": args.source_exponent,
+              "ambient_sampling": args.ambient_sampling, "ambient_sampling_coverage": ambient_coverage,
               "validation_detection": "latched events after full receptive-field warmup" if args.event_validation else "window peak",
               "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
               "feature_metadata_sha256": feature_metadata_hashes,
