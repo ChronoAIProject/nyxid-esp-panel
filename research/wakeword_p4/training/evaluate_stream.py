@@ -30,13 +30,21 @@ def main():
     parser.add_argument("--validation-only", action="store_true",
                         help="Calibrate and report validation without scoring any regression or final fixtures")
     parser.add_argument("--smoothing-window", type=int, default=5)
+    parser.add_argument("--threshold-step", type=float,
+                        help="Optional fixed dense validation grid step; retain legacy thresholds too")
     args = parser.parse_args()
     if not 1 <= args.smoothing_window <= 31:
         parser.error("smoothing window must be 1..31")
+    thresholds = list(THRESHOLDS)
+    if args.threshold_step is not None:
+        if not np.isfinite(args.threshold_step) or not .001 <= args.threshold_step <= .05:
+            parser.error("threshold step must be finite and .001..0.05")
+        thresholds = sorted(set(thresholds + np.arange(.5, 1., args.threshold_step).tolist()))
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"report.json").exists(), "Use a fresh evaluation directory"
     provenance = {"evaluation_source_sha256": sha_file(Path(__file__)),
+                  "threshold_grid": thresholds,
                   "feature_metadata_sha256": {name: sha_file(args.features/name)
                     for name in ("features.json", "human.json", "ambient.json")},
                   "feature_binary_sha256": sha_file(args.features/"features.bin")}
@@ -66,7 +74,7 @@ def main():
             detector.reset()
             values = smooth(detector.predict(data), args.smoothing_window)
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
-            ambient.append({"hours": row.get("source_seconds", row["seconds"])/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
+            ambient.append({"hours": row.get("source_seconds", row["seconds"])/3600, "events": {str(t): events(values, t) for t in thresholds},
                             "source_type": "speech" if "speaker" in row else "environment"})
         return clips, ambient
 
@@ -97,7 +105,7 @@ def main():
                 "ambient_false_per_hour_upper_95": float(.5*chi2.ppf(.95, 2*(count+1))/hours)}
 
     val, va = measure("validation")
-    grid = [summarize(val, va, t) for t in THRESHOLDS]
+    grid = [summarize(val, va, t) for t in thresholds]
     eligible = [r for r in grid if r["ambient_false_per_hour"] <= .5 and r["max_source_false_rate"] <= .01]
     selected = max(eligible, key=lambda r: (r["macro_recall"], -r["ambient_false_per_hour"])) if eligible else min(
         grid, key=lambda r: (r["ambient_false_per_hour"], r["max_source_false_rate"], -r["macro_recall"]))
