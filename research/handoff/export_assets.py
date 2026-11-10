@@ -146,6 +146,16 @@ def main():
     assets.append(models.close())
     print(json.dumps(assets[-1]), flush=True)
 
+    arrays = Archive(args.output, 'evaluation-arrays')
+    for directory in sorted(base.glob('head-*')):
+        if not directory.is_dir() or directory.name.startswith(('head-features-', 'head-negative-')):
+            continue
+        for source in sorted(directory.rglob('*.npy')):
+            if source.name != 'representatives-training-only.npy':
+                arrays.add(prefix + str(source.relative_to(base)), source=source)
+    assets.append(arrays.close())
+    print(json.dumps(assets[-1]), flush=True)
+
     audio = Archive(args.output, 'synthetic-training-audio')
     for name, expected in sorted(sources.items()):
         source = Path(name)

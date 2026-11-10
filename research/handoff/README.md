@@ -25,7 +25,7 @@ and BUILTIN_REF execution. It does not measure wake recognition. Install a
 host driver compatible with the locked CUDA 12 packages. Native Windows should
 use WSL2/Linux for TensorFlow GPU.
 
-The complete asset set is 1.18 GB compressed (about 1.10 GiB). All downloads have archive and per-file SHA256 verification. Default download
+The complete asset set is 1.19 GB compressed (about 1.11 GiB). All downloads have archive and per-file SHA256 verification. Default download
 contains features/models; `--include-audio` also retrieves the synthetic source
 WAVs, and `--include-history` retrieves historical experiment source. No key is
 needed to continue fitting from these features. The historical filename
@@ -63,7 +63,8 @@ Newer extra-view indexes contained absolute Mac paths: the exporter makes only
 their `path` values relative and generates plans binding those new index hashes.
 `original-index.jsonl` and `portable-feature-provenance.json` retain their original
 identities. **Array bytes, source labels/splits, model weights and recipes do not
-change.** Original calibration and checkpoint files remain unchanged and refer
+change.** A complete equal-mean calibration replay from the extracted directory reproduces
+the original calibration JSON exactly. Original calibration and checkpoint files remain unchanged and refer
 to their original audit identities. Use the portable plans for new fitting;
 do not rewrite old calibrations to pretend that their metadata is unchanged.
 Original absolute `jobs[].source` paths are corpus/audit metadata for fitting,
@@ -92,7 +93,8 @@ The 4090 bundle includes all completed `head-*` model checkpoints (DNN,
 temporal, mining, Qwen, environmental, pooling and phase variants), original
 MicroWakeWord model/weight artifacts from training v1/v2/v3, 61,064 indexed
 embedding histories across eight completed feature views, synthetic source
-WAVs, frontend coefficients and numeric backbone inputs/outputs, plus the three
+WAVs, frontend coefficients, per-checkpoint numerical fixtures and validation score
+arrays for exact equal-mean recalibration, plus the three
 hash-bound board runtime bundles. See `assets.json` for exact sizes and hashes.
 The selected runtime bundle is `runtime-equal-mean-bundle-v3`; its calibration
 is `head-equal-mean-validation-v1/calibration.json`.
