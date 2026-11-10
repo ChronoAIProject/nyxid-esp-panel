@@ -1,0 +1,79 @@
+{
+  "scope": "Source/API/documentation and local model-size feasibility only. No MultiNet create/detect/build/recognition claim and no hardware writes.",
+  "component": "ESP-SR2.6.1, same pinned project dependency; use lockfile for exact identity.",
+  "project_lockfile_sha256": "95fd0a4ce3be260b99db86f24907744e76b5f5db8fbcc56fa678cdcfb2a14cc0",
+  "model": "mn7_en",
+  "model_files": [
+    {
+      "name": "_MODEL_INFO_",
+      "bytes": 158,
+      "zlib9_bytes": 131,
+      "sha256": "efdf47e45817535e42c24c5bd5816b3d9fc54113aa7a6943b0d183823830929c"
+    },
+    {
+      "name": "mn7_data",
+      "bytes": 2739172,
+      "zlib9_bytes": 2156768,
+      "sha256": "f9d646f6301041d22de3dc3b1ae842ce9b314af6410b35814087d8042410a8e6"
+    },
+    {
+      "name": "mn7_index",
+      "bytes": 4656,
+      "zlib9_bytes": 879,
+      "sha256": "f7234d8a6c6cdf8df7bb49ae86a48e8ecf20c2cd8ebc8f97665389169d50c6d3"
+    },
+    {
+      "name": "vocab",
+      "bytes": 7143,
+      "zlib9_bytes": 3132,
+      "sha256": "a94f2dbc3b2783db2891763750aa028f2e1f583945b1696931529d80de61951c"
+    }
+  ],
+  "raw_payload_bytes": 2751129,
+  "sum_individually_zlib9_compressed_bytes": 2160910,
+  "compression_note": "Individual file compression measurements, not an actual packed/linked app image.",
+  "official_sources": [
+    {
+      "url": "https://docs.espressif.com/projects/esp-sr/en/latest/esp32p4/speech_command_recognition/README.html",
+      "sha256": "759fbba33a5fcb676b0011a64f4d03da9caa0841204d71226cfe5fde93083bc5",
+      "bytes": 40755,
+      "version": "latest documentation, captured snapshot hash; advisory, not measured panel results"
+    },
+    {
+      "url": "https://docs.espressif.com/projects/esp-sr/en/latest/esp32p4/benchmark/README.html",
+      "sha256": "d30f73689e2d0deaaae8488905ab2bd2564023ddf8c1ca01f57763928ca8988b",
+      "bytes": 23498,
+      "version": "latest documentation, captured snapshot hash; advisory, not measured panel results"
+    }
+  ],
+  "documented_capabilities": [
+    "P4 English MultiNet7 supports configurable phoneme commands without new acoustic-model training.",
+    "API permits command add/update, detection threshold, model clean/reset and continuous recognition.",
+    "Input contract is16kHz mono PCM16 processed by AFE; existing single producer must remain."
+  ],
+  "documented_resources_advisory": {
+    "internal_kb": 18,
+    "psram_kb": 2920,
+    "average_frame_ms": 8,
+    "frame_audio_ms": 32,
+    "not_measured_on_panel": true
+  },
+  "current_layout": {
+    "ota_slot_bytes": 6881280,
+    "filesystem_bytes": 2097152,
+    "change_partition_layout": false
+  },
+  "integration_assessment": "Not a drop-in replacement: compressed model payload alone is2,160,910bytes, larger than the entire current2MiB filesystem. App embeds its original smaller WakeNet and is near its fixed OTA slot capacity. Actual MultiNet code/linking/workspace costs and keyword/near-word behavior are unmeasured. Requires an explicit capacity solution plus quantitative development probing before considering integration; do not remove dual OTA, change partitioning or silently discard GUI assets.",
+  "open_questions": [
+    "Whether Hey Nyx/Nicks phonemes are accepted with explicit command phonemes.",
+    "Whether always-listening or a bounded second-stage verifier can match HiESP FAR, recognition and latency.",
+    "Whether model weights and decoder can fit current flash/PSRAM along with GUI and voice.",
+    "How a verifier avoids excluding the immediate post-wake request from ordered preroll/FIFO."
+  ],
+  "accepted": false,
+  "inference_completed": false,
+  "flashed": false,
+  "component_version": "2.6.1",
+  "component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14",
+  "component_source_commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e"
+}

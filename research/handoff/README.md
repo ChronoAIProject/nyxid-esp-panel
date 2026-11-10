@@ -786,6 +786,46 @@ original batches each over40,627 rows, and the entire mean calibration JSON
 replays byte-for-byte. See
 [`embedding-endpoint-portable-v3.json`](../wakeword_p4/results/embedding-endpoint-portable-v3.json).
 
+### Negative cost control and alternative model feasibility
+
+`embedding/plans/negative20-continuation-v1.json` freezes a separate loss-cost
+intervention: negative BCE weight20 instead of5, with both original control
+datasets, labels, initialization, seeds, optimizers, sampling and PTQ unchanged.
+Each head's100 prefit batches match its retained control byte-for-byte; actual
+representatives also match. All four checkpoints per head complete training
+and original validation. The selected mean has94.5595% source-macro recall
+versus retained control94.6845%, two continuous events versus one/7.30378h,
+and max confusing-source14.5833% versus13.9286%. Its threshold changes from.4
+to.2; a calibration shift is not a discrimination gain. Candidate rejected
+before development regression or physical flashing. The prepared regression
+plan is unexecuted; independent final fixtures remain unread.
+
+See [`embedding-negative20-validation-v3.json`](../wakeword_p4/results/embedding-negative20-validation-v3.json).
+The `negative20-continuation-v1.tar.gz` extension preserves all checkpoints
+and portable plans while reusing the original `head-features-environment-v2`
+arrays. Reproduce fitting with unchanged `train_head.py` and `evaluate_head.py`
+using each manifest member's explicit plan, initialization and output path;
+then use the frozen `head-equal-mean-negative20-v1-plan.json` with
+`evaluate_equal_mean.py`. Do not combine this failed cost experiment with
+the preceding endpoint treatment or infer that all negative weighting fails.
+The public archive passes all member hashes; both portable samplers reproduce
+five original batches per head and the complete mean calibration JSON is
+byte-identical. See
+[`embedding-negative20-portable-v3.json`](../wakeword_p4/results/embedding-negative20-portable-v3.json).
+
+MultiNet7 English is another source-reviewed option, rather than a trained
+Nyx recognizer. Pinned ESP-SR2.6.1 supports custom phoneme commands on P4,
+but its local model files total2,751,129bytes; individually zlib9-compressed
+payloads total2,160,910bytes, exceeding the entire current2MiB filesystem.
+Existing OTA app slots are also nearly full. This is not an actual packed/link
+size, and it does not prove that every storage/size solution is impossible.
+It does rule out treating those weights as a drop-in current-layout change.
+Official timing/memory figures are advisory; no MultiNet create/detect or
+keyword/near-word/resource test ran on this panel. Preserve dual OTA, user GUI
+assets, single audio producer and immediate-request FIFO before considering
+any integration. See
+[`multinet-source-feasibility-v1.json`](../wakeword_p4/results/multinet-source-feasibility-v1.json).
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before

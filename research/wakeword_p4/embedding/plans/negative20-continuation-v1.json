@@ -1,0 +1,37 @@
+{
+  "scope": "Frozen negative BCE weight intervention before fitting. Original data/labels and matched-control recipes retained; no endpoint treatment, mining, audio/speed or runtime change.",
+  "hypothesis": "In-sample near-word false clips persist in the frozen training-only diagnostic. Raising negative cost may improve separation, but can instead shift calibration or reduce recall; no benefit assumed.",
+  "train_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+  "training_diagnostic_sha256": "96c38f3ad337a62e4ca1f8579e5c995a0bdfacc6d839178d1ed77e99c8e05ce0",
+  "members": [
+    {
+      "head": "temporal",
+      "plan": "head-temporal-negative20-plan-v1.json",
+      "plan_sha256": "c51937af3bcff9302634f18bd753ccfc99db29ed84b20f3aca3c9b98b219c860",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-negative20-v1",
+      "retained_control": "head-temporal-phase-control-v1",
+      "control_complete_sha256": "6652ebf9aca4a6e310087bb7d4a41c44251efb4b7d244a14a3fe5d8b92c66389",
+      "control_selection_sha256": "882dd2d3a8be5687de3f2f99fd6abfcd8be07b13705e4e301e61ce36c77bcbcd",
+      "control_representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44"
+    },
+    {
+      "head": "dense",
+      "plan": "head-dense-negative20-plan-v1.json",
+      "plan_sha256": "e9974b6ece68b31444e55575817c1f7146049c0f0d133b4a1b375ab1339dd559",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-negative20-v1",
+      "retained_control": "head-dense-control-v1",
+      "control_complete_sha256": "3df67665fa5429570bb60ab1fc0fb8487978f01a804c2316048fd7ced231c1e1",
+      "control_selection_sha256": "26d3ee2db4855b93796b98c0bbb422a6e43ee632b828b9b9a56bc802ebe54e62",
+      "control_representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386"
+    }
+  ],
+  "control_policy": "Preserved weight5 controls have identical initialization, seeds, steps, data rows/order, sampling and representative inputs. Verify exact representative hashes and prefit batches; only weighted loss differs.",
+  "combination": "Independent member checkpoint selection on original validation; fixed equal mean and original threshold policy; freeze before existing development regression.",
+  "prespecified_advance_rule": "No flash unless original-validation and frozen development results support improvement without losing positive recall/ordinary false-wake behavior; final/human/acoustic/resources/AEC acceptance still required.",
+  "limits": "Single fixed fourfold increase in cost on the same data; not a hyperparameter search and not proof of a general optimum. Calibration uses the unchanged grid so probability shifts alone do not establish discrimination gains.",
+  "accepted": false
+}

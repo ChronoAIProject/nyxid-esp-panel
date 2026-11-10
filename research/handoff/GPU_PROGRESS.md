@@ -337,3 +337,26 @@ and the Hi ESP model enumerate, but model creation faults on an unsupported
 PIE instruction (`esp.ld.128.usar.ip`) in the official QEMU build. No detect
 call completes, so simulated Hi ESP recognition remains unavailable. The
 PSRAM workaround is probe-only and must not enter physical-board firmware.
+
+### GPU snapshot through `ed2b6b1`
+
+The GPU branch now adds speaker/session-disjoint DiPCo far-field conversation
+sources. At frozen thresholds, S05 validation yields v6 zero and v10 one event
+in.754488h; respective upper95% rates3.97055/h and6.28753/h are too weak for
+acceptance. Read-Mandarin bounds must not be generalized to this conversation.
+S09/S10 development and official evaluation recordings remain unscored there.
+v13 adds only training S02/S04 with the original recipe; results remain pending.
+
+The frequency-only SpecAugment control v12 is rejected at65.7552% validation
+source-macro, threshold.98. This does not establish time masking as the cause
+of v10's premature events. The branch also pins official Hey Jarvis v2 for
+MCU pretrained-transfer research, but its30/60-channel architecture differs
+from the current32/64 model. No transfer or numerical parity is yet claimed;
+the Mac branch should not independently duplicate that reconstruction.
+
+Locally, a separate original-data negative BCE weight20 control also fails:
+94.5595% versus retained weight5 control94.6845% mean validation macro, two
+versus one continuous event/7.30378h. All prefit sampled windows and PTQ
+representatives match; no endpoint correction or mining was combined. The
+candidate is rejected before development/final scoring or physical flashing.
+Its full checkpoints remain available as `negative20-continuation-v1.tar.gz`.

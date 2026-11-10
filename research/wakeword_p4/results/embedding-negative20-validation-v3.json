@@ -1,0 +1,1008 @@
+{
+  "scope": "Frozen negative-weight20 continuation: original validation only. Treatment rejected before development/final/physical scoring.",
+  "comparison_plan_sha256": "e7631eced7197f431d7c2387a8efb79863175e30bcdd7ac47961d40ecbcc6c5a",
+  "heads": [
+    {
+      "head": "temporal",
+      "plan": "head-temporal-negative20-plan-v1.json",
+      "plan_sha256": "c51937af3bcff9302634f18bd753ccfc99db29ed84b20f3aca3c9b98b219c860",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-negative20-v1",
+      "retained_control": "head-temporal-phase-control-v1",
+      "control_complete_sha256": "6652ebf9aca4a6e310087bb7d4a41c44251efb4b7d244a14a3fe5d8b92c66389",
+      "control_selection_sha256": "882dd2d3a8be5687de3f2f99fd6abfcd8be07b13705e4e301e61ce36c77bcbcd",
+      "control_representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44",
+      "training_complete_sha256": "c14a0fcc50af6d84526bf3674f29744e0b90e58b966ffda4487186d45610601c",
+      "selected_step": 7500,
+      "selected_head_sha256": "c0007bc009c3657e07f84f313e82ac87d99c52254c5c0e4310fe5a3394c21628",
+      "selected": {
+        "threshold": 0.15,
+        "positive_variants": 1196,
+        "recall": 0.9682274247491639,
+        "macro_recall": 0.9414484126984128,
+        "recall_by_engine": {
+          "edge-tts": 0.9107142857142857,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9770833333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 31,
+            "false_rate": 0.11071428571428571
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 5,
+            "false_rate": 0.02976190476190476
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 16,
+            "false_rate": 0.1
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 19,
+            "false_rate": 0.11875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 4,
+            "false_rate": 0.08333333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 110,
+            "false_rate": 0.11458333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.11875,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 91.12500000000034,
+        "positive_latency_p95_ms": 210.37499999999997
+      },
+      "checkpoints": [
+        {
+          "step": 2500,
+          "head_sha256": "ffb8476c96f92919f0ddcfbdac4d9746a5ceb17cc9eb793e1ff518fc6351d5f9",
+          "calibration_sha256": "6387571591b95aa8c9e959d5d4ecee7ff2075c43026872ab40f26a51cf669470",
+          "selected": {
+            "threshold": 0.2,
+            "positive_variants": 1196,
+            "recall": 0.9590301003344481,
+            "macro_recall": 0.9328472222222223,
+            "recall_by_engine": {
+              "edge-tts": 0.875,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9697916666666667
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 29,
+                "false_rate": 0.10357142857142858
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 3,
+                "false_rate": 0.017857142857142856
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 9,
+                "false_rate": 0.05625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 100,
+                "false_rate": 0.10416666666666667
+              }
+            },
+            "max_corpus_false_rate": 0.10416666666666667,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 96.81249999999997,
+            "positive_latency_p95_ms": 228.56249999999977
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 5000,
+          "head_sha256": "d7f8572a02e5e470d659f549c7c742128eb052257e55ba0ea6a40f6534f1dbe9",
+          "calibration_sha256": "4e1719c3de575e900a171c0bd20d4f627dd37a8a82a791e2d79ee0dfee7d1915",
+          "selected": {
+            "threshold": 0.05,
+            "positive_variants": 1196,
+            "recall": 0.9264214046822743,
+            "macro_recall": 0.9110019841269841,
+            "recall_by_engine": {
+              "edge-tts": 0.8303571428571429,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 0.96875,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9364583333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 25,
+                "false_rate": 0.08928571428571429
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 3,
+                "false_rate": 0.017857142857142856
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 15,
+                "false_rate": 0.09375
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 7,
+                "false_rate": 0.04375
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 2,
+                "false_rate": 0.041666666666666664
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 75,
+                "false_rate": 0.078125
+              }
+            },
+            "max_corpus_false_rate": 0.09375,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 118.81249999999977,
+            "positive_latency_p95_ms": 253.85312499999998
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 7500,
+          "head_sha256": "c0007bc009c3657e07f84f313e82ac87d99c52254c5c0e4310fe5a3394c21628",
+          "calibration_sha256": "2681ee883367d17892785797c437e85f466c18aa82ee942e9210331ba7d09447",
+          "selected": {
+            "threshold": 0.15,
+            "positive_variants": 1196,
+            "recall": 0.9682274247491639,
+            "macro_recall": 0.9414484126984128,
+            "recall_by_engine": {
+              "edge-tts": 0.9107142857142857,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9770833333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 16,
+                "false_rate": 0.1
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 19,
+                "false_rate": 0.11875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 110,
+                "false_rate": 0.11458333333333333
+              }
+            },
+            "max_corpus_false_rate": 0.11875,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 91.12500000000034,
+            "positive_latency_p95_ms": 210.37499999999997
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 10000,
+          "head_sha256": "1c6b97abde45522eb90610005d30bfa059286f12920659a6e03dbcf4a488a104",
+          "calibration_sha256": "93b6c9734e5ee812227d845e1ff02190aa4c09c7024a89734386bd8fdf5d2618",
+          "selected": {
+            "threshold": 0.1,
+            "positive_variants": 1196,
+            "recall": 0.9640468227424749,
+            "macro_recall": 0.9372519841269842,
+            "recall_by_engine": {
+              "edge-tts": 0.8928571428571429,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9739583333333334
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 15,
+                "false_rate": 0.09375
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 16,
+                "false_rate": 0.1
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 105,
+                "false_rate": 0.109375
+              }
+            },
+            "max_corpus_false_rate": 0.11071428571428571,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 94.31250000000003,
+            "positive_latency_p95_ms": 206.56250000000043
+          },
+          "strict_operating_point": false
+        }
+      ],
+      "representatives_match_control": true
+    },
+    {
+      "head": "dense",
+      "plan": "head-dense-negative20-plan-v1.json",
+      "plan_sha256": "e9974b6ece68b31444e55575817c1f7146049c0f0d133b4a1b375ab1339dd559",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-negative20-v1",
+      "retained_control": "head-dense-control-v1",
+      "control_complete_sha256": "3df67665fa5429570bb60ab1fc0fb8487978f01a804c2316048fd7ced231c1e1",
+      "control_selection_sha256": "26d3ee2db4855b93796b98c0bbb422a6e43ee632b828b9b9a56bc802ebe54e62",
+      "control_representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "training_complete_sha256": "99ec13dab74a139ba3f715030fe36d4e499da60635b519320d90e1504e841e95",
+      "selected_step": 2500,
+      "selected_head_sha256": "1b026d4a91c9fa0ce3eccf21f1406b84806a1b9a2928ae86772e76b0edd4b676",
+      "selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9113712374581939,
+        "macro_recall": 0.9071130952380952,
+        "recall_by_engine": {
+          "edge-tts": 0.8303571428571429,
+          "kokoro": 1.0,
+          "macos-say": 0.953125,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.91875
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 26,
+            "false_rate": 0.09285714285714286
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 3,
+            "false_rate": 0.017857142857142856
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 9,
+            "false_rate": 0.05625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 6,
+            "false_rate": 0.125
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 78,
+            "false_rate": 0.08125
+          }
+        },
+        "max_corpus_false_rate": 0.125,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 174.31250000000009,
+        "positive_latency_p95_ms": 289.1250000000003
+      },
+      "checkpoints": [
+        {
+          "step": 2500,
+          "head_sha256": "1b026d4a91c9fa0ce3eccf21f1406b84806a1b9a2928ae86772e76b0edd4b676",
+          "calibration_sha256": "f146bfbc7ac5dafea4d89ff4cf9ecc0953b36a3da5f30c6bdda3efdee41fde7f",
+          "selected": {
+            "threshold": 0.4,
+            "positive_variants": 1196,
+            "recall": 0.9113712374581939,
+            "macro_recall": 0.9071130952380952,
+            "recall_by_engine": {
+              "edge-tts": 0.8303571428571429,
+              "kokoro": 1.0,
+              "macos-say": 0.953125,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.91875
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 26,
+                "false_rate": 0.09285714285714286
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 3,
+                "false_rate": 0.017857142857142856
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 9,
+                "false_rate": 0.05625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 6,
+                "false_rate": 0.125
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 78,
+                "false_rate": 0.08125
+              }
+            },
+            "max_corpus_false_rate": 0.125,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 174.31250000000009,
+            "positive_latency_p95_ms": 289.1250000000003
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 5000,
+          "head_sha256": "09be3125a01493162b5a40ade0cfcc71968adee4c9699acd9d8f28b178e7611d",
+          "calibration_sha256": "dcbe94bb5c27e502945f5614c6005fa46ff490451905ded18d55f600f331cc62",
+          "selected": {
+            "threshold": 0.4,
+            "positive_variants": 1196,
+            "recall": 0.9205685618729097,
+            "macro_recall": 0.8979861111111112,
+            "recall_by_engine": {
+              "edge-tts": 0.8125,
+              "kokoro": 1.0,
+              "macos-say": 0.9375,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.934375
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 27,
+                "false_rate": 0.09642857142857143
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 3,
+                "false_rate": 0.017857142857142856
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 9,
+                "false_rate": 0.05625
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 8,
+                "false_rate": 0.05
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 86,
+                "false_rate": 0.08958333333333333
+              }
+            },
+            "max_corpus_false_rate": 0.09642857142857143,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 170.00000000000037,
+            "positive_latency_p95_ms": 290.37500000000006
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 7500,
+          "head_sha256": "1755dd008897920b6bb26da4fba87e5b4463a169f44ef31f31ef2ca47b0bb397",
+          "calibration_sha256": "527c657a95d4107ab155f058ce40865cdc9ba45d54973a88a55e65f86ed68896",
+          "selected": {
+            "threshold": 0.4,
+            "positive_variants": 1196,
+            "recall": 0.9113712374581939,
+            "macro_recall": 0.8960714285714285,
+            "recall_by_engine": {
+              "edge-tts": 0.8303571428571429,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 0.9375,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.9208333333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 24,
+                "false_rate": 0.08571428571428572
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 2,
+                "false_rate": 0.011904761904761904
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 9,
+                "false_rate": 0.05625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 77,
+                "false_rate": 0.08020833333333334
+              }
+            },
+            "max_corpus_false_rate": 0.08571428571428572,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 175.56249999999983,
+            "positive_latency_p95_ms": 295.26249999999976
+          },
+          "strict_operating_point": false
+        },
+        {
+          "step": 10000,
+          "head_sha256": "f928ed7ca7d609c30c29dc1748a73446a385ec9abde7250bc432718170c37918",
+          "calibration_sha256": "1a41b8aa577b37d273b03198ea20003f7c55c8d7d86bd36316e425c2809f81bf",
+          "selected": {
+            "threshold": 0.4,
+            "positive_variants": 1196,
+            "recall": 0.9105351170568562,
+            "macro_recall": 0.905813492063492,
+            "recall_by_engine": {
+              "edge-tts": 0.8214285714285714,
+              "kokoro": 1.0,
+              "macos-say": 0.984375,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.9177083333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 25,
+                "false_rate": 0.08928571428571429
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 1,
+                "false_rate": 0.005952380952380952
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 73,
+                "false_rate": 0.07604166666666666
+              }
+            },
+            "max_corpus_false_rate": 0.08928571428571429,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 184.62500000000003,
+            "positive_latency_p95_ms": 308.56249999999983
+          },
+          "strict_operating_point": false
+        }
+      ],
+      "representatives_match_control": true
+    }
+  ],
+  "prefit_sampler_check": {
+    "scope": "Frozen training-only prefit isolation check. No evaluation scores read.",
+    "members": [
+      {
+        "head": "temporal",
+        "rows": 40627,
+        "hundred_batches_byte_exact": true,
+        "batch_stream_sha256": "922ec6043a41c015d208db405ee5da15d175919ff2b888b6f9a9813e1e95a59f",
+        "labels_inputs_order_and_rng_exact": true,
+        "positive_loss_unchanged": true,
+        "negative_loss_fourfold": true
+      },
+      {
+        "head": "dense",
+        "rows": 40627,
+        "hundred_batches_byte_exact": true,
+        "batch_stream_sha256": "f850096a0cd880f2181abbe38acc5c67b68103006073f4023092dc0c70b076f9",
+        "labels_inputs_order_and_rng_exact": true,
+        "positive_loss_unchanged": true,
+        "negative_loss_fourfold": true
+      }
+    ],
+    "accepted": false
+  },
+  "equal_mean": {
+    "plan_sha256": "651a3011e97d5149b0ba71ca26d6df6930086707e57d6b27abb5e411421f84a2",
+    "calibration_sha256": "273083c2cdea7fbd64bd0d85f74a3c5d2b434ad3e9adaa719a702da2cb30384e",
+    "members": [
+      {
+        "checkpoint": "head-dense-negative20-v1/step-02500",
+        "head_sha256": "1b026d4a91c9fa0ce3eccf21f1406b84806a1b9a2928ae86772e76b0edd4b676",
+        "calibration_sha256": "f146bfbc7ac5dafea4d89ff4cf9ecc0953b36a3da5f30c6bdda3efdee41fde7f",
+        "details_sha256": "871442c66f16b27f69fd86768841672f69f303156d866c44a399fdb19ca3cf4c",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "2af7a852408031105e9451fafb190db91cd31bc128b23a9797f476d0eec1c692",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "38367e2def84b60f9326508b77903828be4b025ba2412b9edbd4b08e8f3f6a49",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "f4bd6d6ba0dcd15ab6c2b196f087800fb38f25c37b94939a5eac428f094f2b90",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "da5238ee731bb091ccf8c118d6a761cb2c66d5927c7ae73ea0251cc19813af3c",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "9c7f4267a9e2adc9ad906bb6b85e24a1b5f06a56152cf7e1d5bcecdcc287466c",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "c089f3970d5ba3548a72ff43ac50c138cbfdf301d7269aed48e8ccd4acd781b1",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "bbd97962655f550c3ea09f101344d3d73e25ef8e3bd1c863cb4c878dfafe9e1b",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "50507aa5c3376b19bbca840301e40c60d62e17276bca24f8fc23be5b706d35bc",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "7aad382020d1c3db8d92eeff1a413f21ba347524c720aabe1a2e73ade5f76733",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "5d57932e0c08982b83493f6385d7a326d33ce8b3d7afdb2ed3ae260084f5a29c",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "45df0fd59254c9f8445d63a2f5e1d2d470cd48117b2e78a0e684608782d2bcb4",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "e2154e0393d244ee862bfd03232348938ceb1a0ee98285eeafc3e3fc259494a2",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "4316d993626db76bab7c742d9a0360d0209f144d76a79da343e0d3aa90fd63a4",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "a729f1030ac568ab8e6f4b79320178ec8d605c57803132df00e2e3987a3a41fa",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "f8079b6fe8cdc04fb01f1ddda2472e2169d785622d1436b6f11fb35840e67e72",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "5690072475ddaaa385680b254095e655222ba41f94b760f70e05b034ee3a7512",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "7bdfeb48a0ab3206fbd47402bf97d564e151a53653c299d134e1b81e5324aabd",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "2524406763e9025e95e5f11c5e4515de67cd2ee426fe11a88a08da7571c7f12e",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "b16e0c34e1fc3a213df267ad4c0d22ee9df3bb88b3c0d61de6ad4156f669e190",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "4680f1ea123d6fe71697030e2b5f271e1a3c48220a9d8b29fafc6d704c4e9b77",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "f2749d1c2fe6d17aa7f5afb5e07e4363ec851296c342796a8464fef85c8f7b44",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "8f087246fe501104f65eee1ae4b78a44128e25b6914f59ecf662e81774741135",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "a46f07edf11463cafacea15488c976bddd1a4fa41e10fb8f266bf43a954d8e01",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "ac2ca11cca450249c4d3a099824063ab5c0f07b36ec71fdfeb4142f8469ee19c",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "47c3ec1fd31956dccfdc30ae65528903e35b4a4fdd9d02a11f906da7f4ad29b2",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "4407fb0ae707ea3695eb60ca27104b53cafdec22c345fa8b22edd18ca986281f",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "c40de64d81de671db22c8fd20eb4454298d726e21f3e61cb615c852845593fed",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "5e9573e8a519f49a3a2f82215dabda2d3af84bb502de7fe49e9273d9fb825d11",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "680de947253b95efc57981d93c427bc1c3595658ecd0bba271ad9c0c1996fbcc",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "59b6ed79c82b11b057f7b6ba85a74164cd9d232d97a81e4f83087776f391b1da",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "29df12b0d6f11a6cf7f99dc7a212473d490744f08f9b401d7c7cf62966627c62",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "cb44c95d33a90f42dc04ac3396bb17d4592885ca92da27310435184a4d045509",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "cda61d855506be0ae7a262caa8fc07ad45986a031328f4f2db201ab48ec6f9e1",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "31babf820af5c0cbe95f47e52d74b3ee5d41375fc93c0a24afed8b16afd0b412"
+        }
+      },
+      {
+        "checkpoint": "head-temporal-negative20-v1/step-07500",
+        "head_sha256": "c0007bc009c3657e07f84f313e82ac87d99c52254c5c0e4310fe5a3394c21628",
+        "calibration_sha256": "2681ee883367d17892785797c437e85f466c18aa82ee942e9210331ba7d09447",
+        "details_sha256": "7669a7be6356c56f06669221676b38a213e54053fe06a6f27cc652b7b54b8759",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "99c33535500d0db2cbf0ba51631d9dc54e7c0a4500f24ca6bc288c818f525a41",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "37de65c82e57bae2bb1156f560d7217c2a5eeb44b483779046fe7f9ba19d4027",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "23aca3150531e265816f8701e843edcabbb2a168479d557736ff9163479f9c74",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "1d251c85a58f7e98f5791a2ee9e88272544def73538b3e4c99cd1e2d41e57481",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "6f0ccc88f4cf81b8fed69991b4f3597489b8bc432d58566a855ec8703425828c",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "c0d96ee703de006903763c6ec054dbfc1a87a6b7d4eb8e08da184b7c87fd1ad4",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "4a326bfac2467d5c09486255b49c7ccaecec22412ba214650c296c29991372e9",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "8caa7f44344dea18b5aa10bc15435ad090c132839e9980009f2efdb74ea03a1f",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "19786e07790af564214b119d791da813d7fc6220b416a760a3373cc01724622f",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "b25c27c9d53b5b63a905cab1547905d8f85014449d92ef92acfe1712cc707851",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "2bf4e8b4a7f1dfdea87a0436f7178d5e61c358007152eb4ebe4bf8dd23e9f3c9",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "376c5b1fe4a995357c86acb41442de3ff88e488e8351373a38602abac66b12fe",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "b2929e33ea1785d30257f8760de5af0900107308e28307d0364ac57936242de8",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "64d56eee780b0e083b8e237a12fed88ed9c45ac54386c36e6f6269d497b6a1b5",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "dd1f71165b4f944ae0f0ae2eb0fff746ce74387e15b95196b706d8d90fdd5535",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "8ae2db5d5875c4d8af0add5ca4b59e7ed1779307de90ef89483bd202e5c9dff9",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "154bf0fb5c30020dd1c199c52b4f2d33ce784415728e1dc47028e8d34c2a7af3",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "1d9cdd7e03e26d9deb0093be1c7f4705475bb01d08474c7e559689574d54d5a0",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "b81ba9be367f937b95be85e36ba916eacf542b97c00ecb4530d8e77d1198b317",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "3f700b60fd6110347844d12c931763715f721aacd4a2195025151a7e9f1fd7e5",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "9ba1b89378e5b399988219299191f76e3af178b82d043df43a2740768a6ec69f",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "f0fcf1522d6b8b34fbb49550b77afe794f92be83a12396c06bd1cb544e81e758",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "15bd966bc118b442e93e71c6f6292dc20ee6c88631f2f13895af36158f786ce7",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "39c4bb4ff3e89032bc58de035fdc58da8565de48f6d62ab3b7b8b39c48db5f9f",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "0942238cb649eab5c795ccf45a76f87104f62ddb0b5af025aa0d560d08714bb3",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "9fbebc1a41455ead31421c05f075ec54dc685107008d73fb5564d9e5ca027231",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "ab35bf6d7bc1432c951311e9d896e8c2b0b9cf7f8b2e0a6d8ccc08aef89a5bff",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "1c2946bd4ab1cd034dbe96a3cfc5589c815fe371e2e3d947007d6178ac2c91ff",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "abf85f8d120d16c9c7822b6102d70746d5b91b8236f7eb5afc70ccea6364ba84",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "3828335bc8dd526427f89747ba2d0472a2c820976617dc2c06336be25f6ad856",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "4952af4df4ba997a684c0fe430881f3867c4bbbfad9743e712fcbb19c4bcfb74",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "b98bf685435f8b92d6f3f28909d9b0c4780fceffad5cfcfecdd19d7ac8b6cc48",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "12f28c9474f83aac4b8aeb6697eaaafe282ba0006da166da1bf96b9d0efc0a3f",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "1612922eeffdcc1514183ed7549077b5a66037b04f5054e07cd11a9c6788a40c",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "8f103bb18d338f6afdfac683f5c8759ec5b57c9bc69e717b8d7a4c74177c450f"
+        }
+      }
+    ],
+    "selected": {
+      "threshold": 0.2,
+      "positive_variants": 1196,
+      "recall": 0.967391304347826,
+      "macro_recall": 0.945595238095238,
+      "recall_by_engine": {
+        "edge-tts": 0.9196428571428571,
+        "kokoro": 1.0,
+        "macos-say": 1.0,
+        "openai-tts": 0.8333333333333334,
+        "piper": 0.975
+      },
+      "negative_variants": 1872,
+      "confusing_corpora": {
+        "edge-tts:edge-corpus": {
+          "variants": 280,
+          "false_variants": 39,
+          "false_rate": 0.1392857142857143
+        },
+        "edge-tts:edge-partials": {
+          "variants": 168,
+          "false_variants": 5,
+          "false_rate": 0.02976190476190476
+        },
+        "kokoro:kokoro-corpus": {
+          "variants": 160,
+          "false_variants": 15,
+          "false_rate": 0.09375
+        },
+        "kokoro:kokoro-partials": {
+          "variants": 96,
+          "false_variants": 0,
+          "false_rate": 0.0
+        },
+        "macos-say:mac-corpus": {
+          "variants": 160,
+          "false_variants": 19,
+          "false_rate": 0.11875
+        },
+        "openai-tts:openai-corpus": {
+          "variants": 48,
+          "false_variants": 7,
+          "false_rate": 0.14583333333333334
+        },
+        "piper:synthetic": {
+          "variants": 960,
+          "false_variants": 108,
+          "false_rate": 0.1125
+        }
+      },
+      "max_corpus_false_rate": 0.14583333333333334,
+      "continuous_hours": 7.303777777777778,
+      "continuous_events": 2,
+      "continuous_events_per_hour": 0.27383089420999784,
+      "continuous_events_per_hour_upper_95": 0.8619913986194038,
+      "positive_latency_median_ms": 107.18749999999977,
+      "positive_latency_p95_ms": 221.00000000000023
+    },
+    "strict_operating_point": false
+  },
+  "retained_matched_control": {
+    "calibration_sha256": "b9b45e0f729985fd9c05a0c6ac09300f1de7109bc4a38e829be3ddf990fdc94d",
+    "members": [
+      {
+        "checkpoint": "head-dense-control-v1/step-07500",
+        "head_sha256": "d79215659b9da0283269960154e122cfa6ad7fdcedaa645cafdeeb7855fdac27",
+        "calibration_sha256": "57d026d8e7bfd53d522e2a0898ef60c59fe2b45d11a883ff5484b97952c983d7",
+        "details_sha256": "81de7dc0e68f10b82f1ca564abfd5f855905f5e2430a45d31d89d52b3c82c378",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "1a9944a37234c4d8fbc5195e0571661e7793f7cc9a88ebbbdf23b863d61b7429",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "ae02baa66608968391d762e06bd9b3b04428a7b7e97d2499bd825874af015991",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "daca1cfacc60241f4878d3a6087245482f0ff9727f210bc61228d8e55ad93e67",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "0440531780ac5bdbfcf5dcf2153a3d8d7b3db08b6ce87c20c4b0ad9e1591433b",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "8fdadd8120aa49b9b5ec3edab5886a3357adcf15d6217a62a4c74eec948f1e3b",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "af83104ff4f9ffeb2f70237e3d722350514c7250869fcf4cccef9e5d8fbe1e2d",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "f97a3be6930d7eb52451aa3d83b35b8aa962ce9a29cfbe63a2be17330ac67a22",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "e13d54d4e739cde359413d91b79d0b0b9378e30bab55e2591e2efb6fccefca72",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "ab772cf749b31535b36cf1d4559729c2b7b7977370bdf050cd0baedb1d1bf48a",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "85caf4ffd3a922b86fddd26cf95ff9221c2f62391498053572889b91def218bd",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "ee27d66f68d071a631c1b1f0d4ebc7096d5f458e75d1770d94497ffef530723c",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "95d7c3f2380c8aaa01cb8a2b468820b7ec50325214541d1bfea021d57f2340f8",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "c2cecf151d559fe2d22c1ff0c27e1e5cf444a1d1655045995fa3ff5cf4725486",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "b6509f0237611da1d33d7bf2c15ae12f44b005d66c94c64539c9b61bfc7644ba",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "affb75e10230730bd0314741305aa7beef6febd39db7fbbe585883dba20cf8b1",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "0e1e7497809c28e705eb7dfe6c39e95d6d233ee4e8e9f5736f4bfca9f91acc37",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "a58c83788956db82f50ea12e2b4c8c96d5d178b1fc29370762a9acd8b0f5464d",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "bbcf126aba726687ca73140d0c3bbde216ac594722536b5b3bde739eb3acdfc9",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "78180b7fdce8da5952e4378457cf3f51645519b32a49ff436264ec1cb1dab73b",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "e9b114a666ec7dcbc959df8d35093003d3e6b91e512357e4ee860edd600cadb4",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "d4d73b61375aade4f5a471dc24407479c4aa62b3ff3af24895920054bbf67106",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "17043581d68cf60825683337e7e652834a0630502135f18adf6d059b711b7f4e",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "4470fd4a3a26ba7b7cdda44362022bcb487d7016af4ca018bee83d343ace5343",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "bd9edc58623e6a9b1945fc4f18af42eceefddf4cf40b3d30e8b7e6461953e542",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "e2c920e2030efb254adef93ef86b5b2cfde53b2d73b69bce1152c1dd6960343b",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "74c19d1f695925950e2c20912f86ac3b9304ca284b445a9820c11c0ddf02e631",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "b3a5a394694088c26c30bdcd27e4340cad632b67c7b3193d14a759c41bed5f00",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "52db7dcd45ad089d9b4791788f22bae2704cd9de790be5da32e2dd584455442b",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "ecfb67eab5071bc51b16f167a716669d58fc2ff03488fbebaca8a620393bc578",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "fb5bf2b473f900926a84fda5fe0834ed9de2651429d58d4a9e8005cde73119ba",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "052991ae7768ccdb5827b8c05b75c86f2e427207e63994026a5e9e66971c5b27",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "2e1abc4e19260664894e32ee0cdbae0aec358fcead57c485118f78898509a0f8",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "f9f5f9184ce92b09eb2c6977514cda2314d0ab17a9fa9b763b283287f9af03ea",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "8882638f94586440c55b73b03dc1ce4e524d16db390ac3bb8a75fc8680f5cdc3"
+        }
+      },
+      {
+        "checkpoint": "head-temporal-phase-control-v1/step-02500",
+        "head_sha256": "6794c8852445d5d93e0604f41b0ee8725a45bef5b17612c1de253aed0a909928",
+        "calibration_sha256": "67e3649722fa63756ea1d7fad9a826235cc31534ca642de37aaaaad18f703940",
+        "details_sha256": "ee62bed3403fc5dff85bc32fac121eb8ea86e0acddcabfc9da5341a32186b6dd",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "a8fc07ea91ca2554b25d86882fedcd54e5456625a2c6584a3b85f1a2f4522a66",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "e1e1ce6c02a67e497a70709c662aebb9344403383f0cb3e9190f5b8cd60bc49d",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "4d4720a609de71f6324eecf1269fc77b851a046e1a287867136acb9eef22edf7",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "ecd327b2b438d25ead5be3899b2f608350e0157ad95ef544b88e6dcd91ea35b8",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "2fa75c76a789ed927aed7bf6837392282da645faa068cc9e58e69d7904341adf",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "8efe1ee4762c8c10b1a005ee554fc9c716f837a4fc65372a5d7162a8103ef2ca",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "04c2840fcfaf20e345678360abe44f6fa642e2af7a26267eee020e1b91123905",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "7b42bda5e30d88b7f45edb6afa3a57596057a705a6a068504f57fc16a35950fc",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "c6563c9874ff6f31a4af57ad8ef71ec83f116c7429d768b3805fd4a4b6a94f24",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "b5efbf28e193f12e09173837f0554ec49db6de9e081c251b245d3532db75dc73",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "a56ab14568b7bbdd8fe8ac860cca7d4b95c713268e2b771b85afd6eb1be8e773",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "f5402dcea5d64876efc19ba89968947085ad10452221910a3fc04a38722732ef",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "7861a3ae7e1327f2d26f6b1b938e63ba9344541dbecfdb5926c20f14caf4769c",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "715c819216a617d36dd98e56d5633519e2a799e92b04d3ad63490ff0571a783d",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "1b97314ad814a4d65f7b88aefe5dcef8c42a3ade93c805fee4bfac2278534ef3",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "cbc41591b02a4ad05773d54d966ad3e3a6a4da1c8fde4984f755832ece67d5da",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "37493fca21acd04766f5f2a505edc4c03894cf7a2d8e12b3b65fb159a476fed2",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "8eaf88e3294fd861e34ae941aac535840025b2a5dfd883c963ccda100db9d4fc",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "57b73d34fe3228af7cb1b03a6e22262489479e35188f35edc8ec4d6b0578edc1",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "7997e3d13d5ae916a0be7e2586883ba8005c41b7019891323f6e1f5bdae4db43",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "d738d3731f94af89bb3db1e5a9e346eab36fcf6cedbaa49fbf6e74da0147fd8a",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "f8e2f05cb3a0923be26a94e48b21067e947a012507c52754869f039be85c0720",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "09576a06900b7be36d59327bec4f7d94ae723a30dae6ea3ec0c3e0d663020875",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "790282f71cb1a469fed710e0f7c9c4b1b2fdd9bbf4247225644f6d55c5b5180b",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "41449cfc47ce52541373b3a43b5f8a756856e802eb715d42a495dd85640ac9de",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "e70826be1bf745a2203383f4b73e0c05a63884f43d454179086d9c58b297f69c",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "e1152c6839b67f36fa03e3ae6ae3da53f242b2c9270146a0eb6be526eaad3b98",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "dcced752d42e8f5d31f44f7c5d3041476844f2acb81a29e4f47cc1b4b52ecf84",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "3addd64a0238888ae42c4a7134947e4dafe5de9e2960924e85357cb8c287cdcf",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "01434913c320d1d801399d7e62330b6bf85ba45f2c45a00569038416dd9e0efe",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "87ec644ab89d6195e95933339851fe855eee0073a0fa3a38fb30bc0010f86e12",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "227e1c11e3f0c08ba85d5a77e3c39263ed75f4797253ce943ad0968499f0ea8d",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "3f37bc38999275a2e635e2b1f7cbb5fa3fccc34b524a8799a9757e2ddbf71e7e",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "af227e714b411ee2cdfee6ca0071ab31f6839018d4f540e157135688f4b95fc1",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "36b41655d4dd76d1b34a18916a113560699071665875027669a6375ac4706fba"
+        }
+      }
+    ],
+    "selected": {
+      "threshold": 0.4,
+      "positive_variants": 1196,
+      "recall": 0.9724080267558528,
+      "macro_recall": 0.9468452380952381,
+      "recall_by_engine": {
+        "edge-tts": 0.9196428571428571,
+        "kokoro": 1.0,
+        "macos-say": 1.0,
+        "openai-tts": 0.8333333333333334,
+        "piper": 0.98125
+      },
+      "negative_variants": 1872,
+      "confusing_corpora": {
+        "edge-tts:edge-corpus": {
+          "variants": 280,
+          "false_variants": 39,
+          "false_rate": 0.1392857142857143
+        },
+        "edge-tts:edge-partials": {
+          "variants": 168,
+          "false_variants": 3,
+          "false_rate": 0.017857142857142856
+        },
+        "kokoro:kokoro-corpus": {
+          "variants": 160,
+          "false_variants": 13,
+          "false_rate": 0.08125
+        },
+        "kokoro:kokoro-partials": {
+          "variants": 96,
+          "false_variants": 0,
+          "false_rate": 0.0
+        },
+        "macos-say:mac-corpus": {
+          "variants": 160,
+          "false_variants": 14,
+          "false_rate": 0.0875
+        },
+        "openai-tts:openai-corpus": {
+          "variants": 48,
+          "false_variants": 5,
+          "false_rate": 0.10416666666666667
+        },
+        "piper:synthetic": {
+          "variants": 960,
+          "false_variants": 113,
+          "false_rate": 0.11770833333333333
+        }
+      },
+      "max_corpus_false_rate": 0.1392857142857143,
+      "continuous_hours": 7.303777777777778,
+      "continuous_events": 1,
+      "continuous_events_per_hour": 0.13691544710499892,
+      "continuous_events_per_hour_upper_95": 0.6495083315409862,
+      "positive_latency_median_ms": 130.37499999999991,
+      "positive_latency_p95_ms": 233.62499999999997
+    }
+  },
+  "all_training_data_and_labels_unchanged": true,
+  "all_representatives_exact": true,
+  "audio_speed_changed": false,
+  "development_regression_run": false,
+  "regression_plan_prepared_but_unexecuted_sha256": "ce78685ac4056a23bbcd0c10210b7f5e1940bce582468371a1501366df27a870",
+  "final_scores_read": false,
+  "flashed": false,
+  "accepted": false,
+  "interpretation": "Rejected: selected treatment mean macro94.5595% versus retained matched-control94.6845%, continuous2 versus1 events/7.30378h and max confusing-source14.5833% versus13.9286%. Threshold shifts to.2 from.4; increased BCE cost did not improve selected separation on this validation. No development regression consumed.",
+  "limits": [
+    "Single frozen fourfold cost intervention and one seed per head; not a claim that negative weighting can never help.",
+    "Validation voices and continuous streams are reused development evidence, not independent user acceptance.",
+    "This does not explain acoustic misses or establish full-app resource/voice-chain parity."
+  ]
+}
