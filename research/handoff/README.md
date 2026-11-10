@@ -25,7 +25,7 @@ and BUILTIN_REF execution. It does not measure wake recognition. Install a
 host driver compatible with the locked CUDA 12 packages. Native Windows should
 use WSL2/Linux for TensorFlow GPU.
 
-All downloads have archive and per-file SHA256 verification. Default download
+The complete asset set is 1.18 GB compressed (about 1.10 GiB). All downloads have archive and per-file SHA256 verification. Default download
 contains features/models; `--include-audio` also retrieves the synthetic source
 WAVs, and `--include-history` retrieves historical experiment source. No key is
 needed to continue fitting from these features. The historical filename
