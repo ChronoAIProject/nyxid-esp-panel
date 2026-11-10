@@ -1345,3 +1345,22 @@ v17 DiPCo既有误触在S05/U04.CH1约1079.18s，邻近转写为普通讨论、
 `4090-v17-dipco-event-transcript-context.json`，不把验证音频挖入训练。
 另修正未来人声评测报告的limits文案：此前DiPCo报告错误沿用“read Mandarin”，
 实际来源与事件均为DiPCo；历史原始结果不改写，脚本现在使用实际corpus-name。
+
+
+### v18/v19 前缀负样本训练与INT8验证完成
+
+两组完成40k步，v18耗时446.2s、选35k，v19耗时452.5s、选40k；
+均INT8 54,440字节。v18 SHA256
+`d23f01fbea7cc9d9722265ae26ed60650038380aa0198919862af46add0c9240`；
+v19 SHA256 `4d4db51422775b400b6a5a101b5c01cc9177c95fa7fb61333795c0ca699f5151`。
+完整配置与历史见 `4090-training-v18-prefix8.json`、`4090-training-v19-prefix16.json`。
+
+INT8验证v18阈值0.97，来源平均66.5104%，Piper73.4375%、Kokoro59.5833%，
+提前事件0；v19阈值0.95，来源平均78.3073%，Piper79.1146%、Kokoro77.5%，
+1705/2160、提前事件3，中位延迟130ms、P95 220ms，最差近音误触0.875%。
+v19超过v17的70.4167%，但未证明开发回归改善。两者环境均0/1.204811h，
+95%上界2.48647/h，仍不是0.5/h达标。验证报告见
+`4090-quantized-v18-prefix-validation.json`、`4090-quantized-v19-prefix-validation.json`。
+
+v18拒绝，不继续扩展；v19启动原开发回归、固定阈值中文/DiPCo与小样本
+流式导出检查，独立最终集未评分。
