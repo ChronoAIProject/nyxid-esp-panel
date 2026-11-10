@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`a9756cc`:
+`caa2ef7`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,7 +14,7 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5 and Qwen-v6 runs complete | None accepted; duration-weighted ambient control launched |
+| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5, Qwen-v6 and duration-v7 runs complete | None accepted; Qwen-recovery-v8 launched |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
 | Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
 | Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
@@ -201,6 +201,35 @@ unrelated previous acoustic controls are excluded. This enables GPU models
 to use the exact existing development comparison without needing WakeNet on
 Linux; it is not the independent final challenge or a new acceptance set.
 See the [portable comparison instructions](README.md#portable-paired-pcm-baseline).
+
+Subsequent GPU v7 quantized validation is also rejected: source-macro recall
+67.865% (Piper74.896%, Kokoro60.833%), below v6's69.948%, at threshold.97.
+It has zero continuous events/1.20481h, whose upper95% bound remains2.48647/h.
+No development regression or final scores are read. The eight-clip numerical
+comparison has maximum float/INT8 drift.25409; it is not general parity or
+MCU numerical evidence. Duration weighting corrected a sampling imbalance
+without establishing an improved detector.
+
+A stronger ASR check materially changes the training pronunciation hypothesis.
+On the same200 training Piper WAVs, tiny.en's alias-aware positive agreement
+is32/100, while pinned small.en CUDA FP16 reaches80/100 (36/40 standalone,
+44/60 commands). Positive transcripts starting Hey Next decrease45to7.
+This contradicts using tiny.en disagreement alone to claim widespread bad
+Piper pronunciation or discard those WAVs. The two models share the Whisper
+family and neither proves phonetic ground truth. Piper's intended Nyx/Nix/
+Nicks phonemes are identical /nɪks/; merely respelling them would not change
+that generator's intended input. No audio, labels or evaluation rows change.
+
+The stronger check also agrees with62/72 Qwen training positives and270/288
+negatives. A union with the earlier tiny-selected subset preserves every old
+source and adds34 positives/10 negatives, yielding64+/278-. The v8-small MCU
+run tests only that training-source addition against v6, preserving row-based
+ambient sampling and all other settings. Its264 new renderings preserve the
+complete old binary/index prefix and unchanged human/ambient/evaluation rows.
+The full audit has99,212 sequences from17,482 source WAVs. Actual INT8
+validation is pending; independent final fixtures remain unscored. The Mac
+branch should not duplicate these Qwen/ASR experiments or assume v8 is eligible
+for flashing before its results and model artifact are available.
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research
