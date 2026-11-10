@@ -1,0 +1,76 @@
+{
+  "scope": "Audit retained Hi ESP bracket reports/UART silently, without device access.\n\nMatching aggregate counters is not sample-level input or latency evidence.\nThis helper reads existing files only; it cannot play audio or flash a board.\n",
+  "plan_sha256": "cd5106044241be3e97ba17d575298aeeae2621e8e4efd8fc137ea970bcf88a16",
+  "same_trial_order_and_source_metadata": true,
+  "same_declared_app_and_wake_model": true,
+  "arms": {
+    "before": {
+      "trials": 35,
+      "observed_events": 11,
+      "uart_events": 11,
+      "wake_model": "wakeNet9_v1h24_Hi,ESP_3_0.63_0.635, tigger:v4, mode:1, p:0",
+      "boot_reasons": [
+        "rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)"
+      ],
+      "uart_utf8_replacement_characters": 2,
+      "invalid_utf8_confined_to_boot_prefix": true,
+      "no_event_trials_with_completed_source_playback": 24,
+      "missed_positive_trials": 5,
+      "detected_trials_stopped_before_source_completion": 11,
+      "reported_rearm_and_playback_checks_passed": true
+    },
+    "after": {
+      "trials": 35,
+      "observed_events": 8,
+      "uart_events": 8,
+      "wake_model": "wakeNet9_v1h24_Hi,ESP_3_0.63_0.635, tigger:v4, mode:1, p:0",
+      "boot_reasons": [
+        "rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)"
+      ],
+      "uart_utf8_replacement_characters": 2,
+      "invalid_utf8_confined_to_boot_prefix": true,
+      "no_event_trials_with_completed_source_playback": 27,
+      "missed_positive_trials": 8,
+      "detected_trials_stopped_before_source_completion": 8,
+      "reported_rearm_and_playback_checks_passed": true
+    }
+  },
+  "changed_trials": [
+    {
+      "id": "Karen-positive-0",
+      "category": "positive",
+      "before_triggered": true,
+      "after_triggered": false
+    },
+    {
+      "id": "Karen-positive-2",
+      "category": "positive",
+      "before_triggered": true,
+      "after_triggered": false
+    },
+    {
+      "id": "Moira-positive-2",
+      "category": "positive",
+      "before_triggered": true,
+      "after_triggered": false
+    }
+  ],
+  "captured_microphone_audio_compared": false,
+  "accepted": false,
+  "interpretation": [
+    "Every miss retained completed source playback; recorded Mac playback failure does not explain these misses.",
+    "All retained UART detection messages agree with aggregate HTTP report counts. This checks aggregate accounting, not per-trial clock alignment or microphone continuity.",
+    "Both controls retain the same app, model, source identities and trial order. Each UART contains only its initial boot; no extra reset is recorded.",
+    "Successful trials may terminate source playback as soon as a wake is observed. They do not measure complete first-utterance delivery or conversational success.",
+    "These reports do not contain sample-aligned microphone input. Input level, timing/state and room variation cannot be causally separated from these artifacts.",
+    "Keep all changed control outcomes. No waveform, threshold, model or acceptance rule was adjusted, and no replay was performed."
+  ],
+  "source_waveforms_verified": true,
+  "input_files": {
+    "before_report": "ad2ff488b8ace3648096a148ae44bb5a4712ae70bdea89309dc45b38fd20daf5",
+    "after_report": "5bea274a25714ebf6c66e521f4baac6b08ffaec2e5fc9e65ae8fd77de0338165",
+    "before_uart": "d7d1054b6226f0266ee14782368ad20ff4945fd4942bb52f854ec15603e92d74",
+    "after_uart": "32b63b85b5f850d8fa968d9694b38d0e99a3aaeb270cb21b824c571a749fa108"
+  },
+  "script_sha256": "3cd6bf6d0827d8169cc5b86f6fc80f50824b6b44ce3a36c104d7c5ce0aacddab"
+}

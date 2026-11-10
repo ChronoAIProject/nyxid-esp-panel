@@ -453,3 +453,38 @@ The runner records failure type/message, gives the isolated acceptance process
 group SIGTERM for its owned-call cleanup, then restores the original app.
 An actual nested-child timeout fixture verified cleanup before the runner
 returned; ordinary resource/acoustic results remain separate.
+
+### Silent audit of retained acoustic controls
+
+`audit_acoustic_accounting.py` reads the already completed raw-input Hi ESP
+bracket without playback, device requests, flashing or model inference. It
+verifies the exact source WAV hashes/timebases, control trial order, declared
+app/model identities, completed playback on every miss, and aggregate UART
+versus HTTP event counts. Invalid boot-prefix bytes are reported; invalid
+runtime text or an additional boot makes the audit fail.
+
+```sh
+python research/panel_wake_runtime/audit_acoustic_accounting.py \
+  --plan research/panel_wake_runtime/plans/raw-engine-comparison-v1.json \
+  --source-root "$WAKE_SOURCE_ROOT" \
+  --before-report "$WAKE_LOGS/hi_esp_before-acoustic/report.json" \
+  --after-report "$WAKE_LOGS/hi_esp_after-acoustic/report.json" \
+  --before-uart "$WAKE_LOGS/hi_esp_before-swap/uart-private.log" \
+  --after-uart "$WAKE_LOGS/hi_esp_after-swap/uart-private.log" \
+  --output "$NEW_CONTROL_AUDIT_JSON"
+python -m unittest discover -s research/panel_wake_runtime -p test_acoustic_accounting.py
+```
+
+The completed retrospective audit is
+[`acoustic-control-accounting-v1.json`](../wakeword_p4/results/acoustic-control-accounting-v1.json).
+Both retained UART totals match their reports: 11 events before, 8 after,
+including one near-word event in each. All 24/27 no-event trials completed
+source playback. The three changed positive outcomes remain failures in the
+comparison. Each successful trial stopped playback early under the original
+stop-on-wake policy, so those trials establish no first-utterance delivery.
+
+These logs lack sample-aligned microphone input. Matching aggregate counters
+does not align individual detections or prove continuous PCM delivery, input
+levels, exact latency, physical placement or the cause of control variation.
+Do not replay the same benchmark seeking better control scores. No detector,
+threshold, audio speed, microphone producer or call path changes in this audit.

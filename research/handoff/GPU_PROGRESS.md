@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `c0c4a50`; see the dated snapshots below.
+Latest observed GPU commit: `815a769`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -493,3 +493,26 @@ property. That is an inspection result, not a working WakeNet inference path.
 The Mac continuation uses its existing cached independent phoneme model for
 a fixed training-only endpoint diagnostic; it does not repeat GPU capacity or
 threshold-grid experiments or inspect the independent final audio.
+
+### GPU snapshot through `815a769`
+
+Read on 2026-11-11. V22 allows BN affine adaptation while keeping moving
+statistics fixed. Its initial classifier identity matches v19, but validation
+macro recall falls to 72.5521% on the same dense INT8 grid; reject it before
+extended or final scoring.
+
+The GPU track audits the official LibriSpeech train-clean-100 archive and
+extracts 100.59087965 h from 251 speakers for training only. Official source
+speaker IDs do not overlap the mapped Piper voices or held-out LibriSpeech
+speaker sets; this does not establish identities for unrelated TTS providers.
+V23 preserves v19 initialization, architecture and category probability while
+adding these negatives. It reaches 71.171875% validation macro recall and
+still has 4 dev-other / 5.121185 h, 3 Mandarin / 6.913985 h and 2 DiPCo /
+.754488 h events. Expanded calibration has no zero-event operating point;
+reject this run. Source hours do not establish effective sampled coverage.
+
+V24 now prespecifies 120k steps from the same initialization, with LR changes
+scaled from 20k/32k to 60k/96k. That tests longer training plus the relative
+schedule, not a fixed-LR step-count effect. No outcome is available in this
+snapshot. The Mac work does not duplicate this experiment or score final
+corpora. It silently checks retained physical control accounting separately.
