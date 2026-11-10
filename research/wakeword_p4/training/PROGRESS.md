@@ -747,3 +747,16 @@ voices/conditions and real recordings for subsequent acceptance.
   See `../results/embedding-ctc-endpoints-v1.json` and
   `../embedding/plans/training-endpoint-overrides-v1.json`. No new detector
   training, held-out audio scoring, threshold change or quality acceptance yet.
+
+- All-training preparation completes: 224 overrides (112 original, 112 extra
+  environmental), 56 unique sources, all 3,068 nontraining rows preserved.
+  The opt-in sampler consumer keeps original PTQ metadata. On 40,627 real
+  training rows, current default reproduces the retained legacy's 20 batches
+  per seed exactly; both 512-example PTQ files match historical bytes. Treatment
+  preserves negative draws/labels/RNG and original anchors, changing 35/33
+  positive histories in those precheck batches. Six sampler and seven CTC
+  boundary tests pass. The exact override manifest and same-initialization
+  dense/temporal 10k recipes are frozen before fitting in
+  `../embedding/plans/all-training-endpoint-continuation-v1.json`; see
+  `../results/embedding-training-endpoints-v1.json`. Training has not started
+  at this commit; validation/development/physical improvement remains unproven.

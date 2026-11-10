@@ -530,6 +530,42 @@ No original index or payload is rewritten. Its eventual sampler consumer must
 keep PTQ representatives on original metadata and bind the override hash before
 matched fitting. Preparation/CTC results alone cannot accept or deploy a model.
 
+Preparation now completes all 43,348 original/environmental rows with 224
+overrides (112 base, 112 environmental); all 3,068 nontraining rows remain
+untouched. The pure-metadata manifest is tracked as
+`plans/training-endpoint-overrides-v1-records.json`. The optional
+`train_head.py --training-endpoints <manifest>` argument must match the plan's
+`training_endpoints_sha256`. It changes positive sampling anchors only;
+representative sampling always reads the original row metadata. Omit the
+argument for historical behavior. Unknown/duplicate IDs, role/hash/anchor
+conflicts, nonfinite values and out-of-range warm histories are rejected.
+
+The [real-data precheck](../results/embedding-training-endpoints-v1.json) loads
+40,627 training rows and compares the retained legacy sampler against current
+default behavior: 20 batches per member are exact, and both 512-example PTQ
+files reproduce their historical bytes. Treatment keeps labels, negative draws
+and RNG state exact while changing 35/33 sampled positive histories in those
+diagnostic batches. Six sampler tests plus seven CTC/source-boundary tests
+pass. No held-out audio or validation recognition score informs this precheck.
+
+`plans/all-training-endpoint-continuation-v1.json` freezes matched dense and
+temporal continuations with their original weights, seeds and 10,000-step
+recipes. Its member plans bind the manifest; retain the existing controls and
+their PTQ hashes. Select four prespecified checkpoints on original validation,
+then evaluate exactly one equal mean before any development scoring. For each
+member, use a fresh training output:
+
+```sh
+python research/wakeword_p4/embedding/train_head.py \
+  --data-root "$WAKE_DATA" --plan "$ENDPOINT_MEMBER_PLAN" \
+  --initial-weights "$ENDPOINT_INITIAL_WEIGHTS" \
+  --training-endpoints research/wakeword_p4/embedding/plans/training-endpoint-overrides-v1-records.json \
+  --output "$NEW_ENDPOINT_TRAINING_OUTPUT"
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --training "$NEW_ENDPOINT_TRAINING_OUTPUT" --data-root "$WAKE_DATA" \
+  --plan "$ENDPOINT_MEMBER_PLAN"
+```
+
 ### Generic channel-EQ continuation
 
 `audit_capture_transfer.py` characterizes one explicitly hash-bound synthetic

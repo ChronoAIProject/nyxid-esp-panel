@@ -14,6 +14,7 @@ import time
 import numpy as np
 import tensorflow as tf
 from ai_edge_litert.interpreter import Interpreter, OpResolverType
+from training_endpoints import endpoint_map
 
 HISTORY = 16
 MIN_END = 25  # First nine embeddings are cold; every sampled history is warm.
@@ -126,10 +127,11 @@ def weighted_loss(labels, predictions, recipe):
 
 
 class Sampler:
-    def __init__(self, rows, seed, mined=None, hard_negative_stride=2):
+    def __init__(self, rows, seed, mined=None, hard_negative_stride=2, positive_endpoints=()):
         if type(hard_negative_stride) is not int or hard_negative_stride < 2:
             raise ValueError('Hard-negative stride must be an integer of at least two')
         self.hard_negative_stride = hard_negative_stride
+        self.positive_endpoints = endpoint_map(rows, positive_endpoints, MIN_END)
         self.rng = np.random.default_rng(seed)
         self.hard_rng = np.random.default_rng(seed+1_000_000)
         self.hard = {}
@@ -173,7 +175,8 @@ class Sampler:
                     group = self.groups[(kind, engine)]
                     row = group[int(self.rng.integers(len(group)))]
                 if kind == 'positive':
-                    end = int(np.ceil((row['keyword_end']+self.rng.uniform(.03, .32))/.08))
+                    anchor = self.positive_endpoints.get(row.get('id'), row['keyword_end'])
+                    end = int(np.ceil((anchor+self.rng.uniform(.03, .32))/.08))
                     if end < MIN_END or end > row['frames']:
                         raise ValueError('Positive endpoint lies outside a warmed history')
                 else:
@@ -244,6 +247,7 @@ def main():
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--initial-weights', type=Path)
     parser.add_argument('--mined-negatives', type=Path)
+    parser.add_argument('--training-endpoints', type=Path)
     args = parser.parse_args()
     args.output.mkdir(exist_ok=False)
     plan = json.loads(args.plan.read_text())
@@ -252,7 +256,8 @@ def main():
     if bounds is not None and not 0 < bounds['negative_minimum'] < bounds['positive_maximum'] < 1:
         raise ValueError('Invalid training-only confidence filter')
     for path, field in [(args.initial_weights, 'initial_weights_sha256'),
-                        (args.mined_negatives, 'mined_negatives_sha256')]:
+                        (args.mined_negatives, 'mined_negatives_sha256'),
+                        (args.training_endpoints, 'training_endpoints_sha256')]:
         if bool(path) != bool(plan.get(field)):
             raise ValueError('Initialization/mining arguments differ from the frozen plan')
         if path and hashlib.sha256(path.read_bytes()).hexdigest() != plan[field]:
@@ -276,8 +281,14 @@ def main():
         assert mined['backbone_sha256'] == plan['model_sha256']
         for name, digest in mined['feature_indexes'].items():
             assert hashlib.sha256((args.data_root/name/'index.jsonl').read_bytes()).hexdigest() == digest
+    endpoints = json.loads(args.training_endpoints.read_text()) if args.training_endpoints else None
+    if endpoints is not None:
+        for name, digest in endpoints['source_feature_indexes'].items():
+            if hashlib.sha256((args.data_root/name/'index.jsonl').read_bytes()).hexdigest() != digest:
+                raise ValueError('Endpoint original feature index differs')
     sampler = Sampler(rows, plan['recipe']['seed'], mined['records'] if mined else None,
-                      recipe.get('hard_negative_stride', 2))
+                      recipe.get('hard_negative_stride', 2),
+                      endpoints['records'] if endpoints is not None else ())
     representative_rows = [row for row in rows if row['_feature_directory'] in
                            ('head-features-tts-v1', 'head-features-negatives-v1')]
     representative_sampler = Sampler(representative_rows, plan['recipe']['seed']+1)
@@ -305,6 +316,8 @@ def main():
                'training_frames': sum(r['frames'] for r in rows), 'checkpoints': []}
     summary['initial_weights_sha256'] = plan.get('initial_weights_sha256')
     summary['mined_negatives_sha256'] = plan.get('mined_negatives_sha256')
+    summary['training_endpoints_sha256'] = plan.get('training_endpoints_sha256')
+    summary['training_endpoint_overrides'] = len(sampler.positive_endpoints)
     summary['mined_windows'] = len(mined['records']) if mined else 0
     summary['feature_inputs'] = {}
     for name in feature_directories(extra_training):

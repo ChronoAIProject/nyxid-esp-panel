@@ -1,0 +1,67 @@
+{
+  "scope": "Complete training-only endpoint preparation and real-data sampler/PTQ precheck. No detector quality result.",
+  "preparation": {
+    "scope": "Prepare bounded training endpoint overrides; preserve original audio/features.\n\nThe rule applies to complete standalone aliases in original and environmental\nviews. It does not require a marker to equal file length. Validation, commands,\nnegative labels and original metadata stay intact; no model is fitted here.\n",
+    "plan_sha256": "4199078833fad2aa566bcc89f654dd700b28b73596614005f7cf1235d1d7573c",
+    "script_sha256": "d1bab9df0735145f34ed639f05d49df18b61d3050d64f0c26ccaf4d5d5957881",
+    "source_rows": 43348,
+    "preserved_nontraining_rows": 3068,
+    "standalone_sources": 1959,
+    "eligible_sources": 56,
+    "previous_file_end_eligible_sources": 34,
+    "changed_training_endpoints": 224,
+    "changed_rows_by_directory": {
+      "head-features-tts-v1": 112,
+      "head-features-environment-v2": 112
+    },
+    "changed_sources_by_engine": {
+      "openai-tts": 56
+    },
+    "overrides_sha256": "43bf109d2647637c3dbbe61cf1ff837340a77eb5a20ad149fdc0b3cf2de52eef",
+    "original_indexes_and_payloads_changed": false,
+    "heldout_audio_loaded": false,
+    "audio_speed_changed": false,
+    "accepted": false
+  },
+  "sampler_precheck": {
+    "scope": "Real training-only sampler/quantization comparability before fitting. No validation audio or recognition scores.",
+    "legacy_source_commit": "a389202",
+    "legacy_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+    "current_script_sha256": "ce852b0850ff92619aabbd2d9d330be7b2b142ee45aa812fba5b283eab34fb4f",
+    "endpoint_helper_sha256": "73a00a7084e6054627d894b55c84f749bddcef91e63140055a9b498341f4ed65",
+    "overrides_sha256": "43bf109d2647637c3dbbe61cf1ff837340a77eb5a20ad149fdc0b3cf2de52eef",
+    "training_rows": 40627,
+    "checks": [
+      {
+        "head": "dense",
+        "seed": 728,
+        "control": "head-dense-control-v1",
+        "control_complete_sha256": "3df67665fa5429570bb60ab1fc0fb8487978f01a804c2316048fd7ced231c1e1",
+        "legacy_default_batches_identical": 20,
+        "negative_draws_and_rng_identical": true,
+        "positive_examples_changed": 35,
+        "original_row_markers_unchanged": true,
+        "ptq_examples": 512,
+        "ptq_bytes_identical": true,
+        "ptq_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386"
+      },
+      {
+        "head": "temporal",
+        "seed": 727,
+        "control": "head-temporal-phase-control-v1",
+        "control_complete_sha256": "6652ebf9aca4a6e310087bb7d4a41c44251efb4b7d244a14a3fe5d8b92c66389",
+        "legacy_default_batches_identical": 20,
+        "negative_draws_and_rng_identical": true,
+        "positive_examples_changed": 33,
+        "original_row_markers_unchanged": true,
+        "ptq_examples": 512,
+        "ptq_bytes_identical": true,
+        "ptq_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44"
+      }
+    ],
+    "passed": true,
+    "accepted": false
+  },
+  "accepted": false,
+  "training_started": false
+}

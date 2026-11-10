@@ -1,0 +1,39 @@
+{
+  "scope": "Frozen all-training endpoint continuation before fitting: remove the file-end restriction and apply the same bounded RMS correction to all four original/environmental views. Preserve originals, labels, RNG, PTQ, initialization, optimizer and validation policy.",
+  "preparation_plan_sha256": "4199078833fad2aa566bcc89f654dd700b28b73596614005f7cf1235d1d7573c",
+  "preparation_and_precheck_report_sha256": "54161af82545c64df825d1e31558fed5eba8cbfa489d7edeea3c47d733aef2b0",
+  "training_endpoints_sha256": "43bf109d2647637c3dbbe61cf1ff837340a77eb5a20ad149fdc0b3cf2de52eef",
+  "training_script_sha256": "ce852b0850ff92619aabbd2d9d330be7b2b142ee45aa812fba5b283eab34fb4f",
+  "endpoint_helper_sha256": "73a00a7084e6054627d894b55c84f749bddcef91e63140055a9b498341f4ed65",
+  "evaluation_script_sha256": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c",
+  "members": [
+    {
+      "head": "dense",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "retained_control": "head-dense-control-v1",
+      "control_complete_sha256": "3df67665fa5429570bb60ab1fc0fb8487978f01a804c2316048fd7ced231c1e1",
+      "control_selection_sha256": "26d3ee2db4855b93796b98c0bbb422a6e43ee632b828b9b9a56bc802ebe54e62",
+      "control_representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "plan": "head-dense-all-endpoints-plan-v1.json",
+      "plan_sha256": "e0bc27870ffefcbb82e3c900d1c91e80e987b0a280ad57f428376d04c966927f",
+      "output": "head-dense-all-endpoints-v1"
+    },
+    {
+      "head": "temporal",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "retained_control": "head-temporal-phase-control-v1",
+      "control_complete_sha256": "6652ebf9aca4a6e310087bb7d4a41c44251efb4b7d244a14a3fe5d8b92c66389",
+      "control_selection_sha256": "882dd2d3a8be5687de3f2f99fd6abfcd8be07b13705e4e301e61ce36c77bcbcd",
+      "control_representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44",
+      "plan": "head-temporal-all-endpoints-plan-v1.json",
+      "plan_sha256": "2232912c210b5cea5650307ff4fd99e911dc5707daa9005a56bb3b7fa1c118fd",
+      "output": "head-temporal-all-endpoints-v1"
+    }
+  ],
+  "control_policy": "Retain the exact original matched controls; verify their complete/script/initialization/representative hashes. Current default reproduces20real batches per seed and original512 PTQ examples byte-for-byte.",
+  "combination": "Select each member checkpoint from unchanged original validation with its original continuous policy, then evaluate exactly one equal mean on the same fixed threshold grid before any development scoring.",
+  "limits": "CTC/RMS boundaries are imperfect diagnostic proxies. Only a separate experimental sampling view changes; original class labels, source audio, features, validation and PTQ remain intact. A changed training anchor is not a demonstrated recognition improvement. Independent final audio remains unscored.",
+  "accepted": false
+}
