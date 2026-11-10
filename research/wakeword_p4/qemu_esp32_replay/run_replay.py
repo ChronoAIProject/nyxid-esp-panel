@@ -30,11 +30,13 @@ def main():
         p.error('Use fresh output and supported threshold')
     manifest = json.loads(a.manifest.read_text())
     rows = [r for r in manifest['records'] if r['path'] == a.record]
-    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation'):
+    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation'):
         raise ValueError('Require one explicit developer probe record')
     row = rows[0]
-    if row['role'] == 'development-negative-validation':
-        if (row.get('split') != 'validation' or not manifest.get('continuous_recordings')
+    if row['role'] in ('development-negative-validation', 'development-read-speech-validation'):
+        source_policy = (manifest.get('continuous_recordings') if row['role'] == 'development-negative-validation'
+                         else manifest.get('utterance_concatenation'))
+        if (row.get('split') != 'validation' or not source_policy
                 or not manifest.get('source_cache_sha256') or not manifest.get('source_audit_sha256')):
             raise ValueError('Need audited continuous development-validation negatives')
     wav = (a.manifest.parent/row['path']).resolve()
@@ -104,7 +106,11 @@ def main():
                   record=row, manifest_sha256=sha(a.manifest), threshold_requested=a.threshold,
                   threshold_getter_after_set=float(parameters[1]),
                   model='wn9_hiesp', sample_rate=16000, chunk_samples=512,
-                  input_samples=len(pcm), original_seconds=len(pcm)/16000, development_negative_validation=row['role'] == 'development-negative-validation',
+                  input_samples=len(pcm), original_seconds=len(pcm)/16000,
+                  source_seconds=row.get('source_seconds', len(pcm)/16000),
+                  development_negative_validation=row['role'] in ('development-negative-validation', 'development-read-speech-validation'),
+                  utterance_concatenation=bool(manifest.get('utterance_concatenation')),
+                  exposure_policy='Source seconds exclude inserted utterance gaps and alignment; all stream events counted.',
                   final_chunk_zero_pad_samples=(-len(pcm)) % 512,
                   pcm_sha256=hashlib.sha256(raw).hexdigest(), pcm_crc32=f'{zlib.crc32(raw):08x}',
                   firmware_crc32_matched=True, firmware_stage=104, calls=int(done[2]), channel_verified_returns=int(done[4]), events=events,
