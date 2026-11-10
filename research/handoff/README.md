@@ -903,3 +903,19 @@ references are recorded in the training and embedding research READMEs.
 To export a future snapshot, run `export_assets.py --help`; every output must
 use a fresh folder. Publish research assets as a prerelease, never as the latest
 production firmware/OTA release.
+
+The later Mac quarter-TTS activity study is an additional, separate archive:
+[`embedding-negative-activity-v2.tar.gz`](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/embedding-negative-activity-v2.tar.gz).
+Its [asset manifest](assets-negative-activity-v2.json) binds the archive hash,
+size and source identities. It contains the exact training-source energy
+audit, v1 failure evidence, v2 interval policy/manifest, paired fitted models,
+representatives/numeric fixtures, complete validation scores and event traces.
+It adds no captured room audio, board state, credentials or source waveform
+transformations. Source preparation is `67c09b0`, frozen fitting is `4b9bded`;
+the historical failed preparation uses `6bf333f`. It reuses original feature
+assets and retained initialization, with unchanged source hashes. Preserve
+those historical sources rather than updating frozen helper hashes silently.
+The mixed joint/confidence-only proxy result is described in
+[`embedding/README.md`](../wakeword_p4/embedding/README.md); it is not Hi ESP
+parity or a production firmware release. All110member hashes and GitHub's
+archive digest are checked before publishing the reference.

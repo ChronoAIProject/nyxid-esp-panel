@@ -1195,3 +1195,62 @@ before either run. They differ only in `focus_negative_activity`. Use
 `--activity-manifest` argument for both arms, then the original
 `evaluate_head.py` and `compare_negative_activity.py`. Historical plans keep
 their original source hashes; they are not updated to the current helpers.
+
+Both 10000-step runs frozen at `4b9bded` complete. The new off control
+reproduces the retained model bytes and full original main/auxiliary batch
+hashes exactly. Across arms, all source/class choices, all 116 unscheduled
+histories per batch, all 146 sampled undefined-activity histories, auxiliary
+histories/source/class/engine labels and PTQ representatives match byte-for-byte.
+The intervention changes only eligible scheduled TTS endpoints. Its full
+source-draw SHA256 is
+`63468e40c663a26aa3c20c12fccd1313cbec45337bd7dbdb5f8722db60020c9f`.
+Undefined cases are not counted as interval membership. Actual per-engine
+defined-interval endpoint fractions move as predicted by preparation; this
+verifies the sampler intervention, not speech occupancy.
+
+| Reused validation diagnostic | Original uniform control | Quarter-focused treatment |
+| --- | --- | --- |
+| Joint-qualified threshold | .98 | .97 |
+| Engine-macro proxy-window hit fraction | 53.0863% | 57.8770% |
+| Pooled proxy-window hits /1196 | 512 | 556 |
+| Worst confusing-corpus false fraction | .7143% | .7143% |
+| Continuous events /same evaluated exposure | 0 /7.303778h | 0 /7.303778h |
+| One-sided95% event-rate upper bound | .410162/h | .410162/h |
+| Confidence-only macro diagnostic | 69.7312% | 68.5248% |
+
+This is a **mixed result**, with a4.7907percentage-point gain under the fixed
+joint constraint and a1.2063point reduction under the separate confidence-only
+selector. Keep both full19-point grids and all pairing/export checks in
+[`negative-activity-validation-v2.json`](../results/negative-activity-validation-v2.json).
+It does not dominate all operating points, and the reused synthetic coverage
+is still insufficient to claim real-user recall or Hi ESP parity. No board,
+acoustic or reserved-final benchmark follows this result; default sampler and
+production firmware remain unchanged.
+
+Treatment SHA256 is
+`156aebdfd9ed1852d14a2c44a474f372d8895e9eeaedcfab8d36ab456dd57a09`.
+The export remains114464bytes/31operators with the original INT8 interface.
+Representative float/INT8 mean/max errors are.003359/.132689, versus
+.002349/.047086control. The historical interface-pilot limits are not a
+new candidate fidelity pass; preserve this outlier and do not infer MCU
+numeric or resource compatibility from unchanged graph shape.
+
+Cached latched replay has515/558positive variants with any event and507/550
+with an event in the original uncertain proxy window, control/treatment.
+Both retain8earlier-event variants;5/6legacy peak hits lack an event in that
+window. They remain OpenAI-TTS cases and are not relabelled false wakes from
+uncertain markers. Continuous event counts reproduce0. See hash-bound full
+trace references and per-engine totals in
+[`negative-activity-native-events-v2.json`](../results/negative-activity-native-events-v2.json).
+The full wake-word equivalence goal remains active and unachieved.
+
+The exact v2 manifests/audit, two fitted weights, training representatives,
+64numeric input/output fixtures, full calibration grids/scores and event
+traces are available in the existing research prerelease as
+[`embedding-negative-activity-v2.tar.gz`](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/embedding-negative-activity-v2.tar.gz).
+SHA256:`9343b5281c13a64258fbb7e9519db74279a841115e1985db36dbd97489b1f22b`;
+11216880bytes/110members. Every member hash and the remote archive digest
+are verified. See [`assets-negative-activity-v2.json`](../../handoff/assets-negative-activity-v2.json).
+This is a synthetic-training/reused-validation research bundle, with no room
+PCM, board state or device credentials. Original feature arrays are reused
+from the earlier feature asset; this bundle is not production firmware.

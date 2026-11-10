@@ -790,3 +790,14 @@ All 6353 original training-negative WAV hashes are audited without scoring.
 The new v2 preparation preserves those exact original uniform endpoints;
 it does not drop data or invent speech intervals. The original v1 helper,
 plan and failure provenance remain available. Playback stays paused.
+
+The Mac v2 quarter-TTS comparison now completes: the off control reproduces
+retained model/main/auxiliary bytes exactly; both arms preserve all source
+draws,116unscheduled histories per batch,146undefined-activity draws and
+auxiliary/PTQ evidence. Joint-qualified synthetic macro proxy hits improve
+53.0863% to57.8770%, but confidence-only macro falls69.7312% to68.5248%.
+This is a mixed research result, not Hi ESP acceptance or a deployed change.
+Its exported graph has the same size/interface; the representative float/INT8
+maximum error increases to.132689 and is not a numerical fidelity pass.
+No acoustic, board or reserved-final test is performed. Full grids, comparison
+checks and cached event replay are under the Mac results directory.
