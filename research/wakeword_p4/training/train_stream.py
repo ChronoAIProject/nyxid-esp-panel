@@ -25,7 +25,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=12000)
     parser.add_argument("--eval-interval", type=int, default=3000)
-    parser.add_argument("--architecture", choices=("compact", "official64", "teacher60"), default="compact")
+    parser.add_argument("--architecture", choices=("compact", "official64", "teacher60", "teacher120"), default="compact")
     parser.add_argument("--context-frames", type=int, default=FRAMES)
     parser.add_argument("--initial-weights", type=Path)
     parser.add_argument("--freeze-batchnorm", action="store_true")
@@ -45,8 +45,8 @@ def main():
     frames = args.context_frames
     if frames < 150 or frames % 3:
         parser.error("context frames must be >=150 and divisible by 3")
-    if args.initial_weights and (args.architecture != "teacher60" or frames != 150 or not args.freeze_batchnorm):
-        parser.error("reconstructed weights require teacher60, context150 and frozen batchnorm")
+    if args.initial_weights and (args.architecture not in ("teacher60", "teacher120") or frames != 150 or not args.freeze_batchnorm):
+        parser.error("reconstructed weights require teacher60/teacher120, context150 and frozen batchnorm")
     if not 0 <= args.prefix_negatives <= 48:
         parser.error("prefix negatives must be 0..48")
     if args.negative_candidates < 1:
@@ -202,6 +202,11 @@ def main():
                               "--repeat_in_block", "1,1,1,1",
                               "--mixconv_kernel_sizes", "[5], [9], [13], [21]",
                               "--first_conv_filters", "30", "--first_conv_kernel_size", "5"]
+    if args.architecture == "teacher120":
+        architecture_args += ["--pointwise_filters", "120,120,120,120",
+                              "--repeat_in_block", "1,1,1,1",
+                              "--mixconv_kernel_sizes", "[5], [9], [13], [21]",
+                              "--first_conv_filters", "60", "--first_conv_kernel_size", "5"]
     flags = architecture.parse_args(architecture_args)
     model = mixednet.model(flags, (frames, 40), None)
     heads = [getattr(layer, "cell", layer) for layer in model.layers
@@ -213,7 +218,11 @@ def main():
     initial_sha = None
     if args.initial_weights:
         initial_sha = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest()
-        if initial_sha != "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b":
+        expected_initial_sha = {
+            "teacher60": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+            "teacher120": "f00bd48d5a7dde94eaac64cd108fd9db68792b0bdcc6af87e1d05a07367f4337",
+        }[args.architecture]
+        if initial_sha != expected_initial_sha:
             raise ValueError("Unexpected reconstructed initialization weights")
         model.load_weights(args.initial_weights)
         heads[0].set_weights(head_weights)
