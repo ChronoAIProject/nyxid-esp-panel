@@ -1,0 +1,2845 @@
+{
+  "role": "Paired synthetic development diagnostic, not acceptance or matched-FAR comparison",
+  "source_sha256": "39c302c924b273a224cf41f9ab45f923bdf2e941b259243f66cdc3d071b0587e",
+  "replay_source_sha256": "8ef63a31b36234cb80fe8e166377bd7add0738277433251f76bd236ee8d49e16",
+  "frontend_source_sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+  "detector_source_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+  "manifest_sha256": "bfee96660a4149bf3a8f6eba5170b149ea14cc886d47d1fc5a19a5e71e7f7ade",
+  "nyx_model_sha256": "0af1dc32031d661514bb9e4c5e263406c8cbbd1067d1e1ebb6839b635a1e4103",
+  "nyx_calibration_sha256": "881d91ed9034111394280a9c6c2d9862f0d88d25fe20383dc484a9e853b0ce48",
+  "nyx_threshold": 0.92578125,
+  "hiesp_threshold_requested": 0.63,
+  "hiesp_threshold_getter_values": [
+    0.62496001
+  ],
+  "summaries": {
+    "nyx": {
+      "positive_clips": 12,
+      "hits": 7,
+      "recall": 0.5833333333333334,
+      "premature_events": 0,
+      "late_events": 0,
+      "latency_ms_median": 120.00000000000011,
+      "latency_ms_p95": 253.99999999999977,
+      "common_negative": {
+        "clips": 48,
+        "false_events": 1,
+        "false_activation_clips": 1
+      },
+      "cross-target_negative": {
+        "clips": 12,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    },
+    "hiesp": {
+      "positive_clips": 12,
+      "hits": 1,
+      "recall": 0.08333333333333333,
+      "premature_events": 4,
+      "late_events": 0,
+      "latency_ms_median": -61.99999999999983,
+      "latency_ms_p95": -61.99999999999983,
+      "common_negative": {
+        "clips": 48,
+        "false_events": 0,
+        "false_activation_clips": 0
+      },
+      "cross-target_negative": {
+        "clips": 12,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    }
+  },
+  "records": [
+    {
+      "record": {
+        "path": "af_sky/0.9-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 63232,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47232,
+        "sha256": "c9fc58948c8dabb1682196871bf260d7af119ff5395798e31f694bbeaae48997",
+        "pcm_sha256": "e2efbd4c5db961014488e02adb5aa67a7f30f6a74d1e537792d6feb0ad238452",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 46560,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          3.17
+        ],
+        "score_sha256": "dcaedd61183b5e7f112a71f94f54ec4e35b7425b40bee01742294c5c4d1921d5",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 259.9999999999998,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "b9cacd3e9831474cdcece82f60daf05d1cd1d476150bc486c2fbd1802184fcf9",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/0.9-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 74496,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 58496,
+        "sha256": "c4f232ebcf2e038616f4c89c3db0da5d638b80b1f17194d466355dea166ed568",
+        "pcm_sha256": "3ec17af1b3b570b201d570d29ef5e4ae014cd716e814ff6645d3bb4d8b1625ff",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 56000,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b5bf99a9c5af27b6ca03ad442ef6cdcbd0198437391b5cb827f610e123180f63",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [
+          3.36
+        ],
+        "replay_report_sha256": "6fea76757e7696a0feb779a784f20b1ab8496d2de7890806db6462310d9f508f",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 1,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/0.9-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 62550,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46550,
+        "sha256": "e77c1625100ac6ea8917e00e50b5040f68d826917552d283bed3e2d674e06554",
+        "pcm_sha256": "56960127fb7396e65e1607646fdbc0987a2f3e80cd70c9c43332a274b60044c0",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 45280,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cfaeaf55c769c6d0a11b1e4d68c3d4ba0b5c36e39215144e5ba2dc653dd8d845",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "ece6fb3389d99ac797c7c19c7a82bce547049c22eb501ca93cbe05dce5464526",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/0.9-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 63915,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47915,
+        "sha256": "c7157b42b782a29e8906b17d650c65c0b6640b163c21260f94911a9f440b4c7f",
+        "pcm_sha256": "eeb3ad04af244b0ce5064d567c2c96cdcc3c8691c7b9cc57ec2e69441deab466",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 46880,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "4eba2fd018e8f3743127c9d0da4c27206ee6ecbc76ccf563722b8fdacd93accc",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "236eae2c0bffbb495bb3ae9dc34ab3760c62d1a85c698d96da881ad3ba95e0b0",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/0.9-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 62891,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46891,
+        "sha256": "3acfdfc75ab97198985f5a4682800e876d12fc0a950f48c0f1ad9c46eddc1307",
+        "pcm_sha256": "bfa96903ae411497b4ccf805dd742553e34d07a378b9c1de9f6d8782917b5416",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 46080,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "357e1ea946aaa55a354cf0c557a95ea9620d68ff59be4f51f9897559cde00986",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "a5299a242cd1b0885ba6b85cd662f3ab53d6f6d61e612ab26f24db1962e6ce66",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/0.9-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 0.9,
+        "samples": 76203,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 60203,
+        "sha256": "931344aedee2876f1bd18dfda8a58520760a7f6910fbcd1d4fa29c213fd84c3f",
+        "pcm_sha256": "9fe3a4491206c4b67596f3af9b1f7fe7b75c8b19d0b37d823f358464ca3d6c0a",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 57760,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "5736da4ec0428cf21cf51073d4723352ffd176855fb0d5f41a64f2598656ebaa",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "fa34eb728380d2516ec41959522940f9da7e752eb4ae34ceac3f4477fcc8b558",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 61867,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45867,
+        "sha256": "b725dc4ddce999491fb76045167666676b36df5fb871bf69d28b5e5ab9a11cdb",
+        "pcm_sha256": "c0212d6cadf6960c2e7c2a4994e2d507b8ad0e779496031e7bb52d65f77ff613",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 45440,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.96
+        ],
+        "score_sha256": "27a4bfeaeb8a97efe108acab8870a706fa1bcc3f9bb8a8de28b9493c4f7a15d5",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 120.00000000000011,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "19177b2ce308a0e6e2b1d6b1c5a933c296aa411853ead63b3ae63c9d2a0082c7",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 71424,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 55424,
+        "sha256": "779ebcd151d47f694478b8a5610566e229fb980edc11caad5d3335ef333e9afd",
+        "pcm_sha256": "f33bfd4cfaf47381f19bf98c7e7e0d90da5c216a17e341728ef2b9df46fd6985",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 53280,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "7599b9967dbf9bd7c6614de6caca3e1edc3578afd4891bc07e8475c72421b672",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [
+          3.168
+        ],
+        "replay_report_sha256": "7caa94cc98d2d709deaa5f705bf3c6250502965d00d353699818d851452c77fe",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 1,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 61184,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45184,
+        "sha256": "d41dfd194fc9d8cc888bd7a381f7b7a2d0309ad64b9d5a7585fcf1e55b9b59c4",
+        "pcm_sha256": "821433c9d2abea90e7b03b150013d6160fb4a53607e1471e4840b109827f1ea3",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "558b6a563e48b8c5395ccdc55b297011f700ce2d06f8c702a5836d086d1bbcdd",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "e6ef02741ba3eadf98066eb11a6967fb7217c62a74c43958b39e96a831f4ebc6",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 63232,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47232,
+        "sha256": "ebb1132e12f3d1e17e8cdaa03b537b1502d2dbc8c183bc89ef74aaf39e532636",
+        "pcm_sha256": "3f9e0cf93165060970b8ce010fb7b853191d4a0595f9b9925d6d7a846f242df4",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 46240,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "3535f93dd5d06f05583d1104a7fb9113af19d0124a0c85dae2705d68d2fa1b95",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "229b0a2f415ba8dc060df4ba00ee85310415568c6c6f963a11ead16ff927df45",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 61867,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45867,
+        "sha256": "a76d987860cee8b077285066cea6f6556f272edbe8dd061d6569904a97f05373",
+        "pcm_sha256": "7d186502794fb3dafb35259896344503e261bad366bc1eadbada9cda3ea620f5",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 45760,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.96
+        ],
+        "score_sha256": "a4dfdd5724e84f47667acaf3a56d84e11b5139d785e8bd006c8a4bb2737ae927",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 1,
+          "false_activation": true
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "728fdf24001715a01ecc6250669be6f701b0ac91944733ad2ede49ec5067744b",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.0-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.0,
+        "samples": 74155,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 58155,
+        "sha256": "8838a83e42dcc91b850e87e140a1c6d62e49002415a326acc9f3e22d38d42620",
+        "pcm_sha256": "bdd196baa8cf073f282ff26c2fa0e1cfe46c4fab9acb8ca894adcc32b6fee691",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 55360,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b5bf99a9c5af27b6ca03ad442ef6cdcbd0198437391b5cb827f610e123180f63",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "dd98a5866fe85ec63e312ea615707acaa5875effcf9ae74a09ada3e552602ff9",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "60b47ffb0f9f4a53019f8f5061ff542e5dc39edfca66662fe02c0f4d487b55eb",
+        "pcm_sha256": "ce752d852e396b214384eb8875178e82f7e13735989fa133b4bb055d0e179ecb",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.93
+        ],
+        "score_sha256": "ccec2fed49b619f30eda59613270dfcb4822911d767449d5d5cd5ebf927e6ec7",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 120.00000000000011,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "e82cdb64aa9c3adc0f6bbbb7b07be4ac7b6a4a673356b0084e5183c7d0fce243",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 69376,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 53376,
+        "sha256": "a52315d45a409e519866203cc95be7e7b6ac3efb8f03100ddeb2c050a4aed3aa",
+        "pcm_sha256": "c319fd9c05565d815b35ae99be3896941f8631ec4ae3e01a2021c73dfbdebf4a",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 51200,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "25e1e2f27868df8100ce847b0130e51110db4352b59e65cddb7f6740803d4800",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [
+          3.072
+        ],
+        "replay_report_sha256": "457545424a0d1e1206179848f0a68ba34cba31b00c6e258c001627b98f042cb1",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 1,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 60160,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44160,
+        "sha256": "29545f7ed371e46c1ec653d8fca86f1b87a40b85b1181b8b36fe85a24d5b3651",
+        "pcm_sha256": "33b4731a86ad8ef3bab2c6c4c5720d5807de94cf670929ef43401b92a0fb3987",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44000,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cc01156a1ec4b51dfb23f55865f07948e0c378c13e7e60beb6b2cac6966d0434",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "7a92da65b83857c72527e44323d013a7ce3f6f30713ff90abee140cbf372ad49",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 62550,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46550,
+        "sha256": "992d35bc9babd6f270a9e38c85b20804c4b986e2f68acbb934b27a88dc9f47ca",
+        "pcm_sha256": "9a94c72a37102386d7687ee0907cedd772a41326286f379e8bda7696e9d2de27",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 45920,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cfaeaf55c769c6d0a11b1e4d68c3d4ba0b5c36e39215144e5ba2dc653dd8d845",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "e051c0d72316424547ce21fc8162d5f0bc97ea98bf6f80bfd688031b0f5e5dee",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "8ce50628d5a825c605d023f5ab99004e573a9536408743425aef4e4a176d273b",
+        "pcm_sha256": "76d1d2afa1c517179f20454a834bda630b5a53ae5918b0a3f1cf84396f243d0d",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "49b28a9b434fe814440e36a35c890b2ea10abf69124d9c70a47fa82af3454c34",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "7339a9a1287434ff6b2a69c1253b00b2627a203f21a1200a9d9bb3a89fd0ee5b",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "af_sky/1.1-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "af_sky",
+        "speed": 1.1,
+        "samples": 71766,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 55766,
+        "sha256": "614b5b0245fb3758b831fa3ad109e24ce6d4c52f9eab5f8b51e58fe379e15029",
+        "pcm_sha256": "c5e3a28cf865833d88b0b25a0bc4bb8de18f6dd9cb504a4da99d486339f445c5",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 53280,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "0f74f4a201ceb941b85afbf12f38d5d64b9f8a14e333fd62944f3a630c9db7b6",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "e7b6d78b77d31a534cb5ec8ffb5742f9d9b5457b00a699b8d6438bc5732fcab2",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 61526,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45526,
+        "sha256": "98156ec23498f7e63739b18b30f83338bb13f1d45ef2eeb1f338934ddd1547a2",
+        "pcm_sha256": "692d0343b8b90c0da7da6010f2bc89f989dd5b4d1e1aad9328be23a23120a8d9",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 45280,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "7a691cab6ff86e94db9759a33bf8423c2e4cf435d79901b34df5cc9bb16e021c",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "60d88fe73eb15f6daf66707060b8430f48f0926f6c894c92a577206ebdc1747b",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 71083,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 55083,
+        "sha256": "85ce30b0897405661a2644bec4b26caf82cce98a8ce435428a69152e0743d857",
+        "pcm_sha256": "62217b36c46edaa451cfe95e335239c9ac68d54fff0ce8a72da9f404941928b5",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 55040,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b3b66c13c09b793a6c6956578233f4e37963a4f65b34ece63008d6d85cf82789",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "da4f5b3db2129bda961d9cb5b427d6d99586200f979e59790bc9617a9dbfbec8",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 60160,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44160,
+        "sha256": "d5c0786a0f899400cca0d47ff0fffbdc5e143f3693bf72c5624282f63957aef1",
+        "pcm_sha256": "bc9897cae2724c59feab7d54e233b554516b001541ae750faecf1366e498f37c",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 43840,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cc01156a1ec4b51dfb23f55865f07948e0c378c13e7e60beb6b2cac6966d0434",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "170966eb9c7af9af5dba6574176669ef5749c7bba250f888019181e9641a1469",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 61526,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45526,
+        "sha256": "9be7c175062de27f64fd6295f254317113118b5b3cb0633c8a1c10636e7c3ded",
+        "pcm_sha256": "2853681dacb561e7d9c0765dc091af02d14ffd7c3c38acc08be9091462db8476",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 45120,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "558b6a563e48b8c5395ccdc55b297011f700ce2d06f8c702a5836d086d1bbcdd",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "84c4143d0341f5f1c8ffdbf7f5942f73957e6a806c5fdf0605177d124a38d462",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 61184,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45184,
+        "sha256": "7df084b84027154c974f8ce12fe1d367a74f3b9d4201054ff36f22cf07aae36b",
+        "pcm_sha256": "0e8a9be9f9a102995b140d6c1e160438743e60bc2b947b8186858491b541f717",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 45120,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "558b6a563e48b8c5395ccdc55b297011f700ce2d06f8c702a5836d086d1bbcdd",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "8d156581c4ca3ac4370a1578b289faa982269306c55117f7cc1013bf96669697",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/0.9-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 0.9,
+        "samples": 73472,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 57472,
+        "sha256": "ba386f28bcae939aa27f8dbdc5f6b955aa5a8d078b1d3e681bcde3be0ac8ae97",
+        "pcm_sha256": "be35c3669f0566ff24cff6aabafb963c71e5d4d1ea18a12c62b8a5018f6ab3f7",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 57280,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "81c73400a909f2249cd130815b5ea7e0cb04e097e0b7d66a67f2682bf4dda2f3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "cead669d769c96a85620c8fe9c21dce2d38101cce2269e1d32102a8307e5748a",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 60160,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44160,
+        "sha256": "718b52b8f5a50639e848e2668ad58c73f1bac557f13bbad0047f23101810e4bd",
+        "pcm_sha256": "3af77645648f405924164de133a58a315e65ef6e108e83df30c091099eefe629",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 43680,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "0de2d5bf878a093726dc1a7d1b17f4cd421a8136e6ef44d9bb5a404e04c7d368",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "a3903285739d913e98af2329bd80718bf776789e25acc943f5de9f4a1d542404",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 69035,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 53035,
+        "sha256": "d1b099c36867b29173863305870e0fada057ccf0794060da09b65223b82bf6a9",
+        "pcm_sha256": "85f4c581dcfb1c4499046ee6eaa12c56b8de143387f0284e5ca491ebd9d110b3",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 52960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "f39bbf65f3eb51b07231b7fb51d17e4a9d16cc79b735bd23c3ac377d36ac9fdc",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "a2169919a7edfb67c4f55247f63f2f134942ca93d5a69d02df3757b555060640",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 59136,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43136,
+        "sha256": "7bc8b5e65930993ca04c98515b73c60bb24e8c5dd23620193f0afefc6ad5df52",
+        "pcm_sha256": "0a30c51b229aad044191e25616b860669e1ffbc756e33972b27be0e3c1a6f330",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 43200,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "a95db5c44524a4282d99fe2200846b7423f84ec50463586e96fcb7fec8f0ffaa",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "ee84b9aad09adb821a67de720bbf79fcda62eb3b7d8acdb659e5996dad8fd44c",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 60160,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44160,
+        "sha256": "d0ae35c3caabfa66af1a558b1cf4b2a64b1f2209396cba194fc8a0072394756e",
+        "pcm_sha256": "e0275bc95ae36a57f3a03e6e9ba4d26f9389817c247fe7b5ea83898c5863cfcc",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 44160,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cc01156a1ec4b51dfb23f55865f07948e0c378c13e7e60beb6b2cac6966d0434",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "5fb6f91ccf134e59d8cc829c6058a34385c5febe67d2fa5633502d3fe11bf728",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 59819,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43819,
+        "sha256": "cdcb0b95c25a222d5e5b0b664319c17ced5d5e8d5d5ca4c2ac5c54935712f61c",
+        "pcm_sha256": "a1e72af6a348111e521bf62e03e51cf79a5b89c0aa3dd0c98df5281f0045eeb2",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 43520,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cc01156a1ec4b51dfb23f55865f07948e0c378c13e7e60beb6b2cac6966d0434",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "b2fd682f9f1c98cc9f1986bf4ae160902204dc6794cc6ef862f5cb0f7c59dd4b",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.0-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.0,
+        "samples": 71083,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 55083,
+        "sha256": "86f1329f2a04f87b4c5c1d32e6ce4a8e2b66594c69c07b1432cd0f380f9365f1",
+        "pcm_sha256": "82675f1882312e00b47cb61987dec4c22bc4dead43ce38133349b2b6bd7d03a8",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 54880,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b3b66c13c09b793a6c6956578233f4e37963a4f65b34ece63008d6d85cf82789",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "9eed67fe4b8b4223e2d7c8ff05c49ed264f3cd8b8df57468038f8e4366376df8",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 59478,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43478,
+        "sha256": "599db3fe40b7d4ac16518866f46ecd3079aef8d01fc86d72fbc47859cfb7ab4e",
+        "pcm_sha256": "1ac49cc5e1be0d011ff65af2a23257a9f7fe7f929f5628561cb21e7de6d0ea1c",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 43520,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "08ac90d4c94031bdb6939f622169f5986924f57f9e87c4da723da2507bbc22de",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "55b96447264b6e537a7ca4ad4734877361b9dd4a72b60b65b0f786e0f9abdc57",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 67328,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 51328,
+        "sha256": "556aec5a28b3fa4681027066f18654c118cfef4b081d8a9dc711936c153026e2",
+        "pcm_sha256": "75afc77cefd5275f24135dcdde834b7717b0ab73c26853577ba53ae0b970454f",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 50880,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "9df75223095e566982347be4aeaa6a5a2855d19718ae016e2687cb783a82dca4",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [
+          3.072
+        ],
+        "replay_report_sha256": "7d6ea8b314f81286af831ae09c27ea0309a77977eeac2869e337cc778074fce3",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 1,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 58112,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 42112,
+        "sha256": "1753dd4927b2e2b1041b480540f4b8325cbb8302dee070458ca902886ae51d69",
+        "pcm_sha256": "a6fdedb99a9acd30ead6208053418109816b1927bcf0c8b3aef7e6e364c47ec1",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 42080,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "12808711884b37c35f242a288420f894834704be0b8aae0cb67d654634089a83",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "9721be79733d437b7c002d1a9777bd03f6ce199e2d71d734ff2fa3db426ae3dc",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 59478,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43478,
+        "sha256": "4602ae547cf0f6e94a5c35b384dc17bb7140fade08be2bfb89e2560a1b2c8760",
+        "pcm_sha256": "eff16ec3b3c8ca9830e79f7cf7f03d3a799010ce7a05b685fd2cdaa8f536939f",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 43360,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "9aceeaf48ba0b2ab0382740e9f2002cfc4b80bf1dc0f22b67f9071a556428de3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "0821cffbfe20677ef87ec7a8eaa83a09dc0d0e629fc12a20b7a2a1fc7c2485ec",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 59478,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43478,
+        "sha256": "5230b1356b39e06fd9901a82874d223af373ada0b42a329fa0eab30707502133",
+        "pcm_sha256": "23f5c7df73b804180e920b9bdf212e8ad2a96c049f30f3acd63091e08e215e95",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 43520,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "9aceeaf48ba0b2ab0382740e9f2002cfc4b80bf1dc0f22b67f9071a556428de3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "1066e1f5275d9eb6fec71634435dc81af4930447d8f1b5e88b933685c39ff2f2",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "am_liam/1.1-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "am_liam",
+        "speed": 1.1,
+        "samples": 69035,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 53035,
+        "sha256": "778293784b0582e0cf0d7b98b9cfafab5cb7806c6dd34df8a2a6cc7bc5065aaf",
+        "pcm_sha256": "d8fd2aeaf201ce9be56ce0b36be988b3363d5ff993d66ed7a02d1b38ffde5691",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0251\u02d0lju\u02d0m.",
+        "keyword_end": 52800,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "f39bbf65f3eb51b07231b7fb51d17e4a9d16cc79b735bd23c3ac377d36ac9fdc",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "858abc16f5b8021f122031fecf2795527d3d7d25807d45ff7d809266fd06addf",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 64256,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 48256,
+        "sha256": "cc057c0bdfd903e2050d25963638dd0d192c728e2e0a0f08770c16ab1fbc79b3",
+        "pcm_sha256": "9402c31686e245625f6b41de1dd7a88c163146fbe33830d2099c1934225baf06",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 47360,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b334fd0abc83537c6722983c3092e66505852f95942038eaae7d0a5455efbb2e",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "bff5d0d7a49ac188ab395a068d81bb2fcd318733266698eaddaa26906f063929",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 74838,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 58838,
+        "sha256": "fa74d152661f4e4d4d5397d007410c50d23de8153c75192a93e684ae6004af40",
+        "pcm_sha256": "fffdc5ac1ac10ca4bfbcba745cc9738967b55adee6d143719e885a116ea5acb6",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 58080,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "c89fd60156c27854bfe7097328696d18115c7c66c7d9bb4d0ba7730d5bd83d27",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "7108aeb1d87667f68e116cc6a56454d151ec1f1ec04787ba8f50d7a0503e996f",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 62550,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46550,
+        "sha256": "30f1bb1997234ff8ca8491ac3dbba4ea1ddf24ef59e800d2eda19d6baf18fbf4",
+        "pcm_sha256": "6877f841d6d1eadfcf7d466e2626411939f6f0e0e44a8c18d0df6d74774b361a",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 46560,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cfaeaf55c769c6d0a11b1e4d68c3d4ba0b5c36e39215144e5ba2dc653dd8d845",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "1c56ff6134ec85190a3eacbbf50acef2fda5430d231545cf1e33e8ee7ebabd32",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 63574,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47574,
+        "sha256": "db6e91588c32de192353d90273972ddcff56446bc794e067f60f8f37236bd651",
+        "pcm_sha256": "0d6b7474bb4c8fb86bb9f60068d55677a991ee0929fe0fdb4a3ea892151dbbc9",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 47200,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "c6790d9d546ca1e13f28fee1b742683b761a33f9184bcedf41a8272da17c8a5f",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "319ff6c5ebce015cb4bf250c890d84c583bce9efa55938446e37556afc901459",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 63915,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47915,
+        "sha256": "aeda49f2fd0a8874ef18723d70bb647c580592669a2b31ba898821c725a36fb5",
+        "pcm_sha256": "e00c96dc46c9b6b3a39242154c2517978ea7ab216ae468362a23a40bc60b16af",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 47040,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "4eba2fd018e8f3743127c9d0da4c27206ee6ecbc76ccf563722b8fdacd93accc",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "f4b09b71edf284c78d200fc538e10add2eb5df3035361f8531b50d0dc2877596",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/0.9-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 0.9,
+        "samples": 76544,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 60544,
+        "sha256": "43063321dfdda345366cd0c4c9980a222adbe63e6812fba00658294b38597c46",
+        "pcm_sha256": "1d09a1f2bbf984d57b54ce8b4fe8b28dc36825d7f683fa6500dfb27c8f3fae67",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 59200,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "ff75d16888c3990e452095286406ea02fb05aee37ff93a9aa509cc9d24f817e7",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "77c3cac46f89a3acae99e3aa2e9f575d5f0b45c38d62cda08d81f9f3ba1d5c4a",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 63232,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47232,
+        "sha256": "8229cc445bb1856cf160c8daf4ed50278ca8f7f220a19f8fe0a29d3c4813575d",
+        "pcm_sha256": "d8222bfce6c15bb48dd38757e599d4b7c7ac601f799f4617b52d4ce42f742e05",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 46560,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.99
+        ],
+        "score_sha256": "4bd6da1fd8146881b663e170bf121a15656191d1df91a85779d2608d18bf0d0b",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 80.00000000000007,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "1a4f17738c277a2e51fa9fb6eae0ac5615d2ceab67b1e7c47161116d04d19556",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 73472,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 57472,
+        "sha256": "ea3e4282c02a25bc68c2959b898c002cf0b2c45e501e34989f2b4af3ec9ba0dc",
+        "pcm_sha256": "16e1c61fb7754fa05ab4691e749f35aa578cdabd335bad525b2b28deffda1369",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 56320,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "81c73400a909f2249cd130815b5ea7e0cb04e097e0b7d66a67f2682bf4dda2f3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "8b6478b1b4d87f1353dcb9635fa396c0101b9f0ef6a6b75455638b1aed5c1f71",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "e5db74f0174b9d6985d7aad2b0614420fc84dc8a0900097d765bff8944e6cea6",
+        "pcm_sha256": "1b1a536946c5d9e4f7e1bfe33ebfd8f1e3046420a4feb49af0480cffcc4b2f3c",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "fe54c030dd8c6a757b96aed14cc1fe43a41df325b9c84833f60ebf39916fb3b3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "4d71d88b9d34a34536983433e977fd6a902ba590a93ffcd6f2cd0d2e719052c9",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 62891,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46891,
+        "sha256": "04188eda2c93caddd25ccac5480da120f80086af296187aa6547097325ced150",
+        "pcm_sha256": "e87b07a61f0bce0f2dc11dbdf1ede1a5b0a7e21193e987aaa9068e6e8984599d",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 46720,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "97c81b71238776c28583d5ac3e47eb0cfb2932f5a52e595dfbeb79378e21acfb",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "9bdcdce86de680155c96cb8ef8d4fb00a21ed981a9e6e8a2908a6db8adbbb72f",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 63232,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47232,
+        "sha256": "8bd7a9a6d3212d7f8d95ae8bdb94ef406f37483699db9f28d5b8dbb1652c4a01",
+        "pcm_sha256": "78ff5fae6d6825dfcd19d9467a2ef080e5f058d19c45de066c040a0a5fa00bda",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 46560,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "3535f93dd5d06f05583d1104a7fb9113af19d0124a0c85dae2705d68d2fa1b95",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "f2bd14971fe7c123a0fa921d77cc533d4df2e9f29705a5d63bedf9a89a72d226",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.0-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.0,
+        "samples": 74838,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 58838,
+        "sha256": "aff73657ea5467bea7b13a4352da41a610884c4644b1136a13c948302cfd5ad4",
+        "pcm_sha256": "35ce6614f8a90737af00b90f2e5d8481d97b4e657d9b5971c00c9b5f94d6a7e0",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 57120,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "c89fd60156c27854bfe7097328696d18115c7c66c7d9bb4d0ba7730d5bd83d27",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "ba18149568dc0276c392d330745c45de8fa8277552db092c1f59445fb0701c6a",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 61867,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45867,
+        "sha256": "ddbe4d125e5312b154230d0bd85e63e2f4743f8e175eae17eb331c36cb7dad4e",
+        "pcm_sha256": "8e66965c595e3d432dc4b6cf864d50b115643af451edecf168a87c1bf9cf0a6a",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 45920,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          3.11
+        ],
+        "score_sha256": "fc6a40e31d3ebdcf50f8cbb66a298e33c605e3bcf8cc16fbefdc8bd691322d13",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 239.99999999999977,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "d7a76e4304f91195532e4f0dcaae696fea42a315a86572f55e5a2fe152ce2ef5",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 70742,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 54742,
+        "sha256": "cd955c9bc84971c065c5680ce8919d5e61887765a7f3e09a5b670b2b36bfaab0",
+        "pcm_sha256": "44a564613b58e1654c7a47864f6c1ce3266b0b04f39712cb5fbf0391ac08d269",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 53600,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "b3b66c13c09b793a6c6956578233f4e37963a4f65b34ece63008d6d85cf82789",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "0956525c68142a62bc56b43fe748befebdbeec641b7cdd2ef402c93fe7334918",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "9879a41ecca613162a141c608101be81d58638b6cf96ceb32920dd6fe82ffc36",
+        "pcm_sha256": "321879826df53eccc570779fb42e3cd27045bf5527290d1ee34ae584ce792e16",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44160,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "fe54c030dd8c6a757b96aed14cc1fe43a41df325b9c84833f60ebf39916fb3b3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "ba73213b5df21c9f43d89036eaf246e444d982f049fd394718dabc20a7647db5",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 61526,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45526,
+        "sha256": "54135ed8136dacee4318edb20e82887e94bbe9ba587d440ceeb29b1309d746db",
+        "pcm_sha256": "2e731080bf7e62a0f354fac973054700f5c889923e29f4ebd9487ec9fde3340f",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 45120,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "609c7d26fe8b110f1b12ba17a0dd9065c26839290854be2e0767c3e7e9682ad9",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "d3830f12c20a6b350483580db963534cf8a89f2d9ac2fe4a7506b6e38d024dc7",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "3813e1940ed2866f4ac4e487dd5823d40741be6e2146bfae5230e34a5ba16570",
+        "pcm_sha256": "44d2afc5445b92c4d5f90a71b8f53b5fb36b622df1efdfe3eff42707effc43cf",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 44800,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "699ff6d49ee7a441e3dff8970f7b2dd714abe051dea1919daa5f5146a39b12dc",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "646e95bdbbe3f381062e028b96d8d3cbd5e4c6bec9d22ece046dc9b272f27014",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bf_alice/1.1-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bf_alice",
+        "speed": 1.1,
+        "samples": 72790,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 56790,
+        "sha256": "48c5537fcf768b79f83c2e3d56d0cacfbf1da60f0a459b32a51128285691a600",
+        "pcm_sha256": "fa4026d4515515602ff51df46adc6b1b0f58bb2fdde14a1487a571d6ecd984fa",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 55200,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "d8a049de0a02c2957e1f973fd7005c38b1a1cbe4cac2f72ddfea6bcffadc93ce",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "837aef42d5f627503cacaad1435f5bd2b1583f629c6c063f8125fe3d2353b4f2",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 62208,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46208,
+        "sha256": "763e3d03fe3411d3432f167621c2e0f0037ec1695b1a41f5086b838c034c0b45",
+        "pcm_sha256": "813d7d0d4e3a38a0fba4c85efd6ec265d788882bd3715506bfe137a5a9aafac0",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 46080,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "1af0cf8716feed20d7391d944368cdc0044b9c1beed0fb0c2abca0bd2c1ae5ad",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "3bd9732e5cd724303d6a29524628e2db9b3a1d9cded1c989475a346d7b4c7b62",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 75179,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 59179,
+        "sha256": "b77531df6876bdf097c5ba71e0a062e2d2ed6290c3032cf318e0e55699012ae8",
+        "pcm_sha256": "91471e1e48e5d4055326ed24f80d4f9b4706194e42d454fef04d7668ed956e9a",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 59360,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "00b342307ed5676af9c9fe6fcd3f999374b196383b5e452f8039dd81e928c4e5",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [
+          3.648
+        ],
+        "replay_report_sha256": "17bfe9be0774f7181a29991a8fef1fa945db0d0522fae53f854ffeb1d4758d6c",
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": -61.99999999999983,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "920e469cd43babbff93f5dfd48e3c84bd0fb97267b140ac06cd1c421262bb616",
+        "pcm_sha256": "ffb500dca1ddac539e89d7d8785fc4b788b339e532a5fa1f4a55dc8f50f9a89e",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "09ea52cb7a8fd6186b26895ec0f5a8591d84eaf0f75004a92a2dffe4e6654674",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "50d4ede55fbe4c9465b12a64dc6956845a424585c9448841c58694a6f180f0e8",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 63232,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 47232,
+        "sha256": "9ffcc1ca0a1bd18881b2c6ea59f1e7fecd3cc8438b3e50861df8656388b75833",
+        "pcm_sha256": "152eec63442e896fa24427aa861e6b0506a0981e97e7b5c3790cc996824dd619",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 47040,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "3535f93dd5d06f05583d1104a7fb9113af19d0124a0c85dae2705d68d2fa1b95",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "45076da620c8d85d0a6a20d53a9f86af629a8ee7688bec5066ff321fc138f46e",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 62208,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 46208,
+        "sha256": "345df9d7e26db6945e68c81b9e10fae65387ec9e2520f8be6f3a13319edde108",
+        "pcm_sha256": "825fcbb34ad0e68c7b1ba356fb2275cb88e36ce07e35fcad637ede0f36051696",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 45760,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "cfaeaf55c769c6d0a11b1e4d68c3d4ba0b5c36e39215144e5ba2dc653dd8d845",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "e1ed0fbb61b9f33a99fedb2743cf8f39242091788fdfe128fb89c83ab67f7d20",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/0.9-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 0.9,
+        "samples": 75862,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 59862,
+        "sha256": "ed04a41bd45c7892e6b8341ece8d9eb47b494ffe8ad193d4b214aeb9453027a2",
+        "pcm_sha256": "99be997d0efd60ad4e060b9c0fdbc63490d3ebc292da7e40bd6cd232e9d232f3",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 59520,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "59522b6e04fda019503169024c43ec720de4c8fbd29f8184b32f24541832bef0",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "402157d6ecc806b60e1a429f89b6c15e7d341ae96d8f4597cbc3bd2565acde1a",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 61526,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45526,
+        "sha256": "2d560b929ef94e3db1778b85d3acd996178190535fbd205a3b00b93c0230d2ef",
+        "pcm_sha256": "1298f9bb339356de88f0b17d0e22ae01f5aff0a31d3e42102b1494a60d097ac8",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 45440,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.81
+        ],
+        "score_sha256": "0fa966c2d52c520bb8537e8f817fc51f492f12fc4ce43ea2dfc17bf75421359b",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": -29.999999999999805,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "ba86b5734fa1f78fd7ee090211bc64f0226ef25fd74d666e689daeac89114ef6",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 71766,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 55766,
+        "sha256": "d92bc1450da5f69c339256eb4732f891dc9027518c6a3e2ac4667ad9d6144188",
+        "pcm_sha256": "65a5574d3ac130186797a63365ba8846f43ce1ca8995523360b6281d3fafe685",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 55680,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "0f74f4a201ceb941b85afbf12f38d5d64b9f8a14e333fd62944f3a630c9db7b6",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "0fd2b638be59e5757220a019a713a015c47dc8205e74b901b31ac975954ea6e5",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 60160,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44160,
+        "sha256": "cfe76275d64b0e769e61849c78c13b249214ed480da874e136acdc8fa07feacc",
+        "pcm_sha256": "bccfe443f6e3c969e3b176c61748469b8a1ea34b3ffe774afa1325651024dbfa",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 44000,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "47818a5346acd467c84605138bd8e9f6f34cb8954acdeeeca431639c48652198",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "bcd6670c19bad2cd6d57a6838eb8b2d6ae50e0531aa4f123da33e28910a28801",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 61867,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45867,
+        "sha256": "388d1108b5c0a9f44a8d61da56121a55b558e7d9ed80ec7aa2a325e5e9491617",
+        "pcm_sha256": "d43d2153d740fa5ddcdc4a749af9fa388baa7b84d2c0e0f80d174ba24245859a",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 45760,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "a7474fb350f726c534e199178fe1f4b1bf53a926c0cfb2e9cf0696b1f55e6026",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "2c4b051782355a15db0ac03bf59496b751a6f0bf6ff1efc51845f2df51d48479",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 61184,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 45184,
+        "sha256": "bbf5372d7080de0907fb0f762aef44a118673ad1165da5cd64c1d36db8328a7d",
+        "pcm_sha256": "f654774643cb273109d61c67efd798e96a11305c6a88d8fdaebc7024f1a406b6",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 44960,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "9dde792b53837473d3a0763f3335da4ad84b2008db413da58629d6b8ba0e75dd",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "6ddd23300cdb3e74eb004ccfdc254c5763149b3cd92a9c98f963b4fb824f9bfe",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.0-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.0,
+        "samples": 73131,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 57131,
+        "sha256": "06862cce9405677754370381e9da0e74bdaa61cf821129971ed362f754dc2fff",
+        "pcm_sha256": "51c7bcd3a66007b5293402f2f41928a0f1f7968c43ea42f2754a165379c74aa3",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 57120,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "81c73400a909f2249cd130815b5ea7e0cb04e097e0b7d66a67f2682bf4dda2f3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "b40e574e636244559dd232efc246e043e7429722d04fc07ce9a3181771944e4e",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-0.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nicks.",
+        "target": "hey_nyx",
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 59819,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43819,
+        "sha256": "85c2ef9afc3177c7e97823d04df2348ae4e578db11a05dc009e990a16742270f",
+        "pcm_sha256": "dd3bcd049659e4ac639edb01031ad5a579e7ed2813814868a68e68ecd381c71d",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+        "keyword_end": 43520,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [
+          2.75
+        ],
+        "score_sha256": "4064b340c13b5a70d9b8acdcba3ada2ddd72fa4f69d6ff8aa5300669df94944a",
+        "reset_repeatable": true,
+        "classification": {
+          "hit": true,
+          "first_hit_latency_ms": 29.999999999999805,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "0a8be7e981ed1b62e60d5afa5c9fd36515e278aa0ad3233e33252258bb0f02fa",
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-1.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hi E S P.",
+        "target": "hi_esp",
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 69718,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 53718,
+        "sha256": "a8a7fc1c647f25172dc6825c82ff31f669f78f06ed425c670a9c0fbc9fca88ca",
+        "pcm_sha256": "3e830bae9f1f9b0a7e4993784d4718929558c9d543380505532d5704adc46539",
+        "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+        "keyword_end": 53600,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "25e1e2f27868df8100ce847b0130e51110db4352b59e65cddb7f6740803d4800",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "cross-target",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "d07fadbb6042ebb54c12f71f0eaf5bb8729613f14e096e701f423cebab57540f",
+        "classification": {
+          "hit": false,
+          "first_hit_latency_ms": null,
+          "premature_events": 0,
+          "late_events": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-2.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Nick.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 58795,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 42795,
+        "sha256": "68d9bf2e20c7011cb4b56faeb0fad912d732433a31fe66a58ba697a3f37a08da",
+        "pcm_sha256": "a1756a9d5e25febca6f0a9a9d0b648066614e82e4b0ea9d31d7c33ab5ea0f21c",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u026ak.",
+        "keyword_end": 42880,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "04d62f6e3fa6c8f8be6aaa1bfcc95767ddbf19b19a572c0327223629bf7420c0",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "938d83d8c2caf4baf685f4220602b2c569e90f820a7295fa0333a39fed5685b1",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-3.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Next.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 60843,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 44843,
+        "sha256": "db2ae5c8db750a06bb5b25dab29a642a069d4e1152d79ebd19fa5e6a6b1f2e8f",
+        "pcm_sha256": "d9f8494c70c8fab96b9eef915c38a9194efdb6db8a231e0236488d32aa09fb7d",
+        "phonemes": "h\u02c8e\u026a n\u02c8\u025bkst.",
+        "keyword_end": 44640,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "fe54c030dd8c6a757b96aed14cc1fe43a41df325b9c84833f60ebf39916fb3b3",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "db507ea406d523a644963eda49d2ae88578c067032fb24b3b4f4edb84567b9eb",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-4.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Hey Mix.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 59478,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 43478,
+        "sha256": "b6a3fd3175cab7a6e1fd2f84d7497b258727115f2f3002af2ea133a04097d965",
+        "pcm_sha256": "5dd2218d79df18efae5b618874b7716e9a765c841a0aeff52c274fc48c83c7b4",
+        "phonemes": "h\u02c8e\u026a m\u02c8\u026aks.",
+        "keyword_end": 43360,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "dade35d668da830c3a6a39817f61e346501601e1c8e2868d7e60f9e45e664c99",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "6dd3ace2daa87c202a704fe34557656dbeae423ecadd2a2a2446a7952b9a8533",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "bm_george/1.1-5.wav",
+        "role": "development-paired-validation",
+        "split": "validation",
+        "text": "Please check the volume.",
+        "target": null,
+        "voice": "bm_george",
+        "speed": 1.1,
+        "samples": 69718,
+        "lead_samples": 28800,
+        "synthesis_end_samples": 53718,
+        "sha256": "f7b2db6c308cfc292aaca235326c70eb58d761646287238447e1b579b7dde3c9",
+        "pcm_sha256": "8bec1b1a771d3e2f2f9d289aeabddebc457e508e440f7166941aae02f555b14b",
+        "phonemes": "pl\u02c8i\u02d0z t\u0283\u02c8\u025bk \u00f0\u0259 v\u02c8\u0252lju\u02d0m.",
+        "keyword_end": 53760,
+        "keyword_end_method": "Last10ms RMS frame above max(1e-6,peak*.005) plus60ms; PCM retained; not phonetic truth"
+      },
+      "nyx": {
+        "event_seconds": [],
+        "score_sha256": "25e1e2f27868df8100ce847b0130e51110db4352b59e65cddb7f6740803d4800",
+        "reset_repeatable": true,
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      },
+      "hiesp": {
+        "event_seconds": [],
+        "replay_report_sha256": "10b1cdac942e83994b786337c00dbd35a6d69f4cc1d3ce69ccc6a80ffc1096ca",
+        "classification": {
+          "negative_kind": "common",
+          "false_events": 0,
+          "false_activation": false
+        }
+      }
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "limits": "Four reused validation TTS presets;12 targets per engine, no representative recall claim. Native frontends, padding and trigger policies retained, reset per clip. Endpoints are energy proxies, not phonetic truth; fixed -100..+800ms window. Thresholds previously fixed independently, not matched general false-wake rates. Audio-time latency only; no hardware latency. No ASR-based filtering."
+}

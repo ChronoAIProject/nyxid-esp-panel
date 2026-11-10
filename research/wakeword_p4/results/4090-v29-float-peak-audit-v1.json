@@ -1,0 +1,92 @@
+{
+  "role": "Float window versus existing INT8 peak diagnostic, not acceptance",
+  "model_sha256": "0af1dc32031d661514bb9e4c5e263406c8cbbd1067d1e1ebb6839b635a1e4103",
+  "source_sha256": "9b344104a2e76383960bc3a7309ee9edb9302be7883c9c10299fea73cfa2485a",
+  "weights_sha256": "326dea7e071134942cf56e529452d473f832fddb4fcbdc49959b8a5bb0aa332b",
+  "phase": 1,
+  "records": [
+    {
+      "corpus": "aishell-human-features-v1",
+      "speaker": "aishell_S0048",
+      "score_index": 40235,
+      "quantized_smoothed_peak": 0.9953125,
+      "float_window_values": [
+        0.9917894005775452,
+        0.9960789084434509,
+        0.9985511302947998,
+        0.9981760382652283,
+        0.9978346824645996
+      ],
+      "float_stream_values": [
+        0.9917894005775452,
+        0.9960789084434509,
+        0.9985511302947998,
+        0.9981760382652283,
+        0.9978346824645996
+      ],
+      "float_stream_window_alignment_verified": true,
+      "quantized_stream_peak_reproduced": true,
+      "model_warmup_feature_frames": 600,
+      "float_mean": 0.9964860677719116,
+      "feature_sha256": "03c7a9cf4f74d71d5cce7d55f5afe85f36170f81586afcbccff98dd9e9279499",
+      "score_sha256": "0bab1dccf2e47a3588060a387268726b60ca5b099467cec87fc23e0be00d250f",
+      "validation_report_sha256": "57e7ae07034ad52946e481f7625652535ef6a7c16be3a5329c08ecb51c65ef89"
+    },
+    {
+      "corpus": "dipco-human-features-v1",
+      "speaker": "dipco_S05",
+      "score_index": 62044,
+      "quantized_smoothed_peak": 0.9234375,
+      "float_window_values": [
+        0.9664392471313477,
+        0.9380117654800415,
+        0.927865207195282,
+        0.9650802612304688,
+        0.942755401134491
+      ],
+      "float_stream_values": [
+        0.9664392471313477,
+        0.9380117654800415,
+        0.927865207195282,
+        0.9650802612304688,
+        0.9427553415298462
+      ],
+      "float_stream_window_alignment_verified": true,
+      "quantized_stream_peak_reproduced": true,
+      "model_warmup_feature_frames": 600,
+      "float_mean": 0.9480303525924683,
+      "feature_sha256": "cc0d4f51d88de1d825079378e56c424e7c698c139c49b054649baf4072e5a7a4",
+      "score_sha256": "0de9c8a2fff740992abf68314260cf0144fab88b3df1dcd466825a06f6f10907",
+      "validation_report_sha256": "1a21ef16c3ba1f9e0544e3fe12eed8ea9010c2a6ea6afdb04f896c51a7d68ea8"
+    },
+    {
+      "corpus": "libri-dev-other-features-v1",
+      "speaker": "libri_dev_other_1651",
+      "score_index": 1997,
+      "quantized_smoothed_peak": 0.9156250000000001,
+      "float_window_values": [
+        0.7877289056777954,
+        0.8583015203475952,
+        0.9693170189857483,
+        0.9888582229614258,
+        0.9751041531562805
+      ],
+      "float_stream_values": [
+        0.7877289056777954,
+        0.8583015203475952,
+        0.9693170785903931,
+        0.9888582229614258,
+        0.9751040935516357
+      ],
+      "float_stream_window_alignment_verified": true,
+      "quantized_stream_peak_reproduced": true,
+      "model_warmup_feature_frames": 600,
+      "float_mean": 0.915861964225769,
+      "feature_sha256": "59bae4ac7825871854e4d28209eea75e055fd40d2c0db8ea1448aca178139265",
+      "score_sha256": "4f9ad1ecdc4c0fce21cebbdfdd465555262c2e042a819411b8371b99a213e748",
+      "validation_report_sha256": "9af909b2a032bbeeb932895d724fb84fb6bd239107def4946f8bb802bece959b"
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "limits": "Only maxima in existing false-trigger validation streams. Local float and INT8 stream replays use existing continuous frontend features with600-frame model warmup and reproduce window outputs/recorded INT8 peaks. Not a full-corpus float event recount or general quantization quality estimate. No threshold or labels changed."
+}
