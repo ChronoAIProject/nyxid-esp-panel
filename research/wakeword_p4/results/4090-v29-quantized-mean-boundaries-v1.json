@@ -1,0 +1,246 @@
+{
+  "role": "Existing INT8 mean floating-boundary diagnostic; no scoring-policy change",
+  "model_sha256": "0af1dc32031d661514bb9e4c5e263406c8cbbd1067d1e1ebb6839b635a1e4103",
+  "source_sha256": "3bdb639346bdfd9340286b68dd5d5928d272d3857d1377e51291cc3e6a2d669b",
+  "inputs": [
+    {
+      "path": ".local/wakeword/eval-v29-ami-mixtures-validation/clip-details.json",
+      "sha256": "86f42b9d2fd67671175be13155de1c134e9e1c82328aaa45a3314dc362777025"
+    },
+    {
+      "path": ".local/wakeword/eval-v29-mandarin-validation/report.json",
+      "sha256": "57e7ae07034ad52946e481f7625652535ef6a7c16be3a5329c08ecb51c65ef89"
+    },
+    {
+      "path": ".local/wakeword/eval-v29-dipco-validation/report.json",
+      "sha256": "1a21ef16c3ba1f9e0544e3fe12eed8ea9010c2a6ea6afdb04f896c51a7d68ea8"
+    },
+    {
+      "path": ".local/wakeword/eval-v29-libri-dev-other-validation/report.json",
+      "sha256": "9af909b2a032bbeeb932895d724fb84fb6bd239107def4946f8bb802bece959b"
+    }
+  ],
+  "output_scale": 0.00390625,
+  "window": 5,
+  "canonical_formula": "round(smoothed_score * window / output_scale) * output_scale / window",
+  "summaries": [
+    {
+      "kind": "positive",
+      "threshold": 0.91015625,
+      "traces": 2160,
+      "samples": 344270,
+      "changed_samples": 10903,
+      "changed_event_traces": 2,
+      "original_events": 1853,
+      "canonical_events": 1853,
+      "original_proxy_hits": 1849,
+      "canonical_proxy_hits": 1849
+    },
+    {
+      "kind": "positive",
+      "threshold": 0.92578125,
+      "traces": 2160,
+      "samples": 344270,
+      "changed_samples": 10903,
+      "changed_event_traces": 1,
+      "original_events": 1812,
+      "canonical_events": 1812,
+      "original_proxy_hits": 1808,
+      "canonical_proxy_hits": 1808
+    },
+    {
+      "kind": "positive",
+      "threshold": 0.99609375,
+      "traces": 2160,
+      "samples": 344270,
+      "changed_samples": 10903,
+      "changed_event_traces": 0,
+      "original_events": 909,
+      "canonical_events": 909,
+      "original_proxy_hits": 909,
+      "canonical_proxy_hits": 909
+    },
+    {
+      "kind": "confusing-negative",
+      "threshold": 0.91015625,
+      "traces": 3520,
+      "samples": 572493,
+      "changed_samples": 4188,
+      "changed_event_traces": 0,
+      "original_events": 32,
+      "canonical_events": 32
+    },
+    {
+      "kind": "confusing-negative",
+      "threshold": 0.92578125,
+      "traces": 3520,
+      "samples": 572493,
+      "changed_samples": 4188,
+      "changed_event_traces": 0,
+      "original_events": 30,
+      "canonical_events": 30
+    },
+    {
+      "kind": "confusing-negative",
+      "threshold": 0.99609375,
+      "traces": 3520,
+      "samples": 572493,
+      "changed_samples": 4188,
+      "changed_event_traces": 0,
+      "original_events": 4,
+      "canonical_events": 4
+    },
+    {
+      "kind": "eval-v29-mandarin-validation",
+      "threshold": 0.91015625,
+      "traces": 16,
+      "samples": 867809,
+      "changed_samples": 781,
+      "changed_event_traces": 0,
+      "original_events": 1,
+      "canonical_events": 1
+    },
+    {
+      "kind": "eval-v29-mandarin-validation",
+      "threshold": 0.92578125,
+      "traces": 16,
+      "samples": 867809,
+      "changed_samples": 781,
+      "changed_event_traces": 0,
+      "original_events": 1,
+      "canonical_events": 1
+    },
+    {
+      "kind": "eval-v29-mandarin-validation",
+      "threshold": 0.99609375,
+      "traces": 16,
+      "samples": 867809,
+      "changed_samples": 781,
+      "changed_event_traces": 0,
+      "original_events": 0,
+      "canonical_events": 0
+    },
+    {
+      "kind": "eval-v29-dipco-validation",
+      "threshold": 0.91015625,
+      "traces": 1,
+      "samples": 90534,
+      "changed_samples": 244,
+      "changed_event_traces": 0,
+      "original_events": 2,
+      "canonical_events": 2
+    },
+    {
+      "kind": "eval-v29-dipco-validation",
+      "threshold": 0.92578125,
+      "traces": 1,
+      "samples": 90534,
+      "changed_samples": 244,
+      "changed_event_traces": 0,
+      "original_events": 0,
+      "canonical_events": 0
+    },
+    {
+      "kind": "eval-v29-dipco-validation",
+      "threshold": 0.99609375,
+      "traces": 1,
+      "samples": 90534,
+      "changed_samples": 244,
+      "changed_event_traces": 0,
+      "original_events": 0,
+      "canonical_events": 0
+    },
+    {
+      "kind": "eval-v29-libri-dev-other-validation",
+      "threshold": 0.91015625,
+      "traces": 33,
+      "samples": 633689,
+      "changed_samples": 1005,
+      "changed_event_traces": 0,
+      "original_events": 1,
+      "canonical_events": 1
+    },
+    {
+      "kind": "eval-v29-libri-dev-other-validation",
+      "threshold": 0.92578125,
+      "traces": 33,
+      "samples": 633689,
+      "changed_samples": 1005,
+      "changed_event_traces": 0,
+      "original_events": 0,
+      "canonical_events": 0
+    },
+    {
+      "kind": "eval-v29-libri-dev-other-validation",
+      "threshold": 0.99609375,
+      "traces": 33,
+      "samples": 633689,
+      "changed_samples": 1005,
+      "changed_event_traces": 0,
+      "original_events": 0,
+      "canonical_events": 0
+    }
+  ],
+  "differences": [
+    {
+      "identity": {
+        "source": "piper-gpu/validation/1/00246.wav",
+        "variant": 1,
+        "label": 1
+      },
+      "kind": "positive",
+      "threshold": 0.92578125,
+      "original_event_steps": [
+        111
+      ],
+      "canonical_event_steps": [
+        110
+      ],
+      "proxy_window": {
+        "original_hit": true,
+        "canonical_hit": true
+      }
+    },
+    {
+      "identity": {
+        "source": "piper-gpu/validation/1/00429.wav",
+        "variant": 0,
+        "label": 1
+      },
+      "kind": "positive",
+      "threshold": 0.91015625,
+      "original_event_steps": [
+        86
+      ],
+      "canonical_event_steps": [
+        85
+      ],
+      "proxy_window": {
+        "original_hit": true,
+        "canonical_hit": true
+      }
+    },
+    {
+      "identity": {
+        "source": "piper-gpu/validation/1/00056.wav",
+        "variant": 1,
+        "label": 1
+      },
+      "kind": "positive",
+      "threshold": 0.91015625,
+      "original_event_steps": [
+        116
+      ],
+      "canonical_event_steps": [
+        115
+      ],
+      "proxy_window": {
+        "original_hit": true,
+        "canonical_hit": true
+      }
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "deployed_detector_changed": false,
+  "limits": "Reconstructs mean lattice from existing stored smoothed INT8 scores after strict lattice checks. Canonical event differences are diagnostic, not a reselected threshold, corrected acceptance result or MCU equivalence proof. Counts all events including out-of-proxy-window positives and separately recounts fixed proxy-window hits. Original reports remain authoritative for their original policy."
+}
