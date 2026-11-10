@@ -40,6 +40,36 @@ static uint8_t *expand(const uint8_t *begin, const uint8_t *end, size_t *size) {
     return result;
 }
 
+static void json_string(const char *value, size_t capacity) {
+    putchar('"');
+    for (size_t n = 0; n < capacity && value[n]; ++n) {
+        const unsigned char ch = value[n];
+        if (ch == '"' || ch == '\\') printf("\\%c", ch);
+        else if (ch < 32 || ch >= 127) printf("\\u%04x", unsigned(ch));
+        else putchar(ch);
+    }
+    putchar('"');
+}
+
+static bool print_result(const char *marker, unsigned arm, unsigned clip,
+                         unsigned end_sample, const esp_mn_results_t *result) {
+    if (!result || result->num < 0 || result->num > ESP_MN_RESULT_MAX_NUM) return false;
+    printf("%s {\"arm\":%u,\"clip\":%u,\"end_sample\":%u,\"state\":%d,\"num\":%d,\"commands\":[",
+           marker, arm, clip, end_sample, int(result->state), result->num);
+    for (int n = 0; n < result->num; ++n) {
+        if (n) putchar(',');
+        printf("{\"id\":%d,\"phrase_id\":%d,\"probability\":%.8f}",
+               result->command_id[n], result->phrase_id[n], result->prob[n]);
+    }
+    printf("],\"string\":");
+    json_string(result->string, sizeof(result->string));
+    printf(",\"raw_string\":");
+    json_string(result->raw_string, sizeof(result->raw_string));
+    printf("}\n");
+    fflush(stdout);
+    return true;
+}
+
 static bool run() {
     size_t model_size, fixtures_size;
     auto *model_root = expand(packed_model, packed_model_end, &model_size);
@@ -74,11 +104,19 @@ static bool run() {
     unsigned calls = 0;
     bool passed = true;
     for (unsigned arm = 0; arm < command_arm_count && passed; ++arm) {
-        ESP_ERROR_CHECK(esp_mn_commands_alloc(iface, detector));
-        for (unsigned n = 0; n < command_counts[arm]; ++n)
-            ESP_ERROR_CHECK(esp_mn_commands_add(n + 1, command_strings[arm][n]));
-        auto *errors = esp_mn_commands_update();
-        if (errors && errors->num) return false;
+        // A zero-count first arm deliberately preserves the official grammar
+        // loaded during create. Later zero-count arms would retain a replacement.
+        if (!command_counts[arm] && arm != 0) return false;
+        if (command_counts[arm]) {
+            // alloc frees the previous global command list. destroy owns the
+            // last list; explicitly freeing it too caused the old cleanup warning.
+            ESP_ERROR_CHECK(esp_mn_commands_alloc(iface, detector));
+            for (unsigned n = 0; n < command_counts[arm]; ++n)
+                ESP_ERROR_CHECK(esp_mn_commands_add(n + 1, command_strings[arm][n]));
+            auto *errors = esp_mn_commands_update();
+            if (errors && errors->num) return false;
+        }
+        printf("MN_ARM {\"arm\":%u,\"stock_grammar\":%s}\n", arm, command_counts[arm] ? "false" : "true");
         iface->print_active_speech_commands(detector);
         const uint8_t *cursor = fixtures + 4;
         for (unsigned clip = 0; clip < fixture_count; ++clip) {
@@ -90,16 +128,19 @@ static bool run() {
             unsigned target_events = 0, other_events = 0, timeouts = 0;
             int first_target_end = -1;
             float first_target_probability = -1;
+            uLong input_crc = crc32(0, Z_NULL, 0);
             for (uint32_t at = 0; at < samples; at += chunk) {
                 memset(buffer, 0, chunk * sizeof(int16_t));
                 memcpy(buffer, cursor + at * 2, std::min(uint32_t(chunk), samples - at) * 2);
                 if (calls >= 20000) return false;
+                input_crc = crc32(input_crc, reinterpret_cast<const Bytef *>(buffer), chunk * sizeof(int16_t));
                 const int64_t start = esp_timer_get_time();
                 auto state = iface->detect(detector, buffer);
                 timings[calls++] = esp_timer_get_time() - start;
                 if (state == ESP_MN_STATE_DETECTED) {
                     auto *result = iface->get_results(detector);
                     if (!result || result->num < 1 || result->num > ESP_MN_RESULT_MAX_NUM) return false;
+                    if (!print_result("MN_EVENT", arm, clip, at + chunk, result)) return false;
                     if (result->command_id[0] == 1) {
                         ++target_events;
                         if (first_target_end < 0) {
@@ -114,15 +155,17 @@ static bool run() {
                 } else if (state != ESP_MN_STATE_DETECTING) return false;
                 if (calls % 16 == 0) vTaskDelay(1);
             }
+            if (!print_result("MN_DECODER", arm, clip, ((samples + chunk - 1) / chunk) * chunk,
+                              iface->get_results(detector))) return false;
             cursor += samples * 2;
             printf("MN_CLIP {\"arm\":%u,\"clip\":%u,\"samples\":%lu,\"target_events\":%u,"
                 "\"other_events\":%u,\"timeouts\":%u,\"first_target_end_sample\":%d,"
-                "\"first_target_probability\":%.8f}\n", arm, clip, (unsigned long)samples,
-                target_events, other_events, timeouts, first_target_end, first_target_probability);
+                "\"first_target_probability\":%.8f,\"input_crc32\":%lu}\n", arm, clip, (unsigned long)samples,
+                target_events, other_events, timeouts, first_target_end, first_target_probability,
+                (unsigned long)input_crc);
             fflush(stdout);
         }
         passed = cursor == fixtures + fixtures_size;
-        ESP_ERROR_CHECK(esp_mn_commands_free());
     }
     std::sort(timings, timings + calls);
     printf("MN_TIMING {\"calls\":%u,\"p50_us\":%lld,\"p95_us\":%lld,\"max_us\":%lld}\n",

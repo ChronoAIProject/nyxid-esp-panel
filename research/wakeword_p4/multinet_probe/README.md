@@ -23,6 +23,9 @@ short sources cannot estimate always-listening false events per hour.
 
 Use the existing pinned project `managed_components`. Keep model weights,
 recordings, generated headers, build files and UART logs outside git.
+For the historical v1 experiment below, use source commit `92764b9`; its plan
+binds that template. The current template adds the separately frozen control
+protocol described at the end of this document.
 
 ```sh
 python research/wakeword_p4/prepare_multinet_probe.py \
@@ -154,3 +157,59 @@ future independently frozen runs; it is not claimed to have recorded this
 historical result. After every hardware attempt, including this failed-runner
 case, app/slot identity, original service and Hi ESP listening were verified
 restored. No production firmware source or dining-room panel changed.
+
+## Known-command control v1
+
+`../multinet_control_plan_v1.json` freezes a separate harness diagnostic before
+inference. It synthesizes eight new files with the installed English Kathy
+and Rishi voices, both exclusively assigned to training in the original source
+metadata. Each voice says `Turn on the light.`, `Tell me a joke.`, `Hey Nicks.`
+and `Thanks, that is all.`. Default synthesis speed is unchanged; `say -o`
+always writes files and performs no speaker playback. Only source metadata is
+read to verify voice assignments, never held-out WAVs. There is no selection
+based on pronunciation, model score or agreement.
+
+The first arm preserves the exact original grammar loaded during model create;
+its expected command IDs are14/light and1/joke. The second uses the same official
+add/update API as the earlier failed Nyx probe, with IDs1/Nicks,2/light,3/joke.
+Both retain the original .9 threshold,8s timeout and2.4s/1s lead/tail. Feed
+every source sample and pad only the final512sample block. All four known
+command sources must detect their exact ID **in each arm** before considering
+phrase behavior. This is an execution control, not a recognition acceptance set.
+
+The template now retains every detected top-five ID/phrase-ID/probability and
+raw decoder string, final decoder output per case, explicit stock/replacement
+arm identity, and CRC32 over the actual512sample buffers passed to detect.
+The manifest independently computes those CRCs, including final zero padding.
+Command globals have one cleanup owner: the next `alloc` replaces the preceding
+list; final `destroy` releases the last one. No second explicit `free` is used.
+There is no production audio or microphone change.
+
+```sh
+python3 research/wakeword_p4/prepare_multinet_control.py \
+  --plan research/wakeword_p4/multinet_control_plan_v1.json \
+  --source-metadata "$ORIGINAL_SOURCE_METADATA" \
+  --model "$PINNED_COMPONENTS/espressif__esp-sr/model/multinet_model/mn7_en" \
+  --output "$NEW_PRIVATE_CONTROL_PROJECT"
+```
+
+Build using the same IDF command described above. The checked-in vector and
+build identities in `../results/multinet-control-v1-{vectors,build}.json` bind
+all eight generated source hashes,16cases and2,282detect calls before hardware.
+Use the existing development-only restore runner, with those explicit hashes.
+After restoration, independently audit its retained records:
+
+```sh
+python3 research/wakeword_p4/audit_multinet_control.py \
+  --report "$PRIVATE_RESULT/report.json" \
+  --uart "$PRIVATE_RESULT/uart-private.log" \
+  --manifest "$NEW_PRIVATE_CONTROL_PROJECT/vectors-manifest.json" \
+  --output "$NEW_CONTROL_AUDIT"
+python3 -m unittest discover -s research/wakeword_p4 -p 'test_multinet*.py' -v
+```
+
+The13host tests include wrong-command controls, actual PCM CRC changes,
+missing/duplicated/misaligned events, final decoder coverage and grammar order.
+Passing numerical/record coverage still leaves `accepted:false`. Short reused
+synthetic clips do not establish real speaker performance, continuous FAR,
+acoustic transfer, wake latency or full GUI/voice/OTA resource capacity.

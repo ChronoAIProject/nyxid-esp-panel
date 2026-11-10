@@ -1,0 +1,113 @@
+{
+  "scope": "Fixed silent P4 harness control using original initialization grammar and one mixed replacement grammar. No acoustic or wake-quality acceptance.",
+  "previous_result_sha256": "2a40d54fa109f7849ece1506609a655f5b39e78f7e3b440ff5a1fd538498356f",
+  "preparation_script_sha256": "8b6950b7862ae7ce7f42382909fabeacb3a1e6f713b098ed529a24b1591e67a7",
+  "audit_script_sha256": "a19efd1d39835dbd85bb66b76e9b8977716fc7435f945d6390c25d25d9959f55",
+  "runner_sha256": "336df4ca4c4f42b4a4db6d17dbe9d19d25513e57293e8a5957092cf5d15f2efe",
+  "template_files": {
+    "CMakeLists.txt": "b4329ae09f9e9be5fc8679ae64c8d63ac2961d10ae4a4c74ea55aa2e228cb6bf",
+    "main/CMakeLists.txt": "1ada85ffdf54bbf156b3de0b8ea92b3e12318b03999c6770f3bf683ec41dcff4",
+    "main/probe.cpp": "86f3cb97cabf72ba77b999678e22517c89574480874084ed45261c1b68daa7df",
+    "main/readonly_model_files.h": "89b1fd9b96108a6cd91793f60e0f2ef418f4bd4214bb98cf2175ce93d8beb4ed",
+    "partitions.csv": "8bf0726edb130cec0a79474ff82acc271922d3db7b438f13eacd9091dfc42a5f",
+    "sdkconfig.defaults": "16e7c5ce64d04ac3179e0fa299bfb375f03175e8b5b37bb1809c8792e1ff1280"
+  },
+  "source_metadata_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "say_binary": "/usr/bin/say",
+  "say_binary_sha256": "a0c75425dfcaaf5316fe255f9d7be0748a1a24041dccaf50cfc73dbe02e18016",
+  "voices": [
+    "Kathy",
+    "Rishi"
+  ],
+  "voice_languages": {
+    "Kathy": "en_US",
+    "Rishi": "en_IN"
+  },
+  "voice_policy": "Both voice tokens occur exclusively in the original training metadata; no held-out WAV is opened. These reused synthetic training voices do not establish generalization.",
+  "phrases": [
+    {
+      "role": "known_command",
+      "text": "Turn on the light."
+    },
+    {
+      "role": "known_command",
+      "text": "Tell me a joke."
+    },
+    {
+      "role": "wake_target",
+      "text": "Hey Nicks."
+    },
+    {
+      "role": "ordinary_negative",
+      "text": "Thanks, that is all."
+    }
+  ],
+  "model": "mn7_en",
+  "model_files": {
+    "_MODEL_INFO_": "efdf47e45817535e42c24c5bd5816b3d9fc54113aa7a6943b0d183823830929c",
+    "mn7_data": "f9d646f6301041d22de3dc3b1ae842ce9b314af6410b35814087d8042410a8e6",
+    "mn7_index": "f7234d8a6c6cdf8df7bb49ae86a48e8ecf20c2cd8ebc8f97665389169d50c6d3",
+    "vocab": "a94f2dbc3b2783db2891763750aa028f2e1f583945b1696931529d80de61951c"
+  },
+  "dependencies": {
+    "esp-sr": {
+      "version": "2.6.1",
+      "manifest_sha256": "0043e9bfe4ff918e871410779c78c5909a158e3efdbc3a7af7523ba285d3234c",
+      "component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14"
+    },
+    "dl_fft": {
+      "version": "0.8.0",
+      "manifest_sha256": "a599055ee4e8725c39bc1d02f25f02bf2e3b01732ca34a9f1d1fe6a4d9a5a992",
+      "component_hash": "965be7152132b365061abf5fc5fc7b85e525f73b94a204cdda61cfe9572c0d77"
+    },
+    "cjson": {
+      "version": "1.7.19~2",
+      "manifest_sha256": "8cf02081bf037b8d0b89e613f5803d463d4a93d2eab892c4bbe20020cdbd4396",
+      "component_hash": "e788323270d90738662d66fffa910bfe1fba019bba087f01557e70c40485b469"
+    },
+    "esp-dl": {
+      "version": "3.3.14",
+      "manifest_sha256": "550fde7a2722bf623eb3bfaa348e4cdc93366d515fb58fc7064fb791aa5ec867",
+      "component_hash": "3608ac32875cb7fa93805fba2372619bde3d8a02cee47c622cf5e91a1308fe92"
+    },
+    "zlib": {
+      "version": "1.3.2~2",
+      "manifest_sha256": "09a72db22cbbdff2df51b4fa9103f1ad26ee284957440c16482091cb009f58d4",
+      "component_hash": "61b7c41a6c7091085555a3cef58722af4bd9078e8708ee00a0e78efb997daf7c"
+    },
+    "esp_new_jpeg": {
+      "version": "1.0.2",
+      "manifest_sha256": "9f042dbeaf7c206d08805ece59a286f642f4829a4f2cb976f46f23721496f6ad",
+      "component_hash": "e1e7e6991193c41ed6c9fc386702aa7821433319e7aa9c3147cd3236310cd69c"
+    }
+  },
+  "initial_commands_sha256": "517b7df8f3471105ae638cd910f4d1c85f9ba7eab9e960aad2c6ca82713ad47e",
+  "detector_threshold": 0.9,
+  "detector_timeout_ms": 8000,
+  "lead_samples": 38400,
+  "tail_samples": 16000,
+  "command_arms": [
+    {
+      "name": "official_initialization",
+      "stock_grammar": true,
+      "commands": []
+    },
+    {
+      "name": "mixed_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "TURN ON THE LIGHT",
+        "TELL ME A JOKE"
+      ]
+    }
+  ],
+  "policy": "Use every generated source, original default synthesis speed and16kHz mono PCM16. No audio playback or gain/time transformation. Preserve first stock grammar, then replace through official add/update API. Clean per clip and detected/timeout state. Retain top5 command IDs/probabilities/raw strings, final decoder output and CRC of every consumed512sample block including final zero pad. Verify stock and replacement controls independently before considering phrase quality. Do not tune threshold/grammar from these8 sources.",
+  "implementation_corrections": [
+    "Record exact UART bytes and complete lines across timeouts.",
+    "Let alloc replace the previous command list and destroy own the last; avoid a second explicit free.",
+    "Retain event IDs, raw decoder results, per-arm grammar identity and complete input CRC."
+  ],
+  "quality_gate": "All four known-command sources should detect their exact mapped command ID in each grammar. A failed control prevents drawing a phrase-quality conclusion. Even a passed control is not wake acceptance.",
+  "accepted": false
+}

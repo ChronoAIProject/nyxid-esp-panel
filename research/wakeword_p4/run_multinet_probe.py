@@ -16,8 +16,10 @@ import time
 import urllib.request
 
 
-RECORD = re.compile(r'\b(MN_READY|MN_CLIP|MN_TIMING|MN_DONE) (\{[^\r\n]*\})$')
+RECORD = re.compile(r'\b(MN_READY|MN_CLIP|MN_TIMING|MN_DONE|MN_ARM|MN_EVENT|MN_DECODER) (\{[^\r\n]*\})$')
 RECORD_KEYS = {'MN_READY': 'ready', 'MN_TIMING': 'timing', 'MN_DONE': 'done'}
+RECORD_LIST_KEYS = {'MN_CLIP': 'clips', 'MN_ARM': 'arm_records',
+                    'MN_EVENT': 'events', 'MN_DECODER': 'decoder_records'}
 
 
 class UartLines:
@@ -43,8 +45,8 @@ def record_line(line, result):
     value = json.loads(data)
     if not isinstance(value, dict):
         raise ValueError('Probe record must be a JSON object')
-    if marker == 'MN_CLIP':
-        result.setdefault('clips', []).append(value)
+    if marker in RECORD_LIST_KEYS:
+        result.setdefault(RECORD_LIST_KEYS[marker], []).append(value)
     else:
         key = RECORD_KEYS[marker]
         if key in result:

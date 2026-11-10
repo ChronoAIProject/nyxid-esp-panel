@@ -63,6 +63,16 @@ class MultiNetLogTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             lines.feed(b'45')
 
+    def test_decoder_events_and_arm_identity_survive_fragmented_reads(self):
+        extra = b'MN_ARM {"arm":0,"stock_grammar":true}\nMN_EVENT {"arm":0,"clip":1,"commands":[{"id":14,"probability":0.95}]}\nMN_DECODER {"arm":0,"clip":1,"num":0,"raw_string":"raw"}\n'
+        lines, result = UartLines(), {}
+        for byte in extra:
+            for raw in lines.feed(bytes([byte])):
+                record_line(raw.decode(), result)
+        self.assertEqual(result['arm_records'], [{'arm': 0, 'stock_grammar': True}])
+        self.assertEqual(result['events'][0]['commands'][0]['id'], 14)
+        self.assertEqual(result['decoder_records'][0]['raw_string'], 'raw')
+
     def artifacts(self):
         broken = self.raw.replace(b'MN_CLIP', b'M\nN_CLIP', 1)
         original = parse_log(broken)
