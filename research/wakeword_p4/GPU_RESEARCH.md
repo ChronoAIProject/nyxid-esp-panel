@@ -817,3 +817,14 @@ or scoring. This is read Mandarin, not a substitute for far-field/TV testing.
 No Chinese wake classifier scores or new training runs exist yet; independent
 final fixtures remain frozen. Public ESP-SR host searches still yielded no
 usable native WakeNet runner; absence from these searches is not impossibility.
+
+The AISHELL download and extraction audits completed. All28 archives match
+pinned LFS hashes/lengths; all retained WAVs are from original official train,
+16kmono PCM16, with disjoint planned speakers and no exact PCM duplicates.
+Retained9,722 utterances:2,756 train/5,598 validation/1,368 development regression;
+original durations3.56643h/6.91399h/1.72310h.13 of9,735 source WAVs are quarantined:
+12 lack reference transcripts and one has zero frames. No model-based selection
+or label changes occur. Initial strict attempts stopped at the missing
+transcript and then the empty WAV; partial directories/logs remain locally.
+The corrected fresh extraction preserves every raw archive and records exclusions
+with identities and hashes. These corpus audits are not recognition evidence.
