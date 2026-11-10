@@ -778,3 +778,42 @@ All12 premature events are Kokoro. These show separate acoustic-condition and
 source generalization deficits; they do not establish causes. Variants remain
 correlated, and inference/thresholds were not recomputed. The attribution tool
 accepts only validation-only traces and does not read other audio.
+
+## v8 quantized validation: rejected
+
+The v8 data-addition control completed40k steps in358.0s on4090, selected20k;
+63,032-byte INT8 SHA256
+`77121d0c5d9cda091ba57fe2f95131885ea081a9e73741138c3bdd9503d6354d`.
+At frozen validation threshold0.9, source-macro recall63.594% (Piper64.271%,
+Kokoro62.917%), pooled1385/2160 (64.120%), confusing-negative false0.5682%,
+max source1%;6 premature events. Zero ambient events/1.20481h still gives
+upper95%2.48647/h. Latency median120ms/p95200ms. Validation trace attribution
+reproduces counts. No regression or final scores are warranted.
+
+| MCU candidate | Same-population INT8 validation macro recall | Threshold | Ambient95% upper/h |
+| --- | ---: | ---: | ---: |
+| v6 Qwen tiny-selected | 69.948% | 0.8 | 2.48647 |
+| v7 duration sampling | 67.865% | 0.97 | 2.48647 |
+| v8 Qwen recovered additions | 63.594% | 0.9 | 2.48647 |
+
+These are single-run development comparisons, not causal/statistical proof
+that recovered Qwen audio is harmful. v6 remains the strongest of these on
+this source-macro validation metric, but its regression already failed.
+The8-clip float/INT8 comparison passes explicit reset reproduction and4/4
+positive hits in both paths, mean score drift0.001406/max0.052972. This narrow
+check is not recognition acceptance or Hi ESP equivalence.
+
+## Chinese development audio preparation
+
+To address absent Chinese coverage, `download_aishell_subset.py` pins
+`AISHELL/AISHELL-1` revision`bbe295d530192a4cd41644b711c9aecd087df653`.
+OpenSLR33 explicitly lists Apache License v.2.0; its source page is retained
+and hashed. Before audio/model inspection, a fixed seed selects28 archives
+from the first64 sorted speaker IDs:8 training,16 validation,4 development
+regression, total1,055,437,060 archive bytes. Every downloaded archive must
+match its pinned LFS SHA256 and size. Original source partition, transcript
+coverage and PCM format still require extraction audit before any training
+or scoring. This is read Mandarin, not a substitute for far-field/TV testing.
+No Chinese wake classifier scores or new training runs exist yet; independent
+final fixtures remain frozen. Public ESP-SR host searches still yielded no
+usable native WakeNet runner; absence from these searches is not impossibility.
