@@ -627,3 +627,23 @@ at this snapshot. Mac work does not duplicate that experiment, contact the GPU
 worker or score independent final audio. External speaker playback remains
 paused; the next Mac/P4 experiment is silent original-PCM discrimination with
 known-source controls in both grammars.
+
+### GPU snapshot through `983832b`
+
+Read on 2026-11-11. V26 at the same pooled observed Hi ESP development event
+budget selects.94140625 and reports65.33854% source-average proxy-window hits,
+below v19's79.27083% under that diagnostic. Its1/0/0corpus events match Hi ESP's
+observed counts but do not prove general FAR equivalence. Label smoothing
+does not improve this tradeoff; no final scoring is justified by that result.
+
+The GPU track independently prepares CPU MFA alignment for24development
+target clips and2official controls. All26produce intervals, but the frozen
+500ms-prefix stability check has3endpoint/phone errors above20ms, up to80ms.
+Automatic intervals are not treated as phonetic truth; original native events
+and proxy windows remain intact. No v27 training outcome is published here.
+
+The Mac track keeps acoustic playback paused. After rejecting both controlled
+MultiNet settings, it tests a separate training-only lexical auxiliary loss on
+the existing cached embedding head. Both arms export the same binary detector
+graph; only training supervision differs. This does not duplicate GPU dialogue
+augmentation, require GPU-worker messages or alter the live audio pipeline.

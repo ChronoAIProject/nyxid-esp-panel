@@ -634,3 +634,56 @@ before training. The matched controls are reused exact completed experiments,
 not newly independent trials. After independent checkpoint selection, the
 only planned combination is their equal mean; no weight is fitted from the
 private capture or development regression.
+
+### Training-only lexical auxiliary experiment
+
+`plans/lexical-auxiliary-{preparation,control,treatment}-v1.json` freeze a
+different discrimination experiment before new training or detector scores.
+The existing dense64 binary head is continued for exactly10000steps, exporting
+only its final checkpoint. Both arms share the original initialization,
+base/environment features, seed741, main128-example sampler, weighted BCE,
+optimizer/schedule and original512training-only PTQ representatives. The
+unchanged trainer/helpers and all input indexes are hash-bound. Full main and
+auxiliary batch digests must match after both arms finish.
+
+Treatment adds a six-class softmax CE with weight.2from the final shared64-unit
+ReLU; control weight is0. The auxiliary output is discarded on export: the
+runtime input and single sigmoid output/operators remain unchanged. The main
+binary labels and negative sampling remain unchanged. A separate64-example
+training sampler balances class then TTS engine for target and exact standalone
+`Hey Nick`, `Hey Next`, `Hey Nice`, `Hey Mix`, `Hey Nexus`. Other negatives
+remain in the main loss. This is text supervision, not phonetic certification.
+
+Preparation uses only original base variants0/1 and verifies source-role,
+source/audio hashes, held-out source exclusion and warmed feature bounds.
+Positive auxiliary windows use original keyword markers; exact negative short
+phrases use the last original10ms RMS frame above max(peak*.01,1), plus the
+original2.4s lead. Auxiliary end sampling is.03.. .32s after that anchor. No
+waveform, speed, feature payload, binary-training marker or runtime behavior
+changes. These RMS anchors are not phonetic truth. The private manifest has
+10242views from5072unique synthetic source recordings, not5072independent
+speakers; its public aggregate includes hashes and counts per class/engine.
+
+```sh
+python research/wakeword_p4/embedding/lexical_auxiliary.py prepare \
+  --data-root "$WAKE_DATA" --metadata "$ORIGINAL_FEATURES_JSON" \
+  --plan research/wakeword_p4/embedding/plans/lexical-auxiliary-preparation-v1.json \
+  --output "$NEW_PRIVATE_AUXILIARY_MANIFEST"
+python research/wakeword_p4/embedding/lexical_auxiliary.py train \
+  --data-root "$WAKE_DATA" \
+  --plan "$FROZEN_CONTROL_OR_TREATMENT_PLAN" \
+  --initial-weights "$WAKE_DATA/head-environment-expanded-v2/step-10000/head.keras" \
+  --auxiliary-manifest "$NEW_PRIVATE_AUXILIARY_MANIFEST" \
+  --output "$NEW_PRIVATE_TRAINING_OUTPUT"
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --data-root "$WAKE_DATA" --training "$NEW_PRIVATE_TRAINING_OUTPUT" \
+  --plan "$FROZEN_CONTROL_OR_TREATMENT_PLAN"
+```
+
+Keep the complete fixed validation grid and original strict calibration.
+Additionally compare the best macro proxy-window hit fraction satisfying both
+continuous upper95%<=.5/h and worst confusing-corpus false fraction<=.01, or
+report no such point. Endpoint qualifications remain: these synthetic/proxy
+counts do not prove real-user recall or phonetic latency. Inferior outcomes
+stop before physical/final scoring. No speaker playback, microphone access,
+production audio/AFE/FIFO/GUI changes or dining-room board operation.

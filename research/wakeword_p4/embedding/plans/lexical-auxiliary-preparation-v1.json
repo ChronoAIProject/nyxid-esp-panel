@@ -1,0 +1,10 @@
+{
+  "scope": "Pre-score training-only six-class auxiliary metadata preparation; no audio modification or playback.",
+  "source_metadata_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "base_feature_index_sha256": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+  "base_jobs_sha256": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+  "script_sha256": "edfb2bd8a2c665bad2d392786488586a807b41292c0bac300e999857f1a87b98",
+  "class_policy": "Keep every original positive source as target; only exact standalone Hey Nick/Next/Nice/Mix/Nexus negatives receive auxiliary text classes. Other negatives remain in unchanged main binary sampling.",
+  "window_policy": "Base variants0/1 only; no new rendering. Original positive keyword_end; original negative last10ms RMS frame >=max(peak*.01,1) plus2.4s lead. Uniform .03.. .32s after anchor; all sampled histories must be warm and in bounds.",
+  "accepted": false
+}
