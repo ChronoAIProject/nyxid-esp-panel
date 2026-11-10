@@ -972,3 +972,23 @@ ESP-SR 和 Hi ESP 模型，使用开发音频验证实际 detect 调用。
 `4090-qemu-p4-wakenet-create-probe.json` 与 `4090-qemu-p4-wakenet-create-first-fault.txt`。
 原始失败日志和 ELF/闪存均保留在 ignored `.local/wakeword/`。
 后续保留 Hi ESP 比较未完成，独立数据与模型改进仍可继续，目标保持 active。
+
+
+### v10：训练期 SpecAugment 受控实验（进行中）
+
+在 v6 同一特征集、同一 official64 架构、相同 40,000 步/学习率和
+seed=726/等来源采样/行均匀环境采样上，仅打开训练期时频遮挡。
+每样本最多一条时间遮挡（0..10 帧，100 ms）和一条频率遮挡（0..4/40 bins），
+宽度含 0 均匀采样，填 0；独立 RNG seed=10726，不消耗原采样 RNG。
+验证、推理、INT8 代表校准均关闭遮挡；困难负样本候选数仍为 1。
+该参数是受控试验，不声称等于官方 notebook 默认值。
+
+真实训练特征的 128 样本输入审计通过：关闭时不改变输入或随机状态，
+开启时原输入不变，可复现，所有变化值均为 0。审计不是识别证据。
+代码 `spec_augment.py`，输入审计 `4090-v10-specaugment-input-audit.json`。
+训练路径 `.local/wakeword/model-gpu-v10-specaugment`，未访问最终集。
+
+另准备下一项独立实验 `features-gpu-v11-mandarin`：仅将已审计的 AISHELL
+8 名训练说话人、3.566425 小时原始语音的连续 MicroFrontend 流追加到
+human 训练索引。基准二进制、关键词索引和全部验证/开发回归条目保持不变。
+该准备不代表已启动中文训练；v10 不使用这些新增数据。

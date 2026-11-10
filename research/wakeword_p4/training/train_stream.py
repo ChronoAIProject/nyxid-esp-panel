@@ -13,6 +13,7 @@ import tensorflow as tf
 
 from ambient_sampling import probabilities, coverage
 from negative_sampling import candidate_ends
+from spec_augment import mask_spectrograms
 from features import FRAMES
 from evaluate import events, event_indices, smooth, THRESHOLDS
 
@@ -28,6 +29,8 @@ def main():
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     parser.add_argument("--negative-candidates", type=int, default=1)
+    parser.add_argument("--time-mask-width", type=int, default=0)
+    parser.add_argument("--frequency-mask-width", type=int, default=0)
     parser.add_argument("--ambient-sampling", choices=("rows", "duration"), default="rows")
     parser.add_argument("--source-exponent", type=float, default=.5,
                         help="Engine sampling: .5=sqrt clip counts, 0=equal engines")
@@ -36,6 +39,8 @@ def main():
     args = parser.parse_args()
     if args.negative_candidates < 1:
         parser.error("negative candidates must be positive")
+    if not 0 <= args.time_mask_width <= FRAMES or not 0 <= args.frequency_mask_width <= 40:
+        parser.error("mask widths must fit the training spectrogram")
     if args.device == "cpu":
         tf.config.set_visible_devices([], "GPU")
     gpus = tf.config.get_visible_devices("GPU")
@@ -56,6 +61,7 @@ def main():
     tf.keras.utils.set_random_seed(726)
     rng = np.random.default_rng(726)
     mining_rng = np.random.default_rng(4726)
+    augmentation_rng = np.random.default_rng(10726)
     sys.path.insert(0, str(args.upstream.resolve()))
     from microwakeword import mixednet, utils
     from microwakeword.layers import modes
@@ -120,7 +126,7 @@ def main():
             output = output[np.arange(count), scores.argmax(axis=1)]
         return output
 
-    def batch(mine=True):
+    def batch(mine=True, augment=True):
         noise = []
         for _ in range(48):
             index = (int(rng.choice(len(ambient["training"]), p=ambient_weights))
@@ -134,7 +140,11 @@ def main():
         # recipe; its operating threshold is calibrated, not assumed to be .97.
         weights = np.array([1.]*32+[20.]*96, dtype=np.float32)
         order = rng.permutation(len(x))
-        return x[order], y[order], weights[order]
+        x = x[order]
+        if augment:
+            x = mask_spectrograms(x, augmentation_rng, args.time_mask_width,
+                                  args.frequency_mask_width)
+        return x, y[order], weights[order]
 
     architecture = argparse.ArgumentParser()
     mixednet.model_parameters(architecture)
@@ -238,7 +248,7 @@ def main():
         yield [np.zeros((1, 3, 40), dtype=np.float32)]
         yield [np.full((1, 3, 40), 26, dtype=np.float32)]
         for _ in range(100):
-            x, _, _ = batch(mine=False)
+            x, _, _ = batch(mine=False, augment=False)
             for at in range(0, FRAMES, 3):
                 yield [x[:1, at:at+3]]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
@@ -263,6 +273,10 @@ def main():
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
+              "spec_augment": {"time_mask_width": args.time_mask_width,
+                               "frequency_mask_width": args.frequency_mask_width,
+                               "seed": 10726, "fill": 0,
+                               "policy": "One mask per enabled axis per training sample; width uniform inclusive 0..maximum; independent RNG; disabled for validation and INT8 calibration"},
               "mining_policy": "Training-only highest-scoring window per sampled confusing-negative row; baseline RNG preserved; disabled for INT8 calibration",
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),
