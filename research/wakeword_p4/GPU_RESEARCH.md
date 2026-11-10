@@ -2649,3 +2649,28 @@ results/4090-blind-endpoint-review-ui-check-v1.json。
 任一运行失败不得生成质量汇总；不得从最终结果重新调阈值/筛选/重生成音频。
 预注册results/4090-v30-independent-paired-preregistration-v1.json；
 输入manifest results/4090-v30-independent-paired-pcm-manifest-v1.json。
+
+## v30独立配对TTS诊断完成：未证明达到HiESP（2026-11-10）
+
+fd7b1ed预注册推送后才首次评分；468/468官方QEMU完成，无运行失败。
+逐条验证原PCM、CRC、stage104、512调用/尾填充、固定engine/代码/预注册哈希。
+Nyx INT8全468条独立reset两遍分数完全一致，所有score/replay文件哈希核验。
+固定阈值未改，未删除、改标或重新合成任何录音。
+
+- Nyx意图目标片段原音频开始后触发42/78=53.8462%；HiESP45/78=57.6923%。
+- 双方目标前导事件均0，交叉目标负例均0/78。
+- 共同负例312条：Nyx4条/4事件，HiESP0条/0事件。
+- Nyx共同负例事件按原意图文本：Hey Nick 1/78，Hey Mix 3/78；Hey Next和音量指令均0/78。
+
+这是意图片段触发描述，不能直接称为正确发音召回率；26个国际TTS预设尚无独立发音审查。
+不得从这些结果筛选合成声线、改最终标签或选择新工作点。
+两目标词有词汇难度差异、预设不是独立自然人、没有可信音素端点；
+本轮无延迟或显著性/总体FAR匹配声明，未达完整目标。
+该最终集现已评分，后续候选的独立验收需要新预先冻结数据。
+原始全事件报告results/4090-v30-independent-paired-v1.json；
+按声线/原意图负例描述与文件核验results/4090-v30-independent-paired-audit-v1.json。
+本地原始分数/UART/replay位于/tmp/nyx-v30-paired-final-v1。
+
+下一阶段优先解决独立发音/末音素参考，并以训练来源扩展口音及近音词覆盖；
+新训练不得使用本轮保留声线、最终录音或独立最终负例。
+仅凭最终TTS触发比例无法区分错读与检测漏失，不能将其自动转成训练标签。
