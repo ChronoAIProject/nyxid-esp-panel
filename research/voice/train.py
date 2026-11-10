@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Synthetic Hye Nyx voice embedding baseline; no board or recordings needed."""
 from __future__ import annotations
-import argparse, json, math, random
+import argparse, json, math, random, hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 import numpy as np
 import torch
@@ -37,6 +38,10 @@ def main():
     p.add_argument('--samples', type=int, default=10000); p.add_argument('--speakers', type=int, default=20)
     p.add_argument('--seed', type=int, default=20261110); p.add_argument('--batch-size', type=int, default=256)
     p.add_argument('--output', type=Path, default=Path('runs/baseline')); a = p.parse_args()
+    if a.samples < 5 or a.speakers < 2 or a.epochs < 1 or a.batch_size < 1:
+        p.error('samples >= 5, speakers >= 2, epochs >= 1 and batch-size >= 1 required')
+    if (a.output/'metrics.json').exists():
+        p.error('Use a fresh output directory to preserve previous results')
     random.seed(a.seed); np.random.seed(a.seed); torch.manual_seed(a.seed)
     device = torch.device('cuda' if a.device == 'cuda' and torch.cuda.is_available() else 'cpu')
     if a.device == 'cuda' and device.type != 'cuda': raise SystemExit('CUDA requested but unavailable')
@@ -60,8 +65,16 @@ def main():
                 logits,_=model(xb.to(device)); vl += nn.functional.cross_entropy(logits,yb.to(device)).item()*len(yb); vc += (logits.argmax(1)==yb.to(device)).sum().item(); vn += len(yb)
         row={'epoch':epoch,'train_loss':loss_sum/total,'train_accuracy':correct/total,'val_loss':vl/vn,'val_accuracy':vc/vn}; history.append(row)
         print(json.dumps(row), flush=True)
+    confusion = torch.zeros(a.speakers, a.speakers, dtype=torch.int64)
+    with torch.no_grad():
+        for xb, yb in vd:
+            predicted = model(xb.to(device))[0].argmax(1).cpu()
+            confusion += torch.bincount(yb*a.speakers+predicted, minlength=a.speakers**2).reshape(a.speakers,a.speakers)
     a.output.mkdir(parents=True, exist_ok=True); torch.jit.script(model.cpu()).save(str(a.output/'encoder.ts'))
-    final=history[-1]; (a.output/'metrics.json').write_text(json.dumps({'device':str(device),'gpu':torch.cuda.get_device_name(0) if device.type=='cuda' else None,'seed':a.seed,'config':vars(a)|{'output':str(a.output)},'history':history,'final':final}, indent=2, default=str))
+    exported = torch.jit.load(str(a.output/'encoder.ts')).eval()
+    with torch.no_grad():
+        torch.testing.assert_close(exported(x[:8])[0], model(x[:8])[0])
+    final=history[-1]; (a.output/'metrics.json').write_text(json.dumps({'created_utc':datetime.now(timezone.utc).isoformat(),'torch':torch.__version__,'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'export_bytes':(a.output/'encoder.ts').stat().st_size,'export_verified':True,'confusion_matrix':confusion.tolist(),'device':str(device),'gpu':torch.cuda.get_device_name(0) if device.type=='cuda' else None,'seed':a.seed,'config':vars(a)|{'output':str(a.output)},'history':history,'final':final}, indent=2, default=str))
     print(f"saved {a.output} | val_accuracy={final['val_accuracy']:.3f}")
 if __name__ == '__main__': main()
 
