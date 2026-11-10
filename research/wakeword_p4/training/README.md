@@ -1,5 +1,10 @@
 # Reproduce the Hey Nyx training experiments
 
+For current Linux/RTX 4090 experiments, use [GPU_RESEARCH.md](../GPU_RESEARCH.md)
+and the [current method review](../BEST_PRACTICES.md). The four-engine Mac
+experiment below is retained as earlier failure evidence; its environment and
+data counts do not describe the current GPU candidates.
+
 Read [BEST_PRACTICES.md](BEST_PRACTICES.md) for primary sources and the rejected
 first candidate. This is training research, not a production wake-engine update.
 All generated speech is AI-generated audio, not human recordings.

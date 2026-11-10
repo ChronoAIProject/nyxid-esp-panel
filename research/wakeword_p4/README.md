@@ -1,5 +1,11 @@
 # Custom wake-word research: Hey Nyx
 
+Current RTX 4090, board-free training and streaming INT8 experiments are in
+[GPU_RESEARCH.md](GPU_RESEARCH.md); primary-source method review is in
+[BEST_PRACTICES.md](BEST_PRACTICES.md). All evaluated candidates remain rejected,
+and equivalence with Hi ESP is unverified. The Mac/board compatibility probes
+below are historical evidence, not recognition-quality acceptance.
+
 Validated on 2026-11-10 using an Apple Silicon Mac and a development ESP32-P4 revision 1.3. This is a standalone numeric probe and native training/sample-generation research, not a replacement production wake engine. The production default remains **Hi ESP**.
 
 The selected phrase is **Hey Nyx**, pronounced **Hey Nicks**. `Hey Nix` and `Hey Nicks` are acoustic equivalents, not hard negatives. Candidate near-word negatives include `Hey Nick`, `Hey Next`, and `Hey Mix`, alongside ordinary conversation, Chinese speech, television, music, and room noise.
