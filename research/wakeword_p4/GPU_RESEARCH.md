@@ -852,3 +852,22 @@ to conceal failed populations. No model was retrained or threshold adjusted.
 The initial prose mistakenly inferred zero total events from the final three
 speaker log lines; the authoritative JSON always recorded one event. This
 correction uses the summed per-speaker events and full report, not the log tail.
+
+## v9 training-only negative-window mining control
+
+v9-mining has started on4090 against the v6 feature set and settings, selecting
+one highest-scoring window from4 candidates within each sampled training
+confusing-negative row. Each row/source is still drawn from training only;
+no validation/regression/final windows enter mining. Inference-mode selection
+updates neither gradients nor batch statistics. The original candidate is
+included, and extra candidate endpoints use isolated RNG4726, preserving the
+main726 RNG for baseline source/positive/ambient sampling. A1000-row invariant
+audit confirms the baseline endpoint and main RNG state stay identical for
+one versus four candidates. This is a sampler check, not recognition evidence.
+
+INT8 representative calibration explicitly disables mining, preserving the
+baseline sampling path. Architecture official64,40k steps, equal engines,
+ambient rows sampling, negative weight20 and existing event validation remain
+fixed. First500 actual training steps completed without runtime failure;
+results remain pending. The Mandarin dataset is not appended to this control:
+its frozen v6 result remains a separate new-language development stress test.

@@ -12,6 +12,7 @@ import numpy as np
 import tensorflow as tf
 
 from ambient_sampling import probabilities, coverage
+from negative_sampling import candidate_ends
 from features import FRAMES
 from evaluate import events, event_indices, smooth, THRESHOLDS
 
@@ -26,12 +27,15 @@ def main():
     parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
+    parser.add_argument("--negative-candidates", type=int, default=1)
     parser.add_argument("--ambient-sampling", choices=("rows", "duration"), default="rows")
     parser.add_argument("--source-exponent", type=float, default=.5,
                         help="Engine sampling: .5=sqrt clip counts, 0=equal engines")
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    if args.negative_candidates < 1:
+        parser.error("negative candidates must be positive")
     if args.device == "cpu":
         tf.config.set_visible_devices([], "GPU")
     gpus = tf.config.get_visible_devices("GPU")
@@ -51,6 +55,7 @@ def main():
     tf.config.threading.set_inter_op_parallelism_threads(2)
     tf.keras.utils.set_random_seed(726)
     rng = np.random.default_rng(726)
+    mining_rng = np.random.default_rng(4726)
     sys.path.insert(0, str(args.upstream.resolve()))
     from microwakeword import mixednet, utils
     from microwakeword.layers import modes
@@ -84,12 +89,13 @@ def main():
     def sequence(row):
         return raw[row["offset"]:row["offset"]+row["frames"]]
 
-    def sample(label, count):
+    def sample(label, count, mine=True):
         sources = groups["training"][label]
         engines = list(sources)
         probabilities = np.asarray([len(sources[e]) for e in engines], dtype=float)**args.source_exponent
         probabilities /= probabilities.sum()
         output = []
+        candidate_count = args.negative_candidates if not label and mine else 1
         for _ in range(count):
             rows = sources[str(rng.choice(engines, p=probabilities))]
             row = rows[int(rng.integers(len(rows)))]
@@ -100,12 +106,21 @@ def main():
                 # Cover prefixes, full confusing phrases, suffixes and quiet
                 # boundaries, rather than only one phrase-end crop.
                 lo = max(FRAMES, row["lead_frame"]-25)
-                end = int(rng.integers(lo, len(data)+1))
+                ends = candidate_ends(rng, mining_rng, lo, len(data)+1, candidate_count)
+                end = int(ends[0])
             end = min(len(data), max(FRAMES, end))
-            output.append(data[end-FRAMES:end])
-        return np.asarray(output)
+            if candidate_count > 1:
+                output.append(np.asarray([data[int(e)-FRAMES:int(e)] for e in ends]))
+            else:
+                output.append(data[end-FRAMES:end])
+        output = np.asarray(output)
+        if candidate_count > 1:
+            # Inference mode: no gradients, dropout or batch-statistic updates.
+            scores = np.asarray(infer(scale(output.reshape(-1, FRAMES, 40)))).reshape(count, candidate_count)
+            output = output[np.arange(count), scores.argmax(axis=1)]
+        return output
 
-    def batch():
+    def batch(mine=True):
         noise = []
         for _ in range(48):
             index = (int(rng.choice(len(ambient["training"]), p=ambient_weights))
@@ -113,7 +128,7 @@ def main():
             _, data = ambient["training"][index]
             at = int(rng.integers(0, len(data)-FRAMES+1))
             noise.append(data[at:at+FRAMES])
-        x = scale(np.concatenate((sample(1, 32), sample(0, 48), np.asarray(noise))))
+        x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -223,7 +238,7 @@ def main():
         yield [np.zeros((1, 3, 40), dtype=np.float32)]
         yield [np.full((1, 3, 40), 26, dtype=np.float32)]
         for _ in range(100):
-            x, _, _ = batch()
+            x, _, _ = batch(mine=False)
             for at in range(0, FRAMES, 3):
                 yield [x[:1, at:at+3]]
     converter = tf.lite.TFLiteConverter.from_saved_model(str(root/"saved_model"))
@@ -247,6 +262,8 @@ def main():
               "feature_metadata_sha256": feature_metadata_hashes,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
+              "negative_candidates": args.negative_candidates, "mining_seed": 4726,
+              "mining_policy": "Training-only highest-scoring window per sampled confusing-negative row; baseline RNG preserved; disabled for INT8 calibration",
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),
               "model_sha256": hashlib.sha256(data).hexdigest(),
               "source_files_sha256": source_hashes,
