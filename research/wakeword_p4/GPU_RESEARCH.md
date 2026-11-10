@@ -2877,3 +2877,35 @@ UI检查器增加可选expected-clips，默认26保留旧包检查；
 4090-blind-endpoint-review-ui-check-v2.json。
 新训练包与原开发端点包均仍等待实际独立试听；机器检查不代替人审。
 没有启动新训练或修改v30/v31/最终集；完整目标保持未达成。
+
+## 人审导出的完整性与分歧收集器（2026-11-10）
+
+未发现实际试听JSON，48条训练包与26条开发端点包仍无人工标签。
+新增training/collect_review_annotations.py：从冻结HTML/audit复核pack_id与全部匿名ID，
+接受一个或多个原UI导出；核验协议、父manifest、盲审声明、音频SHA和样本数。
+缺/多/重复音频、非法/反向/越界样本坐标、布尔值伪装整数、错误完整声明及
+已知AUTOMATED_UI_TEST导出均拒绝；合法部分结果保留，未完成记录不作有效标注。
+重复标注者名称不当作多人；名称不同也不证明真实身份独立，报告明确未核实。
+
+逐条保留有效意见与备注，单人意见不当共识，发音分歧/无法判断不丢弃。
+多人均认为短语完整时仅报告保守端点区间并集及是否重叠，
+不通过求平均/取交集制造精确边界。文件有效或意见一致不自动成为金标准，
+不改训练标签、模型、历史窗口或最终集，也不宣称真实人声来源已核实。
+
+check_review_collection.py在两套真实冻结输入上使用纯内存synthetic fixtures：
+各16类错误导出拒绝，以及合法部分、区间并集、不相交区间、发音分歧、单人
+非共识、重复身份保护均通过。没有写出fixture标注文件或生成任何真人标签。
+证据results/4090-blind-review-collection-check-v1.json。
+
+收到实际导出后的调用示例（单人/部分结果也可先完整校验）：
+
+```sh
+python3 research/wakeword_p4/training/collect_review_annotations.py \
+  --html .local/wakeword/training-prefix-blind-review-v1/index.html \
+  --input-audit research/wakeword_p4/results/4090-training-prefix-review-inputs-v1.json \
+  --annotations /path/to/actual-review-export.json \
+  --output .local/wakeword/actual-prefix-review-validation.json
+```
+
+多位标注者可重复--annotations；开发端点包使用其对应HTML/audit。
+当前缺少的仍是实际独立试听参考，不以工具完成替代这项数据。
