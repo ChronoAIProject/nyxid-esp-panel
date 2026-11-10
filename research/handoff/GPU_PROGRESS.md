@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `2b940ff`; see the dated snapshots below.
+Latest observed GPU commit: `097d396`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -824,3 +824,21 @@ the GPU weights were not yet available locally or as a named release asset.
 See [GPU model handoff](GPU_MODEL_HANDOFF.md). No board or audio device was
 accessed. The Mac float/INT8 head investigation is separate from this GPU
 candidate and cannot establish numerical compatibility for v30.
+
+### GPU snapshot through `097d396`
+
+V31's completed development comparison reaches 61.38% proxy hits at its
+zero-event point versus v30's 82.55%; reject v31. The frozen v30 also ran on
+9.0623 h of new independent far-field AMI dialogue. All 16 streams completed;
+one event gives 0.1103 observed events/h and a one-sided 95% upper bound of
+0.5235/h, above the preregistered 0.5/h limit. The same-input Hi ESP run was
+pending at this commit. Keep this failure separate from the earlier
+read-speech pass; the AMI test has now been scored and is excluded from
+training and threshold choice. See [the frozen report](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/097d396236642a930f090909af7171480f9f0002/research/wakeword_p4/results/4090-v30-ami-independent-negatives-v1.json).
+
+The branch adds blind review export and consistency checks for prefix audio;
+there are still no independent human annotations in this snapshot. No v30
+weights were identified in the branch or release asset inventory. The Mac
+[near-word audit](../wakeword_p4/results/microwake-near-word-errors-v1.json)
+is a distinct synthetic development diagnostic; its phone evidence does not
+classify the AMI false event or establish a repair for v30.

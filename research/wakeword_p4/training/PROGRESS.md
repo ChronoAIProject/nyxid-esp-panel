@@ -834,3 +834,19 @@ confuse similar complete words. The crop is a manipulation of a broad tail
 region, and CTC support is approximate; neither isolates the /s/ phoneme nor
 proves the training label or real-room timing. No PCM speed, original WAV,
 training label, threshold, or firmware changed.
+
+The [near-word audit](../results/microwake-near-word-errors-v1.json) re-renders
+all 296 previously scored development views of 74 standalone "Hey Mix" and
+"Hey Next" sources and verifies every rebuilt feature array against the cache.
+All five strict equal-mean false views, and all eleven quiet views of those
+same four source WAVs, retain the distinct /m/ or /t/ in the independent
+phoneme decode. The two strict "Hey Next" hits are the same speaker/source;
+both cached crossings are more than 270 ms after the estimated /t/ support.
+Two additional both-member errors from a different "Hey Next" source omit /t/
+in both the raw decode and the firing views; its two non-firing views retain
+it. The strict errors therefore cannot all be explained by missing consonants
+or scoring before the terminal cue. This favors testing cue discrimination
+across render conditions rather than assuming longer smoothing will solve
+them. Phoneme decoder outputs remain diagnostic and are never used as new
+wake labels. These are development results for the Mac models; no reserved
+audio, device, or GPU model was scored.
