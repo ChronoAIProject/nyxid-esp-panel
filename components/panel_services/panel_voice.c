@@ -7,6 +7,9 @@
 #include "esp_wn_models.h"
 #include "model_path.h"
 #include "zlib.h"
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+#include "panel_wake_runtime.h"
+#endif
 #include "esp_heap_caps.h"
 #include "product_support.h"
 #include "nyx_creds.h"
@@ -834,23 +837,38 @@ static bool wake_available(void)
     xSemaphoreTake(state_lock,portMAX_DELAY);bool configured=valid_config(&configuration);xSemaphoreGive(state_lock);
     return configured;
 }
-static void prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,int16_t *scratch,int chunk)
+static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,int16_t *scratch,int chunk)
 {
     // Initialize the model's rolling feature history before advertising a new
     // listener. A keyword can then begin with the first actual microphone frame.
     memset(scratch,0,chunk*sizeof(*scratch));
-    for(int samples=0;samples<2*wn->get_samp_rate(model);samples+=chunk)
-        (void)wn->detect(model,scratch);
+    int prime_samples=2*wn->get_samp_rate(model);
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+    prime_samples=panel_wake_runtime_prime_samples();
+#endif
+    for(int samples=0;samples<prime_samples;samples+=chunk)
+        if(wn->detect(model,scratch)<0)return false;
+    return true;
+}
+const char *panel_voice_wake_word(void)
+{
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+    return "Hey Nyx";
+#else
+    return "Hi ESP";
+#endif
 }
 static void wake_task(void *arg)
 {
     (void)arg;
     if(!wake_tail.samples){wake_status("unavailable");vTaskDelete(NULL);return;}
+#ifndef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
     extern const uint8_t wake_model_start[] asm("_binary_panel_hi_esp_bin_start");
     extern const uint8_t wake_model_end[] asm("_binary_panel_hi_esp_bin_end");
     // ESP-SR's generic name dispatcher links every WakeNet generation, including
     // WakeNet10's DL runtime. This firmware ships only pinned WakeNet9 weights.
     extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
+#endif
     const esp_wn_iface_t *wn=NULL;model_iface_data_t *model=NULL;
     const char *model_name=NULL;bool model_dirty=false;
     aec_handle_t *aec=NULL;void *agc=NULL;
@@ -867,6 +885,13 @@ static void wake_task(void *arg)
             wake_status("audio_busy");vTaskDelay(pdMS_TO_TICKS(100));continue;
         }
         if (!model) {
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+            void *root=NULL;
+            srmodel_list_t *models=NULL;
+            model_name="hey_nyx";
+            wn=&panel_wake_runtime_iface;
+            model=wn->create(model_name,DET_MODE_95);
+#else
             // Weights travel in the app's OTA image, compressed in flash and
             // expanded once into PSRAM. Both existing OTA slots keep their size.
             uint32_t size=(uint32_t)wake_model_start[0] | (uint32_t)wake_model_start[1]<<8 |
@@ -879,6 +904,7 @@ static void wake_task(void *arg)
             model_name=name;
             wn=name?&esp_sr_wakenet9_quantized:NULL;
             model=wn?wn->create(name,DET_MODE_95):NULL;
+#endif
             wn_chunk=model?wn->get_samp_chunksize(model):0;
             aec=create_voice_aec();chunk=aec?aec_get_chunksize(aec):0;
             agc=esp_agc_open(AGC_MODE_2,16000);
@@ -892,7 +918,8 @@ static void wake_task(void *arg)
                 detect=heap_caps_aligned_alloc(16,wn_chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
             }
             if(!model || !aec || !agc || !capture || !mic || !ref || !clean || !adjusted || !detect ||
-                wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1) {
+                wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1 ||
+                !prime_wake_model(wn,model,detect,wn_chunk)) {
                 wake_status("unavailable");product_audio_release();
                 if(model)wn->destroy(model);
                 if(aec)aec_destroy(aec);
@@ -900,10 +927,9 @@ static void wake_task(void *arg)
                 if(models)srmodel_host_deinit(models);
                 free(root);
                 free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
-                ESP_LOGE("panel.wake","Hi ESP listener initialization failed");vTaskDelete(NULL);return;
+                ESP_LOGE("panel.wake","%s listener initialization failed",panel_voice_wake_word());vTaskDelete(NULL);return;
             }
-            prime_wake_model(wn,model,detect,wn_chunk);
-            ESP_LOGI("panel.wake","Hi ESP ready: WakeNet chunk=%d AEC chunk=%d",wn_chunk,chunk);
+            ESP_LOGI("panel.wake","%s ready: detector chunk=%d AEC chunk=%d",panel_voice_wake_word(),wn_chunk,chunk);
         }
         esp_err_t err=product_codec_dev_resume();
         if(err==ESP_OK)err=product_codec_mute_set(false);
@@ -912,8 +938,13 @@ static void wake_task(void *arg)
         // lifecycle; never reset the microphone or active-call audio FIFO.
         if(model_dirty) {
             wn->destroy(model);model=wn->create(model_name,DET_MODE_95);model_dirty=false;
-            if(!model){wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;}
-            prime_wake_model(wn,model,detect,wn_chunk);
+            if(!model || !prime_wake_model(wn,model,detect,wn_chunk)) {
+                if(model)wn->destroy(model);
+                if(aec)aec_destroy(aec);
+                if(agc)esp_agc_close(agc);
+                free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
+                wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;
+            }
         }
         wn_used=agc_used=0;
         // Idle listening and each call have separate adaptive filter state,
@@ -964,19 +995,31 @@ static void wake_task(void *arg)
                 xSemaphoreTake(state_lock,portMAX_DELAY);status.buffered_ms=c->capture.count/16;xSemaphoreGive(state_lock);
             } else if(err==ESP_OK) {
                 panel_voice_pcm_preroll_push(&wake_tail,adjusted,produced);
-                for(size_t at=0;at<produced;++at) {
-                    detect[wn_used++]=adjusted[at];
+                const int16_t *wake_pcm=adjusted;
+                size_t wake_samples=produced;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+                // MicroFrontend already supplies the experimental detector's
+                // noise reduction/PCAN. The communication AEC can suppress its
+                // wake cues even with a silent reference. Use the same I2S
+                // producer's raw mic only for idle detection. The preroll and
+                // active-call FIFO keep their existing AEC/AGC processing.
+                wake_pcm=mic;wake_samples=(size_t)chunk;
+#endif
+                for(size_t at=0;at<wake_samples;++at) {
+                    detect[wn_used++]=wake_pcm[at];
                     if(wn_used==(size_t)wn_chunk) {
                         wn_used=0;
                         model_dirty=true;
-                        if(wn->detect(model,detect)>0)triggered=true;
+                        int detected=wn->detect(model,detect);
+                        if(detected<0){err=ESP_FAIL;wake_status("error");break;}
+                        if(detected>0)triggered=true;
                     }
                 }
             }
             xSemaphoreGive(wake_lock);
             if(triggered) {
                 if(!wake_available())break;
-                ESP_LOGI("panel.wake","Hi ESP detected; recording while connecting");
+                ESP_LOGI("panel.wake","%s detected; recording while connecting",panel_voice_wake_word());
                 xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
                 if(start_call(NULL,true)!=ESP_OK) {
                     atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);break;

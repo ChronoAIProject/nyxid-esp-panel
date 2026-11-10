@@ -299,7 +299,7 @@ bool NyxPanel::run() {
         (void)panel_voice_input_mode_set(static_cast<panel_voice_input_mode_t>(lv_dropdown_get_selected(select)));
     }, LV_EVENT_VALUE_CHANGED, nullptr);
     auto wake_label = lv_label_create(controls);
-    lv_label_set_text(wake_label, "Wake: Hi ESP");
+    lv_label_set_text_fmt(wake_label, "Wake: %s", panel_voice_wake_word());
     lv_obj_set_style_text_font(wake_label, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(wake_label, lv_color_hex(NYX_TEXT), 0);
     lv_obj_align(wake_label, LV_ALIGN_TOP_LEFT, 0, connection_y + 149);

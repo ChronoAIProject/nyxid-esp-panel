@@ -39,6 +39,7 @@ void panel_voice_greeting_get(panel_voice_greeting_t *out);
 esp_err_t panel_voice_greeting_update(const void *json, size_t size);
 void panel_voice_microphone_mute(bool muted);
 esp_err_t panel_voice_wake_set(bool enabled);
+const char *panel_voice_wake_word(void);
 esp_err_t panel_voice_remote_open(const panel_voice_remote_t *request, bool *duplicate);
 esp_err_t panel_voice_remote_say(const panel_voice_remote_t *request, bool *duplicate);
 // Bounded codec/mic/speaker exercise without a provider or an account session.
