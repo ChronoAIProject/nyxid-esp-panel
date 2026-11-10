@@ -1902,3 +1902,22 @@ v26以v24为基线，只把训练BCE改为label_smoothing=0.02，
 这仅是减少过度自信的受控假设，未证明改善；不将soft labels用于评测。
 完整预定计划见results/4090-v26-plan.json，运行脚本
 experiments/v26_label_smoothing.sh。独立最终集不评分。
+
+
+## 多语料开发误触描述性汇总（2026-11-10）
+
+仅合并已逐PCM审计的dev-other、AISHELL validation和DiPCo S05，
+共50个说话人/会话、12.789657865小时源音频。三项Hi ESP回放模型、
+阈值请求/读回、ELF、flash、QEMU哈希一致；无重复说话人/会话，
+所有CRC/stage104与分母、计数复核通过。
+
+固定原阈值：Hi ESP1事件，Nyx v19 1事件，v23 9事件，v24 3事件。
+前两者描述性合并上界均0.370914106/h；v24上界0.606244249/h。
+这不改变先前候选拒绝：重复开发数据不是独立验收，
+相等的观测事件数也不是一般场景误触率等效证明。尤其远场只有0.754488小时，
+合并不能掩盖Hi ESP中文1事件或Nyx英文饱和事件。
+保留各语料结果和既有逐语料零事件选模门槛；没有据此重选阈值，
+也没有以此触碰最终集。证据见results/4090-hiesp-nyx-pooled-development-v1.json。
+
+v26继续运行，扩展验证脚本experiments/v26_validate_expanded.sh
+在训练/原密集验证完成后执行，同样不读取独立最终集。
