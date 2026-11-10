@@ -1,0 +1,50 @@
+{
+  "role": "Official fixture developer transport controls, not independent validation",
+  "revision": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+  "source_sha256": "c35259bfe8d5452a60e4162830d132a6675cb91e23e4d19d4732fe0b0a6bcc09",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-wakenet/main/samples/hiesp.h",
+      "sha256": "70f44269b0f74ed4a7a75ef027cb015f2e8bf2751597b97f78cda4b1a04c2a34",
+      "bytes": 378744
+    },
+    {
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-wakenet/main/test_wakenet.cpp",
+      "sha256": "f081e8e88563abda355aa747eed5191e150e69d8b46698371cda0d6c3f8a0830",
+      "bytes": 5510
+    }
+  ],
+  "original_pcm_sha256": "eb59f5e33caae80f94cd43ed2c3a9caffc20f254a9184663e96827f03bba45f5",
+  "records": [
+    {
+      "path": "official-lead0.wav",
+      "role": "development-transport-probe",
+      "split": "validation",
+      "text": "Official ESP-SR Hi ESP fixture; transcript inferred from official test selection",
+      "target": "hi_esp",
+      "voice": "official-test-fixture-unknown-provenance",
+      "samples": 47232,
+      "lead_samples": 0,
+      "tail_samples": 16000,
+      "source_samples": 31232,
+      "sha256": "dd2d1d721916ded8f54ffd890da1bc827e97e1e65aa8b50044599aa2d56e4127",
+      "pcm_sha256": "25f6a6232c0115f700dab8909c42057e0b43d187b4bf01a343f7958d26943754"
+    },
+    {
+      "path": "official-lead28800.wav",
+      "role": "development-transport-probe",
+      "split": "validation",
+      "text": "Official ESP-SR Hi ESP fixture; transcript inferred from official test selection",
+      "target": "hi_esp",
+      "voice": "official-test-fixture-unknown-provenance",
+      "samples": 76032,
+      "lead_samples": 28800,
+      "tail_samples": 16000,
+      "source_samples": 31232,
+      "sha256": "579b307956e9b1f73a72ee207034c840e214d46287113c8cb55488eaf76b6c0a",
+      "pcm_sha256": "1bb7eaf9ae25bc97da15aeae8ae0d4d2ca4c72622b9ee354ba3b8c030552ad60"
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "limits": "One official model test fixture, identity/recording provenance unknown and possibly used in model development. Two padding variants are correlated. Not a new speaker, recognition benchmark, phonetic endpoint or matched-FAR evidence. Original PCM unchanged; add0/1.8s lead and1s tail. Official test resets detection threshold; our replay uses the existing explicit0.63 setter for comparison and records getter."
+}

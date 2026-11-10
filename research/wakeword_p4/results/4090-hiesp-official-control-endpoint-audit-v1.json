@@ -1,0 +1,53 @@
+{
+  "role": "Official Hi ESP fixture transport and endpoint diagnostic; not quality acceptance",
+  "source_sha256": "257883e816b4c0ccbf80981ac0615e504387da6d3e59b59a0faa22c93d503e73",
+  "manifest_sha256": "3960af30f2015e20cdcbaff032ca8601e7011831c69633df5e551c3f0c382976",
+  "replay_sha256": [
+    "5ff9ed03788175cd025f464f658da8131f0daa56cc6f08cfe7985f980c9bd97f",
+    "59a8114c0b203ce62e44eb0ace18e1171ad31e27970b7b3a4e32b63e1da82c9c"
+  ],
+  "official_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-wakenet/main/samples/hiesp.h",
+      "sha256": "70f44269b0f74ed4a7a75ef027cb015f2e8bf2751597b97f78cda4b1a04c2a34",
+      "bytes": 378744
+    },
+    {
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-wakenet/main/test_wakenet.cpp",
+      "sha256": "f081e8e88563abda355aa747eed5191e150e69d8b46698371cda0d6c3f8a0830",
+      "bytes": 5510
+    }
+  ],
+  "records": [
+    {
+      "path": "official-lead0.wav",
+      "pcm_sha256": "25f6a6232c0115f700dab8909c42057e0b43d187b4bf01a343f7958d26943754",
+      "events_seconds": [
+        1.344
+      ],
+      "emitted_target_control_event": true,
+      "energy_proxy_end_seconds": 2.01,
+      "event_minus_energy_proxy_ms": [
+        -665.9999999999997
+      ],
+      "proxy_window_events": 0
+    },
+    {
+      "path": "official-lead28800.wav",
+      "pcm_sha256": "1bb7eaf9ae25bc97da15aeae8ae0d4d2ca4c72622b9ee354ba3b8c030552ad60",
+      "events_seconds": [
+        3.072
+      ],
+      "emitted_target_control_event": true,
+      "energy_proxy_end_seconds": 3.81,
+      "event_minus_energy_proxy_ms": [
+        -738.0
+      ],
+      "proxy_window_events": 0
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "existing_thresholds_or_windows_changed": false,
+  "conclusion": "Official fixture emits native events in both controls, but existing energy-proxy -100..+800ms window excludes them. Therefore window hits are not equivalent to true target rejection or phonetic latency. Preserve old diagnostic counts; do not use them to rank engines.",
+  "limits": "One official fixture of unknown recording/development provenance, two correlated padding variants. Transport control only, no representative recall, matched FAR, phonetic endpoints or hardware latency. Energy proxy remains a fixed diagnostic, not validated temporal ground truth."
+}

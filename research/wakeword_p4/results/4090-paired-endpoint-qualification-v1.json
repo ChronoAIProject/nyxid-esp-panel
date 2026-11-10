@@ -1,0 +1,41 @@
+{
+  "role": "Qualification of previous paired proxy metrics after official-fixture counterexample",
+  "parents": [
+    {
+      "report": "4090-paired-development-v19-hiesp-v1.json",
+      "sha256": "ace5d16fb40ab61c37c5bae026fde34ce9a4fda254ad53309d1da82c4299ebb9",
+      "counts": {
+        "nyx": {
+          "target_clips": 12,
+          "target_clips_with_any_native_event": 9,
+          "energy_proxy_window_hits": 9
+        },
+        "hiesp": {
+          "target_clips": 12,
+          "target_clips_with_any_native_event": 5,
+          "energy_proxy_window_hits": 1
+        }
+      }
+    },
+    {
+      "report": "4090-v19-hiesp-paired-budget-diagnostic-v2.json",
+      "sha256": "d3afb0e36985f1606ed4425de7f77c75af4f250a0f479be264637afbd0603705",
+      "counts": {
+        "nyx": {
+          "target_clips": 12,
+          "target_clips_with_any_native_event": 9,
+          "energy_proxy_window_hits": 9
+        },
+        "hiesp": {
+          "target_clips": 12,
+          "target_clips_with_any_native_event": 5,
+          "energy_proxy_window_hits": 1
+        }
+      }
+    }
+  ],
+  "official_control_audit": "4090-hiesp-official-control-endpoint-audit-v1.json",
+  "previous_raw_scores_events_or_windows_changed": false,
+  "independent_final_audio_accessed": false,
+  "conclusion": "Do not interpret energy-proxy-window hit fractions as representative true wake recall or compare phonetic latency. Hi ESP emitted events in5/12 synthetic target clips, of which1 fell within the fixed proxy window. Official fixture controls emitted events but both fell before this same proxy-relative window. A detector-independent validated endpoint protocol is still needed; no acceptance or superiority claim is justified."
+}

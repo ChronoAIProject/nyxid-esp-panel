@@ -1,3 +1,9 @@
+> 最新评测资格说明（2026-11-10）：官方Hi ESP测试样本已在QEMU触发，
+> 但能量代理结束点比事件晚666–738ms，固定-100..+800ms窗口会排除这些触发。
+> 因此历史配对集“9/12、1/12”等是代理窗口命中数，不能作为真实漏检率或音素延迟排名。
+> Hi ESP在配对集实际有事件的目标音频是5/12。原始事件/分数不改，最终集继续封存。
+> 反证见results/4090-hiesp-official-control-endpoint-audit-v1.json。
+
 # Hey Nyx GPU continuation
 
 Imported from `origin/research/macos-custom-wakeword` on 2026-11-10.
@@ -2000,3 +2006,25 @@ Piper/Kokoro/Qwen各正负1条共6个实际重渲染探针，
 记录在results/4090-dialogue-augmentation-v1.json及
 results/4090-dialogue-augmentation-audit-v1.json。未来训练配置会记录
 dialogue-augmentation.json哈希；该记录项不影响已启动v26的采样/损失。
+
+
+## 官方Hi ESP正控制与端点代理反证（2026-11-10）
+
+同一ESP-SR提交b9dc43a提供test_apps/esp-sr-wakenet/main/samples/hiesp.h，
+官方test_wakenet.cpp明确把此数组作为int16输入detect。提取62464字节
+（31232样本、1.952s），保留所有源PCM，构造0/1.8s前导及1s尾静音两个控制。
+两个控制均在既有QEMU/未改模型/阈值请求0.63下发出1事件：
+1.344s与3.072s，CRC和stage104全部通过。未知录音/模型开发来源，
+不能计独立说话人、召回或验收。
+
+重要：同一能量代理算法给出结束点2.01s和3.81s，
+触发相对代理为-666ms和-738ms，因此原固定窗口会将它们排除。
+这不是模型完全没有响应，也不是已知音素延迟。现有配对集
+Hi ESP有原生事件的目标音频为5/12，固定代理窗口内为1/12；
+Nyx为9/12。它们仍不能用于代表性真实召回/延迟排名。
+原结果、窗口、标签和原始事件全部保留，不为提高分数移动窗口。
+后续需要独立于唤醒分数、经过核验的端点标注方案。
+
+源URL/哈希、提取代码、两个完整回放和端点反证见
+results/4090-hiesp-official-control-*.json；
+历史结果资格说明见results/4090-paired-endpoint-qualification-v1.json。
