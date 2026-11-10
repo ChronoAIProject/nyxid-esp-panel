@@ -410,3 +410,33 @@ checks. The experiment uses no speakers, microphone, new synthesis or source
 speed change. Reset-separated training clips at.1do not establish continuous
 FAR, real-user recall, latency, Hi ESP parity or whole-app fit. No production
 audio/AEC/AGC/FIFO/GUI/OTA code changes, and no dining-room panel operation.
+
+The frozen discrimination build (`60daa0a`) completes all52cases /9676calls.
+All four bracket controls pass with the expected joke IDs, every consumed-input
+CRC/decoder/grammar record passes audit, and original app/slot/service/Hi ESP
+restoration is verified. Source control events reproduce the reference-v3
+sample indices/probabilities in both grammars, with only their assigned IDs
+changing. See
+[`multinet-discrimination-v1-p4.json`](../results/multinet-discrimination-v1-p4.json).
+
+| Frozen grammar | Target event on target sources | Target event on negative sources | Correct bracket controls |
+| --- | --- | --- | --- |
+| Target + joke | 5/12 | 2/12 | 2/2 |
+| Target + Nick/Mix/Next + joke | 0/12 | 2/12 | 2/2 |
+
+Both false target sources say `Hey Nice.` (Kokoro and Piper). All12target
+sources in the contrastive arm emit alternatives instead:11become `HEY NEXT`,
+one `HEY MIX`. This diagnostic therefore **rejects both frozen settings**;
+adding these alternatives does not improve target/near-word discrimination.
+Do not treat matching negative-event counts or successful controls as proof
+of a usable Nyx detector, and do not tune thresholds/phonemes from this small
+reused source set. Source pronunciation, short-phrase phonetic separability,
+G2P and the decoder remain possible factors; these outcomes alone cannot
+attribute intrinsic model or TTS pronunciation quality.
+
+Measured standalone detect p50/p95/max is8740/17384/17479µs per512samples.
+Detector-create allocation deltas are6432internal /3078088PSRAM bytes,
+excluding already-expanded model2751351bytes and fixtures4942672bytes.
+The probe binary is4226784bytes; this does not establish production capacity.
+No external audio was played during this run. The full wakeword goal remains
+active and unachieved; the board is back on its original firmware.

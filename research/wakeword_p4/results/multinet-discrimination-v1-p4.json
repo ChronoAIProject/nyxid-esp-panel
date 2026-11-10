@@ -1,0 +1,2432 @@
+{
+  "scope": "Silent standalone P4 known-command harness diagnostic, not wake acceptance",
+  "plan_sha256": "a069113b9438ebda3c0c2f68d31b8aa77496c1bf0a14d6dbd1ecc0f6f0c57c00",
+  "vectors_manifest_sha256": "aa56ee19c8b7c3dee1cdac8b8378448cc79b21fca10a9d77851068764a2b0390",
+  "report_sha256": "4c0fbf644978e0d8f890e405d5bd6c02abd9a95e8181bc36249e193010ed947c",
+  "uart_sha256": "5e654abf3f0cd4e3e215fdb8b0b94402e1a4e41d4bf9c56b0577182b92f063d5",
+  "probe_bin_sha256": "b5ef74d71a8fb28b4766fdd5cad337f3a5d7a15a34e397fe5443def545300831",
+  "execution_completed": true,
+  "coverage_and_pcm_crc_verified": true,
+  "detector_threshold": 0.1,
+  "arms": [
+    {
+      "arm": 0,
+      "name": "target_plus_control",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        },
+        "negative": {
+          "trials": 12,
+          "expected_command_detected": 0,
+          "any_command_detected": 2
+        },
+        "target": {
+          "trials": 12,
+          "expected_command_detected": 5,
+          "any_command_detected": 5
+        }
+      },
+      "known_controls_passed": true
+    },
+    {
+      "arm": 1,
+      "name": "contrastive_plus_control",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        },
+        "negative": {
+          "trials": 12,
+          "expected_command_detected": 0,
+          "any_command_detected": 7
+        },
+        "target": {
+          "trials": 12,
+          "expected_command_detected": 0,
+          "any_command_detected": 12
+        }
+      },
+      "known_controls_passed": true
+    }
+  ],
+  "sources": [
+    {
+      "clip": 0,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 0,
+      "tail_samples": 262883,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          2
+        ],
+        [
+          5
+        ]
+      ],
+      "rendered_pcm_sha256": "4d5db502db41c8ab67c37cb849019ecf8ceb5753eb7eabba8cc7510f55839a16",
+      "detect_pcm_crc32": 2362241963
+    },
+    {
+      "engine": "edge-tts",
+      "label": 0,
+      "source_sha256": "11616c2da204faa1fe3bd7971247c25ca6812f843563abc89b10e20b78c24ebb",
+      "variant0_id": "e19d36f53b048d2a266ce3359269ccf8c4162018dd2f0f69e14263c7994d72c1",
+      "clip": 1,
+      "texts": [
+        "Hey, what time is it?"
+      ],
+      "samples": 84352,
+      "source_samples": 29952,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "d79d99d9c47239c29de17981ebd94f3924fd16234824899ef6c66f9a908d3aab",
+      "detect_pcm_crc32": 2510238336,
+      "split": "training",
+      "text": "Hey, what time is it?",
+      "voice": "unresolved-source:11616c2da204faa1",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "edge-tts",
+      "label": 0,
+      "source_sha256": "139c6bf842c325dd6cf021f01df7c6c31ae9ca712151b5cab029519591246643",
+      "variant0_id": "1ddb2e15b5b1cb774ff9db23be4874e5c1975e2a295d4442c9fde7752c4cff1c",
+      "clip": 2,
+      "texts": [
+        "Thanks, that is all."
+      ],
+      "samples": 88192,
+      "source_samples": 33792,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "73e85f75083dad91a393f508230c593e5553f25f540353918b85533ffa3c5123",
+      "detect_pcm_crc32": 245299448,
+      "split": "training",
+      "text": "Thanks, that is all.",
+      "voice": "unresolved-source:139c6bf842c325dd",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "edge-tts",
+      "label": 1,
+      "source_sha256": "025601a7c9ddf03cf3630682c5ee51cfe2de0139d3ec066d49143a369c49b21d",
+      "variant0_id": "88ec875081ea62c150886b99a691358e8e816e29d80cc9933afd1129786b9093",
+      "clip": 3,
+      "texts": [
+        "Hey Nicks!"
+      ],
+      "samples": 84352,
+      "source_samples": 29952,
+      "keyword_end_sample": 51200,
+      "rendered_pcm_sha256": "93f9119c2664967a5ee218eb1c74b77804080b464c0c67686ee708e5e71154ba",
+      "detect_pcm_crc32": 116216836,
+      "split": "training",
+      "text": "Hey Nicks!",
+      "voice": "unresolved-source:025601a7c9ddf03c",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "edge-tts",
+      "label": 1,
+      "source_sha256": "065d5d92cfa3064320470904784037856929123b0757e80a1b43cf6be34d271f",
+      "variant0_id": "3d43787556ea4b225963d3d62e741b2ca179555c70df79990ed549c804a2f95a",
+      "clip": 4,
+      "texts": [
+        "Hey Nyx."
+      ],
+      "samples": 85120,
+      "source_samples": 30720,
+      "keyword_end_sample": 55360,
+      "rendered_pcm_sha256": "6bec12f9f62dc9ea52ef677a8223147e1498d5c0cd855be2e658e48bd4077b11",
+      "detect_pcm_crc32": 756383219,
+      "split": "training",
+      "text": "Hey Nyx.",
+      "voice": "unresolved-source:065d5d92cfa30643",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "source_sha256": "025a9e7ddaa91c9d3f83e553e93c20f1418afc7f8bbc403eb014aacb0cd7d526",
+      "variant0_id": "6fb651b5686eb88d3fc869ca6d649392fe4c0f5fb7b969f3571945cb73400603",
+      "clip": 5,
+      "texts": [
+        "Hey Nice."
+      ],
+      "samples": 69078,
+      "source_samples": 14678,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "10a06838fc36727b4ab12fa35bc19728bb589311ce30646a640d758104847c29",
+      "detect_pcm_crc32": 653222703,
+      "split": "training",
+      "text": "Hey Nice.",
+      "voice": "unresolved-source:025a9e7ddaa91c9d",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "source_sha256": "07ba4816c73715e46a45be6b21cdcd96fb2e5877618cafdf8f185b72ae5ad4c9",
+      "variant0_id": "bc6c06936ec67e8c3ac3380460a0826c1bcc26631e45816e646da8b8a158301e",
+      "clip": 6,
+      "texts": [
+        "How can I help you?"
+      ],
+      "samples": 80000,
+      "source_samples": 25600,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "7c4464b6bb76e045b1f4c8b4caeed8deeaa487e4c710c221450d978b195650ca",
+      "detect_pcm_crc32": 730946643,
+      "split": "training",
+      "text": "How can I help you?",
+      "voice": "unresolved-source:07ba4816c73715e4",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "source_sha256": "0657a6c57350eaaf1896232445d9be2ce31014db94ac0af04e66c1fb9ea9391f",
+      "variant0_id": "5f90359abf30abf82f9b313dd604acdbc3e619208f208571f361d5cecbba20bd",
+      "clip": 7,
+      "texts": [
+        "Hey Nix!"
+      ],
+      "samples": 72491,
+      "source_samples": 18091,
+      "keyword_end_sample": 56491,
+      "rendered_pcm_sha256": "620d73e8129c9840487084e707efedfe7bb3c965c5c52a382448fbbff9c2cddc",
+      "detect_pcm_crc32": 2116569940,
+      "split": "training",
+      "text": "Hey Nix!",
+      "voice": "unresolved-source:0657a6c57350eaaf",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "source_sha256": "18158af21691e424937d80f81dfbd9aab09ab3ad0916ccde3546f2b652ff7825",
+      "variant0_id": "45b57f18917b0f5b3a316b27242fd05c096e2a8a1d04668565b7eb4707ede843",
+      "clip": 8,
+      "texts": [
+        "Hey Nix!"
+      ],
+      "samples": 72832,
+      "source_samples": 18432,
+      "keyword_end_sample": 53280,
+      "rendered_pcm_sha256": "9751bca1fe03d178f0039e188c137ef4d83d7a9ec262e0fd0c5449364b5f476b",
+      "detect_pcm_crc32": 2787647863,
+      "split": "training",
+      "text": "Hey Nix!",
+      "voice": "unresolved-source:18158af21691e424",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "macos-say",
+      "label": 0,
+      "source_sha256": "040b4f79e5c582835afaba54bfc360d0431ea85dd8b1f8a7959b46532794fc36",
+      "variant0_id": "bef1be6b4503d2489361b8a5e4dd366149bca637561cd68fa617c9858d87ee56",
+      "clip": 9,
+      "texts": [
+        "Hey Max."
+      ],
+      "samples": 69180,
+      "source_samples": 14780,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "349ca00625068e41a8524c29e8f9b08afb36474e2efe79555174eeb30ed65a1b",
+      "detect_pcm_crc32": 509728619,
+      "split": "training",
+      "text": "Hey Max.",
+      "voice": "unresolved-source:040b4f79e5c58283",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "macos-say",
+      "label": 0,
+      "source_sha256": "0c1dbf99389d97a274151d54b15919297112ca11007f9dd16d9cc0f00a8a5c9f",
+      "variant0_id": "0d5861dab141bf3f934e32890e4f1a2bbc8797d1187962543aa31d2b11244db3",
+      "clip": 10,
+      "texts": [
+        "Hey Nice."
+      ],
+      "samples": 72808,
+      "source_samples": 18408,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "19e5cacb2d53d27be2eda1c40d865985e857fecce131dd297f342b7c08267ad3",
+      "detect_pcm_crc32": 3894997722,
+      "split": "training",
+      "text": "Hey Nice.",
+      "voice": "unresolved-source:0c1dbf99389d97a2",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "macos-say",
+      "label": 1,
+      "source_sha256": "01da94e4c816ffd525cc7a4ce17eccecf58fcbecd87bb0844b14dffa9d9ef9ff",
+      "variant0_id": "0070d8c14b5857d975f34f0bde438445d362ed9e923c33ba05153afaae4c4ac7",
+      "clip": 11,
+      "texts": [
+        "Hey Nicks!"
+      ],
+      "samples": 72552,
+      "source_samples": 18152,
+      "keyword_end_sample": 50560,
+      "rendered_pcm_sha256": "827dbb4b7bdac035e341dc3ddc80088b890b98e30a2a6c95d3553f20f9adc05e",
+      "detect_pcm_crc32": 1265884132,
+      "split": "training",
+      "text": "Hey Nicks!",
+      "voice": "unresolved-source:01da94e4c816ffd5",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "macos-say",
+      "label": 1,
+      "source_sha256": "13eeb408e5539ce071c0f08b373135cd40b5e95d9072ca76c9c63351bb03e835",
+      "variant0_id": "98bd089c69c4b1b50f256b436d86d071445dde531c6d6472a96faf69ff8ce1c4",
+      "clip": 12,
+      "texts": [
+        "Hey Nyx."
+      ],
+      "samples": 72553,
+      "source_samples": 18153,
+      "keyword_end_sample": 50560,
+      "rendered_pcm_sha256": "6994773ad63241dfe546cadab5798c7325b9d053130db2619889cb6b03f6fe9d",
+      "detect_pcm_crc32": 84233611,
+      "split": "training",
+      "text": "Hey Nyx.",
+      "voice": "unresolved-source:13eeb408e5539ce0",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "openai-tts",
+      "label": 0,
+      "source_sha256": "0a20079695de5084a5a81943381b69cfd9db94112f4621eb3b2c3b5e5815b1d4",
+      "variant0_id": "bf00b5501a69f2023452f732fc87dd99f30a3a35b9389dee0e311d14ed6d473f",
+      "clip": 13,
+      "texts": [
+        "Hey Next, what time is it?"
+      ],
+      "samples": 97600,
+      "source_samples": 43200,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "6cbf8a96fa085d4c9fe7475f663143dc2cc407d130f66ecea89f370922ae2849",
+      "detect_pcm_crc32": 3069744181,
+      "split": "training",
+      "text": "Hey Next, what time is it?",
+      "voice": "unresolved-source:0a20079695de5084",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "openai-tts",
+      "label": 0,
+      "source_sha256": "0b83deb99afe1162959e2654781c9927003fde089f24a98ba6ab03fe57d7c196",
+      "variant0_id": "415f44c5557162bb18141c0870632deebe66357042eeac14567471595de42d4e",
+      "clip": 14,
+      "texts": [
+        "Nicks, turn on the light."
+      ],
+      "samples": 94400,
+      "source_samples": 40000,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "dea44a372cb0d57607a176ae8cd1755e929fd67d1f17d09740247d3fbea468ee",
+      "detect_pcm_crc32": 1013947388,
+      "split": "training",
+      "text": "Nicks, turn on the light.",
+      "voice": "unresolved-source:0b83deb99afe1162",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "openai-tts",
+      "label": 1,
+      "source_sha256": "07551630295649b2bb7ff580b85e89c77742f51403a4b4b49fbfb86fb83ed879",
+      "variant0_id": "0b151960d7fad9cfd9f77dc468e0fb4720dee3591cc3aed77d57c03e42f86165",
+      "clip": 15,
+      "texts": [
+        "Hey Nicks."
+      ],
+      "samples": 95200,
+      "source_samples": 40800,
+      "keyword_end_sample": 79200,
+      "rendered_pcm_sha256": "301b202135dba2900d027a276884386b4738a5dc24abeb41fae47705f66ebe8f",
+      "detect_pcm_crc32": 3103732105,
+      "split": "training",
+      "text": "Hey Nicks.",
+      "voice": "unresolved-source:07551630295649b2",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "openai-tts",
+      "label": 1,
+      "source_sha256": "09a284c88af0d6ef078d8941f071550f8f9bd72764072db36abcd305a009974e",
+      "variant0_id": "ff82c9a0e74ef6062b1137a619ef8de02f41cbd7b1d5b71085d28f1a4e187f96",
+      "clip": 16,
+      "texts": [
+        "Hey Nix!"
+      ],
+      "samples": 76800,
+      "source_samples": 22400,
+      "keyword_end_sample": 55680,
+      "rendered_pcm_sha256": "0714c718444047523ee7c521d76296d0752b27f16f4c5270bec851bdc57da998",
+      "detect_pcm_crc32": 936631432,
+      "split": "training",
+      "text": "Hey Nix!",
+      "voice": "unresolved-source:09a284c88af0d6ef",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "source_sha256": "07233066f8169965be0935b665817f5aa42868a93dc933b26c8d57f9d3e0d77e",
+      "variant0_id": "dfa1c2a54608660976bf5e84d3e52cbc1f5428eec3580da023e055dc77d85993",
+      "clip": 17,
+      "texts": [
+        "Hey Nick, turn on the light."
+      ],
+      "samples": 77435,
+      "source_samples": 23035,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "3c8225cc2115b65456db8c76a9d32a186dedac468b44cde4727723cd5fa144d7",
+      "detect_pcm_crc32": 250243966,
+      "split": "training",
+      "text": "Hey Nick, turn on the light.",
+      "voice": "unresolved-source:07233066f8169965",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "source_sha256": "21b06bc023cc8c1cb8fa1deab56096fb4a3eb1e23464e4162198ac6e44bc411c",
+      "variant0_id": "ed4091ecfc3d82b088334d60e58a9069cf902904ea7ba59020c9f002771c60cc",
+      "clip": 18,
+      "texts": [
+        "Hey Nice."
+      ],
+      "samples": 71119,
+      "source_samples": 16719,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "96fded4d2a0863da7f0d6dadccddc0240b52bbb6be34652f7683af3f9fbb1082",
+      "detect_pcm_crc32": 1069720138,
+      "split": "training",
+      "text": "Hey Nice.",
+      "voice": "unresolved-source:21b06bc023cc8c1c",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "source_sha256": "04f58f5a9f741a47137de7d56e8a113876e9fbbe831e442eba2ab5742ab81ade",
+      "variant0_id": "ca0572c4ea2b1964d93cc579afa6dade3432f711628e66a6b5037c625bffb0d1",
+      "clip": 19,
+      "texts": [
+        "Hey Nyx."
+      ],
+      "samples": 61645,
+      "source_samples": 7245,
+      "keyword_end_sample": 44716,
+      "rendered_pcm_sha256": "2b57bb691eeaf03521f8d734c6fb83436d569ae9235369a7496a4e3c93650272",
+      "detect_pcm_crc32": 3078501233,
+      "split": "training",
+      "text": "Hey Nyx.",
+      "voice": "unresolved-source:04f58f5a9f741a47",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "source_sha256": "101254acd87ecb4b3797ce1e14e6926c647a2d3997666a19f3317dc6d6fbaa64",
+      "variant0_id": "5d08e17d6d8d152060ca6cc04aa65c350411bb7244253fe5de055c9c416c27c7",
+      "clip": 20,
+      "texts": [
+        "Hey Nyx."
+      ],
+      "samples": 67589,
+      "source_samples": 13189,
+      "keyword_end_sample": 51032,
+      "rendered_pcm_sha256": "10032c60d9b55d9655a4b4b1eaeb3be7490052970f7e8c23a468157b59756434",
+      "detect_pcm_crc32": 4034469462,
+      "split": "training",
+      "text": "Hey Nyx.",
+      "voice": "unresolved-source:101254acd87ecb4b",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "qwen",
+      "label": 0,
+      "source_sha256": "00b25e76c06e5f5c024bfc0dee43362931ffe76dc4ade13816821794d05f469c",
+      "variant0_id": "9d0984559b453dfe427b4765247b5daf3cdcdaac3069f2784dbbac28b0a90a00",
+      "clip": 21,
+      "texts": [
+        "Hey Nick."
+      ],
+      "samples": 69760,
+      "source_samples": 15360,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "277e64cbc34edeccb73184e36b7a6a26e698a7e5f9a05605e38ddd6a1b5d28b3",
+      "detect_pcm_crc32": 3521880315,
+      "split": "training",
+      "text": "Hey Nick.",
+      "voice": "unresolved-source:00b25e76c06e5f5c",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "qwen",
+      "label": 0,
+      "source_sha256": "0553bf44e575b7e979ddc5c0e5261b3e05dd892009ce22cee16f54b7f5fe16a4",
+      "variant0_id": "5111ec37199f376f77eec82cfff2307201d426c4c720ff3d7f7fadcf956018b7",
+      "clip": 22,
+      "texts": [
+        "Hey Alex."
+      ],
+      "samples": 68480,
+      "source_samples": 14080,
+      "keyword_end_sample": null,
+      "rendered_pcm_sha256": "0500740600dd727519599eefebedd2d53b6e758aa429be141f40050bde138397",
+      "detect_pcm_crc32": 996676898,
+      "split": "training",
+      "text": "Hey Alex.",
+      "voice": "unresolved-source:0553bf44e575b7e9",
+      "role": "negative",
+      "expected_command_ids": [
+        [],
+        []
+      ]
+    },
+    {
+      "engine": "qwen",
+      "label": 1,
+      "source_sha256": "078b099a468f6777a6580103398716fbb81f86ae1995b7d003c1640ad5be1949",
+      "variant0_id": "6503cecd3c8e9fb9ab2206ea49ededa7d72d24f97346658de915b45937f775b5",
+      "clip": 23,
+      "texts": [
+        "Hey Nicks?"
+      ],
+      "samples": 65920,
+      "source_samples": 11520,
+      "keyword_end_sample": 49280,
+      "rendered_pcm_sha256": "33816857f4d6e549bdb35c646980117d398158f1cf017f0f3e97d2eebec7eacd",
+      "detect_pcm_crc32": 2303301653,
+      "split": "training",
+      "text": "Hey Nicks?",
+      "voice": "unresolved-source:078b099a468f6777",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "engine": "qwen",
+      "label": 1,
+      "source_sha256": "08f5b939b6526cd8a7afc8214f5e52e24ea911fe1dc6c10a722f57a6021802b5",
+      "variant0_id": "05c8390f65a9c7dc07941a74a861089db59a4a997388827901b08238b3220eee",
+      "clip": 24,
+      "texts": [
+        "Hey Nicks."
+      ],
+      "samples": 86400,
+      "source_samples": 32000,
+      "keyword_end_sample": 67680,
+      "rendered_pcm_sha256": "badc46ba1e87c51c0acb7f75d3d6839fafaeb72f97e6fb7369ec277a5d94f5fb",
+      "detect_pcm_crc32": 2850247379,
+      "split": "training",
+      "text": "Hey Nicks.",
+      "voice": "unresolved-source:08f5b939b6526cd8",
+      "role": "target",
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "clip": 25,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 38400,
+      "tail_samples": 224483,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          2
+        ],
+        [
+          5
+        ]
+      ],
+      "rendered_pcm_sha256": "467a12117a99b312306d97cf43e4b6fd5d5496f7637cb54c6ba05bf0c33b8b9d",
+      "detect_pcm_crc32": 4064747821
+    }
+  ],
+  "cases": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        2
+      ],
+      "detected_command_ids": [
+        2
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "voice": "unresolved-source:11616c2da204faa1",
+      "role": "negative",
+      "text": "Hey, what time is it?",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 2,
+      "voice": "unresolved-source:139c6bf842c325dd",
+      "role": "negative",
+      "text": "Thanks, that is all.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 3,
+      "voice": "unresolved-source:025601a7c9ddf03c",
+      "role": "target",
+      "text": "Hey Nicks!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 4,
+      "voice": "unresolved-source:065d5d92cfa30643",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 5,
+      "voice": "unresolved-source:025a9e7ddaa91c9d",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 6,
+      "voice": "unresolved-source:07ba4816c73715e4",
+      "role": "negative",
+      "text": "How can I help you?",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 7,
+      "voice": "unresolved-source:0657a6c57350eaaf",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 8,
+      "voice": "unresolved-source:18158af21691e424",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 9,
+      "voice": "unresolved-source:040b4f79e5c58283",
+      "role": "negative",
+      "text": "Hey Max.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 10,
+      "voice": "unresolved-source:0c1dbf99389d97a2",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 11,
+      "voice": "unresolved-source:01da94e4c816ffd5",
+      "role": "target",
+      "text": "Hey Nicks!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 12,
+      "voice": "unresolved-source:13eeb408e5539ce0",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 13,
+      "voice": "unresolved-source:0a20079695de5084",
+      "role": "negative",
+      "text": "Hey Next, what time is it?",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 14,
+      "voice": "unresolved-source:0b83deb99afe1162",
+      "role": "negative",
+      "text": "Nicks, turn on the light.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 15,
+      "voice": "unresolved-source:07551630295649b2",
+      "role": "target",
+      "text": "Hey Nicks.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 16,
+      "voice": "unresolved-source:09a284c88af0d6ef",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 17,
+      "voice": "unresolved-source:07233066f8169965",
+      "role": "negative",
+      "text": "Hey Nick, turn on the light.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 18,
+      "voice": "unresolved-source:21b06bc023cc8c1c",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 19,
+      "voice": "unresolved-source:04f58f5a9f741a47",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 20,
+      "voice": "unresolved-source:101254acd87ecb4b",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 21,
+      "voice": "unresolved-source:00b25e76c06e5f5c",
+      "role": "negative",
+      "text": "Hey Nick.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 22,
+      "voice": "unresolved-source:0553bf44e575b7e9",
+      "role": "negative",
+      "text": "Hey Alex.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 23,
+      "voice": "unresolved-source:078b099a468f6777",
+      "role": "target",
+      "text": "Hey Nicks?",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 24,
+      "voice": "unresolved-source:08f5b939b6526cd8",
+      "role": "target",
+      "text": "Hey Nicks.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 25,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        2
+      ],
+      "detected_command_ids": [
+        2
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        5
+      ],
+      "detected_command_ids": [
+        5
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 1,
+      "voice": "unresolved-source:11616c2da204faa1",
+      "role": "negative",
+      "text": "Hey, what time is it?",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 2,
+      "voice": "unresolved-source:139c6bf842c325dd",
+      "role": "negative",
+      "text": "Thanks, that is all.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 3,
+      "voice": "unresolved-source:025601a7c9ddf03c",
+      "role": "target",
+      "text": "Hey Nicks!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 4,
+      "voice": "unresolved-source:065d5d92cfa30643",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        3
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 5,
+      "voice": "unresolved-source:025a9e7ddaa91c9d",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 6,
+      "voice": "unresolved-source:07ba4816c73715e4",
+      "role": "negative",
+      "text": "How can I help you?",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 7,
+      "voice": "unresolved-source:0657a6c57350eaaf",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 8,
+      "voice": "unresolved-source:18158af21691e424",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 9,
+      "voice": "unresolved-source:040b4f79e5c58283",
+      "role": "negative",
+      "text": "Hey Max.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 10,
+      "voice": "unresolved-source:0c1dbf99389d97a2",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        2
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 11,
+      "voice": "unresolved-source:01da94e4c816ffd5",
+      "role": "target",
+      "text": "Hey Nicks!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 12,
+      "voice": "unresolved-source:13eeb408e5539ce0",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 13,
+      "voice": "unresolved-source:0a20079695de5084",
+      "role": "negative",
+      "text": "Hey Next, what time is it?",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 14,
+      "voice": "unresolved-source:0b83deb99afe1162",
+      "role": "negative",
+      "text": "Nicks, turn on the light.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        3
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 15,
+      "voice": "unresolved-source:07551630295649b2",
+      "role": "target",
+      "text": "Hey Nicks.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 16,
+      "voice": "unresolved-source:09a284c88af0d6ef",
+      "role": "target",
+      "text": "Hey Nix!",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 17,
+      "voice": "unresolved-source:07233066f8169965",
+      "role": "negative",
+      "text": "Hey Nick, turn on the light.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 18,
+      "voice": "unresolved-source:21b06bc023cc8c1c",
+      "role": "negative",
+      "text": "Hey Nice.",
+      "expected_command_ids": [],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 19,
+      "voice": "unresolved-source:04f58f5a9f741a47",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 20,
+      "voice": "unresolved-source:101254acd87ecb4b",
+      "role": "target",
+      "text": "Hey Nyx.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 21,
+      "voice": "unresolved-source:00b25e76c06e5f5c",
+      "role": "negative",
+      "text": "Hey Nick.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 22,
+      "voice": "unresolved-source:0553bf44e575b7e9",
+      "role": "negative",
+      "text": "Hey Alex.",
+      "expected_command_ids": [],
+      "detected_command_ids": [],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 23,
+      "voice": "unresolved-source:078b099a468f6777",
+      "role": "target",
+      "text": "Hey Nicks?",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 24,
+      "voice": "unresolved-source:08f5b939b6526cd8",
+      "role": "target",
+      "text": "Hey Nicks.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        4
+      ],
+      "expected_command_detected": false,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 25,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        5
+      ],
+      "detected_command_ids": [
+        5
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    }
+  ],
+  "events": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "end_sample": 35328,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 2,
+          "phrase_id": 2,
+          "probability": 0.3317318
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 5,
+      "end_sample": 59392,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.10525496
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 7,
+      "end_sample": 60416,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11407962
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 8,
+      "end_sample": 59392,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11293175
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 15,
+      "end_sample": 80384,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11621266
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 16,
+      "end_sample": 59392,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11420731
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 18,
+      "end_sample": 64512,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11492881
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 20,
+      "end_sample": 60416,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.13040462
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 25,
+      "end_sample": 74752,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 2,
+          "phrase_id": 2,
+          "probability": 0.11258764
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "end_sample": 35328,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 5,
+          "phrase_id": 5,
+          "probability": 0.3317318
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 3,
+      "end_sample": 55296,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.21888807
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 4,
+      "end_sample": 59904,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 3,
+          "phrase_id": 3,
+          "probability": 0.18150878
+        }
+      ],
+      "string": " hd MgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 5,
+      "end_sample": 59392,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.10762497
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 7,
+      "end_sample": 55808,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.71401393
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 8,
+      "end_sample": 54784,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.66695726
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 9,
+      "end_sample": 58880,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.33588782
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 10,
+      "end_sample": 60416,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 2,
+          "phrase_id": 2,
+          "probability": 0.23491235
+        }
+      ],
+      "string": " hd NgK",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 11,
+      "end_sample": 55296,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.26800734
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 12,
+      "end_sample": 59904,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.26269186
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 13,
+      "end_sample": 55808,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.74428183
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 14,
+      "end_sample": 55296,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 3,
+          "phrase_id": 3,
+          "probability": 0.12371301
+        }
+      ],
+      "string": " hd MgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 15,
+      "end_sample": 79360,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.94330835
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 16,
+      "end_sample": 54784,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.87035036
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 17,
+      "end_sample": 54784,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.15021542
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 18,
+      "end_sample": 64512,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.10330427
+        }
+      ],
+      "string": " hd NgKS",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 19,
+      "end_sample": 53760,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.25988495
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 20,
+      "end_sample": 58880,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.75944549
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 23,
+      "end_sample": 54784,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.62093234
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 24,
+      "end_sample": 70144,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 4,
+          "phrase_id": 4,
+          "probability": 0.36293286
+        }
+      ],
+      "string": " hd NfKST",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 25,
+      "end_sample": 74752,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 5,
+          "phrase_id": 5,
+          "probability": 0.11258764
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    }
+  ],
+  "decoder_records": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "end_sample": 84480,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hm WcT TiM gZ gZ gT"
+    },
+    {
+      "arm": 0,
+      "clip": 2,
+      "end_sample": 88576,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " valKS jaT gZ eL"
+    },
+    {
+      "arm": 0,
+      "clip": 3,
+      "end_sample": 84480,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hmgKKS"
+    },
+    {
+      "arm": 0,
+      "clip": 4,
+      "end_sample": 85504,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hm MdKKS"
+    },
+    {
+      "arm": 0,
+      "clip": 5,
+      "end_sample": 69120,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 6,
+      "end_sample": 80384,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": " ht KaN i hfLP YoZ"
+    },
+    {
+      "arm": 0,
+      "clip": 7,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 8,
+      "end_sample": 73216,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 9,
+      "end_sample": 69632,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " PdMcN"
+    },
+    {
+      "arm": 0,
+      "clip": 10,
+      "end_sample": 73216,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": "d ii"
+    },
+    {
+      "arm": 0,
+      "clip": 11,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": "do ST"
+    },
+    {
+      "arm": 0,
+      "clip": 12,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": "d DgD ST"
+    },
+    {
+      "arm": 0,
+      "clip": 13,
+      "end_sample": 97792,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " h hm NfKST WcT TiM gZ gT"
+    },
+    {
+      "arm": 0,
+      "clip": 14,
+      "end_sample": 94720,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " Mg MgKS TkN nN jc LiT"
+    },
+    {
+      "arm": 0,
+      "clip": 15,
+      "end_sample": 95232,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 16,
+      "end_sample": 76800,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 17,
+      "end_sample": 77824,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hmgK TkN nN jc Li"
+    },
+    {
+      "arm": 0,
+      "clip": 18,
+      "end_sample": 71168,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 19,
+      "end_sample": 61952,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": " PdNgKS SKoL"
+    },
+    {
+      "arm": 0,
+      "clip": 20,
+      "end_sample": 68096,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 21,
+      "end_sample": 70144,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": "d"
+    },
+    {
+      "arm": 0,
+      "clip": 22,
+      "end_sample": 68608,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hd"
+    },
+    {
+      "arm": 0,
+      "clip": 23,
+      "end_sample": 66048,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": " h hmgKS"
+    },
+    {
+      "arm": 0,
+      "clip": 24,
+      "end_sample": 86528,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hmgKS"
+    },
+    {
+      "arm": 0,
+      "clip": 25,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 1,
+      "end_sample": 84480,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hm WcT TiM gZ gZ gT"
+    },
+    {
+      "arm": 1,
+      "clip": 2,
+      "end_sample": 88576,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " valKS jaT gZ eL"
+    },
+    {
+      "arm": 1,
+      "clip": 3,
+      "end_sample": 84480,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 4,
+      "end_sample": 85504,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 5,
+      "end_sample": 69120,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 6,
+      "end_sample": 80384,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " ht KaN i hfLP YoZ"
+    },
+    {
+      "arm": 1,
+      "clip": 7,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 8,
+      "end_sample": 73216,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 9,
+      "end_sample": 69632,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 10,
+      "end_sample": 73216,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 11,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 12,
+      "end_sample": 72704,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 13,
+      "end_sample": 97792,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " WcT TiM gZ gZ gT"
+    },
+    {
+      "arm": 1,
+      "clip": 14,
+      "end_sample": 94720,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " nN jc LiT"
+    },
+    {
+      "arm": 1,
+      "clip": 15,
+      "end_sample": 95232,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 16,
+      "end_sample": 76800,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 17,
+      "end_sample": 77824,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 18,
+      "end_sample": 71168,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 19,
+      "end_sample": 61952,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 20,
+      "end_sample": 68096,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 21,
+      "end_sample": 70144,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": "d"
+    },
+    {
+      "arm": 1,
+      "clip": 22,
+      "end_sample": 68608,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": " hd"
+    },
+    {
+      "arm": 1,
+      "clip": 23,
+      "end_sample": 66048,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 24,
+      "end_sample": 86528,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 25,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    }
+  ],
+  "ready": {
+    "chunk": 512,
+    "rate": 16000,
+    "create_us": 334367,
+    "internal_delta": 6432,
+    "psram_delta": 3078088,
+    "model_expanded_bytes": 2751351,
+    "fixtures_expanded_bytes": 4942672
+  },
+  "timing": {
+    "calls": 9676,
+    "p50_us": 8740,
+    "p95_us": 17384,
+    "max_us": 17479
+  },
+  "cleanup_uninitialized_command_warning": false,
+  "restored": {
+    "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+    "original_service_verified": true,
+    "nyx_state": "up",
+    "hi_esp_listening": true
+  },
+  "limits": [
+    "Short control sources are not speaker-generalization evidence.",
+    "Reset-separated short sources do not establish continuous FAR.",
+    "Standalone resources/timing do not establish GUI/voice/OTA capacity.",
+    "No acoustic playback or microphone/AFE transfer was tested."
+  ],
+  "accepted": false
+}
