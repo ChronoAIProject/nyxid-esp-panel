@@ -1832,3 +1832,14 @@ Hi ESP唯一窗口内命中-62ms。仅为能量代理、音频时间，不是音
 v25继续训练，新增experiments/v25_validate_expanded.sh用于训练及密集验证成功后，
 执行中文、DiPCo、dev-other验证、扩展工作点标定和小样本浮点/INT8流式一致性检查。
 全部限定既有validation，独立最终集继续封存。
+
+
+## Hi ESP中文验证流重建（2026-11-10）
+
+从既有AISHELL审计manifest仅选16位validation说话人，重建6.913985191小时
+源朗读音频；每句后200ms静音和10ms对齐严格复现Nyx前端PCM，
+全部源WAV/PCM和原特征文件哈希通过。插入静音不增加曝光分母，
+只在说话人之间重置。training/testing音频未读取，独立最终集未访问。
+重建摘要见results/4090-hiesp-aishell-reconstruction-v1.json。
+官方Hi ESP请求阈值0.63的QEMU回放已启动，当前尚无完成分数；
+不得将重建成功当作零误触或验收通过。
