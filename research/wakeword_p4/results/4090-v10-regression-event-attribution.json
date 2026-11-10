@@ -1,0 +1,28 @@
+{
+  "role": "Existing v10 development-regression event attribution; no rescoring, threshold change or final audio",
+  "model_sha256": "53d00ce7d3ef831056e7d395a2742c5e2892fb37857d12003632f882057a9a90",
+  "threshold": 0.9,
+  "report_sha256": "fbefa100346408cdaa1c2f46ee45d7d38b908a200cd86a668acf13be7b6bf7cd",
+  "trace_sha256": "23574909dfd2520eaf53b3d2bbd6889d640b07eac70c67b980d6e72cc87bf8a1",
+  "groups": {
+    "piper": {
+      "variants": 1920,
+      "misses": 609,
+      "premature_variants": 0,
+      "miss_with_premature": 0,
+      "miss_with_valid_peak_above_threshold": 0
+    },
+    "kokoro": {
+      "variants": 240,
+      "misses": 126,
+      "premature_variants": 60,
+      "miss_with_premature": 60,
+      "miss_with_valid_peak_above_threshold": 57
+    }
+  },
+  "premature_variants_by_speaker": {
+    "bf_emma": 9,
+    "bm_daniel": 51
+  },
+  "interpretation": "57 Kokoro misses have a valid-window peak above threshold but no valid rising event; 60 have premature events. Possible timing/recognition issue, not proof of annotation error. Strict timing criteria and published scores remain unchanged."
+}
