@@ -877,3 +877,29 @@ arguments and threshold grid, writing `validation-control` and
 --artifacts <study> --output <new-report>` verifies the matched exports and
 summarizes the original validation stream counts. No playback, board change,
 or independent final set was used.
+
+The [same-voice ranking experiment](plans/microwake-paired-ranking-v1.json)
+keeps the same eight wake/confuser pairs per batch in both arms. It matches
+the same fixed voice, corpus, preset/style/rate and render variant, and
+omits Qwen descriptions that do not identify a stable voice. Both runs
+complete 8,000 pair draws with identical schedule and representative input
+hashes. The ranking loss is training only; both exports have the same INT8
+input, UINT8 output and operator inventory.
+
+The [results](../results/microwake-paired-ranking-v1.json) do not advance.
+At .97, both have 0 continuous development events / 7.3238 h and the same
+50 false views / 3,744. The three matched confuser counts are also identical:
+Mix 21/136, Next 17/160, Nick 1/172. Macro proxy recall is 73.97% with plain
+BCE and 73.48% with ranking. At their lowest observed worst-group false
+fraction (2.32% for both), recall is 64.40% and 64.91%; neither reaches the
+1% gate. A new rank gain or threshold sweep on these same samples is not
+evidence of real-speaker quality.
+
+To replay this comparison, reuse the verified `windows.json` from the
+whole-phrase experiment. Run `train_stream.py` with the plan's common
+arguments plus `--near-word-windows <windows.json> --paired-near-words
+--paired-near-word-gain <gain>` for each arm. Use the original validation-only
+grid and directory naming from the whole-phrase experiment with the new arm
+names. Run `compare_paired_ranking.py --plan <plan> --artifacts <study>
+--output <new-report>` to verify the schedules, PTQ inputs and fixed-reference
+counts. No board changes, playback, or independent final audio were used.
