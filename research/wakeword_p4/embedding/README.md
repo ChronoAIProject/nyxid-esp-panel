@@ -835,3 +835,34 @@ Retain the entire confidence/confuser tradeoff and original source result;
 No reserved-final or physical readiness is established by export checks alone.
 Source speed, original audio producer/AEC/AGC/FIFO and dining-room board stay
 untouched. No microphone or speaker access is used by this experiment.
+
+The frozen export passes every composition check:512float identities have
+zero error, one shared trunk has103239parameters, and model size increases
+from114464to116392bytes (+1928). Source weights are unchanged; new training
+steps are0. The int8 export SHA256 is
+`c61af87ec5a4edb57f63ed43a09b756e7d445061517140d5938bd5381fb1297c`.
+Its output scale is.0038863569498062134with zero point-128, **not**1/256.
+Measured64representative float/INT8 mean/max errors are.005524/.057925.
+New graph operators include SOFTMAX and STRIDED_SLICE; no MCU support or
+whole-app resource acceptance is implied. See
+[`lexical-product-build-v1.json`](../results/lexical-product-build-v1.json).
+
+The actual int8 validation **rejects this frozen gate**: under the same joint
+confidence/confuser constraint, source-average proxy hits fall from53.0863%
+at.98to39.0952% at.9. Pooled hits are285/1196versus512/1196. Worst confusing
+corpus remains.7143%; continuous count is0 /7.303778h, upper95%.410162/h.
+Even the confidence-only diagnostic drops from69.7312% to59.4058%. Retain all
+threshold rows in
+[`lexical-product-validation-v1.json`](../results/lexical-product-validation-v1.json).
+Do not advance this inferior setting to physical or reserved-final scoring.
+
+Latched replay counts288positive variants with an event anywhere,280with an
+event in the original proxy window, and8with earlier events. Five OpenAI
+variants have a peak in that window without a corresponding latched event
+there; their earlier events stay recorded. Continuous native counters match0.
+Full private traces are retained and hash-bound by
+[`lexical-product-native-events-v1.json`](../results/lexical-product-native-events-v1.json).
+This rejects one fixed gate, not all possible lexical verification designs,
+and does not establish intrinsic source pronunciation or embedding quality.
+The best retained matched lexical setting remains the preceding CE-only
+model; none has achieved Hi ESP parity or full-system acceptance.
