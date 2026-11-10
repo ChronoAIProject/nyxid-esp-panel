@@ -35,6 +35,9 @@ def main():
     tf.config.threading.set_intra_op_parallelism_threads(2)
     loaded = tf.saved_model.load(str(a.model_dir/"saved_model"))
     window_model = None
+    report = json.loads((a.model_dir/"training.json").read_text())
+    frames = report.get("context_frames", 180)
+    phase = report.get("validation_window_phase", 1)
     if a.upstream:
         import sys
         sys.path.insert(0, str(a.upstream.resolve()))
@@ -42,7 +45,7 @@ def main():
         report = json.loads((a.model_dir/"training.json").read_text())
         arch = argparse.ArgumentParser()
         mixednet.model_parameters(arch)
-        window_model = mixednet.model(arch.parse_args(report["architecture_args"]), (180,40), None)
+        window_model = mixednet.model(arch.parse_args(report["architecture_args"]), (frames,40), None)
         window_model.load_weights(a.model_dir/"best.weights.h5")
     signature = loaded.signatures["serving_default"]
     keys = list(signature.structured_input_signature[1])
@@ -99,9 +102,9 @@ def main():
         context = None
         if window_model is not None:
             x = np.clip(raw.astype(np.float32)/25.6, 0, 26)
-            ends = [3*(i+1) for i in range(len(f)) if 180 <= 3*(i+1) < len(x)]
-            baseline = np.stack([x[e-180:e] for e in ends])
-            aligned = np.stack([x[e-179:e+1] for e in ends])
+            ends = [3*(i+1) for i in range(len(f)) if frames <= 3*(i+1) and 3*(i+1)+phase <= len(x)]
+            baseline = np.stack([x[e-frames:e] for e in ends])
+            aligned = np.stack([x[e-frames+phase:e+phase] for e in ends])
             b = window_model(baseline, training=False).numpy().reshape(-1)
             c = window_model(aligned, training=False).numpy().reshape(-1)
             reference = f[np.asarray(ends)//3-1]

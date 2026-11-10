@@ -1182,3 +1182,19 @@ Hey Jarvis、带后续指令的 Hey Jarvis、Hey Nicks、Hey Next 各一条，�
 `results/4090-mww-teacher-probe-generation-v1.json`。
 本轮再次在线核对四项官方来源并更新 BEST_PRACTICES.md。
 后续同架构 scratch/transfer 对照尚未执行；目标仍 active，最终集未评分。
+
+
+### v14/v15 同架构初始化对照启动
+
+训练器新增 teacher60 架构与可配置上下文，重建权重 SHA 强制校验。
+两组均 150 帧、22,801 参数、固定 seed726、40,000 步、每 5,000 步验证，
+v6 同一数据、engine exponent0、按环境行采样，无 SpecAugment 或困难挖掘。
+Adam/LR/负样本惩罚保持原配方。两组冻结四个 BN 层；迁移组保留重建仿射参数，
+随机组为默认 BN 参数，所以比较的是整体初始化方案，不是只改变卷积核的消融。
+
+v14 随机初始化，v15 加载经过目标词/逐层探针检查的官方模型重建权重，
+然后恢复与 v14 完全相同的随机 Dense 分类头。头部 SHA256 均为
+`a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54`。
+初始化记录见 `4090-v14-teacher-initialization.json`、
+`4090-v15-teacher-initialization.json`。流式/窗口数值检查也改为读取训练上下文。
+两个 GPU 训练进程已实际启动；当前尚无完整训练或 INT8 验证结论。
