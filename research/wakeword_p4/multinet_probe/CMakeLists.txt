@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+set(IDF_TARGET esp32p4)
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/main/idf_component.yml")
+    message(FATAL_ERROR "Prepare the private pinned dependency overrides before building")
+endif()
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+project(nyx_multinet_probe)

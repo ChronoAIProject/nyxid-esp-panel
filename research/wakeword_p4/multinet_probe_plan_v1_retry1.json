@@ -1,0 +1,234 @@
+{
+  "scope": "Frozen standalone training-source MultiNet7 phonetic discrimination and resource diagnostic; no playback, held-out scoring or whole-app acceptance.",
+  "parent_plan_sha256": "7b0ac047e69543bfee1b92cb2cb8220ee1a836fb4487ffc7a1091b6b73f17c12",
+  "preparation_script_sha256": "e996ac7c7748c0385e59b96e59fd904a94726a994e10f73cc9716176a726fb19",
+  "template_files": {
+    "CMakeLists.txt": "b4329ae09f9e9be5fc8679ae64c8d63ac2961d10ae4a4c74ea55aa2e228cb6bf",
+    "main/CMakeLists.txt": "e8fdded0663a5bec15b49bcb32a0373de5ecdbc35a4146846d400f040c090acf",
+    "main/probe.cpp": "2f902c5b6fa66489de8198f9f565fc5e0e394051a0ed81ba9aac3f1c9d6a1b7b",
+    "partitions.csv": "8bf0726edb130cec0a79474ff82acc271922d3db7b438f13eacd9091dfc42a5f",
+    "sdkconfig.defaults": "16e7c5ce64d04ac3179e0fa299bfb375f03175e8b5b37bb1809c8792e1ff1280"
+  },
+  "runner_sha256": "d369e396f3139739bd1e6166e43ac00b81c3c512204b87e2db4c507ba8cfed80",
+  "sources_per_engine_label": 2,
+  "selection": "Within each engine/label cohort of the previous fixed384-source training sample, take the two lowest source SHA256 identities. No waveform, text or model-score preference.",
+  "sources": [
+    {
+      "engine": "edge-tts",
+      "label": 0,
+      "source_sha256": "11616c2da204faa1fe3bd7971247c25ca6812f843563abc89b10e20b78c24ebb",
+      "variant0_id": "e19d36f53b048d2a266ce3359269ccf8c4162018dd2f0f69e14263c7994d72c1"
+    },
+    {
+      "engine": "edge-tts",
+      "label": 0,
+      "source_sha256": "139c6bf842c325dd6cf021f01df7c6c31ae9ca712151b5cab029519591246643",
+      "variant0_id": "1ddb2e15b5b1cb774ff9db23be4874e5c1975e2a295d4442c9fde7752c4cff1c"
+    },
+    {
+      "engine": "edge-tts",
+      "label": 1,
+      "source_sha256": "025601a7c9ddf03cf3630682c5ee51cfe2de0139d3ec066d49143a369c49b21d",
+      "variant0_id": "88ec875081ea62c150886b99a691358e8e816e29d80cc9933afd1129786b9093"
+    },
+    {
+      "engine": "edge-tts",
+      "label": 1,
+      "source_sha256": "065d5d92cfa3064320470904784037856929123b0757e80a1b43cf6be34d271f",
+      "variant0_id": "3d43787556ea4b225963d3d62e741b2ca179555c70df79990ed549c804a2f95a"
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "source_sha256": "025a9e7ddaa91c9d3f83e553e93c20f1418afc7f8bbc403eb014aacb0cd7d526",
+      "variant0_id": "6fb651b5686eb88d3fc869ca6d649392fe4c0f5fb7b969f3571945cb73400603"
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "source_sha256": "07ba4816c73715e46a45be6b21cdcd96fb2e5877618cafdf8f185b72ae5ad4c9",
+      "variant0_id": "bc6c06936ec67e8c3ac3380460a0826c1bcc26631e45816e646da8b8a158301e"
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "source_sha256": "0657a6c57350eaaf1896232445d9be2ce31014db94ac0af04e66c1fb9ea9391f",
+      "variant0_id": "5f90359abf30abf82f9b313dd604acdbc3e619208f208571f361d5cecbba20bd"
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "source_sha256": "18158af21691e424937d80f81dfbd9aab09ab3ad0916ccde3546f2b652ff7825",
+      "variant0_id": "45b57f18917b0f5b3a316b27242fd05c096e2a8a1d04668565b7eb4707ede843"
+    },
+    {
+      "engine": "macos-say",
+      "label": 0,
+      "source_sha256": "040b4f79e5c582835afaba54bfc360d0431ea85dd8b1f8a7959b46532794fc36",
+      "variant0_id": "bef1be6b4503d2489361b8a5e4dd366149bca637561cd68fa617c9858d87ee56"
+    },
+    {
+      "engine": "macos-say",
+      "label": 0,
+      "source_sha256": "0c1dbf99389d97a274151d54b15919297112ca11007f9dd16d9cc0f00a8a5c9f",
+      "variant0_id": "0d5861dab141bf3f934e32890e4f1a2bbc8797d1187962543aa31d2b11244db3"
+    },
+    {
+      "engine": "macos-say",
+      "label": 1,
+      "source_sha256": "01da94e4c816ffd525cc7a4ce17eccecf58fcbecd87bb0844b14dffa9d9ef9ff",
+      "variant0_id": "0070d8c14b5857d975f34f0bde438445d362ed9e923c33ba05153afaae4c4ac7"
+    },
+    {
+      "engine": "macos-say",
+      "label": 1,
+      "source_sha256": "13eeb408e5539ce071c0f08b373135cd40b5e95d9072ca76c9c63351bb03e835",
+      "variant0_id": "98bd089c69c4b1b50f256b436d86d071445dde531c6d6472a96faf69ff8ce1c4"
+    },
+    {
+      "engine": "openai-tts",
+      "label": 0,
+      "source_sha256": "0a20079695de5084a5a81943381b69cfd9db94112f4621eb3b2c3b5e5815b1d4",
+      "variant0_id": "bf00b5501a69f2023452f732fc87dd99f30a3a35b9389dee0e311d14ed6d473f"
+    },
+    {
+      "engine": "openai-tts",
+      "label": 0,
+      "source_sha256": "0b83deb99afe1162959e2654781c9927003fde089f24a98ba6ab03fe57d7c196",
+      "variant0_id": "415f44c5557162bb18141c0870632deebe66357042eeac14567471595de42d4e"
+    },
+    {
+      "engine": "openai-tts",
+      "label": 1,
+      "source_sha256": "07551630295649b2bb7ff580b85e89c77742f51403a4b4b49fbfb86fb83ed879",
+      "variant0_id": "0b151960d7fad9cfd9f77dc468e0fb4720dee3591cc3aed77d57c03e42f86165"
+    },
+    {
+      "engine": "openai-tts",
+      "label": 1,
+      "source_sha256": "09a284c88af0d6ef078d8941f071550f8f9bd72764072db36abcd305a009974e",
+      "variant0_id": "ff82c9a0e74ef6062b1137a619ef8de02f41cbd7b1d5b71085d28f1a4e187f96"
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "source_sha256": "07233066f8169965be0935b665817f5aa42868a93dc933b26c8d57f9d3e0d77e",
+      "variant0_id": "dfa1c2a54608660976bf5e84d3e52cbc1f5428eec3580da023e055dc77d85993"
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "source_sha256": "21b06bc023cc8c1cb8fa1deab56096fb4a3eb1e23464e4162198ac6e44bc411c",
+      "variant0_id": "ed4091ecfc3d82b088334d60e58a9069cf902904ea7ba59020c9f002771c60cc"
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "source_sha256": "04f58f5a9f741a47137de7d56e8a113876e9fbbe831e442eba2ab5742ab81ade",
+      "variant0_id": "ca0572c4ea2b1964d93cc579afa6dade3432f711628e66a6b5037c625bffb0d1"
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "source_sha256": "101254acd87ecb4b3797ce1e14e6926c647a2d3997666a19f3317dc6d6fbaa64",
+      "variant0_id": "5d08e17d6d8d152060ca6cc04aa65c350411bb7244253fe5de055c9c416c27c7"
+    },
+    {
+      "engine": "qwen",
+      "label": 0,
+      "source_sha256": "00b25e76c06e5f5c024bfc0dee43362931ffe76dc4ade13816821794d05f469c",
+      "variant0_id": "9d0984559b453dfe427b4765247b5daf3cdcdaac3069f2784dbbac28b0a90a00"
+    },
+    {
+      "engine": "qwen",
+      "label": 0,
+      "source_sha256": "0553bf44e575b7e979ddc5c0e5261b3e05dd892009ce22cee16f54b7f5fe16a4",
+      "variant0_id": "5111ec37199f376f77eec82cfff2307201d426c4c720ff3d7f7fadcf956018b7"
+    },
+    {
+      "engine": "qwen",
+      "label": 1,
+      "source_sha256": "078b099a468f6777a6580103398716fbb81f86ae1995b7d003c1640ad5be1949",
+      "variant0_id": "6503cecd3c8e9fb9ab2206ea49ededa7d72d24f97346658de915b45937f775b5"
+    },
+    {
+      "engine": "qwen",
+      "label": 1,
+      "source_sha256": "08f5b939b6526cd8a7afc8214f5e52e24ea911fe1dc6c10a722f57a6021802b5",
+      "variant0_id": "05c8390f65a9c7dc07941a74a861089db59a4a997388827901b08238b3220eee"
+    }
+  ],
+  "model": "mn7_en",
+  "component_version": "ESP-SR2.6.1",
+  "model_files": {
+    "_MODEL_INFO_": "efdf47e45817535e42c24c5bd5816b3d9fc54113aa7a6943b0d183823830929c",
+    "mn7_data": "f9d646f6301041d22de3dc3b1ae842ce9b314af6410b35814087d8042410a8e6",
+    "mn7_index": "f7234d8a6c6cdf8df7bb49ae86a48e8ecf20c2cd8ebc8f97665389169d50c6d3",
+    "vocab": "a94f2dbc3b2783db2891763750aa028f2e1f583945b1696931529d80de61951c"
+  },
+  "detector_threshold": 0.9,
+  "detector_timeout_ms": 8000,
+  "lead_samples": 38400,
+  "tail_samples": 16000,
+  "command_arms": [
+    {
+      "name": "target_only",
+      "commands": [
+        "HEY NICKS"
+      ]
+    },
+    {
+      "name": "contrastive_grammar",
+      "commands": [
+        "HEY NICKS",
+        "HEY NICK",
+        "HEY MIX",
+        "HEY NEXT",
+        "HEY NEXUS"
+      ]
+    }
+  ],
+  "policy": "Use official command G2P and clean per clip. Count top-ranked command1 as target. Feed every original-speed sample, pad only the final512sample block with zero, clean after each detected/timeout state, retain other command counts. Do not tune threshold or grammar from these results.",
+  "limits": [
+    "Training-only in-sample diagnostic, not recognition generalization.",
+    "Plain source PCM omits microphone/room/AFE transfer.",
+    "Short reset-separated clips do not establish continuous false-wake rates.",
+    "Standalone resources do not establish GUI/voice/OTA capacity.",
+    "Sample-indexed algorithm output still uses approximate positive keyword markers, not true acoustic boundaries."
+  ],
+  "accepted": false,
+  "dependencies": {
+    "esp-sr": {
+      "version": "2.6.1",
+      "manifest_sha256": "0043e9bfe4ff918e871410779c78c5909a158e3efdbc3a7af7523ba285d3234c",
+      "component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14"
+    },
+    "dl_fft": {
+      "version": "0.8.0",
+      "manifest_sha256": "a599055ee4e8725c39bc1d02f25f02bf2e3b01732ca34a9f1d1fe6a4d9a5a992",
+      "component_hash": "965be7152132b365061abf5fc5fc7b85e525f73b94a204cdda61cfe9572c0d77"
+    },
+    "cjson": {
+      "version": "1.7.19~2",
+      "manifest_sha256": "8cf02081bf037b8d0b89e613f5803d463d4a93d2eab892c4bbe20020cdbd4396",
+      "component_hash": "e788323270d90738662d66fffa910bfe1fba019bba087f01557e70c40485b469"
+    },
+    "esp-dl": {
+      "version": "3.3.14",
+      "manifest_sha256": "550fde7a2722bf623eb3bfaa348e4cdc93366d515fb58fc7064fb791aa5ec867",
+      "component_hash": "3608ac32875cb7fa93805fba2372619bde3d8a02cee47c622cf5e91a1308fe92"
+    },
+    "zlib": {
+      "version": "1.3.2~2",
+      "manifest_sha256": "09a72db22cbbdff2df51b4fa9103f1ad26ee284957440c16482091cb009f58d4",
+      "component_hash": "61b7c41a6c7091085555a3cef58722af4bd9078e8708ee00a0e78efb997daf7c"
+    },
+    "esp_new_jpeg": {
+      "version": "1.0.2",
+      "manifest_sha256": "9f042dbeaf7c206d08805ece59a286f642f4829a4f2cb976f46f23721496f6ad",
+      "component_hash": "e1e7e6991193c41ed6c9fc386702aa7821433319e7aa9c3147cd3236310cd69c"
+    }
+  },
+  "retry_of_plan_sha256": "dd0d8aa152a97fd8a2fd339f4723a823db8fb685acb14c200209b3d910ca9485",
+  "implementation_correction": "The initial build disabled the dependency manager, omitting registry component-name aliases. Use explicit version/hash-bound local dependency overrides with the manager enabled; source selection, model, PCM, grammar and threshold unchanged. No inference had run."
+}
