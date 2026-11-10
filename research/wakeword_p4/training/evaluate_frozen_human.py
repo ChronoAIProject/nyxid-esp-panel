@@ -30,6 +30,7 @@ def main():
     if sha(a.model) != frozen['model_sha256']:
         raise ValueError('Model differs from frozen calibration')
     threshold = frozen['threshold']
+    window = frozen.get('sliding_window', 5)
     cache = json.loads((a.features/'cache.json').read_text())
     if sha(a.features/'human.json') != cache['index_sha256']:
         raise ValueError('Changed stream index')
@@ -47,12 +48,12 @@ def main():
             raise ValueError('Unexpected feature format')
         detector.reset(); prefix = detector.predict(data[:300])
         detector.reset(); np.testing.assert_array_equal(prefix, detector.predict(data[:300]))
-        detector.reset(); values = smooth(detector.predict(data))
+        detector.reset(); values = smooth(detector.predict(data), window)
         events = event_indices(values, threshold)
         target = a.output/(row['speaker']+'-scores.npy'); np.save(target, values)
         result = dict(speaker=row['speaker'], source_seconds=row['source_seconds'],
                       features_sha256=row['feature_sha256'], score_sha256=sha(target),
-                      false_events=len(events), event_seconds=[float((3*(i+4)+5)*.01) for i in events],
+                      false_events=len(events), event_seconds=[float((3*(i+window-1)+5)*.01) for i in events],
                       three_second_prefix_reset_reproducible=True)
         results.append(result)
         print(json.dumps(dict(speaker=row['speaker'], false_events=len(events),
@@ -60,13 +61,13 @@ def main():
     hours = sum(r['source_seconds'] for r in results)/3600
     count = sum(r['false_events'] for r in results)
     report = dict(role=f'{a.corpus_name} development {a.split} at frozen prior English calibration', split=a.split,
-                  model_sha256=frozen['model_sha256'], threshold=threshold, threshold_reselected=False,
+                  model_sha256=frozen['model_sha256'], threshold=threshold, sliding_window=window, threshold_reselected=False,
                   frozen_report_sha256=sha(a.frozen_report), feature_cache_sha256=sha(a.features/'cache.json'),
                   feature_index_sha256=cache['index_sha256'], source_sha256=sha(Path(__file__)),
                   detector_source_sha256=sha(Path(__file__).with_name('evaluate.py')),
                   source_hours=hours, false_events=count, false_per_hour=count/hours,
                   false_per_hour_upper_95=float(.5*chi2.ppf(.95, 2*(count+1))/hours),
-                  event_policy='Five-score mean; rising latch;67-step refractory; reset between speakers; all events counted',
+                  event_policy=f'{window}-score mean; rising latch;67-step refractory; reset between speakers; all events counted',
                   exposure_policy='Original WAV seconds; exclude utterance gaps/alignment padding',
                   seconds=round(time.monotonic()-started, 1), speakers=results,
                   positive_recall_measured=False, development_regression_scored=a.split == "testing",

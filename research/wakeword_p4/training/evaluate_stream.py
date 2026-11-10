@@ -29,7 +29,10 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--validation-only", action="store_true",
                         help="Calibrate and report validation without scoring any regression or final fixtures")
+    parser.add_argument("--smoothing-window", type=int, default=5)
     args = parser.parse_args()
+    if not 1 <= args.smoothing_window <= 31:
+        parser.error("smoothing window must be 1..31")
     root = args.output
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"report.json").exists(), "Use a fresh evaluation directory"
@@ -49,8 +52,8 @@ def main():
             if row["split"] != split:
                 continue
             detector.reset()
-            values = smooth(detector.predict(raw[row["offset"]:row["offset"]+row["frames"]]))
-            times = (3*(np.arange(len(values))+4)+5)*.01
+            values = smooth(detector.predict(raw[row["offset"]:row["offset"]+row["frames"]]), args.smoothing_window)
+            times = (3*(np.arange(len(values))+args.smoothing_window-1)+5)*.01
             end = (row["keyword_frame"]+2)*.01 if row["label"] else None
             valid = (times >= end-.10) & (times <= end+.80) if row["label"] else np.ones(len(values), dtype=bool)
             clips.append({"source": row["path"], "engine": row["engine"], "variant": row["variant"],
@@ -61,7 +64,7 @@ def main():
                 continue
             data = np.load(args.features/row["path"], mmap_mode="r")
             detector.reset()
-            values = smooth(detector.predict(data))
+            values = smooth(detector.predict(data), args.smoothing_window)
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
             ambient.append({"hours": row.get("source_seconds", row["seconds"])/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
                             "source_type": "speech" if "speaker" in row else "environment"})
@@ -104,7 +107,7 @@ def main():
     if args.validation_only:
         (root/"clip-details.json").write_text(json.dumps({"validation": val, "testing": None, "mac": None})+"\n")
         report = {**provenance, "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
-                  "threshold": selected["threshold"], "validation": selected,
+                  "threshold": selected["threshold"], "sliding_window": args.smoothing_window, "validation": selected,
                   "testing_regression": None, "validation_only": True,
                   "viable_operating_point": bool(eligible),
                   "limits": "Validation calibration only; no regression/final challenge scores computed. Does not establish acceptance or Hi ESP equivalence."}
@@ -123,14 +126,14 @@ def main():
                 rng = np.random.default_rng(int(hashlib.sha256(item['path'].encode()).hexdigest()[:8], 16))
                 wave = wave*.3+rng.normal(0, 300, len(wave))
             detector.reset()
-            values = smooth(detector.predict(features(wave)))
+            values = smooth(detector.predict(features(wave)), args.smoothing_window)
             mac.append({**item, "variant": variant, "max_score": float(values.max())})
     mp = [r for r in mac if r["label"]]
     mn = [r for r in mac if not r["label"]]
     report = {**provenance, "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
-              "sliding_window": 5, "threshold": threshold, "validation": selected,
+              "sliding_window": args.smoothing_window, "threshold": threshold, "validation": selected,
               "testing_regression": summarize(test, ta, threshold),
-              "event_policy": "Five-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",
+              "event_policy": f"{args.smoothing_window}-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",
               "latency_limits": "Synthetic keyword-end annotation; 10 ms frontend/30 ms inference timing. Includes no hardware capture/network delay.",
               "exposure_policy": "Human source seconds exclude inserted utterance-boundary silence; environmental exposure uses original waveform seconds. All detected events are counted.",
               "mac_regression": {"positive_variants": len(mp), "negative_variants": len(mn),

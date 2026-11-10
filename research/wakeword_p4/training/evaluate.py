@@ -41,8 +41,10 @@ class Detector:
         return np.asarray(result, dtype=np.float32)
 
 
-def smooth(scores):
-    return np.convolve(scores, np.ones(SMOOTH)/SMOOTH, mode='valid') if len(scores)>=SMOOTH else np.array([])
+def smooth(scores, window=SMOOTH):
+    if not isinstance(window, int) or window < 1:
+        raise ValueError("Smoothing window must be a positive integer")
+    return np.convolve(scores, np.ones(window)/window, mode='valid') if len(scores)>=window else np.array([])
 
 
 def event_indices(scores, threshold):
