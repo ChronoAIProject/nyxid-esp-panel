@@ -119,7 +119,7 @@ def main():
                 delay = (times[hits[0]]-end)*1000 if hits else None
                 positives.append(delay)
                 source_recall[row["engine"]].append(bool(hits))
-                premature += sum(times[i] < end-.1 for i in indices)
+                premature += sum(bool(times[i] < end-.1) for i in indices)
             else:
                 negatives.append(bool(indices))
                 source_false[row["engine"]].append(bool(indices))

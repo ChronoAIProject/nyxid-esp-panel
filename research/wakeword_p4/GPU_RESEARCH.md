@@ -541,3 +541,8 @@ and 36 generated waveform frontend reconstruction cases matched exactly.
 Binary length and split membership were audited; hashes and CUDA providers are
 in `4090-embedding-cache-v1.json`. The 40,000-step reference-head run has started;
 no development regression or independent final scores have been computed.
+
+The first head run reached step 10,000 but failed report serialization because a
+premature-event count was a NumPy int64. No checkpoint/result was published from
+that run. The event predicate now explicitly returns Python bool; a fresh v1b
+run retains the same seed/configuration and preserves the failed log locally.

@@ -20,9 +20,9 @@ microWakeWord 的官方 README 明确提醒：训练可用模型仍需大量实�
 | --- | --- | --- |
 | 无板、纯合成 | [乐鑫定制说明](https://docs.espressif.com/projects/esp-sr/en/latest/esp32s3/wake_word_engine/ESP_Wake_Words_Customization.html)明确支持纯 TTS、无需真人录音训练 | 可继续全模拟训练；真实麦克风、远场和部署质量仍未验证 |
 | 正样本 | [openWakeWord](https://github.com/dscripka/openWakeWord/blob/368c03716d1e92591906a84949bc477f3a834455/README.md#training-new-models)建议至少数千条，性能受规模影响；多说话人、随机采样和语音变化是合成方法要点 | Piper 已有 6,000 条训练正样本，但跨来源泛化差；不能把同一声音的速度变化计为新说话人。新增 Qwen 仅有 30 条 ASR 一致正样本，不能据此认定多样性问题已解决 |
-| 负样本 | openWakeWord 发布模型使用约 30,000 小时语音、噪声和音乐；其自动 notebook 示例用约 2,000 小时预计算训练特征和约 11 小时验证特征 | 本地训练连续负音频约 3.975 小时，主要是朗读语音与小规模环境声；音乐、电视、远场多人交谈和中文覆盖不足。优先扩充这些类型，而非先反复训练小语料 |
+| 负样本 | openWakeWord 发布模型使用约 30,000 小时语音、噪声和音乐；其自动 notebook 示例用约 2,000 小时预计算训练特征和约 11 小时验证特征 | 后续已通过 MUSAN 噪声/音乐扩至约 18.7485 原始小时；仍远少于上游规模，电视、远场多人交谈和中文覆盖不足。优先改善类型覆盖，不能仅靠重复小语料 |
 | 架构差别 | openWakeWord 的核心是大规模预训练、冻结的语音 embedding；microWakeWord 面向微控制器、直接训练小型流式网络 | 不能把 openWakeWord 的数据规模或效果直接套到 25,537 参数的 MixedNet。可增加桌面参考模型诊断数据问题，但不能把它当作 MCU 模型性能或资源占用的证明 |
-| 房间与通道 | [microWakeWord notebook](https://github.com/OHF-Voice/micro-wake-word/blob/4665173cd35f1cff9a61e06fc427f124766c488e/notebooks/basic_training_notebook.ipynb)使用真实 RIR、背景音、增益、音高、EQ、失真和带阻；示例背景 SNR 为 -5 到 10 dB | 当前只有四种固定渲染、简单随机脉冲混响，真实背景变体 SNR 为 5–25 dB。已准备实测 MIT RIR，下一步用于训练增强；不改动冻结测试音频 |
+| 房间与通道 | [microWakeWord notebook](https://github.com/OHF-Voice/micro-wake-word/blob/4665173cd35f1cff9a61e06fc427f124766c488e/notebooks/basic_training_notebook.ipynb)使用真实 RIR、背景音、增益、音高、EQ、失真和带阻；示例背景 SNR 为 -5 到 10 dB | v4–v6 已加入实测 MIT RIR 和 -5 到 10 dB SNR；v6 仍未通过开发回归，证明增加此增强还不足以解决泛化问题 |
 | 特征增强 | microWakeWord 支持 SpecAugment；入门 notebook 默认时频掩码为零 | 当前没有时频掩码。应加入可配置实验，而非声称上游默认开启或把它当作唯一原因 |
 | 模型选择 | microWakeWord 支持先约束环境误触率，再优化召回；可分别设置采样权重和分类惩罚 | 已有按来源统计、事件验证与 INT8 校准。后续用固定验证集比较受控实验；候选没有改善时不消耗独立最终集 |
 | 最终评测 | [openWakeWord 评测说明](https://github.com/dscripka/openWakeWord/blob/368c03716d1e92591906a84949bc477f3a834455/README.md#performance--evaluation)使用噪声/混响正样本和约 5.5 小时 Dinner Party 远场对话；microWakeWord 使用 DiPCo 流式测试 | 本地开发回归只有 1.358 小时朗读/环境负音频；零事件仍只有 2.206/h 的单侧 95% 上界。独立 10.745 小时负样本保留未评分，但仍主要是朗读语音，不能代表全场景 |
@@ -61,3 +61,15 @@ microWakeWord 的官方 README 明确提醒：训练可用模型仍需大量实�
 
 官方资料支持方法选择，不代替本地实验。当前没有任何新证据表明 Hey Nyx
 已达标；改进的依据应是更接近部署分布的音频上的实际流式结果。
+
+## 后续实测更新：预训练特征参考
+
+v6 的验证集来源平均召回为 69.948%，开发回归只有 61.120%，且连续
+负音频误触率的单侧 95% 上界为 3.4929/h，候选仍被拒绝。
+这进一步支持先诊断表示和跨来源泛化问题，而非将训练完成视为成功。
+
+已经按上述建议准备官方 openWakeWord 冻结预训练特征的桌面参考。
+94,418 条训练/验证序列来自真实波形，完整缓存和逐流一致性核对已通过；
+40,000 步自定义分类头实验正在进行。由于网络、前端和帧率均不同，
+它用于诊断，不能据此证明 MCU INT8 效果或 Hi ESP 等效性。
+详见 `GPU_RESEARCH.md` 和 `results/4090-embedding-cache-v1.json`。
