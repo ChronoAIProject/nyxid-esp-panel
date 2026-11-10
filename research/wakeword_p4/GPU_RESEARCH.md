@@ -2717,3 +2717,17 @@ v31方案c734ef5推送后已在RTX4090启动。实际完成10500/120000步，
 0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94。
 审计results/4090-v31-initialization-audit.json。此时尚无训练完成或INT8质量结果。
 新AMI来源选择e12ba31推送后已启动下载；未进行分类器评分。
+
+## 新独立远场输入：完整源会议前端连续性实测（2026-11-10）
+
+新增training/prepare_independent_dialogue_inputs.py；只接受固定SHA来源audit及全部
+16场testing原始WAV，生成相同PCM的WAV和连续MicroFrontend特征，不加载模型。
+原音频完整保留，仅最后0..159零样本用于10ms对齐，不插入中间间隔；
+前端跨10s块保持同一实例，每场首次reset。原始时长与对齐时长分别保存。
+
+在已完整下载的EN2002a实测：2142.709375秒原音频，末尾新增10个零样本，
+214269帧。全部10s分块生成的特征与整段单次features(pcm)逐元素完全一致，
+不是仅检查最初几帧；输出PCM往返读取也完全一致。无唤醒评分。
+实证results/4090-ami-independent-input-continuity-v1.json。
+该单会议检查只证明实现连续性，不替代全16场输入冻结、语音真值或识别验收。
+下载和v31训练原进程均继续运行，尚无完整新模型评估结论。
