@@ -1648,3 +1648,10 @@ URL https://www.openslr.org/resources/12/train-clean-100.tar.gz ，官方MD5
 每段校验206/Content-Range/长度，组装时前缀再次哈希，最终校验MD5和总长度，
 保留逐段SHA与档案SHA。当前仍下载，尚未解压/提特征/参与训练或评分。
 新增语料将明确仅训练；实际文件身份/转写/连续前端仍需通过后续审计。
+
+
+### 官方最佳实践复核（2026-11-10）
+
+见 `BEST_PRACTICES.md` 与 `results/4090-best-practices-sources.json`。官方确认纯TTS与无板离线训练路线成立；主要调整优先级为扩大真实负语音/远场覆盖，而非继续孤立加宽模型。openWakeWord约30000h负样本是其发布模型自述规模，不是本项目强制目标；MCU部署仍以microWakeWord为主。最终集保持封存，Hi ESP对比未完成。
+
+v22完成40k，选择10k：BN统计哈希保持不变，gamma/beta已更新。密集INT8验证阈值0.92578125，source-macro召回72.5521%（Piper68.4375%、Kokoro76.6667%），0早触发；低于v19同网格81.6146%，拒绝扩展评测，不访问最终集。发布训练与验证报告。

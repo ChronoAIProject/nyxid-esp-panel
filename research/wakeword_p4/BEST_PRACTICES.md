@@ -122,3 +122,47 @@ v21对照发现，原阈值网格从0.8直接跳0.9会遗漏工作点；统一�
 扩大到70,801参数后虽能在高阈值下消除既有验证误触，但召回降至58.57%，
 且远场曝光不足，仍没有达标模型。优先保持跨语料验证、校准规则与评测窗口明确，
 拒绝以某一来源零事件或更大模型代替最终验收。详见GPU_RESEARCH.md。
+
+
+---
+
+# 本轮复核与当前实验调整
+
+核查日期：2026-11-10。仅引用本次实际获取的官方文档；页面版本可变，获取内容 SHA256 见 `results/4090-best-practices-refresh-sources.json`。
+
+## 结论
+
+无需开发板、使用 TTS 正样本训练唤醒词是已有路线；但开源自定义词训练并非稳定的一键商品化流程。microWakeWord 官方明确表示训练好模型仍很困难，需要实验。Espressif 官方也提供纯 TTS 定制，不能再把真人正样本视为启动训练的必需条件。模型离线质量和设备声学整机质量应分别验证。
+
+## 已验证的实践与本研究差距
+
+| 方面 | 官方实践 | 本研究决定 |
+| --- | --- | --- |
+| MCU 路线 | microWakeWord 使用流式 MixConv、16kHz/40维特征、INT8；openWakeWord 官方提示其完整模型不适合低功耗 MCU | 保留 microWakeWord 为部署主线；大预训练 embedding 可做离线对照，不能直接宣称可部署或等价替换 |
+| 正样本 | microWakeWord 使用 Piper；openWakeWord 推荐至少数千生成样本；Espressif 支持纯 TTS | 继续多声线/多生成器，控制原始说话人身份隔离；增加生成数量不等于增加独立真人 |
+| 负样本 | openWakeWord 自述发布模型使用约30000小时语音/噪声/音乐；microWakeWord 列出 VOICES/Common Voice/FSD50K/FMA/WHAM! | 当前英文真人训练约3.225小时，覆盖是明显短板；优先已审计无 Piper 身份交叉的 train-clean-100，再扩自然对话/远场。30000小时是其实现规模，不是通用硬门槛 |
+| 增强 | 噪声混合、RIR混响、SpecAugment；openWakeWord 评测示例使用5–10dB SNR | 核查现有增强分布，再补目标场景；避免仅重复同一 TTS 的高度相关变体 |
+| 难负例 | microWakeWord 使用 adversarial phrase samples，并允许独立采样/惩罚权重 | 从训练专用池挖掘混淆发音；验证误报只做诊断，不回流训练；现有 v20 退化证明不能盲目堆近音词 |
+| 选模 | microWakeWord 先满足 ambient false accepts/h，再优化识别指标 | 保留验证集事件级选模；量化后重新校准。停止仅凭窗口分类准确率选模 |
+| 流式一致性 | microWakeWord 整窗训练后转流式；其训练期100ms采样只近似真实误报率 | 保留实际流式 INT8 全序列、前端状态、重置和相位核验，最终以连续负音频事件为准 |
+| 评测 | openWakeWord 强调真实环境召回、数小时连续音频误报；microWakeWord 使用 VOiCES/DiPCo | 固定验证阈值；最终集继续封存，扩展独立远场/电视/对话评测。0事件时单侧95%上界为2.996/T，达到0.5/h需至少约5.992小时独立负音频；并不代表场景覆盖充分 |
+| 后处理 | 多帧平滑；openWakeWord 可加 VAD、噪声抑制、指定说话人 verifier | VAD只可减少非语音误报，不能解决人声近音误报；指定说话人 verifier 会改变用户范围，不能作为通用提升。现有15帧平滑已降低召回，不继续以平滑掩盖模型问题 |
+| Hi ESP 对标 | WakeNet9 为嵌入式膨胀卷积并使用多帧平均；官方定制训练非公开一键训练器 | 不同模型前端不能混用。当前 QEMU 在 PIE 指令处失败，尚无 detect 结果，不能宣称达到 Hi ESP |
+
+## 下一轮顺序
+
+1. 结束 v22 BN affine 消融并做相同密集阈值 INT8 验证；不佳则如实拒绝，不触碰最终集。
+2. 完成100小时档案官方校验，审计实际身份、转写和解码，再仅追加 training 特征；保持验证/最终音频与特征不变。
+3. 保持架构和评测固定，验证扩大负音频覆盖的效果，再考虑扩大模型；增加训练专用远场与自然对话。
+4. 候选满足开发门槛后才冻结并做最终独立评测；Hi ESP 对比仍单列未完成。
+
+## 原始来源
+
+- microWakeWord：https://github.com/kahrendt/microWakeWord
+- microWakeWord 数据来源：https://github.com/kahrendt/microWakeWord/blob/main/documentation/data_sources.md
+- openWakeWord 训练、规模与评测：https://github.com/dscripka/openWakeWord#training-new-models
+- openWakeWord 自动训练 notebook：https://github.com/dscripka/openWakeWord/blob/main/notebooks/automatic_model_training.ipynb
+- WakeNet 架构：https://docs.espressif.com/projects/esp-sr/en/latest/esp32s3/wake_word_engine/README.html
+- Espressif 纯 TTS 定制与语料要求：https://docs.espressif.com/projects/esp-sr/en/latest/esp32s3/wake_word_engine/ESP_Wake_Words_Customization.html
+
+Espressif 的客户自带语料要求（至少20000条、超过500人等）属于该定制选项，不是纯TTS方法的前提。本次未联系销售或采购。
