@@ -34,6 +34,16 @@ detector input. `measure_idle_headroom.py` samples the board's status without
 playing or reading audio and verifies the app, OTA slot, voice service and
 idle listener throughout. Use the raw Hi ESP research arm for comparisons
 with the experimental raw idle input, with the same sdkconfig and pin set.
+To also check capture on these two raw arms, give the sampler `--uart` and
+`--capture-backlog-bytes 6784` on the current P4 configuration (six 240-frame
+stereo DMA buffers plus one 256-frame stereo read). Use at least 120 seconds
+for a sustained run. The UART log counts completed DMA bytes and queue
+overflows without reading microphone PCM. The audit compares every cumulative
+prefix against actual audio reads, and accounts for the partial detector
+block between timing windows. It rejects hidden byte loss even when no
+overflow is reported, and rejects interrupted or missing windows. Only
+intervals after the first complete window count; any startup backlog and
+overflow counts are recorded separately from new loss.
 
 The [measured Hi ESP baseline](../wakeword_p4/results/hiesp-idle-timing-baseline-v1.json)
 contains 1,256 detector calls on the USB development board. At 512 samples
@@ -41,6 +51,11 @@ per call, average/max elapsed time is 2.917/16.104 ms, and the calls account
 for 9.12% of the 40.17 s observed wall time. The measurement includes
 scheduling and is not CPU utilization. The original app and voice service
 were restored and rechecked; the resource comparison with v30 remains open.
+The [capture baseline](../wakeword_p4/results/hiesp-idle-capture-baseline-v1.json)
+observed 110.53 seconds across complete timing windows, with no additional
+RX overflows and cumulative byte difference from -64 to +832 bytes.
+The startup counter was already 731 at the first window. Use the same
+capture audit on the candidate before claiming comparable idle behavior.
 
 ## Build
 

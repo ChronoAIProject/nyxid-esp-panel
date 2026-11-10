@@ -43,6 +43,10 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+extern void nyx_wake_capture_counters(uint32_t *bytes, uint32_t *overflows);
+#endif
+
 #define FRAME_SAMPLES 320
 #define MAX_PCM_SAMPLES 1920
 #define MAX_CONTROL_BYTES (96 * 1024)
@@ -964,7 +968,7 @@ static void wake_task(void *arg)
         wake_status("listening");
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
         int64_t wake_window_started=esp_timer_get_time();
-        unsigned wake_calls=0,wake_pcm_samples=0,wake_max_us=0,wake_total_us=0;
+        unsigned wake_calls=0,wake_pcm_samples=0,wake_max_us=0,wake_total_us=0,wake_read_bytes=0;
 #endif
         while(err==ESP_OK) {
             size_t got=0;err=product_i2s_read(capture,chunk*4,&got,1000);
@@ -1046,15 +1050,23 @@ static void wake_task(void *arg)
             // Both engines use the same measurement boundary. Report outside
             // the audio lock and never during a call, warmup, or failed read.
             if(c || triggered) {
-                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=0;
+                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=wake_read_bytes=0;
                 wake_window_started=0;
-            } else if(err==ESP_OK && wake_pcm_samples>=16000*5) {
-                const int64_t now=esp_timer_get_time();
-                ESP_LOGI("panel.wake.timing", "calls=%u pcm_samples=%u wall_us=%lld detect_us=%u max_us=%u stack_free=%u",
-                    wake_calls,wake_pcm_samples,(long long)(now-wake_window_started),wake_total_us,
-                    wake_max_us,(unsigned)uxTaskGetStackHighWaterMark(NULL));
-                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=0;
-                wake_window_started=now;
+            } else if(err==ESP_OK) {
+                wake_read_bytes+=(unsigned)got;
+                if(wake_pcm_samples>=16000*5) {
+                    const int64_t now=esp_timer_get_time();
+                    uint32_t rx_bytes, rx_overflows;
+                    nyx_wake_capture_counters(&rx_bytes,&rx_overflows);
+                    ESP_LOGI("panel.wake.timing",
+                        "calls=%u pcm_samples=%u wall_us=%lld detect_us=%u max_us=%u stack_free=%u "
+                        "end_us=%lld read_bytes=%u pending_samples=%u rx_bytes=%u rx_overflows=%u",
+                        wake_calls,wake_pcm_samples,(long long)(now-wake_window_started),wake_total_us,wake_max_us,
+                        (unsigned)uxTaskGetStackHighWaterMark(NULL),(long long)now,wake_read_bytes,(unsigned)wn_used,
+                        (unsigned)rx_bytes,(unsigned)rx_overflows);
+                    wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=wake_read_bytes=0;
+                    wake_window_started=now;
+                }
             }
 #endif
             if(triggered) {
