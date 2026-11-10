@@ -1,0 +1,39 @@
+{
+  "date_utc": "2026-11-10",
+  "scope": "Minimal firmware boot/timer probe, no audio or WakeNet inference",
+  "idf_version": "v5.5.4",
+  "idf_commit": "735507283d5b2f9fb363a1901172dbd9e847945d",
+  "qemu_release": "esp-develop-9.2.2-20261109",
+  "target": "esp32p4",
+  "build": "passed",
+  "flash_args": "--flash_mode dio --flash_freq 80m --flash_size 4MB\n0x2000 bootloader/bootloader.bin\n0x10000 nyx_qemu_boot_probe.bin\n0x8000 partition_table/partition-table.bin\n",
+  "artifacts": {
+    "nyx_qemu_boot_probe.elf": {
+      "bytes": 3754432,
+      "sha256": "935e9b35750cae5a6bda5f3b48d2a1abf01c31194432f933375ded0089681169"
+    },
+    "nyx_qemu_boot_probe.bin": {
+      "bytes": 159680,
+      "sha256": "ff06442e25708dd44fac197cb67e3ee4b6446d96d8ea3e18e1269decc62e8727"
+    },
+    "bootloader/bootloader.bin": {
+      "bytes": 23072,
+      "sha256": "609a4ebacd08df88601771b244e0c7d2238f5a458de74553d4c8bf142e631478"
+    },
+    "partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+    },
+    "qemu-flash.bin": {
+      "bytes": 4194304,
+      "sha256": "015d6b12ec1628057640e6144668ee94b3da16883833e46724954432ea169307"
+    }
+  },
+  "runtime": {
+    "timeout_seconds": 25,
+    "output": "Adding SPI flash device\n",
+    "boot_marker": false,
+    "timer_marker": false
+  },
+  "conclusion": "Boot unverified: QEMU prints only Adding SPI flash device before timeout. This is not recognition evidence."
+}

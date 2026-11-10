@@ -913,3 +913,18 @@ The isolated IDF install initially stopped because the bundled OpenOCD version
 probe lacked libusb. This is an SDK installation dependency failure, not a
 firmware/recognition result. The missing runtime library is installed and a
 fresh retry log preserves the original failure; no hardware probe is requested.
+
+
+### 官方最佳实践再次复核与 P4 固件启动探针
+
+重新获取乐鑫纯 TTS 定制说明及两个开源项目 README；内容哈希和
+ESPHome HTTP 403 如实记录于 `results/4090-best-practices-refresh.json`。
+已更新 `BEST_PRACTICES.md` 中过时的待办和实验状态，继续优先数据覆盖、
+跨来源泛化、实际流式 INT8 验证和匹配误触条件的比较。
+
+官方 ESP-IDF v5.5.4 安装完成，`qemu_probe/` 最小 P4 固件完整编译成功。
+使用生成的 flash_args 合并为 4 MiB 镜像，无开发板、无烧录。
+QEMU 25 秒运行只输出 Adding SPI flash device，未出现应用启动或计时标记。
+因此固件启动尚未验证，WakeNet 推理更未验证。保留镜像与调试日志，
+下一步定位 ROM 启动路径和仿真兼容性。完整构建哈希见
+`results/4090-qemu-p4-firmware-boot-probe.json`。目标保持进行中。
