@@ -1,0 +1,38 @@
+{
+  "scope": "Pre-score training-only lexical transfer diagnostic; no detector selection, playback, microphone, validation or final inference.",
+  "hypothesis": "Does a fixed linear decoder of the existing INT8 embeddings preserve six-class lexical separation across excluded synthesis engines, and does time ordering help compared with averaging?",
+  "script_sha256": "e090e82581610316c9dc3874171e34ec0d629c62b76986507829c3c12ecd3d3f",
+  "auxiliary_manifest_sha256": "1610d74f9c0c227c1484729c33f33f33d899903d12c372734f1f451e1885c2b1",
+  "feature_index_sha256": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+  "classes": [
+    "target",
+    "hey nick",
+    "hey next",
+    "hey nice",
+    "hey mix",
+    "hey nexus"
+  ],
+  "source_selection": "All original training-only auxiliary sources, variant0 only. Deduplicate by original source PCM SHA; select lexicographically smallest feature ID for equivalent same-role aliases. No score-driven filtering.",
+  "window": "Exactly one 16x96 history ending at floor((minimum_end+maximum_end)/2), unchanged auxiliary bounds, warm end>=25. Original int8/128 input; no waveform modification or new alignment.",
+  "folds": "Leave each of the six synthesis engines out once. Do not load any existing trained detector. Fit transforms and ridge coefficients only on the other five engines. Reject source hash overlap and incomplete class/engine groups.",
+  "representations": [
+    "full_history",
+    "time_mean"
+  ],
+  "ridge_penalty": 1.0,
+  "seed": 741,
+  "objective": "Weighted squared error to six-class one-hot labels; class/engine groups have equal total weight. Feature standardization and y intercept use fit rows only; variance floor1e-12. Fixed ridge penalty1, no search or checkpoint selection.",
+  "negative_control": "Permute source-level class labels within each engine, in engine lexicographic order using NumPy seed741, before the same excluded-engine folds; retain every row and original class count.",
+  "report": "Retain every fold six-class confusion matrix, class recall, macro/pooled top1 and full private per-source predictions for both representations and both label settings. No wake threshold is defined.",
+  "interpretation_limits": [
+    "Closed word-window synthetic-source diagnosis, not streaming wake recall, event rate, hardware support or Hi ESP parity.",
+    "A weak linear decoder cannot prove the information is absent or TTS pronunciation is wrong.",
+    "Existing synthesis/energy anchors are not true phonetic endpoints; long target commands keep their original target-word markers.",
+    "Cross-engine source separation is not independently verified real-speaker separation.",
+    "No decoder from this diagnostic can be deployed or used to select thresholds from these results."
+  ],
+  "speaker_playback": false,
+  "microphone_access": false,
+  "audio_speed_changed": false,
+  "accepted": false
+}

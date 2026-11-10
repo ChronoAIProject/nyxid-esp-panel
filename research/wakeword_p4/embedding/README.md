@@ -866,3 +866,38 @@ This rejects one fixed gate, not all possible lexical verification designs,
 and does not establish intrinsic source pronunciation or embedding quality.
 The best retained matched lexical setting remains the preceding CE-only
 model; none has achieved Hi ESP parity or full-system acceptance.
+
+### Training-only lexical transfer probe
+
+`plans/lexical-transfer-probe-v1.json` freezes a diagnostic before scoring.
+It asks whether the cached INT8 embedding histories permit a simple six-class
+decoder to distinguish the same lexical classes across synthesis engines.
+No existing trained head is loaded: for each engine, a fixed ridge decoder
+fits only the other five engines. Class/engine groups receive equal total
+weight; all standardization and intercepts use fit rows only. The penalty is
+fixed at1, without a search. The two predetermined inputs are the full16x96
+history and its96-dimensional temporal mean. A source-level within-engine
+label permutation provides a negative control for both representations.
+
+Every auxiliary source remains training-only. Select original variant0,
+deduplicate original PCM hashes before splitting, and retain one deterministic
+history at the midpoint of the existing auxiliary endpoint bounds. Those
+synthesis/energy anchors remain uncertain; no new source alignment is inferred.
+All per-source predictions and all fold confusion matrices are retained.
+Three focused tests check invariance under group replication, missing-group
+rejection and source-alias deduplication/held-out-overlap rejection.
+
+```sh
+python research/wakeword_p4/embedding/probe_lexical_transfer.py \
+  --data-root "$WAKE_DATA" --manifest "$ORIGINAL_AUXILIARY_MANIFEST" \
+  --plan research/wakeword_p4/embedding/plans/lexical-transfer-probe-v1.json \
+  --output "$FRESH_PRIVATE_DIAGNOSTIC"
+```
+
+This is closed-class word-window analysis, not streaming wake detection.
+Its top1 fractions cannot be compared to wake recall or FAR, and poor ridge
+transfer cannot prove an intrinsic information limit or incorrect pronunciation.
+There is no detector threshold, validation/final inference, waveform change,
+speaker playback, microphone access or hardware operation in this diagnostic.
+Do not advance a probe as a deployment candidate or duplicate GPU dialogue/
+AMI/calibration experiments using these different80ms features.

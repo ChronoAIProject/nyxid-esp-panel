@@ -670,3 +670,33 @@ feature frames preserve the existing validation/regression rows. This cache
 has not yet produced a trained result at this snapshot. The Mac continuation
 instead tests direct binary supervision on its already-frozen lexical windows;
 its data/representation differ, so their absolute proxy metrics are not ranked.
+
+### GPU snapshot through `98b605a`
+
+Read on2026-11-11. The controlled v27 calibration ablation completes: fixed
+144real training windows with/without synthetic extrema have expanded-zero-event
+proxy hits63.61979%/65.59896%, both below the original v27's70%. The small
+within-ablation improvement does not justify replacing v27. Parsed initializer
+constants match nearest-INT8 saved float states; this rules out incorrectly
+zeroed export constants, not remaining inference/reset differences.
+
+V28 actual CUDA training adds four audited AMI training meetings to v27 and
+retains the original export procedure. No completed result is published here.
+The separate v29 cache adds29196correlated foreground/AMI mixtures with original
+feature prefix and evaluation rows retained. Six actual rerenders match.
+Of those mixtures,8781(30.0767%) have no annotated background word coverage
+over the approximate full-TTS foreground interval. This does not prove silence;
+neither variant count nor annotated overlap establishes independent simultaneous
+speech exposure. Do not duplicate this ongoing experiment on Mac.
+
+The GPU MFA reference audit also fails its20ms endpoint tolerance on an
+official TIMIT sample: its endpoint is53.375ms later than the public reference.
+This one counterexample does not define a universal offset or authorize changing
+Nyx/Hi ESP proxy windows. Re-created Kokoro token-duration waveforms also differ
+from all24original PCM files, so their new durations are not transferred back.
+
+The Mac continuation rejects its extra-binary lexical loss and export-only
+posterior product. It now freezes an independent training-only leave-engine-out
+linear lexical probe of the existing80ms embeddings. That closed-class diagnostic
+does not deploy a detector, score validation/final audio or measure parity.
+External speaker playback remains paused; no microphone or hardware is accessed.
