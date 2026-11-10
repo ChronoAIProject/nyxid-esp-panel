@@ -1,0 +1,38 @@
+{
+  "scope": "Existing source-activity ablation, fixed same-threshold float/INT8 comparison; no retraining, held-out scoring or deployment.",
+  "frozen_training_commit": "4b9bded",
+  "thresholds": [
+    0.95,
+    0.97,
+    0.98
+  ],
+  "backbone_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "index_sha256": {
+    "head-features-tts-v1": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "head-features-negatives-v1": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6"
+  },
+  "checkpoints": {
+    "control": {
+      "head.keras": "5794f798c282eda8d8e70f0b4d218f068e6851de423c2492026bf204aef3f3c9",
+      "head.tflite": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+      "validation/calibration.json": "6b59606897cd88c817e0afcaa263709537d1d0db09490c11f056d0d396a005cb",
+      "validation/details-private.json": "b73765d4d83157b4cd183ccaa63b056fc916c7a838793b66468972e6bb251b99"
+    },
+    "treatment": {
+      "head.keras": "611bb0bd5619eb5cbe562daec63edc851c5c6c08e6f6ddd276c5ad2eaa7a6dcb",
+      "head.tflite": "156aebdfd9ed1852d14a2c44a474f372d8895e9eeaedcfab8d36ab456dd57a09",
+      "validation/calibration.json": "eef3ba20eaf209713e7501a353b76345d0868f6f05bbe3169c64f3c8ccf6b288",
+      "validation/details-private.json": "44c93c9fdff3c49809273086c804e706afd7791da71e6ae6e9b3740d7b6df526"
+    }
+  },
+  "scripts": {
+    "audit_activity_quantization.py": "f6f186fee660a2b11e509067b9dbab8912d79ff46e3d5a9475aef86c0d25cc22",
+    "audit_head_events.py": "d56fe019c71ab424046d4e3c5f78a54e338ca076cd20195de093606bbd3909fb",
+    "evaluate_head.py": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c",
+    "train_head.py": "51fe6745c2e27e0211e4eae307a6cb75d5fa411a5f44306b7ce296190fcd4b8c",
+    "training_endpoints.py": "73a00a7084e6054627d894b55c84f749bddcef91e63140055a9b498341f4ed65",
+    "negative_activity.py": "03a7dc55557e19ce62d76eecf678088b56fcdaa3fa547750518320d410bd9a28",
+    "negative_activity_fallback.py": "611a732961facfbfab7a7b98b90a2200f0c545a18e033bcccbb22f63948bdced"
+  },
+  "accepted": false
+}
