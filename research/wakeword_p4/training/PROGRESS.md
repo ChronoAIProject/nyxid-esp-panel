@@ -722,3 +722,14 @@ voices/conditions and real recordings for subsequent acceptance.
   AEC/AGC/FIFO, model or production-board change. GPU snapshot `ce601c4` rejects
   v20/longer smoothing and starts wider v21 training; its progress is recorded
   separately in `../../handoff/GPU_PROGRESS.md` rather than duplicated locally.
+
+- A new independent endpoint diagnostic freezes all 178 standalone positives
+  from the existing six-engine training-only sample, retaining 14 command
+  sources separately. It pins the already cached phoneme recognizer, software,
+  source/role/hash checks and readout before inference. Seven boundary tests
+  pass (CTC repeat/blank timing, geometry, alias scope, altered audio and
+  held-out hash overlap). It compares original markers with local CTC feature
+  support and RMS endpoints without relabelling, wake scoring, playback or any
+  board change. See `../embedding/plans/ctc-endpoint-audit-v1.json`; inference
+  has not run at this commit. Its output cannot prove a phonetic truth boundary
+  or improved wake quality.

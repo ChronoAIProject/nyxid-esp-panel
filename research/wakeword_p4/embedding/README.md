@@ -482,6 +482,35 @@ feature index and completion hashes before the matched training comparison
 in `head-temporal-phase-comparison-plan-v1.json`; this is an unproven
 augmentation hypothesis, with no relaxed evaluation threshold.
 
+### Independent training-marker audit
+
+`audit_ctc_endpoints.py` inspects the 178 standalone positive sources from the
+already frozen training-discrimination sample. Its plan
+`plans/ctc-endpoint-audit-v1.json` preserves 14 command-followed sources
+separately; a whole-command endpoint cannot stand in for the wake prefix.
+All source hashes, role metadata, original jobs and held-out hash separation
+are checked before loading the existing local phoneme model. Model files and
+runtime packages are pinned. No wake detector, room recording or playback is
+involved, and all original audio, labels and feature arrays stay intact.
+
+```sh
+python research/wakeword_p4/embedding/audit_ctc_endpoints.py \
+  --data-root "$WAKE_DATA" \
+  --parent-plan research/wakeword_p4/embedding/plans/training-discrimination-audit-v3.json \
+  --plan research/wakeword_p4/embedding/plans/ctc-endpoint-audit-v1.json \
+  --model "$PHONEME_MODEL" --output "$NEW_ENDPOINT_AUDIT_OUTPUT"
+python -m unittest discover -s research/wakeword_p4/embedding -p test_ctc_endpoints.py
+```
+
+The independent recognizer receives no expected text. Greedy CTC collapses
+consecutive repeats before removing blanks and retains every predicted token,
+including uncertain text and all-blank cases. Each token run records its local
+convolution support (320-sample stride, 400-sample support). The transformer's
+full-utterance context and spiky CTC emissions mean these are not exact acoustic
+phone boundaries. Compare original markers with the last CTC support and the
+unchanged RMS endpoint independently; neither automatically replaces labels.
+This plan is frozen before inference and establishes no wake recognition result.
+
 ### Generic channel-EQ continuation
 
 `audit_capture_transfer.py` characterizes one explicitly hash-bound synthetic

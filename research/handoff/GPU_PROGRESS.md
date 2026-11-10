@@ -474,3 +474,22 @@ quality evidence. Training is pending at this snapshot. Do not duplicate the
 GPU capacity experiment locally or assume the future `teacher120` artifact
 fits the existing `teacher60` metadata/runtime boundary. Independent final
 audio remains unscored, and the overall goal remains active.
+
+
+### GPU snapshot through `c560247`
+
+V21 finishes but offers no acceptable wider-model tradeoff. On the same fixed
+138-point validation grid, v19 reaches 81.6146% macro at .9140625, versus
+v21's 78.5677% at .84765625. Original 11-grid measurements reproduce exactly;
+the grid change does not introduce new inference differences. Wider v21 has
+two AISHELL events / 6.913985 h and two dev-other events / 5.121185 h at its
+English-selected point. Raising its threshold to .98 removes recorded expanded
+validation events but lowers positive macro recall to 58.5677%. Even the zero
+counts lack sufficient per-scenario exposure for the stated bound. Reject v21
+before development/final rescoring; no MCU quality/resource acceptance exists.
+
+The GPU track's emulator CPU-property query also finds no exposed PIE-named
+property. That is an inspection result, not a working WakeNet inference path.
+The Mac continuation uses its existing cached independent phoneme model for
+a fixed training-only endpoint diagnostic; it does not repeat GPU capacity or
+threshold-grid experiments or inspect the independent final audio.
