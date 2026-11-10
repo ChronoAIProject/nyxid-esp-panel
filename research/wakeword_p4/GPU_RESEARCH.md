@@ -597,3 +597,11 @@ no gradient during selection and evaluation mode to avoid dropout selection
 noise. Validation still independently chooses checkpoint/threshold; no final
 fixtures enter mining. This is a targeted variant, not upstream full-recipe
 reproduction. Source code hash is now captured at process startup.
+
+Validation phrase attribution reproduced v2's exact confusing-negative rate
+(20/3520 variants). The largest contributors are Kokoro "Hey Nick." (6/80),
+"Hey Next." (5/80), and "Hey Mix." (3/80). The phrase audit uses only existing
+validation rows and is not hard-negative mining input. This supports the
+phonetic-confusion diagnosis; adding generic silence or an unrelated noise
+filter would not specifically address these errors. Counts are correlated
+renderings, not independent human trials. See `4090-embedding-v2-confusions.json`.
