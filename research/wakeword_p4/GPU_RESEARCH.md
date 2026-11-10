@@ -1740,3 +1740,19 @@ threshold0.63(DET_MODE_95)。两次独立启动均完成100次真正detect(零PC
 这解决经典ESP32路径的零音频推理兼容，不解决P4 PIE。尚未输入真实
 语音波形，不是召回/误唤醒证据；模拟器host耗时不作为硬件延迟。
 HiESP质量比较仍未完成，但已有可执行引擎，可继续建设真实PCM回放协议。
+
+### HiESP真实PCM回放与同音频开发链路打通
+
+新增qemu_esp32_replay，采用QEMU Xtensa simcall只读文件，不使用不兼容的
+OpenOCD semihost ABI。每次从新模型状态按512样本送真实16k/PCM16，
+核对源PCM SHA、完整读取CRC32、调用次数、尾段补零和stage104。
+6段训练声线开发TTS均CRC一致；两Hi E S P提示各触发1次（2.784/2.976s
+音频时间），Hey Nicks与普通句各2段不触发HiESP。首正例两次启动事件与CRC一致。
+同一PCM送Nyx v19原验证阈值0.9140625，只有两个Hey Nicks提示触发
+（2.75/2.81s音频时间）。两引擎保留各自前端；仅开发功能协议，无匹配FAR。
+
+调试暴露setter请求0.63而getter0.62496001，分别保存不假定相等；
+detect -1为合法CHANNEL_VERIFIED，单独计数；monitor初始提示拆包曾造成
+完成标志误判，修复为先消费完整初始prompt。代表性失败UART亦发布。
+没有语音发音审计、足量负音频标定或真实用户正例，不报告总体召回/FAR/
+硬件延迟，更不宣称Nyx等同HiESP。最终集未访问。v24仍正常训练。
