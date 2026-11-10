@@ -1,0 +1,8 @@
+diff --git a/generate_samples.py b/generate_samples.py
+index 1978c89..ebccd76 100755
+--- a/generate_samples.py
++++ b/generate_samples.py
+@@ -78 +78,2 @@ def generate_samples(
+-    torch_model = torch.load(model_path)
++    # Full-object checkpoint from the pinned upstream Piper release only.
++    torch_model = torch.load(model_path, map_location="cpu", weights_only=False)

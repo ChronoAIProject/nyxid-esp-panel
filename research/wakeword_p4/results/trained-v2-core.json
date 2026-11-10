@@ -1,0 +1,64 @@
+{
+  "model_sha256": "bb8044a5a73782e3124a83165d5511ff48467eafff17113d4c7209d051e5620b",
+  "sliding_window": 5,
+  "threshold": 0.9,
+  "validation": {
+    "threshold": 0.9,
+    "positive_variants": 1968,
+    "recall": 0.7977642276422764,
+    "hard_negative_variants": 2240,
+    "hard_negative_false_rate": 0.007589285714285714,
+    "ambient_hours": 1.2335916666666666,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.428463449051069
+  },
+  "testing_regression": {
+    "threshold": 0.9,
+    "positive_variants": 1968,
+    "recall": 0.790650406504065,
+    "hard_negative_variants": 2240,
+    "hard_negative_false_rate": 0.010714285714285714,
+    "ambient_hours": 1.3896388888888889,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.1557631248714424
+  },
+  "mac_regression": {
+    "positive_variants": 50,
+    "negative_variants": 200,
+    "recall": 0.16,
+    "false_rate": 0.02
+  },
+  "by_engine": {
+    "kokoro": {
+      "threshold": 0.9,
+      "positive_variants": 48,
+      "recall": 0.6666666666666666,
+      "hard_negative_variants": 320,
+      "hard_negative_false_rate": 0.0,
+      "ambient_hours": 1.3896388888888889,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.1557631248714424
+    },
+    "piper": {
+      "threshold": 0.9,
+      "positive_variants": 1920,
+      "recall": 0.79375,
+      "hard_negative_variants": 1920,
+      "hard_negative_false_rate": 0.0125,
+      "ambient_hours": 1.3896388888888889,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.1557631248714424
+    }
+  },
+  "limits": [
+    "v1 test/Mac sets informed development; these are regression results, not untouched final holdouts.",
+    "Four render variants share source utterances and are not independent trial counts.",
+    "MS-SNSD files are blob-disjoint; original room/recording session identities are unavailable.",
+    "No real-user positive wake-word recordings or Chinese/TV/music negative evaluation.",
+    "Not production acceptance; confidence bounds apply only to the measured audio distribution."
+  ]
+}

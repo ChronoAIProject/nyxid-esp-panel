@@ -1,0 +1,83 @@
+{
+  "model_sha256": "6cdab32a1e48feb402bc15c9c7d182c8dc8bb03bf6022cd49a2930f05852dcb7",
+  "sliding_window": 5,
+  "threshold": 0.994,
+  "selection_criterion": "No threshold met desired validation criteria; report best fallback without claiming acceptance",
+  "validation": {
+    "threshold": 0.994,
+    "positive_clips": 960,
+    "detected": 888,
+    "missed": 72,
+    "recall": 0.925,
+    "hard_negative_clips": 960,
+    "hard_negative_false": 64,
+    "hard_negative_false_rate": 0.06666666666666667,
+    "human_hours": 1.1060472222222222,
+    "human_false_events": 0,
+    "human_false_per_hour": 0.0,
+    "human_false_per_hour_upper_95": 2.708503048843696,
+    "latency_ms_median": 104.31250000000026,
+    "latency_ms_p95": 270.68125000000003
+  },
+  "testing": {
+    "threshold": 0.994,
+    "positive_clips": 960,
+    "detected": 891,
+    "missed": 69,
+    "recall": 0.928125,
+    "hard_negative_clips": 960,
+    "hard_negative_false": 83,
+    "hard_negative_false_rate": 0.08645833333333333,
+    "human_hours": 1.1173055555555556,
+    "human_false_events": 0,
+    "human_false_per_hour": 0.0,
+    "human_false_per_hour_upper_95": 2.6812112932387846,
+    "latency_ms_median": 105.25000000000028,
+    "latency_ms_p95": 267.8750000000001,
+    "clean": {
+      "threshold": 0.994,
+      "positive_clips": 480,
+      "detected": 451,
+      "missed": 29,
+      "recall": 0.9395833333333333,
+      "hard_negative_clips": 480,
+      "hard_negative_false": 51,
+      "hard_negative_false_rate": 0.10625,
+      "human_hours": 1.1173055555555556,
+      "human_false_events": 0,
+      "human_false_per_hour": 0.0,
+      "human_false_per_hour_upper_95": 2.6812112932387846,
+      "latency_ms_median": 100.3750000000001,
+      "latency_ms_p95": 256.2500000000001
+    },
+    "augmented": {
+      "threshold": 0.994,
+      "positive_clips": 480,
+      "detected": 440,
+      "missed": 40,
+      "recall": 0.9166666666666666,
+      "hard_negative_clips": 480,
+      "hard_negative_false": 32,
+      "hard_negative_false_rate": 0.06666666666666667,
+      "human_hours": 1.1173055555555556,
+      "human_false_events": 0,
+      "human_false_per_hour": 0.0,
+      "human_false_per_hour_upper_95": 2.6812112932387846,
+      "latency_ms_median": 109.12500000000014,
+      "latency_ms_p95": 277.6437500000002
+    }
+  },
+  "independent_mac_tts": {
+    "positive_clips": 50,
+    "detected": 8,
+    "negative_clips": 200,
+    "false_detections": 4,
+    "recall": 0.16
+  },
+  "limits": [
+    "No real human positive wake-word recordings; synthetic positive recall does not establish real user recall.",
+    "Human negatives are English audiobooks; Chinese/TV/music/household noise not yet evaluated.",
+    "Human false-activation exposure includes 200 ms inserted silence at utterance boundaries.",
+    "First trained research candidate, not a production acceptance result."
+  ]
+}
