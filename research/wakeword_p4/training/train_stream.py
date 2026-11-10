@@ -116,13 +116,19 @@ def main():
     flags = architecture.parse_args(architecture_args)
     model = mixednet.model(flags, (FRAMES, 40), None)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
+    # Valid stride-3, kernel-5 convolution consumes only 179 of 180
+    # input frames. Phase 0 windows therefore end one 10 ms frame before
+    # the streaming output they used to be compared with. Shift by the
+    # unused suffix to align exact causal history (verified on real speech).
+    window_phase = ((FRAMES-flags.first_conv_kernel_size) % flags.stride
+                    if flags.first_conv_filters > 0 else 0)
 
     @tf.function(input_signature=[tf.TensorSpec([None, FRAMES, 40], tf.float32)])
     def infer(x):
         return model(x, training=False)
 
     def score(data):
-        windows = np.lib.stride_tricks.sliding_window_view(data, FRAMES, axis=0)[::3].transpose(0, 2, 1)
+        windows = np.lib.stride_tricks.sliding_window_view(data, FRAMES, axis=0)[window_phase::3].transpose(0, 2, 1)
         outputs = []
         for at in range(0, len(windows), 512):
             outputs.append(np.asarray(infer(scale(windows[at:at+512]))).reshape(-1))
@@ -211,6 +217,7 @@ def main():
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
               "selected_step": selected_step,
+              "validation_window_phase": window_phase,
               "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,

@@ -144,3 +144,32 @@ because the library truncated speed 0.75 to integer zero; the corrected
 adapter preserves the caller's fractional speed. This failure and its scope
 are retained in `4090-kokoro-speed-failure.json`. New generation/training
 remains in progress. More correlated speed variants are not new speakers.
+
+## Context diagnosis and reserved negative exposure
+
+The expanded diagnostic covers all 48 Kokoro positive validation variants at
+the already frozen 0.992 threshold. Float streaming detects 21, INT8 detects
+22; thus quantization alone does not explain the earlier float-window recall.
+The valid kernel-5, stride-3 first convolution consumes 179 of 180 input
+frames. Original phase-0 windows are 10 ms out of alignment with the stream.
+Their maximum probability difference reaches 0.94655. Shifting the window by
+one feature frame reduces the maximum difference to **6.56e-7** without
+changing weights, audio or labels. The report is
+`results/4090-v1-kokoro-context-diagnosis.json`.
+
+`train_stream.py` now derives the window phase from input size/kernel/stride
+before validation. Candidate v1b reruns the same 40,000-step, two-source
+recipe with aligned validation/checkpoint selection. No quality improvement
+is claimed until the actual export is evaluated. This numerical alignment
+check covers the inspected architecture and validation data, not every model.
+
+Separately, `training/freeze_negatives.py` verified the official archive MD5s,
+screened reference transcripts for literal Hey Nyx variants, checked speaker-ID
+isolation and extracted **10.7450 source hours across 73 speakers** from
+LibriSpeech test-clean/test-other. The manifest and per-array hashes are in
+`results/4090-frozen-negative-manifest.json`. No model scores were computed on
+this set. Source hours exclude inserted silence and padding. These are
+human negative speech recordings, not real-user positive wake recordings.
+At zero events, that exposure would give a Poisson one-sided 95% upper bound
+of about 0.279/hour; no zero-event result is claimed. New independent positive
+holdout coverage and the matched Hi ESP comparison remain unresolved.
