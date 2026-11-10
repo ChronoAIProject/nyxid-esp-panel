@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `e1877a4`; see the dated snapshots below.
+Latest observed GPU commit: `019744c`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -555,3 +555,22 @@ ambient probability; it is not an unchanged sampling distribution. The Mac
 side does not duplicate that mining/training experiment, contact the GPU worker,
 or import validation audio into training. Its separate silent MultiNet P4
 probe now has a completed but unusable frozen setting; see the handoff result.
+
+### GPU snapshot through `019744c`
+
+The same-PCM Hi ESP development-negative baseline expands to all33 LibriSpeech
+dev-other speakers /5.121184826 h. All33 retained firmware stages are104,
+all PCM CRCs match, and all input/call counts match512sample coverage, totalling
+594,255detect calls. Hi ESP has zero events, upper95% .584969/h. The same
+source-PCM audit verifies existing Nyx v19/v23/v24 results of1/4/3events at
+their separately frozen .95/.94140625/.9765625 thresholds. Original speech
+seconds supply exposure; inserted gaps are excluded while all events count.
+This strengthens the development comparison but still does not establish
+overall FAR, positive recall, hardware latency or independent acceptance.
+
+The new72-clip Kokoro comparison uses four already-used validation voices and
+correlated synthesis variants, with an ASR screen and separately frozen energy
+endpoint proxy. No wake scores are published at this commit. It remains
+development audio; annotation/ASR agreement is not phonetic truth, and the
+current Mac controls do not adopt its synthesis speed variants. V25 has no
+published outcome at this snapshot. Final audio remains excluded.

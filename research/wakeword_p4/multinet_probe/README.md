@@ -213,3 +213,31 @@ missing/duplicated/misaligned events, final decoder coverage and grammar order.
 Passing numerical/record coverage still leaves `accepted:false`. Short reused
 synthetic clips do not establish real speaker performance, continuous FAR,
 acoustic transfer, wake latency or full GUI/voice/OTA resource capacity.
+
+### Known-command control v1 result
+
+The frozen build at commit `1163b49` completes all16cases /2,282detect calls.
+Every consumed-input CRC matches the independent manifest; original grammar
+then replacement grammar, all final decoder records, and app/service/Hi ESP
+restoration pass verification. The old uninitialized-command cleanup warning
+is absent. See [`multinet-control-v1-p4.json`](../results/multinet-control-v1-p4.json).
+
+Both grammars nevertheless detect0/4known commands,0/2Nyx phrases and0/2ordinary
+negative sources. Therefore **the known-control quality gate fails**. The
+terminal free-decoder string for Rishi's joke is ` TfL Mm cqbK`, close to the
+official `TfL Mm c qbK`, while the constrained string is incomplete. These
+strings establish partial decoding, not a cause for missing detections.
+Neither this test nor v1's misses can yet establish intrinsic Nyx phrase quality.
+
+The pinned upstream source supplies a stronger reference control:
+[`test_multinet.cpp`](https://github.com/espressif/esp-sr/blob/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-multinet/main/test_multinet.cpp)
+uses
+[`tell_me_a_joke.h`](https://github.com/espressif/esp-sr/blob/b9dc43a329a68de2f72147808fc9ea29d2ace71e/test_apps/esp-sr-multinet/main/samples/tell_me_a_joke.h)
+and asserts detection. Header SHA256 is
+`e473320afb28863c873c822817a044731d63b07f8ffe6a7fde5373e1baab871e`;
+its exact89,658PCM bytes /44,829samples hash to
+`6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4`.
+The upstream CPU test permits601calls, uses a500,000ms timeout and feeds zeros
+after its sample. It does not set a lower threshold; another distinct test
+explicitly uses .1. This is source evidence for the next diagnostic, not a
+local inference result or permission to fit the threshold to the failed TTS.

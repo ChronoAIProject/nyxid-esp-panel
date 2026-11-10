@@ -849,6 +849,16 @@ bytes and buffer incomplete lines through timeouts. See
 [`multinet-p4-silent-v1.json`](../wakeword_p4/results/multinet-p4-silent-v1.json)
 and the [probe protocol and measured limits](../wakeword_p4/multinet_probe/README.md).
 
+A separately frozen eight-source known-command control now completes16cases
+with matching consumed-PCM CRCs, but both stock and replacement grammars miss
+all4known commands at.9. Raw decoder strings partially match the expected
+phonemes. Thus Nyx phrase quality remains uninterpretable; do not respond by
+tuning thresholds on these misses. See
+[`multinet-control-v1-p4.json`](../wakeword_p4/results/multinet-control-v1-p4.json).
+The same pinned upstream unit test contains an original joke recording and
+asserts recognition. That original sample, not another preferred TTS voice,
+is the next reference control. No acoustic playback was performed.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before
