@@ -19,14 +19,32 @@ HISTORY = 16
 MIN_END = 25  # First nine embeddings are cold; every sampled history is warm.
 
 
-def load_rows(split, data_root, backbone_sha256):
+def feature_directories(extra_training):
+    names = ['head-features-tts-v1', 'head-features-negatives-v1']
+    for entry in extra_training:
+        name = entry['directory']
+        if not isinstance(name, str) or Path(name).parts != (name,) or name in ('.', '..') or name in names:
+            raise ValueError('Extra features must have a unique name inside the data root')
+        names.append(name)
+    return names
+
+
+def load_rows(split, data_root, backbone_sha256, extra_training=()):
     rows = []
-    for name in ('head-features-tts-v1', 'head-features-negatives-v1'):
+    names = feature_directories(extra_training)
+    extras = {entry['directory']: entry for entry in extra_training}
+    for name in names:
         base = data_root/name
         complete = json.loads((base/'complete.json').read_text())
+        if name in extras:
+            for file, key in [('index.jsonl', 'index_sha256'), ('complete.json', 'complete_sha256')]:
+                if hashlib.sha256((base/file).read_bytes()).hexdigest() != extras[name][key]:
+                    raise ValueError('Extra training features differ from the frozen plan')
         index = [json.loads(line) for line in (base/'index.jsonl').read_text().splitlines()]
         assert len(index) == complete['jobs']
         assert all(row['split'] in ('training', 'validation') for row in index)
+        if name in extras and any(row['split'] != 'training' for row in index):
+            raise ValueError('Extra training views cannot contain held-out rows')
         identity = json.loads((base/'identity.json').read_text())
         assert identity['model_sha256'] == backbone_sha256
         jobs = {job['id']: job for job in json.loads((base/'jobs-private.json').read_text())}
@@ -34,6 +52,7 @@ def load_rows(split, data_root, backbone_sha256):
             if row['split'] != split:
                 continue
             row = dict(row)
+            row['_feature_directory'] = name
             path = Path(row['path'])
             path = path if path.is_absolute() else data_root/path
             if hashlib.sha256(path.read_bytes()).hexdigest() != row['features_sha256']:
@@ -47,19 +66,46 @@ def load_rows(split, data_root, backbone_sha256):
     return rows
 
 
-def make_model():
+def make_model(architecture='conv24'):
     x = tf.keras.Input(shape=(16, 96, 1), name='embedding_history')
-    y = tf.keras.layers.Conv2D(24, (3, 96), activation='relu')(x)
-    y = tf.keras.layers.MaxPool2D((14, 1))(y)
-    y = tf.keras.layers.Flatten()(y)
-    y = tf.keras.layers.Dense(16, activation='relu')(y)
+    if architecture in ('dnn32-layernorm', 'dnn64-layernorm', 'dnn128-layernorm'):
+        width = int(architecture.split('-')[0][3:])
+        y = tf.keras.layers.Flatten()(x)
+        for _ in range(2):
+            y = tf.keras.layers.Dense(width)(y)
+            y = tf.keras.layers.LayerNormalization(epsilon=1e-5)(y)
+            y = tf.keras.layers.ReLU()(y)
+    elif architecture == 'conv24':
+        y = tf.keras.layers.Conv2D(24, (3, 96), activation='relu')(x)
+        y = tf.keras.layers.MaxPool2D((14, 1))(y)
+        y = tf.keras.layers.Flatten()(y)
+        y = tf.keras.layers.Dense(16, activation='relu')(y)
+    else:
+        raise ValueError('Unsupported frozen head architecture')
     y = tf.keras.layers.Dense(1, activation='sigmoid')(y)
     return tf.keras.Model(x, y)
 
 
+def weighted_loss(labels, predictions, recipe):
+    """Optional upstream-style confidence filter; never filter evaluation."""
+    per_example = tf.keras.losses.binary_crossentropy(labels, predictions)
+    positive = tf.squeeze(labels, -1) > .5
+    weights = tf.where(positive, 1., float(recipe['negative_weight']))
+    bounds = recipe.get('loss_confidence_filter')
+    if bounds is None:
+        return tf.reduce_mean(per_example*weights)
+    probability = tf.squeeze(predictions, -1)
+    active = tf.where(positive, probability < bounds['positive_maximum'],
+                      probability >= bounds['negative_minimum'])
+    mask = tf.cast(active, per_example.dtype)
+    return tf.math.divide_no_nan(tf.reduce_sum(per_example*weights*mask), tf.reduce_sum(mask))
+
+
 class Sampler:
-    def __init__(self, rows, seed):
+    def __init__(self, rows, seed, mined=None):
         self.rng = np.random.default_rng(seed)
+        self.hard_rng = np.random.default_rng(seed+1_000_000)
+        self.hard = {}
         self.groups = {}
         for row in rows:
             if row['label']:
@@ -75,6 +121,19 @@ class Sampler:
         lengths = np.asarray([r['frames']-MIN_END+1 for r in self.ambient], np.float64)
         self.cdf = np.cumsum(lengths/lengths.sum())
         self.cdf[-1] = 1
+        if mined is not None:
+            by_id = {row['id']: row for row in rows}
+            for record in mined:
+                row = by_id[record['id']]
+                if row['label'] or row['split'] != 'training' or row['features_sha256'] != record['feature_sha256']:
+                    raise ValueError('Mined window is not a verified training negative')
+                end = record['end']
+                if not isinstance(end, int) or not MIN_END <= end <= row['frames']:
+                    raise ValueError('Mined window is outside warmed history')
+                key = ('tts_negative', row['engine']) if row['kind'] == 'tts' else ('ambient_negative', 'all')
+                self.hard.setdefault(key, []).append((row, end))
+            if not any(key[0] == 'tts_negative' for key in self.hard) or ('ambient_negative', 'all') not in self.hard:
+                raise ValueError('Both mined negative categories must be populated')
 
     def batch(self):
         examples, labels = [], []
@@ -92,6 +151,13 @@ class Sampler:
                         raise ValueError('Positive endpoint lies outside a warmed history')
                 else:
                     end = int(self.rng.integers(MIN_END, row['frames']+1))
+                if self.hard and kind != 'positive' and _ % 2 == 0:
+                    # Consume the original random draws first. The separate
+                    # hard RNG keeps positives/random halves identical to control.
+                    engines = sorted(key[1] for key in self.hard if key[0] == kind)
+                    engine = self.hard_rng.choice(engines)
+                    group = self.hard[(kind, engine)]
+                    row, end = group[int(self.hard_rng.integers(len(group)))]
                 examples.append(row['array'][end-HISTORY:end])
                 labels.append(kind == 'positive')
         x = np.asarray(examples, np.float32)[:, :, :, None]/128
@@ -149,36 +215,59 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--data-root', type=Path, required=True)
     parser.add_argument('--plan', type=Path, required=True)
+    parser.add_argument('--initial-weights', type=Path)
+    parser.add_argument('--mined-negatives', type=Path)
     args = parser.parse_args()
     args.output.mkdir(exist_ok=False)
     plan = json.loads(args.plan.read_text())
+    recipe = plan['recipe']
+    bounds = recipe.get('loss_confidence_filter')
+    if bounds is not None and not 0 < bounds['negative_minimum'] < bounds['positive_maximum'] < 1:
+        raise ValueError('Invalid training-only confidence filter')
+    for path, field in [(args.initial_weights, 'initial_weights_sha256'),
+                        (args.mined_negatives, 'mined_negatives_sha256')]:
+        if bool(path) != bool(plan.get(field)):
+            raise ValueError('Initialization/mining arguments differ from the frozen plan')
+        if path and hashlib.sha256(path.read_bytes()).hexdigest() != plan[field]:
+            raise ValueError('Initialization/mining checksum differs from the frozen plan')
     tf.config.threading.set_intra_op_parallelism_threads(3)
     tf.config.threading.set_inter_op_parallelism_threads(1)
     tf.keras.utils.set_random_seed(plan['recipe']['seed'])
     started = time.monotonic()
-    rows = load_rows('training', args.data_root, plan['model_sha256'])
+    extra_training = plan.get('extra_training_features', [])
+    rows = load_rows('training', args.data_root, plan['model_sha256'], extra_training)
     # Check source-level split disjointness without loading validation embeddings.
     validation_hashes = set()
-    for name in ('head-features-tts-v1', 'head-features-negatives-v1'):
+    for name in feature_directories(extra_training):
         for line in (args.data_root/name/'index.jsonl').read_text().splitlines():
             row = json.loads(line)
             if row['split'] == 'validation':
                 validation_hashes.add(row['source_sha256'])
     assert not validation_hashes.intersection(r['source_sha256'] for r in rows)
-    sampler = Sampler(rows, plan['recipe']['seed'])
-    representative_sampler = Sampler(rows, plan['recipe']['seed']+1)
+    mined = json.loads(args.mined_negatives.read_text()) if args.mined_negatives else None
+    if mined:
+        assert mined['backbone_sha256'] == plan['model_sha256']
+        for name, digest in mined['feature_indexes'].items():
+            assert hashlib.sha256((args.data_root/name/'index.jsonl').read_bytes()).hexdigest() == digest
+    sampler = Sampler(rows, plan['recipe']['seed'], mined['records'] if mined else None)
+    representative_rows = [row for row in rows if row['_feature_directory'] in
+                           ('head-features-tts-v1', 'head-features-negatives-v1')]
+    representative_sampler = Sampler(representative_rows, plan['recipe']['seed']+1)
     examples = np.concatenate([representative_sampler.batch()[0] for _ in range(4)])
     np.save(args.output/'representatives-training-only.npy', examples)
-    model = make_model()
+    model = make_model(plan.get('architecture', 'conv24'))
+    if args.initial_weights:
+        initial = tf.keras.models.load_model(args.initial_weights)
+        model.set_weights(initial.get_weights())
+        assert all(np.array_equal(a, b) for a, b in zip(model.get_weights(), initial.get_weights()))
+        del initial
     optimizer = tf.keras.optimizers.Adam(plan['recipe']['learning_rate'])
 
     @tf.function(input_signature=[tf.TensorSpec((128, 16, 96, 1), tf.float32), tf.TensorSpec((128, 1), tf.float32)])
     def step(x, y):
         with tf.GradientTape() as tape:
             prediction = model(x, training=True)
-            loss = tf.keras.losses.binary_crossentropy(y, prediction)
-            weights = tf.where(tf.squeeze(y, -1) > .5, 1., 5.)
-            loss = tf.reduce_mean(loss*weights)
+            loss = weighted_loss(y, prediction, recipe)
         optimizer.apply_gradients(zip(tape.gradient(loss, model.trainable_variables), model.trainable_variables))
         return loss, tf.reduce_mean(tf.cast((prediction >= .5) == (y >= .5), tf.float32))
 
@@ -186,8 +275,11 @@ def main():
                'plan': plan, 'plan_sha256': hashlib.sha256(args.plan.read_bytes()).hexdigest(),
                'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'training_sources': len(rows),
                'training_frames': sum(r['frames'] for r in rows), 'checkpoints': []}
+    summary['initial_weights_sha256'] = plan.get('initial_weights_sha256')
+    summary['mined_negatives_sha256'] = plan.get('mined_negatives_sha256')
+    summary['mined_windows'] = len(mined['records']) if mined else 0
     summary['feature_inputs'] = {}
-    for name in ('head-features-tts-v1', 'head-features-negatives-v1'):
+    for name in feature_directories(extra_training):
         base = args.data_root/name
         summary['feature_inputs'][name] = {
             'index_sha256': hashlib.sha256((base/'index.jsonl').read_bytes()).hexdigest(),
@@ -196,7 +288,10 @@ def main():
     (args.output/'training.json').write_text(json.dumps(summary, indent=2)+'\n')
     print(json.dumps({'phase': 'loaded', 'rows': len(rows), 'parameters': model.count_params(), 'seconds': time.monotonic()-started}), flush=True)
     for number in range(1, plan['recipe']['steps']+1):
-        lr = .001*(.1 if number > 8000 else .3 if number > 5000 else 1)
+        fraction = number/recipe['steps']
+        factor = recipe['learning_rate_eighty_percent_factor'] if fraction > .8 else (
+            recipe['learning_rate_half_factor'] if fraction > .5 else 1)
+        lr = recipe['learning_rate']*factor
         optimizer.learning_rate.assign(lr)
         x, y = sampler.batch()
         loss, accuracy = step(x, y)

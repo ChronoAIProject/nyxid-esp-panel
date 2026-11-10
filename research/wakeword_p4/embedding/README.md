@@ -171,6 +171,96 @@ byte-for-byte. Export replay matches all64 head output bytes and the complete
 untrained TFLite artifact. These are interface/reproducibility checks; trained
 recognition results are separate.
 
+### DNN and hard-negative follow-ups
+
+The 32/64-wide DNN alternatives flatten the same16x96 input and use two
+Dense/LayerNorm(epsilon1e-5)/ReLU stages followed by a sigmoid. The source
+reference and fixed training recipes are in `head-dnn{32,64}-plan-v1.json`.
+Strict validation selects low-recall points:32-wide32.94% and64-wide16.56%.
+These cannot replace Hi ESP.
+
+Hi ESP itself responds to many of its own near phrases, so the arbitrary1%
+near-phrase gate is not a demonstrated equivalence criterion. Keep those
+failures and separately freeze continuous-FAR diagnostic points before
+development regression. Set `selection_policy` to `continuous` explicitly in
+a new plan to maximize validation macro recall at <=.5 continuous events/hour;
+omitting it preserves strict-first selection. This is a selection policy,
+not permission to declare recognition acceptance.
+
+The selected64-wide secondary diagnostic scores41/50 paired wake clips versus
+Hi ESP48/50,2/100 ordinary-sentence false clips versus0, and3 English plus3
+Mandarin continuous events versus0/0. Those are existing development corpora;
+the newly reserved testing corpora remain unread.
+
+`mine_negatives.py` scans training negatives only, verifying feature and teacher
+identities. It takes up to two separated TTS peaks per variant, and up to256
+one-second continuous peaks per source, at raw scores>=.05. For example:
+
+```sh
+python research/wakeword_p4/embedding/mine_negatives.py \
+  --data-root /private-run --teacher-plan /private-run/frozen-teacher.json \
+  --backbone-sha256 af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a \
+  --output /private-run/mined-training.json
+```
+
+A warm-start plan must bind `initial_weights_sha256`; pass that exact `.keras`
+file with `--initial-weights`. A mining plan must also bind
+`mined_negatives_sha256`, passed with `--mined-negatives`. The trainer verifies
+the mining index/backbone, training-only labels, feature hashes and warmed
+window boundaries. Separate RNG streams consume identical ordinary draws
+before replacing half of each negative category. Positives, the other random
+halves and all512 PTQ representatives stay identical to control.
+
+The5,238-window matched experiment fails: control41/50 versus mined35/50
+paired recall; English false events6 versus1, Mandarin2 versus2. The smaller
+false count does not compensate for lost wake recall. Full aggregates, model
+and plan hashes are in `../results/embedding-head-dnn-v3.json`.
+
+The subsequent prespecified research comparison uses the upstream default128-wide
+head,40k steps at initial LR.0001, and full versus confidence-filtered training
+loss. The optional recipe field `loss_confidence_filter` drops already-easy
+training negatives below.001 and positives at/above.999, matching the upstream
+confidence bounds. It averages the remaining weighted loss and returns zero
+loss/gradient for an empty active batch. All evaluation still scores every
+window. This adapts upstream training; it does not claim the same optimizer
+schedule or accumulation implementation. Both runs fail development regression:
+full loss36/50 and confidence loss39/50, versus Hi ESP48/50. Continuous English
+false events are1/1 and Mandarin3/2, versus reference0/0. See
+`../results/embedding-head-dnn128-v3.json`. No classifier from these runs has
+been installed in the complete application.
+
+### Additional environmental training views
+
+`prepare_environment_views.py` keeps the original v1 feature directories and
+adds training-only views. Variant2 mixes a verified interval from one of the45
+existing training environmental recordings. Variant3 also applies synthetic
+second-order shoebox reflections and a second-order60..180Hz to2,500..7,500Hz
+bandpass. Rooms are synthetic, not measured impulse responses. Direct arrival
+stays at time0. Neither variant changes sample rate, duration or speaking speed.
+Both use8..25dB SNR and the previous.04...20 speech-RMS range.
+
+The frozen extraction plan binds source/background indexes and jobs, backbone,
+window/filter arrays and extraction/frontend code. Held-out audio hashes are
+excluded from both source and background pools. Worker checks verify actual
+WAV hashes and mono16kHz format; mixed PCM and embedding hashes are recorded.
+Silent background intervals are retried and never replaced by synthetic noise.
+
+```sh
+python research/wakeword_p4/embedding/prepare_environment_views.py \
+  --data-root /private-run --plan /private-run/environment-views-plan-v2.json \
+  --output /private-run/head-features-environment-v2 --workers 4
+```
+
+After all extractions complete, bind the new directory's `index_sha256` and
+`complete_sha256` under `extra_training_features` in a new training plan.
+Each entry has `directory`, `index_sha256` and `complete_sha256`; the directory
+must be a unique child of the data root. Extra directories reject validation
+rows. Calibration still loads the original validation directories, and all512
+PTQ representatives still come from original training views in both arms.
+The24-view six-engine replay and source-timebase/shape checks pass, as do
+modified-index/held-out-row/path rejection and unchanged representative checks.
+Batch extraction and matched classification results remain pending.
+
 Remaining gates include recognition, human/acoustic comparison to Hi ESP,
 actual whole-app flash/heap/CPU fit, immediate speech continuity, rearming,
 quiet periods, long-call echo and reconnection. The 73 ms sum of standalone

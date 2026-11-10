@@ -109,14 +109,18 @@ def measure(checkpoint, rows, plan, feature_inputs):
     grid = [summarize(clips, continuous, t) for t in thresholds]
     strict = [r for r in grid if eligible(r)]
     continuous_only = [r for r in grid if r['continuous_events_per_hour'] <= .5]
-    pool = strict or continuous_only
+    prefer_strict = plan.get('selection_policy', 'strict') == 'strict'
+    if plan.get('selection_policy', 'strict') not in ('strict', 'continuous'):
+        raise ValueError('Unsupported frozen selection policy')
+    pool = (strict if prefer_strict else []) or continuous_only
     selected = max(pool, key=lambda r: (r['macro_recall'], -r['continuous_events_per_hour'], -r['max_corpus_false_rate'])) if pool else min(
         grid, key=lambda r: (r['continuous_events_per_hour'], r['max_corpus_false_rate'], -r['macro_recall']))
     result = {'scope': 'Validation-only checkpoint calibration; no heldout/physical acceptance',
               'model_sha256': hashlib.sha256((checkpoint/'head.tflite').read_bytes()).hexdigest(),
               'backbone_sha256': plan['model_sha256'], 'event_policy': plan['event_policy'],
               'feature_inputs': feature_inputs,
-              'selection': 'strict' if strict else 'continuous_diagnostic' if continuous_only else 'no_viable_operating_point',
+              'selection_policy': plan.get('selection_policy', 'strict'),
+              'selection': 'strict' if prefer_strict and strict else 'continuous_diagnostic' if continuous_only else 'no_viable_operating_point',
               'strict_operating_point': eligible(selected), 'selected': selected, 'grid': grid,
               'seconds': time.monotonic()-started}
     (output/'calibration.json').write_text(json.dumps(result, indent=2)+'\n')
@@ -142,10 +146,11 @@ def main():
         results.append({'step': step, **measure(checkpoint, rows, plan, training['feature_inputs'])})
     strict = [r for r in results if r['strict_operating_point']]
     continuous = [r for r in results if r['selection'] != 'no_viable_operating_point']
-    pool = strict or continuous
+    pool = (strict if plan.get('selection_policy', 'strict') == 'strict' else []) or continuous
     chosen = max(pool, key=lambda r: (r['selected']['macro_recall'], -r['selected']['continuous_events_per_hour'],
                                       -r['selected']['max_corpus_false_rate'], -r['step'])) if pool else None
     summary = {'scope': 'Validation-frozen experimental head; no regression/test/device accuracy acceptance',
+               'selection_policy': plan.get('selection_policy', 'strict'),
                'selected_step': chosen['step'] if chosen else None,
                'selected_head_sha256': chosen['model_sha256'] if chosen else None,
                'selected': chosen['selected'] if chosen else None,

@@ -1,0 +1,695 @@
+{
+  "scope": "Frozen-backbone DNN32/64 recognition development experiments; not comparable-Hi-ESP acceptance",
+  "strict_runs": {
+    "32": {
+      "selected_step": 10000,
+      "selected_head_sha256": "2d500c9015cc852750483dc8f1144f497398f55de174cdf4bcf9f3ee0bd7fd78",
+      "selected": {
+        "threshold": 0.97,
+        "positive_variants": 1196,
+        "recall": 0.3294314381270903,
+        "macro_recall": 0.5011904761904762,
+        "recall_by_engine": {
+          "edge-tts": 0.4642857142857143,
+          "kokoro": 0.6666666666666666,
+          "macos-say": 0.59375,
+          "openai-tts": 0.5,
+          "piper": 0.28125
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 1,
+            "false_rate": 0.00625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 2,
+            "false_rate": 0.0020833333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.00625,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 299.5000000000001,
+        "positive_latency_p95_ms": 405.4218749999998
+      },
+      "strict_operating_point": true,
+      "plan_sha256": "8c5597bd535006339f6851891ac1a2a9c4124188cd57f99321a17de1629cdfd3"
+    },
+    "64": {
+      "selected_step": 2500,
+      "selected_head_sha256": "e6844b54c378661c6b21ce52b7e24b4c2cabcb835f832cef6a21fa9ec049bfa1",
+      "selected": {
+        "threshold": 0.97,
+        "positive_variants": 1196,
+        "recall": 0.16555183946488294,
+        "macro_recall": 0.2875892857142857,
+        "recall_by_engine": {
+          "edge-tts": 0.17857142857142858,
+          "kokoro": 0.4583333333333333,
+          "macos-say": 0.328125,
+          "openai-tts": 0.3333333333333333,
+          "piper": 0.13958333333333334
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 1,
+            "false_rate": 0.00625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 0,
+            "false_rate": 0.0
+          }
+        },
+        "max_corpus_false_rate": 0.00625,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 290.00000000000006,
+        "positive_latency_p95_ms": 416.92187499999983
+      },
+      "strict_operating_point": true,
+      "plan_sha256": "2a83bf45d1ff2253ddf885bf0c280ad2bdb2632a390f5a1838aa27a88522467e"
+    }
+  },
+  "continuous_secondary": {
+    "selected": {
+      "step": 7500,
+      "width": 64,
+      "parameters": 102849,
+      "model_sha256": "860cce1399751eb76edfd516836b54ecae06e45083ecfa303ed018013cbd5f96",
+      "calibration_sha256": "39d7cec1606c0d18168ca382ac3ff2063d010a1a84ef81cb4d149c91542a7d3f",
+      "selected": {
+        "threshold": 0.25,
+        "positive_variants": 1196,
+        "recall": 0.9632107023411371,
+        "macro_recall": 0.9281646825396827,
+        "recall_by_engine": {
+          "edge-tts": 0.8571428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8055555555555556,
+          "piper": 0.978125
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 55,
+            "false_rate": 0.19642857142857142
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 10,
+            "false_rate": 0.05952380952380952
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 20,
+            "false_rate": 0.125
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 26,
+            "false_rate": 0.1625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 8,
+            "false_rate": 0.16666666666666666
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 164,
+            "false_rate": 0.17083333333333334
+          }
+        },
+        "max_corpus_false_rate": 0.19642857142857142,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 107.18749999999977,
+        "positive_latency_p95_ms": 220.75000000000023
+      },
+      "event_policy": {
+        "threshold_grid": [
+          0.05,
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.85,
+          0.9,
+          0.95,
+          0.97,
+          0.98,
+          0.99,
+          0.995,
+          0.999
+        ],
+        "score_average_steps": 3,
+        "step_ms": 80,
+        "refractory_steps": 25,
+        "rearm_fraction": 0.5,
+        "min_history_frames": 25,
+        "positive_window_seconds": [
+          -0.1,
+          0.8
+        ],
+        "selection_order": "Prefer strict eligible max macro recall; if none, continuous-only max macro recall is diagnostic, never acceptance; select checkpoint by same validation criteria. Ties lower FAR, then lower confusing-corpus rate, then earlier checkpoint."
+      }
+    },
+    "paired": {
+      "plan_sha256": "28bf832074e625dc4069ae70d2091b88d2f4671c6ecdd5857bd7b5013fb0928e",
+      "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+      "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+      "head_sha256": "860cce1399751eb76edfd516836b54ecae06e45083ecfa303ed018013cbd5f96",
+      "threshold": 0.25,
+      "hi_esp": {
+        "positives_any_event": {
+          "clips": 50,
+          "clips_with_event": 48,
+          "events": 48
+        },
+        "positives_in_estimated_end_window": {
+          "clips": 50,
+          "detected": 32,
+          "window_ms": [
+            -100,
+            800
+          ]
+        },
+        "shared_ordinary_sentences": {
+          "clips": 100,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "nyx_specific_near_words": {
+          "clips": 90,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "latency_ms_from_estimated_end_median": -18.4375
+      },
+      "hey_nyx": {
+        "positives_any_event": {
+          "clips": 50,
+          "clips_with_event": 41,
+          "events": 41
+        },
+        "positives_in_estimated_end_window": {
+          "clips": 50,
+          "detected": 41,
+          "window_ms": [
+            -100,
+            800
+          ]
+        },
+        "shared_ordinary_sentences": {
+          "clips": 100,
+          "clips_with_event": 2,
+          "events": 2
+        },
+        "nyx_specific_near_words": {
+          "clips": 90,
+          "clips_with_event": 24,
+          "events": 24
+        },
+        "latency_ms_from_estimated_end_median": 92.375
+      },
+      "priming_events": 0
+    },
+    "english": {
+      "plan_sha256": "28bf832074e625dc4069ae70d2091b88d2f4671c6ecdd5857bd7b5013fb0928e",
+      "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+      "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+      "head_sha256": "860cce1399751eb76edfd516836b54ecae06e45083ecfa303ed018013cbd5f96",
+      "threshold": 0.25,
+      "hi_esp": {
+        "events": 0,
+        "source_hours": 5.549022395833333
+      },
+      "hey_nyx": {
+        "events": 3,
+        "evaluated_hours": 5.5485999999999995,
+        "false_per_hour": 0.5406769275132466
+      },
+      "priming_events": 0
+    },
+    "mandarin": {
+      "plan_sha256": "28bf832074e625dc4069ae70d2091b88d2f4671c6ecdd5857bd7b5013fb0928e",
+      "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+      "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+      "head_sha256": "860cce1399751eb76edfd516836b54ecae06e45083ecfa303ed018013cbd5f96",
+      "threshold": 0.25,
+      "hi_esp": {
+        "events": 0,
+        "source_hours": 1.2938333333333334
+      },
+      "hey_nyx": {
+        "events": 3,
+        "evaluated_hours": 1.2937555555555558,
+        "false_per_hour": 2.3188306223054327
+      },
+      "priming_events": 0
+    }
+  },
+  "hard_negative_matched": {
+    "control": {
+      "paired": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+        "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 48,
+            "events": 48
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 32,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": -18.4375
+        },
+        "hey_nyx": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 41,
+            "events": 41
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 41,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 3,
+            "events": 3
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 20,
+            "events": 20
+          },
+          "latency_ms_from_estimated_end_median": 88.6875
+        },
+        "priming_events": 0
+      },
+      "english": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+        "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 5.549022395833333
+        },
+        "hey_nyx": {
+          "events": 6,
+          "evaluated_hours": 5.5485999999999995,
+          "false_per_hour": 1.0813538550264932
+        },
+        "priming_events": 0
+      },
+      "mandarin": {
+        "plan_sha256": "a7367c7109e7094dc14961cca24dc7a0a58c8d18ad75004c812b820b454af6f3",
+        "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+        "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+        "head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "threshold": 0.25,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 1.2938333333333334
+        },
+        "hey_nyx": {
+          "events": 2,
+          "evaluated_hours": 1.2937555555555558,
+          "false_per_hour": 1.545887081536955
+        },
+        "priming_events": 0
+      },
+      "selected": {
+        "selected_step": 10000,
+        "selected_head_sha256": "e6798549189ba721e49a03a2d999e6f017d9d5f09180aea84457dc6e5789220c",
+        "selected": {
+          "threshold": 0.25,
+          "positive_variants": 1196,
+          "recall": 0.9724080267558528,
+          "macro_recall": 0.935188492063492,
+          "recall_by_engine": {
+            "edge-tts": 0.8839285714285714,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8055555555555556,
+            "piper": 0.9864583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 42,
+              "false_rate": 0.15
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 13,
+              "false_rate": 0.07738095238095238
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 15,
+              "false_rate": 0.09375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 1,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 27,
+              "false_rate": 0.16875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 8,
+              "false_rate": 0.16666666666666666
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 142,
+              "false_rate": 0.14791666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.16875,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 3,
+          "continuous_events_per_hour": 0.41074634131499677,
+          "continuous_events_per_hour_upper_95": 1.0615953502205029,
+          "positive_latency_median_ms": 94.31250000000003,
+          "positive_latency_p95_ms": 206.56250000000043
+        },
+        "strict_operating_point": false
+      },
+      "training_plan_sha256": "f752f36412a55ad7ea042c785003ca52d3e2c2becfdc6a3b43e04e1da1299296"
+    },
+    "mined": {
+      "paired": {
+        "plan_sha256": "295296425a4bd95b66717313a6cba4cf5bae28b630210abd333aea71c2125b00",
+        "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+        "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+        "head_sha256": "c77e34c7894ed22d30eec861c855604531a2f376a189684780f0ec4aa124a994",
+        "threshold": 0.1,
+        "hi_esp": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 48,
+            "events": 48
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 32,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "latency_ms_from_estimated_end_median": -18.4375
+        },
+        "hey_nyx": {
+          "positives_any_event": {
+            "clips": 50,
+            "clips_with_event": 35,
+            "events": 35
+          },
+          "positives_in_estimated_end_window": {
+            "clips": 50,
+            "detected": 35,
+            "window_ms": [
+              -100,
+              800
+            ]
+          },
+          "shared_ordinary_sentences": {
+            "clips": 100,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "nyx_specific_near_words": {
+            "clips": 90,
+            "clips_with_event": 14,
+            "events": 14
+          },
+          "latency_ms_from_estimated_end_median": 121.0625
+        },
+        "priming_events": 0
+      },
+      "english": {
+        "plan_sha256": "295296425a4bd95b66717313a6cba4cf5bae28b630210abd333aea71c2125b00",
+        "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+        "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+        "head_sha256": "c77e34c7894ed22d30eec861c855604531a2f376a189684780f0ec4aa124a994",
+        "threshold": 0.1,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 5.549022395833333
+        },
+        "hey_nyx": {
+          "events": 1,
+          "evaluated_hours": 5.5485999999999995,
+          "false_per_hour": 0.18022564250441556
+        },
+        "priming_events": 0
+      },
+      "mandarin": {
+        "plan_sha256": "295296425a4bd95b66717313a6cba4cf5bae28b630210abd333aea71c2125b00",
+        "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+        "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+        "head_sha256": "c77e34c7894ed22d30eec861c855604531a2f376a189684780f0ec4aa124a994",
+        "threshold": 0.1,
+        "hi_esp": {
+          "events": 0,
+          "source_hours": 1.2938333333333334
+        },
+        "hey_nyx": {
+          "events": 2,
+          "evaluated_hours": 1.2937555555555558,
+          "false_per_hour": 1.545887081536955
+        },
+        "priming_events": 0
+      },
+      "selected": {
+        "selected_step": 5000,
+        "selected_head_sha256": "c77e34c7894ed22d30eec861c855604531a2f376a189684780f0ec4aa124a994",
+        "selected": {
+          "threshold": 0.1,
+          "positive_variants": 1196,
+          "recall": 0.9523411371237458,
+          "macro_recall": 0.9456150793650794,
+          "recall_by_engine": {
+            "edge-tts": 0.9107142857142857,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.95625
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 40,
+              "false_rate": 0.14285714285714285
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 11,
+              "false_rate": 0.06547619047619048
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 13,
+              "false_rate": 0.08125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 4,
+              "false_rate": 0.041666666666666664
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 22,
+              "false_rate": 0.1375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 6,
+              "false_rate": 0.125
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 104,
+              "false_rate": 0.10833333333333334
+            }
+          },
+          "max_corpus_false_rate": 0.14285714285714285,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 3,
+          "continuous_events_per_hour": 0.41074634131499677,
+          "continuous_events_per_hour_upper_95": 1.0615953502205029,
+          "positive_latency_median_ms": 95.56249999999977,
+          "positive_latency_p95_ms": 221.99999999999997
+        },
+        "strict_operating_point": false
+      },
+      "training_plan_sha256": "900ccc8e48dc47a727b5ac2ae73ed6f6b23b90c9ee580de83f0635b22070f2ac"
+    }
+  },
+  "fresh_testing_scores_read": false,
+  "full_app_candidate_flashing": false,
+  "accepted": false,
+  "mining": {
+    "teacher_head_sha256": "860cce1399751eb76edfd516836b54ecae06e45083ecfa303ed018013cbd5f96",
+    "backbone_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "feature_indexes": {
+      "head-features-tts-v1": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+      "head-features-negatives-v1": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6"
+    },
+    "policy": {
+      "raw_score_minimum": 0.05,
+      "tts_max_per_variant": 2,
+      "tts_separation_steps": 4,
+      "continuous_peaks_per_second": 1,
+      "continuous_max_per_source": 256,
+      "warm_end_minimum": 25
+    },
+    "counts": {
+      "tts/piper": 2249,
+      "tts/kokoro": 267,
+      "tts/qwen": 262,
+      "tts/openai-tts": 676,
+      "tts/macos-say": 204,
+      "tts/edge-tts": 747,
+      "speech/human": 544,
+      "speech/mandarin": 205,
+      "environment/environment": 84
+    },
+    "windows": 5238
+  },
+  "matched_sampler_check": {
+    "scope": "Matched training batch/source-boundary checks only; no accuracy acceptance",
+    "batches": 4,
+    "positive_and_random_streams_identical": true,
+    "changed_negative_histories": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "positive_and_cold_mining_records_rejected": true,
+    "passed": true
+  },
+  "representatives_identical_sha256": "c32f3572e4e716253dc564a212d352d98890f765b60d555b55ba0a7aa90a07f8",
+  "decision": "Reject all: strict DNN heads have low recall; validation-FAR secondary and matched hard-mining candidates fail existing paired recall and ordinary-speech false events compared with Hi ESP. Hard mining reduces English false events but further reduces paired recall."
+}

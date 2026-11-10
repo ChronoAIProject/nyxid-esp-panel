@@ -615,3 +615,28 @@ voices/conditions and real recordings for subsequent acceptance.
   All23,208TTS variants and382continuous sources are complete and hash checked;
   public data/export helpers reproduce sampled feature/model bytes exactly.
   See `../results/embedding-head-conv24-v3.json` and `embedding-head-data-v3.json`.
+- DNN32/64 frozen-backbone training and all INT8 validations complete. Strict
+  selected recall32.94%/16.56% is unacceptable. A separately frozen continuous-
+  FAR diagnostic selects64-wide7.5k at.25; it scores41/50 paired versus HiESP
+  48/50,2/100 ordinary-sentence false clips versus0, English3/5.549h and
+  Mandarin3/1.294h versus0/0. No reserved scores or complete-app candidate flash.
+- Training-only mining selects5,238 difficult windows. Matched same-init10k
+  fine-tunes verify identical positives/random draws/PTQ representatives.
+  Control41/50 versus mined35/50 paired recall, English false events6 versus1,
+  Mandarin2 versus2. Reject both; mining trades recall for fewer false events.
+  The reusable miner, explicit warm-start/mining identities and optional
+  continuous selection policy are recorded with sanitized result aggregates in
+  `../results/embedding-head-dnn-v3.json`.
+- A new128-wide40k-step comparison is frozen and running: full loss versus
+  upstream-style confidence-filtered loss, same random initialization/data/
+  schedule. Empty-active-batch loss/gradient and legacy unfiltered math checks
+  pass. No new model recognition, reserved testing or P4 acceptance yet.
+- Both128-wide runs and frozen development regressions complete: full36/50,
+  confidence39/50 versus HiESP48/50; English false events1/1,Mandarin3/2
+  versus0/0. Reject both. See `../results/embedding-head-dnn128-v3.json`.
+- Training-only real-environment/room/EQ augmentation passes24 exact replay
+  cases over all six TTS engines and starts20,140 added views. Original views
+  and all validation remain immutable. Extra-feature loader checks reject
+  held-out rows, modified indexes and invalid paths; baseline512 PTQ histories
+  must remain identical. A matched warm64 recipe is frozen before new model
+  scores. This is a data-domain experiment, not a recognition improvement claim.

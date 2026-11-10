@@ -1,0 +1,34 @@
+{
+  "scope": "Training-only data and loss implementation checks; not wake recognition acceptance",
+  "miner_replay": {
+    "records": 5238,
+    "all_records_and_identities_exact": true
+  },
+  "environment_pilot": {
+    "scope": "Training-only augmentation pipeline checks, not recognition acceptance",
+    "views": 24,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper",
+      "qwen"
+    ],
+    "exact_replays": true,
+    "sample_timebase_labels_and_shapes": true,
+    "silent_background_rejected": true,
+    "passed": true
+  },
+  "extra_loader": {
+    "scope": "Extra-training feature boundary/preservation checks; no recognition acceptance",
+    "invalid_paths_rejected": true,
+    "heldout_rows_rejected": true,
+    "modified_indexes_rejected": true,
+    "legacy512representatives_identical": true,
+    "passed": true
+  },
+  "full_extraction": "in_progress",
+  "classifier_results": "pending",
+  "accepted": false
+}

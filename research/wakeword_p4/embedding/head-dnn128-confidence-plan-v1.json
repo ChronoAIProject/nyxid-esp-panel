@@ -1,0 +1,80 @@
+{
+  "scope": "Default-upstream-width follow-up after 64-wide recognition rejection; matched full-batch and confidence-filter training, frozen before candidate scores.",
+  "model_sha256": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+  "model_choice": "Quiet-bound8bit export frozen by numeric/fidelity only, not detector scores.6bit grid failed prespecifiedcosinegate and is rejected.",
+  "frontend": "Exact512FFT window and257x32melmatrix,160samplehop,80dBfloor per1760sample block;8newframes per1280PCM/80ms. Native host versus source graph verified training-only.",
+  "data": "Existing source/voice partitions; training+validation only.2normal-speed TTS variants: original quiet and room/gain/noise augmentation. Same human/environment source partitions, only training for fitting; no reserved testing read.",
+  "labels": "Positive whole-phrase end uses existing synthesis/RMS metadata. Random head end .03.. .32seconds after label; reportendpointuncertainty. Negatives sample across all source windows.",
+  "head": "Flatten16x96 -> Dense128 -> LayerNorm(epsilon1e-5) -> ReLU -> Dense128 -> LayerNorm(epsilon1e-5) -> ReLU -> Dense1 sigmoid",
+  "recipe": {
+    "seed": 726,
+    "steps": 40000,
+    "checkpoints": [
+      10000,
+      20000,
+      30000,
+      40000
+    ],
+    "batch": 128,
+    "positive": 32,
+    "tts_negative": 48,
+    "ambient_negative": 48,
+    "negative_weight": 5,
+    "learning_rate": 0.0001,
+    "learning_rate_half_factor": 0.3,
+    "learning_rate_eighty_percent_factor": 0.1,
+    "loss_confidence_filter": {
+      "negative_minimum": 0.001,
+      "positive_maximum": 0.999
+    }
+  },
+  "selection": "Select validation macro recall at <=.5 continuous events/hour; tie lower FAR, lower confusing false rate, earlier checkpoint. Freeze before pre-existing development regressions. Keep strict/near diagnostics; no reserved or device acceptance.",
+  "event_policy": {
+    "threshold_grid": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      0.97,
+      0.98,
+      0.99,
+      0.995,
+      0.999
+    ],
+    "score_average_steps": 3,
+    "step_ms": 80,
+    "refractory_steps": 25,
+    "rearm_fraction": 0.5,
+    "min_history_frames": 25,
+    "positive_window_seconds": [
+      -0.1,
+      0.8
+    ],
+    "selection_order": "Select validation macro recall at <=.5 continuous events/hour; tie lower FAR, lower confusing false rate, earlier checkpoint. Freeze before pre-existing development regressions. Keep strict/near diagnostics; no reserved or device acceptance."
+  },
+  "architecture": "dnn128-layernorm",
+  "upstream_reference": {
+    "url": "https://raw.githubusercontent.com/dscripka/openWakeWord/main/openwakeword/train.py",
+    "sha256": "8d559e4c1bc9b5523bae50e7ec8f642756a63a7bb5f323620d069a2d03db2972",
+    "bytes": 46290
+  },
+  "upstream_match_scope": "Default width128, two dense layers with LayerNorm/relu; source train_model default LR1e-4. Confidence-filter arm drops negative predictions<.001 and positive predictions>=.999 in training-only loss. Fixed-step recipe, split data, loss weighting, LR decay and empty-batch handling are explicitly adapted; not an identical upstream trainer.",
+  "interface_fidelity_gate": {
+    "scope": "Pre-training representative-only interface pilot; no accuracy acceptance",
+    "mean_absolute_error_limit": 0.01,
+    "max_absolute_error_limit": 0.1,
+    "pilot_passed": true,
+    "quantization_note": "Builtins-INT8 conversion includes float NEG between DEQUANTIZE/QUANTIZE; parameter tensors remain quantized. Actual operator/dtype/P4 numeric support must be verified before complete-app use."
+  },
+  "selection_policy": "continuous"
+}
