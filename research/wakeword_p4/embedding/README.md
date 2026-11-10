@@ -1104,3 +1104,50 @@ are hash-bound by
 No P4, acoustic or reserved-final scoring follows this inferior setting.
 The retained lexical reference remains unchanged and is not accepted as
 Hi ESP parity; the stock board firmware and audio chain were not touched.
+
+### Quarter-TTS source-activity sampling
+
+`plans/negative-activity-preparation-v1.json` freezes a different sampling
+hypothesis before source-span measurement or fitting. The main sampler's
+TTS negatives currently choose a uniform end over the entire warmed feature
+sequence. For exactly 12 of those 48 draws per batch, keep the original
+chosen source but draw a new end from its broad original source-energy span.
+Consume every original RNG choice first, then use a separate seed 3000741.
+The 32 positives, 48 ambient negatives, other 36 TTS histories, all source/
+class draws, original auxiliary batches and PTQ arrays must remain identical.
+This differs from teacher mining, which also replaced source selections and
+ambient draws. Neither a new loss nor a runtime VAD is introduced.
+
+`negative_activity.py` checks all original training-negative source WAVs,
+feature/job/index identities and held-out/positive source exclusion. Use the
+first/last original 10 ms RMS block at least max(peak*0.01,1), plus the existing
+2.4 s lead. Eligible end positions run from 30 ms after activity start to
+320 ms after its end, on the original 80 ms grid. Reject silent/invalid or
+out-of-warm-range sources rather than filtering them silently. The manifest
+must cover every original/environmental TTS-negative view. All source PCM,
+features and labels remain unchanged.
+
+Endpoint membership in this span is **not speech occupancy**: internal gaps
+can be silent and histories ending later can still retain the spoken word.
+Its theoretical and sampled fractions diagnose the sampler, not missing
+phonetic information or source pronunciation. No validation/final scores,
+speaker, microphone or board are used by preparation. After preparation,
+freeze the actual manifest SHA in both off/on training plans before fitting.
+
+```sh
+python research/wakeword_p4/embedding/negative_activity.py \
+  --data-root "$WAKE_DATA" \
+  --plan research/wakeword_p4/embedding/plans/negative-activity-preparation-v1.json \
+  --output "$FRESH_PRIVATE_ACTIVITY_MANIFEST" \
+  --report "$FRESH_PRIVATE_ACTIVITY_PREPARATION"
+```
+
+The retained CE-only recipe, original auxiliary bounds, 10000-step final
+checkpoint, threshold grid and validation windows stay fixed. Keep both joint
+and confidence-only diagnostics; the extra 1% confuser rule is a research
+constraint, not a demonstrated Hi ESP equivalence definition. The off control
+must reproduce the retained detector and full main/auxiliary batch hashes.
+Verify the actual all-source hash and the remaining 116 histories per batch
+after the original shuffle. Twenty-five focused tests pass, including source/
+role/coverage/bound guards and preservation of the original RNG state, labels,
+source choices and every unscheduled history across the sampling change.

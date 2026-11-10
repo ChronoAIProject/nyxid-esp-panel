@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `5740561`; see the dated snapshots below.
+Latest observed GPU commit: `463a544`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -737,3 +737,32 @@ on its existing 80 ms embedding features. Original audio speed, auxiliary
 anchors, main/PTQ draws and exported binary topology stay fixed. This is
 independent of GPU AMI/mixing work and is not acceptance or a deployed change.
 Acoustic playback remains paused; no microphone or production board is used.
+
+### GPU snapshot through `463a544`
+
+Read on 2026-11-11. V29 AMI mixtures finish 120k steps with the v28
+initialization. The original 0.91015625 point has 79.3229167% source-macro
+proxy hits and 4 expanded development events / 12.789657865 h, versus Hi ESP
+1 event. Its expanded zero-event point raises the threshold to 0.99609375
+and lowers proxy hits to 46.8229167%; do not mix the two operating points.
+
+Under the fixed at-most-one observed Hi ESP event budget, V29 instead selects
+0.92578125 and 78.0729167% proxy hits. This improves over v27/v28's matching
+diagnostic, remains below v19's 79.2708333%, and is not independent acceptance
+or population FAR equality. Original paired development replay has 7/12 Nyx
+clips with any event, versus Hi ESP 5/12; uncertain proxy windows retain their
+earlier Hi ESP events separately. Shared negatives remain Nyx 1/48 versus
+Hi ESP 0/48. Neither the proxy fraction nor any-event count proves superiority.
+
+Three audited false-trigger neighborhoods also have high float scores, so
+those instances are not purely quantization errors. These are local peak
+checks, not full float event statistics. V30 adds the previously prepared
+eight independent AMI training meetings and remains the ongoing GPU run.
+Do not duplicate its data intervention or import development voices into fit.
+
+The separate Mac study retains its failed domain-adversary result and now
+freezes quarter-TTS source-activity endpoint sampling. It keeps the original
+source choices and all unscheduled/auxiliary/PTQ histories fixed; no new audio
+or teacher-score mining is used. Endpoint-span coverage is not speech occupancy.
+External playback stays paused; original speed, audio producer/AEC/AGC/FIFO
+and the dining-room production panel remain unchanged.

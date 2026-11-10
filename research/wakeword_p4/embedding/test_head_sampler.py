@@ -54,6 +54,32 @@ class MiningComparabilityTest(unittest.TestCase):
         np.testing.assert_array_equal(a, b)
         np.testing.assert_array_equal(y, z)
 
+    def test_activity_sampling_changes_only_scheduled_tts_windows_and_preserves_rng(self):
+        intervals = [{key: row[key] for key in
+                      ('id', 'source_sha256', 'features_sha256', 'engine', 'variant', 'frames')} |
+                     {'feature_directory': row['_feature_directory'], 'minimum_end': 45, 'maximum_end': 50}
+                     for row in self.rows if row['kind'] == 'tts' and not row['label']]
+        control = Sampler(self.rows, 741, negative_intervals=intervals)
+        treatment = Sampler(self.rows, 741, negative_intervals=intervals, focus_negative_activity=True)
+        for _ in range(10):
+            x, y = control.batch()
+            other, labels = treatment.batch()
+            mask = treatment.last_activity_mask
+            self.assertEqual(int(mask.sum()), 12)
+            np.testing.assert_array_equal(control.last_activity_mask, mask)
+            np.testing.assert_array_equal(y, labels)
+            np.testing.assert_array_equal(x[~mask], other[~mask])
+            self.assertEqual([draw[:3] for draw in control.last_draws], [draw[:3] for draw in treatment.last_draws])
+            for selected, draw in zip(mask, treatment.last_draws):
+                if selected:
+                    self.assertEqual(draw[2], 'tts_negative')
+                    self.assertTrue(45 <= draw[3] <= 50)
+            self.assertEqual(control.rng.bit_generator.state, treatment.rng.bit_generator.state)
+        with self.assertRaises(ValueError):
+            Sampler(self.rows, 741, focus_negative_activity=True)
+        with self.assertRaises(ValueError):
+            Sampler(self.rows, 741, self.mined, negative_intervals=intervals)
+
     def test_invalid_stride_and_heldout_mining_rejected(self):
         for value in (True, 0, 1, 2.5):
             with self.assertRaises(ValueError):

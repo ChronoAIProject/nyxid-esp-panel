@@ -15,6 +15,7 @@ import numpy as np
 import tensorflow as tf
 from ai_edge_litert.interpreter import Interpreter, OpResolverType
 from training_endpoints import endpoint_map
+from negative_activity import interval_map
 
 HISTORY = 16
 MIN_END = 25  # First nine embeddings are cold; every sampled history is warm.
@@ -127,13 +128,24 @@ def weighted_loss(labels, predictions, recipe):
 
 
 class Sampler:
-    def __init__(self, rows, seed, mined=None, hard_negative_stride=2, positive_endpoints=()):
+    def __init__(self, rows, seed, mined=None, hard_negative_stride=2, positive_endpoints=(),
+                 negative_intervals=(), focus_negative_activity=False, activity_stride=4):
         if type(hard_negative_stride) is not int or hard_negative_stride < 2:
             raise ValueError('Hard-negative stride must be an integer of at least two')
         self.hard_negative_stride = hard_negative_stride
         self.positive_endpoints = endpoint_map(rows, positive_endpoints, MIN_END)
+        if type(activity_stride) is not int or activity_stride < 2 or type(focus_negative_activity) is not bool:
+            raise ValueError('Expected an integer activity stride>=2 and explicit boolean mode')
+        if mined is not None and negative_intervals:
+            raise ValueError('Keep mining and source-activity interventions separate')
+        self.activity = interval_map(rows, negative_intervals, MIN_END)
+        self.focus_negative_activity = focus_negative_activity
+        self.activity_stride = activity_stride
+        if focus_negative_activity and not self.activity:
+            raise ValueError('Activity sampling requires complete training-negative intervals')
         self.rng = np.random.default_rng(seed)
         self.hard_rng = np.random.default_rng(seed+1_000_000)
+        self.activity_rng = np.random.default_rng(seed+3_000_000)
         self.hard = {}
         self.groups = {}
         for row in rows:
@@ -165,7 +177,7 @@ class Sampler:
                 raise ValueError('Both mined negative categories must be populated')
 
     def batch(self):
-        examples, labels = [], []
+        examples, labels, draws, activity_mask = [], [], [], []
         for kind, count in [('positive', 32), ('tts_negative', 48), ('ambient_negative', 48)]:
             for _ in range(count):
                 if kind == 'ambient_negative':
@@ -188,11 +200,19 @@ class Sampler:
                     engine = self.hard_rng.choice(engines)
                     group = self.hard[(kind, engine)]
                     row, end = group[int(self.hard_rng.integers(len(group)))]
+                scheduled_activity = kind == 'tts_negative' and _ % self.activity_stride == 0
+                if self.focus_negative_activity and scheduled_activity:
+                    low, high = self.activity[row['id']]
+                    end = int(self.activity_rng.integers(low, high + 1))
+                draws.append((row.get('id', ''), row.get('source_sha256', ''), kind, end))
+                activity_mask.append(scheduled_activity)
                 examples.append(row['array'][end-HISTORY:end])
                 labels.append(kind == 'positive')
         x = np.asarray(examples, np.float32)[:, :, :, None]/128
         y = np.asarray(labels, np.float32)[:, None]
         order = self.rng.permutation(len(y))
+        self.last_draws = [draws[index] for index in order]
+        self.last_activity_mask = np.asarray(activity_mask, np.bool_)[order]
         return x[order], y[order]
 
 

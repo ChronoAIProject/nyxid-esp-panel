@@ -186,7 +186,21 @@ def train(args):
         if row['split'] != 'training'}
     if heldout.intersection(row['source_sha256'] for row in rows):
         raise ValueError('Main training source overlaps held-out features')
-    sampler = Sampler(rows, plan['recipe']['seed'])
+    activity_records = ()
+    activity_path = getattr(args, 'activity_manifest', None)
+    activity_enabled = plan.get('focus_negative_activity', False)
+    if type(activity_enabled) is not bool or (activity_enabled and activity_path is None):
+        raise ValueError('Expected explicit activity mode and bound manifest')
+    if activity_path is not None:
+        if sha(activity_path) != plan['negative_activity_manifest_sha256']:
+            raise ValueError('Frozen source-activity manifest differs')
+        activity_manifest = json.loads(activity_path.read_text())
+        if (not activity_manifest['all_sources_training_only'] or not activity_manifest['heldout_source_hash_disjoint']
+                or not activity_manifest['source_audio_unchanged'] or activity_manifest['audio_speed_changed']):
+            raise ValueError('Invalid training-only source-activity roles')
+        activity_records = activity_manifest['records']
+    sampler = Sampler(rows, plan['recipe']['seed'], negative_intervals=activity_records,
+                      focus_negative_activity=activity_enabled, activity_stride=plan.get('activity_stride', 4))
     aux_sampler = AuxiliarySampler(rows, auxiliary['records'], plan['recipe']['seed'] + 2000000)
     representatives = Sampler([r for r in rows if r['_feature_directory'] in
         ('head-features-tts-v1', 'head-features-negatives-v1')], plan['recipe']['seed'] + 1)
@@ -249,6 +263,8 @@ def train(args):
         'engine_class_order': ENGINES,
         'training_sources': len(rows), 'training_frames': sum(r['frames'] for r in rows),
         'auxiliary_manifest_sha256': sha(args.auxiliary_manifest),
+        'negative_activity_manifest_sha256': sha(activity_path) if activity_path is not None else None,
+        'focus_negative_activity': activity_enabled,
         'initial_weights_sha256': sha(args.initial_weights), 'feature_inputs': {}, 'checkpoints': []}
     for name in feature_directories(extra):
         base = args.data_root / name
@@ -258,6 +274,8 @@ def train(args):
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     main_hash, aux_hash, auxiliary_source_hash = hashlib.sha256(), hashlib.sha256(), hashlib.sha256()
     engine_hash = hashlib.sha256()
+    main_source_hash, unmodified_hash = hashlib.sha256(), hashlib.sha256()
+    activity_counts = Counter()
     recipe = plan['recipe']
     for number in range(1, recipe['steps'] + 1):
         fraction = number / recipe['steps']
@@ -265,6 +283,14 @@ def train(args):
             recipe['learning_rate_half_factor'] if fraction > .5 else 1)
         optimizer.learning_rate.assign(recipe['learning_rate'] * factor)
         x, y = sampler.batch()
+        main_source_hash.update(json.dumps([draw[:3] for draw in sampler.last_draws], separators=(',', ':')).encode())
+        for value in (x[~sampler.last_activity_mask], y[~sampler.last_activity_mask]):
+            unmodified_hash.update(value.tobytes())
+        if activity_records:
+            for identity, _, kind, end in sampler.last_draws:
+                if kind == 'tts_negative':
+                    low, high = sampler.activity[identity]
+                    activity_counts[(by_id[identity]['engine'], low <= end <= high)] += 1
         ax, ay = aux_sampler.batch()
         auxiliary_source_hash.update(json.dumps(aux_sampler.last_source_draws, separators=(',', ':')).encode())
         ae = engine_labels(aux_sampler.last_source_draws, by_id)
@@ -292,6 +318,11 @@ def train(args):
                    auxiliary_batches_sha256=aux_hash.hexdigest(),
                    auxiliary_source_batches_sha256=auxiliary_source_hash.hexdigest(), accepted=False)
     summary['engine_labels_batches_sha256'] = engine_hash.hexdigest()
+    summary['main_sources_batches_sha256'] = main_source_hash.hexdigest()
+    summary['main_unmodified_batches_sha256'] = unmodified_hash.hexdigest()
+    summary['tts_negative_endpoint_interval_counts'] = [
+        {'engine': engine, 'inside_interval': inside, 'sampled_windows': count}
+        for (engine, inside), count in sorted(activity_counts.items())]
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     (args.output / 'complete.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps({'phase': 'completed', 'seconds': summary['seconds'],
@@ -311,6 +342,7 @@ def main():
         else:
             command.add_argument('--initial-weights', type=Path, required=True)
             command.add_argument('--auxiliary-manifest', type=Path, required=True)
+            command.add_argument('--activity-manifest', type=Path)
     args = parser.parse_args()
     (prepare if args.action == 'prepare' else train)(args)
 

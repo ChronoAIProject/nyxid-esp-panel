@@ -1,0 +1,40 @@
+{
+  "scope": "Pre-score preparation and fixed quarter-TTS endpoint sampling protocol. Training-only source WAVs, no waveform transformation or detector inference.",
+  "preparation_script_sha256": "03a7dc55557e19ce62d76eecf678088b56fcdaa3fa547750518320d410bd9a28",
+  "feature_inputs": {
+    "head-features-tts-v1": {
+      "index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+      "jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+      "complete.json": "d7c5dc44fe1d2a461817e79d55f31f36b01c74f39b22a301191e65705a528c19",
+      "identity.json": "3934e12ecc2fa960793de37a39a54069e31df90c96a3b9f64bc59301cd45ae44"
+    },
+    "head-features-negatives-v1": {
+      "index.jsonl": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6",
+      "jobs-private.json": "3f56106a037d7bc36282ec025eaf648e4221241306cf74e397a8b71ca4bdb69b",
+      "complete.json": "b0a236887d51fba7eabd5e33ca2ff3b697139626cd84fdd176821a5fcd3ad64c",
+      "identity.json": "f3c997e77979e20f50ab1ab781682dc1f89e3cfc43a9dcb05d22a79cefdc404b"
+    },
+    "head-features-environment-v2": {
+      "index.jsonl": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+      "jobs-private.json": "c3e3ccc79bba2dd98f17791f2c2c53b678a3571390e822f0ff5dfd9baae81858",
+      "complete.json": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c",
+      "identity.json": "6f1f97497f58c5c53da32a9f809c83a9bf8fe57cbc35bb7591ad420e50417674"
+    }
+  },
+  "selection": "Every original training TTS-negative view from the retained CE recipe, including original and environmental views. Exclude heldout hashes and any training-positive source hash. No teacher scores or source filtering.",
+  "source_interval": "Original16kHz mono PCM16;10ms RMS blocks; first/last block RMS>=max(peak*.01,1). Endpoints ceil((2.4+first+.03)/.08) through ceil((2.4+last+.32)/.08), inclusive, inside original warmed range25..frames. Silent or invalid sources fail preparation, never disappear silently.",
+  "training_intervention": "One quarter of the48TTS-negative ends per batch, positions0,4,..44before original batch permutation. Consume every original RNG draw first, then use separate seed741+3000000for an interval end on the SAME source. Positives32,ambient48,other36TTS histories and all source/class draws must remain identical. No mining or other sampler change.",
+  "frozen_recipe_reference_sha256": "e338ff616f00832d23e7c25964889680274b3bedaadedbd751280d65149e0546",
+  "training_protocol": "Retained initial weights and CE.2,extra-binary0,engine-adversary0,seed741,10000steps/final checkpoint,unchanged original auxiliary manifest,loss,learning-rate schedule and512PTQ histories. Bind prepared manifest in new plans before fitting. Off control must exactly reproduce retained model and main/auxiliary batch bytes.",
+  "evaluation": "Original19point validation grid, retain joint confidence/confuser point and confidence-only diagnostic. The1%near-word constraint is additional research, not demonstrated HiESP parity; later matched native/acoustic/continuous comparisons remain necessary.",
+  "decision_gate": "Compare under original fixed joint constraints; retain confidence-only alternatives and every grid row. An inferior intervention is not a board or final-evaluation candidate.",
+  "speaker_playback": false,
+  "microphone_access": false,
+  "audio_speed_changed": false,
+  "accepted": false,
+  "limits": [
+    "Endpoint position inside an energy span does not prove speech occupancy;16embedding histories retain earlier speech outside it.",
+    "Source energy/RMS and synthetic metadata are not phonetic ground truth.",
+    "Same synthetic views/reused validation do not establish independent speakers, real recall or HiESP parity."
+  ]
+}
