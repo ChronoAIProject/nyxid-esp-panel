@@ -100,7 +100,7 @@ def main():
     feature_metadata_hashes = {
         name: hashlib.sha256((args.features/name).read_bytes()).hexdigest()
         for name in ("features.json", "human.json", "ambient.json", "augmentation.json",
-                     "negative-additions.json", "base-provenance.json")
+                     "negative-additions.json", "base-provenance.json", "dialogue-augmentation.json")
         if (args.features/name).is_file()}
     groups = {}
     for split in ("training", "validation", "testing"):

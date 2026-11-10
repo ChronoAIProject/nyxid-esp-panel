@@ -1979,3 +1979,24 @@ Hi ESP仍1/12窗口内命中，另4条提前触发。共同/交叉目标负例�
 不能声称Nyx优于Hi ESP。完整曲线与逐条事件见
 results/4090-v19-hiesp-development-calibration-v1.json及
 results/4090-v19-hiesp-paired-budget-diagnostic-v2.json。
+
+
+## 正/近音样本的真实对话背景增强准备（2026-11-10）
+
+核查原MS-SNSD训练背景仅45条设备/家具声音，没有叠加真实对话。
+原环境负例虽有DiPCo，不能代替正样本在交谈背景中的训练覆盖。
+另建features-gpu-dialogue-mix-v1：仅使用已审计S02/S04训练通道，
+为每个原始training关键词/近音来源增加两个确定性混音，新增29196序列。
+前景整段RMS标定，5..15dB SNR，1.8..4.5s对话预热、1s尾部；
+不改端点代理，不修改标签，不给新增混音再叠RIR，原RIR变体保留。
+背景随机片段可能包含停顿，不能称每条都有重叠语音。
+
+完整原特征二进制前缀SHA、全部原索引前缀及validation/testing行核验通过。
+Piper/Kokoro/Qwen各正负1条共6个实际重渲染探针，
+波形哈希、元数据及特征数组与缓存逐项一致。
+最大裁剪比例1.4315%，平均0.1067%，已报告而非静默忽略。
+新增独立对话小时0；当前运行v26数据完全不变，尚未基于此缓存训练/评分。
+
+记录在results/4090-dialogue-augmentation-v1.json及
+results/4090-dialogue-augmentation-audit-v1.json。未来训练配置会记录
+dialogue-augmentation.json哈希；该记录项不影响已启动v26的采样/损失。

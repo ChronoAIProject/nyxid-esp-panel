@@ -1,0 +1,130 @@
+{
+  "role": "Dialogue feature prefix/evaluation preservation and deterministic waveform re-render audit",
+  "base_records": 98948,
+  "combined_records": 128144,
+  "added_training_sequences": 29196,
+  "exact_original_record_prefix_verified": true,
+  "validation_and_development_regression_rows_unchanged": true,
+  "deterministic_reproduced_probes": [
+    {
+      "engine": "piper",
+      "label": 0,
+      "path": "piper-gpu/training/0/03503.wav",
+      "frames": 512,
+      "rendered_pcm_sha256": "964b79be6fd312a5a62ce1164a36c93312950fc789c3eb984caab90a9edb39e9"
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "path": "piper-gpu/training/1/03777.wav",
+      "frames": 497,
+      "rendered_pcm_sha256": "39b2f55c4285ee0fddf7c1b86ad4ada768c4627fed9a5181cff1125002e74d9f"
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "path": "kokoro-speed-v2/training/af_bella/000.wav",
+      "frames": 480,
+      "rendered_pcm_sha256": "2a73409c5cb6a0d91f2344e9bc91ba1187f2ec2d8ef86d1d5c2a1c00efb32e2f"
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "path": "kokoro-speed-v2/training/af_bella/003.wav",
+      "frames": 405,
+      "rendered_pcm_sha256": "079d8e8d74af16bb9ad48c4b6a3bb419ae68126f0f4f870289f47b174433e3d0"
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 1,
+      "path": "qwen-cuda-v1-asr/training/profile_000/000.wav",
+      "frames": 460,
+      "rendered_pcm_sha256": "5079e71eef308bedbbc9e504c9ca2dc0c9db3b2349f3e19faa266b63c7717c35"
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 0,
+      "path": "qwen-cuda-v1-asr/training/profile_000/003.wav",
+      "frames": 619,
+      "rendered_pcm_sha256": "76b1c5d2693c904f36f0b0b0aa7ea63fcfe50eb97fabb28134d176c41b279db7"
+    }
+  ],
+  "training_engine_label_mix_counts": [
+    {
+      "engine": "piper",
+      "label": 0,
+      "dialogue_mixed": false,
+      "sequences": 36000
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "dialogue_mixed": false,
+      "sequences": 36000
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "dialogue_mixed": false,
+      "sequences": 1800
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "dialogue_mixed": false,
+      "sequences": 12000
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 1,
+      "dialogue_mixed": false,
+      "sequences": 180
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 0,
+      "dialogue_mixed": false,
+      "sequences": 1608
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "dialogue_mixed": true,
+      "sequences": 12000
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "dialogue_mixed": true,
+      "sequences": 12000
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "dialogue_mixed": true,
+      "sequences": 600
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "dialogue_mixed": true,
+      "sequences": 4000
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 1,
+      "dialogue_mixed": true,
+      "sequences": 60
+    },
+    {
+      "engine": "qwen-cuda",
+      "label": 0,
+      "dialogue_mixed": true,
+      "sequences": 536
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "v26_dataset_changed": false,
+  "classifiers_scored": false,
+  "limits": "Six source/label probes reproduce actual rendered feature arrays and metadata; full prefix SHA separately verified by generator. New variants are correlated with existing training voices/dialogues, not independent data or recognition evidence."
+}
