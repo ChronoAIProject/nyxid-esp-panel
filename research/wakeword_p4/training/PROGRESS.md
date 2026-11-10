@@ -733,3 +733,17 @@ voices/conditions and real recordings for subsequent acceptance.
   board change. See `../embedding/plans/ctc-endpoint-audit-v1.json`; inference
   has not run at this commit. Its output cannot prove a phonetic truth boundary
   or improved wake quality.
+
+- The frozen independent CTC audit completes all 178 sources, without playback
+  or a board change. OpenAI marker-to-CTC-support median is 440 ms and 10/32
+  markers exceed the original RMS end by >200 ms; other cohorts have no such
+  RMS-late cases. CTC spikes remain an imperfect timing diagnostic, not new
+  labels. Full training-only accounting verifies 1,959 unique standalone
+  sources and 56 RMS-late anchors. The prior file-end-only rule covers 34 and
+  misses 22, including a fixed-sample 840 ms RMS delay. The new generic
+  preparation plan freezes all four original/environmental views (224 expected
+  endpoint overrides), preserving all source/feature bytes and original
+  metadata. It must retain original PTQ inputs before any matched fitting.
+  See `../results/embedding-ctc-endpoints-v1.json` and
+  `../embedding/plans/training-endpoint-overrides-v1.json`. No new detector
+  training, held-out audio scoring, threshold change or quality acceptance yet.

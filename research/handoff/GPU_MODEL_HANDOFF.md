@@ -13,6 +13,11 @@ The later inspected snapshot `ce601c4` rejects v20 and starts wider v21
 `teacher120` training without quality or MCU results. The topology below
 describes v19's `teacher60`; a wider artifact requires its own explicit
 metadata, numeric and resource checks. See [GPU progress](GPU_PROGRESS.md).
+Snapshot `c560247` subsequently rejects the wider model's recall/false-event
+tradeoff. Its denser validation grid also gives the original v19 weights a
+different calibration (.9140625), still failing expanded validation. The .95
+reference contract below describes the original calibration; a handoff must
+bind the actual chosen report rather than silently mixing those policies.
 
 ## Required files
 

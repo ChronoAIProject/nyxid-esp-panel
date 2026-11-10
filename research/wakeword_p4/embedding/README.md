@@ -511,6 +511,25 @@ phone boundaries. Compare original markers with the last CTC support and the
 unchanged RMS endpoint independently; neither automatically replaces labels.
 This plan is frozen before inference and establishes no wake recognition result.
 
+The completed [178-source report](../results/embedding-ctc-endpoints-v1.json)
+records all-blank counts and binds all per-source CTC rows by hash. OpenAI's median original
+marker-to-last-CTC-support gap is 440 ms, versus 36..225 ms for the other
+cohorts; 10/32 OpenAI markers are also more than 200 ms beyond the RMS end.
+CTC support typically precedes the full phone tail, so this does not justify
+using its timestamp as a label. It independently reinforces the existing
+energy-based concern without establishing a cause of acoustic misses.
+
+All-training accounting verifies 1,959 unique standalone sources: 56 exceed
+the unchanged 200 ms RMS lateness criterion. The prior file-end restriction
+covers 34 and misses 22, including a fixed-sample marker 840 ms beyond the
+RMS end. All 56 happen to be OpenAI sources; the rule is provider-independent.
+`prepare_training_endpoints.py` and
+`plans/training-endpoint-overrides-v1.json` freeze a separate manifest for all
+four original/environmental views, expected to affect 224 training endpoints.
+No original index or payload is rewritten. Its eventual sampler consumer must
+keep PTQ representatives on original metadata and bind the override hash before
+matched fitting. Preparation/CTC results alone cannot accept or deploy a model.
+
 ### Generic channel-EQ continuation
 
 `audit_capture_transfer.py` characterizes one explicitly hash-bound synthetic

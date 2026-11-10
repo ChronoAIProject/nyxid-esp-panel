@@ -1,0 +1,43 @@
+{
+  "scope": "Frozen all-training standalone endpoint ablation preparation. Generate a separate sampler override; never replace original indexes, audio, features, class labels or held-out markers.",
+  "script_sha256": "d1bab9df0735145f34ed639f05d49df18b61d3050d64f0c26ccaf4d5d5957881",
+  "helper_sha256": "fb61f48e6ccd1dfa80d0437de90977a9382529a0bdbe37bf41578900e624f420",
+  "independent_audit_report": "embedding-ctc-endpoints-v1.json",
+  "independent_audit_report_sha256": "ee5c65d8a242c278d6542347dbaa133645fdac21580ad5db3e7544928b043131",
+  "inputs": {
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "head-features-tts-v1/jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+    "head-features-tts-v1/identity.json": "3934e12ecc2fa960793de37a39a54069e31df90c96a3b9f64bc59301cd45ae44",
+    "head-features-tts-v1/complete.json": "d7c5dc44fe1d2a461817e79d55f31f36b01c74f39b22a301191e65705a528c19",
+    "head-features-environment-v2/index.jsonl": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+    "head-features-environment-v2/jobs-private.json": "c3e3ccc79bba2dd98f17791f2c2c53b678a3571390e822f0ff5dfd9baae81858",
+    "head-features-environment-v2/identity.json": "6f1f97497f58c5c53da32a9f809c83a9bf8fe57cbc35bb7591ad420e50417674",
+    "head-features-environment-v2/complete.json": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c",
+    "../features-expanded-human335/features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283"
+  },
+  "feature_directories": [
+    "head-features-tts-v1",
+    "head-features-environment-v2"
+  ],
+  "text_metadata": "../features-expanded-human335/features.json",
+  "lead_samples": 38400,
+  "rms_peak_fraction": 0.01,
+  "minimum_late_samples": 3200,
+  "post_activity_margin_samples": 1280,
+  "expected_counts": [
+    1959,
+    56,
+    34,
+    224
+  ],
+  "expected_counts_order": [
+    "unique_training_standalone_sources",
+    "eligible_sources",
+    "previous_file_end_eligible_sources",
+    "affected_training_views"
+  ],
+  "eligibility": "All training-positive standalone complete Hey Nyx/Nix/Nicks aliases in the original and environmental views whose original marker exceeds the unchanged10ms RMS activity end by strictly more than200ms. No condition on source file length and no provider/text-confidence selection.",
+  "override": "New source anchor=min(original marker,activity_end+80ms). Only positive sampling endpoints change in a separate manifest. Preserve source/feature identities, row order, commands, negatives and all nontraining rows.",
+  "next": "Before fitting, verify a sampler consumer that uses these overrides only for training while deriving all PTQ representatives from the original rows. Bind this exact output hash in matched dense/temporal recipes. Do not train or deploy directly from accounting or CTC scores.",
+  "accepted": false
+}
