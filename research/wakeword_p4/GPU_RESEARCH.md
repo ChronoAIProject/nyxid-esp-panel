@@ -1956,3 +1956,26 @@ results/4090-v26-initialization-audit.json。本轮未改变运行中的训练�
 results/4090-spatial-training-*.json保存源、缓存、组合和相关性审计。
 通用追加报告的added_speakers是流ID，不代表新增真人；
 added_original_hours为原通道波形小时，不代表独立对话小时。
+
+
+## 与Hi ESP观测事件预算一致的开发诊断（2026-11-10）
+
+作为独立诊断，保留原环境0事件、近音来源误检≤1%约束，
+用固定Hi ESP在同批12.789657865小时负音频的1事件作为观测预算，
+扫描v19已有固定密集阈值网格，最大化原英语验证来源平均召回。
+三项负语料报告SHA必须匹配既有同PCM审计，逐流score哈希/原事件重计数通过。
+选择阈值0.94140625：中文0、DiPCo0、dev-other1事件；
+合并观测数与Hi ESP相等，名义单侧95%上界0.370914106/h。
+原合成验证来源平均召回79.2708%，中位延迟130ms、P95210ms。
+
+此点**没有通过既有逐语料零事件门槛**。诊断独立保存并标记
+not_for_final_acceptance，未替代原门槛、未授权最终测试。
+相等开发观测数不是一般场景FAR等效，也不是独立置信保证。
+
+随后仅从已有配对开发分数重新计数，未用其正样本选阈值，
+窗口不变：Nyx9/12命中，中位150ms、P95266ms；
+Hi ESP仍1/12窗口内命中，另4条提前触发。共同/交叉目标负例均0。
+这些是重复合成小样本，Hi ESP字母发音/ASR和能量端点限制仍在，
+不能声称Nyx优于Hi ESP。完整曲线与逐条事件见
+results/4090-v19-hiesp-development-calibration-v1.json及
+results/4090-v19-hiesp-paired-budget-diagnostic-v2.json。
