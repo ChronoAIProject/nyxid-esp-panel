@@ -1,0 +1,38 @@
+{
+  "role": "v26 initialization equivalence audit, not recognition result",
+  "baseline": "v24",
+  "initialization_json_equal": true,
+  "baseline_sha256": "0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94",
+  "v26_sha256": "0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94",
+  "initialization": {
+    "context_frames": 150,
+    "initial_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+    "classifier_reset": true,
+    "classifier_initial_sha256": "a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54",
+    "frozen_batchnorm": [
+      "batch_normalization",
+      "batch_normalization_1",
+      "batch_normalization_2",
+      "batch_normalization_3"
+    ],
+    "batchnorm_policy": "frozen",
+    "batchnorm_initial": {
+      "layers": [
+        "batch_normalization",
+        "batch_normalization_1",
+        "batch_normalization_2",
+        "batch_normalization_3"
+      ],
+      "moving_statistics_sha256": "aaca90e4b713c56c164189d62c3632733f90c61948485c0475127d7b01083299",
+      "affine_sha256": "2dd4a15dc23a775bb927318229ddeb931cd001d4f791528b499e6db9da1ce76c"
+    },
+    "seed": 726
+  },
+  "label_smoothing": 0.02,
+  "target_formula": "y*(1-epsilon)+epsilon/2",
+  "negative_target": 0.01,
+  "positive_target": 0.99,
+  "training_sample_weights_unchanged": true,
+  "evaluation_labels_unchanged": true,
+  "independent_final_audio_accessed": false
+}
