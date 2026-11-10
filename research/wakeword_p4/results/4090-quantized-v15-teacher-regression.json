@@ -1,0 +1,107 @@
+{
+  "evaluation_source_sha256": "6b15ab5ccd3898b39ae40d942d33f4ff0c50abb90cc6aea19588695f7b4f6c02",
+  "feature_metadata_sha256": {
+    "features.json": "f46e69b9b69a84a194f7a97ba952af1e3779b69b3aebd2159edcb13597311eaf",
+    "human.json": "05e99028ec63a6b9d7446b0c51eae5466806cb6b0ac40419a51dae7d79fbb134",
+    "ambient.json": "19f38c3a1d949e2ae47b724bae3332f9e55933d18f6e947e1892f9acaf71962d"
+  },
+  "feature_binary_sha256": "f0b193654755aa24c0bc8c52c11062b983cef2e5c0113f875bcfe1aeafdce852",
+  "model_sha256": "d527fda86027d532d896af0f0ac1ee03bdfd6ab71c4b4ce2f18f9407cde3abe8",
+  "sliding_window": 5,
+  "threshold": 0.95,
+  "validation": {
+    "threshold": 0.95,
+    "positive_variants": 2160,
+    "recall": 0.8018518518518518,
+    "detected": 1732,
+    "latency_ms_median": 129.9999999999999,
+    "latency_ms_p95": 239.99999999999977,
+    "premature_positive_events": 3,
+    "macro_recall": 0.7572916666666667,
+    "recall_by_engine": {
+      "piper": 0.8145833333333333,
+      "kokoro": 0.7
+    },
+    "hard_negative_variants": 3520,
+    "hard_negative_false_rate": 0.007954545454545454,
+    "max_source_false_rate": 0.008125,
+    "ambient_hours": 1.2048112673611107,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.4864743173555475
+  },
+  "testing_regression": {
+    "threshold": 0.95,
+    "positive_variants": 2160,
+    "recall": 0.7611111111111111,
+    "detected": 1644,
+    "latency_ms_median": 129.9999999999999,
+    "latency_ms_p95": 239.99999999999977,
+    "premature_positive_events": 68,
+    "macro_recall": 0.6760416666666667,
+    "recall_by_engine": {
+      "piper": 0.7854166666666667,
+      "kokoro": 0.5666666666666667
+    },
+    "hard_negative_variants": 3520,
+    "hard_negative_false_rate": 0.003693181818181818,
+    "max_source_false_rate": 0.0046875,
+    "ambient_hours": 1.3581617534722223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.2057256920210127
+  },
+  "event_policy": "Five-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",
+  "latency_limits": "Synthetic keyword-end annotation; 10 ms frontend/30 ms inference timing. Includes no hardware capture/network delay.",
+  "exposure_policy": "Human source seconds exclude inserted utterance-boundary silence; environmental exposure uses original waveform seconds. All detected events are counted.",
+  "mac_regression": null,
+  "by_engine": {
+    "kokoro": {
+      "threshold": 0.95,
+      "positive_variants": 240,
+      "recall": 0.5666666666666667,
+      "detected": 136,
+      "latency_ms_median": 40.000000000000036,
+      "latency_ms_p95": 242.50000000000017,
+      "premature_positive_events": 68,
+      "macro_recall": 0.5666666666666667,
+      "recall_by_engine": {
+        "kokoro": 0.5666666666666667
+      },
+      "hard_negative_variants": 1600,
+      "hard_negative_false_rate": 0.0025,
+      "max_source_false_rate": 0.0025,
+      "ambient_hours": 1.3581617534722223,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.2057256920210127
+    },
+    "piper": {
+      "threshold": 0.95,
+      "positive_variants": 1920,
+      "recall": 0.7854166666666667,
+      "detected": 1508,
+      "latency_ms_median": 129.9999999999999,
+      "latency_ms_p95": 239.99999999999977,
+      "premature_positive_events": 0,
+      "macro_recall": 0.7854166666666667,
+      "recall_by_engine": {
+        "piper": 0.7854166666666667
+      },
+      "hard_negative_variants": 1920,
+      "hard_negative_false_rate": 0.0046875,
+      "max_source_false_rate": 0.0046875,
+      "ambient_hours": 1.3581617534722223,
+      "ambient_false_events": 0,
+      "ambient_false_per_hour": 0.0,
+      "ambient_false_per_hour_upper_95": 2.2057256920210127
+    }
+  },
+  "limits": [
+    "v1 test/Mac sets informed development; these are regression results, not untouched final holdouts.",
+    "Four render variants share source utterances and are not independent trial counts.",
+    "MS-SNSD files are blob-disjoint; original room/recording session identities are unavailable.",
+    "No real-user positive wake-word recordings or Chinese/TV/music negative evaluation.",
+    "Not production acceptance; confidence bounds apply only to the measured audio distribution."
+  ]
+}
