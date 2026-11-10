@@ -944,3 +944,31 @@ QEMU 正常 quit 返回 0。先前超时记录保留为历史，不再作为启�
 这证明无板 ROM/应用/FreeRTOS/计时链路工作，不证明 WakeNet 的 PIE/DSP
 内核可执行，更不是识别率或 Hi ESP 比较结果。下一步加载精确 2.6.1
 ESP-SR 和 Hi ESP 模型，使用开发音频验证实际 detect 调用。
+
+
+### Hi ESP 模型创建探针：确证当前 QEMU 不支持所需 PIE 指令
+
+从组件注册表下载 ESP-SR **2.6.1**，component_hash 与主项目锁文件一致
+（7ba1e97d…b4d14）。未改模型或推理库。Hi ESP 的 `wn9_hiesp` 约 284 KiB，
+已由官方打包工具装入 model 分区，完整固件编译并从 ROM 启动。
+
+第一次启用 IDF PSRAM 初始化时，设备 ID 读取报“PSRAM chip is not connected”。
+核查官方 QEMU 源码，确有 0x48000000 起的 64 MiB 普通 RAM，但控制器缺少
+该交易。仅在仿真探针关闭硬件 PSRAM 初始化，逐 4 KiB 页写读一个字后，
+把其中 16 MiB 注册为外部堆。这个配置不能部署到板子，不代表真实 PSRAM 时序。
+
+`esp_srmodel_init` 与 Hi ESP 模型枚举通过；create 尚未通过。实际异常：
+
+- ROM `strtod` 的 `frm` CSR 读取触发非法指令，QEMU lazy-FPU 分类没有覆盖
+  CSR 读取。尝试先执行普通浮点指令后，仍捕获 1 次 CSR fault。
+- 随后 27 次重启均出现 PIE fault：MEPC=0x4003b430、MTVAL=0x03a1801f。
+  精确 ELF 反汇编为 `esp.ld.128.usar.ip q0,a1,0`；addr2line 对应
+  `dl_esp32p4_sr_memcpy.S:55`，调用方 `dl_nn_get_sigmoid_table`。
+
+因此当前官方 P4 QEMU 能启动普通固件，却不能直接执行这个精确 WakeNet
+二进制。没有完成一次 detect，没有计算召回或误触；准备的零 PCM 只用于
+运行时兼容性探针，也没有实际推理完成。不能据此判断 Hi ESP 效果。
+`qemu_wakenet_probe/` 保存源码、配置和依赖锁；结果和首个异常周期见
+`4090-qemu-p4-wakenet-create-probe.json` 与 `4090-qemu-p4-wakenet-create-first-fault.txt`。
+原始失败日志和 ELF/闪存均保留在 ignored `.local/wakeword/`。
+后续保留 Hi ESP 比较未完成，独立数据与模型改进仍可继续，目标保持 active。

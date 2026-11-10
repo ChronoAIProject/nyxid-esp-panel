@@ -1,0 +1,78 @@
+{
+  "scope": "Actual ESP-SR 2.6.1 / wn9_hiesp model creation under official P4 QEMU; no recognition scoring",
+  "qemu_release": "esp-develop-9.2.2-20261109",
+  "idf_version": "v5.5.4",
+  "esp_sr_version": "2.6.1",
+  "esp_sr_component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14",
+  "model": "wn9_hiesp",
+  "mode": "DET_MODE_95",
+  "build": "passed",
+  "model_partition_discovered": true,
+  "model_created": false,
+  "detect_call_completed": false,
+  "exceptions": [
+    {
+      "mepc": "0x4fc16bcc",
+      "mcause": "0x00000002",
+      "mtval": "0x00202973",
+      "count": 1
+    },
+    {
+      "mepc": "0x4003b430",
+      "mcause": "0x00000002",
+      "mtval": "0x03a1801f",
+      "count": 27
+    }
+  ],
+  "failure_attribution": {
+    "rom_frm_read": {
+      "mepc": "0x4fc16bcc",
+      "instruction": "0x00202973",
+      "caller": "_strtod_l",
+      "note": "QEMU lazy-FPU classifier misses CSR accesses with FS disabled; an explicit floating-point instruction was tried before create. Both ROM-CSR and PIE faults remain in captured run."
+    },
+    "pie": {
+      "mepc": "0x4003b430",
+      "mtval": "0x03a1801f",
+      "instruction": "esp.ld.128.usar.ip q0,a1,0",
+      "symbol": "dl_esp32p4_sr_memcpy",
+      "caller": "dl_nn_get_sigmoid_table",
+      "source_line": "dl_esp32p4_sr_memcpy.S:55"
+    }
+  },
+  "simulation_only_shim": {
+    "reason": "IDF PSRAM device-ID read fails; QEMU source supplies plain 64 MiB RAM at 0x48000000",
+    "registered_bytes": 16777216,
+    "check": "write/read one word per 4 KiB page before heap_caps registration",
+    "psram_hardware_init": "disabled; not a deployable configuration",
+    "inference_library_modified": false,
+    "model_modified": false
+  },
+  "artifacts": {
+    "elf": {
+      "sha256": "0c7180fcc983f024aba65e23305ffd1c72e7e8119383443b6770230bc4c76868",
+      "bytes": 15611700
+    },
+    "flash": {
+      "sha256": "6e24c84590842386533b448a2e9178f909c1ffde1d66c99c8364acb62fd89c29",
+      "bytes": 4194304
+    },
+    "packed_models": {
+      "sha256": "2a162e78cb30938d9c55172df2a1b0f9bee307f8ee27ddf90e3ffbcd8ece736a",
+      "bytes": 291142
+    },
+    "serial": {
+      "sha256": "8487542580432e9cf620b41da696b52a362f52611cd37779905dfc03077a0f22",
+      "bytes": 212123
+    },
+    "wakenet_library": {
+      "sha256": "d162ab53ec6b08cfdcbd7329d56f4a4414bed2e26a572ab2a5247f8041dce0c9",
+      "bytes": 1844364
+    },
+    "dl_library": {
+      "sha256": "07174a92fae60884998186a843e06e9955b78c2dc4d491fe2b6de2068f6eedd2",
+      "bytes": 4412542
+    }
+  },
+  "conclusion": "This exact emulator cannot execute optimized model creation; Hi ESP comparison remains unverified. No zero-PCM inference or audio recognition completed."
+}
