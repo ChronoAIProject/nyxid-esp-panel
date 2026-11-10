@@ -1,0 +1,26 @@
+{
+  "scope": "Prespecified training-only phase augmentation; same original sources, speaking rate, complete waveform samples and recording durations. No validation/reserved fitting.",
+  "hypothesis": "Fixed80ms block alignment changes positive peaks by up to0.497 and a negative threshold outcome in the training-only pilot. Its24positive sources all still pass, so this does not establish the physical-miss cause. Test one additional uniformly sampled within-block offset per original training source, with matched no-addition control; no improvement assumed.",
+  "seed": 738,
+  "jobs": "head-features-tts-v1/jobs-private.json",
+  "backbone": "embedding-stream-int8-quiet.tflite",
+  "window": "native-fft-window.npy",
+  "mel_filter": "native-mel-filter.npy",
+  "offset_range_samples": [
+    1,
+    1280
+  ],
+  "input_files": {
+    "head-features-tts-v1/jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a"
+  },
+  "helpers": {
+    "prepare_head_features.py": "ed63c33c9acd3a1e779a35bd8303c2515cedc0bcd4f70abe75257109a8403b65",
+    "native_mel.py": "724436b5880d07c170bb5c5843f1da34383c31a7b1c9714c4048cb38267724d0"
+  },
+  "extractor_sha256": "9bfea51f48a9523db5136dfbc93254576c875f64e766505c02f1a6bd7055f998",
+  "followup": "Bind completed index/feature identities before matched training. Original validation/checkpoint policy only; freeze before existing development regression. Reserved scoring and physical/resource acceptance remain separate."
+}

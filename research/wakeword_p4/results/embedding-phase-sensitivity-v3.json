@@ -1,0 +1,24 @@
+{
+  "scope": "Measure fixed-head sensitivity to sample alignment on training sources only.\n\nShift silence from the tail to the lead without changing speech samples,\nrecording length, sample rate or speed. This is a diagnostic, not wake accuracy\nacceptance or a calibration/threshold search.\n",
+  "plan_sha256": "a4f11b0391483faf6d6a587921bb4b8d7904f80970d37c0af2b03e472ae69b3b",
+  "sources": 48,
+  "positive_sources": 24,
+  "all_phase_zero_features_exact": true,
+  "positive_threshold_outcome_varies_by_phase": 0,
+  "positive_above_threshold_by_offset": {
+    "0": 24,
+    "16": 24,
+    "160": 24,
+    "320": 24,
+    "640": 24,
+    "960": 24,
+    "1264": 24
+  },
+  "heldout_sources_read": false,
+  "audio_speed_changed": false,
+  "accepted": false,
+  "negative_threshold_outcome_varies_by_phase": 1,
+  "positive_peak_variation_max": 0.49674479166666663,
+  "harness_failure": "Initial run resolved relative feature paths against repository cwd and failed before report/scores. Explicit retry resolves and contains features under data root, same frozen sampling/models/threshold.",
+  "conclusion": "All24training positives pass at all seven offsets, while one of24negatives changes threshold outcome. Scores can vary substantially, but this small fitted-data pilot does not establish the physical-miss cause or model accuracy. A frozen matched phase-augmentation experiment follows; no threshold relaxation."
+}

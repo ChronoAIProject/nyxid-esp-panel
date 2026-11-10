@@ -452,3 +452,32 @@ The common schedule, source partitions and selection rule are in
 `head-positional-pool-comparison-plan-v1.json`; no reserved data may be used
 to fit or select. A promising result still needs frozen development regression,
 separate P4 depthwise numeric/layout checks and the whole-app/voice gates.
+
+The positional-pool experiment now finishes: validation macro recall is
+92.370% fixed and93.113% learned, below the preceding average-pool93.522%
+and original temporal95.261%. It does not advance to device/reserved scoring.
+Initial arm features/predictions and all512 PTQ representatives are exactly
+equal. See `../results/embedding-positional-pool-v3.json`.
+
+`audit_phase_sensitivity.py` freezes a48-source training-only pilot across
+six engines, balanced labels, and offsets0/16/160/320/640/960/1264samples.
+Move silence from the tail to the lead; speech bytes and total recording
+length stay exact. Phase0 must reproduce each original embedding array.
+All24positive sources remain above the fixed.4 threshold, though peak changes
+reach.497; one of24negative sources changes threshold outcome. This is fitted
+training data, not proof of accuracy or the cause of a physical miss.
+The initial harness fails on relative feature-path resolution before results;
+the explicit retry resolves/contains feature paths under the private data root.
+See `phase-sensitivity-plan-v1-retry1.json` and
+`../results/embedding-phase-sensitivity-v3.json`.
+
+`prepare_phase_views.py --data-root <private-root> --plan
+phase-views-plan-v1.json --output <fresh-private-feature-directory>
+--workers 4` adds one uniformly selected1..1279sample offset per original
+training TTS source, with original waveforms/durations and shifted endpoint
+metadata. It rejects held-out overlap, verifies source/model/frontend hashes,
+checks speech-byte preservation on every view and hashes PCM/features.
+The original arrays and held-out data stay immutable. Bind the completed
+feature index and completion hashes before the matched training comparison
+in `head-temporal-phase-comparison-plan-v1.json`; this is an unproven
+augmentation hypothesis, with no relaxed evaluation threshold.

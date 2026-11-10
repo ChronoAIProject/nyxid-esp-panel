@@ -1,0 +1,39 @@
+{
+  "scope": "Prespecified matched temporal phase-augmentation continuation. Frozen before new fitting or validation scores.",
+  "hypothesis": "Expose the fixed backbone/head to different within80ms alignments of each original training TTS waveform. No speed/rate/duration, original source, threshold-policy or held-out changes. The small training pilot shows score variability, not proof of physical-miss cause.",
+  "arms": {
+    "control": "Original environmental feature view only; repeat prior control to verify artifact identity.",
+    "phase": "Same initial weights/recipe, plus one new uniformly offset view per original training TTS source."
+  },
+  "phase_feature_plan_sha256": "6aabaf8fb79e119aedfd14ee761ff6fd7e3144817210d2d5eb6da302b93649e5",
+  "training_source_jobs": 10070,
+  "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+  "recipe": {
+    "seed": 727,
+    "steps": 10000,
+    "checkpoints": [
+      2500,
+      5000,
+      7500,
+      10000
+    ],
+    "batch": 128,
+    "positive": 32,
+    "tts_negative": 48,
+    "ambient_negative": 48,
+    "negative_weight": 5,
+    "learning_rate": 0.0001,
+    "learning_rate_half_factor": 0.3,
+    "learning_rate_eighty_percent_factor": 0.1
+  },
+  "architecture": "temporal32-bn-dropout",
+  "original_control_model_sha256": {
+    "step-02500": "6794c8852445d5d93e0604f41b0ee8725a45bef5b17612c1de253aed0a909928",
+    "step-05000": "1781003c8e42b1e5ffa1d3b5e305b90357a2d14a87e3ad5a7c6e58fc08e3b64b",
+    "step-07500": "feecb3a3112c16f6bdc1c5e86eed7de807aba01b84918326eb0821a539d16f88",
+    "step-10000": "d8163c3911466c34c7d8383e913395cb34e23e5c2cc4ef56c8290c86cfcc2a34"
+  },
+  "selection": "Select highest macro recall on validation at <=.5 continuous false events/hour, tie lower FAR then lower confusing rate then earlier checkpoint. Retain strict/near-phrase diagnostics; freeze before existing paired/long regression. No reserved scores, no acceptance without physical/resource/voice-chain tests.",
+  "ptq": "Same512original training representative histories, independently byte-verified. New phase views excluded from PTQ selection.",
+  "remaining_acceptance": "Freeze selected head/threshold or equal-mean threshold on original validation before old development regression. Reserved and P4/acoustic/long-call gates remain separate."
+}

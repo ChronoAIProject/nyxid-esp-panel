@@ -1,0 +1,159 @@
+{
+  "scope": "Prespecified fixed versus learned temporal-pooling ablation on original training and validation only; no development or reserved scores read.",
+  "comparison_plan_sha256": "e9bbbbc93497d9982db93d245e39139c6f87eb625324e2d96a57bef8591399d5",
+  "initialization": {
+    "scope": "Prepare matched fixed/learnable temporal-pool heads from verified weights.\n\nUse training representatives only. This verifies initial float equivalence;\nit neither trains nor evaluates wake recognition or MCU compatibility.\n",
+    "source_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+    "representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44",
+    "arms": {
+      "fixed": {
+        "initial_weights_sha256": "bdc02e3542bd5347d52cf93f3fc7351e5f1014c6a9e1e08c5b5754b460feba69",
+        "original_learned_tensors_exact": true,
+        "pool_trainable": false,
+        "pool_values_exact": true,
+        "max_feature_delta_from_mean": 0.0,
+        "max_probability_delta_from_mean": 0.0
+      },
+      "learned": {
+        "initial_weights_sha256": "a13724588c6dbdd2f74c11334462e01177b6c914f87d925bc6317f9bae773edc",
+        "original_learned_tensors_exact": true,
+        "pool_trainable": true,
+        "pool_values_exact": true,
+        "max_feature_delta_from_mean": 0.0,
+        "max_probability_delta_from_mean": 0.0
+      }
+    },
+    "acceptance": false,
+    "matched_initial_predictions_exact": true
+  },
+  "arms": {
+    "fixed": {
+      "selected_step": 10000,
+      "selected_head_sha256": "54bdd575cfbc424b2001fa5dd10c5f26b9fae74229601a647e53614e250e1035",
+      "selected": {
+        "threshold": 0.5,
+        "positive_variants": 1196,
+        "recall": 0.9506688963210702,
+        "macro_recall": 0.923700396825397,
+        "recall_by_engine": {
+          "edge-tts": 0.8660714285714286,
+          "kokoro": 1.0,
+          "macos-say": 0.984375,
+          "openai-tts": 0.8055555555555556,
+          "piper": 0.9625
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 27,
+            "false_rate": 0.09642857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 4,
+            "false_rate": 0.023809523809523808
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 10,
+            "false_rate": 0.0625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 4,
+            "false_rate": 0.08333333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 101,
+            "false_rate": 0.10520833333333333
+          }
+        },
+        "max_corpus_false_rate": 0.10520833333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 175.56249999999983,
+        "positive_latency_p95_ms": 291.6875000000001
+      },
+      "ptq_representatives_identical_to_previous_control": true
+    },
+    "learned": {
+      "selected_step": 10000,
+      "selected_head_sha256": "815679ee5a850dabf226e035569d275b7e190f86dd1192b7736e6d8cd2431262",
+      "selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9590301003344481,
+        "macro_recall": 0.9311309523809526,
+        "recall_by_engine": {
+          "edge-tts": 0.8660714285714286,
+          "kokoro": 1.0,
+          "macos-say": 0.984375,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.971875
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 27,
+            "false_rate": 0.09642857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 5,
+            "false_rate": 0.02976190476190476
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 4,
+            "false_rate": 0.08333333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 105,
+            "false_rate": 0.109375
+          }
+        },
+        "max_corpus_false_rate": 0.109375,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 140.75000000000014,
+        "positive_latency_p95_ms": 244.48125000000016
+      },
+      "ptq_representatives_identical_to_previous_control": true
+    }
+  },
+  "accepted": false,
+  "conclusion": "Learned pooling improves over its fixed-pool arm by0.743percentage points in selected validation macro recall, but remains below the preceding average-pool93.522% and original temporal95.261%. No established improvement sufficient to advance into device or reserved evaluation."
+}

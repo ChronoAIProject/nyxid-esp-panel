@@ -1,0 +1,38 @@
+{
+  "scope": "Prespecified training-only sample-block phase diagnostic; no validation/test score selection. Speech bytes and full recording length remain unchanged.",
+  "jobs": "head-features-tts-v1/jobs-private.json",
+  "index": "head-features-tts-v1/index.jsonl",
+  "backbone": "embedding-stream-int8-quiet.tflite",
+  "window": "native-fft-window.npy",
+  "mel_filter": "native-mel-filter.npy",
+  "heads": [
+    {
+      "path": "head-environment-expanded-v2/step-10000/head.tflite",
+      "sha256": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840"
+    },
+    {
+      "path": "head-temporal32-dropout-v1/step-20000/head.tflite",
+      "sha256": "616bfbbae5ac4b86694e7a536fc6a1415efc078c8d350bb9ec3593ec337c3a47"
+    }
+  ],
+  "seed": 737,
+  "per_engine_label": 4,
+  "offset_samples": [
+    0,
+    16,
+    160,
+    320,
+    640,
+    960,
+    1264
+  ],
+  "threshold": 0.4,
+  "input_files": {
+    "head-features-tts-v1/jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a"
+  },
+  "audit_script_sha256": "c05842916656d042651fd176cba580b39ebb8c27a896afbd5b3f6eaca73fbbfe"
+}

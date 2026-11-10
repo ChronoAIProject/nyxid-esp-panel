@@ -1641,7 +1641,8 @@
     "original_app_remote_microphone_request_reply": true,
     "hi_esp_immediate_request_reply_and_quiet": true,
     "custom_acoustic_fullchain": "Physical Hey Nyx detection confirmed. Call blocked by retained idle-model internal memory; explicit49152byte task allocation fails against31744largest block. Full request/reply not accepted.",
-    "scope": "Successful new physical control; previously failed control preserved. Original app restored/no production changes."
+    "scope": "Successful new physical control; previously failed control preserved. Original app restored/no production changes.",
+    "hi_esp_fresh_after_custom_miss": "Original app preflightv3: wake, complete immediate request/reply and8seconds quiet pass. Same native Marin audio pair, built-in speakers69/unmuted."
   },
   "hardware_observed_async_iram": {
     "image_bytes": 6449856,
@@ -1700,6 +1701,106 @@
       "original_app_restored": true
     },
     "proposed_fix": "Destroy/join experimental idle classifier before call stacks are created. Rebuild at rearm. Preserve I2S/AEC/AGC/preroll/callFIFO and original audio formats.",
-    "fix_verified": false
+    "fix_verified": true,
+    "verification_scope": "Three successful full request/reply/8squiet/rearm rounds. Overall wake repeatability only3/5; no replacement acceptance."
+  },
+  "release_before_call_resource_check": {
+    "elf_sha256": "58be9670ecc7d4aae150253b3cae3a7a27b032f8fcf5332447bcd26267f0a864",
+    "image_bytes": 6450400,
+    "seconds": 300.0108006250812,
+    "all_idle_resource_gates_passed": true,
+    "final_timing": {
+      "board_ms": 309048,
+      "step": 3700,
+      "mean_us": 51317,
+      "p50_us": 51136,
+      "p95_us": 53299,
+      "max_us": 108659,
+      "over80ms": 3
+    },
+    "pipeline_aggregate": {
+      "elapsed_ms": 288001,
+      "expected_ms": 288000
+    },
+    "capture_prefix_unaccounted_range_bytes": [
+      -640,
+      0
+    ],
+    "new_rx_overflows": 0,
+    "initial_overflows": 825,
+    "queue_final": {
+      "consumed": 3700,
+      "highwater": 1,
+      "max_delay_us": 44252,
+      "mean_delay_us": 297
+    },
+    "first_acoustic_attempt_wakes": 0,
+    "first_acoustic_attempt_complete_request_reply": false,
+    "restored": true,
+    "scope": "Same five-minute bounds; first acoustic miss retained. No threshold/audio change."
+  },
+  "release_before_call_repeated_acoustic": {
+    "elf_sha256": "58be9670ecc7d4aae150253b3cae3a7a27b032f8fcf5332447bcd26267f0a864",
+    "same_model_threshold_native_audio_and_mac_volume": true,
+    "trials": [
+      {
+        "trial": 1,
+        "physical_wakes": 1,
+        "passed_complete_request_reply_quiet": true,
+        "roles": [
+          "user",
+          "assistant"
+        ],
+        "report_sha256": "c4709d452538d10539e96e57af41d3990d1f8673763cbd76230a17f1a12e7766",
+        "rearmed": true
+      },
+      {
+        "trial": 2,
+        "physical_wakes": 1,
+        "passed_complete_request_reply_quiet": true,
+        "roles": [
+          "user",
+          "assistant"
+        ],
+        "report_sha256": "e70b083030a83b0a7e9e928b2926de1799215c39c7f39287955a7e71b3d630ef",
+        "rearmed": true
+      },
+      {
+        "trial": 3,
+        "physical_wakes": 0,
+        "passed_complete_request_reply_quiet": false,
+        "roles": [],
+        "report_sha256": "a66dfaf740903b5de0b7d2fff8c610f38a8575adac808077abb9da8a64ada1fb",
+        "rearmed": true
+      },
+      {
+        "trial": 4,
+        "physical_wakes": 1,
+        "passed_complete_request_reply_quiet": true,
+        "roles": [
+          "user",
+          "assistant"
+        ],
+        "report_sha256": "d3b9b41092b3f1b959bb5d70c2543192df8ae517a02cd092eb460b3b7eed8c90",
+        "rearmed": true
+      },
+      {
+        "trial": 5,
+        "physical_wakes": 0,
+        "passed_complete_request_reply_quiet": false,
+        "roles": [],
+        "report_sha256": "d532c48a93a340de183f0e3a834132273cda81bdd05bfa0143319940901e3b38",
+        "rearmed": true
+      }
+    ],
+    "physical_wakes": 3,
+    "complete_request_reply_quiet_passes": 3,
+    "trials_total": 5,
+    "largest_internal_before_call_bytes": 126976,
+    "task_allocation_failures": 0,
+    "active_ui_snapshot_visually_checked": true,
+    "original_app_service_hiesp_restored": true,
+    "accepted_as_wake_replacement": false,
+    "conclusion": "Idle-model memory release fixes task allocation and enables the full chain for all three detected trials. Two of five fixed native acoustic repeats fail to wake, so physical recognition remains inadequate. Preserve the preceding single miss and every failed trial; no overall acceptance or model/threshold change."
   }
 }
