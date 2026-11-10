@@ -26,6 +26,9 @@ def main():
     threshold = calibration["selected"]["threshold"]
     if not isinstance(threshold, (int, float)) or not math.isfinite(threshold) or not 0 < threshold < 1:
         raise ValueError("Invalid frozen threshold")
+    smoothing_steps = calibration.get("smoothing_steps", 5)
+    if type(smoothing_steps) is not int or smoothing_steps not in (3, 5, 7):
+        raise ValueError("Unsupported calibration smoothing_steps")
     architecture = training["architecture"]
     flags = training["architecture_args"]
     if (architecture not in ("transfer60", "official64", "wide128")
@@ -52,6 +55,7 @@ def main():
         "#pragma once\n"
         f'#define PANEL_WAKE_MODEL_SHA256 "{digest}"\n'
         f"#define PANEL_WAKE_THRESHOLD {threshold:.17g}f\n"
+        f"#define PANEL_WAKE_SMOOTHING_STEPS {smoothing_steps}\n"
         f"#define PANEL_WAKE_PRIME_SAMPLES {(frames + 200) * 160}\n")
     (args.output / "manifest.json").write_text(json.dumps({
         "scope": "Experimental firmware build; recognition acceptance is not implied",
@@ -61,7 +65,7 @@ def main():
         "selftest_sha256": hashlib.sha256(selftest).hexdigest() if selftest else None,
         "threshold": threshold, "input_frames": frames, "sample_rate": 16000,
         "frontend_hop_samples": 160, "model_stride_frames": 3,
-        "smoothing_steps": 5, "refractory_steps": 67,
+        "smoothing_steps": smoothing_steps, "refractory_steps": 67,
         "validation_policy_operating_point": calibration.get("policy_operating_point"),
         "strict_validation_operating_point": calibration.get("viable_operating_point"),
         "prepare_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()

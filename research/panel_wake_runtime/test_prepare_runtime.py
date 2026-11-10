@@ -48,6 +48,7 @@ class PrepareRuntime(unittest.TestCase):
         manifest = json.loads((output / "manifest.json").read_text())
         self.assertEqual(manifest["model_sha256"], self.digest)
         self.assertEqual(manifest["threshold"], .1)
+        self.assertEqual(manifest["smoothing_steps"], 5)
         self.assertFalse(manifest["strict_validation_operating_point"])
         self.assertIn("acceptance is not implied", manifest["scope"])
         self.assertEqual((output / "hey_nyx_model.bin").read_bytes(), self.model.read_bytes())
@@ -56,6 +57,19 @@ class PrepareRuntime(unittest.TestCase):
     def test_calibration_for_different_model_rejected(self):
         self.calibration["model_sha256"] = "0" * 64
         self.assert_rejected()
+
+    def test_calibration_binds_reviewed_window_to_runtime_and_manifest(self):
+        self.calibration["smoothing_steps"] = 7
+        self.assertEqual(self.run_prepare().returncode, 0)
+        output = self.root / "output"
+        self.assertEqual(json.loads((output / "manifest.json").read_text())["smoothing_steps"], 7)
+        self.assertIn("#define PANEL_WAKE_SMOOTHING_STEPS 7", (output / "wake_config.h").read_text())
+
+    def test_invalid_explicit_smoothing_rejected_before_output(self):
+        for steps in (None, 0, 4, 8, 5., "5", True, [5]):
+            with self.subTest(steps=steps):
+                self.calibration["smoothing_steps"] = steps
+                self.assert_rejected()
 
     def test_training_report_for_different_model_rejected(self):
         self.training["model_sha256"] = "0" * 64

@@ -46,7 +46,12 @@ to the normal release and add only the adapter's declared dependencies. Do not
 update unrelated camera, audio or UI packages while measuring a detector.
 
 Configuration verifies the model, training report and calibration hashes,
-supported topology, input context and frozen threshold. The generated
+supported topology, input context, frozen threshold and score-average window.
+Reviewed calibration windows are three, five or seven model steps; older
+calibrations without the field retain five steps. Invalid explicit metadata
+fails configuration. Offline comparisons and the firmware must use the same
+bound window. Changing it requires a new validation calibration, not tuning
+against the acoustic test. The generated
 `manifest.json` under `build-hey-nyx/esp-idf/panel_wake_runtime/generated`
 records those identities and detector settings. A failed production-quality
 calibration is still usable for an explicitly diagnostic research build; a

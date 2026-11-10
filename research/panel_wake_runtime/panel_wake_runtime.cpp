@@ -26,7 +26,7 @@ extern const uint8_t selftest_bytes[] asm("_binary_wake_selftest_bin_start");
 #endif
 namespace {
 constexpr size_t arena_size=64*1024, variable_size=16*1024;
-constexpr int chunk_samples=480, smooth_steps=5, refractory_steps=67;
+constexpr int chunk_samples=480, smooth_steps=PANEL_WAKE_SMOOTHING_STEPS, refractory_steps=67;
 constexpr char tag[]="panel.wake.research";
 
 struct Detector {
@@ -89,8 +89,9 @@ struct Detector {
         config.log_scale.enable_log=1;config.log_scale.scale_shift=6;
         frontend_started=true; // Populate can fail after partial allocation.
         if(!FrontendPopulateState(&config,&frontend,16000))return false;
-        ESP_LOGI(tag,"model=%s threshold=%.6f tensor=%u allocated=%u+%u",
+        ESP_LOGI(tag,"model=%s threshold=%.6f smoothing=%d tensor=%u allocated=%u+%u",
             PANEL_WAKE_MODEL_SHA256,double(PANEL_WAKE_THRESHOLD),
+            smooth_steps,
             unsigned(interpreter->arena_used_bytes()),unsigned(arena_size),unsigned(variable_size));
         return true;
     }
@@ -123,7 +124,7 @@ struct Detector {
             float score=(int(output->data.uint8[0])-int(output->params.zero_point))*output->params.scale;
             if(!std::isfinite(score)){failed=true;return -1;}
             ++steps;
-            // Recompute the five-value sum in time order, like the host's
+            // Recompute the calibration-bound sum in time order, like the host's
             // convolution. A rolling subtract/add would accumulate drift.
             history[smooth_at]=score;smooth_at=(smooth_at+1)%smooth_steps;
             if(smooth_count<smooth_steps)++smooth_count;
