@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `64bb326`; see the dated snapshots below.
+Latest observed GPU commit: `5740561`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -700,3 +700,40 @@ posterior product. It now freezes an independent training-only leave-engine-out
 linear lexical probe of the existing80ms embeddings. That closed-class diagnostic
 does not deploy a detector, score validation/final audio or measure parity.
 External speaker playback remains paused; no microphone or hardware is accessed.
+
+### GPU snapshot through `5740561`
+
+Read on 2026-11-11. V28's added continuous AMI backgrounds finish 120k steps,
+select 70k and produce a 54440-byte model. Original validation proxy macro is
+69.6614583% at 0.994, with 0 events in 1.204811 h. Expanded development
+Mandarin/DiPCo/Libri counts are 0/0/1 and no expanded zero-event threshold
+exists. Float also has a high-confidence event at the audited Libri location,
+so this failure is not explained solely by INT8 quantization.
+
+The fixed at-most-one observed Hi ESP development event budget still yields
+69.6614583%, below the earlier v19 diagnostic 79.2708333%. Equal observed
+counts on these reused corpora are not equal population FAR or acceptance.
+On the existing 72-WAV paired development suite, Nyx has one Hey Next false
+trigger versus Hi ESP zero on 48 shared negatives. Native Hi ESP events
+outside uncertain proxy windows remain recorded; window-only fractions
+cannot prove a Nyx recall/latency advantage. Original correlated speed views
+in that old GPU suite are not new normal-speed Mac acceptance trials.
+
+A training-only complete-stream replay of all 400 original Hey Next sources
+finds two Piper events and zero Kokoro/Qwen events at the unchanged 0.994
+point. This rules out simply never seeing the phrase, not pronunciation
+uncertainty or every possible fitting/sampling issue. No development voices
+are added to training from that observation.
+
+Eight additional AMI meetings now have 2.975060729 actual source hours and
+32 new metadata participants, separate from the earlier 16. V29 dialogue
+mixtures remain the ongoing GPU experiment; no completed result is published
+in this snapshot. The prepared v30 extra-meeting cache also changes AMI's
+duration-based ambient sampling share, which is explicitly retained as a
+limitation. Do not duplicate those runs or assume reports supply model weights.
+
+The Mac continuation instead freezes a training-only engine-adversary pair
+on its existing 80 ms embedding features. Original audio speed, auxiliary
+anchors, main/PTQ draws and exported binary topology stay fixed. This is
+independent of GPU AMI/mixing work and is not acceptance or a deployed change.
+Acoustic playback remains paused; no microphone or production board is used.

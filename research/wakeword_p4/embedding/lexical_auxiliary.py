@@ -159,6 +159,7 @@ class AuxiliarySampler:
 def train(args):
     import tensorflow as tf
     from train_head import Sampler, export, feature_directories, load_rows, weighted_loss
+    from lexical_domain import ENGINES, engine_labels, reverse_gradient
 
     plan = json.loads(args.plan.read_text())
     root = Path(__file__).parent
@@ -196,15 +197,29 @@ def train(args):
     lexical = tf.keras.Model(model.input, layer(model.layers[-2].output))
     weight = plan['auxiliary_loss_weight']
     binary_weight = plan.get('auxiliary_binary_loss_weight', 0)
+    domain_scale = plan.get('domain_adversarial_scale', 0.)
     if weight not in (0, .2):
         raise ValueError('Expected prespecified zero/.2 matched experiment')
     if binary_weight not in (0, .2):
         raise ValueError('Expected prespecified zero/.2 auxiliary binary loss')
+    if domain_scale not in (0., .05) or (domain_scale and (weight != .2 or binary_weight != 0)):
+        raise ValueError('Expected fixed zero/.05 domain scale on original CE-only recipe')
+    by_id = {row['id']: row for row in rows}
+    if any(engines != ENGINES for engines in aux_sampler.engines.values()):
+        raise ValueError('All auxiliary classes must cover the same six engine domains')
+    domain_layer = None
+    if domain_scale:
+        trunk = tf.keras.Model(model.input, model.layers[-2].output)
+        domain_layer = tf.keras.layers.Dense(len(ENGINES), name='training_only_engine_logits',
+            kernel_initializer=tf.keras.initializers.GlorotUniform(seed=plan['recipe']['seed'] + 2))
+        domain_layer.build((None, 64))
     variables = model.trainable_variables + (layer.trainable_variables if weight else [])
+    if domain_layer is not None:
+        variables += domain_layer.trainable_variables
     optimizer = tf.keras.optimizers.Adam(plan['recipe']['learning_rate'])
 
     @tf.function
-    def step(x, y, auxiliary_x, auxiliary_y):
+    def step(x, y, auxiliary_x, auxiliary_y, auxiliary_engine):
         with tf.GradientTape() as tape:
             binary = weighted_loss(y, model(x, training=True), plan['recipe'])
             if weight:
@@ -216,14 +231,22 @@ def train(args):
                 loss_aux_binary = binary_auxiliary_loss(auxiliary_y, model(auxiliary_x, training=True), plan['recipe'])
             else:
                 loss_aux_binary = tf.constant(0.)
-            loss = binary + weight * loss_aux + binary_weight * loss_aux_binary
+            if domain_scale:
+                domain_logits = domain_layer(reverse_gradient(trunk(auxiliary_x, training=True), domain_scale))
+                loss_domain = tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(
+                    auxiliary_engine, domain_logits, from_logits=True))
+            else:
+                loss_domain = tf.constant(0.)
+            loss = binary + weight * loss_aux + binary_weight * loss_aux_binary + loss_domain
         optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
-        return binary, loss_aux, loss_aux_binary
+        return binary, loss_aux, loss_aux_binary, loss_domain
 
     args.output.mkdir(parents=True, exist_ok=False)
     np.save(args.output / 'representatives-training-only.npy', examples)
     summary = {'scope': __doc__, 'plan_sha256': sha(args.plan), 'plan': plan,
         'parameters': model.count_params(), 'auxiliary_parameters_training_only': layer.count_params(),
+        'domain_parameters_training_only': domain_layer.count_params() if domain_layer is not None else 0,
+        'engine_class_order': ENGINES,
         'training_sources': len(rows), 'training_frames': sum(r['frames'] for r in rows),
         'auxiliary_manifest_sha256': sha(args.auxiliary_manifest),
         'initial_weights_sha256': sha(args.initial_weights), 'feature_inputs': {}, 'checkpoints': []}
@@ -234,6 +257,7 @@ def train(args):
             'completion': json.loads((base / 'complete.json').read_text())}
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     main_hash, aux_hash, auxiliary_source_hash = hashlib.sha256(), hashlib.sha256(), hashlib.sha256()
+    engine_hash = hashlib.sha256()
     recipe = plan['recipe']
     for number in range(1, recipe['steps'] + 1):
         fraction = number / recipe['steps']
@@ -243,14 +267,17 @@ def train(args):
         x, y = sampler.batch()
         ax, ay = aux_sampler.batch()
         auxiliary_source_hash.update(json.dumps(aux_sampler.last_source_draws, separators=(',', ':')).encode())
+        ae = engine_labels(aux_sampler.last_source_draws, by_id)
+        engine_hash.update(ae.tobytes())
         for value in (x, y):
             main_hash.update(value.tobytes())
         for value in (ax, ay):
             aux_hash.update(value.tobytes())
-        binary, loss_aux, loss_aux_binary = step(x, y, ax, ay)
+        binary, loss_aux, loss_aux_binary, loss_domain = step(x, y, ax, ay, ae)
         if number % 1000 == 0:
             print(json.dumps({'step': number, 'binary_loss': float(binary), 'auxiliary_loss': float(loss_aux),
                               'auxiliary_binary_loss': float(loss_aux_binary),
+                              'engine_domain_loss': float(loss_domain),
                               'seconds': time.monotonic() - started}), flush=True)
         if number in recipe['checkpoints']:
             output = args.output / f'step-{number:05d}'
@@ -259,9 +286,12 @@ def train(args):
             summary['checkpoints'].append({'step': number, **report})
             print(json.dumps({'phase': 'exported', 'step': number, **report}), flush=True)
     lexical.save(args.output / 'training-only-auxiliary.keras')
+    if domain_layer is not None:
+        tf.keras.Model(trunk.input, domain_layer(trunk.output)).save(args.output / 'training-only-domain.keras')
     summary.update(seconds=time.monotonic() - started, main_batches_sha256=main_hash.hexdigest(),
                    auxiliary_batches_sha256=aux_hash.hexdigest(),
                    auxiliary_source_batches_sha256=auxiliary_source_hash.hexdigest(), accepted=False)
+    summary['engine_labels_batches_sha256'] = engine_hash.hexdigest()
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     (args.output / 'complete.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps({'phase': 'completed', 'seconds': summary['seconds'],

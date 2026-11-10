@@ -1028,3 +1028,48 @@ No P4, acoustic or reserved-final evaluation follows this inferior candidate.
 This tests one auxiliary metadata intervention; it does not rule out every
 endpoint effect or explain the broader source-transfer deficit. The retained
 CE-only setting and the full Hi ESP parity goal remain unchanged.
+
+### Training-only engine adversary
+
+The cross-engine diagnostic finds a large Piper target-to-Nick transfer
+deficit; the preceding auxiliary-anchor harmonization does not improve the
+retained detector. `plans/lexical-domain-{control,treatment}-v1.json` therefore
+freeze a separate representation hypothesis before training: keep lexical
+CE at 0.2 and use the original auxiliary histories to learn an engine classifier.
+Its Dense6 head sees the shared final 64-unit ReLU. The head minimizes ordinary
+engine CE; only its gradient into the shared representation is reversed at
+the fixed treatment scale 0.05. There is no gradient-scale search, extra
+sampler, warmup or new audio. Control scale 0 disables the adversary and must
+exactly reproduce the retained CE-only detector and full batch hashes.
+
+Every auxiliary class already samples all six synthesis engines. Class,
+engine, source, window and main/PTQ draws stay identical between arms. Engine
+IDs are bound to each actual sampled source, and their full batch digest is
+retained. The extra classifier has 390 training-only parameters, with Glorot
+seed 743. Its normal classifier gradient and reversed feature gradient are
+checked independently; the original source/role/bounds and control tests also
+pass (16 lexical tests total). Both auxiliary branches are removed at binary
+export, whose interface/operators/bytes must be checked before comparison.
+
+```sh
+python research/wakeword_p4/embedding/lexical_auxiliary.py train \
+  --data-root "$WAKE_DATA" --initial-weights "$ORIGINAL_INITIAL_WEIGHTS" \
+  --auxiliary-manifest "$ORIGINAL_AUXILIARY_MANIFEST" \
+  --plan "$DOMAIN_ARM_PLAN" --output "$NEW_PRIVATE_DOMAIN_ARM"
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --data-root "$WAKE_DATA" --training "$NEW_PRIVATE_DOMAIN_ARM" \
+  --plan "$DOMAIN_ARM_PLAN"
+python research/wakeword_p4/embedding/lexical_domain.py \
+  --control "$NEW_PRIVATE_DOMAIN_CONTROL" \
+  --treatment "$NEW_PRIVATE_DOMAIN_TREATMENT" \
+  --reference-complete "$RETAINED_RMS_CONTROL_COMPLETE" \
+  --report "$FRESH_PRIVATE_DOMAIN_COMPARISON"
+```
+
+For each arm, `DOMAIN_ARM_PLAN` names its frozen control/treatment plan and
+the output path is fresh. Preserve the same 10000-step final checkpoint,
+19-point validation grid and confidence/confuser constraints. Reducing engine
+information is only a hypothesis: synthesis domains are not real speakers,
+and confusing an engine classifier does not establish real microphone
+generalization. No speaker, microphone, board or reserved-final access occurs
+in this experiment. An inferior candidate receives no physical/final test.
