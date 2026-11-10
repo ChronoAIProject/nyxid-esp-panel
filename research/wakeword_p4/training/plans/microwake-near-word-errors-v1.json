@@ -1,0 +1,39 @@
+{
+  "scope": "Diagnostic on the two named phrases in the previously inspected synthetic validation set. Reserved testing and independent audio are excluded.",
+  "selection": "All original Hey Mix and Hey Next validation sources in the existing equal-mean report and all four renders. Preserve quiet and false activation variants within each source; engine and speaker metadata retained.",
+  "primary": "At the frozen strict equal-mean threshold, inspect exact phone sequences of false clips and their quiet same-source controls. For Hey Mix report unprompted /m/ and for Hey Next report /t/ at CTC mean spike confidence >= .5; always retain full spans.",
+  "secondary": "Repeat the descriptive readout for clips that both member models triggered at their fixed individual points. All counts are views; same-source views are not independent.",
+  "limits": [
+    "An unprompted phoneme decoder gives evidence of a cue in the audio, not proof of the human-perceived pronunciation, the acoustic source of a cue, or true phone boundaries.",
+    "The waveform with its original lead and augmentation is rebuilt and checked against its cached MicroFrontend features. Phoneme decoding is on original WAV and a speech-centered crop of that render, not the entire stream.",
+    "No thresholds, labels, model weights or device settings are changed. No playback or board operation."
+  ],
+  "comparison_sha256": "24af78c6a2274921d51a68388a3b7967bc958dc20ab1e184e13b665972eb5600",
+  "overlap_sha256": "4ecbcf306aee51e0dd3781679b3a13f376d41577b3b4c3de19c6716e23346340",
+  "generation_sha256": "c7731ddd5653724af205f2dee27a9ef055c2951cf09ff0884b10a0347bd49c09",
+  "background_manifest_sha256": "9a818dd49e55d65e82de89dccff245d729e711777bb3ac55541af5a3c875623f",
+  "research_source_sha256": {
+    "training/audit_near_word_errors.py": "340db259cdfd9645aa2c853658f819fa01bbaa3bb9b5f4ca6041dc33a61167ab",
+    "training/compare_stream_equal_mean.py": "afcaae9be1f3f6f5abbe9688eeb5867f151440a33160cd9187895fe449bb35b5",
+    "training/stream_data.py": "205c6620a0a2b45f84a41a20014ed8db3b7206696ea46a4865f38b8f7f56662f",
+    "training/features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "embedding/audit_ctc_endpoints.py": "fb61f48e6ccd1dfa80d0437de90977a9382529a0bdbe37bf41578900e624f420"
+  },
+  "phoneme_model_files": {
+    "config.json": "4609fb49b7e1d28aecb2840da1926c40bd915bc6f1120a940afacf7159bbfb13",
+    "identity.json": "3b5b3a569a8a7b50c1b9508f27f3f74fb34c93915c2ffba9eab206e85e25e3fd",
+    "preprocessor_config.json": "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335",
+    "pytorch_model.bin": "3173bde9e9ce490fa0f989e413c42f25bc1820c020adc1e6b9b87025b3cfcc5e",
+    "special_tokens_map.json": "bb7068de1150661a10b55f9e4b12a0e77af8bf91f5e45e1b58afaf1d0e17f675",
+    "tokenizer_config.json": "1273ec458332cc55226ec596904bae811420755ace7e5d69462b61c4f480b457",
+    "vocab.json": "d732ab2456c0c017930001dc9af0b41b3b93d25b2eb9740bf9d925508d7d87d0"
+  },
+  "runtime_packages": {
+    "torch": "2.8.0",
+    "transformers": "4.57.3",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1",
+    "pymicro-features": "2.0.2"
+  }
+}
