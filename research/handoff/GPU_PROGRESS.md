@@ -608,3 +608,22 @@ new independent conversations or people. A separate dialogue-mix cache adds
 29,196 correlated training sequences and preserves original evaluation bytes;
 neither new cache has a trained/validated outcome in this snapshot. The Mac
 probe keeps original speed and reads no independent final audio.
+
+### GPU snapshot through `7c9b72d`
+
+Read on 2026-11-11. V26 completes120ksteps with BCE label smoothing.02;
+the selected55k INT8 export has SHA256
+`96108b06672edd55268e2c3e1e7d02baf501722cc19df67a27b118ff6eba14a2`.
+At its original.828125 working point, source-average proxy-window hits are
+78.8021%, but the extended Mandarin/DiPCo/dev-other corpora have1/1/2events.
+Expanded calibration at.96875 has zero events on all those development
+corpora and the original background, with source-average proxy-window hits
+falling to56.40625%. This is a development tradeoff, not independent quality
+acceptance or proof of Hi ESP parity. Endpoint qualifications above still apply.
+
+V27 separately tests the prepared training dialogue-mix cache against v24,
+without label smoothing or hard-ambient replacement. No v27 result is published
+at this snapshot. Mac work does not duplicate that experiment, contact the GPU
+worker or score independent final audio. External speaker playback remains
+paused; the next Mac/P4 experiment is silent original-PCM discrimination with
+known-source controls in both grammars.

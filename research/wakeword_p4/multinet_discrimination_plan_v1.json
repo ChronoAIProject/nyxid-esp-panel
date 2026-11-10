@@ -1,0 +1,92 @@
+{
+  "scope": "Frozen training-only silent Nyx discrimination diagnostic with original known-source controls in every grammar; no acoustic playback or acceptance scoring.",
+  "hypothesis": "At the upstream diagnostic .1 setting, does unchanged HEY NICKS G2P detect the original training sources, and do explicit alternative commands reduce near-word target confusions while both bracket controls succeed?",
+  "scripts": {
+    "prepare_multinet_discrimination.py": "bd50ab20b102d8e53599f23ca302ea85e7cdcd2dcbe494a1d07f4456bf634773",
+    "prepare_multinet_probe.py": "5e9106453ad93e1d96e97aa5fc6896e9c3156b636a2f10a981a428c1f4cebe81",
+    "run_multinet_probe.py": "336df4ca4c4f42b4a4db6d17dbe9d19d25513e57293e8a5957092cf5d15f2efe",
+    "audit_multinet_control.py": "7f55db217c57c7982f9d8c1264fa9e31b4d42feced8aae87b689e0f960d5e811",
+    "audit_multinet_log.py": "0f6cf8085b1af2140ed7ee8ed09ff2441f1c8949c3574d73ea31de521ab6f81a"
+  },
+  "template_files": {
+    "CMakeLists.txt": "b4329ae09f9e9be5fc8679ae64c8d63ac2961d10ae4a4c74ea55aa2e228cb6bf",
+    "main/CMakeLists.txt": "1ada85ffdf54bbf156b3de0b8ea92b3e12318b03999c6770f3bf683ec41dcff4",
+    "main/probe.cpp": "fb17e2e4e06c411766501b6e6f703f11097eb93852d2016b2d8a0edb448ac032",
+    "main/readonly_model_files.h": "89b1fd9b96108a6cd91793f60e0f2ef418f4bd4214bb98cf2175ce93d8beb4ed",
+    "partitions.csv": "8bf0726edb130cec0a79474ff82acc271922d3db7b438f13eacd9091dfc42a5f",
+    "sdkconfig.defaults": "16e7c5ce64d04ac3179e0fa299bfb375f03175e8b5b37bb1809c8792e1ff1280"
+  },
+  "nyx_project": {
+    "vectors_manifest_sha256": "056654addff6322929389f5b0d062a5479d73fffe6dfcc1e64a13184831bd40a",
+    "dependency_manifest_sha256": "bed506485472bddfbdab6d7cbfac913061752556faf89cb33c87725fa796f668"
+  },
+  "reference_project": {
+    "vectors_manifest_sha256": "cba722cfbb37b5498aecc4828f2007322f3ca62ff5bb0c7ea1edb55d85958f90",
+    "dependency_manifest_sha256": "bed506485472bddfbdab6d7cbfac913061752556faf89cb33c87725fa796f668"
+  },
+  "source_selection": "Reuse every one of the original 24 score-independently selected training-only sources, in original order. Prepend reference placement0 and append placement1; no source selection or PCM edits based on scores.",
+  "control_source_pcm_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+  "control_provenance": {
+    "repository": "espressif/esp-sr",
+    "commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+    "files": {
+      "test_multinet.cpp": "fe83910e9d0462ba48477342e28fb98ae2cef28a865428840e1548bcb8e6bed3",
+      "tell_me_a_joke.h": "e473320afb28863c873c822817a044731d63b07f8ffe6a7fde5373e1baab871e",
+      "sdkconfig.ci.p4v1_mn7_en": "f0f1bb197024e817744b9f13f1bbac577d434fbdb3fe9f88e8678854b3180ab8",
+      "sdkconfig.defaults": "3eca14953e94a9ce18c551538a30382440f0c7d852cd771f4f2b5a21a5756d18"
+    }
+  },
+  "control_blocks_per_case": 601,
+  "detector_threshold": 0.1,
+  "detector_timeout_ms": 500000,
+  "expected_detect_calls": 9676,
+  "command_arms": [
+    {
+      "name": "target_plus_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "TELL ME A JOKE"
+      ]
+    },
+    {
+      "name": "contrastive_plus_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "HEY NICK",
+        "HEY MIX",
+        "HEY NEXT",
+        "TELL ME A JOKE"
+      ]
+    }
+  ],
+  "command_phonemes": [
+    [
+      null,
+      "TfL Mm c qbK"
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      "TfL Mm c qbK"
+    ]
+  ],
+  "phoneme_policy": "Target and alternatives retain original automatic G2P. Only the reference uses its pinned upstream source-defined phonemes. No score-derived phoneme corrections.",
+  "grammar_policy": "Five-command template capacity requires replacing original contrastive HEY NEXUS with the mandatory reference; retain original first three alternatives in original order. This is a diagnostic, not a matched causal comparison to .9 runs.",
+  "quality_gate": "All four original-reference cases must emit the correct reference ID (2 or5) before treating any target/miss/confusion result as a functioning-harness diagnosis. Retain failed controls and all outcomes regardless.",
+  "accounting_policy": "Log every native event and final decoder; check full sample/call coverage and consumed-input CRC including final512-sample zero padding. ID1 is the target in both grammars. Count any ID1 event on each original label0 source as a target false detection; report separately from alternative command detections and exclude known controls from Nyx totals.",
+  "limits": [
+    "The .1 threshold comes from upstream compatibility tests and has no product FAR qualification.",
+    "Reused training-only synthetic sources are not independent recall or speaker evidence.",
+    "The two bracket controls are correlated placements of one reused recording.",
+    "Reset-separated sources are not continuous exposure; no claim of Hi ESP parity.",
+    "Standalone MultiNet flash/RAM/CPU is not whole-app fit; preserve production audio and dual OTA."
+  ],
+  "speaker_playback": false,
+  "microphone_capture": false,
+  "audio_speed_changed": false,
+  "accepted": false
+}

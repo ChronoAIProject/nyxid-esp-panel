@@ -367,3 +367,46 @@ training-only Nyx discrimination probe must retain a known-source control,
 declare its threshold/phonemes before inference and keep all ordinary/near-word
 misses and false detections. No deployed audio producer, AEC/AGC, preroll/FIFO,
 GUI or dining-room panel changed; the full goal remains unachieved.
+
+### Silent training-source discrimination v1 (frozen before inference)
+
+`../multinet_discrimination_plan_v1.json` reuses every original24Nyx training
+source and its rendered PCM byte-for-byte. The score-independent selection
+and source/held-out separation remain those of the original frozen probe.
+`prepare_multinet_discrimination.py` checks both pinned project manifests,
+each model/fixture/dependency identity, all decompressed PCM hashes and exact
+container coverage. It prepends original reference placement0 and appends
+placement1 to bracket the24sources; these are correlated control placements,
+not independent speakers. The controls retain all601blocks and source PCM.
+
+Two replacement grammars use the upstream diagnostic.1threshold and500000ms
+timeout. Grammar0 is `HEY NICKS` plus `TELL ME A JOKE`; grammar1 adds original
+alternatives `HEY NICK`, `HEY MIX`, `HEY NEXT` before the joke. The existing
+five-command capacity means the old `HEY NEXUS` is replaced by the mandatory
+control, as declared before scoring. All Nyx/alternative commands retain
+original G2P; only the joke uses its pinned `TfL Mm c qbK` phonemes. Both
+controls must detect the correct joke ID in **both** grammars before target
+outcomes are interpreted as evidence from a functioning harness.
+
+There are52cases /9676detect calls. The shared auditor verifies every consumed
+PCM CRC, including padded final512sample blocks, every event, final decoder
+and grammar order. Command1 is the target in both grammars. Count target
+events on original label0 sources separately from alternative detections;
+exclude known controls from Nyx totals. All sources and outcomes stay retained.
+
+```sh
+python3 research/wakeword_p4/prepare_multinet_discrimination.py \
+  --plan research/wakeword_p4/multinet_discrimination_plan_v1.json \
+  --nyx-project "$ORIGINAL_24_SOURCE_PROJECT" \
+  --reference-project "$REFERENCE_V3_PROJECT" \
+  --output "$NEW_PRIVATE_DISCRIMINATION_PROJECT"
+python3 -m unittest discover -s research/wakeword_p4 -p 'test_multinet*.py' -v
+```
+
+Build and run with the same guarded app-slot-only restoration runner; audit
+with `audit_multinet_control.py`. The17host tests cover source-byte mutation,
+unaccounted compressed data, final-block padding and all prior event/coverage
+checks. The experiment uses no speakers, microphone, new synthesis or source
+speed change. Reset-separated training clips at.1do not establish continuous
+FAR, real-user recall, latency, Hi ESP parity or whole-app fit. No production
+audio/AEC/AGC/FIFO/GUI/OTA code changes, and no dining-room panel operation.
