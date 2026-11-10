@@ -310,5 +310,30 @@ diagnostic finds26 false clips/768 negative training variants, and a separate
 source-RMS check finds delayed file-end markers in some standalone TTS clips.
 A metadata-only continuation now tests correction of68 extra-view markers
 across34 audio hashes. PCM, features, base-view markers and PTQ sampling stay
-unchanged. This is distinct from new acoustic augmentation or loss weighting;
-fitting results remain pending.
+unchanged. This is distinct from new acoustic augmentation or loss weighting.
+The continuation now completes without a deployment improvement. Its frozen
+equal mean selects .4, validation engine-macro94.4851% versus retained matched
+control94.6845%, each with one event/7.30378h. Existing development positives
+are44/50 versus historical original mean46/50 and Hi ESP48/50. Near-word
+false clips20/90 versus original23/90 are a tradeoff; ordinary1/100,
+English1/5.549h and Mandarin0/1.294h remain unchanged. Candidate rejected,
+no flash/playback or final scoring. This partial augmented-view metadata
+experiment does not establish whether full phonetic alignment would help.
+
+### GPU snapshot through `168e236`
+
+The newer GPU branch completes and rejects v10 SpecAugment and v11 Mandarin
+addition. v10 improves source-macro validation to77.6823% at .9, but frozen
+development recall drops to57.8906% with60 premature Kokoro events. Its
+zero AISHELL events/6.913985h gives upper95%.433286/h for that read-speech
+corpus only. v11 reaches only40.0781% validation macro at .994 and has no
+qualified operating point. Neither reaches final acceptance; do not duplicate
+these recipes as untried experiments.
+
+The board-free P4 boot diagnosis has advanced: ROM/application/FreeRTOS/timer
+markers now pass twice, with an independently checked ~98ms interval. This
+supersedes the earlier absence-of-serial-output observation. Exact ESP-SR2.6.1
+and the Hi ESP model enumerate, but model creation faults on an unsupported
+PIE instruction (`esp.ld.128.usar.ip`) in the official QEMU build. No detect
+call completes, so simulated Hi ESP recognition remains unavailable. The
+PSRAM workaround is probe-only and must not enter physical-board firmware.

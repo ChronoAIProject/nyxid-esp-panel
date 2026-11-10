@@ -751,6 +751,41 @@ sampling/optimizer/selection settings. This tests only augmented-view
 supervision; full corpus realignment and a separate negative-weight20
 control are not combined into this experiment. No candidate is accepted.
 
+Both endpoint continuations now complete with representative inputs byte-exact
+to their retained controls. The frozen mean selects .4: source-macro validation
+94.4851% versus retained control94.6845%, each with one event/7.30378h. The
+existing development regression has44/50 positive clips versus historical
+original mean46/50 and Hi ESP48/50. Near-word false clips20/90 versus original
+23/90 improve at the expense of positive recall; ordinary1/100, English1/5.549h
+and Mandarin0/1.294h stay unchanged. This candidate is rejected as a replacement.
+No further acoustic playback, physical flash or reserved scoring occurred.
+The matched control comparison is on validation; development references here
+are the historical original mean, not a new matched-control regression.
+
+Exact plans and results are `head-equal-mean-endpoint-v1-{plan,regression-plan}.json`,
+[`embedding-endpoint-validation-v3.json`](../wakeword_p4/results/embedding-endpoint-validation-v3.json)
+and [`embedding-endpoint-regression-v3.json`](../wakeword_p4/results/embedding-endpoint-regression-v3.json).
+The failed candidate, feature metadata view and every fitted checkpoint are
+preserved for the GPU machine:
+
+```sh
+python3 research/handoff/fetch_assets.py --output .local/endpoint-update \
+  --asset endpoint-continuation-v1.tar.gz
+```
+
+This extension references unchanged environmental feature arrays already in
+the original snapshot. Merge overlapping files only when byte-identical; use
+the included portable training plans to bind normalized index paths. No new
+waveforms or microphone/device state are exported. This remains one partial
+supervision experiment, without a claim that RMS endpoints are phonetic truth
+or that full-corpus realignment cannot help.
+
+The public download and all20,497 archive members pass their recorded hashes.
+After merging only identical overlaps, both portable samplers reproduce five
+original batches each over40,627 rows, and the entire mean calibration JSON
+replays byte-for-byte. See
+[`embedding-endpoint-portable-v3.json`](../wakeword_p4/results/embedding-endpoint-portable-v3.json).
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before
