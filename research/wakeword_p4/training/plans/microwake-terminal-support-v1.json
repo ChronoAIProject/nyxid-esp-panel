@@ -1,0 +1,43 @@
+{
+  "scope": "Training-only counterfactual on standalone Hey Nyx WAVs and two retained compact INT8 models.",
+  "hypothesis": "Test whether detections require the acoustic tail near the independently identified terminal /s/.",
+  "ctc_rows_sha256": "5b64417e4ae98e724155e901b1064bc4d6bf4620695b87678a9eb26e6c97073c",
+  "tts_jobs_sha256": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+  "selection": "All previously audited standalone training clips ending in separate CTC k, s tokens with terminal mean argmax probability >= .5.",
+  "models": {
+    "control": {
+      "model_sha256": "f092fbc285e8f764365f75f34c75b1f0e652bcab92b577bc64bdd6a84a3ebeb7",
+      "calibration_sha256": "5ed5b05605cd4ab7208f44bc0448f9c325a1e74a5f97a34034f2cf866925b280",
+      "threshold": 0.97
+    },
+    "focus": {
+      "model_sha256": "65c7619be695ac3dc92b3eb1bff227afac3b3630b25cb1e2a126f3e4d31f60e0",
+      "calibration_sha256": "183268f95a8ad7c64a05edf9b914527e488369ec01b97c0f9a7d9cf9927c0964",
+      "threshold": 0.98
+    }
+  },
+  "models_threshold_scope": "Original failed validation fallbacks; unchanged and not eligible for deployment.",
+  "audio": {
+    "sample_rate": 16000,
+    "leading_silence_samples": 85920,
+    "trailing_silence_samples": 16000,
+    "pre_support_margin_samples": 640,
+    "post_support_margin_samples": 960,
+    "fade_samples": 80
+  },
+  "arms": {
+    "intact": "unchanged source",
+    "before_s_support": "fade to zero by 40 ms before the CTC s feature support starts; zero the rest",
+    "after_s_support": "fade to zero by 60 ms after that support ends; zero the rest"
+  },
+  "event_policy": {
+    "smooth_steps": 5,
+    "step_samples": 480,
+    "refractory_steps": 67
+  },
+  "limits": [
+    "A contextual CTC support window is not a human phonetic boundary.",
+    "Removing a suffix changes the waveform, not its original training label. This only diagnoses model behavior.",
+    "Uses known training recordings and original failed thresholds. It cannot estimate deployment recall or latency."
+  ]
+}
