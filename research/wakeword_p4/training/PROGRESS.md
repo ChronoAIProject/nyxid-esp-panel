@@ -582,3 +582,28 @@ voices/conditions and real recordings for subsequent acceptance.
   mean embedding cosine.9743/min.938 is a feasibility diagnostic, not wake recall.
   A bounded standalone P4 memory/timing probe is building. No classifier, native
   frontend, whole-app fit or release provenance acceptance is established.
+
+- Cached pretrained embedding/native frontend feasibility now passes numerical
+  probes: 105 warmed float outputs agree with original windows within5.92e-5;
+  quiet-calibrated INT8 cosine mean/min.9860/.9676 on training-only fixtures.
+  All114x96 quiet-LUT P4 output bytes match reference. Exact exhaustive
+  activation folding reduces cached inference from~79ms to~70ms. Native FFT
+  frontend matches all8,448 quantized source values in33 cases at2.813ms median.
+  Each probe restores/verifies the original development app/service/HiESP.
+  These are standalone resources/fidelity results, not wake acceptance.
+- Sixbit weight-grid compression fails its fidelity gate and newer ESP-NN
+  doubles cached inference time despite exact bytes; both are rejected.
+  Public reusable LUT/native-mel helpers reproduce the private measured artifact
+  and frontend goldens. See `../embedding/README.md` and
+  `../results/embedding-cached-p4-v3.json` for methods, hashes and limits.
+- The frozen-backbone head recipe is recorded before classifier scores:
+  16x96 histories,Conv24/Pool14/Dense16/sigmoid,10k steps,four checkpoints,
+  fixed warmed-history and80ms event policy. All23,208 TTS variants are
+  prepared; existing disjoint continuous training/validation features continue
+  extracting. Training/calibration launches only after both completion markers.
+  No fresh testing has been scored; whole-app flash/scheduling fit remains open.
+- Follow-up model/arena placement probes match all114x96 bytes in each case:
+  flash/internal70.41ms,PSRAM/internal69.85ms,PSRAM/PSRAM70.36ms medians.
+  Model expansion into PSRAM does not invalidate the standalone timing result.
+  P4 is360MHz/PSRAM200MHz; variable arena16KiB,tensor arena96KiB with76,604
+  used bytes. Original app/service/HiESP restores; whole-app fit remains untested.
