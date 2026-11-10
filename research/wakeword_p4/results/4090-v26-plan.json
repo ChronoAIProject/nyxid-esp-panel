@@ -1,0 +1,16 @@
+{
+  "role": "Prospective v26 controlled development experiment, not a result",
+  "baseline": "v24",
+  "single_change": "BCE label_smoothing=0.02; targets0.01/0.99, original class sample weights retained",
+  "reason": "Existing v25 false-trigger peaks include float means0.9990 and0.99989; not solely INT8 rounding. Smoothing is an unproven calibration hypothesis, not assumed cure.",
+  "architecture": "teacher60,context150,frozen reconstructed pretrained BN",
+  "features": ".local/wakeword/features-gpu-v23-librispeech100",
+  "steps": 120000,
+  "seed": 726,
+  "prefix_negatives": 16,
+  "hard_ambient_count": 0,
+  "baseline_loss_unchanged_at_default": true,
+  "threshold_selection": "Same validation-only dense INT8 grid then separate Mandarin/DiPCo/dev-other expanded validation. No fixed threshold transfer from v24.",
+  "independent_final_audio_accessed": false,
+  "limits": "Changing BCE target softening interacts with weight20 negatives; may reduce recall or fail to suppress confusion. Must evaluate actual streaming events; no success assumed."
+}

@@ -40,6 +40,8 @@ def main():
     parser.add_argument("--hard-ambient-count", type=int, default=0,
                         help="Replace this many of48 ambient slots with audited training-only real-speech hard windows")
     parser.add_argument("--negative-candidates", type=int, default=1)
+    parser.add_argument("--label-smoothing", type=float, default=0.,
+                        help="Training BCE only: y*(1-epsilon)+epsilon/2; evaluation labels stay unchanged")
     parser.add_argument("--time-mask-width", type=int, default=0)
     parser.add_argument("--frequency-mask-width", type=int, default=0)
     parser.add_argument("--ambient-sampling", choices=("rows", "duration", "stratified"), default="rows")
@@ -48,6 +50,8 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    if not 0 <= args.label_smoothing <= .2:
+        parser.error("label smoothing must be finite and within0..0.2")
     bn_policy = args.batchnorm_policy or ("frozen" if args.freeze_batchnorm else "train")
     if args.freeze_batchnorm and bn_policy != "frozen":
         parser.error("freeze-batchnorm conflicts with the selected policy")
@@ -258,7 +262,9 @@ def main():
                           batchnorm_initial=bn_initial, seed=726)
     (root/"initialization.json").write_text(json.dumps(initialization, indent=2)+"\n")
     print(json.dumps(initialization), flush=True)
-    model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
+    loss = (tf.keras.losses.BinaryCrossentropy(label_smoothing=args.label_smoothing)
+            if args.label_smoothing else "binary_crossentropy")
+    model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss=loss)
     # Valid stride-3, kernel-5 convolution consumes only 179 of 180
     # input frames. Phase 0 windows therefore end one 10 ms frame before
     # the streaming output they used to be compared with. Shift by the
@@ -381,6 +387,8 @@ def main():
               "feature_metadata_sha256": feature_metadata_hashes,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
+              "label_smoothing": args.label_smoothing,
+              "label_smoothing_policy": "Training BCE targets y*(1-epsilon)+epsilon/2; sample weights unchanged; evaluation labels/windows unchanged",
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
               "hard_ambient": ({**hard_ambient.report, "count_per_batch": args.hard_ambient_count,
                                 "seed": 30726, "remaining_broad_ambient_slots": 48-args.hard_ambient_count,
