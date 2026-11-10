@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from lexical_auxiliary import AuxiliarySampler, CLASSES, lexical_class, rms_end
+from lexical_auxiliary import AuxiliarySampler, CLASSES, binary_auxiliary_loss, lexical_class, rms_end
 from compare_lexical_auxiliary import confidence_point
 
 
@@ -62,6 +62,16 @@ class LexicalAuxiliaryTest(unittest.TestCase):
         grid = [point(.99, .65, .001), point(.95, .41, .10), acceptable]
         self.assertEqual(confidence_point(grid), acceptable)
         self.assertIsNone(confidence_point(grid[:2]))
+
+    def test_auxiliary_binary_loss_keeps_target_and_all_confuser_polarities(self):
+        import tensorflow as tf
+        probability = tf.Variable(np.full((6, 1), .5, np.float32))
+        with tf.GradientTape() as tape:
+            loss = binary_auxiliary_loss(tf.range(6), probability, {'negative_weight': 5})
+        gradient = np.asarray(tape.gradient(loss, probability))[:, 0]
+        self.assertLess(gradient[0], 0)
+        self.assertTrue(np.all(gradient[1:] > 0))
+        np.testing.assert_allclose(gradient[1:], -gradient[0] * 5, atol=1e-6)
 
 
 if __name__ == '__main__':

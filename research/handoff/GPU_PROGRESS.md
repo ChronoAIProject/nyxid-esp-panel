@@ -647,3 +647,26 @@ MultiNet settings, it tests a separate training-only lexical auxiliary loss on
 the existing cached embedding head. Both arms export the same binary detector
 graph; only training supervision differs. This does not duplicate GPU dialogue
 augmentation, require GPU-worker messages or alter the live audio pipeline.
+
+### GPU snapshot through `55561e3`
+
+Read on2026-11-11. V27 completes120ksteps and selects65k; its original
+.95703125point has72.34375% source-average proxy-window hits and1DiPCo event.
+Expanded calibration at.96875has70.0% hits and zero events on the original
+and three expanded development-negative corpora. These reused/proxy metrics
+do not establish final parity; the same-observed-event-budget point remains
+below v19's earlier diagnostic. No final scoring is justified by that alone.
+
+The initial float/INT8 comparison has maximum drift.87761802, mostly at cold
+step7. After complete context, maximum is still.22486654; matching exported
+initial buffers alone does not explain all drift. The GPU worker prepares a
+controlled PTQ comparison with/without two synthetic all0/all26 representatives
+while holding the real144training windows and SavedModel fixed. Do not
+duplicate that experiment on Mac or label initial-state drift as resolved.
+
+The training-only AMI addition audits four meetings,1.292258h and16metadata
+participants, with original corpus and Kaldi train agreement.465206continuous
+feature frames preserve the existing validation/regression rows. This cache
+has not yet produced a trained result at this snapshot. The Mac continuation
+instead tests direct binary supervision on its already-frozen lexical windows;
+its data/representation differ, so their absolute proxy metrics are not ranked.

@@ -44,6 +44,13 @@ def rms_end(pcm):
     return min((int(active[-1]) + 1) * 160, len(pcm)) / 16000
 
 
+def binary_auxiliary_loss(classes, probabilities, recipe):
+    import tensorflow as tf
+    from train_head import weighted_loss
+    labels = tf.cast(tf.equal(classes, 0), probabilities.dtype)[:, None]
+    return weighted_loss(labels, probabilities, recipe)
+
+
 def prepare(args):
     plan = json.loads(args.plan.read_text())
     if sha(Path(__file__)) != plan['script_sha256']:
@@ -186,8 +193,11 @@ def train(args):
                                   kernel_initializer=tf.keras.initializers.GlorotUniform(seed=plan['recipe']['seed'] + 1))
     lexical = tf.keras.Model(model.input, layer(model.layers[-2].output))
     weight = plan['auxiliary_loss_weight']
+    binary_weight = plan.get('auxiliary_binary_loss_weight', 0)
     if weight not in (0, .2):
         raise ValueError('Expected prespecified zero/.2 matched experiment')
+    if binary_weight not in (0, .2):
+        raise ValueError('Expected prespecified zero/.2 auxiliary binary loss')
     variables = model.trainable_variables + (layer.trainable_variables if weight else [])
     optimizer = tf.keras.optimizers.Adam(plan['recipe']['learning_rate'])
 
@@ -200,9 +210,13 @@ def train(args):
                 loss_aux = tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(auxiliary_y, logits, from_logits=True))
             else:
                 loss_aux = tf.constant(0.)
-            loss = binary + weight * loss_aux
+            if binary_weight:
+                loss_aux_binary = binary_auxiliary_loss(auxiliary_y, model(auxiliary_x, training=True), plan['recipe'])
+            else:
+                loss_aux_binary = tf.constant(0.)
+            loss = binary + weight * loss_aux + binary_weight * loss_aux_binary
         optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
-        return binary, loss_aux
+        return binary, loss_aux, loss_aux_binary
 
     args.output.mkdir(parents=True, exist_ok=False)
     np.save(args.output / 'representatives-training-only.npy', examples)
@@ -230,9 +244,10 @@ def train(args):
             main_hash.update(value.tobytes())
         for value in (ax, ay):
             aux_hash.update(value.tobytes())
-        binary, loss_aux = step(x, y, ax, ay)
+        binary, loss_aux, loss_aux_binary = step(x, y, ax, ay)
         if number % 1000 == 0:
             print(json.dumps({'step': number, 'binary_loss': float(binary), 'auxiliary_loss': float(loss_aux),
+                              'auxiliary_binary_loss': float(loss_aux_binary),
                               'seconds': time.monotonic() - started}), flush=True)
         if number in recipe['checkpoints']:
             output = args.output / f'step-{number:05d}'

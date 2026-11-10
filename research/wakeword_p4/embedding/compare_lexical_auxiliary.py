@@ -60,13 +60,16 @@ def main():
     parser.add_argument('--control', type=Path, required=True)
     parser.add_argument('--treatment', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--difference-field', choices=['auxiliary_loss_weight', 'auxiliary_binary_loss_weight'],
+                        default='auxiliary_loss_weight')
     args = parser.parse_args()
     control, left, a = read_arm(args.control)
     treatment, right, b = read_arm(args.treatment)
-    if control['plan']['auxiliary_loss_weight'] != 0 or treatment['plan']['auxiliary_loss_weight'] != .2:
+    difference = args.difference_field
+    if control['plan'][difference] != 0 or treatment['plan'][difference] != .2:
         raise ValueError('Expected frozen zero/.2 auxiliary weights')
-    if ({k: v for k, v in control['plan'].items() if k != 'auxiliary_loss_weight'}
-            != {k: v for k, v in treatment['plan'].items() if k != 'auxiliary_loss_weight'}):
+    if ({k: v for k, v in control['plan'].items() if k != difference}
+            != {k: v for k, v in treatment['plan'].items() if k != difference}):
         raise ValueError('Training plans differ beyond the auxiliary weight')
     for key in ('main_batches_sha256', 'auxiliary_batches_sha256', 'initial_weights_sha256',
                 'feature_inputs', 'auxiliary_manifest_sha256', 'parameters', 'training_sources', 'training_frames'):
@@ -79,6 +82,7 @@ def main():
     joint_a, joint_b = a['confidence_and_confuser_qualified'], b['confidence_and_confuser_qualified']
     result = {'scope': 'Matched final-checkpoint lexical auxiliary ablation on existing validation; proxy-window metrics, not acoustic or final acceptance',
         'comparison_script_sha256': sha(Path(__file__)), 'matched_training_verified': True,
+        'difference_field': difference,
         'same_main_auxiliary_and_ptq_samples': True, 'same_exported_binary_interface_ops_and_size': True,
         'control': a, 'treatment': b,
         'joint_qualified_macro_difference': joint_b['macro_recall'] - joint_a['macro_recall'] if joint_a and joint_b else None,

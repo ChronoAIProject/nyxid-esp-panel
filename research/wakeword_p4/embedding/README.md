@@ -730,3 +730,31 @@ Five focused tests cover exact-negative classes, alias preservation, source
 tail anchors, deterministic byte-preserving samples, source-role/bounds
 failures and simultaneous confidence/near-word constraints. The full goal
 remains active and unachieved.
+
+### Complete-word binary supervision, frozen follow-up
+
+`plans/lexical-binary-{control,treatment}-v1.json` keep the preceding lexical
+CE weight.2and the exact same main/auxiliary/PTQ batches, original initialization,
+seed741,10000steps and final-only checkpoint. Treatment additionally applies
+the **existing** weighted binary loss to those64auxiliary histories, with
+weight.2. Class0is the unchanged positive label; classes1..5are the unchanged
+exact-confuser negatives. Control adds no auxiliary binary loss. The intent
+is to train the final sigmoid on complete words as well as their shared
+representation, with no new runtime branch or microphone/audio change.
+
+The six-class manifest remains pinned to the previous source identity;
+recreate that preparation using commit`36b27da` before using the newer trainer.
+No source record, RMS anchor, feature array or main sampler changes. The
+new control must independently reproduce the previous lexical-treatment model
+bytes and all recorded main/auxiliary/PTQ hashes; keep any mismatch as a
+failed replication rather than assuming topology implies equivalence.
+
+Use the same `lexical_auxiliary.py train` and `evaluate_head.py` commands with
+the new plans and fresh private outputs. Compare with
+`compare_lexical_auxiliary.py --difference-field auxiliary_binary_loss_weight`,
+plus `--control`, `--treatment`, and a fresh `--output`. The same full threshold
+grid, joint confidence/confuser constraints and endpoint limitations apply.
+The sixth focused test checks actual loss-gradient polarity and the original
+negative weight across all six auxiliary classes. Historical interface-pilot
+success is explicitly not a new model fidelity pass. No physical/reserved
+benchmark or production replacement follows from this preparation alone.
