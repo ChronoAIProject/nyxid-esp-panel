@@ -2188,3 +2188,24 @@ results/4090-v27-calibration-*-v1.json保留完整来源、网格及每语料计
 保持原始导出校准流程以隔离数据干预，继续120000步、相同初始化、
 冻结BN、原BCE和prefix16。仍按同一密集/扩展零事件开发门槛，最终集不评分。
 runner见experiments/v28_ami_dialogue.sh，未预判结果。
+
+
+## Kokoro 原生时长输出与旧音频对应失败（2026-11-10）
+
+实际检查固定Kokoro ONNX图，输出为waveform和duration，旧封装只返回第一个。
+读取原生token时长，对24条原有开发目标重新合成；
+每条均验证原生duration总和×600等于24kHz未裁剪波形长度，
+记录实际库trim偏移、全部token/时长以及新音频SHA。没有调用唤醒分类器。
+
+然而24/24新波形均不等于原保存PCM，其中3条长度也不同。
+不能将本次推理时长回填到旧音频：所有original_pcm_candidate_end_seconds均为null。
+完整失败保留，不按匹配程度筛选；新诊断波形在
+.local/wakeword/synthesis-duration-development-v1（未评分），
+原生时长与失配报告见results/4090-synthesis-duration-development-v1.json。
+候选仅属于本次保存的新波形，也不构成真实音素标注：
+原生duration含重音/空格token分配，声码器时移及听觉边界仍未核验。
+因此没有凭此重算召回或宣布延迟优势。源码training/audit_synthesis_durations.py。
+
+v28已启动实际CUDA训练（PID210525），运行初期1500步，
+初始化JSON与v27逐项完全相同。训练完成后runner自动执行
+原密集验证、三项扩展负语料、扩展校准及流式探针；不触碰独立最终集。
