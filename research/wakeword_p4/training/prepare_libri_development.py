@@ -76,7 +76,12 @@ def main():
         raise ValueError('Official MD5 mismatch')
     a.work.mkdir(parents=True, exist_ok=True)
     with tarfile.open(a.archive) as archive:
-        archive.extractall(a.work, filter='data')
+        members = archive.getmembers()
+        for member in members:
+            target = (a.work/member.name).resolve()
+            if not target.is_relative_to(a.work.resolve()) or not (member.isfile() or member.isdir()):
+                raise ValueError('Archive contains escaped path or unsupported link/device')
+        archive.extractall(a.work, members=members)
     corpus = a.work/'LibriSpeech/dev-other'
     speakers = sorted(int(x.name) for x in corpus.iterdir() if x.is_dir())
     previous = {int(r['speaker']) for r in json.loads(a.development_human.read_text())
