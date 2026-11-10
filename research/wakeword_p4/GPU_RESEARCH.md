@@ -2746,3 +2746,27 @@ run_replay/run_corpus新增显式independent-dialogue-final角色，只接受tes
 完整下载PCM为1049.3546875秒，公开转写末词1049.04秒。
 不按元数据虚增曝光，也不裁剪/排除此流；最终输入以所有完整PCM样本数冻结。
 截至本次核验8场已完成，全部末词时间未越过对应实际录音末端。
+
+## 新AMI独立远场负例准备完成并冻结，尚未评分（2026-11-10）
+
+16/16原WAV下载完成，源audit SHA
+`ddd3c6d4a1d792965cc2fc8d154d3943f927db4bfabc69c38b7a62e35080447b`。
+实际原始PCM曝光9.062306666666666h；16位自然参与者跨四组会议重复，
+与官方train/dev及实际48位AMI训练参与者均不重叠。
+逐场原WAV哈希/样本数核验，全部公开转写末词落在录音内；
+这不等于完整语音真值或精确音素对齐。源转写/来源报告完整保留。
+
+同PCM输入与连续缓存全部生成并复核：16/16原PCM前缀哈希与原始样本数一致，
+仅新增总计1056个末尾对齐零样本，全部后缀为零，不计入曝光；
+16/16输出WAV/PCM及feature SHA、uint16形状和10ms帧数均核验。
+固定prepared manifest SHA
+`588ff7fbf95a9aaca68d5e9895c975418e60a1f76fcf22862705b02d0adb5c84`。
+无删除、改标、裁剪、会话拼接或分类器评分。
+
+results/4090-ami-independent-source-v1.json记录来源/许可/完整原manifest；
+4090-ami-independent-source-timing-v1.json记录元数据与实际PCM差异；
+4090-ami-independent-input-manifest-v1.json冻结双方相同PCM及feature清单；
+4090-ami-independent-input-audit-v1.json记录独立完整性复核。
+本地原音频ami-independent-final-source-v1、输入ami-independent-final-inputs-v1。
+输入准备并非识别验收；须在候选通过开发检验并固定后另推评分预注册。
+v31原训练仍运行，已完成57000/120000步，未发布中途分数为最终识别质量。
