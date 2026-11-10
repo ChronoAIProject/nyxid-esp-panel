@@ -546,3 +546,17 @@ The first head run reached step 10,000 but failed report serialization because a
 premature-event count was a NumPy int64. No checkpoint/result was published from
 that run. The event predicate now explicitly returns Python bool; a fresh v1b
 run retains the same seed/configuration and preserves the failed log locally.
+
+The v1b reference completed 40,000 steps in 110.6 seconds on RTX 4090.
+Validation selected step 40,000 / threshold 0.985: source-macro recall 30.026%,
+Piper 6.719%, Kokoro 53.333%; pooled 257/2,160 correlated variants (11.898%).
+There were zero ambient events in 1.20481 hours, upper 95% bound 2.48647/h;
+maximum source confusing-negative rate 0.9375%. Hit latency median 251.75 ms,
+p95 369.125 ms. This reference failed to improve validation recall and is
+rejected; no regression or independent final evaluation is warranted.
+Report: `4090-embedding-head-v1b.json`. The custom head, loss and positive-window
+sampling differ from the upstream full training recipe, so this failure does
+not establish that pretrained embeddings or the upstream method are unsuitable.
+Next diagnostic should audit the positive-window distribution against full
+stream inference and align training sampling/loss with the official recipe
+before another large data expansion. No Hi ESP comparison was completed.
