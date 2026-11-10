@@ -32,11 +32,12 @@ def main():
         p.error('Use fresh output and supported threshold')
     manifest = json.loads(a.manifest.read_text())
     rows = [r for r in manifest['records'] if r['path'] == a.record]
-    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation', 'development-paired-validation', 'independent-negative-final', 'independent-paired-final'):
+    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation', 'development-paired-validation', 'independent-negative-final', 'independent-paired-final', 'independent-dialogue-final'):
         raise ValueError('Require one explicit supported replay record')
     row = rows[0]
     paired_final = row['role'] == 'independent-paired-final'
-    final = row['role'] == 'independent-negative-final' or paired_final
+    dialogue_final = row['role'] == 'independent-dialogue-final'
+    final = row['role'] == 'independent-negative-final' or paired_final or dialogue_final
     if bool(a.final_preregistration) != final:
         raise ValueError('Independent final replay requires a separate explicit preregistration')
     freeze = None
@@ -47,7 +48,18 @@ def main():
                 or a.threshold != freeze['threshold_requested']
                 or any(sha(getattr(a, k)) != freeze[k+'_sha256'] for k in ('qemu', 'elf', 'flash'))):
             raise ValueError('Final PCM, engine or operating point differs from preregistration')
-        if paired_final:
+        if dialogue_final:
+            if (freeze.get('final_role') != 'independent-dialogue-final'
+                    or not manifest.get('continuous_recordings') or manifest.get('inserted_intermediate_gaps')
+                    or not manifest.get('original_pcm_preserved')
+                    or manifest['source_audit_sha256'] != freeze['source_audit_sha256']
+                    or manifest['source_manifest_sha256'] != freeze['source_manifest_sha256']
+                    or row['frontend_final_zero_pad_samples'] != (-row['original_samples']) % 160
+                    or row['samples'] != row['original_samples']+row['frontend_final_zero_pad_samples']
+                    or row['source_seconds'] != row['original_samples']/16000
+                    or not row['exact_original_pcm_preserved']):
+                raise ValueError('Changed independent dialogue waveform protocol')
+        elif paired_final:
             if (not manifest.get('paired_wakephrases')
                     or manifest['source_holdout_manifest_sha256'] != freeze['source_holdout_manifest_sha256']
                     or row['lead_samples'] != 28800 or row['tail_samples'] != 16000
@@ -151,7 +163,7 @@ def main():
                   source_sha256=sha(Path(__file__)), serial_sha256=sha(serial), command=command,
                   independent_final_audio_accessed=final,
                   final_preregistration_sha256=sha(a.final_preregistration) if final else None,
-                  limits=('Independent paired TTS intention diagnostic; no validated phonetic endpoints or pronunciation labels. Not true recall or phonetic latency acceptance.' if paired_final else 'Independent negative audio only; fixed operating point, raw official events. No positive recall, matched population FAR or hardware latency claim.' if final else 'Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.'))
+                  limits=('Independent dialogue negatives; repeated participants and transcript-screen limitations remain. Nominal Poisson bounds do not account for clustering. No positive recall, matched population FAR or hardware latency claim.' if dialogue_final else 'Independent paired TTS intention diagnostic; no validated phonetic endpoints or pronunciation labels. Not true recall or phonetic latency acceptance.' if paired_final else 'Independent negative audio only; fixed operating point, raw official events. No positive recall, matched population FAR or hardware latency claim.' if final else 'Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.'))
     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report))
 
 

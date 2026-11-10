@@ -1,4 +1,4 @@
-"""Run a fixed Hi ESP threshold over an existing development validation corpus."""
+"""Replay development negatives or an explicitly preregistered final corpus."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
@@ -25,8 +25,10 @@ def main():
     final = bool(a.final_preregistration)
     if final:
         freeze=json.loads(a.final_preregistration.read_text())
+        final_role=freeze.get('final_role','independent-negative-final')
         if (not rows or len(rows)!=freeze['expected_streams'] or sha(a.manifest)!=freeze['pcm_manifest_sha256']
-                or any(r['split']!='testing' or r['role']!='independent-negative-final' for r in rows)
+                or final_role not in ('independent-negative-final','independent-dialogue-final')
+                or any(r['split']!='testing' or r['role']!=final_role for r in rows)
                 or a.threshold!=freeze['threshold_requested']):
             raise ValueError('Need unchanged independently preregistered final corpus')
     elif (not rows or any(r['split']!='validation' or r['role'] not in
@@ -71,7 +73,7 @@ def main():
                  final_preregistration_sha256=sha(a.final_preregistration) if final else None,
                  event_policy='All native WAKENET_DETECTED outputs counted; verified-channel outputs separate; reset only between source speaker/session streams.',
                  exposure_policy='Original speech/recording seconds; inserted utterance gaps and final alignment excluded.',
-                 limits=('Independent negative read speech at a fixed preregistered operating point. Native trigger policy and frontend retained. No population FAR equality, positive recall or hardware latency claim.' if final else 'Reused development only. Native trigger policies and frontends retained. No matched general false-wake operating-point selection, independent-final acceptance, positive recall or hardware latency claim.'))
+                 limits=('Independent negatives at a fixed preregistered operating point. Dialogue streams may share participants; nominal Poisson bounds do not account for clustering. Native trigger policy and frontend retained. No population FAR equality, positive recall or hardware latency claim.' if final else 'Reused development only. Native trigger policies and frontends retained. No matched general false-wake operating-point selection, independent-final acceptance, positive recall or hardware latency claim.'))
     (a.output/'report.json').write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps({k:v for k,v in summary.items() if k!='reports'}),flush=True)
 

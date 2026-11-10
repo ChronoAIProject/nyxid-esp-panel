@@ -1,0 +1,28 @@
+{
+  "role": "Dialogue replay guard and existing development transport regression; no final inference",
+  "run_replay_source_sha256": "ac63be21d910fa70936e5bb07729891b6d425d44c4ea64bfd5ab9c0ef4fe8daf",
+  "run_corpus_source_sha256": "cc1a27971b3bc1771ca8067391d05443bc8c8196e6667c786114de5d5f7d7b3a",
+  "development_manifest_sha256": "bfee96660a4149bf3a8f6eba5170b149ea14cc886d47d1fc5a19a5e71e7f7ade",
+  "development_record": "af_sky/0.9-0.wav",
+  "development_outcomes_equal_previous": true,
+  "development_report_sha256": "21fdc1b87b8a7d03886aa6f8ccf01a702e0580fea1036c1264fea0e2e47c5a29",
+  "guard_fixtures": [
+    {
+      "case": "missing-preregistration",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Independent final replay requires a separate explicit preregistration"
+    },
+    {
+      "case": "changed-threshold",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Final PCM, engine or operating point differs from preregistration"
+    },
+    {
+      "case": "changed-source-audit",
+      "rejected_before_output_creation": true,
+      "error": "ValueError: Changed independent dialogue waveform protocol"
+    }
+  ],
+  "independent_final_scored": false,
+  "limits": "Guards use explicitly synthetic metadata fixtures; only original developer PCM actually replayed. No independent recognition quality or full-goal conclusion."
+}

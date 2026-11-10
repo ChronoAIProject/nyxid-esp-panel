@@ -2731,3 +2731,18 @@ v31方案c734ef5推送后已在RTX4090启动。实际完成10500/120000步，
 实证results/4090-ami-independent-input-continuity-v1.json。
 该单会议检查只证明实现连续性，不替代全16场输入冻结、语音真值或识别验收。
 下载和v31训练原进程均继续运行，尚无完整新模型评估结论。
+
+## 新独立远场复放角色与拒绝保护（2026-11-10）
+
+run_replay/run_corpus新增显式independent-dialogue-final角色，只接受testing及
+单独final_role预注册；manifest/引擎/阈值和source audit/source manifest哈希固定。
+检查连续录音、无插入中间间隔、原PCM保留、末尾0..159样本对齐及原始曝光。
+旧development与原独立负例/配对角色保留；没有用新最终录音测试分类器。
+原af_sky开发样本实际复放的事件、PCM/CRC、调用次数、stage104/getter
+与既有报告一致。三个明确fixture分别缺预注册、改阈值、改来源audit，
+均在创建输出/推理前被拒绝。证据results/4090-ami-independent-replay-guards-v1.json。
+
+下载中核对到实际WAV时长不同于共享元数据：ES2004a元数据1186秒，
+完整下载PCM为1049.3546875秒，公开转写末词1049.04秒。
+不按元数据虚增曝光，也不裁剪/排除此流；最终输入以所有完整PCM样本数冻结。
+截至本次核验8场已完成，全部末词时间未越过对应实际录音末端。
