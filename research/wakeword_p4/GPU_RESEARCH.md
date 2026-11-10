@@ -871,3 +871,26 @@ ambient rows sampling, negative weight20 and existing event validation remain
 fixed. First500 actual training steps completed without runtime failure;
 results remain pending. The Mandarin dataset is not appended to this control:
 its frozen v6 result remains a separate new-language development stress test.
+
+## New board-free baseline route: released P4 QEMU
+
+Espressif QEMU release`esp-develop-9.2.2-20261109` includes an x86_64 Linux
+RISC-V emulator and`esp32p4-rom.bin`. The17,544,120-byte asset matches its
+upstream release SHA256
+`afa59465495295b8aa4f804768983fa30b0bbf33d0f68a047f9caa436b9164c0`.
+After installing missing pixman/SDL2/slirp runtime libraries, actual
+`qemu-system-riscv32 --version` and`-machine help` succeed and list`esp32p4`.
+Python3.11 lacks tar extraction filters; the original archive was retained,
+then member types and resolved path/link containment were explicitly checked
+before extraction. No firmware or WakeNet inference has yet run.
+
+This changes the next action from looking for native x86 libraries to testing
+system emulation. Machine availability does not verify optimized PIE/DSP
+instruction support or numerical equivalence. Exact firmware ESP-SR2.6.1 and
+Hi ESP model pins must be established before recognition comparisons. An
+isolated ESP-IDFv5.5.4 checkout is downloading for a no-board firmware boot
+probe; production firmware and attached devices are not involved.
+
+The v9 mining run has completed40k steps and exported INT8; validation-only
+quantized calibration is running. Training metadata is published separately
+from final recognition evidence. Independent final fixtures remain unscored.
