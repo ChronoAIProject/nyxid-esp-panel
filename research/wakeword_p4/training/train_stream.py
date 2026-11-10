@@ -12,7 +12,7 @@ import numpy as np
 import tensorflow as tf
 
 from features import FRAMES
-from evaluate import events, smooth, THRESHOLDS
+from evaluate import events, event_indices, smooth, THRESHOLDS
 
 
 def main():
@@ -25,6 +25,10 @@ def main():
     parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
+    parser.add_argument("--source-exponent", type=float, default=.5,
+                        help="Engine sampling: .5=sqrt clip counts, 0=equal engines")
+    parser.add_argument("--event-validation", action="store_true",
+                        help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
     if args.device == "cpu":
         tf.config.set_visible_devices([], "GPU")
@@ -73,7 +77,7 @@ def main():
     def sample(label, count):
         sources = groups["training"][label]
         engines = list(sources)
-        probabilities = np.sqrt([len(sources[e]) for e in engines])
+        probabilities = np.asarray([len(sources[e]) for e in engines], dtype=float)**args.source_exponent
         probabilities /= probabilities.sum()
         output = []
         for _ in range(count):
@@ -144,7 +148,8 @@ def main():
                 times = (FRAMES+2+3*(np.arange(len(values))+4))*.01
                 end = (row["keyword_frame"]+2)*.01
                 valid = (times >= end-.10) & (times <= end+.80)
-                positives.append((row["engine"], float(values[valid].max()) if valid.any() else 0.))
+                positives.append((row["engine"], float(values[valid].max()) if valid.any() else 0.,
+                                  values, times, end))
             else:
                 negatives.append((row["engine"], float(values.max()) if len(values) else 0.))
         human = [(r.get("source_seconds", r["seconds"])/3600, score(data)) for r, data in ambient["validation"]]
@@ -152,11 +157,15 @@ def main():
         grid = []
         for threshold in THRESHOLDS:
             count = sum(events(s, threshold) for _, s in human)
-            recalls = {e: float(np.mean([v >= threshold for source, v in positives if source == e]))
-                       for e in {source for source, _ in positives}}
+            def hit(row):
+                if not args.event_validation:
+                    return row[1] >= threshold
+                return any(row[4]-.1 <= row[3][i] <= row[4]+.8 for i in event_indices(row[2], threshold))
+            recalls = {e: float(np.mean([hit(r) for r in positives if r[0] == e]))
+                       for e in {r[0] for r in positives}}
             false_rates = {e: float(np.mean([v >= threshold for source, v in negatives if source == e]))
                            for e in {source for source, _ in negatives}}
-            grid.append({"threshold": threshold, "recall": float(np.mean([v >= threshold for _, v in positives])),
+            grid.append({"threshold": threshold, "recall": float(np.mean([hit(r) for r in positives])),
                          "macro_recall": float(np.mean(list(recalls.values()))), "recall_by_engine": recalls,
                          "hard_negative_false_rate": float(np.mean([v >= threshold for _, v in negatives])),
                          "max_source_false_rate": max(false_rates.values()),
@@ -216,8 +225,11 @@ def main():
     (root/"hey_nyx.tflite").write_bytes(data)
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
+              "gpu_details": [tf.config.experimental.get_device_details(g) for g in gpus],
               "selected_step": selected_step,
               "validation_window_phase": window_phase,
+              "source_exponent": args.source_exponent,
+              "validation_detection": "latched events after full receptive-field warmup" if args.event_validation else "window peak",
               "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,

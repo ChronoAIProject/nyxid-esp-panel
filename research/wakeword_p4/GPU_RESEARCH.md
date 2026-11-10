@@ -173,3 +173,36 @@ human negative speech recordings, not real-user positive wake recordings.
 At zero events, that exposure would give a Poisson one-sided 95% upper bound
 of about 0.279/hour; no zero-event result is claimed. New independent positive
 holdout coverage and the matched Hi ESP comparison remain unresolved.
+
+## Candidate v1b and the next corpus
+
+Aligned validation selected step 10,000 of the v1b 40,000-step rerun.
+The actual quantized regression result is still rejected: mean source recall
+61.64% (Piper 79.53%, Kokoro 43.75%), confusing-negative false detections
+1.384%, and zero continuous events in 1.3582 source hours. The one-sided 95%
+upper bound is **2.2057/hour**, above the 0.5/hour goal. Detection latency
+among hits is median 120 ms, p95 170 ms. Full reports are
+`4090-training-v1b-aligned.json`, `4090-threshold-v1b-aligned.json` and
+`4090-quantized-v1b-aligned.json`. The model SHA-256 is
+`c866e74cc7c782b39b44665b05959c3cc60640d5b4ef29ab3a6ac68791bf989b`.
+Training reruns are not claimed bit exact on GPU; different selected weights
+and thresholds prevent attributing quality differences to alignment alone.
+
+The completed Kokoro speed expansion has 3,220 WAVs across the same 28
+English voice IDs, using speeds 0.75/0.9/1/1.1/1.25. Hash/audio/voice audits
+passed. Together with Piper it yields 68,560 rendered sequences from 17,140
+source WAVs (`4090-features-v2-audit.json`). Candidate v2 keeps the architecture
+and 40,000-step budget, uses equal engine sampling (`--source-exponent 0`)
+and latched-event float validation (`--event-validation`) after causal history
+warmup. Its final quantized evaluation still includes startup behavior. This
+is a multiple-change experiment, not an isolated speed-ablation study.
+
+Before any scores, `comparison_holdout.py` generated 468 paired/common-negative
+WAVs using 26 unused international Kokoro presets: 78 Hey Nicks, 78 Hi ESP and
+312 common negative phrases. `audit_comparison.py` verified voice/audio
+disjointness from development and exact pairing by voice/speed. See
+`4090-comparison-holdout-generation.json` and `4090-comparison-holdout-audit.json`.
+These are English phrases through international carrier voices, not recordings
+of 26 independently established human speakers. No recognition scores have
+been computed on this challenge; pronunciation review and matched acoustic
+rendering are still pending. It does not establish a Hi ESP comparison.
