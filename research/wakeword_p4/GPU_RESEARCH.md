@@ -1280,3 +1280,24 @@ Piper为0。提前偏移110–400ms，中位155ms；Kokoro另有60个未命中�
 这些偏移推断标注错误。新增可复现脚本 `diagnose_early_events.py`，统计与既有
 报告的正例数/命中数/提前数逐项核对。报告
 `4090-v15-premature-event-diagnostic.json`；本次未触及独立最终集。
+
+
+### v16/v17 实际 INT8 验证结果
+
+40k训练完成，v16耗时428.3s、选择15k步；v17耗时429.6s、选择10k步。
+两者均22,801参数、INT8 54,440字节。v16模型SHA256
+`4a4feae50cc83c659a1fcb8012cd3b420067d7210557fe3fa96423f1e54065a5`；
+v17模型SHA256 `69861afc52bc8bea5e1afbf0748f1f586c75e797452f2314aa9ee02c0ff060f2`。
+训练报告与配置见 `4090-training-v16-human-rows.json`、
+`4090-training-v17-human-stratified.json`。
+
+固定原v6完整INT8验证，各自重新校准后阈值均0.95。v16来源平均59.4531%，
+Piper46.4063%、Kokoro72.5%，提前事件2；v17来源平均70.4167%，
+Piper70%、Kokoro70.8333%，提前事件0。v17中位延迟140ms、P95 220ms，
+最差近音误触0.6875%。两组环境均0/1.204811h，95%上界2.48647/h。
+报告见 `4090-quantized-v16-human-validation.json`、
+`4090-quantized-v17-human-validation.json`。
+
+分层明显优于同数据按行，但验证召回未超过v15；因更均衡且无提前事件，
+v17继续开发回归、固定阈值中文/DiPCo验证和小样本导出检查。
+v16拒绝，不进一步评分；独立最终集保持冻结。
