@@ -354,6 +354,16 @@ on macOS with the documented guarded app-swap procedure. Linux can inspect the
 same assets; its playback system needs a separately frozen protocol. Device
 addresses, credentials and provisioned firmware are deliberately absent.
 
+The subsequent frozen plan `acoustic-matched-extended-v1.json` expands each
+arm to all 25 positive variant-0 phrases and 50 shared ordinary sentences from
+the same five development voices. A fixed seed shuffles matched trial keys
+identically across engines. It keeps the model, thresholds, normal speed,
+playback settings and Hi ESP / Hey Nyx / Hi ESP bracket unchanged. Its full
+100-WAV source asset is `acoustic-matched-extended-v1.tar.gz`, fetched with the
+same `--asset` command into another fresh directory. This is a prespecified
+development measurement, not a new independent holdout or a reported quality
+gain. Extended results are pending; the completed pilot remains separate.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before
