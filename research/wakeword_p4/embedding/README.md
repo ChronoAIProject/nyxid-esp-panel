@@ -1254,3 +1254,25 @@ are verified. See [`assets-negative-activity-v2.json`](../../handoff/assets-nega
 This is a synthetic-training/reused-validation research bundle, with no room
 PCM, board state or device credentials. Original feature arrays are reused
 from the earlier feature asset; this bundle is not production firmware.
+
+The [fixed-threshold float/INT8 audit](../results/negative-activity-quantization-v1.json)
+uses the original fitted Keras models and TFLite exports, with their hashes
+and validation indices frozen at `9b6b36c`. Both arms exactly reproduce all
+430026 cached INT8 scores, including 35 continuous streams, then score the
+same warmed embedding histories in float. The original 0.95, 0.97 and 0.98
+thresholds, 3-score average, latch and proxy windows stay fixed. No threshold
+is selected for float. Counts of all positive-stream events and events inside
+the proxy window are reported separately.
+
+At the treatment's INT8 joint point 0.97, float/INT8 give 547/550 latched
+positive variants in the proxy window. Ten variants hit only in float and
+thirteen only in INT8. Confusing clips trigger 6/5 times, with worst-corpus
+fractions 1.25%/0.7143%; this small change crosses the study's 1% bound. The
+control at 0.98 gives 507/507 positive variants, with ten changes in each
+direction. Both precisions have zero continuous events at all three points
+in both arms. These matched results do not support treating quantization as
+the main source of misses, though it changes individual decisions and can
+change qualification at the confuser bound. The largest treatment smoothed
+error (0.214469) is on a continuous window with scores 0.073292/0.287760,
+below every audited threshold. The report does not measure physical latency,
+audio or v30 behavior.
