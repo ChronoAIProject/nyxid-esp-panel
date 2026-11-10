@@ -204,6 +204,31 @@ the same raw idle source for both engines and keep the unchanged processed
 communication path. Independent continuous-negative and human/room evidence
 remain separate requirements.
 
+### Raw-input engine comparison
+
+`plans/raw-engine-comparison-v1.json` freezes a new Hi ESP / Hey Nyx / Hi ESP
+bracket after the input-control result. Both idle detectors receive the
+single producer's raw mic; communication audio keeps its original AEC/AGC
+and ordered preroll/FIFO. The Hi ESP arm uses the pinned raw-input control;
+the Hey Nyx arm uses the already measured equal-mean runtime. Neither model,
+threshold nor source waveform changes during the bracket.
+
+Each arm has 35 trials in the same logical randomized order: three positive
+forms per each of five reused voices, two shared ordinary sentences, and the
+shared near-word fixtures `Hey Nick` and `Hi ESB` per voice. Categories remain
+explicit in each trial so ordinary and near-word false counts cannot be
+pooled away. These are reused generator-labelled synthetic regression clips,
+not human pronunciation truth or new independent speakers.
+
+Run the unchanged `acoustic_wake_probe.py` with `--arm hi_esp` or `hey_nyx`
+through `run_full_app.py`, binding each plan's exact app identity and wake word.
+Before the Hey Nyx acoustic command, run `resource_smoke.py --seconds 40
+--require-capture-counters --capture-backlog-bytes 27264`, using that runner's
+private UART file. This checks current idle cadence and hardware byte balance
+without playing or recording room audio. Do not infer call/reconnect or
+recognition acceptance from that idle check. Restore and verify the original
+app/service/listener after every arm, including any failed resource check.
+
 ```sh
 python research/panel_wake_runtime/acoustic_wake_probe.py \
   --plan "$WAKE_ACOUSTIC_PLAN" --arm hi_esp \
