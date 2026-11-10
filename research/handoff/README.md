@@ -366,8 +366,9 @@ physical experiment is a separate measurement and is unchanged.
 This is a recall/latency tradeoff, not a proven improvement or independent
 test guarantee. Threshold-grid selection, repeated experiments and limited
 speech/environment coverage constrain the interpretation of the validation
-bound. The candidate is not accepted or flashed. Existing development
-regression, physical acceptance and resource/voice-chain gates remain pending.
+bound. The candidate is not accepted or flashed. Physical acceptance and
+resource/voice-chain gates remain pending; completed development regression
+is reported below.
 No threshold was selected from microphone trials or development regression.
 The complete original confusion-group metrics remain in
 [`embedding-confidence-operating-point-v3.json`](../wakeword_p4/results/embedding-confidence-operating-point-v3.json).
@@ -386,6 +387,26 @@ The frozen regression protocol is
 the original corpus/helper identities and differs only in the validation
 operating point and its explicit candidate identity. Preserve all old results
 and use fresh output directories for this diagnostic.
+
+The completed regression reproduces every original source/cache identity and
+has no priming events. Increasing the frozen threshold trades recall for fewer
+near-word/continuous events; it does not fix the known ordinary-sentence event:
+
+| Existing development measurement | Original .4 | Confidence-bound .6 | Hi ESP |
+| --- | --- | --- | --- |
+| Positive clips with any event | 46 / 50 | 40 / 50 | 48 / 50 |
+| Nyx-specific near-word clips with events | 23 / 90 | 15 / 90 | 0 / 90 |
+| Shared ordinary-sentence clips with events | 1 / 100 | 1 / 100 | 0 / 100 |
+| English continuous events / 5.549 source hours | 1 | 0 | 0 |
+| Mandarin continuous events / 1.294 source hours | 0 | 0 | 0 |
+
+The new zero-event 95% upper bounds remain .540/hour for English and
+2.316/hour for Mandarin, computed from their slightly shorter evaluated
+durations. Reused development corpora do not provide independent acceptance.
+The .6 candidate is rejected as a replacement and was not flashed. Full
+reports and paired phrase counts are in
+[`embedding-confidence-regression-v3.json`](../wakeword_p4/results/embedding-confidence-regression-v3.json).
+The .4 physical bracket below remains an independent, unchanged measurement.
 
 ### Matched physical five-voice pilot
 
@@ -438,9 +459,65 @@ the same five development voices. A fixed seed shuffles matched trial keys
 identically across engines. It keeps the model, thresholds, normal speed,
 playback settings and Hi ESP / Hey Nyx / Hi ESP bracket unchanged. Its full
 100-WAV source asset is `acoustic-matched-extended-v1.tar.gz`, fetched with the
-same `--asset` command into another fresh directory. This is a prespecified
-development measurement, not a new independent holdout or a reported quality
-gain. Extended results are pending; the completed pilot remains separate.
+same `--asset` command into another fresh directory. The completed 225-trial
+bracket is a prespecified development measurement, not a new independent
+holdout; the smaller pilot remains separate.
+
+| Expanded arm, in execution order | Positive triggers | Onset-ambiguous positive triggers | Ordinary-negative triggers |
+| --- | --- | --- | --- |
+| Hi ESP before | 6 / 25 | 0 | 0 / 50 |
+| Frozen Hey Nyx .4 | 12 / 25 | 1 of the 12 | 0 / 50 |
+| Hi ESP after restoration | 5 / 25 | 0 | 0 / 50 |
+
+The Hey Nyx `Tessa-positive-2` HTTP interval straddles source onset, spanning
+1.744–3.702 s; keep it ambiguous rather than count it as a confirmed wake after
+speech. There are 11 Hey Nyx triggers with intervals clearly after source
+onset. All 225 trials rearm with unchanged playback settings; the original
+app, service and idle listener are verified after the final arm. Hi ESP
+detects only Samantha/Tessa in both arms, and three individual Tessa outcomes
+change across the bracket. Its low and variable control performance limits
+interpretation of the apparent Hey Nyx advantage. The same preprocessing,
+synthetic-voice, short-negative and latency limitations as the pilot apply.
+See all retained trials and recovery evidence in
+[`embedding-acoustic-matched-extended-v3.json`](../wakeword_p4/results/embedding-acoustic-matched-extended-v3.json).
+
+### Backbone precision isolation
+
+One already-viewed source/capture pair is replayed with unchanged native mel,
+heads, .4 threshold, source level/speed and 16 kHz sampling. The three paths
+are actual INT8 backbone, original float backbone with the identical
+dequantized INT8 input, and float backbone with native mel. Float outputs
+are requantized into the existing INT8-head space. The first nine shared
+INT8 history steps are excluded from embedding differences; head scoring
+starts only after complete float context. Actual INT8 extraction matches the
+existing extractor byte for byte, including the known capture peak.
+
+| Peak equal-mean score | Actual INT8 | Float, dequantized input | Float, native mel |
+| --- | --- | --- | --- |
+| Existing synthetic source | .4492 | .6712 | .6921 |
+| Existing microphone capture | .2181 | .1198 | .1204 |
+
+The source triggers all three paths, while the capture triggers none. This
+does not support quantization alone as the cause of this particular missed
+cue. It does not establish behavior on other recordings or accuracy of a
+retrained float system. No fitting, new recording, model switch or float
+deployment occurred. Only hashes and aggregate diagnostics are published in
+[`embedding-backbone-precision-diagnostic-v3.json`](../wakeword_p4/results/embedding-backbone-precision-diagnostic-v3.json);
+the microphone WAV, arrays and score sequences remain private.
+
+To reproduce on the original local pair, supply its existing private paths;
+the plan checks both WAV hashes and all model/helper identities:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/diagnose_backbone_precision.py \
+  --data-root "$WAKE_DATA" --source "$WAKE_SOURCE_WAV" \
+  --capture "$WAKE_PRIVATE_CAPTURE_WAV" \
+  --plan research/wakeword_p4/embedding/plans/backbone-precision-diagnostic-v1.json \
+  --output .local/new-private-precision-diagnostic
+```
+
+The private capture is deliberately absent from the public handoff. A new
+pair requires a separately frozen plan and cannot reproduce this exact result.
 
 ## Board and numerical constraints
 

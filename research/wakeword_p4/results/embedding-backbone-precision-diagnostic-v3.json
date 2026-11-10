@@ -1,0 +1,107 @@
+{
+  "scope": "Isolate backbone quantization on one existing playback/capture pair.\n\nThe recording stays private. Compare actual INT8, original float with the same\ndequantized INT8 input, and original float with native mel input. All paths\nretain the original output quantizer and frozen heads/threshold. No fitting,\naudio transformation, live audio change or population acceptance.\n",
+  "plan_sha256": "e8e8f5a9801df5a5ae0615363d1b89b7ddf98bd9d11fb1ede4842b491b6034a4",
+  "cases": [
+    {
+      "name": "source",
+      "wav_sha256": "ea3b02ce55e0ec88241fa18fc031d6dffba176cac42fdfa1e2798aacc3389e3f",
+      "samples": 99200,
+      "steps": 108,
+      "shared_prefix_steps": 9,
+      "actual_int8_extraction_byte_exact": true,
+      "clipped_values": {
+        "input": 0,
+        "float_dequantized_output": 0,
+        "float_native_output": 0
+      },
+      "internal_quantization_difference": {
+        "mean_absolute_byte_delta": 1.8321759259259258,
+        "maximum_absolute_byte_delta": 10.0,
+        "differing_bytes": 8001,
+        "bytes": 9504
+      },
+      "input_quantization_difference": {
+        "mean_absolute_byte_delta": 0.18434343434343434,
+        "maximum_absolute_byte_delta": 3.0,
+        "differing_bytes": 1688,
+        "bytes": 9504
+      },
+      "paths": {
+        "actual_int8": {
+          "peak_score": 0.44921875,
+          "peak_time_s": 2.8000000000000003,
+          "score_at_original_peak": 0.44921875,
+          "threshold_crossing_events": 1
+        },
+        "float_dequantized_input": {
+          "peak_score": 0.6712239583333334,
+          "peak_time_s": 2.8000000000000003,
+          "score_at_original_peak": 0.6712239583333334,
+          "threshold_crossing_events": 1
+        },
+        "float_native_input": {
+          "peak_score": 0.6920572916666666,
+          "peak_time_s": 2.8000000000000003,
+          "score_at_original_peak": 0.6920572916666666,
+          "threshold_crossing_events": 1
+        }
+      }
+    },
+    {
+      "name": "capture",
+      "wav_sha256": "067da3937bf2ace314c67ee238d2093ae184b14c22cfd8dc522f4dbd9b5923b3",
+      "samples": 135680,
+      "steps": 136,
+      "shared_prefix_steps": 9,
+      "actual_int8_extraction_byte_exact": true,
+      "clipped_values": {
+        "input": 0,
+        "float_dequantized_output": 0,
+        "float_native_output": 0
+      },
+      "internal_quantization_difference": {
+        "mean_absolute_byte_delta": 3.3323490813648293,
+        "maximum_absolute_byte_delta": 27.0,
+        "differing_bytes": 10979,
+        "bytes": 12192
+      },
+      "input_quantization_difference": {
+        "mean_absolute_byte_delta": 0.6511646981627297,
+        "maximum_absolute_byte_delta": 5.0,
+        "differing_bytes": 6216,
+        "bytes": 12192
+      },
+      "paths": {
+        "actual_int8": {
+          "peak_score": 0.21809895833333334,
+          "peak_time_s": 3.36,
+          "score_at_original_peak": 0.21809895833333334,
+          "threshold_crossing_events": 0
+        },
+        "float_dequantized_input": {
+          "peak_score": 0.11979166666666667,
+          "peak_time_s": 3.36,
+          "score_at_original_peak": 0.11979166666666667,
+          "threshold_crossing_events": 0
+        },
+        "float_native_input": {
+          "peak_score": 0.12044270833333333,
+          "peak_time_s": 3.36,
+          "score_at_original_peak": 0.12044270833333333,
+          "threshold_crossing_events": 0
+        }
+      }
+    }
+  ],
+  "threshold": 0.4,
+  "audio_changed": false,
+  "training_data_created": false,
+  "accepted": false,
+  "limits": [
+    "One reused source/capture pair; diagnostic, not independent recognition evidence.",
+    "Float outputs are requantized into the existing INT8-head training space. No float deployment or accuracy claim.",
+    "The first9embedding steps use the common INT8 prefix; metrics exclude them. Head scoring starts only after fully warmed float windows.",
+    "Only aggregate metrics are emitted; microphone audio, mel windows, embeddings and score sequences stay unexported."
+  ],
+  "interpretation": "INT8/native-float precision changes scores, but replacing the backbone by float does not recover this reused captured cue: original .2181 versus float .1198/.1204, all below frozen .4. This diagnostic does not support quantization alone as the cause of this miss, nor establish behavior on other sources or a deployable float model."
+}

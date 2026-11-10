@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`ff4282c`:
+`e3ca18d`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,10 +14,11 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4 and expanded-negative-v5 runs complete | None accepted; v3 Qwen feature experiment remains untrained |
+| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5 and Qwen-v6 runs complete | None accepted; duration-weighted ambient control prepared |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
 | Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
 | Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
+| Official pretrained-feature desktop reference | Corrected batched mel/embedding consistency, complete CUDA cache, and three rejected trained heads | Learning-rate control pending; no MCU export or accepted detector |
 | Reserved negative exposure | 10.745 source hours / 73 speakers, archive/source audit | No model scores read; independent positive holdout still needed |
 | Unscored paired challenge | Corrected 468 WAVs / 26 unused international Kokoro presets; pairing/isolation/ASR screens | Pronunciation uncertainty, acoustic and matched Hi ESP scores |
 
@@ -147,6 +148,44 @@ sources. These reused development voices are not a fresh evaluation population.
 Extract the destination frontend from the raw WAVs; never import embedding
 arrays or old `keyword_frame` values into the 10 ms track. New synthesis isn't
 required to test this already available source diversity.
+
+GPU Qwen v6 now completes both validation and development regression. Its
+validation source-macro recall is 69.948%, but development regression is only
+61.120% (Piper 73.906%, Kokoro 48.333%), with one continuous false event in
+1.35816 source hours. The 95% upper bound is 3.4929/hour. It remains rejected;
+the validation gain does not establish generalization, and the final challenge
+and 10.745-hour negative reserve remain unscored.
+
+The separate desktop openWakeWord diagnostic uses the pinned official float
+backbone, not the local quantized streaming embedding. Its CUDA13 ONNX loader
+stays separate from TensorFlow's CUDA12 environment. The initial batched cache
+was rejected because TF32 drift and a batch-global mel ReduceMax changed
+features. TF32 is now disabled, the derived mel graph reduces only non-batch
+axes, and generated waveform/sequential consistency checks pass. The completed
+cache contains 94,418 sequences / 8,230,203 embedding frames, including 88,719
+training and 5,699 validation sequences. This establishes cache consistency,
+not wake recognition or MCU compatibility.
+
+The first desktop head, upstream-architecture-only v2 and training-only
+eight-window hard-negative-mining v3 all remain rejected. Validation macro
+recall is respectively 30.026%, 42.370% and 51.380%; all have zero continuous
+events in only 1.20481 validation hours, whose upper bound remains 2.48647/h.
+Phrase attribution identifies Hey Nick / Next / Mix among confusing negatives.
+The positive-phrase audit does not isolate all misses to command-followed
+speech or one spelling. A v4 learning-rate control uses the pinned upstream
+1e-4 target with warmup/hold/cosine; all 40,000 schedule values agree within
+1.3553e-20. No completed v4 result is published at this snapshot. Negative
+weight scheduling and low-loss filtering remain separate recipe deviations.
+
+The latest audit finds a concrete ambient-sampling coverage imbalance in both
+GPU trainers: uniform row sampling gives human speech only 2.12% of draws
+despite 17.20% of source duration, while short noise rows receive 82.23% of
+draws despite 33.21% of duration. The optional duration-weighted sampler passes
+a 100,000-draw coverage check (17.163% human, expected 17.201%). Its forthcoming
+MCU-architecture control changes only this sampling choice against v6. No
+recognition gain or universal preference for duration weighting is established.
+These GPU checks do not justify changing the Mac detector or mixing 10 ms
+MicroFrontend arrays, desktop float arrays and local 80 ms INT8 embeddings.
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research

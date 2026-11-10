@@ -1,0 +1,36 @@
+{
+  "scope": "Prespecified precision-isolation diagnostic on one already-viewed playback/capture pair. Not new recognition acceptance. No training,threshold selection or private-data export.",
+  "script_sha256": "733f4afe18f8d44aa59d66d9199c81e9e6b706389c64c14a54672f1c1161f393",
+  "helpers": {
+    "native_mel.py": "724436b5880d07c170bb5c5843f1da34383c31a7b1c9714c4048cb38267724d0",
+    "prepare_head_features.py": "ed63c33c9acd3a1e779a35bd8303c2515cedc0bcd4f70abe75257109a8403b65",
+    "evaluate_equal_mean.py": "21fe60fb2c9c04d55c957739210b60f5a09e1a57f4970ae9bf2d6b8de1524e45",
+    "evaluate_head.py": "9e6c406ab6fc32d5df8f71a67d86a029858818b829302141a9a16630ad598b0c"
+  },
+  "data_files": {
+    "embedding_model.tflite": "c0aea21eb84a4ce90a08c870da41b7a7173b45269e6a3207c71d67c40f3a59d8",
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a",
+    "head-equal-mean-validation-v1/calibration.json": "927e98674386fbbf2d8ade53e58ae9484ef19b3ad4e7e8ce7cd6966b2086eece"
+  },
+  "float_model": "embedding_model.tflite",
+  "integer_model": "embedding-stream-int8-quiet.tflite",
+  "window": "native-fft-window.npy",
+  "mel_filter": "native-mel-filter.npy",
+  "calibration": "head-equal-mean-validation-v1/calibration.json",
+  "threshold": 0.4,
+  "prime_samples": 38400,
+  "inputs": {
+    "source": {
+      "sha256": "ea3b02ce55e0ec88241fa18fc031d6dffba176cac42fdfa1e2798aacc3389e3f",
+      "samples": 99200
+    },
+    "capture": {
+      "sha256": "067da3937bf2ace314c67ee238d2093ae184b14c22cfd8dc522f4dbd9b5923b3",
+      "samples": 135680,
+      "expected_original_peak": 0.21809895833333334
+    }
+  },
+  "invariants": "Unchanged16kHz PCM at original speed/level; same native frontend,three-step equal-mean heads and .4 threshold. Float76frame history ends at each80mel-frame warmup boundary; first9embedding outputs share original INT8 primer. Only aggregate metrics emitted."
+}

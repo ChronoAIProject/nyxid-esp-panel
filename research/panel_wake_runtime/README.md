@@ -136,6 +136,19 @@ including failed Hi ESP controls and different detector preprocessing paths,
 does not establish Hi ESP equivalence. See the sanitized result linked from
 the [handoff](../handoff/README.md#matched-physical-five-voice-pilot).
 
+The frozen expanded plan `plans/acoustic-matched-extended-v1.json` measures
+25 positive / 50 shared ordinary-negative trials per arm. Its completed
+Hi ESP / Hey Nyx / Hi ESP bracket has 6/25, 12/25 and 5/25 positive triggers,
+respectively, and 0/50 ordinary-negative triggers in each arm. One of the
+12 Hey Nyx observation intervals straddles source onset, leaving 11 clearly
+after onset. All 225 trials rearm and the original app/service/listener are
+verified afterward. The low, variable Hi ESP controls and different detector
+preprocessing prevent a parity claim. The synthetic source asset is
+`acoustic-matched-extended-v1.tar.gz`; the
+[expanded report](../wakeword_p4/results/embedding-acoustic-matched-extended-v3.json)
+retains the ambiguous event and every failed control. No threshold or
+playback setting was chosen from either physical protocol.
+
 For a new environment, freeze a new plan before measuring: explicitly select
 and verify its development device/app, playback device, unchanged source PCM,
 placement and arm order. Do not edit the completed plan or tune thresholds from
