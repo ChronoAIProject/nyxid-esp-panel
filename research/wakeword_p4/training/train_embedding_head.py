@@ -12,7 +12,11 @@ import torch
 from torch import nn
 
 
-def head():
+def head(architecture="original"):
+    if architecture == "upstream-dnn":
+        # Pinned upstream DNN order, expressed with logits for stable BCE.
+        return nn.Sequential(nn.Flatten(), nn.Linear(16*96, 64), nn.LayerNorm(64),
+                             nn.ReLU(), nn.Linear(64, 64), nn.LayerNorm(64), nn.ReLU(), nn.Linear(64, 1))
     return nn.Sequential(nn.Flatten(), nn.LayerNorm(16*96), nn.Linear(16*96, 64),
                          nn.ReLU(), nn.Dropout(.1), nn.Linear(64, 64), nn.ReLU(), nn.Linear(64, 1))
 
@@ -31,6 +35,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--cache", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--head", choices=["original", "upstream-dnn"], default="original")
     p.add_argument("--steps", type=int, default=40000)
     p.add_argument("--eval-interval", type=int, default=10000)
     a = p.parse_args()
@@ -88,7 +93,7 @@ def main():
         x = torch.from_numpy(np.asarray(examples, dtype=np.float32)).cuda()
         y = torch.tensor([1.]*32+[0.]*96, device="cuda")[:, None]
         return x, y
-    model = head().cuda()
+    model = head(a.head).cuda()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     loss_fn = nn.BCEWithLogitsLoss(reduction="none")
     weights = torch.tensor([1.]*32+[20.]*96, device="cuda")[:, None]
@@ -169,7 +174,7 @@ def main():
     report = {"role": "Frozen official pretrained-feature desktop diagnostic, custom MLP head",
               "steps": a.steps, "selected_step": selected_step, "selected_validation": selected,
               "head_parameters": sum(p.numel() for p in model.parameters()), "negative_weight": 20,
-              "head": "Flatten 16x96; LayerNorm; Linear64 ReLU Dropout0.1; Linear64 ReLU; Linear1",
+              "head": str(model), "head_architecture": a.head,
               "source_sampling": "Equal engines; 32 positive, 48 confusing-negative, 48 ambient per batch",
               "torch": torch.__version__, "gpu": torch.cuda.get_device_name(0),
               "model_sha256": hashlib.sha256((a.output/"best.pt").read_bytes()).hexdigest(),

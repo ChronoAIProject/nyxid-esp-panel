@@ -560,3 +560,23 @@ not establish that pretrained embeddings or the upstream method are unsuitable.
 Next diagnostic should audit the positive-window distribution against full
 stream inference and align training sampling/loss with the official recipe
 before another large data expansion. No Hi ESP comparison was completed.
+
+## Reference-head diagnosis and architecture control
+
+The deterministic positive-window audit (`audit_embedding_head.py`, up to 300
+renderings per source/split, no regression/final audio) finds validation Piper
+median raw score 0.8555 at training-style endpoints and median valid-window peak
+0.9317. Both are below selected threshold 0.985; this suggests separation under
+the confusing-negative constraint, not simply universally absent positive
+activation. These are raw diagnostic score quantiles, not smoothed event recall.
+Sampling indices agree with the cache timeline: head score index i ends at
+(i+1)*80 ms, and sampled indices ceil(keyword_end/80ms)..+2 match the trainer.
+
+Pinned upstream `openwakeword/train.py` uses Linear -> LayerNorm -> ReLU twice,
+whereas v1 normalized the flattened input and used dropout. The v2-upstream
+experiment changes only that head architecture; seed, 40k steps, Adam1e-3,
+negative weight20, sampling, cache and event validation are unchanged. It uses
+logits with BCEWithLogitsLoss, equivalent to sigmoid+BCE for this binary loss.
+This is a single-factor architecture experiment, not a reproduction of the full
+upstream recipe: upstream additionally schedules negative weights/learning rate
+and filters low-loss samples. These differences remain explicit.
