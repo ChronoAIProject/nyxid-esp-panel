@@ -1,0 +1,36 @@
+{
+  "scope": "Frozen metadata-only endpoint continuation before fitting. Replace only added environmental index; keep old base features, PCM, feature payloads, source/voice partitions, labels, RNG recipe and PTQ sampling unchanged.",
+  "preparation_plan_sha256": "a97b0e74ea3774a01a862824f33f5b324d619ac8e8a0e99a9c064451db7c8a06",
+  "feature_audit_sha256": "5bda3bc65114fa3c3c037184647848447fdb3dd7cb6c4a8c9ca0d36c778af085",
+  "train_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+  "members": [
+    {
+      "head": "temporal",
+      "plan": "head-temporal-endpoint-plan-v1.json",
+      "plan_sha256": "7d2d6d2d033afd9c5e30730ccfab7fceabb3a596c98f2a1cbaa0d546b451d54a",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-endpoint-v1",
+      "retained_control": "head-temporal-phase-control-v1",
+      "control_complete_sha256": "6652ebf9aca4a6e310087bb7d4a41c44251efb4b7d244a14a3fe5d8b92c66389",
+      "control_selection_sha256": "882dd2d3a8be5687de3f2f99fd6abfcd8be07b13705e4e301e61ce36c77bcbcd",
+      "control_representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44"
+    },
+    {
+      "head": "dense",
+      "plan": "head-dense-endpoint-plan-v1.json",
+      "plan_sha256": "d65c3a8ec4eb810a2612f991c4ee6d272fefa333d20c62c637015be3ad4a6348",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-endpoint-v1",
+      "retained_control": "head-dense-control-v1",
+      "control_complete_sha256": "3df67665fa5429570bb60ab1fc0fb8487978f01a804c2316048fd7ced231c1e1",
+      "control_selection_sha256": "26d3ee2db4855b93796b98c0bbb422a6e43ee632b828b9b9a56bc802ebe54e62",
+      "control_representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386"
+    }
+  ],
+  "control_policy": "Reuse the preserved original matched controls; verify actual complete/plan/script/initialization/representative identities. No new control fitted or rescored to select treatment.",
+  "combination": "After original-validation-only member selection, evaluate exactly the equal mean using the original fixed grid; freeze before any development regression.",
+  "limits": "Only augmented views are realigned. The original base views remain unchanged, so this is a partial supervision correction with exact original PTQ sampling, not full corpus realignment. Source RMS boundaries are not phonetic ground truth. Negative-weight20 is deferred to avoid mixing interventions.",
+  "accepted": false
+}

@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-11 at GPU branch commit
-`0987834`:
+`d338e7a`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,7 +14,8 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial through Qwen-recovery-v8 runs complete; v8 INT8 validation rejected | None accepted |
+| TensorFlow GPU training | Initial through negative-window-mining-v9 runs complete; v9 INT8 validation rejected | None accepted |
+| Released P4 QEMU | Pinned Linux emulator runs; minimal IDF5.5.4 firmware builds | Application/timer markers absent after25s; boot and WakeNet inference unverified |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
 | Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
 | Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
@@ -287,3 +288,27 @@ or infer a general claim that real-room augmentation cannot help. Its exact
 features/checkpoints and portable fitting plans are published as the two
 `measured-room-*-v1.tar.gz` research assets. Independent final fixtures remain
 unscored; the overall Hey Nyx objective remains unmet.
+
+GPU commits `8c00e47` through `d338e7a` now reject the training-only negative
+window-mining control v9: validation engine macro63.646% (Piper83.125%,
+Kokoro44.167%) at.5, with33 premature events. The pooled78.796% figure is
+dominated by Piper variants and does not establish a source-balanced gain.
+Zero ambient events/1.20481h still gives upper95%2.48647/h. No regression or
+final scores were computed. Do not repeat this as an untried mining recipe.
+
+Espressif's pinned `esp-develop-9.2.2-20261109` Linux release lists the P4
+machine and a minimal IDF5.5.4 firmware compiles, but the25-second run prints
+only `Adding SPI flash device`. No application or timer marker appears.
+This is a pending boot diagnosis, not an available board-free WakeNet baseline;
+optimized DSP instructions and numerical/recognition parity remain unverified.
+
+The new local training-only diagnostic scores384 frozen audio hashes, with
+four canonical original/environment views each. It preserves68 exact-audio
+duplicates across the full source-file inventory as same-role spellings,
+without inventing opposing labels or extra independent recordings. The
+diagnostic finds26 false clips/768 negative training variants, and a separate
+source-RMS check finds delayed file-end markers in some standalone TTS clips.
+A metadata-only continuation now tests correction of68 extra-view markers
+across34 audio hashes. PCM, features, base-view markers and PTQ sampling stay
+unchanged. This is distinct from new acoustic augmentation or loss weighting;
+fitting results remain pending.

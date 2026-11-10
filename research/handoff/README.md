@@ -708,6 +708,49 @@ both entire equal-mean calibration JSONs reproduce byte-exactly. This verifies
 the handoff, not CUDA execution or wake recognition acceptance. See
 [`embedding-measured-room-portable-v3.json`](../wakeword_p4/results/embedding-measured-room-portable-v3.json).
 
+### Training supervision diagnostic and endpoint control
+
+A frozen training-only sample covers384 distinct audio hashes across six
+engines and both labels, with four canonical views per source. The original
+mean detects764/768 positive variants and falsely accepts26/768 negatives.
+These are in-sample diagnostics, not recognition acceptance. Uniform negative
+endpoint draws intersect the source-activity interval about37–50% of the
+time; that interval omits the embedding receptive field, so this does not
+establish silence sampling as the cause of failures.
+
+The first two audit prechecks stopped before scoring: identical same-role
+spellings generated extra paths, and the original dataset intentionally uses
+symlinks. Their exact code/plans are preserved at `39b7406` and `fd0408b`.
+The corrected `training-discrimination-audit-v3.json` preserves the original384
+audio hashes and canonical source IDs, explicitly binds1536 feature rows,
+and checks actual metadata/role/hash identities. No opposing-label audio hash
+was found among11,604 source-file rows (11,536 distinct audio hashes).
+
+Some standalone TTS clips use the file end as the keyword marker. In the
+frozen32-source OpenAI subgroup,10 markers trail the last low-energy RMS frame
+by more than200ms (maximum840ms). Apparent early crossings relative to these
+markers do not prove early phonetic detection. RMS endpoints are not phonetic
+ground truth; the original audio and metadata remain preserved. Reports are
+`embedding-training-discrimination-v3.json` and
+`embedding-training-marker-diagnostic-v3.json`.
+
+The isolated endpoint experiment changes metadata only in the added
+environmental views. A standalone complete alias with a file-end marker and
+more than200ms of low-energy tail receives a marker80ms after the last
+10ms frame above1% of peak RMS. Source-prefix labels, negative labels, all
+20,140 feature arrays and the original base views stay unchanged. The full
+audit changes68 rows across34 audio hashes, all OpenAI by eligibility rather
+than an engine-specific rule. Since PTQ sampling uses only original base
+views, its representative inputs remain matched to the retained controls.
+
+`embedding/plans/endpoint-views-v1.json` freezes preparation;
+`embedding/plans/endpoint-continuation-v1.json` binds two fitting plans and
+their retained controls. Use the unchanged `train_head.py` and original
+validation-only `evaluate_head.py`. Both keep negative weight5 and all old
+sampling/optimizer/selection settings. This tests only augmented-view
+supervision; full corpus realignment and a separate negative-weight20
+control are not combined into this experiment. No candidate is accepted.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before

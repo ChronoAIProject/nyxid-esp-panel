@@ -1,0 +1,381 @@
+{
+  "scope": "Measure a frozen training-only sample; never select thresholds or fit a model.",
+  "plan_sha256": "7b0ac047e69543bfee1b92cb2cb8220ee1a836fb4487ffc7a1091b6b73f17c12",
+  "sources": 384,
+  "variants": 1536,
+  "all_inputs_training_only": true,
+  "heldout_source_hash_disjoint": true,
+  "threshold": 0.4,
+  "cohorts": [
+    {
+      "engine": "edge-tts",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 4,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.008138020833333332,
+        0.2781249999999996
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.37339801416299645
+    },
+    {
+      "engine": "edge-tts",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 127,
+      "score_quantiles_05_50_95": [
+        0.75830078125,
+        0.9814453125,
+        0.99609375
+      ],
+      "premature_threshold_crossing_mean": 0.0234375
+    },
+    {
+      "engine": "kokoro",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 1,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.0029296875,
+        0.14514973958333333
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.49144926569268094
+    },
+    {
+      "engine": "kokoro",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 128,
+      "score_quantiles_05_50_95": [
+        0.9410481770833333,
+        0.9905598958333333,
+        0.99609375
+      ],
+      "premature_threshold_crossing_mean": 0.0390625
+    },
+    {
+      "engine": "macos-say",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 5,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.006510416666666666,
+        0.3224609375
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.4944218639778942
+    },
+    {
+      "engine": "macos-say",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 128,
+      "score_quantiles_05_50_95": [
+        0.88525390625,
+        0.9866536458333333,
+        0.99609375
+      ],
+      "premature_threshold_crossing_mean": 0.0
+    },
+    {
+      "engine": "openai-tts",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 2,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.00390625,
+        0.20312499999999933
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.4996244913373211
+    },
+    {
+      "engine": "openai-tts",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 128,
+      "score_quantiles_05_50_95": [
+        0.7063802083333334,
+        0.98828125,
+        0.99609375
+      ],
+      "premature_threshold_crossing_mean": 0.453125
+    },
+    {
+      "engine": "piper",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 13,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.006510416666666667,
+        0.7199218749999995
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.49281876357312
+    },
+    {
+      "engine": "piper",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 125,
+      "score_quantiles_05_50_95": [
+        0.4986328125,
+        0.9664713541666667,
+        0.994140625
+      ],
+      "premature_threshold_crossing_mean": 0.0
+    },
+    {
+      "engine": "qwen",
+      "label": 0,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 1,
+      "score_quantiles_05_50_95": [
+        0.0,
+        0.001953125,
+        0.1564778645833329
+      ],
+      "uniform_endpoint_source_activity_fraction_mean": 0.48654117639519456
+    },
+    {
+      "engine": "qwen",
+      "label": 1,
+      "sources": 32,
+      "variants": 128,
+      "threshold_clips": 128,
+      "score_quantiles_05_50_95": [
+        0.8865234375000001,
+        0.9873046875,
+        0.99609375
+      ],
+      "premature_threshold_crossing_mean": 0.0234375
+    }
+  ],
+  "negative_phrases": [
+    {
+      "texts": [
+        "Ask Nicks about it."
+      ],
+      "variants": 12,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hello, can you hear me?"
+      ],
+      "variants": 52,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey Alex."
+      ],
+      "variants": 28,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey Max."
+      ],
+      "variants": 36,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey Mix."
+      ],
+      "variants": 28,
+      "false_clips": 6
+    },
+    {
+      "texts": [
+        "Hey Next, what time is it?"
+      ],
+      "variants": 20,
+      "false_clips": 2
+    },
+    {
+      "texts": [
+        "Hey Next."
+      ],
+      "variants": 24,
+      "false_clips": 2
+    },
+    {
+      "texts": [
+        "Hey Nexus."
+      ],
+      "variants": 40,
+      "false_clips": 1
+    },
+    {
+      "texts": [
+        "Hey Nice."
+      ],
+      "variants": 56,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey Nick, turn on the light."
+      ],
+      "variants": 16,
+      "false_clips": 10
+    },
+    {
+      "texts": [
+        "Hey Nick."
+      ],
+      "variants": 40,
+      "false_clips": 3
+    },
+    {
+      "texts": [
+        "Hey Siri."
+      ],
+      "variants": 12,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey Six."
+      ],
+      "variants": 40,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey there."
+      ],
+      "variants": 16,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hey, what time is it?"
+      ],
+      "variants": 12,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Hi ESP."
+      ],
+      "variants": 16,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "How can I help you?"
+      ],
+      "variants": 36,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "I heard Nick speaking."
+      ],
+      "variants": 20,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "I mixed the ingredients."
+      ],
+      "variants": 20,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Nicks is ready."
+      ],
+      "variants": 16,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Nicks, turn on the light."
+      ],
+      "variants": 20,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Nicks."
+      ],
+      "variants": 8,
+      "false_clips": 1
+    },
+    {
+      "texts": [
+        "Nix the plan."
+      ],
+      "variants": 4,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Nix."
+      ],
+      "variants": 12,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Nyx."
+      ],
+      "variants": 16,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Please check the volume."
+      ],
+      "variants": 68,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Take the next exit."
+      ],
+      "variants": 28,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "Thanks, that is all."
+      ],
+      "variants": 28,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "The next thing is ready."
+      ],
+      "variants": 28,
+      "false_clips": 0
+    },
+    {
+      "texts": [
+        "The nicks on the surface."
+      ],
+      "variants": 16,
+      "false_clips": 1
+    }
+  ],
+  "accepted": false,
+  "limits": "In-sample descriptive evidence only. Source activity endpoints omit the full embedding receptive field. TTS text/RMS boundaries are not phonetic ground truth; no detector threshold or new training sample is chosen from these scores."
+}

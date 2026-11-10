@@ -51,6 +51,8 @@ def main():
             raise ValueError('Duplicate selected feature row')
         selected_ids[row['directory']].add(row['id'])
     for directory, binding in plan['feature_inputs'].items():
+        if sha(base / directory / 'jobs-private.json') != plan['source_job_files_sha256'][directory]:
+            raise ValueError('Feature source jobs differ')
         for file, key in [('index.jsonl', 'index_sha256'), ('complete.json', 'complete_sha256')]:
             if sha(base / directory / file) != binding[key]:
                 raise ValueError('Feature input differs')
@@ -92,12 +94,10 @@ def main():
         if not entries or any(e['split'] != 'training' or e['label'] != job['label']
                               or e['sha256'] != source for e in entries):
             raise ValueError('Source text role differs')
-        unique_texts = {e['text'] for e in entries}
-        if len(unique_texts) != 1:
-            raise ValueError('Ambiguous source text metadata')
-        texts[source] = next(iter(unique_texts))
-        if not source_path.is_relative_to(metadata_path.resolve().parent / 'dataset'):
-            raise ValueError('Source outside the verified synthetic dataset')
+        # The verified dataset intentionally links to original TTS corpora.
+        # Exact metadata path/role/hash bindings above authorize this source;
+        # resolved-directory containment would reject that original layout.
+        texts[source] = sorted({e['text'] for e in entries})
         if sha(source_path) != source:
             raise ValueError('Source waveform differs')
         pcm, rate = sf.read(source_path, dtype='int16')
@@ -122,7 +122,7 @@ def main():
         valid = ((times >= row['keyword_end'] - .1) & (times <= row['keyword_end'] + .8)) if row['label'] else np.ones(len(times), bool)
         maximum = float(scores[valid].max()) if valid.any() else 0.
         record = {key: row[key] for key in ('id', 'engine', 'label', 'variant', 'source_sha256', 'features_sha256')}
-        record.update({'text': texts[row['source_sha256']], 'max_score': maximum,
+        record.update({'texts': texts[row['source_sha256']], 'max_score': maximum,
             'hit_or_false_clip': maximum >= plan['threshold'], 'events': events(scores, plan['threshold'])})
         if row['label']:
             record['premature_threshold_crossing'] = bool(np.any((times < row['keyword_end'] - .1) & (scores >= plan['threshold'])))
@@ -148,12 +148,12 @@ def main():
     phrases = defaultdict(list)
     for row in details:
         if not row['label']:
-            phrases[row['text']].append(row)
+            phrases[tuple(row['texts'])].append(row)
     result = {'scope': __doc__, 'plan_sha256': sha(args.plan), 'sources': len(chosen), 'variants': len(details),
         'all_inputs_training_only': True, 'heldout_source_hash_disjoint': True,
         'threshold': plan['threshold'], 'cohorts': cohorts,
-        'negative_phrases': [{'text': text, 'variants': len(rows), 'false_clips': sum(r['hit_or_false_clip'] for r in rows)}
-            for text, rows in sorted(phrases.items())],
+        'negative_phrases': [{'texts': list(texts), 'variants': len(rows), 'false_clips': sum(r['hit_or_false_clip'] for r in rows)}
+            for texts, rows in sorted(phrases.items())],
         'accepted': False, 'limits': 'In-sample descriptive evidence only. Source activity endpoints omit the full embedding receptive field. TTS text/RMS boundaries are not phonetic ground truth; no detector threshold or new training sample is chosen from these scores.'}
     (args.output / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     (args.output / 'rows-private.json').write_text(json.dumps(details, indent=2) + '\n')

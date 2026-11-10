@@ -1,0 +1,21 @@
+{
+  "scope": "Frozen metadata-only endpoint experiment. Reference environmental training views alone; original base views, PCM/features and validation unchanged. No microphone/regression/final input.",
+  "script_sha256": "827c91c27755276129553b8042be99fbb1e3be07ea5a287470e28a9bc0c80633",
+  "inputs": {
+    "head-features-environment-v2/index.jsonl": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+    "head-features-environment-v2/jobs-private.json": "c3e3ccc79bba2dd98f17791f2c2c53b678a3571390e822f0ff5dfd9baae81858",
+    "head-features-environment-v2/identity.json": "6f1f97497f58c5c53da32a9f809c83a9bf8fe57cbc35bb7591ad420e50417674",
+    "head-features-environment-v2/complete.json": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c",
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "../features-expanded-human335/features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283"
+  },
+  "reference_directory": "head-features-environment-v2",
+  "text_metadata": "../features-expanded-human335/features.json",
+  "lead_samples": 38400,
+  "rms_peak_fraction": 0.01,
+  "minimum_late_samples": 3200,
+  "post_activity_margin_samples": 1280,
+  "eligibility": "Training standalone complete Hey Nyx/Nix/Nicks aliases whose original marker equals source file length and exceeds the frozen10ms RMS activity endpoint by strictly more than200ms. Preserve prefix/command anchors and all other labels. New marker=activity_end+80ms capped by old file end.",
+  "interpretation": "This isolates correction in the added environment views, half of existing TTS views. Original base views remain unchanged, retaining exact PTQ representative sampling. It does not test full corpus realignment or establish phonetic ground truth.",
+  "next": "Only after full metadata/order/payload/source audit, freeze same-initialization dense and temporal continuation plans replacing the old environmental feature directory by this one. Preserve negative_weight5 and all existing sampling/optimizer/validation policies; compare original retained matched controls."
+}
