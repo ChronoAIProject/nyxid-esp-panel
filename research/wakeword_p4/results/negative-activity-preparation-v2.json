@@ -1,0 +1,72 @@
+{
+  "scope": "Explicit v2 preparation: undefined energy retains original uniform draws.",
+  "preparation_plan_sha256": "c4a698d52d2783a218f30f63e09cc20518b2a3e0cc33f9f6ed05f58ddf7da08a",
+  "training_source_audit_sha256": "f6f54f8c9d186700768c5d049a1700c08ff1cf8c137526014ffef5b7ed3090b0",
+  "all_sources_training_only": true,
+  "heldout_source_hash_disjoint": true,
+  "source_audio_unchanged": true,
+  "audio_speed_changed": false,
+  "speaker_playback": false,
+  "microphone_access": false,
+  "source_recordings": 6353,
+  "uniform_fallback_sources": 2,
+  "uniform_fallback_views": 8,
+  "accepted": false,
+  "manifest_sha256": "70efdcbf8f72c6171463a19712ea4013bd8e605e595dad51626d11a96fd5be5b",
+  "feature_views": 25440,
+  "cohorts": [
+    {
+      "engine": "edge-tts",
+      "feature_views": 4096,
+      "defined_activity_views": 4096,
+      "uniform_fallback_views": 0,
+      "uniform_endpoint_fraction_in_defined_interval": 0.3636983553574301,
+      "quarter_focused_expected_fraction_given_defined": 0.5227737665180726
+    },
+    {
+      "engine": "kokoro",
+      "feature_views": 2560,
+      "defined_activity_views": 2560,
+      "uniform_fallback_views": 0,
+      "uniform_endpoint_fraction_in_defined_interval": 0.5214305062927668,
+      "quarter_focused_expected_fraction_given_defined": 0.641072879719575
+    },
+    {
+      "engine": "macos-say",
+      "feature_views": 1360,
+      "defined_activity_views": 1360,
+      "uniform_fallback_views": 0,
+      "uniform_endpoint_fraction_in_defined_interval": 0.5031897459142439,
+      "quarter_focused_expected_fraction_given_defined": 0.6273923094356829
+    },
+    {
+      "engine": "openai-tts",
+      "feature_views": 3888,
+      "defined_activity_views": 3880,
+      "uniform_fallback_views": 8,
+      "uniform_endpoint_fraction_in_defined_interval": 0.509241819721503,
+      "quarter_focused_expected_fraction_given_defined": 0.6319313647911272
+    },
+    {
+      "engine": "piper",
+      "feature_views": 12000,
+      "defined_activity_views": 12000,
+      "uniform_fallback_views": 0,
+      "uniform_endpoint_fraction_in_defined_interval": 0.5161611445267845,
+      "quarter_focused_expected_fraction_given_defined": 0.6371208583950884
+    },
+    {
+      "engine": "qwen",
+      "feature_views": 1536,
+      "defined_activity_views": 1536,
+      "uniform_fallback_views": 0,
+      "uniform_endpoint_fraction_in_defined_interval": 0.5096794358031994,
+      "quarter_focused_expected_fraction_given_defined": 0.6322595768523995
+    }
+  ],
+  "limits": [
+    "All undefined-activity sources and environmental views retain their ORIGINAL endpoint and consume no new activity-RNG draw.",
+    "Defined interval membership is not speech occupancy or phonetic truth. Undefined cases have no claimed speech span.",
+    "No model/scoring, waveform/features/labels changed, or hardware/audio-device access."
+  ]
+}

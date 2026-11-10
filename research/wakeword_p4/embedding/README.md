@@ -1183,3 +1183,15 @@ python research/wakeword_p4/embedding/negative_activity_fallback.py \
   --output "$FRESH_PRIVATE_ACTIVITY_MANIFEST_V2" \
   --report "$FRESH_PRIVATE_ACTIVITY_PREPARATION_V2"
 ```
+
+Preparation at `67c09b0` succeeds with every original source/view retained.
+The resulting manifest SHA256 is
+`70efdcbf8f72c6171463a19712ea4013bd8e605e595dad51626d11a96fd5be5b`.
+See [`negative-activity-preparation-v2.json`](../results/negative-activity-preparation-v2.json).
+The new `negative-activity-{control,treatment}-v2.json` plans bind this exact
+manifest, the current helper bytes and the retained domain-control completion
+before either run. They differ only in `focus_negative_activity`. Use
+`lexical_auxiliary.py train` with the original auxiliary manifest and extra
+`--activity-manifest` argument for both arms, then the original
+`evaluate_head.py` and `compare_negative_activity.py`. Historical plans keep
+their original source hashes; they are not updated to the current helpers.
