@@ -1,0 +1,69 @@
+{
+  "role": "Training dialogue augmentation integrity audit, not recognition quality",
+  "source_sha256": "37782bd22196700d415e364a2a3eaf30c2b0219b6ff3458e8c89fd20f50edd00",
+  "augmentation_report_sha256": "38c82eaa558620903bf10bde0e386ada368768872ff9d803d7799c1c9816baea",
+  "all_base_feature_bytes_preserved": true,
+  "all_base_index_rows_preserved": true,
+  "all_new_rows_training": true,
+  "added_sequences": 29196,
+  "probes": [
+    {
+      "path": "piper-gpu/training/0/03503.wav",
+      "engine": "piper",
+      "label": 0,
+      "variant": 8,
+      "rendered_pcm_sha256": "3c8901f81d2a2842f90aaf647e6495551570744cb0d713f0ff6017df73066eb0",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    },
+    {
+      "path": "piper-gpu/training/1/03777.wav",
+      "engine": "piper",
+      "label": 1,
+      "variant": 8,
+      "rendered_pcm_sha256": "75991d9957139658eb8d87ef2e0936926defca1404ed51384de8b00d9d80e57f",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    },
+    {
+      "path": "kokoro-speed-v2/training/af_bella/000.wav",
+      "engine": "kokoro",
+      "label": 1,
+      "variant": 8,
+      "rendered_pcm_sha256": "983f6a2628945973ef52756c0e6b2f917bc897f21e4fec801d369d6a1b89b22a",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    },
+    {
+      "path": "kokoro-speed-v2/training/af_bella/003.wav",
+      "engine": "kokoro",
+      "label": 0,
+      "variant": 8,
+      "rendered_pcm_sha256": "ccb7d5529478c5cdb8a7f81924cd37bb9435dc9d8b9d7e344523a06e7e8502ce",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    },
+    {
+      "path": "qwen-cuda-v1-asr/training/profile_000/000.wav",
+      "engine": "qwen-cuda",
+      "label": 1,
+      "variant": 8,
+      "rendered_pcm_sha256": "1df7bb919918d01ba47da78080689c698ce89d32e853fbcab1efe1297e71ae51",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    },
+    {
+      "path": "qwen-cuda-v1-asr/training/profile_000/003.wav",
+      "engine": "qwen-cuda",
+      "label": 0,
+      "variant": 8,
+      "rendered_pcm_sha256": "22af531c116136f6057ce5e392e8b4b29caeedd65ad8e248e30e8d59602aa892",
+      "exact_feature_array_match": true,
+      "exact_metadata_match": true
+    }
+  ],
+  "evaluation_waveforms_accessed": false,
+  "classifiers_scored": false,
+  "independent_final_audio_accessed": false,
+  "limits": "Six deterministic training rerenders check reproducibility across engine/label groups. They do not establish accuracy, independent conversation exposure, acceptable clipping, or complete speech overlap. Original validation/development-regression metadata and feature prefix retained; no acceptance scores or final audio."
+}
