@@ -28,7 +28,10 @@ def sha(path, algorithm='sha256'):
 
 
 def worker(job):
-    corpus, output, speaker = job
+    corpus, output, speaker, *configuration = job
+    split, prefix, category = configuration or ('validation', 'libri_dev_other_', 'english-hard-read')
+    if split not in ('training', 'validation'):
+        raise ValueError('Unsupported preparation split')
     corpus, output = Path(corpus), Path(output)
     frontend = MicroFrontend()
     chunks, first, sources = [], [], []
@@ -51,10 +54,10 @@ def worker(job):
     data = np.concatenate(chunks)
     if len(data) != total//160-2:
         raise ValueError('Unexpected frontend cadence')
-    relative = Path('human/validation')/f'{speaker}.npy'
+    relative = Path('human')/split/f'{speaker}.npy'
     target = output/relative; target.parent.mkdir(parents=True, exist_ok=True); np.save(target, data)
-    return dict(speaker=f'libri_dev_other_{speaker}', original_speaker_id=speaker, split='validation',
-                category='english-hard-read', language='en', path=str(relative), frames=len(data),
+    return dict(speaker=f'{prefix}{speaker}', original_speaker_id=speaker, split=split,
+                category=category, language='en', path=str(relative), frames=len(data),
                 seconds=total/16000, source_seconds=samples/16000,
                 inserted_silence_seconds=(total-samples)/16000, files=len(sources),
                 stream_pcm_sha256=pcm_hash.hexdigest(), feature_sha256=sha(target),

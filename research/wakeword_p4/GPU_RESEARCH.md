@@ -1655,3 +1655,15 @@ URL https://www.openslr.org/resources/12/train-clean-100.tar.gz ，官方MD5
 见 `BEST_PRACTICES.md` 与 `results/4090-best-practices-sources.json`。官方确认纯TTS与无板离线训练路线成立；主要调整优先级为扩大真实负语音/远场覆盖，而非继续孤立加宽模型。openWakeWord约30000h负样本是其发布模型自述规模，不是本项目强制目标；MCU部署仍以microWakeWord为主。最终集保持封存，Hi ESP对比未完成。
 
 v22完成40k，选择10k：BN统计哈希保持不变，gamma/beta已更新。密集INT8验证阈值0.92578125，source-macro召回72.5521%（Piper68.4375%、Kokoro76.6667%），0早触发；低于v19同网格81.6146%，拒绝扩展评测，不访问最终集。发布训练与验证报告。
+
+### train-clean-100训练专用提取准备
+
+新增prepare_libri_training.py：官方MD5后才解压；禁止路径逃逸和链接/设备；
+要求官方元数据与实际目录均为251人，排除既有人声/Piper/最终manifest身份。
+仅访问最终manifest的ID，不访问最终音频。转写与FLAC必须一一对应、无重复，
+目标短语字面命中则停止待审计。逐FLAC/PCM与特征哈希、原始时长、插入静音
+分别记录；输出全部training，category=unspecified并入现有英文人声采样层。
+复用开发语料worker但保留三参数默认行为；用原训练2428的两个FLAC共15.375s
+核验新旧路径特征逐元素一致、首两段连续前端一致，见
+`results/4090-libri-training-worker-probe.json`。此为数据管线验证，不是模型质量。
+档案仍下载，当前未将新增语料加入训练；完整特征生成需等档案验证通过。
