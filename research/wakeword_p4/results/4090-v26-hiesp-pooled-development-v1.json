@@ -1,0 +1,105 @@
+{
+  "role": "Descriptive pooled existing negative development, not acceptance or threshold selection",
+  "source_sha256": "f30f548b03c6573437688fdcea6354c45b0e2a5a9f05544ef3a3d2c5d5da2c5e",
+  "corpora": [
+    {
+      "audit_sha256": "cb91ed496f5ddeaf0d7a72290432652faf206bc5fdc56c555b4b81660bd4daa9",
+      "replay_sha256": "4c1700a67ef5785c324914ee32d036b7e3b83a1d76087128d105d0c8f327d267",
+      "name": "4090-v26-hiesp-aishell-pcm-audit-v1.json",
+      "hiesp": {
+        "threshold_requested": 0.63,
+        "threshold_getter_values": [
+          0.62496001
+        ],
+        "events": 1,
+        "source_hours": 6.913985190972223,
+        "false_per_hour": 0.14463438557920646,
+        "false_per_hour_upper_95": 0.6861259298884194
+      },
+      "nyx": [
+        {
+          "model_sha256": "96108b06672edd55268e2c3e1e7d02baf501722cc19df67a27b118ff6eba14a2",
+          "threshold": 0.828125,
+          "report_sha256": "22ada6d8f0c61849126a49b3dbfff851e5c1ab56b359d4fc31a320addd94b07e",
+          "events": 1,
+          "source_hours": 6.913985190972223,
+          "false_per_hour": 0.14463438557920646,
+          "false_per_hour_upper_95": 0.6861259298884194
+        }
+      ]
+    },
+    {
+      "audit_sha256": "f192ee8e71e85e3d86b95d0ecfc4ed35409dc0db0f8d5d136d315c541d76b7de",
+      "replay_sha256": "1b3ef75b45f19839603bb7e4829229eefc9e9d993d4a5e4805dfd0bf1c004252",
+      "name": "4090-v26-hiesp-libridev-pcm-audit-v1.json",
+      "hiesp": {
+        "threshold_requested": 0.63,
+        "threshold_getter_values": [
+          0.62496001
+        ],
+        "events": 0,
+        "source_hours": 5.121184826388888,
+        "false_per_hour": 0.0,
+        "false_per_hour_upper_95": 0.584968591275464
+      },
+      "nyx": [
+        {
+          "model_sha256": "96108b06672edd55268e2c3e1e7d02baf501722cc19df67a27b118ff6eba14a2",
+          "threshold": 0.828125,
+          "report_sha256": "775990bcdc83d6480249c32d72226ab5a2da55ca3d3a6de617e60c72bdc9149f",
+          "events": 2,
+          "source_hours": 5.121184826388888,
+          "false_per_hour": 0.39053462583389403,
+          "false_per_hour_upper_95": 1.2293627032225967
+        }
+      ]
+    },
+    {
+      "audit_sha256": "0136be6d8bfb9876cbd03e5e3c85070e8c48039ca8e287f7d58fd67820b3dc99",
+      "replay_sha256": "76b9a5e22ac247796ab3ca77484bd0e90e96ceca0c40e57ba2865672ddebe98c",
+      "name": "4090-v26-hiesp-dipco-pcm-audit-v1.json",
+      "hiesp": {
+        "threshold_requested": 0.63,
+        "threshold_getter": 0.62496001,
+        "events": 0,
+        "source_hours": 0.7544878472222222,
+        "false_per_hour": 0.0,
+        "false_per_hour_upper_95": 3.9705507313117065
+      },
+      "nyx": [
+        {
+          "model_sha256": "96108b06672edd55268e2c3e1e7d02baf501722cc19df67a27b118ff6eba14a2",
+          "threshold": 0.828125,
+          "report_sha256": "f2c73373cf90eeef741ea340dd1dffa4fd5e37c3b7d3751b63ca61a36d6ea7e0",
+          "events": 1,
+          "source_hours": 0.7544878472222222,
+          "false_per_hour": 1.3254023953887042,
+          "false_per_hour_upper_95": 6.287529396074353
+        }
+      ]
+    }
+  ],
+  "speakers_or_sessions": 50,
+  "hiesp": {
+    "threshold_requested": 0.63,
+    "threshold_getter": 0.62496001,
+    "events": 1,
+    "source_hours": 12.789657864583333,
+    "false_per_hour": 0.07818817442874407,
+    "false_per_hour_upper_95": 0.3709141064302524
+  },
+  "nyx": [
+    {
+      "model_sha256": "96108b06672edd55268e2c3e1e7d02baf501722cc19df67a27b118ff6eba14a2",
+      "threshold": 0.828125,
+      "same_observed_pooled_event_count": false,
+      "events": 4,
+      "source_hours": 12.789657864583333,
+      "false_per_hour": 0.31275269771497627,
+      "false_per_hour_upper_95": 0.7156969422915662
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "thresholds_reselected": false,
+  "limits": "Descriptive pooling of previously reused development corpora; all per-corpus results retained. Different acoustic populations and short far-field exposure remain. Equal observed counts do not establish equal population false-wake rates. Nominal stationary Poisson bound is not independent acceptance. Does not replace the existing per-corpus zero-event candidate gate, match general FAR, or measure positive recall/latency."
+}
