@@ -18,6 +18,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--dataset", type=Path, required=True)
     p.add_argument("--model", type=Path, required=True)
+    p.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
     p.add_argument("--model-description", default="faster-whisper 1.2.1 tiny.en CPU INT8, beam=3, no prompt/VAD")
     p.add_argument("--model-source", type=Path, required=True)
     p.add_argument("--details", type=Path, required=True)
@@ -27,7 +28,10 @@ def main():
     a = p.parse_args()
     if a.details.exists() or a.output.exists():
         p.error("Use fresh audit outputs")
-    model = WhisperModel(str(a.model), device="cpu", compute_type="int8", cpu_threads=4)
+    compute_type = "float16" if a.device == "cuda" else "int8"
+    model = WhisperModel(str(a.model), device=a.device, compute_type=compute_type, cpu_threads=4)
+    if model.model.device != a.device:
+        raise RuntimeError("ASR runtime device differs from request")
     counts, by_voice = Counter(), defaultdict(Counter)
     rows = list(map(json.loads, (a.dataset/"manifest.jsonl").read_text().splitlines()))
     if a.training_source and any(r["split"] != "training" for r in rows):
@@ -72,6 +76,7 @@ def main():
             files[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
     report = {"asr": a.model_description,
               "audit_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              "runtime_device": model.model.device, "requested_compute_type": compute_type,
               "asr_source": json.loads(a.model_source.read_text()), "asr_files_sha256": files,
               "manifest_sha256": hashlib.sha256((a.dataset/"manifest.jsonl").read_bytes()).hexdigest(),
               "clips": len(rows), "counts": dict(counts),

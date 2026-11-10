@@ -720,3 +720,23 @@ would not change this generator's phoneme input. This verifies only intent,
 not waveform pronunciation. A pinned larger Whisper small.en reference is
 being downloaded to recheck the exact same200 training WAVs before deciding
 whether the tiny-ASR disagreement warrants a data-generation change.
+
+## Larger-ASR check changes the pronunciation diagnosis
+
+Whisper small.en (`Systran/faster-whisper-small.en` pinned at
+`d1d751a5f8271d482d14ca55d9e2deeebbae577f`, model LFS SHA verified) completed
+the exact same200 Piper training WAVs on4090 CUDA FP16. Alias-aware agreement
+is80/100 positives (36/40 standalone,44/60 commands) and79/100 negatives.
+Only7 positive transcripts start "hey next", versus45 with tiny.en. This large
+same-waveform discrepancy shows the tiny-ASR concern cannot justify mass
+quarantine or a claim that most Piper positives are mispronounced. Models share
+the Whisper family and are not phonetic ground truth; capacity and runtime
+precision both differ. All data and labels remain intact. No validation/final
+or wake-classifier scores enter this ASR check. Reports retain original raw
+matching and the command-alias recount separately.
+
+The audit tool now accepts explicit CUDA/CPU and model descriptions, verifies
+the actual runtime device, and hashes its own source. The same pinned small.en
+is now auditing all360 original Qwen training clips, because the existing
+30-positive subset was selected with tiny.en and may unnecessarily limit
+training diversity. No revised subset or additional training run yet exists.
