@@ -1,0 +1,47 @@
+{
+  "scope": "Prepare matched mean-pool and ordered dense wake-head initializations.\n\nShared convolution/BatchNorm and sigmoid weights are identical. The added\nDense32 starts as the uniform temporal mean of the same eight positions, so\nboth models initially give the same function up to float accumulation order.\nOnly completed training representatives are used for this interface audit.\n",
+  "source_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+  "representatives_sha256": "c32f3572e4e716253dc564a212d352d98890f765b60d555b55ba0a7aa90a07f8",
+  "seed": 729,
+  "shared_feature_arrays_exact": true,
+  "classifier_arrays_exact": true,
+  "initial_float_max_delta": 5.960464477539063e-08,
+  "fixtures": 512,
+  "outputs": {
+    "control": {
+      "sha256": "3753c179f0e68da3b79c68c2b3ea5a8dbf299bd78d537ffb87e04fa65fd554f8",
+      "parameters": 20769
+    },
+    "dense": {
+      "sha256": "4d2edb97527b23c959c6fee0bbc1d9580ee61397f67b39a8c1df84972b6a61f1",
+      "parameters": 28993
+    }
+  },
+  "accepted": false,
+  "actual_training_initialization_replay": {
+    "scope": "Public initialization replay vs actual training inputs; model tensor values only,not serialized archive metadata",
+    "all_weights_exact": true,
+    "arms": {
+      "control": {
+        "arrays": 12,
+        "all_exact": true
+      },
+      "dense": {
+        "arrays": 14,
+        "all_exact": true
+      }
+    }
+  },
+  "initialization_archive_note": "Keras archive metadata hashes can differ on regeneration; all26combinedmodelweightarraysmatchtheactualtraininginputs.Exactactualinitialization.kerasfileswillbeexportedforplan-boundcontinuation.",
+  "actual_training_initializers": {
+    "control": {
+      "file": "temporal-context-control-initial-v1.keras",
+      "sha256": "c728ed73f72c5475bd36585ca7ed1eafa518a12fe984a69c46ddb1f2e049f74c"
+    },
+    "dense": {
+      "file": "temporal-context-dense-initial-v1.keras",
+      "sha256": "85478865b550d5899e535dece83b15e0047939b18ec74e70b72b3ac7761a86b3"
+    }
+  },
+  "public_initializer_script_sha256": "2e2f2eced66c3a3485686ce046555b80ba6ffc409770a3be45a97d516c2a91f1"
+}

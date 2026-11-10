@@ -16,6 +16,8 @@ def main():
     p.add_argument('--features', required=True)
     p.add_argument('--training', action='append', required=True)
     p.add_argument('--plan', type=Path, action='append', required=True)
+    p.add_argument('--initial-weights', type=Path, action='append',
+                   help='Optional one-per-training initialization inside data root, verified against each plan')
     p.add_argument('--evaluation', action='append', default=[],
                    help='Explicit completed equal-mean evaluation directory')
     p.add_argument('--evaluation-plan', type=Path, action='append', default=[])
@@ -26,6 +28,8 @@ def main():
     args = p.parse_args()
     if len(args.training) != len(args.plan):
         p.error('Each training directory requires one corresponding plan')
+    if args.initial_weights is not None and len(args.initial_weights) != len(args.plan):
+        p.error('Explicit initial weights must cover every training plan')
     if len(args.evaluation) != len(args.evaluation_plan):
         p.error('Each evaluation directory requires one corresponding plan')
     for name in (args.features, *args.training, *args.evaluation, args.name):
@@ -45,6 +49,10 @@ def main():
         fitted = json.loads((base / directory / 'complete.json').read_text())
         if fitted['plan_sha256'] != sha(plan_path.read_bytes()):
             raise ValueError('Training does not bind the explicit plan')
+    for initial, plan_path in zip(args.initial_weights or [], args.plan):
+        initial.resolve().relative_to(base)
+        if initial.suffix != '.keras' or sha(initial.read_bytes()) != json.loads(plan_path.read_text())['initial_weights_sha256']:
+            raise ValueError('Initial weights differ from the explicit plan')
     for directory, plan_path in zip(args.evaluation, args.evaluation_plan):
         calibrated = json.loads((base / directory / 'calibration.json').read_text())
         if calibrated['plan_sha256'] != sha(plan_path.read_bytes()):
@@ -86,6 +94,8 @@ def main():
         archive.add(prefix + 'portable-plans/' + plan_path.name, data=encoded(plan))
     for plan_path in args.evaluation_plan:
         archive.add(prefix + 'portable-plans/' + plan_path.name, source=plan_path)
+    for initial in args.initial_weights or []:
+        archive.add(prefix + str(initial.resolve().relative_to(base)), source=initial)
     for directory in [*args.training, *args.evaluation]:
         for path in sorted((base / directory).rglob('*')):
             if path.is_file() and path.suffix in ('.keras', '.tflite', '.json', '.npy'):

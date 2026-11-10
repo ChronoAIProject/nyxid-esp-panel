@@ -2,7 +2,9 @@
 
 Snapshot: 2026-11-10. Branch: `research/hey-nyx-4090`.
 This branch combines the complete Mac training research and the experimental
-full-panel runtime. Production still uses **Hi ESP**. Hey Nyx is **not accepted
+full-panel runtime. Track the independent
+[GPU branch progress](GPU_PROGRESS.md) alongside each new experiment cycle.
+Production still uses **Hi ESP**. Hey Nyx is **not accepted
 as an equivalent replacement**. The dining-room production panel is excluded.
 
 ## Start on Linux
@@ -26,8 +28,9 @@ host driver compatible with the locked CUDA 12 packages. Native Windows should
 use WSL2/Linux for TensorFlow GPU.
 
 The original asset set is 1.19 GB compressed (about 1.11 GiB); the subsequent
-low-level feature and model extensions add about 129 MB. All downloads have
-archive and per-file SHA256 verification. Default download
+low-level feature and model extensions add about 129 MB.
+The ordered-context continuation adds another 7 MB of checkpoints.
+All downloads have archive and per-file SHA256 verification. Default download
 contains features/models; `--include-audio` also retrieves the synthetic source
 WAVs, and `--include-history` retrieves historical experiment source. No key is
 needed to continue fitting from these features. The historical filename
@@ -179,6 +182,56 @@ downloaded snapshot (including synthetic audio) without changing bound files:
 The original corpus prefix is audit metadata. Only path resolution changes;
 every source WAV must retain its bound SHA256. See
 `embedding-level-stress-v3.json` for the complete fixed-threshold comparison.
+
+### Ordered temporal context continuation
+
+A further matched experiment tests an ordered Dense32 conjunction after the
+two existing temporal feature stages, against a fixed uniform-mean control.
+Both start from identical pretrained feature/classifier arrays; the new layer
+starts as an exact temporal mean. All 512 training fixtures agree initially
+within 5.96e-8. Re-running the full 10,000-step treatment from the isolated
+research entry point reproduces all four checkpoints' weights and INT8 model
+bytes exactly. `train_head.py` stays byte-identical, preserving older plan hashes.
+
+| Combination | Validation macro recall | Paired wakes / 50 | English events / 5.549 h | Mandarin events / 1.294 h |
+| --- | --- | --- | --- | --- |
+| Original frozen equal mean | 94.68% | 46 | 1 | 0 |
+| Context mean control | 94.50% | 45 | 2 | 0 |
+| Ordered Dense32 | 95.00% | 45 | 3 | 0 |
+| Hi ESP reference | Separate model/policy | 48 | 0 | 0 |
+
+The Dense32 combination's validation-selected threshold is .3; control .4.
+Neither threshold is changed after the fixed development regression. Both
+have one false wake in 100 ordinary sentence clips. The small validation gain
+does not persist in development regression, so both new candidates are
+rejected and were not flashed. These are reused development datasets, not
+fresh independent acceptance. Complete results and source hashes are in
+`embedding-context-continuation-v3.json`, with initialization and full-training
+replay reports alongside it. The motivating near-word error counts are in
+`embedding-validation-errors-v3.json`; they suggest a hypothesis, not a cause.
+
+`context-continuation-v1.tar.gz` adds both four-checkpoint families, the exact
+initialization files, validation arrays/calibrations and portable plans. Fetch
+it with `--asset context-continuation-v1.tar.gz` into another fresh staging
+directory and merge its verified workspace into the existing snapshot.
+Reproduce the treatment with its unchanged existing feature arrays:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/train_context_head.py \
+  --data-root "$WAKE_DATA" \
+  --plan "$WAKE_DATA/portable-plans/head-temporal-context-dense-plan-v1.json" \
+  --initial-weights "$WAKE_DATA/temporal-context-dense-initial-v1.keras" \
+  --output "$WAKE_DATA/new-4090-context-reproduction"
+```
+
+`prepare_context_initialization.py --help` documents regeneration of the matched
+initializers from the original checkpoint and training representatives. Keras
+ZIP metadata can change the regenerated archive hash; weight arrays match.
+Use the exported exact initializer when replaying an existing hash-bound plan.
+`regress_equal_mean.py` reuses the audited historical regression procedure with
+an explicit data root. It requires the original paired/continuous WAVs, Hi ESP
+reports and cache identities; these complete physical-baseline source folders
+are not all included in the fitting snapshot. No private room audio is needed.
 
 The original 4090 bundle includes all then-completed `head-*` model checkpoints (DNN,
 temporal, mining, Qwen, environmental, pooling and phase variants), original
