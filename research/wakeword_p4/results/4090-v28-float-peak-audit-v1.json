@@ -1,0 +1,38 @@
+{
+  "role": "Float window versus existing INT8 peak diagnostic, not acceptance",
+  "model_sha256": "c452815c3c2210bdfd4f8b516ca591f2682674b2118a2476d6e4aa7fe545b237",
+  "source_sha256": "9b344104a2e76383960bc3a7309ee9edb9302be7883c9c10299fea73cfa2485a",
+  "weights_sha256": "04ee5ddbf149b7b794dfea78ea36c2d197c26f8cc45666253d64efc70df0278e",
+  "phase": 1,
+  "records": [
+    {
+      "corpus": "libri-dev-other-features-v1",
+      "speaker": "libri_dev_other_1585",
+      "score_index": 2793,
+      "quantized_smoothed_peak": 0.99609375,
+      "float_window_values": [
+        0.9976511597633362,
+        0.9998949766159058,
+        0.999995231628418,
+        0.9999904632568359,
+        0.9996799826622009
+      ],
+      "float_stream_values": [
+        0.9976511597633362,
+        0.9998949766159058,
+        0.999995231628418,
+        0.9999904632568359,
+        0.9996799826622009
+      ],
+      "float_stream_window_alignment_verified": true,
+      "quantized_stream_peak_reproduced": true,
+      "model_warmup_feature_frames": 600,
+      "float_mean": 0.9994423985481262,
+      "feature_sha256": "4a4eb8aa1f94647c52cc2c8173ac938c131442812f12047ff26756c2287895ec",
+      "score_sha256": "b6a54a4ccd522188c7613c9898096896baad68b2c4b788bed50ad2db0a9a9226",
+      "validation_report_sha256": "143d9e6ac03398b4785d902e99f556a3e0ec68e5add987674b0dd14c544b9420"
+    }
+  ],
+  "independent_final_audio_accessed": false,
+  "limits": "Only maxima in existing false-trigger validation streams. Local float and INT8 stream replays use existing continuous frontend features with600-frame model warmup and reproduce window outputs/recorded INT8 peaks. Not a full-corpus float event recount or general quantization quality estimate. No threshold or labels changed."
+}
