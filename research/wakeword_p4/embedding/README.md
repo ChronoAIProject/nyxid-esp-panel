@@ -524,10 +524,10 @@ the unchanged 200 ms RMS lateness criterion. The prior file-end restriction
 covers 34 and misses 22, including a fixed-sample marker 840 ms beyond the
 RMS end. All 56 happen to be OpenAI sources; the rule is provider-independent.
 `prepare_training_endpoints.py` and
-`plans/training-endpoint-overrides-v1.json` freeze a separate manifest for all
-four original/environmental views, expected to affect 224 training endpoints.
-No original index or payload is rewritten. Its eventual sampler consumer must
-keep PTQ representatives on original metadata and bind the override hash before
+`plans/training-endpoint-overrides-v1.json` produce a separate manifest for all
+four original/environmental views, affecting 224 training endpoints.
+No original index or payload is rewritten. The sampler consumer keeps PTQ
+representatives on original metadata and binds the override hash before
 matched fitting. Preparation/CTC results alone cannot accept or deploy a model.
 
 Preparation now completes all 43,348 original/environmental rows with 224
@@ -565,6 +565,22 @@ python research/wakeword_p4/embedding/evaluate_head.py \
   --training "$NEW_ENDPOINT_TRAINING_OUTPUT" --data-root "$WAKE_DATA" \
   --plan "$ENDPOINT_MEMBER_PLAN"
 ```
+
+Both 10k continuations and all eight checkpoint calibrations now complete.
+Actual exported PTQ files retain the control hashes, and all source-feature
+inputs and initial weights match. Both heads select 2.5k checkpoints. Their
+exact model/cached-score identities are frozen before the single equal-mean
+calibration in `plans/head-equal-mean-all-endpoints-v1-plan.json`.
+
+The [completed validation report](../results/embedding-all-endpoint-validation-v1.json)
+rejects this recipe: at the same .4 threshold, macro recall is 94.3065%, versus
+retained control 94.6845%. Both have one event in 7.303778 continuous hours
+(upper 95% .649508/h). Worst confusing-corpus false fraction remains 13.2143%,
+and approximate endpoint-relative median latency rises from 130.375 to 139.5 ms.
+The accounting gap is real, but this bounded-anchor/10k continuation does not
+establish a recognition improvement. Stop before development/final scoring or
+physical playback; retain the original development-board app. These results
+do not settle other timing-supervision or representation hypotheses.
 
 ### Generic channel-EQ continuation
 

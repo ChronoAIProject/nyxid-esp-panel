@@ -769,3 +769,17 @@ voices/conditions and real recordings for subsequent acceptance.
   hashes are frozen in `head-equal-mean-all-endpoints-v1-plan.json` before
   the single planned equal-mean calibration. No combined score, development
   regression, new physical playback or acceptance at this commit.
+
+- All-training endpoint equal-mean calibration completes at the pre-existing
+  .4 threshold: macro recall94.3065% versus retained-control94.6845%, one
+  continuous event/7.303778h for both (upper95%.649508/h). Worst confusing
+  false fraction13.2143% still fails the quality gate; approximate median
+  endpoint-relative latency139.5ms versus130.375ms. Reject this recipe before
+  development/final scoring or physical playback. Both completed trainings have
+  exact original PTQ files, source-feature inputs and initialization identities.
+  The audit established a real eligibility omission, but its fuller bounded
+  sampling correction did not improve recognition in this continuation. See
+  `../results/embedding-all-endpoint-validation-v1.json`. Original board app
+  stays installed; no PCM speed, I2S/AEC/AGC/FIFO or production-board change.
+  Human/room generalization, continuous false wakes, precise latency and long
+  call/reconnect acceptance remain unresolved; the full goal remains active.
