@@ -2674,3 +2674,25 @@ Nyx INT8全468条独立reset两遍分数完全一致，所有score/replay文件�
 下一阶段优先解决独立发音/末音素参考，并以训练来源扩展口音及近音词覆盖；
 新训练不得使用本轮保留声线、最终录音或独立最终负例。
 仅凭最终TTS触发比例无法区分错读与检测漏失，不能将其自动转成训练标签。
+
+## v31训练侧窗口挖掘受控方案（2026-11-10）
+
+v30已冻结，不修改其模型/阈值或已发布最终结论。
+在原训练variant0、同冻结阈值下复放三个既有近音词：
+Hey Mix Piper5/262、Hey Nick Piper1/312、Hey Next Piper5/277训练片段触发；
+对应Kokoro/Qwen训练片段均无事件。每条独立reset两遍完全一致。
+这只是重代入诊断，不是泛化证据；报告results/4090-v30-training-hey-*-v1.json。
+
+新v31仅把negative_candidates1改4，保留v30全部训练特征/预训练初始化/
+teacher60/context150/frozenBN/prefix16/stratified ambient/source exponent0/
+seed726/120k步及每5k验证。每条抽中训练负例的原窗口保留，额外三个窗口
+使用隔离RNG4726，以inference模式选最高分；训练正例/ambient基线抽样不变。
+1000次endpoint检查通过：所有候选范围合法，原endpoint及主RNG状态与count1一致。
+INT8代表校准仍关闭挖掘。shell语法检查通过。
+
+已有v9的同原则实验失败（official64从零模型、v6训练数据、40k），
+本次是对预训练/扩展数据组合的单变量再检验，不声称方法必然改善。
+方案results/4090-v31-plan.json；脚本experiments/v31_negative_windows.sh。
+先推送再运行，阈值只在既有开发验证集选择。
+已评分最终正/负数据永不进入训练、调阈值或新候选独立验收；
+后续验收必须新建预先冻结独立数据。当前没有新候选质量结果，目标未完成。

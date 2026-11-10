@@ -1,0 +1,36 @@
+{
+  "role": "Prospective controlled development experiment; no result",
+  "baseline": "v30 frozen model remains unchanged",
+  "single_change": "negative_candidates4 instead of1; highest inference score among four within each already-sampled training-negative row",
+  "reason": "Training-only replay found1/312 Hey Nick,5/262 Hey Mix,5/277 Hey Next Piper training clips still trigger at frozen v30 point. This is resubstitution evidence, not held-out quality.",
+  "prior_failure": "v9 used the same mining principle with official64 from-scratch architecture and v6 data: macro63.646% versus baseline69.948%,33 early events; rejected. v31 is a new controlled test on pretrained teacher60 and expanded v30 training data, not assumed improvement.",
+  "features": ".local/wakeword/features-gpu-ami-extra-v1",
+  "feature_index_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "metadata_sha256": {
+    "human.json": "e36e4943b5988dae68705efa7787f7859355cec77ccc3095864ee4d2d0854a56",
+    "ambient.json": "19f38c3a1d949e2ae47b724bae3332f9e55933d18f6e947e1892f9acaf71962d",
+    "dialogue-augmentation.json": "38c82eaa558620903bf10bde0e386ada368768872ff9d803d7799c1c9816baea"
+  },
+  "architecture": "teacher60,context150,frozenBN,reconstructed initialization and reset head",
+  "steps": 120000,
+  "eval_interval": 5000,
+  "seed": 726,
+  "source_exponent": 0,
+  "prefix_negatives": 16,
+  "ambient_sampling": "stratified",
+  "negative_weight": 20,
+  "hard_ambient_count": 0,
+  "label_smoothing": 0,
+  "script_sha256": "db8a50f92d8865898d32d90a6a0a7e4d24105355048330b2abafc20296babbf9",
+  "trainer_sha256": "a9c76aee07f2a61557ed77095609671f546bfbbf418d979732da356b98898c20",
+  "sampling_source_sha256": "620ada162e65b3cad389f5a12ce23a6388c7793e14cf98092ec43ad367e922c6",
+  "training_diagnostic_reports": {
+    "mix": "3eb09ea7e305d064cfe1cb0d0877434e5ce9ea7a5edc6a8c3c45bacbbaa43a36",
+    "nick": "0a1a0e3097dff3c035dc106a744b5f560097e01cddf4c1f139b439eafa9d8423",
+    "next": "77525b7e399631235c0f558e9cc9b312af68f2ef3f018ee4a4a07bdd252f6cfd"
+  },
+  "threshold_selection": "Existing validation-only dense INT8 grid, then same expanded negative validation; no final traces used by training or calibration. Development proxy-window metrics are not phonetic recall/latency.",
+  "export_calibration": "mining disabled, same baseline representative path",
+  "final_policy": "v30 model and published final outcomes frozen. Never reuse scored final paired or negative data for candidate acceptance, training or threshold selection; any future acceptance requires fresh predeclared independent data.",
+  "limits": "Training/development experiment only. Prior final outcomes are public, so no claim that overall research hypothesis is blind. No human-verified pronunciation/endpoints, real-person recall, matched population FAR or full goal claim."
+}
