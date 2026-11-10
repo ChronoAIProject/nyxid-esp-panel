@@ -1686,3 +1686,14 @@ v22完成40k，选择10k：BN统计哈希保持不变，gamma/beta已更新。�
 逐范围SHA与来源见 `results/4090-librispeech100-download.json`。
 提取脚本已通过身份集合、转写/音频对应与目标字面筛查，进入251人连续前端
 特征生成。此时尚无完整特征cache、未开始v23训练，不作识别效果结论。
+
+### v23数据审计完成，4090训练启动
+
+251人全部提取，原始100.59087965h，全部training、category unspecified，
+索引SHA `aea736f8ad92748fa32798aa7af0006f8fa417e792968bf972b223cb05aac6aa`。
+每流前两段连续性校验通过；完整逐FLAC/PCM来源留在本地哈希索引，
+发布摘要与251流特征哈希。append核实旧验证/开发回归行和关键词特征不变。
+v23已在4090开始训练；初始权重和随机分类头SHA与v19一致，BN frozen。
+发布 `4090-librispeech100-training-features.json`、
+`4090-v23-librispeech100-feature-addition.json`、
+`4090-v23-librispeech100-initialization.json`。尚无最终训练/INT8评分结论。
