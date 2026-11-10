@@ -894,3 +894,22 @@ probe; production firmware and attached devices are not involved.
 The v9 mining run has completed40k steps and exported INT8; validation-only
 quantized calibration is running. Training metadata is published separately
 from final recognition evidence. Independent final fixtures remain unscored.
+
+## v9 mining INT8 validation: rejected
+
+v9 completed40k steps in554.2s, selected20k, INT8 model SHA256
+`3e083c7e8044d037201d3397a818d88cb5e85d19389e54d0f8cd798be09a99d1`.
+At validation-selected0.5, source-macro recall63.646% (Piper83.125%,
+Kokoro44.167%). Pooled1702/2160 (78.796%) is dominated by Piper variants and
+must not be treated as a source-balanced gain. Confusing false0.8523%, max
+source0.9375%;33 premature events. Zero ambient events/1.20481h, upper95%
+2.48647/h. Hit latency median80ms/p95180ms. Training-only hard window selection
+improved this candidate's Piper point estimate but did not resolve cross-source
+recognition and does not surpass v6's69.948% macro validation recall. No
+regression/final scored. Attribution reproduces counts; streaming consistency
+report records score drift and reset checks separately.
+
+The isolated IDF install initially stopped because the bundled OpenOCD version
+probe lacked libusb. This is an SDK installation dependency failure, not a
+firmware/recognition result. The missing runtime library is installed and a
+fresh retry log preserves the original failure; no hardware probe is requested.
