@@ -463,6 +463,26 @@ check. Single GPU reruns, changed source probabilities and correlated variants
 prevent a causal or statistical improvement claim. The independent positive
 challenge and 10.745-hour negative reserve remain unscored.
 
+### v6 development regression: rejected
+
+The full INT8 development-regression run reproduced the earlier validation
+measurements and selected threshold **0.8** before evaluating regression
+audio. `4090-v6-threshold-freeze-check.json` verifies the same model,
+threshold and validation metrics; no threshold was tuned on regression.
+Regression mean source recall is **61.120%** (Piper 73.906%, Kokoro 48.333%),
+pooled 1,535/2,160 correlated renderings (71.065%). Confusing-negative false
+detections are 0.7670%, maximum source 0.9375%. There are 74 premature positive
+events, all in Kokoro. Hit latency is median 120 ms, p95 220 ms.
+One continuous false event in 1.35816 source hours is **0.7363/hour**, with
+a one-sided 95% upper bound of **3.4929/hour**. The candidate remains rejected.
+The report is `4090-quantized-v6-qwen-regression.json`; these familiar development
+fixtures are not the independent final reserve. The validation gain has not
+established comparable performance on the development voice holdouts.
+Next priority is a trained pretrained-feature diagnostic on the same waveform
+protocol to investigate the generalization bottleneck. Merely adding further
+negative hours or declaring the stronger validation result a success would
+not resolve this failure. Independent final fixtures remain unscored.
+
 ## Official pretrained-feature diagnostic preparation
 
 The official openWakeWord code is pinned at

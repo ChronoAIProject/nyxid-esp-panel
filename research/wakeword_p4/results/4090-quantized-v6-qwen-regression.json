@@ -1,0 +1,100 @@
+{
+  "model_sha256": "324f0097d642bd30ca4e3c9d53d847d3bd90772833e125fe89882848ad6469cd",
+  "sliding_window": 5,
+  "threshold": 0.8,
+  "validation": {
+    "threshold": 0.8,
+    "positive_variants": 2160,
+    "recall": 0.7541666666666667,
+    "detected": 1629,
+    "latency_ms_median": 129.9999999999999,
+    "latency_ms_p95": 209.99999999999997,
+    "premature_positive_events": 3,
+    "macro_recall": 0.6994791666666667,
+    "recall_by_engine": {
+      "kokoro": 0.6291666666666667,
+      "piper": 0.7697916666666667
+    },
+    "hard_negative_variants": 3520,
+    "hard_negative_false_rate": 0.007102272727272727,
+    "max_source_false_rate": 0.0075,
+    "ambient_hours": 1.2048112673611107,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour": 0.0,
+    "ambient_false_per_hour_upper_95": 2.4864743173555475
+  },
+  "testing_regression": {
+    "threshold": 0.8,
+    "positive_variants": 2160,
+    "recall": 0.7106481481481481,
+    "detected": 1535,
+    "latency_ms_median": 120.00000000000011,
+    "latency_ms_p95": 220.00000000000063,
+    "premature_positive_events": 74,
+    "macro_recall": 0.6111979166666667,
+    "recall_by_engine": {
+      "kokoro": 0.48333333333333334,
+      "piper": 0.7390625
+    },
+    "hard_negative_variants": 3520,
+    "hard_negative_false_rate": 0.007670454545454545,
+    "max_source_false_rate": 0.009375,
+    "ambient_hours": 1.3581617534722223,
+    "ambient_false_events": 1,
+    "ambient_false_per_hour": 0.7362893244810051,
+    "ambient_false_per_hour_upper_95": 3.4928568016752064
+  },
+  "event_policy": "Five-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",
+  "latency_limits": "Synthetic keyword-end annotation; 10 ms frontend/30 ms inference timing. Includes no hardware capture/network delay.",
+  "exposure_policy": "Human source seconds exclude inserted utterance-boundary silence; environmental exposure uses original waveform seconds. All detected events are counted.",
+  "mac_regression": null,
+  "by_engine": {
+    "kokoro": {
+      "threshold": 0.8,
+      "positive_variants": 240,
+      "recall": 0.48333333333333334,
+      "detected": 116,
+      "latency_ms_median": 25.000000000000135,
+      "latency_ms_p95": 182.49999999999977,
+      "premature_positive_events": 74,
+      "macro_recall": 0.48333333333333334,
+      "recall_by_engine": {
+        "kokoro": 0.48333333333333334
+      },
+      "hard_negative_variants": 1600,
+      "hard_negative_false_rate": 0.009375,
+      "max_source_false_rate": 0.009375,
+      "ambient_hours": 1.3581617534722223,
+      "ambient_false_events": 1,
+      "ambient_false_per_hour": 0.7362893244810051,
+      "ambient_false_per_hour_upper_95": 3.4928568016752064
+    },
+    "piper": {
+      "threshold": 0.8,
+      "positive_variants": 1920,
+      "recall": 0.7390625,
+      "detected": 1419,
+      "latency_ms_median": 129.9999999999999,
+      "latency_ms_p95": 229.99999999999997,
+      "premature_positive_events": 0,
+      "macro_recall": 0.7390625,
+      "recall_by_engine": {
+        "piper": 0.7390625
+      },
+      "hard_negative_variants": 1920,
+      "hard_negative_false_rate": 0.00625,
+      "max_source_false_rate": 0.00625,
+      "ambient_hours": 1.3581617534722223,
+      "ambient_false_events": 1,
+      "ambient_false_per_hour": 0.7362893244810051,
+      "ambient_false_per_hour_upper_95": 3.4928568016752064
+    }
+  },
+  "limits": [
+    "v1 test/Mac sets informed development; these are regression results, not untouched final holdouts.",
+    "Four render variants share source utterances and are not independent trial counts.",
+    "MS-SNSD files are blob-disjoint; original room/recording session identities are unavailable.",
+    "No real-user positive wake-word recordings or Chinese/TV/music negative evaluation.",
+    "Not production acceptance; confidence bounds apply only to the measured audio distribution."
+  ]
+}
