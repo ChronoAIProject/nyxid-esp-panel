@@ -1,0 +1,1399 @@
+{
+  "role": "Read-only official QEMU CPU capability inspection; no inference",
+  "command": [
+    ".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32",
+    "-machine",
+    "none",
+    "-cpu",
+    "espressif",
+    "-display",
+    "none",
+    "-nodefaults",
+    "-S",
+    "-qmp",
+    "stdio"
+  ],
+  "requests": [
+    {
+      "execute": "qmp_capabilities"
+    },
+    {
+      "execute": "query-cpu-definitions"
+    },
+    {
+      "execute": "qom-list-properties",
+      "arguments": {
+        "typename": "espressif-riscv-cpu"
+      }
+    },
+    {
+      "execute": "quit"
+    }
+  ],
+  "responses": [
+    {
+      "QMP": {
+        "version": {
+          "qemu": {
+            "micro": 2,
+            "minor": 2,
+            "major": 9
+          },
+          "package": "esp_develop_9.2.2_20261109"
+        },
+        "capabilities": [
+          "oob"
+        ]
+      }
+    },
+    {
+      "return": {}
+    },
+    {
+      "return": [
+        {
+          "name": "sifive-e34",
+          "typename": "sifive-e34-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        },
+        {
+          "name": "lowrisc-ibex",
+          "typename": "lowrisc-ibex-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        },
+        {
+          "name": "sifive-e31",
+          "typename": "sifive-e31-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        },
+        {
+          "name": "espressif",
+          "typename": "espressif-riscv-cpu",
+          "static": false,
+          "deprecated": false
+        },
+        {
+          "name": "max",
+          "typename": "max-riscv-cpu",
+          "static": false,
+          "deprecated": false
+        },
+        {
+          "name": "rv32i",
+          "typename": "rv32i-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        },
+        {
+          "name": "rv32",
+          "typename": "rv32-riscv-cpu",
+          "static": false,
+          "deprecated": false
+        },
+        {
+          "name": "rv32e",
+          "typename": "rv32e-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        },
+        {
+          "name": "sifive-u34",
+          "typename": "sifive-u34-riscv-cpu",
+          "static": true,
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "return": [
+        {
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "name": "parent_bus",
+          "type": "link<bus>"
+        },
+        {
+          "name": "realized",
+          "type": "bool"
+        },
+        {
+          "name": "hotplugged",
+          "type": "bool"
+        },
+        {
+          "name": "hotpluggable",
+          "type": "bool"
+        },
+        {
+          "name": "memory",
+          "type": "link<memory-region>"
+        },
+        {
+          "name": "legacy-memory",
+          "type": "str"
+        },
+        {
+          "name": "start-powered-off",
+          "type": "bool"
+        },
+        {
+          "default-value": true,
+          "name": "debug",
+          "type": "bool"
+        },
+        {
+          "name": "pmu-num",
+          "type": "pmu-num"
+        },
+        {
+          "default-value": false,
+          "name": "rvv_vl_half_avl",
+          "type": "bool"
+        },
+        {
+          "name": "elen",
+          "type": "elen"
+        },
+        {
+          "name": "priv_spec",
+          "type": "priv_spec"
+        },
+        {
+          "name": "cbom_blocksize",
+          "type": "cbom_blocksize"
+        },
+        {
+          "name": "mmu",
+          "type": "mmu"
+        },
+        {
+          "default-value": 4096,
+          "name": "resetvec",
+          "type": "uint64"
+        },
+        {
+          "default-value": false,
+          "name": "rvv_ta_all_1s",
+          "type": "bool"
+        },
+        {
+          "default-value": false,
+          "name": "rvv_ma_all_1s",
+          "type": "bool"
+        },
+        {
+          "name": "cboz_blocksize",
+          "type": "cboz_blocksize"
+        },
+        {
+          "name": "vext_spec",
+          "type": "vext_spec"
+        },
+        {
+          "name": "cbop_blocksize",
+          "type": "cbop_blocksize"
+        },
+        {
+          "default-value": false,
+          "name": "x-misa-w",
+          "type": "bool"
+        },
+        {
+          "name": "pmp",
+          "type": "pmp"
+        },
+        {
+          "name": "pmu-mask",
+          "type": "pmu-mask"
+        },
+        {
+          "name": "mvendorid",
+          "type": "mvendorid"
+        },
+        {
+          "name": "vlen",
+          "type": "vlen"
+        },
+        {
+          "default-value": false,
+          "name": "short-isa-string",
+          "type": "bool"
+        },
+        {
+          "name": "mimpid",
+          "type": "mimpid"
+        },
+        {
+          "name": "marchid",
+          "type": "marchid"
+        },
+        {
+          "default-value": 0,
+          "name": "hartid-base",
+          "type": "uint32"
+        },
+        {
+          "default-value": false,
+          "name": "has-pma",
+          "type": "bool"
+        },
+        {
+          "default-value": false,
+          "name": "mie-as-bitmap",
+          "type": "bool"
+        },
+        {
+          "default-value": false,
+          "name": "clic-ext-irq",
+          "type": "bool"
+        },
+        {
+          "default-value": false,
+          "name": "has-pmp32",
+          "type": "bool"
+        },
+        {
+          "name": "zvkt",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[4]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "sstc",
+          "type": "bool"
+        },
+        {
+          "name": "zknh",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[16]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicbom",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[53]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[90]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[44]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zihintpause",
+          "type": "bool"
+        },
+        {
+          "name": "zvks",
+          "type": "bool"
+        },
+        {
+          "name": "zfhmin",
+          "type": "bool"
+        },
+        {
+          "name": "zfbfmin",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[21]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xventanacondops",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[12]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[28]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[65]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "rva22s64",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[19]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zbkc",
+          "type": "bool"
+        },
+        {
+          "name": "zkne",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[33]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicsr",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[70]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zbkb",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[24]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[77]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zknd",
+          "type": "bool"
+        },
+        {
+          "name": "m",
+          "description": "Integer multiplication and division",
+          "type": "bool"
+        },
+        {
+          "name": "zbc",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[1]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadcmo",
+          "type": "bool"
+        },
+        {
+          "name": "svadu",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[8]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[82]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[45]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "sscofpmf",
+          "type": "bool"
+        },
+        {
+          "name": "zbb",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[36]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[89]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zama16b",
+          "type": "bool"
+        },
+        {
+          "name": "zvkn",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[1]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zfh",
+          "type": "bool"
+        },
+        {
+          "name": "zba",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[8]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[13]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[50]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[41]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[57]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[94]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zawrs",
+          "type": "bool"
+        },
+        {
+          "name": "zk",
+          "type": "bool"
+        },
+        {
+          "name": "i",
+          "description": "Base integer instruction set",
+          "type": "bool"
+        },
+        {
+          "name": "svpbmt",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[25]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[62]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zicsr",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[16]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[69]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "h",
+          "description": "Hypervisor",
+          "type": "bool"
+        },
+        {
+          "name": "zfinx",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[30]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadfmemidx",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[21]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[37]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[74]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "g",
+          "description": "General purpose (IMAFD_Zicsr_Zifencei)",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[28]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zfh",
+          "type": "bool"
+        },
+        {
+          "name": "smepmp",
+          "type": "bool"
+        },
+        {
+          "name": "zve64f",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[5]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "f",
+          "description": "Single-precision float point",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[42]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[49]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[33]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[86]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zawrs",
+          "type": "bool"
+        },
+        {
+          "name": "svvptc",
+          "type": "bool"
+        },
+        {
+          "name": "e",
+          "description": "Base integer instruction set (embedded)",
+          "type": "bool"
+        },
+        {
+          "name": "zve32f",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[10]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[5]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvkg",
+          "type": "bool"
+        },
+        {
+          "name": "zve64d",
+          "type": "bool"
+        },
+        {
+          "name": "zfa",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[17]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "d",
+          "description": "Double-precision float point",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[54]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[91]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[45]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zifencei",
+          "type": "bool"
+        },
+        {
+          "name": "zkt",
+          "type": "bool"
+        },
+        {
+          "name": "c",
+          "description": "Compressed instructions",
+          "type": "bool"
+        },
+        {
+          "name": "zcf",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[22]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadbb",
+          "type": "bool"
+        },
+        {
+          "name": "zks",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[29]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[13]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[66]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "b",
+          "description": "Bit manipulation (Zba_Zbb_Zbs)",
+          "type": "bool"
+        },
+        {
+          "name": "zce",
+          "type": "bool"
+        },
+        {
+          "name": "xtheadba",
+          "type": "bool"
+        },
+        {
+          "name": "zvkng",
+          "type": "bool"
+        },
+        {
+          "name": "xtheadfmv",
+          "type": "bool"
+        },
+        {
+          "name": "zkr",
+          "type": "bool"
+        },
+        {
+          "name": "a",
+          "description": "Atomic instructions",
+          "type": "bool"
+        },
+        {
+          "name": "xtheadmemidx",
+          "type": "bool"
+        },
+        {
+          "name": "zcd",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[34]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[71]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[25]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[78]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadmempair",
+          "type": "bool"
+        },
+        {
+          "name": "svnapot",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[2]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zfa",
+          "type": "bool"
+        },
+        {
+          "name": "zvkb",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[9]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[30]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[46]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[83]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zcb",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[37]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[2]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zksh",
+          "type": "bool"
+        },
+        {
+          "name": "zca",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[9]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[14]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[51]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[58]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zcmop",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[42]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zkn",
+          "type": "bool"
+        },
+        {
+          "name": "zvknc",
+          "type": "bool"
+        },
+        {
+          "name": "svade",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[10]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[26]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[63]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "ztso",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[17]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zdinx",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[31]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[22]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvfbfmin",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[38]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[75]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvknhb",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[29]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zifencei",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[6]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvknha",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[43]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[80]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zksed",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[34]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[87]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "smstateen",
+          "type": "bool"
+        },
+        {
+          "name": "zaamo",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[6]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[11]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadmac",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[18]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[55]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[92]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "xtheadcondmov",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[46]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvfbfwma",
+          "type": "bool"
+        },
+        {
+          "name": "zbkx",
+          "type": "bool"
+        },
+        {
+          "name": "zvkned",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[23]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[60]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[14]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[67]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zimop",
+          "type": "bool"
+        },
+        {
+          "name": "zalrsc",
+          "type": "bool"
+        },
+        {
+          "name": "Zihintntl",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[35]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zihintntl",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[72]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zihpm",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[26]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[79]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zihintpause",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[3]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[40]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[31]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[47]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[84]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "smaia",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[38]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zfhmin",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[3]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[15]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[52]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicboz",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[59]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[43]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zcmt",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[20]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zbs",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[11]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[27]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[64]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[18]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvksh",
+          "type": "bool"
+        },
+        {
+          "name": "xtheadsync",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[32]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvbc",
+          "type": "bool"
+        },
+        {
+          "name": "zvksg",
+          "type": "bool"
+        },
+        {
+          "name": "svinval",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[39]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[23]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[76]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[0]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "sv32",
+          "type": "bool"
+        },
+        {
+          "name": "zvbb",
+          "type": "bool"
+        },
+        {
+          "name": "x-j",
+          "description": "Dynamic translated languages",
+          "type": "bool"
+        },
+        {
+          "name": "zcmp",
+          "type": "bool"
+        },
+        {
+          "name": "zvfhmin",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[7]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicfiss",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[44]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvfh",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[81]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[35]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[88]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[0]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zve64x",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[7]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[12]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[40]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[19]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[56]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[93]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[47]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zvksc",
+          "type": "bool"
+        },
+        {
+          "name": "zve32x",
+          "type": "bool"
+        },
+        {
+          "name": "zicfilp",
+          "type": "bool"
+        },
+        {
+          "name": "ssaia",
+          "type": "bool"
+        },
+        {
+          "name": "zmmul",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[24]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[61]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zabha",
+          "type": "bool"
+        },
+        {
+          "name": "v",
+          "description": "Vector operations",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[15]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[68]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zve64f",
+          "type": "bool"
+        },
+        {
+          "name": "zvksed",
+          "type": "bool"
+        },
+        {
+          "name": "zicntr",
+          "type": "bool"
+        },
+        {
+          "name": "u",
+          "description": "User-level instructions",
+          "type": "bool"
+        },
+        {
+          "name": "Zve32f",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[36]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicbop",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[20]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[73]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zhinx",
+          "type": "bool"
+        },
+        {
+          "name": "smcntrpmf",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[27]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "Zve64d",
+          "type": "bool"
+        },
+        {
+          "name": "xtheadbs",
+          "type": "bool"
+        },
+        {
+          "name": "zhinxmin",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[4]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[41]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "zicond",
+          "type": "bool"
+        },
+        {
+          "name": "s",
+          "description": "Supervisor-level instructions",
+          "type": "bool"
+        },
+        {
+          "name": "zacas",
+          "type": "bool"
+        },
+        {
+          "name": "unnamed-gpio-in[48]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[32]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "unnamed-gpio-in[85]",
+          "type": "child<irq>"
+        },
+        {
+          "name": "rva22u64",
+          "type": "bool"
+        },
+        {
+          "name": "espressif-cpu-irq-lines[39]",
+          "type": "child<irq>"
+        }
+      ]
+    },
+    {
+      "timestamp": {
+        "seconds": 1794335123,
+        "microseconds": 182645
+      },
+      "event": "SHUTDOWN",
+      "data": {
+        "guest": false,
+        "reason": "host-qmp-quit"
+      }
+    },
+    {
+      "return": {}
+    }
+  ],
+  "exit_code": 0,
+  "stderr": "",
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "source_sha256": "30a8e2fa86862329229a0b7bf6fa8c0bf3007418ed4b5bbe47c5982fb755238c",
+  "property_count": 309,
+  "pie_named_properties": [],
+  "detect_completed": false,
+  "limits": "No property with PIE in its name was found. This is not an exhaustive proof of unsupported instructions or future emulator capability. Prior actual WakeNet instruction fault remains the runtime evidence; no Hi ESP quality comparison."
+}

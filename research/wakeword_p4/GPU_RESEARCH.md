@@ -1551,3 +1551,11 @@ RTX4090已实际运行：70,801参数，150帧、冻结BN、同v19组合人声�
 
 后处理恢复原5分数（15分数已拒绝），允许关键词窗口不变；最终集未访问。
 当前尚无宽模型质量、INT8资源或MCU性能结论。
+
+
+训练期间复核官方QEMU CPU配置：新增qemu_probe/inspect_cpu.py，machine none、
+CPU espressif、暂停状态下仅QMP读取CPU定义与QOM属性，不启动固件。
+查询成功，309个属性中无PIE命名属性；标准F/D/V选项不能直接当成Espressif
+自定义PIE支持。完整命令、原始响应及QEMU/脚本哈希见
+`4090-qemu-cpu-properties.json`。没有推理、也没有证明未来仿真器永远不支持；
+此前真实WakeNet创建阶段PIE非法指令仍是运行时阻碍证据。
