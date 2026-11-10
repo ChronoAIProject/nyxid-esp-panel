@@ -1,0 +1,28 @@
+{
+  "threshold_requested": 0.63,
+  "threshold_getter_expected": 0.62496001,
+  "qemu_sha256": "c15716f0bf981f046976b556c9856270b55b4e6a77ef00e2a124c2ef65b4932d",
+  "elf_sha256": "cc511f5563697a5522a9a10cdbb22773ba6030863da8e8c5a46dca65313e16ac",
+  "flash_sha256": "7e140bd5449ded2a06ec649437b5194c6500f73fc7ca5a41144496ba99b9fc70",
+  "nyx_model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "nyx_threshold": 0.91796875,
+  "role": "Frozen independent paired TTS intention diagnostic preregistration",
+  "pcm_manifest_sha256": "9b1a515117e5927011016694859ec914752befe60d268d2ad68d61f31fa02ed8",
+  "source_holdout_manifest_sha256": "40b4ed9e88a4c8c7d7a1b5d6ec94522c15cfc39a91ed763ffcadd996d2f468eb",
+  "sliding_window": 5,
+  "expected_clips": 468,
+  "expected_voices": 26,
+  "expected_speeds": [
+    0.9,
+    1.0,
+    1.1
+  ],
+  "expected_target_clips_each": 78,
+  "expected_common_negatives": 312,
+  "evaluator_source_sha256": "0518b555a2e7e961e9239189ab211171d9dc8d83d0d5089f6db7b8ee41f8a61b",
+  "run_replay_source_sha256": "51f9f9521bbe0cf551bd0ccdd44f5a04a5e4b4d5bc8d8917909dc91709318da5",
+  "detector_source_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+  "frontend_source_sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+  "protocol": "Commit and push before scoring. Preserve all468 clips; no exclusion, regeneration, relabeling or threshold tuning. Same PCM for both engines; fixed1.8s zero lead and1s tail. Report all events, early events separately; intended target activation means any event at/after source start, including fixed tail/final call padding. Count all common and cross-target negative events. Reset every clip; verify Nyx reset repeatability and official full PCM consumption. Any incomplete run prevents quality summary. No phonetic windows or latency statistics.",
+  "limits": "TTS synthesis intent only, not human-verified pronunciation or phonetic endpoint gold. Presets are not independent physical speakers. Different wakephrases have lexical difficulty differences. Fixed previously selected operating points, not proof of matched population FAR. No claim of true recall, phonetic latency superiority or full goal acceptance."
+}

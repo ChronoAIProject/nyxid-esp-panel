@@ -1,4 +1,4 @@
-"""Replay an explicitly marked developer WAV through unmodified Hi ESP detect."""
+"""Replay explicit development or preregistered final WAV through unmodified Hi ESP detect."""
 import argparse
 import hashlib
 import json
@@ -25,30 +25,38 @@ def main():
     p.add_argument('--threshold', type=float, default=.63)
     p.add_argument('--timeout-seconds', type=float, default=120.)
     p.add_argument('--final-preregistration', type=Path,
-                   help='Required only for explicitly frozen independent-negative-final PCM')
+                   help='Required for explicitly frozen independent final PCM')
     a = p.parse_args()
     if (a.output.exists() or not math.isfinite(a.threshold) or not .4 <= a.threshold <= .9999
             or not math.isfinite(a.timeout_seconds) or a.timeout_seconds <= 0):
         p.error('Use fresh output and supported threshold')
     manifest = json.loads(a.manifest.read_text())
     rows = [r for r in manifest['records'] if r['path'] == a.record]
-    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation', 'development-paired-validation', 'independent-negative-final'):
-        raise ValueError('Require one explicit developer probe record')
+    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation', 'development-paired-validation', 'independent-negative-final', 'independent-paired-final'):
+        raise ValueError('Require one explicit supported replay record')
     row = rows[0]
-    final = row['role'] == 'independent-negative-final'
+    paired_final = row['role'] == 'independent-paired-final'
+    final = row['role'] == 'independent-negative-final' or paired_final
     if bool(a.final_preregistration) != final:
         raise ValueError('Independent final replay requires a separate explicit preregistration')
     freeze = None
     if final:
         freeze = json.loads(a.final_preregistration.read_text())
-        if (row.get('split') != 'testing' or not manifest.get('all_frontend_frames_equal')
-                or not manifest.get('utterance_concatenation')
+        if (row.get('split') != 'testing'
                 or sha(a.manifest) != freeze['pcm_manifest_sha256']
-                or manifest['frozen_negative_manifest_sha256'] != freeze['frozen_negative_manifest_sha256']
-                or manifest['nyx_preregistration_sha256'] != freeze['nyx_preregistration_sha256']
                 or a.threshold != freeze['threshold_requested']
                 or any(sha(getattr(a, k)) != freeze[k+'_sha256'] for k in ('qemu', 'elf', 'flash'))):
             raise ValueError('Final PCM, engine or operating point differs from preregistration')
+        if paired_final:
+            if (not manifest.get('paired_wakephrases')
+                    or manifest['source_holdout_manifest_sha256'] != freeze['source_holdout_manifest_sha256']
+                    or row['lead_samples'] != 28800 or row['tail_samples'] != 16000
+                    or row['samples'] != row['source_samples']+44800):
+                raise ValueError('Changed independent paired waveform protocol')
+        elif (not manifest.get('all_frontend_frames_equal') or not manifest.get('utterance_concatenation')
+              or manifest['frozen_negative_manifest_sha256'] != freeze['frozen_negative_manifest_sha256']
+              or manifest['nyx_preregistration_sha256'] != freeze['nyx_preregistration_sha256']):
+            raise ValueError('Changed independent negative waveform protocol')
     if row['role'] == 'development-paired-validation':
         if (row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
                 or not manifest.get('voice_partition_sha256') or not manifest.get('endpoint_annotation_source_sha256')
@@ -126,7 +134,7 @@ def main():
         raise ValueError('Missing successful threshold setter/getter evidence')
     if final and float(parameters[1]) != freeze['threshold_getter_expected']:
         raise ValueError('Final engine getter differs from preregistration')
-    report = dict(role=('Hi ESP independent negative fixed-point replay' if final else 'Hi ESP real-waveform developer transport probe, not acceptance'),
+    report = dict(role=('Hi ESP independent paired fixed-point replay' if paired_final else 'Hi ESP independent negative fixed-point replay' if final else 'Hi ESP real-waveform developer transport probe, not acceptance'),
                   record=row, manifest_sha256=sha(a.manifest), threshold_requested=a.threshold,
                   threshold_getter_after_set=float(parameters[1]),
                   model='wn9_hiesp', sample_rate=16000, chunk_samples=512,
@@ -143,7 +151,7 @@ def main():
                   source_sha256=sha(Path(__file__)), serial_sha256=sha(serial), command=command,
                   independent_final_audio_accessed=final,
                   final_preregistration_sha256=sha(a.final_preregistration) if final else None,
-                  limits=('Independent negative audio only; fixed operating point, raw official events. No positive recall, matched population FAR or hardware latency claim.' if final else 'Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.'))
+                  limits=('Independent paired TTS intention diagnostic; no validated phonetic endpoints or pronunciation labels. Not true recall or phonetic latency acceptance.' if paired_final else 'Independent negative audio only; fixed operating point, raw official events. No positive recall, matched population FAR or hardware latency claim.' if final else 'Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.'))
     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report))
 
 
