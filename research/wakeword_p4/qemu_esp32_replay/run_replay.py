@@ -30,9 +30,15 @@ def main():
         p.error('Use fresh output and supported threshold')
     manifest = json.loads(a.manifest.read_text())
     rows = [r for r in manifest['records'] if r['path'] == a.record]
-    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation'):
+    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation', 'development-read-speech-validation', 'development-paired-validation'):
         raise ValueError('Require one explicit developer probe record')
     row = rows[0]
+    if row['role'] == 'development-paired-validation':
+        if (row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
+                or not manifest.get('voice_partition_sha256') or not manifest.get('endpoint_annotation_source_sha256')
+                or manifest.get('independent_final_audio_accessed')
+                or not 0 < row.get('keyword_end', 0) <= row['samples']):
+            raise ValueError('Need paired development validation with frozen endpoint metadata')
     if row['role'] in ('development-negative-validation', 'development-read-speech-validation'):
         source_policy = (manifest.get('continuous_recordings') if row['role'] == 'development-negative-validation'
                          else manifest.get('utterance_concatenation'))
