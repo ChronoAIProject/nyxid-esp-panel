@@ -1630,3 +1630,21 @@ v22已在RTX4090实际启动，同v19的teacher60/context150、原组合人声�
 `a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54`。
 初始化报告 `4090-v22-bn-affine-initialization.json`。后续使用同一密集INT8验证网格，
 开发回归不参与阈值选择，最终集未访问。
+
+
+### 原始说话人映射审计与较大训练语料准备
+
+Piper配置speaker_id_map可追溯至原LibriTTS/LibriSpeech ID。核查官方
+SPEAKERS.TXT后，Piper904个声线全在train-clean-360（该集921人），
+其中232个为本研究验证/开发回归声线；直接加入整份360会跨身份。
+train-clean-100的251人与全部Piper声线无交叉，dev-clean/dev-other/test-clean/
+test-other原始ID亦无交叉。保存配置与元数据哈希及完整交叉ID表于
+`4090-librispeech-piper-speaker-audit.json`。该核查不覆盖无身份映射的其他TTS。
+
+为补足目前只有约3.225h原始英文真人训练，开始下载官方train-clean-100，
+URL https://www.openslr.org/resources/12/train-clean-100.tar.gz ，官方MD5
+`2a93770f6d5c6c964bc36631d331a522`。顺序传输实测慢，主动终止自己的curl，
+保留所有已收前缀，使用download_libri_training.py的8路16MiB范围请求：
+每段校验206/Content-Range/长度，组装时前缀再次哈希，最终校验MD5和总长度，
+保留逐段SHA与档案SHA。当前仍下载，尚未解压/提特征/参与训练或评分。
+新增语料将明确仅训练；实际文件身份/转写/连续前端仍需通过后续审计。
