@@ -233,6 +233,63 @@ an explicit data root. It requires the original paired/continuous WAVs, Hi ESP
 reports and cache identities; these complete physical-baseline source folders
 are not all included in the fitting snapshot. No private room audio is needed.
 
+### Generic channel-EQ continuation
+
+The completed training-only EQ extension adds 20,140 paired environmental
+views from the same six engines. Independent five-band gains preserve each
+original source/background draw, audio duration, rate and speed. It does not
+fit or load a private microphone recording. All 43,730 original indexed arrays
+remain unchanged; the balanced 48-row pilot/full replay and pre-EQ reference
+features are exact. See `embedding-eq-views-audit-v3.json`.
+
+Both existing dense/temporal heads continue for 10,000 steps from their exact
+original initializers, with the same budget, class/engine sampling recipe,
+PTQ representatives and validation policy as their recorded controls. All 512
+PTQ representatives match each control byte-for-byte. Only the added EQ views
+change their training feature sets; extra views intentionally change sampled
+within-engine examples. The recipe and equal-mean combination are frozen
+before fitting in `embedding/plans/eq-continuation-v1.json`.
+
+| Combination | Validation macro recall | Paired wakes / 50 | English events / 5.549 h | Mandarin events / 1.294 h |
+| --- | --- | --- | --- | --- |
+| Original frozen equal mean | 94.68% | 46 | 1 | 0 |
+| Generic EQ equal mean | 94.57% | 45 | 2 | 0 |
+| Hi ESP reference | Separate model/policy | 48 | 0 | 0 |
+
+The EQ combination freezes threshold .5 on original validation before
+development scoring. It has one ordinary false wake / 100 sentence clips.
+It is rejected and was never flashed. A post-calibration diagnostic on the
+same previously missed private capture raises peak score from .2181 to .4915,
+but both models still miss at their own fixed thresholds. This single reused
+cue does not justify lowering a threshold or fitting a measured-room filter.
+The aggregate acoustic diagnostic and full rejected experiment are published;
+the recording remains private. See `embedding-capture-transfer-diagnostic-v3.json`
+and `embedding-eq-continuation-v3.json` under `research/wakeword_p4/results/`.
+
+`eq-continuation-v1.tar.gz` includes the new features, both four-checkpoint
+families, exact initialization files, calibrations and portable plans. Fetch
+it incrementally with `--asset eq-continuation-v1.tar.gz`, verify it, and merge
+its workspace into the existing downloaded snapshot without changing existing
+files. To replay one head with the same data and unchanged trainer:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/train_head.py \
+  --data-root "$WAKE_DATA" \
+  --plan "$WAKE_DATA/portable-plans/head-temporal-eq-plan-v1.json" \
+  --initial-weights "$WAKE_DATA/head-temporal32-dropout-v1/step-20000/head.keras" \
+  --output "$WAKE_DATA/new-4090-temporal-eq-reproduction"
+```
+
+For dense replay, use `head-dense-eq-plan-v1.json` and initializer
+`head-environment-expanded-v2/step-10000/head.keras`. No private microphone
+recording or physical baseline source folders are needed to fit these heads.
+Portable training plans only rebind normalized feature-index paths; arrays,
+labels, recipe, initialization and model bytes remain exact. These repeated
+development results are research evidence, not fresh user acceptance.
+The published archive and every member were downloaded/verified. Both heads'
+first five batches agree exactly over 60,767 portable training rows, and the
+portable equal-mean calibration reproduces the original JSON byte-for-byte.
+
 The original 4090 bundle includes all then-completed `head-*` model checkpoints (DNN,
 temporal, mining, Qwen, environmental, pooling and phase variants), original
 MicroWakeWord model/weight artifacts from training v1/v2/v3, 61,064 indexed

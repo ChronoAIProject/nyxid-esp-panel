@@ -1,0 +1,42 @@
+{
+  "scope": "Generic five-band full-channel augmentation of completed training-only environmental mixes. Inspired by observed acoustic mismatch,not a fitted room response. No private capture is read by this extraction.",
+  "reference_plan": "environment-views-plan-v2.json",
+  "reference_index": "head-features-environment-v2/index.jsonl",
+  "reference_audit_prefix": 48,
+  "input_files": {
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a",
+    "head-features-tts-v1/jobs-private.json": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+    "head-features-tts-v1/index.jsonl": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+    "head-features-negatives-v1/jobs-private.json": "3f56106a037d7bc36282ec025eaf648e4221241306cf74e397a8b71ca4bdb69b",
+    "head-features-negatives-v1/index.jsonl": "862f6daa8ffe1be1ef4e0ba87278234665fcce36f2d35f91c1ba1304a1a51ad6",
+    "environment-views-plan-v2.json": "1ced57ce60ad903cca674158f518d620ab7cad7364ff7262a830c4117dd97c21",
+    "head-features-environment-v2/index.jsonl": "16e7a48c1077ec365381a62f757d99066ad309eaec8867b5a64283afc01b8426",
+    "head-features-environment-v2/complete.json": "8849c2bb19a47208d00e2bd3242ecc2256cfa6b054ede602e3f6569ff559168c"
+  },
+  "extractor_sha256": "546940a671f90a590fa63abe531e8e541150e80a3499fd767d04185ed6724956",
+  "helpers": {
+    "prepare_environment_views.py": "2ef5edbe7f628ec2347b9d9638571854a452fd67bc9c2eeb6c42d627dad95288",
+    "prepare_head_features.py": "ed63c33c9acd3a1e779a35bd8303c2515cedc0bcd4f70abe75257109a8403b65",
+    "native_mel.py": "724436b5880d07c170bb5c5843f1da34383c31a7b1c9714c4048cb38267724d0"
+  },
+  "channel_policy": {
+    "centers_hz": [
+      125,
+      315,
+      800,
+      2000,
+      5000
+    ],
+    "gain_db": [
+      -12,
+      12
+    ],
+    "q": 0.7071067811865476,
+    "peak_ceiling": 30000,
+    "normalization": "Restore original whole-mix RMS,then uniform peak limit if needed; no hard clipping",
+    "scope": "Generic independent RBJ peaking filters on complete rendered signal including background. Original sample count/rate/speed and room/noise draws retained. Causal filter phase changes are part of channel augmentation."
+  },
+  "next_fitting": "After complete array/pilot/isolation audit,freeze matched control/treatment continuation plans using existing original features and equal training budgets. No threshold selection from this diagnostic."
+}

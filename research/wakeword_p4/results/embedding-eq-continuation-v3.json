@@ -1,0 +1,2040 @@
+{
+  "scope": "Prespecified generic five-band EQ training augmentation. Original-validation selection and existing development regression only; no reserved/P4/human acceptance.",
+  "accepted": false,
+  "experiment_plan_sha256": "36c209d9f85c8b8175ef1074d8fbe8d80699ba791ac9599a496f17774c36d408",
+  "extraction_audit": {
+    "scope": "Audit complete EQ views against immutable original and pilot feature arrays.\n\nDoes not score a detector or load microphone captures. Reports aggregate\nprovenance, split isolation, numeric bounds and deterministic pilot replay.\n",
+    "plan_sha256": "1e1156b4bd9b26d36ef19ea03eb2ec6ed30491b36ed443c22aabd9dfeac8c306",
+    "audit_script_sha256": "5ce6325cfcd3ec9f28ea81d1bf86f1fad742d26b014390489882bf197e4cd4d5",
+    "views": 20140,
+    "engines": {
+      "edge-tts": 2560,
+      "kokoro": 1400,
+      "macos-say": 952,
+      "openai-tts": 2268,
+      "piper": 12000,
+      "qwen": 960
+    },
+    "positive_views": 7420,
+    "original_arrays_hash_verified": 43730,
+    "paired_source_background_timebase_pcm_exact": true,
+    "pilot_and_full_rows_exact": 48,
+    "original_render_features_exact": 48,
+    "heldout_source_and_background_excluded": true,
+    "peak_ceiling": 30000,
+    "peak_limited_views": 7245,
+    "max_relative_rms_rounding_error": 7.879094552687427e-06,
+    "original_input_indexes_and_arrays_unchanged": true,
+    "microphone_recordings_read": false,
+    "audio_speed_changed": false,
+    "feature_index_sha256": "dd2883eaea87f408b8ed1d7fc2b914261c74286c7d9bf348d9001c94bf36ee99",
+    "complete_sha256": "aefc0d5ed45fbe85336f937bf96fe8a70832083df2e4474d6b5673a74b5777f4",
+    "passed": true,
+    "limits": "Extraction/provenance audit only. No recognition, P4 or human acceptance."
+  },
+  "heads": {
+    "dense": {
+      "training_plan_sha256": "d403d5bade412d2a5be870195480d9d73c8c35c47bca270912c45c15a8575125",
+      "training_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+      "training_seconds": 26.63121883291751,
+      "parameters": 102849,
+      "training_rows": 60767,
+      "selected_step": 2500,
+      "selected_head_sha256": "8a7d5c6fe96704a2f5b58159c6ed2361ae76e1b2d9c227817f5f95f1596e9fe9",
+      "selected": {
+        "threshold": 0.7,
+        "positive_variants": 1196,
+        "recall": 0.9264214046822743,
+        "macro_recall": 0.913779761904762,
+        "recall_by_engine": {
+          "edge-tts": 0.8303571428571429,
+          "kokoro": 1.0,
+          "macos-say": 0.96875,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.9364583333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 27,
+            "false_rate": 0.09642857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 2,
+            "false_rate": 0.011904761904761904
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 10,
+            "false_rate": 0.0625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 11,
+            "false_rate": 0.06875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 86,
+            "false_rate": 0.08958333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.10416666666666667,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 209.12500000000023,
+        "positive_latency_p95_ms": 312.3750000000003
+      },
+      "matched_control": "head-dense-control-v1",
+      "matched_initialization_recipe_event_policy": true,
+      "all512_original_ptq_representatives_exact": true
+    },
+    "temporal": {
+      "training_plan_sha256": "4ef198e143d390a50cd5e71fd96f26367b17b590368d2fff6cc2bea1507f15ee",
+      "training_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+      "training_seconds": 38.39240670809522,
+      "parameters": 20769,
+      "training_rows": 60767,
+      "selected_step": 2500,
+      "selected_head_sha256": "f72b88b0f46e8c0c72bcb3a89612185455ec83cbde822ecfcf46372e102c6b2c",
+      "selected": {
+        "threshold": 0.6,
+        "positive_variants": 1196,
+        "recall": 0.9707357859531772,
+        "macro_recall": 0.9420734126984127,
+        "recall_by_engine": {
+          "edge-tts": 0.9107142857142857,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9802083333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 34,
+            "false_rate": 0.12142857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 6,
+            "false_rate": 0.03571428571428571
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 15,
+            "false_rate": 0.09375
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 112,
+            "false_rate": 0.11666666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.12142857142857143,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 1,
+        "continuous_events_per_hour": 0.13691544710499892,
+        "continuous_events_per_hour_upper_95": 0.6495083315409862,
+        "positive_latency_median_ms": 152.37500000000014,
+        "positive_latency_p95_ms": 255.56249999999991
+      },
+      "matched_control": "head-temporal-phase-control-v1",
+      "matched_initialization_recipe_event_policy": true,
+      "all512_original_ptq_representatives_exact": true
+    }
+  },
+  "equal_mean": {
+    "scope": "Validation-only frozen equal mean; no development/reserved/physical acceptance",
+    "plan_sha256": "9b0749288e0a5db7f64dd4c6d209f20a0fd877ec8c64333ba2e520fd590b5847",
+    "members": [
+      {
+        "checkpoint": "head-dense-eq-v1/step-02500",
+        "head_sha256": "8a7d5c6fe96704a2f5b58159c6ed2361ae76e1b2d9c227817f5f95f1596e9fe9",
+        "calibration_sha256": "d2fd0012dbbaf8604a70177ca81077d56fbc06126edc94bf6d8c6f4fdb4e2b06",
+        "details_sha256": "ae804e3e79cc887f1296a62ddb28c3055cc0f3e1fab1eeb19e0f33ecbecf6c57",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "fd7bb41096cffc6a639b78ccd3330bad5523df2c1b630e31cdf690b06943473e",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "25ce93c4d019d6abdd42dcd82b50ffd0cd958821d1216b75094019cfbb3c0294",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "abfe60643af5d7b45f2feb352c54eaf3ba828291d74d5727f683a52ad9affd34",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "41f7a0259c3a7ef1a5f9869e51a34e478cd4b4adae2c291a3c060030e1adfcd3",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "9fd09ce06ec8106a6dc1e5f5cca06473b1b15a6ce97013268ddfb9cc1d917cf1",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "f84e016983b889cf420c276b673ab3771855b75317c5fc8fbe2852a624eb6068",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "17119d3e719f376121b492ae0a6d3524407553838647c1df91733b381a9b7d4d",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "1e94e5498976b5ebf35d0f97d8727e98463b6b6d771f5cf3dbe86e1b1b8ee5d4",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "eb21c80d8f222e53e0a6ae3ce74b1cf68ce5b6b9eb6c0f50a129cd9a3d1a9637",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "57487278a2646fcdf815f915807dfc9c4f7b28c63a6fc4736638089763634c87",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "8b58c1351d3a7286ffa520e77e5774a399a6b8d6d45a4d0fda5fd2fe5b67323c",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "9a41a2a53150c6f5f1d3884d1f87e5463d7699b1367f112bc6797d8ecc5de776",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "8d3d45fa5ab3619b354fa7a1685973972bb9cfe0cc8397a7c07281da2e7e9932",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "0652dc9ba1f021df08f4faf135592bce0b08ca5a5ad325a0d203a709a38d2245",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "da8ec4b848423056cbe31f50b922efe50998b1ca4af86578ea8db0cb74ab0e7f",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "10eaebc13ce978e128656c9a28d6743ede10f88b72065cc8108d91fe5311ffaf",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "4e4d2947b54099fe4bd0f19581106b47d6666474bd2800f97badf1e316f56008",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "51ded581ff92091b99d527a3ce483596a672825860510d8af923d603ff35be7e",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "267b9bdd71804025ddde779f69cb80cea644e41a23067467be1d200c55c88779",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "1078d9ec17cedd753270dee06b8835be5f4dc44bbf8bce7012c36620cc0c1583",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "77688c46f083f964daf4d195db2dea401cee27c154eb23fae6f5cf0f9ea42b00",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "a570bbade21f0b2c7609e711a27e06c7d9f06669bafc31f4ee32d731e819be04",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "fa58fe4e6f475ec0bf77b563f2cdfd0c7eb6427a3066a5323fae1a7419b5119f",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "4d0ec384e49e03d304f1a97185c6cb92d34ef323a84bec1e6c0cfaa944a6f0e4",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "933b6a079484680194607e7c7dc0bc41bca95d2db628e7cf4ebc39dfa3c3c41c",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "7da401eeee0734bbc8ffe538bad49d14f8a754c5bcdd9961d9a43da1529e1b34",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "550a33e4b2329c46f3c861d8098d7d9a684246af8832231b6118295c38369b91",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "995760c53703c9aec41d9f77c8062e64fae605b8205ca63adbc5e869f0da7a5e",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "7697849d1e8a05620ec01a99da0425dffdf0049f8fbe81e681be9548daa2b9b6",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "a2b9ed4d56186c4f39f3d449b97f36a90e3ede689a357c4e0ac9be2be2027a8b",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "a62ea4831c8413e6d88801a0978dbf3f1d34502e83c67df035600fd3e67876f2",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "c4bd8f98e2d955a55d936e735edb72ee86c593d1e1579c7a874e46c9941516cd",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "d23a91800e298f045079fb8de353d18a491ee0a277c853268ebc16d285aca4d6",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "214d4d48cf7297842499aa869aa99f427f512f326dc7307360b863d110c84f78",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "6dcc95b823fa0b192745b3ffd993ef883b7d2955c8cf7166051ffe6fb5d12c15"
+        }
+      },
+      {
+        "checkpoint": "head-temporal-eq-v1/step-02500",
+        "head_sha256": "f72b88b0f46e8c0c72bcb3a89612185455ec83cbde822ecfcf46372e102c6b2c",
+        "calibration_sha256": "fe29f0ca859fca279cd6baa8573f5a0feca1e9a0d5a449d2d599c2931b7c1965",
+        "details_sha256": "7c7592e5391d661316224fdd2e6969b1805334d8ede6a442f445c25cd260311e",
+        "continuous_scores": {
+          "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "588e55cc208d7ca8eea22db1b0a82b448593c031871a8f4f33e2edcf5c3664e3",
+          "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "92118d709f54b05ba84fddcaf7c5144b956bf9b670dc67242353d86dca017bc2",
+          "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "bca499be445c1c24214b2befd0e8d093b6e914f63e74d00965d734f138daf148",
+          "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "1ede5dde55f431212e769b5135378638a382ea53b74a1fee9309da9668861d93",
+          "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "be44858261956c97934e5dceb46292dc9757854a7f1cfd066dfb02de40b4c600",
+          "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "99c93c7daf649ffc84ef623f8a5f90fc6363e913ab087ee469ed66409af175d4",
+          "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "f5c8eb5ba57a6b16165172007ac3519f451c803d164141d3c9bdbee074f83277",
+          "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "5ae0d992b6db1b442c5c1af0204003097061fda920aee1e38859da6ec64db4fe",
+          "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "47eae00f366fc252dd8c83c22a2670a7059d18447b8c4a207da940d62d6f1915",
+          "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "0bd1ea2f760522e8c4faf856f36bfee6bc428cdcb92fe3e674a684bc7a8e384d",
+          "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "1544629800ac47185c078f471144070a59429cd20d0640ca997ad91b1061c706",
+          "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "b3cbbebf1d7a359667ef9b97aec3a9095f6981cc13ffffe5c3697c84b43d37cc",
+          "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "21049b1f88897168867163ab08bd6d5187de97bbd138a8a2252e84f0345d67b5",
+          "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "a1a6d55674437f21da73ae4fbebef6b3f0d834f33e4ae2035cb0aa67e8e2edc8",
+          "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "f62fffdd8797cd72ee73e0916ff19f830d68cd00a0ee06a9e4ecedc98a676870",
+          "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "d9ed6192acf7aafed689e1569c0b8004396b530ff8b244e17e6b7c4f327b9f55",
+          "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "07ba2ef2a5801ff37b28d8a099e8a7f6d069b10f4309c262699f0c90168d8708",
+          "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "44bbeba623bb30533ca7a3011018506a1864031ffba9c98439e3cbc0ca9dfb40",
+          "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "1468ff5d0cc6d26efbe287d977e7da59b68524fb0dbce301357c630b0d1af26b",
+          "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "d90db120fa161077b086a5e5f18c4806a4abc59a85923e8067f33fb0cfea21a9",
+          "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "eef1332353468561e46fd0a17cb0d3099863476b0c0f6cb0c2e81876f21c5de8",
+          "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "02918b3e2fd28dc23591d859e1d78b3598ec9f69f11ce24ebeb9c7344634b83b",
+          "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "bc9833721e43ad2e6c03c8ab133e96972d330b7f65e729391d64b64618fe610f",
+          "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "745e9c015c676cb086cc8bf13575498c4862074818419add49553e6dcf1d2c59",
+          "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "6d55621ea0074d8e8e191c4e1926e0164a8d6486652d44a78ba1a347d9bd62a5",
+          "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "dc2707b217e605f4bf9bc6868e4492435e977eb822626c9ceb2f45798523a33b",
+          "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "97bbb6e8e9400ed4f6cc7b8f6a5399c40fd34cd857dd8a461fd6674a3f372273",
+          "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "8434d958754207c2ef65118da4f8a00b6e486f31bc705434933a735dbec6ab2a",
+          "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "0208fee084e31566a76114b001cf9c260f4ea60259d7ea6ee4d3be27afcacae1",
+          "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "1eb76164e1a0a2523b57690f5b8c6e97401ddf2bfb118779723748a5932e786f",
+          "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "5b0cbdfaed469ec31dd1e91350ef10ffb51a9bdc80f23b172defd53bbfc22658",
+          "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "03cf5b95c4732ea9dcd19ca8727e0e05c30f6eefecc2207f29577a56c72abd51",
+          "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "61a6b71cc3ca274db42702f835ad7c62144e741681dc19054c38bc7c4b240580",
+          "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "fe37cd477fa88f4690c6e78bf16dbba966fc84c64fa60780e9ce197c3b732a97",
+          "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "9843163077137bf9e4e61bf2162c655c4e1f18b853cf64b0e07d765d1f84349e"
+        }
+      }
+    ],
+    "selected": {
+      "threshold": 0.5,
+      "positive_variants": 1196,
+      "recall": 0.9740802675585284,
+      "macro_recall": 0.9456845238095237,
+      "recall_by_engine": {
+        "edge-tts": 0.9107142857142857,
+        "kokoro": 1.0,
+        "macos-say": 1.0,
+        "openai-tts": 0.8333333333333334,
+        "piper": 0.984375
+      },
+      "negative_variants": 1872,
+      "confusing_corpora": {
+        "edge-tts:edge-corpus": {
+          "variants": 280,
+          "false_variants": 35,
+          "false_rate": 0.125
+        },
+        "edge-tts:edge-partials": {
+          "variants": 168,
+          "false_variants": 5,
+          "false_rate": 0.02976190476190476
+        },
+        "kokoro:kokoro-corpus": {
+          "variants": 160,
+          "false_variants": 16,
+          "false_rate": 0.1
+        },
+        "kokoro:kokoro-partials": {
+          "variants": 96,
+          "false_variants": 0,
+          "false_rate": 0.0
+        },
+        "macos-say:mac-corpus": {
+          "variants": 160,
+          "false_variants": 17,
+          "false_rate": 0.10625
+        },
+        "openai-tts:openai-corpus": {
+          "variants": 48,
+          "false_variants": 5,
+          "false_rate": 0.10416666666666667
+        },
+        "piper:synthetic": {
+          "variants": 960,
+          "false_variants": 117,
+          "false_rate": 0.121875
+        }
+      },
+      "max_corpus_false_rate": 0.125,
+      "continuous_hours": 7.303777777777778,
+      "continuous_events": 2,
+      "continuous_events_per_hour": 0.27383089420999784,
+      "continuous_events_per_hour_upper_95": 0.8619913986194038,
+      "positive_latency_median_ms": 140.75000000000014,
+      "positive_latency_p95_ms": 245.24999999999997
+    },
+    "strict_operating_point": false,
+    "grid": [
+      {
+        "threshold": 0.05,
+        "positive_variants": 1196,
+        "recall": 0.9966555183946488,
+        "macro_recall": 0.9777777777777779,
+        "recall_by_engine": {
+          "edge-tts": 1.0,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8888888888888888,
+          "piper": 1.0
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 86,
+            "false_rate": 0.30714285714285716
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 40,
+            "false_rate": 0.23809523809523808
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 30,
+            "false_rate": 0.1875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 11,
+            "false_rate": 0.11458333333333333
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 48,
+            "false_rate": 0.3
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 17,
+            "false_rate": 0.3541666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 233,
+            "false_rate": 0.24270833333333333
+          }
+        },
+        "max_corpus_false_rate": 0.3541666666666667,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 158,
+        "continuous_events_per_hour": 21.63264064258983,
+        "continuous_events_per_hour_upper_95": 24.684976352474557,
+        "positive_latency_median_ms": 15.562499999999702,
+        "positive_latency_p95_ms": 120.06249999999996
+      },
+      {
+        "threshold": 0.1,
+        "positive_variants": 1196,
+        "recall": 0.995819397993311,
+        "macro_recall": 0.9759920634920636,
+        "recall_by_engine": {
+          "edge-tts": 0.9910714285714286,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8888888888888888,
+          "piper": 1.0
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 69,
+            "false_rate": 0.24642857142857144
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 33,
+            "false_rate": 0.19642857142857142
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 29,
+            "false_rate": 0.18125
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 7,
+            "false_rate": 0.07291666666666667
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 44,
+            "false_rate": 0.275
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 15,
+            "false_rate": 0.3125
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 206,
+            "false_rate": 0.21458333333333332
+          }
+        },
+        "max_corpus_false_rate": 0.3125,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 67,
+        "continuous_events_per_hour": 9.173334956034928,
+        "continuous_events_per_hour_upper_95": 11.241867281191347,
+        "positive_latency_median_ms": 38.812499999999694,
+        "positive_latency_p95_ms": 131.68749999999994
+      },
+      {
+        "threshold": 0.15,
+        "positive_variants": 1196,
+        "recall": 0.9916387959866221,
+        "macro_recall": 0.973373015873016,
+        "recall_by_engine": {
+          "edge-tts": 0.9821428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8888888888888888,
+          "piper": 0.9958333333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 63,
+            "false_rate": 0.225
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 26,
+            "false_rate": 0.15476190476190477
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 26,
+            "false_rate": 0.1625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 5,
+            "false_rate": 0.052083333333333336
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 38,
+            "false_rate": 0.2375
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 13,
+            "false_rate": 0.2708333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 186,
+            "false_rate": 0.19375
+          }
+        },
+        "max_corpus_false_rate": 0.2708333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 40,
+        "continuous_events_per_hour": 5.476617884199957,
+        "continuous_events_per_hour_upper_95": 7.129100952874196,
+        "positive_latency_median_ms": 50.18750000000027,
+        "positive_latency_p95_ms": 151.0625000000001
+      },
+      {
+        "threshold": 0.2,
+        "positive_variants": 1196,
+        "recall": 0.9882943143812709,
+        "macro_recall": 0.9678075396825397,
+        "recall_by_engine": {
+          "edge-tts": 0.9553571428571429,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8888888888888888,
+          "piper": 0.9947916666666666
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 58,
+            "false_rate": 0.20714285714285716
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 19,
+            "false_rate": 0.1130952380952381
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 26,
+            "false_rate": 0.1625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 5,
+            "false_rate": 0.052083333333333336
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 33,
+            "false_rate": 0.20625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 13,
+            "false_rate": 0.2708333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 173,
+            "false_rate": 0.18020833333333333
+          }
+        },
+        "max_corpus_false_rate": 0.2708333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 29,
+        "continuous_events_per_hour": 3.9705479660449687,
+        "continuous_events_per_hour_upper_95": 5.413769893743258,
+        "positive_latency_median_ms": 61.99999999999983,
+        "positive_latency_p95_ms": 165.2499999999999
+      },
+      {
+        "threshold": 0.25,
+        "positive_variants": 1196,
+        "recall": 0.9841137123745819,
+        "macro_recall": 0.965188492063492,
+        "recall_by_engine": {
+          "edge-tts": 0.9464285714285714,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8888888888888888,
+          "piper": 0.990625
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 51,
+            "false_rate": 0.18214285714285713
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 14,
+            "false_rate": 0.08333333333333333
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 26,
+            "false_rate": 0.1625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 3,
+            "false_rate": 0.03125
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 26,
+            "false_rate": 0.1625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 13,
+            "false_rate": 0.2708333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 161,
+            "false_rate": 0.16770833333333332
+          }
+        },
+        "max_corpus_false_rate": 0.2708333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 18,
+        "continuous_events_per_hour": 2.4644780478899806,
+        "continuous_events_per_hour_upper_95": 3.654515666220858,
+        "positive_latency_median_ms": 72.37500000000009,
+        "positive_latency_p95_ms": 175.81249999999991
+      },
+      {
+        "threshold": 0.3,
+        "positive_variants": 1196,
+        "recall": 0.9816053511705686,
+        "macro_recall": 0.956061507936508,
+        "recall_by_engine": {
+          "edge-tts": 0.9285714285714286,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.990625
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 48,
+            "false_rate": 0.17142857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 12,
+            "false_rate": 0.07142857142857142
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 23,
+            "false_rate": 0.14375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 2,
+            "false_rate": 0.020833333333333332
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 24,
+            "false_rate": 0.15
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 13,
+            "false_rate": 0.2708333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 157,
+            "false_rate": 0.16354166666666667
+          }
+        },
+        "max_corpus_false_rate": 0.2708333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 7,
+        "continuous_events_per_hour": 0.9584081297349925,
+        "continuous_events_per_hour_upper_95": 1.8001798798474014,
+        "positive_latency_median_ms": 92.99999999999997,
+        "positive_latency_p95_ms": 188.43750000000003
+      },
+      {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9782608695652174,
+        "macro_recall": 0.9536507936507936,
+        "recall_by_engine": {
+          "edge-tts": 0.9196428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9875
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 39,
+            "false_rate": 0.1392857142857143
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 10,
+            "false_rate": 0.05952380952380952
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 19,
+            "false_rate": 0.11875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 22,
+            "false_rate": 0.1375
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 7,
+            "false_rate": 0.14583333333333334
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 136,
+            "false_rate": 0.14166666666666666
+          }
+        },
+        "max_corpus_false_rate": 0.14583333333333334,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 5,
+        "continuous_events_per_hour": 0.6845772355249946,
+        "continuous_events_per_hour_upper_95": 1.4393968749608088,
+        "positive_latency_median_ms": 125.93750000000026,
+        "positive_latency_p95_ms": 221.99999999999997
+      },
+      {
+        "threshold": 0.5,
+        "positive_variants": 1196,
+        "recall": 0.9740802675585284,
+        "macro_recall": 0.9456845238095237,
+        "recall_by_engine": {
+          "edge-tts": 0.9107142857142857,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.984375
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 35,
+            "false_rate": 0.125
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 5,
+            "false_rate": 0.02976190476190476
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 16,
+            "false_rate": 0.1
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 117,
+            "false_rate": 0.121875
+          }
+        },
+        "max_corpus_false_rate": 0.125,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 140.75000000000014,
+        "positive_latency_p95_ms": 245.24999999999997
+      },
+      {
+        "threshold": 0.6,
+        "positive_variants": 1196,
+        "recall": 0.9623745819397993,
+        "macro_recall": 0.9411904761904764,
+        "recall_by_engine": {
+          "edge-tts": 0.9017857142857143,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.9708333333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 30,
+            "false_rate": 0.10714285714285714
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 3,
+            "false_rate": 0.017857142857142856
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 105,
+            "false_rate": 0.109375
+          }
+        },
+        "max_corpus_false_rate": 0.109375,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 1,
+        "continuous_events_per_hour": 0.13691544710499892,
+        "continuous_events_per_hour_upper_95": 0.6495083315409862,
+        "positive_latency_median_ms": 163.93749999999986,
+        "positive_latency_p95_ms": 267.1874999999999
+      },
+      {
+        "threshold": 0.7,
+        "positive_variants": 1196,
+        "recall": 0.9439799331103679,
+        "macro_recall": 0.9174404761904762,
+        "recall_by_engine": {
+          "edge-tts": 0.8392857142857143,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.95625
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 25,
+            "false_rate": 0.08928571428571429
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 1,
+            "false_rate": 0.005952380952380952
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 10,
+            "false_rate": 0.0625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 4,
+            "false_rate": 0.08333333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 90,
+            "false_rate": 0.09375
+          }
+        },
+        "max_corpus_false_rate": 0.09375,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 198.81249999999983,
+        "positive_latency_p95_ms": 291.6875000000001
+      },
+      {
+        "threshold": 0.8,
+        "positive_variants": 1196,
+        "recall": 0.9163879598662207,
+        "macro_recall": 0.8914980158730159,
+        "recall_by_engine": {
+          "edge-tts": 0.7946428571428571,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 0.96875,
+          "openai-tts": 0.8055555555555556,
+          "piper": 0.9302083333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 18,
+            "false_rate": 0.06428571428571428
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 9,
+            "false_rate": 0.05625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 9,
+            "false_rate": 0.05625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 3,
+            "false_rate": 0.0625
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 71,
+            "false_rate": 0.07395833333333333
+          }
+        },
+        "max_corpus_false_rate": 0.07395833333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 220.75000000000023,
+        "positive_latency_p95_ms": 313.62500000000006
+      },
+      {
+        "threshold": 0.85,
+        "positive_variants": 1196,
+        "recall": 0.8921404682274248,
+        "macro_recall": 0.8560714285714285,
+        "recall_by_engine": {
+          "edge-tts": 0.7678571428571429,
+          "kokoro": 0.9166666666666666,
+          "macos-say": 0.9375,
+          "openai-tts": 0.75,
+          "piper": 0.9083333333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 14,
+            "false_rate": 0.05
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 9,
+            "false_rate": 0.05625
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 8,
+            "false_rate": 0.05
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 1,
+            "false_rate": 0.020833333333333332
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 57,
+            "false_rate": 0.059375
+          }
+        },
+        "max_corpus_false_rate": 0.059375,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 231.06250000000017,
+        "positive_latency_p95_ms": 324.85624999999993
+      },
+      {
+        "threshold": 0.9,
+        "positive_variants": 1196,
+        "recall": 0.8453177257525084,
+        "macro_recall": 0.8105257936507936,
+        "recall_by_engine": {
+          "edge-tts": 0.7321428571428571,
+          "kokoro": 0.875,
+          "macos-say": 0.890625,
+          "openai-tts": 0.6944444444444444,
+          "piper": 0.8604166666666667
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 10,
+            "false_rate": 0.03571428571428571
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 7,
+            "false_rate": 0.04375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 4,
+            "false_rate": 0.025
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 1,
+            "false_rate": 0.020833333333333332
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 44,
+            "false_rate": 0.04583333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.04583333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 242.68750000000017,
+        "positive_latency_p95_ms": 335.5625
+      },
+      {
+        "threshold": 0.95,
+        "positive_variants": 1196,
+        "recall": 0.7249163879598662,
+        "macro_recall": 0.7416666666666666,
+        "recall_by_engine": {
+          "edge-tts": 0.625,
+          "kokoro": 0.875,
+          "macos-say": 0.8125,
+          "openai-tts": 0.6666666666666666,
+          "piper": 0.7291666666666666
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 7,
+            "false_rate": 0.025
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 4,
+            "false_rate": 0.025
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 1,
+            "false_rate": 0.00625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 1,
+            "false_rate": 0.020833333333333332
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 13,
+            "false_rate": 0.013541666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.025,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 265.93750000000017,
+        "positive_latency_p95_ms": 357.5000000000004
+      },
+      {
+        "threshold": 0.97,
+        "positive_variants": 1196,
+        "recall": 0.6162207357859532,
+        "macro_recall": 0.6612698412698412,
+        "recall_by_engine": {
+          "edge-tts": 0.5535714285714286,
+          "kokoro": 0.8333333333333334,
+          "macos-say": 0.78125,
+          "openai-tts": 0.5277777777777778,
+          "piper": 0.6104166666666667
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 4,
+            "false_rate": 0.014285714285714285
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 3,
+            "false_rate": 0.01875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 1,
+            "false_rate": 0.020833333333333332
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 4,
+            "false_rate": 0.004166666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.020833333333333332,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 278.8124999999999,
+        "positive_latency_p95_ms": 370.0750000000001
+      },
+      {
+        "threshold": 0.98,
+        "positive_variants": 1196,
+        "recall": 0.48244147157190637,
+        "macro_recall": 0.5742658730158731,
+        "recall_by_engine": {
+          "edge-tts": 0.5178571428571429,
+          "kokoro": 0.75,
+          "macos-say": 0.671875,
+          "openai-tts": 0.4722222222222222,
+          "piper": 0.459375
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 3,
+            "false_rate": 0.010714285714285714
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 3,
+            "false_rate": 0.01875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 2,
+            "false_rate": 0.0020833333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.01875,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 285.3124999999999,
+        "positive_latency_p95_ms": 379.4999999999997
+      },
+      {
+        "threshold": 0.99,
+        "positive_variants": 1196,
+        "recall": 0.2834448160535117,
+        "macro_recall": 0.42777777777777776,
+        "recall_by_engine": {
+          "edge-tts": 0.4375,
+          "kokoro": 0.625,
+          "macos-say": 0.53125,
+          "openai-tts": 0.3055555555555556,
+          "piper": 0.23958333333333334
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 2,
+            "false_rate": 0.0125
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 1,
+            "false_rate": 0.0010416666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.0125,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 299.5000000000001,
+        "positive_latency_p95_ms": 405.775
+      },
+      {
+        "threshold": 0.995,
+        "positive_variants": 1196,
+        "recall": 0.11036789297658862,
+        "macro_recall": 0.2705456349206349,
+        "recall_by_engine": {
+          "edge-tts": 0.22321428571428573,
+          "kokoro": 0.4583333333333333,
+          "macos-say": 0.46875,
+          "openai-tts": 0.1388888888888889,
+          "piper": 0.06354166666666666
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 1,
+            "false_rate": 0.0010416666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.0010416666666666667,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": 289.56250000000017,
+        "positive_latency_p95_ms": 428.60624999999993
+      },
+      {
+        "threshold": 0.999,
+        "positive_variants": 1196,
+        "recall": 0.0,
+        "macro_recall": 0.0,
+        "recall_by_engine": {
+          "edge-tts": 0.0,
+          "kokoro": 0.0,
+          "macos-say": 0.0,
+          "openai-tts": 0.0,
+          "piper": 0.0
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 0,
+            "false_rate": 0.0
+          }
+        },
+        "max_corpus_false_rate": 0.0,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 0,
+        "continuous_events_per_hour": 0.0,
+        "continuous_events_per_hour_upper_95": 0.41016202364051946,
+        "positive_latency_median_ms": null,
+        "positive_latency_p95_ms": null
+      }
+    ],
+    "accepted": false
+  },
+  "matched_control_equal_mean": {
+    "threshold": 0.4,
+    "positive_variants": 1196,
+    "recall": 0.9724080267558528,
+    "macro_recall": 0.9468452380952381,
+    "recall_by_engine": {
+      "edge-tts": 0.9196428571428571,
+      "kokoro": 1.0,
+      "macos-say": 1.0,
+      "openai-tts": 0.8333333333333334,
+      "piper": 0.98125
+    },
+    "negative_variants": 1872,
+    "confusing_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 280,
+        "false_variants": 39,
+        "false_rate": 0.1392857142857143
+      },
+      "edge-tts:edge-partials": {
+        "variants": 168,
+        "false_variants": 3,
+        "false_rate": 0.017857142857142856
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 160,
+        "false_variants": 13,
+        "false_rate": 0.08125
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 96,
+        "false_variants": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 160,
+        "false_variants": 14,
+        "false_rate": 0.0875
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 48,
+        "false_variants": 5,
+        "false_rate": 0.10416666666666667
+      },
+      "piper:synthetic": {
+        "variants": 960,
+        "false_variants": 113,
+        "false_rate": 0.11770833333333333
+      }
+    },
+    "max_corpus_false_rate": 0.1392857142857143,
+    "continuous_hours": 7.303777777777778,
+    "continuous_events": 1,
+    "continuous_events_per_hour": 0.13691544710499892,
+    "continuous_events_per_hour_upper_95": 0.6495083315409862,
+    "positive_latency_median_ms": 130.37499999999991,
+    "positive_latency_p95_ms": 233.62499999999997
+  },
+  "original_frozen_equal_mean": {
+    "threshold": 0.4,
+    "positive_variants": 1196,
+    "recall": 0.9724080267558528,
+    "macro_recall": 0.9468452380952381,
+    "recall_by_engine": {
+      "edge-tts": 0.9196428571428571,
+      "kokoro": 1.0,
+      "macos-say": 1.0,
+      "openai-tts": 0.8333333333333334,
+      "piper": 0.98125
+    },
+    "negative_variants": 1872,
+    "confusing_corpora": {
+      "edge-tts:edge-corpus": {
+        "variants": 280,
+        "false_variants": 37,
+        "false_rate": 0.13214285714285715
+      },
+      "edge-tts:edge-partials": {
+        "variants": 168,
+        "false_variants": 4,
+        "false_rate": 0.023809523809523808
+      },
+      "kokoro:kokoro-corpus": {
+        "variants": 160,
+        "false_variants": 16,
+        "false_rate": 0.1
+      },
+      "kokoro:kokoro-partials": {
+        "variants": 96,
+        "false_variants": 0,
+        "false_rate": 0.0
+      },
+      "macos-say:mac-corpus": {
+        "variants": 160,
+        "false_variants": 16,
+        "false_rate": 0.1
+      },
+      "openai-tts:openai-corpus": {
+        "variants": 48,
+        "false_variants": 5,
+        "false_rate": 0.10416666666666667
+      },
+      "piper:synthetic": {
+        "variants": 960,
+        "false_variants": 122,
+        "false_rate": 0.12708333333333333
+      }
+    },
+    "max_corpus_false_rate": 0.13214285714285715,
+    "continuous_hours": 7.303777777777778,
+    "continuous_events": 2,
+    "continuous_events_per_hour": 0.27383089420999784,
+    "continuous_events_per_hour_upper_95": 0.8619913986194038,
+    "positive_latency_median_ms": 130.37499999999991,
+    "positive_latency_p95_ms": 233.62499999999997
+  },
+  "regression": {
+    "paired": {
+      "scope": "Validation-frozen matched hard-negative development regression, exact existing PCM/cached features; no reserved/physical/whole-app acceptance",
+      "plan_sha256": "841d8adf381d720612007f7d1e61c5c5c7de700adad7ebd7950c5f1ef1daab1b",
+      "manifest_sha256": "019741d914394a00233a4156b2c2f2f4eb8b59d4fbd34e51c4c8d059ff890da4",
+      "baseline_sha256": "168bf57a7006cf320ba3fbc46e3e2134fbc7bdb08c74b148333bb886b97bdcaf",
+      "ensemble_identity_sha256": "48e361676e54dd13aac57847b17fb2dac2e1c87ac664330fb0777c988a826223",
+      "threshold": 0.5,
+      "source_pcm_hashes_verified": true,
+      "priming_events": 0,
+      "seconds": 4.588039458962157,
+      "accepted": false,
+      "hi_esp": {
+        "positives_any_event": {
+          "clips": 50,
+          "clips_with_event": 48,
+          "events": 48
+        },
+        "positives_in_estimated_end_window": {
+          "clips": 50,
+          "detected": 32,
+          "window_ms": [
+            -100,
+            800
+          ]
+        },
+        "ordinary_and_near_word_negatives": {
+          "clips": 250,
+          "clips_with_event": 14,
+          "events": 14
+        },
+        "shared_negative_texts": {
+          "clips": 190,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "shared_ordinary_sentences": {
+          "clips": 100,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "nyx_specific_near_words": {
+          "clips": 90,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "negative_events_by_text": {
+          "He connects the next two cables.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hello, can you hear me?": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Alex.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Max.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Mix.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Next.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Nexus.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Nice.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Nick.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Siri.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Six.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hi ASP.": {
+            "clips": 10,
+            "clips_with_event": 2,
+            "events": 2
+          },
+          "Hi ESB.": {
+            "clips": 10,
+            "clips_with_event": 9,
+            "events": 9
+          },
+          "Hi EST.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "Hi SP.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "High speed.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "How can I help you?": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I heard Nick speaking.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I mixed the ingredients.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I see ESP.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "I will be back in six minutes.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Please check the volume.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Thanks, that is all.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "The next thing is ready.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "The television is playing.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          }
+        },
+        "hi_esp_specific_near_words_unvalidated_pronunciation": {
+          "clips": 60,
+          "clips_with_event": 14,
+          "events": 14
+        },
+        "other_wake_phrase": {
+          "clips": 50,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "latency_ms_from_estimated_end_median": -18.4375,
+        "latency_ms_from_estimated_end_range": [
+          -99.5,
+          126.9375
+        ]
+      },
+      "hey_nyx": {
+        "positives_any_event": {
+          "clips": 50,
+          "clips_with_event": 45,
+          "events": 45
+        },
+        "positives_in_estimated_end_window": {
+          "clips": 50,
+          "detected": 45,
+          "window_ms": [
+            -100,
+            800
+          ]
+        },
+        "ordinary_and_near_word_negatives": {
+          "clips": 250,
+          "clips_with_event": 25,
+          "events": 25
+        },
+        "shared_negative_texts": {
+          "clips": 190,
+          "clips_with_event": 25,
+          "events": 25
+        },
+        "shared_ordinary_sentences": {
+          "clips": 100,
+          "clips_with_event": 1,
+          "events": 1
+        },
+        "nyx_specific_near_words": {
+          "clips": 90,
+          "clips_with_event": 24,
+          "events": 24
+        },
+        "negative_events_by_text": {
+          "He connects the next two cables.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hello, can you hear me?": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Alex.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "Hey Max.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "Hey Mix.": {
+            "clips": 10,
+            "clips_with_event": 6,
+            "events": 6
+          },
+          "Hey Next.": {
+            "clips": 10,
+            "clips_with_event": 7,
+            "events": 7
+          },
+          "Hey Nexus.": {
+            "clips": 10,
+            "clips_with_event": 5,
+            "events": 5
+          },
+          "Hey Nice.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Nick.": {
+            "clips": 10,
+            "clips_with_event": 4,
+            "events": 4
+          },
+          "Hey Siri.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hey Six.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hi ASP.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hi ESB.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hi EST.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Hi SP.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "High speed.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "How can I help you?": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I heard Nick speaking.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I mixed the ingredients.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I see ESP.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "I will be back in six minutes.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Please check the volume.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "Thanks, that is all.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          },
+          "The next thing is ready.": {
+            "clips": 10,
+            "clips_with_event": 1,
+            "events": 1
+          },
+          "The television is playing.": {
+            "clips": 10,
+            "clips_with_event": 0,
+            "events": 0
+          }
+        },
+        "hi_esp_specific_near_words_unvalidated_pronunciation": {
+          "clips": 60,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "other_wake_phrase": {
+          "clips": 50,
+          "clips_with_event": 0,
+          "events": 0
+        },
+        "latency_ms_from_estimated_end_median": 121.0625,
+        "latency_ms_from_estimated_end_range": [
+          -59.8125,
+          328.375
+        ]
+      }
+    },
+    "english": {
+      "scope": "Validation-frozen matched hard-negative development regression, exact existing PCM/cached features; no reserved/physical/whole-app acceptance",
+      "plan_sha256": "841d8adf381d720612007f7d1e61c5c5c7de700adad7ebd7950c5f1ef1daab1b",
+      "manifest_sha256": "d40cb00eca7cc4d1ce6a193422681d6d464f8f39188d0901ba5feb17d3c07073",
+      "baseline_sha256": "a09b1fec1763c2a3523f64c2cca0b27bf24239cccb1338392f367d1bf17367ee",
+      "ensemble_identity_sha256": "48e361676e54dd13aac57847b17fb2dac2e1c87ac664330fb0777c988a826223",
+      "threshold": 0.5,
+      "source_pcm_hashes_verified": true,
+      "priming_events": 0,
+      "seconds": 30.08240662503522,
+      "accepted": false,
+      "hi_esp": {
+        "events": 0,
+        "source_hours": 5.549022395833333
+      },
+      "hey_nyx": {
+        "events": 2,
+        "evaluated_hours": 5.5485999999999995,
+        "false_per_hour": 0.3604512850088311
+      }
+    },
+    "mandarin": {
+      "scope": "Validation-frozen matched hard-negative development regression, exact existing PCM/cached features; no reserved/physical/whole-app acceptance",
+      "plan_sha256": "841d8adf381d720612007f7d1e61c5c5c7de700adad7ebd7950c5f1ef1daab1b",
+      "manifest_sha256": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+      "baseline_sha256": "f748efb83f30c3c1d7238955246d6225b8384b56736407e2bf7dff944629f06b",
+      "ensemble_identity_sha256": "48e361676e54dd13aac57847b17fb2dac2e1c87ac664330fb0777c988a826223",
+      "threshold": 0.5,
+      "source_pcm_hashes_verified": true,
+      "priming_events": 0,
+      "seconds": 8.702695708023384,
+      "accepted": false,
+      "hi_esp": {
+        "events": 0,
+        "source_hours": 1.2938333333333334
+      },
+      "hey_nyx": {
+        "events": 0,
+        "evaluated_hours": 1.2937555555555558,
+        "false_per_hour": 0.0
+      }
+    }
+  },
+  "known_private_cue_diagnostic": {
+    "scope": "One previously observed missed synthetic playback capture; post-calibration diagnostic only, not independent acceptance or threshold selection. Unchanged16kHz PCM,gain1,offset0,original speed. Raw audio remains private.",
+    "original": {
+      "scope": "Frozen-model gain/arrival-phase diagnostic on explicit captured PCM only.\n\nThis never selects a threshold, trains a model or changes live audio. Offset\nadds silence before the identical ordered recording; gains keep sample rate,\nsample count and speed. Reports are diagnostic, not independent wake trials.\n",
+      "input_sha256": "067da3937bf2ace314c67ee238d2093ae184b14c22cfd8dc522f4dbd9b5923b3",
+      "channel": 0,
+      "configuration_sha256": "927e98674386fbbf2d8ade53e58ae9484ef19b3ad4e7e8ce7cd6966b2086eece",
+      "threshold": 0.4,
+      "jobs_prespecified": [
+        {
+          "gain": 1.0,
+          "offset_samples": 0
+        }
+      ],
+      "original_speed_and_sample_rate_unchanged": true,
+      "accepted": false,
+      "results": [
+        {
+          "gain": 1.0,
+          "offset_samples": 0,
+          "clipped_samples": 0,
+          "peak_score": 0.21809895833333334,
+          "head_peak_scores": [
+            0.3072916666666667,
+            0.13802083333333334
+          ],
+          "events": 0,
+          "peak_time_s": 3.36,
+          "seconds": 0.14588500000536442
+        }
+      ]
+    },
+    "eq": {
+      "scope": "Frozen-model gain/arrival-phase diagnostic on explicit captured PCM only.\n\nThis never selects a threshold, trains a model or changes live audio. Offset\nadds silence before the identical ordered recording; gains keep sample rate,\nsample count and speed. Reports are diagnostic, not independent wake trials.\n",
+      "input_sha256": "067da3937bf2ace314c67ee238d2093ae184b14c22cfd8dc522f4dbd9b5923b3",
+      "channel": 0,
+      "configuration_sha256": "48e361676e54dd13aac57847b17fb2dac2e1c87ac664330fb0777c988a826223",
+      "threshold": 0.5,
+      "jobs_prespecified": [
+        {
+          "gain": 1.0,
+          "offset_samples": 0
+        }
+      ],
+      "original_speed_and_sample_rate_unchanged": true,
+      "accepted": false,
+      "results": [
+        {
+          "gain": 1.0,
+          "offset_samples": 0,
+          "clipped_samples": 0,
+          "peak_score": 0.4915364583333333,
+          "head_peak_scores": [
+            0.3684895833333333,
+            0.73046875
+          ],
+          "events": 0,
+          "peak_time_s": 3.36,
+          "seconds": 0.14718562504276633
+        }
+      ]
+    }
+  },
+  "decision": "Reject replacement: validation macro94.568% versus original/control94.685%; existing paired45/50 versus original46/50 and HiESP48/50; English2/5.549h versus original1 and HiESP0. Ordinary1/100 and Mandarin0/1.294h. Known captured cue margin improves but still no wake at frozen.5. No threshold lowering or experimental flash; original Hi ESP remains active.",
+  "limits": [
+    "Reused development regression and correlated TTS views do not establish independent population performance.",
+    "One capture spectrum/margin does not isolate microphone response or justify fitting a measured filter.",
+    "Only the USB development panel is eligible for later physical follow-up; production panel excluded."
+  ],
+  "portable_artifact_verification": {
+    "portable_training_rows": 60767,
+    "both_head_five_batches_each_exact": true,
+    "feature_identity_order_exact": true,
+    "portable_equal_mean_calibration_byte_exact": true,
+    "calibration_sha256": "48e361676e54dd13aac57847b17fb2dac2e1c87ac664330fb0777c988a826223",
+    "public_download_archive_and_all_members_verified": true,
+    "archive_files": 20497,
+    "verified_data_files": 20496,
+    "new_files_merged": 20494,
+    "all_existing_files_unchanged": true
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "scope": "Characterize one known playback/capture pair without fitting a wake model.\n\nOnly aggregate alignment, band power and coherence are exported. Neither the\nmicrophone recording nor a fitted room/device response becomes training data.\nKeep original PCM rate/speed; correlation alignment is diagnostic only.\n",
+  "plan_sha256": "5ced6256c6c36196338576d4d42a3972d1d58b75d2b11bd38da6090659981e09",
+  "source_sha256": "ea3b02ce55e0ec88241fa18fc031d6dffba176cac42fdfa1e2798aacc3389e3f",
+  "capture_sha256": "067da3937bf2ace314c67ee238d2093ae184b14c22cfd8dc522f4dbd9b5923b3",
+  "sample_rate": 16000,
+  "source_samples": 99200,
+  "capture_samples": 135680,
+  "alignment_lag_samples": 9448,
+  "full_playback_overlap": true,
+  "waveform_correlation": 0.2946092974048956,
+  "scalar_least_squares_gain": 0.024992619543912728,
+  "rms_ratio": 0.08483309849371175,
+  "bands": [
+    {
+      "hz": [
+        80,
+        250
+      ],
+      "relative_gain_db": -24.50745781540377,
+      "coherence_mean": 0.2320621329288864,
+      "source_power_fraction": 0.19716269795880792,
+      "capture_power_fraction": 0.0971510138385216
+    },
+    {
+      "hz": [
+        250,
+        500
+      ],
+      "relative_gain_db": -21.223217561387816,
+      "coherence_mean": 0.5415156977568463,
+      "source_power_fraction": 0.3978807481550652,
+      "capture_power_fraction": 0.4176375467930315
+    },
+    {
+      "hz": [
+        500,
+        1000
+      ],
+      "relative_gain_db": -25.78030860104546,
+      "coherence_mean": 0.3326655697441226,
+      "source_power_fraction": 0.33708865535226545,
+      "capture_power_fraction": 0.12390294893464379
+    },
+    {
+      "hz": [
+        1000,
+        2000
+      ],
+      "relative_gain_db": -15.916856300973723,
+      "coherence_mean": 0.5575015671470838,
+      "source_power_fraction": 0.03256601738809518,
+      "capture_power_fraction": 0.11599716807902638
+    },
+    {
+      "hz": [
+        2000,
+        4000
+      ],
+      "relative_gain_db": -13.8743932208615,
+      "coherence_mean": 0.5030603238026827,
+      "source_power_fraction": 0.02836484935296168,
+      "capture_power_fraction": 0.16169981593848948
+    },
+    {
+      "hz": [
+        4000,
+        7500
+      ],
+      "relative_gain_db": -9.81265440258578,
+      "coherence_mean": 0.6459103427304118,
+      "source_power_fraction": 0.005318516892232843,
+      "capture_power_fraction": 0.07724910723154114
+    }
+  ],
+  "speed_and_sample_rate_unchanged": true,
+  "training_data_created": false,
+  "accepted": false,
+  "limits": [
+    "One known synthetic playback at one room/placement; no population inference.",
+    "Band power ratios include room response and noise; they are not an isolated microphone response.",
+    "No equalizer/threshold is selected from these measurements; no fitted impulse response is exported."
+  ]
+}

@@ -481,3 +481,56 @@ The original arrays and held-out data stay immutable. Bind the completed
 feature index and completion hashes before the matched training comparison
 in `head-temporal-phase-comparison-plan-v1.json`; this is an unproven
 augmentation hypothesis, with no relaxed evaluation threshold.
+
+### Generic channel-EQ continuation
+
+`audit_capture_transfer.py` characterizes one explicitly hash-bound synthetic
+playback and private microphone capture. It restricts correlation alignment to
+complete playback overlap, then reports six-band power ratios/coherence.
+The recorded pair has waveform correlation .295 and RMS ratio .0848, with
+different attenuation across bands. This diagnostic is post-hoc and contains
+room/noise effects; it does not isolate a microphone transfer function or
+establish a population cause. No recording or fitted filter is exported.
+See `plans/capture-transfer-diagnostic-v1.json` and the aggregate result
+`../results/embedding-capture-transfer-diagnostic-v3.json`.
+
+The independent training hypothesis uses generic RBJ peaking filters at
+125/315/800/2000/5000 Hz, each drawn uniformly from -12 to +12 dB with Q=.7071.
+`prepare_eq_views.py` reuses the completed environmental renderer's exact
+source/noise/room RNG sequence, adds separate deterministic EQ gains, restores
+whole-mix RMS and uniformly limits peaks to 30000. Samples, rate and speed stay
+unchanged. It reads only existing training sources; microphone captures are
+not training inputs. The original renderer/head trainer remain byte-identical.
+
+```sh
+python research/wakeword_p4/embedding/prepare_eq_views.py \
+  --data-root "$WAKE_DATA" --plan "$WAKE_DATA/eq-views-plan-v1.json" \
+  --output "$WAKE_DATA/head-features-eq-pilot-v2" --limit 48 --workers 3
+python research/wakeword_p4/embedding/prepare_eq_views.py \
+  --data-root "$WAKE_DATA" --plan "$WAKE_DATA/eq-views-plan-v1.json" \
+  --output "$WAKE_DATA/head-features-eq-v1" --workers 3
+python research/wakeword_p4/embedding/audit_eq_views.py \
+  --data-root "$WAKE_DATA" --plan "$WAKE_DATA/eq-views-plan-v1.json" \
+  --features "$WAKE_DATA/head-features-eq-v1" \
+  --pilot "$WAKE_DATA/head-features-eq-pilot-v2" \
+  --output "$WAKE_DATA/eq-views-audit-v1.json"
+```
+
+Use fresh output paths. The first preliminary 48-view pilot was preserved
+locally before adding separate pre/post-EQ PCM hashes to the extraction
+metadata; the second pilot and full run bind the final extractor hash.
+All 20,140 full views pass source/background/timebase/PCM pairing, feature
+hash/shape and split isolation checks. The 48 balanced pilot rows reproduce
+the full run exactly; their pre-EQ features reproduce the completed reference
+arrays. All 43,730 original indexed arrays remain unchanged. The audit covers
+extraction provenance, not recognition quality.
+
+`plans/eq-continuation-v1.json` freezes the two matched continuation recipes
+before fitting. Each treatment adds EQ views to its existing dense/temporal
+control; initialization, 10,000-step budget, class/engine recipe, training-only
+PTQ representatives and original validation policy remain fixed. Completed
+index/completion hashes are bound in `plans/head-{dense,temporal}-eq-plan-v1.json`
+before training. The matched controls are reused exact completed experiments,
+not newly independent trials. After independent checkpoint selection, the
+only planned combination is their equal mean; no weight is fitted from the
+private capture or development regression.
