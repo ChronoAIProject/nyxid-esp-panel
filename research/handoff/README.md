@@ -89,6 +89,35 @@ Detailed reports: [`../wakeword_p4/results/`](../wakeword_p4/results/), especial
 `embedding-full-app-resources-v3.json`, `embedding-head-equal-mean-v3.json` and
 `embedding-phase-continuation-v3.json`. Older failures remain in Git history.
 
+### Subsequent acoustic diagnosis
+
+An opt-in whole-app input trace now verifies the exact PCM consumed by the
+detector, frontend bytes, embedding, both heads and event policy. In one home
+development-panel run, all **1,682 steps match the host byte for byte**, with
+5,046 complete fragments and no reported drops. Forty seconds of steady-state
+resource observation passes: mean inference51.8ms/80ms, no new hardware RX
+overflows, byte balance -640..0. Private room audio stays off GitHub.
+
+At the same recorded Mac output level100, the Hi ESP control completes its
+initial directive, one reply and eight seconds of quiet. Hey Nyx misses its
+paired synthetic cue: peak .2181 at the frozen .4 threshold. This is one trial,
+not a new recall estimate. The original Hi ESP app/service is restored. See
+`embedding-input-trace-hardware-v3.json` and `embedding-home-acoustic-level-v3.json`.
+The acoustic harness now rejects muted/zero-volume playback and records output
+level before/after; earlier muted playback cannot establish a detector miss.
+
+The new `prepare_level_views.py` experiment pairs low-level training views with
+the completed environmental views. Existing augmentation targets RMS .04.. .20
+of PCM full scale; the new prespecified range is .002.. .02. This is a hypothesis
+about acoustic robustness, not a proven cause. Original room, background, SNR
+and RNG draws must match the completed reference index. The input PCM speed,
+source/held-out partitions and existing views remain unchanged. Plans under
+`embedding/plans/level-*.json` freeze extraction and the fitting comparison.
+The initial4090 snapshot does **not** include these newly generated features;
+use its existing assets until a later asset manifest explicitly includes them.
+New extraction requires the original source paths to be rebased locally as
+described above. No new classifier or production wake replacement is accepted.
+
 The 4090 bundle includes all completed `head-*` model checkpoints (DNN,
 temporal, mining, Qwen, environmental, pooling and phase variants), original
 MicroWakeWord model/weight artifacts from training v1/v2/v3, 61,064 indexed

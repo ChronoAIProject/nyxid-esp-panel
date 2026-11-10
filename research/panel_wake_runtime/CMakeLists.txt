@@ -34,6 +34,35 @@ if(NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE)
         target_link_options(${COMPONENT_LIB} INTERFACE "-Wl,--wrap=i2s_new_channel")
         target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_CAPTURE_COUNTERS=1)
     endif()
+    set(NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP "" CACHE STRING "Explicit development LAN receiver for private input/numeric tracing; empty disables")
+    set(NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT "30282" CACHE STRING "Development diagnostic UDP receiver port")
+    if(NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP)
+        if(NOT NYX_PANEL_NODE_DEV_MODE)
+            message(FATAL_ERROR "Wake input tracing requires the isolated node development profile")
+        endif()
+        if(NOT NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP MATCHES "^(10\\.[0-9]+\\.[0-9]+\\.[0-9]+|192\\.168\\.[0-9]+\\.[0-9]+|172\\.(1[6-9]|2[0-9]|3[01])\\.[0-9]+\\.[0-9]+)$")
+            message(FATAL_ERROR "Wake trace receiver must be an explicit private LAN IPv4 address")
+        endif()
+        string(REPLACE "." ";" _trace_octets "${NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP}")
+        list(LENGTH _trace_octets _trace_octet_count)
+        if(NOT _trace_octet_count EQUAL 4)
+            message(FATAL_ERROR "Wake trace receiver must be an explicit IPv4 address")
+        endif()
+        foreach(_octet IN LISTS _trace_octets)
+            if(NOT "${_octet}" MATCHES "^[0-9]+$" OR _octet GREATER 255)
+                message(FATAL_ERROR "Invalid wake trace IPv4 octet")
+            endif()
+        endforeach()
+        if(NOT "${NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT}" MATCHES "^[0-9]+$" OR
+                NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT LESS 1024 OR
+                NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT GREATER 65535)
+            message(FATAL_ERROR "Wake trace port must be 1024..65535")
+        endif()
+        idf_component_optional_requires(PRIVATE lwip)
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE
+            NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP="${NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP}"
+            NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT=${NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT})
+    endif()
     execute_process(COMMAND ${PYTHON} "${CMAKE_CURRENT_LIST_DIR}/prepare_embedding_runtime.py"
         --bundle "${NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE}"
         --model "${NYX_PANEL_EXPERIMENTAL_WAKE_MODEL}"

@@ -23,6 +23,9 @@
 extern "C" {
 #include "zlib.h"
 }
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+#include "embedding_trace.h"
+#endif
 
 extern const uint8_t backbone_data[] asm("_binary_embedding_backbone_bin_start");
 extern const uint8_t backbone_end[] asm("_binary_embedding_backbone_bin_end");
@@ -149,6 +152,10 @@ struct ModelSlot {
 
 struct Detector {
     Resolver ops;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+    InputTrace trace;
+    int8_t traced_features[256]{};
+#endif
 #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_PROFILE
     OperatorProfile profile;
     SchedulerProfile scheduler;
@@ -214,6 +221,9 @@ struct Detector {
             unsigned(slots[0].interpreter->arena_used_bytes()),
             unsigned(slots[1].interpreter->arena_used_bytes()),
             unsigned(slots[2].interpreter->arena_used_bytes()), int(xPortGetCoreID()));
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+        if (!trace.initialize()) return false;
+#endif
         return true;
     }
 
@@ -223,6 +233,9 @@ struct Detector {
         memcpy(pcm + 480, samples, block_samples * sizeof(int16_t));
         native_frontend(pcm, scratch);
         for (unsigned n = 0; n < 256; ++n) slots[0].input->data.int8[n] = native_quantize(scratch.features[n]);
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+        memcpy(traced_features, slots[0].input->data.int8, sizeof(traced_features));
+#endif
         memmove(pcm, pcm + block_samples, 480 * sizeof(int16_t));
         int64_t stage = esp_timer_get_time();
         stage_us[0] += stage - start;
@@ -233,13 +246,20 @@ struct Detector {
         memcpy(history + sizeof(history) - 96, slots[0].output->data.int8, 96);
         ++steps;
         int numerator = 0;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+        int traced_heads[2] = {-1, -1};
+#endif
         if (steps >= 25) {
             for (int n = 1; n < 3; ++n) {
                 memcpy(slots[n].input->data.int8, history, sizeof(history));
                 stage = esp_timer_get_time();
                 if (slots[n].interpreter->Invoke() != kTfLiteOk) { failed = true; return -1; }
                 stage_us[n + 1] += esp_timer_get_time() - stage;
-                numerator += int(slots[n].output->data.int8[0]) + 128;
+                int probability = int(slots[n].output->data.int8[0]) + 128;
+                numerator += probability;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+                traced_heads[n - 1] = probability;
+#endif
             }
             score_history[score_at] = numerator; score_at = (score_at + 1) % 3;
             score_count = std::min(score_count + 1, 3u);
@@ -267,10 +287,21 @@ struct Detector {
             scheduler.print(steps);
 #endif
         }
-        if (score_count != 3) return 0;
+        if (score_count != 3) {
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+            trace.write(steps, start, samples, traced_features, slots[0].output->data.int8,
+                        traced_heads, 0, false);
+#endif
+            return 0;
+        }
         double score = double(score_history[0] + score_history[1] + score_history[2]) / 1536;
         if (score < embedding_threshold * .5 && int64_t(steps) - last_event >= 25) armed = true;
-        if (armed && score >= embedding_threshold && int64_t(steps) - last_event >= 25) {
+        bool event = armed && score >= embedding_threshold && int64_t(steps) - last_event >= 25;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP
+        trace.write(steps, start, samples, traced_features, slots[0].output->data.int8,
+                    traced_heads, score_history[0] + score_history[1] + score_history[2], event);
+#endif
+        if (event) {
             armed = false; last_event = steps;
             ESP_LOGI(tag, "activation score=%.6f step=%u inference_us=%u", score, steps, elapsed);
             return 1;

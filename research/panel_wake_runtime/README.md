@@ -109,6 +109,35 @@ integration evidence, not a recall estimate. Recognition acceptance additionally
 needs matched voices/conditions, continuous negative exposure, human positives,
 distance/noise variation, repeated rearming, immediate speech, playback echo,
 reconnect/long calls and full-app CPU/RAM/flash measurements.
+`acoustic_voice_smoke.py` records Mac output volume/mute state before and after
+each trial and rejects muted/zero-volume playback before playing. It does not
+change the Mac volume. Keep the same output device and record any externally
+changed level; checking the WAV file alone does not verify physical playback.
+
+### Private input and numerical tracing
+
+For an embedding-runtime diagnostic, set
+`-DNYX_PANEL_EXPERIMENTAL_WAKE_TRACE_IP=<receiver-private-LAN-IP>` and optionally
+`-DNYX_PANEL_EXPERIMENTAL_WAKE_TRACE_PORT=30282`. This requires the isolated
+`NYX_PANEL_NODE_DEV_MODE=ON` profile. The default empty address compiles out the
+trace. Never enable it in a production or OTA release.
+
+Start `trace_capture.py --source-ip <development-panel-IP> --output
+<fresh-private-directory> --seconds 300` before booting the diagnostic app.
+The bounded receiver accepts only that source IP. The detector copies its
+already consumed PCM, quantized frontend, embedding, classifier bytes and
+event state; it does not open the microphone or advance an extra model.
+Three nonblocking UDP fragments per 80 ms step each fit a standard IPv4 MTU.
+There is no retransmission. Keep every capture private: it contains room audio.
+
+After the runner has restored the original app, stop the receiver and run
+`replay_trace.py --help` in the NumPy/LiteRT research environment. Supply the
+captured `packets.bin`, original unfused reference backbone, exact runtime
+bundle, FFT window and mel-filter coefficients. The replay rejects incomplete,
+duplicate, conflicting or corrupt records, then compares each numerical stage
+and the frozen event policy using BUILTIN_REF. A host-generated trace only
+tests the harness; it is not evidence of device numerical parity. Record trace
+packet drops and scheduling/stack overhead alongside any hardware result.
 
 ## Frozen embedding diagnostic
 

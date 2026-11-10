@@ -17,6 +17,16 @@ import urllib.request
 from pymongo import MongoClient
 
 
+def mac_output():
+    settings = subprocess.check_output(
+        ['/usr/bin/osascript', '-e', 'get volume settings'], text=True, timeout=5)
+    volume = re.search(r'output volume:(\d+)', settings)
+    muted = re.search(r'output muted:(true|false)', settings)
+    if not volume or not muted:
+        raise RuntimeError('Cannot verify Mac playback volume and mute state')
+    return {'volume': int(volume[1]), 'muted': muted[1] == 'true'}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--status-url", required=True)
@@ -62,6 +72,9 @@ def main():
 
     signal.signal(signal.SIGTERM, interrupted)
     try:
+        report['mac_output_before'] = mac_output()
+        if report['mac_output_before']['muted'] or not report['mac_output_before']['volume']:
+            raise RuntimeError('Mac playback is muted or at zero volume; no acoustic trial was played')
         player = subprocess.Popen(["/usr/bin/afplay", str(args.audio)])
         quiet_since = None
         deadline = started + 90
@@ -116,6 +129,11 @@ def main():
                 report["owned_call_stop_requested"] = True
         finally:
             mongo.close()
+            try:
+                report['mac_output_after'] = mac_output()
+                report['mac_output_unchanged'] = report.get('mac_output_before') == report['mac_output_after']
+            except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+                report['mac_output_error'] = str(error)
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
 
