@@ -12,6 +12,7 @@
 #include "model_path.h"
 #include "zlib.h"
 #include "fixture_config.h"
+#include "readonly_model_files.h"
 
 extern const uint8_t packed_model[] asm("_binary_model_bin_start");
 extern const uint8_t packed_model_end[] asm("_binary_model_bin_end");
@@ -46,6 +47,7 @@ static bool run() {
     if (!model_root || !fixtures || fixtures_size < 4 || read32(fixtures) != fixture_count) return false;
     srmodel_list_t *models = srmodel_load(model_root);
     if (!models || models->num != 1 || strcmp(models->model_name[0], "mn7_en")) return false;
+    if (!model_files::install(models)) return false;
     auto *iface = esp_mn_handle_from_name(models->model_name[0]);
     if (!iface) return false;
     printf("MN_STAGE models_loaded model=%s\n", models->model_name[0]);
@@ -129,6 +131,7 @@ static bool run() {
     free(timings);
     free(buffer);
     iface->destroy(detector);
+    ESP_ERROR_CHECK(esp_vfs_unregister("/mnprobe"));
     srmodel_host_deinit(models);
     free(model_root);
     free(fixtures);

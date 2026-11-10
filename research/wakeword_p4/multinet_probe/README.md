@@ -28,7 +28,7 @@ recordings, generated headers, build files and UART logs outside git.
 python research/wakeword_p4/prepare_multinet_probe.py \
   --data-root "$WAKE_DATA" \
   --parent-plan research/wakeword_p4/embedding/plans/training-discrimination-audit-v3.json \
-  --plan research/wakeword_p4/multinet_probe_plan_v1_retry2.json \
+  --plan research/wakeword_p4/multinet_probe_plan_v1_retry3.json \
   --model "$PINNED_COMPONENTS/espressif__esp-sr/model/multinet_model/mn7_en" \
   --output "$NEW_PRIVATE_PROBE_PROJECT"
 ```
@@ -47,6 +47,16 @@ file byte and pads its container payload offset to 16-byte alignment. This is
 an initialization hypothesis, not an established cause or recognition result.
 It also retains panic register/backtrace lines before recovery. Markdown is
 not part of the firmware-template identity; executable source/config files are.
+
+Retry2 still faults before inference. Its dump has `MTVAL=0` and a `strlen`
+call from formatted `%s/%s/vocab` path construction. Pinned `srmodel_load`
+sets the model base path to NULL; the MultiNet decoder still needs filesystem
+reads. Retry3 registers a read-only RAM VFS for the original four model files
+and the pinned original initialization command list, then sets the base path.
+The target grammars still replace that original command list before PCM is fed.
+All model/fixture bytes, threshold and test sources stay unchanged. This uses
+the pinned loader's non-header setter in a standalone diagnostic; it is not a
+new production loader interface or storage solution.
 
 The generated model and fixture blobs use a size prefix and zlib compression.
 Firmware expands both in PSRAM and embeds them in the app. Source WAV hashes,

@@ -116,9 +116,13 @@ def main():
             'keyword_end_sample': plan['lead_samples'] + job['keyword_end'] if source['label'] else None,
             'rendered_pcm_sha256': hashlib.sha256(rendered).hexdigest()})
     model = packed_model(args.model, plan['model_files'])
+    commands_path = args.model.parent / 'fst/commands_en.txt'
+    if sha(commands_path) != plan['initial_commands_sha256']:
+        raise ValueError('Pinned original initialization commands differ')
     args.output.mkdir(parents=True)
     shutil.copytree(template, args.output, dirs_exist_ok=True)
     (args.output / 'main/idf_component.yml').write_text(dependency_manifest)
+    shutil.copyfile(commands_path, args.output / 'main/commands_en.txt')
     for name, raw in (('model', model), ('fixtures', pcm)):
         (args.output / 'main' / (name + '.bin')).write_bytes(struct.pack('<I', len(raw)) + zlib.compress(raw, 9))
     arms = plan['command_arms']
@@ -138,7 +142,7 @@ def main():
         'detector_timeout_ms': plan['detector_timeout_ms'], 'all_sources_training_only': True,
         'heldout_source_hash_disjoint': True, 'audio_speed_changed': False,
         'model_raw_bytes': len(model), 'fixtures_raw_bytes': len(pcm),
-        'files': {name: sha(args.output / name) for name in ('main/model.bin', 'main/fixtures.bin', 'main/fixture_config.h')},
+        'files': {name: sha(args.output / name) for name in ('main/model.bin', 'main/fixtures.bin', 'main/fixture_config.h', 'main/commands_en.txt')},
         'model_files': plan['model_files'], 'accepted': False}
     report['dependencies'] = plan['dependencies']
     (args.output / 'vectors-manifest.json').write_text(json.dumps(report, indent=2) + '\n')
