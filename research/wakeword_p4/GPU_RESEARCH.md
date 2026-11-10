@@ -2209,3 +2209,31 @@ runner见experiments/v28_ami_dialogue.sh，未预判结果。
 v28已启动实际CUDA训练（PID210525），运行初期1500步，
 初始化JSON与v27逐项完全相同。训练完成后runner自动执行
 原密集验证、三项扩展负语料、扩展校准及流式探针；不触碰独立最终集。
+
+
+## 流式初始常数及外部音素参考核查（2026-11-10）
+
+直接解析原v27及校准对照两份TFLite的资源初始化子图，
+通过VAR_HANDLE/ASSIGN_VARIABLE匹配全部6个SavedModel状态缓冲。
+三份模型所有初始化常数都与浮点值的最近INT8量化结果逐元素相同，
+最大初值偏差均不超过该状态量化步长的一半。
+这排除了“导出常数被错误清零”这一具体解释，
+不等于运行时重置、量化推理或MCU正确性证明，冷启动分数偏差仍保留。
+可复现审计training/audit_export_initializers.py，
+results/4090-v27-*export-initializers-v1.json，未读音频或唤醒分数。
+
+为独立核验MFA，读取LDC官方公开TIMIT样例WAV/.phn/.txt
+（https://catalog.ldc.upenn.edu/desc/addenda/LDC93S1.wav 等）。
+仅作为非唤醒工具质量控制，不进入训练、选阈值或独立验收集。
+46797个16kHz样本，公开末非静音axr结束于44586样本，即2.786625s；
+公开音素表末端46720与WAV差77样本，原样保留并记录。
+
+按事先20ms容差和相同english_us_arpa3.0.0配置复跑，
+MFA末词/末音素R结束2.84s，较公开参考晚53.375ms，**未通过20ms容差**。
+词序列全部保留，运行32.685s；请求4作业，但MFA因只有1条自动使用1作业。
+不使用这一个样例推导总体误差、给旧边界减53ms或调整Nyx/HiESP窗口。
+参考axr与MFA音素表不同，比较仅为同一末端边界，不声称全音素对齐一致。
+这为“自动对齐不能直接当作精确音素真值”提供外部实际反例，
+目标词的独立端点质量核验仍未完成，延迟优胜结论继续禁止。
+来源SHA、完整音素参考、TextGrid收集及实测见results/4090-mfa-ldc-sample-*.json；
+复现experiments/mfa_ldc_sample_reference.sh，不访问唤醒分数或最终音频。
