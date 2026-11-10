@@ -422,3 +422,72 @@ This matters because v4 and v5 intentionally share the generated index but
 have different ambient training inputs. The already completed v5 run retains
 its original source hash; `4090-v5-training-protocol.json` binds its ambient
 and human indices explicitly instead of rewriting historical training output.
+
+## Controlled Qwen addition v6
+
+The screened Qwen training source (30 positive, 268 negative original clips)
+was appended to v5, retaining the four original render modes and adding the
+same two measured-room modes only where absent. The new
+`append_room_features.py --only-missing` option rejects no old data and avoids
+regenerating earlier room variants. Auxiliary feature copying now resolves
+all paths in human/ambient indices, including the separately attached MUSAN
+directories; the older append helper only carried the original two directories.
+
+The result has 98,948 sequences from 17,438 source WAVs; 1,788 new renderings
+are exclusively Qwen training data. Full binary-prefix and index comparison
+plus unchanged human/ambient indices are recorded in
+`4090-v6-base-preservation.json`. Negative exposure stays 18.7485 training
+hours. The audit and RIR configuration are in `4090-features-v6-qwen-audit.json`
+and `4090-v6-qwen-augmentation.json`.
+
+The same 40,000-step official64 recipe selected step 10,000 (364.7 seconds
+on RTX 4090). Equal engine sampling now gives each of three engines one third
+of positive and confusing-negative draws; this heavily oversamples the small
+Qwen source. Description conditions are not physical speaker identities.
+INT8 SHA-256 is
+`324f0097d642bd30ca4e3c9d53d847d3bd90772833e125fe89882848ad6469cd`.
+At validation threshold **0.8**, mean source recall is **69.948%**, Piper
+76.979%, Kokoro 62.917%; pooled recall 1,629/2,160 (75.417%). Confusing-negative
+false detections are 0.7102%, maximum source 0.75%. Three premature positive
+events occurred. Hit latency is median 130 ms, p95 210 ms. Zero continuous
+events in unchanged 1.20481 validation hours still has a **2.4865/hour**
+one-sided 95% upper bound. This is not acceptance or Hi ESP equivalence.
+See `4090-training-v6-qwen.json`, `4090-threshold-v6-qwen.json` and
+`4090-validation-v6-qwen.json`.
+
+The small eight-clip float/INT8 diagnostic reproduces after reset, with 4/4
+positive hits on both paths, mean score drift 0.00130 and maximum 0.07032.
+It is not general numerical equivalence. Compared with v5's 59.010% on the
+same validation population, the v6 result warrants a development-regression
+check. Single GPU reruns, changed source probabilities and correlated variants
+prevent a causal or statistical improvement claim. The independent positive
+challenge and 10.745-hour negative reserve remain unscored.
+
+## Official pretrained-feature diagnostic preparation
+
+The official openWakeWord code is pinned at
+`368c03716d1e92591906a84949bc477f3a834455` in a separate system-site environment.
+Its v0.5.1 release feature models were downloaded with release asset IDs,
+sizes and local SHA-256 hashes recorded in `4090-pretrained-embedding-probe.json`.
+The release API has no upstream digest for these older assets; byte hashes
+pin what was downloaded rather than proving an independently published hash.
+Only the feature backbone is used here; no pretrained wake-word classifier
+is substituted for a trained Hey Nyx model.
+
+`embedding_probe.py` successfully streams actual training WAVs from all three
+engines, with both labels, through the official mel and 96-dimensional
+embedding models on CUDA. It asserts that both sessions use the CUDA provider
+and verifies repeatability after reset. Upstream `AudioFeatures.reset()` seeds
+embedding history with random noise; the probe replaces that history with
+embeddings computed from deterministic silence before processing each stream.
+This is a feature/runtime probe, **not recognition accuracy**, and no frozen
+final fixtures are used.
+
+The first GPU attempt correctly rejected silent CPU fallback: ONNX Runtime
+GPU 1.31.1 requires CUDA 13 and could not find `libcublasLt.so.13` through the
+TensorFlow CUDA 12 loader. `gpu_python.py --cuda-major 13` now prioritizes the
+existing pip CUDA 13 libraries for that process only. The default CUDA 12
+loader still excludes them, preserving TensorFlow's launch behavior.
+`requirements-oww-diagnostic.lock` records this separate environment with the
+GPU runtime overriding the inherited CPU module. No MCU footprint, INT8
+export, trained diagnostic classifier or comparison with WakeNet is claimed.

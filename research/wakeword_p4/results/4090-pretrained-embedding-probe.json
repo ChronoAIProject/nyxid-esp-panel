@@ -1,0 +1,132 @@
+{
+  "pretrained_source": {
+    "upstream_commit": "368c03716d1e92591906a84949bc477f3a834455",
+    "feature_models": [
+      {
+        "name": "embedding_model.onnx",
+        "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/embedding_model.onnx",
+        "asset_id": 129656245,
+        "bytes": 1326578,
+        "sha256": "70d164290c1d095d1d4ee149bc5e00543250a7316b59f31d056cff7bd3075c1f",
+        "upstream_digest": null
+      },
+      {
+        "name": "melspectrogram.onnx",
+        "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/melspectrogram.onnx",
+        "asset_id": 129656233,
+        "bytes": 1087958,
+        "sha256": "ba2b0e0f8b7b875369a2c89cb13360ff53bac436f2895cced9f479fa65eb176f",
+        "upstream_digest": null
+      }
+    ],
+    "role": "Pretrained-feature desktop diagnostic, not MCU or Hi ESP equivalence."
+  },
+  "device": "gpu",
+  "provider": "CUDAExecutionProvider",
+  "clips": [
+    {
+      "source": "kokoro-speed-v2/training/af_bella/003.wav",
+      "source_sha256": "2ed02cf4392e0551ae5f3e5de8594746a1b16b8693fe8a04a5965594a986f5ad",
+      "engine": "kokoro",
+      "label": 0,
+      "stream_window_shape": [
+        52,
+        16,
+        96
+      ],
+      "source_audio_seconds": 4.152,
+      "stream_seconds": 0.11580743900049129,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "f28de0597e175a3aa0ecbcb25bd38a60a919cf576862a028c0cc61edd4186ef2"
+    },
+    {
+      "source": "kokoro-speed-v2/training/af_bella/000.wav",
+      "source_sha256": "f0be9d54d884ef5a70430562d0ef5454f211ccafe113bb8184bc112d042afac9",
+      "engine": "kokoro",
+      "label": 1,
+      "stream_window_shape": [
+        54,
+        16,
+        96
+      ],
+      "source_audio_seconds": 4.2586875,
+      "stream_seconds": 0.08663663399966026,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "f19fade0b05285d850949c15e692cd49abe3f4ed7bc54e30de9e285981d0dd57"
+    },
+    {
+      "source": "piper-gpu/training/0/03503.wav",
+      "source_sha256": "8acabcfa42fd3b5cc85bd7c0c1282ce4f238751c8d16bf00d189095c2f182014",
+      "engine": "piper",
+      "label": 0,
+      "stream_window_shape": [
+        53,
+        16,
+        96
+      ],
+      "source_audio_seconds": 4.172625,
+      "stream_seconds": 0.08236034299989115,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "12c81cbacd41082571c32ae611361e33f0791b06c7d1166f79f987a024dc2f5d"
+    },
+    {
+      "source": "piper-gpu/training/1/03777.wav",
+      "source_sha256": "9c83c00214b0d4d5514754f3dcc5cc383f2da33316096e62f6e62e781d7396d6",
+      "engine": "piper",
+      "label": 1,
+      "stream_window_shape": [
+        47,
+        16,
+        96
+      ],
+      "source_audio_seconds": 3.719875,
+      "stream_seconds": 0.0876933449999342,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "43c6ae089d188a768d72ef9b3c114263004b546404f349451ce8a8563b07c9d2"
+    },
+    {
+      "source": "qwen-cuda-v1-asr/training/profile_000/003.wav",
+      "source_sha256": "543824d9348814354de9e842648830337c43e6863048e426eb0f8e839d94c826",
+      "engine": "qwen-cuda",
+      "label": 0,
+      "stream_window_shape": [
+        50,
+        16,
+        96
+      ],
+      "source_audio_seconds": 3.96,
+      "stream_seconds": 0.08354901299935591,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "5366a2e733cf257a88b413bfe41e213d4464eede90070c3d9f4a1ad66a656a57"
+    },
+    {
+      "source": "qwen-cuda-v1-asr/training/profile_000/000.wav",
+      "source_sha256": "5b4b3c0263a9494d66f4f2d4515a6e9370e6c2e54cd7888e820f81ce7e257a67",
+      "engine": "qwen-cuda",
+      "label": 1,
+      "stream_window_shape": [
+        48,
+        16,
+        96
+      ],
+      "source_audio_seconds": 3.8,
+      "stream_seconds": 0.07867545900080586,
+      "reset_max_absolute_error": 0.0,
+      "features_sha256": "ed82723c5c247150f1a1473800ae70f95afe8668c81911be044d32fa35118b91"
+    }
+  ],
+  "model_providers": {
+    "melspectrogram": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "embedding": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "reset_reproducibility_passed": true,
+  "startup": "Deterministic silence-derived embedding history replaces upstream random reset history.",
+  "source_sha256": "78cb3fddcf6d8354e24d7e200965f3566b838c0691c5dd0f911ac07dd208d13e",
+  "limits": "Actual waveform-derived feature smoke probe only. No trained Hey Nyx classifier, recognition accuracy, INT8 MCU suitability or Hi ESP parity is established."
+}

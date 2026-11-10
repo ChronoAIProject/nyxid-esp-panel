@@ -13,6 +13,23 @@ import soundfile as sf
 from features import FRAMES, RATE, background, features
 
 
+def copy_negative_assets(base, root):
+    """Preserve auxiliary sources, including separately attached MUSAN arrays."""
+    prefixes = set()
+    for name in ("human.json", "ambient.json"):
+        shutil.copyfile(base/name, root/name)
+        for row in json.loads((base/name).read_text()):
+            path = Path(row["path"])
+            if path.is_absolute() or ".." in path.parts or len(path.parts) < 2:
+                raise ValueError("Invalid auxiliary feature path")
+            prefixes.add(path.parts[0])
+    for name in prefixes:
+        (root/name).symlink_to((base/name).resolve(), target_is_directory=True)
+    for name in ("negative-additions.json",):
+        if (base/name).is_file():
+            shutil.copyfile(base/name, root/name)
+
+
 def render_stream(item, dataset, rng, variant, backgrounds, augmentation=None):
     pcm, rate = sf.read(Path(dataset) / item["path"], dtype="float32")
     assert rate == RATE and pcm.ndim == 1
@@ -161,10 +178,7 @@ def main():
                     print(json.dumps({"split": split, "clips": count, "total": len(jobs)}), flush=True)
     (root/"features.json").write_text(json.dumps(index)+"\n")
     if args.base_features:
-        for name in ("human.json", "ambient.json"):
-            shutil.copyfile(base/name, root/name)
-        for name in ("human-source", "ambient"):
-            (root/name).symlink_to((base/name).resolve(), target_is_directory=True)
+        copy_negative_assets(base, root)
         (root/"base-provenance.json").write_text(json.dumps({
             "base_index_sha256": hashlib.sha256((base/"features.json").read_bytes()).hexdigest(),
             "base_sequences": len(base_index), "base_frames": offset-sum(r["frames"] for r in index[len(base_index):]),

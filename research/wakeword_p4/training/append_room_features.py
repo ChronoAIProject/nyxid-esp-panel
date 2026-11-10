@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import shutil
 
-from stream_data import worker
+from stream_data import worker, copy_negative_assets
 
 
 def sha(path):
@@ -25,6 +25,8 @@ def main():
     p.add_argument("--backgrounds", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--workers", type=int, default=4)
+    p.add_argument("--only-missing", action="store_true",
+                   help="Append room variants only for sources that do not already have them")
     a = p.parse_args()
     if a.output.exists():
         p.error("Use a fresh output directory")
@@ -60,14 +62,13 @@ def main():
             continue
         for variant in (4, 5):
             if (row["path"], variant) in existing:
+                if a.only_missing:
+                    continue
                 raise ValueError("Requested rendering already exists")
             jobs.append((row, str(base/"dataset"), variant, backgrounds, config))
     root.mkdir(parents=True)
     (root/"dataset").symlink_to(base/"dataset", target_is_directory=True)
-    for name in ("human.json", "ambient.json"):
-        shutil.copyfile(base/name, root/name)
-    for name in ("human-source", "ambient"):
-        (root/name).symlink_to((base/name).resolve(), target_is_directory=True)
+    copy_negative_assets(base, root)
     shutil.copyfile(base/"features.bin", root/"features.bin")
     with (root/"features.bin").open("ab") as output, ProcessPoolExecutor(max_workers=a.workers) as pool:
         for number, (record, raw) in enumerate(pool.map(worker, jobs, chunksize=10), 1):
