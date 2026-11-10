@@ -130,6 +130,47 @@ The exact grid, recipe and checkpoint tie order are recorded before fitting
 in [`head-plan-v1.json`](head-plan-v1.json). `requirements.lock` records the
 host package versions used for this experiment.
 
+The helpers implement this frozen v1 topology/data schema. To prepare TTS
+histories from the existing `features.json` plus `dataset/` directory:
+
+```sh
+python research/wakeword_p4/embedding/prepare_head_features.py \
+  --source-features /private-run/source-features \
+  --model /private-run/embedding-stream-int8-quiet.tflite \
+  --expected-model-sha256 af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a \
+  --window /private-run/native-fft-window.npy \
+  --mel-filter /private-run/native-mel-filter.npy \
+  --output /private-run/head-features-tts-v1 --workers 3
+```
+
+For continuous negatives, substitute `--jobs /private-run/negative-jobs.json`
+for `--source-features` and name the output `head-features-negatives-v1`.
+Each job records `id`, `source`, `source_sha256`, `split`, `kind`, `label`,
+`variant`, `engine` and optional `keyword_end`. Explicit testing jobs are
+rejected. Use the unfused quiet backbone for host extraction; firmware LUT
+equality is established separately on the P4. The extractor writes feature
+hashes, input identities, an index and a completion marker into a fresh
+private directory.
+
+```sh
+python research/wakeword_p4/embedding/train_head.py \
+  --data-root /private-run \
+  --plan research/wakeword_p4/embedding/head-plan-v1.json \
+  --output /private-run/head-conv24-v1
+python research/wakeword_p4/embedding/evaluate_head.py \
+  --data-root /private-run \
+  --plan research/wakeword_p4/embedding/head-plan-v1.json \
+  --training /private-run/head-conv24-v1
+```
+
+Training requires both complete feature directories and verifies source split
+disjointness and array hashes. Calibration binds the head, backbone, event
+policy and exact preparation/index identities. Public-helper replay reproduces
+both TTS variants and all6,230 frames of a continuous training-only fixture
+byte-for-byte. Export replay matches all64 head output bytes and the complete
+untrained TFLite artifact. These are interface/reproducibility checks; trained
+recognition results are separate.
+
 Remaining gates include recognition, human/acoustic comparison to Hi ESP,
 actual whole-app flash/heap/CPU fit, immediate speech continuity, rearming,
 quiet periods, long-call echo and reconnection. The 73 ms sum of standalone

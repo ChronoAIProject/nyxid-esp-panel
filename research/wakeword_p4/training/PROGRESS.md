@@ -607,3 +607,11 @@ voices/conditions and real recordings for subsequent acceptance.
   Model expansion into PSRAM does not invalidate the standalone timing result.
   P4 is360MHz/PSRAM200MHz; variable arena16KiB,tensor arena96KiB with76,604
   used bytes. Original app/service/HiESP restores; whole-app fit remains untested.
+- Frozen-backbone Conv24 head training and all four INT8 calibrations complete.
+  Best strict point is7.5k at.97:recall36.96%,macro41.16%,zero validation
+  continuous events. Its continuous-only diagnostic at.6 reaches macro85.64%
+  but3events/~7.304h and10.36% maximum confusing-corpus false clips. Reject:
+  no paired regressions, reserved scores or full-app candidate flash were used.
+  All23,208TTS variants and382continuous sources are complete and hash checked;
+  public data/export helpers reproduce sampled feature/model bytes exactly.
+  See `../results/embedding-head-conv24-v3.json` and `embedding-head-data-v3.json`.
