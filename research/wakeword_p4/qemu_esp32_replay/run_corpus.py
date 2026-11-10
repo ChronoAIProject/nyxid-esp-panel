@@ -18,16 +18,25 @@ def main():
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--threshold',type=float,default=.63)
     p.add_argument('--workers',type=int,default=4)
+    p.add_argument('--final-preregistration',type=Path)
     a=p.parse_args()
     if a.output.exists() or not 1<=a.workers<=8:p.error('Fresh output; workers1..8')
     manifest=json.loads(a.manifest.read_text());rows=manifest['records']
-    if (not rows or any(r['split']!='validation' or r['role'] not in
+    final = bool(a.final_preregistration)
+    if final:
+        freeze=json.loads(a.final_preregistration.read_text())
+        if (not rows or len(rows)!=freeze['expected_streams'] or sha(a.manifest)!=freeze['pcm_manifest_sha256']
+                or any(r['split']!='testing' or r['role']!='independent-negative-final' for r in rows)
+                or a.threshold!=freeze['threshold_requested']):
+            raise ValueError('Need unchanged independently preregistered final corpus')
+    elif (not rows or any(r['split']!='validation' or r['role'] not in
             ('development-negative-validation','development-read-speech-validation') for r in rows)):
         raise ValueError('Exclusively audited development-validation rows required')
     a.output.mkdir(parents=True);reports=[];failures=[]
     base=[sys.executable,str(Path(__file__).with_name('run_replay.py'))]
     for key in ('qemu','elf','nm','flash','manifest'):base+=['--'+key,str(getattr(a,key).resolve())]
     base+=['--threshold',str(a.threshold),'--timeout-seconds','1800']
+    if final:base+=['--final-preregistration',str(a.final_preregistration.resolve())]
     def run(item):
         index,row=item;out=a.output/str(index)
         with (a.output/f'{index}-runner.log').open('wb') as log:
@@ -52,16 +61,17 @@ def main():
         raise ValueError('Incomplete replay evidence')
     hours=sum(r['source_seconds'] for r in reports)/3600
     count=sum(len(r['events']) for r in reports)
-    summary=dict(role='Hi ESP existing development negative validation, not acceptance',
+    summary=dict(role=('Hi ESP independent negative fixed-point corpus evaluation' if final else 'Hi ESP existing development negative validation, not acceptance'),
                  model='wn9_hiesp',threshold_requested=a.threshold,
                  threshold_getter_values=sorted({r['threshold_getter_after_set'] for r in reports}),
                  source_sha256=sha(Path(__file__)),manifest_sha256=sha(a.manifest),
                  source_hours=hours,false_events=count,false_per_hour=count/hours,
                  false_per_hour_upper_95=float(.5*chi2.ppf(.95,2*(count+1))/hours),
-                 reports=reports,independent_final_audio_accessed=False,
+                 reports=reports,independent_final_audio_accessed=final,
+                 final_preregistration_sha256=sha(a.final_preregistration) if final else None,
                  event_policy='All native WAKENET_DETECTED outputs counted; verified-channel outputs separate; reset only between source speaker/session streams.',
                  exposure_policy='Original speech/recording seconds; inserted utterance gaps and final alignment excluded.',
-                 limits='Reused development only. Native trigger policies and frontends retained. No matched general false-wake operating-point selection, independent-final acceptance, positive recall or hardware latency claim.')
+                 limits=('Independent negative read speech at a fixed preregistered operating point. Native trigger policy and frontend retained. No population FAR equality, positive recall or hardware latency claim.' if final else 'Reused development only. Native trigger policies and frontends retained. No matched general false-wake operating-point selection, independent-final acceptance, positive recall or hardware latency claim.'))
     (a.output/'report.json').write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps({k:v for k,v in summary.items() if k!='reports'}),flush=True)
 

@@ -2552,3 +2552,25 @@ test-other33人5.341547257h、0次、上界0.560836052/h。
 正例最终集尚未评分，独立真实末音素端点/召回与延迟比较、远场/电视分布证据
 仍不足。负例数值成功不等于整体达到HiESP。后续首先保持v30固定，
 补齐官方HiESP对同负例PCM的比较及独立正例评测语义。
+
+
+## 官方HiESP对独立负例的同PCM准备与预注册（2026-11-10）
+
+从原固定官方test-clean/test-other归档校验SHA，并对已提取的每条FLAC
+逐文件验证与归档成员字节相同。按原human_worker顺序添加200ms静音及
+features()实际逐句160样本对齐补零，复用连续frontend；
+全部73条流的每一帧重算特征与Nyx已评分的冻结缓存逐值一致。
+这同时明确旧缓存的per-utterance隐式alignment，不能省略补零后声称同PCM。
+重建WAV及源FLAC/PCM哈希见4090-hiesp-independent-negative-pcm-manifest-v1.json。
+音频曝光仍仅原始10.745014097h，所有插入静音/补零排除。
+
+官方wn9_hiesp保持既有开发请求阈值0.63/getter0.62496001，
+QEMU/ELF/flash SHA固定，另立4090-hiesp-independent-negative-preregistration-v1.json，
+先提交推送后再执行最终负例官方评分。此阶段没有重算或选择Nyx模型/阈值。
+
+run_replay/run_corpus新增显式final-preregistration分支，
+仅接受independent-negative-final/testing和固定PCM manifest/engine/threshold；
+原development角色限制保留。实际开发样本复放事件时刻及CRC/stage104与旧报告一致，
+未提供最终预注册及改阈值两种情况都在启动QEMU/创建输出前被拒绝。
+完成后需对同PCM、全部流、事件与padding重新审计；
+最终正例仍不评分，同负例结果不能证明总体FAR相等或真实延迟优胜。
