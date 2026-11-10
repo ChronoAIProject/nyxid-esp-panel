@@ -35,10 +35,14 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--cache", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--negative-candidates", type=int, default=1, help="Training-only max-score mining per confusing-negative row")
     p.add_argument("--head", choices=["original", "upstream-dnn"], default="original")
     p.add_argument("--steps", type=int, default=40000)
     p.add_argument("--eval-interval", type=int, default=10000)
     a = p.parse_args()
+    if a.negative_candidates < 1:
+        p.error("negative candidates must be positive")
+    source_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     if a.output.exists():
         p.error("Use a fresh output directory")
     cache = json.loads((a.cache/"cache.json").read_text())
@@ -83,11 +87,25 @@ def main():
         return x[end-15:end+1]
     def batch():
         examples = []
+        mined = []
         for label, count in ((1, 32), (0, 48)):
             engines = list(groups[label])
             for _ in range(count):
                 source = groups[label][str(rng.choice(engines))]
-                examples.append(sample(source[int(rng.integers(len(source)))], bool(label)))
+                row = source[int(rng.integers(len(source)))]
+                if label == 0 and a.negative_candidates > 1:
+                    mined.append([sample(row) for _ in range(a.negative_candidates)])
+                else:
+                    examples.append(sample(row, bool(label)))
+        if mined:
+            # Select only from training audio; evaluation mode avoids dropout noise.
+            model.eval()
+            candidates = torch.from_numpy(np.asarray(mined, dtype=np.float32)).cuda()
+            with torch.no_grad():
+                scores = model(candidates.flatten(0, 1)).reshape(48, a.negative_candidates)
+                hardest = candidates[torch.arange(48, device="cuda"), scores.argmax(1)]
+            model.train()
+            examples.extend(hardest.cpu().numpy())
         for _ in range(48):
             examples.append(sample(ambient[int(rng.integers(len(ambient)))]))
         x = torch.from_numpy(np.asarray(examples, dtype=np.float32)).cuda()
@@ -173,13 +191,13 @@ def main():
     selected = next(r["selected"] for r in history if r["step"] == selected_step)
     report = {"role": "Frozen official pretrained-feature desktop diagnostic, custom MLP head",
               "steps": a.steps, "selected_step": selected_step, "selected_validation": selected,
-              "head_parameters": sum(p.numel() for p in model.parameters()), "negative_weight": 20,
+              "head_parameters": sum(p.numel() for p in model.parameters()), "negative_weight": 20, "negative_candidates": a.negative_candidates,
               "head": str(model), "head_architecture": a.head,
               "source_sampling": "Equal engines; 32 positive, 48 confusing-negative, 48 ambient per batch",
               "torch": torch.__version__, "gpu": torch.cuda.get_device_name(0),
               "model_sha256": hashlib.sha256((a.output/"best.pt").read_bytes()).hexdigest(),
               "cache_index_sha256": cache["index_sha256"], "cache_binary_sha256": cache["embeddings_sha256"],
-              "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "history": history,
+              "source_sha256": source_sha256, "history": history,
               "seconds": round(time.monotonic()-started, 1),
               "event_policy": "80 ms cadence; two-score average; rising latch; 25-step (2 s) refractory; end window -100..+800 ms",
               "regression_or_final_scores_computed": False,

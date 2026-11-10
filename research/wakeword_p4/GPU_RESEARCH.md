@@ -580,3 +580,20 @@ logits with BCEWithLogitsLoss, equivalent to sigmoid+BCE for this binary loss.
 This is a single-factor architecture experiment, not a reproduction of the full
 upstream recipe: upstream additionally schedules negative weights/learning rate
 and filters low-loss samples. These differences remain explicit.
+
+The architecture-only v2 run completed in 116.7s. Selected step30k/threshold0.98:
+source-macro recall42.370% (Piper28.906%, Kokoro55.833%), pooled689/2160;
+zero ambient events, upper95%2.48647/h, max confusing-source false0.9375%.
+This improves v1b's validation recall but remains inadequate; regression/final
+remain unscored. At v1b threshold0.5, macro recall87.9% came with max-source
+confusing false8.3% and two ambient events. Lowering the threshold therefore
+exposes the separation problem; it is not an accepted improvement.
+
+Next controlled experiment keeps the v2 head and all other settings, selecting
+one max-scoring window from eight random candidates within each sampled
+training confusing-negative row. Original sampling often selects easy context
+rather than the confusing phrase. Mining uses only training cache rows, with
+no gradient during selection and evaluation mode to avoid dropout selection
+noise. Validation still independently chooses checkpoint/threshold; no final
+fixtures enter mining. This is a targeted variant, not upstream full-recipe
+reproduction. Source code hash is now captured at process startup.
