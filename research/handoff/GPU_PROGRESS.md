@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`caa2ef7`:
+`2f70cc0`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -230,6 +230,18 @@ The full audit has99,212 sequences from17,482 source WAVs. Actual INT8
 validation is pending; independent final fixtures remain unscored. The Mac
 branch should not duplicate these Qwen/ASR experiments or assume v8 is eligible
 for flashing before its results and model artifact are available.
+
+The v7 validation attribution reproduces all1584 positive hits and20
+confusing-negative triggered variants without new inference or thresholds.
+Piper recall is81.458/84.167% in quiet/microphone-floor variants versus
+66.250/67.708% in colored/real noise plus synthetic-reverb variants. Kokoro
+stays58.333–63.333%, including61.667% quiet; all12 premature events are Kokoro.
+This separates observed source and acoustic-condition deficits without proving
+their causes. The local80ms embedding continuation now freezes a different
+matched synthetic-versus-measured response study: same original/noise draws,
+matched response energy and additional-view counts, no microphone fitting.
+Its48-pair training-only pilot passes; full extraction and subsequent fitting
+remain separate from GPU v8 and cannot be treated as recognition acceptance.
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research

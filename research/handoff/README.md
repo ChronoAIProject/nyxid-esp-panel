@@ -572,6 +572,67 @@ python3 research/handoff/export_paired_baseline.py \
   --output .local/new-paired-export
 ```
 
+### Matched measured-room training study
+
+The new `embedding/plans/measured-room-views-v1.json` freezes a separate
+80ms embedding experiment before new detector scoring. Both arms add one
+variant3 room view for each of the10,070 original training TTS sources.
+Control reuses the exact completed synthetic-room array. Treatment replaces
+only that response by one of270 hash-pinned public measured MIT responses.
+The original room RNG draws are still consumed, preserving background/SNR,
+bandpass, scalar level and all subsequent random draws. Both arms retain all
+existing source/environment views and use matched additional-view counts.
+
+Measured responses are aligned at the first sample within20dB of their peak
+and scaled to the original per-job response's L2 energy. The existing renderer
+keeps sample count,16kHz sampling, speech rate,2.4s lead,1s tail and keyword
+timebase. Its fixed window can truncate longer reverberation tails. This is
+an acoustic training hypothesis, not a fitted microphone response, proof of
+causation, or a deployment-room coverage claim. It differs from the GPU's
+10ms MicroFrontend room experiment; their derived features are not shared.
+
+All270 response WAV hashes and headers were verified against the GPU branch's
+public pinned audit (`4c3d8370…`). Raw responses remain local. Attribution:
+MIT Computational Audition Lab,
+[environmental impulse response survey](https://mcdermottlab.mit.edu/Reverb/IR_Survey.html),
+using the pinned16kHz mirror identified in the plan. Fetch with the research
+NumPy/soundfile environment:
+
+```sh
+curl -fL https://raw.githubusercontent.com/ChronoAIProject/nyxid-esp-panel/2f70cc0fac55979700080d8f1c1dce867132f96d/research/wakeword_p4/results/4090-mit-rir-audit.json \
+  -o .local/mit-rir-audit.json
+.local/4090-env/bin/python research/handoff/fetch_measured_rirs.py \
+  --audit .local/mit-rir-audit.json --output "$WAKE_DATA/measured-room-rirs-v1"
+```
+
+The48-pair extraction pilot covers four samples per engine/label across six
+engines. All48 unmodified control feature replays are byte-exact; treatment
+keeps source/label/background/timebase pairing and changes all48 feature
+arrays. Maximum response-energy difference is1.74e-7. Three targeted tests
+protect input immutability, response timing/energy and identical subsequent
+random draws. See
+[`embedding-measured-room-pilot-v3.json`](../wakeword_p4/results/embedding-measured-room-pilot-v3.json).
+
+The complete paired extraction is running. Its plan binds the original local
+jobs/index layout, including source paths; this is not yet a portable raw
+extraction plan for a rebased public snapshot. Run on the original verified
+layout, using fresh output folders:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/prepare_measured_room_views.py \
+  --data-root "$WAKE_DATA" \
+  --plan research/wakeword_p4/embedding/plans/measured-room-views-v1.json \
+  --output "$WAKE_DATA/head-features-measured-room-v1" \
+  --control-output "$WAKE_DATA/head-features-measured-room-control-v1" --workers 3
+```
+
+Use `--limit 48` only for a separately named extraction pilot; pilot completion
+cannot authorize fitting. After the full pairing/isolation audit, freeze four
+matched dense/temporal control/treatment training plans using the completed
+feature hashes. Validation chooses checkpoints/thresholds before existing
+paired/continuous regression. No new recognition gain, candidate acceptance
+or physical trial is reported at this stage.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before
