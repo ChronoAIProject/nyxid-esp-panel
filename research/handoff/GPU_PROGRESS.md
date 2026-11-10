@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `78c8264`; see the dated snapshots below.
+Latest observed GPU commit: `c0c4a50`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -430,3 +430,20 @@ feature extraction. No dev-other model result is available at this snapshot.
 No v19 model/calibration was identified among the currently listed research
 prerelease assets. Physical v19 acceptance cannot be inferred from its JSON
 scores or attempted by substituting another frontend's weights.
+
+
+### GPU snapshot through `c0c4a50`
+
+The officially hashed LibriSpeech dev-other development extraction completes:
+33 speakers, 5.121185 original hours, no speaker-ID intersection with existing
+human/final manifests. At the previously frozen .95 threshold, v19 has one
+event (upper 95% .926322/h), and v17 has two (upper 95% 1.22936/h). Both fail
+the recorded .5/h bound on this read-speech corpus. The v19 event overlaps
+ordinary text containing “on the nets”; this is a hypothesis source, not
+phonetic causal proof or permission to move validation audio into training.
+
+No .tflite/checkpoint is tracked in the GPU research tree at this snapshot.
+The [model handoff contract](GPU_MODEL_HANDOFF.md) records the actual
+`teacher60`/context/validation metadata boundary and required model/report/
+synthetic INT8 probe identities before attempting physical integration.
+The current Mac raw-input engine bracket proceeds independently.
