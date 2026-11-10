@@ -447,3 +447,30 @@ The [model handoff contract](GPU_MODEL_HANDOFF.md) records the actual
 `teacher60`/context/validation metadata boundary and required model/report/
 synthetic INT8 probe identities before attempting physical integration.
 The current Mac raw-input engine bracket proceeds independently.
+
+
+### GPU snapshot through `ce601c4`
+
+The training-only near-word expansion (v20) preserves existing evaluation
+bytes but lowers validation macro recall to 68.8802%, versus v19's 78.3073%,
+at the same .95 threshold. Its worst-source near-word false fraction is 1%,
+versus v19's .875%. It is rejected before development/final rescoring. This
+rejects that particular data/sampling recipe, not near-word training generally.
+
+Expanded validation calibration finds no acceptable v19 threshold in its
+recorded grid: the dev-other false event remains through .994 as positive
+recall falls. Its five-score mean reaches the representable uint8 ceiling
+255/256, so merely raising the threshold cannot rescue this model at that
+event. A separately fixed 15-score smoothing experiment also fails validation
+at 55.3906% macro with median latency 280 ms; it is rejected without development
+or final rescoring. The Mac physical plan keeps its already frozen model and
+event policy; these findings are not permission to tune against acoustic scores.
+
+The GPU track now starts v21, a widened `teacher120` architecture with 70,801
+parameters versus 22,801. Its Net2Wider initialization agrees with the original
+float teacher on 16 numerical probes within 5.37e-7; the classifier is then
+reset for training. This is neither quantized MCU byte equivalence nor Hey Nyx
+quality evidence. Training is pending at this snapshot. Do not duplicate the
+GPU capacity experiment locally or assume the future `teacher120` artifact
+fits the existing `teacher60` metadata/runtime boundary. Independent final
+audio remains unscored, and the overall goal remains active.

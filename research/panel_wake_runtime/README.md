@@ -246,6 +246,34 @@ Keep the runner alive until its `restored: true` report. Stop-on-wake measures
 neither complete conversation nor independent continuous false-event exposure;
 use `acoustic_voice_smoke.py` for first-utterance/reply/quiet acceptance.
 
+The completed 105-trial bracket is recorded in the
+[sanitized raw-input report](../wakeword_p4/results/raw-engine-acoustic-v1.json):
+
+| Arm | Positive triggers | Ordinary false triggers | Near-word false triggers |
+| --- | ---: | ---: | ---: |
+| Hi ESP before | 10/15 | 0/10 | 1/10 |
+| Hey Nyx | 9/15 | 0/10 | 1/10 |
+| Hi ESP after | 7/15 | 0/10 | 1/10 |
+
+The repeat loses `Karen-positive-0`, `Karen-positive-2` and
+`Moira-positive-2`. This control variation prevents attributing the small
+recall-count differences to model quality alone; the result does not establish
+parity. Both Hi ESP arms falsely trigger on Samantha's `Hi ESB`; Hey Nyx
+falsely triggers on her `Hey Nick`. All other negative trials remain visible
+in the frozen plan. Preserve all control misses rather than rerunning until
+a preferred control count appears.
+
+All 105 trials rearm and preserve the checked playback conditions. No event
+is before or straddles the source-onset interval; approximate keyword-end
+intervals remain in the report and are not precise latency measurements.
+The 40-second Hey Nyx idle cadence/capture-balance check passes. It retains
+individual timing excursions above the 80 ms stride and a nonzero initial
+cumulative RX overflow counter with no observed increment; it does not prove
+every inference meets its stride or that startup has no overflow. All three
+swaps restore and verify the original app/service/listener, followed by a live
+idle/connected/listening check. Existing offline quality gaps and human,
+continuous-negative, first-utterance and long-call/reconnect gates remain open.
+
 ### Private input and numerical tracing
 
 For an embedding-runtime diagnostic, set

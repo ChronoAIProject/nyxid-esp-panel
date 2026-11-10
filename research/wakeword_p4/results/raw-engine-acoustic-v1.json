@@ -1,0 +1,955 @@
+{
+  "scope": "Frozen raw-input Hi ESP / Hey Nyx / Hi ESP whole-app acoustic development bracket. Reused synthetic voices, not human or independent acceptance.",
+  "plan": "research/panel_wake_runtime/plans/raw-engine-comparison-v1.json",
+  "plan_sha256": "cd5106044241be3e97ba17d575298aeeae2621e8e4efd8fc137ea970bcf88a16",
+  "plan_frozen_at_commit": "d052ce7",
+  "prior_input_diagnostic": "hiesp-input-acoustic-v1.json",
+  "hey_candidate": {
+    "offline_selection_report": "embedding-head-equal-mean-v3.json",
+    "full_app_resource_report": "embedding-full-app-resources-v3.json",
+    "architecture": "80 ms embedding, fixed equal mean of environmental DNN64 and temporal-dropout heads",
+    "threshold": 0.4,
+    "bin_bytes": 6450400,
+    "bin_sha256": "53c7ded8be47f0bece70764ce874479773c9060079dd83959e5765ad137e75b8",
+    "elf_sha256": "58be9670ecc7d4aae150253b3cae3a7a27b032f8fcf5332447bcd26267f0a864"
+  },
+  "input_path": "The existing single I2S producer raw microphone samples feed both idle detectors; preroll/call audio retains AEC/AGC and ordered FIFO.",
+  "audio_speed_changed": false,
+  "arm_sequence": [
+    "hi_esp_before",
+    "hey_nyx",
+    "hi_esp_after"
+  ],
+  "arms": {
+    "hi_esp_before": {
+      "engine": "hi_esp",
+      "report_sha256": "ad2ff488b8ace3648096a148ae44bb5a4712ae70bdea89309dc45b38fd20daf5",
+      "app_bin_sha256": "088388da1d2a1d811f0d1b866926671d75d5bd0579d75ab25c3e4c4e6e563036",
+      "app_elf_sha256": "0753e1a8993c442af07e4d3353a736af3d93cd1e13bd5f87fdb41c2416c60714",
+      "complete": true,
+      "metrics": {
+        "positive": {
+          "trials": 15,
+          "triggered": 10
+        },
+        "ordinary": {
+          "trials": 10,
+          "triggered": 0
+        },
+        "near_word": {
+          "trials": 10,
+          "triggered": 1
+        }
+      },
+      "all_rearmed": true,
+      "playback_conditions_unchanged": true,
+      "onset_ambiguous_or_early_events": 0,
+      "by_voice": {
+        "Daniel": {
+          "hits": [],
+          "misses": [
+            "Daniel-positive-1",
+            "Daniel-positive-0",
+            "Daniel-positive-2"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Karen": {
+          "hits": [
+            "Karen-positive-1",
+            "Karen-positive-0",
+            "Karen-positive-2"
+          ],
+          "misses": [],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Moira": {
+          "hits": [
+            "Moira-positive-0",
+            "Moira-positive-2"
+          ],
+          "misses": [
+            "Moira-positive-1"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Samantha": {
+          "hits": [
+            "Samantha-positive-2",
+            "Samantha-positive-1",
+            "Samantha-positive-0"
+          ],
+          "misses": [],
+          "ordinary_false_events": [],
+          "near_word_false_events": [
+            "Samantha-negative-30"
+          ]
+        },
+        "Tessa": {
+          "hits": [
+            "Tessa-positive-0",
+            "Tessa-positive-2"
+          ],
+          "misses": [
+            "Tessa-positive-1"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        }
+      },
+      "events": [
+        {
+          "id": "Samantha-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            2.9467249169247225,
+            3.629035959020257
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -36.33758307527746,
+            645.973459020257
+          ]
+        },
+        {
+          "id": "Samantha-positive-1",
+          "category": "positive",
+          "text": "Hi, E S P.",
+          "observed_interval_s": [
+            3.306207500048913,
+            3.6249435000354424
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            23.332500048912852,
+            342.0685000354422
+          ]
+        },
+        {
+          "id": "Samantha-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            2.420389833045192,
+            4.121423874981701
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -562.6726669548079,
+            1138.3613749817014
+          ]
+        },
+        {
+          "id": "Moira-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            2.8529977920698,
+            3.1700277500785887
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -119.18970793019979,
+            197.84025007858875
+          ]
+        },
+        {
+          "id": "Samantha-negative-30",
+          "category": "near_word",
+          "text": "Hi ESB.",
+          "observed_interval_s": [
+            2.9994335840456188,
+            3.2753225840860978
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": null
+        },
+        {
+          "id": "Tessa-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            3.167701791971922,
+            3.485031749936752
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            32.88929197192214,
+            350.21924993675225
+          ]
+        },
+        {
+          "id": "Karen-positive-1",
+          "category": "positive",
+          "text": "Hi, E S P.",
+          "observed_interval_s": [
+            3.3051412081113085,
+            3.75792804104276
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -126.54629188869126,
+            326.24054104276024
+          ]
+        },
+        {
+          "id": "Karen-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            3.0339617499848828,
+            3.463906000019051
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -56.4757500151174,
+            373.46850001905096
+          ]
+        },
+        {
+          "id": "Karen-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            3.0204607909545302,
+            3.3893780829384923
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -69.97670904546993,
+            298.9405829384921
+          ]
+        },
+        {
+          "id": "Moira-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            2.8386906660161912,
+            3.3990861660568044
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -133.49683398380873,
+            426.89866605680436
+          ]
+        },
+        {
+          "id": "Tessa-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            3.21992591698654,
+            4.023870958015323
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            85.11341698654019,
+            889.0584580153229
+          ]
+        }
+      ],
+      "uart_failure_markers": []
+    },
+    "hey_nyx": {
+      "engine": "hey_nyx",
+      "report_sha256": "395f4f51162834735c46c20ee368c5612acfbeec69221dcb02886a8ba5d19176",
+      "app_bin_sha256": "53c7ded8be47f0bece70764ce874479773c9060079dd83959e5765ad137e75b8",
+      "app_elf_sha256": "58be9670ecc7d4aae150253b3cae3a7a27b032f8fcf5332447bcd26267f0a864",
+      "complete": true,
+      "metrics": {
+        "positive": {
+          "trials": 15,
+          "triggered": 9
+        },
+        "ordinary": {
+          "trials": 10,
+          "triggered": 0
+        },
+        "near_word": {
+          "trials": 10,
+          "triggered": 1
+        }
+      },
+      "all_rearmed": true,
+      "playback_conditions_unchanged": true,
+      "onset_ambiguous_or_early_events": 0,
+      "by_voice": {
+        "Daniel": {
+          "hits": [
+            "Daniel-positive-1"
+          ],
+          "misses": [
+            "Daniel-positive-0",
+            "Daniel-positive-2"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Karen": {
+          "hits": [
+            "Karen-positive-1",
+            "Karen-positive-0",
+            "Karen-positive-2"
+          ],
+          "misses": [],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Moira": {
+          "hits": [
+            "Moira-positive-0",
+            "Moira-positive-2"
+          ],
+          "misses": [
+            "Moira-positive-1"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Samantha": {
+          "hits": [
+            "Samantha-positive-2"
+          ],
+          "misses": [
+            "Samantha-positive-1",
+            "Samantha-positive-0"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": [
+            "Samantha-negative-10"
+          ]
+        },
+        "Tessa": {
+          "hits": [
+            "Tessa-positive-0",
+            "Tessa-positive-2"
+          ],
+          "misses": [
+            "Tessa-positive-1"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        }
+      },
+      "events": [
+        {
+          "id": "Samantha-negative-10",
+          "category": "near_word",
+          "text": "Hey Nick.",
+          "observed_interval_s": [
+            2.775941584026441,
+            3.1312335840193555
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": null
+        },
+        {
+          "id": "Daniel-positive-1",
+          "category": "positive",
+          "text": "Hey, Nicks.",
+          "observed_interval_s": [
+            3.57943045895081,
+            3.9088673749938607
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            388.11795895081013,
+            717.5548749938607
+          ]
+        },
+        {
+          "id": "Samantha-positive-2",
+          "category": "positive",
+          "text": "Hey Nicks!",
+          "observed_interval_s": [
+            2.7238374169683084,
+            3.1112870830111206
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            112.58741696830832,
+            500.0370830111205
+          ]
+        },
+        {
+          "id": "Moira-positive-0",
+          "category": "positive",
+          "text": "Hey Nicks.",
+          "observed_interval_s": [
+            2.685573749942705,
+            3.084595042048022
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -31.176250057295185,
+            367.8450420480219
+          ]
+        },
+        {
+          "id": "Tessa-positive-0",
+          "category": "positive",
+          "text": "Hey Nicks.",
+          "observed_interval_s": [
+            2.8965519999619573,
+            3.191203041933477
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            179.8019999619571,
+            474.4530419334767
+          ]
+        },
+        {
+          "id": "Karen-positive-1",
+          "category": "positive",
+          "text": "Hey, Nicks.",
+          "observed_interval_s": [
+            3.745712333940901,
+            3.9833476250059903
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            546.5873339409009,
+            784.2226250059903
+          ]
+        },
+        {
+          "id": "Karen-positive-0",
+          "category": "positive",
+          "text": "Hey Nicks.",
+          "observed_interval_s": [
+            3.025198500021361,
+            3.2852955830749124
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            266.26100002136076,
+            526.3580830749124
+          ]
+        },
+        {
+          "id": "Karen-positive-2",
+          "category": "positive",
+          "text": "Hey Nicks!",
+          "observed_interval_s": [
+            2.9572323749307543,
+            3.3828334159916267
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            198.29487493075425,
+            623.8959159916267
+          ]
+        },
+        {
+          "id": "Moira-positive-2",
+          "category": "positive",
+          "text": "Hey Nicks!",
+          "observed_interval_s": [
+            3.0544034999329597,
+            3.4148271669400856
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            337.65349993295945,
+            698.0771669400854
+          ]
+        },
+        {
+          "id": "Tessa-positive-2",
+          "category": "positive",
+          "text": "Hey Nicks!",
+          "observed_interval_s": [
+            2.903926041908562,
+            3.184390874928795
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            187.17604190856196,
+            467.6408749287946
+          ]
+        }
+      ],
+      "uart_failure_markers": []
+    },
+    "hi_esp_after": {
+      "engine": "hi_esp",
+      "report_sha256": "5bea274a25714ebf6c66e521f4baac6b08ffaec2e5fc9e65ae8fd77de0338165",
+      "app_bin_sha256": "088388da1d2a1d811f0d1b866926671d75d5bd0579d75ab25c3e4c4e6e563036",
+      "app_elf_sha256": "0753e1a8993c442af07e4d3353a736af3d93cd1e13bd5f87fdb41c2416c60714",
+      "complete": true,
+      "metrics": {
+        "positive": {
+          "trials": 15,
+          "triggered": 7
+        },
+        "ordinary": {
+          "trials": 10,
+          "triggered": 0
+        },
+        "near_word": {
+          "trials": 10,
+          "triggered": 1
+        }
+      },
+      "all_rearmed": true,
+      "playback_conditions_unchanged": true,
+      "onset_ambiguous_or_early_events": 0,
+      "by_voice": {
+        "Daniel": {
+          "hits": [],
+          "misses": [
+            "Daniel-positive-1",
+            "Daniel-positive-0",
+            "Daniel-positive-2"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Karen": {
+          "hits": [
+            "Karen-positive-1"
+          ],
+          "misses": [
+            "Karen-positive-0",
+            "Karen-positive-2"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Moira": {
+          "hits": [
+            "Moira-positive-0"
+          ],
+          "misses": [
+            "Moira-positive-1",
+            "Moira-positive-2"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        },
+        "Samantha": {
+          "hits": [
+            "Samantha-positive-2",
+            "Samantha-positive-1",
+            "Samantha-positive-0"
+          ],
+          "misses": [],
+          "ordinary_false_events": [],
+          "near_word_false_events": [
+            "Samantha-negative-30"
+          ]
+        },
+        "Tessa": {
+          "hits": [
+            "Tessa-positive-0",
+            "Tessa-positive-2"
+          ],
+          "misses": [
+            "Tessa-positive-1"
+          ],
+          "ordinary_false_events": [],
+          "near_word_false_events": []
+        }
+      },
+      "events": [
+        {
+          "id": "Samantha-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            2.9928536670049652,
+            3.349592624930665
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            9.791167004965295,
+            366.53012493066495
+          ]
+        },
+        {
+          "id": "Samantha-positive-1",
+          "category": "positive",
+          "text": "Hi, E S P.",
+          "observed_interval_s": [
+            3.239747792016715,
+            3.498188166995533
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -43.1272079832854,
+            215.3131669955326
+          ]
+        },
+        {
+          "id": "Samantha-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            2.7795029999688268,
+            3.266387249925174
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -203.55950003117317,
+            283.3247499251739
+          ]
+        },
+        {
+          "id": "Moira-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            2.8817530419910327,
+            3.149851083988324
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -90.43445800896733,
+            177.66358398832384
+          ]
+        },
+        {
+          "id": "Samantha-negative-30",
+          "category": "near_word",
+          "text": "Hi ESB.",
+          "observed_interval_s": [
+            2.8171301659895107,
+            3.1451846660347655
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": null
+        },
+        {
+          "id": "Tessa-positive-0",
+          "category": "positive",
+          "text": "Hi E S P.",
+          "observed_interval_s": [
+            3.042428750079125,
+            3.5318501670844853
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -92.3837499208746,
+            397.0376670844855
+          ]
+        },
+        {
+          "id": "Karen-positive-1",
+          "category": "positive",
+          "text": "Hi, E S P.",
+          "observed_interval_s": [
+            3.3111873749876395,
+            3.8980257919756696
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -120.50012501236029,
+            466.3382919756698
+          ]
+        },
+        {
+          "id": "Tessa-positive-2",
+          "category": "positive",
+          "text": "Hi E S P!",
+          "observed_interval_s": [
+            3.067850042018108,
+            3.546022125054151
+          ],
+          "before_source_onset": false,
+          "onset_straddled": false,
+          "delay_from_estimated_keyword_end_ms": [
+            -66.9624579818917,
+            411.20962505415105
+          ]
+        }
+      ],
+      "uart_failure_markers": []
+    }
+  },
+  "restorations": {
+    "hi_esp_before": {
+      "restored": true,
+      "original_app_service_and_listener_verified": true
+    },
+    "hey_nyx": {
+      "restored": true,
+      "original_app_service_and_listener_verified": true
+    },
+    "hi_esp_after": {
+      "restored": true,
+      "original_app_service_and_listener_verified": true
+    }
+  },
+  "accepted_as_hiesp_replacement": false,
+  "hiesp_repeat_changed_trials": [
+    "Karen-positive-0",
+    "Karen-positive-2",
+    "Moira-positive-2"
+  ],
+  "hiesp_repeat_changed_outcomes": [
+    {
+      "id": "Karen-positive-0",
+      "before_triggered": true,
+      "after_triggered": false
+    },
+    {
+      "id": "Karen-positive-2",
+      "before_triggered": true,
+      "after_triggered": false
+    },
+    {
+      "id": "Moira-positive-2",
+      "before_triggered": true,
+      "after_triggered": false
+    }
+  ],
+  "hey_positive_hits_missed_by_both_hiesp": [
+    "Daniel-positive-1"
+  ],
+  "hey_positive_misses_hit_by_both_hiesp": [
+    "Samantha-positive-1",
+    "Samantha-positive-0"
+  ],
+  "interpretation": [
+    "The observed control-repeat variation prevents attributing these small recall-count differences to the wake model alone. The experiment does not establish parity.",
+    "All three arms have a near-word false event; preserve its specific phrase and voice rather than pooling it with ordinary negatives.",
+    "Existing offline quality gaps remain. No candidate, threshold or source waveform was changed in response to this measurement.",
+    "Retain all control misses; do not replay the same benchmark until a more favorable control appears."
+  ],
+  "hey_idle_resources": {
+    "scope": "Idle whole-app resources/scheduling only; no recognition acceptance",
+    "passed": true,
+    "elapsed_seconds": 40.02502950001508,
+    "timings": [
+      {
+        "board_ms": 21448,
+        "step": 100,
+        "mean_us": 50740,
+        "p50_us": 51113,
+        "p95_us": 56846,
+        "max_us": 111480,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 29439,
+        "step": 200,
+        "mean_us": 51074,
+        "p50_us": 51293,
+        "p95_us": 53161,
+        "max_us": 111480,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 37433,
+        "step": 300,
+        "mean_us": 51156,
+        "p50_us": 51275,
+        "p95_us": 53519,
+        "max_us": 111480,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 45445,
+        "step": 400,
+        "mean_us": 51258,
+        "p50_us": 51266,
+        "p95_us": 54527,
+        "max_us": 111480,
+        "over80ms": 2
+      },
+      {
+        "board_ms": 53438,
+        "step": 500,
+        "mean_us": 51298,
+        "p50_us": 51335,
+        "p95_us": 53587,
+        "max_us": 111480,
+        "over80ms": 2
+      }
+    ],
+    "cadence_windows": [
+      {
+        "steps": 100,
+        "elapsed_ms": 7991,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7994,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 8012,
+        "expected_ms": 8000
+      },
+      {
+        "steps": 100,
+        "elapsed_ms": 7993,
+        "expected_ms": 8000
+      }
+    ],
+    "pipeline_aggregate": {
+      "elapsed_ms": 31990,
+      "expected_ms": 32000
+    },
+    "pipeline_cadence_passed": true,
+    "inference_margin_passed": true,
+    "queue_windows": [
+      {
+        "consumed": 100,
+        "highwater": 1,
+        "max_delay_us": 46353,
+        "mean_delay_us": 808
+      },
+      {
+        "consumed": 200,
+        "highwater": 1,
+        "max_delay_us": 46353,
+        "mean_delay_us": 537
+      },
+      {
+        "consumed": 300,
+        "highwater": 1,
+        "max_delay_us": 46353,
+        "mean_delay_us": 445
+      },
+      {
+        "consumed": 400,
+        "highwater": 1,
+        "max_delay_us": 46353,
+        "mean_delay_us": 405
+      },
+      {
+        "consumed": 500,
+        "highwater": 1,
+        "max_delay_us": 46353,
+        "mean_delay_us": 378
+      }
+    ],
+    "capture_counters": [
+      {
+        "step": 100,
+        "rx_bytes": 1186624,
+        "rx_overflows": 851
+      },
+      {
+        "step": 200,
+        "rx_bytes": 1698304,
+        "rx_overflows": 851
+      },
+      {
+        "step": 300,
+        "rx_bytes": 2209984,
+        "rx_overflows": 851
+      },
+      {
+        "step": 400,
+        "rx_bytes": 2722624,
+        "rx_overflows": 851
+      },
+      {
+        "step": 500,
+        "rx_bytes": 3234304,
+        "rx_overflows": 851
+      }
+    ],
+    "capture_windows": [
+      {
+        "steps": 100,
+        "rx_bytes": 511680,
+        "overflows": 0
+      },
+      {
+        "steps": 100,
+        "rx_bytes": 511680,
+        "overflows": 0
+      },
+      {
+        "steps": 100,
+        "rx_bytes": 512640,
+        "overflows": 0
+      },
+      {
+        "steps": 100,
+        "rx_bytes": 511680,
+        "overflows": 0
+      }
+    ],
+    "capture_balance": [
+      {
+        "steps": 100,
+        "unaccounted_bytes": -320
+      },
+      {
+        "steps": 200,
+        "unaccounted_bytes": -640
+      },
+      {
+        "steps": 300,
+        "unaccounted_bytes": 0
+      },
+      {
+        "steps": 400,
+        "unaccounted_bytes": -320
+      }
+    ],
+    "capture_backlog_bound_bytes": 27264,
+    "capture_queue_passed": true,
+    "capture_balance_passed": true,
+    "capture_loss_passed": true,
+    "uart_failure": false,
+    "report_sha256": "ee8d3678f6b61520cf8631d2a162243d8b780299834384a2578cd615f2393097",
+    "limits": [
+      "Forty-second idle window only; no call, reconnect or long-run acceptance.",
+      "Hardware overflow counters are cumulative; report their observed values and increments, not a lifetime zero-overflow claim.",
+      "Timing summaries include individual inferences exceeding the 80 ms stride; preserved cadence and byte balance do not make every step meet the stride."
+    ]
+  },
+  "final_live_verification": {
+    "original_app_service_and_listener_verified": true,
+    "snapshot_sha256": "2cd29bc4b82368175420dd35363cbcf8235b4ff2b93fc667eef089f970b9d26b"
+  },
+  "limits": [
+    "All five synthetic voices and phrasings already informed development. Correlated TTS forms are not independent human trials or new speakers.",
+    "Target phrases necessarily differ; the generator labels are preserved and are not phonetic ground truth.",
+    "Near-word and ordinary false counts remain separate. Short stop-on-wake clips do not establish continuous false events/hour.",
+    "Event intervals include playback launch and HTTP polling and use approximate TTS keyword endpoints. They do not establish sample-exact detector latency or a precise early-keyword error rate.",
+    "No thresholds, source PCM speed, detector weights or call AEC/AGC/FIFO were adjusted during the bracket.",
+    "No complete first-utterance/reply/quiet, long-call/echo/reconnect, human/distance/noise or production-board acceptance is claimed."
+  ]
+}

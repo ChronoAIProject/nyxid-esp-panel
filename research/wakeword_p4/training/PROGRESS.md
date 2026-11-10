@@ -702,3 +702,23 @@ voices/conditions and real recordings for subsequent acceptance.
   Hey Nyx parity. No model/threshold training change,
   speech speed change, second mic reader or production-board update. See
   `../results/hiesp-input-build-v1.json` and `../results/hiesp-input-acoustic-v1.json`.
+
+- The frozen raw-input Hi ESP / equal-mean Hey Nyx / Hi ESP physical bracket
+  completes all 105 trials: positive triggers 10/15, 9/15 and 7/15; ordinary
+  false triggers 0/10 each; near-word false triggers 1/10 each. The Hi ESP
+  repeat loses three positive outcomes (two correlated Karen forms and one
+  Moira form). This variation prevents interpreting the small count differences
+  as model parity. Samantha's `Hi ESB` triggers both controls; her `Hey Nick`
+  triggers Hey Nyx. All trials rearm, no source-onset-ambiguous/early events,
+  and all three swaps restore/verify original app/service/listener; the final
+  live check confirms idle/connected/Hi ESP listening. The 40-second Hey Nyx
+  idle cadence and capture-balance gate passes, with its nonzero initial RX
+  counter and individual >80 ms inference excursions retained. No lifetime
+  zero-overflow, exact latency, call/reconnect or recognition acceptance claim.
+  See `../results/raw-engine-acoustic-v1.json`. Keep all control misses; do not
+  immediately replay the benchmark to obtain a preferred count. Further
+  comparison needs an explicit input/environment diagnostic or a new bound
+  candidate, not threshold fitting on these clips. No audio-speed, call
+  AEC/AGC/FIFO, model or production-board change. GPU snapshot `ce601c4` rejects
+  v20/longer smoothing and starts wider v21 training; its progress is recorded
+  separately in `../../handoff/GPU_PROGRESS.md` rather than duplicated locally.

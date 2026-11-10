@@ -5,10 +5,14 @@ accept a model for release or change service permissions. The GPU track's
 `teacher60` model and the Mac track's 80 ms embedding have different inputs;
 their weights and cached features cannot be substituted for one another.
 
-The latest inspected GPU candidate at `c0c4a50` is v19, model SHA-256
+The retained GPU reference at `c0c4a50` is v19, model SHA-256
 `4d4db51422775b400b6a5a101b5c01cc9177c95fa7fb61333795c0ca699f5151`.
 Its published reports still reject overall acceptance. A future handoff must
 name its own commit and hashes; do not assume this snapshot remains latest.
+The later inspected snapshot `ce601c4` rejects v20 and starts wider v21
+`teacher120` training without quality or MCU results. The topology below
+describes v19's `teacher60`; a wider artifact requires its own explicit
+metadata, numeric and resource checks. See [GPU progress](GPU_PROGRESS.md).
 
 ## Required files
 
