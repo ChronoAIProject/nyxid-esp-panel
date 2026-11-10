@@ -52,6 +52,13 @@ idf_component_optional_requires(PRIVATE panel_wake_runtime)
 # flashed model partition, or change any existing board's partition layout.
 if(NYX_PANEL_EXPERIMENTAL_WAKE_MODEL)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME=1)
+    if(DEFINED NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE)
+        if(NOT "${NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE}" MATCHES "^[01]$")
+            message(FATAL_ERROR "Experimental wake task core must be 0 or 1")
+        endif()
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE
+            NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE=${NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE})
+    endif()
 else()
 idf_component_get_property(_sr_dir espressif__esp-sr COMPONENT_DIR)
 set(_wake_source "${_sr_dir}/model/wakenet_model/wn9_hiesp")

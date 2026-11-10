@@ -293,7 +293,12 @@ void panel_voice_init(void)
     state("idle",!nyx_creds_have_agent()?"Sign in to NyxID in Settings":
         valid_config(&configuration)?"Ready":configuration.bot.agent_id[0]?
         "Refresh Bots in Settings to update voice access":"Select a Bot in Settings");
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE
+    if(wake_lock && xTaskCreatePinnedToCore(wake_task,"voice_wake",16384,NULL,4,NULL,
+                                          NYX_PANEL_EXPERIMENTAL_WAKE_TASK_CORE)!=pdPASS)
+#else
     if(wake_lock && xTaskCreate(wake_task,"voice_wake",16384,NULL,4,NULL)!=pdPASS)
+#endif
         ESP_LOGE("panel.wake","Wake listener task unavailable");
 }
 size_t panel_voice_bots(panel_voice_bot_t *out,size_t cap)
@@ -906,10 +911,11 @@ static void wake_task(void *arg)
             model=wn?wn->create(name,DET_MODE_95):NULL;
 #endif
             wn_chunk=model?wn->get_samp_chunksize(model):0;
-            aec=create_voice_aec();chunk=aec?aec_get_chunksize(aec):0;
-            agc=esp_agc_open(AGC_MODE_2,16000);
+            if(!aec)aec=create_voice_aec();
+            chunk=aec?aec_get_chunksize(aec):0;
+            if(!agc)agc=esp_agc_open(AGC_MODE_2,16000);
             if(agc)set_agc_config(agc,15,1,3);
-            if(chunk>0 && chunk<=1024 && wn_chunk>0 && wn_chunk<=2048) {
+            if(!capture && chunk>0 && chunk<=1024 && wn_chunk>0 && wn_chunk<=2048) {
                 capture=heap_caps_aligned_alloc(16,chunk*4,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
                 mic=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
                 ref=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
@@ -998,11 +1004,11 @@ static void wake_task(void *arg)
                 const int16_t *wake_pcm=adjusted;
                 size_t wake_samples=produced;
 #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
-                // MicroFrontend already supplies the experimental detector's
-                // noise reduction/PCAN. The communication AEC can suppress its
-                // wake cues even with a silent reference. Use the same I2S
-                // producer's raw mic only for idle detection. The preroll and
-                // active-call FIFO keep their existing AEC/AGC processing.
+                // Keep each experimental detector's training frontend. The
+                // communication AEC can suppress its wake cues even with a
+                // silent reference. Use the same I2S producer's raw mic only
+                // for idle detection. The preroll and active-call FIFO keep
+                // their existing AEC/AGC processing.
                 wake_pcm=mic;wake_samples=(size_t)chunk;
 #endif
                 for(size_t at=0;at<wake_samples;++at) {
@@ -1019,6 +1025,15 @@ static void wake_task(void *arg)
             xSemaphoreGive(wake_lock);
             if(triggered) {
                 if(!wake_available())break;
+#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+                // Idle inference and a call never overlap. Release only the
+                // experimental classifier and join its consumer before the
+                // call needs internal task stacks. Keep the sole I2S reader,
+                // AEC/AGC, preroll and ordered call FIFO alive throughout.
+                wn->destroy(model);model=NULL;model_dirty=false;
+                ESP_LOGI("panel.wake","Idle model released before call: largest_internal=%u",
+                    (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+#endif
                 ESP_LOGI("panel.wake","%s detected; recording while connecting",panel_voice_wake_word());
                 xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
                 if(start_call(NULL,true)!=ESP_OK) {
@@ -1305,9 +1320,17 @@ static void call_task(void *arg)
     if (!c->socket) goto done;
     esp_websocket_register_events(c->socket,WEBSOCKET_EVENT_ANY,socket_event,c);
     if (esp_websocket_client_start(c->socket)!=ESP_OK) goto done;
-    if (xTaskCreate(mic_task,"voice_mic",MIC_STACK_BYTES,c,4,NULL)!=pdPASS) goto done;
+    if (xTaskCreate(mic_task,"voice_mic",MIC_STACK_BYTES,c,4,NULL)!=pdPASS) {
+        ESP_LOGE("panel.voice","Microphone task allocation failed: stack=%u largest_internal=%u",
+            (unsigned)MIC_STACK_BYTES,(unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+        state("error","Voice microphone unavailable. Please try again");goto done;
+    }
     tasks|=DONE_MIC;
-    if (xTaskCreate(speaker_task,"voice_spk",SPEAKER_STACK_BYTES,c,4,NULL)!=pdPASS) goto done;
+    if (xTaskCreate(speaker_task,"voice_spk",SPEAKER_STACK_BYTES,c,4,NULL)!=pdPASS) {
+        ESP_LOGE("panel.voice","Speaker task allocation failed: stack=%u largest_internal=%u",
+            (unsigned)SPEAKER_STACK_BYTES,(unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+        state("error","Voice playback unavailable. Please try again");goto done;
+    }
     tasks|=DONE_SPEAKER;
     if(!atomic_load(&stopping))state("connecting","Waiting for audio");
     int64_t heartbeat=0;deadline=esp_timer_get_time()+25000000;

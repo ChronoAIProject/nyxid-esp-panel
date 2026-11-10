@@ -7,12 +7,43 @@ SIGKILL this process or remove power during restoration. Logs stay private.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import signal
 import subprocess
 import sys
 import time
 import urllib.request
+
+
+def run_acceptance(command, log, timeout):
+    # Composite checks can have an acoustic child with its own call cleanup.
+    # Terminate the isolated group gracefully before restoring/flashing audio.
+    process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
+                               start_new_session=True)
+    try:
+        returncode = process.wait(timeout=timeout)
+        result = subprocess.CompletedProcess(command, returncode)
+        result.check_returncode()
+        return result
+    except BaseException:
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+            deadline = time.monotonic() + 45
+            while time.monotonic() < deadline:
+                process.poll()  # Reap the leader while its children clean up.
+                try:
+                    os.killpg(process.pid, 0)
+                except ProcessLookupError:
+                    break
+                time.sleep(.1)
+            else:
+                os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        finally:
+            process.wait(timeout=5)
+        raise
 
 
 def main():
@@ -108,9 +139,12 @@ def main():
         (args.output / "experimental-private.json").write_text(json.dumps(experimental, indent=2) + "\n")
         print("Experimental full app, original service selection and Hey Nyx listening verified", flush=True)
         with (args.output / "acceptance-private.log").open("w") as log:
-            result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=args.command_timeout)
+            result = run_acceptance(command, log, args.command_timeout)
         report["acceptance_exit_code"] = result.returncode
         result.check_returncode()
+    except BaseException as error:
+        report["failure"] = {"type": type(error).__name__, "message": str(error)}
+        raise
     finally:
         signal.signal(signal.SIGTERM, signal.SIG_IGN)
         if monitor:
