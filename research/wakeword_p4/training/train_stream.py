@@ -284,6 +284,10 @@ def main():
         model.save_weights(root/"best.weights.h5")
     else:
         model.load_weights(root/"best.weights.h5")
+    if args.negative_focus_gain:
+        # The upstream inference clone copies Keras compile metadata. Use the
+        # stock loss for that clone; this neither trains nor changes weights.
+        model.compile(loss="binary_crossentropy")
     streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))

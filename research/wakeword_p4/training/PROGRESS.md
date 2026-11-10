@@ -812,3 +812,13 @@ shared near-word errors. It does not say whether the synthetic utterances
 were pronounced as intended. The [next matched training plan](plans/microwake-negative-focus-v1.json)
 therefore varies only the penalty for high-scoring training negatives and
 leaves the training input choices intact.
+
+The [matched INT8 screen](../results/microwake-negative-focus-v1.json)
+rejects this loss change. Both arms observe zero events in 7.324 hours of
+continuous validation at their diagnostic fallback, but the worst
+engine/corpus false-clip rate stays at 4.17%, above the 1% gate. The fallback
+macro proxy recall falls from 81.82% to 80.27%. The initial focused export
+failed because the upstream clone tried to deserialize the training-only
+loss. Resetting the compile metadata for export reproduced the first
+training checkpoint byte for byte and completed quantized validation.
+No hardware or reserved evaluation corpus was used.
