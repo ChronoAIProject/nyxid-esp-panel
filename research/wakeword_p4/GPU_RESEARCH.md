@@ -660,3 +660,17 @@ experimental choice rather than a universal best-practice requirement.
 `train_stream.py --ambient-sampling duration` will test only this change against
 v6 on the same actual MicroFrontend waveforms and MCU architecture. Default rows
 preserves prior sampling behavior. No final fixtures enter training.
+
+The v4-lr reference finished40k steps in216.1s, selecting40k/threshold0.992.
+Source-macro recall50.781% (Piper28.229%, Kokoro73.333%), pooled718/2160;
+zero ambient events/1.20481h (upper95%2.48647/h), maximum confusing-source false1%.
+Latency median236.969ms/p95335.581ms. This does not improve v3's51.380% source-
+macro recall and remains rejected. Upstream LR scheduling alone did not resolve
+this reference's generalization/separation problem; no regression/final scored.
+
+The deployable v7-duration experiment has now launched on RTX4090: the same
+v6 feature population, official64 MixedNet, equal-engine sampling,40k steps,
+event-based validation and negative weight20, changing only environmental
+source selection from uniform rows to original-duration weights. Its actual
+INT8 export must pass quantized validation separately before any further
+regression evaluation. No data were added and final fixtures stay frozen.
