@@ -821,10 +821,33 @@ Existing OTA app slots are also nearly full. This is not an actual packed/link
 size, and it does not prove that every storage/size solution is impossible.
 It does rule out treating those weights as a drop-in current-layout change.
 Official timing/memory figures are advisory; no MultiNet create/detect or
-keyword/near-word/resource test ran on this panel. Preserve dual OTA, user GUI
+keyword/near-word/resource test had run at that source-review snapshot. Preserve dual OTA, user GUI
 assets, single audio producer and immediate-request FIFO before considering
 any integration. See
 [`multinet-source-feasibility-v1.json`](../wakeword_p4/results/multinet-source-feasibility-v1.json).
+
+The subsequent **silent standalone P4** probe now actually initializes that
+model and completes 48 cases / 7,272 detect calls. Both fixed grammars detect
+zero of 12 target sources at the frozen .9 default; one positive triggers an
+unrecorded non-target command in the contrastive grammar. Neither setting is
+usable. There was no known-supported-command positive control, so this does
+not rule out the entire MultiNet family. No microphone or speaker was opened.
+No threshold/grammar was fitted to these misses, and no final audio was read.
+
+Two model-creation failures preceded successful inference. Padding file
+payloads alone did not resolve them; a retained null-path vocabulary lookup
+led to a read-only RAM VFS exposing the original model/initialization files.
+The original development app, service and Hi ESP listener were restored after
+every hardware attempt. The dining-room production panel was not used.
+
+The runner originally parsed only 46 cases because two UART timeout fragments
+were written as separate lines. Both complete JSON payloads remained in the
+original log. The offline audit joins only those two split markers, retains
+the original hashes/error, and verifies all 48 identities, sample counts and
+7,272 calls without another hardware run. Future UART reads now retain exact
+bytes and buffer incomplete lines through timeouts. See
+[`multinet-p4-silent-v1.json`](../wakeword_p4/results/multinet-p4-silent-v1.json)
+and the [probe protocol and measured limits](../wakeword_p4/multinet_probe/README.md).
 
 ## Board and numerical constraints
 

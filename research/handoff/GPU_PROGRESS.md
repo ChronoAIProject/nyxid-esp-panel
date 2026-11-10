@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `815a769`; see the dated snapshots below.
+Latest observed GPU commit: `e1877a4`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -516,3 +516,42 @@ scaled from 20k/32k to 60k/96k. That tests longer training plus the relative
 schedule, not a fixed-LR step-count effect. No outcome is available in this
 snapshot. The Mac work does not duplicate this experiment or score final
 corpora. It silently checks retained physical control accounting separately.
+
+### GPU snapshot through `e1877a4`
+
+Read on 2026-11-11. Official ESP-SR2.6.1 Hi ESP now performs actual inference
+in the classic ESP32 Xtensa QEMU target, using the unchanged model. This is a
+working alternative to the still-unverified P4 PIE emulator path. Six source
+PCM probes complete with matching CRC and call coverage; the two Hi E S P
+prompts trigger, while Hey Nicks and ordinary prompts do not. One positive
+repeats with identical events across boots. Requested threshold .63 and getter
+.62496001 are retained separately; `CHANNEL_VERIFIED` (-1) is a legitimate
+return, not a wake or generic error. This is functional evidence, not broad
+recall or P4 hardware timing.
+
+Continuous DiPCo S05_U04.CH1 uses the same original PCM in both tracks:
+43,458,500 samples / .754488 source hours, SHA256
+`396ce6d7dfe4fefeb74f9e5e0c8d3783baa2583d6af0c64e5c77ac9270c6b28a`.
+Hi ESP completes 84,880 detect calls with zero events; v19 at .95 also has
+zero, while v23 at .94140625 has two. Zero-event upper 95% remains 3.97055/h.
+This repeatedly used development session does not establish overall parity.
+Host emulator elapsed time must not be reported as P4 inference latency.
+
+V24 completes 120k steps and selects 110k. At .9765625 its original INT8
+validation macro recall is 79.6875%, below v19's dense-grid 81.6146%. Expanded
+validation has zero Mandarin events / 6.913985 h, zero DiPCo / .754488 h, but
+three dev-other / 5.121185 h. Two false-event peaks reach the uint8 ceiling;
+expanded calibration has no usable zero-event point. Reject v24 without
+development-regression/final scoring; longer training did not fix the observed
+real-speech false activations.
+
+V25 is preregistered, with no outcome yet at this commit. Frozen v24 scans all
+251 training-only LibriSpeech streams / 100.59088 h, selecting 157 difficult
+windows from 105 people. Source auditing checks the complete jittered input
+footprint against 199 FLAC/decoded-PCM identities. Four of 48 ambient slots
+will use those windows with a separate RNG; the other 44 keep broad coverage,
+and PTQ keeps the original broad sampler. This intentionally increases English
+ambient probability; it is not an unchanged sampling distribution. The Mac
+side does not duplicate that mining/training experiment, contact the GPU worker,
+or import validation audio into training. Its separate silent MultiNet P4
+probe now has a completed but unusable frozen setting; see the handoff result.

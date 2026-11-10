@@ -15,7 +15,42 @@ import sys
 import time
 import urllib.request
 
-import serial
+
+RECORD = re.compile(r'\b(MN_READY|MN_CLIP|MN_TIMING|MN_DONE) (\{[^\r\n]*\})$')
+RECORD_KEYS = {'MN_READY': 'ready', 'MN_TIMING': 'timing', 'MN_DONE': 'done'}
+
+
+class UartLines:
+    """Keep timed-out UART fragments until an actual newline arrives."""
+
+    def __init__(self, limit=8192):
+        self.pending = b''
+        self.limit = limit
+
+    def feed(self, chunk):
+        parts = (self.pending + chunk).split(b'\n')
+        if any(len(part) > self.limit for part in parts):
+            raise ValueError('UART line exceeds recording limit')
+        self.pending = parts.pop()
+        return parts
+
+
+def record_line(line, result):
+    match = RECORD.search(line)
+    if not match:
+        return None
+    marker, data = match.groups()
+    value = json.loads(data)
+    if not isinstance(value, dict):
+        raise ValueError('Probe record must be a JSON object')
+    if marker == 'MN_CLIP':
+        result.setdefault('clips', []).append(value)
+    else:
+        key = RECORD_KEYS[marker]
+        if key in result:
+            raise ValueError('Duplicate probe summary: ' + marker)
+        result[key] = value
+    return match.group(0), marker
 
 
 def validate_result(result, manifest):
@@ -50,6 +85,8 @@ def sha(path):
 
 
 def main():
+    import serial
+
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--port', required=True)
     p.add_argument('--expected-mac', required=True)
@@ -119,36 +156,34 @@ def main():
     signal.signal(signal.SIGTERM, interrupted)
     try:
         flash(args.probe_bin, 'probe-flash-private.log')
-        with serial.Serial(args.port, 115200, timeout=.2) as uart, (args.output / 'uart-private.log').open('w') as log:
+        with serial.Serial(args.port, 115200, timeout=.2) as uart, (args.output / 'uart-private.log').open('wb') as log:
             uart.dtr = False
             uart.rts = True
             time.sleep(.1)
             uart.rts = False
             deadline = time.monotonic() + 180
-            while time.monotonic() < deadline:
-                line = uart.read_until(b'\n', 8192).decode('utf-8', errors='replace').strip()
-                if line:
-                    log.write(line + '\n')
+            lines = UartLines()
+            completed = False
+            while time.monotonic() < deadline and not completed:
+                chunk = uart.read_until(b'\n', 8192)
+                if chunk:
+                    log.write(chunk)
                     log.flush()
-                match = re.search(r'(MN_READY|MN_CLIP|MN_TIMING|MN_DONE) (\{.*\})', line)
-                if match:
-                    marker, data = match.groups()
-                    value = json.loads(data)
-                    print(match.group(0), flush=True)
-                    if marker == 'MN_CLIP':
-                        result['clips'].append(value)
-                    else:
-                        result[{'MN_READY': 'ready', 'MN_TIMING': 'timing', 'MN_DONE': 'done'}[marker]] = value
-                        if marker == 'MN_DONE':
+                for raw in lines.feed(chunk):
+                    line = raw.decode('utf-8', errors='replace').strip()
+                    record = record_line(line, result)
+                    if record:
+                        print(record[0], flush=True)
+                        if record[1] == 'MN_DONE':
+                            completed = True
                             break
-                if 'abort()' in line or 'Guru Meditation' in line:
-                    # Retain the register/backtrace lines emitted after panic.
-                    drain_until = time.monotonic() + 2
-                    while time.monotonic() < drain_until:
-                        tail = uart.read_until(b'\n', 8192).decode('utf-8', errors='replace')
-                        log.write(tail)
-                    log.flush()
-                    raise RuntimeError('MultiNet probe firmware failed; see private UART log')
+                    if 'abort()' in line or 'Guru Meditation' in line:
+                        # Retain the register/backtrace bytes emitted after panic.
+                        drain_until = time.monotonic() + 2
+                        while time.monotonic() < drain_until:
+                            log.write(uart.read_until(b'\n', 8192))
+                        log.flush()
+                        raise RuntimeError('MultiNet probe firmware failed; see private UART log')
             validate_result(result, manifest)
             result['execution_completed'] = True
     except BaseException as error:

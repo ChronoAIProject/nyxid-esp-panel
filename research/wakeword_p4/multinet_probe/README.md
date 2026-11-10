@@ -88,3 +88,69 @@ microphone/AFE transfer, a complete storage solution preserving dual OTA and
 GUI assets, whole-app CPU/heap checks, immediate speech continuity and long
 call/echo/reconnection tests. Standalone size and timing cannot establish those
 requirements.
+
+## Measured result: frozen v1 setting is unusable
+
+The retry3 plan was frozen at source commit `92764b9` before actual inference.
+The [retained result](../results/multinet-p4-silent-v1.json) now records actual
+P4 execution, rather than the earlier source-only resource estimates:
+
+| Fixed command grammar | Positive target detections | Negative target detections | Other-command events |
+| --- | --- | --- | --- |
+| HEY NICKS | 0/12 | 0/12 | 0 |
+| Target plus four near commands | 0/12 | 0/12 | 1, on an OpenAI positive |
+
+All 48 cases and 7,272 inference calls complete with original PCM speed.
+The non-target event's command ID/probability were not logged, so its specific
+confusion is unknown. There was no known-supported-command positive control.
+The frozen .9 setting is unusable, but the experiment cannot determine whether
+that is intrinsic phrase behavior or a remaining model/decoder harness issue.
+Before considering another quality run, establish that control and retain raw
+decoder outputs; do not blindly tune the threshold on these 24 sources.
+Zero negative triggers on short reset-separated clips is not continuous FAR.
+
+Creation takes 333,916 us. Measured heap deltas **during creation** are 6,432
+internal bytes and 3,078,104 PSRAM bytes. These exclude the already-expanded
+2,751,351-byte model container and 3,711,816-byte test fixture container, other
+allocations and linked code. Standalone detect-call p50/p95/max are
+8,919/17,373/17,471 us for each 512-sample (32 ms audio) block. These are
+standalone timings, not full GUI/voice load measurements or wake latency.
+
+Final destruction logs `esp_mn_commands_clear: The mn commands is not
+initialized`, after the probe has explicitly freed the command globals.
+`MN_DONE` still reports completion; retain this warning and resolve command
+ownership before a future firmware experiment. The frozen probe source and
+its result have not been rewritten to conceal it.
+
+The automatic runner fails its clip-coverage check after parsing only 46/48
+rows. Its old `read_until` handling inserted a newline when a timeout split
+`MN_CLIP` after `M`. The retained log contains both JSON payloads intact.
+Offline recovery joins exactly original lines 102–103 and 118–119 (arm0,
+clips4/19), preserving the original log/report hashes and failed-run status.
+Full clip identity/sample coverage and 7,272 calls then pass validation.
+There was no hardware rerun for this repair. Reproduce with:
+
+```sh
+python3 research/wakeword_p4/audit_multinet_log.py \
+  --uart "$PRIVATE_RESULT/uart-private.log" \
+  --report "$PRIVATE_RESULT/report.json" \
+  --manifest "$PRIVATE_PROJECT/vectors-manifest.json" \
+  --expected-uart-sha256 ab2af42833b192951f585024a05cc88ce676dcf5868fa144b4fe016200e2e42a \
+  --expected-repairs 2 --output "$NEW_AUDIT_REPORT"
+```
+
+The maintained runner now writes exact UART bytes and buffers fragments until
+a real newline; it rejects duplicate summaries and unterminated completion
+records. Seven host tests cover all stream split boundaries, empty timeout
+reads, bounds, incomplete/duplicate/missing results, explicit recovery and
+damaged payloads. They perform no hardware or audio operations:
+
+```sh
+python3 -m unittest discover -s research/wakeword_p4 -p test_multinet_log.py -v
+```
+
+The v1 plan binds the original runner revision. The updated recorder is for
+future independently frozen runs; it is not claimed to have recorded this
+historical result. After every hardware attempt, including this failed-runner
+case, app/slot identity, original service and Hi ESP listening were verified
+restored. No production firmware source or dining-room panel changed.
