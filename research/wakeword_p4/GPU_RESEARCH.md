@@ -1756,3 +1756,16 @@ detect -1为合法CHANNEL_VERIFIED，单独计数；monitor初始提示拆包曾
 完成标志误判，修复为先消费完整初始prompt。代表性失败UART亦发布。
 没有语音发音审计、足量负音频标定或真实用户正例，不报告总体召回/FAR/
 硬件延迟，更不宣称Nyx等同HiESP。最终集未访问。v24仍正常训练。
+
+### HiESP连续DiPCo验证：与Nyx核验同源PCM
+
+完整S05_U04.CH1.wav 2716.15625s连续送入HiESP，整段不切断/重置；
+43458500样本、84846次detect、CRC32与宿主一致、stage104完成，0事件。
+原始PCM SHA `396ce6d7dfe4fefeb74f9e5e0c8d3783baa2583d6af0c64e5c77ac9270c6b28a`，
+加60样本末尾对齐后等于既有Nyx前端stream_pcm_sha，特征/原score哈希和
+事件计数重算通过。v19冻结0.95亦0事件；v23冻结0.94140625为2事件。
+这不是匹配总体FAR的质量结论；仅0.754488h，零事件上界3.97055/h，
+不足0.5/h，且该开发会话已多次使用。没有正例总体比较或最终集评分。
+新增prepare_hiesp_negative.py仅解码既有validation；metadata可读取其他split，
+不读其音频。回放增加可配置host超时和每分钟音频进度，不改detect算术。
+发布manifest、完整UART、回放与同PCM比较报告。v24继续训练。

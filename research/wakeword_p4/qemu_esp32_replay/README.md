@@ -59,3 +59,28 @@ Sources/hashes, successful reports and representative failed UARTs are published
 No final set was read. Next work requires pronunciation screening, longer
 continuous negative streams, validation-only operating-point calibration, and
 only then frozen independent comparison.
+
+## Continuous existing development negatives
+
+`training/prepare_hiesp_negative.py --source SOURCE --features FEATURES --output FRESH`
+checks the existing source audit, manifest, cache and feature hashes, selects only
+validation, verifies one original WAV per speaker/session and original duration,
+then copies the unchanged WAV and emits a development-negative-validation manifest.
+It reads other split metadata only, never their audio. For DiPCo use source
+`.local/wakeword/dipco-development-v1b`, features
+`.local/wakeword/dipco-human-features-v1`, record `S05_U04.CH1.wav`.
+Replay with the same runner, adding `--timeout-seconds 1800` for the longer stream.
+Firmware prints a progress line every60 seconds of consumed audio, without
+resetting frontend/model state. The default120s host deadline remains for probes.
+
+`training/compare_hiesp_negative.py` takes the replay manifest, original features,
+completed Hi ESP report and repeated `--nyx-report` directories' report.json paths.
+It requires original PCM equality with the existing Nyx frontend stream after only
+final10ms alignment, identical exposure, feature and score-trace hashes, and
+reproduced Nyx events. It reports each native engine's trigger count and Poisson
+bound, without selecting a new threshold or claiming matched general FAR.
+
+The full2716.15625-second S05 validation recording completed: Hi ESP0 events,
+Nyx v19 at0.95 also0, v23 at0.94140625 had2. Original PCM and both final padding
+lengths(60 samples) matched. Zero events still gives upper3.97055/hour, not0.5/h.
+This is reused development evidence, not independent acceptance.

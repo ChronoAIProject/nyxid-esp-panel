@@ -81,6 +81,8 @@ void app_main(void) {
                    (unsigned long)calls, (unsigned long)(at+chunk), result);
         }
         at += count;
+        if (!(calls % 1875)) printf("NYX_PCM_PROGRESS samples=%lu calls=%lu events=%lu\n",
+            (unsigned long)at, (unsigned long)calls, (unsigned long)events);
         if (!(calls % 32)) vTaskDelay(1);
     }
     uint8_t extra;

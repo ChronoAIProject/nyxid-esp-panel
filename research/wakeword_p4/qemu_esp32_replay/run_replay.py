@@ -23,14 +23,21 @@ def main():
         p.add_argument('--'+name, type=Path, required=True)
     p.add_argument('--record', required=True)
     p.add_argument('--threshold', type=float, default=.63)
+    p.add_argument('--timeout-seconds', type=float, default=120.)
     a = p.parse_args()
-    if a.output.exists() or not math.isfinite(a.threshold) or not .4 <= a.threshold <= .9999:
+    if (a.output.exists() or not math.isfinite(a.threshold) or not .4 <= a.threshold <= .9999
+            or not math.isfinite(a.timeout_seconds) or a.timeout_seconds <= 0):
         p.error('Use fresh output and supported threshold')
     manifest = json.loads(a.manifest.read_text())
     rows = [r for r in manifest['records'] if r['path'] == a.record]
-    if len(rows) != 1 or rows[0]['role'] != 'development-transport-probe':
+    if len(rows) != 1 or rows[0]['role'] not in ('development-transport-probe', 'development-negative-validation'):
         raise ValueError('Require one explicit developer probe record')
-    row = rows[0]; wav = (a.manifest.parent/row['path']).resolve()
+    row = rows[0]
+    if row['role'] == 'development-negative-validation':
+        if (row.get('split') != 'validation' or not manifest.get('continuous_recordings')
+                or not manifest.get('source_cache_sha256') or not manifest.get('source_audit_sha256')):
+            raise ValueError('Need audited continuous development-validation negatives')
+    wav = (a.manifest.parent/row['path']).resolve()
     if not wav.is_relative_to(a.manifest.parent.resolve()) or sha(wav) != row['sha256']:
         raise ValueError('Escaped or changed audio')
     info = sf.info(wav); pcm, rate = sf.read(wav, dtype='int16'); raw = pcm.astype('<i2').tobytes()
@@ -62,7 +69,7 @@ def main():
                     break
                 if process.poll() is not None:
                     raise RuntimeError('QEMU exited before completion')
-                if time.monotonic()-started > 120:
+                if time.monotonic()-started > a.timeout_seconds:
                     raise TimeoutError('Live QEMU exceeded developer probe deadline')
                 time.sleep(.1)
             with socket.socket(socket.AF_UNIX) as channel:
@@ -97,7 +104,7 @@ def main():
                   record=row, manifest_sha256=sha(a.manifest), threshold_requested=a.threshold,
                   threshold_getter_after_set=float(parameters[1]),
                   model='wn9_hiesp', sample_rate=16000, chunk_samples=512,
-                  input_samples=len(pcm), original_seconds=len(pcm)/16000,
+                  input_samples=len(pcm), original_seconds=len(pcm)/16000, development_negative_validation=row['role'] == 'development-negative-validation',
                   final_chunk_zero_pad_samples=(-len(pcm)) % 512,
                   pcm_sha256=hashlib.sha256(raw).hexdigest(), pcm_crc32=f'{zlib.crc32(raw):08x}',
                   firmware_crc32_matched=True, firmware_stage=104, calls=int(done[2]), channel_verified_returns=int(done[4]), events=events,
@@ -105,7 +112,7 @@ def main():
                   qemu_sha256=sha(a.qemu), elf_sha256=sha(a.elf), flash_sha256=sha(a.flash),
                   source_sha256=sha(Path(__file__)), serial_sha256=sha(serial), command=command,
                   independent_final_audio_accessed=False,
-                  limits='Developer TTS training voices only. Text is not yet pronunciation audited. No representative recall/FAR, matched operating-point comparison, or hardware latency.')
+                  limits='Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.')
     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report))
 
 
