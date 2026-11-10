@@ -1,0 +1,34 @@
+{
+  "role": "Prospective fresh independent AMI far-field source selection, not inference preregistration",
+  "sessions": [
+    "EN2002a",
+    "EN2002b",
+    "EN2002c",
+    "EN2002d",
+    "ES2004a",
+    "ES2004b",
+    "ES2004c",
+    "ES2004d",
+    "IS1009a",
+    "IS1009b",
+    "IS1009c",
+    "IS1009d",
+    "TS3003a",
+    "TS3003b",
+    "TS3003c",
+    "TS3003d"
+  ],
+  "channel": "Array1-01",
+  "selection": "All16 sessions in pinned official Kaldi AMI evaluation split, one original microphone each; no score-dependent selection. Any target-containing/invalid source stops preparation, with no replacement or silent exclusion.",
+  "preparer_sha256": "d8a30174b381e6033173349feda22314cb7804c3385d10b3bd25bb3a7e6e986c",
+  "training_audit_sha256": [
+    "ba4449e1a371e5594cb28968d409b85ff7f3be944a8b217f6c666f1a453d3023",
+    "1c5ad8fa024b122a6006503590d0ab1ffb735d8400b46a6e7d5db1d07136c007"
+  ],
+  "metadata_duration_hours_estimate": 9.072156944444444,
+  "expected_unique_participants": 16,
+  "classifiers_scored": false,
+  "model_selected_for_this_acceptance": false,
+  "protocol": "Push selection and code before audio download. Never train/tune on these recordings. Freeze source hashes after acquisition. Only after candidate is fixed from development data, push separate model/threshold/engine/scorer preregistration before any inference. Complete all16 sources and preserve failures; no threshold tuning from final outcomes.",
+  "limits": "Sixteen participants recur over four meeting groups; not16 independent meetings by speaker. Far-field dialogue domain only, transcript screen not full phonetic truth. This source preparation cannot establish full goal, positive recall or latency."
+}
