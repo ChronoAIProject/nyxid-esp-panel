@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 
 from lexical_auxiliary import AuxiliarySampler, CLASSES, lexical_class, rms_end
+from compare_lexical_auxiliary import confidence_point
 
 
 class LexicalAuxiliaryTest(unittest.TestCase):
@@ -52,6 +53,15 @@ class LexicalAuxiliaryTest(unittest.TestCase):
         records[0]['maximum_end'] = 41
         with self.assertRaises(ValueError):
             AuxiliarySampler(rows, records, 721)
+
+    def test_selection_requires_both_confidence_bound_and_confuser_constraint(self):
+        def point(macro, upper, confuser):
+            return {'macro_recall': macro, 'continuous_events_per_hour_upper_95': upper,
+                    'continuous_events_per_hour': 0., 'max_corpus_false_rate': confuser}
+        acceptable = point(.53, .41, .007)
+        grid = [point(.99, .65, .001), point(.95, .41, .10), acceptable]
+        self.assertEqual(confidence_point(grid), acceptable)
+        self.assertIsNone(confidence_point(grid[:2]))
 
 
 if __name__ == '__main__':

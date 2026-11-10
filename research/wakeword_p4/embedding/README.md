@@ -642,7 +642,7 @@ different discrimination experiment before new training or detector scores.
 The existing dense64 binary head is continued for exactly10000steps, exporting
 only its final checkpoint. Both arms share the original initialization,
 base/environment features, seed741, main128-example sampler, weighted BCE,
-optimizer/schedule and original512training-only PTQ representatives. The
+optimizer/schedule and the same512training-only PTQ representatives. The
 unchanged trainer/helpers and all input indexes are hash-bound. Full main and
 auxiliary batch digests must match after both arms finish.
 
@@ -687,3 +687,46 @@ report no such point. Endpoint qualifications remain: these synthetic/proxy
 counts do not prove real-user recall or phonetic latency. Inferior outcomes
 stop before physical/final scoring. No speaker playback, microphone access,
 production audio/AFE/FIFO/GUI changes or dining-room board operation.
+
+Both frozen10000-step runs now complete (control30.57s, treatment32.76s).
+The full main-batch digest is
+`f2c3c405646eb45213fc932eaf4bc24e9b7ff95cdef65c53d4b386601c3ad733`
+in both arms; auxiliary batches and512PTQ examples also match exactly.
+The independently inspected exports both have102849parameters,114464bytes,
+the same31operators, a single int8 probability output and no auxiliary
+softmax. The390auxiliary parameters exist only in training. Model SHA256 is
+`586a4d8f1c81faed377a86f8aa32aea14dc0c4ff0260e4141ccbf5bdad4eaf5f`
+for control and
+`f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f`
+for treatment. This verifies graph pruning, not P4 numeric/resource parity.
+
+| Fixed joint validation constraint | Control, weight0 | Auxiliary, weight.2 |
+| --- | --- | --- |
+| Selected threshold | .99 | .98 |
+| Mean proxy-window hit fraction across5TTS engines | 40.4474% | 53.0863% |
+| Pooled proxy-window hits /1196variants | 23.0769% | 42.8094% |
+| Worst confusing-corpus clip false fraction | .6250% | .7143% |
+| Continuous events /source distribution | 0 /7.303778h | 0 /7.303778h |
+| One-sided95% event-rate upper bound | .410162/h | .410162/h |
+
+The auxiliary treatment improves the prespecified joint-constraint macro
+metric by12.6389percentage points in this matched run. Its per-engine values
+are51.7857/66.6667/65.6250/41.6667/39.6875% for Edge/Kokoro/macOS/OpenAI/Piper.
+That is useful experimental evidence, but coverage is still too low to
+replace Hi ESP. These are reused synthetic/proxy metrics, not native acoustic
+recall or independent acceptance. This setting does not advance to a new
+physical or reserved-final benchmark. The original board firmware stays active.
+
+Training-representative float/INT8 maximum absolute errors are.232631control
+and.047086treatment (means.004607/.002349). Preserve those outliers; do not
+attribute recognition changes solely to quantization from this observation.
+The quality comparison above uses actual exported INT8 models throughout.
+
+`compare_lexical_auxiliary.py` reproduces the matched-input/export checks and
+both frozen constraint selectors, retaining every original threshold row.
+Run it with `--control`, `--treatment` and a fresh `--output`. The result is
+[`lexical-auxiliary-validation-v1.json`](../results/lexical-auxiliary-validation-v1.json).
+Five focused tests cover exact-negative classes, alias preservation, source
+tail anchors, deterministic byte-preserving samples, source-role/bounds
+failures and simultaneous confidence/near-word constraints. The full goal
+remains active and unachieved.
