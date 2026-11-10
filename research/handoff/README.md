@@ -37,6 +37,42 @@ needed to continue fitting from these features. The historical filename
 `jobs-private.json` contains only generated/public dataset provenance in this
 export; it contains no device credentials or private room recordings.
 
+## Reuse original speech with a different frontend
+
+The existing downloaded snapshot with `--include-audio` contains six synthetic
+TTS sources. `waveform_inventory.py` verifies the base original WAVs against
+both the downloaded archive contents and their historical jobs/metadata,
+checks mono16kHz PCM16 headers, and preserves source text, source-PCM keyword
+endpoints and engine-qualified voice tokens. It rejects cross-split source
+hashes/voice tokens. It never scores a detector or changes audio.
+
+```sh
+python3 research/handoff/waveform_inventory.py \
+  --snapshot .local/research-snapshot --output .local/new-waveform-inventory
+```
+
+Actual verification on the extracted public snapshot covers 11,604 originals:
+10,070 training and 1,534 validation, across Piper, Kokoro, Qwen, OpenAI,
+macOS and Edge TTS. No source WAV hashes or voice tokens cross these splits.
+The complete generated `waveforms.jsonl` has SHA256
+`32a67247f94e71d2602e8ca338cc56ba4ae7e4ba634a39af67ef77896a83b95c`;
+the sanitized report is
+[`embedding-portable-waveform-inventory-v3.json`](../wakeword_p4/results/embedding-portable-waveform-inventory-v3.json).
+`waveform-inventory-v1.tar.gz` publishes this portable manifest/report; raw WAVs
+remain in `synthetic-training-audio.tar.gz`. Fetch a named incremental asset
+into a fresh directory, then merge its verified workspace as usual.
+
+This is an import inventory, not an evaluated new model. Existing development
+voices and correlated variants do not provide fresh acceptance. Training
+must preserve source partitions; Piper blends and Qwen description conditions
+are not independently established human speakers. The separate 960 extended
+Qwen sources and all testing/private microphone recordings are excluded.
+Use `keyword_end` as an approximate 16 kHz source-sample endpoint when rendering
+the destination frontend; derived frame indices and old feature arrays are
+deliberately omitted. The GPU 10 ms MicroFrontend and local 80 ms embedding cannot
+interchange precomputed arrays. This allows the GPU track to reuse broader
+source coverage without repeating TTS generation.
+
 ## Continue fitting from an existing checkpoint
 
 The completed phase experiment adds training-only 1..1279-sample phase offsets

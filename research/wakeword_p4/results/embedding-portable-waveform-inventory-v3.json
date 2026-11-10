@@ -1,0 +1,154 @@
+{
+  "scope": "Verify portable, original synthetic WAVs for a different feature frontend.\n\nUses only the exported base training/validation jobs. Drops derived frame\ncoordinates: keyword_end is an approximate source-PCM sample index, not a\n10 ms MicroFrontend or 80 ms embedding frame. No model scores are read.\n",
+  "script_sha256": "e28cea4cb242b4a1ed0fcbfb4a5d4c52abc9a04376f6b77808fe20b473a513d0",
+  "jobs_sha256": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+  "source_metadata_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "manifest_sha256": "32a67247f94e71d2602e8ca338cc56ba4ae7e4ba634a39af67ef77896a83b95c",
+  "records": 11604,
+  "counts": [
+    {
+      "engine": "edge-tts",
+      "split": "training",
+      "label": 0,
+      "sources": 1024
+    },
+    {
+      "engine": "edge-tts",
+      "split": "training",
+      "label": 1,
+      "sources": 256
+    },
+    {
+      "engine": "edge-tts",
+      "split": "validation",
+      "label": 0,
+      "sources": 224
+    },
+    {
+      "engine": "edge-tts",
+      "split": "validation",
+      "label": 1,
+      "sources": 56
+    },
+    {
+      "engine": "kokoro",
+      "split": "training",
+      "label": 0,
+      "sources": 640
+    },
+    {
+      "engine": "kokoro",
+      "split": "training",
+      "label": 1,
+      "sources": 60
+    },
+    {
+      "engine": "kokoro",
+      "split": "validation",
+      "label": 0,
+      "sources": 128
+    },
+    {
+      "engine": "kokoro",
+      "split": "validation",
+      "label": 1,
+      "sources": 12
+    },
+    {
+      "engine": "macos-say",
+      "split": "training",
+      "label": 0,
+      "sources": 340
+    },
+    {
+      "engine": "macos-say",
+      "split": "training",
+      "label": 1,
+      "sources": 136
+    },
+    {
+      "engine": "macos-say",
+      "split": "validation",
+      "label": 0,
+      "sources": 80
+    },
+    {
+      "engine": "macos-say",
+      "split": "validation",
+      "label": 1,
+      "sources": 32
+    },
+    {
+      "engine": "openai-tts",
+      "split": "training",
+      "label": 0,
+      "sources": 972
+    },
+    {
+      "engine": "openai-tts",
+      "split": "training",
+      "label": 1,
+      "sources": 162
+    },
+    {
+      "engine": "openai-tts",
+      "split": "validation",
+      "label": 0,
+      "sources": 24
+    },
+    {
+      "engine": "openai-tts",
+      "split": "validation",
+      "label": 1,
+      "sources": 18
+    },
+    {
+      "engine": "piper",
+      "split": "training",
+      "label": 0,
+      "sources": 3000
+    },
+    {
+      "engine": "piper",
+      "split": "training",
+      "label": 1,
+      "sources": 3000
+    },
+    {
+      "engine": "piper",
+      "split": "validation",
+      "label": 0,
+      "sources": 480
+    },
+    {
+      "engine": "piper",
+      "split": "validation",
+      "label": 1,
+      "sources": 480
+    },
+    {
+      "engine": "qwen",
+      "split": "training",
+      "label": 0,
+      "sources": 384
+    },
+    {
+      "engine": "qwen",
+      "split": "training",
+      "label": 1,
+      "sources": 96
+    }
+  ],
+  "source_wav_hashes_and_headers_verified": true,
+  "cross_split_wav_hashes": 0,
+  "cross_split_voice_tokens": 0,
+  "audio_changed": false,
+  "detector_scores_read": false,
+  "limits": [
+    "Existing synthetic development voices, not independent human speakers or a fresh holdout.",
+    "Original voice tokens are engine-qualified; Qwen conditions and Piper blends are not new human identities.",
+    "Preserve splits and group provenance when importing. New feature extraction/calibration is required.",
+    "No derived frame indices or precomputed feature arrays are exported.",
+    "Does not include the separate additional960Qwen sources, reserved final audio or microphone captures."
+  ]
+}

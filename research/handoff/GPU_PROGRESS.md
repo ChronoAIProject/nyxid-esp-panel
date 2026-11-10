@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`6a3b08b`:
+`ff4282c`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,9 +14,10 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned and balanced-v2 40,000-step runs complete | All rejected; new v3 features audited but training not started |
+| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4 and expanded-negative-v5 runs complete | None accepted; v3 Qwen feature experiment remains untrained |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
-| Real room augmentation | 270 MIT RIR WAVs, pinned revision and hash/format audit | Not yet applied to a candidate; broader noise/negative coverage pending |
+| Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
+| Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
 | Reserved negative exposure | 10.745 source hours / 73 speakers, archive/source audit | No model scores read; independent positive holdout still needed |
 | Unscored paired challenge | Corrected 468 WAVs / 26 unused international Kokoro presets; pairing/isolation/ASR screens | Pronunciation uncertainty, acoustic and matched Hi ESP scores |
 
@@ -120,6 +121,32 @@ audio and verify the appropriate frontend rather than interchanging arrays.
 The corrected paired challenge and 10.745-hour negative reserve remain unscored.
 Local work therefore focuses on matched physical speaker-to-panel measurement;
 it does not duplicate the GPU RIR preparation or read its reserved scores.
+
+Subsequent commits `901577e` and `ff4282c` complete the measured-room and
+expanded-negative experiments. V4 adds 28,600 training renderings with measured
+RIRs and -5..10 dB noise: a combined intervention. Its INT8 validation macro
+recall is 49.974%, below v2's 57.109%. V5 retains v4's generated features and adds
+1,062 MUSAN training ambient recordings, raising source exposure to 18.7485 h.
+At the validation-only .95 threshold it reaches 59.010% source macro recall
+(Piper 75.521%, Kokoro 42.500%). This is not a controlled statistical gain;
+Kokoro remains below v2's 46.667%. Both new models have zero continuous events
+in 1.20481 validation hours, still a 2.4865/hour one-sided 95% upper bound.
+Neither reads regression/final scores or qualifies for acceptance. Their
+eight-clip reset/numeric diagnostics do not establish general equivalence.
+
+The next GPU priority is positive-source quality/generalization, with a possible
+pretrained-feature diagnostic. The existing Mac snapshot already supplies six
+TTS engines and a frozen pretrained-embedding detector. Rather than regenerating
+those voices, `waveform_inventory.py` now verifies **11,604 original WAVs**
+(10,070 training, 1,534 validation) from the downloaded assets. It preserves
+source-PCM keyword endpoints, text and engine-qualified voice tokens, verifies
+WAV hashes/headers and source/voice isolation, and omits every derived feature
+frame coordinate. See the handoff for commands and the sanitized verification
+report. It excludes testing, private captures and the separate 960 extra Qwen
+sources. These reused development voices are not a fresh evaluation population.
+Extract the destination frontend from the raw WAVs; never import embedding
+arrays or old `keyword_frame` values into the 10 ms track. New synthesis isn't
+required to test this already available source diversity.
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research
