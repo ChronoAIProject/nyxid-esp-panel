@@ -1760,7 +1760,7 @@ detect -1为合法CHANNEL_VERIFIED，单独计数；monitor初始提示拆包曾
 ### HiESP连续DiPCo验证：与Nyx核验同源PCM
 
 完整S05_U04.CH1.wav 2716.15625s连续送入HiESP，整段不切断/重置；
-43458500样本、84846次detect、CRC32与宿主一致、stage104完成，0事件。
+43458500样本、84880次detect、CRC32与宿主一致、stage104完成，0事件。
 原始PCM SHA `396ce6d7dfe4fefeb74f9e5e0c8d3783baa2583d6af0c64e5c77ac9270c6b28a`，
 加60样本末尾对齐后等于既有Nyx前端stream_pcm_sha，特征/原score哈希和
 事件计数重算通过。v19冻结0.95亦0事件；v23冻结0.94140625为2事件。
@@ -1769,3 +1769,13 @@ detect -1为合法CHANNEL_VERIFIED，单独计数；monitor初始提示拆包曾
 新增prepare_hiesp_negative.py仅解码既有validation；metadata可读取其他split，
 不读其音频。回放增加可配置host超时和每分钟音频进度，不改detect算术。
 发布manifest、完整UART、回放与同PCM比较报告。v24继续训练。
+
+### v24完成120k：原INT8验证改善，但尚无负集结论
+
+1280.7s完成，按原验证规则选110k；初始分类头及预训练来源保持一致，
+BN frozen校验通过。INT8 SHA
+`21e605dfc061fdc0823b4ab75a5be593955dd747103f33b0ccedea2e673ba825`。
+密集阈值0.9765625，source-macro79.6875%（Piper79.375%、Kokoro80%），
+早触发2，中位120/P95180ms。好于v23的71.1719%，仍低于v19的81.6146%；
+原ambient零事件但1.2048h上界2.486/h，不作为验收。
+三个额外开发负集和小样本流式一致性已运行，尚待结果；不访问开发回归/最终集。
