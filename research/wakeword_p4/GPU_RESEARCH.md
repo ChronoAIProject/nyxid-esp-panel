@@ -828,3 +828,27 @@ or label changes occur. Initial strict attempts stopped at the missing
 transcript and then the empty WAV; partial directories/logs remain locally.
 The corrected fresh extraction preserves every raw archive and records exclusions
 with identities and hashes. These corpus audits are not recognition evidence.
+
+## Frozen v6 Mandarin validation result
+
+Continuous MicroFrontend extraction completed28 speaker streams/4,592,264
+frames, with exact chunk-continuity checks against concatenated first-two WAVs
+for every speaker. Raw WAV and decoded PCM hashes were verified again. The
+200ms utterance gaps and explicit0..159-sample alignment padding are counted
+as inserted silence, excluded from exposure. Cache and index hashes are published.
+
+v6 was scored only on the16 new Chinese validation speakers at its previously
+frozen0.8 threshold; model SHA matched the old calibration report. Result:
+**zero false events in6.913985h; one-sided95% Poisson upper0.43329/h**.
+Three-second feature-prefix inference reproduced exactly after explicit state
+reset for every stream. All events, including startup, are counted. The run
+reads no new training/development-regression or independent final audio.
+
+This meets the numerical false-event bound on this read-Mandarin development
+population at the frozen English-calibrated threshold. It does not repair the
+existing English regression (one event/1.35816h, upper3.4929/h), low positive
+recall, absent far-field/TV testing, or missing matched WakeNet comparison.
+Do not pool easy/new exposure to conceal the failed population. No model was
+retrained or threshold adjusted for this result. This evidence reduces the
+priority of Chinese-specific hard-negative retraining relative to the existing
+near-English-word and cross-TTS positive-generalization deficits.
