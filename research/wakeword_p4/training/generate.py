@@ -9,7 +9,7 @@ import wave
 
 import numpy as np
 import torch
-import torchaudio
+from scipy.signal import resample_poly
 
 from phrases import HARD_NEGATIVES
 
@@ -48,7 +48,6 @@ def main():
     config = json.loads((source / "models/en_US-libritts_r-medium.pt.json").read_text())
     assert config["num_speakers"] == 904 and config["audio"]["sample_rate"] == 22050
     voice = config["espeak"]["voice"]
-    resample = torchaudio.transforms.Resample(22050, 16000)
     speakers = rng.permutation(904)
     partitions = {"training": speakers[:672], "validation": speakers[672:784], "testing": speakers[784:]}
     plan = []
@@ -85,7 +84,7 @@ def main():
                 torch.LongTensor([b["speakers"][1] for b in batch]), padded,
                 float(rng.choice([.25, .5, .75])), .667, .8, length_scale, None)
             durations = durations.cpu().numpy()[:, 0]
-            waves = resample(audio.cpu()).numpy()[:, 0]
+            waves = resample_poly(audio.cpu().numpy(), 320, 441, axis=-1)[:, 0]
             for i, item in enumerate(batch):
                 end = min(len(waves[i]), int(np.ceil(durations[i, :lengths[i]].sum() * 16000 / 22050)))
                 pcm = audio_float_to_int16(waves[i, :end])
@@ -112,6 +111,11 @@ def main():
             if device == "mps":
                 torch.mps.empty_cache()
     report = {"phrase": "Hey Nyx", "sample_rate": 16000, "device": device,
+              "torch_version": torch.__version__,
+              "gpu": torch.cuda.get_device_name(0) if device == "cuda" else None,
+              "resampler": "scipy.signal.resample_poly 320/441 (CPU); differs from previous torchaudio resampling",
+              "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              "upstream_generator_sha256": hashlib.sha256((source / "generate_samples.py").read_bytes()).hexdigest(),
               "counts": counts, "speaker_partitions": {s: ids.tolist() for s, ids in partitions.items()},
               "checkpoint_sha256": CHECKPOINT_SHA, "seconds": round(time.monotonic() - started, 1),
               "scope": "Synthetic Piper voices; real human keyword recall remains unmeasured"}

@@ -36,5 +36,20 @@ recordings of independent humans. Its existing test split was used in prior
 research; treat re-created scores as regression, never a fresh holdout.
 
 `training/generate.py --device cuda` now selects NVIDIA for the pinned Piper
-model. Its original Mac path remains available. Further Linux execution and
-cross-device waveform checks are required before reporting Piper GPU results.
+model. Its original Mac path remains available. On this Linux/4090 host it
+generated 13,920 clips (6,000 positives + 6,000 negatives for training; 480 of
+each class for each validation/regression split). Whole source speaker IDs
+are disjoint; `results/4090-piper-manifest-audit.json` records the completed
+audio/hash audit. Speaker blends are not new independent speakers.
+
+This run uses SciPy polyphase resampling (320/441) instead of torchaudio;
+waveforms are not claimed equal to the previous Mac run. Apply
+`piper-lazy-torchaudio.patch` to the pinned generator before importing it on
+this host. The research entry point calls the low-level CUDA generation API,
+not the upstream file-generation API that still requires torchaudio. Exact
+source hashes and GPU/runtime details are in `4090-piper-generation.json`.
+These reports establish corpus reconstruction, not recognition quality.
+
+Stage results are committed and pushed to `research-hye-nyx-voice-gpu` after
+verification. Local weights/audio remain ignored; reports record hashes and
+commands. Pending or failed evaluation must remain explicit in published notes.
