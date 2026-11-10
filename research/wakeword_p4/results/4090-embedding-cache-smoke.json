@@ -1,0 +1,63 @@
+{
+  "complete_development_cache": false,
+  "sequences": 38,
+  "frames": 8346,
+  "feature_dim": 96,
+  "history_frames": 15,
+  "stride_seconds": 0.08,
+  "pretrained_source": {
+    "upstream_commit": "368c03716d1e92591906a84949bc477f3a834455",
+    "feature_models": [
+      {
+        "name": "embedding_model.onnx",
+        "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/embedding_model.onnx",
+        "asset_id": 129656245,
+        "bytes": 1326578,
+        "sha256": "70d164290c1d095d1d4ee149bc5e00543250a7316b59f31d056cff7bd3075c1f",
+        "upstream_digest": null
+      },
+      {
+        "name": "melspectrogram.onnx",
+        "url": "https://github.com/dscripka/openWakeWord/releases/download/v0.5.1/melspectrogram.onnx",
+        "asset_id": 129656233,
+        "bytes": 1087958,
+        "sha256": "ba2b0e0f8b7b875369a2c89cb13360ff53bac436f2895cced9f479fa65eb176f",
+        "upstream_digest": null
+      }
+    ],
+    "role": "Pretrained-feature desktop diagnostic, not MCU or Hi ESP equivalence."
+  },
+  "providers": {
+    "mel": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "embedding": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "batch_mel": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "cuda_tf32_enabled": false,
+  "derived_mel_sha256": "3ff4a5bc0e08a6427d5216b60c0dbc1787b17ed2ae3e984c12730cf5786372fc",
+  "derived_mel_change": "ReduceMax axes=1,2,3 keepdims=1; dynamic Clip replaced by broadcast Max/Min. Per-example clipping preserves finite single-stream semantics.",
+  "batch_vs_official_stream_max_errors": [
+    3.4332275390625e-05,
+    3.4332275390625e-05,
+    3.4332275390625e-05,
+    4.57763671875e-05
+  ],
+  "reconstructed_frontend_cases": 36,
+  "embeddings_sha256": "1f56053cabf6b1255c8acbcf66afb56dc7cba5168127c79635879624ae8b33fa",
+  "index_sha256": "83bcecb336312fb79a1cd5f55c0f68893e5e583190df0248e0bd059d9dbed57b",
+  "base_index_sha256": "f46e69b9b69a84a194f7a97ba952af1e3779b69b3aebd2159edcb13597311eaf",
+  "human_index_sha256": "05e99028ec63a6b9d7446b0c51eae5466806cb6b0ac40419a51dae7d79fbb134",
+  "ambient_index_sha256": "19f38c3a1d949e2ae47b724bae3332f9e55933d18f6e947e1892f9acaf71962d",
+  "source_sha256": "e9dcf17fc78ea4874ea25c1ddaa87723e1487c6829e5365e6250c81c90292b57",
+  "seconds": 6.5,
+  "final_or_regression_audio_scored": false,
+  "limits": "Frozen backbone desktop diagnostic only. Actual streaming waveform features; no classifier or MCU/Hi ESP equivalence yet."
+}

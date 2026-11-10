@@ -511,3 +511,33 @@ loader still excludes them, preserving TensorFlow's launch behavior.
 `requirements-oww-diagnostic.lock` records this separate environment with the
 GPU runtime overriding the inherited CPU module. No MCU footprint, INT8
 export, trained diagnostic classifier or comparison with WakeNet is claimed.
+
+## Batched pretrained-feature consistency
+
+Initial cache attempts failed strict comparison against official single-stream
+inference. CUDA TF32 caused drift; after disabling it, an axis-free global
+ReduceMax in the official mel graph still coupled dynamic range clipping across
+examples. An actual waveform probe found a 0.50484 mel difference; the embedding
+network itself matched individual inference. Failed caches were not trained.
+
+`embedding_cache.py` derives an identified mel graph: ReduceMax over non-batch
+axes, then broadcast Max/Min replacing dynamic Clip (ONNX bounds require scalars).
+Original models remain intact. Derived model SHA-256:
+`3ff4a5bc0e08a6427d5216b60c0dbc1787b17ed2ae3e984c12730cf5786372fc`.
+With TF32 disabled, smoke passed 36 waveform reconstruction cases and four
+sequential comparisons (maximum absolute error 4.58e-5; atol/rtol 1e-4).
+Incomplete smoke caches are rejected by the trainer. The full cache checks its
+entire first batch and uses only training/validation audio. No recognition
+accuracy is implied by these consistency checks.
+
+`train_embedding_head.py` implements a float desktop reference with 16 causal
+embedding frames and validation-only selection. No trained result yet; this is
+not an MCU export, INT8 candidate, or Hi ESP equivalence evidence.
+
+The complete cache finished in 291.2 seconds: 94,418 sequences, 8,230,203
+96-dimensional frames; 88,719 training and 5,699 validation sequences.
+All 64 first-batch sequential comparisons passed (max error 6.10352e-5),
+and 36 generated waveform frontend reconstruction cases matched exactly.
+Binary length and split membership were audited; hashes and CUDA providers are
+in `4090-embedding-cache-v1.json`. The 40,000-step reference-head run has started;
+no development regression or independent final scores have been computed.
