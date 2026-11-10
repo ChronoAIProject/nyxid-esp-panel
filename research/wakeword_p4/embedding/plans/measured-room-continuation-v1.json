@@ -1,0 +1,48 @@
+{
+  "scope": "Frozen matched measured-room continuation, derived after complete paired feature audit and before fitting. Original validation only; no microphone/development/final score selection.",
+  "extraction_plan_sha256": "99a73b0674d8f5d8ec728e28dccbd2f660a936ec2bafeba69d29f6235851e038",
+  "feature_audit_sha256": "583acb7109119f450f1d7c4d12a52f9938f49fa1ef69171e41576d3b0c7fb1e5",
+  "reference_recipe_sha256": "36c209d9f85c8b8175ef1074d8fbe8d80699ba791ac9599a496f17774c36d408",
+  "train_script_sha256": "bfe34d9601c9cbcd736d9227e403a6a1a70d036fbb92f506271ba6be04827958",
+  "members": [
+    {
+      "head": "temporal",
+      "arm": "control",
+      "plan": "head-temporal-measured-room-control-plan-v1.json",
+      "plan_sha256": "da647c3f4f47fa0317082f5a67dda2fa67a35b146ded27212c7cf6ad3751744a",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-measured-room-control-v1"
+    },
+    {
+      "head": "temporal",
+      "arm": "measured",
+      "plan": "head-temporal-measured-room-measured-plan-v1.json",
+      "plan_sha256": "2fb625ebf34525067f3a78ea965561a013778a04e99cc29c15f7940cf38428f3",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-measured-room-measured-v1"
+    },
+    {
+      "head": "dense",
+      "arm": "control",
+      "plan": "head-dense-measured-room-control-plan-v1.json",
+      "plan_sha256": "d932ca3c2f38e28dee537b2d57bf1cc71b54eefc25ead6c403bea69893bf1e11",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-measured-room-control-v1"
+    },
+    {
+      "head": "dense",
+      "arm": "measured",
+      "plan": "head-dense-measured-room-measured-plan-v1.json",
+      "plan_sha256": "b74c3b7913d53abf356cf6da4bac9f8b1f3b7ca9f6895e5362f903f70afd9152",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-measured-room-measured-v1"
+    }
+  ],
+  "only_intended_difference": "The added view in each control is an exact existing synthetic-room variant3; treatment replaces it with its paired measured-room view. Both preserve base/environment features, row order and IDs, source/background/level/timebase, initialization, sampling RNG, optimizer/schedule, representative examples and validation policy. No new mining or audio speed change.",
+  "combination": "Independently select dense and temporal checkpoints on original validation for each arm. Evaluate exactly their equal mean on the existing event threshold grid; no fitted weights. Freeze validation choices before paired/English/Mandarin development regression.",
+  "gate": "No flash or acceptance based on validation alone. Preserve failed trials and untouched final reserves; independent physical/resource/AEC tests still required."
+}

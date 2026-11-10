@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
-Observed 2026-11-10 at GPU branch commit
-`2f70cc0`:
+Observed 2026-11-11 at GPU branch commit
+`0987834`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,12 +14,13 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned, balanced-v2, measured-room-v4, expanded-negative-v5, Qwen-v6 and duration-v7 runs complete | None accepted; Qwen-recovery-v8 launched |
+| TensorFlow GPU training | Initial through Qwen-recovery-v8 runs complete; v8 INT8 validation rejected | None accepted |
 | CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
 | Real room augmentation | 270 MIT RIR WAVs used in v4/v5; base data preservation and renderer regression verified | v4 validation rejected; no generalization improvement established |
 | Broader negative training | MUSAN music 8.547 h / noise 6.226 h; v5 total 18.7485 h continuous training exposure | Validation exposure remains 1.20481 h; no final acceptance |
 | Official pretrained-feature desktop reference | Corrected batched mel/embedding consistency, complete CUDA cache, and four rejected trained heads | No MCU export or accepted detector |
 | Reserved negative exposure | 10.745 source hours / 73 speakers, archive/source audit | No model scores read; independent positive holdout still needed |
+| New Mandarin development coverage | AISHELL speaker-disjoint extraction audit; frozen v6 has1 event/6.914 validation hours | Upper95% .686/hour; far-field/TV, positive recall and matched Hi ESP evidence missing |
 | Unscored paired challenge | Corrected 468 WAVs / 26 unused international Kokoro presets; pairing/isolation/ASR screens | Pronunciation uncertainty, acoustic and matched Hi ESP scores |
 
 The `6cf7a35` commit adds an audited feature pipeline, pinned Linux GPU
@@ -253,3 +254,26 @@ git fetch origin research-hye-nyx-voice-gpu
 git log --oneline -8 origin/research-hye-nyx-voice-gpu
 git show origin/research-hye-nyx-voice-gpu:research/wakeword_p4/GPU_RESEARCH.md
 ```
+
+GPU commits `fa61787` through `0987834` complete and reject v8-small: INT8
+validation source-macro recall63.594% at.9 (Piper64.271%, Kokoro62.917%),
+6 premature events, confusing-negative false rate.5682%, and zero ambient
+events/1.20481h (upper95%2.48647/h). No regression/final scores were read.
+The broader Qwen source union did not produce an accepted detector.
+
+The new pinned AISHELL audit retains9,722 read-Mandarin utterances from28
+speaker-disjoint sources:2,756 train,5,598 validation,1,368 development
+regression.13 defective/untranscribed WAVs remain quarantined. At its old.8
+threshold, frozen v6 has **one** event/6.913985 validation source hours,
+observed.144634/h and upper95%.686126/h. Original utterance gaps/alignment
+padding are excluded from exposure, and state-reset prefix checks pass for
+all16 scored speakers. This is not zero events; the latest prose correction
+agrees with the authoritative full JSON. No threshold/retraining or independent
+final scoring occurred. Read speech cannot establish room/TV performance.
+
+Locally, all10,070 paired80ms measured-room feature views now pass their full
+audit. The four dense/temporal fitting plans are frozen in
+`embedding/plans/measured-room-continuation-v1.json` before fitting. This
+remains a distinct frontend/experiment from the GPU10ms models. No microphone
+recordings, evaluation sources, audio speed changes or new acceptance claim
+enter this training stage.

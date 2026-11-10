@@ -613,7 +613,12 @@ protect input immutability, response timing/energy and identical subsequent
 random draws. See
 [`embedding-measured-room-pilot-v3.json`](../wakeword_p4/results/embedding-measured-room-pilot-v3.json).
 
-The complete paired extraction is running. Its plan binds the original local
+The complete paired extraction and audit now pass for all10,070 pairs. All
+original control arrays match, all treatment arrays change, and the48 original
+numerical renderer replays are byte-exact. Maximum response-energy difference
+is2.61e-7. The sanitized report is
+[`embedding-measured-room-feature-audit-v3.json`](../wakeword_p4/results/embedding-measured-room-feature-audit-v3.json).
+Its plan binds the original local
 jobs/index layout, including source paths; this is not yet a portable raw
 extraction plan for a rebased public snapshot. Run on the original verified
 layout, using fresh output folders:
@@ -627,9 +632,18 @@ layout, using fresh output folders:
 ```
 
 Use `--limit 48` only for a separately named extraction pilot; pilot completion
-cannot authorize fitting. After the full pairing/isolation audit, freeze four
-matched dense/temporal control/treatment training plans using the completed
-feature hashes. Validation chooses checkpoints/thresholds before existing
+cannot authorize fitting. Replay the complete audit with
+`embedding/audit_measured_room_views.py --data-root "$WAKE_DATA" --plan
+research/wakeword_p4/embedding/plans/measured-room-views-v1.json --output
+.local/fresh-room-audit.json`.
+
+Four matched dense/temporal control/treatment plans are frozen before fitting
+in `embedding/plans/measured-room-continuation-v1.json`. Each entry binds its
+initial weights, training-plan hash and fresh output directory. Run the
+unchanged `train_head.py` with that plan and initialization, followed by
+`evaluate_head.py` with the same plan. The two arms include exactly one of the
+new feature directories each; their paired IDs intentionally match, so never
+load both together. Validation chooses checkpoints/thresholds before existing
 paired/continuous regression. No new recognition gain, candidate acceptance
 or physical trial is reported at this stage.
 
