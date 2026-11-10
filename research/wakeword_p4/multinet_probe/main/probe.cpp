@@ -48,6 +48,8 @@ static bool run() {
     if (!models || models->num != 1 || strcmp(models->model_name[0], "mn7_en")) return false;
     auto *iface = esp_mn_handle_from_name(models->model_name[0]);
     if (!iface) return false;
+    printf("MN_STAGE models_loaded model=%s\n", models->model_name[0]);
+    fflush(stdout);
     const auto internal_before = heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
     const auto psram_before = heap_caps_get_free_size(MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     const int64_t create_start = esp_timer_get_time();

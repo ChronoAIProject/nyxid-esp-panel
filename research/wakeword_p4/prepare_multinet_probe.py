@@ -27,6 +27,10 @@ def packed_model(source, expected):
     payload = b''
     for path in files:
         data = path.read_bytes()
+        # Preserve file bytes while aligning each directly referenced payload.
+        padding = (-offset) % 16
+        payload += bytes(padding)
+        offset += padding
         header += struct.pack('<32sII', path.name.encode('ascii'), offset, len(data))
         payload += data
         offset += len(data)

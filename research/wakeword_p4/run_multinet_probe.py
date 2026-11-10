@@ -142,9 +142,18 @@ def main():
                         if marker == 'MN_DONE':
                             break
                 if 'abort()' in line or 'Guru Meditation' in line:
+                    # Retain the register/backtrace lines emitted after panic.
+                    drain_until = time.monotonic() + 2
+                    while time.monotonic() < drain_until:
+                        tail = uart.read_until(b'\n', 8192).decode('utf-8', errors='replace')
+                        log.write(tail)
+                    log.flush()
                     raise RuntimeError('MultiNet probe firmware failed; see private UART log')
             validate_result(result, manifest)
             result['execution_completed'] = True
+    except BaseException as error:
+        result['error'] = {'type': type(error).__name__, 'message': str(error)}
+        raise
     finally:
         signal.signal(signal.SIGTERM, signal.SIG_IGN)
         print('Restoring original development app', flush=True)
