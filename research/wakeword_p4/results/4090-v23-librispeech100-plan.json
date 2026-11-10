@@ -1,0 +1,35 @@
+{
+  "role": "Prospective v23 experiment registration, not results",
+  "hypothesis": "Greater independent real English negative coverage improves discrimination at matched development false-wake constraints",
+  "baseline": "v19-prefix16",
+  "changed": "Add audited training-only LibriSpeech train-clean-100 streams to existing human:unspecified stratum; duration weighting within stratum",
+  "unchanged": [
+    "teacher60/context150",
+    "reconstructed pretrained initial weights and reset classifier seed726",
+    "frozen BN",
+    "prefix16",
+    "six equal ambient strata",
+    "40000 steps and 5000 evaluation interval",
+    "source-exponent0",
+    "original keyword features and validation/development regression sets",
+    "INT8 validation 1/256 threshold grid and 5-score mean"
+  ],
+  "expected_sampling": {
+    "ambient_windows_per_step": 48,
+    "steps": 40000,
+    "english_stratum_probability": 0.16666666666666666,
+    "expected_english_windows": 320000,
+    "window_seconds": 1.5,
+    "expected_english_window_hours_with_overlap": 133.33333333333334
+  },
+  "sampling_limits": "Expected sampled duration counts overlapping crops and is not independent audio exposure; actual new corpus share depends on audited source duration. English class probability stays 1/6. Within-class mix changes intentionally. Random sample positions use padded timeline, not a guarantee every original second is observed.",
+  "preconditions": [
+    "Official archive MD5 and identity audit pass",
+    "Preparation cache and feature hashes pass append audit",
+    "No independent-final audio accessed"
+  ],
+  "selection": "Original validation only. Dense INT8 validation first; compare v19 81.6146% source-macro recall under same original development constraints. Expanded-negative validation required for any promising candidate; no acceptance based on this one score.",
+  "final_sets": "Untouched by this runner",
+  "hiesp_comparison": "Still unmeasured; this experiment cannot prove parity",
+  "runner_sha256": "a7246e3adbe4d8e8cafd5c437b4054ea294e1b26de44540a94e45ee65a330fd1"
+}
