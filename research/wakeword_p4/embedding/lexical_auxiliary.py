@@ -143,12 +143,14 @@ class AuxiliarySampler:
 
     def batch(self, count=64):
         examples, labels = [], []
+        self.last_source_draws = []
         for _ in range(count):
             cls = int(self.rng.integers(len(CLASSES)))
             engine = self.rng.choice(self.engines[cls])
             group = self.groups[(cls, engine)]
             row, record = group[int(self.rng.integers(len(group)))]
             end = int(self.rng.integers(record['minimum_end'], record['maximum_end'] + 1))
+            self.last_source_draws.append((row['id'], row['source_sha256'], cls))
             examples.append(row['array'][end - 16:end])
             labels.append(cls)
         return np.asarray(examples, np.float32)[:, :, :, None] / 128, np.asarray(labels, np.int32)
@@ -231,7 +233,7 @@ def train(args):
             'identity': json.loads((base / 'identity.json').read_text()),
             'completion': json.loads((base / 'complete.json').read_text())}
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
-    main_hash, aux_hash = hashlib.sha256(), hashlib.sha256()
+    main_hash, aux_hash, auxiliary_source_hash = hashlib.sha256(), hashlib.sha256(), hashlib.sha256()
     recipe = plan['recipe']
     for number in range(1, recipe['steps'] + 1):
         fraction = number / recipe['steps']
@@ -240,6 +242,7 @@ def train(args):
         optimizer.learning_rate.assign(recipe['learning_rate'] * factor)
         x, y = sampler.batch()
         ax, ay = aux_sampler.batch()
+        auxiliary_source_hash.update(json.dumps(aux_sampler.last_source_draws, separators=(',', ':')).encode())
         for value in (x, y):
             main_hash.update(value.tobytes())
         for value in (ax, ay):
@@ -257,7 +260,8 @@ def train(args):
             print(json.dumps({'phase': 'exported', 'step': number, **report}), flush=True)
     lexical.save(args.output / 'training-only-auxiliary.keras')
     summary.update(seconds=time.monotonic() - started, main_batches_sha256=main_hash.hexdigest(),
-                   auxiliary_batches_sha256=aux_hash.hexdigest(), accepted=False)
+                   auxiliary_batches_sha256=aux_hash.hexdigest(),
+                   auxiliary_source_batches_sha256=auxiliary_source_hash.hexdigest(), accepted=False)
     (args.output / 'training.json').write_text(json.dumps(summary, indent=2) + '\n')
     (args.output / 'complete.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps({'phase': 'completed', 'seconds': summary['seconds'],

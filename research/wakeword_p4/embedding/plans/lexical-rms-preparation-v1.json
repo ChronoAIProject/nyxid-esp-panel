@@ -1,0 +1,29 @@
+{
+  "scope": "Pre-score preparation and prespecified auxiliary-only RMS-anchor ablation. Silent existing training sources only.",
+  "scripts": {
+    "lexical_rms_alignment.py": "5c71004c65300abcb81e781ab5400df0053b7bad8af3a9edf3c234181820bb4e",
+    "lexical_auxiliary.py": "d172c4caece11e5c49dfc5d29afa7ff9d31f9408728d93e426cc0ed3cb2aa874",
+    "audit_ctc_endpoints.py": "fb61f48e6ccd1dfa80d0437de90977a9382529a0bdbe37bf41578900e624f420"
+  },
+  "original_manifest_sha256": "1610d74f9c0c227c1484729c33f33f33d899903d12c372734f1f451e1885c2b1",
+  "metadata_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "source_jobs_sha256": "5f238f33ca0feb584116fe7d1d0860c5a1a44ba3aedf744a727838ba090a59a3",
+  "feature_index_sha256": "1c3ca248556d167713a2680bad1675623002e4b6d1ec998bcbfffe53cc3c1c8d",
+  "expected_standalone_training_sources": 1959,
+  "eligibility": "Every class0 source whose unchanged original training text aliases all match standalone Hey Nyx/Nix/Nicks, independent of engine or detector prediction. Keep every original record/order/class/source and all commanded positives.",
+  "anchor": "Same existing negative source RMS rule: last original10ms PCM frame RMS>=max(peak*.01,1). Add unchanged2.4s lead; min_end=ceil((anchor+.03)/.08),max_end=ceil((anchor+.32)/.08). Reject out-of-warm-range values; never filter to pass.",
+  "frozen_training_reference_plan_sha256": "ead5a3a156023c8dfe58c4ed6110e50747bb50f4ac3a2c96cf350f4d3654767d",
+  "retained_reference_complete_sha256": "b44b61ec7de3b8c60446f9ce6b4c78b1cc6805627661a06bbc4dbcfc23023628",
+  "retained_reference_model_sha256": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+  "training_protocol": "Both arms keep retained CE.2/binary-extra0 recipe, seed741, original initialization, main sampler/loss,10000steps/final checkpoint, PTQ histories and original validation policy. Only auxiliary manifest bounds differ. Freeze actual prepared manifest SHA in treatment plan before fitting. Add source/class draw hash instrumentation to both arms; reproduce control model bytes and original complete main/auxiliary batch hashes, then verify all main/PTQ/source/class draws between arms.",
+  "decision_gate": "Same original19threshold grid, joint continuous upper95<=.5/hour and worst confusing-corpus false fraction<=.01. Retain full grids; reject an inferior treatment without acoustic or final testing.",
+  "limits": [
+    "Source RMS is not phonetic truth. This changes only auxiliary training metadata, not original main endpoints, labels, waveforms or validation windows.",
+    "Targets followed by commands preserve original marker because full-file RMS cannot locate a wake prefix.",
+    "Existing training source and validation partitions are not independent real-user evidence or Hi ESP parity."
+  ],
+  "audio_speed_changed": false,
+  "speaker_playback": false,
+  "microphone_access": false,
+  "accepted": false
+}

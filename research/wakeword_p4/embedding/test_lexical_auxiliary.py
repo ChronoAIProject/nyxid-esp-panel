@@ -40,6 +40,8 @@ class LexicalAuxiliaryTest(unittest.TestCase):
             np.testing.assert_array_equal(x, xx)
             np.testing.assert_array_equal(y, yy)
             np.testing.assert_array_equal(x[:, 0, 0, 0] * 128, y)
+            self.assertEqual(a.last_source_draws, b.last_source_draws)
+            self.assertEqual([draw[2] for draw in a.last_source_draws], y.tolist())
 
     def test_heldout_wrong_labels_duplicates_and_bounds_rejected(self):
         for field, value in [('split', 'validation'), ('label', 0), ('features_sha256', 'changed')]:
@@ -53,6 +55,17 @@ class LexicalAuxiliaryTest(unittest.TestCase):
         records[0]['maximum_end'] = 41
         with self.assertRaises(ValueError):
             AuxiliarySampler(rows, records, 721)
+
+    def test_anchor_change_retains_source_class_draw_sequence(self):
+        rows, records = self.fixtures()
+        altered = [record | {'minimum_end': 27, 'maximum_end': 34} if record['class'] == 0
+                   else dict(record) for record in records]
+        original, treatment = AuxiliarySampler(rows, records, 741), AuxiliarySampler(rows, altered, 741)
+        for _ in range(16):
+            _, before = original.batch()
+            _, after = treatment.batch()
+            np.testing.assert_array_equal(before, after)
+            self.assertEqual(original.last_source_draws, treatment.last_source_draws)
 
     def test_selection_requires_both_confidence_bound_and_confuser_constraint(self):
         def point(macro, upper, confuser):

@@ -928,3 +928,42 @@ average does not justify preferring it for wake detection. This result does
 not isolate source pronunciation, endpoint, data-coverage or representation
 causes; further experiments must distinguish them without adjusting endpoints
 or thresholds to these diagnostic predictions. No model or board was changed.
+
+### Auxiliary-only RMS-anchor ablation
+
+The earlier independent marker audit finds Piper standalone markers typically
+precede the source RMS end, whereas most other engines follow it. The original
+auxiliary sampler uses those positive markers but source-RMS anchors for exact
+short negatives. `plans/lexical-rms-preparation-v1.json` therefore freezes one
+specific training-metadata test before preparing or fitting a candidate:
+apply the same existing source-RMS policy to all1959standalone target sources.
+Preserve commanded positives because full-file activity cannot locate their
+wake prefix. This generic text-based eligibility rule does not select engines
+or source clips from classifier predictions. No waveform, original main label,
+main sampler or validation endpoint changes.
+
+`lexical_rms_alignment.py prepare` verifies the original auxiliary manifest,
+source metadata/jobs/index and each eligible source WAV. It preserves every
+record field/order except eligible minimum/maximum auxiliary ends. After
+preparation, freeze the actual manifest hash in a treatment plan. Both arms
+use the retained CE.2/binary-extra0 recipe, same10000step budget and final
+checkpoint, initialization, main/PTQ draws and original19point validation grid.
+The only plan difference is the auxiliary-manifest hash. The helper now also
+hashes the actual auxiliary source/class draws, independent of changed history
+bytes. This instrumentation must preserve the retained control's complete
+main/auxiliary batch digests and exported model bytes; verify these explicitly.
+
+```sh
+python research/wakeword_p4/embedding/lexical_rms_alignment.py prepare \
+  --data-root "$WAKE_DATA" --manifest "$ORIGINAL_AUXILIARY_MANIFEST" \
+  --metadata "$ORIGINAL_SOURCE_METADATA" \
+  --plan research/wakeword_p4/embedding/plans/lexical-rms-preparation-v1.json \
+  --output "$NEW_PRIVATE_ALIGNED_MANIFEST" --report "$NEW_PRIVATE_PREPARATION_REPORT"
+```
+
+RMS is an uncertain auxiliary anchor, not phonetic truth or a runtime endpoint
+detector. Keep the same joint confidence/confuser constraints and every grid
+row; an inferior setting gets no acoustic/final test. Preparation, training
+and validation use no speaker, microphone or board. Historical frozen helper
+hashes require their original source commits for reproduction; do not rewrite
+prior plans to accommodate the added training-metadata instrumentation.
