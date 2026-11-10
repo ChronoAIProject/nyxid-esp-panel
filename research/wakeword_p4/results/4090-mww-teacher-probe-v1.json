@@ -1,0 +1,293 @@
+{
+  "role": "Teacher-target reconstruction and intermediate-activation diagnostic, not Nyx recognition evidence",
+  "source_model_sha256": "21a7976add39ee24ec96c63d96b7aaa18e24d1d9824b963e451da8feb4b78b77",
+  "reconstruction_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+  "source_sha256": "f8c4d42ad54355b31af6e540952abaf3725d654f8b44c1f6b8c1ed33262e2864",
+  "audio_generation_sha256": "ef41d69cce4d9978397d05746f496a8e7c6e02eaa9f362b234e97b9df2d57c8e",
+  "matched_input_quantization": true,
+  "reset_repeatability_passed": true,
+  "high_response_target_clips": 8,
+  "mean_absolute_error": 0.0006121026470701899,
+  "max_absolute_error": 0.08564895391464233,
+  "intermediate_layers": [
+    {
+      "name": "activation",
+      "original_op": "CONV_2D",
+      "values": 62550,
+      "absolute_error_sum": 2234.8164603710175,
+      "absolute_error_max": 1.282440185546875,
+      "outside_range": 2,
+      "original_quantization_scale": 1.4935686588287354,
+      "mean_error_lsb": 0.023921552163185835,
+      "max_error_lsb": 0.8586416017543991,
+      "outside_range_fraction": 3.19744204636291e-05
+    },
+    {
+      "name": "depthwise_conv2d",
+      "original_op": "DEPTHWISE_CONV_2D",
+      "values": 62550,
+      "absolute_error_sum": 3358.8944129943848,
+      "absolute_error_max": 1.1210675239562988,
+      "outside_range": 1,
+      "original_quantization_scale": 1.2521613836288452,
+      "mean_error_lsb": 0.04288532758563783,
+      "max_error_lsb": 0.8953059394847109,
+      "outside_range_fraction": 1.598721023181455e-05
+    },
+    {
+      "name": "activation_1",
+      "original_op": "CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 849.1664822399616,
+      "absolute_error_max": 1.5812740325927734,
+      "outside_range": 4,
+      "original_quantization_scale": 0.04090571776032448,
+      "mean_error_lsb": 0.16594016456237576,
+      "max_error_lsb": 38.656552657450064,
+      "outside_range_fraction": 3.19744204636291e-05
+    },
+    {
+      "name": "depthwise_conv2d_1",
+      "original_op": "DEPTHWISE_CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 1185.5658058524132,
+      "absolute_error_max": 0.5174427032470703,
+      "outside_range": 0,
+      "original_quantization_scale": 0.046389274299144745,
+      "mean_error_lsb": 0.20429172549227187,
+      "max_error_lsb": 11.154360810007544,
+      "outside_range_fraction": 0.0
+    },
+    {
+      "name": "activation_2",
+      "original_op": "CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 1705.2733677327633,
+      "absolute_error_max": 0.32255029678344727,
+      "outside_range": 0,
+      "original_quantization_scale": 0.04309869930148125,
+      "mean_error_lsb": 0.3162805870538314,
+      "max_error_lsb": 7.483991443156189,
+      "outside_range_fraction": 0.0
+    },
+    {
+      "name": "depthwise_conv2d_2",
+      "original_op": "DEPTHWISE_CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 1887.2584279179573,
+      "absolute_error_max": 0.22978591918945312,
+      "outside_range": 0,
+      "original_quantization_scale": 0.05681793391704559,
+      "mean_error_lsb": 0.265514734246932,
+      "max_error_lsb": 4.044249823038998,
+      "outside_range_fraction": 0.0
+    },
+    {
+      "name": "activation_3",
+      "original_op": "CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 1787.7014691233635,
+      "absolute_error_max": 0.2663860321044922,
+      "outside_range": 0,
+      "original_quantization_scale": 0.03958584740757942,
+      "mean_error_lsb": 0.3609921359562296,
+      "max_error_lsb": 6.729324987330896,
+      "outside_range_fraction": 0.0
+    },
+    {
+      "name": "depthwise_conv2d_3",
+      "original_op": "DEPTHWISE_CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 3154.30452811718,
+      "absolute_error_max": 0.24111181497573853,
+      "outside_range": 0,
+      "original_quantization_scale": 0.1032278910279274,
+      "mean_error_lsb": 0.24425825774417373,
+      "max_error_lsb": 2.3357235391984115,
+      "outside_range_fraction": 0.0
+    },
+    {
+      "name": "activation_4",
+      "original_op": "CONV_2D",
+      "values": 125100,
+      "absolute_error_sum": 1606.3962807357311,
+      "absolute_error_max": 0.17779222130775452,
+      "outside_range": 0,
+      "original_quantization_scale": 0.02834215760231018,
+      "mean_error_lsb": 0.45306704267345166,
+      "max_error_lsb": 6.273065861903985,
+      "outside_range_fraction": 0.0
+    }
+  ],
+  "clips": [
+    {
+      "path": "000.wav",
+      "text": "Hey Jarvis.",
+      "teacher_target_text": true,
+      "steps": 123,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9999540448188782,
+      "mean_absolute_error": 0.0010402916106932558,
+      "max_absolute_error": 0.03943231701850891
+    },
+    {
+      "path": "001.wav",
+      "text": "Hey Jarvis, what time is it?",
+      "teacher_target_text": true,
+      "steps": 150,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9999948143959045,
+      "mean_absolute_error": 0.0007837485284590825,
+      "max_absolute_error": 0.013657748699188232
+    },
+    {
+      "path": "002.wav",
+      "text": "Hey Nicks.",
+      "teacher_target_text": false,
+      "steps": 124,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 1.2199065216464746e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "003.wav",
+      "text": "Hey Next.",
+      "teacher_target_text": false,
+      "steps": 122,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 1.415580059248375e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "004.wav",
+      "text": "Hey Jarvis.",
+      "teacher_target_text": true,
+      "steps": 129,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9999990463256836,
+      "mean_absolute_error": 0.0007917076861202396,
+      "max_absolute_error": 0.009201057255268097
+    },
+    {
+      "path": "005.wav",
+      "text": "Hey Jarvis, what time is it?",
+      "teacher_target_text": true,
+      "steps": 144,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.997417688369751,
+      "mean_absolute_error": 0.0010988363677843932,
+      "max_absolute_error": 0.046414852142333984
+    },
+    {
+      "path": "006.wav",
+      "text": "Hey Nicks.",
+      "teacher_target_text": false,
+      "steps": 123,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 1.3531283056247518e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "007.wav",
+      "text": "Hey Next.",
+      "teacher_target_text": false,
+      "steps": 120,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 1.2084412733616833e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "008.wav",
+      "text": "Hey Jarvis.",
+      "teacher_target_text": true,
+      "steps": 129,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9999958872795105,
+      "mean_absolute_error": 0.0012146783129378272,
+      "max_absolute_error": 0.036662936210632324
+    },
+    {
+      "path": "009.wav",
+      "text": "Hey Jarvis, what time is it?",
+      "teacher_target_text": true,
+      "steps": 149,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9997860789299011,
+      "mean_absolute_error": 0.0016812977481509277,
+      "max_absolute_error": 0.08564895391464233
+    },
+    {
+      "path": "010.wav",
+      "text": "Hey Nicks.",
+      "teacher_target_text": false,
+      "steps": 124,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 1.7109655863902933e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "011.wav",
+      "text": "Hey Next.",
+      "teacher_target_text": false,
+      "steps": 123,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 3.613449923530758e-05,
+      "max_absolute_error": 0.001250925357453525
+    },
+    {
+      "path": "012.wav",
+      "text": "Hey Jarvis.",
+      "teacher_target_text": true,
+      "steps": 127,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9999967813491821,
+      "mean_absolute_error": 0.0012135238613136437,
+      "max_absolute_error": 0.039934635162353516
+    },
+    {
+      "path": "013.wav",
+      "text": "Hey Jarvis, what time is it?",
+      "teacher_target_text": true,
+      "steps": 151,
+      "original_max": 0.99609375,
+      "reconstructed_max": 0.9991573691368103,
+      "mean_absolute_error": 0.0012248260816699458,
+      "max_absolute_error": 0.06549227237701416
+    },
+    {
+      "path": "014.wav",
+      "text": "Hey Nicks.",
+      "teacher_target_text": false,
+      "steps": 126,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001311379368416965,
+      "mean_absolute_error": 5.376128707979957e-05,
+      "max_absolute_error": 0.001311379368416965
+    },
+    {
+      "path": "015.wav",
+      "text": "Hey Next.",
+      "teacher_target_text": false,
+      "steps": 121,
+      "original_max": 0.0,
+      "reconstructed_max": 0.001250925357453525,
+      "mean_absolute_error": 3.6246080298252244e-05,
+      "max_absolute_error": 0.001250925357453525
+    }
+  ],
+  "diagnostic_gate": {
+    "minimum_high_response_clips": 4,
+    "maximum_mean_probability_error": 0.01,
+    "maximum_probability_error": 0.15,
+    "maximum_layer_mean_lsb_error": 5,
+    "passed": true
+  },
+  "validation_or_final_accessed": false,
+  "limits": "Small synthetic training-speaker probe; float dequantized reconstruction is not bit-exact INT8. Passing is not transfer efficacy, recognition acceptance, MCU certification or Hi ESP equivalence."
+}

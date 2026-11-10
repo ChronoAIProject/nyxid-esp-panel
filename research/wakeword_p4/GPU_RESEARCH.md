@@ -1163,3 +1163,22 @@ Piper 63.2813%、Kokoro 62.0833%，池化 63.1481%（1364/2160）。
 冻结阈值诊断，并建立预训练权重重建代码；没有合格新候选，目标仍 active。
 接下来优先完成原预训练目标词/中间激活探针，避免将低概率区间的一致性
 当成迁移依据。最终集继续冻结，Hi ESP 无板比较仍未完成。
+
+
+### 官方预训练目标词与中间激活检查通过
+
+新增 `generate_teacher_probes.py` 与 `probe_mww_reconstruction.py`。
+4090 使用固定 Piper 检查点，从原训练说话人中选 4 人，每人生成
+Hey Jarvis、带后续指令的 Hey Jarvis、Hey Nicks、Hey Next 各一条，共 16 条。
+这批音频仅为兼容性探针，不计入 Nyx 召回率或独立评估。
+
+在真实 MicroFrontend 特征、相同量化输入上，对照官方 INT8 与重建浮点网络。
+8 条原目标词均达到高响应；输出平均绝对差 0.000612103，最大 0.085649。
+9 个中间层平均误差为 0.0239–0.4531 个原激活量化 LSB；局部最大可达
+38.66 LSB，不能声称位精确。首条目标音频的状态重置重复性通过。
+预先定义的诊断门槛通过，仅允许继续迁移研究，不代表 Nyx 质量达标。
+
+报告：`results/4090-mww-teacher-probe-v1.json` 与
+`results/4090-mww-teacher-probe-generation-v1.json`。
+本轮再次在线核对四项官方来源并更新 BEST_PRACTICES.md。
+后续同架构 scratch/transfer 对照尚未执行；目标仍 active，最终集未评分。

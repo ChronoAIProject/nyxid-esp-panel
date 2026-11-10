@@ -1,0 +1,42 @@
+{
+  "accessed_utc": "2026-11-10T17:18:17.224932+00:00",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/micro-wake-word/main/README.md",
+      "sha256": "a86731053ee2be8c242a1db4bbe7abc1bae6debd698b862b0f5931f27281f3e5",
+      "bytes": 6520,
+      "status": 200,
+      "excerpts": [
+        " see the ``basic_training_notebook.ipynb`` notebook to see how a model is trained. This notebook will produce a model, but it will most likely not be usable! Training a usable model requires a lot of experimentation, and that notebook is meant to serve only as a starting point for advanced users.\n\n## Models\n\nSee https://github.com/esphome/micro-wake-word-models to download the currently available models.\n\n## Acknowledgements\n\nI am very thankful for many people's support to help improve this! Thank you, in particular, to the following individuals and organizations for providing feedback, collaboration, and developmental support:\n\n  - [balloob](https://github.com/balloob)\n  - [dscripka](https://github.com/dscripka)\n  - [jesserockz](https://github.com/jesserockz)\n  - [kbx81](https://github.co",
+        " Kononenko, Subrahmanya, Visontai, and Laurenzo.\n\n### Training Process\n- We augment the spectrograms in several possible ways during training:\n    - [SpecAugment](https://arxiv.org/pdf/1904.08779.pdf) masks time and frequency features\n- The best weights are chosen as a two-step process:\n    1. The top priority is minimizing a specific metric like the false accepts per hour on ambient background noise first.\n    2. If the specified minimization target metric is met, then we maximize a different specified metric like accuracy.\n- Validation and test sets are split into two portions:\n    1. The ``validation`` and ``testing`` sets include the positive and negative generated samples.\n    2. The ``validation_ambient`` and ``testing_ambient`` sets are all negative samples representing real-world b"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/dscripka/openWakeWord/main/README.md",
+      "sha256": "00190089228bb85e6caf6d11708f0f75931b53b375a33f3bebfa01ee97d02692",
+      "bytes": 27414,
+      "status": 200,
+      "excerpts": [
+        " to help the model have a low false-accept rate. This also benefits from scale, and the [included models](#pre-trained-models) were all trained with ~30,000 hours of negative data representing speech, noise, and music. See the individual model documentation pages for more details on training data curation and preparation.\n\n# Language Support\n\nCurrently, openWakeWord only supports English, primarily because the pre-trained text-to-speech models used to generate training data are all based on english datasets. It's likely that speech-to-text models trained on other languages would also work well, but non-english models & datasets are less commonly available.\n\nFuture release road maps may have non-english support. In particular, [Mycroft.AIs Mimic 3](https://github.com/MycroftAI/mimic3-voices",
+        "n** to train new models. The included models (see the [Pre-trained Models](#pre-trained-models) section for more details) were all trained with *100% synthetic* speech generated from text-to-speech models. Training new models is a simple as generating new clips for the target wake word/phrase and training a small model on top of of the frozen shared feature extractor. See the [Training New Models](#training-new-models) section for more details.\n\nFuture releases of openWakeWord will aim to stay aligned with these goals, even when adding new functionality.\n\n# Pre-Trained Models\n\nopenWakeWord comes with pre-trained models for common words & phrases. Currently, only English models are supported, but they should be reasonably robust across different types speaker accents and pronunciation.\n\nThe"
+      ]
+    },
+    {
+      "url": "https://docs.espressif.com/projects/esp-sr/en/latest/esp32s3/wake_word_engine/ESP_Wake_Words_Customization.html",
+      "sha256": "812d3a293f79a8928046ac2126036dbccc855eb3b501c55507e7edd2927e3388",
+      "bytes": 18963,
+      "status": 200,
+      "excerpts": []
+    },
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/micro-wake-word/main/notebooks/basic_training_notebook.ipynb",
+      "sha256": "c3b5e1eb339ffd7893209dfa1ca0373abcdd54378d4533f109601cead87a6726",
+      "bytes": 23325,
+      "status": 200,
+      "excerpts": [
+        " is intended as a **starting point** for advanced users. You should use Python 3.10.\\n\",\n    \"\\n\",\n    \"**The model generated will most likely not be usable for everyday use; it may be difficult to trigger or falsely activates too frequently. You will most likely have to experiment with many different settings to obtain a decent model!**\\n\",\n    \"\\n\",\n    \"In the comment at the start of certain blocks, I note some specific settings to consider modifying.\\n\",\n    \"\\n\",\n    \"This runs on Google Colab, but is extremely slow compared to training on a local GPU. If you must use Colab, be sure to Change the runtime type to a GPU. Even then, it still slow!\\n\",\n    \"\\n\",\n    \"At the end of this notebook, you will be able to download a tflite file. To use this in ESPHome, you need to write a model ",
+        "orresponds to training steps\\n\",\n    \"config[\\\"batch_size\\\"] = 128\\n\",\n    \"\\n\",\n    \"config[\\\"time_mask_max_size\\\"] = [\\n\",\n    \"    0\\n\",\n    \"]  # SpecAugment - list that corresponds to training steps\\n\",\n    \"config[\\\"time_mask_count\\\"] = [0]  # SpecAugment - list that corresponds to training steps\\n\",\n    \"config[\\\"freq_mask_max_size\\\"] = [\\n\",\n    \"    0\\n\",\n    \"]  # SpecAugment - list that corresponds to training steps\\n\",\n    \"config[\\\"freq_mask_count\\\"] = [0]  # SpecAugment - list that corresponds to training steps\\n\",\n    \"\\n\",\n    \"config[\\\"eval_step_interval\\\"] = (\\n\",\n    \"    500  # Test the validation sets after every this many steps\\n\",\n    \")\\n\",\n    \"config[\\\"clip_duration_ms\\\"] = (\\n\",\n    \"    1500  # Maximum length of wake word that the streaming model will accept\\n\","
+      ]
+    }
+  ]
+}
