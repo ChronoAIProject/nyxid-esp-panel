@@ -1,0 +1,122 @@
+{
+  "role": "Training background word-annotation overlap diagnostic, not speech/VAD or classifier evidence",
+  "source_sha256": "1e81a9951dfc1c93d4547ce5f1ba3e0b682dd3263d702229f383967bd0462a4c",
+  "source_audit_sha256": "ba4449e1a371e5594cb28968d409b85ff7f3be944a8b217f6c666f1a453d3023",
+  "augmentation_report_sha256": "38c82eaa558620903bf10bde0e386ada368768872ff9d803d7799c1c9816baea",
+  "annotations_sha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+  "parsed_training_transcripts": [
+    "words/ES2002a.B.words.xml",
+    "words/ES2002a.A.words.xml",
+    "words/ES2002a.C.words.xml",
+    "words/ES2002a.D.words.xml",
+    "words/ES2005a.C.words.xml",
+    "words/ES2005a.A.words.xml",
+    "words/ES2005a.D.words.xml",
+    "words/ES2005a.B.words.xml",
+    "words/IS1000a.D.words.xml",
+    "words/IS1000a.B.words.xml",
+    "words/IS1000a.A.words.xml",
+    "words/IS1000a.C.words.xml",
+    "words/TS3005a.A.words.xml",
+    "words/TS3005a.C.words.xml",
+    "words/TS3005a.B.words.xml",
+    "words/TS3005a.D.words.xml"
+  ],
+  "per_mixture_trace_sha256": "149acbab9d08ead9bac413a17f20f7f53d008291caf12eb371bb5b22dc590a1a",
+  "summaries": {
+    "all": {
+      "mixtures": 29196,
+      "mean_fraction": 0.6250379742738843,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 8781,
+      "at_least_half_span_word_coverage": 18352
+    },
+    "session:ES2005a": {
+      "mixtures": 7356,
+      "mean_fraction": 0.5314258772416988,
+      "median_fraction": 0.8977664247579382,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 3202,
+      "at_least_half_span_word_coverage": 3933
+    },
+    "engine_label:piper:0": {
+      "mixtures": 12000,
+      "mean_fraction": 0.6292137067783109,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 3629,
+      "at_least_half_span_word_coverage": 7583
+    },
+    "engine_label:piper:1": {
+      "mixtures": 12000,
+      "mean_fraction": 0.6230394772822436,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 3649,
+      "at_least_half_span_word_coverage": 7520
+    },
+    "session:IS1000a": {
+      "mixtures": 7224,
+      "mean_fraction": 0.6291032633523568,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 1892,
+      "at_least_half_span_word_coverage": 4560
+    },
+    "session:ES2002a": {
+      "mixtures": 7332,
+      "mean_fraction": 0.6375397473757378,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 2115,
+      "at_least_half_span_word_coverage": 4705
+    },
+    "session:TS3005a": {
+      "mixtures": 7284,
+      "mean_fraction": 0.7029594373550324,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 1572,
+      "at_least_half_span_word_coverage": 5154
+    },
+    "engine_label:kokoro:1": {
+      "mixtures": 600,
+      "mean_fraction": 0.645408853012147,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 172,
+      "at_least_half_span_word_coverage": 391
+    },
+    "engine_label:kokoro:0": {
+      "mixtures": 4000,
+      "mean_fraction": 0.6194206740019216,
+      "median_fraction": 1.0,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 1146,
+      "at_least_half_span_word_coverage": 2495
+    },
+    "engine_label:qwen-cuda:1": {
+      "mixtures": 60,
+      "mean_fraction": 0.5902550398515652,
+      "median_fraction": 0.985546875,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 18,
+      "at_least_half_span_word_coverage": 35
+    },
+    "engine_label:qwen-cuda:0": {
+      "mixtures": 536,
+      "mean_fraction": 0.599304436506726,
+      "median_fraction": 0.9388888888888889,
+      "p10_fraction": 0.0,
+      "no_annotated_word_overlap": 167,
+      "at_least_half_span_word_coverage": 328
+    }
+  },
+  "lead_quantization_samples": 160,
+  "maximum_overlap_count_error_from_lead_rounding_samples": 320,
+  "wake_scores_accessed": false,
+  "independent_final_audio_accessed": false,
+  "labels_or_features_changed": false,
+  "limits": "Official training word intervals across all meeting speakers are unioned. Foreground support is the full inserted TTS clip, including its silence; not a foreground active-speech interval.10ms insertion-time rounding and word annotation/acoustic timing errors remain. Zero annotated overlap is not proof of silence; nonzero is not proof of simultaneous audible speech. No wake scores, model thresholds, clip filtering, new labels or independent exposure claim."
+}
