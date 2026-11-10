@@ -45,17 +45,22 @@ def smooth(scores):
     return np.convolve(scores, np.ones(SMOOTH)/SMOOTH, mode='valid') if len(scores)>=SMOOTH else np.array([])
 
 
-def events(scores, threshold):
-    # Five consecutive 30 ms scores, rising-edge latch, and >=2 s refractory.
-    count = 0
+def event_indices(scores, threshold):
+    # Input is already a five-score moving average (not five threshold hits).
+    # Rising-edge latch and >=2 s refractory use the 30 ms model cadence.
+    result = []
     armed = True
     last = -1000
     for index, value in enumerate(scores):
         if value < threshold*.5 and index-last>=67:
             armed=True
         if armed and value>=threshold and index-last>=67:
-            count+=1;last=index;armed=False
-    return count
+            result.append(index);last=index;armed=False
+    return result
+
+
+def events(scores, threshold):
+    return len(event_indices(scores, threshold))
 
 
 def tts_scores(detector, records, dataset, split):

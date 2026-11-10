@@ -24,10 +24,21 @@ def main():
     parser.add_argument("--eval-interval", type=int, default=3000)
     parser.add_argument("--architecture", choices=("compact", "official64"), default="compact")
     parser.add_argument("--threads", type=int, default=6)
+    parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     args = parser.parse_args()
+    if args.device == "cpu":
+        tf.config.set_visible_devices([], "GPU")
+    gpus = tf.config.get_visible_devices("GPU")
+    if args.device == "cuda" and not gpus:
+        raise RuntimeError("CUDA training requested but TensorFlow found no GPU")
+    for gpu in gpus:
+        tf.config.experimental.set_memory_growth(gpu, True)
+    print(json.dumps({"tensorflow": tf.__version__, "gpus": [g.name for g in gpus]}), flush=True)
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
     root = args.output
+    if root.exists() and any(root.iterdir()):
+        raise ValueError("Use a fresh output directory; preserve partial/failed runs")
     root.mkdir(parents=True, exist_ok=True)
     assert not (root/"training.json").exists(), "Use a fresh output directory"
     tf.config.threading.set_intra_op_parallelism_threads(args.threads)
@@ -130,7 +141,7 @@ def main():
                 positives.append((row["engine"], float(values[valid].max()) if valid.any() else 0.))
             else:
                 negatives.append((row["engine"], float(values.max()) if len(values) else 0.))
-        human = [(len(data)*.01/3600, score(data)) for _, data in ambient["validation"]]
+        human = [(r.get("source_seconds", r["seconds"])/3600, score(data)) for r, data in ambient["validation"]]
         hours = sum(h for h, _ in human)
         grid = []
         for threshold in THRESHOLDS:
@@ -155,6 +166,7 @@ def main():
 
     history = []
     best = None
+    selected_step = None
     started = time.monotonic()
     with (root/"progress.jsonl").open("w") as log:
         for step in range(1, args.steps+1):
@@ -173,6 +185,7 @@ def main():
                 print(json.dumps({"step": step, **selected, "seconds": item["seconds"]}), flush=True)
                 if best is None or rank > best:
                     best = rank
+                    selected_step = step
                     model.save_weights(root/"best.weights.h5")
     model.load_weights(root/"best.weights.h5")
     streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": FRAMES}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
@@ -196,6 +209,9 @@ def main():
     data = converter.convert()
     (root/"hey_nyx.tflite").write_bytes(data)
     report = {"recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
+              "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
+              "selected_step": selected_step,
+              "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
               "architecture": args.architecture, "architecture_args": architecture_args,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "seconds": round(time.monotonic()-started, 1), "model_bytes": len(data),

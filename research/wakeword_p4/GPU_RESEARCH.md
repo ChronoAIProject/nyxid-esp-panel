@@ -53,3 +53,51 @@ These reports establish corpus reconstruction, not recognition quality.
 Stage results are committed and pushed to `research-hye-nyx-voice-gpu` after
 verification. Local weights/audio remain ignored; reports record hashes and
 commands. Pending or failed evaluation must remain explicit in published notes.
+
+## Linux GPU training reproduction
+
+The observed environment is pinned in `requirements-linux-gpu.lock` (Python
+3.11, TensorFlow 2.21.0, PyTorch 2.15.0). TensorFlow uses CUDA 12 libraries;
+PyTorch uses CUDA 13. Do not import both runtimes into the same training process.
+`training/gpu_python.py` supplies pip-installed CUDA 12 library paths locally.
+GPU discovery and actual matrix execution on `/device:GPU:0` passed on 4090.
+
+After generating the Piper/Kokoro sources, downloading/hash-checking the
+LibriSpeech dev-clean archive in `results/4090-data-provenance.json`, and
+extracting it into `.local/wakeword/LibriSpeech/dev-clean`, run from repository root:
+
+```sh
+python3 research/wakeword_p4/training/features.py --dataset .local/wakeword/hey-nyx/kokoro \
+  --corpus .local/wakeword/LibriSpeech/dev-clean \
+  --output .local/wakeword/human-features --workers 12
+```
+
+Run from repository root for the subsequent commands:
+
+```sh
+python3 research/wakeword_p4/training/stream_data.py \
+  --source .local/wakeword/hey-nyx/piper-gpu --source .local/wakeword/hey-nyx/kokoro \
+  --backgrounds .local/wakeword/backgrounds --human-features .local/wakeword/human-features \
+  --output .local/wakeword/features-gpu-v1 --workers 16
+python3 research/wakeword_p4/training/audit_features.py \
+  --features .local/wakeword/features-gpu-v1 --output /tmp/features-audit.json
+python3 research/wakeword_p4/training/gpu_python.py \
+  research/wakeword_p4/training/train_stream.py --device cuda \
+  --upstream .local/wakeword/microWakeWord --features .local/wakeword/features-gpu-v1 \
+  --output .local/wakeword/model-gpu-v1 --architecture official64 \
+  --steps 40000 --eval-interval 10000
+```
+
+The 58,256 rendered sequences are correlated variants of 14,564 source clips,
+not independent trials. Source exposure for human negatives excludes the
+inserted 200 ms utterance-boundary silence. Float checkpoint selection is
+validation-only; the exported INT8 model requires separate validation
+calibration before test/regression scoring. Event recall includes latch and
+refractory behavior, and reports latency relative to synthetic keyword-end
+annotations. Run `python3 research/wakeword_p4/training/test_events.py` for the
+premature-wake, refractory and continuously-high-score regression scenarios.
+
+The rebuilt test voices and dev-clean data are **regression** sets because
+prior experiments used them. A fresh final positive holdout and >=5.992 hours
+of independent-source negative exposure still need to be frozen. No candidate
+has yet passed the goal's final acceptance gates.

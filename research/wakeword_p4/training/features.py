@@ -33,10 +33,12 @@ def human_worker(job):
     frontend = MicroFrontend()
     parts = []
     samples = 0
+    source_samples = 0
     files = sorted((Path(corpus) / str(speaker)).rglob("*.flac"))
     for path in files:
         pcm, rate = sf.read(path, dtype="int16")
         assert rate == RATE and pcm.ndim == 1
+        source_samples += len(pcm)
         # Continuous frontend state across this speaker's utterances. Add a
         # short real-time silence at boundaries, and count it in exposure.
         pcm = np.concatenate((pcm, np.zeros(3200, dtype=np.int16)))
@@ -47,7 +49,9 @@ def human_worker(job):
     array = np.concatenate(parts)
     np.save(path, array)
     return {"split": split, "speaker": speaker, "path": str(path.relative_to(root)),
-            "frames": len(array), "seconds": samples / RATE, "files": len(files)}
+            "frames": len(array), "seconds": samples / RATE, "files": len(files),
+            "source_seconds": source_samples / RATE,
+            "inserted_silence_seconds": (samples-source_samples)/RATE}
 
 
 def background(rng, n):

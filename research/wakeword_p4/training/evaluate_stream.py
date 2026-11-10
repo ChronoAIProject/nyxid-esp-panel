@@ -8,7 +8,7 @@ import numpy as np
 from scipy.stats import chi2
 import soundfile as sf
 
-from evaluate import Detector, THRESHOLDS, events, smooth
+from evaluate import Detector, THRESHOLDS, events, event_indices, smooth
 from features import features
 
 
@@ -16,7 +16,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--features", type=Path, required=True)
-    parser.add_argument("--mac-eval", type=Path, required=True)
+    parser.add_argument("--mac-eval", type=Path,
+                        help="Optional historical Mac regression WAVs; omitted is unmeasured, never zero errors")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     root = args.output
@@ -48,7 +49,7 @@ def main():
             detector.reset()
             values = smooth(detector.predict(data))
             np.save(root/f"ambient-{split}-{number:03d}.npy", values)
-            ambient.append({"hours": len(data)*.01/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
+            ambient.append({"hours": row.get("source_seconds", row["seconds"])/3600, "events": {str(t): events(values, t) for t in THRESHOLDS},
                             "source_type": "speech" if "speaker" in row else "environment"})
         return clips, ambient
 
@@ -57,15 +58,23 @@ def main():
         neg = [r for r in clips if not r["label"]]
         hours = sum(r["hours"] for r in ambient)
         count = sum(r["events"][str(threshold)] for r in ambient)
-        recalls = {e: float(np.mean([r["max_score"] >= threshold for r in pos if r["engine"] == e]))
+        def detection(row):
+            indices = event_indices(row["scores"], threshold)
+            hits = [i for i in indices if row["keyword_end"]-.10 <= row["times"][i] <= row["keyword_end"]+.80]
+            return (row["times"][hits[0]]-row["keyword_end"])*1000 if hits else None
+        delays = [d for r in pos if (d := detection(r)) is not None]
+        recalls = {e: float(np.mean([detection(r) is not None for r in pos if r["engine"] == e]))
                    for e in {r["engine"] for r in pos}}
-        false_rates = {e: float(np.mean([r["max_score"] >= threshold for r in neg if r["engine"] == e]))
+        false_rates = {e: float(np.mean([bool(event_indices(r["scores"], threshold)) for r in neg if r["engine"] == e]))
                        for e in {r["engine"] for r in neg}}
         return {"threshold": threshold, "positive_variants": len(pos),
-                "recall": float(np.mean([r["max_score"] >= threshold for r in pos])),
+                "recall": len(delays)/len(pos), "detected": len(delays),
+                "latency_ms_median": float(np.median(delays)) if delays else None,
+                "latency_ms_p95": float(np.quantile(delays, .95)) if delays else None,
+                "premature_positive_events": sum(sum(r["times"][i] < r["keyword_end"]-.10 for i in event_indices(r["scores"], threshold)) for r in pos),
                 "macro_recall": float(np.mean(list(recalls.values()))), "recall_by_engine": recalls,
                 "hard_negative_variants": len(neg),
-                "hard_negative_false_rate": float(np.mean([r["max_score"] >= threshold for r in neg])),
+                "hard_negative_false_rate": float(np.mean([bool(event_indices(r["scores"], threshold)) for r in neg])),
                 "max_source_false_rate": max(false_rates.values()),
                 "ambient_hours": hours, "ambient_false_events": count, "ambient_false_per_hour": count/hours,
                 "ambient_false_per_hour_upper_95": float(.5*chi2.ppf(.95, 2*(count+1))/hours)}
@@ -82,7 +91,7 @@ def main():
     test, ta = measure("testing")
     threshold = selected["threshold"]
     mac = []
-    for item in map(json.loads, (args.mac_eval/"manifest.jsonl").read_text().splitlines()):
+    for item in (map(json.loads, (args.mac_eval/"manifest.jsonl").read_text().splitlines()) if args.mac_eval else []):
         pcm, rate = sf.read(args.mac_eval/item["path"], dtype="int16")
         assert rate == 16000
         for variant in (0, 1):
@@ -98,9 +107,12 @@ def main():
     report = {"model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
               "sliding_window": 5, "threshold": threshold, "validation": selected,
               "testing_regression": summarize(test, ta, threshold),
+              "event_policy": "Five-score moving average, rising-edge latch, 67-step refractory; keyword event window -100 to +800 ms relative to annotated end",
+              "latency_limits": "Synthetic keyword-end annotation; 10 ms frontend/30 ms inference timing. Includes no hardware capture/network delay.",
+              "exposure_policy": "Human source seconds exclude inserted utterance-boundary silence; environmental exposure uses original waveform seconds. All detected events are counted.",
               "mac_regression": {"positive_variants": len(mp), "negative_variants": len(mn),
                                  "recall": float(np.mean([r["max_score"] >= threshold for r in mp])),
-                                 "false_rate": float(np.mean([r["max_score"] >= threshold for r in mn]))},
+                                 "false_rate": float(np.mean([r["max_score"] >= threshold for r in mn]))} if args.mac_eval else None,
               "by_engine": {e: summarize([r for r in test if r["engine"] == e], ta, threshold)
                             for e in sorted({r["engine"] for r in test})},
               "limits": ["v1 test/Mac sets informed development; these are regression results, not untouched final holdouts.",
