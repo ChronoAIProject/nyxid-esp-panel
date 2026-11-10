@@ -1,0 +1,20 @@
+{
+  "role": "Prospective v27 dialogue augmentation ablation, no training result",
+  "baseline": "v24",
+  "single_intervention": "Add2 dialogue-mixed variants to every original training source; unchanged BCE, no hard ambient replacement, no alternate-channel ambient additions",
+  "features_index_sha256": "e646a12453436eba1280bbcb676b2173ef0442a999d5e5af1f1604d1f65ed292",
+  "dialogue_augmentation_sha256": "6ff524b9f403051cfeb8116acf57aa45beb9372e1ecf8d35f721def48a4f8f15",
+  "architecture": "teacher60 context150 frozen reconstructed pretrained BN",
+  "steps": 120000,
+  "seed": 726,
+  "prefix_negatives": 16,
+  "label_smoothing": 0,
+  "hard_ambient_count": 0,
+  "source_exponent": 0,
+  "ambient_sampling": "stratified",
+  "new_independent_dialogue_hours": 0,
+  "validation_and_development_regression_unchanged": true,
+  "independent_final_audio_accessed": false,
+  "planned_evaluation": "Original dense validation then Mandarin/DiPCo/dev-other and unchanged per-corpus zero-event candidate gate. Proxy-window positive metrics are diagnostics, not phonetic recall/latency. No final scoring unless an independently justified protocol and candidate are ready.",
+  "limits": "Separate from v26 label-smoothing intervention. New training sequences are correlated; augmentation may dilute clean recognition or create interference sensitivity. No improvement assumed. Run only after current v26 jobs complete."
+}
