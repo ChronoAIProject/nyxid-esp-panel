@@ -11,6 +11,7 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 import numpy as np
 import tensorflow as tf
 
+from batchnorm_policy import apply_policy, snapshot
 from ambient_sampling import probabilities, coverage, stratified_probabilities
 from negative_sampling import candidate_ends
 from spec_augment import mask_spectrograms
@@ -29,6 +30,7 @@ def main():
     parser.add_argument("--context-frames", type=int, default=FRAMES)
     parser.add_argument("--initial-weights", type=Path)
     parser.add_argument("--freeze-batchnorm", action="store_true")
+    parser.add_argument("--batchnorm-policy", choices=("train", "frozen", "affine"))
     parser.add_argument("--threads", type=int, default=6)
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     parser.add_argument("--prefix-negatives", type=int, default=0,
@@ -42,11 +44,14 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    bn_policy = args.batchnorm_policy or ("frozen" if args.freeze_batchnorm else "train")
+    if args.freeze_batchnorm and bn_policy != "frozen":
+        parser.error("freeze-batchnorm conflicts with the selected policy")
     frames = args.context_frames
     if frames < 150 or frames % 3:
         parser.error("context frames must be >=150 and divisible by 3")
-    if args.initial_weights and (args.architecture not in ("teacher60", "teacher120") or frames != 150 or not args.freeze_batchnorm):
-        parser.error("reconstructed weights require teacher60/teacher120, context150 and frozen batchnorm")
+    if args.initial_weights and (args.architecture not in ("teacher60", "teacher120") or frames != 150 or bn_policy not in ("frozen", "affine")):
+        parser.error("reconstructed weights require teacher60/teacher120, context150 and fixed batchnorm statistics")
     if not 0 <= args.prefix_negatives <= 48:
         parser.error("prefix negatives must be 0..48")
     if args.negative_candidates < 1:
@@ -226,17 +231,13 @@ def main():
             raise ValueError("Unexpected reconstructed initialization weights")
         model.load_weights(args.initial_weights)
         heads[0].set_weights(head_weights)
-    frozen_bn = []
-    if args.freeze_batchnorm:
-        for layer in model.layers:
-            if isinstance(layer, tf.keras.layers.BatchNormalization):
-                layer.trainable = False
-                frozen_bn.append(layer.name)
-        if not frozen_bn:
-            raise ValueError("No batch normalization layers found")
+    bn_layers = apply_policy(model, bn_policy)
+    bn_initial = snapshot(model)
+    frozen_bn = bn_layers if bn_policy == "frozen" else []
     initialization = dict(context_frames=frames, initial_weights_sha256=initial_sha,
                           classifier_reset=bool(args.initial_weights), classifier_initial_sha256=head_sha,
-                          frozen_batchnorm=frozen_bn, seed=726)
+                          frozen_batchnorm=frozen_bn, batchnorm_policy=bn_policy,
+                          batchnorm_initial=bn_initial, seed=726)
     (root/"initialization.json").write_text(json.dumps(initialization, indent=2)+"\n")
     print(json.dumps(initialization), flush=True)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss="binary_crossentropy")
@@ -323,6 +324,13 @@ def main():
                     selected_step = step
                     model.save_weights(root/"best.weights.h5")
     model.load_weights(root/"best.weights.h5")
+    bn_selected = snapshot(model)
+    if bn_policy in ("frozen", "affine") and bn_selected["moving_statistics_sha256"] != bn_initial["moving_statistics_sha256"]:
+        raise ValueError("Fixed batch normalization statistics changed during training")
+    if bn_policy == "affine" and bn_selected["affine_sha256"] == bn_initial["affine_sha256"]:
+        raise ValueError("Affine batch normalization policy did not update any affine weights")
+    if bn_policy == "frozen" and bn_selected["affine_sha256"] != bn_initial["affine_sha256"]:
+        raise ValueError("Frozen batch normalization affine weights changed")
     streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))
@@ -343,7 +351,7 @@ def main():
     converter.representative_dataset = representative
     data = converter.convert()
     (root/"hey_nyx.tflite").write_bytes(data)
-    report = {**initialization, "recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
+    report = {**initialization, "batchnorm_selected": bn_selected, "recipe": "stream-v2", "parameters": model.count_params(), "steps": args.steps,
               "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
               "gpu_details": [tf.config.experimental.get_device_details(g) for g in gpus],
               "selected_step": selected_step,

@@ -1607,3 +1607,26 @@ Piper45.8854%、Kokoro71.25%，1052/2160；dev-other虽零事件，单侧95%上�
 本轮训练、量化及全部预定validation检查结束，无后台任务待完成。
 后续需改变预训练表示/训练来源覆盖与选择方案，而不是继续对同一小样本调阈值；
 Hi ESP比较未完成，总目标active。
+
+
+### v22固定BN统计量、训练仿射参数
+
+此前迁移方案把重建BN的统计量与gamma/beta全部冻结；这保留初始化映射，
+但也不允许各通道仿射适配。新增batchnorm_policy.py的affine策略：使用标准
+BatchNormalization权重格式，将该实例训练调用固定为training=False，仍保留
+可训练gamma/beta；不克隆主模型、不额外初始化随机层，因而保留原随机头与采样。
+标准推理/上游流式克隆仍使用相同权重与不变统计量。原freeze-batchnorm行为保留，
+冲突参数被拒绝。完整训练在所选检查点再次断言统计量未变、仿射参数确实更新。
+
+probe_bn_affine.py仅用两个原training波形特征窗口核验：初始化inference与
+training调用输出逐元素不变；3步后仿射哈希变化、统计量哈希不变；流式克隆
+相位对齐后误差0。最初检查在转换后调用原窗口模型，因上游转换会改源层mode
+而失败；修正为转换前计算窗口参考后通过，失败日志保留。
+诊断报告 `4090-bn-affine-policy-probe.json`，不计为识别质量。
+
+v22已在RTX4090实际启动，同v19的teacher60/context150、原组合人声特征、
+六类ambient分层、prefix16、40k/每5k验证与优化器；BN策略改为affine，
+仍从原重建权重初始化并重置随机头。Dense初始SHA与v19完全相同：
+`a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54`。
+初始化报告 `4090-v22-bn-affine-initialization.json`。后续使用同一密集INT8验证网格，
+开发回归不参与阈值选择，最终集未访问。
