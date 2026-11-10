@@ -309,6 +309,51 @@ Build caches, installed dependencies, redundant old derived features, NVS,
 credentials, device snapshots, private microphone captures and provisioned
 firmware backups stay local.
 
+### Matched physical five-voice pilot
+
+The frozen original equal-mean app (threshold .4) was tested through the Mac
+speaker, between original Hi ESP app measurements. All 30 short trials used
+unchanged source PCM, the same output100/unmuted built-in speaker, and the same
+last-confirmed approximately 0.5 m quiet placement. No microphone audio was
+recorded. All wake calls were stopped immediately and every trial rearmed.
+
+| Arm, in execution order | Positive triggers | Ordinary-negative triggers |
+| --- | --- | --- |
+| Original Hi ESP before | 1 / 5 | 0 / 5 |
+| Original frozen Hey Nyx | 4 / 5 | 0 / 5 |
+| Original Hi ESP after restoration | 2 / 5 | 0 / 5 |
+
+Samantha changes from a Hi ESP miss to a hit across the bracket. Daniel misses
+all three arms; Tessa hits all three. Keep the failed controls and this
+variation explicit. The five already-used synthetic voices are correlated
+development conditions, not fresh human acceptance. Short negative clips do
+not establish continuous false events/hour. These whole-app paths also have
+different detector inputs: default Hi ESP retains AEC/AGC, while experimental
+Hey Nyx reads raw mic from the same producer. This is not a classifier-only
+matched-input comparison or evidence of population parity.
+
+The sanitized per-trial events, source hashes, conservative HTTP latency
+intervals and recovery evidence are in
+[`embedding-acoustic-matched-pilot-v3.json`](../wakeword_p4/results/embedding-acoustic-matched-pilot-v3.json).
+The original Hi ESP app, service selection and idle listener were restored
+and verified. No threshold, waveform speed/level or model was selected from
+these acoustic trials. Conversation completion, echo and long-call acceptance
+remain separate gates.
+
+The small synthetic-only asset includes all 15 unchanged source WAVs, selected
+source provenance and the exact frozen plan. Its public archive and every
+member have been downloaded and verified:
+
+```sh
+python3 research/handoff/fetch_assets.py --output .local/acoustic-pilot \
+  --asset acoustic-matched-pilot-v1.tar.gz
+```
+
+Use [`acoustic_wake_probe.py`](../panel_wake_runtime/acoustic_wake_probe.py)
+on macOS with the documented guarded app-swap procedure. Linux can inspect the
+same assets; its playback system needs a separately frozen protocol. Device
+addresses, credentials and provisioned firmware are deliberately absent.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before

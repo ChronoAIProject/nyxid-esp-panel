@@ -1,7 +1,7 @@
 # GPU research cross-reference
 
 Observed 2026-11-10 at GPU branch commit
-`9c90954`:
+`6a3b08b`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
 Read its subsequent commits at the beginning of each new experiment cycle.
 This is an evidence snapshot, not a claim that the branch remains unchanged.
@@ -14,7 +14,9 @@ The GPU branch imports earlier Mac research from `b59c05e` and now records:
 | Piper CUDA synthesis | 13,920 waveform clips with full file/manifest audit | Broader voice coverage and P4 acceptance |
 | Kokoro synthesis | 3,220 waveform clips / same 28 voices, multi-speed hash/voice audit | More correlated views do not establish new speakers |
 | MicroFrontend features | v2: 68,560 correlated sequences / 17,140 source WAVs | Further training experiments and P4 comparison |
-| TensorFlow GPU training | Initial, aligned and balanced-v2 40,000-step runs complete | All rejected; Qwen source preparation pending synthesis |
+| TensorFlow GPU training | Initial, aligned and balanced-v2 40,000-step runs complete | All rejected; new v3 features audited but training not started |
+| CUDA Qwen synthesis | 360 waveform-QA-accepted clips; 298 training-only ASR-agreement selections | Description conditions are not independent speaker identities; pronunciation uncertainty remains |
+| Real room augmentation | 270 MIT RIR WAVs, pinned revision and hash/format audit | Not yet applied to a candidate; broader noise/negative coverage pending |
 | Reserved negative exposure | 10.745 source hours / 73 speakers, archive/source audit | No model scores read; independent positive holdout still needed |
 | Unscored paired challenge | Corrected 468 WAVs / 26 unused international Kokoro presets; pairing/isolation/ASR screens | Pronunciation uncertainty, acoustic and matched Hi ESP scores |
 
@@ -98,6 +100,26 @@ of the existing 80 ms embedding training features. It preserves original
 sample count/rate/speed and does not fit a room filter from microphone audio.
 This is a separate hypothesis; importing unqualified GPU weights or adding
 more correlated TTS variants is not an acceptance result.
+
+Commit `6a3b08b` adds a primary-source review in
+`research/wakeword_p4/BEST_PRACTICES.md`. The new GPU Qwen source has 72 positive
+and 288 negative clips across 24 description conditions. An independently
+declared training-only ASR policy retains 30 positives and 268 negatives;
+all parent files, labels and exclusions remain auditable. ASR agreement is
+not pronunciation ground truth and can bias accent coverage. The v3 extension
+adds 1,192 correlated feature views while an explicit byte comparison preserves
+the full v2 binary prefix and record list, including validation/regression.
+No v3 training or recognition gain is reported.
+
+The GPU work now prioritizes realistic acoustic and negative coverage before
+another source-only run. Its pinned official-notebook MIT RIR source is audited,
+but not yet used for training. Official precomputed negative features advertise
+a 20 ms step, versus this GPU track's 10 ms step, so they have not been imported.
+Our local 80 ms embedding model is another distinct input contract. Reuse raw
+audio and verify the appropriate frontend rather than interchanging arrays.
+The corrected paired challenge and 10.745-hour negative reserve remain unscored.
+Local work therefore focuses on matched physical speaker-to-panel measurement;
+it does not duplicate the GPU RIR preparation or read its reserved scores.
 
 Continue exchanging results by source commit, model/feature hashes, frozen
 validation policy and downloadable artifacts. Keep the two active research

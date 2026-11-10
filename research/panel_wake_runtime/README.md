@@ -114,6 +114,50 @@ each trial and rejects muted/zero-volume playback before playing. It does not
 change the Mac volume. Keep the same output device and record any externally
 changed level; checking the WAV file alone does not verify physical playback.
 
+### Frozen multi-voice acoustic measurement
+
+`acoustic_wake_probe.py` measures wake events and rearming without recording
+microphone audio or reading conversation history. Its frozen plan binds the
+probe/helper hashes, exact 16 kHz PCM16 WAVs, app identities, default playback
+device/volume, source onset annotations, trial order and observation windows.
+It validates the explicit development service/app at each status poll, stops
+only its own local wake call, and refuses unrelated active calls. A zero exit
+code means the measurement completed, including misses; it is not recognition
+acceptance. `report.json` retains each missed, early or onset-ambiguous event.
+
+The completed five-voice protocol is
+`plans/acoustic-matched-pilot-v1.json`. Fetch its synthetic WAVs with
+`research/handoff/fetch_assets.py --asset acoustic-matched-pilot-v1.tar.gz`.
+The source root is the extracted `workspace/hey-nyx-training-v3` directory.
+On this protocol the original Hi ESP before/after arms trigger 1/5 and 2/5
+positives; the frozen Hey Nyx app triggers 4/5. Each arm triggers 0/5 ordinary
+negatives. All trials rearm. This small reused synthetic whole-app pilot,
+including failed Hi ESP controls and different detector preprocessing paths,
+does not establish Hi ESP equivalence. See the sanitized result linked from
+the [handoff](../handoff/README.md#matched-physical-five-voice-pilot).
+
+For a new environment, freeze a new plan before measuring: explicitly select
+and verify its development device/app, playback device, unchanged source PCM,
+placement and arm order. Do not edit the completed plan or tune thresholds from
+its results. The current playback adapter uses macOS `afplay`/system tools.
+
+```sh
+python research/panel_wake_runtime/acoustic_wake_probe.py \
+  --plan "$WAKE_ACOUSTIC_PLAN" --arm hi_esp \
+  --source-root "$WAKE_SOURCE_ROOT" \
+  --status-url "$DEV_PANEL_STATUS_URL" \
+  --expected-app-sha256 "$ORIGINAL_APP_ELF_SHA256" \
+  --expected-slug "$DEV_SERVICE_SLUG" \
+  --admin-module "$LOCAL_OWNER_ADAPTER" --admin-base "$LOCAL_API_BASE" \
+  --output "$NEW_PRIVATE_OUTPUT"
+```
+
+Run Hi ESP before, then the `hey_nyx` arm through `run_full_app.py` with its
+experimental ELF hash, then Hi ESP after the runner verifies restoration.
+Keep the runner alive until its `restored: true` report. Stop-on-wake measures
+neither complete conversation nor independent continuous false-event exposure;
+use `acoustic_voice_smoke.py` for first-utterance/reply/quiet acceptance.
+
 ### Private input and numerical tracing
 
 For an embedding-runtime diagnostic, set
