@@ -1,0 +1,65 @@
+{
+  "role": "Read-speech validation event source attribution, not phonetic labels or acceptance",
+  "source_sha256": "7e3aaf1fe2ed5c89e5fc5f3def284ab648c1bb0c30790242a975de8dd4832ce6",
+  "source_manifest_sha256": "61b1c334ef1042c458b87aac683efe652b189e049d20fad8f950ba6d50d1dee1",
+  "feature_cache_sha256": "8aadc00dc43a23ab73a5ff4686ac68e103271f62d87c549dd9c910e6a4064772",
+  "report_sha256": "57e7ae07034ad52946e481f7625652535ef6a7c16be3a5329c08ecb51c65ef89",
+  "detector_source_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+  "frontend_source_sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+  "model_sha256": "0af1dc32031d661514bb9e4c5e263406c8cbbd1067d1e1ebb6839b635a1e4103",
+  "threshold": 0.91015625,
+  "context_seconds": 1.7,
+  "events": [
+    {
+      "speaker": "aishell_S0048",
+      "event_seconds": 1207.16,
+      "context_start_sample": 19287360,
+      "context_end_sample": 19314560,
+      "overlapping_sources": [
+        {
+          "path": "wav/validation/S0048/BAC009S0048W0387.wav",
+          "text": "反观 秘鲁 得分 最 高 的 是 八 号 弗里 亚斯 十八 分",
+          "source_sha256": "13571a5f2fbe46905a4a904fd5b1c07da8e00c69cd0341b4ac418ec636fe2421",
+          "start_sample": 19215680,
+          "end_sample": 19331551
+        }
+      ],
+      "entire_context_inside_one_original_utterance": true,
+      "isolated_utterance_controls": [
+        {
+          "path": "wav/validation/S0048/BAC009S0048W0387.wav",
+          "zero_lead_samples": 0,
+          "event_seconds_relative_to_utterance": [
+            6.17
+          ],
+          "peak": 0.9921875000000001,
+          "reset_repeatability_passed": true,
+          "input_pcm_sha256": "c30f1760af99e2640992a82d64908b55105bcec54d04fcf011a4a80d567f1ecd"
+        },
+        {
+          "path": "wav/validation/S0048/BAC009S0048W0387.wav",
+          "zero_lead_samples": 160,
+          "event_seconds_relative_to_utterance": [],
+          "peak": 0.6687500000000001,
+          "reset_repeatability_passed": true,
+          "input_pcm_sha256": "aadcbc6bf856ce8a64e985a85f993af07d0f85f294e25a9d5bf6750f01c3fc3d"
+        },
+        {
+          "path": "wav/validation/S0048/BAC009S0048W0387.wav",
+          "zero_lead_samples": 320,
+          "event_seconds_relative_to_utterance": [
+            6.180000000000001
+          ],
+          "peak": 0.9953125,
+          "reset_repeatability_passed": true,
+          "input_pcm_sha256": "caa862605ca426cab5faa3d9f30aaca6e8f07cadfa080cd802267aea26d41866"
+        }
+      ],
+      "reconstructed_stream_pcm_sha256": "eedcd2331b4859d618b1628978d886ddbad2314cd0fcaf5bd0c8231d769942ae"
+    }
+  ],
+  "all_reported_events_located": true,
+  "independent_final_audio_accessed": false,
+  "labels_or_thresholds_changed": false,
+  "limits": "Conservative preceding context, not exact model attribution or phonetic truth. Source transcripts cannot establish what caused an activation. Original utterance gaps and all events retained. Optional isolated utterance controls reset frontend/model and vary zero lead, so are distinct acoustic/state/phase conditions, not guaranteed reproductions of original continuous scores. Reconstructs only validation speakers with existing reported events; no training or final audio inference."
+}
