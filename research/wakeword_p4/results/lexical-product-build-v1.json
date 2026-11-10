@@ -1,0 +1,76 @@
+{
+  "scope": "Frozen export-only lexical gate; reuse weights without fitting any new data.\n\nOne shared trunk feeds the existing binary sigmoid and existing six-class\nclassifier. Output is binary_probability * lexical_target_probability.\n",
+  "plan_sha256": "1a4f909c75fe6428b73317d43e04dbc91a8b73cb3302fdc59a0f9f6292b8d656",
+  "parameters": 103239,
+  "new_training_steps": 0,
+  "all_source_trunk_weights_exact": true,
+  "trunk_duplicated": false,
+  "composition_max_float_error": 0.0,
+  "lexical_parameters_retained_at_inference": 390,
+  "checkpoints": [
+    {
+      "step": 10000,
+      "model_sha256": "c61af87ec5a4edb57f63ed43a09b756e7d445061517140d5938bd5381fb1297c",
+      "model_bytes": 116392,
+      "input_quantization": [
+        0.0078125,
+        0
+      ],
+      "output_quantization": [
+        0.0038863569498062134,
+        -128
+      ],
+      "float_int8_max_absolute_error": 0.057924941182136536,
+      "float_int8_mean_absolute_error": 0.005523585183211473,
+      "ops": [
+        "RESHAPE",
+        "FULLY_CONNECTED",
+        "MEAN",
+        "DEQUANTIZE",
+        "NEG",
+        "QUANTIZE",
+        "SQUARED_DIFFERENCE",
+        "MEAN",
+        "ADD",
+        "RSQRT",
+        "MUL",
+        "MUL",
+        "ADD",
+        "MUL",
+        "ADD",
+        "FULLY_CONNECTED",
+        "MEAN",
+        "DEQUANTIZE",
+        "NEG",
+        "QUANTIZE",
+        "SQUARED_DIFFERENCE",
+        "MEAN",
+        "ADD",
+        "RSQRT",
+        "MUL",
+        "MUL",
+        "ADD",
+        "MUL",
+        "ADD",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "FULLY_CONNECTED",
+        "SOFTMAX",
+        "STRIDED_SLICE",
+        "MUL"
+      ]
+    }
+  ],
+  "source_files": {
+    "complete.json": "b44b61ec7de3b8c60446f9ce6b4c78b1cc6805627661a06bbc4dbcfc23023628",
+    "step-10000/head.keras": "c4c64442f6db01ebd7fbce276a20c39753a1f6d4e456f32d4e7f8dcd691c4b5d",
+    "training-only-auxiliary.keras": "e3d199bd3e7bf80422c134acce85bb44f061c4872a4d658d9ae2bd3050d29fdf",
+    "step-10000/head.tflite": "f908c50b7d8e2f7c5daedb5f4f9ad58b83478c2f61d643b4cf5537fa205d4e0f",
+    "representatives-training-only.npy": "29f7a355f577e90f2bfbe22f022a4cd4121d2777d0487ad5bef5670bd2b15a95",
+    "step-10000/validation/calibration.json": "db5c2f8d28edb958a293230a827aaaac28925fe5e5f2d5dd41c7315c2d7eae41"
+  },
+  "source_model_bytes": 114464,
+  "model_byte_increase": 1928,
+  "complete_sha256": "2e4cc406383a0106bf1f62b1115910e6086095152be5df249f3c0b5660fe39cd",
+  "accepted": false
+}

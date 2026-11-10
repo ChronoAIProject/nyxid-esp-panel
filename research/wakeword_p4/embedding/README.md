@@ -832,6 +832,6 @@ python research/wakeword_p4/embedding/compose_lexical_gate.py compare \
 ```
 
 Retain the entire confidence/confuser tradeoff and original source result;
-no reserved-final or physical benchmark is authorized by export checks alone.
+No reserved-final or physical readiness is established by export checks alone.
 Source speed, original audio producer/AEC/AGC/FIFO and dining-room board stay
 untouched. No microphone or speaker access is used by this experiment.
