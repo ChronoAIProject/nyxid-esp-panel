@@ -1,0 +1,57 @@
+{
+  "role": "Independent acceptance data usage ledger; frozen input flags describe preparation time only",
+  "datasets": [
+    {
+      "dataset": "independent-librispeech-negatives",
+      "status": "scored-for-both-engines",
+      "prepared_pcm_manifest_sha256": "6c75fa923db7db7179fa28f1f3d075e34d1a4a4bd27e7de3ac8f36ba08e58e21",
+      "preregistration": "4090-hiesp-independent-negative-preregistration-v1.json",
+      "preregistration_sha256": "450459a3d78097f26067ea4a63dd93af845f0ce30b6caba8430cef8939924cbc",
+      "results": {
+        "4090-v30-independent-negatives-v1.json": "e4915ebdf4fe745ad2ce33cd94b65e31676e85e013c956c9e164d7b485448772",
+        "4090-hiesp-independent-negatives-v1.json": "442281bac3e32be2cd34d29c31f2fcdddac29bf27955eba33cfaf86b39f9f59a",
+        "4090-v30-hiesp-independent-negative-comparison-v1.json": "993afe7e215f5e48fda44bcb371428576d93846a1b9728dfd5bda738f81202c4"
+      },
+      "nyx_model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "nyx_threshold": 0.91796875,
+      "hiesp_threshold_requested": 0.63,
+      "usable_as_untouched_future_acceptance": false,
+      "usable_for_training_or_threshold_selection": false
+    },
+    {
+      "dataset": "independent-paired-kokoro-intent",
+      "status": "scored-for-both-engines",
+      "prepared_pcm_manifest_sha256": "9b1a515117e5927011016694859ec914752befe60d268d2ad68d61f31fa02ed8",
+      "preregistration": "4090-v30-independent-paired-preregistration-v1.json",
+      "preregistration_sha256": "222f180a4c8f77e75deeab678f298f10ae53cc73041d9e24de098a798b368e7c",
+      "results": {
+        "4090-v30-independent-paired-v1.json": "0cbcdddd68c169c50afbb049b6f9eca0f2c6163d2da3e99d6389ca00dee72be7",
+        "4090-v30-independent-paired-audit-v1.json": "c277d17d8d80bbdd0061144cb8bff06b038014fe078a34990ecb9035b10378f6"
+      },
+      "nyx_model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "nyx_threshold": 0.91796875,
+      "hiesp_threshold_requested": 0.63,
+      "usable_as_untouched_future_acceptance": false,
+      "usable_for_training_or_threshold_selection": false
+    },
+    {
+      "dataset": "independent-ami-farfield",
+      "status": "scored-for-both-engines",
+      "prepared_pcm_manifest_sha256": "588ff7fbf95a9aaca68d5e9895c975418e60a1f76fcf22862705b02d0adb5c84",
+      "preregistration": "4090-v30-ami-independent-preregistration-v1.json",
+      "preregistration_sha256": "7fa642da5bacd23d0a3d7c28b1647ff6e752de9404ea3c8a1ae0c663346d4d3f",
+      "results": {
+        "4090-v30-ami-independent-negatives-v1.json": "2ada82ea70c97daaf060b57436e6c1e0dda904f3686f8011882a6e72460fb318",
+        "4090-hiesp-ami-independent-negatives-v1.json": "1e34af417bc328f4ad7e6d43a8419c7b236efd369a3f863483940935a9119200",
+        "4090-v30-hiesp-ami-independent-comparison-v1.json": "ef0fa3dd4cd942b81ba7670ab56685e02a15144b08601d34e1da0dea45c67fac"
+      },
+      "nyx_model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "nyx_threshold": 0.91796875,
+      "hiesp_threshold_requested": 0.63,
+      "usable_as_untouched_future_acceptance": false,
+      "usable_for_training_or_threshold_selection": false
+    }
+  ],
+  "policy": "All listed sets have been scored. Do not infer untouched status from immutable preparation manifests with classifiers_scored:false or detector_scores_computed:false. Use committed evaluation/provenance records. Never relabel or filter final sets from outcomes. Later candidate acceptance requires new prospectively frozen independent data.",
+  "full_goal_achieved": false
+}

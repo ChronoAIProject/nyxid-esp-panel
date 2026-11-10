@@ -2946,3 +2946,31 @@ d2d5d32预注册推送后首次评分；Nyx16/16完整完成，无运行失败�
 .local/wakeword/v30-ami-independent-final-v1；每场开头reset重复性已核验。
 官方HiESP同PCM原进程仍运行；此时尚无双方完整审计/质量排名结论。
 全部16场的按会议组结果与原事件时间保留；相关性等名义Poisson限制不变。
+
+## 新AMI独立双引擎检验完整审计：双方均未通过数值上界（2026-11-10）
+
+官方16/16复放完成，无运行失败；预注册比较工具逐流审计全部通过。
+双方原始曝光9.062306666666666h；Nyx1事件，HiESP1事件，观察均0.110347182/h，
+名义Poisson单侧95%上界均0.523472080/h，均高于预注册0.5/h。
+这表示本次有限曝光未证明所需上界，不证明总体实际FAR超过0.5/h。
+Nyx事件IS1009c/1743.56s；官方事件IS1009d/1086.624s，会议不同；
+相同有限样本计数不等于总体FAR相等，也不证明召回/延迟达到HiESP。
+四个重复参与者会议组的曝光与各自数值上界均列出，不能视16场为16组独立人。
+
+已核验全16输入WAV/原PCM/对齐后PCM SHA、原音频保留和零后缀、
+QEMU CRC/stage104/全调用次数/最终512填充、固定代码/阈值/getter/engine SHA、
+Nyx缓存/score SHA、全分数长度、原触发规则重计事件、逐流双方相同曝光。
+没有再次加载模型或重跑Nyx，未筛选/重标/调阈值/追加曝光以改变结论。
+结果4090-hiesp-ami-independent-negatives-v1.json、
+4090-v30-hiesp-ami-independent-comparison-v1.json。
+官方原始inputPCM/UART/per-stream报告另完整复制到
+.local/wakeword/hiesp-ami-independent-final-v1，所有复制文件SHA逐个一致；
+/tmp原始运行也保留，Nyx原始分数位于v30-ami-independent-final-v1。
+
+新增4090-independent-data-usage-ledger-v1.json统一列出三组已评分最终数据：
+LibriSpeech独立负例、Kokoro配对意图片段、AMI独立远场，均不可再称未触碰，
+不可作为后续候选训练/阈值选择或新的独立验收。
+原始输入manifest中的classifiers_scored:false等只描述准备时状态，
+输入哈希冻结后不能用这些历史字段推定当前未评分；以评分报告/使用台账为准。
+此前read-speech名义上界通过与本次远场上界失败完整并列，不合并以挽救失败。
+实际独立发音/端点参考仍缺失，v31拒绝结论不变，整体目标未达成。
