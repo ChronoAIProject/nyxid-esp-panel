@@ -629,3 +629,16 @@ whereas these diagnostics used constant1e-3. Upstream also ramps negative weight
 and filters low-loss samples; these remain separate factors to investigate,
 not claims of a reproduced recipe. Preserve the existing validation criteria
 rather than relaxing the confusing-negative cap to make a candidate pass.
+
+## Upstream learning-rate control
+
+The v4-lr run changes v3's constant1e-3 learning rate to the pinned upstream
+first-stage1e-4 target with20% warmup, one-third hold, and cosine decay.
+Architecture, 8-candidate training-only mining, negative weight20, seed, dataset,
+40k steps and validation criteria stay fixed. All40,000 schedule values were
+compared against the upstream function extracted from its hash-pinned source:
+maximum difference1.3553e-20 due to warmup arithmetic order, passing rtol1e-14.
+The initial bit-exact assertion failed only at that floating-point precision;
+no training source was changed to alter the live run. The reusable verifier
+and `4090-embedding-lr-parity.json` record the comparison. Negative-weight
+scheduling and low-loss filtering are still not reproduced.

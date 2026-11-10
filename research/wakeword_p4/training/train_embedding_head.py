@@ -21,6 +21,18 @@ def head(architecture="original"):
                          nn.ReLU(), nn.Dropout(.1), nn.Linear(64, 64), nn.ReLU(), nn.Linear(64, 1))
 
 
+def learning_rate(step, steps, policy):
+    if policy == "constant":
+        return 1e-3
+    # Pinned upstream auto_train first-stage target and phase lengths.
+    index, warmup, hold = step-1, steps//5, steps//3
+    if index < warmup:
+        return 1e-4*index/warmup
+    if index <= warmup+hold:
+        return 1e-4
+    return float(.5e-4*(1+np.cos(np.pi*(index-warmup-hold)/(steps-warmup-hold))))
+
+
 def event_indices(values, threshold):
     armed, last, result = True, -1000, []
     for n, value in enumerate(values):
@@ -36,10 +48,13 @@ def main():
     p.add_argument("--cache", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--negative-candidates", type=int, default=1, help="Training-only max-score mining per confusing-negative row")
+    p.add_argument("--lr-policy", choices=["constant", "upstream"], default="constant")
     p.add_argument("--head", choices=["original", "upstream-dnn"], default="original")
     p.add_argument("--steps", type=int, default=40000)
     p.add_argument("--eval-interval", type=int, default=10000)
     a = p.parse_args()
+    if a.steps < 10 or a.eval_interval < 1:
+        p.error("Require at least 10 steps and a positive evaluation interval")
     if a.negative_candidates < 1:
         p.error("negative candidates must be positive")
     source_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
@@ -174,6 +189,8 @@ def main():
     model.train()
     for step in range(1, a.steps+1):
         x, y = batch()
+        for group in optimizer.param_groups:
+            group["lr"] = learning_rate(step, a.steps, a.lr_policy)
         optimizer.zero_grad(set_to_none=True)
         loss = (loss_fn(model(x), y)*weights).mean()
         loss.backward()
@@ -190,6 +207,7 @@ def main():
                 torch.save(model.state_dict(), a.output/"best.pt")
     selected = next(r["selected"] for r in history if r["step"] == selected_step)
     report = {"role": "Frozen official pretrained-feature desktop diagnostic, custom MLP head",
+              "lr_policy": a.lr_policy, "lr_target": 1e-4 if a.lr_policy == "upstream" else 1e-3,
               "steps": a.steps, "selected_step": selected_step, "selected_validation": selected,
               "head_parameters": sum(p.numel() for p in model.parameters()), "negative_weight": 20, "negative_candidates": a.negative_candidates,
               "head": str(model), "head_architecture": a.head,
