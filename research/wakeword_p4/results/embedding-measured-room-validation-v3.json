@@ -1,0 +1,3863 @@
+{
+  "scope": "Completed frozen matched measured-room training and original-validation-only comparison. No development/microphone/final or physical acceptance.",
+  "comparison_plan_sha256": "fbfa53433d47ddadfd68f815f465588812b61b06871f977143afd9ea39dca1c1",
+  "comparison_script_sha256": "6701404ffc89dc6d9f599d70ebfc50c88a9e77fa90e89f8cfd2cd184c2f750d4",
+  "heads": [
+    {
+      "head": "temporal",
+      "arm": "control",
+      "plan": "head-temporal-measured-room-control-plan-v1.json",
+      "plan_sha256": "da647c3f4f47fa0317082f5a67dda2fa67a35b146ded27212c7cf6ad3751744a",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-measured-room-control-v1",
+      "selection_sha256": "b5d01d940c404fbc49d83e3994f91cee01b7be1c5ece0da6f16b55365314f87e",
+      "selected_step": 5000,
+      "selected_head_sha256": "90105c7d89b8b8764e43d744d740d42240a72adcad30ad5d429f671e270061e1",
+      "selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9724080267558528,
+        "macro_recall": 0.9409126984126983,
+        "recall_by_engine": {
+          "edge-tts": 0.9017857142857143,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9833333333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 32,
+            "false_rate": 0.11428571428571428
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 8,
+            "false_rate": 0.047619047619047616
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 136,
+            "false_rate": 0.14166666666666666
+          }
+        },
+        "max_corpus_false_rate": 0.14166666666666666,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 95.56249999999977,
+        "positive_latency_p95_ms": 200.06250000000003
+      },
+      "strict_operating_point": false,
+      "training_rows": 50697,
+      "training_frames": 7618929,
+      "representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44",
+      "training_seconds": 32.97707766701933,
+      "checkpoints": [
+        {
+          "step": 2500,
+          "model_sha256": "ac9e7301587dbdc5e031e3d9cb3c42a18cf120ed0fecf7563f3ea9b4871048c5",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.25,
+            "positive_variants": 1196,
+            "recall": 0.9682274247491639,
+            "macro_recall": 0.9398710317460317,
+            "recall_by_engine": {
+              "edge-tts": 0.9017857142857143,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.978125
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 33,
+                "false_rate": 0.11785714285714285
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 4,
+                "false_rate": 0.023809523809523808
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 16,
+                "false_rate": 0.1
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 13,
+                "false_rate": 0.08125
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 117,
+                "false_rate": 0.121875
+              }
+            },
+            "max_corpus_false_rate": 0.121875,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 82.68750000000003,
+            "positive_latency_p95_ms": 187.18749999999983
+          }
+        },
+        {
+          "step": 5000,
+          "model_sha256": "90105c7d89b8b8764e43d744d740d42240a72adcad30ad5d429f671e270061e1",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.4,
+            "positive_variants": 1196,
+            "recall": 0.9724080267558528,
+            "macro_recall": 0.9409126984126983,
+            "recall_by_engine": {
+              "edge-tts": 0.9017857142857143,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9833333333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 32,
+                "false_rate": 0.11428571428571428
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 8,
+                "false_rate": 0.047619047619047616
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 17,
+                "false_rate": 0.10625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 5,
+                "false_rate": 0.10416666666666667
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 136,
+                "false_rate": 0.14166666666666666
+              }
+            },
+            "max_corpus_false_rate": 0.14166666666666666,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 95.56249999999977,
+            "positive_latency_p95_ms": 200.06250000000003
+          }
+        },
+        {
+          "step": 7500,
+          "model_sha256": "70176d3acc0db527ed0b1bdca8308f2d54dc70ba719e3a873462f4678e079a06",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.15,
+            "positive_variants": 1196,
+            "recall": 0.9724080267558528,
+            "macro_recall": 0.9409126984126983,
+            "recall_by_engine": {
+              "edge-tts": 0.9017857142857143,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9833333333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 35,
+                "false_rate": 0.125
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 19,
+                "false_rate": 0.11875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 20,
+                "false_rate": 0.125
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 125,
+                "false_rate": 0.13020833333333334
+              }
+            },
+            "max_corpus_false_rate": 0.13020833333333334,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 71.06250000000003,
+            "positive_latency_p95_ms": 175.56249999999983
+          }
+        },
+        {
+          "step": 10000,
+          "model_sha256": "806386abc73410f7c8ce9c56bfb2ec16732f34ffecbbc443ed81c85e23862663",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.25,
+            "positive_variants": 1196,
+            "recall": 0.9698996655518395,
+            "macro_recall": 0.9387103174603174,
+            "recall_by_engine": {
+              "edge-tts": 0.8928571428571429,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.98125
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 111,
+                "false_rate": 0.115625
+              }
+            },
+            "max_corpus_false_rate": 0.115625,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 90.25000000000038,
+            "positive_latency_p95_ms": 196.25000000000003
+          }
+        }
+      ]
+    },
+    {
+      "head": "temporal",
+      "arm": "measured",
+      "plan": "head-temporal-measured-room-measured-plan-v1.json",
+      "plan_sha256": "2fb625ebf34525067f3a78ea965561a013778a04e99cc29c15f7940cf38428f3",
+      "initial_weights": "head-temporal32-dropout-v1/step-20000/head.keras",
+      "initial_weights_sha256": "9776963a0d6fde3936df527e8775501166819338b90e4b489b67ac3fc1bd3ced",
+      "output": "head-temporal-measured-room-measured-v1",
+      "selection_sha256": "28f95339f84d4ed9a4b989e533777091a9a1390169a744338d8c2f52c504c58a",
+      "selected_step": 5000,
+      "selected_head_sha256": "6376be053e88eb6b63c159670d37abd68f76accc7cc64b91ba8ae124cf395e80",
+      "selected": {
+        "threshold": 0.5,
+        "positive_variants": 1196,
+        "recall": 0.9665551839464883,
+        "macro_recall": 0.9347222222222223,
+        "recall_by_engine": {
+          "edge-tts": 0.875,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9791666666666666
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 31,
+            "false_rate": 0.11071428571428571
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 7,
+            "false_rate": 0.041666666666666664
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 15,
+            "false_rate": 0.09375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 3,
+            "false_rate": 0.0625
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 128,
+            "false_rate": 0.13333333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.13333333333333333,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 120.00000000000011,
+        "positive_latency_p95_ms": 220.75000000000023
+      },
+      "strict_operating_point": false,
+      "training_rows": 50697,
+      "training_frames": 7618929,
+      "representatives_sha256": "6b25856e1afe5adcd595ecdab6ee272ca1a9cf3a209b37ba3b07e2a33d958c44",
+      "training_seconds": 34.956747542019,
+      "checkpoints": [
+        {
+          "step": 2500,
+          "model_sha256": "880ff685cc395c45688fa48127330aea8dd98e5d39bb6c4c683beb47f0c6469c",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.9481605351170569,
+            "macro_recall": 0.9221130952380954,
+            "recall_by_engine": {
+              "edge-tts": 0.8928571428571429,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 0.96875,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.9572916666666667
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 22,
+                "false_rate": 0.07857142857142857
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 3,
+                "false_rate": 0.017857142857142856
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 5,
+                "false_rate": 0.03125
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 93,
+                "false_rate": 0.096875
+              }
+            },
+            "max_corpus_false_rate": 0.096875,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 1,
+            "continuous_events_per_hour": 0.13691544710499892,
+            "continuous_events_per_hour_upper_95": 0.6495083315409862,
+            "positive_latency_median_ms": 162.68750000000009,
+            "positive_latency_p95_ms": 267.1874999999999
+          }
+        },
+        {
+          "step": 5000,
+          "model_sha256": "6376be053e88eb6b63c159670d37abd68f76accc7cc64b91ba8ae124cf395e80",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.5,
+            "positive_variants": 1196,
+            "recall": 0.9665551839464883,
+            "macro_recall": 0.9347222222222223,
+            "recall_by_engine": {
+              "edge-tts": 0.875,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 1.0,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9791666666666666
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 7,
+                "false_rate": 0.041666666666666664
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 15,
+                "false_rate": 0.09375
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 128,
+                "false_rate": 0.13333333333333333
+              }
+            },
+            "max_corpus_false_rate": 0.13333333333333333,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 120.00000000000011,
+            "positive_latency_p95_ms": 220.75000000000023
+          }
+        },
+        {
+          "step": 7500,
+          "model_sha256": "97e2a194f0ae445538c10b6b3f3d554e60251d3aefab81580b9dff711dae311c",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.5,
+            "positive_variants": 1196,
+            "recall": 0.9448160535117057,
+            "macro_recall": 0.9140079365079365,
+            "recall_by_engine": {
+              "edge-tts": 0.8214285714285714,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 0.96875,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.9604166666666667
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 22,
+                "false_rate": 0.07857142857142857
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 2,
+                "false_rate": 0.011904761904761904
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 8,
+                "false_rate": 0.05
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 91,
+                "false_rate": 0.09479166666666666
+              }
+            },
+            "max_corpus_false_rate": 0.09479166666666666,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 1,
+            "continuous_events_per_hour": 0.13691544710499892,
+            "continuous_events_per_hour_upper_95": 0.6495083315409862,
+            "positive_latency_median_ms": 151.0625000000001,
+            "positive_latency_p95_ms": 266.0343749999999
+          }
+        },
+        {
+          "step": 10000,
+          "model_sha256": "a4df98b5618424b338b30f7129d6fc239e1d5872629c00a29aeedb9a5009f944",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.5,
+            "positive_variants": 1196,
+            "recall": 0.947324414715719,
+            "macro_recall": 0.9209424603174604,
+            "recall_by_engine": {
+              "edge-tts": 0.8571428571428571,
+              "kokoro": 0.9583333333333334,
+              "macos-say": 0.96875,
+              "openai-tts": 0.8611111111111112,
+              "piper": 0.959375
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 21,
+                "false_rate": 0.075
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 4,
+                "false_rate": 0.023809523809523808
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 7,
+                "false_rate": 0.04375
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 85,
+                "false_rate": 0.08854166666666667
+              }
+            },
+            "max_corpus_false_rate": 0.08854166666666667,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 152.37500000000014,
+            "positive_latency_p95_ms": 255.56249999999991
+          }
+        }
+      ]
+    },
+    {
+      "head": "dense",
+      "arm": "control",
+      "plan": "head-dense-measured-room-control-plan-v1.json",
+      "plan_sha256": "d932ca3c2f38e28dee537b2d57bf1cc71b54eefc25ead6c403bea69893bf1e11",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-measured-room-control-v1",
+      "selection_sha256": "6bc30bc31df84f5114a7565df62b22d013b0e8405cbd7a4ab43e1bf1c9d5e349",
+      "selected_step": 10000,
+      "selected_head_sha256": "395b3e6c35466a3477d250f6f1e9cfc3672bf6417b2e37c480b5184419b0bd97",
+      "selected": {
+        "threshold": 0.6,
+        "positive_variants": 1196,
+        "recall": 0.9481605351170569,
+        "macro_recall": 0.9244146825396825,
+        "recall_by_engine": {
+          "edge-tts": 0.8571428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8055555555555556,
+          "piper": 0.959375
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 32,
+            "false_rate": 0.11428571428571428
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 1,
+            "false_rate": 0.005952380952380952
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 100,
+            "false_rate": 0.10416666666666667
+          }
+        },
+        "max_corpus_false_rate": 0.11428571428571428,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 175.56249999999983,
+        "positive_latency_p95_ms": 287.8750000000001
+      },
+      "strict_operating_point": false,
+      "training_rows": 50697,
+      "training_frames": 7618929,
+      "representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "training_seconds": 19.869285625056364,
+      "checkpoints": [
+        {
+          "step": 2500,
+          "model_sha256": "cd4eb5cd9f0f2fdcf8020ae41765671877a87762a64d08d6eeb17e4272b52cee",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.927257525083612,
+            "macro_recall": 0.9216369047619049,
+            "recall_by_engine": {
+              "edge-tts": 0.8571428571428571,
+              "kokoro": 1.0,
+              "macos-say": 0.984375,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.9333333333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 13,
+                "false_rate": 0.08125
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 13,
+                "false_rate": 0.08125
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 8,
+                "false_rate": 0.16666666666666666
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 80,
+                "false_rate": 0.08333333333333333
+              }
+            },
+            "max_corpus_false_rate": 0.16666666666666666,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 197.50000000000023,
+            "positive_latency_p95_ms": 312.3750000000003
+          }
+        },
+        {
+          "step": 5000,
+          "model_sha256": "ddb3a9fce883078f4b50bba0359e5f68d1ac1f05d62bcf8f30788c1346d96a9e",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.9306020066889632,
+            "macro_recall": 0.9108134920634919,
+            "recall_by_engine": {
+              "edge-tts": 0.8214285714285714,
+              "kokoro": 1.0,
+              "macos-say": 0.984375,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.9427083333333334
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 26,
+                "false_rate": 0.09285714285714286
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 2,
+                "false_rate": 0.011904761904761904
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 10,
+                "false_rate": 0.0625
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 13,
+                "false_rate": 0.08125
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 3,
+                "false_rate": 0.0625
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 90,
+                "false_rate": 0.09375
+              }
+            },
+            "max_corpus_false_rate": 0.09375,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 189.99999999999994,
+            "positive_latency_p95_ms": 300.7500000000003
+          }
+        },
+        {
+          "step": 7500,
+          "model_sha256": "eedc352c556156c3f9939a134c8d8c29dc74de55e13cb71b2772746adac41dfc",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.9448160535117057,
+            "macro_recall": 0.9204265873015872,
+            "recall_by_engine": {
+              "edge-tts": 0.8392857142857143,
+              "kokoro": 1.0,
+              "macos-say": 1.0,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.9572916666666667
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 31,
+                "false_rate": 0.11071428571428571
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 1,
+                "false_rate": 0.005952380952380952
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 99,
+                "false_rate": 0.103125
+              }
+            },
+            "max_corpus_false_rate": 0.11071428571428571,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 175.56249999999983,
+            "positive_latency_p95_ms": 290.37500000000006
+          }
+        },
+        {
+          "step": 10000,
+          "model_sha256": "395b3e6c35466a3477d250f6f1e9cfc3672bf6417b2e37c480b5184419b0bd97",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.9481605351170569,
+            "macro_recall": 0.9244146825396825,
+            "recall_by_engine": {
+              "edge-tts": 0.8571428571428571,
+              "kokoro": 1.0,
+              "macos-say": 1.0,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.959375
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 32,
+                "false_rate": 0.11428571428571428
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 1,
+                "false_rate": 0.005952380952380952
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 1,
+                "false_rate": 0.010416666666666666
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 14,
+                "false_rate": 0.0875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 5,
+                "false_rate": 0.10416666666666667
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 100,
+                "false_rate": 0.10416666666666667
+              }
+            },
+            "max_corpus_false_rate": 0.11428571428571428,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 3,
+            "continuous_events_per_hour": 0.41074634131499677,
+            "continuous_events_per_hour_upper_95": 1.0615953502205029,
+            "positive_latency_median_ms": 175.56249999999983,
+            "positive_latency_p95_ms": 287.8750000000001
+          }
+        }
+      ]
+    },
+    {
+      "head": "dense",
+      "arm": "measured",
+      "plan": "head-dense-measured-room-measured-plan-v1.json",
+      "plan_sha256": "b74c3b7913d53abf356cf6da4bac9f8b1f3b7ca9f6895e5362f903f70afd9152",
+      "initial_weights": "head-environment-expanded-v2/step-10000/head.keras",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "output": "head-dense-measured-room-measured-v1",
+      "selection_sha256": "b08b79b4721efed485f5dd75c97c320a0e4c54d522cefca6ce5b18d4f9ee96e0",
+      "selected_step": 7500,
+      "selected_head_sha256": "f502018e504568769e9e804072c4233af8adadfb3c2fde667f440254401c7890",
+      "selected": {
+        "threshold": 0.6,
+        "positive_variants": 1196,
+        "recall": 0.939799331103679,
+        "macro_recall": 0.9247619047619049,
+        "recall_by_engine": {
+          "edge-tts": 0.8571428571428571,
+          "kokoro": 1.0,
+          "macos-say": 0.984375,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.9489583333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 29,
+            "false_rate": 0.10357142857142858
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 1,
+            "false_rate": 0.005952380952380952
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 11,
+            "false_rate": 0.06875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 4,
+            "false_rate": 0.08333333333333333
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 97,
+            "false_rate": 0.10104166666666667
+          }
+        },
+        "max_corpus_false_rate": 0.10357142857142858,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 175.56249999999983,
+        "positive_latency_p95_ms": 290.37500000000006
+      },
+      "strict_operating_point": false,
+      "training_rows": 50697,
+      "training_frames": 7618929,
+      "representatives_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "training_seconds": 20.68556979193818,
+      "checkpoints": [
+        {
+          "step": 2500,
+          "model_sha256": "287b0ff87f51d949c66444b16f3c5cb6db92355877e323320949af56a3979c28",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.7,
+            "positive_variants": 1196,
+            "recall": 0.8904682274247492,
+            "macro_recall": 0.9021428571428572,
+            "recall_by_engine": {
+              "edge-tts": 0.8482142857142857,
+              "kokoro": 1.0,
+              "macos-say": 0.9375,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.8916666666666667
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 25,
+                "false_rate": 0.08928571428571429
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 5,
+                "false_rate": 0.02976190476190476
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 9,
+                "false_rate": 0.05625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 5,
+                "false_rate": 0.10416666666666667
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 60,
+                "false_rate": 0.0625
+              }
+            },
+            "max_corpus_false_rate": 0.10416666666666667,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 220.75000000000023,
+            "positive_latency_p95_ms": 332.7499999999997
+          }
+        },
+        {
+          "step": 5000,
+          "model_sha256": "b1cdf118d4490a632c0dbcd70cbaba93fd179eb84dab9b284c3d5d3865d6351c",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.7,
+            "positive_variants": 1196,
+            "recall": 0.9138795986622074,
+            "macro_recall": 0.9082242063492064,
+            "recall_by_engine": {
+              "edge-tts": 0.8303571428571429,
+              "kokoro": 1.0,
+              "macos-say": 0.984375,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.9208333333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 23,
+                "false_rate": 0.08214285714285714
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 2,
+                "false_rate": 0.011904761904761904
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 2,
+                "false_rate": 0.041666666666666664
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 81,
+                "false_rate": 0.084375
+              }
+            },
+            "max_corpus_false_rate": 0.084375,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 219.50000000000003,
+            "positive_latency_p95_ms": 323.9375
+          }
+        },
+        {
+          "step": 7500,
+          "model_sha256": "f502018e504568769e9e804072c4233af8adadfb3c2fde667f440254401c7890",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.6,
+            "positive_variants": 1196,
+            "recall": 0.939799331103679,
+            "macro_recall": 0.9247619047619049,
+            "recall_by_engine": {
+              "edge-tts": 0.8571428571428571,
+              "kokoro": 1.0,
+              "macos-say": 0.984375,
+              "openai-tts": 0.8333333333333334,
+              "piper": 0.9489583333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 29,
+                "false_rate": 0.10357142857142858
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 1,
+                "false_rate": 0.005952380952380952
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 11,
+                "false_rate": 0.06875
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 12,
+                "false_rate": 0.075
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 4,
+                "false_rate": 0.08333333333333333
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 97,
+                "false_rate": 0.10104166666666667
+              }
+            },
+            "max_corpus_false_rate": 0.10357142857142858,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 175.56249999999983,
+            "positive_latency_p95_ms": 290.37500000000006
+          }
+        },
+        {
+          "step": 10000,
+          "model_sha256": "879cd70f01fda984e6ccccecb99b3897b720c4710102f6525ce62919b968256e",
+          "selection": "continuous_diagnostic",
+          "strict_operating_point": false,
+          "selected": {
+            "threshold": 0.7,
+            "positive_variants": 1196,
+            "recall": 0.9255852842809364,
+            "macro_recall": 0.9082242063492064,
+            "recall_by_engine": {
+              "edge-tts": 0.8303571428571429,
+              "kokoro": 1.0,
+              "macos-say": 0.96875,
+              "openai-tts": 0.8055555555555556,
+              "piper": 0.9364583333333333
+            },
+            "negative_variants": 1872,
+            "confusing_corpora": {
+              "edge-tts:edge-corpus": {
+                "variants": 280,
+                "false_variants": 28,
+                "false_rate": 0.1
+              },
+              "edge-tts:edge-partials": {
+                "variants": 168,
+                "false_variants": 1,
+                "false_rate": 0.005952380952380952
+              },
+              "kokoro:kokoro-corpus": {
+                "variants": 160,
+                "false_variants": 10,
+                "false_rate": 0.0625
+              },
+              "kokoro:kokoro-partials": {
+                "variants": 96,
+                "false_variants": 0,
+                "false_rate": 0.0
+              },
+              "macos-say:mac-corpus": {
+                "variants": 160,
+                "false_variants": 10,
+                "false_rate": 0.0625
+              },
+              "openai-tts:openai-corpus": {
+                "variants": 48,
+                "false_variants": 2,
+                "false_rate": 0.041666666666666664
+              },
+              "piper:synthetic": {
+                "variants": 960,
+                "false_variants": 84,
+                "false_rate": 0.0875
+              }
+            },
+            "max_corpus_false_rate": 0.1,
+            "continuous_hours": 7.303777777777778,
+            "continuous_events": 2,
+            "continuous_events_per_hour": 0.27383089420999784,
+            "continuous_events_per_hour_upper_95": 0.8619913986194038,
+            "positive_latency_median_ms": 209.12500000000023,
+            "positive_latency_p95_ms": 313.62500000000006
+          }
+        }
+      ]
+    }
+  ],
+  "equal_means": {
+    "control": {
+      "scope": "Validation-only frozen equal mean; no development/reserved/physical acceptance",
+      "plan_sha256": "72921d0c9661c1205c609e15109684754c0d1321caffcb8ba7bc2a97bf1d4ec3",
+      "members": [
+        {
+          "checkpoint": "head-dense-measured-room-control-v1/step-10000",
+          "head_sha256": "395b3e6c35466a3477d250f6f1e9cfc3672bf6417b2e37c480b5184419b0bd97",
+          "calibration_sha256": "035eb6f23dfad2e35bd5be433af2c4d59670ebe17cd5360ae2507aa4dbdcf849",
+          "details_sha256": "9dceffe9cdc4190de63258e55b72cff731e75d4eb1007967a47e2f3f6ae6051f",
+          "continuous_scores": {
+            "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "2c41e6cb6ddb0340bb58e6a07a2f727dab2efb381ae17475e869c4d140afb211",
+            "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+            "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "fa7e2ae93d0df03e1913dc9761bec58c071a107bb5d357032fdd5dec46da4843",
+            "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "92a3d9c577dc9fba38f3f98eacffa11940beb7e861b1f01690ba8aa9fdf13dcb",
+            "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "fdd333503759f9a024c9b9cd25d580596663376fed27beb8cb6cc128dcb1f400",
+            "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "bb048e3258f57247c5c1a27be74e874ad650d0bda7297b87aebcc1f65d7c28d1",
+            "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "9289de57717d32d1018a4d9eb8dbc84a8522b25be964509b4b98ded7d9dcbb14",
+            "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "05f765e6eaf7770bca78ea05eecf009f04be529e2443141336afe22d336b51d0",
+            "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "eaa8de8a79acb619ef97be747f057e3a82908d2fb37cb08990ef91a906798f36",
+            "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "85ed8b74955a440ec3e8462968c4a4a1751f24ad5dc39c92c9d05299d4d4c299",
+            "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "77015dc281e52cc57be5c4f39632a2dded20c5d8c27ca8d70ee97fe435d0b361",
+            "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "30c65e8853c570bb03860f2e35f605ef317a3bd22f30170c7fb433358d934e21",
+            "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "6a29ef28a44fddecf7e6982c31161f9281c1745fa2f38a76eb719efeb5cc47fb",
+            "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "d32acc1eaaaf846dc7fa5b2487dc754ea1f4cdd01608977097043b242a9f0141",
+            "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "68e00313925e81c80a2e4cecb3f8641c61eaf50bf6ba0cab5b51b50da76c6e62",
+            "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "a1ff9270f90afa1e40fb8d3648a8a406b8b9cec9fff7c5f72bb4d60a917c7f1c",
+            "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "cfc30dc413033760a2f5c3773098b4f77ce394a7cec42244e2c3855425982c4c",
+            "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "7ca852c747f0eca71d89eb6ca70a436a5e78207dc59136006f3319806ff75896",
+            "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "e43d242ca42c24f6fae9d26a9b17ab2dedc8990c6271cb1f451efdca5df7c8c0",
+            "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "370f4cbfdb1fe3ece15fb40c555c028e26c956b185a780ae7620cbe104422212",
+            "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "19a444db7d3f8b58be0e8efdfe4ac9fe68ed42e2db7ffbd5b4eb4faa32b84aa6",
+            "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "8fd5a26482ce5da0f65df388b4e871c1065b94c1048ef9e0b81d3bd76570d050",
+            "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "6c15ee925696338222813a6f243bdceafe938c17e9f5e4955637631d60a4c525",
+            "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "0ea5ac0b74f6a8baec9a9c4fe1cebb9969d072ad3734bfd286251d37a90e4371",
+            "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "0377312764039e3d735058f746ad1b718766345c3e27e660d32c5ce912dc9b7b",
+            "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "97a95cbab0feae35e0815b4cbd94ea7605e23fe419ad40e393a8c11a81476268",
+            "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "dc33eced9bc3d52c1ae723c2da5e3adddc76c493c3133b8cd0670b220d51b02d",
+            "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "85b4fe6239ae1d042f44eb5f692b6473522ac5cf0fb927240330a23a136c93d0",
+            "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "3145b77b9f912e0617c273f36d373e282475dec8d6337ede2117523ae048fc2a",
+            "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "9420e709c353badc854f444ad651f11ec8b45f4cf669e2984be54162f462fd47",
+            "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "fe9d4eff1bb2e43a2a683ab367adf9c6d8b332b48ae42c092c5750227c794245",
+            "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "4c1ebc8a3d53f3077462ee7626f334b39ade422bec7129203d52788a7c4de512",
+            "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "fe59ecd25c868175899f623a5b565bb6f8d024b8c222bae72cf13873945cbee0",
+            "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "27343cc3d1f3adbc3d925d6bcd793ca380615c783cdfb9a564d2d6c7983fa934",
+            "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "6dc1b18dfdf83d07d74f979d5a871a692bdb0a46ed5f8ab406e44fbfd54f9ef6"
+          }
+        },
+        {
+          "checkpoint": "head-temporal-measured-room-control-v1/step-05000",
+          "head_sha256": "90105c7d89b8b8764e43d744d740d42240a72adcad30ad5d429f671e270061e1",
+          "calibration_sha256": "2ed03c64a4190d0e3ecd524699ea1631c570e8a6a31d6ada63104e070b3fce62",
+          "details_sha256": "21c91914dc8dbaa2054bdde9cfcc545b57f5f76172930c3269dd551c99009bc7",
+          "continuous_scores": {
+            "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "d2f8015e5fffe038b9a303eb3d087e376d67692875b31c036121d4d8bb455a65",
+            "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "45c037377697e6f2103a138bbf474173c9ea7d678bd223238cf582b0b1f7146b",
+            "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "8b074f991b7ba426a7676d182cc6581299f58ade692436e5bc50e575fe2973e4",
+            "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "0d1e9b53871c37ab7870ab2a668a6a19154ac8c62e74837aa044e14e4376badc",
+            "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "e974aa83f3f21cf78ec6b468aeaa92c936c98c13c7ce00667e6fc2c670689ad0",
+            "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "563f3e769a97fe9c858a8da4c4ef1bfceb84b4fcf7d15ba422394158c29f0dda",
+            "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "d2e767567a7139995ccd683b9179fbc249270bb6bc00c9467d498335bb9f0aa9",
+            "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "e8f843a7997b6a3404951a66f6c999f37dd2e6d4c3f554288f88e289f968f01e",
+            "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "0ed738fed91b8f865017d6fd5fb858cb78cf7956c6697e991d0d159dc69b718c",
+            "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "3d1cbb5b34925549f47c1eb560fa9c0456425787a80c02bc1e211351b5fafa88",
+            "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "4ec0d128cb59c4a9eb57fc4458800ac25bd1b39171ef9f0aa2b7bb9a58e06df4",
+            "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "d5c121530feff6cb535e5a59c2bcc003ae8f4e350c3893af4cdd26528f0ec22a",
+            "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "d063b2983cc0886461475ce3302a21e4c2d669d624ce7246c7e0ff3cabb501d8",
+            "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "5100567e9032376a703714cf8639c5137df82d227a40a76a8c74170301d06a14",
+            "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "05913de8be6bf8c982d47137403fa7f75894997ec5712ea080bb84c56340022e",
+            "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "df28d9afea677b4e083ccc4d43d7339e02656fd445e30f888775d55bdb130299",
+            "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "849ebe61fa39b1d75d059cf7900e8f31e3532f6d993ee0b218689d6b652997f6",
+            "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "e4ac766e87c1db99605b337d08c3bbbccfd7331115ee23b4c801084c9dd7a61e",
+            "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "48cf5734fa2d815e9d1b55c84d4f95b46bae5b2a40604571d9c7ee9f99987180",
+            "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "17a2e40045610d85501c7d4c36a243a21b4cb1ef9e0ef953de1d896eee32a389",
+            "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "012d8a033f465a36be1f13212c0facbdf626f5c84488bce1eea5269e0756d1ec",
+            "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "154d8e328bdb2c9b34acbe74a5c225c9adf7fe3375b42c249784a909a0e55114",
+            "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "061849493b65fa037e1471e3db9fd93e29c634cad26cc19f821809089299d5a4",
+            "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "7a6b62778a2925a247ee2ac454b94216f1223d12ac477e0d5f497f97ef2c120e",
+            "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "794aff112353b6d3ba5aa3fcf8af0bccc67501087abbfede69e5e222220a3ae2",
+            "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "b33852f31ec35e25b4ca30216b2d0db14f4975342096aad5c7afacaaba01002a",
+            "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "bcbb169078b86e12f0373b123b5a5d0366d4b2dc1923671181d10c02b0336c9a",
+            "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "6d36e83b78d518ac9a5389d6705869be6148aa56a4bd971b500b6b31e1d7f2e0",
+            "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "ab54ed983cb2cb4a8f62bd199d17cc8e5d69c6c35fcfd05fb6028487d4078dd2",
+            "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "a3c2097a46a7016d65c2b6f767e41c9aa4ddb43b73ba544fa74cc3ec5b385c48",
+            "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "312f2ab902415dcc8de51aba8738afbcaa0e06e582eb8eb278273fd7603ef819",
+            "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "90f46d3ad1ef035f33e9146b31c5f822d53571c0a1b724c5762c555c15a33d8c",
+            "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "ea753fa87f6dae90c47fcea71db7ef56d5b32a25548896fec4b176efb9e3d93a",
+            "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "444ed9cffa8c14e44ad99b8e9e3bdcb5b11ee1baabb262540b9dd3dd69974679",
+            "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "01b52593f80d96bc5b5b9f50f89b3cbc910cfb158b75d90b79e756356a87eb10"
+          }
+        }
+      ],
+      "selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9749163879598662,
+        "macro_recall": 0.9528174603174604,
+        "recall_by_engine": {
+          "edge-tts": 0.9196428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9833333333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 36,
+            "false_rate": 0.12857142857142856
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 6,
+            "false_rate": 0.03571428571428571
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 16,
+            "false_rate": 0.1
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 19,
+            "false_rate": 0.11875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 130,
+            "false_rate": 0.13541666666666666
+          }
+        },
+        "max_corpus_false_rate": 0.13541666666666666,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 116.87500000000006,
+        "positive_latency_p95_ms": 220.75000000000023
+      },
+      "strict_operating_point": false,
+      "grid": [
+        {
+          "threshold": 0.05,
+          "positive_variants": 1196,
+          "recall": 0.9941471571906354,
+          "macro_recall": 0.9739980158730159,
+          "recall_by_engine": {
+            "edge-tts": 0.9821428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8888888888888888,
+            "piper": 0.9989583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 83,
+              "false_rate": 0.29642857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 38,
+              "false_rate": 0.2261904761904762
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 30,
+              "false_rate": 0.1875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 11,
+              "false_rate": 0.11458333333333333
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 47,
+              "false_rate": 0.29375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 16,
+              "false_rate": 0.3333333333333333
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 237,
+              "false_rate": 0.246875
+            }
+          },
+          "max_corpus_false_rate": 0.3333333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 79,
+          "continuous_events_per_hour": 10.816320321294915,
+          "continuous_events_per_hour_upper_95": 13.042322912234356,
+          "positive_latency_median_ms": 3.937499999999705,
+          "positive_latency_p95_ms": 112.21249999999972
+        },
+        {
+          "threshold": 0.1,
+          "positive_variants": 1196,
+          "recall": 0.9916387959866221,
+          "macro_recall": 0.9702182539682539,
+          "recall_by_engine": {
+            "edge-tts": 0.9642857142857143,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8888888888888888,
+            "piper": 0.9979166666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 69,
+              "false_rate": 0.24642857142857144
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 24,
+              "false_rate": 0.14285714285714285
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 26,
+              "false_rate": 0.1625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 6,
+              "false_rate": 0.0625
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 33,
+              "false_rate": 0.20625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 12,
+              "false_rate": 0.25
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 203,
+              "false_rate": 0.21145833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.25,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 38,
+          "continuous_events_per_hour": 5.202786989989959,
+          "continuous_events_per_hour_upper_95": 6.8195480719152535,
+          "positive_latency_median_ms": 29.21875000000007,
+          "positive_latency_p95_ms": 129.12500000000017
+        },
+        {
+          "threshold": 0.15,
+          "positive_variants": 1196,
+          "recall": 0.9874581939799331,
+          "macro_recall": 0.9590972222222222,
+          "recall_by_engine": {
+            "edge-tts": 0.9375,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.996875
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 59,
+              "false_rate": 0.21071428571428572
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 19,
+              "false_rate": 0.1130952380952381
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 22,
+              "false_rate": 0.1375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 4,
+              "false_rate": 0.041666666666666664
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 30,
+              "false_rate": 0.1875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 10,
+              "false_rate": 0.20833333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 180,
+              "false_rate": 0.1875
+            }
+          },
+          "max_corpus_false_rate": 0.21071428571428572,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 17,
+          "continuous_events_per_hour": 2.3275626007849817,
+          "continuous_events_per_hour_upper_95": 3.4912384876273728,
+          "positive_latency_median_ms": 40.000000000000036,
+          "positive_latency_p95_ms": 141.99999999999991
+        },
+        {
+          "threshold": 0.2,
+          "positive_variants": 1196,
+          "recall": 0.9841137123745819,
+          "macro_recall": 0.9582638888888889,
+          "recall_by_engine": {
+            "edge-tts": 0.9375,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9927083333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 54,
+              "false_rate": 0.19285714285714287
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 14,
+              "false_rate": 0.08333333333333333
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 21,
+              "false_rate": 0.13125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 3,
+              "false_rate": 0.03125
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 27,
+              "false_rate": 0.16875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 10,
+              "false_rate": 0.20833333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 171,
+              "false_rate": 0.178125
+            }
+          },
+          "max_corpus_false_rate": 0.20833333333333334,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 8,
+          "continuous_events_per_hour": 1.0953235768399914,
+          "continuous_events_per_hour_upper_95": 1.9763265195601492,
+          "positive_latency_median_ms": 50.37499999999984,
+          "positive_latency_p95_ms": 153.6249999999999
+        },
+        {
+          "threshold": 0.25,
+          "positive_variants": 1196,
+          "recall": 0.9824414715719063,
+          "macro_recall": 0.9546924603174602,
+          "recall_by_engine": {
+            "edge-tts": 0.9196428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9927083333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 48,
+              "false_rate": 0.17142857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 9,
+              "false_rate": 0.05357142857142857
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 18,
+              "false_rate": 0.1125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 3,
+              "false_rate": 0.03125
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 24,
+              "false_rate": 0.15
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 7,
+              "false_rate": 0.14583333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 162,
+              "false_rate": 0.16875
+            }
+          },
+          "max_corpus_false_rate": 0.17142857142857143,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 7,
+          "continuous_events_per_hour": 0.9584081297349925,
+          "continuous_events_per_hour_upper_95": 1.8001798798474014,
+          "positive_latency_median_ms": 61.99999999999983,
+          "positive_latency_p95_ms": 172.12500000000017
+        },
+        {
+          "threshold": 0.3,
+          "positive_variants": 1196,
+          "recall": 0.9807692307692307,
+          "macro_recall": 0.9542757936507936,
+          "recall_by_engine": {
+            "edge-tts": 0.9196428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.990625
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 44,
+              "false_rate": 0.15714285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 7,
+              "false_rate": 0.041666666666666664
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 17,
+              "false_rate": 0.10625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 2,
+              "false_rate": 0.020833333333333332
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 20,
+              "false_rate": 0.125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 7,
+              "false_rate": 0.14583333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 152,
+              "false_rate": 0.15833333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.15833333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 5,
+          "continuous_events_per_hour": 0.6845772355249946,
+          "continuous_events_per_hour_upper_95": 1.4393968749608088,
+          "positive_latency_median_ms": 82.68750000000003,
+          "positive_latency_p95_ms": 184.62500000000003
+        },
+        {
+          "threshold": 0.4,
+          "positive_variants": 1196,
+          "recall": 0.9749163879598662,
+          "macro_recall": 0.9528174603174604,
+          "recall_by_engine": {
+            "edge-tts": 0.9196428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9833333333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 36,
+              "false_rate": 0.12857142857142856
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 6,
+              "false_rate": 0.03571428571428571
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 16,
+              "false_rate": 0.1
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 19,
+              "false_rate": 0.11875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 5,
+              "false_rate": 0.10416666666666667
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 130,
+              "false_rate": 0.13541666666666666
+            }
+          },
+          "max_corpus_false_rate": 0.13541666666666666,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 2,
+          "continuous_events_per_hour": 0.27383089420999784,
+          "continuous_events_per_hour_upper_95": 0.8619913986194038,
+          "positive_latency_median_ms": 116.87500000000006,
+          "positive_latency_p95_ms": 220.75000000000023
+        },
+        {
+          "threshold": 0.5,
+          "positive_variants": 1196,
+          "recall": 0.9657190635451505,
+          "macro_recall": 0.9376686507936508,
+          "recall_by_engine": {
+            "edge-tts": 0.8928571428571429,
+            "kokoro": 0.9583333333333334,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9760416666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 30,
+              "false_rate": 0.10714285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 2,
+              "false_rate": 0.011904761904761904
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 13,
+              "false_rate": 0.08125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 15,
+              "false_rate": 0.09375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 5,
+              "false_rate": 0.10416666666666667
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 111,
+              "false_rate": 0.115625
+            }
+          },
+          "max_corpus_false_rate": 0.115625,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 2,
+          "continuous_events_per_hour": 0.27383089420999784,
+          "continuous_events_per_hour_upper_95": 0.8619913986194038,
+          "positive_latency_median_ms": 130.37499999999991,
+          "positive_latency_p95_ms": 232.37500000000023
+        },
+        {
+          "threshold": 0.6,
+          "positive_variants": 1196,
+          "recall": 0.9540133779264214,
+          "macro_recall": 0.924672619047619,
+          "recall_by_engine": {
+            "edge-tts": 0.8660714285714286,
+            "kokoro": 0.9583333333333334,
+            "macos-say": 1.0,
+            "openai-tts": 0.8333333333333334,
+            "piper": 0.965625
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 23,
+              "false_rate": 0.08214285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 1,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 10,
+              "false_rate": 0.0625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 9,
+              "false_rate": 0.05625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 3,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 98,
+              "false_rate": 0.10208333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.10208333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 2,
+          "continuous_events_per_hour": 0.27383089420999784,
+          "continuous_events_per_hour_upper_95": 0.8619913986194038,
+          "positive_latency_median_ms": 152.37500000000014,
+          "positive_latency_p95_ms": 255.56249999999991
+        },
+        {
+          "threshold": 0.7,
+          "positive_variants": 1196,
+          "recall": 0.9406354515050167,
+          "macro_recall": 0.8986408730158729,
+          "recall_by_engine": {
+            "edge-tts": 0.8303571428571429,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.984375,
+            "openai-tts": 0.8055555555555556,
+            "piper": 0.95625
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 19,
+              "false_rate": 0.06785714285714285
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 1,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 10,
+              "false_rate": 0.0625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 7,
+              "false_rate": 0.04375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 3,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 83,
+              "false_rate": 0.08645833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.08645833333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 187.18749999999983,
+          "positive_latency_p95_ms": 289.1250000000003
+        },
+        {
+          "threshold": 0.8,
+          "positive_variants": 1196,
+          "recall": 0.9147157190635451,
+          "macro_recall": 0.8766468253968254,
+          "recall_by_engine": {
+            "edge-tts": 0.7589285714285714,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.96875,
+            "openai-tts": 0.8055555555555556,
+            "piper": 0.9333333333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 13,
+              "false_rate": 0.04642857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 9,
+              "false_rate": 0.05625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 5,
+              "false_rate": 0.03125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 2,
+              "false_rate": 0.041666666666666664
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 68,
+              "false_rate": 0.07083333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.07083333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 210.37499999999997,
+          "positive_latency_p95_ms": 308.56249999999983
+        },
+        {
+          "threshold": 0.85,
+          "positive_variants": 1196,
+          "recall": 0.8846153846153846,
+          "macro_recall": 0.8388988095238096,
+          "recall_by_engine": {
+            "edge-tts": 0.7142857142857143,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.90625,
+            "openai-tts": 0.75,
+            "piper": 0.9072916666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 11,
+              "false_rate": 0.039285714285714285
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 8,
+              "false_rate": 0.05
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 5,
+              "false_rate": 0.03125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 53,
+              "false_rate": 0.05520833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.05520833333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 220.75000000000023,
+          "positive_latency_p95_ms": 313.62500000000006
+        },
+        {
+          "threshold": 0.9,
+          "positive_variants": 1196,
+          "recall": 0.842809364548495,
+          "macro_recall": 0.8141468253968254,
+          "recall_by_engine": {
+            "edge-tts": 0.6964285714285714,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.875,
+            "openai-tts": 0.7222222222222222,
+            "piper": 0.8604166666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 10,
+              "false_rate": 0.03571428571428571
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 5,
+              "false_rate": 0.03125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 3,
+              "false_rate": 0.01875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 35,
+              "false_rate": 0.036458333333333336
+            }
+          },
+          "max_corpus_false_rate": 0.036458333333333336,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 233.62499999999997,
+          "positive_latency_p95_ms": 334.3125000000002
+        },
+        {
+          "threshold": 0.95,
+          "positive_variants": 1196,
+          "recall": 0.7265886287625418,
+          "macro_recall": 0.735297619047619,
+          "recall_by_engine": {
+            "edge-tts": 0.6160714285714286,
+            "kokoro": 0.8333333333333334,
+            "macos-say": 0.828125,
+            "openai-tts": 0.6666666666666666,
+            "piper": 0.7322916666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 6,
+              "false_rate": 0.02142857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 4,
+              "false_rate": 0.025
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 16,
+              "false_rate": 0.016666666666666666
+            }
+          },
+          "max_corpus_false_rate": 0.025,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 255.56249999999991,
+          "positive_latency_p95_ms": 357.5000000000004
+        },
+        {
+          "threshold": 0.97,
+          "positive_variants": 1196,
+          "recall": 0.6237458193979933,
+          "macro_recall": 0.6937599206349205,
+          "recall_by_engine": {
+            "edge-tts": 0.5892857142857143,
+            "kokoro": 0.8333333333333334,
+            "macos-say": 0.796875,
+            "openai-tts": 0.6388888888888888,
+            "piper": 0.6104166666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 3,
+              "false_rate": 0.010714285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 1,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 6,
+              "false_rate": 0.00625
+            }
+          },
+          "max_corpus_false_rate": 0.020833333333333332,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 276.2500000000001,
+          "positive_latency_p95_ms": 369.78125000000017
+        },
+        {
+          "threshold": 0.98,
+          "positive_variants": 1196,
+          "recall": 0.5058528428093646,
+          "macro_recall": 0.5954265873015874,
+          "recall_by_engine": {
+            "edge-tts": 0.5267857142857143,
+            "kokoro": 0.7083333333333334,
+            "macos-say": 0.703125,
+            "openai-tts": 0.5555555555555556,
+            "piper": 0.48333333333333334
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 1,
+              "false_rate": 0.0035714285714285713
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 2,
+              "false_rate": 0.0020833333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.020833333333333332,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 280.0000000000002,
+          "positive_latency_p95_ms": 380.75000000000034
+        },
+        {
+          "threshold": 0.99,
+          "positive_variants": 1196,
+          "recall": 0.32608695652173914,
+          "macro_recall": 0.47983134920634923,
+          "recall_by_engine": {
+            "edge-tts": 0.48214285714285715,
+            "kokoro": 0.625,
+            "macos-say": 0.625,
+            "openai-tts": 0.3888888888888889,
+            "piper": 0.278125
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 1,
+              "false_rate": 0.00625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 1,
+              "false_rate": 0.0010416666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.00625,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 299.5000000000001,
+          "positive_latency_p95_ms": 411.1875000000001
+        },
+        {
+          "threshold": 0.995,
+          "positive_variants": 1196,
+          "recall": 0.15133779264214048,
+          "macro_recall": 0.34209325396825396,
+          "recall_by_engine": {
+            "edge-tts": 0.3392857142857143,
+            "kokoro": 0.4583333333333333,
+            "macos-say": 0.515625,
+            "openai-tts": 0.3055555555555556,
+            "piper": 0.09166666666666666
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 0,
+              "false_rate": 0.0
+            }
+          },
+          "max_corpus_false_rate": 0.0,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 299.99999999999983,
+          "positive_latency_p95_ms": 446.56250000000017
+        },
+        {
+          "threshold": 0.999,
+          "positive_variants": 1196,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "edge-tts": 0.0,
+            "kokoro": 0.0,
+            "macos-say": 0.0,
+            "openai-tts": 0.0,
+            "piper": 0.0
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 0,
+              "false_rate": 0.0
+            }
+          },
+          "max_corpus_false_rate": 0.0,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": null,
+          "positive_latency_p95_ms": null
+        }
+      ],
+      "accepted": false,
+      "calibration_sha256": "2a798f5fa6fce018900dc7e3f8363b98ce085908a6b4256b9a999cb3dce3a3c2",
+      "regression_plan_sha256": "c3520dd49cda8cc7aefd828f9b1dd9080310cc5e12b17717710105f38e805c66"
+    },
+    "measured": {
+      "scope": "Validation-only frozen equal mean; no development/reserved/physical acceptance",
+      "plan_sha256": "b49c86771da384c92197ba77c8f35e6e058ba683b818673c2aff7624a60ecbee",
+      "members": [
+        {
+          "checkpoint": "head-dense-measured-room-measured-v1/step-07500",
+          "head_sha256": "f502018e504568769e9e804072c4233af8adadfb3c2fde667f440254401c7890",
+          "calibration_sha256": "30169dc0cf69e69c2f3b824a5e7b1ad1630071d31da467e314c50c0b43947569",
+          "details_sha256": "e5f32eb6dc76573cabca7d7b26b92adb0fbefcdf38ed611659c4d626cb89e6e9",
+          "continuous_scores": {
+            "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "571ecd7f6e5a6492afe3d6d5c42554d24a1c672a1609c9b8e8a63accde51e5d9",
+            "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "213649b64ead49d5058af8883506a65da1dd7c34b849f69210746acad5221675",
+            "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "52508db6f332243a313811d71e661417d50ddcdcb07cf74f8f18872ca5ab1f63",
+            "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "b9972153ab76959773cf270299ec6567b924adcab8eeea12684cb44c248e3f96",
+            "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "286adef56b77820a5abef8a1fe21d1d66dea56cbcb63d8f4df1dbb891e871142",
+            "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "0cc3db242032e1d4f084636cba39b9e098330d6b49f929359891cd33313f2830",
+            "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "b1110291e775da7d2b3cc47054c08e5c0e35a8f7a4aee3c689d3cf6dcf294426",
+            "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "95146bbbc5b011380151b6dc12c3ffb4c39d260f789f1555b689d325cfa25d36",
+            "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "8ed911f87bea4fad67a5d729d83e794cb10bce7eeea9fb8525469b981f1b86c4",
+            "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "9b9c2f42afa9f35cceef58aad5e28dc255b42266f9d66f11ffc4ed58ba681be2",
+            "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "23bfbeaf1bdc23b303259c2a3a2188d43e7aa43a6d8696bdcf72a410e60081d9",
+            "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "0bb8e795124427fb9624665be75ddb77d9d575086bdcfa549f4110eb97830d95",
+            "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "d3f0be9eb3b1703d28da0dc54e82268855951b6a1a9802ff56f4afa6f1632bc2",
+            "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "5be28bdf9b1050c2838082207a32b6bc980658caf8faeeb75ab6ca3bcd410440",
+            "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "e1f7eba038ab706e0a093cc149fc9e1d1b0b508bd828daf96e5d16dad21a516d",
+            "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "f1a1d72919eb7791ed873c25fe4d578c610bbafb356ff339663ea2087bab1735",
+            "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "dc69db2c08dafef42a052d989867138a6011cb3f7597b3424ee79aeee756bfb8",
+            "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "398c9019362fae978869786e074f3ae1163f0a77ebd64ba566abaa9a7e5f51cd",
+            "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "192f0fd38271c9c9ae891f194440edbf69a87c8683d57164df292fa64b53cd47",
+            "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "282dbee863db5d9627e08c03180a7b48aca71a6c7a42052a94a236677287d4ce",
+            "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "e5237c6cff134a3ed1d6cb5e28ea84ccfe63964c9913439004f57c64f3f5b94b",
+            "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "211e92207f29b13347ce9091ee9e9ff89c72fcf875701a406e3dd3dba12ff4f8",
+            "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "4375cb8b6b5b779ee7937017afad6a638cc1ee3014fd72fbdd240fc7ba378e86",
+            "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "88bd067f17d3710da3252e9ccfb17f9a624af17f9c2044372c21c8376591c1b7",
+            "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "8b134c9dc6cecfb958d18a45bf6529d574b6c4c7c68b4a427f24b5fa4b3a38ed",
+            "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "6035529e5c84a69aff9a515020c4c8397bfb55d15d4932774286a0e6df00866f",
+            "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "2057255310b5b6e927eb6d9f8be06be2e3d72de07e6f65e0ab1bbce50e95d57b",
+            "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "e5f85740b43632806b5632e8b7f003453b2c18bf861e624d37dde2df0ee090c7",
+            "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "8c94b71f14bb8da9ba3b18c7764568663c40762945b63defba60652dd047c9e1",
+            "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "e61430ff41f40408d1196e7c096aa78395adb2ab7017e1a8026eeb2e1ce3d403",
+            "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "dadbf029f06b84271d66182e8c09d502050680dfe541b14fcedd06ce48ca9f50",
+            "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "55423757330ed8e1f33c4a735804a56e4b772fd070212b812d0755d1fa5e6c3b",
+            "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "a68b4f19a8749bfe335daace8e1fdedc350ede19a8076e6bec4babeed068e24c",
+            "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "414137ad6d06744e49346b5c905314761249128eb0b2b91df6785ed524328447",
+            "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "fa9dc25f0a15f5b772e602c3ed2d692017803c2cc050b6bfd55e09275cc95abe"
+          }
+        },
+        {
+          "checkpoint": "head-temporal-measured-room-measured-v1/step-05000",
+          "head_sha256": "6376be053e88eb6b63c159670d37abd68f76accc7cc64b91ba8ae124cf395e80",
+          "calibration_sha256": "edba184a0040e62d7f2917960c2a90444243cf06a06f7bf831d00f4141fafc97",
+          "details_sha256": "d97dae64b61c9de10410fc1de49bf8ddd38c8a5382f84db984e12c37e3af3815",
+          "continuous_scores": {
+            "0c4368226dcf371068d0ea3c3404a00aa1f802dc8e480dc770dee38f1914d0b4-scores.npy": "183abe17d4ee242f65b7c66a782679a8d1ce3e6fe4c12eb37c8f6dd868d9aa7e",
+            "0f0d6e74f38482870cefc7e027cce5bd157305d00d3bfe073a65ac1397e9c7e6-scores.npy": "9121d479e5173a27ae49b7a68934f1d434bb5f0923eada4a8c9a56c445951a7d",
+            "13ad28a5752eadf41e04c1eb27502717fa6071fb9389651860b29d7a6a70fde5-scores.npy": "b2ddf66482c6575a2c3bd07677ca3a08d99cbd144f120e6cb0c659842799dbcb",
+            "1b388ba3bcd34509b13c6fa00306d350d239a52d5fe7faeab6e0f8df432b898b-scores.npy": "e49e26cf0c8f925823d8fd03dd637f2107122d284ea15e7d315410983e8c0a35",
+            "1edb84ea7753e2390526f3304e93102e6c0a13ad5279dcd7e5eee5046ea0ec0a-scores.npy": "2c5063526aeba2cfc1f6af634a866a94ede14695b389a67eb49039b0d3a3751b",
+            "22d693e1e5637d272b514b8da1a3276d3a4c4fafc500d93d4732ca7c99168ee1-scores.npy": "af78e16bb0acc2de3adf0ec4584627a918617e5744433b38010c9e93c61c1d5a",
+            "2582c84c030c959fb607783123ee262762c72c1e0468fb394deb5b2f80e16bb3-scores.npy": "c25db922edbb46e2017cc6e5219f9a5472eede1665da9e8583b22f16d90a6e9f",
+            "397313cf35f65f79d74aae66a55688980fecdb82876626fc170a443a3932a0e0-scores.npy": "83aff12effa7f80a6809621ed7a66ddf63539314b9d2b5e175352f3db09a3105",
+            "3ded24d570f92a668b15674f50d31ff4d2af1d8e1ee37e85626debcf3f614138-scores.npy": "0456a85ab7cc32b800534a77dea1e1ab064805edb877677de3fd079776297729",
+            "4a720283576aef99a4a488db5e4c47b53f5ffc3faece3aa5ff2e8168639de357-scores.npy": "79c4488d850d2065b317bd3fca3b1bf3d3a0291356cbdd41e75a5b206dfb0094",
+            "4ad6f39bda8268de2f7d417e0608a95fc6a6030d9d29ca8f5ab14772778b2018-scores.npy": "f0d533b4e264270ad51b481befe87a5973562bc64a6d824dd70021a6a71678e1",
+            "4c204abc4995ed340dd3256b905111ac5154b4bbd7880c3ad0e0dbe9b78d8b5c-scores.npy": "afdbd2bca8227b64c7c93596b9d70575bbdf6d8b6efe4be9f0bc9113f18946f6",
+            "5b7ef0db8c6c649a793a79abc5f9b05b2052d2c696bdfb85650c12373dd3e335-scores.npy": "c8125b0b340b1cc9fde377e18f4769789b4448d995bb170f1fff323d85d88990",
+            "633f1996a68a23c653d7e89d5679406c0160ae7e25474f0dd2057601a3a6ab93-scores.npy": "3ec60d15704ed314c6bdf3b5e246dd398575d1a913b1abd990dd7a2e8bf67f02",
+            "6a75de3d6d056dd365ae261edfc111c18b54041a57ceebed191edee5a2779994-scores.npy": "e379a288cc32680b9bac0c615694eef2835f9471a15940a42d47a4eda9a54382",
+            "6ed1ec76aff3375da70745e5bc8a50169ba187486ac4dae1f84bca5f33582c0b-scores.npy": "e913d867ad9d2441652d2da4a0f18aecb0dd44c5ccb5a5274ad0010553e737db",
+            "6f5da2a32dacd6d07602dc74ac4fea0f901502a10dd8d6d8ebc61c6c1b48b696-scores.npy": "1dc9cda29a7610e3d12008984cdaf0d4800149728e369ac3024e1509cfacb9d1",
+            "74dc2d64fcd2471ff7659a078794aae270781d432c6b4101b7645555346e7fa6-scores.npy": "b30807b58f024a9603f837f7523815f0c4aa8600e1351271bd51260f79cfd950",
+            "79070475df7feb5346f7af3cdf3557b90038c134afb82a6815efa52772a00317-scores.npy": "0eee1d3d74c528a52f88a37c349ae30ef35e52bfd55c11520ef61918257df66c",
+            "93ba13491348be098d637d638bc4f18d3ef3294bb29be589f2e9393f0f729a3b-scores.npy": "5b1b5ce4f095ae52e1c50eb0b048f777e21d1bab84ab42a7c962a51f4646d6f0",
+            "94d2b24b92079c95ad47b71653af59029a4bd57f9bb8fd3daae292f0fd26ccf3-scores.npy": "e2c685167aa9f5490f8198fe02f199cea3541b215eba8cfc617722585f0678b1",
+            "97b0a6f0ce0111a63ad51b188d7bfbc085548b62922d9e1a75bc05154218ef22-scores.npy": "8d24bd325a78a33010cc40a7f014139dfd5e80fb924acc4079c5ea8a31ed52ad",
+            "97d9cced85a232a48d7934af8bfc3541d47c1f0b993a980982252e3451945788-scores.npy": "5c41825849868a756adb08aa035438a0400ca57aaa4ffcc94afb3dcbaac71bf3",
+            "981c7f10f7faa9e0aafa64372c721edef0a1ee7da4e3aca6556178863e0b9bab-scores.npy": "f76a0bef2274eee7c244a5b0ac62614b664ce93e7d982ef8c88dcb1d1b6ff48b",
+            "999a38e8bc53a7de19fbd83384fc0a5be18013966c99aacc5956ccc4e3b2fc9a-scores.npy": "3723812b5a86a9d94b6ca9aec856ba978f190a147f7a3493141f88ca885ef1a2",
+            "b60028ed416c4a6de3b82b9d988821441142753242c1ce0c885b4ff0bfee7aae-scores.npy": "4ca9645296cb0da54977147735380b1c8f42dabb37d492a0f0db779aafabfc7a",
+            "c7a6c0e860456f019a8c4fc20a70883f617fe1ce83fac0dde42834654fd99501-scores.npy": "2e2121ec1bd1ea920162d2982b37562e103dd242a3d5abee5cb8a3c68d2126c0",
+            "d1e6e9992d2522dd3bfec0bd89ff1b996c28137b67546c99b5789cac2a1143b2-scores.npy": "863ddd0f1b70ef8b6e467a55abd686ac9e6540eb4abd618f3790890b7dfa83a0",
+            "d31bcde3ea984cf362b28a61093434c6197276a93acd57c6e6336f8953fe1cb5-scores.npy": "22191bb5d91a46c94868c72fc3a36273985c344528cb235d1be98d942fdb0f25",
+            "d6b5cc0ec9c5070a1da4c507938163d8aa95d5fe5f62fbf9779d72f482c493b4-scores.npy": "c5068411a611782747d4b948c54af68640567ad1c3f27e2c0d2dcacd84bada03",
+            "e05a52ac591cd28bdd1e0864a8df8e5241299a20158d4ab3c6604ecef8484a96-scores.npy": "155ffa9132a1026ece78cb3138f3458056886ddf0491bb2d3348447fac0eadb6",
+            "e71009d949eede3c7f59728a505cc6b24eab2f7f9596a80683c7bbb575842aa3-scores.npy": "339c18a3aa6ae6d3312ef14230ee18ee048e2f59959d90c9de501b1f90e007e9",
+            "e7a3887b63081db142de92b28c8ce4e6a859c708d23cffe16919dd2a990aebd9-scores.npy": "6610731ea3af1edb2f79a8e0fef55ce7cb29bb0f5ff30aca6cba791f6fc88a68",
+            "f1fff5a3f8707145d45357cef6fe0b0847739cb160e357276d5d64cafa260048-scores.npy": "e24c9a29c6200e19d72d39d1ae218e4eba47b60024bba047e42f152ad78b2f39",
+            "f34ce7f087a6a0094abaa02c3072398b8de6cf20a5d09d1e2f54947faead346a-scores.npy": "c927008c47c6fc3585fd1e24de88b5c0d5fb449a7fc0d632701b8ec646e9d6ca"
+          }
+        }
+      ],
+      "selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9740802675585284,
+        "macro_recall": 0.952609126984127,
+        "recall_by_engine": {
+          "edge-tts": 0.9196428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8611111111111112,
+          "piper": 0.9822916666666667
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 35,
+            "false_rate": 0.125
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 4,
+            "false_rate": 0.023809523809523808
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 15,
+            "false_rate": 0.09375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 130,
+            "false_rate": 0.13541666666666666
+          }
+        },
+        "max_corpus_false_rate": 0.13541666666666666,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 117.50000000000016,
+        "positive_latency_p95_ms": 220.75000000000023
+      },
+      "strict_operating_point": false,
+      "grid": [
+        {
+          "threshold": 0.05,
+          "positive_variants": 1196,
+          "recall": 0.9949832775919732,
+          "macro_recall": 0.9757837301587301,
+          "recall_by_engine": {
+            "edge-tts": 0.9910714285714286,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8888888888888888,
+            "piper": 0.9989583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 73,
+              "false_rate": 0.26071428571428573
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 37,
+              "false_rate": 0.22023809523809523
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 31,
+              "false_rate": 0.19375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 12,
+              "false_rate": 0.125
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 48,
+              "false_rate": 0.3
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 15,
+              "false_rate": 0.3125
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 233,
+              "false_rate": 0.24270833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.3125,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 99,
+          "continuous_events_per_hour": 13.554629263394894,
+          "continuous_events_per_hour_upper_95": 16.018714972700003,
+          "positive_latency_median_ms": 12.9999999999999,
+          "positive_latency_p95_ms": 117.50000000000016
+        },
+        {
+          "threshold": 0.1,
+          "positive_variants": 1196,
+          "recall": 0.9899665551839465,
+          "macro_recall": 0.9666468253968252,
+          "recall_by_engine": {
+            "edge-tts": 0.9464285714285714,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8888888888888888,
+            "piper": 0.9979166666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 61,
+              "false_rate": 0.21785714285714286
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 26,
+              "false_rate": 0.15476190476190477
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 27,
+              "false_rate": 0.16875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 5,
+              "false_rate": 0.052083333333333336
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 33,
+              "false_rate": 0.20625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 12,
+              "false_rate": 0.25
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 199,
+              "false_rate": 0.20729166666666668
+            }
+          },
+          "max_corpus_false_rate": 0.25,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 40,
+          "continuous_events_per_hour": 5.476617884199957,
+          "continuous_events_per_hour_upper_95": 7.129100952874196,
+          "positive_latency_median_ms": 36.24999999999989,
+          "positive_latency_p95_ms": 130.37499999999991
+        },
+        {
+          "threshold": 0.15,
+          "positive_variants": 1196,
+          "recall": 0.9874581939799331,
+          "macro_recall": 0.9644444444444444,
+          "recall_by_engine": {
+            "edge-tts": 0.9375,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8888888888888888,
+            "piper": 0.9958333333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 54,
+              "false_rate": 0.19285714285714287
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 19,
+              "false_rate": 0.1130952380952381
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 25,
+              "false_rate": 0.15625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 4,
+              "false_rate": 0.041666666666666664
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 27,
+              "false_rate": 0.16875
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 11,
+              "false_rate": 0.22916666666666666
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 177,
+              "false_rate": 0.184375
+            }
+          },
+          "max_corpus_false_rate": 0.22916666666666666,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 26,
+          "continuous_events_per_hour": 3.559801624729972,
+          "continuous_events_per_hour_upper_95": 4.939444925785802,
+          "positive_latency_median_ms": 40.000000000000036,
+          "positive_latency_p95_ms": 148.56250000000014
+        },
+        {
+          "threshold": 0.2,
+          "positive_variants": 1196,
+          "recall": 0.9832775919732442,
+          "macro_recall": 0.9564781746031746,
+          "recall_by_engine": {
+            "edge-tts": 0.9285714285714286,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9927083333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 50,
+              "false_rate": 0.17857142857142858
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 15,
+              "false_rate": 0.08928571428571429
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 23,
+              "false_rate": 0.14375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 2,
+              "false_rate": 0.020833333333333332
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 25,
+              "false_rate": 0.15625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 9,
+              "false_rate": 0.1875
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 168,
+              "false_rate": 0.175
+            }
+          },
+          "max_corpus_false_rate": 0.1875,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 18,
+          "continuous_events_per_hour": 2.4644780478899806,
+          "continuous_events_per_hour_upper_95": 3.654515666220858,
+          "positive_latency_median_ms": 58.187500000000284,
+          "positive_latency_p95_ms": 153.6249999999999
+        },
+        {
+          "threshold": 0.25,
+          "positive_variants": 1196,
+          "recall": 0.9824414715719063,
+          "macro_recall": 0.9562698412698414,
+          "recall_by_engine": {
+            "edge-tts": 0.9285714285714286,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9916666666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 47,
+              "false_rate": 0.16785714285714284
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 12,
+              "false_rate": 0.07142857142857142
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 21,
+              "false_rate": 0.13125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 2,
+              "false_rate": 0.020833333333333332
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 23,
+              "false_rate": 0.14375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 8,
+              "false_rate": 0.16666666666666666
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 161,
+              "false_rate": 0.16770833333333332
+            }
+          },
+          "max_corpus_false_rate": 0.16785714285714284,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 11,
+          "continuous_events_per_hour": 1.5060699181549881,
+          "continuous_events_per_hour_upper_95": 2.492889954333113,
+          "positive_latency_median_ms": 69.81250000000028,
+          "positive_latency_p95_ms": 174.68749999999994
+        },
+        {
+          "threshold": 0.3,
+          "positive_variants": 1196,
+          "recall": 0.979933110367893,
+          "macro_recall": 0.9540674603174603,
+          "recall_by_engine": {
+            "edge-tts": 0.9196428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9895833333333334
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 43,
+              "false_rate": 0.15357142857142858
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 8,
+              "false_rate": 0.047619047619047616
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 19,
+              "false_rate": 0.11875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 1,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 20,
+              "false_rate": 0.125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 7,
+              "false_rate": 0.14583333333333334
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 148,
+              "false_rate": 0.15416666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.15416666666666667,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 8,
+          "continuous_events_per_hour": 1.0953235768399914,
+          "continuous_events_per_hour_upper_95": 1.9763265195601492,
+          "positive_latency_median_ms": 83.93749999999977,
+          "positive_latency_p95_ms": 188.43750000000003
+        },
+        {
+          "threshold": 0.4,
+          "positive_variants": 1196,
+          "recall": 0.9740802675585284,
+          "macro_recall": 0.952609126984127,
+          "recall_by_engine": {
+            "edge-tts": 0.9196428571428571,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.9822916666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 35,
+              "false_rate": 0.125
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 4,
+              "false_rate": 0.023809523809523808
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 15,
+              "false_rate": 0.09375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 1,
+              "false_rate": 0.010416666666666666
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 17,
+              "false_rate": 0.10625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 5,
+              "false_rate": 0.10416666666666667
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 130,
+              "false_rate": 0.13541666666666666
+            }
+          },
+          "max_corpus_false_rate": 0.13541666666666666,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 3,
+          "continuous_events_per_hour": 0.41074634131499677,
+          "continuous_events_per_hour_upper_95": 1.0615953502205029,
+          "positive_latency_median_ms": 117.50000000000016,
+          "positive_latency_p95_ms": 220.75000000000023
+        },
+        {
+          "threshold": 0.5,
+          "positive_variants": 1196,
+          "recall": 0.9665551839464883,
+          "macro_recall": 0.9475793650793651,
+          "recall_by_engine": {
+            "edge-tts": 0.9017857142857143,
+            "kokoro": 1.0,
+            "macos-say": 1.0,
+            "openai-tts": 0.8611111111111112,
+            "piper": 0.975
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 24,
+              "false_rate": 0.08571428571428572
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 2,
+              "false_rate": 0.011904761904761904
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 11,
+              "false_rate": 0.06875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 12,
+              "false_rate": 0.075
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 3,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 110,
+              "false_rate": 0.11458333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.11458333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 2,
+          "continuous_events_per_hour": 0.27383089420999784,
+          "continuous_events_per_hour_upper_95": 0.8619913986194038,
+          "positive_latency_median_ms": 138.84375000000014,
+          "positive_latency_p95_ms": 234.93749999999991
+        },
+        {
+          "threshold": 0.6,
+          "positive_variants": 1196,
+          "recall": 0.9531772575250836,
+          "macro_recall": 0.9244642857142857,
+          "recall_by_engine": {
+            "edge-tts": 0.8660714285714286,
+            "kokoro": 0.9583333333333334,
+            "macos-say": 1.0,
+            "openai-tts": 0.8333333333333334,
+            "piper": 0.9645833333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 22,
+              "false_rate": 0.07857142857142857
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 1,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 10,
+              "false_rate": 0.0625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 10,
+              "false_rate": 0.0625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 3,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 98,
+              "false_rate": 0.10208333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.10208333333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 161.43750000000034,
+          "positive_latency_p95_ms": 268.4375000000001
+        },
+        {
+          "threshold": 0.7,
+          "positive_variants": 1196,
+          "recall": 0.9297658862876255,
+          "macro_recall": 0.8988392857142857,
+          "recall_by_engine": {
+            "edge-tts": 0.8035714285714286,
+            "kokoro": 0.9583333333333334,
+            "macos-say": 0.953125,
+            "openai-tts": 0.8333333333333334,
+            "piper": 0.9458333333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 18,
+              "false_rate": 0.06428571428571428
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 1,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 9,
+              "false_rate": 0.05625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 7,
+              "false_rate": 0.04375
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 3,
+              "false_rate": 0.0625
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 81,
+              "false_rate": 0.084375
+            }
+          },
+          "max_corpus_false_rate": 0.084375,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 196.25000000000003,
+          "positive_latency_p95_ms": 290.37500000000006
+        },
+        {
+          "threshold": 0.8,
+          "positive_variants": 1196,
+          "recall": 0.8963210702341137,
+          "macro_recall": 0.863313492063492,
+          "recall_by_engine": {
+            "edge-tts": 0.7589285714285714,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.921875,
+            "openai-tts": 0.8055555555555556,
+            "piper": 0.9135416666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 13,
+              "false_rate": 0.04642857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 7,
+              "false_rate": 0.04375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 5,
+              "false_rate": 0.03125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 2,
+              "false_rate": 0.041666666666666664
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 65,
+              "false_rate": 0.06770833333333333
+            }
+          },
+          "max_corpus_false_rate": 0.06770833333333333,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 210.37499999999997,
+          "positive_latency_p95_ms": 312.3750000000003
+        },
+        {
+          "threshold": 0.85,
+          "positive_variants": 1196,
+          "recall": 0.8645484949832776,
+          "macro_recall": 0.8325595238095239,
+          "recall_by_engine": {
+            "edge-tts": 0.7232142857142857,
+            "kokoro": 0.9166666666666666,
+            "macos-say": 0.890625,
+            "openai-tts": 0.75,
+            "piper": 0.8822916666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 10,
+              "false_rate": 0.03571428571428571
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 7,
+              "false_rate": 0.04375
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 52,
+              "false_rate": 0.05416666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.05416666666666667,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 221.99999999999997,
+          "positive_latency_p95_ms": 325.6875
+        },
+        {
+          "threshold": 0.9,
+          "positive_variants": 1196,
+          "recall": 0.8093645484949833,
+          "macro_recall": 0.780813492063492,
+          "recall_by_engine": {
+            "edge-tts": 0.6964285714285714,
+            "kokoro": 0.8333333333333334,
+            "macos-say": 0.828125,
+            "openai-tts": 0.7222222222222222,
+            "piper": 0.8239583333333333
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 7,
+              "false_rate": 0.025
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 4,
+              "false_rate": 0.025
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 30,
+              "false_rate": 0.03125
+            }
+          },
+          "max_corpus_false_rate": 0.03125,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 233.62499999999997,
+          "positive_latency_p95_ms": 334.3125000000002
+        },
+        {
+          "threshold": 0.95,
+          "positive_variants": 1196,
+          "recall": 0.6780936454849499,
+          "macro_recall": 0.6989285714285713,
+          "recall_by_engine": {
+            "edge-tts": 0.6071428571428571,
+            "kokoro": 0.7916666666666666,
+            "macos-say": 0.75,
+            "openai-tts": 0.6666666666666666,
+            "piper": 0.6791666666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 3,
+              "false_rate": 0.010714285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 3,
+              "false_rate": 0.01875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 1,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 9,
+              "false_rate": 0.009375
+            }
+          },
+          "max_corpus_false_rate": 0.020833333333333332,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 255.56249999999991,
+          "positive_latency_p95_ms": 355.6249999999999
+        },
+        {
+          "threshold": 0.97,
+          "positive_variants": 1196,
+          "recall": 0.5677257525083612,
+          "macro_recall": 0.6381646825396825,
+          "recall_by_engine": {
+            "edge-tts": 0.5446428571428571,
+            "kokoro": 0.75,
+            "macos-say": 0.703125,
+            "openai-tts": 0.6388888888888888,
+            "piper": 0.5541666666666667
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 2,
+              "false_rate": 0.007142857142857143
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 3,
+              "false_rate": 0.01875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 1,
+              "false_rate": 0.020833333333333332
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 4,
+              "false_rate": 0.004166666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.020833333333333332,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 276.2500000000001,
+          "positive_latency_p95_ms": 379.4999999999997
+        },
+        {
+          "threshold": 0.98,
+          "positive_variants": 1196,
+          "recall": 0.4540133779264214,
+          "macro_recall": 0.5647718253968254,
+          "recall_by_engine": {
+            "edge-tts": 0.5089285714285714,
+            "kokoro": 0.7083333333333334,
+            "macos-say": 0.625,
+            "openai-tts": 0.5555555555555556,
+            "piper": 0.42604166666666665
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 2,
+              "false_rate": 0.0125
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 1,
+              "false_rate": 0.0010416666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.0125,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 279.99999999999983,
+          "positive_latency_p95_ms": 393.5000000000001
+        },
+        {
+          "threshold": 0.99,
+          "positive_variants": 1196,
+          "recall": 0.26588628762541805,
+          "macro_recall": 0.4223412698412699,
+          "recall_by_engine": {
+            "edge-tts": 0.44642857142857145,
+            "kokoro": 0.5416666666666666,
+            "macos-say": 0.546875,
+            "openai-tts": 0.3611111111111111,
+            "piper": 0.215625
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 1,
+              "false_rate": 0.0010416666666666667
+            }
+          },
+          "max_corpus_false_rate": 0.0010416666666666667,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 290.18750000000006,
+          "positive_latency_p95_ms": 413.1968749999998
+        },
+        {
+          "threshold": 0.995,
+          "positive_variants": 1196,
+          "recall": 0.10953177257525083,
+          "macro_recall": 0.2768055555555555,
+          "recall_by_engine": {
+            "edge-tts": 0.25,
+            "kokoro": 0.375,
+            "macos-say": 0.421875,
+            "openai-tts": 0.2777777777777778,
+            "piper": 0.059375
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 0,
+              "false_rate": 0.0
+            }
+          },
+          "max_corpus_false_rate": 0.0,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": 298.18750000000006,
+          "positive_latency_p95_ms": 430.46875
+        },
+        {
+          "threshold": 0.999,
+          "positive_variants": 1196,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "edge-tts": 0.0,
+            "kokoro": 0.0,
+            "macos-say": 0.0,
+            "openai-tts": 0.0,
+            "piper": 0.0
+          },
+          "negative_variants": 1872,
+          "confusing_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 280,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "edge-tts:edge-partials": {
+              "variants": 168,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 96,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 160,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 48,
+              "false_variants": 0,
+              "false_rate": 0.0
+            },
+            "piper:synthetic": {
+              "variants": 960,
+              "false_variants": 0,
+              "false_rate": 0.0
+            }
+          },
+          "max_corpus_false_rate": 0.0,
+          "continuous_hours": 7.303777777777778,
+          "continuous_events": 0,
+          "continuous_events_per_hour": 0.0,
+          "continuous_events_per_hour_upper_95": 0.41016202364051946,
+          "positive_latency_median_ms": null,
+          "positive_latency_p95_ms": null
+        }
+      ],
+      "accepted": false,
+      "calibration_sha256": "5ce50aac572b4e660cb7045403a6e265cc53d968f52aa2317e9a45df7b398d47",
+      "regression_plan_sha256": "82d36b017b83cc908f5793dae16280c4ba5cc7cd5f8fd1bfe808fa7a49d4b8e3"
+    }
+  },
+  "audio_speed_changed": false,
+  "original_source_voice_partitions_preserved": true,
+  "development_regression_pending": true,
+  "accepted": false,
+  "interpretation": "Measured-room mean does not improve this original validation comparison: same.4threshold, macro95.2609% versus matched-control95.2817%, with3 versus2 continuous events. These correlated synthetic validations and single training seeds do not establish deployment performance or causal significance. Freeze both choices before existing development regression; no candidate flashed.",
+  "matched_initialization_and_representatives_verified": true
+}

@@ -647,6 +647,20 @@ load both together. Validation chooses checkpoints/thresholds before existing
 paired/continuous regression. No new recognition gain, candidate acceptance
 or physical trial is reported at this stage.
 
+After all four member selections exist, derive the fixed equal means and
+freeze their development protocols with the maintained helper:
+
+```sh
+.local/4090-env/bin/python research/wakeword_p4/embedding/run_measured_room_comparison.py \
+  calibrate --data-root "$WAKE_DATA" --log-output .local/room-comparison-logs
+```
+
+Preserve the generated equal-mean and regression plans under `embedding/plans/`
+before running the same command with `regress` instead of `calibrate`. Each
+stage uses fresh output/log files, checks selected model/policy identities,
+and retains the original paired/English/Mandarin protocols. These commands
+perform offline inference and do not play sound or access a board.
+
 ## Board and numerical constraints
 
 Read [`../panel_wake_runtime/README.md`](../panel_wake_runtime/README.md) before
