@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `019744c`; see the dated snapshots below.
+Latest observed GPU commit: `64bb326`; see the dated snapshots below.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit
@@ -574,3 +574,37 @@ endpoint proxy. No wake scores are published at this commit. It remains
 development audio; annotation/ASR agreement is not phonetic truth, and the
 current Mac controls do not adopt its synthesis speed variants. V25 has no
 published outcome at this snapshot. Final audio remains excluded.
+
+### GPU snapshot through `64bb326`
+
+Read on 2026-11-11. V25 completes120ksteps but is rejected: validation macro
+70.2604% at.994, with1Mandarin /6.913985h,1DiPCo /.754488h and2dev-other
+/5.121185h events. Expanded calibration has no valid zero-event point. Matched
+float-window diagnostics show two English false peaks already near.999 before
+INT8, so quantization alone cannot explain their overconfidence. V26 tests
+only BCE label smoothing.02 against v24, with no hard-ambient replacement;
+no outcome is published at this snapshot. The Mac work does not duplicate it.
+
+Hi ESP's full same-PCM AISHELL replay now has1event /6.913985h, all16speaker
+CRCs and completion stages verified. V19 at its original.95 has0 on that PCM.
+The GPU pooled development diagnostic selects v19.94140625 under Hi ESP's
+observed1event /12.789658h budget, but explicitly keeps the original individual
+corpus gates and marks the new point ineligible for final acceptance. Equal
+pooled observed counts do not prove general FAR equivalence or replace the
+independent physical and positive-recall requirements.
+
+The official upstream Hi ESP unit recording provides an important evaluation
+counterexample: both prefix placements trigger, but its energy endpoint proxy
+is666–738ms later than detection, outside the frozen-100..+800ms window. Hence
+the paired synthetic result of1/12 is a **proxy-window hit count**; Hi ESP
+actually emits native events on5/12 target files. Keep original events/windows
+and avoid ranking real recall or phonetic latency from those proxy counts.
+The local HTTP acoustic runner already records every wake-count increase and
+source-onset ambiguity, rather than filtering at a keyword-end latency window;
+its approximate endpoint delays still are not phonetic hardware latency.
+
+Four new far-field training microphone channels add2.531channel-hours but zero
+new independent conversations or people. A separate dialogue-mix cache adds
+29,196 correlated training sequences and preserves original evaluation bytes;
+neither new cache has a trained/validated outcome in this snapshot. The Mac
+probe keeps original speed and reads no independent final audio.

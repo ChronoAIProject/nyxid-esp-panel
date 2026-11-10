@@ -94,6 +94,17 @@ def main():
     for arm in arms:
         header += '{' + ','.join(json.dumps(command) for command in arm['commands']) + '},\n'
     header += '};\n'
+    if 'command_phonemes' in plan:
+        phonemes = plan['command_phonemes']
+        if len(phonemes) != len(arms) or any(len(p) != len(a['commands']) for p, a in zip(phonemes, arms)):
+            raise ValueError('Explicit phoneme matrix differs from frozen command shape')
+        if any(p is not None and (not isinstance(p, str) or not p or not p.isascii()) for row in phonemes for p in row):
+            raise ValueError('Explicit phonemes must be nonempty ASCII or null for original G2P')
+        header += '#define MN_EXPLICIT_COMMAND_PHONEMES 1\n'
+        header += 'constexpr const char *command_phonemes[][5] = {\n'
+        for row in phonemes:
+            header += '{' + ','.join('nullptr' if p is None else json.dumps(p) for p in row) + '},\n'
+        header += '};\n'
     (args.output / 'main/fixture_config.h').write_text(header)
     manifest = {**previous, 'scope': __doc__, 'plan_sha256': sha(args.plan),
         'cases': len(records) * len(arms), 'sources': records, 'command_arms': arms,
@@ -105,6 +116,8 @@ def main():
         'files': {name: sha(args.output / name) for name in previous['files']},
         'source_reference': {'repository': 'espressif/esp-sr', 'commit': plan['upstream_commit'],
                              'files': plan['upstream_files']}, 'accepted': False}
+    if 'command_phonemes' in plan:
+        manifest['command_phonemes'] = plan['command_phonemes']
     (args.output / 'vectors-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print(json.dumps({'cases': manifest['cases'], 'calls': len(records) * len(arms) * plan['blocks_per_case'],
         'manifest_sha256': sha(args.output / 'vectors-manifest.json'), 'accepted': False}, indent=2))

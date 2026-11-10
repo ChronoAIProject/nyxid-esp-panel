@@ -1,0 +1,147 @@
+{
+  "scope": "Prepare the pinned upstream original-PCM control, with no audio playback.\n\nReuse a hash-verified prepared project's model/dependencies and the current\nfrozen template. Preserve every sample, including the upstream test's partial\nfinal source block. Two prefix placements are correlated transport controls,\nnever independent recognition/false-wake evaluation or a training addition.\n",
+  "plan_sha256": "ddada3fc3408418d5d11c89dd8dc95e9d8b35e606a282c022a64d4a7538b0273",
+  "cases": 4,
+  "sources": [
+    {
+      "clip": 0,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 0,
+      "tail_samples": 262883,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ],
+      "rendered_pcm_sha256": "4d5db502db41c8ab67c37cb849019ecf8ceb5753eb7eabba8cc7510f55839a16",
+      "detect_pcm_crc32": 2362241963
+    },
+    {
+      "clip": 1,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 38400,
+      "tail_samples": 224483,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ],
+      "rendered_pcm_sha256": "467a12117a99b312306d97cf43e4b6fd5d5496f7637cb54c6ba05bf0c33b8b9d",
+      "detect_pcm_crc32": 4064747821
+    }
+  ],
+  "command_arms": [
+    {
+      "name": "official_initialization",
+      "stock_grammar": true,
+      "commands": []
+    },
+    {
+      "name": "mixed_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "TURN ON THE LIGHT",
+        "TELL ME A JOKE"
+      ]
+    }
+  ],
+  "detector_threshold": 0.1,
+  "detector_timeout_ms": 500000,
+  "all_sources_training_only": true,
+  "heldout_source_hash_disjoint": null,
+  "audio_speed_changed": false,
+  "synthesis_rate_override": false,
+  "speaker_playback": false,
+  "model_raw_bytes": 2751351,
+  "fixtures_raw_bytes": 1230860,
+  "files": {
+    "main/model.bin": "24abbc2697c5c29cda1d70f7bdce063d2dd88d943cdb60ff8cd96d8c9c734cd4",
+    "main/fixtures.bin": "3f60beb70bc9458165f68179b781c4b63aea6bb6aae8bf4ae4d55d4f5db5f4d1",
+    "main/fixture_config.h": "0740b1ba9dfb0bde7c689e41f748d0805b779239cec728e0258e7920a486638b",
+    "main/commands_en.txt": "517b7df8f3471105ae638cd910f4d1c85f9ba7eab9e960aad2c6ca82713ad47e"
+  },
+  "model_files": {
+    "_MODEL_INFO_": "efdf47e45817535e42c24c5bd5816b3d9fc54113aa7a6943b0d183823830929c",
+    "mn7_data": "f9d646f6301041d22de3dc3b1ae842ce9b314af6410b35814087d8042410a8e6",
+    "mn7_index": "f7234d8a6c6cdf8df7bb49ae86a48e8ecf20c2cd8ebc8f97665389169d50c6d3",
+    "vocab": "a94f2dbc3b2783db2891763750aa028f2e1f583945b1696931529d80de61951c"
+  },
+  "dependencies": {
+    "esp-sr": {
+      "version": "2.6.1",
+      "manifest_sha256": "0043e9bfe4ff918e871410779c78c5909a158e3efdbc3a7af7523ba285d3234c",
+      "component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14"
+    },
+    "dl_fft": {
+      "version": "0.8.0",
+      "manifest_sha256": "a599055ee4e8725c39bc1d02f25f02bf2e3b01732ca34a9f1d1fe6a4d9a5a992",
+      "component_hash": "965be7152132b365061abf5fc5fc7b85e525f73b94a204cdda61cfe9572c0d77"
+    },
+    "cjson": {
+      "version": "1.7.19~2",
+      "manifest_sha256": "8cf02081bf037b8d0b89e613f5803d463d4a93d2eab892c4bbe20020cdbd4396",
+      "component_hash": "e788323270d90738662d66fffa910bfe1fba019bba087f01557e70c40485b469"
+    },
+    "esp-dl": {
+      "version": "3.3.14",
+      "manifest_sha256": "550fde7a2722bf623eb3bfaa348e4cdc93366d515fb58fc7064fb791aa5ec867",
+      "component_hash": "3608ac32875cb7fa93805fba2372619bde3d8a02cee47c622cf5e91a1308fe92"
+    },
+    "zlib": {
+      "version": "1.3.2~2",
+      "manifest_sha256": "09a72db22cbbdff2df51b4fa9103f1ad26ee284957440c16482091cb009f58d4",
+      "component_hash": "61b7c41a6c7091085555a3cef58722af4bd9078e8708ee00a0e78efb997daf7c"
+    },
+    "esp_new_jpeg": {
+      "version": "1.0.2",
+      "manifest_sha256": "9f042dbeaf7c206d08805ece59a286f642f4829a4f2cb976f46f23721496f6ad",
+      "component_hash": "e1e7e6991193c41ed6c9fc386702aa7821433319e7aa9c3147cd3236310cd69c"
+    }
+  },
+  "accepted": false,
+  "source_partition_policy": "Upstream unit sample assigned only to training-side harness controls; not independent quality evaluation or a model-fitting addition.",
+  "heldout_source_audio_accessed": false,
+  "source_reference": {
+    "repository": "espressif/esp-sr",
+    "commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+    "files": {
+      "test_multinet.cpp": "fe83910e9d0462ba48477342e28fb98ae2cef28a865428840e1548bcb8e6bed3",
+      "tell_me_a_joke.h": "e473320afb28863c873c822817a044731d63b07f8ffe6a7fde5373e1baab871e",
+      "sdkconfig.ci.p4v1_mn7_en": "f0f1bb197024e817744b9f13f1bbac577d434fbdb3fe9f88e8678854b3180ab8",
+      "sdkconfig.defaults": "3eca14953e94a9ce18c551538a30382440f0c7d852cd771f4f2b5a21a5756d18"
+    }
+  },
+  "command_phonemes": [
+    [],
+    [
+      null,
+      null,
+      "TfL Mm c qbK"
+    ]
+  ]
+}

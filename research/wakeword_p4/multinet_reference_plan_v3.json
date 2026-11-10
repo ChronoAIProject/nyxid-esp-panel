@@ -1,0 +1,63 @@
+{
+  "scope": "Counterfactual original-source control: correct only mixed-grammar joke phonemes to the pinned official spelling, retaining .1 and all PCM/runtime settings.",
+  "previous_result_sha256": "7d0328647ada30f391353a3ad90461f35068b646990927ecf248556287f65d11",
+  "preparation_script_sha256": "15668ee71de77fe80e655a429449a895a76a61abd5b813315f6787cf7ea3ca3b",
+  "audit_script_sha256": "7f55db217c57c7982f9d8c1264fa9e31b4d42feced8aae87b689e0f960d5e811",
+  "runner_sha256": "336df4ca4c4f42b4a4db6d17dbe9d19d25513e57293e8a5957092cf5d15f2efe",
+  "template_files": {
+    "CMakeLists.txt": "b4329ae09f9e9be5fc8679ae64c8d63ac2961d10ae4a4c74ea55aa2e228cb6bf",
+    "main/CMakeLists.txt": "1ada85ffdf54bbf156b3de0b8ea92b3e12318b03999c6770f3bf683ec41dcff4",
+    "main/probe.cpp": "fb17e2e4e06c411766501b6e6f703f11097eb93852d2016b2d8a0edb448ac032",
+    "main/readonly_model_files.h": "89b1fd9b96108a6cd91793f60e0f2ef418f4bd4214bb98cf2175ce93d8beb4ed",
+    "partitions.csv": "8bf0726edb130cec0a79474ff82acc271922d3db7b438f13eacd9091dfc42a5f",
+    "sdkconfig.defaults": "16e7c5ce64d04ac3179e0fa299bfb375f03175e8b5b37bb1809c8792e1ff1280"
+  },
+  "base_vectors_manifest_sha256": "944bd606f8da81227fccaa261f1a651f93af8dc0daf0b0b622de61ae9d2e0612",
+  "base_dependency_manifest_sha256": "bed506485472bddfbdab6d7cbfac913061752556faf89cb33c87725fa796f668",
+  "upstream_commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+  "upstream_files": {
+    "test_multinet.cpp": "fe83910e9d0462ba48477342e28fb98ae2cef28a865428840e1548bcb8e6bed3",
+    "tell_me_a_joke.h": "e473320afb28863c873c822817a044731d63b07f8ffe6a7fde5373e1baab871e",
+    "sdkconfig.ci.p4v1_mn7_en": "f0f1bb197024e817744b9f13f1bbac577d434fbdb3fe9f88e8678854b3180ab8",
+    "sdkconfig.defaults": "3eca14953e94a9ce18c551538a30382440f0c7d852cd771f4f2b5a21a5756d18"
+  },
+  "source_pcm_bytes": 89658,
+  "source_pcm_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+  "prefix_samples": [
+    0,
+    38400
+  ],
+  "blocks_per_case": 601,
+  "detector_threshold": 0.1,
+  "detector_timeout_ms": 500000,
+  "command_arms": [
+    {
+      "name": "official_initialization",
+      "stock_grammar": true,
+      "commands": []
+    },
+    {
+      "name": "mixed_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "TURN ON THE LIGHT",
+        "TELL ME A JOKE"
+      ]
+    }
+  ],
+  "policy": "Reuse byte-identical model/PCM/placements,601blocks per case,.1threshold,500000ms timeout,command IDs and grammar texts. Stock remains unchanged. Only mixed command3 uses official phoneme_add with TfL Mm c qbK rather than automatic G2P TfL Mm d qbK; mixed commands1/2 retain G2P. Same reset/event/decoder/CRC policy. Do not modify from outcome.",
+  "upstream_protocol_relation": "Pinned test_multinet.cpp directly calls esp_mn_commands_phoneme_add with TELL ME A JOKE and TfL Mm c qbK. This control uses that exact source-defined spelling and the preceding reference-v2 threshold/window. It is not a product wake or false-activation evaluation.",
+  "quality_gate": "Both correlated placements must detect TELL ME A JOKE with ID1 in stock grammar and ID3 in mixed grammar. If not, investigate the harness/model contract before scoring Nyx quality.",
+  "source_partition_policy": "Public upstream unit source is assigned only to training-side harness controls; no validation/final audio or new model fitting.",
+  "accepted": false,
+  "hypothesis": "Does the independently source-defined weak-article phoneme c, rather than automatic letter-name d, restore the mixed-grammar known-source control while the stock arm reproduces its result?",
+  "command_phonemes": [
+    [],
+    [
+      null,
+      null,
+      "TfL Mm c qbK"
+    ]
+  ]
+}

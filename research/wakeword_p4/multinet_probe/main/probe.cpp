@@ -111,8 +111,16 @@ static bool run() {
             // alloc frees the previous global command list. destroy owns the
             // last list; explicitly freeing it too caused the old cleanup warning.
             ESP_ERROR_CHECK(esp_mn_commands_alloc(iface, detector));
-            for (unsigned n = 0; n < command_counts[arm]; ++n)
+            for (unsigned n = 0; n < command_counts[arm]; ++n) {
+#ifdef MN_EXPLICIT_COMMAND_PHONEMES
+                const char *phonemes = command_phonemes[arm][n];
+                ESP_ERROR_CHECK(phonemes
+                    ? esp_mn_commands_phoneme_add(n + 1, command_strings[arm][n], phonemes)
+                    : esp_mn_commands_add(n + 1, command_strings[arm][n]));
+#else
                 ESP_ERROR_CHECK(esp_mn_commands_add(n + 1, command_strings[arm][n]));
+#endif
+            }
             auto *errors = esp_mn_commands_update();
             if (errors && errors->num) return false;
         }

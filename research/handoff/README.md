@@ -856,8 +856,12 @@ phonemes. Thus Nyx phrase quality remains uninterpretable; do not respond by
 tuning thresholds on these misses. See
 [`multinet-control-v1-p4.json`](../wakeword_p4/results/multinet-control-v1-p4.json).
 The same pinned upstream unit test contains an original joke recording and
-asserts recognition. That original sample, not another preferred TTS voice,
-is the next reference control. No acoustic playback was performed.
+asserts recognition. Its subsequent P4 reference control passes2/2stock-grammar
+placements at the upstream-declared.1threshold, while automatic mixed G2P
+still misses2/2. Its article phoneme differs from the original stock spelling;
+the separately frozen reference-v3 corrects only that one spelling using the
+official phoneme API. See the [reference control protocol and evidence](../wakeword_p4/multinet_probe/README.md).
+No acoustic playback was performed, and no Nyx quality candidate is accepted.
 
 ## Board and numerical constraints
 

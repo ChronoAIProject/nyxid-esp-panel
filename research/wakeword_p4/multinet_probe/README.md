@@ -301,3 +301,29 @@ identities are `../results/multinet-reference-v2-{build,vectors}.json`.
 This is a source-backed compatibility diagnostic, not an always-listening
 Nyx threshold selection. It combines that test's threshold with the preceding
 CPU-test window, and is not claimed to reproduce one upstream test exactly.
+
+Reference-v2 (`f10b429`) now completes all4cases /2,404calls with matching input
+CRCs and successful original-app/service/Hi ESP restoration. The stock grammar
+recognizes both placements as joke command1, with probabilities.11651418 and
+.11258345. Events occur at source-stream samples34,816 and74,752 respectively;
+these are audio indices, not phonetic endpoints or physical latency. The mixed
+G2P grammar still misses both. See
+[`multinet-reference-v2-p4.json`](../results/multinet-reference-v2-p4.json).
+Thus the original model can recognize the pinned source on this actual P4 at
+the upstream-declared.1setting. The mixed-grammar control still fails, leaving
+the phoneme discrepancy unresolved; these results do not qualify a Nyx model.
+
+`../multinet_reference_plan_v3.json` freezes its causal follow-up: keep the same
+PCM/model/settings/grammar texts and IDs, but give only mixed command3 the
+official `TfL Mm c qbK` through `esp_mn_commands_phoneme_add`. All other mixed
+commands retain their existing G2P, and the stock arm remains the replication
+control. An optional generated phoneme matrix selects that documented API;
+it adds no production behavior. Source spelling comes from the pinned upstream
+test, not from editing labels or transcripts after recognition.
+
+The pre-inference build/vector identities are
+`../results/multinet-reference-v3-{build,vectors}.json`. Their source rows,
+model/fixture blobs, threshold, timeout and command texts/IDs are verified
+identical to v2. Only the declared phoneme API choice and corresponding
+template/header code change. A later passing control still cannot establish
+always-listening Nyx recall/FAR or whole-app resource acceptance.
