@@ -1,0 +1,24 @@
+{
+  "role": "Pre-registered v30 single fixed-point independent negative evaluation; not full goal acceptance",
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "threshold": 0.91796875,
+  "sliding_window": 5,
+  "detector_source_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+  "frontend_source_sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+  "negative_manifest_sha256": "20aabf1d216872eeb7693ac983bae60ec8853a9ff085715d533e41f330b29d47",
+  "expected_streams": 73,
+  "expected_source_hours": 10.745014097222223,
+  "false_per_hour_upper_95_limit": 0.5,
+  "confidence": 0.95,
+  "event_policy": "Existing float64 five-score convolution; >= threshold; rising latch, rearm below half threshold, 67-step refractory; reset between speakers; count all events including startup",
+  "exposure_policy": "Original waveform seconds only; exclude inserted utterance gaps and final alignment padding",
+  "selection_evidence": {
+    "4090-v30-expanded-calibration.json": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+    "4090-v30-hiesp-development-calibration-v1.json": "3ea358f98a5b70e6f92c0b3c1935671836c67c4be1b0237c9f901a95ed6d73cc",
+    "4090-v30-paired-hiesp-budget-development-v1.json": "a23f198a99348911167dce5e23994bca4c07f02d0da7091b675144863975a57e"
+  },
+  "protocol": "Commit and push this record and evaluator before scoring. Complete all 73 streams once, irrespective of early failures. Never tune the threshold/model, discard events or retry a candidate based on these final scores. A failed fixed-point test is a failure; later candidates require fresh independent acceptance data. This set never becomes training data.",
+  "positive_final_scoring_authorized_by_this_record": false,
+  "hiesp_final_measured": false,
+  "limits": "Only this frozen LibriSpeech negative distribution. No independent positive recall, phonetic endpoint accuracy, TV/farfield coverage or MCU equivalence conclusion. Full goal remains incomplete even if the negative numerical bound passes."
+}
