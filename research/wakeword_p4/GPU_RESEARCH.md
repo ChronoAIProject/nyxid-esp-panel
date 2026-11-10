@@ -2574,3 +2574,31 @@ run_replay/run_corpus新增显式final-preregistration分支，
 未提供最终预注册及改阈值两种情况都在启动QEMU/创建输出前被拒绝。
 完成后需对同PCM、全部流、事件与padding重新审计；
 最终正例仍不评分，同负例结果不能证明总体FAR相等或真实延迟优胜。
+
+
+## 官方HiESP同独立负例结果：73条完整审计通过（2026-11-10）
+
+预注册dd642ac已先推送，随后官方未修改wn9_hiesp以既定0.63请求/
+0.62496001 getter复放73条同PCM独立负例，全部完成，无运行失败。
+逐流对照冻结Nyx结果、原feature SHA、重建WAV/PCM SHA，验证官方
+CRC、stage104、调用次数、最终512样本填充、固定QEMU/ELF/flash SHA、
+原阈值/getter及双方原音频曝光；Nyx原score SHA与全部事件重新计数通过。
+未再次推理Nyx，模型/阈值未调整。
+
+10.745014097h、73位保留说话人：
+- Nyx v30：0次，观察0/h，单侧95%上界0.278802079/h。
+- 官方HiESP：1次，观察0.0930664205/h，单侧95%上界0.441494490/h。
+官方事件来自test-other说话人8188；全部事件保留，无文本过滤或事后调阈值。
+两引擎在预定混合负例分布的名义数值上界均<=0.5/h。
+不同子语料曝光与各自上界仍在完整比较报告中，不因合并通过而省略。
+
+这证明固定工作点下同一独立负例PCM的观测结果，不证明总体FAR等价、
+Nyx统计显著优于官方或同总体误触率的召回/时延排名。
+开发采用的“至多1次事件预算”也不是此最终观测点的总体FAR匹配。
+独立正例最终集仍未评分，可信端点/延迟比较、真实声学部署分布仍未完成，
+完整研究目标保持未达成，不能写成已达到HiESP。
+
+官方完整报告results/4090-hiesp-independent-negatives-v1.json，
+逐流比较results/4090-v30-hiesp-independent-negative-comparison-v1.json，
+审计工具training/compare_independent_negative_engines.py；
+官方原始UART/每流report与输入PCM保留/tmp/nyx-hiesp-final-neg-v1。
