@@ -100,8 +100,8 @@ def audit(report, manifest, uart):
         'decoder_records': decoders, 'ready': parsed['ready'], 'timing': parsed['timing'],
         'cleanup_uninitialized_command_warning': b'The mn commands is not initialized' in uart,
         'restored': restored,
-        'limits': ['Two reused training voices are not speaker-generalization evidence.',
-            'Reset-separated synthetic sources do not establish continuous FAR.',
+        'limits': ['Short control sources are not speaker-generalization evidence.',
+            'Reset-separated short sources do not establish continuous FAR.',
             'Standalone resources/timing do not establish GUI/voice/OTA capacity.',
             'No acoustic playback or microphone/AFE transfer was tested.'], 'accepted': False}
 

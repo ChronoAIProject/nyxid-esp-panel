@@ -1,0 +1,54 @@
+{
+  "scope": "Pinned upstream original-PCM reference control with two correlated prefix placements; no playback, fitting or independent quality acceptance.",
+  "previous_result_sha256": "8690d769dbd05507cada4b689a5e46341d579d8183cd1a5a81663e2ec650982b",
+  "preparation_script_sha256": "9568fc627f8adb735c8a18feecb985512e0bd71730e15023bc18ed67c02b5b3d",
+  "audit_script_sha256": "7f55db217c57c7982f9d8c1264fa9e31b4d42feced8aae87b689e0f960d5e811",
+  "runner_sha256": "336df4ca4c4f42b4a4db6d17dbe9d19d25513e57293e8a5957092cf5d15f2efe",
+  "template_files": {
+    "CMakeLists.txt": "b4329ae09f9e9be5fc8679ae64c8d63ac2961d10ae4a4c74ea55aa2e228cb6bf",
+    "main/CMakeLists.txt": "1ada85ffdf54bbf156b3de0b8ea92b3e12318b03999c6770f3bf683ec41dcff4",
+    "main/probe.cpp": "86f3cb97cabf72ba77b999678e22517c89574480874084ed45261c1b68daa7df",
+    "main/readonly_model_files.h": "89b1fd9b96108a6cd91793f60e0f2ef418f4bd4214bb98cf2175ce93d8beb4ed",
+    "partitions.csv": "8bf0726edb130cec0a79474ff82acc271922d3db7b438f13eacd9091dfc42a5f",
+    "sdkconfig.defaults": "16e7c5ce64d04ac3179e0fa299bfb375f03175e8b5b37bb1809c8792e1ff1280"
+  },
+  "base_vectors_manifest_sha256": "944bd606f8da81227fccaa261f1a651f93af8dc0daf0b0b622de61ae9d2e0612",
+  "base_dependency_manifest_sha256": "bed506485472bddfbdab6d7cbfac913061752556faf89cb33c87725fa796f668",
+  "upstream_commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+  "upstream_files": {
+    "test_multinet.cpp": "fe83910e9d0462ba48477342e28fb98ae2cef28a865428840e1548bcb8e6bed3",
+    "tell_me_a_joke.h": "e473320afb28863c873c822817a044731d63b07f8ffe6a7fde5373e1baab871e",
+    "sdkconfig.ci.p4v1_mn7_en": "f0f1bb197024e817744b9f13f1bbac577d434fbdb3fe9f88e8678854b3180ab8",
+    "sdkconfig.defaults": "3eca14953e94a9ce18c551538a30382440f0c7d852cd771f4f2b5a21a5756d18"
+  },
+  "source_pcm_bytes": 89658,
+  "source_pcm_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+  "prefix_samples": [
+    0,
+    38400
+  ],
+  "blocks_per_case": 601,
+  "detector_threshold": 0.9,
+  "detector_timeout_ms": 500000,
+  "command_arms": [
+    {
+      "name": "official_initialization",
+      "stock_grammar": true,
+      "commands": []
+    },
+    {
+      "name": "mixed_control",
+      "stock_grammar": false,
+      "commands": [
+        "HEY NICKS",
+        "TURN ON THE LIGHT",
+        "TELL ME A JOKE"
+      ]
+    }
+  ],
+  "policy": "Preserve every original16kHz PCM16 sample. Each placement has601complete512sample blocks; fill remaining positions with zeros. No speed/gain/phoneme/threshold/model change. Use original stock grammar then the same mixed add/update grammar. Clean per clip and detected/timeout state. Retain all detected commands/raw strings, terminal decoder output and consumed-input CRC. A source recorded once gives two correlated views, not two speakers.",
+  "upstream_protocol_relation": "The pinned cpu-loading unit test uses create(...,500000), its default threshold and up to601detect calls. It zeros the final partial source block; this diagnostic instead preserves all89658source bytes. The second placement additionally uses the prior2.4s prefix. This is a known-source harness diagnostic, not a bit-identical reproduction or a product-quality test.",
+  "quality_gate": "Both correlated placements must detect TELL ME A JOKE with ID1 in stock grammar and ID3 in mixed grammar. If not, investigate the harness/model contract before scoring Nyx quality.",
+  "source_partition_policy": "Public upstream unit source is assigned only to training-side harness controls; no validation/final audio or new model fitting.",
+  "accepted": false
+}

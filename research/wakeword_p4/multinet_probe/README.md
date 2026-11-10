@@ -241,3 +241,38 @@ The upstream CPU test permits601calls, uses a500,000ms timeout and feeds zeros
 after its sample. It does not set a lower threshold; another distinct test
 explicitly uses .1. This is source evidence for the next diagnostic, not a
 local inference result or permission to fit the threshold to the failed TTS.
+
+### Original upstream PCM reference v1
+
+`../multinet_reference_plan_v1.json` freezes that source control independently.
+`prepare_multinet_reference.py` checks all original header/test/config hashes,
+decodes the literal byte array without executing it, verifies its89,658byte
+PCM identity, and reuses the hash-verified preceding model/dependency project.
+The current template/runner/auditor are bound separately. There is no synthesis
+or playback and no validation/final source audio is read.
+
+Two correlated placements of the same2.8018125s source use either0or38,400
+leading zero samples, then fill to exactly601blocks /307,712samples. Every
+original source byte survives. Unlike the vendor loop, the last fractional
+source block is not discarded. Both use the vendor CPU test's500,000ms timeout,
+the unchanged.9threshold, and the preceding stock/mixed grammars. Four cases
+must consume2,404blocks with matching independent CRCs. Expected joke IDs are1
+in stock and3in mixed. These are transport controls of one reused recording,
+not independent speakers or an acceptance set. The longer silence/timeout is
+a declared diagnostic change; it does not alter production call behavior.
+
+```sh
+python3 research/wakeword_p4/prepare_multinet_reference.py \
+  --plan research/wakeword_p4/multinet_reference_plan_v1.json \
+  --base-project "$PRIVATE_KNOWN_CONTROL_PROJECT" \
+  --upstream-source "$PINNED_UPSTREAM_TEST_FILES" \
+  --output "$NEW_PRIVATE_REFERENCE_PROJECT"
+```
+
+Build and use the same guarded restore runner and independent control auditor.
+The pre-inference build/vector identities are
+`../results/multinet-reference-v1-{build,vectors}.json`. Preparation verifies
+all89,658decoded bytes; an independent extraction of the generated fixtures
+also verifies that both source slices retain the original PCM SHA and that
+their full307,712sample buffers match their declared CRCs. No recognition
+result is implied by those input/build checks.
