@@ -688,3 +688,12 @@ voices/conditions and real recordings for subsequent acceptance.
   improves previous43/50 but still differs from HiESP48/50 and zero shared
   false counts. Keep as next research candidate only. Original board restored;
   no reserved scores read or release. Next actual whole-app slot/CPU/heap fit.
+
+- Matched Hi ESP raw/processed research builds now fit the original OTA slot.
+  All 2,709 compile units, dependency lock and sdkconfig are compared; the only
+  compile-command difference is the raw-input definition on panel_services.
+  Four invalid-configuration guards and 23 runtime-tool tests pass. The frozen
+  processed/raw/processed physical bracket reuses 15 positives and 10 ordinary
+  negatives per arm; results remain pending. No model/threshold training change,
+  speech speed change, second mic reader or production-board update. See
+  `../results/hiesp-input-build-v1.json`.

@@ -936,6 +936,9 @@ static void wake_task(void *arg)
                 ESP_LOGE("panel.wake","%s listener initialization failed",panel_voice_wake_word());vTaskDelete(NULL);return;
             }
             ESP_LOGI("panel.wake","%s ready: detector chunk=%d AEC chunk=%d",panel_voice_wake_word(),wn_chunk,chunk);
+#ifdef NYX_PANEL_RESEARCH_RAW_HIESP
+            ESP_LOGW("panel.wake","Research Hi ESP baseline: raw idle mic; call and preroll remain AEC/AGC");
+#endif
         }
         esp_err_t err=product_codec_dev_resume();
         if(err==ESP_OK)err=product_codec_mute_set(false);
@@ -1003,12 +1006,13 @@ static void wake_task(void *arg)
                 panel_voice_pcm_preroll_push(&wake_tail,adjusted,produced);
                 const int16_t *wake_pcm=adjusted;
                 size_t wake_samples=produced;
-#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+#if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_RESEARCH_RAW_HIESP)
                 // Keep each experimental detector's training frontend. The
                 // communication AEC can suppress its wake cues even with a
                 // silent reference. Use the same I2S producer's raw mic only
                 // for idle detection. The preroll and active-call FIFO keep
-                // their existing AEC/AGC processing.
+                // their existing AEC/AGC processing. The opt-in Hi ESP research
+                // baseline uses this same input path for a matched comparison.
                 wake_pcm=mic;wake_samples=(size_t)chunk;
 #endif
                 for(size_t at=0;at<wake_samples;++at) {

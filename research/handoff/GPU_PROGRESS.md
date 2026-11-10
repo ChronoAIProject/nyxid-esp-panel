@@ -360,3 +360,25 @@ versus one continuous event/7.30378h. All prefit sampled windows and PTQ
 representatives match; no endpoint correction or mining was combined. The
 candidate is rejected before development/final scoring or physical flashing.
 Its full checkpoints remain available as `negative20-continuation-v1.tar.gz`.
+
+
+### GPU snapshot through `72fc264`
+
+The matched MCU scratch/official-pretrained experiment now reports v15 transfer
+validation macro recall75.7292% at the frozen.95 threshold, with three premature
+positive events. Its reused development regression reaches67.6042% macro
+(Piper78.5417%, Kokoro56.6667%), with68 premature Kokoro events. Zero events
+in1.35816 ambient source hours still gives upper95%2.20573/hour. These scores
+do not meet Hi ESP equivalence. At that same frozen threshold, AISHELL produces
+two events/6.913985h (upper95%.910588/hour), while DiPCo S05 produces zero in
+only.754488h (upper95%3.97055/hour). Neither establishes an acceptable general
+household false-wake rate. Preserve the failed Mandarin gate.
+
+The next GPU recipe audits sparse human sampling and adds training-only DiPCo
+S02/S04 streams (1.26550 original hours), retaining all validation/regression
+rows. Its paired stratified training remains pending at this snapshot; do not
+repeat it locally or treat feature preparation as recognition improvement.
+The Mac continuation instead isolates physical Hi ESP raw-versus-AEC/AGC input
+under matched dependencies/optimization, with unchanged PCM playback speed and
+call capture path. No new model/threshold or reserved-final scores are needed
+for that diagnostic.

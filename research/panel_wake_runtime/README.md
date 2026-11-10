@@ -154,6 +154,38 @@ and verify its development device/app, playback device, unchanged source PCM,
 placement and arm order. Do not edit the completed plan or tune thresholds from
 its results. The current playback adapter uses macOS `afplay`/system tools.
 
+### Matched Hi ESP input diagnostic
+
+`NYX_PANEL_RESEARCH_HIESP_INPUT=processed` and `=raw` build two isolated
+Hi ESP controls. Both require `NYX_PANEL_NODE_DEV_MODE=ON`, reject an
+experimental Hey Nyx model, and pin the measured dependency versions. Empty
+is the normal build. `processed` retains the normal idle AEC/AGC input;
+`raw` feeds the detector the same single producer's raw microphone samples.
+Both keep processed preroll, the active-call AEC/AGC and the ordered FIFO.
+They use the same embedded Hi ESP weights, DET_MODE_95 and model lifecycle.
+
+Build both with the same sdkconfig and
+`-DCMAKE_PROJECT_nyxid-esp-panel_INCLUDE=.../embedding_size_profile.cmake` when
+using the existing private size profile. The profile retains the calculator's
+release optimization even when no experimental runtime target exists. Compare
+the dependency locks, generated sdkconfig headers and compile-command arrays:
+the only command difference must be `NYX_PANEL_RESEARCH_RAW_HIESP=1` on
+`panel_services`. Save each app image before changing the cache input mode.
+
+The frozen `plans/hiesp-input-{processed,raw}-v1.json` plans reuse the first
+three positive and first two ordinary-negative source indices for each of
+five existing synthetic voices (15 positive,10 negative trials per arm).
+They retain the parent's randomized order and source bytes. Run processed,
+raw,processed through `run_full_app.py --experimental-wake-word 'Hi ESP'`,
+with each plan passed to the unchanged `acoustic_wake_probe.py --arm hi_esp`.
+The runner restores and verifies the original app/service/listener after
+each arm. Rebuilding changes the app identity: freeze a new plan rather than
+loosening identity checks or editing a completed measurement.
+
+This controls the idle detector input, not the trained wake phrase or model.
+It can diagnose whether different input processing confounds the comparison;
+it cannot establish Hey Nyx equivalence or continuous false events/hour.
+
 ```sh
 python research/panel_wake_runtime/acoustic_wake_probe.py \
   --plan "$WAKE_ACOUSTIC_PLAN" --arm hi_esp \

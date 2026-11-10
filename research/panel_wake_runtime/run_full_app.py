@@ -55,6 +55,8 @@ def main():
     p.add_argument("--expected-restore-elf-sha256", required=True)
     p.add_argument("--experimental-app", type=Path, required=True)
     p.add_argument("--expected-experimental-elf-sha256", required=True)
+    p.add_argument("--experimental-wake-word", choices=("Hey Nyx", "Hi ESP"), default="Hey Nyx",
+                   help="Expected detector for this explicit research arm; default preserves Hey Nyx runs")
     p.add_argument("--app-offset", type=lambda s: int(s, 0), required=True)
     p.add_argument("--slot", required=True)
     p.add_argument("--slot-bytes", type=lambda s: int(s, 0), required=True)
@@ -100,6 +102,7 @@ def main():
     report = {"scope": "Temporary full-app development experiment; not a production release",
               "experimental_bin_sha256": hashlib.sha256(args.experimental_app.read_bytes()).hexdigest(),
               "experimental_elf_sha256": args.expected_experimental_elf_sha256,
+              "experimental_wake_word": args.experimental_wake_word,
               "restored": False}
 
     def wait_ready(digest, word):
@@ -135,9 +138,9 @@ def main():
             str(Path(__file__).resolve().parents[2] / "tools" / "monitor_uart.py"),
             "--port", args.port, "--output", str(args.output / "uart-private.log")],
             stdout=monitor_log, stderr=subprocess.STDOUT)
-        experimental = wait_ready(args.expected_experimental_elf_sha256, "Hey Nyx")
+        experimental = wait_ready(args.expected_experimental_elf_sha256, args.experimental_wake_word)
         (args.output / "experimental-private.json").write_text(json.dumps(experimental, indent=2) + "\n")
-        print("Experimental full app, original service selection and Hey Nyx listening verified", flush=True)
+        print(f"Experimental full app, original service selection and {args.experimental_wake_word} listening verified", flush=True)
         with (args.output / "acceptance-private.log").open("w") as log:
             result = run_acceptance(command, log, args.command_timeout)
         report["acceptance_exit_code"] = result.returncode

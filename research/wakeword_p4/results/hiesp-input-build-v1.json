@@ -1,0 +1,62 @@
+{
+  "images": {
+    "raw": {
+      "bytes": 6188784,
+      "bin_sha256": "088388da1d2a1d811f0d1b866926671d75d5bd0579d75ab25c3e4c4e6e563036",
+      "elf_sha256": "0753e1a8993c442af07e4d3353a736af3d93cd1e13bd5f87fdb41c2416c60714"
+    },
+    "processed": {
+      "bytes": 6188688,
+      "bin_sha256": "6ac3e1477983679a851d9c87d7d3480010a3b0041b7ccda5b15ca0e1c02a8d73",
+      "elf_sha256": "221f4c8fefe8a264009bb7205db8b30d340b291fadb1db10a385637c5757af71"
+    }
+  },
+  "compile_units": 2709,
+  "differing_compile_units": 41,
+  "only_difference": "NYX_PANEL_RESEARCH_RAW_HIESP=1 on panel_services",
+  "same_dependency_lock": true,
+  "same_sdkconfig_header": true,
+  "scope": "Build and configuration evidence for an isolated Hi ESP idle-input comparison; not recognition acceptance.",
+  "configuration_guard_checks": [
+    {
+      "configuration": [
+        "-DNYX_PANEL_RESEARCH_HIESP_INPUT=unknown"
+      ],
+      "rejected_before_project_configuration": true,
+      "message": "input must be raw or processed"
+    },
+    {
+      "configuration": [
+        "-DNYX_PANEL_RESEARCH_HIESP_INPUT=raw"
+      ],
+      "rejected_before_project_configuration": true,
+      "message": "requires isolated node development mode"
+    },
+    {
+      "configuration": [
+        "-DNYX_PANEL_RESEARCH_HIESP_INPUT=processed"
+      ],
+      "rejected_before_project_configuration": true,
+      "message": "requires isolated node development mode"
+    },
+    {
+      "configuration": [
+        "-DNYX_PANEL_RESEARCH_HIESP_INPUT=raw",
+        "-DNYX_PANEL_NODE_DEV_MODE=ON",
+        "-DNYX_PANEL_EXPERIMENTAL_WAKE_MODEL=unread-test-path"
+      ],
+      "rejected_before_project_configuration": true,
+      "message": "separate research arms"
+    }
+  ],
+  "research_host_tests_passed": 23,
+  "app_slot_bytes": 6881280,
+  "default_build_input": "unchanged AEC/AGC",
+  "call_audio_invariants": [
+    "one existing I2S producer",
+    "existing communication AEC/AGC",
+    "processed preroll and ordered wake/call FIFO",
+    "normal16kHz PCM speed and24kbps20ms Opus"
+  ],
+  "accepted_as_hiesp_replacement": false
+}
