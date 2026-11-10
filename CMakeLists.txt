@@ -11,6 +11,11 @@ set(NYX_PANEL_EXPERIMENTAL_WAKE_MODEL "" CACHE FILEPATH "Private experimental He
 set(NYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION "" CACHE FILEPATH "Validation calibration identifying the experimental artifact")
 set(NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST "" CACHE FILEPATH "Optional private exact-PCM/output diagnostic for the experimental model")
 set(NYX_PANEL_RESEARCH_HIESP_INPUT "" CACHE STRING "Research Hi ESP control input: raw or processed; empty keeps the normal build")
+option(NYX_PANEL_RESEARCH_WAKE_TIMING "Measure the development wake detector's wall time" OFF)
+if(NYX_PANEL_RESEARCH_WAKE_TIMING AND (NOT NYX_PANEL_NODE_DEV_MODE OR
+        (NOT NYX_PANEL_RESEARCH_HIESP_INPUT AND NOT NYX_PANEL_EXPERIMENTAL_WAKE_MODEL)))
+    message(FATAL_ERROR "Wake timing requires an isolated development wake arm")
+endif()
 set_property(CACHE NYX_PANEL_RESEARCH_HIESP_INPUT PROPERTY STRINGS "" "raw" "processed")
 if(NOT "${NYX_PANEL_RESEARCH_HIESP_INPUT}" STREQUAL "")
     if(NOT NYX_PANEL_RESEARCH_HIESP_INPUT MATCHES "^(raw|processed)$")

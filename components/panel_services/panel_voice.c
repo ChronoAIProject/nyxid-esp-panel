@@ -962,6 +962,10 @@ static void wake_task(void *arg)
         if(!aec){wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;}
         xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
         wake_status("listening");
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+        int64_t wake_window_started=esp_timer_get_time();
+        unsigned wake_calls=0,wake_pcm_samples=0,wake_max_us=0,wake_total_us=0;
+#endif
         while(err==ESP_OK) {
             size_t got=0;err=product_i2s_read(capture,chunk*4,&got,1000);
             xSemaphoreTake(wake_lock,portMAX_DELAY);
@@ -1020,13 +1024,39 @@ static void wake_task(void *arg)
                     if(wn_used==(size_t)wn_chunk) {
                         wn_used=0;
                         model_dirty=true;
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+                        const int64_t wake_detect_started=esp_timer_get_time();
+                        if(!wake_window_started)wake_window_started=wake_detect_started;
+#endif
                         int detected=wn->detect(model,detect);
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+                        const unsigned elapsed=(unsigned)(esp_timer_get_time()-wake_detect_started);
+                        wake_calls++;
+                        wake_pcm_samples+=(unsigned)wn_chunk;
+                        wake_total_us+=elapsed;
+                        if(elapsed>wake_max_us)wake_max_us=elapsed;
+#endif
                         if(detected<0){err=ESP_FAIL;wake_status("error");break;}
                         if(detected>0)triggered=true;
                     }
                 }
             }
             xSemaphoreGive(wake_lock);
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+            // Both engines use the same measurement boundary. Report outside
+            // the audio lock and never during a call, warmup, or failed read.
+            if(c || triggered) {
+                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=0;
+                wake_window_started=0;
+            } else if(err==ESP_OK && wake_pcm_samples>=16000*5) {
+                const int64_t now=esp_timer_get_time();
+                ESP_LOGI("panel.wake.timing", "calls=%u pcm_samples=%u wall_us=%lld detect_us=%u max_us=%u stack_free=%u",
+                    wake_calls,wake_pcm_samples,(long long)(now-wake_window_started),wake_total_us,
+                    wake_max_us,(unsigned)uxTaskGetStackHighWaterMark(NULL));
+                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=0;
+                wake_window_started=now;
+            }
+#endif
             if(triggered) {
                 if(!wake_available())break;
 #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME

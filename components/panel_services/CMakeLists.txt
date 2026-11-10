@@ -47,6 +47,9 @@ idf_component_register(
         json lvgl nvs_flash spi_flash quirc
         waveshare__esp32_p4_platform product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib)
 idf_component_optional_requires(PRIVATE panel_wake_runtime)
+if(NYX_PANEL_RESEARCH_WAKE_TIMING)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_RESEARCH_WAKE_TIMING=1)
+endif()
 if(NYX_PANEL_RESEARCH_HIESP_INPUT STREQUAL "raw")
     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_RESEARCH_RAW_HIESP=1)
 endif()
