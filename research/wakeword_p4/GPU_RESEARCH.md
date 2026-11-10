@@ -928,3 +928,19 @@ QEMU 25 秒运行只输出 Adding SPI flash device，未出现应用启动或计
 因此固件启动尚未验证，WakeNet 推理更未验证。保留镜像与调试日志，
 下一步定位 ROM 启动路径和仿真兼容性。完整构建哈希见
 `results/4090-qemu-p4-firmware-boot-probe.json`。目标保持进行中。
+
+
+### P4 无板启动与计时已实际通过
+
+后续 HMP 寄存器显示 CPU 已在应用的 `esp_cpu_wait_for_intr` 中；
+此前用“没有串口输出”推断未启动证据不足，未据此否定 QEMU。
+在应用加入独立可读内存标记，并改为 `-serial file:...`、`-snapshot` 后，
+完整 ROM/bootloader/app 日志和两个串口标记均被捕获，内存标记交叉验证通过。
+实测 `elapsed_us=97984`，芯片 revision=301（3.01，IDF 日志格式为 v3.1）。
+QEMU 正常 quit 返回 0。先前超时记录保留为历史，不再作为启动失败结论。
+
+`qemu_probe/run_probe.py` 按 ELF 符号读取实际固件标记，保留原始 HMP/串口
+日志及 ELF、闪存、QEMU 哈希。结果见 `4090-qemu-p4-boot-markers.json`。
+这证明无板 ROM/应用/FreeRTOS/计时链路工作，不证明 WakeNet 的 PIE/DSP
+内核可执行，更不是识别率或 Hi ESP 比较结果。下一步加载精确 2.6.1
+ESP-SR 和 Hi ESP 模型，使用开发音频验证实际 detect 调用。
