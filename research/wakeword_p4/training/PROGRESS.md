@@ -694,6 +694,11 @@ voices/conditions and real recordings for subsequent acceptance.
   compile-command difference is the raw-input definition on panel_services.
   Four invalid-configuration guards and 23 runtime-tool tests pass. The frozen
   processed/raw/processed physical bracket reuses 15 positives and 10 ordinary
-  negatives per arm; results remain pending. No model/threshold training change,
+  negatives per arm. The complete processed/raw/processed bracket now yields
+  2/15, 8/15, 2/15 positive triggers and 0/10 ordinary negatives each. Processed
+  repeats match every trial; raw gains seven clips and loses one. All 75 trials
+  rearm, and all three app swaps restore/verify the original app/service/listener.
+  This confirms an input-path confound in the old physical comparison, not
+  Hey Nyx parity. No model/threshold training change,
   speech speed change, second mic reader or production-board update. See
-  `../results/hiesp-input-build-v1.json`.
+  `../results/hiesp-input-build-v1.json` and `../results/hiesp-input-acoustic-v1.json`.

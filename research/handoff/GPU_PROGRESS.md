@@ -1,5 +1,8 @@
 # GPU research cross-reference
 
+Latest observed GPU commit: `78c8264`; see the dated snapshots below.
+The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
+
 Observed 2026-11-11 at GPU branch commit
 `d338e7a`:
 [research-hye-nyx-voice-gpu](https://github.com/ChronoAIProject/nyxid-esp-panel/tree/research-hye-nyx-voice-gpu).
@@ -382,3 +385,48 @@ The Mac continuation instead isolates physical Hi ESP raw-versus-AEC/AGC input
 under matched dependencies/optimization, with unchanged PCM playback speed and
 call capture path. No new model/threshold or reserved-final scores are needed
 for that diagnostic.
+
+
+### GPU snapshot through `454eb32`
+
+The paired human-sampling controls finish: row-weighted v16 reaches 59.4531%
+validation engine macro, while category-stratified v17 reaches 70.4167% at
+the same .95 threshold. V17's existing development regression is 66.1458%
+macro, with 40 premature events and one ambient event / 1.358162 h (upper
+95% 3.49286/h). At the frozen threshold it has zero AISHELL events / 6.913985 h
+(upper 95% .433286/h), but one DiPCo S05 event / .754488 h (upper 95%
+6.28753/h). The read-Mandarin result does not establish household acceptance,
+and the candidate remains rejected. The branch preserves the conversation
+false-event context without reusing that validation audio for training.
+
+V18/v19 now test 8 or 16 training-positive prefix negatives per batch, retaining
+the original evaluation window, source partitions and remaining RNG sequence.
+Both runs are pending at this snapshot. This directly overlaps the possible
+prefix-supervision follow-up; the Mac side will not duplicate it. Its current
+physical Hi ESP input comparison continues without changing any detector
+threshold, replay speed, provider setting or training data.
+
+
+### GPU snapshot through `78c8264`
+
+The prefix experiment completes: 8 prefix negatives per batch (v18) is rejected
+at 66.5104% validation macro; 16 (v19) reaches 78.3073% at the frozen .95
+threshold. Existing development regression improves to 69.4271% macro, with
+17 premature events versus v17's 40 and v15's 68. Zero ambient events /
+1.358162 h still gives upper 95% 2.20573/h. This remains a research candidate,
+not an accepted detector or a claim that prefix supervision always improves
+recognition. Both experiments preserve the original evaluation window.
+
+Frozen v19 has zero AISHELL events / 6.913985 validation hours (upper 95%
+.433286/h) and zero DiPCo S05 events / .754488 h (upper 95% 3.97055/h).
+Newly scored, previously assigned development regression streams yield zero
+AISHELL events / 1.723096 h and zero DiPCo S09/S10 events / .712196 h; their
+bounds remain 1.73858/h and 4.20633/h. These cannot be relabelled untouched
+final holdouts after scoring. Independent final audio remains unscored.
+
+The GPU branch is downloading the officially hashed LibriSpeech dev-other
+for preassigned development coverage and audits speaker separation before
+feature extraction. No dev-other model result is available at this snapshot.
+No v19 model/calibration was identified among the currently listed research
+prerelease assets. Physical v19 acceptance cannot be inferred from its JSON
+scores or attempted by substituting another frontend's weights.

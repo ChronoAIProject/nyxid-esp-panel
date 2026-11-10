@@ -186,6 +186,24 @@ This controls the idle detector input, not the trained wake phrase or model.
 It can diagnose whether different input processing confounds the comparison;
 it cannot establish Hey Nyx equivalence or continuous false events/hour.
 
+The completed bracket yields 2/15,8/15,2/15 positive triggers, and 0/10
+ordinary-negative triggers per arm. The processed repeats agree on every
+trial. Raw gains seven positive clips and loses one; all 75 trials rearm.
+All three swaps restore and verify the original app, selected service and
+Hi ESP listener. The [sanitized report](../wakeword_p4/results/hiesp-input-acoustic-v1.json)
+retains each voice's hits/misses and every observed event interval. Its
+aggregation verifies frozen plan/trial order, source hashes, playback
+conditions, app identities, restoration, the raw-input UART marker and
+absence of UART panic/read errors before publishing counts. No room audio,
+account identifiers or private UART is published.
+
+This isolates an important confound in the earlier physical Hey Nyx bracket.
+It also retains Hi ESP's remaining raw-input misses; neither result can be
+promoted to human acceptance. The next physical model comparison must use
+the same raw idle source for both engines and keep the unchanged processed
+communication path. Independent continuous-negative and human/room evidence
+remain separate requirements.
+
 ```sh
 python research/panel_wake_runtime/acoustic_wake_probe.py \
   --plan "$WAKE_ACOUSTIC_PLAN" --arm hi_esp \
