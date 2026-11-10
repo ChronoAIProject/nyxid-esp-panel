@@ -18,6 +18,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--dataset", type=Path, required=True)
     p.add_argument("--model", type=Path, required=True)
+    p.add_argument("--model-description", default="faster-whisper 1.2.1 tiny.en CPU INT8, beam=3, no prompt/VAD")
     p.add_argument("--model-source", type=Path, required=True)
     p.add_argument("--details", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
@@ -69,7 +70,8 @@ def main():
     for path in sorted(a.model.iterdir()):
         if path.is_file():
             files[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
-    report = {"asr": "faster-whisper 1.2.1 tiny.en CPU INT8, beam=3, no prompt/VAD",
+    report = {"asr": a.model_description,
+              "audit_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "asr_source": json.loads(a.model_source.read_text()), "asr_files_sha256": files,
               "manifest_sha256": hashlib.sha256((a.dataset/"manifest.jsonl").read_bytes()).hexdigest(),
               "clips": len(rows), "counts": dict(counts),

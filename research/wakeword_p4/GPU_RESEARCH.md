@@ -696,3 +696,27 @@ explain it. Before filtering or synthesizing more from the same recipe, seek
 an independent stronger ASR check and inspect intended phonemes. Current
 validation/final waveforms and labels remain unchanged. No wake model scores
 were used to select this pilot. Source/ASR model hashes are in the pilot reports.
+
+## v7 quantized validation: rejected
+
+At validation-selected INT8 threshold0.97, v7 source-macro recall is67.865%
+(Piper74.896%, Kokoro60.833%), pooled1584/2160 correlated variants (73.333%).
+Confusing-negative false0.5682%, max source0.875%;12 premature positive events.
+Zero ambient events/1.20481h still gives upper95%2.48647/h, exceeding0.5/h.
+Latency median130ms/p95190ms. This is lower source-macro validation recall than
+v6's69.948%; no development regression or independent final evaluation is run.
+Changing ambient coverage alone did not establish improved recognition.
+
+The validation-only evaluator now records metadata and full feature-binary
+hashes, and retains5680 validation clip traces locally with testing/mac=null.
+The small8-clip streaming comparison reproduces explicit resets;4/4 positive
+hits in both float and INT8. Mean score drift0.002878, max0.25409, showing why
+full quantized evaluation matters. These are narrow consistency diagnostics,
+not MCU numeric equivalence or acceptance. See v7 reports and streaming audit.
+
+Intended Piper phonemes for Nyx/Nix/Nicks are exactly identical /nɪks/;
+Next has /nɛkst/, Nick /nɪk/, Mix /mɪks/. Thus simply respelling Nyx as Nicks
+would not change this generator's phoneme input. This verifies only intent,
+not waveform pronunciation. A pinned larger Whisper small.en reference is
+being downloaded to recheck the exact same200 training WAVs before deciding
+whether the tiny-ASR disagreement warrants a data-generation change.
