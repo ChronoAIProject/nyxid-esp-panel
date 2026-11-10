@@ -1,0 +1,3284 @@
+{
+  "scope": "Training-only leave-engine-out ridge probes of fixed lexical embeddings.\n\nThese are six-class diagnostic decoders, never streaming wake detectors.\nNo existing trained detector is loaded and no validation/final data are scored.\n",
+  "plan_sha256": "1dd1509b0761e2b118d3b175c6dfb031032afd8485d937f63cfba82967807d46",
+  "script_sha256": "e090e82581610316c9dc3874171e34ec0d629c62b76986507829c3c12ecd3d3f",
+  "auxiliary_manifest_sha256": "1610d74f9c0c227c1484729c33f33f33d899903d12c372734f1f451e1885c2b1",
+  "classes": [
+    "target",
+    "hey nick",
+    "hey next",
+    "hey nice",
+    "hey mix",
+    "hey nexus"
+  ],
+  "source_recordings": 5072,
+  "one_original_view_per_source": true,
+  "all_sources_original_training_only": true,
+  "validation_and_final_scores_read": false,
+  "source_hash_disjoint_folds": true,
+  "input_array_sha256": "d02c192db8251a7ab536a388751a0d182472e0bf7b18398c367d5112aecc9137",
+  "private_rows_sha256": "5ac134d525810f0a09b1760c98fc5229bad3611006731754f20ad198e60fdec6",
+  "numpy_version": "2.5.4",
+  "speaker_playback": false,
+  "microphone_access": false,
+  "audio_speed_changed": false,
+  "results": [
+    {
+      "representation": "full_history",
+      "labels": "original_labels",
+      "dimensions": 1536,
+      "mean_excluded_engine_macro_top1_fraction": 0.8393859366412569,
+      "folds": [
+        {
+          "engine": "edge-tts",
+          "fit": {
+            "sources": 4656,
+            "confusion_true_rows_predicted_columns": [
+              [
+                2682,
+                494,
+                67,
+                0,
+                162,
+                0
+              ],
+              [
+                6,
+                250,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                6,
+                5,
+                236,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                247,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                0,
+                0,
+                243,
+                0
+              ],
+              [
+                1,
+                0,
+                2,
+                0,
+                0,
+                247
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7876651982378855,
+              0.9765625,
+              0.9477911646586346,
+              0.9919678714859438,
+              0.9838056680161943,
+              0.988
+            ],
+            "macro_top1_fraction": 0.9459654003997763,
+            "pooled_top1_fraction": 0.8387027491408935,
+            "target_assigned_to_confuser_sources": 723,
+            "confuser_assigned_to_target_sources": 16
+          },
+          "excluded_engine": {
+            "sources": 416,
+            "confusion_true_rows_predicted_columns": [
+              [
+                187,
+                15,
+                26,
+                0,
+                28,
+                0
+              ],
+              [
+                0,
+                31,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                31,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                32,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                0,
+                0,
+                30,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                32
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.73046875,
+              0.96875,
+              0.96875,
+              1.0,
+              0.9375,
+              1.0
+            ],
+            "macro_top1_fraction": 0.9342447916666666,
+            "pooled_top1_fraction": 0.8245192307692307,
+            "target_assigned_to_confuser_sources": 69,
+            "confuser_assigned_to_target_sources": 1
+          }
+        },
+        {
+          "engine": "kokoro",
+          "fit": {
+            "sources": 4912,
+            "confusion_true_rows_predicted_columns": [
+              [
+                2828,
+                530,
+                80,
+                0,
+                163,
+                0
+              ],
+              [
+                6,
+                260,
+                0,
+                0,
+                2,
+                0
+              ],
+              [
+                5,
+                1,
+                253,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                261,
+                0,
+                0
+              ],
+              [
+                4,
+                1,
+                0,
+                0,
+                254,
+                0
+              ],
+              [
+                1,
+                0,
+                3,
+                0,
+                0,
+                258
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7853374062760344,
+              0.9701492537313433,
+              0.9693486590038314,
+              1.0,
+              0.9806949806949807,
+              0.9847328244274809
+            ],
+            "macro_top1_fraction": 0.9483771873556118,
+            "pooled_top1_fraction": 0.8375407166123778,
+            "target_assigned_to_confuser_sources": 773,
+            "confuser_assigned_to_target_sources": 16
+          },
+          "excluded_engine": {
+            "sources": 160,
+            "confusion_true_rows_predicted_columns": [
+              [
+                41,
+                0,
+                5,
+                0,
+                1,
+                13
+              ],
+              [
+                1,
+                15,
+                2,
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                0,
+                18,
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                20,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                17,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                20
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.6833333333333333,
+              0.75,
+              0.9,
+              1.0,
+              0.85,
+              1.0
+            ],
+            "macro_top1_fraction": 0.8638888888888889,
+            "pooled_top1_fraction": 0.81875,
+            "target_assigned_to_confuser_sources": 19,
+            "confuser_assigned_to_target_sources": 1
+          }
+        },
+        {
+          "engine": "macos-say",
+          "fit": {
+            "sources": 4900,
+            "confusion_true_rows_predicted_columns": [
+              [
+                2803,
+                516,
+                95,
+                0,
+                160,
+                0
+              ],
+              [
+                7,
+                264,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                255,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                263,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                0,
+                0,
+                258,
+                0
+              ],
+              [
+                0,
+                0,
+                2,
+                0,
+                1,
+                262
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7842753217683268,
+              0.974169741697417,
+              0.9659090909090909,
+              0.9962121212121212,
+              0.9847328244274809,
+              0.9886792452830189
+            ],
+            "macro_top1_fraction": 0.9489963908829093,
+            "pooled_top1_fraction": 0.8377551020408164,
+            "target_assigned_to_confuser_sources": 771,
+            "confuser_assigned_to_target_sources": 14
+          },
+          "excluded_engine": {
+            "sources": 172,
+            "confusion_true_rows_predicted_columns": [
+              [
+                73,
+                4,
+                0,
+                1,
+                9,
+                0
+              ],
+              [
+                2,
+                15,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                6,
+                9,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                17,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                16,
+                0
+              ],
+              [
+                1,
+                0,
+                1,
+                1,
+                0,
+                14
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.8390804597701149,
+              0.8823529411764706,
+              0.5294117647058824,
+              1.0,
+              0.9411764705882353,
+              0.8235294117647058
+            ],
+            "macro_top1_fraction": 0.8359251746675681,
+            "pooled_top1_fraction": 0.8372093023255814,
+            "target_assigned_to_confuser_sources": 14,
+            "confuser_assigned_to_target_sources": 4
+          }
+        },
+        {
+          "engine": "openai-tts",
+          "fit": {
+            "sources": 4730,
+            "confusion_true_rows_predicted_columns": [
+              [
+                2751,
+                525,
+                83,
+                0,
+                140,
+                0
+              ],
+              [
+                6,
+                245,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                5,
+                2,
+                236,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                243,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                0,
+                240,
+                0
+              ],
+              [
+                1,
+                0,
+                2,
+                0,
+                0,
+                243
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7862246356101743,
+              0.9722222222222222,
+              0.963265306122449,
+              0.9918367346938776,
+              0.9876543209876543,
+              0.9878048780487805
+            ],
+            "macro_top1_fraction": 0.9481680162808596,
+            "pooled_top1_fraction": 0.8367864693446089,
+            "target_assigned_to_confuser_sources": 748,
+            "confuser_assigned_to_target_sources": 14
+          },
+          "excluded_engine": {
+            "sources": 342,
+            "confusion_true_rows_predicted_columns": [
+              [
+                113,
+                1,
+                2,
+                9,
+                16,
+                21
+              ],
+              [
+                7,
+                25,
+                0,
+                0,
+                3,
+                1
+              ],
+              [
+                5,
+                0,
+                24,
+                0,
+                0,
+                7
+              ],
+              [
+                4,
+                0,
+                1,
+                28,
+                0,
+                3
+              ],
+              [
+                10,
+                0,
+                1,
+                0,
+                23,
+                2
+              ],
+              [
+                8,
+                0,
+                0,
+                0,
+                1,
+                27
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.6975308641975309,
+              0.6944444444444444,
+              0.6666666666666666,
+              0.7777777777777778,
+              0.6388888888888888,
+              0.75
+            ],
+            "macro_top1_fraction": 0.7042181069958847,
+            "pooled_top1_fraction": 0.7017543859649122,
+            "target_assigned_to_confuser_sources": 49,
+            "confuser_assigned_to_target_sources": 34
+          }
+        },
+        {
+          "engine": "piper",
+          "fit": {
+            "sources": 1346,
+            "confusion_true_rows_predicted_columns": [
+              [
+                622,
+                9,
+                15,
+                0,
+                15,
+                0
+              ],
+              [
+                2,
+                134,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                1,
+                0,
+                136,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                137,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                134,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                136
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.9409984871406959,
+              0.9781021897810219,
+              0.9927007299270073,
+              1.0,
+              0.9781021897810219,
+              0.9927007299270073
+            ],
+            "macro_top1_fraction": 0.9804340544261256,
+            "pooled_top1_fraction": 0.9650817236255572,
+            "target_assigned_to_confuser_sources": 39,
+            "confuser_assigned_to_target_sources": 7
+          },
+          "excluded_engine": {
+            "sources": 3726,
+            "confusion_true_rows_predicted_columns": [
+              [
+                74,
+                2536,
+                69,
+                0,
+                319,
+                2
+              ],
+              [
+                3,
+                148,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                22,
+                115,
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                3,
+                0,
+                141,
+                0,
+                0
+              ],
+              [
+                1,
+                9,
+                0,
+                0,
+                132,
+                0
+              ],
+              [
+                3,
+                0,
+                5,
+                0,
+                0,
+                137
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.024666666666666667,
+              0.9801324503311258,
+              0.7986111111111112,
+              0.9791666666666666,
+              0.9295774647887324,
+              0.9448275862068966
+            ],
+            "macro_top1_fraction": 0.7761636576285332,
+            "pooled_top1_fraction": 0.20048309178743962,
+            "target_assigned_to_confuser_sources": 2926,
+            "confuser_assigned_to_target_sources": 9
+          }
+        },
+        {
+          "engine": "qwen",
+          "fit": {
+            "sources": 4816,
+            "confusion_true_rows_predicted_columns": [
+              [
+                2807,
+                525,
+                76,
+                0,
+                157,
+                0
+              ],
+              [
+                5,
+                250,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                4,
+                3,
+                240,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                248,
+                0,
+                0
+              ],
+              [
+                4,
+                1,
+                0,
+                0,
+                242,
+                0
+              ],
+              [
+                1,
+                0,
+                2,
+                0,
+                0,
+                247
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7873772791023843,
+              0.9765625,
+              0.963855421686747,
+              0.9959839357429718,
+              0.979757085020243,
+              0.988
+            ],
+            "macro_top1_fraction": 0.9485893702587243,
+            "pooled_top1_fraction": 0.8376245847176079,
+            "target_assigned_to_confuser_sources": 758,
+            "confuser_assigned_to_target_sources": 14
+          },
+          "excluded_engine": {
+            "sources": 256,
+            "confusion_true_rows_predicted_columns": [
+              [
+                90,
+                1,
+                1,
+                0,
+                4,
+                0
+              ],
+              [
+                2,
+                30,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                30,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                32,
+                0,
+                0
+              ],
+              [
+                7,
+                1,
+                0,
+                0,
+                24,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                31
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.9375,
+              0.9375,
+              0.9375,
+              1.0,
+              0.75,
+              0.96875
+            ],
+            "macro_top1_fraction": 0.921875,
+            "pooled_top1_fraction": 0.92578125,
+            "target_assigned_to_confuser_sources": 6,
+            "confuser_assigned_to_target_sources": 11
+          }
+        }
+      ]
+    },
+    {
+      "representation": "full_history",
+      "labels": "permuted_labels",
+      "dimensions": 1536,
+      "mean_excluded_engine_macro_top1_fraction": 0.15369284780725942,
+      "folds": [
+        {
+          "engine": "edge-tts",
+          "fit": {
+            "sources": 4656,
+            "confusion_true_rows_predicted_columns": [
+              [
+                406,
+                531,
+                454,
+                850,
+                474,
+                690
+              ],
+              [
+                9,
+                118,
+                21,
+                51,
+                31,
+                26
+              ],
+              [
+                19,
+                19,
+                110,
+                38,
+                33,
+                30
+              ],
+              [
+                11,
+                26,
+                19,
+                145,
+                21,
+                27
+              ],
+              [
+                16,
+                27,
+                14,
+                39,
+                124,
+                27
+              ],
+              [
+                15,
+                17,
+                26,
+                39,
+                17,
+                136
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.11923641703377386,
+              0.4609375,
+              0.44176706827309237,
+              0.5823293172690763,
+              0.5020242914979757,
+              0.544
+            ],
+            "macro_top1_fraction": 0.44171576567898635,
+            "pooled_top1_fraction": 0.22315292096219932,
+            "target_assigned_to_confuser_sources": 2999,
+            "confuser_assigned_to_target_sources": 70
+          },
+          "excluded_engine": {
+            "sources": 416,
+            "confusion_true_rows_predicted_columns": [
+              [
+                55,
+                51,
+                18,
+                41,
+                51,
+                40
+              ],
+              [
+                5,
+                4,
+                2,
+                5,
+                6,
+                10
+              ],
+              [
+                12,
+                3,
+                2,
+                4,
+                9,
+                2
+              ],
+              [
+                4,
+                7,
+                2,
+                6,
+                5,
+                8
+              ],
+              [
+                4,
+                10,
+                3,
+                2,
+                9,
+                4
+              ],
+              [
+                4,
+                6,
+                3,
+                6,
+                7,
+                6
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.21484375,
+              0.125,
+              0.0625,
+              0.1875,
+              0.28125,
+              0.1875
+            ],
+            "macro_top1_fraction": 0.17643229166666666,
+            "pooled_top1_fraction": 0.1971153846153846,
+            "target_assigned_to_confuser_sources": 201,
+            "confuser_assigned_to_target_sources": 29
+          }
+        },
+        {
+          "engine": "kokoro",
+          "fit": {
+            "sources": 4912,
+            "confusion_true_rows_predicted_columns": [
+              [
+                554,
+                465,
+                473,
+                955,
+                435,
+                719
+              ],
+              [
+                18,
+                116,
+                25,
+                48,
+                25,
+                36
+              ],
+              [
+                19,
+                21,
+                124,
+                42,
+                25,
+                30
+              ],
+              [
+                16,
+                17,
+                27,
+                160,
+                20,
+                21
+              ],
+              [
+                17,
+                23,
+                25,
+                35,
+                129,
+                30
+              ],
+              [
+                23,
+                20,
+                20,
+                40,
+                17,
+                142
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.15384615384615385,
+              0.43283582089552236,
+              0.47509578544061304,
+              0.6130268199233716,
+              0.4980694980694981,
+              0.5419847328244275
+            ],
+            "macro_top1_fraction": 0.4524764684999311,
+            "pooled_top1_fraction": 0.24938925081433225,
+            "target_assigned_to_confuser_sources": 3047,
+            "confuser_assigned_to_target_sources": 93
+          },
+          "excluded_engine": {
+            "sources": 160,
+            "confusion_true_rows_predicted_columns": [
+              [
+                16,
+                5,
+                11,
+                4,
+                13,
+                11
+              ],
+              [
+                8,
+                1,
+                0,
+                5,
+                3,
+                3
+              ],
+              [
+                6,
+                1,
+                6,
+                1,
+                3,
+                3
+              ],
+              [
+                10,
+                2,
+                2,
+                0,
+                4,
+                2
+              ],
+              [
+                6,
+                3,
+                4,
+                2,
+                2,
+                3
+              ],
+              [
+                3,
+                4,
+                3,
+                4,
+                2,
+                4
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.26666666666666666,
+              0.05,
+              0.3,
+              0.0,
+              0.1,
+              0.2
+            ],
+            "macro_top1_fraction": 0.1527777777777778,
+            "pooled_top1_fraction": 0.18125,
+            "target_assigned_to_confuser_sources": 44,
+            "confuser_assigned_to_target_sources": 33
+          }
+        },
+        {
+          "engine": "macos-say",
+          "fit": {
+            "sources": 4900,
+            "confusion_true_rows_predicted_columns": [
+              [
+                384,
+                616,
+                532,
+                870,
+                479,
+                693
+              ],
+              [
+                12,
+                136,
+                26,
+                43,
+                25,
+                29
+              ],
+              [
+                13,
+                20,
+                138,
+                38,
+                31,
+                24
+              ],
+              [
+                9,
+                35,
+                27,
+                150,
+                23,
+                20
+              ],
+              [
+                11,
+                27,
+                26,
+                45,
+                127,
+                26
+              ],
+              [
+                12,
+                34,
+                23,
+                40,
+                23,
+                133
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.10744264129826525,
+              0.5018450184501845,
+              0.5227272727272727,
+              0.5681818181818182,
+              0.4847328244274809,
+              0.5018867924528302
+            ],
+            "macro_top1_fraction": 0.4478027279229753,
+            "pooled_top1_fraction": 0.2179591836734694,
+            "target_assigned_to_confuser_sources": 3190,
+            "confuser_assigned_to_target_sources": 57
+          },
+          "excluded_engine": {
+            "sources": 172,
+            "confusion_true_rows_predicted_columns": [
+              [
+                11,
+                6,
+                44,
+                14,
+                7,
+                5
+              ],
+              [
+                1,
+                0,
+                8,
+                3,
+                3,
+                2
+              ],
+              [
+                4,
+                1,
+                6,
+                2,
+                0,
+                4
+              ],
+              [
+                2,
+                1,
+                11,
+                0,
+                1,
+                2
+              ],
+              [
+                2,
+                0,
+                8,
+                4,
+                2,
+                1
+              ],
+              [
+                2,
+                1,
+                8,
+                2,
+                2,
+                2
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.12643678160919541,
+              0.0,
+              0.35294117647058826,
+              0.0,
+              0.11764705882352941,
+              0.11764705882352941
+            ],
+            "macro_top1_fraction": 0.11911201262114042,
+            "pooled_top1_fraction": 0.12209302325581395,
+            "target_assigned_to_confuser_sources": 76,
+            "confuser_assigned_to_target_sources": 11
+          }
+        },
+        {
+          "engine": "openai-tts",
+          "fit": {
+            "sources": 4730,
+            "confusion_true_rows_predicted_columns": [
+              [
+                421,
+                542,
+                460,
+                921,
+                518,
+                637
+              ],
+              [
+                9,
+                119,
+                17,
+                44,
+                34,
+                29
+              ],
+              [
+                17,
+                19,
+                105,
+                41,
+                34,
+                29
+              ],
+              [
+                9,
+                29,
+                19,
+                141,
+                26,
+                21
+              ],
+              [
+                14,
+                27,
+                18,
+                35,
+                120,
+                29
+              ],
+              [
+                15,
+                26,
+                23,
+                41,
+                26,
+                115
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.12032009145470135,
+              0.4722222222222222,
+              0.42857142857142855,
+              0.5755102040816327,
+              0.49382716049382713,
+              0.46747967479674796
+            ],
+            "macro_top1_fraction": 0.4263217969367599,
+            "pooled_top1_fraction": 0.21585623678646934,
+            "target_assigned_to_confuser_sources": 3078,
+            "confuser_assigned_to_target_sources": 64
+          },
+          "excluded_engine": {
+            "sources": 342,
+            "confusion_true_rows_predicted_columns": [
+              [
+                17,
+                10,
+                17,
+                51,
+                24,
+                43
+              ],
+              [
+                7,
+                0,
+                1,
+                10,
+                8,
+                10
+              ],
+              [
+                3,
+                5,
+                4,
+                11,
+                6,
+                7
+              ],
+              [
+                6,
+                5,
+                1,
+                14,
+                2,
+                8
+              ],
+              [
+                5,
+                2,
+                1,
+                11,
+                6,
+                11
+              ],
+              [
+                3,
+                6,
+                2,
+                10,
+                6,
+                9
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.10493827160493827,
+              0.0,
+              0.1111111111111111,
+              0.3888888888888889,
+              0.16666666666666666,
+              0.25
+            ],
+            "macro_top1_fraction": 0.17026748971193414,
+            "pooled_top1_fraction": 0.14619883040935672,
+            "target_assigned_to_confuser_sources": 145,
+            "confuser_assigned_to_target_sources": 24
+          }
+        },
+        {
+          "engine": "piper",
+          "fit": {
+            "sources": 1346,
+            "confusion_true_rows_predicted_columns": [
+              [
+                203,
+                94,
+                99,
+                86,
+                82,
+                97
+              ],
+              [
+                3,
+                102,
+                5,
+                10,
+                11,
+                6
+              ],
+              [
+                4,
+                5,
+                112,
+                7,
+                5,
+                4
+              ],
+              [
+                5,
+                7,
+                5,
+                109,
+                5,
+                6
+              ],
+              [
+                4,
+                3,
+                7,
+                7,
+                110,
+                6
+              ],
+              [
+                4,
+                6,
+                7,
+                11,
+                4,
+                105
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.3071104387291982,
+              0.7445255474452555,
+              0.8175182481751825,
+              0.7956204379562044,
+              0.8029197080291971,
+              0.7664233576642335
+            ],
+            "macro_top1_fraction": 0.7056862896665453,
+            "pooled_top1_fraction": 0.5505200594353641,
+            "target_assigned_to_confuser_sources": 458,
+            "confuser_assigned_to_target_sources": 20
+          },
+          "excluded_engine": {
+            "sources": 3726,
+            "confusion_true_rows_predicted_columns": [
+              [
+                43,
+                176,
+                35,
+                2522,
+                140,
+                84
+              ],
+              [
+                2,
+                7,
+                1,
+                136,
+                4,
+                1
+              ],
+              [
+                3,
+                8,
+                1,
+                117,
+                11,
+                4
+              ],
+              [
+                3,
+                5,
+                2,
+                128,
+                5,
+                1
+              ],
+              [
+                2,
+                8,
+                3,
+                120,
+                5,
+                4
+              ],
+              [
+                3,
+                8,
+                3,
+                123,
+                4,
+                4
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.014333333333333333,
+              0.046357615894039736,
+              0.006944444444444444,
+              0.8888888888888888,
+              0.035211267605633804,
+              0.027586206896551724
+            ],
+            "macro_top1_fraction": 0.16988695951048197,
+            "pooled_top1_fraction": 0.05045625335480408,
+            "target_assigned_to_confuser_sources": 2957,
+            "confuser_assigned_to_target_sources": 13
+          }
+        },
+        {
+          "engine": "qwen",
+          "fit": {
+            "sources": 4816,
+            "confusion_true_rows_predicted_columns": [
+              [
+                467,
+                510,
+                410,
+                1006,
+                556,
+                616
+              ],
+              [
+                8,
+                120,
+                13,
+                51,
+                32,
+                32
+              ],
+              [
+                22,
+                20,
+                114,
+                37,
+                31,
+                25
+              ],
+              [
+                15,
+                19,
+                22,
+                144,
+                28,
+                21
+              ],
+              [
+                17,
+                15,
+                22,
+                44,
+                118,
+                31
+              ],
+              [
+                12,
+                28,
+                21,
+                40,
+                20,
+                129
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.13099579242636747,
+              0.46875,
+              0.4578313253012048,
+              0.5783132530120482,
+              0.4777327935222672,
+              0.516
+            ],
+            "macro_top1_fraction": 0.4382705273769813,
+            "pooled_top1_fraction": 0.22674418604651161,
+            "target_assigned_to_confuser_sources": 3098,
+            "confuser_assigned_to_target_sources": 74
+          },
+          "excluded_engine": {
+            "sources": 256,
+            "confusion_true_rows_predicted_columns": [
+              [
+                17,
+                15,
+                16,
+                10,
+                21,
+                17
+              ],
+              [
+                3,
+                2,
+                5,
+                5,
+                13,
+                4
+              ],
+              [
+                5,
+                4,
+                8,
+                6,
+                5,
+                4
+              ],
+              [
+                8,
+                6,
+                6,
+                0,
+                6,
+                6
+              ],
+              [
+                7,
+                7,
+                6,
+                2,
+                6,
+                4
+              ],
+              [
+                4,
+                7,
+                8,
+                2,
+                7,
+                4
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.17708333333333334,
+              0.0625,
+              0.25,
+              0.0,
+              0.1875,
+              0.125
+            ],
+            "macro_top1_fraction": 0.13368055555555555,
+            "pooled_top1_fraction": 0.14453125,
+            "target_assigned_to_confuser_sources": 79,
+            "confuser_assigned_to_target_sources": 27
+          }
+        }
+      ]
+    },
+    {
+      "representation": "time_mean",
+      "labels": "original_labels",
+      "dimensions": 96,
+      "mean_excluded_engine_macro_top1_fraction": 0.8484610856902547,
+      "folds": [
+        {
+          "engine": "edge-tts",
+          "fit": {
+            "sources": 4656,
+            "confusion_true_rows_predicted_columns": [
+              [
+                1332,
+                1753,
+                93,
+                3,
+                220,
+                4
+              ],
+              [
+                5,
+                248,
+                1,
+                0,
+                2,
+                0
+              ],
+              [
+                9,
+                18,
+                211,
+                2,
+                3,
+                6
+              ],
+              [
+                0,
+                2,
+                0,
+                247,
+                0,
+                0
+              ],
+              [
+                7,
+                0,
+                0,
+                0,
+                239,
+                1
+              ],
+              [
+                1,
+                0,
+                3,
+                1,
+                1,
+                244
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.39118942731277534,
+              0.96875,
+              0.8473895582329317,
+              0.9919678714859438,
+              0.9676113360323887,
+              0.976
+            ],
+            "macro_top1_fraction": 0.8571513655106733,
+            "pooled_top1_fraction": 0.5414518900343642,
+            "target_assigned_to_confuser_sources": 2073,
+            "confuser_assigned_to_target_sources": 22
+          },
+          "excluded_engine": {
+            "sources": 416,
+            "confusion_true_rows_predicted_columns": [
+              [
+                180,
+                14,
+                26,
+                2,
+                33,
+                1
+              ],
+              [
+                2,
+                29,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                6,
+                2,
+                23,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                32,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                29,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                32
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.703125,
+              0.90625,
+              0.71875,
+              1.0,
+              0.90625,
+              1.0
+            ],
+            "macro_top1_fraction": 0.8723958333333334,
+            "pooled_top1_fraction": 0.78125,
+            "target_assigned_to_confuser_sources": 76,
+            "confuser_assigned_to_target_sources": 11
+          }
+        },
+        {
+          "engine": "kokoro",
+          "fit": {
+            "sources": 4912,
+            "confusion_true_rows_predicted_columns": [
+              [
+                1319,
+                1934,
+                111,
+                3,
+                232,
+                2
+              ],
+              [
+                5,
+                259,
+                0,
+                0,
+                4,
+                0
+              ],
+              [
+                12,
+                15,
+                220,
+                2,
+                6,
+                6
+              ],
+              [
+                0,
+                2,
+                0,
+                259,
+                0,
+                0
+              ],
+              [
+                9,
+                1,
+                0,
+                0,
+                249,
+                0
+              ],
+              [
+                1,
+                0,
+                2,
+                1,
+                1,
+                257
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.36628714246042765,
+              0.9664179104477612,
+              0.842911877394636,
+              0.9923371647509579,
+              0.9613899613899614,
+              0.9809160305343512
+            ],
+            "macro_top1_fraction": 0.8517100144963491,
+            "pooled_top1_fraction": 0.5217833876221498,
+            "target_assigned_to_confuser_sources": 2282,
+            "confuser_assigned_to_target_sources": 27
+          },
+          "excluded_engine": {
+            "sources": 160,
+            "confusion_true_rows_predicted_columns": [
+              [
+                21,
+                8,
+                14,
+                0,
+                1,
+                16
+              ],
+              [
+                0,
+                19,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                20,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                20,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                17,
+                3
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                19
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.35,
+              0.95,
+              1.0,
+              1.0,
+              0.85,
+              0.95
+            ],
+            "macro_top1_fraction": 0.85,
+            "pooled_top1_fraction": 0.725,
+            "target_assigned_to_confuser_sources": 39,
+            "confuser_assigned_to_target_sources": 0
+          }
+        },
+        {
+          "engine": "macos-say",
+          "fit": {
+            "sources": 4900,
+            "confusion_true_rows_predicted_columns": [
+              [
+                1220,
+                2034,
+                84,
+                6,
+                224,
+                6
+              ],
+              [
+                5,
+                261,
+                1,
+                0,
+                4,
+                0
+              ],
+              [
+                17,
+                19,
+                214,
+                1,
+                6,
+                7
+              ],
+              [
+                0,
+                2,
+                0,
+                262,
+                0,
+                0
+              ],
+              [
+                6,
+                3,
+                0,
+                0,
+                252,
+                1
+              ],
+              [
+                2,
+                0,
+                2,
+                0,
+                1,
+                260
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.3413542249580302,
+              0.9630996309963099,
+              0.8106060606060606,
+              0.9924242424242424,
+              0.9618320610687023,
+              0.9811320754716981
+            ],
+            "macro_top1_fraction": 0.8417413825875072,
+            "pooled_top1_fraction": 0.5038775510204082,
+            "target_assigned_to_confuser_sources": 2354,
+            "confuser_assigned_to_target_sources": 30
+          },
+          "excluded_engine": {
+            "sources": 172,
+            "confusion_true_rows_predicted_columns": [
+              [
+                48,
+                21,
+                3,
+                1,
+                14,
+                0
+              ],
+              [
+                0,
+                17,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                8,
+                7,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                17,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                16,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                1,
+                0,
+                15
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.5517241379310345,
+              1.0,
+              0.4117647058823529,
+              1.0,
+              0.9411764705882353,
+              0.8823529411764706
+            ],
+            "macro_top1_fraction": 0.7978363759296823,
+            "pooled_top1_fraction": 0.6976744186046512,
+            "target_assigned_to_confuser_sources": 39,
+            "confuser_assigned_to_target_sources": 2
+          }
+        },
+        {
+          "engine": "openai-tts",
+          "fit": {
+            "sources": 4730,
+            "confusion_true_rows_predicted_columns": [
+              [
+                1187,
+                1935,
+                130,
+                3,
+                239,
+                5
+              ],
+              [
+                2,
+                247,
+                1,
+                0,
+                2,
+                0
+              ],
+              [
+                10,
+                16,
+                206,
+                1,
+                5,
+                7
+              ],
+              [
+                0,
+                2,
+                0,
+                243,
+                0,
+                0
+              ],
+              [
+                4,
+                0,
+                0,
+                0,
+                239,
+                0
+              ],
+              [
+                1,
+                0,
+                3,
+                1,
+                0,
+                241
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.3392397827950843,
+              0.9801587301587301,
+              0.8408163265306122,
+              0.9918367346938776,
+              0.9835390946502057,
+              0.9796747967479674
+            ],
+            "macro_top1_fraction": 0.8525442442627461,
+            "pooled_top1_fraction": 0.4995771670190275,
+            "target_assigned_to_confuser_sources": 2312,
+            "confuser_assigned_to_target_sources": 17
+          },
+          "excluded_engine": {
+            "sources": 342,
+            "confusion_true_rows_predicted_columns": [
+              [
+                115,
+                0,
+                3,
+                1,
+                43,
+                0
+              ],
+              [
+                7,
+                25,
+                0,
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                0,
+                35,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                36,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                0,
+                33,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                1,
+                35
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7098765432098766,
+              0.6944444444444444,
+              0.9722222222222222,
+              1.0,
+              0.9166666666666666,
+              0.9722222222222222
+            ],
+            "macro_top1_fraction": 0.8775720164609053,
+            "pooled_top1_fraction": 0.8157894736842105,
+            "target_assigned_to_confuser_sources": 47,
+            "confuser_assigned_to_target_sources": 9
+          }
+        },
+        {
+          "engine": "piper",
+          "fit": {
+            "sources": 1346,
+            "confusion_true_rows_predicted_columns": [
+              [
+                492,
+                43,
+                50,
+                3,
+                70,
+                3
+              ],
+              [
+                6,
+                127,
+                1,
+                0,
+                3,
+                0
+              ],
+              [
+                7,
+                4,
+                122,
+                2,
+                1,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                137,
+                0,
+                0
+              ],
+              [
+                8,
+                3,
+                0,
+                0,
+                126,
+                0
+              ],
+              [
+                1,
+                0,
+                1,
+                1,
+                1,
+                133
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.7443267776096822,
+              0.927007299270073,
+              0.8905109489051095,
+              1.0,
+              0.9197080291970803,
+              0.9708029197080292
+            ],
+            "macro_top1_fraction": 0.9087259957816624,
+            "pooled_top1_fraction": 0.8447251114413076,
+            "target_assigned_to_confuser_sources": 169,
+            "confuser_assigned_to_target_sources": 22
+          },
+          "excluded_engine": {
+            "sources": 3726,
+            "confusion_true_rows_predicted_columns": [
+              [
+                265,
+                2593,
+                20,
+                0,
+                116,
+                6
+              ],
+              [
+                0,
+                151,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                5,
+                37,
+                91,
+                0,
+                3,
+                8
+              ],
+              [
+                0,
+                3,
+                0,
+                141,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                1,
+                1,
+                2,
+                0,
+                0,
+                141
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.08833333333333333,
+              1.0,
+              0.6319444444444444,
+              0.9791666666666666,
+              0.9859154929577465,
+              0.9724137931034482
+            ],
+            "macro_top1_fraction": 0.7762956217509398,
+            "pooled_top1_fraction": 0.24932903918411164,
+            "target_assigned_to_confuser_sources": 2735,
+            "confuser_assigned_to_target_sources": 6
+          }
+        },
+        {
+          "engine": "qwen",
+          "fit": {
+            "sources": 4816,
+            "confusion_true_rows_predicted_columns": [
+              [
+                1219,
+                1981,
+                108,
+                3,
+                250,
+                4
+              ],
+              [
+                6,
+                246,
+                1,
+                0,
+                3,
+                0
+              ],
+              [
+                9,
+                18,
+                209,
+                2,
+                5,
+                6
+              ],
+              [
+                0,
+                2,
+                0,
+                247,
+                0,
+                0
+              ],
+              [
+                8,
+                2,
+                0,
+                0,
+                236,
+                1
+              ],
+              [
+                1,
+                0,
+                3,
+                1,
+                1,
+                244
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.3419354838709677,
+              0.9609375,
+              0.8393574297188755,
+              0.9919678714859438,
+              0.9554655870445344,
+              0.976
+            ],
+            "macro_top1_fraction": 0.8442773120200534,
+            "pooled_top1_fraction": 0.498546511627907,
+            "target_assigned_to_confuser_sources": 2346,
+            "confuser_assigned_to_target_sources": 24
+          },
+          "excluded_engine": {
+            "sources": 256,
+            "confusion_true_rows_predicted_columns": [
+              [
+                69,
+                4,
+                11,
+                0,
+                12,
+                0
+              ],
+              [
+                1,
+                31,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                28,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                32,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                31,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                31
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.71875,
+              0.96875,
+              0.875,
+              1.0,
+              0.96875,
+              0.96875
+            ],
+            "macro_top1_fraction": 0.9166666666666666,
+            "pooled_top1_fraction": 0.8671875,
+            "target_assigned_to_confuser_sources": 27,
+            "confuser_assigned_to_target_sources": 6
+          }
+        }
+      ]
+    },
+    {
+      "representation": "time_mean",
+      "labels": "permuted_labels",
+      "dimensions": 96,
+      "mean_excluded_engine_macro_top1_fraction": 0.16010798173187982,
+      "folds": [
+        {
+          "engine": "edge-tts",
+          "fit": {
+            "sources": 4656,
+            "confusion_true_rows_predicted_columns": [
+              [
+                338,
+                415,
+                327,
+                1293,
+                519,
+                513
+              ],
+              [
+                23,
+                40,
+                30,
+                81,
+                47,
+                35
+              ],
+              [
+                20,
+                28,
+                60,
+                77,
+                26,
+                38
+              ],
+              [
+                24,
+                34,
+                27,
+                95,
+                38,
+                31
+              ],
+              [
+                26,
+                28,
+                31,
+                71,
+                60,
+                31
+              ],
+              [
+                22,
+                24,
+                40,
+                80,
+                35,
+                49
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.09926578560939794,
+              0.15625,
+              0.24096385542168675,
+              0.3815261044176707,
+              0.242914979757085,
+              0.196
+            ],
+            "macro_top1_fraction": 0.21948678753430673,
+            "pooled_top1_fraction": 0.13788659793814434,
+            "target_assigned_to_confuser_sources": 3067,
+            "confuser_assigned_to_target_sources": 115
+          },
+          "excluded_engine": {
+            "sources": 416,
+            "confusion_true_rows_predicted_columns": [
+              [
+                13,
+                100,
+                8,
+                38,
+                64,
+                33
+              ],
+              [
+                1,
+                10,
+                1,
+                4,
+                8,
+                8
+              ],
+              [
+                5,
+                7,
+                1,
+                6,
+                7,
+                6
+              ],
+              [
+                4,
+                8,
+                1,
+                8,
+                4,
+                7
+              ],
+              [
+                1,
+                10,
+                3,
+                3,
+                8,
+                7
+              ],
+              [
+                1,
+                9,
+                1,
+                5,
+                8,
+                8
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.05078125,
+              0.3125,
+              0.03125,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "macro_top1_fraction": 0.19075520833333334,
+            "pooled_top1_fraction": 0.11538461538461539,
+            "target_assigned_to_confuser_sources": 243,
+            "confuser_assigned_to_target_sources": 12
+          }
+        },
+        {
+          "engine": "kokoro",
+          "fit": {
+            "sources": 4912,
+            "confusion_true_rows_predicted_columns": [
+              [
+                435,
+                448,
+                481,
+                1468,
+                371,
+                398
+              ],
+              [
+                29,
+                51,
+                35,
+                93,
+                35,
+                25
+              ],
+              [
+                28,
+                26,
+                66,
+                86,
+                27,
+                28
+              ],
+              [
+                23,
+                34,
+                27,
+                118,
+                28,
+                31
+              ],
+              [
+                24,
+                27,
+                33,
+                90,
+                62,
+                23
+              ],
+              [
+                24,
+                42,
+                48,
+                83,
+                26,
+                39
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.12079977783948903,
+              0.19029850746268656,
+              0.25287356321839083,
+              0.4521072796934866,
+              0.23938223938223938,
+              0.14885496183206107
+            ],
+            "macro_top1_fraction": 0.23405272157139226,
+            "pooled_top1_fraction": 0.15696254071661236,
+            "target_assigned_to_confuser_sources": 3166,
+            "confuser_assigned_to_target_sources": 128
+          },
+          "excluded_engine": {
+            "sources": 160,
+            "confusion_true_rows_predicted_columns": [
+              [
+                6,
+                3,
+                8,
+                6,
+                31,
+                6
+              ],
+              [
+                5,
+                0,
+                2,
+                4,
+                7,
+                2
+              ],
+              [
+                2,
+                2,
+                3,
+                4,
+                7,
+                2
+              ],
+              [
+                3,
+                1,
+                4,
+                1,
+                10,
+                1
+              ],
+              [
+                2,
+                3,
+                5,
+                2,
+                5,
+                3
+              ],
+              [
+                3,
+                1,
+                3,
+                3,
+                8,
+                2
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.1,
+              0.0,
+              0.15,
+              0.05,
+              0.25,
+              0.1
+            ],
+            "macro_top1_fraction": 0.10833333333333334,
+            "pooled_top1_fraction": 0.10625,
+            "target_assigned_to_confuser_sources": 54,
+            "confuser_assigned_to_target_sources": 15
+          }
+        },
+        {
+          "engine": "macos-say",
+          "fit": {
+            "sources": 4900,
+            "confusion_true_rows_predicted_columns": [
+              [
+                187,
+                706,
+                552,
+                1477,
+                441,
+                211
+              ],
+              [
+                14,
+                64,
+                37,
+                99,
+                33,
+                24
+              ],
+              [
+                16,
+                40,
+                81,
+                83,
+                22,
+                22
+              ],
+              [
+                12,
+                49,
+                37,
+                109,
+                34,
+                23
+              ],
+              [
+                14,
+                43,
+                40,
+                94,
+                51,
+                20
+              ],
+              [
+                10,
+                53,
+                45,
+                90,
+                27,
+                40
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.052322327923894796,
+              0.23616236162361623,
+              0.3068181818181818,
+              0.4128787878787879,
+              0.1946564885496183,
+              0.1509433962264151
+            ],
+            "macro_top1_fraction": 0.22563025733675235,
+            "pooled_top1_fraction": 0.10857142857142857,
+            "target_assigned_to_confuser_sources": 3387,
+            "confuser_assigned_to_target_sources": 66
+          },
+          "excluded_engine": {
+            "sources": 172,
+            "confusion_true_rows_predicted_columns": [
+              [
+                10,
+                6,
+                57,
+                10,
+                3,
+                1
+              ],
+              [
+                2,
+                0,
+                13,
+                1,
+                1,
+                0
+              ],
+              [
+                2,
+                0,
+                12,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                14,
+                1,
+                1,
+                0
+              ],
+              [
+                2,
+                1,
+                9,
+                2,
+                3,
+                0
+              ],
+              [
+                1,
+                0,
+                11,
+                3,
+                2,
+                0
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.11494252873563218,
+              0.0,
+              0.7058823529411765,
+              0.058823529411764705,
+              0.17647058823529413,
+              0.0
+            ],
+            "macro_top1_fraction": 0.1760198332206446,
+            "pooled_top1_fraction": 0.1511627906976744,
+            "target_assigned_to_confuser_sources": 77,
+            "confuser_assigned_to_target_sources": 7
+          }
+        },
+        {
+          "engine": "openai-tts",
+          "fit": {
+            "sources": 4730,
+            "confusion_true_rows_predicted_columns": [
+              [
+                187,
+                620,
+                362,
+                1463,
+                415,
+                452
+              ],
+              [
+                15,
+                57,
+                28,
+                81,
+                33,
+                38
+              ],
+              [
+                21,
+                33,
+                54,
+                74,
+                26,
+                37
+              ],
+              [
+                10,
+                37,
+                30,
+                109,
+                33,
+                26
+              ],
+              [
+                9,
+                34,
+                26,
+                80,
+                62,
+                32
+              ],
+              [
+                12,
+                41,
+                42,
+                86,
+                21,
+                44
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.05344384109745642,
+              0.2261904761904762,
+              0.22040816326530613,
+              0.4448979591836735,
+              0.2551440329218107,
+              0.17886178861788618
+            ],
+            "macro_top1_fraction": 0.22982437687943488,
+            "pooled_top1_fraction": 0.10845665961945032,
+            "target_assigned_to_confuser_sources": 3312,
+            "confuser_assigned_to_target_sources": 67
+          },
+          "excluded_engine": {
+            "sources": 342,
+            "confusion_true_rows_predicted_columns": [
+              [
+                11,
+                8,
+                20,
+                31,
+                55,
+                37
+              ],
+              [
+                3,
+                1,
+                1,
+                10,
+                13,
+                8
+              ],
+              [
+                1,
+                2,
+                5,
+                9,
+                8,
+                11
+              ],
+              [
+                2,
+                3,
+                1,
+                12,
+                7,
+                11
+              ],
+              [
+                3,
+                1,
+                1,
+                12,
+                8,
+                11
+              ],
+              [
+                2,
+                1,
+                5,
+                11,
+                10,
+                7
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.06790123456790123,
+              0.027777777777777776,
+              0.1388888888888889,
+              0.3333333333333333,
+              0.2222222222222222,
+              0.19444444444444445
+            ],
+            "macro_top1_fraction": 0.1640946502057613,
+            "pooled_top1_fraction": 0.1286549707602339,
+            "target_assigned_to_confuser_sources": 151,
+            "confuser_assigned_to_target_sources": 11
+          }
+        },
+        {
+          "engine": "piper",
+          "fit": {
+            "sources": 1346,
+            "confusion_true_rows_predicted_columns": [
+              [
+                72,
+                118,
+                111,
+                150,
+                128,
+                82
+              ],
+              [
+                8,
+                30,
+                21,
+                32,
+                25,
+                21
+              ],
+              [
+                11,
+                12,
+                52,
+                24,
+                23,
+                15
+              ],
+              [
+                10,
+                12,
+                18,
+                61,
+                23,
+                13
+              ],
+              [
+                8,
+                16,
+                18,
+                31,
+                49,
+                15
+              ],
+              [
+                8,
+                13,
+                26,
+                36,
+                20,
+                34
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.10892586989409984,
+              0.21897810218978103,
+              0.3795620437956204,
+              0.44525547445255476,
+              0.35766423357664234,
+              0.24817518248175183
+            ],
+            "macro_top1_fraction": 0.2930934843984083,
+            "pooled_top1_fraction": 0.2213967310549777,
+            "target_assigned_to_confuser_sources": 589,
+            "confuser_assigned_to_target_sources": 45
+          },
+          "excluded_engine": {
+            "sources": 3726,
+            "confusion_true_rows_predicted_columns": [
+              [
+                97,
+                273,
+                72,
+                2277,
+                148,
+                133
+              ],
+              [
+                6,
+                10,
+                5,
+                125,
+                1,
+                4
+              ],
+              [
+                4,
+                15,
+                2,
+                110,
+                4,
+                9
+              ],
+              [
+                3,
+                10,
+                2,
+                109,
+                10,
+                10
+              ],
+              [
+                3,
+                12,
+                8,
+                109,
+                5,
+                5
+              ],
+              [
+                3,
+                13,
+                4,
+                117,
+                3,
+                5
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.03233333333333333,
+              0.06622516556291391,
+              0.013888888888888888,
+              0.7569444444444444,
+              0.035211267605633804,
+              0.034482758620689655
+            ],
+            "macro_top1_fraction": 0.15651430974265065,
+            "pooled_top1_fraction": 0.061191626409017714,
+            "target_assigned_to_confuser_sources": 2903,
+            "confuser_assigned_to_target_sources": 19
+          }
+        },
+        {
+          "engine": "qwen",
+          "fit": {
+            "sources": 4816,
+            "confusion_true_rows_predicted_columns": [
+              [
+                382,
+                477,
+                492,
+                1231,
+                487,
+                496
+              ],
+              [
+                25,
+                47,
+                35,
+                86,
+                33,
+                30
+              ],
+              [
+                22,
+                30,
+                59,
+                62,
+                26,
+                50
+              ],
+              [
+                23,
+                34,
+                34,
+                95,
+                34,
+                29
+              ],
+              [
+                27,
+                24,
+                33,
+                74,
+                57,
+                32
+              ],
+              [
+                20,
+                37,
+                49,
+                76,
+                30,
+                38
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.10715287517531556,
+              0.18359375,
+              0.23694779116465864,
+              0.3815261044176707,
+              0.23076923076923078,
+              0.152
+            ],
+            "macro_top1_fraction": 0.21533162525447927,
+            "pooled_top1_fraction": 0.14078073089700996,
+            "target_assigned_to_confuser_sources": 3183,
+            "confuser_assigned_to_target_sources": 117
+          },
+          "excluded_engine": {
+            "sources": 256,
+            "confusion_true_rows_predicted_columns": [
+              [
+                11,
+                11,
+                20,
+                6,
+                29,
+                19
+              ],
+              [
+                5,
+                2,
+                9,
+                0,
+                6,
+                10
+              ],
+              [
+                6,
+                1,
+                10,
+                3,
+                6,
+                6
+              ],
+              [
+                3,
+                5,
+                3,
+                2,
+                10,
+                9
+              ],
+              [
+                5,
+                2,
+                4,
+                4,
+                9,
+                8
+              ],
+              [
+                5,
+                3,
+                7,
+                5,
+                7,
+                5
+              ]
+            ],
+            "per_class_top1_fraction": [
+              0.11458333333333333,
+              0.0625,
+              0.3125,
+              0.0625,
+              0.28125,
+              0.15625
+            ],
+            "macro_top1_fraction": 0.16493055555555555,
+            "pooled_top1_fraction": 0.15234375,
+            "target_assigned_to_confuser_sources": 85,
+            "confuser_assigned_to_target_sources": 24
+          }
+        }
+      ]
+    }
+  ],
+  "accepted": false,
+  "limits": [
+    "Closed six-class, already known word-window diagnosis; no streaming detector/FAR or recognition acceptance.",
+    "All sources are existing synthetic training recordings, not independent real speakers.",
+    "Original auxiliary energy/synthesis anchors are retained and are not phonetic ground truth.",
+    "Poor ridge transfer cannot prove an intrinsic representation limit or faulty source pronunciation.",
+    "Excluded-engine results cannot choose detector thresholds, operating windows or a deployment candidate."
+  ],
+  "original_private_report_sha256": "d77b2a9da3f49f7a4353001a98ffa124aa6201a3d57ca7194da70d5682d7df76",
+  "scipy_version": "1.17.0",
+  "aggregate_target_class_engine_mean": [
+    {
+      "representation": "full_history",
+      "labels": "original_labels",
+      "fraction": 0.6520966789946077
+    },
+    {
+      "representation": "full_history",
+      "labels": "permuted_labels",
+      "fraction": 0.15071702275791118
+    },
+    {
+      "representation": "time_mean",
+      "labels": "original_labels",
+      "fraction": 0.520301502412374
+    },
+    {
+      "representation": "time_mean",
+      "labels": "permuted_labels",
+      "fraction": 0.08009027999503335
+    }
+  ],
+  "interpretation": "Both representations exceed their label-permutation controls on this synthetic closed-class diagnostic, so these features support some cross-engine lexical decoding. Overall six-class macro hides a severe target-class transfer deficit: excluded Piper targets reach74/3000 with full history and265/3000 with time mean;2536/2593 are respectively assigned Hey Nick. Full-history target recall averaged equally across engines is65.20967%, versus52.03015% for the time mean. This is not a streaming detection result and does not isolate pronunciation, anchor, data-coverage or representation causes. Do not select a replacement or conclude that time averaging improves target detection from the six-class macro."
+}

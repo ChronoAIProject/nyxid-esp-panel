@@ -901,3 +901,30 @@ There is no detector threshold, validation/final inference, waveform change,
 speaker playback, microphone access or hardware operation in this diagnostic.
 Do not advance a probe as a deployment candidate or duplicate GPU dialogue/
 AMI/calibration experiments using these different80ms features.
+
+The frozen probe completes all24fold/representation/label runs on5072unique
+source recordings. Full-history and temporal-mean six-class macro top1 are
+83.9386%/84.8461%, versus15.3693%/16.0108% for their label-permutation controls.
+Those averages conceal a substantial **target-class transfer deficit**:
+
+| Excluded engine | Full-history target correct/total | Temporal-mean target correct/total |
+| --- | --- | --- |
+| Edge | 187/256 | 180/256 |
+| Kokoro | 41/60 | 21/60 |
+| macOS | 73/87 | 48/87 |
+| OpenAI | 113/162 | 115/162 |
+| Piper | 74/3000 | 265/3000 |
+| Qwen | 90/96 | 69/96 |
+
+Equally averaging target-class fractions across engines gives65.2097% for
+full history and52.0302% for the temporal mean. Of the excluded Piper targets,
+2536/2593respectively are assigned Hey Nick. Neither summary is streaming wake
+recall or an independent real-speaker result. Keep the full fit/excluded-engine
+confusion matrices and source hashes in
+[`lexical-transfer-probe-v1.json`](../results/lexical-transfer-probe-v1.json).
+The simple probes find some cross-engine lexical structure, but neither
+establishes adequate target transfer. The time mean's slightly higher six-class
+average does not justify preferring it for wake detection. This result does
+not isolate source pronunciation, endpoint, data-coverage or representation
+causes; further experiments must distinguish them without adjusting endpoints
+or thresholds to these diagnostic predictions. No model or board was changed.
