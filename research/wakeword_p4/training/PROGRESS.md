@@ -783,3 +783,21 @@ voices/conditions and real recordings for subsequent acceptance.
   stays installed; no PCM speed, I2S/AEC/AGC/FIFO or production-board change.
   Human/room generalization, continuous false wakes, precise latency and long
   call/reconnect acceptance remain unresolved; the full goal remains active.
+
+### Compact-model complementarity check
+
+The [frozen equal-mean comparison](plans/microwake-equal-mean-v1.json) pairs
+an existing transfer60 and official64 INT8 model on 6,136 cached validation
+clips and 7.324 hours of continuous validation. The score timebases match,
+and the event counter reproduced all 1,330 original continuous counts.
+The equal mean qualifies under the strict validation limits with zero
+continuous events and at most 0.36% false clips in any engine/corpus group,
+but its engine-macro latched proxy recall is 39.82%. Neither member alone
+qualifies under those same limits; the prespecified fallback comparison is
+the best member at the 2% false-clip limit and zero events (44.81%).
+At that looser limit the equal mean reaches 56.72%, indicating some
+complementarity that is insufficient at the strict point. The result misses
+the advancement gate, so do not train a student from this pair. The
+[full grid](../results/microwake-equal-mean-v1.json) is reused synthetic and
+continuous validation only. No speaker, microphone, board, or reserved
+evaluation data was used.
