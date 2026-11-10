@@ -1387,3 +1387,22 @@ v19仅保留为更有希望的研究候选，不视作产品达标；来源泛�
 本轮两组训练与全部计划开发检查完成，最终集继续冻结；目标active，Hi ESP比较未完成。
 下一步应扩大真实连续英文/远场开发覆盖，并在现有说话人隔离下独立审计正词时间标签，
 不能凭开发集全零就直接宣称低误触或通过调整回归阈值提高分数。
+
+
+### v19额外中文/远场开发回归首次检查
+
+扩展evaluate_frozen_human.py的显式split参数：默认validation不变，testing仅指
+已预划分的开发回归，不是独立最终集。报告分别标明development_regression_scored
+与independent_final_scored，避免把内部split名称当作最终测试。
+保持原模型SHA与阈值0.95。AISHELL4个回归说话人1.723096h为0事件，
+95%上界1.73858/h；DiPCo S09/S10共0.712196h为0事件，上界4.20633/h。
+均不足以单独验收。报告 `4090-v19-mandarin-frozen-regression.json`、
+`4090-v19-dipco-frozen-regression.json`。这些开发回归此前未对唤醒模型评分，
+本轮首次使用后明确作为开发证据，不能再称未使用的独立保留集。
+
+另外开始下载OpenSLR官方LibriSpeech dev-other，校验值来自官方md5sum.txt：
+`c8d0bcc9cca99d4f8b62fcc847357931`。新脚本prepare_libri_development.py会
+先审计与既有人声及最终manifest的说话人ID隔离、目标词字面转写，
+保留逐文件FLAC/PCM哈希及原始时长，再生成统一10ms前端连续流，
+核对前两段拼接一致性。整个dev-other预先指定为开发验证，不作最终集。
+下载仍运行，尚无该语料评分；独立最终音频未访问。

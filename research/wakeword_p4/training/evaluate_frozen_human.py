@@ -21,6 +21,8 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--corpus-name', default='Mandarin',
                    help='Descriptive corpus label only; does not alter evaluation')
+    p.add_argument("--split", choices=("validation", "testing"), default="validation",
+                   help="testing is the pre-existing development regression, never independent final")
     a = p.parse_args()
     if a.output.exists():
         p.error('Use a fresh evaluation directory')
@@ -31,9 +33,9 @@ def main():
     cache = json.loads((a.features/'cache.json').read_text())
     if sha(a.features/'human.json') != cache['index_sha256']:
         raise ValueError('Changed stream index')
-    rows = [r for r in json.loads((a.features/'human.json').read_text()) if r['split'] == 'validation']
+    rows = [r for r in json.loads((a.features/'human.json').read_text()) if r['split'] == a.split]
     if not rows or len({r['speaker'] for r in rows}) != len(rows):
-        raise ValueError('Need unique validation speaker streams')
+        raise ValueError('Need unique development speaker streams')
     a.output.mkdir(parents=True)
     detector, results, started = Detector(a.model), [], time.monotonic()
     for row in rows:
@@ -57,7 +59,7 @@ def main():
                               completed=len(results), planned=len(rows))), flush=True)
     hours = sum(r['source_seconds'] for r in results)/3600
     count = sum(r['false_events'] for r in results)
-    report = dict(role=f'{a.corpus_name} development validation at frozen prior English calibration',
+    report = dict(role=f'{a.corpus_name} development {a.split} at frozen prior English calibration', split=a.split,
                   model_sha256=frozen['model_sha256'], threshold=threshold, threshold_reselected=False,
                   frozen_report_sha256=sha(a.frozen_report), feature_cache_sha256=sha(a.features/'cache.json'),
                   feature_index_sha256=cache['index_sha256'], source_sha256=sha(Path(__file__)),
@@ -67,7 +69,8 @@ def main():
                   event_policy='Five-score mean; rising latch;67-step refractory; reset between speakers; all events counted',
                   exposure_policy='Original WAV seconds; exclude utterance gaps/alignment padding',
                   seconds=round(time.monotonic()-started, 1), speakers=results,
-                  positive_recall_measured=False, testing_or_independent_final_scored=False,
+                  positive_recall_measured=False, development_regression_scored=a.split == "testing",
+                  independent_final_scored=False,
                   limits=f'Development {a.corpus_name} negative audio only; Poisson event-count bound assumes stationary rate and does not establish general acoustic coverage, positive recall, deployment performance, or Hi ESP equivalence.')
     (a.output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report), flush=True)
 
