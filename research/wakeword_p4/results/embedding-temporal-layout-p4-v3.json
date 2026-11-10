@@ -1,0 +1,56 @@
+{
+  "scope": "Equivalent temporal-head resource optimization only; not recognition or whole-app acceptance",
+  "source_sha256": "616bfbbae5ac4b86694e7a536fc6a1415efc078c8d350bb9ec3593ec337c3a47",
+  "transformed_sha256": "f1b3f38556bf463c2b5288af1baa877a03216b5b8e90a65b7924eef353fc9d21",
+  "transformation": "[1,16,96,1] input reshaped to [1,16,1,96]; first Conv32 kernel [32,5,96,1] reshaped to [32,5,1,96]; external input/output remain unchanged",
+  "constant_weight_bias_bytes_unchanged": true,
+  "int32_accumulator_bound_checked": true,
+  "host_cases": 299,
+  "host_output_byte_mismatches": 0,
+  "input_vectors_sha256": "770b1a48385957cb0777d20f2d8176585c12ca0aa3856b6626237d22d07f9967",
+  "expected_outputs_sha256": "7b35c4e1b2c8a03de8699561ba650f7e0ed763f569c107ba5b7a3d5e38f95d09",
+  "original_layout_failure": "ESP-NN first convolution requests approximately248KiB scratch, exceeding64KiB arena; all three placement allocations failed",
+  "p4_placements": [
+    {
+      "name": "internal64k_model_flash",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 18956,
+      "p50_us": 892,
+      "p95_us": 893,
+      "max_us": 1087,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    },
+    {
+      "name": "internal64k_model_psram",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 18956,
+      "p50_us": 827,
+      "p95_us": 829,
+      "max_us": 859,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    },
+    {
+      "name": "psram64k_model_psram",
+      "calls": 299,
+      "arena_allocated": 65536,
+      "arena_used": 18956,
+      "p50_us": 827,
+      "p95_us": 829,
+      "max_us": 870,
+      "mismatches": 0,
+      "max_output_delta": 0,
+      "passed": true
+    }
+  ],
+  "total_p4_outputs": 897,
+  "original_development_app_service_and_hi_esp_restored": true,
+  "production_board_modified": false,
+  "recognition_scores_changed": false,
+  "accepted_as_replacement": false
+}

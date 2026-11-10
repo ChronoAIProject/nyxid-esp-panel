@@ -367,3 +367,19 @@ The nontracing classifier-head P4 probe passes299cases in all three placements
 The original app, slot, service and Hi ESP listener restore after each of the
 five hardware probes, including failures. Full intermediate/rounding evidence
 and limitations are in `../results/embedding-head-p4-v3.json`.
+
+The temporal head needs a separate resource correction. Its initial full-width
+convolution makes pinned ESP-NN request about248KiB scratch and fails the64KiB
+probe arena. `reshape_temporal_head.py` moves the96feature values from spatial
+width to channels, inserts a reshape at the input, and keeps every constant byte,
+quantization parameter and external input/output shape. Bounded int32 sums make
+the reordering exact. Supply the frozen model and299-case input file with their
+expected SHA256 arguments; `--output` must name a fresh private directory.
+
+The transformed head matches all299 host cases and all897 P4 outputs in the
+same three placements. It uses18,956 tensor bytes; median invocation times are
+892/827/827microseconds (flash/internal, PSRAM/internal, PSRAM/PSRAM). The
+original app/service/Hi ESP restores afterward. This removes the scratch-memory
+blocker without retraining or changing any recognition score. See
+`../results/embedding-temporal-layout-p4-v3.json`. Complete-app fit/scheduling
+and physical recognition remain separate measurements.
