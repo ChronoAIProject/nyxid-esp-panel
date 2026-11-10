@@ -613,10 +613,10 @@ protect input immutability, response timing/energy and identical subsequent
 random draws. See
 [`embedding-measured-room-pilot-v3.json`](../wakeword_p4/results/embedding-measured-room-pilot-v3.json).
 
-The complete paired extraction and audit now pass for all10,070 pairs. All
-original control arrays match, all treatment arrays change, and the48 original
+The complete paired extraction and audit now pass for all 10,070 pairs. All
+original control arrays match, all treatment arrays change, and the 48 original
 numerical renderer replays are byte-exact. Maximum response-energy difference
-is2.61e-7. The sanitized report is
+is 2.61e-7. The sanitized report is
 [`embedding-measured-room-feature-audit-v3.json`](../wakeword_p4/results/embedding-measured-room-feature-audit-v3.json).
 Its plan binds the original local
 jobs/index layout, including source paths; this is not yet a portable raw
@@ -660,6 +660,53 @@ before running the same command with `regress` instead of `calibrate`. Each
 stage uses fresh output/log files, checks selected model/policy identities,
 and retains the original paired/English/Mandarin protocols. These commands
 perform offline inference and do not play sound or access a board.
+
+The study is now complete and **both continuations are rejected as production
+replacements**. The matched initializer and representative PTQ arrays are exact
+between arms; all 50,697 training rows and 7,618,929 embedding frames per arm
+were verified. Both equal means select .4 on original validation, before any
+development regression. The measured treatment has 95.261% validation macro
+recall versus control 95.282%, and 3 versus 2 continuous events / 7.304 h.
+
+| Existing development measurement | Matched synthetic control | Measured-room treatment | Hi ESP |
+| --- | --- | --- | --- |
+| Positive clips with an event | 46 / 50 | 44 / 50 | 48 / 50 |
+| Ordinary sentences with an event | 1 / 100 | 1 / 100 | 0 / 100 |
+| Nyx near-word clips with an event | 26 / 90 | 25 / 90 | 0 / 90 |
+| English events / 5.549 source hours | 2 | 2 | 0 |
+| Mandarin events / 1.294 source hours | 0 | 0 | 0 |
+
+The original frozen equal mean remains 46/50 with 23/90 near-word events and
+only one English event. Neither new continuation establishes an improvement.
+This single-seed study does not establish the cause of earlier acoustic
+misses or universal effects of measured responses. No new firmware was flashed,
+no new acoustic playback occurred, and final reserves remain unread. Complete
+validation grids and regression exposure/confidence metrics are in
+[`embedding-measured-room-validation-v3.json`](../wakeword_p4/results/embedding-measured-room-validation-v3.json)
+and
+[`embedding-measured-room-regression-v3.json`](../wakeword_p4/results/embedding-measured-room-regression-v3.json).
+
+Both failed runs are preserved as research extensions, including exact feature
+arrays, all 16 exported checkpoints, selected-member validation data and
+portable fitting plans:
+
+```sh
+python3 research/handoff/fetch_assets.py --output .local/room-update \
+  --asset measured-room-control-v1.tar.gz --asset measured-room-treatment-v1.tar.gz
+```
+
+Merge only verified files into the prior snapshot; overlapping original
+control feature arrays and initial weights must be byte-identical. Raw RIRs,
+microphone audio and device state are absent from these extensions. The
+training feature directories share paired IDs: each training plan must load
+only its corresponding arm.
+
+Both public downloads and every archived member hash were verified. Merging
+them adds10,778 files while10,072 overlapping files stay byte-identical. The
+four portable fitting plans reproduce five original same-seed batches each;
+both entire equal-mean calibration JSONs reproduce byte-exactly. This verifies
+the handoff, not CUDA execution or wake recognition acceptance. See
+[`embedding-measured-room-portable-v3.json`](../wakeword_p4/results/embedding-measured-room-portable-v3.json).
 
 ## Board and numerical constraints
 

@@ -277,3 +277,13 @@ audit. The four dense/temporal fitting plans are frozen in
 remains a distinct frontend/experiment from the GPU10ms models. No microphone
 recordings, evaluation sources, audio speed changes or new acceptance claim
 enter this training stage.
+
+That local 80 ms study has now completed. Its measured treatment is rejected:
+44/50 existing paired positives versus matched-control 46/50 and Hi ESP 48/50;
+both continuations retain one ordinary-sentence event and two English events.
+No inferior model was flashed and no new acoustic playback occurred. Preserve
+this as a failed matched experiment, rather than repeat its RIR substitution
+or infer a general claim that real-room augmentation cannot help. Its exact
+features/checkpoints and portable fitting plans are published as the two
+`measured-room-*-v1.tar.gz` research assets. Independent final fixtures remain
+unscored; the overall Hey Nyx objective remains unmet.
