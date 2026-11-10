@@ -1,0 +1,108 @@
+{
+  "scope": "Actual-P4 phoneme counterfactual on one repeated upstream recording; not Nyx quality acceptance",
+  "before_result_sha256": "7d0328647ada30f391353a3ad90461f35068b646990927ecf248556287f65d11",
+  "after_result_sha256": "47a64f39df71356299ffdcf18aded0a148d454717073eeea03917ec92d550a33",
+  "before_manifest_sha256": "135a98fce92c6d6182631a958b32d4c887eb47b2714ea5b04c647405a1a49851",
+  "after_manifest_sha256": "cba722cfbb37b5498aecc4828f2007322f3ca62ff5bb0c7ea1edb55d85958f90",
+  "same_model_and_consumed_pcm_verified": true,
+  "same_operating_point_and_grammar_texts_verified": true,
+  "actual_active_command_changes": [
+    {
+      "arm": 1,
+      "before_id": 3,
+      "after_id": 3,
+      "before_phonemes": "TfL Mm d qbK",
+      "after_phonemes": "TfL Mm c qbK"
+    }
+  ],
+  "original_reference_spelling_verified": true,
+  "stock_native_event_trace_exactly_reproduced": true,
+  "stock_events": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "end_sample": 34816,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11651418
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "end_sample": 74752,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11258345
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    }
+  ],
+  "before_arms": [
+    {
+      "arm": 0,
+      "name": "official_initialization",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        }
+      },
+      "known_controls_passed": true
+    },
+    {
+      "arm": 1,
+      "name": "mixed_control",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 0,
+          "any_command_detected": 0
+        }
+      },
+      "known_controls_passed": false
+    }
+  ],
+  "after_arms": [
+    {
+      "arm": 0,
+      "name": "official_initialization",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        }
+      },
+      "known_controls_passed": true
+    },
+    {
+      "arm": 1,
+      "name": "mixed_control",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        }
+      },
+      "known_controls_passed": true
+    }
+  ],
+  "interpretation": "Compare the retained role counts for the source-defined single-phoneme intervention. A passing known-source control is not independent phrase generalization, continuous FAR or full-app acceptance.",
+  "accepted": false
+}

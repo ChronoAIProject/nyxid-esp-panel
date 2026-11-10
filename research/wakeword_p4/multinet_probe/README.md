@@ -26,6 +26,9 @@ recordings, generated headers, build files and UART logs outside git.
 For the historical v1 experiment below, use source commit `92764b9`; its plan
 binds that template. The current template adds the separately frozen control
 protocol described at the end of this document.
+Each later plan also binds its exact preparation/runner/template hashes. Check
+out the source commit named in its result section before reproducing a
+historical freeze; the current template belongs to reference-v3 (`dbafe94`).
 
 ```sh
 python research/wakeword_p4/prepare_multinet_probe.py \
@@ -327,3 +330,40 @@ model/fixture blobs, threshold, timeout and command texts/IDs are verified
 identical to v2. Only the declared phoneme API choice and corresponding
 template/header code change. A later passing control still cannot establish
 always-listening Nyx recall/FAR or whole-app resource acceptance.
+
+Reference-v3 now completes all 4 cases / 2,404 calls. Both original placements
+pass in each grammar, with all consumed-input CRCs verified and original
+app/service/Hi ESP restoration complete. There is no cleanup warning. The
+stock events reproduce v2 **exactly**, including sample indices, command and
+phrase IDs, probabilities and decoder strings. Corrected mixed command3 now
+triggers at samples35,328 /74,752 with probabilities.33173180 /.11258764.
+See [`multinet-reference-v3-p4.json`](../results/multinet-reference-v3-p4.json).
+
+| Reference setting | Original stock grammar | Mixed grammar |
+| --- | --- | --- |
+| v1: .9, original G2P | 0/2 | 0/2 |
+| v2: .1, original G2P | 2/2 | 0/2 |
+| v3: .1, only joke phonemes corrected | 2/2 | 2/2 |
+
+These are two correlated placements of **one** source recording, not two
+speakers. The independent paired audit checks model/fixture identities,
+operating point, complete case coverage, actual printed active commands and
+the unchanged stock native-event trace. It confirms that only mixed command3
+changes from `TfL Mm d qbK` to the pinned original `TfL Mm c qbK`, and that
+this restores its known-source detections in this fixed setting. The earlier
+blanket assumption that text G2P exactly reproduces the stock grammar was
+incorrect. A source-defined explicit phoneme API fixes this control.
+
+Reproduce the comparison with `audit_multinet_phonemes.py --help`, supplying
+the v2/v3 result JSONs, vector manifests, retained private UARTs and original
+`commands_en.txt`. It performs no hardware or audio operations. The retained
+comparison is
+[`multinet-phoneme-counterfactual-v1.json`](../results/multinet-phoneme-counterfactual-v1.json).
+
+This establishes a working known-source control for future MultiNet Nyx
+probes. It does not establish a useful Nyx phrase threshold, phonetic policy,
+independent recall, continuous false-event rate or production fit. The next
+training-only Nyx discrimination probe must retain a known-source control,
+declare its threshold/phonemes before inference and keep all ordinary/near-word
+misses and false detections. No deployed audio producer, AEC/AGC, preroll/FIFO,
+GUI or dining-room panel changed; the full goal remains unachieved.

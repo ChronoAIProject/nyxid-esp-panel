@@ -1,0 +1,288 @@
+{
+  "scope": "Silent standalone P4 known-command harness diagnostic, not wake acceptance",
+  "plan_sha256": "ddada3fc3408418d5d11c89dd8dc95e9d8b35e606a282c022a64d4a7538b0273",
+  "vectors_manifest_sha256": "cba722cfbb37b5498aecc4828f2007322f3ca62ff5bb0c7ea1edb55d85958f90",
+  "report_sha256": "c80cc78a7f51372902f3656029e069a03350a246f1fe608ddec271e1614337ba",
+  "uart_sha256": "0d741fa285b120e01de07ce8638bd308ec27aca9ce75740f6ac3a636ecf350a2",
+  "probe_bin_sha256": "9b0c0e6c416e2ed234a701d8633048b02828444986ed892150eb7c11fa23fa13",
+  "execution_completed": true,
+  "coverage_and_pcm_crc_verified": true,
+  "detector_threshold": 0.1,
+  "arms": [
+    {
+      "arm": 0,
+      "name": "official_initialization",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        }
+      },
+      "known_controls_passed": true
+    },
+    {
+      "arm": 1,
+      "name": "mixed_control",
+      "roles": {
+        "known_command": {
+          "trials": 2,
+          "expected_command_detected": 2,
+          "any_command_detected": 2
+        }
+      },
+      "known_controls_passed": true
+    }
+  ],
+  "sources": [
+    {
+      "clip": 0,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 0,
+      "tail_samples": 262883,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ],
+      "rendered_pcm_sha256": "4d5db502db41c8ab67c37cb849019ecf8ceb5753eb7eabba8cc7510f55839a16",
+      "detect_pcm_crc32": 2362241963
+    },
+    {
+      "clip": 1,
+      "engine": "esp-sr-upstream-unit-sample",
+      "voice": "unknown-upstream-reference",
+      "split": "training_control",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "label": 0,
+      "source_sha256": "6277bddf1b8e5b44cf2c453b9763e013c2817f5011320d42128eb732d5ac4ac4",
+      "source_samples": 44829,
+      "source_peak": 16421,
+      "lead_samples": 38400,
+      "tail_samples": 224483,
+      "samples": 307712,
+      "expected_command_ids": [
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ],
+      "rendered_pcm_sha256": "467a12117a99b312306d97cf43e4b6fd5d5496f7637cb54c6ba05bf0c33b8b9d",
+      "detect_pcm_crc32": 4064747821
+    }
+  ],
+  "cases": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        1
+      ],
+      "detected_command_ids": [
+        1
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        3
+      ],
+      "detected_command_ids": [
+        3
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    },
+    {
+      "arm": 1,
+      "clip": 1,
+      "voice": "unknown-upstream-reference",
+      "role": "known_command",
+      "text": "Tell me a joke.",
+      "expected_command_ids": [
+        3
+      ],
+      "detected_command_ids": [
+        3
+      ],
+      "expected_command_detected": true,
+      "pcm_crc_verified": true
+    }
+  ],
+  "events": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "end_sample": 34816,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11651418
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "end_sample": 74752,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 1,
+          "phrase_id": 1,
+          "probability": 0.11258345
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "end_sample": 35328,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 3,
+          "phrase_id": 3,
+          "probability": 0.3317318
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 1,
+      "end_sample": 74752,
+      "state": 1,
+      "num": 1,
+      "commands": [
+        {
+          "id": 3,
+          "phrase_id": 3,
+          "probability": 0.11258764
+        }
+      ],
+      "string": " TfL Mm c qbK",
+      "raw_string": ""
+    }
+  ],
+  "decoder_records": [
+    {
+      "arm": 0,
+      "clip": 0,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 0,
+      "clip": 1,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 0,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": " hd Ng",
+      "raw_string": ""
+    },
+    {
+      "arm": 1,
+      "clip": 1,
+      "end_sample": 307712,
+      "state": 0,
+      "num": 0,
+      "commands": [],
+      "string": "",
+      "raw_string": ""
+    }
+  ],
+  "ready": {
+    "chunk": 512,
+    "rate": 16000,
+    "create_us": 333813,
+    "internal_delta": 6432,
+    "psram_delta": 3078752,
+    "model_expanded_bytes": 2751351,
+    "fixtures_expanded_bytes": 1230860
+  },
+  "timing": {
+    "calls": 2404,
+    "p50_us": 9173,
+    "p95_us": 17285,
+    "max_us": 17354
+  },
+  "cleanup_uninitialized_command_warning": false,
+  "restored": {
+    "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+    "original_service_verified": true,
+    "nyx_state": "up",
+    "hi_esp_listening": true
+  },
+  "limits": [
+    "Short control sources are not speaker-generalization evidence.",
+    "Reset-separated short sources do not establish continuous FAR.",
+    "Standalone resources/timing do not establish GUI/voice/OTA capacity.",
+    "No acoustic playback or microphone/AFE transfer was tested."
+  ],
+  "accepted": false
+}

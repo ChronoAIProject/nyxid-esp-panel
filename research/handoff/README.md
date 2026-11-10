@@ -858,9 +858,12 @@ tuning thresholds on these misses. See
 The same pinned upstream unit test contains an original joke recording and
 asserts recognition. Its subsequent P4 reference control passes2/2stock-grammar
 placements at the upstream-declared.1threshold, while automatic mixed G2P
-still misses2/2. Its article phoneme differs from the original stock spelling;
-the separately frozen reference-v3 corrects only that one spelling using the
-official phoneme API. See the [reference control protocol and evidence](../wakeword_p4/multinet_probe/README.md).
+still misses2/2. Its article phoneme differs from the original stock spelling.
+The separately frozen reference-v3 corrects only that spelling through the
+official phoneme API and restores both mixed-grammar detections, while the
+stock native events reproduce exactly. The paired audit verifies identical
+model, PCM and operating point plus that single actual active-command change.
+See the [reference control protocol and evidence](../wakeword_p4/multinet_probe/README.md).
 No acoustic playback was performed, and no Nyx quality candidate is accepted.
 
 ## Board and numerical constraints
