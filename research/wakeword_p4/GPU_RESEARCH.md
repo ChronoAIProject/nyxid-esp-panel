@@ -2934,3 +2934,15 @@ python3 research/wakeword_p4/training/collect_review_annotations.py \
 核对PCM/CRC/stage104/全512调用与尾填充、缓存/score SHA、固定阈值/engine/
 源代码及每流曝光，按原检测策略重计全部Nyx事件，不再次加载模型推理。
 比较代码SHA也预注册；最终报告前必须完成该逐流审计。
+
+## v30新独立AMI检验：Nyx完整完成，数值标准未通过（2026-11-10）
+
+d2d5d32预注册推送后首次评分；Nyx16/16完整完成，无运行失败，原始scores保存。
+原始曝光9.062306666666666h，1次事件，观察0.110347182/h；
+单侧95%上界0.523472080/h，超过预注册0.5/h，因此本域数值标准失败。
+不四舍五入通过、不合并旧LibriSpeech时长、不删流/事件/改标签或调阈值。
+这与之前独立LibriSpeech0事件结果并列保留，不能把read-speech通过推广成远场通过。
+结果results/4090-v30-ami-independent-negatives-v1.json，原始分数
+.local/wakeword/v30-ami-independent-final-v1；每场开头reset重复性已核验。
+官方HiESP同PCM原进程仍运行；此时尚无双方完整审计/质量排名结论。
+全部16场的按会议组结果与原事件时间保留；相关性等名义Poisson限制不变。
