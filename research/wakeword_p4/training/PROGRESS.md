@@ -2106,3 +2106,14 @@ remove detections and that both group limits plus zero events are required.
 With the two actual-TFLite adapter tests, four focused checks pass. No full
 precision diagnostic has launched at this commit. Physical latency, hardware
 costs, real-speaker performance and voice stability remain outside this run.
+
+The precision diagnostic has launched from immutable source at `ed8652c`.
+Actual runtime versions and exact commands are retained. Both arithmetic paths
+run fresh on the same inputs; a pointwise INT8 mismatch stops the experiment
+before interpretation. The supplementary [read-only precision auditor](../../handoff/audit_scalar_precision.py)
+checks the committed plan, actual command/source/model bytes, every saved
+clip/timebase, continuous array/exposure, independent event count, full grid,
+strict-gate existence, precision contingency and aligned error aggregate.
+It also binds actual continuous feature bytes and compares all retained INT8
+scores with the original evidence. No final quality conclusion is recorded
+while the second model's fresh inference remains live.
