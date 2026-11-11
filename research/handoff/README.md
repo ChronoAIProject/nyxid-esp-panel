@@ -1830,6 +1830,42 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 
 Coordinate Mac/P4 and RTX 4090 research in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
+
+### Cross-host report and floating-model diagnostic receipt
+
+GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
+SavedModel on all 350 old Mac sources: 12/50 target triggers versus 11/50 INT8,
+with the same three confusing negatives. The only float-only target is
+`Moira-3-0.wav` (float maximum five-score mean .9440673232 versus INT8 .91328125
+at the unchanged .91796875 threshold). The large recall gap is present in
+these floating results too; this does not establish a cause or a best float
+threshold.
+
+The [Mac receipt](../wakeword_p4/results/gpu-v30-mac-gpu-diagnostic-receipt-v1.json)
+checks report/script/model/training identities, all 350 source rows and 94940
+original Mac output bytes. Every reported Linux INT8 event matches events
+independently recomputed with integer five-score sums on the Mac trace. All
+349 identical output streams have identical maximum five-score means. The
+one differing stream, `Tessa-1-3.wav`, has maximum .0265625 on Mac and reported
+.02421875 on Linux; both remain far below the fixed threshold.
+
+The GPU floating script filters source events with `480*s-56160` although a
+one-based score step `s` returns at `480*(s+1)-56160`. The receipt checks every
+reported float and recomputed INT8 event: this offset error does not change
+the source-event membership or any reported trigger count in these results.
+It retains the corrected return offsets explicitly.
+
+This is an independent accounting check, not independent float inference or
+verification of Linux/float score arrays. Those full archives and original
+floating weights remain requested through issue #13. Do not describe the
+receipt as another execution of the floating model. Reproduce after fetching
+the pinned GPU objects, using the original public full Mac study:
+
+```sh
+python research/wakeword_p4/training/audit_gpu_mac_diagnostics.py \
+  --gpu-commit ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee \
+  --study "$FULL_MAC_STUDY" --output "$FRESH_RECEIPT_JSON"
+```
 The [result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json) verifies the
 original model, all 179 host/P4 output bytes and event step 144. All 12
 preselected training-only reset traces reproduce: eight vary and four stay
