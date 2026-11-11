@@ -3674,3 +3674,12 @@ replay manifest SHAc65b0e566384bc3c54d36d4766d6e7abed731e01263354f5d05a924a454b2
 目前无唤醒模型评分或FAR结果；新曝光不得并入旧开发来挽救旧门槛。
 v36原训练仍在运行，原后处理等待保留；先完成探索回归再考虑消费新开发评分。
 最终保留集未下载、未生成、未评分；冻结v30及Mac交接不变。
+
+## 跨端通过 Issues 沟通
+
+用户指定GPU端与Mac/P4端改用仓库Issues沟通。检索现有open/closed列表无对应议题后，
+建立 https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13 作为统一交接与研究同步线程。
+已发布冻结v30下载地址、归档/模型SHA、manifest/验证记录、原触发参数、Mac回报项目，
+以及v35拒绝/v36训练中和新开发数据未评分状态。没有声称P4已通过或v36可替换。
+后续重要研究产物/拒绝或升级决策在该Issue同步；Mac/P4实测结果在该Issue回报。
+用户明确授权通过Issues沟通；无需再次请求发布研究更新许可。
