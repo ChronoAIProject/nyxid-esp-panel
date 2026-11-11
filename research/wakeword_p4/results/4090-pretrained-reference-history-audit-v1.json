@@ -1,0 +1,59 @@
+{
+  "role": "Historical pretrained speech embedding experiments audit, not a new run or acceptance",
+  "experiments": [
+    {
+      "report": "4090-embedding-head-v1b.json",
+      "sha256": "f17ab5ad37b3b28619ed356c139b3983ece49175ec0d41c30b5d693aa494de28",
+      "steps": 40000,
+      "selected_step": 40000,
+      "proxy_macro_hit_rate": 0.30026041666666664,
+      "proxy_hits": 257,
+      "positive_variants": 2160,
+      "threshold": 0.985,
+      "ambient_events": 0,
+      "ambient_hours": 1.204811267361111,
+      "hard_negative_false_rate": 0.005397727272727273
+    },
+    {
+      "report": "4090-embedding-head-v2-upstream.json",
+      "sha256": "90f465e17f24bc6676caac0185a0f04844163f1ce089d4c61ecacf16aebe7725",
+      "steps": 40000,
+      "selected_step": 30000,
+      "proxy_macro_hit_rate": 0.4236979166666667,
+      "proxy_hits": 689,
+      "positive_variants": 2160,
+      "threshold": 0.98,
+      "ambient_events": 0,
+      "ambient_hours": 1.204811267361111,
+      "hard_negative_false_rate": 0.005681818181818182
+    },
+    {
+      "report": "4090-embedding-head-v3-mining.json",
+      "sha256": "42d2a8c9bdf689cee5fb98b3c3eaa10a6c7e5aeface397050bc8e536651bf894",
+      "steps": 40000,
+      "selected_step": 20000,
+      "proxy_macro_hit_rate": 0.5138020833333333,
+      "proxy_hits": 622,
+      "positive_variants": 2160,
+      "threshold": 0.9,
+      "ambient_events": 0,
+      "ambient_hours": 1.204811267361111,
+      "hard_negative_false_rate": 0.004545454545454545
+    },
+    {
+      "report": "4090-embedding-head-v4-lr.json",
+      "sha256": "1301a4047d1ae123e718de85eccc72ac5fa269bd55881ebbede13ba07a02ad13",
+      "steps": 40000,
+      "selected_step": 40000,
+      "proxy_macro_hit_rate": 0.5078125,
+      "proxy_hits": 718,
+      "positive_variants": 2160,
+      "threshold": 0.992,
+      "ambient_events": 0,
+      "ambient_hours": 1.204811267361111,
+      "hard_negative_false_rate": 0.005965909090909091
+    }
+  ],
+  "decision": "Do not repeat generic frozen embedding plus head as an untried solution. Existing results do not establish a teacher stronger than v30. Before distillation, require a materially different hypothesis and development evidence of teacher advantage.",
+  "limits": "Different development constraints, architecture, trigger cadence and calibration; rates do not form a controlled head-to-head architecture comparison. Proxy windows are not phonetic recall or latency. No independent-final scores."
+}

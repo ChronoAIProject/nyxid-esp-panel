@@ -2982,3 +2982,8 @@ LibriSpeech独立负例、Kokoro配对意图片段、AMI独立远场，均不可
 边界参考尚缺不阻止该消融，但仍阻止最终召回/末音素延迟结论。
 配置见results/4090-v32-plan.json，执行experiments/v32_no_prefix_negatives.sh。
 同v30开发评测与扩展负例标定；特别检查早触发，失败也保留推送。
+
+v32原进程session80679确认存活；启动初始化JSON与v30全部字段相同，
+审计results/4090-v32-initialization-audit.json。未因观察等待重启任务。
+同时复核历史四次预训练embedding头实验，不能当作更强教师或未尝试路线；
+摘要和报告哈希见4090-pretrained-reference-history-audit-v1.json。
