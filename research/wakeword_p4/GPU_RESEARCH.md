@@ -3362,3 +3362,10 @@ v30固定.91796875/five-score原策略，HiESP固定.63，不选阈值、不声�
 原官方QEMU运行/CRC/全PCM哈希验证流程不改，输出短/tmp目录避免AF_UNIX路径限制。
 准备器prepare_phone_replay.py；compare_paired_validation报告改为披露manifest的endpoint协议，
 移除旧硬编码“12条/能量端点”描述，保持评分算法不变。
+
+80条复放首次运行terminal失败于record27，UART只落盘NYX_PCM_DONE前缀，
+旧runner以子串判断完成并立即quit QEMU，截断了计数行；stage104已达到，不等于计数完整。
+失败报告4090-phone-dev-replay-partial-done-failure-v1.json，原/tmp日志保留，无整体分数。
+修正为等待完整newline终止的DONE计数行；实存部分行不匹配、完整模拟行匹配检查通过。
+按相同冻结输入/阈值重跑到新目录，保证80条runner来源SHA统一；不是观察超时重启。
+v35训练会话不变、未重启。任何最终验收仍未进行。

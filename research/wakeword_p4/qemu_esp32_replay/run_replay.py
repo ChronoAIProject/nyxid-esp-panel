@@ -109,7 +109,9 @@ def main():
                 text = serial.read_text(errors='replace') if serial.exists() else ''
                 if 'NYX_PCM_ERROR' in text or 'Guru Meditation' in text:
                     raise RuntimeError('Firmware failed; inspect preserved UART')
-                if 'NYX_PCM_DONE' in text:
+                # UART file writes can expose the marker before its counters.
+                # Wait for the whole terminated line before quitting QEMU.
+                if re.search(r'NYX_PCM_DONE samples=\d+ calls=\d+ events=\d+ verified=\d+ crc32=[0-9a-f]+\r?\n', text):
                     break
                 if process.poll() is not None:
                     raise RuntimeError('QEMU exited before completion')
