@@ -1,0 +1,320 @@
+{
+  "scope": "Same-weight float versus INT8 full development diagnostic for both completed broader-bank models; no fitting, recalibration or deployment advancement.",
+  "decision": "Both prequantization float models and both INT8 models fail the unchanged strict gate at every point of the frozen grid. Precision alone does not explain the absence of a qualifying detector under these fixed conditions. No deployment advancement.",
+  "accepted": false,
+  "plan_sha256": "efeaddab56e59d327bf47d6d33dfea565ae5671246649024b93e9790d1e656fe",
+  "raw_result_sha256": "2953914ff50835b7d6c186cb9fc2f9d2ccd545557ac031c7fbb15c0f078edede",
+  "launch_sha256": "e3631fdf70fe73a1fa36fb8b8c23ff17599ed5e426048d9d741f601c5ad0987d",
+  "input_result_audit_sha256": "419fea38b49533d4ad5d7b2246814aba46e911f3dbd25655fd41f9d35132b257",
+  "negative_plan_test_sha256": "38262660f09b844608aa054a73428232d2b25dd6b571cc6039388d01bc47d45a",
+  "continuous_feature_files_hashed": 35,
+  "arms": {
+    "control": {
+      "models_sha256": {
+        "float": "39946321ced08bff2e4000306e5f9b7a43ef0e998aae24749563395155d475d4",
+        "int8": "270242cba83fb285f2ef3a6c5ee962a84e68956e99e82e5c21fb31598be622ec"
+      },
+      "strict_gate": {
+        "float": null,
+        "int8": null
+      },
+      "reference_0_97": {
+        "float": {
+          "threshold": 0.97,
+          "positive_variants": 2392,
+          "recall": 0.834866220735786,
+          "macro_recall": 0.7940128968253969,
+          "recall_by_engine": {
+            "edge-tts": 0.7098214285714286,
+            "kokoro": 0.7291666666666666,
+            "macos-say": 0.9609375,
+            "openai-tts": 0.7222222222222222,
+            "piper": 0.8479166666666667
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.018696581196581196,
+          "max_source_false_rate": 0.052083333333333336,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 19,
+              "false_rate": 0.033928571428571426
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 2,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 6,
+              "false_rate": 0.01875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 2,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 5,
+              "false_rate": 0.052083333333333336
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 36,
+              "false_rate": 0.01875
+            }
+          },
+          "max_corpus_false_rate": 0.052083333333333336,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 2,
+          "ambient_false_per_hour": 0.27308145109414633,
+          "ambient_false_per_hour_upper_95": 0.8596322290250369
+        },
+        "int8": {
+          "threshold": 0.97,
+          "positive_variants": 2392,
+          "recall": 0.8311036789297659,
+          "macro_recall": 0.7825694444444445,
+          "recall_by_engine": {
+            "edge-tts": 0.71875,
+            "kokoro": 0.7083333333333334,
+            "macos-say": 0.9609375,
+            "openai-tts": 0.6805555555555556,
+            "piper": 0.8442708333333333
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.017895299145299144,
+          "max_source_false_rate": 0.052083333333333336,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 18,
+              "false_rate": 0.03214285714285714
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 2,
+              "false_rate": 0.005952380952380952
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 6,
+              "false_rate": 0.01875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 2,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 5,
+              "false_rate": 0.052083333333333336
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 34,
+              "false_rate": 0.017708333333333333
+            }
+          },
+          "max_corpus_false_rate": 0.052083333333333336,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 2,
+          "ambient_false_per_hour": 0.27308145109414633,
+          "ambient_false_per_hour_upper_95": 0.8596322290250369
+        }
+      },
+      "paired_views_at_reference_0_97": {
+        "positive": {
+          "views": 2392,
+          "both_above": 1982,
+          "float_only_above": 15,
+          "int8_only_above": 6,
+          "neither_above": 389
+        },
+        "negative": {
+          "views": 3744,
+          "both_above": 66,
+          "float_only_above": 4,
+          "int8_only_above": 1,
+          "neither_above": 3673
+        }
+      },
+      "clip_count": 6136,
+      "clip_smoothed_steps": 1429512,
+      "continuous_source_count": 35,
+      "continuous_smoothed_steps": 878709,
+      "all_smoothed_steps": 2308221,
+      "max_absolute_precision_delta": 0.5403154730796815,
+      "mean_absolute_precision_delta": 0.0008180105710120393,
+      "all_fresh_int8_scores_replay_original_exactly": true
+    },
+    "phonetic": {
+      "models_sha256": {
+        "float": "b8e08719d922bcc811f769fb9b7efe8c752f35bf605b443845f9b2b7b4de8bf7",
+        "int8": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe"
+      },
+      "strict_gate": {
+        "float": null,
+        "int8": null
+      },
+      "reference_0_97": {
+        "float": {
+          "threshold": 0.97,
+          "positive_variants": 2392,
+          "recall": 0.8294314381270903,
+          "macro_recall": 0.7920089285714285,
+          "recall_by_engine": {
+            "edge-tts": 0.7053571428571429,
+            "kokoro": 0.6875,
+            "macos-say": 0.9765625,
+            "openai-tts": 0.75,
+            "piper": 0.840625
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.019497863247863248,
+          "max_source_false_rate": 0.041666666666666664,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 19,
+              "false_rate": 0.033928571428571426
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 6,
+              "false_rate": 0.01875
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 2,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 4,
+              "false_rate": 0.041666666666666664
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 42,
+              "false_rate": 0.021875
+            }
+          },
+          "max_corpus_false_rate": 0.041666666666666664,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 3,
+          "ambient_false_per_hour": 0.40962217664121947,
+          "ambient_false_per_hour_upper_95": 1.0586898879667346
+        },
+        "int8": {
+          "threshold": 0.97,
+          "positive_variants": 2392,
+          "recall": 0.8490802675585284,
+          "macro_recall": 0.8114583333333332,
+          "recall_by_engine": {
+            "edge-tts": 0.75,
+            "kokoro": 0.7291666666666666,
+            "macos-say": 0.96875,
+            "openai-tts": 0.75,
+            "piper": 0.859375
+          },
+          "hard_negative_variants": 3744,
+          "hard_negative_false_rate": 0.0202991452991453,
+          "max_source_false_rate": 0.041666666666666664,
+          "negative_corpora": {
+            "edge-tts:edge-corpus": {
+              "variants": 560,
+              "false_clips": 21,
+              "false_rate": 0.0375
+            },
+            "edge-tts:edge-partials": {
+              "variants": 336,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "kokoro:kokoro-corpus": {
+              "variants": 320,
+              "false_clips": 5,
+              "false_rate": 0.015625
+            },
+            "kokoro:kokoro-partials": {
+              "variants": 192,
+              "false_clips": 0,
+              "false_rate": 0.0
+            },
+            "macos-say:mac-corpus": {
+              "variants": 320,
+              "false_clips": 2,
+              "false_rate": 0.00625
+            },
+            "openai-tts:openai-corpus": {
+              "variants": 96,
+              "false_clips": 4,
+              "false_rate": 0.041666666666666664
+            },
+            "piper:synthetic": {
+              "variants": 1920,
+              "false_clips": 44,
+              "false_rate": 0.022916666666666665
+            }
+          },
+          "max_corpus_false_rate": 0.041666666666666664,
+          "ambient_hours": 7.323822222222223,
+          "ambient_false_events": 3,
+          "ambient_false_per_hour": 0.40962217664121947,
+          "ambient_false_per_hour_upper_95": 1.0586898879667346
+        }
+      },
+      "paired_views_at_reference_0_97": {
+        "positive": {
+          "views": 2392,
+          "both_above": 1981,
+          "float_only_above": 3,
+          "int8_only_above": 50,
+          "neither_above": 358
+        },
+        "negative": {
+          "views": 3744,
+          "both_above": 71,
+          "float_only_above": 2,
+          "int8_only_above": 5,
+          "neither_above": 3666
+        }
+      },
+      "clip_count": 6136,
+      "clip_smoothed_steps": 1429512,
+      "continuous_source_count": 35,
+      "continuous_smoothed_steps": 878709,
+      "all_smoothed_steps": 2308221,
+      "max_absolute_precision_delta": 0.6476857528090477,
+      "mean_absolute_precision_delta": 0.0009449583284506072,
+      "all_fresh_int8_scores_replay_original_exactly": true
+    }
+  },
+  "all_maxima_timebases_events_grids_contingencies_and_errors_reconstructed": true,
+  "interpretation": "At the fixed.97 reference, INT8 loses15 and gains6 positive variants for the binary control, while losing3 and gaining50 for compact CTC. Near-word false views change70\u219267 and73\u219276 respectively. Both precisions retain the same event counts per model (2 and3), without asserting event identities. The apparent between-training-arm fixed-threshold recall gain is not stable across arithmetic precision. Large selected score deltas coexist with small full-exposure means; neither establishes numerical adequacy or clinical/physical performance.",
+  "limits": "Reused development data and frozen existing21-point grid. The floating model is an offline reference, not a deployable P4 candidate. Smoothed scores and synthesis-intent time anchors do not establish physical wake latency or real-speaker pronunciation. Clip variants and continuous exposure are correlated with previous development. Event counts alone do not identify one-to-one introduced or removed wake events because rearm/latching can change. No training, PTQ change, threshold extension, residual-error fitting, final/test inference, playback, microphone capture, board/OTA, production device, PCM speed or audio producer changes."
+}

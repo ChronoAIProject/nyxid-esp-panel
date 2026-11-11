@@ -2117,3 +2117,41 @@ strict-gate existence, precision contingency and aligned error aggregate.
 It also binds actual continuous feature bytes and compares all retained INT8
 scores with the original evidence. No final quality conclusion is recorded
 while the second model's fresh inference remains live.
+
+The [completed precision diagnostic](../results/scalar-precision-diagnostic-v1.json)
+finds no strict point for either float model or either INT8 model in the
+unchanged grid. At .97, control float/INT8 macro proxy recalls are
+79.4013%/78.2569%, with 70/67 false near-word views and two continuous events
+for both. Compact CTC float/INT8 recalls are 79.2009%/81.1458%, with 73/76 false
+near-word views and three continuous events for both. Worst-group fractions
+remain 5.2083% (control) and 4.1667% (CTC) for both precisions at that reference.
+
+INT8 loses 15 and gains six positive variants for the binary control, while
+losing three and gaining 50 for CTC. Thus the earlier fixed-reference apparent
+between-training-arm recall improvement is not stable across precision.
+This does not establish that quantization is harmless: maximum aligned
+smoothed-score errors are .54032 and .64769, despite full-exposure means
+.000818 and .000945. It establishes only that removing quantization does not
+produce a qualifying detector under this fixed grid/weights/data. Equal event
+counts do not assert identical event locations or one-to-one event attribution.
+
+Every fresh INT8 score, including startup and all continuous streams, replays
+the original cache exactly. The supplementary read-only audit binds original
+committed/executed plans, actual commands, model bytes, parent evidence, full
+scalar binary and all 35 actual continuous feature files. It reconstructs
+each model's 6,136 clips / 1,429,512 smoothed steps and 35 continuous sources /
+878,709 steps for both precisions, all grids, strict-point existence,
+contingencies and error aggregates. A changed threshold grid is rejected before
+input/score reconstruction. All processes are terminal and four focused tests
+pass. No final/test score, training, calibration change, threshold extension,
+speaker, microphone or hardware operation occurred. The full goal stays open.
+
+Code inspection suggests a separate training hypothesis, not a demonstrated
+cause: the current compact auxiliary head sees only eight positive / eight
+confuser pair slots per 128-example mixed batch. The 48 known ambient negative
+slots receive binary loss but no temporal blank/background loss. Any future
+open-set sequence study should test explicit background supervision while
+preserving consistent targets for known confusers. Do not assign blank to all
+negative slots indiscriminately: the same near-word source can appear in the
+ordinary TTS sampler as well as a paired slot. No such training or new inference
+rule has been implemented, frozen or scored by this diagnostic.
