@@ -1830,3 +1830,20 @@ The unauthenticated download and all 279 listed member hashes are verified.
 Bank/initializer dependencies and the separate scalar-feature-cache requirement
 are explicit. There is no source audio, device state or firmware. No job from
 this study remains running and none of its models is accepted for deployment.
+
+Next research question, not a frozen experiment or a deployment decision:
+can the retained compact ordered readout help at inference, where the current
+scalar export discards it? Do not infer that it will generalize from its
+233/236 fitted training sequences. A four-hypothesis forced-choice posterior
+is not an open-set wake probability, and adding it to inference could add
+quantization, state, latency and resource costs. No combination rule or new
+threshold has been scored or selected from this study.
+
+Before another wake-validation run, separately freeze an inference experiment
+and verify scalar/sequence export, causal window alignment, reset behavior and
+quantization on training-only inputs. Retain the original binary comparator,
+continuous event policy and untouched final data. A low-cost implementation
+should reuse the same encoder and existing audio producer; it must not add a
+microphone reader or change PCM speed. Actual P4 costs and real-speaker/room
+acceptance still require later matched evidence. Do not train on the residual
+validation utterance or treat a graph/serialization smoke as wake acceptance.
