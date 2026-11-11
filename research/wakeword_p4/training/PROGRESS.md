@@ -1699,3 +1699,10 @@ versions; they are not a contemporaneous environment capture. No fold, wake
 validation, firmware export or device test follows this failed gate. Do not
 extend this head-only budget or loosen gates. The result limits this particular
 frozen-encoder recipe; it does not rule out training a temporal encoder.
+
+The [public compact-readout supplement](../../handoff/assets-compact-phrase-ctc-readout-v1.json)
+preserves both final checkpoints, full row scores, launched source, plans,
+log and input/result audit. The unauthenticated download and all 85 listed
+member hashes are verified. The bank/initializer dependencies are explicit;
+the complete original scalar feature cache remains separate. No audio,
+device state or firmware is included. The full Hi ESP goal remains active.

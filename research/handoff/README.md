@@ -1045,3 +1045,22 @@ member hashes before extraction into fresh staging. The public download and
 all 279 listed member hashes are verified. No source waveform, room recording,
 device state, credential or firmware is included. The study ran silently and
 did not access a speaker, microphone or board. It remains unaccepted research.
+
+The [compact phrase readout supplement](assets-compact-phrase-ctc-readout-v1.json)
+retains the fixed 1,000-update temporal-mean and six-token CTC readouts,
+executed sources, plans, launch/log, full fitted row scores and input/result
+audit. Both use the original frozen encoder and the same 32,000 row draws.
+CTC fails its fit gate (93.60% macro, 7.20% greedy exact sequences, normalized
+loss 1.00034); no held-engine fold, open-set validation or firmware follows.
+These fitted four-phrase scores are not false-wake or generalization evidence.
+
+The study root is
+`workspace/home-wake-research-20261110/compact-phrase-ctc-readout-v1`.
+Its bank and initializer dependencies are listed in the manifest. The complete
+scalar feature cache remains separate. H5 files retain weights, not Adam slots.
+Verify the archive SHA256 and all
+`CONTENTS-compact-phrase-ctc-readout-v1.json` member hashes before extraction.
+The unauthenticated public download and all 85 listed hashes are verified.
+The audit runtime and training-environment versions observed after the run are
+explicitly distinguished. This is rejected research, with no audio, board
+state, credentials or firmware, and all processing was silent.
