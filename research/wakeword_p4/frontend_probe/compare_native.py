@@ -63,14 +63,21 @@ class Native:
         self.lib.nyx_frontend_process.restype = ctypes.c_int
         self.lib.nyx_frontend_weight.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
         self.lib.nyx_frontend_weight.restype = ctypes.c_int
+        self.lib.nyx_frontend_set_weight_pair.argtypes = [ctypes.c_void_p, ctypes.c_int,
+                                                        ctypes.c_int, ctypes.c_int]
+        self.lib.nyx_frontend_set_weight_pair.restype = ctypes.c_int
 
-    def process(self, pcm):
+    def process(self, pcm, weight_pairs=()):
         pcm = np.pad(pcm, (0, (-len(pcm)) % 160)).astype(np.int16)
         state = self.lib.nyx_frontend_create()
         if not state:
             raise RuntimeError('Native frontend allocation failed')
         rows = []
         try:
+            for index, weight, unweight in weight_pairs:
+                if self.lib.nyx_frontend_set_weight_pair(state, index, weight, unweight) != 1:
+                    raise ValueError('Invalid diagnostic weight pair')
+                assert [self.lib.nyx_frontend_weight(state, index, flag) for flag in (0, 1)] == [weight, unweight]
             coefficient = [self.lib.nyx_frontend_weight(state, 293, flag) for flag in (0, 1)]
             for at in range(0, len(pcm), 160):
                 out = np.empty(40, dtype=np.uint16)
@@ -89,6 +96,9 @@ def main():
     for name in ('source', 'study', 'source-root', 'output'):
         p.add_argument('--'+name, type=Path, required=True)
     p.add_argument('--compiler', default='c++')
+    p.add_argument('--weight-pair', type=int, nargs=3, action='append', default=[],
+                   metavar=('INDEX', 'WEIGHT', 'UNWEIGHT'),
+                   help='Separate diagnostic arm: override only these initialized pairs')
     args = p.parse_args()
     assert version('pymicro-features') == '2.0.2'
     for name, digest in PINNED.items():
@@ -148,6 +158,10 @@ def main():
                 arrays[mode+'_'+str(pack_index)] = actual
                 item[mode+'_vs_saved'] = compare(actual, saved)
                 item[mode+'_coefficient293'] = coefficient
+            if args.weight_pair:
+                actual, _ = libraries['default'].process(rendered, args.weight_pair)
+                arrays['override_'+str(pack_index)] = actual
+                item['override_vs_saved'] = compare(actual, saved)
             details.append(item)
     assert len(details) == 30
     np.savez_compressed(args.output/'arrays.npz', **arrays)
@@ -161,14 +175,17 @@ def main():
               'runner_sha256': sha(Path(__file__).read_bytes()),
               'rendering_source_sha256': sha((TRAINING/'audit_old_complete_sources.py').read_bytes()),
               'wheel_binary_sha256': sha(package.locate_file(binary).read_bytes()),
-              'witnesses': len(details), 'details': details,
+              'witnesses': len(details), 'details': details, 'diagnostic_weight_pairs': args.weight_pair,
               'arrays_npz_sha256': sha((args.output/'arrays.npz').read_bytes()),
               'audio_io': False, 'board_access': False, 'trained_or_scored_model': False,
               'limits': 'Fixed training witnesses only; matching outputs do not prove all internal tables or other inputs equivalent. No Linux/P4/recognition parity claim.'}
     (args.output/'report.json').write_text(json.dumps(report, indent=2)+'\n')
+    modes = ['wheel_vs_saved', 'default_vs_saved', 'off_vs_saved']
+    if args.weight_pair:
+        modes.append('override_vs_saved')
     print(json.dumps({'witnesses': len(details),
         'exact': {key: sum(row[key]['exact'] for row in details)
-                  for key in ('wheel_vs_saved', 'default_vs_saved', 'off_vs_saved')}}))
+                  for key in modes}}))
 
 
 if __name__ == '__main__':

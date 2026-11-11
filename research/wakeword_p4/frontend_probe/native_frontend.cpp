@@ -55,6 +55,16 @@ extern "C" int nyx_frontend_weight(void *handle, int index, int unweight) {
     return (unweight ? fb.unweights : fb.weights)[index];
 }
 
+// Controlled diagnostic intervention in an isolated handle, before any PCM.
+extern "C" int nyx_frontend_set_weight_pair(void *handle, int index, int weight, int unweight) {
+    if (nyx_frontend_weight(handle, index, 0) < 0 || weight < 0 || unweight < 0 ||
+        weight > 4096 || unweight > 4096 || weight+unweight != 4096) return 0;
+    auto &fb = static_cast<FrontendState *>(handle)->filterbank;
+    fb.weights[index] = static_cast<int16_t>(weight);
+    fb.unweights[index] = static_cast<int16_t>(unweight);
+    return 1;
+}
+
 extern "C" void nyx_frontend_destroy(void *handle) {
     if (handle) {
         FrontendFreeStateContents(static_cast<FrontendState *>(handle));

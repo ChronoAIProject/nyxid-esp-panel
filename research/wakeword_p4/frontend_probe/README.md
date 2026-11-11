@@ -83,3 +83,22 @@ passed length/SHA and safe-path checks. It contains no audio, firmware, native
 binaries, board state or credentials. Original training WAVs/pack and the
 unmodified upstream C++ source remain external dependencies. This is numerical
 diagnosis on30 training witnesses, not recognition or Hi ESP acceptance.
+
+## Isolated Linux coefficient intervention
+
+GPU `c186b46` reports all original source hashes exact and only one integer
+filterbank pair differing from default Mac: index211, Linux2471/1625 versus
+Mac2470/1626. The pair is in block33, contributing to output channels32/33.
+Before executing this next arm, add `--weight-pair 211 2471 1625` to the same
+fixed30-witness comparison. It creates a fresh default native handle per input
+and replaces only that pair before the first PCM hop. Original library source,
+installed wheel, saved arrays, rendering and all other coefficients stay fixed.
+The diagnostic setter rejects invalid indices or noncomplementary Q12 weights.
+Keep this operation confined to host probes; do not apply it to training or P4.
+
+Compare all30 resulting difference counts, maxima and first difference values
+to GPU's original `4090-old-complete-cross-host-v1.json`, retaining all complete
+predicted arrays and hashes. The existing GPU report lacks full Linux output
+hashes: matching its summaries alone cannot establish full-array Linux parity.
+Ask GPU to compare actual full hashes independently before making that claim.
+No model or recognition inference is part of this intervention.
