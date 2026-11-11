@@ -1,0 +1,54 @@
+{
+  "role": "v32 configuration equivalence audit, not recognition evidence",
+  "equal_fields": {
+    "context_frames": true,
+    "initial_weights_sha256": true,
+    "classifier_initial_sha256": true,
+    "batchnorm_policy": true,
+    "batchnorm_initial": true,
+    "batchnorm_selected": true,
+    "recipe": true,
+    "parameters": true,
+    "steps": true,
+    "tensorflow": true,
+    "validation_window_phase": true,
+    "source_exponent": true,
+    "ambient_sampling": true,
+    "ambient_sampling_coverage": true,
+    "features_index_sha256": true,
+    "feature_metadata_sha256": true,
+    "architecture": true,
+    "architecture_args": true,
+    "batch_size": true,
+    "negative_weight": true,
+    "label_smoothing": true,
+    "negative_candidates": true,
+    "hard_ambient": true,
+    "spec_augment": true,
+    "sources": true
+  },
+  "prefix_negatives": {
+    "baseline": {
+      "count_per_batch": 16,
+      "seed": 20726,
+      "gap_frames_inclusive": [
+        15,
+        35
+      ],
+      "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."
+    },
+    "candidate": {
+      "count_per_batch": 0,
+      "seed": 20726,
+      "gap_frames_inclusive": [
+        15,
+        35
+      ],
+      "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."
+    }
+  },
+  "baseline_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+  "candidate_report_sha256": "d822f339cd0670ca21e3eaea604bdfc2fb4da2c7f0ecc762012d8a1ee35fce78",
+  "model_hash_verified": true,
+  "limits": "Representative INT8 tensors differ with prefix policy in original exports; separately preregistered shared-input exports address this coupling. Unused source file inventory additions are not changed training configuration."
+}

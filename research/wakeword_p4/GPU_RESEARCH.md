@@ -3031,3 +3031,14 @@ Mandarin0/6.913985191h、DiPCo0/0.754487847h、Libri-dev-other0/5.121184826h。
 分别保存三组报告及4090-v30-common-calibration-expanded-validation-v1.json。
 这些是重复开发评测，短时长和选择偏差不允许独立FAR验收解释；
 同代表输入对照的v32一侧尚未完成，不能下双方差异结论。
+
+## v32训练完成：原密集开发点未显示收益（2026-11-11）
+
+120000步完整训练+导出1200.2s，选中15000步；RTX4090，22801参数，54440B。
+原模型SHA be9130507b6f350c6bfe9209d3329d928d956b5565cbbad2fcefa8fa418870d3。
+配置审计所列所有不变字段与v30相同，prefix16→0，模型哈希已核验。
+结果4090-v32-training.json、4090-v32-training-configuration-audit.json。
+原密集INT8开发点0.9609375：代理macro75.7552083%，1656/2160，早触发26；
+Piper76.9270833%、Kokoro74.5833333%。并非音素真召回/延迟；早触发不删除。
+尚待扩展开发负例与共享校准双方对照，当前不替换v30、不评分最终集。
+原pipeline session80679继续负例/探针；共享校准v32补充pipeline session17186已启动。
