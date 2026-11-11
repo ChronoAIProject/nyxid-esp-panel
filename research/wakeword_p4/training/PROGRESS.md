@@ -1847,3 +1847,29 @@ should reuse the same encoder and existing audio producer; it must not add a
 microphone reader or change PCM speed. Actual P4 costs and real-speaker/room
 acceptance still require later matched evidence. Do not train on the residual
 validation utterance or treat a graph/serialization smoke as wake acceptance.
+
+### Retained compact sequence export
+
+The [separate export plan](plans/compact-sequence-export-smoke-v1.json)
+freezes a training-only numerical feasibility check. It reloads the final
+compact-study encoder/binary weights and retained six-token head, verifies
+that loading the auxiliary checkpoint leaves all scalar weights identical,
+and exports both the scalar and complete [67,6] logits through the existing
+streaming conversion. The full-history output is a correctness reference;
+its added compute/output cost is not claimed suitable for the P4 yet.
+
+PTQ uses exactly 100 distinct training-bank windows with seed 519 plus the
+original zero/maximum frame boundaries. Twenty fixed original training
+sources cover all five engines and four phrase classes. Every complete
+335-frame window must align with float streaming at stride three within
+1e-4 for both heads. Quantized recreation/reset and 256-step chunking must
+replay exactly. Quantization differences are reported without substituting
+numerical tests for wake quality. No export or smoke has run at this commit.
+
+Two independent exhaustive-path tests verify the new NumPy CTC probability,
+including order, blank-only, wrong-word and repeated/out-of-grammar paths,
+constant logit offsets and invalid inputs. The proposed future score is the
+binary score times the absolute probability of exactly [hey,nyx], not a
+four-phrase forced-choice posterior. No rule or threshold is scored here.
+Only a pass permits a separately frozen actual wake-inference comparison.
+This remains silent, offline research with no firmware or board operation.
