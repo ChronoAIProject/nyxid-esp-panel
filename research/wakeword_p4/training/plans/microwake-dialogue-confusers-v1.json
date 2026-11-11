@@ -1,0 +1,87 @@
+{
+  "scope": "Matched AMI dialogue hard-negative continuation. Existing development validation only.",
+  "hypothesis": "Training against actual false activations in distant meeting audio reduces independent development false events without suppressing Hey Nyx.",
+  "parent_plan_sha256": "3bd986cd4e756b016d6cdfa0ae1793a4c699f79b0de3dcb0a16be6a3bb1a3056",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "f2902ed53f42d82589eba766c43c0d8f7f1afe26f993265117e42bc8c1da263e",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-matched-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "28ecdb785aa14c497dc7683509b2548075d673d7e24598b033d325ce3a575000"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs replace eight positive and eight TTS negative slots in each 128-row training batch in both arms. Same engine, corpus, fixed voice/preset, delivery metadata and rendering variant; exclude voice-description-only Qwen and multi-voice Piper. Independent seed 381 and same within-band phase draw; original representative inputs remain unchanged.",
+  "arms": [
+    "ordinary",
+    "hard"
+  ],
+  "advance": "Require 250 identical speaker/window pair draws and the same representative input digest and exported interface. A candidate must have zero continuous development events and <=1% worst-source and worst-source/corpus false fraction, and retain macro recall within 3 points of the ordinary arm at a matched feasible gate. Report fixed .97 and whole grid. Keep final sets sealed.",
+  "limits": "36 peak groups from 12 audited AMI training meetings. Same-recording controls match history length, not speaker or noise level within the meeting. In-sample AMI results cannot establish independent false-wake performance. The held-out gate is on the existing development set.",
+  "objective": "Continue both arms from the same mined checkpoint. Replace one ambient slot every fourth batch with one matched AMI window. Only the location of the matched window differs. No FLEURS, final or firmware changes.",
+  "bank_sha256": "539866e0039c45bc3782ebebcb08a5a08e679133d77fa96d588de1afbd028e26",
+  "bank_data_sha256": "070c97ec45052beee5c238cdac5e2f37118eda9955f07d8a0a54ab7b9ad50ea4",
+  "mining_report_sha256": "f38d41536512e26f6a11d96363ca6f76ba1e357ae3d21506163982fbebdaeb20"
+}

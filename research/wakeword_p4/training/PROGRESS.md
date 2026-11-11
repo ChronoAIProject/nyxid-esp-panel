@@ -1058,6 +1058,52 @@ To reproduce, use the local model and Python dependencies pinned by
 matched fine-tune's `validation-hard` directory. The checked-in result
 retains aggregate counts only.
 
+### Mining far-field dialogue
+
+The [dialogue scan](../results/microwake-dialogue-confuser-scan-v1.json)
+replays the previous ordinary and mined models on 12 audited AMI training
+meetings (4.267 h) and the official Mandarin FLEURS train partition
+(9.906 h, including 200 ms separators). It verifies the AMI WAV hashes,
+participant and recording exclusions against the GPU track's independent
+set, and cached FLEURS feature hashes. A separate metadata check confirms
+no FLEURS source hash overlaps either reserved split.
+
+At the fixed .97 diagnostic threshold, the mined model reduces AMI
+activations from six to one; both models have zero on FLEURS. At .5, AMI
+has 41 and 18 high-score groups respectively, including adjacent groups
+that the listener's latch counts as one event. This extends the previous
+audiobook result to spontaneous dialogue on training-eligible recordings.
+It is not an independent false-wake estimate.
+
+The AMI bank has 36 matched pairs after combining peaks within two
+seconds. Each control comes from the same recording, at least ten seconds
+away from any retained score peak, with the same amount of history. The
+two early pairs use identical leading padding in both arms. No Mandarin
+or independent final recording is in the bank.
+
+To reproduce, fetch the GPU source-audit commit and run
+`mine_dialogue_confusers.py --fleurs-training <official-train-feature-root>
+--experiment <microwake-matched-confusers-v1> --output <scan>`. Then run
+`dialogue_confuser_windows.py --scan <scan> --output <bank>`. Use the
+[frozen continuation plan](plans/microwake-dialogue-confusers-v1.json)
+with the same train and validation commands as the matched fine-tune above,
+changing the initialization and bank to the pinned files in this plan.
+Neither source collection nor replay involved the microphone or speakers.
+
+Both 1,000-step [continuations](../results/microwake-dialogue-confusers-v1.json)
+complete with identical AMI draw schedules, TTS pairs, representative inputs
+and exported tensor/operator interfaces. At .97, the matched ordinary and
+mined arms have 69 and 64 false clips out of 3,744; macro proxy recall is
+75.87% and 78.19%, respectively. Both wake once in 7.324 hours of continuous
+development validation. At .992, both have zero continuous events and a
+2.86% worst engine/corpus false fraction; recall is 71.51% and 72.87%.
+The prior mined model's comparable zero-event fallback at .994 had
+70.84% recall and the same worst-group error. Its 16 false Edge variants
+are exactly the 16 still present at .992 in the new mined arm, including
+14 standalone “Hey Next” or “Hey Mix” views. Neither continuation meets
+the 1% gate, so no candidate advances to firmware testing. More ordinary
+dialogue alone has not resolved those specific confusions.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

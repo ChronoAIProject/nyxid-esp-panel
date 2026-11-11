@@ -1,0 +1,96 @@
+{
+  "scope": "Training-only mining. No reserved audio scored.",
+  "gpu_source_audit_commit": "3b52402e09d83df7da233cc427155f1ffc3850ae",
+  "ami_audit_sha256": {
+    "training-source": "ba4449e1a371e5594cb28968d409b85ff7f3be944a8b217f6c666f1a453d3023",
+    "extra-training-source": "1c5ad8fa024b122a6006503590d0ab1ffb735d8400b46a6e7d5db1d07136c007",
+    "independent-source": "ddd3c6d4a1d792965cc2fc8d154d3943f927db4bfabc69c38b7a62e35080447b"
+  },
+  "fleurs_training_manifest_sha256": "12816832eb6efd1e4d68737d28d5e4b405698be97c8f5725b51edc31325407c3",
+  "model_sha256": {
+    "ordinary": "c5eeef619166c71e1d8bf6469e16490689e97e45df3dfdeee282d30f0383e3dc",
+    "hard": "921081f23ef620c840b2e397891602d52e1e3e5b8e33bfc8c0ccc8e9e18c0383"
+  },
+  "thresholds": [
+    0.5,
+    0.9,
+    0.97
+  ],
+  "totals": {
+    "ami": {
+      "streams": 12,
+      "hours": 4.267318524305556,
+      "models": {
+        "ordinary": {
+          "events": {
+            "0.5": 36,
+            "0.9": 10,
+            "0.97": 6
+          },
+          "high_score_groups": 41,
+          "streams_with_confusers": 12,
+          "max_score": 0.9953125
+        },
+        "hard": {
+          "events": {
+            "0.5": 14,
+            "0.9": 6,
+            "0.97": 1
+          },
+          "high_score_groups": 18,
+          "streams_with_confusers": 10,
+          "max_score": 0.975
+        }
+      }
+    },
+    "fleurs": {
+      "streams": 59,
+      "hours": 9.9063,
+      "models": {
+        "ordinary": {
+          "events": {
+            "0.5": 5,
+            "0.9": 1,
+            "0.97": 0
+          },
+          "high_score_groups": 6,
+          "streams_with_confusers": 4,
+          "max_score": 0.9015625
+        },
+        "hard": {
+          "events": {
+            "0.5": 3,
+            "0.9": 0,
+            "0.97": 0
+          },
+          "high_score_groups": 3,
+          "streams_with_confusers": 2,
+          "max_score": 0.8453125
+        }
+      }
+    }
+  },
+  "mining_report_sha256": "f38d41536512e26f6a11d96363ca6f76ba1e357ae3d21506163982fbebdaeb20",
+  "runtime_packages": {
+    "ai-edge-litert": "2.3.0",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "pymicro-features": "2.0.2"
+  },
+  "source_sha256": {
+    "mine_dialogue_confusers.py": "dbf7fb043e6b5ce9d1137f5d657d9be9b9b4808038663102ab2374e19c73444b",
+    "dialogue_confuser_windows.py": "0eec6089ca1d151939ddee58432a46b46ebd393034311eb685b28bb237007af3"
+  },
+  "fleurs_reserved_metadata_sha256": {
+    "validation": "135dd6e9a50759ff917d9d9b7112227ada19b2207938a2c68a6109329016bd88",
+    "testing": "74eb6df73050d1b59180ada6b05b6953ba7b760f3c13a4db2e4616e0200e0935"
+  },
+  "bank": {
+    "sha256": "539866e0039c45bc3782ebebcb08a5a08e679133d77fa96d588de1afbd028e26",
+    "data_sha256": "070c97ec45052beee5c238cdac5e2f37118eda9955f07d8a0a54ab7b9ad50ea4",
+    "pairs": 36,
+    "meetings": 12,
+    "equal_leading_padding_pairs": 2
+  },
+  "limits": "Selected public training recordings for mining, not independent acceptance. FLEURS hours include 200 ms utterance separators. No audio played, microphone used or board flashed."
+}
