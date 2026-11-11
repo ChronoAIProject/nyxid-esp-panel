@@ -4004,3 +4004,13 @@ maxdelta9.5367431640625e-7,31updated arrays exact under same incoming gradients,
 iterationdelta1/frozenBN unchanged. GPU did not rerun this Mac random experiment;
 not actual-GPU/recognition evidence or independent-gradient-exactness claim.
 Current formal v39 remains unchanged; no new/final data.
+
+### v39 formal training and export completed (2026-11-11)
+
+Original session77297 exited0 after120000 steps,2733.1s onRTX4090; selected120000
+under unchanged historical checkpoint rule. Original training report copied unchanged.
+INT8 model54688B SHA eaa826469fe4669a8b0c7ff355a1a26f07589b691478ad9a2955c4f266a19096.
+Export audit confirms finite saved weights,frozenBN unchanged,int8[1,3,40] to
+uint8[1,1]. Unique original postprocessor authenticated recipe and started historical
+regression. Export contract only; no accuracy/FAR/MCU parity or promotion claim.
+No new/final data consumed; frozenv30 retained pending full gates.
