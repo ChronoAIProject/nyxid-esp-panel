@@ -1339,6 +1339,25 @@ These paired-only batches do not represent the full mixed training batches.
 One bounded .1-gain continuation is planned to test the interaction; these
 gradient statistics alone do not predict an improvement.
 
+The [single .1-gain comparison](../results/microwake-phone-conditional-gain-v1.json)
+also fails. At .97, proxy recall is 81.02%, false near-word views are
+71/3,744, the worst group fraction is 5.21%, and the continuous event remains
+one / 7.324 h. The auxiliary head reaches 395/578 nonblank agreement (68.34%)
+and conditional KL 1.0679, but this better training fit does not establish
+better wake recognition. The original control and its validation are reused
+byte-exactly; warmup, source schedule, input prefix, PTQ inputs and scalar
+interface remain matched. Neither conditional recipe is promoted. No board,
+microphone or speaker was used.
+
+The [spike-retention audit](../results/microwake-phone-spike-retention-v1.json)
+also shows why the existing averaged bank must not be repurposed as a CTC
+transcript. Its collapsed argmax strings average only 2.45 symbols and are
+empty for 20/236 rows, including eleven positives. These are teacher
+alignment predictions after 30 ms averaging, not verified phone strings.
+Any future sequence-level objective must first retain the original teacher
+resolution and test its labels; it cannot manufacture transcripts from this
+bank or replace the original binary wake labels.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
