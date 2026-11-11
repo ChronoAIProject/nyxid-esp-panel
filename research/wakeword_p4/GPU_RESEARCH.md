@@ -3074,3 +3074,9 @@ Mandarin0、DiPCo1、Libri-dev-other2，扩展网格仍无零事件可用工作�
 120k/5k、teacher60/context150、原初始化/特征/开发协议均不变；最终集不评分。
 实际trainer AST权重块已执行检查，baseline及屏蔽槽/其他权重/零梯度语义通过。
 计划4090-v33-plan.json；检查4090-v33-loss-mask-check.json。
+
+v33原训练session7030/PID18604存活，初始化全部字段与v30一致。
+额外执行实际batch函数AST，使用确定性合成feature提供器验证控制流：
+训练和representative两个调用模式中，mask开关不改变输入、标签、调用序列或main/prefix RNG状态，
+仅16个槽的权重20→0。此处合成输入仅用于代码语义，不是识别质量或实际完整特征一致性证据。
+审计4090-v33-batch-invariance-audit.json；不据此宣称转换器状态或量化数值等价。

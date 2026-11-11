@@ -1,0 +1,21 @@
+{
+  "role": "Actual batch AST executed with deterministic synthetic feature providers; control-flow and RNG audit, not recognition evidence",
+  "trainer_sha256": "d16039a9af3ed283edaf220c943f2b54774c4f7fa223c3966ca45fafbb5aadb1",
+  "checks": [
+    {
+      "mine": true,
+      "augment": true,
+      "inputs_labels_calls_rng_identical": true,
+      "only16_weights_changed": true
+    },
+    {
+      "mine": false,
+      "augment": false,
+      "inputs_labels_calls_rng_identical": true,
+      "only16_weights_changed": true
+    }
+  ],
+  "initialization_all_fields_equal_v30": true,
+  "initialization_sha256": "0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94",
+  "limits": "Synthetic providers verify batch composition/control flow only. Does not establish actual full feature identity, converter state equivalence, or recognition quality."
+}
