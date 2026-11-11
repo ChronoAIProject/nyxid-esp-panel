@@ -3859,3 +3859,18 @@ false clips persist in float, so quantization is not the main explanation on
 this consumed fixed-threshold corpus. This does not prove phonetic correctness,
 float-optimal threshold, general FAR, new acceptance or hardware equivalence.
 No retraining, threshold selection, new development or finals used.
+
+### v37 training-window/stream-support diagnostic (2026-11-11)
+
+Pinned1002 training-only complete-source crops: offline float window at both.5
+and historical.99609375 classifies258/258 positives and744/744 negatives correctly.
+INT8 isolated150-frame feature replay from zero state: last score above historical
+threshold203/258positive and2/744negative; maximum individual score221/258 and25/744;
+maximum five-mean172/258 and2/744. At.5 five-mean219/258 and27/744.
+Original per-crop results/scores retained; report records hashes. This suggests
+single-window fit does not ensure sustained streaming support even on training
+crops. However window float versus stream INT8 confounds state/phase/quantization;
+feature crops start with zero model buffers rather than original stream history.
+It is not full PCM accuracy or isolated causality, and neither new acceptance nor
+threshold selection. Next diagnostic should separate float streaming/window and
+INT8 on identical crops before changing training supervision or context.
