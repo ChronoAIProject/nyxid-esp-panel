@@ -1,0 +1,117 @@
+{
+  "scope": "Training-only shared synthesis-intent phone versus word-token CTC representation diagnostic, not a wake detector evaluation.",
+  "hypothesis": "Whole-word compact CTC treats Nyx/Mix/Next/Nick as unrelated atomic labels. Test whether explicitly shared American-English intent-phone strings transfer between TTS engines better than whole-word CTC after identical temporal-encoder fine-tuning. Prior 392-class teacher targets were weak and are not reused. This is a distinct hypothesis, not a proven cause of prior failures.",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "unique_crops": 3112,
+  "classes": [
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "word_tokens": [
+    "blank",
+    "hey",
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "phone_tokens": [
+    "blank",
+    "HH",
+    "EY",
+    "N",
+    "IH",
+    "K",
+    "S",
+    "M",
+    "EH",
+    "T"
+  ],
+  "intent_phones": {
+    "nyx": [
+      "HH",
+      "EY",
+      "N",
+      "IH",
+      "K",
+      "S"
+    ],
+    "mix": [
+      "HH",
+      "EY",
+      "M",
+      "IH",
+      "K",
+      "S"
+    ],
+    "next": [
+      "HH",
+      "EY",
+      "N",
+      "EH",
+      "K",
+      "S",
+      "T"
+    ],
+    "nick": [
+      "HH",
+      "EY",
+      "N",
+      "IH",
+      "K"
+    ]
+  },
+  "target_policy": "Original synthesis intent only, with the original alias mapping for Nyx/Nix/Nicks. These are fixed dictionary-like hypotheses, not measured phones, teacher decodes or human pronunciation truth. Retain original binary source roles. Correct true CTC lengths 6/6/7/5; zero padding is excluded by true lengths.",
+  "deduplication": "Keep first occurrence of each exact uint16 feature-crop SHA256 in original bank order. Repeated crop identities must agree in engine, source waveform hash, render variant and intent class. Retain all original bank row IDs for each unique crop. Expected3112 crops from744 source hashes; do not treat the original10120 Cartesian rows as independent speech.",
+  "folds": "Full-bank fitted diagnostic plus five leave-one-engine-out fine-tunes. Each fresh model loads the same original binary initializer. Fold training/test waveform hashes must be disjoint. Full-fit is descriptive and does not condition whether held-engine runs execute. Exactly one final checkpoint per arm/fold; all twelve planned runs retained, regardless of full-fit metrics.",
+  "initializer_exposure_limit": "The original binary encoder already trained on the corpus and source engines. Held-engine means excluded only from this new fine-tune/head, not unseen by the initializer. These folds do not establish independent speaker or engine generalization, open-set wake acceptance or a stronger teacher.",
+  "steps": 1000,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "encoder_learning_rate": 0.0002,
+  "head_learning_rate": 0.003,
+  "global_clipnorm": 5.0,
+  "optimization": "Same selected unique row IDs, initial encoder/classifier weights,1000 updates,batch32,seeds and optimizer definitions in each paired fold. Per-example CTC NLL divided by true target-token length, then mean; one combined encoder/head global gradient clip5, separate fresh Adam rates. No augmentation, validation, mining, checkpoint selection, head warmup or follow-on sweep. Disconnected original binary classifier remains unchanged. Word head366 parameters versus phone head610: recipe changes target sharing/length and head size, so not a parameter-isolated causal experiment.",
+  "readout": "For each held/fitted crop, raw CTC log likelihood for each of the four predefined intent strings with equal priors. No score length correction, forced probability normalization, fitted margin or wake threshold. Unequal phone target lengths are retained. Also record greedy exact strings/edit rates and normalized true-label loss. Forced-choice metrics are not open-set false-wake rates.",
+  "diagnostic_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_engine_macro_gain": 0.03,
+    "maximum_nyx_recall_regression": 0.01
+  },
+  "advance_action": "Only if the aggregate held-engine phone metrics meet all fixed diagnostic gates and unweighted engine-macro accuracy improves by at least3 percentage points over word control without more than1pp Nyx recall regression, design a separate preregistered mixed-source/open-set wake study. Do not auto-deploy, select a wake threshold, score reserved datasets or extend this fit budget. Failure rejects this exact recipe.",
+  "source_sha256": {
+    "intent_phone_fit.py": "3c2a6b6360ea8165968050b3d0ad7a3a5e0eb06cf85a7161bed96795fd52e742",
+    "test_intent_phone_fit.py": "7bf7aab4db7b95fcbc3b62881603da1b64efe5e9382b17aeb7c4f54563571d84",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "audit_source_sha256": {
+    "audit_intent_phone_fit.py": "b73d5e13aa3181a13d446a2d99d2a3fde080a185c3394fac7f215fb187df4234",
+    "launch_intent_phone_fit.py": "1802e9c97f6ce872f732e2dc8b39b4fd100c0bdddc9222b3fbc5eb431807fdd0",
+    "audit_compact_study.py": "ebcc9b2300e170bbe846cd06e21fb95ef366761f761e6afcc1149b361e8a84b3"
+  },
+  "motivating_scalar_result_sha256": "ba3228d164f4f802fd5fef39985a8345e9423b95a8e12538c9f389f6d6e88e3d",
+  "motivating_occurrence_result_sha256": "bba2cc42fc379f359509339c2c34ec3a1ce7fa0044d8a527e78db705e612fae1",
+  "limits": "Only original training-source cached features are read. Intent labels and proxy crop endpoints are unverified pronunciations. Correlated environment variants remain in a fold together by engine; engine-level counts are not independent people. Head sizes and unequal target lengths differ, and parent encoder already saw these sources; cannot attribute any result only to phoneme sharing. No independent validation/test inference, new synthesis, acoustic playback, room recording, microphone/device access, board flash, OTA, dining-room device, PCM speed or single I2S-AEC-AGC/FIFO pipeline change. No proof of Hi ESP recall, physical endpoint latency, P4 resource or long-call parity."
+}

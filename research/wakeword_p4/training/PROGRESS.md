@@ -2570,3 +2570,32 @@ caches remain external and byte-bound. Overall Hi ESP objective remains
 active, with both this scalar recipe and retained-head inference rejected.
 A fresh unauthenticated download verifies the exact 335-member inventory and
 all 334 listed hashes/lengths in the retained-head supplement.
+
+## Shared intent-phone representation diagnostic, preregistered
+
+The [new training-only plan](plans/intent-phone-generalization-v1.json)
+compares whole-word CTC with explicitly shared intent-phone strings:
+`HH EY N IH K S`, `HH EY M IH K S`, `HH EY N EH K S T`, and `HH EY N IH K`.
+This does not reuse the weak 392-class phone teacher or change source labels.
+It tests a distinct structural hypothesis after ordinary-positive supervision
+and occurrence filtering failed, without claiming those failures were caused
+by atomic word labels. Dictionary intent is not verified pronunciation.
+
+The original broad bank's 10,120 Cartesian rows reduce to 3,112 exact distinct
+crops from 744 source hashes. A full fitted diagnostic and five held-engine
+fine-tunes each compare words/phones using the same fresh initializer, row
+draws and 1,000-update budget. The initializer already saw the source corpus;
+these are fine-tune/head-held-out engines, not independent acceptance.
+No wake validation, threshold choice or hardware follows this diagnostic.
+The 366-versus-610-parameter heads and unequal target lengths differ, so it
+is a paired recipe comparison, not isolated proof of phonetic sharing.
+
+Five focused tests pass: explicit target strings/lengths, exhaustive CTC paths
+including repeated labels, batched unequal-length likelihood versus separate
+class evaluations, exact crop deduplication/conflict rejection, and an
+independent shared-clip/first-Adam calculation with unchanged classifier.
+Separate float32 CTC batch kernels differ by 1.91e-6 in one test cell; the
+comparison uses a documented 4e-6 absolute numerical allowance. This is a
+software-math check, not a detector-quality gate or a relaxed wake criterion.
+Full feature/bank/checkpoint bytes and all final fold scores/draws are audited.
+Work remains silent and excludes the dining-room production device.
