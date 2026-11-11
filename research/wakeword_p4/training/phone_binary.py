@@ -69,3 +69,27 @@ class PhoneBinary:
         return (np.concatenate([x,np.clip(self.x[ids].astype(np.float32)/25.6,0,26)]),
                 np.concatenate([y,extra_y]),
                 np.concatenate([weights*(144/128),extra_w*(.1*144/16)]))
+
+
+class FullSourceBatch(PhoneBinary):
+    """Entire phrase batch from audited complete synthetic sources, no extra loss."""
+    def __init__(self, root):
+        super().__init__(root, source_balanced=True)
+        if self.report['pack_sha256']!='c0c389fc4a22e1fb9807d99e8a7a98e0e028696d2047dd27dce81f1de8fef096':
+            raise ValueError('Require frozen full-source pack')
+        self.rng=np.random.default_rng(97726)
+        self.report={k:v for k,v in self.report.items() if k in ('pack_sha256','report_sha256','groups')}
+        self.report.update(seed=97726,positive_slots=32,confusing_negative_slots=48,
+            policy='Replace first80 phrase slots with complete-source crops; equal checkpoint groups before voices, equal negative phrase choice. Original48 ambient slots/weights retained; no supplementary BCE or head. Groups do not certify physical-person independence.')
+
+    def first80(self):
+        indices=[]
+        for i in range(80):
+            target='hey_nyx' if i<32 else str(self.rng.choice(['hey_nick','hey_next','hey_mix']))
+            group=str(self.rng.choice(['kokoro','alba','cori']))
+            voices=self.groups[target]
+            voice=str(self.rng.choice(sorted(v for v in voices if v.startswith(group+'/'))))
+            indices.append(int(self.rng.choice(voices[voice])))
+        expected=np.asarray([1]*32+[0]*48,dtype=np.float32)
+        np.testing.assert_array_equal(self.y[indices],expected)
+        return np.clip(self.x[indices].astype(np.float32)/25.6,0,26)

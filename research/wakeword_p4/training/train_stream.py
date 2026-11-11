@@ -39,6 +39,7 @@ def main():
     parser.add_argument("--mask-prefix-loss", action="store_true",
                         help="Keep sampled prefixes but give their unverified labels zero training weight")
     parser.add_argument("--phone-binary-pack", type=Path)
+    parser.add_argument("--full-source-pack", type=Path)
     parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
@@ -74,6 +75,11 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.full_source_pack and (args.architecture!='teacher60' or frames!=150 or bn_policy!='frozen'
+            or args.phone_binary_pack or args.phrase_auxiliary_manifest or args.prefix_negatives
+            or args.mask_prefix_loss or args.label_smoothing or args.negative_candidates!=1
+            or args.hard_ambient_index):
+        parser.error('full source requires teacher60/context150 frozenBN, no extra pack/head/prefix/mining/hard ambient')
     if args.phone_source_balanced and not args.phone_binary_pack:
         parser.error("source balancing requires phone binary pack")
     if args.phone_binary_pack and (args.architecture != 'teacher60' or frames != 150 or bn_policy != 'frozen' or args.phrase_auxiliary_manifest or args.label_smoothing):
@@ -205,6 +211,12 @@ def main():
             output.append(sequence(row)[end-frames:end])
         return np.asarray(output)
 
+    full_source = None
+    if args.full_source_pack:
+        from phone_binary import FullSourceBatch
+        full_source = FullSourceBatch(args.full_source_pack)
+        (root/'full_source.json').write_text(json.dumps(full_source.report, indent=2)+'\n')
+
     def batch(mine=True, augment=True):
         noise = []
         for _ in range(48):
@@ -214,6 +226,8 @@ def main():
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
         x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))
+        if full_source is not None:
+            x[:80] = full_source.first80()
         if args.prefix_negatives:
             # Keep baseline RNG and all original draws unchanged. Only replace
             # the selected confusing-negative slots before the same permutation.
@@ -428,6 +442,7 @@ def main():
               "feature_metadata_sha256": feature_metadata_hashes,
               "architecture": args.architecture, "architecture_args": architecture_args,
               "phone_binary": phone_binary.report if phone_binary is not None else None,
+              "full_source": full_source.report if full_source is not None else None,
               "effective_training_batch_size": 144 if phone_binary is not None else 128,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "label_smoothing": args.label_smoothing,
