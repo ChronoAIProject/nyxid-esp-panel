@@ -1,0 +1,54 @@
+{
+  "source_sha256": "db6d12d753ec6075256e18b364a0abff0f91d3f8934eddacd9ce6ddd1750614e",
+  "inputs": [
+    {
+      "name": "input",
+      "shape": [
+        "batch_size",
+        "phonemes"
+      ],
+      "type": "tensor(int64)"
+    },
+    {
+      "name": "input_lengths",
+      "shape": [
+        "batch_size"
+      ],
+      "type": "tensor(int64)"
+    },
+    {
+      "name": "scales",
+      "shape": [
+        3
+      ],
+      "type": "tensor(float)"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "shape": [
+        "batch_size",
+        1,
+        1,
+        "Unsqueezeoutput_dim_3"
+      ],
+      "type": "tensor(float)"
+    }
+  ],
+  "num_speakers": 1,
+  "sample_rate": 22050,
+  "espeak": {
+    "voice": "en-gb-x-rp"
+  },
+  "inference": {
+    "noise_scale": 0.5,
+    "length_scale": 1.0,
+    "noise_w": 0.333
+  },
+  "onnxruntime": "1.31.1",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "audio_generated": false
+}
