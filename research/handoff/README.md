@@ -1147,8 +1147,46 @@ included. It uses unchanged original labels, render inputs and PCM speed.
 The actual unauthenticated public download and all 95 listed member hashes
 pass against `CONTENTS-compact-broad-bank-v1.json`.
 
-The separately frozen broader-bank mixed-source study is running; this bank
-publication reports data preparation only. Its two arms rebuild binary-only
-and gain-.1 CTC models on identical new inputs and the original fixed budget.
-No previous control scores are reused. Playback, microphone and board access
-remain disabled; real-speaker and full-device Hi ESP acceptance remain open.
+The subsequent separately frozen broader-bank study has completed and is
+rejected. This bank publication reports data preparation only. Both arms
+rebuilt binary-only and gain-.1 CTC models on identical new inputs and the
+original fixed budget; no previous control scores were reused. Processing
+stayed silent and did not access a board. Real-speaker and full-device Hi ESP
+acceptance remain open.
+
+The [complete broader-bank study supplement](assets-compact-broad-ctc-v1.json)
+retains both fixed final scalar INT8 models and binary/auxiliary checkpoints,
+the original initializer, immutable source/plan/launches, runtime versions,
+warmup logs, complete development score traces, input audit and supplementary
+cached-score reconstruction. At .97, macro proxy recall rises from 78.2569%
+to 81.1458%, while near-word false views rise from 67 to 76/3,744 and continuous
+events rise from two to three/7.323822 hours. Neither arm has a strict
+1%/zero-event point in the frozen grid. There is no qualified deployment
+candidate, and no final/test score or threshold extension follows.
+
+The root is `workspace/home-wake-research-20261110/microwake-compact-broad-ctc-v1`.
+Use the broader-bank dependency above; the full scalar feature cache remains
+external. Both exports discard the auxiliary head and remain 61,712 bytes /
+25,831 parameters. H5 files omit Adam slots. The first supplementary audit
+launch used system Python without LiteRT; its failed launch/log are retained
+alongside the successful rerun in the pinned training Python. No source,
+scores or tolerance changed. Reconstruction checks each arm's 6,136 clips /
+1,429,512 smoothed steps, 35 continuous sources / 878,709 steps, all maxima,
+timebases, independent event streams, full grids and the rejection decision.
+The unauthenticated download and all 303 listed member hashes are verified
+against `CONTENTS-microwake-compact-broad-ctc-v1.json`. No waveform, device
+state, credentials or firmware is included; SavedModel directories are omitted.
+
+To rerun the supplementary accounting after restoring this study and its
+original external feature tree, choose a fresh output filename:
+
+```sh
+PYTHONHASHSEED=0 "$WAKE_PYTHON" research/handoff/audit_scalar_wake_scores.py \
+  --artifacts "$WAKE_OUTPUT/microwake-compact-broad-ctc-v1" \
+  --features "$WAKE_FEATURES" \
+  --output "$WAKE_OUTPUT/microwake-compact-broad-ctc-v1/rechecked-scores.json"
+```
+
+This command checks saved accounting without replaying model invocations.
+The full comparison and input-audit commands are retained in the study's
+launch files. No speaker, microphone or board operation is required.

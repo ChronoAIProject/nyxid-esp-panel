@@ -2046,3 +2046,14 @@ accidentally recorded system Python without LiteRT; that failed launch/log
 are retained. Rerunning with the pinned training Python changes no code,
 scores or tolerances and passes. Both training/evaluation jobs are terminal.
 No speaker, microphone or board was used. The full Hi ESP goal remains open.
+
+The [completed broader-study archive](../../handoff/assets-compact-broad-ctc-v1.json)
+is published: 4,132,455 bytes, SHA256
+`f33bae8a71f72bb92c92607050162d9339de38ddc15da1e3d5fbcec1c53ab7ef`.
+A fresh unauthenticated download verifies all 303 listed lengths/hashes and
+the exact 304-member inventory. Both models/checkpoints, original initializer,
+all executed sources/logs/launches, complete development traces and audits
+are retained. The broader-bank dependency and external full scalar feature
+cache are explicit; H5 files omit Adam slots. The shared research branch and
+release contain the completed evidence. This remains a rejected fixed recipe,
+not a general claim that more data or compact sequence supervision cannot work.
