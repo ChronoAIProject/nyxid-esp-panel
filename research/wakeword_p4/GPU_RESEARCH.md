@@ -3683,3 +3683,22 @@ v36原训练仍在运行，原后处理等待保留；先完成探索回归再�
 以及v35拒绝/v36训练中和新开发数据未评分状态。没有声称P4已通过或v36可替换。
 后续重要研究产物/拒绝或升级决策在该Issue同步；Mac/P4实测结果在该Issue回报。
 用户明确授权通过Issues沟通；无需再次请求发布研究更新许可。
+
+## 新开发校准与生成参考报告工具
+
+实现synthetic_presentation.py：核对manifest原记录、每条完整INT8平滑trace哈希、
+长度（MicroFrontend30ms/10ms、模型3帧、平滑5）、逐事件重算与原报告一致。
+按呈现区间lead..generation/RIR end+800ms报告触发、共同/交叉负例、提前/晚事件，
+按声音/增强条件macro，分别列原生生成终点与完整混响终点延迟，不称音素真值。
+已用旧VCTK300条×v30/v35两模型各完整核验；重算24/60、22/60，官方均54/60。
+此为已消费开发数据重算，不是新性能实验或匹配FAR结论。
+审计4090-synthetic-presentation-metrics-audit-v1.json保存来源/模型/报告SHA及摘要。
+
+实现calibrate_slr83_development.py，严格绑定SLR83新manifest及dev2/dev3 index，
+90合成/86背景完整trace，frozen-v30 SHA及.91796875，固定138点与新baseline最低macro。
+FAR95<=.5/h、零共同/交叉负例误触发、零pre-generation，以及无可用点输出null，
+排序macro、lower upper、higher threshold与生成前预注册一致，不加入旧曝光。
+5个数值边界/门槛测试通过，涵盖起止包含、晚事件排除、两种参考相差60ms、
+早事件/两种负例/FAR或baseline macro任一失败均不可通过。
+新校准尚未执行：v36原训练仍在进行，先完成原后处理与探索回归再决定消费新开发。
+Issue13尚无Mac回复；当前没有P4通过结论。
