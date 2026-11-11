@@ -3935,3 +3935,13 @@ and weights unchanged, optimizer0. Does not erase prior real-weight residual or
 prove backend cause, gradients, INT8/MCU or recognition improvement. No new/final
 sets or audio regeneration. v38 continues unmodified; future five-score-loss
 experiment must be separately preregistered after current experiment completes.
+
+### v38 training completed and export authenticated (2026-11-11)
+
+Original session84703 exit0 after120000 steps; report1445.3s; historical float
+selection15000.54440B SHA5bf6c0900ab6a05846f752bdd9e3d52a9b18d4be698e0a7e7e918a6985c41aca.
+All saved weights finite/BN unchanged, INT8[1,3,40]→UINT8[1,1]. Original training
+and export audit copied unchanged. Original postprocessor PID118594/session79006
+verified temporal pack/seed107726/base recipe and started historical regression.
+No new/final data, threshold extension or automatic promotion. Export evidence
+only, not accuracy/FAR/MCU acceptance; retain v30 until full gates pass.
