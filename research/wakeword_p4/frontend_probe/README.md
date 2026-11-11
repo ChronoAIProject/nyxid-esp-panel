@@ -16,6 +16,14 @@ x86_64/Rosetta. Preserve build/run failures; they do not justify installing
 software or changing feature data. GPU can independently run the same driver
 with its source/compiler after receiving it through Issue13.
 
+First Mac run: arm64 succeeds; x86_64 compiles but execution fails with
+`Bad CPU type in executable` (no usable Rosetta). Preserve this failure instead
+of installing it. `otool` shows fused multiply-adds in the default arm64 table
+initializer. Before the alternate run, add the fixed `--fp-contract off`
+comparison to isolate whether those integer tables depend on contraction on
+this same machine. This tests one cause without changing the original pack or
+claiming Linux/installed-wheel behavior.
+
 ```sh
 python research/wakeword_p4/frontend_probe/run_coefficients.py \
   --source /path/to/pymicro-features-source --output /new/output/directory \

@@ -20,6 +20,8 @@ def main():
     p.add_argument('--compiler', default='c++')
     p.add_argument('--arch', choices=('arm64', 'x86_64'),
                    help='Optional macOS cross-build/run; requires native support or Rosetta')
+    p.add_argument('--fp-contract', choices=('on', 'off'),
+                   help='Diagnostic alternate: explicitly control fused floating arithmetic')
     args = p.parse_args()
     source = args.source.resolve()
     own = Path(__file__).with_name('coefficients.cpp').resolve()
@@ -31,6 +33,8 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     executable = args.output.resolve()/'coefficients'
     command = [args.compiler, '-std=c++17', '-O2', '-fno-fast-math']
+    if args.fp_contract:
+        command.append('-ffp-contract='+args.fp_contract)
     if args.arch:
         if platform.system() != 'Darwin':
             p.error('--arch applies only to macOS')
@@ -51,6 +55,7 @@ def main():
     report = {
         'scope': 'Numeric-only upstream filterbank/window table diagnostic; no input PCM or model.',
         'platform': platform.platform(), 'python': sys.version, 'arch': args.arch,
+        'fp_contract': args.fp_contract,
         'compiler_version': subprocess.check_output([args.compiler, '--version'], text=True),
         'command': command, 'run_command': run,
         'source_sha256': {str(path.relative_to(source)): sha(path) for path in inputs},
