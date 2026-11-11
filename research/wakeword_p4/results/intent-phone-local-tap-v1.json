@@ -1,0 +1,131 @@
+{
+  "plan_sha256": "d755c8bb8966a56e50cc66503ad872eec46da024f07e92b75a6ba3be018855e2",
+  "rows_sha256": "1d0f9ee4955bdc2f70d2b7e3d6215da3f294cd0cab45eed70402b2efa0f9bfba",
+  "parent_deep_control_replayed": true,
+  "arms": {
+    "deep": {
+      "result": "deep.json",
+      "result_sha256": "a9e2143a70145d98814c7a616d82962419a522192fad64a1e5a7196fdd2e9238",
+      "summary": {
+        "confusion": [
+          [
+            1741,
+            0,
+            0,
+            11
+          ],
+          [
+            439,
+            3,
+            2,
+            4
+          ],
+          [
+            114,
+            0,
+            331,
+            3
+          ],
+          [
+            8,
+            0,
+            0,
+            456
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.680503949040646,
+        "recall_by_phrase": {
+          "nyx": 0.9937214611872146,
+          "mix": 0.006696428571428571,
+          "next": 0.7388392857142857,
+          "nick": 0.9827586206896551
+        },
+        "nyx_recall": 0.9937214611872146,
+        "confuser_false_nyx": 561,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.4125,
+        "mean_ctc_nll_per_token": 3.1818550670915986,
+        "greedy_exact_sequences": 0,
+        "target_tokens": 18656,
+        "greedy_edits": 12573,
+        "greedy_token_error_rate": 0.6739386792452831
+      },
+      "fit_gate_passed": false,
+      "parameters": 22420
+    },
+    "local": {
+      "result": "local.json",
+      "result_sha256": "307ed37a86713808851020b3cc3eb0ea5fca57c7730e6ed3e6052e88c1dfe7b0",
+      "summary": {
+        "confusion": [
+          [
+            1061,
+            1,
+            0,
+            690
+          ],
+          [
+            264,
+            1,
+            0,
+            183
+          ],
+          [
+            195,
+            0,
+            55,
+            198
+          ],
+          [
+            1,
+            0,
+            0,
+            463
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.4321096087230357,
+        "recall_by_phrase": {
+          "nyx": 0.605593607305936,
+          "mix": 0.002232142857142857,
+          "next": 0.12276785714285714,
+          "nick": 0.9978448275862069
+        },
+        "nyx_recall": 0.605593607305936,
+        "confuser_false_nyx": 460,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.3382352941176471,
+        "mean_ctc_nll_per_token": 3.585356010122855,
+        "greedy_exact_sequences": 0,
+        "target_tokens": 18656,
+        "greedy_edits": 13956,
+        "greedy_token_error_rate": 0.7480703259005146
+      },
+      "fit_gate_passed": false,
+      "parameters": 12940
+    }
+  },
+  "advance": false,
+  "accepted": false,
+  "limits": "Dictionary-like synthesis-intent phones are not verified pronunciations. All3112 crops/744 source hashes and the initializer have prior corpus exposure. This full-fit diagnostic cannot establish independent generalization,open-set false wakes,latency,resources or call stability. Taps use different encoder depths/trainable counts; equal head size/right endpoints/budget do not isolate causality. A local fit pass only supports designing a separate predeclared held-engine study; failure rejects this exact recipe without extending the budget. No reserved quality set,audio device,board,firmware,speed or pipeline changes.",
+  "scope": "Completed training-only matched-endpoint local/deep intent-phone fit; both fail the unchanged fit gate.",
+  "training_source_commit": "29ae1f2e93fb806b6f2788d8201fa0aa4556a451",
+  "raw_result_sha256": "85ae1202150c7ba7a005930f506d2ce43e03cbaee26e98783511db9a8a82a1a0",
+  "corrected_input_result_audit_sha256": "bd916f6a9f694f2eb17bcb9cc1f3884e9c30e188e120bb528e51d9008e698034",
+  "audit_correction_sha256": "058ddf95c8f17e7f2e480dfb82695918237f074339ef367f805d8f74b09cba3d",
+  "audit_correction_commit": "fb660bfa22f1f17e416abd35afc19c4fbbd9b157",
+  "crop_source_hashes": 744,
+  "all_checkpoint_logits_and_likelihoods_replayed_exactly": true,
+  "reference_samples_per_arm": 20,
+  "independent_ctc_maximum_absolute_loss_delta": {
+    "deep": 0.00010218691832619697,
+    "local": 6.046154343408716e-06
+  },
+  "software_checks": {
+    "actual_graph_receptive_field_and_disjoint_update_tests": 2,
+    "result": "passed",
+    "provenance": "Observed unittest output before the frozen launch; summary only, not a raw log transcript."
+  },
+  "interpretation": "The exact local41-feature,matched-endpoint phone recipe is worse than the replayed deep137-feature control and fails even on fitted training crops. Neither produces any complete greedy phone targets. No held-engine stage,open-set wake test,export or hardware operation follows. It does not establish that all local or phone representations fail: encoder depth/trainable count differ, and matching right endpoints restricts local input coverage to feature96..334 versus deep0..334."
+}

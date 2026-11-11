@@ -1506,3 +1506,43 @@ numerical script [audit_intent_ctc_numerics.py](../wakeword_p4/training/audit_in
 uses `--plan`, `--study` (the completed representation run), `--upstream`,
 `--features`, `--bank`, `--initial-weights` and a fresh `--output`. Original
 absolute launch paths remain provenance; relocated runs must record new launches.
+
+### Matched-endpoint local/deep intent-phone fit
+
+The [separate frozen plan](../wakeword_p4/training/plans/intent-phone-local-tap-v1.json)
+and [completed result](../wakeword_p4/results/intent-phone-local-tap-v1.json)
+compare a 41-feature local tap with the 137-feature final encoder at identical
+67 right endpoints. Both fit the same 3,112 unique training crops with an
+identical 610-parameter phone head, draw schedule and 1,000-update budget.
+The deep control exactly replays the prior full-fit phone tensors/metrics.
+Local average intent accuracy falls from 68.0504% to 43.2110%; neither arm
+emits a complete greedy target. Both fail the unchanged fitted-bank gate.
+This is neither independent recognition nor open-set false-wake evidence.
+Depth/trainable counts differ, and local coverage starts at feature 96 while
+deep coverage starts at 0; do not infer a unique cause or a universal limit.
+
+The [complete evidence archive](assets-intent-phone-local-tap-v1.json) retains
+both checkpoints, full logits, scores, crop inventory, plans, immutable sources,
+launch/runtime/logs, original failed audit and explicit corrected audit.
+Every checkpoint logit and four-class likelihood replays bitwise; an independent
+float64 CTC reference checks the predefined first crop per engine/class.
+The [audit correction](../wakeword_p4/training/plans/intent-phone-local-tap-audit-correction-v1.json)
+only handles a 1.33e-15 mean-loss reduction difference with 1e-12 numerical
+allowance; quality gates, original training artifacts and integer counts remain
+unchanged. Nothing proceeds to firmware or reserved quality evaluation.
+
+To replay the frozen training, use
+[launch_intent_phone_taps.py](launch_intent_phone_taps.py) from training commit
+`29ae1f2` in a separate checkout, with
+`--artifacts`, `--repository`, `--upstream`, `--features`, `--bank`,
+`--initial-weights` and `--parent-study` (the extracted shared-phone study root)
+to start a fresh pinned-runtime fit. Its historical auditor retains the
+documented roundoff failure; run the corrected auditor from this branch
+afterward, recording a fresh correction JSON for that run and preserving
+its original failed audit. For the original retained results,
+[audit_intent_phone_taps.py](audit_intent_phone_taps.py) takes the same options
+except upstream, plus `--output` and the retained `--audit-correction` JSON.
+Retain original absolute launch paths as provenance; relocated runs need new
+launch records. No audio, device credentials, firmware or full scalar feature
+cache is included; the prior phone study, broad bank and broad-study initializer
+archives are dependencies.

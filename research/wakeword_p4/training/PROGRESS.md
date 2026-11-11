@@ -2696,3 +2696,39 @@ absolute roundoff only for reconstructed floating metrics, and binds the
 corrected auditor bytes. It also replays every four-class likelihood from
 checkpoint logits. Integer counts, logits, stored scores and the original
 quality gates remain exact. No fit is repeated or extended.
+
+## Matched-endpoint local/deep fit completed: rejected
+
+The [completed result](../results/intent-phone-local-tap-v1.json) retains both
+1,000-step fits and every checkpoint/logit. Deep control replays the prior
+full-fit phone encoder/head tensors, row draws and all metrics exactly. The
+local tap reduces average intent accuracy on the fitted 3,112 crops from
+68.0504% to 43.2110%, Nyx recall from 99.3721% to 60.5594%, while confusers
+predicted Nyx are 561/1,360 versus 460/1,360. Both produce zero exact greedy
+phone strings; NLL per token is 3.18186 versus 3.58536. Neither passes the
+unchanged fit gate, so there is no held-engine or wake-inference follow-on.
+
+The corrected read-only audit verifies all original inputs/crop groups, both
+saved checkpoints, every 3,112x67x10 logit and all four class likelihoods
+bitwise, all greedy strings, counts, metrics, paired draws and gates. The
+first crop per engine/class (20 per arm, four hypotheses each) also matches
+independent NumPy float64 CTC within the predeclared 2e-4 numerical allowance;
+maximum deltas are 1.02187e-4 deep and 6.04615e-6 local. The sole metric
+roundoff is the documented 1.33227e-15 local mean-loss difference. Original
+failed audit/source/launch/plan and every training artifact remain unchanged.
+
+Matching right endpoints restricts local input coverage to frames 96..334,
+versus deep 0..334, in addition to changing encoder depth/trainable count.
+This rejects the exact recipe and cannot isolate a receptive-field cause or
+rule out every local representation. No held-out quality set, audio device,
+board, firmware, PCM speed or capture/AEC/FIFO path changed. The GPU branch
+still points to c8dcd2c with v32 rejected and no new candidate evidence.
+Full Hi ESP parity is open.
+
+The [public complete evidence archive](../../handoff/assets-intent-phone-local-tap-v1.json)
+is 14,632,340 bytes, SHA256
+`b45a467c90f2f99cc83a7c6921ad29929ca998721433df8d6df7848047987b77`.
+A fresh unauthenticated download verifies all 132 members and 131 listed
+member hashes/lengths. Both failed/corrected audit records are included.
+All fit, audit and publication processes are terminal; no deployed model
+changed and the continuing Hi ESP objective remains active.
