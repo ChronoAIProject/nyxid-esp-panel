@@ -4090,3 +4090,13 @@ index211belongs block33(start208,width12). Window/all other integer tables exact
 22diagnostic mel float bit entries differ. No-contractMac additionally differs
 at293. This is a concrete coefficient discrepancy near observed channel32/33,
 not proof of installed-wheel/P4/runtime causality. v40unchanged;no model/audioIO.
+
+### Installed Linux frontend confirms all30 Mac intervention predictions
+
+Mac29d56cd single-pair211 intervention predictions received and bound to old
+GPU report hash. Re-rendered fixed30 training inputs with actual installed
+pymicro-features2.0.2:30/30 complete raw arraySHA match predictions,no residual.
+Installed micro_features_cpp.abi3.so SHA
+7c88ffb22e174fcd1fad58d4e2a850452a192f9ca32448e47d13fd3ebadb32f4.
+Supports the single-pair explanation for these30witness differences only,
+not P4 or recognition causality/universal parity. No v40/wheel/data changes.
