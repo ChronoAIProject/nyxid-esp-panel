@@ -4040,3 +4040,15 @@ this included pack. Original Mac report/audit preserved unchanged.
 Original WAV binding and cross-host30witnesses still pending; no model scoring
 or training/new/final access. This receipt alone does not authorize promotion
 or establish source independence,pronunciation truth or frontend parity.
+
+### Original training WAV binding and cross-host witnesses (2026-11-11)
+
+Anonymous original synthetic archive395739341B SHA
+47bb80ce97b271997864ae531640f65d437c685259de223f0b5154016348549c
+verified;only2594canonical training WAVs extracted. All file/header/PCM hashes
+match. Original Mac auditor aborted on frontend element mismatch;failure log
+preserved. Separate fixed30witness pass retains all differences:30/30rendered
+PCM exact,16/30full frontend arrays exact,14differ. No byte-exact frontend parity
+claim; no model inference/training or validation/new/final WAV access.
+Future training must bind one explicit feature environment/data hash and retain
+this cross-host limitation rather than silently replacing saved arrays.
