@@ -4174,3 +4174,15 @@ regression also passes50batches. Two-step4090smoke exit0,35.4s,selected1,
 Finite weights,frozenBN exact,int8[1,3,40] to uint8[1,1]. Not accuracy evidence.
 Formal120k is authorized after these passed prechecks; same historical gate,
 new/final untouched. No promotion; frozenv30 retained.
+
+### Unseen development executor generalized while v41 trains (2026-11-11)
+
+Original v36-only runner preserved. New experiments/unseen_development.py takes
+explicit --candidate and --check-only. Authenticates model/training/export/probe,
+old synthetic/background report hashes, fixed138point scope and eligible point
+before any unseen data access. Fresh output guard prevents silent rescore;
+frozenv30 hash pinned. Existing SLR83/newVox threshold/official comparison protocol
+unchanged. Negative guard checks on v37/v38/v39/v40 all reject at old-stage gate.
+No passing candidate yet; actual unseen scoring path not exercised. New/final
+remain unscored. v41 original training/session58922 and waiter/session42935 live;
+first5000step internal validation completed. No new training or threshold changes.
