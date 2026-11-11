@@ -3908,3 +3908,17 @@ finals, threshold selection or model change. A next training hypothesis may expa
 end-position/phase coverage using only whole-signal-valid windows from these exact
 reconstructed streams, rather than another identical fixed-end crop repetition.
 Preregister counts/exclusions and keep original independent gates unchanged.
+
+### v38 temporal-source coverage started (2026-11-11)
+
+Preregistered before formal training at752dd20. Offsets0..14frames after original
+end, keep entire generated signal/full RIR inside effective150frame support.
+15030attempts→13448valid/1582excluded; all1002 offset0 crops identical; prior270
+unsupported variants remain excluded. Base-example sampling unchanged, then uniform
+valid offsets via independent107726 RNG, preserving long-source mass.50batch
+repeat exact and original v37 source/base RNG states identical. Ambient code and
+weights unchanged. Two-step4090 smoke exit0,38.7s,finite weights/BN unchanged,
+INT8[1,3,40]→UINT8[1,1],54312B SHA93de6f90dd4c8a129eb6e2653ca8d47b00e65ebb7a27ceaacc646d7f99ca1744.
+Formal120k runner session84703/PID118009 started once; same old-stage gate,
+no new/final data and no automatic promotion. Unique postprocessor verifies temporal
+pack/seed plus original full-source recipe before any historical evaluation.
