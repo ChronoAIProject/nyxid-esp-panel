@@ -3485,3 +3485,11 @@ VoxConverse dev0分片下载完整终结exit0，485283393 bytes/LFS SHA核验通
 输出官方复放manifest与Nyx cache；共享schema中的speaker字段明确仅为recording ID，不冒充全局人物。
 无转写的连续背景中任何事件都保留计数，不以可能包含目标短语为由事后删除。
 新特征准备不评分或选阈值、不访问保留test分片；源码语法检查通过。
+
+dev1完整下载/审计终结exit0：43录音3.9328177777777777h，容器LFS SHA通过。
+两片合计87录音8.173672725694447h，路径/编码SHA/PCM SHA均无重复。
+完整镜像WAV编码字节不变，87条前端cache生成完毕并逐条重读核验dtype/shape/feature SHA、
+PCM SHA、采样数及原生曝光秒数。源音频不切分、无音量归一化，输出连续复放manifest已冻结。
+报告4090-voxconverse-development-{combined-audit,cache,feature-index,replay-manifest}-v1.json。
+仍无唤醒评分，8.17h不是FAR通过证明；保留test分片未访问。
+v35最新100000/120000步，后处理等待同进程，未更改训练数据或候选选择。
