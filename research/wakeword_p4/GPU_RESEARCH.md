@@ -3449,3 +3449,14 @@ v35原训练继续，尚无其VCTK候选结果，不能由训练loss推断此差
 VCTK官方缓存评分程序以v30再核验通过：300/300重置输出相同、双方事件逐条与原复放完全一致。
 记录4090-vctk-dev-cache-baseline-audit-v1.json，候选评分可复用已核验官方报告而不重跑QEMU。
 v35最新59000步，仍原进程；候选训练和后处理均未宣称完成。
+
+## VoxConverse连续负音频来源准备预声明
+
+研究记录未发现VoxConverse已用。主库joonson/voxconverse固定commit
+24bf60be297701cd7e4ef18550c6d390c1b87365，README注明研究用途CC BY4.0。
+官方test ZIP请求HTTP401，故明确使用diarizers-community/voxconverse镜像
+revision3acfa1b45ca4b7419aee999d67d94c617f9c9d47，固定parquet LFS SHA/size与模型卡。
+在音频/模型评分前固定候选分区：dev前2分片、test前4分片；本轮只下载dev0检查结构。
+镜像声明diarizers预处理，不能声称官方原始PCM逐字节等同。说话人标签未必跨录音全局唯一，
+没有跨语料物理人物隔离保证；无转写，目标短语不存在尚未认证。连续性/时长需另行审计。
+不评分、不用训练、不下载所保留test；已有最终集不访问，原验收门槛不放宽。
