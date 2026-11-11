@@ -57,6 +57,8 @@ def main():
     for name in ('features', 'windows', 'backgrounds', 'phone-model', 'output'):
         p.add_argument('--'+name, type=Path, required=True)
     p.add_argument('--pairs-per-stratum', type=int, default=8)
+    p.add_argument('--retain-teacher-frames', action='store_true',
+                   help='Also retain the original 168-step teacher posteriors before alignment/averaging')
     a = p.parse_args()
     if a.output.exists() or a.pairs_per_stratum != 8:
         p.error('Use a fresh directory and the fixed eight-pair source screen')
@@ -89,7 +91,7 @@ def main():
     if teacher.config.vocab_size != VOCAB or teacher.config.pad_token_id != 0:
         raise ValueError('Changed teacher vocabulary/blank convention')
     a.output.mkdir(parents=True)
-    samples, targets, rows = [], [], []
+    samples, targets, teacher_frames, rows = [], [], [], []
     for number, (stratum, items) in enumerate(pairs, 1):
         for role, (row, end) in enumerate(items):
             path = Path(row['path'])
@@ -114,12 +116,15 @@ def main():
             with torch.inference_mode():
                 inputs = extractor(clip.astype(np.float32)/32768, sampling_rate=16000, return_tensors='pt')
                 logits = teacher(**inputs).logits[0]
-                posterior = align_posteriors(logits.softmax(-1).numpy())
+                original = logits.softmax(-1).numpy()
+                posterior = align_posteriors(original)
             if not np.isfinite(posterior).all() or not np.allclose(posterior.sum(-1), 1, atol=1e-5):
                 raise ValueError('Invalid teacher posterior')
             sample = np.array(cached[end-FRAMES:end], copy=True)
             samples.append(sample)
             targets.append(posterior)
+            if a.retain_teacher_frames:
+                teacher_frames.append(original)
             rows.append({'stratum': list(stratum), 'pair': number-1, 'label': row['label'],
                          'path': row['path'], 'source_sha256': row['sha256'], 'variant': row['variant'],
                          'end_frame': end, 'feature_sha256': hashlib.sha256(sample.tobytes()).hexdigest(),
@@ -127,7 +132,10 @@ def main():
         if number % 10 == 0 or number == len(pairs):
             print(f'{number}/{len(pairs)} pairs', flush=True)
     data = a.output/'bank.npz'
-    np.savez_compressed(data, features=np.stack(samples), posteriors=np.stack(targets))
+    arrays = {'features': np.stack(samples), 'posteriors': np.stack(targets)}
+    if a.retain_teacher_frames:
+        arrays['teacher_posteriors'] = np.stack(teacher_frames)
+    np.savez_compressed(data, **arrays)
     report = {'scope': 'Training-only offline phone targets; original binary labels retained.',
               'source_sha256': sha(Path(__file__)), 'feature_index_sha256': sha(a.features/'features.json'),
               'windows_sha256': sha(a.windows), 'teacher_files_sha256': phone['phoneme_model_files'],
@@ -135,6 +143,8 @@ def main():
               'pairs_per_stratum_limit': a.pairs_per_stratum, 'pair_count': len(pairs),
               'strata': dict(Counter(':'.join(r['stratum']) for r in rows[::2])),
               'frames': FRAMES, 'encoder_steps': STEPS, 'vocabulary': VOCAB, 'blank': 0,
+              'retained_teacher_frames': 168 if a.retain_teacher_frames else 0,
+              'teacher_frame_stride_samples': 320, 'teacher_frame_support_samples': 400,
               'data_sha256': sha(data), 'rows': rows,
               'limits': 'Teacher transformer sees the complete training crop. Posterior timestamps are model coordinates, not human phone endpoints. No teacher prediction replaces a source wake label. No nontraining waveform or score was accessed.'}
     (a.output/'bank.json').write_text(json.dumps(report, indent=2)+'\n')

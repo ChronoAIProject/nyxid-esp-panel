@@ -1,0 +1,36 @@
+{
+  "scope": "Regenerate the same 236 training windows and retain full-resolution teacher posteriors before any sequence-level training.",
+  "parent_plan_sha256": "1f6119f880e3da33b7c0fe3c238966a1fb7a82b0be7fbdb9071caced55edbb83",
+  "source_sha256": {
+    "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "stream_data.py": "205c6620a0a2b45f84a41a20014ed8db3b7206696ea46a4865f38b8f7f56662f",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1"
+  },
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "prior_bank_sha256": "1b01ae0fbbba29cda6fea93236d3f9c9d1b848a7def48ac005d45ad76da08010",
+  "prior_bank_data_sha256": "762cd247ede0011f9408fecc3e74ab70ba9f95a47fdbb3709935dad2fdb28c02",
+  "teacher_model_plan_sha256": "7dece7d2194356067fbe10e7b0e631f6a9d319e11a945ecb5726bddac3fe4192",
+  "retained_shape": [
+    236,
+    168,
+    392
+  ],
+  "sample_rate": 16000,
+  "frame_stride_samples": 320,
+  "frame_support_samples": 400,
+  "required_checks": [
+    "Rebuilt feature crops equal the existing bank exactly.",
+    "Aligned 67-step posteriors equal the existing bank exactly.",
+    "Source roles, source/PCM/feature hashes and row order match the original bank.",
+    "Full posteriors are finite, nonnegative and normalized.",
+    "Only original training sources and backgrounds are read."
+  ],
+  "limits": "Teacher CTC outputs are weak phonetic predictions, not human transcripts or a replacement for binary wake labels. No new validation, speaker, microphone or board access."
+}
