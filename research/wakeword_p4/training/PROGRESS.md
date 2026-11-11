@@ -1232,6 +1232,13 @@ validation-only grid and `compare_phone_distillation.py --plan <plan>
 `python -m unittest discover -s research/wakeword_p4/training
 -p test_phone_distillation.py`. No board, microphone or speaker was used.
 
+The [public handoff](../../handoff/assets-phone-distillation-v1.json) contains
+the original 236-window phone bank, both INT8 exports and binary checkpoints,
+initializer, pairing bounds and reports. Per-file hashes and the public
+archive download are verified. The training-only phone head's own weights
+were not retained; the handoff reproduces its training from the supplied
+initializer and bank. The archive is explicitly unaccepted.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
