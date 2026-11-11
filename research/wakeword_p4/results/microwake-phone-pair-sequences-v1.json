@@ -1,0 +1,161 @@
+{
+  "scope": "Measure weak teacher sequence separation within existing training pairs.\n\nIdentical predictions do not prove identical pronunciation or bad binary labels.\nThis diagnostic never changes either kind of label or selects a model.\n",
+  "source_sha256": "fccd7d0544f683957f60286205c516be2aff6615f4ef3cefbea33e8891e17165",
+  "dependency_sha256": {
+    "phone_distillation.py": "50846b64b221e0a760290d003ea78475644cfb6e215ff0fff5d6290f229d6355",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f"
+  },
+  "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "sequence": {
+    "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+    "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+    "length_histogram": {
+      "3": 6,
+      "4": 14,
+      "5": 63,
+      "6": 112,
+      "7": 29,
+      "8": 10,
+      "9": 1,
+      "11": 1
+    },
+    "encoding": "Full168 greedy CTC collapse; nonempty labels padded by blank zero to 67 steps."
+  },
+  "pair_count": 118,
+  "identical_teacher_pairs": 1,
+  "edit_histogram": {
+    "0": 1,
+    "1": 15,
+    "2": 35,
+    "3": 27,
+    "4": 24,
+    "5": 12,
+    "6": 2,
+    "7": 1,
+    "8": 1
+  },
+  "strata": {
+    "edge-tts:hey mix": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 2.5
+    },
+    "edge-tts:hey next": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.625
+    },
+    "edge-tts:hey nick": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.125
+    },
+    "kokoro:hey mix": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.125
+    },
+    "kokoro:hey next": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 2.875
+    },
+    "kokoro:hey nick": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 2.375
+    },
+    "macos-say:hey mix": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.125
+    },
+    "macos-say:hey next": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 2,
+      "mean_phone_edits": 3.75
+    },
+    "macos-say:hey nick": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 2,
+      "mean_phone_edits": 3.75
+    },
+    "openai-tts:hey mix": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 2.0
+    },
+    "openai-tts:hey next": {
+      "pairs": 8,
+      "identical_teacher_pairs": 1,
+      "minimum_phone_edits": 0,
+      "mean_phone_edits": 2.25
+    },
+    "openai-tts:hey nick": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 2.625
+    },
+    "piper:hey mix": {
+      "pairs": 7,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 2,
+      "mean_phone_edits": 3.2857142857142856
+    },
+    "piper:hey next": {
+      "pairs": 7,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.0
+    },
+    "piper:hey nick": {
+      "pairs": 8,
+      "identical_teacher_pairs": 0,
+      "minimum_phone_edits": 1,
+      "mean_phone_edits": 3.0
+    }
+  },
+  "limits": "Training-only weak teacher predictions; edit separation is not phonetic truth, independent wake recognition or latency evidence. Identical predictions cannot distinguish the pair through this auxiliary target alone, but do not prove a pronunciation error. Binary labels, teacher targets, data, training recipe and validation gates remain unchanged.",
+  "raw_diagnostic_sha256": "355847e85ac2972f1d76221593f320b2d4637fe9eb03d068418a9b001f71064c",
+  "checks": {
+    "all_236_sequences_reproduce_prior_readout": true,
+    "prior_readout_sha256": "3cdcdc2b965f5c340ef112882806c021647cd7e353a25b74e1186524ad2571b1"
+  },
+  "identical_pairs": [
+    {
+      "pair": 84,
+      "stratum": "openai-tts:hey next",
+      "positive_teacher_sequence": [
+        39,
+        44,
+        4,
+        14,
+        11,
+        5,
+        6
+      ],
+      "negative_teacher_sequence": [
+        39,
+        44,
+        4,
+        14,
+        11,
+        5,
+        6
+      ],
+      "phone_edits": 0
+    }
+  ]
+}

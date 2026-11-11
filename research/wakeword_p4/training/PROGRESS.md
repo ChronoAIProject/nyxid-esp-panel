@@ -1453,6 +1453,15 @@ event rejection, an existing viable control and the recall margin. Passing
 only permits further independent evaluation; it does not establish Hi ESP
 parity or authorize a firmware update. This study uses no speaker or microphone.
 
+The [training-pair sequence audit](../results/microwake-phone-pair-sequences-v1.json)
+checks a limitation of the auxiliary labels independently of wake validation.
+One of 118 positive/confuser pairs has exactly the same teacher sequence
+(OpenAI TTS, `hey next` stratum); the other pairs differ by one to eight
+edits. All 236 sequences reproduce the earlier readout audit exactly. This
+teacher target alone cannot distinguish that pair, but the collision is not
+proof of a bad recording or binary label. No target, source role, warmup,
+joint-training recipe or quality gate is changed by the diagnostic.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
