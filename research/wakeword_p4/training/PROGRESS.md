@@ -1351,12 +1351,20 @@ microphone or speaker was used.
 
 The [spike-retention audit](../results/microwake-phone-spike-retention-v1.json)
 also shows why the existing averaged bank must not be repurposed as a CTC
-transcript. Its collapsed argmax strings average only 2.45 symbols and are
+transcript. Its collapsed argmax strings average only 2.44 symbols and are
 empty for 20/236 rows, including eleven positives. These are teacher
 alignment predictions after 30 ms averaging, not verified phone strings.
 Any future sequence-level objective must first retain the original teacher
 resolution and test its labels; it cannot manufacture transcripts from this
 bank or replace the original binary wake labels.
+
+The [public conditional-study handoff](../../handoff/assets-phone-conditional-v1.json)
+contains both rejected studies' exact checkpoints, INT8 files, launched
+sources, raw validation scores/event traces, frozen plans and diagnostics.
+It reuses the original phone-bank/initializer handoff. The public download
+and all listed member identities are verified; both studies remain
+unaccepted. These results are available to the GPU research branch without
+any captured room audio or device configuration.
 
 ### Human pilot preparation
 

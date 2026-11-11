@@ -939,3 +939,24 @@ pass, and the unchanged original comparison is reproduced without rescoring.
 The archive download and all listed member hashes are verified. This is an
 unaccepted research supplement, with no captured room audio, board state or
 firmware. It is not a production release or evidence of Hi ESP parity.
+
+The [conditional phone-study handoff](assets-phone-conditional-v1.json)
+adds the subsequent .01 and .1 auxiliary-gain experiments. Excluding CTC
+blank from the phone-identity objective passes the training-fit prescreen,
+but both wake models still fail the frozen development gate. The archive
+retains exact binary/auxiliary checkpoints, INT8 models, launched source
+snapshots, validation scores/event traces, gradient and spike-retention
+diagnostics, and frozen plans. The control model is byte-identical to the
+previous original-recipe control; its calibration is reused without
+rescoring. Both source-bank and initializer dependencies are in
+`assets-phone-distillation-v1.json`.
+
+Download from the manifest URL, verify its archive hash, and check the
+`CONTENTS-microwake-phone-conditional-v1.json` member identities. Extract
+into a fresh staging directory; the sibling study roots are
+`workspace/home-wake-research-20261110/microwake-phone-conditional-v1` and
+`microwake-phone-conditional-gain-v1`. Supporting plans/results/source are
+under the same parent's `phone-conditional-handoff`. The public download and
+all listed member hashes are verified. No room audio, device state or
+firmware is included, and no board, microphone or speaker was used. This is
+unaccepted research, not a production update.
