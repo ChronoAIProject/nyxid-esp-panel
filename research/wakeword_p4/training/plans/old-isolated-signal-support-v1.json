@@ -1,0 +1,16 @@
+{
+  "scope": "Inventory existing six-engine training-only isolated phrases, including original exact-zero PCM padding, without any detector score or feature/model change.",
+  "manifest_sha256": "32a67247f94e71d2602e8ca338cc56ba4ae7e4ba634a39af67ef77896a83b95c",
+  "selected_rows": 3393,
+  "phrase_labels": {"hey nyx": 1, "hey nix": 1, "hey nicks": 1, "hey nick": 0, "hey next": 0, "hey mix": 0, "hey nexus": 0, "hi esp": 0},
+  "selection": "All training rows with exactly these normalized ASCII word sequences, ignoring punctuation/case. Existing labels must agree; preserve source path, engine-qualified voice provenance and SHA aliases. No filtering by duration or score.",
+  "rir_tail_samples": [0, 960],
+  "last_window_offset_frames": [0, 12],
+  "geometry": "Use original v37/v39 150-frame conservative sample ledger: (e+d-150)*160 <= source_start; (e+d+1)*160 >= source_end. Compare full original WAV [0,N) to exact first/last nonzero PCM support, with the full960-sample RIR extension when specified. This is source-span geometry only, before actual frontend/crop/pack validation.",
+  "limits": [
+    "Exact digital-zero support is not a phonetic boundary, a pronunciation review or a proposed relabel; all original WAV bytes stay intact.",
+    "No feature extraction or training eligibility is established by these counts: actual full-history raw geometry, labels, sampling and score equivalence would need a separately frozen experiment.",
+    "All sources are previously exported synthetic training material; correlated aliases/voices/conditions are not independent human trials or fresh acceptance.",
+    "No validation/new/final WAV, detector scoring, TTS generation, playback, microphone recording, device/firmware/settings change or production-board access."
+  ]
+}
