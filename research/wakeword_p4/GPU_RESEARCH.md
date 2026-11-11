@@ -3378,3 +3378,12 @@ Nyx目标any-event9/16、固定生成末端窗口内5/16、窗口前4事件；Hi
 原阈值不变，非匹配FAR；没有连续负例曝光上界或最终验收结论。
 完整比较、逐条官方报告与manifest、any-event摘要已发布4090-*phone-development*。
 v35同训练进程已19000步以上，继续原会话79588；本次基线未改变其训练或选择规则。
+
+## v35后处理排队与官方缓存复用核验
+
+score_phone_development.py逐条核验80条官方report的manifest/PCM/模型来源、阈值getter、CRC/stage，
+不再重复运行HiESP；重算Nyx并复核reset。用v30基线验证80条双方事件逐条完全一致。
+核验报告4090-phone-dev-cache-baseline-audit-v1.json；这是评分程序验证，不是新性能提升。
+v35_after_training.py绑定当前训练PID及/proc启动时间，原进程终结后核验120k产物和模型SHA，
+再运行historical_regression及新开发音历史阈值诊断。无完整产物即失败，不启动新训练。
+后处理仅排队；训练未终结时不会读取半成品评估，不自动发布或升级模型。
