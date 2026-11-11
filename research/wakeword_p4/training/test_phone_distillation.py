@@ -68,19 +68,21 @@ class PhonePreparationTest(unittest.TestCase):
             model.compile(optimizer=tf.keras.optimizers.Adam(5e-5, global_clipnorm=5),
                           loss='binary_crossentropy')
             return model
-        control, auxiliary = make(), make()
-        auxiliary.set_weights(control.get_weights())
         rng = np.random.default_rng(44)
         x = rng.normal(0, .05, (4, STEPS*60)).astype(np.float32)
         y = np.array([[1.], [0.], [1.], [0.]], np.float32)
         weights = np.array([1., 5., 1., 5.], np.float32)
         q = np.full((4, STEPS, VOCAB), 1/VOCAB, np.float32)
-        train = supervisor(auxiliary, q, 0.)
         ids = np.arange(1, 5, dtype=np.float32)[:, None]
-        train(x, np.concatenate((y, ids), axis=1), weights)
-        control.train_on_batch(x, y, sample_weight=weights)
-        for a, b in zip(control.get_weights(), auxiliary.get_weights(), strict=True):
-            np.testing.assert_allclose(a, b, rtol=0, atol=1e-7)
+        for objective in ('joint', 'conditional'):
+            with self.subTest(objective=objective):
+                control, auxiliary = make(), make()
+                auxiliary.set_weights(control.get_weights())
+                train = supervisor(auxiliary, q, 0., objective)
+                train(x, np.concatenate((y, ids), axis=1), weights)
+                control.train_on_batch(x, y, sample_weight=weights)
+                for a, b in zip(control.get_weights(), auxiliary.get_weights(), strict=True):
+                    np.testing.assert_allclose(a, b, rtol=0, atol=1e-7)
 
     def test_warmup_fits_only_head_and_zero_gain_still_matches_binary_update(self):
         import tensorflow as tf
@@ -122,6 +124,36 @@ class PhonePreparationTest(unittest.TestCase):
         for steps, rate in ((0, .02), (1, float('nan'))):
             with self.assertRaises(ValueError):
                 train.warmup(features, steps=steps, learning_rate=rate)
+
+    def test_conditional_loss_excludes_ctc_blank_and_uses_teacher_phone_mass(self):
+        import tensorflow as tf
+        x = tf.keras.Input((STEPS*60,))
+        model = tf.keras.Model(x, tf.keras.layers.Dense(1, activation='sigmoid', name='classifier')(x))
+        q = np.zeros((1, 2, VOCAB), np.float32)
+        q[0, 0, [0, 1, 2]] = [.9, .075, .025]
+        q[0, 1, [0, 1, 2]] = [.2, .2, .6]
+        # Explicit 391-way uniform conditional predictor; changing its blank
+        # logit must have no effect. Compute the weighted reference by hand.
+        phones = np.zeros_like(q)
+        train = supervisor(model, q, .01, 'conditional')
+        joint = supervisor(model, q, .01, 'joint')
+        reference_joint = sum(w*sum(t*np.log(t*392) for t in distribution)
+                              for w, distribution in ((.145, (.9, .075, .025)),
+                                                      (.81, (.2, .2, .6))))/.955
+        self.assertAlmostEqual(float(joint.phone_loss(q, phones)), reference_joint, places=5)
+        reference = sum(w*sum(t*np.log(t*391) for t in distribution)
+                        for w, distribution in ((.1, (.75, .25)), (.8, (.25, .75))))/.9
+        self.assertAlmostEqual(float(train.phone_loss(q, phones)), reference, places=5)
+        phones[..., 0] = 100
+        self.assertAlmostEqual(float(train.phone_loss(q, phones)), reference, places=5)
+        blank = np.zeros_like(q); blank[..., 0] = 1
+        self.assertEqual(float(train.phone_loss(blank, phones)), 0.)
+        with tf.GradientTape() as tape:
+            logits = tf.Variable(phones)
+            loss = train.phone_loss(q, logits)
+        gradient = tape.gradient(loss, logits).numpy()
+        self.assertTrue(np.isfinite(gradient).all())
+        np.testing.assert_array_equal(gradient[..., 0], 0)
 
 
 if __name__ == '__main__':

@@ -37,6 +37,7 @@ def main():
                 or train['initial_weights_sha256'] != plan['init']['sha256']
                 or any(train['source_files_sha256'][k] != v for k, v in plan['source_sha256'].items())
                 or phone['bank_sha256'] != plan['phone_bank_sha256'] or phone['draws'] != steps*8
+                or phone.get('objective', 'joint') != plan.get('phone_objective', 'joint')
                 or phone['gain'] != gain or train['training_prefix_batches'] != 16
                 or train['paired_near_words'] is not None or train['phrase_output']
                 or cal['feature_index_sha256'] != plan['feature_index_sha256']['features.json']

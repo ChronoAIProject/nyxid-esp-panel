@@ -61,15 +61,34 @@ class Sampler:
                 'schedule_sha256': self.digest.hexdigest(), 'steps': STEPS, 'vocabulary': VOCAB}
 
 
-def supervisor(model, targets, gain):
+def supervisor(model, targets, gain, objective='joint'):
     import tensorflow as tf
 
+    if objective not in ('joint', 'conditional'):
+        raise ValueError('Unknown phone objective')
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
     logits = tf.keras.layers.Dense(VOCAB, name='training_phone_logits',
         kernel_initializer=tf.keras.initializers.GlorotUniform(seed=919))(temporal)
     teacher = tf.constant(targets)
     full = tf.keras.Model(model.input, (model.output, logits))
+
+    def phone_loss(q, phones):
+        if objective == 'conditional':
+            # CTC blank is an alignment marker, not an acoustic silence label.
+            # Fit the phone identity separately; uncertain/blank frames carry
+            # only their actual nonblank posterior mass as supervision weight.
+            q = q[..., 1:]
+            weight = tf.reduce_sum(q, axis=-1)
+            q = tf.math.divide_no_nan(q, weight[..., None])
+            logp = tf.nn.log_softmax(phones[..., 1:], axis=-1)
+        else:
+            logp = tf.nn.log_softmax(phones, axis=-1)
+            weight = .05+.95*(1-q[..., 0])
+        divergence = tf.reduce_sum(q*(tf.math.log(tf.maximum(q, 1e-30))-logp), axis=-1)
+        numerator, denominator = tf.reduce_sum(weight*divergence), tf.reduce_sum(weight)
+        return (tf.math.divide_no_nan(numerator, denominator) if objective == 'conditional'
+                else numerator/denominator)
 
     @tf.function
     def train(x, y, weights):
@@ -79,11 +98,7 @@ def supervisor(model, targets, gain):
             ids = tf.cast(y[:, 1], tf.int32)
             present = ids > 0
             q = tf.gather(teacher, tf.boolean_mask(ids, present)-1)
-            logp = tf.nn.log_softmax(tf.boolean_mask(phones, present), axis=-1)
-            divergence = tf.reduce_sum(q*(tf.math.log(tf.maximum(q, 1e-30))-logp), axis=-1)
-            # Retain blank supervision while emphasizing the sparse phone spikes.
-            frame_weight = .05+.95*(1-q[..., 0])
-            phonetic = tf.reduce_sum(frame_weight*divergence)/tf.reduce_sum(frame_weight)
+            phonetic = phone_loss(q, tf.boolean_mask(phones, present))
             loss = binary+gain*phonetic
         variables = full.trainable_variables
         model.optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
@@ -96,20 +111,28 @@ def supervisor(model, targets, gain):
             x = np.clip(features[start:start+32].astype(np.float32)/25.6, 0, 26)
             q = targets[start:start+32]
             logits = np.asarray(full(x, training=False)[1])
+            labels = q.argmax(-1)
+            if objective == 'conditional':
+                q = q[..., 1:]
+                weight = q.sum(-1)
+                q = np.divide(q, weight[..., None], out=np.zeros_like(q), where=weight[..., None] > 0)
+                logits = logits[..., 1:]
+                prediction = 1+logits.argmax(-1)
+            else:
+                weight = .05+.95*(1-q[..., 0])
+                prediction = logits.argmax(-1)
             logp = np.asarray(tf.nn.log_softmax(logits, axis=-1))
             divergence = np.sum(q*(np.log(np.maximum(q, 1e-30))-logp), axis=-1)
-            weight = .05+.95*(1-q[..., 0])
             total_kl += float(np.sum(weight*divergence))
             total_weight += float(weight.sum())
-            labels, prediction = q.argmax(-1), logits.argmax(-1)
             nonblank = labels != 0
             nonblank_total += int(nonblank.sum())
             nonblank_correct += int(((prediction == labels) & nonblank).sum())
             blank_total += int((~nonblank).sum())
             blank_correct += int(((prediction == labels) & ~nonblank).sum())
-        return {'weighted_kl': total_kl/total_weight,
+        return {'weighted_kl': total_kl/total_weight if total_weight else 0.,
                 'nonblank_frames': nonblank_total, 'nonblank_correct': nonblank_correct,
-                'blank_frames': blank_total, 'blank_correct': blank_correct}
+                'blank_frames': blank_total, 'blank_correct': blank_correct if objective == 'joint' else None}
 
     def warmup(features, steps, learning_rate, batch_size=32):
         """Fit only the new head to cached, frozen training encoder states."""
@@ -139,10 +162,7 @@ def supervisor(model, targets, gain):
         @tf.function
         def update(z, q):
             with tf.GradientTape() as tape:
-                logp = tf.nn.log_softmax(head(z), axis=-1)
-                divergence = tf.reduce_sum(q*(tf.math.log(tf.maximum(q, 1e-30))-logp), axis=-1)
-                weight = .05+.95*(1-q[..., 0])
-                loss = tf.reduce_sum(weight*divergence)/tf.reduce_sum(weight)
+                loss = phone_loss(q, head(z))
             variables = head.trainable_variables
             optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
 
@@ -158,6 +178,7 @@ def supervisor(model, targets, gain):
         if before != digest(model.weights) or optimizer_before != digest(model.optimizer.variables):
             raise ValueError('Phone-head warmup changed the binary model or its optimizer')
         return {'steps': steps, 'learning_rate': learning_rate, 'batch_size': batch_size,
+                'objective': objective,
                 'seed': 1223, 'schedule_sha256': schedule.hexdigest(),
                 'head_weights_sha256': digest(head.weights),
                 'encoder_cache_sha256': hashlib.sha256(cache.astype('<f4', copy=False).tobytes()).hexdigest(),
@@ -168,6 +189,7 @@ def supervisor(model, targets, gain):
                 'scope': 'Training-bank fit only; separate optimizer and cached inference-mode encoder states.'}
 
     train.audit = audit
+    train.phone_loss = phone_loss
     train.warmup = warmup
     train.auxiliary_model = full
     return train

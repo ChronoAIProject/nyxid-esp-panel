@@ -54,6 +54,8 @@ def main():
                         help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
+    parser.add_argument("--phone-objective", choices=("joint", "conditional"), default="joint",
+                        help="Phone posterior KL, or nonblank phone KL weighted by teacher nonblank mass")
     parser.add_argument("--phone-warmup-steps", type=int, default=0,
                         help="Fit only the auxiliary phone head on frozen training states before joint training")
     parser.add_argument("--phone-warmup-learning-rate", type=float, default=.003)
@@ -294,7 +296,7 @@ def main():
     model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
     if phone_sampler:
         from phone_distillation import supervisor as phone_supervisor
-        train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain)
+        train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -488,7 +490,8 @@ def main():
               "paired_phrase_gain": args.paired_phrase_gain,
               "phrase_output": args.phrase_output,
               "phone_distillation": None if not phone_sampler else {
-                  **phone_sampler.metadata(), "gain": args.phone_gain, "initial_fit": initial_phone_fit,
+                  **phone_sampler.metadata(), "gain": args.phone_gain, "objective": args.phone_objective,
+                  "initial_fit": initial_phone_fit,
                   "warmup": phone_warmup},
               "initial_target_probability_max_error": initial_probability_error,
               "training_prefix_batches": min(args.steps, 16),
