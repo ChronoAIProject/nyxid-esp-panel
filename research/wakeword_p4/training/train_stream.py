@@ -61,6 +61,8 @@ def main():
     parser.add_argument("--phone-warmup-learning-rate", type=float, default=.003)
     parser.add_argument("--phone-warmup-only", action="store_true",
                         help="With --steps 0, save the training-bank head-fit diagnostic and stop before joint training/validation")
+    parser.add_argument("--phone-gradient-audit-plan", type=Path,
+                        help="Observe fixed-state gradients on matched mixed batches without training or export")
     parser.add_argument("--matched-confuser-bank", type=Path, help="Training-only same-speaker ambient negative bank")
     parser.add_argument("--matched-confuser-arm", choices=ARMS)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
@@ -75,6 +77,9 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.phone_gradient_audit_plan and (not args.phone_bank or not args.initial_weights
+            or args.phone_warmup_steps or args.phone_warmup_only or args.export_only):
+        parser.error("Gradient audit requires a phone bank and explicit binary state, without warmup or export")
     if args.phone_warmup_only:
         if args.export_only or args.steps != 0 or not args.phone_bank or args.phone_warmup_steps < 1:
             parser.error("--phone-warmup-only requires --steps 0, a phone bank and positive warmup steps without export-only")
@@ -385,6 +390,27 @@ def main():
     validation_phase = (-effective_frames)%flags.stride if args.align_stream else 0
     history = []
     initial_phone_fit = train_with_phones.audit(phone_sampler.features) if phone_sampler else None
+    if args.phone_gradient_audit_plan:
+        from phone_gradient_audit import audit as audit_gradients
+        audit_plan = json.loads(args.phone_gradient_audit_plan.read_bytes())
+        if (audit_plan['initial_weights_sha256'] != initial_weights_hash
+                or audit_plan['phone_bank_sha256'] != phone_sampler.bank_sha256
+                or audit_plan['gain'] != args.phone_gain or audit_plan['batches'] != 16
+                or args.phone_objective != audit_plan['phone_objective']
+                or any(source_hashes[k] != v for k, v in audit_plan['source_sha256'].items())):
+            raise ValueError("Gradient audit inputs differ from the frozen plan")
+        observed_batches = []
+        for current_step in range(1, audit_plan['batches']+1):
+            observed_batches.append(batch())
+        result = audit_gradients(model, train_with_phones, phone_sampler.targets,
+                                 observed_batches, args.phone_gain, audit_plan)
+        result.update(plan_sha256=hashlib.sha256(args.phone_gradient_audit_plan.read_bytes()).hexdigest(),
+                      initial_weights_sha256=initial_weights_hash,
+                      phone_bank=phone_sampler.metadata(), source_files_sha256=source_hashes)
+        with (root/"phone-gradient-audit.json").open("x") as output:
+            json.dump(result, output, indent=2); output.write("\n")
+        print(json.dumps(result), flush=True)
+        return
     phone_warmup = None
     if args.phone_warmup_steps:
         phone_warmup = train_with_phones.warmup(phone_sampler.features, args.phone_warmup_steps,

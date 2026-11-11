@@ -1523,6 +1523,27 @@ research/wakeword_p4/results/microwake-phone-ctc-joint-v1.json
 --output <fresh-report.json>` in the training environment. The complete audit
 report is versioned so the GPU branch can inspect every changed view.
 
+### Full mixed-batch gradient diagnostic: predeclared
+
+The [warmup](plans/microwake-phone-full-gradient-warmup-v1.json) and
+[final](plans/microwake-phone-full-gradient-final-v1.json) plans observe the
+same original 16 mixed-source training batches at two saved weight states.
+They measure binary/auxiliary gradient norms, directions and their shared
+global clipping, rather than extrapolating from the earlier paired-crop-only
+gradient audit. The optional `--phone-gradient-audit-plan` branch restores
+only an explicitly bound auxiliary weight file, verifies that it matches
+the selected binary state, computes without optimizer updates, verifies the
+original input digest and stops before any training, validation or export.
+It does not resume an Adam state or recreate the full training trajectory.
+
+Fifteen phone tests pass, including a closed-form scalar two-task gradient
+check, clipping, zero gradients for unrelated heads, immutable weight/optimizer
+state and rejection of a changed training prefix. An initial test exposed
+TensorFlow's unconnected-gradient handling of Keras dtype strings; the
+diagnostic now explicitly represents those unrelated derivatives as zeros.
+Existing trainer behavior remains the default; no model recipe is selected
+or changed by this observation protocol.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
