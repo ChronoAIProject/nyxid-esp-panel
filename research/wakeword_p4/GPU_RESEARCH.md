@@ -3204,3 +3204,12 @@ CTC经常输出HEYNIX等连写。事后仅删除空格的敏感性诊断为正20
 主报告4090-piper-training-ctc-audit-v1.json，空格诊断4090-ctc-training-spacing-sensitivity-v1.json。
 模型来源4090-ctc-model-source-v1.json，运行版本4090-ctc-audit-environment-v1.json。
 审核未读取任何独立最终音频或唤醒分数；没有发音/末音素金标准与达标结论。
+
+## CTC自然语音机械正控制预声明
+
+固定现有train-clean-100按目录字典序前24位说话人，各取首章首条原始FLAC，完整PCM。
+清单SHA256 0f9593ac0e554c575686bee172bb2a1ec1348cd3e62b38d47d06f55785087815。
+复用固定wav2vec2模型、CUDA FP32贪心CTC；不调整解码器，报告全24条WER/CER。
+归一化仅小写ASCII字母/空格；CER再移除空格。选样先于推理。
+此语料可能属于该ASR的960小时训练集，只检查运行/解码机制，绝不解释为独立泛化表现。
+不用最终集、不评分唤醒模型、不改标签；代码ctc_natural_control.py。
