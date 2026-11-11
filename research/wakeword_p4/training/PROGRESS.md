@@ -1523,7 +1523,7 @@ research/wakeword_p4/results/microwake-phone-ctc-joint-v1.json
 --output <fresh-report.json>` in the training environment. The complete audit
 report is versioned so the GPU branch can inspect every changed view.
 
-### Full mixed-batch gradient diagnostic: predeclared
+### Full mixed-batch gradient diagnostic
 
 The [warmup](plans/microwake-phone-full-gradient-warmup-v1.json) and
 [final](plans/microwake-phone-full-gradient-final-v1.json) plans observe the
@@ -1543,6 +1543,23 @@ TensorFlow's unconnected-gradient handling of Keras dtype strings; the
 diagnostic now explicitly represents those unrelated derivatives as zeros.
 Existing trainer behavior remains the default; no model recipe is selected
 or changed by this observation protocol.
+
+The [completed diagnostic](../results/microwake-phone-full-gradient-v1.json)
+reproduces the exact original first-16-batch hash at both fixed states, with
+128 pair draws each and no change to full weights or optimizer. Both runs
+stop before any training summary, export or validation. The scaled auxiliary
+encoder gradient / binary gradient ratio has median .579 (range .077–5.374)
+after warmup and .809 (.060–12.713) at the final weights. Encoder directions
+oppose on 3/16 and 6/16 batches, with respective median cosine .075 and .043.
+
+Shared global clipping is not a large classifier-suppression mechanism in
+these observations: its minimum relative binary scale is .9873 initially,
+then 1.0000 at final weights. This does not reconstruct Adam updates or prove
+a cause for the wake regression. The variable strength and nearly orthogonal
+auxiliary encoder pressure support a bounded task-balancing experiment,
+rather than another head-fit budget or an assumption that clipping is the
+main problem. Original labels, model recipes, wake thresholds, final datasets,
+devices and audio paths remain unchanged by this diagnostic.
 
 ### Human pilot preparation
 

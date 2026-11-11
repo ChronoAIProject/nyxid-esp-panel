@@ -1,0 +1,1665 @@
+{
+  "scope": "Two predeclared fixed weight states on the exact original first 16 mixed-source training batches; read-only, not a replay of the optimizer trajectory.",
+  "shared_training_prefix_sha256": "822a0c05675856fd89b0bfb7ff1bdce176e8a99a2bb9fb576762bdf7a856fa39",
+  "checks": {
+    "exact_prior_training_inputs": true,
+    "both_completed": true,
+    "128_pair_draws_each": true,
+    "weights_and_optimizer_unchanged": true,
+    "no_training_summary_or_export": true
+  },
+  "states": {
+    "warmup": {
+      "raw_diagnostic_sha256": "358a43e37b8ab31fa80e54b472f4be48c906322808cdbb378fe269b32be7e5ac",
+      "launch_sha256": "cdb9ec4bc384a6b293df208338813e7ed2648a1ff46ed57fadac634125eba09a",
+      "checkout_revision": "d3e6abd815020c69f3ea0e2830f572bf909e42f1",
+      "summary": {
+        "conflicting_encoder_batches": 3,
+        "binary_clipped_batches": 1,
+        "joint_clipped_batches": 2,
+        "scaled_phone_to_binary_encoder_norm": {
+          "minimum": 0.0771496233137965,
+          "median": 0.5793045782538322,
+          "maximum": 5.374488910680458
+        },
+        "encoder_cosine": {
+          "minimum": -0.10844135061725292,
+          "median": 0.07452931392025805,
+          "maximum": 0.2049777662844269
+        },
+        "classifier_relative_scale": {
+          "minimum": 0.9873421555096679,
+          "median": 1.0,
+          "maximum": 1.0
+        }
+      },
+      "diagnostic": {
+        "scope": "Read-only gradient decomposition on actual mixed-source training batches.",
+        "checkpoint_sha256": "eaad4ec50c46036e464d7277c1244af31009add1468e2739e9359c48d3083313",
+        "training_prefix_sha256": "822a0c05675856fd89b0bfb7ff1bdce176e8a99a2bb9fb576762bdf7a856fa39",
+        "batch_count": 16,
+        "gain": 0.1,
+        "binary_weights_sha256": "956b02b3b2d1f1863079193989b3a5162db3b62e0fea9a06ee29804e4c3d609e",
+        "full_weights_sha256": "cfa5e03ed16e579644b10a69fcf6dfeaf1978af56a599745de523dea4f89b925",
+        "weights_unchanged": true,
+        "optimizer_unchanged": true,
+        "batches": [
+          {
+            "binary_loss": 0.005164789967238903,
+            "phone_loss": 1.8951747417449951,
+            "joint_loss": 0.1946822702884674,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.2130232873321896,
+                "phone_norm": 13.504868964780798,
+                "joint_norm": 1.8912626527616776,
+                "scaled_phone_to_binary_norm": 1.113323141098317,
+                "cosine": 0.08595989087638234,
+                "decomposition_max_error": 7.227063178461002e-08
+              },
+              "encoder": {
+                "binary_norm": 1.2022695369231315,
+                "phone_norm": 13.488768374605561,
+                "joint_norm": 1.8832298931547173,
+                "scaled_phone_to_binary_norm": 1.1219421236544216,
+                "cosine": 0.08683228473247878,
+                "decomposition_max_error": 7.227063178461002e-08
+              },
+              "classifier": {
+                "binary_norm": 0.16116282510811963,
+                "phone_norm": 0.0,
+                "joint_norm": 0.16116282510811963,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.6592522219457939,
+                "joint_norm": 0.06592522326681859,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.705522538272279e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.015574934892356396,
+            "phone_loss": 1.457531452178955,
+            "joint_loss": 0.16132807731628418,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.6287378215468633,
+                "phone_norm": 10.85156913630828,
+                "joint_norm": 1.9812723505617782,
+                "scaled_phone_to_binary_norm": 0.6662563484896671,
+                "cosine": 0.026899908474086808,
+                "decomposition_max_error": 9.909272193769914e-08
+              },
+              "encoder": {
+                "binary_norm": 1.5975311827476404,
+                "phone_norm": 10.826073944356793,
+                "joint_norm": 1.9542856390666747,
+                "scaled_phone_to_binary_norm": 0.6776752817892865,
+                "cosine": 0.02748996534089899,
+                "decomposition_max_error": 9.909272193769914e-08
+              },
+              "classifier": {
+                "binary_norm": 0.31730271269900434,
+                "phone_norm": 0.0,
+                "joint_norm": 0.31730271269900434,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.7434215973439253,
+                "joint_norm": 0.07434215864639661,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.667067408509665e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.03618994727730751,
+            "phone_loss": 1.7019797563552856,
+            "joint_loss": 0.20638792216777802,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 3.5333096095318046,
+                "phone_norm": 7.7567744401034515,
+                "joint_norm": 3.6260966908845242,
+                "scaled_phone_to_binary_norm": 0.21953282608402083,
+                "cosine": 0.011424975986813342,
+                "decomposition_max_error": 9.834766387384342e-08
+              },
+              "encoder": {
+                "binary_norm": 3.4969862543103543,
+                "phone_norm": 7.734536921982487,
+                "joint_norm": 3.5902323593908716,
+                "scaled_phone_to_binary_norm": 0.22117721831045134,
+                "cosine": 0.011576836800336257,
+                "decomposition_max_error": 9.834766387384342e-08
+              },
+              "classifier": {
+                "binary_norm": 0.5053354667685975,
+                "phone_norm": 0.0,
+                "joint_norm": 0.5053354667685975,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5869312712165676,
+                "joint_norm": 0.058693127809990704,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 7.194466888774467e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.010611705482006073,
+            "phone_loss": 1.5148946046829224,
+            "joint_loss": 0.16210117936134338,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.4907013230858428,
+                "phone_norm": 7.094220694131929,
+                "joint_norm": 1.6716092063506907,
+                "scaled_phone_to_binary_norm": 0.4758981953169841,
+                "cosine": 0.03253171837650202,
+                "decomposition_max_error": 6.332993507385254e-08
+              },
+              "encoder": {
+                "binary_norm": 1.4724293547336655,
+                "phone_norm": 7.082207297874889,
+                "joint_norm": 1.654820847814794,
+                "scaled_phone_to_binary_norm": 0.48098791803535634,
+                "cosine": 0.03299128520226156,
+                "decomposition_max_error": 6.332993507385254e-08
+              },
+              "classifier": {
+                "binary_norm": 0.23268482969133128,
+                "phone_norm": 0.0,
+                "joint_norm": 0.23268482969133128,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.41268274373587194,
+                "joint_norm": 0.04126827383630804,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.3120006769917238e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.02331838756799698,
+            "phone_loss": 1.5744140148162842,
+            "joint_loss": 0.18075978755950928,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 3.196381904284965,
+                "phone_norm": 10.119081927272658,
+                "joint_norm": 3.380870220885288,
+                "scaled_phone_to_binary_norm": 0.316579252113377,
+                "cosine": 0.029289147513669574,
+                "decomposition_max_error": 6.109476088922428e-08
+              },
+              "encoder": {
+                "binary_norm": 3.165376705884619,
+                "phone_norm": 10.092722478498013,
+                "joint_norm": 3.3507772444010278,
+                "scaled_phone_to_binary_norm": 0.3188474363804806,
+                "cosine": 0.029653282374540266,
+                "decomposition_max_error": 6.109476088922428e-08
+              },
+              "classifier": {
+                "binary_norm": 0.44412564425330886,
+                "phone_norm": 0.0,
+                "joint_norm": 0.44412564425330886,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.7299123391730585,
+                "joint_norm": 0.07299123913030127,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 8.21892172115507e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.0016385104972869158,
+            "phone_loss": 1.292665719985962,
+            "joint_loss": 0.13090509176254272,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.13509933272738223,
+                "phone_norm": 7.086797120710211,
+                "joint_norm": 0.7073411589398982,
+                "scaled_phone_to_binary_norm": 5.245619632341711,
+                "cosine": -0.10521581335505995,
+                "decomposition_max_error": 7.02217221246193e-08
+              },
+              "encoder": {
+                "binary_norm": 0.13146981924960932,
+                "phone_norm": 7.065830856461894,
+                "joint_norm": 0.7045542714325511,
+                "scaled_phone_to_binary_norm": 5.374488910680458,
+                "cosine": -0.10844135061725292,
+                "decomposition_max_error": 7.02217221246193e-08
+              },
+              "classifier": {
+                "binary_norm": 0.031104924527460127,
+                "phone_norm": 0.0,
+                "joint_norm": 0.031104924527460127,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5447272142802475,
+                "joint_norm": 0.054472721675409085,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 7.171183824278976e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.06775911152362823,
+            "phone_loss": 2.115015983581543,
+            "joint_loss": 0.27926069498062134,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 3.3543992872255814,
+                "phone_norm": 22.15595612778864,
+                "joint_norm": 4.22358313973399,
+                "scaled_phone_to_binary_norm": 0.6605044370288368,
+                "cosine": 0.11287655781864726,
+                "decomposition_max_error": 1.6745179892696527e-07
+              },
+              "encoder": {
+                "binary_norm": 3.3203949120037217,
+                "phone_norm": 22.121586201089396,
+                "joint_norm": 4.194813961753828,
+                "scaled_phone_to_binary_norm": 0.6662335892973625,
+                "cosine": 0.11420970419753222,
+                "decomposition_max_error": 1.6745179892696527e-07
+              },
+              "classifier": {
+                "binary_norm": 0.4764160014937416,
+                "phone_norm": 0.0,
+                "joint_norm": 0.4764160014937416,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 1.233619019092252,
+                "joint_norm": 0.12336189866044094,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.6577541828849407e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.016169533133506775,
+            "phone_loss": 1.809675931930542,
+            "joint_loss": 0.19713713228702545,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 2.5326734179068473,
+                "phone_norm": 13.292332641103282,
+                "joint_norm": 3.0206260076409523,
+                "scaled_phone_to_binary_norm": 0.5248340566581562,
+                "cosine": 0.14003890516318865,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "encoder": {
+                "binary_norm": 2.5006736188780745,
+                "phone_norm": 13.28064736545705,
+                "joint_norm": 2.993327622934252,
+                "scaled_phone_to_binary_norm": 0.5310827956594912,
+                "cosine": 0.14195570214917969,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "classifier": {
+                "binary_norm": 0.40133040455363783,
+                "phone_norm": 0.0,
+                "joint_norm": 0.40133040455363783,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5572365710526578,
+                "joint_norm": 0.0557236592168217,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.891787052067805e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.019602898508310318,
+            "phone_loss": 1.7425181865692139,
+            "joint_loss": 0.19385471940040588,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.9126266515902954,
+                "phone_norm": 8.960297989262484,
+                "joint_norm": 2.074099408975743,
+                "scaled_phone_to_binary_norm": 0.468481288902476,
+                "cosine": -0.046424571870543406,
+                "decomposition_max_error": 1.1613592504344794e-07
+              },
+              "encoder": {
+                "binary_norm": 1.8892440792042184,
+                "phone_norm": 8.94534055530164,
+                "joint_norm": 2.051904631497979,
+                "scaled_phone_to_binary_norm": 0.47348781736394635,
+                "cosine": -0.04707774093158871,
+                "decomposition_max_error": 1.1613592504344794e-07
+              },
+              "classifier": {
+                "binary_norm": 0.29815686737908587,
+                "phone_norm": 0.0,
+                "joint_norm": 0.29815686737908587,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5175156094815866,
+                "joint_norm": 0.05175156022150182,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.123445928270244e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.03783590719103813,
+            "phone_loss": 1.7996786832809448,
+            "joint_loss": 0.21780377626419067,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 2.5944923923585312,
+                "phone_norm": 8.596838449104695,
+                "joint_norm": 2.67086240028758,
+                "scaled_phone_to_binary_norm": 0.33134953389821714,
+                "cosine": -0.07553227085405363,
+                "decomposition_max_error": 6.85453414861481e-08
+              },
+              "encoder": {
+                "binary_norm": 2.546437769481035,
+                "phone_norm": 8.570981272702099,
+                "joint_norm": 2.6233607049211254,
+                "scaled_phone_to_binary_norm": 0.3365871090754701,
+                "cosine": -0.07718983197661228,
+                "decomposition_max_error": 6.85453414861481e-08
+              },
+              "classifier": {
+                "binary_norm": 0.4970366788947742,
+                "phone_norm": 0.0,
+                "joint_norm": 0.4970366788947742,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.6662667206117358,
+                "joint_norm": 0.0666266686764818,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 9.872019290577128e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.19753673672676086,
+            "phone_loss": 1.8893884420394897,
+            "joint_loss": 0.3864755630493164,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 12.907016324481804,
+                "phone_norm": 9.873760089573034,
+                "joint_norm": 13.026819566899299,
+                "scaled_phone_to_binary_norm": 0.07649916790486008,
+                "cosine": 0.0836483909393446,
+                "decomposition_max_error": 3.769993781599368e-07
+              },
+              "encoder": {
+                "binary_norm": 12.755717540903943,
+                "phone_norm": 9.840988033779258,
+                "joint_norm": 12.876677625921891,
+                "scaled_phone_to_binary_norm": 0.0771496233137965,
+                "cosine": 0.08492243215513078,
+                "decomposition_max_error": 3.769993781599368e-07
+              },
+              "classifier": {
+                "binary_norm": 1.9704670555772332,
+                "phone_norm": 0.0,
+                "joint_norm": 1.9704670555772332,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.8037989956816195,
+                "joint_norm": 0.08037990742630417,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.8533319234327605e-08
+              }
+            },
+            "binary_clip_scale": 0.3873861994360453,
+            "joint_clip_scale": 0.38382353991490203,
+            "classifier_binary_scale_relative_to_binary_only": 0.9908033390804066
+          },
+          {
+            "binary_loss": 0.005554076749831438,
+            "phone_loss": 1.8927154541015625,
+            "joint_loss": 0.19482563436031342,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.4199904875882591,
+                "phone_norm": 11.103386924592186,
+                "joint_norm": 1.224232095671438,
+                "scaled_phone_to_binary_norm": 2.6437234301071784,
+                "cosine": 0.09596221089953424,
+                "decomposition_max_error": 6.277114153463437e-08
+              },
+              "encoder": {
+                "binary_norm": 0.4057252752825202,
+                "phone_norm": 11.082579044321873,
+                "joint_norm": 1.2175174677261587,
+                "scaled_phone_to_binary_norm": 2.731547606099891,
+                "cosine": 0.09952272811888575,
+                "decomposition_max_error": 6.277114153463437e-08
+              },
+              "classifier": {
+                "binary_norm": 0.1085311506506162,
+                "phone_norm": 0.0,
+                "joint_norm": 0.1085311506506162,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.6794430981049367,
+                "joint_norm": 0.06794430949105768,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 8.1956386573101e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.025614116340875626,
+            "phone_loss": 1.6371556520462036,
+            "joint_loss": 0.18932968378067017,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.5801504136222753,
+                "phone_norm": 9.68566608748577,
+                "joint_norm": 1.938680950209091,
+                "scaled_phone_to_binary_norm": 0.6129584882544646,
+                "cosine": 0.10568162344054054,
+                "decomposition_max_error": 5.21540641784668e-08
+              },
+              "encoder": {
+                "binary_norm": 1.5415990591547517,
+                "phone_norm": 9.67394047478349,
+                "joint_norm": 1.9067947251199036,
+                "scaled_phone_to_binary_norm": 0.6275263608481733,
+                "cosine": 0.10845574217352928,
+                "decomposition_max_error": 5.21540641784668e-08
+              },
+              "classifier": {
+                "binary_norm": 0.34691161768357076,
+                "phone_norm": 0.0,
+                "joint_norm": 0.34691161768357076,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.4764485791958064,
+                "joint_norm": 0.047644857799175086,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.472691893534208e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.0070513393729925156,
+            "phone_loss": 2.1101372241973877,
+            "joint_loss": 0.2180650532245636,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.7712669538748593,
+                "phone_norm": 11.999196919499644,
+                "joint_norm": 2.2018592821408807,
+                "scaled_phone_to_binary_norm": 0.6774358259916698,
+                "cosine": 0.06375104628110834,
+                "decomposition_max_error": 8.195638656616211e-08
+              },
+              "encoder": {
+                "binary_norm": 1.765087453037118,
+                "phone_norm": 11.968896021669142,
+                "joint_norm": 2.1952377655293027,
+                "scaled_phone_to_binary_norm": 0.678090822133188,
+                "cosine": 0.06413619568538532,
+                "decomposition_max_error": 8.195638656616211e-08
+              },
+              "classifier": {
+                "binary_norm": 0.14782728104129897,
+                "phone_norm": 0.0,
+                "joint_norm": 0.14782728104129897,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.8522058057783777,
+                "joint_norm": 0.08522057335999628,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 3.017485141788845e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.01595877669751644,
+            "phone_loss": 1.7827690839767456,
+            "joint_loss": 0.1942356824874878,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.5102262174460566,
+                "phone_norm": 15.686699226355147,
+                "joint_norm": 2.38836020670714,
+                "scaled_phone_to_binary_norm": 1.0386986429677352,
+                "cosine": 0.20319472834570312,
+                "decomposition_max_error": 7.804483175000154e-08
+              },
+              "encoder": {
+                "binary_norm": 1.4983005436226955,
+                "phone_norm": 15.674017167699605,
+                "joint_norm": 2.380001803202759,
+                "scaled_phone_to_binary_norm": 1.0461197010448835,
+                "cosine": 0.2049777662844269,
+                "decomposition_max_error": 7.804483175000154e-08
+              },
+              "classifier": {
+                "binary_norm": 0.18941675966333632,
+                "phone_norm": 0.0,
+                "joint_norm": 0.18941675966333632,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.6306492248384077,
+                "joint_norm": 0.06306492600828091,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.4062970876346781e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.031158791854977608,
+            "phone_loss": 1.6592389345169067,
+            "joint_loss": 0.19708268344402313,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 4.900225759485842,
+                "phone_norm": 8.37256325099661,
+                "joint_norm": 5.064100597850996,
+                "scaled_phone_to_binary_norm": 0.17086076564511396,
+                "cosine": 0.11357087604743671,
+                "decomposition_max_error": 1.2516975400611585e-07
+              },
+              "encoder": {
+                "binary_norm": 4.868309310121997,
+                "phone_norm": 8.357674488255276,
+                "joint_norm": 5.0329759571181185,
+                "scaled_phone_to_binary_norm": 0.17167509202585643,
+                "cosine": 0.11451908938008042,
+                "decomposition_max_error": 1.2516975400611585e-07
+              },
+              "classifier": {
+                "binary_norm": 0.5583699086699411,
+                "phone_norm": 0.0,
+                "joint_norm": 0.5583699086699411,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.4990917153247917,
+                "joint_norm": 0.04990917067740087,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.332993508079143e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 0.9873421555096679,
+            "classifier_binary_scale_relative_to_binary_only": 0.9873421555096679
+          }
+        ],
+        "limits": "Actual first mixed training batches at one fixed saved state; no parameter/optimizer update or resume. These samples do not represent the complete training trajectory. Float64 norm/clip calculations diagnose the float32 optimizer approximately. No validation, model selection, inference export, room recording or board access.",
+        "plan_sha256": "b09bc57fa0549f9aec0b81819986378b951447c5b9dcb7c7fe53099730a3ebf6",
+        "initial_weights_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+        "phone_bank": {
+          "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+          "pairs": 118,
+          "draws": 128,
+          "schedule_sha256": "f532c25592b9fcc446f8e6ddf5803c08f194288c0bea768b91155353ea0b888a",
+          "steps": 67,
+          "vocabulary": 392,
+          "sequence": {
+            "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+            "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+            "length_histogram": {
+              "3": 6,
+              "4": 14,
+              "5": 63,
+              "6": 112,
+              "7": 29,
+              "8": 10,
+              "9": 1,
+              "11": 1
+            },
+            "encoding": "Full168 greedy CTC collapse; nonempty labels padded by blank zero to 67 steps."
+          }
+        },
+        "source_files_sha256": {
+          "test_ctc_confuser_margin.py": "2df9e1e94625b1a69850debe651407f9cd572014ac0026287a94153e04b0565d",
+          "connected_speech_candidates.py": "c62edbcffc3050b564374db85d7587d73fb56efe81fbb9b6f863424b7d6037b7",
+          "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+          "stream_data.py": "205c6620a0a2b45f84a41a20014ed8db3b7206696ea46a4865f38b8f7f56662f",
+          "mac_eval_samples.py": "41b8c6d96b16363d5696d656f6cd32ee55e369ea47b4597646e11b627419b597",
+          "fleurs_negatives.py": "9348449bed032ec8be40aa384fbea8cde52a9398eb5af7f4d6f4d8fa6d1f1853",
+          "audit_phone_wake_changes.py": "281429c8f8d8a41cd7b18357cd1473bfaeae5ae46d4c97737c70687b876c6368",
+          "phrases.py": "9de03dd44c7136ba1df8e40819aa3c9e9418987143516ac15be86dae33b98969",
+          "quarantine_pronunciation.py": "46f8443bc65ed2311ef6bb365e231f820afc7bb0acec3e6d7ab39022097cbcb0",
+          "compare_phone_distillation.py": "0ec4eb69f5982f5f8c5b5714bb7177f6c94c141969ffc18b6d8caa1c415abd30",
+          "audit_phone_pair_sequences.py": "fccd7d0544f683957f60286205c516be2aff6615f4ef3cefbea33e8891e17165",
+          "backgrounds.py": "caf5a6b72134671b5deeb1ae8359f8924f5b42350fa4c6d9b3ae86af66df6938",
+          "evaluate_continuous.py": "006372f427f2db6632c2fb18517ed09cc6184be93d3333ba3802363362a7d684",
+          "probe_ctc_confuser_margin.py": "189284349558da15425868978709d312ab15170a4d23ee147603c04000c6fb19",
+          "train_stream.py": "938d2b62fc738371b709418200d2f0e0bc11c62ebdff1ef8b2be21eef1513169",
+          "phone_distillation.py": "50846b64b221e0a760290d003ea78475644cfb6e215ff0fff5d6290f229d6355",
+          "compare_matched_confusers.py": "5c1a1a1be85edceef3abad331e1fe4e2a9a1404c152bdf43a6c8b108a08903f3",
+          "probe_causal_phone_verifier.py": "995edca3b6d18a44f2b3d2f0243505e7aa9a2514ff96f209160524a461ddd9db",
+          "compare_candidates.py": "79246adeb08ee0d5cccccc70a33358862a19bae83fa6fb15daf65fda70b4b83e",
+          "audit_phone_ctc_readout.py": "3856c99b6872a4dc46d5deb56997a7dea2de0e6fdde041c718e6d707c97aa4cd",
+          "audit_speech.py": "967f5c47640da968714acd80631620ffc0e8fc433949430b9e5c8a488278cc70",
+          "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+          "generate.py": "747e7b0102c159776ed721b4d8cb60f4f02d7aa3e4d875bdbd53c5c90c88053f",
+          "compare_stream_equal_mean.py": "afcaae9be1f3f6f5abbe9688eeb5867f151440a33160cd9187895fe449bb35b5",
+          "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+          "test_phone_gradient_audit.py": "fb6e475f72ebde11672e9be90f2fbb425ee6fde093ab71742b6c1363b1456b47",
+          "training_negatives.py": "aff5a6a539b1ee13de8ee08fa78693d9e98f9a4839175e18a65a62c9f2a598b4",
+          "extend_human_features.py": "76ad04b37a3bac1a80c7c74b0b7ac672b53d64c638658562dbbeec902bceab34",
+          "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+          "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+          "openai_samples.py": "0eb51c1e359d32864b004044e439f9b2c355751033e840f2bf878fa55fc33144",
+          "mac_corpus.py": "731103e207cca2bde011a655927112f8a70a619d5408c250ee80cf5a4d4faa12",
+          "edge_samples.py": "57c4d69c52db483c5f1a936850bda8dd5a83e7aa7e2d267319220316d89ec6a9",
+          "baseline_samples.py": "49c9108517a22346b7101c86eb3575b96cda01a5d767e1cc49ceb8f118f51a85",
+          "probe_score_ceiling.py": "390dd10a24d19c40b176b00eb866174097dacbd0acb6402fd4852723c913b20c",
+          "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+          "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+          "audit_negative_vocabulary.py": "4f9e1ac8fc921a30a192900923aa348a5152e31723b511b0b788c0183e4f0d5e",
+          "mlx_samples.py": "00ed1c972beb3cbd664a77b2c6ec4d91fd6de1741f008bf206ea894082c6a7a8",
+          "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+          "compare_phrase_output.py": "1b8f578a38052ba16edcf573fc03d524f53d37e79b33ede9f603c25815b0051b",
+          "compare_paired_ranking.py": "9649371c6710b23737a164a8ab4e536f7a0bbeadc88ddf6d7e2032d6e0c007e5",
+          "audit_export.py": "32b3e9242f6896481a82d3902a12b3f2e7b21346888d8b05af6a426e60827b4e",
+          "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+          "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1",
+          "probe_ambient_false_wake.py": "84688fd1f6323bf519696ff9a9c60e087eb54573539a663b00e75665e4353b9f",
+          "train.py": "173f921b25e25ec3811aa4521c8ddb6f5207d4fa5abeb98fe5f8e4f61ab03b0c",
+          "continuous_negatives.py": "8a179b1fed85124125c05810df48dd1b5428216fda988dd444f888ecee5718dd",
+          "score_connected_speech.py": "7d65a4c75ae87f23140de027f1a7f9f5a64f6bb246e87e6ff9ca8738a1f2cdbc",
+          "mine_dialogue_confusers.py": "dbf7fb043e6b5ce9d1137f5d657d9be9b9b4808038663102ab2374e19c73444b",
+          "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+          "audit_phonemes.py": "17204f5bc1c66ede2a60e432e70953d1e0145d3089b1befd34b8064a2a187f66",
+          "align_connected_speech.py": "a05f5979550cff5e2db13fa8e7688a393019eaa5b4b249bd2880b8eb9e8ce41b",
+          "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+          "test_phone_ctc_readout.py": "25ec55d7a074b22106a0fef1b1b813d34477c6e581a4c8ecb7b07be101e3ffe2",
+          "test_detector_policy.py": "eef3bfe191adbaa032deb9ec7bd24b64cb09818dc9218612cfbe611ead437279",
+          "probe_terminal_support.py": "30c99f71f3b009b5b90a5dd55b4aca993261619a29c1167a3a9f0a6043432a25",
+          "audit_phone_gradients.py": "06a7bd84cbe7d9125b212d94b8772f9dbb33c91636ebe3cd880c304ec2a1e610",
+          "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+          "compare_near_word_windows.py": "8cab8c0a512fa27c53700d0a0ef38a04ed95455f4c23942d14a3a9f3a8874569",
+          "prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef",
+          "audit_transfer.py": "acdea6530c225aa7c60bbe6f7ddf4daaa50284e6216771bc2bfea93c9fca9159",
+          "audit_near_word_errors.py": "340db259cdfd9645aa2c853658f819fa01bbaa3bb9b5f4ca6041dc33a61167ab",
+          "rebuild_continuous_features.py": "8fc25df4dcd28fdf875f4414c3330ca66557e48a8d505f4ae28d7169eb98c2e9",
+          "test_quarantine_pronunciation.py": "5f4b786da7c7e89bc62efa6ee909e1c2e5e94cac6a94149c6faa10f472df927f",
+          "phone_gradient_audit.py": "19b5708a81d28dad4ca1a00f4d6933929cc968bdc2f227c8c8b9efa0e257d134",
+          "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+          "dialogue_confuser_windows.py": "0eec6089ca1d151939ddee58432a46b46ebd393034311eb685b28bb237007af3",
+          "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+          "mine_stream_confusers.py": "889995c7c737cd4ad1e1e9ba2db24fbcd07ed7b7a4b3624b40ec2c9a1d3c3a3d",
+          "kokoro_samples.py": "2694bba41464bb816d72f47551d2e6598e2c823dedff7cc8600ef292819b6246"
+        }
+      }
+    },
+    "final": {
+      "raw_diagnostic_sha256": "d5f50c0b1b2333a573762e070d273b693e40886832ea9a4f60e0a4f474fb15e5",
+      "launch_sha256": "d198a2bda271e9590a9a4fbf40c0c7de30551e602e200754925e58c31dbd8fff",
+      "checkout_revision": "d3e6abd815020c69f3ea0e2830f572bf909e42f1",
+      "summary": {
+        "conflicting_encoder_batches": 6,
+        "binary_clipped_batches": 1,
+        "joint_clipped_batches": 1,
+        "scaled_phone_to_binary_encoder_norm": {
+          "minimum": 0.059713438799224465,
+          "median": 0.8093378333620531,
+          "maximum": 12.7133249389768
+        },
+        "encoder_cosine": {
+          "minimum": -0.17761459579647532,
+          "median": 0.042881834719209956,
+          "maximum": 0.2365463997209788
+        },
+        "classifier_relative_scale": {
+          "minimum": 1.0,
+          "median": 1.0,
+          "maximum": 1.000819183147424
+        }
+      },
+      "diagnostic": {
+        "scope": "Read-only gradient decomposition on actual mixed-source training batches.",
+        "checkpoint_sha256": "75995edf61f0b6240f7b88041285f4decc58e0eb783a980f50cd0885279a9102",
+        "training_prefix_sha256": "822a0c05675856fd89b0bfb7ff1bdce176e8a99a2bb9fb576762bdf7a856fa39",
+        "batch_count": 16,
+        "gain": 0.1,
+        "binary_weights_sha256": "19d21b9004141d0f5a1911e8bd0b9211e39d1db9607877706ee4510d83f67ddc",
+        "full_weights_sha256": "9763ad1895f6fbe190225d52670f5925871aac4fc570eca5cb0639d2ba05d550",
+        "weights_unchanged": true,
+        "optimizer_unchanged": true,
+        "batches": [
+          {
+            "binary_loss": 0.0035071969032287598,
+            "phone_loss": 1.2067131996154785,
+            "joint_loss": 0.12417852133512497,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.6639091840537794,
+                "phone_norm": 9.395003118846168,
+                "joint_norm": 1.1122102191181715,
+                "scaled_phone_to_binary_norm": 1.4151036534064776,
+                "cosine": -0.0692790210926047,
+                "decomposition_max_error": 3.129243850152896e-08
+              },
+              "encoder": {
+                "binary_norm": 0.6590157019505392,
+                "phone_norm": 9.384041596751524,
+                "joint_norm": 1.108367896144116,
+                "scaled_phone_to_binary_norm": 1.4239481045712354,
+                "cosine": -0.06987497426361779,
+                "decomposition_max_error": 3.129243850152896e-08
+              },
+              "classifier": {
+                "binary_norm": 0.08045936398949072,
+                "phone_norm": 0.0,
+                "joint_norm": 0.08045936398949072,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.4537035525167441,
+                "joint_norm": 0.04537035435572468,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 3.003515303133563e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.003136123064905405,
+            "phone_loss": 0.9162137508392334,
+            "joint_loss": 0.09475749731063843,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.45822566860075353,
+                "phone_norm": 6.7053203212198875,
+                "joint_norm": 0.8601696711925496,
+                "scaled_phone_to_binary_norm": 1.4633227208103332,
+                "cosine": 0.13068616572681713,
+                "decomposition_max_error": 2.8870999813079834e-08
+              },
+              "encoder": {
+                "binary_norm": 0.4512582905610662,
+                "phone_norm": 6.6802515004481,
+                "joint_norm": 0.8545171384159856,
+                "scaled_phone_to_binary_norm": 1.4803609463091072,
+                "cosine": 0.13320194059275636,
+                "decomposition_max_error": 2.8870999813079834e-08
+              },
+              "classifier": {
+                "binary_norm": 0.07960350849373396,
+                "phone_norm": 0.0,
+                "joint_norm": 0.07960350849373396,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5792758418278007,
+                "joint_norm": 0.05792758262125667,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.05359673500061e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.0035948497243225574,
+            "phone_loss": 1.2326256036758423,
+            "joint_loss": 0.12685741484165192,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.2438536261550994,
+                "phone_norm": 7.80121801097574,
+                "joint_norm": 1.4779914841147896,
+                "scaled_phone_to_binary_norm": 0.6271813537329339,
+                "cosine": 0.014786868938101671,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "encoder": {
+                "binary_norm": 1.2336767326501594,
+                "phone_norm": 7.787973855315413,
+                "joint_norm": 1.4687343557488481,
+                "scaled_phone_to_binary_norm": 0.6312815707065695,
+                "cosine": 0.014934203195572872,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "classifier": {
+                "binary_norm": 0.15878779114534283,
+                "phone_norm": 0.0,
+                "joint_norm": 0.15878779114534283,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.45438495100067244,
+                "joint_norm": 0.04543849405557773,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.984919309616089e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.005830892361700535,
+            "phone_loss": 0.9894629120826721,
+            "joint_loss": 0.10477718710899353,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.9123453809658046,
+                "phone_norm": 7.974048375748072,
+                "joint_norm": 1.2730780519638818,
+                "scaled_phone_to_binary_norm": 0.8740164133134297,
+                "cosine": 0.10480935908976137,
+                "decomposition_max_error": 6.742775440771176e-08
+              },
+              "encoder": {
+                "binary_norm": 0.8926167035795302,
+                "phone_norm": 7.96393163653924,
+                "joint_norm": 1.2583742718048663,
+                "scaled_phone_to_binary_norm": 0.8922006057698282,
+                "cosine": 0.10726194703570195,
+                "decomposition_max_error": 6.742775440771176e-08
+              },
+              "classifier": {
+                "binary_norm": 0.1887048347564325,
+                "phone_norm": 0.0,
+                "joint_norm": 0.1887048347564325,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.40154749071549395,
+                "joint_norm": 0.04015474805390497,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 5.20376488557725e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.006454650312662125,
+            "phone_loss": 1.0397700071334839,
+            "joint_loss": 0.11043165624141693,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.065669476765936,
+                "phone_norm": 12.368565717880076,
+                "joint_norm": 1.677835913523306,
+                "scaled_phone_to_binary_norm": 1.160638076584107,
+                "cosine": 0.056774834468303066,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "encoder": {
+                "binary_norm": 1.0437970873214395,
+                "phone_norm": 12.35631473963465,
+                "joint_norm": 1.663119129421619,
+                "scaled_phone_to_binary_norm": 1.1837851331184543,
+                "cosine": 0.058022000923904256,
+                "decomposition_max_error": 5.960464477539063e-08
+              },
+              "classifier": {
+                "binary_norm": 0.2148000796318833,
+                "phone_norm": 0.0,
+                "joint_norm": 0.2148000796318833,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.55036712529531,
+                "joint_norm": 0.05503671366098349,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 8.70786607230778e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.000422831391915679,
+            "phone_loss": 0.7935512661933899,
+            "joint_loss": 0.07977795600891113,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.03807625803408829,
+                "phone_norm": 4.7073093779553945,
+                "joint_norm": 0.4720725604305695,
+                "scaled_phone_to_binary_norm": 12.362846616232908,
+                "cosine": -0.0051584144767450445,
+                "decomposition_max_error": 3.804452717269535e-08
+              },
+              "encoder": {
+                "binary_norm": 0.03691341831471392,
+                "phone_norm": 4.692922816433354,
+                "joint_norm": 0.47054535510377316,
+                "scaled_phone_to_binary_norm": 12.7133249389768,
+                "cosine": -0.0053372256241252716,
+                "decomposition_max_error": 3.804452717269535e-08
+              },
+              "classifier": {
+                "binary_norm": 0.009338146186552015,
+                "phone_norm": 0.0,
+                "joint_norm": 0.009338146186552015,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.3677458616844676,
+                "joint_norm": 0.03677458534825902,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.193295121106196e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.05005817115306854,
+            "phone_loss": 1.2668755054473877,
+            "joint_loss": 0.1767457276582718,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.9723798270090918,
+                "phone_norm": 9.802735364008168,
+                "joint_norm": 2.2976252291861208,
+                "scaled_phone_to_binary_norm": 0.4970003865266151,
+                "cosine": 0.11064644419425287,
+                "decomposition_max_error": 7.003545759998175e-08
+              },
+              "encoder": {
+                "binary_norm": 1.929758274417834,
+                "phone_norm": 9.769499322428072,
+                "joint_norm": 2.259703846304821,
+                "scaled_phone_to_binary_norm": 0.5062550813715421,
+                "cosine": 0.11347496916147612,
+                "decomposition_max_error": 7.003545759998175e-08
+              },
+              "classifier": {
+                "binary_norm": 0.4078175870512686,
+                "phone_norm": 0.0,
+                "joint_norm": 0.4078175870512686,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.8065380374500531,
+                "joint_norm": 0.08065380635441458,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.798654794953202e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.006248846184462309,
+            "phone_loss": 1.188173770904541,
+            "joint_loss": 0.12506622076034546,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.1004724395037786,
+                "phone_norm": 8.954830333536206,
+                "joint_norm": 1.5227794342118832,
+                "scaled_phone_to_binary_norm": 0.8137259973156701,
+                "cosine": 0.15522166072621837,
+                "decomposition_max_error": 6.01634383146088e-08
+              },
+              "encoder": {
+                "binary_norm": 1.0880004556436387,
+                "phone_norm": 8.948280451954636,
+                "joint_norm": 1.5134034406467451,
+                "scaled_phone_to_binary_norm": 0.822451902987579,
+                "cosine": 0.15711592027344568,
+                "decomposition_max_error": 6.01634383146088e-08
+              },
+              "classifier": {
+                "binary_norm": 0.1652107703106317,
+                "phone_norm": 0.0,
+                "joint_norm": 0.1652107703106317,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.3424372286809765,
+                "joint_norm": 0.03424372162347453,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 2.8870999813947196e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.005545826628804207,
+            "phone_loss": 1.0922129154205322,
+            "joint_loss": 0.11476711928844452,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.8165852455189164,
+                "phone_norm": 6.348082251461055,
+                "joint_norm": 1.047722590292802,
+                "scaled_phone_to_binary_norm": 0.7773936997143552,
+                "cosine": 0.026939493475079578,
+                "decomposition_max_error": 4.1723251341732603e-08
+              },
+              "encoder": {
+                "binary_norm": 0.7951203946620988,
+                "phone_norm": 6.330937532615294,
+                "joint_norm": 1.030026127288235,
+                "scaled_phone_to_binary_norm": 0.7962237637365274,
+                "cosine": 0.027741668514515653,
+                "decomposition_max_error": 4.1723251341732603e-08
+              },
+              "classifier": {
+                "binary_norm": 0.18599736877595086,
+                "phone_norm": 0.0,
+                "joint_norm": 0.18599736877595086,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.4662383826304373,
+                "joint_norm": 0.046623836413175836,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.984919309616089e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.030779775232076645,
+            "phone_loss": 1.2328046560287476,
+            "joint_loss": 0.1540602445602417,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 2.143545684280591,
+                "phone_norm": 7.139741857521812,
+                "joint_norm": 2.409718239565442,
+                "scaled_phone_to_binary_norm": 0.33308092801008,
+                "cosine": 0.22941006338270478,
+                "decomposition_max_error": 7.301568982764906e-08
+              },
+              "encoder": {
+                "binary_norm": 2.0836983209242037,
+                "phone_norm": 7.123222898381026,
+                "joint_norm": 2.356140168363488,
+                "scaled_phone_to_binary_norm": 0.3418548081961112,
+                "cosine": 0.2365463997209788,
+                "decomposition_max_error": 7.301568982764906e-08
+              },
+              "classifier": {
+                "binary_norm": 0.5029805244496066,
+                "phone_norm": 0.0,
+                "joint_norm": 0.5029805244496066,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.48539605687441956,
+                "joint_norm": 0.04853960385961245,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 1.0989606380289174e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.02451450563967228,
+            "phone_loss": 1.193782091140747,
+            "joint_loss": 0.14389272034168243,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 2.4112950487918954,
+                "phone_norm": 7.376749878657098,
+                "joint_norm": 2.6277408100582433,
+                "scaled_phone_to_binary_norm": 0.3059248134048544,
+                "cosine": 0.15362287463169066,
+                "decomposition_max_error": 9.946525098003534e-08
+              },
+              "encoder": {
+                "binary_norm": 2.3854297299547644,
+                "phone_norm": 7.351232339289303,
+                "joint_norm": 2.6033045788919167,
+                "scaled_phone_to_binary_norm": 0.30817224447976954,
+                "cosine": 0.15582765078209226,
+                "decomposition_max_error": 9.946525098003534e-08
+              },
+              "classifier": {
+                "binary_norm": 0.3522340355165131,
+                "phone_norm": 0.0,
+                "joint_norm": 0.3522340355165131,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.6130431192458391,
+                "joint_norm": 0.061304311346634284,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.28642737865448e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.003531700000166893,
+            "phone_loss": 1.1793780326843262,
+            "joint_loss": 0.12146950513124466,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.6242684400462347,
+                "phone_norm": 7.320802687061044,
+                "joint_norm": 0.9163758024991492,
+                "scaled_phone_to_binary_norm": 1.1727010717567028,
+                "cosine": -0.0939883121324269,
+                "decomposition_max_error": 4.190951585769653e-08
+              },
+              "encoder": {
+                "binary_norm": 0.6059052772397087,
+                "phone_norm": 7.301775810742205,
+                "joint_norm": 0.9024259033389687,
+                "scaled_phone_to_binary_norm": 1.2051018674084715,
+                "cosine": -0.0970891507638961,
+                "decomposition_max_error": 4.190951585769653e-08
+              },
+              "classifier": {
+                "binary_norm": 0.15029930223002058,
+                "phone_norm": 0.0,
+                "joint_norm": 0.15029930223002058,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5274675274746702,
+                "joint_norm": 0.052746754762498856,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 2.561137080192566e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.009630539454519749,
+            "phone_loss": 0.9014875888824463,
+            "joint_loss": 0.09977930039167404,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 1.0589966214763111,
+                "phone_norm": 7.159215238422157,
+                "joint_norm": 1.3349387890798552,
+                "scaled_phone_to_binary_norm": 0.6760375900389313,
+                "cosine": 0.09763394214683288,
+                "decomposition_max_error": 4.9918889993838533e-08
+              },
+              "encoder": {
+                "binary_norm": 1.0273479755569772,
+                "phone_norm": 7.146142340909705,
+                "joint_norm": 1.309259891795668,
+                "scaled_phone_to_binary_norm": 0.6955912223446414,
+                "cosine": 0.10082577924578728,
+                "decomposition_max_error": 4.9918889993838533e-08
+              },
+              "classifier": {
+                "binary_norm": 0.2569629962022196,
+                "phone_norm": 0.0,
+                "joint_norm": 0.2569629962022196,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.432449388383888,
+                "joint_norm": 0.04324494083663579,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 3.3993273972597604e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.0011179647408425808,
+            "phone_loss": 1.221566915512085,
+            "joint_loss": 0.12327466160058975,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 0.13344820331977894,
+                "phone_norm": 9.682169528244271,
+                "joint_norm": 0.9543250724425826,
+                "scaled_phone_to_binary_norm": 7.2553764587171745,
+                "cosine": -0.17226684102201312,
+                "decomposition_max_error": 5.415640771944119e-08
+              },
+              "encoder": {
+                "binary_norm": 0.12964570560241712,
+                "phone_norm": 9.666078457152532,
+                "joint_norm": 0.95216731191113,
+                "scaled_phone_to_binary_norm": 7.455764471516994,
+                "cosine": -0.17761459579647532,
+                "decomposition_max_error": 5.415640771944119e-08
+              },
+              "classifier": {
+                "binary_norm": 0.03162932165141157,
+                "phone_norm": 0.0,
+                "joint_norm": 0.03162932165141157,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5579731479503903,
+                "joint_norm": 0.05579731205304766,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 2.1327286959041403e-08
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          },
+          {
+            "binary_loss": 0.051165591925382614,
+            "phone_loss": 1.2004659175872803,
+            "joint_loss": 0.17121218144893646,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 10.352813724719052,
+                "phone_norm": 6.110163981914594,
+                "joint_norm": 10.344339815870663,
+                "scaled_phone_to_binary_norm": 0.059019355939202975,
+                "cosine": -0.04337251731893101,
+                "decomposition_max_error": 5.805864931041071e-07
+              },
+              "encoder": {
+                "binary_norm": 10.186008819511315,
+                "phone_norm": 6.0824161425224945,
+                "joint_norm": 10.177229814700073,
+                "scaled_phone_to_binary_norm": 0.059713438799224465,
+                "cosine": -0.04428388526699693,
+                "decomposition_max_error": 5.805864931041071e-07
+              },
+              "classifier": {
+                "binary_norm": 1.8509393149341435,
+                "phone_norm": 0.0,
+                "joint_norm": 1.8509393149341435,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.5816508876191868,
+                "joint_norm": 0.0581650876228126,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.146728992548894e-09
+              }
+            },
+            "binary_clip_scale": 0.4829604910268669,
+            "joint_clip_scale": 0.48335612412198775,
+            "classifier_binary_scale_relative_to_binary_only": 1.000819183147424
+          },
+          {
+            "binary_loss": 0.017983999103307724,
+            "phone_loss": 1.0873637199401855,
+            "joint_loss": 0.1267203688621521,
+            "supervised_examples": 16,
+            "groups": {
+              "all": {
+                "binary_norm": 2.874465927171152,
+                "phone_norm": 9.9493555609633,
+                "joint_norm": 2.9974960795236836,
+                "scaled_phone_to_binary_norm": 0.3461288396886568,
+                "cosine": -0.04676174645439515,
+                "decomposition_max_error": 1.0579824444301167e-07
+              },
+              "encoder": {
+                "binary_norm": 2.8474985413328255,
+                "phone_norm": 9.933378768514887,
+                "joint_norm": 2.971110852870003,
+                "scaled_phone_to_binary_norm": 0.348845789535168,
+                "cosine": -0.04728052968425775,
+                "decomposition_max_error": 1.0579824444301167e-07
+              },
+              "classifier": {
+                "binary_norm": 0.3928185631755947,
+                "phone_norm": 0.0,
+                "joint_norm": 0.3928185631755947,
+                "scaled_phone_to_binary_norm": 0.0,
+                "cosine": null,
+                "decomposition_max_error": 0.0
+              },
+              "auxiliary_head": {
+                "binary_norm": 0.0,
+                "phone_norm": 0.563615400507346,
+                "joint_norm": 0.05636153956909089,
+                "scaled_phone_to_binary_norm": null,
+                "cosine": null,
+                "decomposition_max_error": 6.612390279422953e-09
+              }
+            },
+            "binary_clip_scale": 1.0,
+            "joint_clip_scale": 1.0,
+            "classifier_binary_scale_relative_to_binary_only": 1.0
+          }
+        ],
+        "limits": "Actual first mixed training batches at one fixed saved state; no parameter/optimizer update or resume. These samples do not represent the complete training trajectory. Float64 norm/clip calculations diagnose the float32 optimizer approximately. No validation, model selection, inference export, room recording or board access.",
+        "plan_sha256": "106f3995ae99b53e0082097aec49f2f564b8c722d744576dc8aa2a2d73911453",
+        "initial_weights_sha256": "2f441acbbf216ed2b32759bb077acff063402f45c40fb55a5f9bc7c3a97ea255",
+        "phone_bank": {
+          "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+          "pairs": 118,
+          "draws": 128,
+          "schedule_sha256": "f532c25592b9fcc446f8e6ddf5803c08f194288c0bea768b91155353ea0b888a",
+          "steps": 67,
+          "vocabulary": 392,
+          "sequence": {
+            "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+            "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+            "length_histogram": {
+              "3": 6,
+              "4": 14,
+              "5": 63,
+              "6": 112,
+              "7": 29,
+              "8": 10,
+              "9": 1,
+              "11": 1
+            },
+            "encoding": "Full168 greedy CTC collapse; nonempty labels padded by blank zero to 67 steps."
+          }
+        },
+        "source_files_sha256": {
+          "test_ctc_confuser_margin.py": "2df9e1e94625b1a69850debe651407f9cd572014ac0026287a94153e04b0565d",
+          "connected_speech_candidates.py": "c62edbcffc3050b564374db85d7587d73fb56efe81fbb9b6f863424b7d6037b7",
+          "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+          "stream_data.py": "205c6620a0a2b45f84a41a20014ed8db3b7206696ea46a4865f38b8f7f56662f",
+          "mac_eval_samples.py": "41b8c6d96b16363d5696d656f6cd32ee55e369ea47b4597646e11b627419b597",
+          "fleurs_negatives.py": "9348449bed032ec8be40aa384fbea8cde52a9398eb5af7f4d6f4d8fa6d1f1853",
+          "audit_phone_wake_changes.py": "281429c8f8d8a41cd7b18357cd1473bfaeae5ae46d4c97737c70687b876c6368",
+          "phrases.py": "9de03dd44c7136ba1df8e40819aa3c9e9418987143516ac15be86dae33b98969",
+          "quarantine_pronunciation.py": "46f8443bc65ed2311ef6bb365e231f820afc7bb0acec3e6d7ab39022097cbcb0",
+          "compare_phone_distillation.py": "0ec4eb69f5982f5f8c5b5714bb7177f6c94c141969ffc18b6d8caa1c415abd30",
+          "audit_phone_pair_sequences.py": "fccd7d0544f683957f60286205c516be2aff6615f4ef3cefbea33e8891e17165",
+          "backgrounds.py": "caf5a6b72134671b5deeb1ae8359f8924f5b42350fa4c6d9b3ae86af66df6938",
+          "evaluate_continuous.py": "006372f427f2db6632c2fb18517ed09cc6184be93d3333ba3802363362a7d684",
+          "probe_ctc_confuser_margin.py": "189284349558da15425868978709d312ab15170a4d23ee147603c04000c6fb19",
+          "train_stream.py": "938d2b62fc738371b709418200d2f0e0bc11c62ebdff1ef8b2be21eef1513169",
+          "phone_distillation.py": "50846b64b221e0a760290d003ea78475644cfb6e215ff0fff5d6290f229d6355",
+          "compare_matched_confusers.py": "5c1a1a1be85edceef3abad331e1fe4e2a9a1404c152bdf43a6c8b108a08903f3",
+          "probe_causal_phone_verifier.py": "995edca3b6d18a44f2b3d2f0243505e7aa9a2514ff96f209160524a461ddd9db",
+          "compare_candidates.py": "79246adeb08ee0d5cccccc70a33358862a19bae83fa6fb15daf65fda70b4b83e",
+          "audit_phone_ctc_readout.py": "3856c99b6872a4dc46d5deb56997a7dea2de0e6fdde041c718e6d707c97aa4cd",
+          "audit_speech.py": "967f5c47640da968714acd80631620ffc0e8fc433949430b9e5c8a488278cc70",
+          "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+          "generate.py": "747e7b0102c159776ed721b4d8cb60f4f02d7aa3e4d875bdbd53c5c90c88053f",
+          "compare_stream_equal_mean.py": "afcaae9be1f3f6f5abbe9688eeb5867f151440a33160cd9187895fe449bb35b5",
+          "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+          "test_phone_gradient_audit.py": "fb6e475f72ebde11672e9be90f2fbb425ee6fde093ab71742b6c1363b1456b47",
+          "training_negatives.py": "aff5a6a539b1ee13de8ee08fa78693d9e98f9a4839175e18a65a62c9f2a598b4",
+          "extend_human_features.py": "76ad04b37a3bac1a80c7c74b0b7ac672b53d64c638658562dbbeec902bceab34",
+          "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+          "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+          "openai_samples.py": "0eb51c1e359d32864b004044e439f9b2c355751033e840f2bf878fa55fc33144",
+          "mac_corpus.py": "731103e207cca2bde011a655927112f8a70a619d5408c250ee80cf5a4d4faa12",
+          "edge_samples.py": "57c4d69c52db483c5f1a936850bda8dd5a83e7aa7e2d267319220316d89ec6a9",
+          "baseline_samples.py": "49c9108517a22346b7101c86eb3575b96cda01a5d767e1cc49ceb8f118f51a85",
+          "probe_score_ceiling.py": "390dd10a24d19c40b176b00eb866174097dacbd0acb6402fd4852723c913b20c",
+          "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+          "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+          "audit_negative_vocabulary.py": "4f9e1ac8fc921a30a192900923aa348a5152e31723b511b0b788c0183e4f0d5e",
+          "mlx_samples.py": "00ed1c972beb3cbd664a77b2c6ec4d91fd6de1741f008bf206ea894082c6a7a8",
+          "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+          "compare_phrase_output.py": "1b8f578a38052ba16edcf573fc03d524f53d37e79b33ede9f603c25815b0051b",
+          "compare_paired_ranking.py": "9649371c6710b23737a164a8ab4e536f7a0bbeadc88ddf6d7e2032d6e0c007e5",
+          "audit_export.py": "32b3e9242f6896481a82d3902a12b3f2e7b21346888d8b05af6a426e60827b4e",
+          "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+          "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1",
+          "probe_ambient_false_wake.py": "84688fd1f6323bf519696ff9a9c60e087eb54573539a663b00e75665e4353b9f",
+          "train.py": "173f921b25e25ec3811aa4521c8ddb6f5207d4fa5abeb98fe5f8e4f61ab03b0c",
+          "continuous_negatives.py": "8a179b1fed85124125c05810df48dd1b5428216fda988dd444f888ecee5718dd",
+          "score_connected_speech.py": "7d65a4c75ae87f23140de027f1a7f9f5a64f6bb246e87e6ff9ca8738a1f2cdbc",
+          "mine_dialogue_confusers.py": "dbf7fb043e6b5ce9d1137f5d657d9be9b9b4808038663102ab2374e19c73444b",
+          "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+          "audit_phonemes.py": "17204f5bc1c66ede2a60e432e70953d1e0145d3089b1befd34b8064a2a187f66",
+          "align_connected_speech.py": "a05f5979550cff5e2db13fa8e7688a393019eaa5b4b249bd2880b8eb9e8ce41b",
+          "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+          "test_phone_ctc_readout.py": "25ec55d7a074b22106a0fef1b1b813d34477c6e581a4c8ecb7b07be101e3ffe2",
+          "test_detector_policy.py": "eef3bfe191adbaa032deb9ec7bd24b64cb09818dc9218612cfbe611ead437279",
+          "probe_terminal_support.py": "30c99f71f3b009b5b90a5dd55b4aca993261619a29c1167a3a9f0a6043432a25",
+          "audit_phone_gradients.py": "06a7bd84cbe7d9125b212d94b8772f9dbb33c91636ebe3cd880c304ec2a1e610",
+          "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+          "compare_near_word_windows.py": "8cab8c0a512fa27c53700d0a0ef38a04ed95455f4c23942d14a3a9f3a8874569",
+          "prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef",
+          "audit_transfer.py": "acdea6530c225aa7c60bbe6f7ddf4daaa50284e6216771bc2bfea93c9fca9159",
+          "audit_near_word_errors.py": "340db259cdfd9645aa2c853658f819fa01bbaa3bb9b5f4ca6041dc33a61167ab",
+          "rebuild_continuous_features.py": "8fc25df4dcd28fdf875f4414c3330ca66557e48a8d505f4ae28d7169eb98c2e9",
+          "test_quarantine_pronunciation.py": "5f4b786da7c7e89bc62efa6ee909e1c2e5e94cac6a94149c6faa10f472df927f",
+          "phone_gradient_audit.py": "19b5708a81d28dad4ca1a00f4d6933929cc968bdc2f227c8c8b9efa0e257d134",
+          "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+          "dialogue_confuser_windows.py": "0eec6089ca1d151939ddee58432a46b46ebd393034311eb685b28bb237007af3",
+          "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+          "mine_stream_confusers.py": "889995c7c737cd4ad1e1e9ba2db24fbcd07ed7b7a4b3624b40ec2c9a1d3c3a3d",
+          "kokoro_samples.py": "2694bba41464bb816d72f47551d2e6598e2c823dedff7cc8600ef292819b6246"
+        }
+      }
+    }
+  },
+  "interpretation": "Shared global clipping has only a small classifier scaling effect in these samples; it does not explain the regression on its own. Scaled auxiliary encoder gradients vary widely and can exceed binary gradients, with most directions close to orthogonal and some opposed. This supports testing bounded encoder task balancing rather than assuming a clipping or frozen-head optimization failure.",
+  "limits": "Only 16 original mixed batches at two fixed states. Gradient norms are not Adam update norms, a causal validation result, an independent sample or a wake-quality acceptance. No data/label/threshold/runtime changes, playback, microphone capture or board access."
+}
