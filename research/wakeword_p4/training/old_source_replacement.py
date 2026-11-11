@@ -1,5 +1,10 @@
 """Opt-in replacement of half the v37 phrase slots with complete old sources.
 
+Superseded before real-pack execution by GPU v40's frozen CompleteCoverage
+implementation at 911937b (seed127726). This unused seed137726 prototype is
+retained for provenance only; do not integrate it into the running experiment.
+Coordination: https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13
+
 Call after consuming the original baseline128 and FullSourceBatch.first80().
 This module never owns that generator, its RNG, loss, model or optimizer.
 Only the returned x changes; y/weights and unselected input slots are preserved.

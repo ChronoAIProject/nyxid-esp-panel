@@ -1,4 +1,8 @@
-"""Exercise the real source pack without a model or real v37 baseline generator."""
+"""Unused probe, superseded by GPU v40's completed sampler integration audit.
+
+The real-pack run was never executed. Retained for provenance only; use the
+frozen GPU v40 implementation/audit at 911937b, not this seed137726 prototype.
+"""
 import argparse
 from collections import Counter
 from fractions import Fraction
