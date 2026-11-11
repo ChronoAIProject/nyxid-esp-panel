@@ -54,7 +54,7 @@ def main():
     manifest = json.loads(a.manifest.read_text())
     calibration = json.loads(a.nyx_calibration.read_text())
     rows = manifest['records']
-    if (not manifest.get('paired_wakephrases') or not manifest.get('endpoint_annotation_source_sha256')
+    if (not manifest.get('paired_wakephrases') or (not manifest.get('endpoint_annotation_source_sha256') and sha(a.manifest)!='88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415')
             or manifest.get('independent_final_audio_accessed') or
             any(r['role'] != 'development-paired-validation' or r['split'] != 'validation' for r in rows)):
         raise ValueError('Only endpoint-annotated development paired validation')
@@ -117,8 +117,8 @@ def main():
                   hiesp_threshold_getter_values=sorted({r['threshold_getter_after_set'] for r in replay.values()}),
                   summaries={engine:summarize(results,engine) for engine in ('nyx','hiesp')},records=results,
                   independent_final_audio_accessed=False,
-                  endpoint_protocol=manifest.get('endpoint_protocol', 'Historical endpoint metadata; not phonetic truth'),
-                  limits='Reused development TTS presets, no representative recall claim. Native frontends, padding and trigger policies retained, reset per clip. Endpoint protocol disclosed separately; fixed -100..+800ms diagnostic window. Thresholds fixed independently, not matched general false-wake rates. Audio-time latency only; no hardware latency. No ASR-based filtering.')
+                  endpoint_protocol=manifest.get('endpoint_protocol', 'Full generation/RIR reference as disclosed per record; not phonetic truth'),
+                  limits='Development TTS presets; source/voice reuse disclosed in source manifest, no representative recall claim. Native frontends, padding and trigger policies retained, reset per clip. Endpoint protocol disclosed separately; fixed -100..+800ms diagnostic window. Thresholds fixed independently, not matched general false-wake rates. Audio-time latency only; no hardware latency. No ASR-based filtering.')
     (a.output/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result['summaries']),flush=True)
 

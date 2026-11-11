@@ -3653,3 +3653,24 @@ first2 remaining dev indices，报告4090-voxconverse-new-development-plan-v1。
 新stage不把新曝光合并旧dev0/1来挽救旧FAR；背景完整性/重复审计是评分前条件。
 新阈值规则、零混淆词误触发、FAR95<=.5/h等在生成前固定；最终集仍不访问。
 v36原训练观察至24000/120000步；原后处理PID91294仍绑定等待，不重启。
+
+## 新开发复放/连续背景准备完毕（尚未评分）
+
+SLR83固定30原音制作90条（三条件）完整复放，干净30条原PCM逐样本保留，
+25dB白噪/15dB白噪+完整960样本RIR，噪声以原音RMS为参考，不做RMS标准化。
+预备replay-v1发现RIR噪声曾以混响RMS计算，评分前纠正并另存v2，v1保留、不评分。
+v2 manifest SHA88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415，
+全部WAV/PCM哈希、无饱和、源长度、完整尾音/参考边界与干净字节复核通过。
+冻结清单与审计4090-slr83-development-replay-{manifest,audit}-v2.json。
+评分工具仅增加这一精确manifest白名单，不放开最终音频或改变既有事件/阈值规则。
+
+Vox新dev2/dev3下载原会话exit0，LFS大小/SHA全部匹配；原等待准备进程exit0。
+86条完整native16kmonoPCM16 WAV，8.487218975694445h；无裁切/拼静音/重采样/标准化。
+与旧dev0/dev1的路径、编码SHA、PCM SHA均无重复，保留镜像预处理/物理人重叠未知限制。
+每条完整编码字节保存，全部86个特征SHA/shape/dtype和原WAV SHA二次核验。
+新index SHA865960c9f88fc1d306ab3cfaed0cf3ce861df475375a84d25335263968f24305；
+replay manifest SHAc65b0e566384bc3c54d36d4766d6e7abed731e01263354f5d05a924a454b2170。
+所有来源/下载/单分片/跨stage/合并/前端/复放清单保存4090-voxconverse-new-development-*。
+目前无唤醒模型评分或FAR结果；新曝光不得并入旧开发来挽救旧门槛。
+v36原训练仍在运行，原后处理等待保留；先完成探索回归再考虑消费新开发评分。
+最终保留集未下载、未生成、未评分；冻结v30及Mac交接不变。

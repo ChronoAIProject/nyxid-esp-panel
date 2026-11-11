@@ -25,7 +25,8 @@ def main():
     calibration=json.loads(a.calibration.read_text())
     official=json.loads(a.official_reports.read_text())
     expected_counts={'2ff49bdd98b7b8ccaa2d01bef9f8764db331ad2a08c98ace522a05df48763dc8':80,
-        '779077bae3a01ae80392962d572b1d6a42a5b58ecd1bb583d23599ea931ba5be':300}
+        '779077bae3a01ae80392962d572b1d6a42a5b58ecd1bb583d23599ea931ba5be':300,
+        '88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415':90}
     count=expected_counts.get(sha(a.manifest))
     if (count is None
             or len(rows)!=count or manifest['independent_final_audio_accessed']
