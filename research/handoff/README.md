@@ -1665,3 +1665,28 @@ the complete prepared inventory before copying it into the new run and points
 only treatment at its scalar weights. Original features, background inventory,
 bank and pinned upstream/runtime remain separate dependencies. The live Mac
 run and any later full results retain their own commands, raw logs and audits.
+
+The [completed result](../wakeword_p4/results/microwake-word-encoder-initialization-v1.json)
+rejects this initializer recipe. At the existing .97 reference, mean-engine
+recall improves 81.1458% -> 83.4539% and continuous events decrease 3 -> 1 on
+7.32382 reused development hours, while negative false clips increase
+76 -> 93/3,744 and worst-group false fraction rises 4.16667% -> 5.20833%.
+Treatment has no zero-event point on the frozen grid. Its minimum worst-group
+fraction is still 3.75%, above the unchanged 1% gate. Fitted CTC exact targets
+increase 8,860 -> 9,526/10,120 repeated rows without qualifying scalar rejection.
+These observations do not establish independent generalization or a unique
+cause. No reserved-quality scoring or hardware follows this failed screen.
+
+The [full study archive](assets-microwake-word-encoder-initialization-v1.json)
+includes both actual scalar exports and SavedModels, every checkpoint, the
+complete prepared initializer, frozen source/plan/commands/runtime, raw
+preflight/training/evaluation logs and complete development scores. The input
+audit verifies both original-control replay and explicitly different initial
+encoder identities. Full warmups are retained per arm; the default full-equality
+rule for ordinary matched studies remains unchanged. Separate saved-score
+audits reproduce every timebase, maximum, continuous event, full grid,
+reference text group and decision. A fresh public download verifies all 397
+listed member hashes and lengths. Full scalar/background caches remain
+external and byte-bound; no source audio, credentials, firmware or device state
+is included. Use the captured postprocessing/diagnostics with fresh output
+paths after the launcher completes; preserve historical source/launch records.

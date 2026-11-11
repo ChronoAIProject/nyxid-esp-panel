@@ -2994,3 +2994,51 @@ This is silent cached-feature research. No reserved quality data, audio
 device, microphone, speaker, board, firmware/OTA, original PCM speed or
 single I2S/AEC/AGC/FIFO path is touched. No development pass can establish
 Hi ESP parity; real-user/acoustic, P4 and long-call/reconnect evidence remains.
+
+## Word encoder initialization completed: development screen fails
+
+The [completed initializer comparison](../results/microwake-word-encoder-initialization-v1.json)
+does not advance. Both actual training processes exit zero and the original
+control again reproduces scalar SHA31537348..., complete warmup, input prefix,
+pair schedule and representative inputs. Treatment starts from the exact
+prepared scalar tensors. Both warmups preserve their own binary/optimizer
+state and share the fixed recipe/draws; their encoder-dependent results are
+retained separately. Both exports remain 61,712 bytes / 25,831 parameters,
+with the same scalar interface and no inference word head.
+
+At the existing .97 reference on reused development data:
+
+| Metric | Original binary encoder | Word-pretrained encoder |
+| --- | ---: | ---: |
+| Mean recall across engines | 81.1458% | 83.4539% |
+| Negative false clips / 3,744 variants | 76 | 93 |
+| Continuous false events / 7.32382 hours | 3 | 1 |
+| Worst engine/corpus false fraction | 4.16667% | 5.20833% |
+| Grid points with zero continuous events | 5 | 0 |
+
+The one treatment continuous event persists at every threshold in the frozen
+grid, including .996. Its one-sided 95% upper bound is .647731/hour on this
+particular exposure. At .996 the macro recall is 75.3879% and worst-group
+false fraction is 3.75%, still above the unchanged 1% gate. Control's frozen
+comparator remains .99 / 77.1637% macro / zero continuous events / 4.16667%
+worst group. Neither arm satisfies the strict gate. No new threshold, seed,
+gain, update extension, reserved-quality scoring or firmware follows.
+
+At .97, Mix false clips increase 32 -> 39, Next 22 -> 24, Nick 2 -> 3 and
+other negative texts 20 -> 27. Meanwhile, fitted two-token CTC exact targets
+improve 8,860 -> 9,526 among 10,120 repeated bank rows, and normalized NLL
+falls .198515 -> .109737. Better closed-set fit does not deliver useful
+open-set rejection in this recipe. The reduced continuous count on the same
+development exposure does not establish a general population FAR improvement,
+independent recognition, or a unique explanation of the remaining errors.
+
+All 6 focused software/gate tests, the actual legacy-study input regression,
+new full input audit and supplementary score/group audits pass. Reconstruction
+checks all 6,136 clips / 1,429,512 clip steps and 35 continuous sources /
+878,709 steps per arm, all timebases/maxima/events, full grids and the decision.
+Training source is `2e9277f`. The [complete evidence](../../handoff/assets-microwake-word-encoder-initialization-v1.json)
+retains both models, all checkpoints/SavedModels, the full prepared initializer,
+immutable sources, actual commands/runtime, raw logs and complete scores.
+Its fresh unauthenticated download verifies all 397 listed member hashes and
+lengths. No source audio, credentials, full feature caches or device state is
+included. No board or audio device was used; Hi ESP parity remains unachieved.

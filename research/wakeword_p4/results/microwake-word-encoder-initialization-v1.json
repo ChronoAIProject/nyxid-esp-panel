@@ -1,0 +1,156 @@
+{
+  "scope": "Paired full mixed-source scalar wake study comparing the original binary initializer with its retained word-CTC pretrained encoder; reused development validation only.",
+  "plan_sha256": "f97143ed61228262208426ca2b7793001ffb92fbdb9df3074af9c86335ef43f2",
+  "training_source_commit": "2e9277f995a282e4f335a33c09f1b456c12eb4aa",
+  "study_launch_sha256": "fedb6dbb2f6e721e98fb1cf3ebb8e8679a9298e3fcdf783b484cf2801dc20939",
+  "comparison_sha256": "6696681ae5c9c412b90d54a2b89b4f27d301a49b123528cc7f70f61a5de743e0",
+  "input_audit_sha256": "2f80674e445db3729e1a749a3dc59f54b8e9b7aa901f03f7c91d2ee61ae3d7dd",
+  "cached_score_audit_sha256": "06f867fd61e4f9dbf7f76fa790e1945d8dd7c3970b5a0c1c8f89589c7838c623",
+  "fixed_reference_error_groups_sha256": "3155b82bc38c2eb909e704dce608c01547f472a0b361981fe6195064e0737255",
+  "prepared_conversion_sha256": "3d5424d26f32d28782bf41eda0248bfd5a4c26a7261b676cea96a8c836cacc2d",
+  "preflight_logs_sha256": {
+    "word-initializer-tests-final.log": "0e35c0f39a5a5f1323d3f717de355ed6b65d9c46e9fe1582ccda0b0b9978eecc",
+    "word-initializer-gate-regression.log": "bb07e045dfb65ee62cd905a1f2b3760cd2772e96a19251c85124174633278ea1",
+    "word-initializer-legacy-study-audit.json": "a72b1f8451e17a8471d2dfd8c91bca0bf1e1f199eddd19e3383cd7c2102fb986",
+    "word-initializer-legacy-study-launch.json": "250d6a605183dfe4f4215434bbdc6ca51163bd2950fbb5be5601069bedc949c9",
+    "word-initializer-legacy-study.log": "9b28581a50a44fb2e292f02979623164f2a116e5dc0ab322a901067066225a75",
+    "word-initializer-legacy-study-exit.json": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d"
+  },
+  "software_tests": 6,
+  "objective": "Identical original weighted binary BCE plus0.1 times paired two-token CTC NLL/2 in both arms. No conditional intent, background or ordinary-positive auxiliary objective. The only planned recipe difference is the initial encoder tensor group, imported from the completed1000-step full unique-training-crop word fit. Original scalar classifier tensors and fresh downstream optimizer definition are preserved.",
+  "warmup_policy": "Both arms use the identical1000-step frozen-head CTC-only recipe, seeds and row-draw schedule, followed by3000 mixed-source updates. The initial encoder differs by design, so cached encoder states, head updates and fitted warmup statistics are expected to differ. Each warmup must preserve its own binary weights and optimizer exactly. Control must fully replay the original complete warmup/model. No gain/seed/step/checkpoint sweep.",
+  "original_auxiliary_control_replayed": true,
+  "full_scalar_features_and_background_bytes_bound": true,
+  "all_maxima_timebases_events_grids_and_gate_reproduced": true,
+  "fixed_reference_error_cohorts": [
+    {
+      "label": 0,
+      "category": "hey mix",
+      "variants": 136,
+      "control_hits": 32,
+      "treatment_hits": 39,
+      "control_only_hits": 1,
+      "treatment_only_hits": 8,
+      "both_hits": 31
+    },
+    {
+      "label": 0,
+      "category": "hey next",
+      "variants": 160,
+      "control_hits": 22,
+      "treatment_hits": 24,
+      "control_only_hits": 1,
+      "treatment_only_hits": 3,
+      "both_hits": 21
+    },
+    {
+      "label": 0,
+      "category": "hey nick",
+      "variants": 172,
+      "control_hits": 2,
+      "treatment_hits": 3,
+      "control_only_hits": 0,
+      "treatment_only_hits": 1,
+      "both_hits": 2
+    },
+    {
+      "label": 0,
+      "category": "other",
+      "variants": 3276,
+      "control_hits": 20,
+      "treatment_hits": 27,
+      "control_only_hits": 1,
+      "treatment_only_hits": 8,
+      "both_hits": 19
+    },
+    {
+      "label": 1,
+      "category": "other",
+      "variants": 2392,
+      "control_hits": 2031,
+      "treatment_hits": 2085,
+      "control_only_hits": 30,
+      "treatment_only_hits": 84,
+      "both_hits": 2001
+    }
+  ],
+  "development_advance": false,
+  "accepted": false,
+  "strict_gate": {
+    "control": null,
+    "phonetic": null
+  },
+  "control_comparator_policy": "minimum_false_zero_event",
+  "control_comparator": {
+    "threshold": 0.99,
+    "macro_recall": 0.7716369047619048,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour_upper_95": 0.40903945817584486,
+    "max_source_false_rate": 0.041666666666666664,
+    "max_corpus_false_rate": 0.041666666666666664,
+    "hard_negative_false_rate": 0.017094017094017096
+  },
+  "treatment_comparator": null,
+  "arms": {
+    "control": {
+      "initial_weights_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+      "model_sha256": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "paired_draws": 24000,
+      "fitted_ctc": {
+        "ctc_loss": 0.19851451178077653,
+        "sequences": 10120,
+        "exact_sequences": 8860,
+        "target_phones": 20240,
+        "phone_edits": 1317,
+        "phone_error_rate": 0.06506916996047431
+      },
+      "full_warmup_in_input_audit": true,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8114583333333332,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.0202991452991453
+      },
+      "reference_false_clips": 76,
+      "zero_continuous_event_grid_points": 5,
+      "minimum_worst_group_false_rate_on_grid": 0.041666666666666664
+    },
+    "phonetic": {
+      "initial_weights_sha256": "1216b938b0a6e7b556deaab98e4c339db252457716c0f2891e6aecd8c8fb06c0",
+      "model_sha256": "d9fbc6ad35f6158591dcbd5c84d7f82548a1891157a779333152a9545792f98d",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "paired_draws": 24000,
+      "fitted_ctc": {
+        "ctc_loss": 0.1097370567911934,
+        "sequences": 10120,
+        "exact_sequences": 9526,
+        "target_phones": 20240,
+        "phone_edits": 603,
+        "phone_error_rate": 0.029792490118577077
+      },
+      "full_warmup_in_input_audit": true,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8345386904761906,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 1,
+        "ambient_false_per_hour_upper_95": 0.6477307032380661,
+        "max_source_false_rate": 0.052083333333333336,
+        "max_corpus_false_rate": 0.052083333333333336,
+        "hard_negative_false_rate": 0.024839743589743588
+      },
+      "reference_false_clips": 93,
+      "zero_continuous_event_grid_points": 0,
+      "minimum_worst_group_false_rate_on_grid": 0.0375
+    }
+  },
+  "limits": "The reused fitted word control reached98.1176% macro/9 confuser-to-Nyx among1360 fitted training negatives, but its previously observed held-engine macro is only81.1866%; the binary initializer already saw the source corpus. These are not independent people, unseen-initializer engines or pronunciation truth. The bank has5060 Cartesian pairs but only3112 distinct crops/744 source hashes. Staged encoder initialization can overfit or forget original negative rejection. Original pair weighting, source sampling, augmentation, downstream step budget, representative inputs, export graph and21-point quality gates remain unchanged. No additional pretraining, loss/gain/seed/step/threshold search, reserved-quality scoring, audio device, playback, microphone capture, board access, firmware/OTA, PCM speed, or single I2S/AEC/AGC/FIFO change. Independent real-speaker/room recognition, matched Hi ESP latency/FAR, P4 resources and long-call/reconnect stability remain required; no development pass completes the goal."
+}
