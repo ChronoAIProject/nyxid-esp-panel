@@ -1147,6 +1147,46 @@ training and calibration reports, validation scores, exact initializer and
 pairing bounds. Its per-file manifest and public download hash are verified.
 It is explicitly unaccepted and contains no room audio or device state.
 
+### Relative phone-hypothesis diagnostic
+
+The [CTC hypothesis comparison](../results/microwake-ctc-confuser-margin-v1.json)
+uses the already frozen trigger-conditioned cohort, restricted to standalone
+phrases: 54 distinct positive sources and 34 negative views from 15 sources.
+It scores Nyx, Mix, Next and Nick phone hypotheses on the clean source,
+the last 2.4 seconds available at the first wake crossing, and the same
+window with another 240 ms. No threshold is fitted. The canonical readout
+uses one dictionary pronunciation; an exploratory secondary readout averages
+a fixed family of vowel/nasal variants with equal per-class priors.
+
+Both readouts identify all 34 clean negative views as their intended class.
+At the crossing, the canonical readout rejects 32/34 negatives and retains
+32/54 positives; the variant readout rejects 33/34 and retains 31/54.
+Adding 240 ms retains 35/54 or 32/54 positives, respectively, with unchanged
+negative counts. On complete clean positives the respective counts are
+42/54 and 41/54. Thus much of the near-word evidence is available in the
+existing causal window, but this large recognizer's output cannot serve as
+a useful mandatory gate. Its predictions are not human pronunciation truth
+or a justification for relabelling source audio.
+
+The original 88 detector inputs are rebuilt and feature-exact. Source
+identity includes text and engine as well as waveform hash and variant:
+some synthetic aliases share identical WAV bytes but have different render
+seeds. The guarded replay reproduces all scores exactly. Two tiny exhaustive
+CTC tests verify repeated phones and equal template priors independently
+of the large model. This motivates testing phonetic representation learning
+on disjoint training data, rather than a runtime phone-string check or an
+added fixed listening delay. No training, firmware, microphone or speaker
+change was made in this diagnostic.
+
+Reproduce with the pinned phone-model environment from the near-word audit:
+`probe_ctc_confuser_margin.py --features <features-expanded-human335>
+--cohort <original-causal-phone-report> --backgrounds <original-backgrounds>
+--phone-model <phoneme-audit-model> --output <new-report.json>`.
+Run `python -m unittest discover -s research/wakeword_p4/training
+-p test_ctc_confuser_margin.py` in that same environment for the numerical
+checks. Per-view outputs remain outside the checkout; the published summary
+binds the exact retained report hash.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
