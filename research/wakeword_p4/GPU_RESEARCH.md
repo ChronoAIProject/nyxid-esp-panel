@@ -3890,3 +3890,21 @@ include incomplete-context startup. Do not call this a newly proven export bug,
 isolated endpoint cause, or complete-PCM accuracy. Preserve frozen model and all
 scores. Next recover original full training-feature streams and compare aligned
 windows/stream phase and temporal support before changing training.
+
+### v37 complete training-history reconstruction and phase audit (2026-11-11)
+
+Reconstructed all1002 included original augmented training waveforms/features;
+all1002 crops exactly equal frozen pack, including noise seeds/gain/full RIR.
+Full float streams from original history and phase1-aligned offline windows:
+max score difference.010274052619934082 (not byte parity). Full-history target
+maximum score232/258, maximum five-mean218/258 at historical.99609375; negatives
+five-mean Mix1/247,Next2/224,Nick1/273. This raises positive five-support from
+isolated-crop178 to218, demonstrating that omitted history materially changes
+that diagnostic; remaining40 positives still fail five-support. Maxima over whole
+streams are descriptive, not event-policy acceptance. Prior unaligned max1.0
+cannot be called an export defect; aligned residual is not zero and retained.
+All full raw/float/aligned arrays saved locally with report SHA; no new development,
+finals, threshold selection or model change. A next training hypothesis may expand
+end-position/phase coverage using only whole-signal-valid windows from these exact
+reconstructed streams, rather than another identical fixed-end crop repetition.
+Preregister counts/exclusions and keep original independent gates unchanged.
