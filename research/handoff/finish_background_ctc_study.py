@@ -13,8 +13,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('artifacts', 'repository', 'upstream', 'features', 'bank', 'initial-weights', 'prior-study'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--plan-repository-path', default='research/wakeword_p4/training/plans/microwake-background-ctc-v1.json')
     args = parser.parse_args()
-    args.plan_repository_path = 'research/wakeword_p4/training/plans/microwake-background-ctc-v1.json'
     root, prior = args.artifacts.resolve(), args.prior_study.resolve()
     plan = json.loads((root/'plan.json').read_bytes())
     for name, digest in plan['postprocessing_source_sha256'].items():

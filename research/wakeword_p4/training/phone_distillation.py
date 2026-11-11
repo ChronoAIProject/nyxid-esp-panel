@@ -93,7 +93,8 @@ def balance_encoder_gradients(binary, phone, encoder_indices, gain, ratio_cap):
     return mixed, scale, tf.math.divide_no_nan(scale*pn, bn)
 
 
-def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, background_gain=None):
+def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, background_gain=None,
+               positive_gain=None):
     import tensorflow as tf
 
     if objective not in ('joint', 'conditional', 'ctc'):
@@ -107,6 +108,14 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
         from background_ctc import mask as background_mask, empty_target_loss
         background_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
         background_examples = tf.Variable(0, dtype=tf.int64, trainable=False)
+    if positive_gain is not None:
+        if (objective != 'ctc' or background_gain is None or targets.shape[-1] != 6
+                or encoder_ratio_cap is not None or not np.isfinite(positive_gain)
+                or not 0 <= positive_gain <= 1):
+            raise ValueError('Positive CTC needs compact CTC, background markers and a finite gain in [0,1]')
+        from positive_ctc import mask as positive_mask, keyword_loss
+        positive_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
+        positive_examples = tf.Variable(0, dtype=tf.int64, trainable=False)
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
     logits = tf.keras.layers.Dense(targets.shape[-1], name='training_phone_logits',
@@ -159,9 +168,13 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
             q = tf.gather(teacher, tf.boolean_mask(ids, present)-1)
             phonetic = phone_loss(q, tf.boolean_mask(phones, present))
             if background_gain is not None:
-                ambient = background_mask(y)
+                ambient = background_mask(y[:, :3] if positive_gain is not None else y)
                 if background_gain:
                     phonetic += background_gain*empty_target_loss(tf.boolean_mask(phones, ambient))
+            if positive_gain is not None:
+                ordinary_positive = positive_mask(y)
+                if positive_gain:
+                    phonetic += positive_gain*keyword_loss(tf.boolean_mask(phones, ordinary_positive))
             loss = binary+gain*phonetic
         variables = full.trainable_variables
         if bounded:
@@ -183,7 +196,18 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
         if background_gain is not None:
             background_steps.assign_add(1)
             background_examples.assign_add(tf.math.count_nonzero(ambient))
+        if positive_gain is not None:
+            positive_steps.assign_add(1)
+            positive_examples.assign_add(tf.math.count_nonzero(ordinary_positive))
         return loss
+
+    def positive_metadata():
+        if positive_gain is None:
+            return None
+        return {'gain': positive_gain, 'steps': int(positive_steps),
+                'examples': int(positive_examples), 'target': [1, 2],
+                'target_meaning': 'Compact synthesis-intent [hey,nyx], not a transcript of continuation speech.',
+                'normalization': 'Mean eligible-example CTC NLL divided by two target tokens; zero for an empty cohort.'}
 
     def background_metadata():
         if background_gain is None:
@@ -311,4 +335,5 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
     train.auxiliary_model = full
     train.balance_metadata = balance_metadata
     train.background_metadata = background_metadata
+    train.positive_metadata = positive_metadata
     return train

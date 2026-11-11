@@ -60,10 +60,13 @@ def audit(args):
         command = execution['command']
         start = command.index('--architecture')
         background_gain = plan.get('background_gains', {}).get(arm)
+        positive_gain = plan.get('positive_gains', {}).get(arm)
         options = ['--output', '--upstream', '--features', '--initial-weights',
             '--phone-bank', '--phone-gain', '--compact-phrase-plan']
         if background_gain is not None:
             options.append('--phone-background-gain')
+        if positive_gain is not None:
+            options.append('--phone-positive-gain')
         require(start == 2+2*len(options) and command[start:] == common, 'Training options differ: '+arm)
         require(command[2:start:2] == options, 'Input options differ: '+arm)
         for option, expected in (('--output', directory), ('--upstream', args.upstream),
@@ -105,6 +108,15 @@ def audit(args):
                     'Background objective/cohort count differs: '+arm)
         else:
             require(phone.get('background') is None, 'Unplanned background supervision: '+arm)
+        if positive_gain is not None:
+            from positive_exposure import audit as audit_positive
+            require(float(command[command.index('--phone-positive-gain')+1]) == positive_gain
+                    and phone['ordinary_positive']['gain'] == positive_gain,
+                    'Positive objective gain differs: '+arm)
+            positive_checked = audit_positive(directory, args.features, steps)
+        else:
+            require(phone.get('ordinary_positive') is None, 'Unplanned positive supervision: '+arm)
+            positive_checked = None
         warmup = phone['warmup']
         require(all(warmup[k] == v for k, v in plan['warmup'].items()), 'Warmup recipe differs: '+arm)
         for group in ('weights', 'optimizer'):
@@ -120,6 +132,8 @@ def audit(args):
         shared[arm] = {'warmup': warmup, 'prefix': train['training_prefix_sha256'],
             'draw_schedule': phone['schedule_sha256'], 'sequence': phone['sequence'],
             'sources': train['sources'], 'ptq_inputs': train['representative_training_inputs_sha256']}
+        if positive_checked is not None:
+            shared[arm]['positive_exposure'] = positive_checked
         arms[arm] = {'launch_sha256': sha(directory/'launch.json'),
             'training_sha256': sha(directory/'training.json'), 'model_sha256': train['model_sha256'],
             'phone_fit': train['history'][0]['phone_fit'],

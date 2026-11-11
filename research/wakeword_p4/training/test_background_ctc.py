@@ -13,7 +13,7 @@ from phone_distillation import supervisor
 from phrase_ctc_readout import targets
 
 
-def fixture(background_gain=None):
+def fixture(background_gain=None, positive_gain=None):
     tf.keras.utils.set_random_seed(17)
     x = tf.keras.Input((335, 40))
     z = tf.keras.layers.Conv1D(60, 3, strides=5, activation='tanh')(x)
@@ -24,7 +24,7 @@ def fixture(background_gain=None):
     packed = np.zeros((4, 67), np.int32)
     packed[:, :2] = targets(np.arange(4))
     return model, supervisor(model, np.eye(6, dtype=np.float32)[packed], .1,
-                             'ctc', background_gain=background_gain)
+                             'ctc', background_gain=background_gain, positive_gain=positive_gain)
 
 
 class BackgroundTest(unittest.TestCase):

@@ -58,6 +58,8 @@ def main():
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
     parser.add_argument("--phone-background-gain", type=float,
                         help="Opt-in compact CTC empty-target loss on explicit ambient-negative markers; zero is the matched control")
+    parser.add_argument("--phone-positive-gain", type=float,
+                        help="Opt-in compact CTC on complete ordinary positive crops; zero replays background-only supervision")
     parser.add_argument("--phone-encoder-ratio-cap", type=float,
                         help="Bound scaled auxiliary encoder gradient norm relative to binary encoder gradient")
     parser.add_argument("--phone-objective", choices=("joint", "conditional", "ctc"), default="joint",
@@ -83,6 +85,10 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.phone_positive_gain is not None and (not args.compact_phrase_plan
+            or args.phone_background_gain is None or not np.isfinite(args.phone_positive_gain)
+            or not 0 <= args.phone_positive_gain <= 1 or args.phone_gain <= 0):
+        parser.error("Positive CTC requires a compact phrase plan, background gain, positive phone gain and positive gain in [0,1]")
     if args.phone_background_gain is not None and (not args.compact_phrase_plan
             or not np.isfinite(args.phone_background_gain) or not 0 <= args.phone_background_gain <= 1
             or args.phone_gain <= 0):
@@ -196,14 +202,14 @@ def main():
     def sequence(row):
         return raw[row["offset"]:row["offset"]+row["frames"]]
 
-    def sample(label, count, reschedule=False):
+    def sample(label, count, reschedule=False, retain_positive=False):
         nonlocal scheduled, changed
         sources = groups["training"][label]
         engines = list(sources)
         probabilities = (np.sqrt([len(sources[e]) for e in engines])
                          if args.source_sampling == "sqrt" else np.ones(len(engines)))
         probabilities /= probabilities.sum()
-        output = []
+        output, selections = [], []
         for slot in range(count):
             rows = sources[str(rng.choice(engines, p=probabilities))]
             row = rows[int(rng.integers(len(rows)))]
@@ -224,7 +230,14 @@ def main():
                         end = remapped
             end = min(len(data), max(frames, end))
             output.append(data[end-frames:end])
-        return np.asarray(output)
+            if retain_positive:
+                selections.append((row, end))
+        return (np.asarray(output), selections) if retain_positive else np.asarray(output)
+
+    positive_exposure = None
+    if args.phone_positive_gain is not None:
+        from positive_ctc import Exposure
+        positive_exposure = Exposure(records, root/"positive-exposure.jsonl")
 
     current_step = 0
 
@@ -248,7 +261,10 @@ def main():
             _, data = ambient["training"][int(rng.integers(len(ambient["training"])))]
             at = int(rng.integers(0, len(data)-frames+1))
             noise.append(data[at:at+frames])
-        samples = np.concatenate((sample(1, 32),
+        positive = sample(1, 32, retain_positive=mine and positive_exposure is not None)
+        if mine and positive_exposure is not None:
+            positive, selections = positive
+        samples = np.concatenate((positive,
                                   negative_sample(sample(0, 48*multiplier, bool(windows) and not pair_sampler and mine), 48),
                                   negative_sample(np.asarray(noise), 48)))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
@@ -267,6 +283,10 @@ def main():
             if args.phone_background_gain is not None:
                 from background_ctc import mark_ambient
                 y = mark_ambient(y, 48)
+            if positive_exposure is not None:
+                from positive_ctc import mark
+                y = mark(y, selections, frames)
+                positive_exposure.record(current_step, y, selections, samples)
         x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -327,7 +347,8 @@ def main():
     if phone_sampler:
         from phone_distillation import supervisor as phone_supervisor
         train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective,
-                                             args.phone_encoder_ratio_cap, args.phone_background_gain)
+                                             args.phone_encoder_ratio_cap, args.phone_background_gain,
+                                             args.phone_positive_gain)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -450,6 +471,7 @@ def main():
         return
     training_prefix_digest = hashlib.sha256()
     legacy_training_prefix_digest = hashlib.sha256()
+    background_training_prefix_digest = hashlib.sha256()
     initial_probability_error = None
     best = None
     started = time.monotonic()
@@ -465,6 +487,9 @@ def main():
                 if args.phone_background_gain is not None:
                     for value in (x, y[:, :2], weights):
                         legacy_training_prefix_digest.update(value.astype("<f4", copy=False).tobytes())
+                if positive_exposure is not None:
+                    for value in (x, y[:, :3], weights):
+                        background_training_prefix_digest.update(value.astype("<f4", copy=False).tobytes())
             if step == 1 and args.phrase_output:
                 initial_probability_error = float(np.max(np.abs(
                     np.asarray(model(x, training=False))-np.asarray(binary_initial_model(x, training=False)))))
@@ -550,6 +575,8 @@ def main():
                   "encoder_ratio_cap": args.phone_encoder_ratio_cap,
                   "encoder_balance": train_with_phones.balance_metadata(),
                   "background": train_with_phones.background_metadata(),
+                  "ordinary_positive": (None if positive_exposure is None else {
+                      **train_with_phones.positive_metadata(), "exposure": positive_exposure.metadata()}),
                   "initial_fit": initial_phone_fit,
                   "warmup": phone_warmup},
               "initial_target_probability_max_error": initial_probability_error,
@@ -557,6 +584,8 @@ def main():
               "training_prefix_sha256": training_prefix_digest.hexdigest(),
               "legacy_training_prefix_sha256": (legacy_training_prefix_digest.hexdigest()
                                                  if args.phone_background_gain is not None else None),
+              "background_training_prefix_sha256": (background_training_prefix_digest.hexdigest()
+                                                     if positive_exposure is not None else None),
               "matched_confusers": confusers.metadata() if confusers else None,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,

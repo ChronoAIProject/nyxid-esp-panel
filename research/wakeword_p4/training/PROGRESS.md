@@ -2422,3 +2422,37 @@ plans, launches/runtime and audits. The previous retained background-head
 archive supplies the unchanged model; full feature caches remain external and
 byte-bound. All evidence is shared on the research branch. The full Hi ESP
 objective remains active, with no qualifying deployment candidate.
+## Ordinary-positive compact supervision, preregistered 2026-11-11
+
+The [matched plan](plans/microwake-positive-ctc-v1.json) tests the verified
+ordinary-positive coverage gap without changing examples, crops, sampling RNG,
+PCM, augmentation, pair supervision, background loss or streaming inference.
+After eight pair replacements, up to 24 ordinary positive draws per batch gain
+compact synthesis-intent `[hey,nyx]` CTC targets, only when their existing crop
+contains the conservative keyword feature support. Truncated crops retain their
+original BCE role. This is a hypothesis test, not a causal diagnosis.
+
+Both 3,000-step arms retain paired gain .1 and background gain 1; additional
+positive gain is 0 versus 1. The explicit-zero arm must replay the parent
+background-treatment INT8 hash, three-column input prefix, legacy two-column
+prefix, warmup, pair schedule and PTQ inputs exactly before scores are reused.
+Actual eligible draws/crops and per-engine/text exposure are retained and
+independently audited; 72,000 potential slots are not assumed eligible.
+
+Thirteen math/cohort/zero-gain/CLI tests and three exposure/background-input
+tests passed before launch. The four-update fixture replays auxiliary weights
+and Adam state exactly. An observed TF 2.21 graph optimizer warning for mixed
+dense CTC label widths was removed by padding positive targets to the same
+67-label width while retaining true length 2; exhaustive path math still passes.
+No wake-quality conclusion follows from these software checks.
+
+GPU branch `dc09173361efb9bb19bb075eee5e660099184030` was read without merging.
+Its supplemental v30 common-calibration development result retains 82.0833%
+macro proxy hits, one early trigger and zero events on the three reported
+additional negative corpora; v32 counterpart is pending. This is separate
+development evidence and does not establish independent acceptance.
+
+This run is silent and touches no board. Scalar rejection, if observed, will
+not imply rejection of every possible use of its temporal head; a head export
+and inference comparison would require a separate frozen stage. Full Hey Nyx
+versus Hi ESP parity remains unachieved.
