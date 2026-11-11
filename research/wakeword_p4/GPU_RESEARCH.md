@@ -3977,3 +3977,17 @@ logits, max1.1368683772161603e-13; gradientL1.000107626, sigmoid logits agree wi
 probability scorer; all original variables unchanged,optimizer0. Saturated examples
 make small gradients; no general training/recognition claim. Training integration,
 GPU two-step export and formal120k remain to run before any candidate gate.
+
+### v39 integrated and formal training started (2026-11-11)
+
+Main128 v37 weighted BCE plus sequence16 stable BCE(mean five probabilities),
+same Adam once per step; new graph shares original variables. Separate original
+window copy used for export to avoid upstream mode mutation of shared graph.
+50 sampler batches exact; discarded CPU plumbing update confirms optimizer delta1,
+finite loss/original weights change/BN exact. Two-step4090 smoke session66219 exit0,
+37.8s,finite saved weights/frozenBN/int8[1,3,40]→uint8[1,1]. Smoke54560B SHA
+ e7114a82e8d66f850809629771d252d8c46d6167389bf9e2ad8bed77c88ba85d.
+Formal session77297/PID129206 started once after audited integration e491229.
+Unique postprocessor authenticates seed117726/sequence pack and no temporal jitter
+before original historical/synthetic/oldVox138-point exploration. No new/final data,
+threshold extension or automatic promotion; frozenv30 retained pending full gates.
