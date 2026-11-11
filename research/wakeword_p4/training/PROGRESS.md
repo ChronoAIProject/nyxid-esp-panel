@@ -990,6 +990,30 @@ ordinary windows from the same speakers, keeping the development and final
 sets untouched. This scan is source selection; its counts are not a new
 estimate of production false wakes.
 
+The [matched fine-tune](../results/microwake-matched-confusers-v1.json) uses
+one ambient slot in every fourth batch for 250 draws from 22 training
+utterances. The control uses ordinary windows from the same speakers and
+the treatment uses windows ending at the mined score peaks. Both start at
+the auxiliary model checkpoint and match draw order, synthetic phrase
+pairs, representative input bytes and exported interface. When a hard
+window starts before its speaker stream, both arms get equal leading zero
+features (two pairs). No audio playback, board test, or final set was used.
+
+At .97, the mined arm reduces false clips from 68 to 58 out of 3,744,
+while macro proxy recall moves from 78.36% to 77.46%. Both still have one
+wake in 7.324 h. At .994 the mined arm reaches zero background wakes and
+70.84% macro recall, but its worst engine/corpus false clip rate is 2.86%,
+above the fixed 1% gate. The ordinary arm has no zero-wake point in the
+grid. This is evidence that actual detector-triggering speech is useful
+for training, but both exports fail promotion.
+
+For reproduction, build the bank with `matched_confuser_windows.py` using
+the frozen direct-score report. Use the
+[plan](plans/microwake-matched-confusers-v1.json) and
+`--matched-confuser-bank <bank> --matched-confuser-arm ordinary|hard` in
+the standard streaming training command. Run the frozen validation grid
+and verify the outputs with `compare_matched_confusers.py`.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
