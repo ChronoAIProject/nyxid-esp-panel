@@ -4120,3 +4120,14 @@ OldVox0events/8.173672725694447h,upper950.3665099367309777/h.
 Data coverage alone failed confusion gate. Original reports retained;no new/final
 scored,no promotion,freezev30. Next work must diagnose actual training support/
 confusion mechanism before another intervention;do not blind-tune mix/loss weights.
+
+### v40 actual old-source training support diagnostic (2026-11-11)
+
+All6597sampler-eligible old-source variants scored,not a mined subset.
+Windowfloat positives4216/4602>=.5;all1995negatives<.5. Complete INT8
+full-history five-mean after complete-context warmup:4224/4602positive,
+115/1995negative>=.5. At historical.99609375,35negative false clips
+(allPiper:Next22/Mix11/Nick2). Original rawSHA verified and all scores saved.
+First reset exact;not event accuracy or independent acceptance. Offlinefloat
+vsfullINT8 confounds phase/state/quantization;next same-weight floatfull-history
+comparison required before attributing cause. No new/final or training changes.
