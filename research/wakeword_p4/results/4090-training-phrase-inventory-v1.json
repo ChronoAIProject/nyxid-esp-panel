@@ -1,0 +1,118 @@
+{
+  "role": "Training-only textual intention inventory for possible auxiliary phrase discrimination; no phonetic truth or classifier scores",
+  "feature_index_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "groups": {
+    "kokoro/label0": {
+      "variant0_rows_by_intended_text": {
+        "Hello, can you hear me?": 100,
+        "Hey Alex.": 100,
+        "Hey Max.": 100,
+        "Hey Mix.": 100,
+        "Hey Next, what time is it?": 100,
+        "Hey Next.": 100,
+        "Hey Nexus.": 100,
+        "Hey Nice.": 100,
+        "Hey Nick, turn on the light.": 100,
+        "Hey Nick.": 100,
+        "Hey Siri.": 100,
+        "Hey Six.": 100,
+        "Hi ESP.": 100,
+        "How can I help you?": 100,
+        "I heard Nick speaking.": 100,
+        "I mixed the ingredients.": 100,
+        "Please check the volume.": 100,
+        "Take the next exit.": 100,
+        "Thanks, that is all.": 100,
+        "The next thing is ready.": 100
+      },
+      "distinct_source_paths": 2000,
+      "all_rendered_rows": 20000
+    },
+    "kokoro/label1": {
+      "variant0_rows_by_intended_text": {
+        "Hey Nicks.": 100,
+        "Hey Nix!": 100,
+        "Hey Nyx.": 100
+      },
+      "distinct_source_paths": 300,
+      "all_rendered_rows": 3000
+    },
+    "piper/label0": {
+      "variant0_rows_by_intended_text": {
+        "Hello, can you hear me?": 331,
+        "Hey Alex.": 280,
+        "Hey Max.": 297,
+        "Hey Mix.": 262,
+        "Hey Next, what time is it?": 292,
+        "Hey Next.": 277,
+        "Hey Nexus.": 286,
+        "Hey Nice.": 299,
+        "Hey Nick, turn on the light.": 289,
+        "Hey Nick.": 312,
+        "Hey Siri.": 259,
+        "Hey Six.": 297,
+        "Hi ESP.": 304,
+        "How can I help you?": 338,
+        "I heard Nick speaking.": 310,
+        "I mixed the ingredients.": 299,
+        "Please check the volume.": 328,
+        "Take the next exit.": 343,
+        "Thanks, that is all.": 305,
+        "The next thing is ready.": 292
+      },
+      "distinct_source_paths": 6000,
+      "all_rendered_rows": 60000
+    },
+    "piper/label1": {
+      "variant0_rows_by_intended_text": {
+        "Hey Nyx, can you hear me?": 869,
+        "Hey Nyx, check the volume.": 815,
+        "Hey Nyx, turn on the light.": 850,
+        "Hey Nyx, what time is it?": 881,
+        "Hey Nyx.": 2585
+      },
+      "distinct_source_paths": 6000,
+      "all_rendered_rows": 60000
+    },
+    "qwen-cuda/label0": {
+      "variant0_rows_by_intended_text": {
+        "Hello, can you hear me?": 24,
+        "Hey Alex.": 22,
+        "Hey Max.": 24,
+        "Hey Mix.": 20,
+        "Hey Next.": 23,
+        "Hey Nexus.": 22,
+        "Hey Nice.": 24,
+        "Hey Nick.": 24,
+        "Hey Six.": 15,
+        "How can I help you?": 23,
+        "Please check the volume.": 24,
+        "Thanks, that is all.": 23
+      },
+      "distinct_source_paths": 268,
+      "all_rendered_rows": 2680
+    },
+    "qwen-cuda/label1": {
+      "variant0_rows_by_intended_text": {
+        "Hey Nicks.": 10,
+        "Hey Nicks?": 6,
+        "Hey Nix!": 14
+      },
+      "distinct_source_paths": 30,
+      "all_rendered_rows": 300
+    }
+  },
+  "findings": [
+    "Existing confusing training texts already include Hey Nick, Next, Mix, Six, Max, Nice and Nexus; adding their strings is not new data.",
+    "Engine text inventories differ substantially; source-balanced sampling alone cannot ensure phrase balance.",
+    "Clip intention cannot label every random streaming crop: an arbitrary negative crop may contain silence or a suffix without its initial confusing phrase.",
+    "Qwen has 30 variant0 positive rows; correlated augmentation rows must not be counted as independent speakers."
+  ],
+  "next_design_constraints": [
+    "Preserve target binary output; an auxiliary phrase head needs valid target-containing crop supervision or clip-level aggregation.",
+    "Do not supervise random silence/partial windows with the complete confusing phrase class.",
+    "Audit original source paths and speaker identities before any new split; this inventory does not certify split independence.",
+    "No launch of multiclass training before v33 result and a declared crop-label protocol."
+  ],
+  "final_data_used": false
+}

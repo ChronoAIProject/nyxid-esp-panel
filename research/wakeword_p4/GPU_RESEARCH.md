@@ -3080,3 +3080,13 @@ v33原训练session7030/PID18604存活，初始化全部字段与v30一致。
 训练和representative两个调用模式中，mask开关不改变输入、标签、调用序列或main/prefix RNG状态，
 仅16个槽的权重20→0。此处合成输入仅用于代码语义，不是识别质量或实际完整特征一致性证据。
 审计4090-v33-batch-invariance-audit.json；不据此宣称转换器状态或量化数值等价。
+
+## 后续混淆词辅助分类的训练集意图清点
+
+仅清点现有训练feature index文本，不读取最终集/模型分数；
+results/4090-training-phrase-inventory-v1.json保存实际输入SHA和分引擎逐文本计数。
+现有训练已含Nick/Next/Mix/Six/Max/Nice/Nexus，不能把增加这些字符串当新数据。
+三引擎词分布不同，variant0正例Piper6000/Kokoro300/Qwen30，增强行不是新人。
+关键约束：当前负例裁剪可取静音或后缀，不能将整句意图类别强行赋给任意随机窗口。
+若后续做多分类辅助头，需预声明有效短语crop或clip级聚合监督，保留二分类输出。
+本次清点不证明实际发音/音素边界或说话人隔离；v33未完成前不启动另一训练。
