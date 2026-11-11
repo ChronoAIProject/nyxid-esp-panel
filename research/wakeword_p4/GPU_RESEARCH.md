@@ -2987,3 +2987,14 @@ v32原进程session80679确认存活；启动初始化JSON与v30全部字段相�
 审计results/4090-v32-initialization-audit.json。未因观察等待重启任务。
 同时复核历史四次预训练embedding头实验，不能当作更强教师或未尝试路线；
 摘要和报告哈希见4090-pretrained-reference-history-audit-v1.json。
+
+### v32量化校准耦合检查
+
+源码复核发现representative()调用batch(mine=False, augment=False)，
+但batch中的prefix替换不受mine标志控制。因此prefix16→0也改变INT8代表输入，
+虽然校准流程和主RNG不变。此前脚本“Original export calibration retained”
+只能理解为流程保留，不能理解为代表tensor完全一致。
+v32是端到端prefix策略消融，不能把INT8差异全部归因于训练梯度；
+不修改正在运行的代码、不覆盖原导出，保留浮点与INT8探针。
+若需严格训练因果隔离，须另外预声明并对双方冻结权重使用完全相同的代表输入序列重新导出。
+审计results/4090-v32-export-calibration-coupling-audit.json。

@@ -1,0 +1,9 @@
+{
+  "role": "v32 export calibration coupling audit; not quality evidence",
+  "source_sha256": "a9c76aee07f2a61557ed77095609671f546bfbbf418d979732da356b98898c20",
+  "observation": "representative() calls batch(mine=False, augment=False); batch() still applies prefix replacements when prefix_negatives is nonzero. Therefore changing 16 to 0 also changes representative calibration values, although calibration algorithm is unchanged.",
+  "consequence": "v32 exported INT8 comparison is an end-to-end prefix-policy ablation, not a strict training-only numerical isolation. Differences cannot all be attributed to gradients from prefix labels.",
+  "handling": "Do not alter the running job. Preserve original export and float-versus-INT8 probe. Report this limitation. If training-policy causal attribution is needed, perform separately declared matched calibration exports from frozen candidate weights with an identical explicit representative input sequence for both models; do not overwrite existing exports.",
+  "prior_script_comment": "Original export calibration retained means existing calibration procedure, not identical representative tensors.",
+  "independent_final_scored": false
+}
