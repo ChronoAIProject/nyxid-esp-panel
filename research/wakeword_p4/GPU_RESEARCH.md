@@ -3437,3 +3437,11 @@ VCTK加静音复放manifest冻结SHA779077bae3a01ae80392962d572b1d6a42a5b58ecd1b
 缓存候选评分器按两个明确manifest SHA分别支持80条Kokoro与300条VCTK，
 仍逐条核验官方report/同PCM/阈值getter与来源；不放宽到任意来源数据。
 本变更只扩展协议身份白名单，不改变分数/事件/端点窗口算法。
+
+VCTK300条同PCM双引擎复放完整终结exit0，300条官方计数/CRC/stage全部通过。
+v30目标any-event24/60、HiESP54/60；共同混淆负例v30为4事件/180条（4条），HiESP0/180；
+交叉目标双方0/60。固定生成末端窗口v30仅4/60、窗口前20事件；HiESP8/60、窗口前46事件。
+生成尾部使窗口内命中严重低估any-event，不将窗口值称为真实召回，全部事件保留。
+这批新来源开发诊断清楚暴露v30的来源泛化弱项，但不是独立最终或匹配FAR结论。
+完整比较、官方逐条reports、manifest与any-event摘要已推送4090-*vctk-development*。
+v35原训练继续，尚无其VCTK候选结果，不能由训练loss推断此差距已改善。
