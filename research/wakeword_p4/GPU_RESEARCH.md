@@ -3422,3 +3422,13 @@ ceil(native_samples×320/441)重采样长度、有限值及PCM16无饱和。
 20个开发声音与89个保留声音无交集；后者未生成/评分。
 4090-vctk-development-v1.json及全清单已冻结发布；尚无唤醒评分或阈值选择。
 v35原训练进程已45000步，后处理仍等待同PID；未重启或使用VCTK做训练。
+
+## VCTK开发基线双引擎复放预声明
+
+固定已冻结300条VCTK开发源，prepare_phone_replay增加显式vctk协议，仅接受清单与分区固定SHA。
+全PCM加1.8秒前静音/1秒后静音，读回确认原PCM逐样本相同；生成末端为参考。
+长度倍率与速度分开记录，不把length_scale当speaking-speed。
+v30.91796875/原five-score策略，官方HiESP.63，冻结阈值基线不选阈值。
+全300条QEMU计数/CRC/stage及同PCM核验后才产整体报告；所有事件保留。
+固定[-100,+800]ms窗口只是生成参考诊断，同时报告any-event，不能误读为末音素召回。
+仅20个development声音，无89个保留声音或历史最终集访问。
