@@ -1,0 +1,181 @@
+{
+  "scope": "Training-only compact two-token phrase readout feasibility on the existing frozen wake encoder; no deployment or independent wake evaluation.",
+  "plan_sha256": "10a634b2e9ffaafdb33ea3f317e66241136257d3061e2a827acfa7493edcdd9c",
+  "raw_result_sha256": "3b815310a20b980f2afa17df198a2d533337db49ad894060f0ab718f1166a461",
+  "audit_sha256": "eec7d1e11c9480473259823ccad3800127319ff7b0633e54e4d6bfa2ac3d13ae",
+  "audit": {
+    "plan_sha256": "10a634b2e9ffaafdb33ea3f317e66241136257d3061e2a827acfa7493edcdd9c",
+    "raw_result_sha256": "3b815310a20b980f2afa17df198a2d533337db49ad894060f0ab718f1166a461",
+    "launch_sha256": "e649bac9cf75bf6ae732bb1aced58a3664aaff9fbf28d8365c23bb0928302c4b",
+    "checkout_revision": "478541c0102f04eeeef39486349ac4cbc0d9cc31",
+    "executed_frozen_source_and_plan_match": true,
+    "original_encoder_cache_reproduced": true,
+    "binary_weights_unchanged": true,
+    "both_readouts_share_32000_row_draws": true,
+    "one_final_checkpoint_per_readout": true,
+    "stopped_before_held_engine_scoring": true,
+    "training_process_terminal": true,
+    "head_checkpoint_sha256": {
+      "mean": "0bbe5f705ef4069567f10e8296c0027d49947e06edf157a254f7879df0f93878",
+      "ctc": "bbfb5d223136fb4243b536b657c168bf8a79eb460c21d0c1574af302991c4cf3"
+    },
+    "limits": "Training-only intent labels and frozen encoder source corpus; no independent acceptance, open-set FAR, microphone, speaker or board access.",
+    "audit_runtime_packages": {
+      "numpy": "2.4.3"
+    },
+    "training_environment_observed_after_run": {
+      "python": "3.12.13 (main, Mar 25 2026, 03:16:06) [Clang 22.1.1 ]",
+      "packages": {
+        "tensorflow": "2.21.0",
+        "numpy": "2.5.4",
+        "keras": "3.15.1",
+        "h5py": "3.14.0"
+      }
+    },
+    "runtime_metadata_note": "Training interpreter package versions read after run; launch pins the interpreter and flags but did not record versions contemporaneously. audit_runtime_packages describes the independent audit interpreter, not training."
+  },
+  "full_fit": {
+    "mean": {
+      "kind": "mean",
+      "parameters": 244,
+      "draw_schedule_sha256": "0cde00448994e63fc652fcbd934a96c7404cd4ce31b96a6eaf718b6ea8cd1742",
+      "head_weights_sha256": "2f77b8a014f5bfcc89e9d7950ab5d4d05ea25196a184120345722899e25ec56d",
+      "history": [
+        {
+          "step": 250,
+          "loss": 0.7513516545295715
+        },
+        {
+          "step": 500,
+          "loss": 0.35627055168151855
+        },
+        {
+          "step": 750,
+          "loss": 0.36294299364089966
+        },
+        {
+          "step": 1000,
+          "loss": 0.24861009418964386
+        }
+      ],
+      "summary": {
+        "confusion": [
+          [
+            117,
+            0,
+            0,
+            1
+          ],
+          [
+            2,
+            36,
+            0,
+            1
+          ],
+          [
+            1,
+            2,
+            33,
+            3
+          ],
+          [
+            0,
+            0,
+            1,
+            39
+          ]
+        ],
+        "rows": 236,
+        "macro_accuracy": 0.9339390482398957,
+        "recall_by_phrase": {
+          "nyx": 0.9915254237288136,
+          "mix": 0.9230769230769231,
+          "next": 0.8461538461538461,
+          "nick": 0.975
+        },
+        "nyx_recall": 0.9915254237288136,
+        "confuser_false_nyx": 3,
+        "confuser_rows": 118,
+        "confuser_false_nyx_fraction": 0.025423728813559324
+      }
+    },
+    "ctc": {
+      "kind": "ctc",
+      "parameters": 366,
+      "draw_schedule_sha256": "0cde00448994e63fc652fcbd934a96c7404cd4ce31b96a6eaf718b6ea8cd1742",
+      "head_weights_sha256": "8dffc151a14fa172f0a185ca93622398ab7adeaf3690b3d1e02f90d47b52cf54",
+      "history": [
+        {
+          "step": 250,
+          "loss": 1.6829917430877686
+        },
+        {
+          "step": 500,
+          "loss": 1.3434832096099854
+        },
+        {
+          "step": 750,
+          "loss": 1.0798940658569336
+        },
+        {
+          "step": 1000,
+          "loss": 1.139917254447937
+        }
+      ],
+      "summary": {
+        "confusion": [
+          [
+            115,
+            1,
+            0,
+            2
+          ],
+          [
+            1,
+            36,
+            2,
+            0
+          ],
+          [
+            0,
+            3,
+            33,
+            3
+          ],
+          [
+            0,
+            0,
+            0,
+            40
+          ]
+        ],
+        "rows": 236,
+        "macro_accuracy": 0.9359517601043025,
+        "recall_by_phrase": {
+          "nyx": 0.9745762711864406,
+          "mix": 0.9230769230769231,
+          "next": 0.8461538461538461,
+          "nick": 1.0
+        },
+        "nyx_recall": 0.9745762711864406,
+        "confuser_false_nyx": 1,
+        "confuser_rows": 118,
+        "confuser_false_nyx_fraction": 0.00847457627118644,
+        "greedy_exact_sequence_fraction": 0.07203389830508475,
+        "mean_normalized_ctc_loss": 1.0003442764282227
+      }
+    }
+  },
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "advance": false,
+  "folds_run": false,
+  "accepted": false,
+  "interpretation": "This fixed frozen-encoder compact CTC recipe does not pass its full-bank fit gate. Forced-choice macro accuracy 93.60% is close to temporal-mean 93.39%; greedy exact sequences 7.20% and normalized CTC loss1.0003 fail the ordered-sequence fit criteria. It reduces false Nyx assignments from 3 to 1/118 within these fitted training rows but is not an open-set false-wake estimate. Do not proceed to folds, change fit gates, extend this head-only budget or promote a model from this result.",
+  "limits": "Original encoder already trained on this source corpus. Held-engine splits apply only to the new readout; they are not independent generalization evidence. Synthesis-intent text is not human pronunciation truth. Forced-choice hypotheses do not test silence, ordinary speech or open-set false wakes. Tiny correlated training bank; no real-speaker recall, latency, P4 resource or call/reconnect proof. No source relabeling, validation/test scoring, speaker playback, microphone capture, board access or PCM/audio-pipeline change."
+}

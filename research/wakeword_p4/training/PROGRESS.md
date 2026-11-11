@@ -1681,3 +1681,21 @@ and rejection of changed cached features or reserved-source overlap. No new
 training has launched at this commit. The script is separate from the existing
 trainer/runtime and accesses no audio device or board. The source/weights,
 bank, index, optimizer, seeds and stop/advance gates are pinned in the plan.
+
+The [completed compact readout result](../results/compact-phrase-ctc-readout-v1.json)
+fails that fixed fit gate and stops before all five held-engine folds. Mean
+and compact CTC macro accuracy are 93.39% and 93.60%; Nyx recall is 117/118
+and 115/118. Confusers assigned Nyx fall from 3 to 1 of 118 fitted rows, but
+CTC greedy exact sequence accuracy is only 17/236 (7.20%) and normalized loss
+is 1.00034. Next recall is 33/39 for both heads. Forced-choice accuracy does
+not establish ordered-sequence learning or open-set false-wake performance.
+
+Both readouts use exactly the same 32,000 row draws and one final checkpoint.
+The frozen encoder cache reproduces the earlier cache exactly, and all binary
+weights remain unchanged. A read-only input/result audit binds the executed
+source snapshot, plan, launch, checkpoints and raw result. Runtime versions
+collected after training are explicitly separated from the audit interpreter's
+versions; they are not a contemporaneous environment capture. No fold, wake
+validation, firmware export or device test follows this failed gate. Do not
+extend this head-only budget or loosen gates. The result limits this particular
+frozen-encoder recipe; it does not rule out training a temporal encoder.
