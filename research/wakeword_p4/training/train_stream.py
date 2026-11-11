@@ -14,7 +14,7 @@ import tensorflow as tf
 from features import FRAMES
 from evaluate import events, smooth, THRESHOLDS
 from near_word_windows import key as near_word_key, load_windows, map_end
-from paired_training import PAIRS_PER_BATCH, Sampler as PairSampler, training_loss as pair_training_loss
+from paired_training import CONFUSERS, PAIRS_PER_BATCH, Sampler as PairSampler, training_loss as pair_training_loss
 
 
 def main():
@@ -47,6 +47,8 @@ def main():
                         help="Use the supplied near-word bounds for same-voice pairs instead of rescheduling")
     parser.add_argument("--paired-near-word-gain", type=float, default=0.,
                         help="Training-only ranking penalty for the same-voice pairs")
+    parser.add_argument("--paired-phrase-gain", type=float,
+                        help="Training-only multiclass loss for the same-voice phrase pairs")
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--hard-negative-fraction", type=float, default=0.,
@@ -84,6 +86,10 @@ def main():
             or not 0 <= args.paired_near_word_gain <= 2
             or (args.paired_near_word_gain and not args.paired_near_words)):
         parser.error("Paired training requires near-word bounds, no focus loss, and gain in [0, 2]")
+    train_phrases = args.paired_phrase_gain is not None
+    if train_phrases and (not 0 <= args.paired_phrase_gain <= 2 or not args.paired_near_words
+                          or args.paired_near_word_gain or args.architecture != "transfer60"):
+        parser.error("Paired phrase classification requires transfer60 pairs, no ranking loss, and gain in [0, 2]")
     initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
@@ -180,9 +186,12 @@ def main():
                                   negative_sample(np.asarray(noise), 48)))
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         if mine and pair_sampler:
-            pair_sampler.apply(samples, sequence)
-            ids = np.zeros_like(y)
-            ids[:PAIRS_PER_BATCH, 0] = ids[32:32+PAIRS_PER_BATCH, 0] = np.arange(1, PAIRS_PER_BATCH + 1)
+            classes = pair_sampler.apply(samples, sequence)
+            if train_phrases:
+                ids = classes[:, None]
+            else:
+                ids = np.zeros_like(y)
+                ids[:PAIRS_PER_BATCH, 0] = ids[32:32+PAIRS_PER_BATCH, 0] = np.arange(1, PAIRS_PER_BATCH + 1)
             y = np.concatenate((y, ids), axis=1)
         x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
@@ -236,6 +245,28 @@ def main():
     loss_fn = (pair_training_loss(args.paired_near_word_gain) if pair_sampler
                else focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
     model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
+
+    if train_phrases:
+        # The auxiliary head sees the same encoder state as the binary head.
+        # No extra inputs, operator or output is exported from this model.
+        phrase_logits = tf.keras.layers.Dense(1 + len(CONFUSERS), name="training_phrase_head",
+            kernel_initializer=tf.keras.initializers.GlorotUniform(seed=919))(model.get_layer("classifier").input)
+        pair_model = tf.keras.Model(model.input, (model.output, phrase_logits))
+
+        @tf.function
+        def train_with_phrases(x, y, weights):
+            with tf.GradientTape() as tape:
+                scores, logits = pair_model(x, training=True)
+                binary = tf.keras.losses.binary_crossentropy(y[:, :1], scores)
+                primary = tf.reduce_mean(binary * weights)
+                label = tf.cast(y[:, 1], tf.int32)
+                present = label > 0
+                paired = tf.nn.sparse_softmax_cross_entropy_with_logits(
+                    labels=tf.boolean_mask(label - 1, present), logits=tf.boolean_mask(logits, present))
+                loss = primary + args.paired_phrase_gain * tf.reduce_mean(paired)
+            variables = pair_model.trainable_variables
+            model.optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
+            return loss
 
     @tf.function(input_signature=[tf.TensorSpec([None, frames, 40], tf.float32)])
     def infer(x):
@@ -297,7 +328,8 @@ def main():
             if step == int(args.steps*.5): model.optimizer.learning_rate.assign(args.learning_rate*.3)
             if step == int(args.steps*.8): model.optimizer.learning_rate.assign(args.learning_rate*.1)
             x, y, weights = batch()
-            loss = float(model.train_on_batch(x, y, sample_weight=weights))
+            loss = float(train_with_phrases(x, y, weights) if train_phrases
+                         else model.train_on_batch(x, y, sample_weight=weights))
             if step % 500 == 0:
                 print(json.dumps({"step": step, "loss": loss, "seconds": round(time.monotonic()-started, 1)}), flush=True)
             if step % args.eval_interval == 0 or step == args.steps:
@@ -363,6 +395,7 @@ def main():
               "near_word_windows": {"sha256": windows_hash, "scheduled": scheduled, "changed": changed},
               "paired_near_words": None if not pair_sampler else {
                   "gain": args.paired_near_word_gain, **pair_sampler.metadata()},
+              "paired_phrase_gain": args.paired_phrase_gain,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
                                        "pool_multiplier": args.hard_negative_pool,

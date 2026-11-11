@@ -1,4 +1,4 @@
-"""Training-only same-voice wake/confuser pairing and ranking."""
+"""Training-only same-voice wake/confuser pairing and losses."""
 from collections import defaultdict
 import hashlib
 from pathlib import Path
@@ -71,10 +71,13 @@ class Sampler:
         self.draws = 0
 
     def apply(self, batch, sequence):
+        classes = np.zeros(len(batch), dtype=np.int32)
         for slot in range(PAIRS_PER_BATCH):
             group = self.bank[self.strata[int(self.rng.integers(len(self.strata)))]]
             (negative, nband), positives = group[int(self.rng.integers(len(group)))]
             positive, pband = positives[int(self.rng.integers(len(positives)))]
+            classes[slot] = 1
+            classes[slot + 32] = CONFUSERS.index(phrase(negative)) + 2
             phase = int(self.rng.integers(256))
             for row, band, index in ((positive, pband, slot), (negative, nband, slot + 32)):
                 lo, hi = band
@@ -82,6 +85,7 @@ class Sampler:
                 batch[index] = sequence(row)[end - self.frames:end]
                 self.digest.update(f"{row['sha256']}:{row['variant']}:{end}\n".encode())
             self.draws += 1
+        return classes
 
     def metadata(self):
         return {'draws': self.draws, 'schedule_sha256': self.digest.hexdigest(),

@@ -1,0 +1,83 @@
+{
+  "scope": "Matched same-voice auxiliary phrase classification; development validation only.",
+  "hypothesis": "Encouraging the shared encoder to identify complete near words can reduce binary false wakes without reducing recall.",
+  "parent_plan_sha256": "eca2791e1ee800e5f9e30bb44fb4da6c9e52d5399f03f1f49d468a1bbcb75c0d",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "44ba10feabec3f6057628a3df583688aeaf48adb98efbe801247598d1116cdbe",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "model-quality-control335",
+    "file": "step-5000.weights.h5",
+    "sha256": "923fd6833c7d906b147ec3c00caa9be942e3b7f2f66f635c02f94ecd91d853c0"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs replace eight positive and eight TTS negative slots in each 128-row training batch in both arms. Same engine, corpus, fixed voice/preset, delivery metadata and rendering variant; exclude voice-description-only Qwen and multi-voice Piper. Independent seed 381 and same within-band phase draw; original representative inputs remain unchanged.",
+  "arms": {
+    "phrase_control": 0.0,
+    "phrase_aux": 0.35
+  },
+  "advance": "Require identical pair schedule, validation exposure, representative inputs and exported interface. Require zero continuous development events and <=1% worst engine/corpus and engine false fraction, with at least 3 recall points over control at the same gate, or over control at the 2% limit if it has no strict point. Report the full grid and fixed .97 comparison. Keep all final sets sealed.",
+  "limits": "These are synthetic voice presets; identity matching does not substitute for new speakers. A paired objective with a limited corpus is an exploratory screen, not acoustic acceptance.",
+  "objective": "Both arms run the same Adam path and weighted binary BCE. A training-only four-way Dense head on the existing encoder state predicts Hey Nyx, Hey Mix, Hey Next or Hey Nick for the 16 paired items. Its mean cross entropy has gain 0 or 0.35; the head is excluded before export."
+}
