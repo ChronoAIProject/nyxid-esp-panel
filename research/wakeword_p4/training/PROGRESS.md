@@ -1991,3 +1991,18 @@ The read-only auditor now takes pair count from the bound bank and verifies
 the full scalar cache when its hash is supplied. Old replay requirements stay
 enforced for plans that request them. No training or validation has launched
 at this commit, and no board operation is part of the experiment.
+
+Both broader-bank arms have now launched from immutable source snapshots at
+commit `4b8e1ef`. The launch records actual runtime versions and exact commands;
+postprocessing will audit inputs before scoring either scalar INT8 export.
+A deliberately changed plan is rejected before bank/score access. The
+generalized auditor also passes the previous capped study with its original
+control-replay requirements still enforced.
+
+The [broader bank archive](../../handoff/assets-compact-broad-bank-v1.json)
+is publicly available: 47,616,916 bytes, SHA256
+`ff0ba245483376a57449d1f320f39459b50f82c911a4a35b28c6adede69689de`.
+A fresh unauthenticated download verifies all 95 listed member hashes and
+the exact 96-member inventory. The full scalar cache remains separate, but
+its original index and complete-phrase bounds are included. This publishes
+training data preparation, not a completed study or deployment candidate.

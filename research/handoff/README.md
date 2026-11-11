@@ -1128,3 +1128,27 @@ the actual INT8 model is retained. No source audio, device state, credentials
 or firmware is included. The full-history sequence output is an unoptimized
 research interface with unmeasured P4 costs, and is incompatible with the
 current scalar adapter. No playback, microphone or board operation occurred.
+
+The [uncapped compact training bank](assets-compact-broad-bank-v1.json)
+retains all eligible existing same-voice/render Cartesian pairings instead of
+the earlier eight-pair source cap. It has 5,060 pairs / 10,120 retained rows,
+representing 3,112 distinct midpoint crops from 744 original source hashes
+(404 positive, 340 negative). Pairs and four environment renders are
+correlated. Uniform pair sampling changes engine/phrase exposure; the bank
+is intended for a new matched control/treatment study, with no inherited
+wake-quality claim.
+
+The root is `workspace/home-wake-research-20261110/compact-broad-bank-v1`.
+The archive includes the NPZ feature bank, per-row source/crop identities,
+immutable preparation source/plan/launch/log, original feature index and
+whole-phrase window bounds. The full 2,984,015,040-byte scalar feature cache
+is external, bound separately by SHA256. No teacher output or waveform is
+included. It uses unchanged original labels, render inputs and PCM speed.
+The actual unauthenticated public download and all 95 listed member hashes
+pass against `CONTENTS-compact-broad-bank-v1.json`.
+
+The separately frozen broader-bank mixed-source study is running; this bank
+publication reports data preparation only. Its two arms rebuild binary-only
+and gain-.1 CTC models on identical new inputs and the original fixed budget.
+No previous control scores are reused. Playback, microphone and board access
+remain disabled; real-speaker and full-device Hi ESP acceptance remain open.
