@@ -3529,3 +3529,9 @@ v30开发背景完整87条评分终结exit0，全部score trace SHA与事件数�
 固定网格无可用点，selected/threshold=null；报告4090-v30-new-development-calibration-v1.json。
 这是v30开发阈值研究失败，不修改冻结v30，也不扩网格或放宽条件来挽救。
 v35仍原进程115000步以上，尚未用其分数选新开发阈值；官方背景复放同会话继续。
+
+新增v35_new_development.py后续评估排队：绑定现有historical evaluator的PID/启动时间，
+其终结后须完整120k训练/模型SHA及Kokoro新开发报告通过核验，才执行VCTK与Vox评分，
+随后应用已预注册新开发阈值规则。任何缺产物或失败不重启训练/评估。
+不改原训练、checkpoint选择或旧阈值，所有阈值选择仅使用已声明development数据；
+未自动发布、未自动访问最终数据、未自动升级v30。
