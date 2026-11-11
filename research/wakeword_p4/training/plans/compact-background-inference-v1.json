@@ -1,0 +1,67 @@
+{
+  "scope": "Frozen development inference comparison on the retained background-supervised compact head: same-invocation scalar versus absolute CTC product.",
+  "hypothesis": "After explicit ambient empty-target training, test the previously specified absolute ordered CTC product on the newly retained head. The scalar-only training recipe failed. This is a different inference question on the new head, not a re-evaluation of its scalar export or a causal comparison of background-training gains.",
+  "export_result_sha256": "46097bdbee4b3dc12ed885ceb3bc50b961d8c91fd9ad43ff811702f96bea8588",
+  "export_plan_sha256": "99fb6a2db5ba5c9071db8f49674e9864027ccc1b2af95df627442811e1e5b01a",
+  "model_sha256": "746efafd96cc8ba5cee6773a8346226ce5a60df40a5ab1251267b505dd3f317b",
+  "model_bytes": 63680,
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "source_sha256": {
+    "compact_sequence_inference.py": "0bacf7da9fc62353ce4588e1db2bdbf6777de5755d37bb214a51a8a4f4104416",
+    "evaluate_compact_sequence.py": "a73f618a7eebfcd678e9e64021f6742a51993fd1a7bdd49061f3caa6f02c7194",
+    "test_compact_sequence_inference.py": "46e118ae2b5d32f5bd5e74750558d999425e499807b51424b5f9d96d15653764",
+    "test_evaluate_compact_sequence.py": "bc26c5ab84dc0739e14eec9d1a384a9cf3e5c1e244ff76330473ed6093cc68c1",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "compare_phone_distillation.py": "e53dc19e6a2fff6f68d0e0c0c388a9a175cfee3c40aeb1370b5f36d8bcc7696c",
+    "compare_paired_ranking.py": "9649371c6710b23737a164a8ab4e536f7a0bbeadc88ddf6d7e2032d6e0c007e5",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc"
+  },
+  "event_policy": {
+    "smooth_steps": 5,
+    "refractory_steps": 67,
+    "rearm_fraction": 0.5
+  },
+  "rule": "For each unchanged30ms streaming step, read scalar p and all67x6 CTC logits from one shared INT8 invocation. Compute the absolute CTC path-sum probability that the67 states collapse to exactly [hey=1,nyx=2] with blank0, retaining probability mass on other words/blank/repeats. Treatment raw score is p*P_CTC; control raw score is p from this same artifact. Apply the original five-score average and common latch/refractory to each independently. No fitted scale, forced-choice normalization or additional threshold.",
+  "validation": "Read all and only existing validation feature rows and continuous validation arrays. Source reset/timebase, positive [-.10,+.80]s estimated-end window, negative any-score maxima, duration and event policy match the original evaluator. Retain all per-step clip scores/times and continuous arrays. Correlated variants and weak endpoint estimates remain explicitly limited.",
+  "advance": "Require both rules to use the same INT8 artifact/invocations, source resets, validation exposure, timebase and event policy. The product must have zero continuous development events and at most1% worst engine and engine/corpus false fraction, plus at least3 macro-recall points over the matched binary comparator. Select comparator at best recall in the same strict gate, otherwise the2% zero-event gate, otherwise minimum-false zero-event point; if no zero-event point exists use its frozen.97 reference and require product worst-group false fraction no greater than that reference. This is development advancement only, not Hi ESP parity or firmware eligibility.",
+  "comparator": "Apply the existing strict1%/zero-event gate helper to the matched same-artifact binary baseline, with its strict/two-percent/minimum-false-zero-event/frozen.97 fallback policy unchanged. Require at least3 macro-recall points of gain at an eligible product operating point. The old scalar export is context only because this dual model has a new training-only PTQ cache; do not claim its binary outputs replay byte-exact.",
+  "stop_policy": "Run this one fixed product rule and the fixed21-point grid once. Retain all outcomes. No score-scale/window/threshold sweep outside this plan, further fitting, training on validation failures, final scoring or firmware operation. A failure rejects this inference recipe, not every sequence approach.",
+  "limits": "Reused development features and unchanged21-point grid/gates. Compare binary and product from the identical dual INT8 invocation; parent scalar output is context only because PTQ changed. New CTC head saw background negatives, but this experiment does not isolate the causal effect of background supervision without a second dual export. Original full feature bytes and training/development background payloads stay bound. Pointwise product dominance does not imply monotonic latched-event counts. Absolute CTC likelihood is not calibrated human wake confidence. Full-history head is an unoptimized correctness reference, with unmeasured P4 cost, memory and physical latency. No fitting, threshold extension, validation-residual training, final/test scoring, source WAV reading, playback, microphone, board/OTA, production device, PCM speed or audio producer change.",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "background_inputs_sha256": "18724af73cabd4c6f6a4d302956e45026829f410300ee9e502994c4096a04b28",
+  "parent_study_plan_sha256": "63e32e91dc6305edaa81446f7aa83043c1119819918c9788f77eb99fc004e24c",
+  "parent_study_result_sha256": "c1c7d416ba46ea03885c722f71a5c0c5fbd62d0b91377c3c50147a91eb60809d",
+  "postprocessing_source_sha256": {
+    "audit_compact_inference.py": "2ee2fac30ab9e39e22fa6f49e62c42724eba4682b2e0c6d736efb4590db57bd3",
+    "background_inputs.py": "018e7ac72579081a734c44679f9a6c0bb3acac642f5e57baa49d2152fdff8d10",
+    "audit_compact_study.py": "41e0bd56c0ae88afdd62b9820d0d48da6f503735abd44b75ef8ee649fc515b35"
+  }
+}

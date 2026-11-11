@@ -2251,3 +2251,20 @@ with actual unique crop count explicit because Cartesian pairs repeat inputs.
 No model fitting, validation/test scoring, inference rule change or hardware
 action is permitted by this numerical-only plan. A pass permits a separately
 frozen inference comparison; it does not advance a detector for deployment.
+
+The [retained-head numerical smoke](../results/compact-background-export-smoke-v1.json)
+passes all 20 fixed training sources. The two-output INT8 model is 63,680
+bytes / 26,197 parameters. Maximum aligned float scalar/logit errors are
+4.77e-6 / 1.15e-5, below the unchanged 1e-4 gate. Reset replay and 256-step
+chunking are exact for every source. PTQ uses the frozen 100 row IDs, with
+96 distinct feature crops; no validation/test feature is read.
+
+The [separate background-head inference plan](plans/compact-background-inference-v1.json)
+now freezes the previously specified scalar-times-absolute-CTC rule on this
+new dual model. Its matched scalar baseline comes from the identical INT8
+invocations. The existing 21-point grid, five-score smoothing, event latch,
+1% / zero-event gate and three-point advancement requirement stay unchanged.
+Full scalar feature bytes and all training/development background payloads
+remain bound. This does not causally isolate background supervision without
+a second dual model, and the unoptimized full-history output has no P4 cost
+or latency approval. No development inference has launched at this commit.

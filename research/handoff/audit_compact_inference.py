@@ -28,10 +28,22 @@ def audit(args):
     plan = json.loads((root/'plan.json').read_bytes())
     launch = json.loads((root/'launch.json').read_bytes())
     revision = launch['checkout_revision']
-    committed = subprocess.check_output(['git', 'show', revision+':research/wakeword_p4/training/plans/compact-sequence-inference-v1.json'], cwd=repo)
+    plan_path = getattr(args, 'plan_repository_path',
+        'research/wakeword_p4/training/plans/compact-sequence-inference-v1.json')
+    committed = subprocess.check_output(['git', 'show', revision+':'+plan_path], cwd=repo)
     require(hashlib.sha256(committed).hexdigest() == sha(root/'plan.json') == launch['plan_sha256'],
             'Plan differs from frozen commit or launch')
     require(sha(output/'plan.json') == sha(root/'plan.json'), 'Evaluation plan differs')
+    command = launch['command']
+    require(Path(command[1]).resolve() == root/'source/evaluate_compact_sequence.py',
+            'Wrong executed evaluator')
+    require(command[2::2] == ['--plan', '--export', '--features', '--output'], 'Evaluation options differ')
+    for name, expected in (('--plan', root/'plan.json'), ('--export', args.export),
+                           ('--features', args.features), ('--output', output)):
+        require(Path(command[command.index(name)+1]).resolve() == expected.resolve(),
+                'Evaluation input differs: '+name)
+    for name, digest in plan.get('postprocessing_source_sha256', {}).items():
+        require(sha(Path(__file__).parent/name) == digest, 'Postprocessing source differs: '+name)
     for name, digest in plan['source_sha256'].items():
         require(sha(root/'source'/name) == launch['source_sha256'][name] == digest,
                 'Executed source differs: '+name)
@@ -39,6 +51,13 @@ def audit(args):
     require(sha(args.export/'compact_dual.tflite') == plan['model_sha256'], 'Model differs')
     for name, digest in plan['feature_index_sha256'].items():
         require(sha(args.features/name) == digest, 'Feature index differs: '+name)
+    if plan.get('feature_data_sha256'):
+        require(sha(args.features/'features.bin') == plan['feature_data_sha256'], 'Scalar feature bytes differ')
+    if plan.get('background_inputs_sha256'):
+        from background_inputs import inventory
+        require(sha(root/'background-inputs.json') == plan['background_inputs_sha256']
+                and inventory(args.features) == json.loads((root/'background-inputs.json').read_bytes()),
+                'Actual background inputs differ')
     sys.path.insert(0, str(root/'source'))
     from evaluate_compact_sequence import summarize
     from compare_phone_distillation import operating_points
@@ -111,15 +130,19 @@ def audit(args):
         'clip_count': len(selected), 'clip_smoothed_steps': clip_steps,
         'continuous_source_count': len(selected_ambient), 'continuous_smoothed_steps': continuous_steps,
         'all_maxima_timebases_events_grids_and_gate_reproduced': True,
+        'full_scalar_and_background_bytes_hashed': bool(plan.get('feature_data_sha256')
+                                                       and plan.get('background_inputs_sha256')),
         'pointwise_product_dominance_verified': True, 'continuous_event_counts_measured_independently': True,
         'continuous_arrays': event_locations,
-        'limits': 'Cached-score reconstruction only. Feature-index hashes do not hash the full external scalar feature cache. No new inference, independent wake acceptance, pronunciation, physical endpoint, P4 resource or call stability proof.'}
+        'limits': 'Cached-score reconstruction only. Full scalar/background bytes are checked only when explicitly hash-bound in the plan; index hashes alone do not bind array bytes. No new inference, independent wake acceptance, pronunciation, physical endpoint, P4 resource or call stability proof.'}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('artifacts', 'repository', 'export', 'features', 'output'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--plan-repository-path',
+        default='research/wakeword_p4/training/plans/compact-sequence-inference-v1.json')
     args = parser.parse_args()
     result = audit(args)
     with args.output.open('x') as stream:
