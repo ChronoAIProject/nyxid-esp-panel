@@ -1282,3 +1282,53 @@ provenance and must not be rewritten in place on a relocated machine.
 The public unauthenticated download verifies the exact 325-member inventory
 and all 324 listed lengths/hashes. No source audio, device state, credential
 or firmware is included. H5 files are weight checkpoints without Adam slots.
+
+The [retained background-head export smoke](../wakeword_p4/results/compact-background-export-smoke-v1.json)
+and [separate fixed inference comparison](../wakeword_p4/results/compact-background-inference-v1.json)
+test the temporal head discarded by that scalar-only recipe. Export passes
+20 predeclared training sources, float scalar/logit alignment within 1.15e-5
+at the original 1e-4 gate, and exact reset/256-step chunk replay. The dual
+model is 63,680 bytes / 26,197 parameters. PTQ uses 100 frozen training-bank
+row IDs representing 96 distinct feature crops. No fitting or validation
+feature is used in the export smoke.
+
+The subsequent development result is rejected. Absolute CTC product reaches
+the strict false-wake gate at .95 with zero continuous events and .8929%
+worst-corpus fraction, but only 20.3110% macro proxy recall (8.1522% aggregate
+variant recall). The matched same-artifact binary comparator has 74.6706%
+macro recall at its minimum-false zero-event .99 fallback. At fixed .97,
+binary/product macro recalls are 80.3061% / 10.3824%, false near-word views
+71 / 6, and continuous events two / zero over 7.323822 development hours.
+New dual PTQ changes binary outputs relative to the scalar-only model;
+this comparison isolates the fixed inference rule within the dual artifact.
+
+`input-result-audit.json` binds the committed/executed plan and source, actual
+commands, model, scalar bytes and all training/development background payloads.
+It reconstructs all clip maxima/timebases, both independent event streams,
+full grids, product dominance and the rejection. The generic read-only auditor
+also reproduces the old compact study; an added threshold is rejected before
+input/score access. To rerun with a fresh output name:
+
+```sh
+"$WAKE_PYTHON" research/handoff/audit_compact_inference.py \
+  --artifacts "$WAKE_OUTPUT/compact-background-inference-v1" \
+  --repository "$WAKE_REPOSITORY" \
+  --export "$WAKE_OUTPUT/compact-background-export-smoke-v1/export" \
+  --features "$WAKE_FEATURES" \
+  --plan-repository-path research/wakeword_p4/training/plans/compact-background-inference-v1.json \
+  --output "$WAKE_OUTPUT/compact-background-inference-v1/rechecked.json"
+```
+
+No score normalization, threshold extension, final/test inference or hardware
+change follows. This is a rejected fixed recipe; it establishes no real-speaker,
+physical latency, resource or call stability parity with Hi ESP.
+
+The [complete retained-head supplement](assets-compact-background-inference-v1.json)
+contains both roots `workspace/home-wake-research-20261110/compact-background-export-smoke-v1`
+and `compact-background-inference-v1`. It includes the dual SavedModel/INT8,
+immutable plans/sources/launches/runtime, numerical diagnostics, full paired
+development scores and independent audits. Its explicit dependency is the
+completed background-training archive; full features remain external and
+byte-bound. A fresh unauthenticated download verifies all 279 listed member
+lengths/hashes and the exact 280-member inventory. No waveform, device state,
+credential or firmware is included. All jobs are terminal; work stayed silent.

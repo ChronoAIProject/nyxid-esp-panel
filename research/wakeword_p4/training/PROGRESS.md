@@ -2268,3 +2268,38 @@ Full scalar feature bytes and all training/development background payloads
 remain bound. This does not causally isolate background supervision without
 a second dual model, and the unoptimized full-history output has no P4 cost
 or latency approval. No development inference has launched at this commit.
+
+The [completed retained background-head inference](../results/compact-background-inference-v1.json)
+launched from immutable `83a1548` and is rejected. Both rules use the same
+dual INT8 invocations and the unchanged development inputs/grid/event policy.
+The product does reach the strict false-wake gate at .95, but macro proxy
+recall is only 20.3110% (aggregate variant recall 8.1522%). Its worst corpus
+fraction is .8929%, with zero events over 7.323822 hours. The existing fallback
+selects the same-artifact binary comparator at .99, macro recall 74.6706%
+and worst-group fraction 4.1667%, so the required three-point gain is absent.
+At the common .97 reference, binary/product macro recalls are 80.3061% /
+10.3824%, false near-word views 71 / 6, and continuous events two / zero.
+The dual artifact has a different PTQ cache from the scalar-only export;
+these binary values must not be claimed as exact replay of that export.
+
+The source/plan/input/result auditor reconstructs all 6,136 clip traces and
+35 continuous streams, both independent event grids and the rejection. It
+checks actual scalar and background feature bytes plus product dominance;
+pointwise dominance alone is not an event-count proof. An appended threshold
+is rejected before input/score access. The generalized auditor also reproduces
+the older compact-inference study unchanged. Numerical export and evaluation
+are terminal. This rejects one fixed absolute-probability rule on this head,
+not all compact-sequence detectors. No fitting, threshold extension, final/test
+inference, sound, recording, board or firmware operation occurred. The full
+Hi ESP objective remains active, with no qualifying deployment candidate.
+
+The [retained background-head supplement](../../handoff/assets-compact-background-inference-v1.json)
+is public: 3,221,819 bytes, SHA256
+`225aac6d73662ce0be6a2a12db133c44c390920eda9bc0c85517e4b7a62305eb`.
+The fresh unauthenticated download verifies the exact 280-member inventory
+and all 279 listed lengths/hashes. It retains numerical smoke and full fixed
+inference, the actual dual INT8/SavedModel, immutable sources/plans/commands,
+runtime versions, complete paired traces, byte inventories and independent
+audits/rejection checks. The completed background-training archive is the
+explicit dependency; full scalar/background features stay external. All
+evidence is shared on the research branch; no training/evaluation job remains.
