@@ -19,9 +19,12 @@ def sha(p):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--shard',default='dev-00000-of-00005.parquet')
     a=p.parse_args()
     if a.output.exists(): p.error('Fresh report required')
-    source=json.loads((a.source/'source.json').read_text());path=a.source/'dev-00000-of-00005.parquet'
+    source=json.loads((a.source/'source.json').read_text());path=a.source/a.shard
+    if 'data/'+a.shard not in source['development_shards']:
+        p.error('Only preregistered development shards; reserved final audio not allowed')
     entry=next(x for x in source['selected_shards'] if Path(x['path']).name==path.name)
     assert path.stat().st_size==entry['size'] and sha(path)==entry['lfs']['oid']
     table=pq.ParquetFile(path);rows=[]
