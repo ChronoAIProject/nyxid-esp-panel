@@ -1103,3 +1103,28 @@ scalar feature cache is separate. H5 files do not contain Adam slots.
 The unauthenticated public download and all 279 listed member hashes are
 verified. No source audio, device state or firmware is included. Processing
 stayed silent, and real-speaker, latency, resource and call parity remain open.
+
+The [retained-sequence inference supplement](assets-compact-sequence-inference-v1.json)
+contains the failed first export procedure, corrected numerical smoke and
+completed matched binary versus absolute CTC-product development experiment.
+The corrected export passes all 2,603 aligned training windows and exact
+quantized reset/chunking replays. The fixed inference rule is rejected:
+at its best strict 1%/zero-continuous-event point, macro proxy recall is only
+1.53125%. Numerical export correctness does not establish wake quality.
+
+The roots are `workspace/home-wake-research-20261110/compact-sequence-export-smoke-v1`,
+`compact-sequence-export-smoke-v2` and `compact-sequence-inference-v1`.
+Executed sources, immutable plans/launches, original failure log, dual INT8
+model, complete development score traces and read-only reconstruction audit
+are retained. The audit reconstructs all 6,136 clip maxima/timebases,
+35 continuous sources, both event streams, grids and the rejection decision.
+The full scalar feature cache remains external; its index hash alone does
+not verify every feature byte. H5 checkpoints in dependencies omit Adam slots.
+
+The unauthenticated public download, archive SHA256 and all 342 listed member
+hashes are verified against `CONTENTS-compact-sequence-inference-v1.json`.
+Use the two dependencies in the manifest. SavedModel directories are omitted;
+the actual INT8 model is retained. No source audio, device state, credentials
+or firmware is included. The full-history sequence output is an unoptimized
+research interface with unmeasured P4 costs, and is incompatible with the
+current scalar adapter. No playback, microphone or board operation occurred.

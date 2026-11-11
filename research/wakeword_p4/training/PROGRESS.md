@@ -1948,3 +1948,12 @@ artifact. Retaining ordered output can reject errors, but the present model
 and absolute score lose too much correct speech. Training-bank fit remains
 insufficient evidence of broader phrase discrimination. The full Hi ESP goal
 stays active and no candidate from these studies is qualified for deployment.
+
+The [complete inference/export supplement](../../handoff/assets-compact-sequence-inference-v1.json)
+is published on the shared research release. A fresh unauthenticated download
+matches SHA256 `df845ab277135cbebc371f03af2bdb73bc677e00eeb32bc0478fb52119fff1a5`
+and 3,173,537 bytes. All 342 listed member lengths/hashes and the exact
+343-file inventory pass verification. The original failed export, corrected
+smoke, actual INT8 artifact, sources/plans/launches/logs, complete inference
+scores and reconstruction audits are retained; external dependencies and the
+missing complete scalar feature cache are explicit. No deployment follows.
