@@ -4052,3 +4052,13 @@ PCM exact,16/30full frontend arrays exact,14differ. No byte-exact frontend parit
 claim; no model inference/training or validation/new/final WAV access.
 Future training must bind one explicit feature environment/data hash and retain
 this cross-host limitation rather than silently replacing saved arrays.
+
+### v40 data-coverage hypothesis frozen before integration (2026-11-11)
+
+Preregistered v37-baseline original128BCE,half phrase slots retained British,
+half replaced with five-engine complete-source candidate;no v39sequence loss.
+Independent127726sampler preserves base RNG/ambient. Equal engine/conditioning
+identity/canonical-source/variant,negative Nick/Next/Mix balanced;aliases once.
+Pinned Mac saved features retained with measured Linux frontend limitation.
+No optimization or candidate scoring yet;sampler audits and4090smoke required
+before120k. Original138point gate,new/final isolation unchanged.
