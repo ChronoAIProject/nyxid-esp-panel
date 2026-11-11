@@ -41,3 +41,28 @@ The unused Mac `training/old_source_replacement.py` and its real-pack probe were
 superseded before execution by GPU v40's completed implementation/audit at
 `911937b`. Keep them only as provenance; do not integrate their seed137726 or
 run them to duplicate v40.
+
+## Full native frontend versus installed wheel
+
+Next, before running, freeze a host-only comparison on the same30 original
+training witnesses (first canonical per engine/label, all three variants).
+`compare_native.py` builds the full unmodified2.0.2 frontend in isolated shared
+libraries, default versus `-ffp-contract=off`. It does not replace the installed
+extension. A small C ABI feeds exact160-sample hops and exposes actual coefficient293.
+The fixed WAV, rendered PCM and saved full-array hashes are checked; both native
+outputs and the current installed wheel are compared to the immutable saved
+arrays. Retain every changed element plus all outputs in `arrays.npz`, compiler,
+all source/header and binary hashes. No learned model, scoring, audio I/O or
+hardware. Differences remain diagnostic and never modify v40's input arrays.
+
+```sh
+python research/wakeword_p4/frontend_probe/compare_native.py \
+  --source /path/to/pymicro-features-source \
+  --study /path/to/old-complete-container-pack-v1 \
+  --source-root /path/to/original-workspace --output /new/native-comparison
+```
+
+This can connect the standalone coefficient observation to actual feature
+outputs on these inputs, without claiming to inspect the installed extension's
+private state. Build failures and all nonidentical outputs remain in the new
+directory. No threshold or feature tolerance is chosen from this diagnostic.
