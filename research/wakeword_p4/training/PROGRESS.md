@@ -2894,3 +2894,53 @@ empty cohorts and invalid settings. The two existing compact sampler/loss
 tests also pass. Raw logs are retained. Frozen source/plan/launch/runtime,
 scalar and auxiliary checkpoints, warmup, INT8 and development arrays will be
 retained. This study is silent and excludes all boards and audio devices.
+
+## Conditional word wake result: development screen fails
+
+The [completed full mixed-source study](../results/microwake-word-intent-ctc-v1.json)
+does not advance. Both 3,000-step jobs exit zero. Control exactly reproduces
+the original gain-.1 auxiliary model, full warmup, first 16 input batches,
+pair schedule and PTQ inputs. Both new exports retain the same scalar graph,
+61,712 bytes and 25,831 inference parameters; the conditional objective is
+absent from inference. Each arm records 48,000 paired examples over 3,000
+updates, with no conditional warmup updates or new supervision cohorts.
+
+At the existing fixed .97 reference on reused development data:
+
+| Metric | Original word CTC control | Plus conditional intent loss |
+| --- | ---: | ---: |
+| Mean engine recall | 81.1458% | 81.8125% |
+| Negative false clips / 3,744 variants | 76 | 83 |
+| Continuous false events / 7.32382 hours | 3 | 3 |
+| Worst engine/corpus false fraction | 4.16667% | 4.16667% |
+| Grid points with zero continuous events | 5 | 0 |
+
+Neither arm meets the unchanged 1% worst-group gate. The frozen comparator
+selects control .99 (77.1637% macro, zero continuous events, 4.16667% worst
+group); treatment has no zero-event point anywhere on the same 21-point grid.
+At .996 it still has 2 continuous events. No threshold extension, gain/seed
+sweep, step extension, reserved-quality scoring or firmware action follows.
+
+A secondary saved-score breakdown at .97 reconstructs all reference totals.
+Hey Mix false clips change 32 -> 31, Hey Next 22 -> 22 and Hey Nick 2 -> 2; the other
+negative texts increase 20 -> 28. These are correlated synthesis-text variants,
+not independent speakers or certified pronunciations. The small fitted CTC
+change (8,860 -> 8,902 exact targets among 10,120 repeated bank rows) does not
+translate into useful open-set rejection. This result does not identify one
+unique cause, and does not support promoting the conditional recipe.
+
+All 6 preflight software tests pass. The executed read-only input audit binds
+full scalar/background bytes and frozen source, plan and actual launches.
+The separate score reconstruction verifies each arm's 6,136 clips/1,429,512
+clip steps, 35 continuous sources/878,709 steps, every maximum/timebase/event,
+all 21 grid points and the decision. Both supplementary audit processes exit
+zero. Complete sources, commands/runtime, raw logs, all checkpoints,
+SavedModels, scalar INT8 and full score arrays are retained in the
+[public evidence](../../handoff/assets-microwake-word-intent-ctc-v1.json).
+The archive's fresh unauthenticated download verifies all 362 listed member
+hashes and lengths. Training source commit is `2a6d8e3`. Other host workloads slowed
+this run; elapsed host time is not a P4 resource or latency measurement.
+
+No audio devices or boards were used. GPU reference remains `c8dcd2c`. The full
+Hi ESP comparison goal remains active and unachieved; independent real-user,
+matched acoustic, P4 resource and long-call/reconnect evidence is still needed.

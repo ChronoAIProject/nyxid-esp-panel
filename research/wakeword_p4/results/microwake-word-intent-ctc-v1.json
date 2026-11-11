@@ -1,0 +1,170 @@
+{
+  "scope": "Paired full mixed-source scalar wake training with an additional conditional two-word CTC intent loss; reused development validation only.",
+  "plan_sha256": "5612cf336fbd6a5878ec26348c9b1cd295da04733f0eff159b37e1baf0ae5fca",
+  "training_source_commit": "2a6d8e320e16567311c6808f28556e6ef2ed630b",
+  "study_launch_sha256": "12afdab329270356be9255c4c12381a3793d9dd80f6313f6ad378f3f91afa6b2",
+  "comparison_sha256": "2340da1eb4f2c717538b9dfed2f6f5e21665caa480acd7a0274fc23b56a60fe2",
+  "input_audit_sha256": "6692833c9cedc4f66628c42bf9d61453656d0922dde12fe9d4afb7a83379c89e",
+  "cached_score_audit_sha256": "d896db9dc60a8b7604864ae906262dc1d019efae40d766e31a9008e511adf6ad",
+  "fixed_reference_error_groups_sha256": "ac4a0f927407825dac219bedab0338edf844e5853e8a3bec71ea7b403b32a3e4",
+  "fixed_reference_error_cohorts": [
+    {
+      "label": 0,
+      "category": "hey mix",
+      "variants": 136,
+      "control_hits": 32,
+      "treatment_hits": 31,
+      "control_only_hits": 2,
+      "treatment_only_hits": 1,
+      "both_hits": 30
+    },
+    {
+      "label": 0,
+      "category": "hey next",
+      "variants": 160,
+      "control_hits": 22,
+      "treatment_hits": 22,
+      "control_only_hits": 0,
+      "treatment_only_hits": 0,
+      "both_hits": 22
+    },
+    {
+      "label": 0,
+      "category": "hey nick",
+      "variants": 172,
+      "control_hits": 2,
+      "treatment_hits": 2,
+      "control_only_hits": 0,
+      "treatment_only_hits": 0,
+      "both_hits": 2
+    },
+    {
+      "label": 0,
+      "category": "other",
+      "variants": 3276,
+      "control_hits": 20,
+      "treatment_hits": 28,
+      "control_only_hits": 0,
+      "treatment_only_hits": 8,
+      "both_hits": 20
+    },
+    {
+      "label": 1,
+      "category": "other",
+      "variants": 2392,
+      "control_hits": 2031,
+      "treatment_hits": 2067,
+      "control_only_hits": 10,
+      "treatment_only_hits": 46,
+      "both_hits": 2021
+    }
+  ],
+  "software_tests": 6,
+  "preflight_logs_sha256": {
+    "compact-intent-ctc-tests.log": "134655cab304e492534dbd5e61b71a962af9bf4a30aaf5b5932c53fc88a8bdd0",
+    "compact-intent-legacy-tests.log": "f42af378876120d94f932f6905b34cfc11de5c2f86ed498737d59a123b125e48"
+  },
+  "objective": "Original weighted binary BCE plus0.1*(paired two-token CTC NLL/2 + intent_gain*four-intent conditional CTC cross-entropy). Conditional classes use original synthesis intent and raw equal-prior CTC likelihoods for [hey,nyx|mix|next|nick],with no fitted score/length adjustment. Only the16 paired slots per128 mixed-source batch receive the new conditional term. Intent gain0/1 is the sole recipe difference;no background/ordinary-positive auxiliary targets or encoder caps are added.",
+  "warmup_policy": "Both arms replay the original1000-step frozen-head CTC-only warmup exactly,including initial/final fits,head/cache/draw hashes and unchanged binary weights/optimizer. Conditional intent loss is excluded from warmup. Then both perform exactly3000 original mixed-source updates with the same draw schedule,augmentation,optimizer schedule and fixed final checkpoint. No gain/seed/step sweep or checkpoint search.",
+  "original_auxiliary_gain_point_one_control_replayed": true,
+  "full_scalar_features_and_background_bytes_bound": true,
+  "all_maxima_timebases_events_grids_and_gate_reproduced": true,
+  "bank_unique_crops": 3112,
+  "bank_unique_sources": 744,
+  "development_advance": false,
+  "accepted": false,
+  "strict_gate": {
+    "control": null,
+    "phonetic": null
+  },
+  "control_comparator_policy": "minimum_false_zero_event",
+  "control_comparator": {
+    "threshold": 0.99,
+    "macro_recall": 0.7716369047619048,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour_upper_95": 0.40903945817584486,
+    "max_source_false_rate": 0.041666666666666664,
+    "max_corpus_false_rate": 0.041666666666666664,
+    "hard_negative_false_rate": 0.017094017094017096
+  },
+  "treatment_comparator": null,
+  "arms": {
+    "control": {
+      "intent_gain": 0,
+      "model_sha256": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "intent": {
+        "gain": 0.0,
+        "steps": 3000,
+        "paired_examples": 48000,
+        "classes": 4,
+        "warmup_applied": false,
+        "objective": "Paired original-intent cross-entropy over raw CTC likelihoods; no score/length correction. Added inside the existing auxiliary gain; omitted from frozen-head warmup and scalar export."
+      },
+      "paired_draws": 24000,
+      "fitted_ctc": {
+        "ctc_loss": 0.19851451178077653,
+        "sequences": 10120,
+        "exact_sequences": 8860,
+        "target_phones": 20240,
+        "phone_edits": 1317,
+        "phone_error_rate": 0.06506916996047431
+      },
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8114583333333332,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.0202991452991453
+      },
+      "reference_false_clips": 76,
+      "zero_continuous_event_grid_points": 5,
+      "minimum_worst_group_false_rate_on_grid": 0.041666666666666664,
+      "complete_grid_in_comparison_and_archive": true
+    },
+    "phonetic": {
+      "intent_gain": 1,
+      "model_sha256": "c39f80a17053a8a69ccd94777eeb789ad9da2633342cb57fafee5c0855c4d7e6",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "intent": {
+        "gain": 1.0,
+        "steps": 3000,
+        "paired_examples": 48000,
+        "classes": 4,
+        "warmup_applied": false,
+        "objective": "Paired original-intent cross-entropy over raw CTC likelihoods; no score/length correction. Added inside the existing auxiliary gain; omitted from frozen-head warmup and scalar export."
+      },
+      "paired_draws": 24000,
+      "fitted_ctc": {
+        "ctc_loss": 0.19864681916451266,
+        "sequences": 10120,
+        "exact_sequences": 8902,
+        "target_phones": 20240,
+        "phone_edits": 1276,
+        "phone_error_rate": 0.06304347826086956
+      },
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8181249999999999,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.02216880341880342
+      },
+      "reference_false_clips": 83,
+      "zero_continuous_event_grid_points": 0,
+      "minimum_worst_group_false_rate_on_grid": 0.041666666666666664,
+      "complete_grid_in_comparison_and_archive": true
+    }
+  },
+  "limits": "Training uses only original training sources. Reused development validation is not untouched acceptance;synthetic source intent is not human pronunciation truth. The bank has5060 Cartesian pairs but only3112 distinct crops/744 source hashes,with unchanged pair-role/source weighting. New conditional intent supervision is training-only and discarded before the existing scalar INT8 export. No audio device,playback,microphone,board,firmware/OTA,PCM speed,or I2S/AEC/AGC/FIFO changes. Independent real-speaker/room recall,matched Hi ESP recognition/FAR/latency,P4 resources and long-call/reconnect stability remain required;no development pass alone completes the goal.",
+  "interpretation": "The conditional word objective does not pass the unchanged development advancement screen. At the fixed .97 reference it changes engine-macro recall from 81.1458% to 81.8125%, while negative false clips increase from76 to83 and continuous events stay3/7.32382 hours. No treatment grid point has zero continuous events; minimum worst-group false fraction remains4.16667%. Fitted two-word CTC metrics do not establish open-set separation or independent pronunciation quality. This recipe is rejected without a gain/seed/step extension, reserved-quality scoring or firmware action."
+}

@@ -1589,3 +1589,47 @@ absolute launch paths remain provenance; relocated runs need fresh launch
 records. The original phone/broad-bank/broad-study initializer archives are
 dependencies. No source audio, credentials, device state, firmware or full
 scalar feature cache is included.
+
+### Conditional word objective in full mixed-source wake training
+
+The [word-intent plan](../wakeword_p4/training/plans/microwake-word-intent-ctc-v1.json)
+and [completed result](../wakeword_p4/results/microwake-word-intent-ctc-v1.json)
+test the conditional four-intent CTC objective directly in scalar wake training.
+Both arms replay the original binary initializer, 1,000-step frozen-head CTC
+warmup and 3,000 mixed-source updates. Existing binary BCE and word CTC gain .1
+remain; treatment alone adds gain-one conditional intent loss on the same 16
+paired slots per 128 examples. Warmup, ordinary/background losses, sampling,
+checkpoint choice, scalar interface and development gates remain unchanged.
+
+This recipe is rejected. At the existing .97 reference, mean-engine recall
+changes 81.1458% -> 81.8125%, negative false clips 76 -> 83/3,744, and continuous
+events stay 3/ 7.32382 hours. Worst-group false fraction remains 4.16667%; unlike
+control, treatment has no threshold with zero continuous events on the frozen grid.
+Saved-score text groups show almost unchanged Mix/Next/Nick confusion and
+eight additional false clips on other negative texts. No reserved-quality
+evaluation or firmware follows this failed development screen.
+
+The [complete evidence archive](assets-microwake-word-intent-ctc-v1.json)
+contains both actual scalar exports, SavedModels, all binary/auxiliary
+checkpoints, exact warmup, source snapshots, commands/runtime, 6 passing
+preflight tests, raw training/evaluation logs and complete development score
+arrays. Exact control replay is required before its old scores are reused.
+The separate read-only reconstruction reproduces all maxima/timebases/events,
+full grids and the decision; fixed-reference error groups reconstruct totals.
+The public download verifies all 362 listed member hashes and lengths. Source audio,
+credentials, device state, firmware and full scalar/background features are
+excluded. Broad-bank and original broad-word study archives are dependencies.
+
+For a fresh run, use training commit `2a6d8e3` and
+`launch_positive_ctc_study.py --plan research/wakeword_p4/training/plans/microwake-word-intent-ctc-v1.json`,
+supplying `--artifacts`, `--repository`, `--upstream`, `--features`, `--bank`,
+`--initial-weights`, `--prior-study` (the original broad-word study root) and
+`--background-inputs`. The launcher records both immutable source commands
+and runs the captured input audit, exact-control score reuse, new INT8
+validation and frozen comparator. After completion, run the captured
+`postprocessing/audit_scalar_wake_scores.py --artifacts <root> --features <features> --output <fresh JSON>`.
+The archive's `diagnostics/run-post-training-audits.py` records this command's
+actual log/exit and the secondary fixed-reference breakdown; its original
+absolute feature path needs updating for a relocated fresh run. Preserve the
+historical sources and launch paths as provenance; never overwrite retained
+scores or claim cached reconstruction is independent inference/acceptance.
