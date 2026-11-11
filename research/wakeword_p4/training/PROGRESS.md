@@ -1706,3 +1706,24 @@ log and input/result audit. The unauthenticated download and all 85 listed
 member hashes are verified. The bank/initializer dependencies are explicit;
 the complete original scalar feature cache remains separate. No audio,
 device state or firmware is included. The full Hi ESP goal remains active.
+
+### Compact phrase CTC encoder-learning diagnostic
+
+The [separate frozen plan](plans/compact-phrase-ctc-encoder-fit-v1.json) now
+tests learning the temporal representation itself. It first replays the prior
+1,000-step frozen-head control and requires the same final head/cache hashes.
+A fresh identical six-token head then trains with the original encoder for
+exactly 1,000 updates and the same 32,000 row draws. This changes the trainable
+representation and uses a separate .0002 encoder Adam optimizer; head Adam
+remains .003. One combined CTC gradient is globally clipped at five before the
+disjoint optimizer updates. The unused binary classifier remains fixed.
+
+The prior five fit criteria are unchanged. Only a complete pass permits
+designing a subsequent mixed-source binary-wake comparison; there is no
+automatic fold, validation, threshold selection, export or board operation.
+Fitting these 236 previously seen, correlated training windows can overfit
+and is not independent recognition or false-wake evidence. No training has
+launched at this snapshot. Five focused tests cover the existing path-sum and
+source/label checks plus an independent first-step Adam/gradient calculation,
+shared clipping, encoder/head updates, untouched classifier and read-only
+measurement. All processing is silent and uses cached features.

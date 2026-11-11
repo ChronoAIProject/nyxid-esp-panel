@@ -1,0 +1,59 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "rows": 236,
+  "engines": [
+    "edge-tts",
+    "kokoro",
+    "macos-say",
+    "openai-tts",
+    "piper"
+  ],
+  "classes": [
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "tokens": [
+    "blank",
+    "hey",
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "steps": 1000,
+  "learning_rate": 0.003,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "scope": "Training-only compact phrase CTC temporal representation learning after the rejected frozen-head recipe.",
+  "hypothesis": "At the same 1000-update budget and exact row draws, allowing the original temporal encoder to train may learn ordered Hey + original intent-class sequences that a frozen linear readout could not. This diagnoses capacity/optimization, not wake quality.",
+  "parent_plan_sha256": "10a634b2e9ffaafdb33ea3f317e66241136257d3061e2a827acfa7493edcdd9c",
+  "parent_result_sha256": "703bb449618dcec85d324b686af2855c7b4880b93f365340f9398d7c3d0a0cfe",
+  "encoder_learning_rate": 0.0002,
+  "required_encoder_cache_sha256": "5b7d4f0bbe781eb3578fc147707908d768c9c6e495003802e8cae281212340a4",
+  "required_frozen_head_sha256": "8dffc151a14fa172f0a185ca93622398ab7adeaf3690b3d1e02f90d47b52cf54",
+  "source_sha256": {
+    "phrase_ctc_encoder_fit.py": "7a61f1f6c9e7ec75090b63adbef64f53d45a34d8eebdc091862a9c50dd477449",
+    "test_phrase_ctc_encoder_fit.py": "65ebe8195fcedf9a2ba381c2db164e5a473a55261f24ae50d13b183f8f2e0f5e",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f"
+  },
+  "optimizer": "Fresh Adam(.0002) for the encoder and Adam(.003) for the six-token head; compute the normalized CTC gradient once, globally clip the concatenated gradients at5, then update disjoint variable groups. Exact1000 updates, batch32, no augmentation, schedule, extra budget or checkpoint selection. The original disconnected binary classifier remains fixed. Frozen comparator is replayed with the original1000-step head-only recipe; its head/cache hashes must match.",
+  "advance_action": "Only if all unchanged fit gates pass, design a separate preregistered full mixed-source binary-wake study with compact auxiliary sequence supervision. This does not authorize readout folds, final scoring, firmware export, threshold tuning or deployment.",
+  "stop_policy": "Record both fixed final heads and the encoder even on failure. No extension of the failed frozen-head budget, gate changes or hyperparameter sweep. A joint-fit failure rejects this recipe only.",
+  "limits": "All236 rows are fitted training synthesis-intent labels from a tiny correlated bank already seen by the initializer. A trainable encoder can overfit them. No independent generalization, open-set silence/ordinary-speech FAR, human pronunciation, keyword-end latency, P4 resources or call stability evidence. No validation/test scoring, teacher-label replacement, speaker playback, microphone capture, board access or PCM/audio-pipeline change."
+}
