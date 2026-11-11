@@ -4297,3 +4297,14 @@ Finite weights,frozenBN exact,originalstreamINT8contract valid. Not accuracy/FAR
 Formal120k authorized after these passed prechecks;unchanged historical gate.
 Quality provenance/endpoint failures retained;research diagnostic,no promotion,
 new/final untouched,frozenv30 retained.
+
+### Mac positive interval cross-check received (2026-11-11)
+
+Issue13 Mac52607a4 independently enumerated every endpoint for4602positives.
+Original source6f60547efb8a23e9af810e698835818430cac0f925f38e01ad821338eaea4857
+reexecuted unchanged on Linux metadata;report byte-exact SHA
+887598121cb18123199f4ad99b1afc88ff1d4a80fb75f7c43fb2a7baea9bc733.
+All intervals equal proposedcrop_end..350;103663supported five positions;
+packindices2/371have zero,retained. No rawfeatures/scores/model inference.
+Agreement limited to sample-container/phase arithmetic,not physicalRF or phonetics.
+No v42training change;original session85259 and waiter8208 continue.
