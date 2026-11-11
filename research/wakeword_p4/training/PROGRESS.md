@@ -2517,3 +2517,19 @@ binary weights, full float window/stream alignment, INT8 reset/chunk replay
 and exact parent calibration-input replay. A pass permits a separate frozen
 occurrence-rule development comparison with an actual long-source boundary
 gate; no held-out quality inference, firmware or acceptance follows here.
+
+The [numerical export result](../results/compact-positive-export-smoke-v1.json)
+passes: 63,680 B /26,197 parameters, SHA256
+`2c19277c1870224ffd1ee78fdcdadeb8114d36861447aa9194991292faf17cbb`.
+All 20 fixed training sources pass; maximum scalar alignment delta is
+4.20213e-6 and temporal-logit delta 1.14441e-5, below unchanged 1e-4.
+Training-only calibration inputs exactly replay the prior retained-head export.
+
+The [separate occurrence comparison](plans/compact-positive-occurrence-v1.json)
+is now frozen before development inference. Scalar and product come from the
+same new dual INT8 invocation. Its pre-validation numerical gate uses the
+original 40 training sources plus the known 823-frame source, compares all
+logits/scalars/products across actual 256-step chunks, and independently
+reconstructs probabilities in the probability domain. Prior-model trace
+values are not expected to replay after weights change. Same fixed 21-point
+grid, false-event policy and advancement rule; no threshold/score fitting.

@@ -1,0 +1,448 @@
+{
+  "scope": "Frozen same-artifact binary versus keyword-occurrence product comparison after ordinary-positive compact supervision.",
+  "hypothesis": "After ordinary-positive supervision, test the retained head using the already specified contiguous collapsed [hey,nyx] occurrence probability. The scalar-only recipe failed; this is a different inference question, not a causal comparison of positive gains without a second dual export.",
+  "export_result_sha256": "8655f2f3d395bda5b7d0c9a0c24bcd5f5885daa2a6011ef05d7558be08221884",
+  "export_plan_sha256": "0b19adbb345952b11ad94dde00964d0f0d6246586680a87e512bfde4659ef456",
+  "model_sha256": "2c19277c1870224ffd1ee78fdcdadeb8114d36861447aa9194991292faf17cbb",
+  "model_bytes": 63680,
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "source_sha256": {
+    "compact_sequence_inference.py": "0bacf7da9fc62353ce4588e1db2bdbf6777de5755d37bb214a51a8a4f4104416",
+    "compare_paired_ranking.py": "9649371c6710b23737a164a8ab4e536f7a0bbeadc88ddf6d7e2032d6e0c007e5",
+    "compare_phone_distillation.py": "e53dc19e6a2fff6f68d0e0c0c388a9a175cfee3c40aeb1370b5f36d8bcc7696c",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "evaluate_compact_sequence.py": "4d1b52a9ec85c4a6050cf96d85f5c281efefefb2075bde75ec3bdc64983d94ba",
+    "keyword_occurrence.py": "55914a725b7b52a834cd9acf61eda2872a1267e6ec91bb5f83d7a811f5fc89e1",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "test_compact_sequence_inference.py": "46e118ae2b5d32f5bd5e74750558d999425e499807b51424b5f9d96d15653764",
+    "test_evaluate_compact_sequence.py": "bc26c5ab84dc0739e14eec9d1a384a9cf3e5c1e244ff76330473ed6093cc68c1",
+    "test_keyword_occurrence.py": "ca0ccd388f67d54db8a9371edacca78df44883bb4bfac4e8e9a4a15557c49641"
+  },
+  "event_policy": {
+    "smooth_steps": 5,
+    "refractory_steps": 67,
+    "rearm_fraction": 0.5
+  },
+  "rule": "At each unchanged30ms step, use the same scalar p and67x6 logits from the frozen dual INT8 artifact. Sum all CTC paths whose collapsed tokens contain contiguous[hey1,nyx2], preserving blank0 and repeated-label collapse with arbitrary context before/after. Treatment is p*P_occurrence; control is the same invocation p. No score normalization, learned scale, alternate temporal window or extra threshold. Apply unchanged five-score smoothing and independent existing event latch.",
+  "validation": "Read all and only existing validation feature rows and continuous validation arrays. Source reset/timebase, positive [-.10,+.80]s estimated-end window, negative any-score maxima, duration and event policy match the original evaluator. Retain all per-step clip scores/times and continuous arrays. Correlated variants and weak endpoint estimates remain explicitly limited.",
+  "advance": "Require both rules to use the same INT8 artifact/invocations, source resets, validation exposure, timebase and event policy. The product must have zero continuous development events and at most1% worst engine and engine/corpus false fraction, plus at least3 macro-recall points over the matched binary comparator. Select comparator at best recall in the same strict gate, otherwise the2% zero-event gate, otherwise minimum-false zero-event point; if no zero-event point exists use its frozen.97 reference and require product worst-group false fraction no greater than that reference. This is development advancement only, not Hi ESP parity or firmware eligibility.",
+  "comparator": "Apply the existing strict1%/zero-event gate helper to the matched same-artifact binary baseline, with its strict/two-percent/minimum-false-zero-event/frozen.97 fallback policy unchanged. Require at least3 macro-recall points of gain at an eligible product operating point. The old scalar export is context only because this dual model has a new training-only PTQ cache; do not claim its binary outputs replay byte-exact.",
+  "stop_policy": "Run this separately frozen semantic rule once on the unchanged21-point development grid and gate. Retain the outcome; no score-scale/window/threshold sweep, validation-residual fitting, final/test inference or deployment. Training diagnostic and mathematical semantics motivate the rule; held-out errors are not imported into model fitting.",
+  "limits": "Reused development data and fixed21-point grid, not independent acceptance. Neutral67-step six-class logits have about.90247 chance occurrence, so this probability is not calibrated wake confidence. Scalar and product share this one new dual INT8 invocation/PTQ; neither old scalar nor old dual binary values are claimed exact. Original scalar/background bytes remain bound. No fitting, threshold extension, additional score rule, validation-residual training, final/test scoring, source WAV access, sound, recording, hardware/OTA, production device, speed or audio-pipeline change. Full-history head is an unoptimized correctness reference with unmeasured P4 cost, latency and real-speaker quality.",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "background_inputs_sha256": "18724af73cabd4c6f6a4d302956e45026829f410300ee9e502994c4096a04b28",
+  "parent_study_plan_sha256": "4e26fb15413a236ca3a63f8a129ad48b3c8809cbc5d00079529580326b39ac23",
+  "parent_study_result_sha256": "ba3228d164f4f802fd5fef39985a8345e9423b95a8e12538c9f389f6d6e88e3d",
+  "postprocessing_source_sha256": {
+    "audit_compact_inference.py": "d8f9231fdfcfa7dab9b0fccd518300afeb7f0221dc9043537c7138303a607be6",
+    "background_inputs.py": "018e7ac72579081a734c44679f9a6c0bb3acac642f5e57baa49d2152fdff8d10",
+    "audit_keyword_occurrence.py": "0babbdfe0b6b02a7f1d7d1c76704b75537c3fa4a36b28ea9ae8b8197c52bc36d",
+    "audit_compact_study.py": "ebcc9b2300e170bbe846cd06e21fb95ef366761f761e6afcc1149b361e8a84b3",
+    "launch_positive_inference.py": "69d1557f6052ca42293b20b4013c09dad07c8c4bd91448312008fbca18980798"
+  },
+  "ctc_event": "occurrence",
+  "adapter_gate": "Before held-out inference, replay the fixed40 training sources and explicit long training source from monolithic new-model outputs versus256-step chunks and the occurrence adapter. Require scalar, all67x6 logits and products exactly equal, and an actual >256-step long source. Retain every new-model monolithic trace. Independently reconstruct occurrence probability with probability-domain matrices at absolute tolerance1e-12. These are new-model traces, not exact replays of old-model values.",
+  "long_training_source": {
+    "path": "openai-corpus/training/ballad/003.wav",
+    "variant": 0,
+    "sha256": "1a5a6554156fbc5ee785c2777bcfc760b24d79a15e6cb7175a55592e2cd5506e",
+    "engine": "openai-tts",
+    "label": 1,
+    "text": "Hey Nicks.",
+    "frames": 823
+  },
+  "parent_failed_protocol_plan_sha256": "87a0f1eb47e7175987b22b29acc110464c501b834af1b0d71afcd84227837d45",
+  "parent_protocol_failure_sha256": "a3ada0e5aa7fb5f51b099d9d86d0671084784d3390b8dbb46b9a5748bbfb75a3",
+  "procedure_correction": "The original40-source cohort has no source longer than256 steps, so the original gate stopped before any development inference. Keep every original replay and add one predeclared longer training source to actually test the same chunking requirement. Model, grammar, validation data,21-point grid, smoothing, event policy and advancement gate remain unchanged. No wake-quality scores existed for the failed protocol.",
+  "parent_input_audit_sha256": "3b5b873446222c689a72c0a655c4244c67ca0e69b2dda2806dfdc3283ddbe94f",
+  "adapter_training_sources": [
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/000.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "d648348421679690540151938ebb602182b98fd5557c8a2e48523add05c8d723",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/010.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "639f13ca94a2598526738db19558a6b8463f6eba3a653ee1f168c2c1ac60501f",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/009.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "1173df28a1ec7fdc81ef5c5e89a54da72f4e1f3e10c83900fc76f5ee4903ac47",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/008.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "ee2cd2eb9a28ad39b41e27457031d068dd7304a21029c788a90f6a75e1e9f92f",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/000.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "60e63a101b83329116dcf344b69bda3ee0cb2aca2cf2fb8c72cb9c07b0845ecd",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/005.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "46277029d3ca8ad8c412a0699f949c129beb6743cc6e9ec25ffbc6a7e788d385",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/004.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "6148c594583d58936a39cdbb0b8b8359aa8ea39d3932cd118c42971fd4a412a6",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/003.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "20f09dc3626ca818e5656f4f702c0d1be630c2dc42e11418b8f20c6526f0aa06",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/000.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "57d8d7b69282f204c69391eb50085efeb45260c90756292849fb26a08af9a6b5",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/010.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "79ea5e1fe04ab351605a6e024fb7961b2c5416fc26097b5ee383879580df2060",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/009.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "5536542d4652297a7ff8a36d2eac9cc21bdcde876888015765fcd610588d62c7",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/008.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "8025a44a3770a351c9e0747a07f81e72a39cf4569bff5c399336ffd79f694198",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "openai-balanced/training/alloy/000.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "6c74a6c1f38de098459991886f4d72a6d59f6073133160e2b5a929a73f44a2c9",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "openai-balanced/training/alloy/011.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "6580b8ff79ad77238395cd8843de9524f9fb54a0066e027ecebd4e66e2b2b32e",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "openai-balanced/training/alloy/010.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "9f822a66590222076c7c0fafe905d946a22e6c511a055fdee3badb8b8282f2e5",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "openai-balanced/training/alloy/009.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "4a974df55b9e008245b2c06173b845e88111f40c045d37e32ce9b42033f0f7a2",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "synthetic/training/1/02857.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "4322befd1a205b21ae75767ab7c0815d26d55018ce1019f8a4000b92cbce65ec",
+      "label": 1,
+      "text": "Hey Nyx.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "synthetic/training/0/00256.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "05db6529d1899340beebfc4dfb553145f835c2a3deb8b72b52f583054adfad04",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "synthetic/training/0/00291.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "eb5fd82c947e6dd3ddcb3c1f33e9e059c244031a814a6e29339f9139c0ec97eb",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "synthetic/training/0/00426.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "bcdea49a1f247e83a97f11ce1f35a07750817f918810f587ec23eafc72758a93",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "synthetic/training/1/01823.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "d86fa9bac84f0882474cb70e83fb78af496dd5f79b1a3940687b1378d2c95a02",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02336.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e5b90066e7d80080219bc4046cf6b4803581fed8b9c644dc055addb6c0c84581",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02256.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "a1b2bfeb673730410d8de17e870b885a1d341b0c56d32d11c054d66668fb8928",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02748.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "c556a64f0f050a25c75751c9e1b1d62e3b0780873de31e1a9b604cdd44f07612",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01188.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e24a2ccd3cbded3327b1869a8e74a6a9d0c9785425f2c7d67736c8f91a6aabc2",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01068.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "19b0af007ff8d2205896d5c56bdad671228ef37743c74148831aa5fd133480f9",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00417.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "4dfeedc882740a87dbda93cd71391b490ec84cf5bcba4657d01ea4f6abbd7493",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00108.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "879a1cf461bb1bcd949e1746289d4f896c889ea516666bdce779776706460ad7",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02128.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "fcdac008c19a0447e68784b24429a2fd66eb9e6552ec0b800697cdc423dfb006",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01484.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "2fc739472b1798fecdee5be8cf558eaa89ccc6fa4a28a0e173c821888defbe6a",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00025.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "31e3770dd2f29027a3a4d1d8c9031e029d6ccb2e23a7f815b92773bf1d1dc5e5",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00021.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "454b140a06eed32a3987d83c2b3651da253121279bda105929a84e0d726902e0",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01483.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "ca2b0f5bfcf15fad6e54723b0596d8d8fe3982a5d9af2dbb1311633ae804f40b",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00637.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "9157a6c6f975a0613702f0e4ff83788973403e83e2bd5a97c64d8ad1feafe4ad",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02579.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "abc3492b39cd02f1de0ecc667b3f0f59ed96af9300671d8be85a8cfde89dafa4",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00463.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "bd056820de7da7aeef19753b86b33209f30993db6247b9100f5b95f4f3f6be93",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02932.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "18bbab01eb7085bab221194715971bab5a232ce24946559204af9f64afdd0edf",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02616.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "3dddac94a1abe68ac3c76185953a623940819393458265a9945bc559ed46ddbe",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01601.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e5a791f37a4ccc6f4de51cad98e15b1d989e05f078fa7c7253d503fce1e8060c",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00276.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "889c74b8038096f4ec922e45dbf2e0a4fa4a7ce3f2ae8a6490cd770b0c16c2e6",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    }
+  ]
+}
