@@ -2016,10 +2016,12 @@ trainable-variable gradients match five separate overlapping windows within
 eager execution and leaves every frozen BN variable unchanged. No optimizer
 steps are taken.
 
+The helper expects the original model's **normalized float input**,
+`x = clip(raw_uint16.astype(float32)/25.6, 0, 26)`, with a batch dimension.
 The 150-frame teacher60 window uses 149 effective input frames because of
-valid striding. For a complete feature stream `raw`, sequence scoring of
-`raw[1:]` matches original streaming outputs from zero-based step49 onward;
-scoring of `raw` instead matches window starts0,3,6,... . This mapping retains
+valid striding. For a complete normalized feature stream `x`, scoring of
+`x[:,1:,:]` matches original streaming outputs from zero-based step49 onward;
+scoring of `x` instead matches window starts0,3,6,... . This mapping retains
 the known one-frame phase; the helper does not invent future context or alter
 microphone speed. In the future, a trainer could directly differentiate a
 five-score objective rather than assuming one terminal positive score creates
