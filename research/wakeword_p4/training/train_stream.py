@@ -41,6 +41,7 @@ def main():
     parser.add_argument("--phone-binary-pack", type=Path)
     parser.add_argument("--full-source-pack", type=Path)
     parser.add_argument("--full-source-temporal-pack", type=Path)
+    parser.add_argument("--five-score-pack", type=Path)
     parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
@@ -78,6 +79,9 @@ def main():
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
     if args.full_source_temporal_pack and not args.full_source_pack:
         parser.error('temporal expansion requires full-source base pack')
+    if args.five_score_pack and (not args.full_source_pack or args.full_source_temporal_pack
+            or args.time_mask_width or args.frequency_mask_width):
+        parser.error('five-score supplement requires original full-source base without temporal jitter or masking')
     if args.full_source_pack and (args.architecture!='teacher60' or frames!=150 or bn_policy!='frozen'
             or args.phone_binary_pack or args.phrase_auxiliary_manifest or args.prefix_negatives
             or args.mask_prefix_loss or args.label_smoothing or args.negative_candidates!=1
@@ -308,6 +312,11 @@ def main():
         phone_binary = PhoneBinary(args.phone_binary_pack, source_balanced=args.phone_source_balanced)
         (root/'phone_binary.json').write_text(json.dumps(phone_binary.report, indent=2)+'\n')
     auxiliary = None
+    five_score = None
+    if args.five_score_pack:
+        from five_score_training import FiveScoreTraining
+        five_score = FiveScoreTraining(model, args.five_score_pack)
+        (root/'five_score.json').write_text(json.dumps(five_score.report,indent=2)+'\n')
     if args.phrase_auxiliary_manifest:
         from phrase_auxiliary import PhraseAuxiliary
         if model.losses:
@@ -385,7 +394,10 @@ def main():
             x, y, weights = batch()
             if phone_binary is not None:
                 x, y, weights = phone_binary.append(x, y, weights)
-            if auxiliary is None:
+            if five_score is not None:
+                sx,sy,sw=five_score.batch()
+                loss=float(five_score.step(x,y,weights,sx,sy,sw))
+            elif auxiliary is None:
                 loss = float(model.train_on_batch(x, y, sample_weight=weights))
             else:
                 auxiliary_x, auxiliary_y = auxiliary.batch()
@@ -413,7 +425,11 @@ def main():
         raise ValueError("Affine batch normalization policy did not update any affine weights")
     if bn_policy == "frozen" and bn_selected["affine_sha256"] != bn_initial["affine_sha256"]:
         raise ValueError("Frozen batch normalization affine weights changed")
-    streaming = utils.to_streaming_inference(model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
+    export_model = model
+    if five_score is not None:
+        export_model = mixednet.model(flags, (frames,40), None)
+        export_model.set_weights(model.get_weights())
+    streaming = utils.to_streaming_inference(export_model, {"stride": 3, "spectrogram_length": frames}, modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), dtype=np.float32))
     streaming.export(str(root/"saved_model"))
 
@@ -437,6 +453,7 @@ def main():
               "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
               "gpu_details": [tf.config.experimental.get_device_details(g) for g in gpus],
               "selected_step": selected_step,
+              "five_score": five_score.report if five_score is not None else None,
               "validation_window_phase": window_phase,
               "source_exponent": args.source_exponent,
               "ambient_sampling": args.ambient_sampling, "ambient_sampling_coverage": ambient_coverage,
