@@ -1891,6 +1891,20 @@ streams. v41 still has no eligible old-development point and is rejected. This
 review checks committed identities/calculations; it does not reload weights or
 score arrays, infer audio, touch reserved sets or perform hardware acceptance.
 
+The [positive-boundary audit](../wakeword_p4/results/positive-temporal-bounds-audit-v1.json)
+independently enumerates every possible endpoint under the original immutable
+sample ledger. All4602 positive intervals equal v42's proposed bounds, with
+13..100 individual windows and103663 five-output positions at the live phase.
+Pack indices2 and371 have only four legal live-phase windows, so neither has a
+supported five-output position; both remain in the data. This checks the sample
+ledger/phase convention, not phonetic completeness or recognition quality.
+
+```sh
+python research/wakeword_p4/training/audit_positive_temporal_bounds.py \
+  --pack "$ORIGINAL_COMPLETE_SOURCE_PACK" --gpu-revision bdb6eb1 \
+  --output "$FRESH_POSITIVE_BOUNDARY_JSON"
+```
+
 ### Independent v40 report reconciliation
 
 The [v40 review](../wakeword_p4/results/gpu-v40-report-review-v1.json)
