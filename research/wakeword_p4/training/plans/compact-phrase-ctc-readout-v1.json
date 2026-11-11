@@ -1,0 +1,64 @@
+{
+  "scope": "Training-only compact two-token phrase readout feasibility on the existing frozen wake encoder; no deployment or independent wake evaluation.",
+  "hypothesis": "A six-token CTC readout may preserve the ordered Hey + target/confuser contrast more effectively than the previous 392-phone auxiliary task. Compare with a temporal-mean four-class linear readout on identical frozen encoder states and training draws. This diagnoses representation/readout feasibility, not a causal parameter-count comparison or speech truth.",
+  "parent_failed_plan_sha256": "8d07d935e0baa7e05a5bc88fb1151a3fe4279133ac177b9a558908c23fdab7b1",
+  "parent_failed_result_sha256": "9e5b379167fe27228d8c8089bfab568c6796f0e477e57bf1cbe75a62f9be3a35",
+  "source_sha256": {
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "test_phrase_ctc_readout.py": "e6b2f5a61a11fa5b69369e6d3bd952e4cc8120d83a29ce0db605494179c5eada",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f"
+  },
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "rows": 236,
+  "engines": [
+    "edge-tts",
+    "kokoro",
+    "macos-say",
+    "openai-tts",
+    "piper"
+  ],
+  "classes": [
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "tokens": [
+    "blank",
+    "hey",
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "encoder": "Original binary model at 335 frames, reshape classifier input into [67,60]. Cache inference-mode outputs once; preserve all encoder/classifier weights. No teacher posterior or phone label is used.",
+  "ctc_head": "One Dense(6) per temporal encoder state, 366 parameters. Train mean two-token CTC NLL /2, blank index0, target [hey, original synthesis-intent class]. Score four equal-prior, equal-length hypotheses without a fitted threshold.",
+  "mean_head": "Temporal mean of the same encoder states followed by Dense(4), 244 parameters; sparse categorical CE. This is a separate readout comparator, not a matched architecture/loss causal ablation.",
+  "steps": 1000,
+  "learning_rate": 0.003,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "optimizer": "Fresh Adam(global_clipnorm=5) for every head/fold. Same row-ID draws within corresponding CTC/mean runs; no schedules, augmentation, early checkpoint selection or extra budgets.",
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "readout_gate": {
+    "minimum_macro_accuracy": 0.9,
+    "minimum_nyx_recall": 0.9,
+    "maximum_confuser_false_nyx_fraction": 0.01
+  },
+  "minimum_macro_gain_over_mean": 0.03,
+  "fold_policy": "First fit both heads on all236 windows. If compact CTC fails any frozen fit criterion, stop before folds. Otherwise train one fresh pair of heads per held-out TTS engine on all other engine rows. Reject source-WAV hash overlap between fold train/test. Score every held-out row once and aggregate by original class.",
+  "advance_action": "Passing the training-only fit and readout gates permits designing a later full open-set wake experiment. It does not permit a firmware change, threshold selection, scored-final reuse or claim of Hi ESP parity.",
+  "limits": "Original encoder already trained on this source corpus. Held-engine splits apply only to the new readout; they are not independent generalization evidence. Synthesis-intent text is not human pronunciation truth. Forced-choice hypotheses do not test silence, ordinary speech or open-set false wakes. Tiny correlated training bank; no real-speaker recall, latency, P4 resource or call/reconnect proof. No source relabeling, validation/test scoring, speaker playback, microphone capture, board access or PCM/audio-pipeline change."
+}

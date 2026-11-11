@@ -1655,3 +1655,29 @@ device state, credential or firmware is included. This is a rejected research
 recipe, and recognition, real-speaker/room generalization, precise P4 latency,
 resources and long call/reconnect parity remain unproven. The full goal stays
 open; no additional cap or threshold sweep is selected from these results.
+
+### Compact phrase-sequence readout feasibility
+
+The [new frozen plan](plans/compact-phrase-ctc-readout-v1.json) tests task
+compression before another full training run. Instead of 392 weak phone
+classes, a Dense(6) CTC head learns the sequence `hey, nyx|mix|next|nick`
+from the original synthesis-intent labels of the same 236 training windows.
+A temporal-mean Dense(4) readout uses the same frozen [67,60] encoder cache
+and identical row draws. The heads have 366 and 244 parameters; their
+different losses/structures make this a readout comparison, not an isolated
+parameter-count effect. Original binary encoder/classifier weights stay fixed.
+
+Both first get exactly 1,000 training updates. Compact CTC must pass the
+predeclared full-bank accuracy, target/confuser, greedy-sequence and loss
+criteria before held-engine readout folds can run. A pass in those folds only
+supports designing a later open-set experiment. The encoder already saw the
+source training corpus, so these folds are not independent acceptance.
+Forced-choice phrase scores do not measure silence/ordinary-speech false wakes.
+No teacher output replaces a label, and no wake-validation threshold is fitted.
+
+Four tests pass: exhaustive CTC path likelihood versus the TensorFlow result,
+word-order sensitivity, alias/label validation, binary confusion accounting,
+and rejection of changed cached features or reserved-source overlap. No new
+training has launched at this commit. The script is separate from the existing
+trainer/runtime and accesses no audio device or board. The source/weights,
+bank, index, optimizer, seeds and stop/advance gates are pinned in the plan.
