@@ -3842,3 +3842,20 @@ v30; no threshold extension, voice removal or endpoint/phonetic causal claim.
 Full phrase-distribution replacement alone did not meet the synthetic goal.
 Further work should diagnose score/representation and same-checkpoint quantization
 before another long training run, preserving all failures and source splits.
+
+### Same-checkpoint v30 Mac350 float/INT8 diagnostic (2026-11-11)
+
+Completed all350 consumed original Mac PCM streams on CPU, same authenticated
+native frontend as prior Linux replay, original saved_model, explicit float
+state-zero reset,56160prime/480tail and unchanged.91796875 threshold/smoothing5.
+All float outputs retained locally, hash3b1a18df275afca363ddfc908bec05041f6fa0b2ae7f17c0d6bbe837948c4a0d;
+full per-file SavedModel hashes, provenance and per-source events/maxima/errors
+in results/4090-mac-float-int8-v1.json. First stream reset-repeat exact.
+Float12/50 vs INT811/50 target intent clips; same3/250 nontarget false clips
+(Tessa HeyNext variant3, HeyNexus variants0/3); zero on50 HiESP cross-target.
+Only float-only target is Moira-3-0 HeyNicks?: float maximum five-mean.9440673,
+INT8.91328125, below threshold. No INT8-only target. Most misses and all these
+false clips persist in float, so quantization is not the main explanation on
+this consumed fixed-threshold corpus. This does not prove phonetic correctness,
+float-optimal threshold, general FAR, new acceptance or hardware equivalence.
+No retraining, threshold selection, new development or finals used.
