@@ -24,9 +24,12 @@ def main():
     manifest=json.loads(a.manifest.read_text());rows=manifest['records']
     calibration=json.loads(a.calibration.read_text())
     official=json.loads(a.official_reports.read_text())
-    if (sha(a.manifest)!='2ff49bdd98b7b8ccaa2d01bef9f8764db331ad2a08c98ace522a05df48763dc8'
-            or len(rows)!=80 or manifest['independent_final_audio_accessed']
-            or len(official)!=80 or not calibration['validation_only']
+    expected_counts={'2ff49bdd98b7b8ccaa2d01bef9f8764db331ad2a08c98ace522a05df48763dc8':80,
+        '779077bae3a01ae80392962d572b1d6a42a5b58ecd1bb583d23599ea931ba5be':300}
+    count=expected_counts.get(sha(a.manifest))
+    if (count is None
+            or len(rows)!=count or manifest['independent_final_audio_accessed']
+            or len(official)!=count or not calibration['validation_only']
             or calibration['model_sha256']!=sha(a.model) or calibration['threshold'] is None
             or calibration['sliding_window']!=5):
         raise ValueError('Need exact frozen development manifest and calibrated unchanged model')
@@ -71,9 +74,9 @@ def main():
         manifest_sha256=sha(a.manifest),official_reports_sha256=sha(a.official_reports),
         source_sha256=sha(Path(__file__)),detector_source_sha256=sha(Path(__file__).with_name('evaluate.py')),
         frontend_source_sha256=sha(Path(__file__).with_name('features.py')),
-        baseline_exact_event_reproduction=bool(baseline),reset_exact_clips=80,
+        baseline_exact_event_reproduction=bool(baseline),reset_exact_clips=count,
         summaries=summary,records=results,final_data_used=False,threshold_selected=False,
-        limits='Generation-end window metrics are not phonetic recall/latency. Any-event is an intention diagnostic. Historical development voices, independent fixed thresholds, no matched FAR or acceptance claim. Cached official source/model/PCM authenticated; no repeated QEMU run.')
+        limits='Generation-end window metrics are not phonetic recall/latency. Any-event is an intention diagnostic. Development voices only, independently fixed thresholds, no matched FAR or acceptance claim. Cached official source/model/PCM authenticated; no repeated QEMU run.')
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(summary),flush=True)
 
 

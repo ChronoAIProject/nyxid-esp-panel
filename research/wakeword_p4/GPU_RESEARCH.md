@@ -3432,3 +3432,8 @@ v30.91796875/原five-score策略，官方HiESP.63，冻结阈值基线不选阈�
 全300条QEMU计数/CRC/stage及同PCM核验后才产整体报告；所有事件保留。
 固定[-100,+800]ms窗口只是生成参考诊断，同时报告any-event，不能误读为末音素召回。
 仅20个development声音，无89个保留声音或历史最终集访问。
+
+VCTK加静音复放manifest冻结SHA779077bae3a01ae80392962d572b1d6a42a5b58ecd1bb583d23599ea931ba5be。
+缓存候选评分器按两个明确manifest SHA分别支持80条Kokoro与300条VCTK，
+仍逐条核验官方report/同PCM/阈值getter与来源；不放宽到任意来源数据。
+本变更只扩展协议身份白名单，不改变分数/事件/端点窗口算法。
