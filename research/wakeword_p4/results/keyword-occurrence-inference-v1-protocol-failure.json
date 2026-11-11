@@ -1,0 +1,14 @@
+{
+  "phase": "training_adapter_gate",
+  "terminal": true,
+  "exception": "AssertionError at launcher.py line59: assert any(r[\"crosses_256_step_chunk\"] for r in reports)",
+  "launcher_sha256": "684dd8a9cffb8bb64f2df4eb76cdb81e539a0bf7ef1dbdac29c753b5a81d29f0",
+  "plan_sha256": "87a0f1eb47e7175987b22b29acc110464c501b834af1b0d71afcd84227837d45",
+  "replayed_training_sources": 40,
+  "streaming_steps": 8513,
+  "maximum_source_steps": 252,
+  "cross_chunk_sources": 0,
+  "observation": "Observed launcher completed every equality assertion, then failed the required cross-chunk cohort assertion before writing the adapter report or launching development inference.",
+  "development_inference_launched": false,
+  "correction": "Retain all40 original replays and add a separately fixed long training source, with exact monolithic/chunked scalar, logits and product replay. No scoring/data/threshold relaxation."
+}

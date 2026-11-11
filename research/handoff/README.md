@@ -1332,3 +1332,50 @@ completed background-training archive; full features remain external and
 byte-bound. A fresh unauthenticated download verifies all 279 listed member
 lengths/hashes and the exact 280-member inventory. No waveform, device state,
 credential or firmware is included. All jobs are terminal; work stayed silent.
+
+The [keyword occurrence diagnostic](../wakeword_p4/results/keyword-occurrence-training-diagnostic-v1.json)
+separates exact whole-window CTC from the probability that adjacent collapsed
+tokens `[hey,nyx]` occur inside a longer sequence. A three-state log recurrence
+retains blank/repeat semantics and allows surrounding symbols. Exhaustive
+short-path tests and an independent probability-domain matrix reconstruction
+verify the event calculation. This is not a calibrated wake confidence: the
+uninformative67-step six-class prior already has.9024687 occurrence probability.
+
+The fixed40-source optimization-seen diagnostic retains8,513 scalar/logit
+steps. At fixed.97, isolated Nyx detections change5/2/4 for scalar/exact/occurrence;
+Piper continuation detections change16/0/6. At the scalar peak only2/20
+continuations contain the greedy keyword, both exact, so context semantics
+alone does not explain the gap. Cohort/engine/wording are confounded. Separately,
+all1,702 distinct Piper training continuation sources are absent from the
+compact paired bank; the encoder sees them via BCE, but they receive no paired
+temporal CTC target. This motivates a new training study, not a proven cause.
+
+The [first inference protocol](../wakeword_p4/results/keyword-occurrence-inference-v1-protocol-failure.json)
+stops before development inference: the40 sources are at most252 steps, so
+the required256-step cross-chunk check has no eligible source. The
+[corrected, separately frozen protocol](../wakeword_p4/results/keyword-occurrence-inference-v2.json)
+adds one predeclared823-frame training source; all41 scalar/product replays
+pass, and the long source's full logits also replay across the boundary.
+No tolerance, model, PTQ, grammar, validation grid or quality gate is relaxed.
+
+Full development inference is rejected. At.97, occurrence-product macro proxy
+recall is52.1939%, with20 false near-word views, zero continuous events and
+2.1429% worst-corpus fraction. Its best strict point is.994 /17.9211% macro
+recall, far below the same-artifact binary fallback at.99 /74.6706%. Every
+fresh binary clip/continuous score replays the preceding dual-model study
+exactly. The read-only audit binds source/plan/model/full feature bytes and
+reconstructs all traces, grids, independent events and the rejection. No
+threshold extension, fitting, final/test score, sound, recording or board action
+occurred. Original executed commands and both failed/corrected protocols remain
+provenance; relocated machines should record fresh launches.
+
+The [complete occurrence supplement](assets-keyword-occurrence-inference-v2.json)
+retains three roots under `workspace/home-wake-research-20261110/`:
+`keyword-occurrence-training-diagnostic-v1`, the failed numerical protocol
+`keyword-occurrence-inference-v1`, and completed `keyword-occurrence-inference-v2`.
+The previous retained-head archive supplies the identical dual model; complete
+feature caches remain external. Actual logits, independent probability audit,
+41-source adapter replay, full development traces and original commands/source
+identities are included. Its fresh public unauthenticated download verifies
+all426 listed member lengths/hashes and the exact427-member inventory. No
+source waveform, device state, credential or firmware is included.

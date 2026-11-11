@@ -2382,3 +2382,43 @@ BCE, but the temporal head's paired CTC loss selects only the bank slots;
 background CTC selects ambient negatives. This suggests a separate future
 ordinary-positive supervision study, rather than attributing every miss to
 exact-window semantics. It does not prove the cause of held-out errors.
+
+The [completed occurrence inference](../results/keyword-occurrence-inference-v2.json)
+launched from immutable `238f2e7` and is rejected. All41 training adapter replays
+(8,787 steps) pass; the823-frame extra source crosses a chunk boundary and
+matches all scalar/logit/product outputs exactly. Development binary scores
+replay every parent clip and continuous value exactly. No new PTQ or fitting
+occurs. The original failed protocol remains explicitly retained and unscored.
+
+At fixed .97, occurrence-product macro proxy recall is52.1939% (aggregate
+variant recall35.9114%), versus10.3824% for the previously frozen exact-event
+product on the same artifact. The occurrence product has20 false near-word
+views /3,744, zero events over7.323822 hours and2.1429% worst-corpus fraction;
+it therefore fails the strict false-wake gate at that reference. Its best
+strict point is.994, macro recall17.9211% (aggregate9.9916%), zero events and
+.5357% worst-corpus fraction. The unchanged same-artifact binary fallback is
+.99 /74.6706% macro recall, so advancement fails decisively. Different strict
+thresholds do not imply pointwise deterioration relative to exact-event scoring.
+
+The auditor reconstructs all6,136 clips /1,429,512 smoothed steps and35
+continuous streams /878,709 steps, all maxima/timebases, independent event
+grids and the rejection. Actual scalar/background bytes and parent score
+bytes are bound; every binary value replays exactly. An appended threshold
+is rejected before input/score access. All processes are terminal. This
+semantic correction improves some fixed-reference detections but does not
+repair the head's recognition/false-wake tradeoff. The training-only evidence
+motivates testing ordinary-positive supervision separately; no new training
+or deployment follows from this rejected inference rule. All work was silent,
+without final/test inference, audio devices, hardware or speed/pipeline changes.
+
+The [complete occurrence supplement](../../handoff/assets-keyword-occurrence-inference-v2.json)
+is public:3,468,730 bytes, SHA256
+`02110f77a3405ceb4ecaa9d11610ab36acc23204424a86157cdb4c2117d245fb`.
+A fresh unauthenticated download verifies the exact427-member inventory and
+all426 listed lengths/hashes. It retains the training diagnostic and actual
+logits, independent CTC/matrix audit, original failed numerical protocol,
+corrected41-source replay, full paired development traces, immutable sources,
+plans, launches/runtime and audits. The previous retained background-head
+archive supplies the unchanged model; full feature caches remain external and
+byte-bound. All evidence is shared on the research branch. The full Hi ESP
+objective remains active, with no qualifying deployment candidate.

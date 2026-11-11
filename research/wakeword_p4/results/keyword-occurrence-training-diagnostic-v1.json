@@ -1,0 +1,94 @@
+{
+  "scope": "Training-only exact-window versus occurrence semantic diagnostic; not quality acceptance.",
+  "plan_sha256": "524ede0b2cd2bfb73ab261deceabce90db8f1d15de6ebe44f8462bfdc682c83d",
+  "raw_result_sha256": "c55e639a0eb3d3a27df96909ffbd5c1d681bac06682cb7e068e7cf9801d1b1d3",
+  "input_result_audit_sha256": "d07c446822cc93e78171c9dc6536519600dc33989691f815ac7fb8b3470ace89",
+  "model_sha256": "746efafd96cc8ba5cee6773a8346226ce5a60df40a5ab1251267b505dd3f317b",
+  "source_count": 40,
+  "raw_streaming_steps": 8513,
+  "cohorts": {
+    "isolated_nyx": {
+      "sources": 5,
+      "median_maxima": {
+        "scalar": 0.99609375,
+        "exact_product": 0.9532716035440427,
+        "occurrence_product": 0.9953022262569214
+      },
+      "at_scalar_peak_greedy_exact": 3,
+      "at_scalar_peak_greedy_contains": 3,
+      "reference_0_97_views": {
+        "scalar": 5,
+        "exact_product": 2,
+        "occurrence_product": 4
+      }
+    },
+    "isolated_mix": {
+      "sources": 5,
+      "median_maxima": {
+        "scalar": 0.003125,
+        "exact_product": 1.19357121405247e-05,
+        "occurrence_product": 7.92037569759409e-05
+      },
+      "at_scalar_peak_greedy_exact": 0,
+      "at_scalar_peak_greedy_contains": 0,
+      "reference_0_97_views": {
+        "scalar": 0,
+        "exact_product": 0,
+        "occurrence_product": 0
+      }
+    },
+    "isolated_next": {
+      "sources": 5,
+      "median_maxima": {
+        "scalar": 0.0203125,
+        "exact_product": 1.204586375822458e-06,
+        "occurrence_product": 2.0652594307175787e-06
+      },
+      "at_scalar_peak_greedy_exact": 0,
+      "at_scalar_peak_greedy_contains": 0,
+      "reference_0_97_views": {
+        "scalar": 0,
+        "exact_product": 0,
+        "occurrence_product": 0
+      }
+    },
+    "isolated_nick": {
+      "sources": 5,
+      "median_maxima": {
+        "scalar": 0.0,
+        "exact_product": 0.0,
+        "occurrence_product": 0.0
+      },
+      "at_scalar_peak_greedy_exact": 0,
+      "at_scalar_peak_greedy_contains": 0,
+      "reference_0_97_views": {
+        "scalar": 0,
+        "exact_product": 0,
+        "occurrence_product": 0
+      }
+    },
+    "piper_continuation": {
+      "sources": 20,
+      "median_maxima": {
+        "scalar": 0.99609375,
+        "exact_product": 0.4496817026665869,
+        "occurrence_product": 0.5649735621675847
+      },
+      "at_scalar_peak_greedy_exact": 2,
+      "at_scalar_peak_greedy_contains": 2,
+      "reference_0_97_views": {
+        "scalar": 16,
+        "exact_product": 0,
+        "occurrence_product": 6
+      }
+    }
+  },
+  "neutral_67_step_logits": {
+    "exact": 6.318758021637156e-47,
+    "occurrence": 0.90246870598698
+  },
+  "maximum_tensorflow_exact_probability_delta": 2.1796977680565988e-06,
+  "maximum_matrix_occurrence_probability_delta": 2.1094237467877974e-15,
+  "accepted": false,
+  "limits": "Optimization-seen training sources, small deterministic diagnostic cohorts and correlated renderer/text exposure. Recurrence is an event probability, not calibrated wake confidence; chance occurrence can grow with window length. Piper-only continuation is confounded with engine/voice/wording. Source text is synthesis intent, not pronunciation truth. No fitting, new export, score-scale tuning, validation/test inference, audio/source-WAV access, playback, microphone, board, production device, PCM speed or audio producer changes. This cannot qualify an inference rule or establish Hi ESP recall, FAR, latency, resources or voice stability."
+}
