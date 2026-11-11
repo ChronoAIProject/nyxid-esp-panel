@@ -57,6 +57,34 @@ RX overflows and cumulative byte difference from -64 to +832 bytes.
 The startup counter was already 731 at the first window. Use the same
 capture audit on the candidate before claiming comparable idle behavior.
 
+The same opt-in build emits `panel.wake.clock` UART markers. Each idle
+epoch starts after model priming. A wake that reaches local call startup
+records the first returning positive detector block's one-past-end sample
+position, the I2S read boundary and board timer values for read and inference.
+The timestamps are captured before call setup and printed afterward. Only
+counters and timestamps are logged; the marker contains no audio.
+
+```sh
+python research/panel_wake_runtime/audit_event_clock.py \
+  --uart /path/to/private/uart.log --backlog-bound-bytes 6784 \
+  --output /path/to/private/event-clock.json
+```
+
+Add `--require-event` for a planned wake test. The audit is for the matched
+raw-input arms: it checks sample and read chunk geometry, clock order and
+DMA accounting from the epoch start. A new RX overflow or excessive byte
+imbalance invalidates sample alignment. Idle logs verify the epoch and
+continuous resource audit; they do not exercise the positive event marker.
+For acoustic latency, the independently reviewed word end must be located
+on the same board microphone sample clock. A source WAV endpoint, an HTTP
+poll or a UART receive timestamp alone does not establish this alignment.
+For an async detector the returning block can be newer than the block that
+made the decision; interpret the marker as the return time in that case.
+The [silent USB board check](../wakeword_p4/results/hiesp-event-clock-idle-v1.json)
+verified two idle epoch markers and 35.17 seconds of continuous capture
+accounting, with zero new overflows. The original app and Hi ESP listener
+were restored. No positive event was exercised in that check.
+
 ## Build
 
 Use the release's ESP-IDF 5.5.4 environment and dependency versions. Set the
