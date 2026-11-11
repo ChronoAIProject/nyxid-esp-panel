@@ -1997,6 +1997,50 @@ are `study/result.json` and `study/scores.npz` in
 `gpu-v30-mac-regression-v1.tar.gz`. No WAV, model execution, audio device,
 board, firmware or reserved data is accessed by this analysis.
 
+### Differentiable sequence scores for a future training experiment
+
+`sequence_scorer.py` reuses the original window model's variables and frozen
+BN, replacing its Flatten/Dense *application* with a sliding convolution of
+the same Dense kernel. It computes an entire series in one graph while
+retaining the original window model for eventual export. The inference graph,
+parameter count, calibration and firmware are not changed. This is a research
+helper, not an adopted training recipe or a new accepted model.
+
+The [random-input probe](../wakeword_p4/results/sequence-scorer-random-five-gradient-v1.json)
+uses the pinned teacher60 architecture, nonidentity frozen BN and two random
+lengths (420/423 feature frames). All 22801 original parameters are shared.
+Across 183 independent windows and 183 mature streaming outputs, maximum
+probability delta is 8.94e-8. For the mean of five consecutive scores, all 15
+trainable-variable gradients match five separate overlapping windows within
+1.49e-8. Dynamic-length compiled `training=True` gives the same gradients as
+eager execution and leaves every frozen BN variable unchanged. No optimizer
+steps are taken.
+
+The 150-frame teacher60 window uses 149 effective input frames because of
+valid striding. For a complete feature stream `raw`, sequence scoring of
+`raw[1:]` matches original streaming outputs from zero-based step49 onward;
+scoring of `raw` instead matches window starts0,3,6,... . This mapping retains
+the known one-frame phase; the helper does not invent future context or alter
+microphone speed. In the future, a trainer could directly differentiate a
+five-score objective rather than assuming one terminal positive score creates
+enough temporal support. Loss/label/interval design and actual gains remain
+unproven.
+
+```sh
+python research/wakeword_p4/training/probe_sequence_scorer.py \
+  --upstream "$PINNED_MICROWAKEWORD" --output "$FRESH_PROBE_JSON"
+```
+
+The upstream revision must be `4665173cd35f1cff9a61e06fc427f124766c488e`.
+Upstream `to_streaming_inference` changes source layers' `mode` in place,
+so the probe exports a separate model with the same weights. Do the same if
+using the shared sequence graph during training; converting its original
+window model in place invalidates the shared graph. Before adoption, check
+the helper against actual trained weights and existing complete-source streams,
+including any remaining native numerical drift. Random graph/gradient parity
+does not prove recognition, an isolated failure cause, export parity or P4
+performance. This probe reads no WAV, checkpoint, reserved set or device.
+
 ### Mac/Linux frontend witness
 
 GPU branch `40e77bf` executed the original 350 PCM sources on Linux CPU.

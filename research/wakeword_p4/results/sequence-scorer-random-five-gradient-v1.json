@@ -1,0 +1,68 @@
+{
+  "scope": "Verify shared sequence/window/stream scores and gradients on random inputs.\n\nThis accesses no speech, pretrained checkpoint, device or recognition set.\nIt proves a training graph mapping, not wake quality or hardware performance.\n",
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "60,60,60,60",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [9], [13], [21]",
+    "--first_conv_filters",
+    "30",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "seed": 97727,
+  "parameters": 22801,
+  "window_frames": 150,
+  "effective_input_frames": 149,
+  "stream_phase_frames": 1,
+  "first_mature_stream_output_zero_based": 49,
+  "same_original_trainable_variables": true,
+  "optimizer_steps": 0,
+  "nonidentity_frozen_batchnorm_seed": 97728,
+  "gradient_objective": "Mean of five consecutive scores versus five separate overlapping windows",
+  "compiled_dynamic_length_training_true_frozen_bn_unchanged": true,
+  "tensorflow": "2.21.0",
+  "numpy": "2.5.4",
+  "python": "3.12.13 (main, Mar 25 2026, 03:16:06) [Clang 22.1.1 ]",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "details": [
+    {
+      "random_input_frames": 420,
+      "input_sha256": "e84741cac41c90f0579e2a78950dd25d839f860dea03fd8ad4340921aafa493e",
+      "compared_window_scores": 91,
+      "compared_mature_stream_scores": 91,
+      "window_max_abs_delta": 8.940696716308594e-08,
+      "stream_max_abs_delta": 8.940696716308594e-08,
+      "max_gradient_abs_delta": 7.450580596923828e-09,
+      "gradient_variables": 15,
+      "compiled_training_max_gradient_abs_delta": 0.0,
+      "non_saturated_score_min": 0.46319839358329773,
+      "score_max": 0.4656682014465332
+    },
+    {
+      "random_input_frames": 423,
+      "input_sha256": "af08f91ab17c8d765f08e53fc44a45352769da264365e532f60109e1e6a9818f",
+      "compared_window_scores": 92,
+      "compared_mature_stream_scores": 92,
+      "window_max_abs_delta": 5.960464477539063e-08,
+      "stream_max_abs_delta": 8.940696716308594e-08,
+      "max_gradient_abs_delta": 1.4901161193847656e-08,
+      "gradient_variables": 15,
+      "compiled_training_max_gradient_abs_delta": 0.0,
+      "non_saturated_score_min": 0.46312546730041504,
+      "score_max": 0.4658002257347107
+    }
+  ],
+  "sources_sha256": {
+    "sequence_scorer.py": "1df37cc65e14a81c9b41e7e52c262e4d32cc514859a1459344c2401dbb425f55",
+    "probe_sequence_scorer.py": "f7eb9527685862ebdfa92a4f5f0498423bd041927d241e6e247c7b802981767c"
+  },
+  "limits": "Random initialized teacher60 only. No source audio or checkpoint, training, INT8 export, MCU, recognition, timing or resource acceptance."
+}
