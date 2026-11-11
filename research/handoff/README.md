@@ -1960,3 +1960,52 @@ For the AST comparison, fetch the pinned GPU branch objects first. Full inputs
 are `study/result.json` and `study/scores.npz` in
 `gpu-v30-mac-regression-v1.tar.gz`. No WAV, model execution, audio device,
 board, firmware or reserved data is accessed by this analysis.
+
+### Mac/Linux frontend witness
+
+GPU branch `40e77bf` executed the original 350 PCM sources on Linux CPU.
+Its report has 101 different frontend hashes and one different output stream
+(`rendered/Tessa-1-3.wav`, source index 283). The GPU issue update reports two
+different output bytes and unchanged fixed-policy events. This is close
+agreement, not byte identity. It does not explain away the retained 11/50
+versus 48/50 regression, or establish the cause of the frontend difference.
+
+The [Mac witness](../wakeword_p4/results/gpu-v30-mac-frontend-witness-v1.json)
+exports that exact source under the original Mac versions. Both its frontend
+hash and every output byte reproduce the original archived Mac run. It also
+independently invokes the interpreter with saved input tensors and checks
+that all 305 output bytes agree. The
+[public asset](assets-gpu-v30-mac-frontend-witness-v1.json) contains:
+
+- `witness/arrays.npz`: complete little-endian UINT16 frontend `[916,40]`,
+  INT8 quantized inputs `[916,40]`, the actual 305 invoked input tensors
+  `[305,1,3,40]`, and UINT8 outputs `[305]`. The final frontend frame is not
+  part of an invoked triplet, as in the unchanged streaming detector.
+- `witness/report.json`: input/model/reference/array hashes, original PCM CRC,
+  prime/tail lengths, actual package/Python/platform versions, frontend wheel
+  metadata and native binary hash. No native binary or original audio is
+  included.
+- `source/`: exporter plus the unmodified frontend, detector and policy source.
+
+The archive was anonymously downloaded and all six payload members verified.
+It contains no firmware, credentials, device state, microphone recordings or
+WAVs. Reproduce with the original Mac package versions and public inputs:
+
+```sh
+python research/wakeword_p4/training/export_mac_frontend_witness.py \
+  --sources "$PUBLIC_MAC_PAIRED" --model-dir "$ORIGINAL_V30_PAYLOAD" \
+  --reference "$FULL_MAC_STUDY" --output "$FRESH_WITNESS"
+```
+
+`FULL_MAC_STUDY` is the `study` directory in the public full regression archive.
+The exporter verifies its fixed result, score, plan, manifest and baseline
+hashes; it does not relax or spoof the pinned Mac version checks.
+
+For Linux diagnosis, compare its fresh frontend with `frontend_uint16` and
+report differing-element count, first coordinates/values and maximum absolute
+delta. Compare the *actually invoked* INT8 inputs as well. Finally, reset the
+same original interpreter and feed each `invoked_input_int8` tensor directly,
+checking all 305 bytes against `output_uint8`. This separates frontend/input
+differences from interpreter differences without re-exporting the model or
+changing thresholds. Exchange results in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
