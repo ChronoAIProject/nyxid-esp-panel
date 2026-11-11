@@ -1291,6 +1291,13 @@ comparison helper also checks head/cache/schedule equality and unchanged
 binary state when warmup is explicitly planned. No microphone, speaker or
 board was used in either run.
 
+The [public supplement](../../handoff/assets-phone-fit-v1.json) retains both
+auxiliary checkpoints, raw diagnostics, frozen plans and executed source
+snapshots, including the interrupted harness. The public download and every
+listed member hash are verified. It depends on the original phone-bank
+handoff and remains explicitly unaccepted. These studies stay silent; any
+future room playback needs advance notice of its content and duration.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

@@ -919,3 +919,23 @@ The mixed joint/confidence-only proxy result is described in
 [`embedding/README.md`](../wakeword_p4/embedding/README.md); it is not Hi ESP
 parity or a production firmware release. All110member hashes and GitHub's
 archive digest are checked before publishing the reference.
+
+The [phone-fit supplement](assets-phone-fit-v1.json) adds the retained
+auxiliary head from the exact original-recipe replay and the frozen-encoder
+head-fit diagnostic. It depends on the bank/initializer in the
+[original phone-supervision handoff](assets-phone-distillation-v1.json).
+Download the supplement from its manifest URL and verify the SHA256 and
+`CONTENTS-microwake-phone-fit-v1.json` member hashes before extraction.
+Its root is `workspace/home-wake-research-20261110/phone-fit-handoff-v1`.
+
+It contains both auxiliary checkpoints, source/input identities, plans,
+results and executed source snapshots. The original INT8 replay is exact;
+the faster head-only optimizer still fails the nonblank training-fit gate.
+The first joint attempt entered float validation before interruption and
+produced no summary or INT8 model; its source and log are retained explicitly.
+Use `--phone-warmup-only --steps 0` with the head-fit plan to reproduce the
+head/cache without joint training or validation. Four numerical/source tests
+pass, and the unchanged original comparison is reproduced without rescoring.
+The archive download and all listed member hashes are verified. This is an
+unaccepted research supplement, with no captured room audio, board state or
+firmware. It is not a production release or evidence of Hi ESP parity.
