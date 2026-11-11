@@ -932,6 +932,19 @@ validation-only grid from the plan with `evaluate_stream.py --threshold-grid`.
 `compare_paired_ranking.py` verifies the exported interface, paired input
 schedule, calibration and validation exposure and generates the report.
 
+The [background wake diagnosis](../results/microwake-ambient-localization-v1.json)
+rebuilds the public LibriSpeech stream and matches the original score array
+through the offending utterance. The wake starts 1.97 s into “Have you piles?
+Why suffer longer…”. Muting the second sentence leaves the first crossing
+at the same sample, and muting the first sentence reduces the score to zero.
+Replacing all earlier utterances with silence still yields a wake. The six
+other “Have you”, “Do you” or “Are you” onsets found in those already scored
+LibriSpeech validation streams do not trigger. This points to a specific
+connected speech confuser, not a general question-prefix effect or an artifact
+of joining the audiobook chapters. It does not isolate a phoneme or establish
+how common that acoustic pattern is. The source stays in development
+validation; future training must use separate speakers and utterances.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
