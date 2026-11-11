@@ -3874,3 +3874,19 @@ feature crops start with zero model buffers rather than original stream history.
 It is not full PCM accuracy or isolated causality, and neither new acceptance nor
 threshold selection. Next diagnostic should separate float streaming/window and
 INT8 on identical crops before changing training supervision or context.
+
+### v37 float-stream support decomposition (2026-11-11)
+
+Same1002 authenticated training crops, original saved_model, per-crop zero float
+state, first reset-repeat exact. Historical.99609375 threshold: float-stream last
+203/258positive,2/744negative, identical aggregate INT8 last counts; float max222
+vs INT8221 positives; float max five-mean178/258 vs INT8172/258, both2/744negative.
+At.5 float/INT8 five-mean both219/258 positives,27/744negative. All offline window
+float remains258/258positive,0/744negative at both thresholds. Max window versus
+float-stream-last error1.0. Thus isolated-crop support gap already exists before
+quantization. However this comparison intentionally does not shift the known
+window/stream phase1 or restore original frontend/model prehistory. Five-means
+include incomplete-context startup. Do not call this a newly proven export bug,
+isolated endpoint cause, or complete-PCM accuracy. Preserve frozen model and all
+scores. Next recover original full training-feature streams and compare aligned
+windows/stream phase and temporal support before changing training.
