@@ -995,3 +995,28 @@ and the supporting `phone-ctc-fit-handoff` directory are under
 `workspace/home-wake-research-20261110`. The public download and all listed
 member hashes are verified. This remains unaccepted research with no source
 audio, device state, credentials or firmware.
+
+The [joint-encoder CTC supplement](assets-phone-ctc-joint-v1.json) contains
+the subsequent separately planned matched study: the same 5,000-step frozen
+head warmup, then 3,000 joint steps at binary learning rate .0002 with auxiliary
+gain zero or .1. It retains both binary/auxiliary checkpoints, scalar INT8
+exports, launched source snapshots, launch/input audits, all development
+scores/event traces, plans and the paired weak-sequence diagnostic.
+The archive's study root is
+`workspace/home-wake-research-20261110/microwake-phone-ctc-joint-v1`;
+supporting records are in the sibling `phone-ctc-joint-handoff` directory.
+
+The wake-quality gate fails: fixed-reference macro proxy recall changes from
+81.86% to 84.48%, but false near-word views rise from 74 to 87/3,744.
+Both have one continuous event/7.324 hours and no zero-event grid point.
+Improved auxiliary transcription does not qualify the wake model. The study
+does not change the previous failed prescreens or authorize firmware use.
+
+Use the full-resolution bank and original initializer dependencies listed in
+the manifest. Full mixed-source retraining also needs the original scalar
+feature tree with its exact feature-index identities; this supplement does
+not include that complete feature cache. Verify the archive SHA256 and all
+`CONTENTS-microwake-phone-ctc-joint-v1.json` member hashes before extraction
+into fresh staging. The actual public download and all 262 listed member
+hashes are verified. No source audio, room recording, device configuration,
+credential or firmware is included. This is unaccepted research.

@@ -1487,6 +1487,15 @@ on this auxiliary task; it does not establish better wake discrimination.
 The launched sources, checks, checkpoints and complete validation results are
 retained. Training and validation both used no speaker, microphone or hardware.
 
+The [public joint-study supplement](../../handoff/assets-phone-ctc-joint-v1.json)
+preserves both complete runs' checkpoints, executed sources, audits, raw
+development scores and event traces, plus the paired-sequence diagnostic.
+The public archive download and all 262 listed member hashes are verified.
+Teacher-bank and initializer dependencies are separate; full retraining also
+requires the original scalar feature cache, which is not in this supplement.
+No source audio, room recording, board state, credential or firmware is added.
+The recipe remains rejected and the full Hi ESP comparison goal remains open.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
