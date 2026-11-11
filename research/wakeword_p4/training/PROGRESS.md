@@ -3178,3 +3178,28 @@ raw logs. Its fresh anonymous download verifies all19 listed member hashes
 and lengths. Original source WAVs and the full feature cache remain separately
 byte-bound dependencies. This silent cycle uses no reserved quality data,
 microphone, playback, USB/board or firmware; Hi ESP parity is still unproven.
+
+## Frozen review queue: unprompted phoneme consistency, preregistered
+
+The [separate plan](plans/review-phoneme-consistency-v1.json) reads97 distinct
+original training WAVs covering all38 previously selected triplets. It uses
+the already pinned1.263GB `facebook/wav2vec2-lv-60-espeak-cv-ft` checkpoint,
+CPU float32/2 threads, local files only and original whole16k PCM. Expected
+text, lexicon, dictionary phones or a recognition prompt never enters the
+model. Retain all frame logits and raw greedy token sequences; no phone,
+string or sample is filtered in response to a prediction.
+
+Compare the existing triplets' raw phone edit distances without re-ranking
+sources: nearest-positive versus confuser order is computed by exact integer
+cross-products, and empty outputs/ties are explicit. Preserve both original
+spectral inversion and noninversion cohorts. This recognizer already makes
+errors on these synthesizers; agreement may prioritize human review, while
+disagreement can reflect metric/style differences or recognizer errors.
+Neither outcome verifies pronunciation or authorizes label changes/training.
+
+Three focused tests pass CTC collapse-before-blank semantics, known edit
+orders/ties/empty handling, shared-source deduplication and invalid triplet
+role/identity/voice rejection. Runtime, all model support files/weights and
+review source identities are frozen. No new data split, wake quality score,
+API/network inference, speaker, microphone, board/OTA, production device or
+PCM/audio-producer change. The complete Hi ESP objective remains unchanged.

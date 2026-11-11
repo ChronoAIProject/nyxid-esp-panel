@@ -1,0 +1,44 @@
+{
+  "scope": "Unprompted pretrained phoneme consistency on97 original training WAVs from the frozen38-triplet acoustic review queue; no wake training, automatic relabeling or quality advancement.",
+  "hypothesis": "Check whether spectral-distance inversions in the frozen queue also appear under an independent learned phoneme readout. Agreement may prioritize later human review; disagreement may reflect metric/style differences or recognizer error. Neither outcome certifies pronunciation.",
+  "source_paths": 97,
+  "source_hashes": 97,
+  "review_triplets": 38,
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "neighbour_inputs_sha256": {
+    "inventory.json": "e81a8ff4e22e23a9ad10eda7bd9f21ac77832701edc71647a3a37b69f26c852b",
+    "review-candidates.json": "cb6a923b07d6b252f176991044e8ce26adeee69a6686f95f608bb93b370869bc",
+    "result.json": "b8cdd13136328854dcf80d308091246c26564055f39824f77702007422fc01ce"
+  },
+  "model": {
+    "repo": "facebook/wav2vec2-lv-60-espeak-cv-ft",
+    "revision": "ae45363bf3413b374fecd9dc8bc1df0e24c3b7f4",
+    "model_sha256": "3173bde9e9ce490fa0f989e413c42f25bc1820c020adc1e6b9b87025b3cfcc5e",
+    "bytes": 1263535127,
+    "use": "Independent phoneme consistency diagnostic only; no wake model acceptance"
+  },
+  "model_files_sha256": {
+    "config.json": "4609fb49b7e1d28aecb2840da1926c40bd915bc6f1120a940afacf7159bbfb13",
+    "identity.json": "3b5b3a569a8a7b50c1b9508f27f3f74fb34c93915c2ffba9eab206e85e25e3fd",
+    "preprocessor_config.json": "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335",
+    "pytorch_model.bin": "3173bde9e9ce490fa0f989e413c42f25bc1820c020adc1e6b9b87025b3cfcc5e",
+    "special_tokens_map.json": "bb7068de1150661a10b55f9e4b12a0e77af8bf91f5e45e1b58afaf1d0e17f675",
+    "tokenizer_config.json": "1273ec458332cc55226ec596904bae811420755ace7e5d69462b61c4f480b457",
+    "vocab.json": "d732ab2456c0c017930001dc9af0b41b3b93d25b2eb9740bf9d925508d7d87d0"
+  },
+  "runtime": {
+    "torch": "2.8.0",
+    "transformers": "4.57.3",
+    "numpy": "2.5.4"
+  },
+  "inference": "CPU float32,2 intra-op/1 inter-op threads,eval/inference mode,seed0,deterministic algorithms. Original full16k mono PCM16 decoded tofloat32/32768. Use pinned extractor/model locally only, no expected text/lexicon/ASR prompt, no crop/resample/gain/tempo augmentation. Require no missing or mismatched pretrained model tensors. One inference per source; retain all frame logits and greedy CTC IDs/phones. Collapse consecutive argmax IDs before removing blank0; do not remove nonblank special tokens.",
+  "analysis": "Use the existing38 spectral-selected triplets without re-ranking sources. Normalize token Levenshtein distance by max sequence length for positive and negative comparisons; compare order by exact integer cross-products. Empty predictions are an explicit category. Keep ties, all original source intentions, both spectral inversion/noninversion groups and different-intent sources with identical predicted strings. No expected dictionary-phone strings or inference confidence threshold.",
+  "advance_action": "None. No new training, sample filtering or quality/model promotion follows automatically. The queue is selected from reused training data, not an independent acceptance set. Human pronunciation/reference review is still required.",
+  "limits": "This learned phoneme model was already observed to make errors on these synthesizers. Predictions, edit-distance order and cross-intent predicted-string collisions are not verified pronunciation, actual waveform collisions, human wake recall or true phone endpoint labels. The deliberately selected correlated97 sources/38 triplets cannot rank TTS engine quality or estimate corpus-wide label errors. No labels, splits or checkpoints change. No validation/final scoring, API keys, network inference, speaker, microphone, board/USB, firmware/OTA, production board, original PCM speed or single I2S/AEC/AGC/FIFO modification. Full Hi ESP acoustic recognition/FAR/latency,P4 resources and long-call/reconnect stability remain unproven.",
+  "source_sha256": {
+    "review_phoneme_consistency.py": "f7734518ae8593afb5c68395caa4aa668701ba00319ba6aeb366432277ae27ba",
+    "test_review_phoneme_consistency.py": "ce0089d3054376b0f18daca0b4c8cda1c928931ba1935f5af051784a7aec3650",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c"
+  }
+}
