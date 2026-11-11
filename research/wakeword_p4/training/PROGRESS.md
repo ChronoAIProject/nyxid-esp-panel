@@ -903,3 +903,17 @@ grid and directory naming from the whole-phrase experiment with the new arm
 names. Run `compare_paired_ranking.py --plan <plan> --artifacts <study>
 --output <new-report>` to verify the schedules, PTQ inputs and fixed-reference
 counts. No board changes, playback, or independent final audio were used.
+
+### Human pilot preparation
+
+The [paired recording pilot](../human_pilot/README.md) can collect four
+counterbalanced pairs per person and condition with an explicit local save.
+It preserves the recorded PCM, produces a duration-matched 16 kHz copy,
+and reuses the GPU branch's pinned review page and validator to obtain
+pronunciation and endpoint ranges without detector scores. Chromium fake
+media completed all eight prompts, including the local save. The existing
+review parser validated the resulting eight-clip fixture and the native PCM
+and replay duration checks passed. The real recording route rejects known
+automation captures; the fixture route rejects cross-origin submission and
+does not serve audio back. No real audio has been collected or scored at
+this snapshot. The pilot does not replace matched tests on the P4.

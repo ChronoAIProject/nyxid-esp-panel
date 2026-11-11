@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'none'">
+<title>Nyx wake comparison</title>
+<style>
+  body { background: #14121c; color: #f0ebff; font: 17px system-ui; margin: 2rem auto; padding: 0 1rem; max-width: 42rem }
+  main { border: 1px solid #514366; border-radius: 1rem; padding: 1.4rem; background: #211a2d }
+  label, button { display: block; margin: .85rem 0 }
+  select, input, button { font: inherit; padding: .55rem .7rem; max-width: 100%; border-radius: .4rem }
+  button { background: #e2ccff; color: #221036; cursor: pointer; border: 0 }
+  button:disabled { opacity: .45; cursor: default }
+  #prompt { font-size: clamp(1.6rem, 6vw, 2.4rem); font-weight: 650; margin-block: .7rem }
+  #status { color: #e4d7f5; min-height: 2lh }
+  small { color: #cfc2de }
+</style>
+<main>
+  <h1>Wake phrase comparison</h1>
+  <p>Read each prompt once in your usual voice after “Speak now.” Read any request right after the wake phrase. Say the letters E, S, P separately.</p>
+  <p>This pilot takes about one minute. The microphone opens only for a trial. Your recording stays in this tab until you save it locally.</p>
+  <label>Participant code <input id="participant" value="p01" maxlength="24" required></label>
+  <label>Position <select id="condition"></select></label>
+  <div id="progress"></div>
+  <div id="prompt"></div>
+  <p id="status" role="status" aria-live="polite"></p>
+  <button id="record" disabled>Record this prompt</button>
+  <button id="save" disabled>Save recordings</button>
+  <small>Keep your position and microphone setting unchanged for all eight prompts. If you misread one, keep going.</small>
+</main>
+<script type="module" src="./capture.js"></script>
+</html>
