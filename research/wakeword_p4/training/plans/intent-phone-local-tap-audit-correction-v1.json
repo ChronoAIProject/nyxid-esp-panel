@@ -1,0 +1,30 @@
+{
+  "scope": "Read-only audit correction after both frozen fits completed; no training, logits, scores or prior evidence changed.",
+  "plan_sha256": "d755c8bb8966a56e50cc66503ad872eec46da024f07e92b75a6ba3be018855e2",
+  "original_auditor_sha256": "4dc9a2fa385457d7a5018759df0ee7cae2dc8f740b831487a3c19ac83cbf20dd",
+  "corrected_auditor_sha256": "bca7e6216db2df8e7287e30dc082694b2783e3d5ec1b2b1031f687216c5f7b9b",
+  "metric_roundoff_tolerance": 1e-12,
+  "observed_failure": {
+    "arm": "local",
+    "metric": "mean_ctc_nll_per_token",
+    "reported": 3.585356010122855,
+    "reconstructed": 3.5853560101228563,
+    "absolute_delta": 1.3322676295501878e-15
+  },
+  "interpretation": "Original equality rejected floating-point reduction roundoff. Allow1e-12 absolute only for reconstructed floating metrics; integer counts, tensors, logits, all original scores and decisions remain exact. Diagnostic quality gates are unchanged. Also independently replay every stored four-class likelihood from actual checkpoint logits, in addition to the predefined float64 reference sample.",
+  "unchanged_evidence_sha256": {
+    "plan.json": "d755c8bb8966a56e50cc66503ad872eec46da024f07e92b75a6ba3be018855e2",
+    "launch.json": "988094ce42cb5886bc2418b4783eaf6f354e1ddec6b6189cbfc1495a5553517b",
+    "training.log": "415e6ba6d949efc467120220018b3507b990efdf94c2fbbedd02f71627cfc387",
+    "training-exit.json": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+    "audit.log": "963096be3744195601e957f6f81e399f911a628c8364c3cf550f599349705f04",
+    "audit-exit.json": "8869ca5e7f3ae989b151917c32f706ea8b83fd8d2ab5fd425117c4860c4e595f",
+    "study/result.json": "85ae1202150c7ba7a005930f506d2ce43e03cbaee26e98783511db9a8a82a1a0",
+    "study/deep.json": "a9e2143a70145d98814c7a616d82962419a522192fad64a1e5a7196fdd2e9238",
+    "study/local.json": "307ed37a86713808851020b3cc3eb0ea5fca57c7730e6ed3e6052e88c1dfe7b0",
+    "study/deep.weights.h5": "51ee663f097165a9d21ab4f084194963a6e784407e80b31fd964358aea02fb87",
+    "study/local.weights.h5": "b09c2d36fbf506b89db292c2b1cabe3120a58cd2535fe64f3c88eeb21e3d89ff",
+    "study/deep-logits.npz": "1036953d3af2eac5efcb0f3c720bb7295bbf1564ac2f52977f15fb3a96c95f82",
+    "study/local-logits.npz": "87624e37295b6c6a2025edbbe2b461be2c247388edee7fe1b6e055d6613a39ee"
+  }
+}

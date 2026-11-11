@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('artifacts', 'repository', 'features', 'bank', 'initial-weights', 'parent-study', 'output'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--audit-correction', type=Path)
     args = parser.parse_args()
     root = args.artifacts.resolve()
     plan = json.loads((root/'plan.json').read_bytes())
@@ -29,6 +30,16 @@ def main():
         require(sha(root/'source'/name) == launch['source_sha256'][name] == digest, 'Source differs: '+name)
     for name, digest in plan['audit_source_sha256'].items():
         require(sha(root/'auditing'/name) == digest, 'Auditor differs: '+name)
+    correction = None
+    if args.audit_correction:
+        correction = json.loads(args.audit_correction.read_bytes())
+        require(correction['original_auditor_sha256'] == plan['audit_source_sha256'][Path(__file__).name]
+                and correction['corrected_auditor_sha256'] == sha(Path(__file__))
+                and correction['metric_roundoff_tolerance'] == 1e-12
+                and correction['plan_sha256'] == sha(root/'plan.json'), 'Audit correction differs')
+    else:
+        require(sha(Path(__file__)) == plan['audit_source_sha256'][Path(__file__).name],
+                'A changed auditor requires explicit correction provenance')
     for name, digest in plan['parent_study_sha256'].items():
         require(sha(args.parent_study/name) == digest, 'Parent evidence differs: '+name)
     command = launch['command']
@@ -109,9 +120,21 @@ def main():
         require(full.count_params() == arm['parameters'] == info['parameters']
                 and encoder.count_params() == arm['encoder_parameters'] and head.count_params() == arm['head_parameters'] == 610,
                 'Parameter accounting differs')
+        score_replay_delta = 0.
         for start in range(0, len(rows), plan['batch_size']):
             actual = np.asarray(full(x[start:start+plan['batch_size']], training=False))
             require(np.array_equal(actual, retained[start:start+len(actual)]), 'Checkpoint logit replay differs')
+            target_rows = np.zeros((4, 7), np.int32)
+            for j, reference in enumerate(references):
+                target_rows[j, :len(reference)] = reference
+            repeated = np.repeat(actual, 4, axis=0)
+            losses = tf.nn.ctc_loss(np.tile(target_rows, (len(actual), 1)), repeated,
+                np.tile([len(v) for v in references], len(actual)), [67]*len(repeated),
+                logits_time_major=False, blank_index=0)
+            replayed = -np.asarray(losses).reshape(len(actual), 4)
+            stored = np.asarray(arm['scores'][start:start+len(actual)])
+            require(np.array_equal(replayed, stored), 'Full class likelihood replay differs')
+            score_replay_delta = max(score_replay_delta, float(np.max(np.abs(replayed-stored))))
         greedy = [[int(v) for j, v in enumerate(row) if v and (j == 0 or v != row[j-1])]
                   for row in retained.argmax(-1)]
         require(greedy == arm['decoded'], 'Greedy sequences differ')
@@ -140,7 +163,16 @@ def main():
             target_tokens=int(lengths.sum()),
             greedy_edits=sum(distance(references[label], d) for d, label in zip(greedy, labels, strict=True)))
         measured['greedy_token_error_rate'] = measured['greedy_edits']/measured['target_tokens']
-        require(measured == arm['summary'] == info['summary'], 'Metric reconstruction differs')
+        metric_deltas = {}
+        for key, value in measured.items():
+            stored = arm['summary'][key]
+            if isinstance(value, float):
+                delta = abs(value-stored)
+                require(delta <= (1e-12 if correction else 0), 'Metric reconstruction differs: '+key)
+                metric_deltas[key] = delta
+            else:
+                require(value == stored, 'Metric reconstruction differs: '+key)
+        require(arm['summary'] == info['summary'], 'Result metric reference differs')
         gate = plan['fit_gate']
         passed = (measured['macro_accuracy'] >= gate['minimum_macro_accuracy']
             and measured['nyx_recall'] >= gate['minimum_nyx_recall']
@@ -150,6 +182,8 @@ def main():
         require(bool(passed) == arm['fit_gate_passed'] == info['fit_gate_passed'], 'Fit gate differs')
         reports[kind] = {'summary': measured, 'fit_gate_passed': bool(passed),
             'parameters': arm['parameters'], 'maximum_independent_ctc_loss_delta': max_delta,
+            'metric_reconstruction_absolute_deltas': metric_deltas,
+            'maximum_full_likelihood_replay_delta': score_replay_delta,
             'checkpoint_sha256': arm['checkpoint_sha256'], 'result_sha256': sha(path)}
         tf.keras.backend.clear_session()
     deep = json.loads((root/'study/deep.json').read_bytes())
@@ -164,6 +198,8 @@ def main():
     require(result['parent_deep_control_replayed'] and result['accepted'] is False
             and result['advance'] == reports['local']['fit_gate_passed'], 'Final decision differs')
     report = {'plan_sha256': sha(root/'plan.json'), 'source_commit': launch['checkout_revision'],
+        'actual_auditor_sha256': sha(Path(__file__)),
+        'audit_correction_sha256': sha(args.audit_correction) if args.audit_correction else None,
         'result_sha256': sha(root/'study/result.json'), 'unique_crops': len(rows),
         'source_hashes': len({r['sha256'] for r in rows}), 'draw_schedule_sha256': schedule.hexdigest(),
         'all_crops_checkpoint_logits_metrics_and_gate_reconstructed': True,

@@ -2687,3 +2687,12 @@ validation, extra fitting, export or hardware follows. Two focused tests pass
 actual graph-gradient receptive fields at first/middle/last states and the
 local update's untouched disconnected suffix/classifier. Evidence will retain
 both full logits and checkpoints for read-only replay. Work stays silent.
+
+Both frozen fits completed. The original read-only auditor rejected a local
+mean-loss reduction difference of 1.33227e-15 (3.585356010122855 versus
+3.5853560101228563). The [explicit audit correction](plans/intent-phone-local-tap-audit-correction-v1.json)
+preserves the original failure and all training evidence, allows 1e-12
+absolute roundoff only for reconstructed floating metrics, and binds the
+corrected auditor bytes. It also replays every four-class likelihood from
+checkpoint logits. Integer counts, logits, stored scores and the original
+quality gates remain exact. No fit is repeated or extended.
