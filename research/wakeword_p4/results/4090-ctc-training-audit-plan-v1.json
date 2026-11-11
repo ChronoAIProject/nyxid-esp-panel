@@ -1,0 +1,12 @@
+{
+  "role": "Predeclared cross-family training pronunciation diagnostic, not acceptance",
+  "dataset": "Existing frozen200 Piper training pilot,100positive/100negative",
+  "manifest_sha256": "78cf35c78f71c246a85eeabb285bedaafbe92a1980aaa21411741835f12e880b",
+  "model": "facebook/wav2vec2-base-960h",
+  "revision": "22aad52d435eb6dbaf354bdad9b0da84ce7d6156",
+  "expected_safetensors_sha256": "8aa76ab2243c81747a1f832954586bc566090c83a0ac167df6f31f0fa917d74a",
+  "runtime": "CUDA FP32, greedy CTC, no language model/VAD/prompt or resampling",
+  "comparison": "Exact same WAVs as prior Whisper small.en; apply same target aliases preserving command suffix. Keep all transcripts and cross-family agreement counts.",
+  "actions": "No deletion, filtering, relabeling, model training or final-set scoring. ASR mismatches cannot establish actual pronunciation or phone timing.",
+  "source_sha256": "b150477e098e7200a5c4bda9ee0b888f8ef4f424698b57d5a3a8052b88c433e5"
+}

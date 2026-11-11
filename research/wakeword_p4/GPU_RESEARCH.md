@@ -3180,3 +3180,13 @@ v30维持原冻结模型/阈值；比较4090-v30-v34-auxiliary-comparison-v1.jso
 全score MAE0.00185657583、max0.189404964，完整上下文MAE0.00194479253。
 完整分数与偏差保留，不解释为MCU数值等价。
 六份验证/负例/校准/探针报告完整推送；整体目标仍未达成。
+
+## 跨家族训练语音审核预声明
+
+复核历史tiny.en/small.en同200Piper WAV审核：small.en别名一致80/100正、79/100负，
+不能由tiny.en大量Next转写推断普遍错读。新增不同家族wav2vec2-base-960h CTC诊断，
+固定revision22aad52d435eb6dbaf354bdad9b0da84ce7d6156，CUDA FP32贪心、不用LM/VAD提示。
+只用相同200条历史训练pilot，100正100负；保留原WAV与标签、全部转写和分歧，不筛除。
+ASR无论一致或不一致均不是发音真值/音素边界，不作唤醒质量或HiESP验收。
+代码training/audit_training_ctc.py，预声明results/4090-ctc-training-audit-plan-v1.json。
+依赖在.local/wakeword/ctc-audit-env隔离安装，模型固定版本下载/哈希校验进行中。
