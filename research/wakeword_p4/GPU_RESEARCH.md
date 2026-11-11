@@ -3346,3 +3346,9 @@ v35训练仍运行同一会话，不重启。为后续比较准备80条新开发
 新增v35_historical_regression.sh仅复现原开发密集网格、Mandarin/DiPCo/Libri-dev-other连续负例、
 扩展校准与float/INT8探针，依赖正式training.json完成后才运行。
 其阈值与分数明确为历史开发回归，不替代上述新合成开发或最终验收，未自动启动。
+
+80/80新开发音频机械质量门槛通过并已读回核验；各Nyx/HiESP/Nick/Next/Mix16条。
+清单冻结SHA256 10b5e060163f2eaf896ff8219cd9c1ff341c569f4e585b3a68828fb71bef2b94，
+4090-synthetic-phone-development-v1.json及对应manifest保留完整配置、音素、时长、来源与哈希。
+训练/开发声音分区无交集；没有最终集访问、唤醒评分或阈值选择。
+v35同一训练进程已超过6500步；会话79588仍活跃，继续原任务不重启。
