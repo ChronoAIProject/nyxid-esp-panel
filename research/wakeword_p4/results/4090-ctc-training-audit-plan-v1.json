@@ -8,5 +8,6 @@
   "runtime": "CUDA FP32, greedy CTC, no language model/VAD/prompt or resampling",
   "comparison": "Exact same WAVs as prior Whisper small.en; apply same target aliases preserving command suffix. Keep all transcripts and cross-family agreement counts.",
   "actions": "No deletion, filtering, relabeling, model training or final-set scoring. ASR mismatches cannot establish actual pronunciation or phone timing.",
-  "source_sha256": "b150477e098e7200a5c4bda9ee0b888f8ef4f424698b57d5a3a8052b88c433e5"
+  "source_sha256": "9fe7df8a3f22e2ddd0ba455cd3320d5b20d64055f51594ba6558f1d197a56a57",
+  "runtime_isolation": "USE_TF=0 before transformers import; no TensorFlow GPU runtime in ASR process"
 }

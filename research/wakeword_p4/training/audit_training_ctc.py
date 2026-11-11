@@ -3,11 +3,13 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 
 import numpy as np
 import soundfile as sf
+os.environ['USE_TF'] = '0'
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 
