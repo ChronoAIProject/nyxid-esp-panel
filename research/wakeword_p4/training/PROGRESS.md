@@ -2239,3 +2239,15 @@ control-reuse provenance, full development traces and independent audits.
 The broader-study and broader-bank archives are explicit dependencies; full
 scalar/background features remain external and byte-bound. This is evidence
 of a completed rejected recipe, with no qualifying deployment or parity claim.
+
+The [retained background-head numerical plan](plans/compact-background-export-smoke-v1.json)
+checks a distinct question before any new development scoring: can the newly
+background-supervised temporal head be retained with its unchanged scalar head
+in a correct two-output INT8 stream? The rejected scalar export discards that
+head. Reuse the existing tested export procedure, the 1e-4 float alignment
+gate and exact reset/256-step chunk replay; all 20 first training sources cover
+five engines and four compact intents. PTQ uses 100 frozen broad-bank row IDs,
+with actual unique crop count explicit because Cartesian pairs repeat inputs.
+No model fitting, validation/test scoring, inference rule change or hardware
+action is permitted by this numerical-only plan. A pass permits a separately
+frozen inference comparison; it does not advance a detector for deployment.
