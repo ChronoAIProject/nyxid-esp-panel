@@ -1,0 +1,765 @@
+{
+  "scope": "Numerical training-loss diagnosis on artificial logits and first50 saved training batches of the completed old Mac screen. No training or recognition acceptance.",
+  "preregistered_source_commit": "e32f0d6",
+  "decision": "Artificial high-confidence wrong logits expose a real numerical hazard, but these800 old training draws show only tiny lost gradients on confidently correct examples. Do not attribute recognition failure to clipping or retrain on this evidence.",
+  "optimizer_steps": 0,
+  "summary": {
+    "initial": {
+      "terminal": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 29,
+          "max_loss_difference": 3.5762786865234375e-07,
+          "mean_absolute_loss_difference": 3.013619576108795e-08,
+          "max_gradient_difference": 1.341104507446289e-07
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.948490873677656e-08,
+            "mean_absolute_loss_difference": 1.4785716651033454e-08,
+            "max_gradient_difference": 9.313225746154785e-10
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1609536443302204e-07,
+            "mean_absolute_loss_difference": 1.9803744422119962e-08,
+            "max_gradient_difference": 8.335718604257636e-08
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7881393432617188e-07,
+            "mean_absolute_loss_difference": 2.2962922230362892e-08,
+            "max_gradient_difference": 7.450580596923828e-08
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 15,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 8.642641802225626e-08,
+            "max_gradient_difference": 9.942509393567889e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 1.1920342046778387e-07,
+            "mean_absolute_loss_difference": 2.5408786186176258e-08,
+            "max_gradient_difference": 7.550412561840858e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 2.5574804496386605e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 2,
+            "max_loss_difference": 3.5762786865234375e-07,
+            "mean_absolute_loss_difference": 2.7882665065703804e-08,
+            "max_gradient_difference": 8.793398365014582e-08
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.6338859981933638e-08,
+            "max_gradient_difference": 1.341104507446289e-07
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 2,
+            "max_loss_difference": 1.0952347651027594e-07,
+            "mean_absolute_loss_difference": 2.0697980218642442e-08,
+            "max_gradient_difference": 8.290623298989885e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7881393432617188e-07,
+            "mean_absolute_loss_difference": 4.3945743044560004e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 5,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 2.5992443752897998e-08,
+            "max_gradient_difference": 7.985585881442603e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 8.940696716308594e-08,
+            "mean_absolute_loss_difference": 2.200249582529068e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1725919080163294e-07,
+            "mean_absolute_loss_difference": 1.9105369730709754e-08,
+            "max_gradient_difference": 1.8437450677311062e-08
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.22252207748852e-08,
+            "max_gradient_difference": 8.940696716308594e-08
+          }
+        }
+      },
+      "five_mean": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 12,
+          "max_loss_difference": 2.384185791015625e-07,
+          "mean_absolute_loss_difference": 6.348351178075973e-08,
+          "max_gradient_difference": 8.940696716308594e-08
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.0023435354232788e-07,
+            "mean_absolute_loss_difference": 6.161173615737425e-08,
+            "max_gradient_difference": 1.862645149230957e-09
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7830825527198613e-07,
+            "mean_absolute_loss_difference": 5.6719201779742434e-08,
+            "max_gradient_difference": 5.587935447692871e-09
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.6670674085617065e-07,
+            "mean_absolute_loss_difference": 6.138132135902197e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 6,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 9.858451477384733e-08,
+            "max_gradient_difference": 2.4918170637988624e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.7838101484812796e-07,
+            "mean_absolute_loss_difference": 5.5890243544354234e-08,
+            "max_gradient_difference": 2.0439099301938768e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.1606683731079102e-07,
+            "mean_absolute_loss_difference": 6.26430107786291e-08,
+            "max_gradient_difference": 1.4901161193847656e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1921338227693923e-07,
+            "mean_absolute_loss_difference": 5.459560270537622e-08,
+            "max_gradient_difference": 8.940696716308594e-08
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7767160898074508e-07,
+            "mean_absolute_loss_difference": 6.049980072475591e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.7857018974609673e-07,
+            "mean_absolute_loss_difference": 5.77159688930351e-08,
+            "max_gradient_difference": 1.021432005643419e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.5040859580039978e-07,
+            "mean_absolute_loss_difference": 4.8482498016255704e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 1.764710759744048e-07,
+            "mean_absolute_loss_difference": 5.3004502120757024e-08,
+            "max_gradient_difference": 3.6629071331617524e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.8812716007232666e-07,
+            "mean_absolute_loss_difference": 6.09632095915913e-08,
+            "max_gradient_difference": 1.862645149230957e-08
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7815546016208827e-07,
+            "mean_absolute_loss_difference": 5.635236277612421e-08,
+            "max_gradient_difference": 9.594478100893866e-09
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 5.9493483917094636e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          }
+        }
+      }
+    },
+    "terminal": {
+      "terminal": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 50,
+          "max_loss_difference": 3.337860107421875e-06,
+          "mean_absolute_loss_difference": 4.4662261444727847e-08,
+          "max_gradient_difference": 1.341104507446289e-07
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 19,
+            "max_loss_difference": 1.1894299944970044e-07,
+            "mean_absolute_loss_difference": 2.6663162344675584e-08,
+            "max_gradient_difference": 9.344309859216082e-08
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 2,
+            "max_loss_difference": 1.1917949649387083e-07,
+            "mean_absolute_loss_difference": 3.198920239810832e-08,
+            "max_gradient_difference": 9.525066246851566e-08
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.7906970956337318e-08,
+            "max_gradient_difference": 1.341104507446289e-07
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 1.1582118020214693e-07,
+            "max_gradient_difference": 4.3020460083198486e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 5,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 3.7634229954619514e-08,
+            "max_gradient_difference": 9.394364752779438e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 1.7245978867208578e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 6,
+            "max_loss_difference": 3.337860107421875e-06,
+            "mean_absolute_loss_difference": 1.0702647301741308e-07,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 8.940696716308594e-08,
+            "mean_absolute_loss_difference": 2.098356688406966e-08,
+            "max_gradient_difference": 8.940696716308594e-08
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.1920094777906343e-07,
+            "mean_absolute_loss_difference": 2.998671178033874e-08,
+            "max_gradient_difference": 9.065421835430243e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 8.940696716308594e-08,
+            "mean_absolute_loss_difference": 1.7085570291897056e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 6,
+            "max_loss_difference": 1.1919070175281377e-07,
+            "mean_absolute_loss_difference": 4.037568146486592e-08,
+            "max_gradient_difference": 8.330123080213525e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.9761359598978743e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.1917631326241462e-07,
+            "mean_absolute_loss_difference": 3.690115946142214e-08,
+            "max_gradient_difference": 5.3599919169755594e-08
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 1.8931839207425583e-08,
+            "max_gradient_difference": 8.940696716308594e-08
+          }
+        }
+      },
+      "five_mean": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 26,
+          "max_loss_difference": 4.76837158203125e-07,
+          "mean_absolute_loss_difference": 6.823410814149611e-08,
+          "max_gradient_difference": 1.7881393432617188e-07
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 6,
+            "max_loss_difference": 1.78809386852663e-07,
+            "mean_absolute_loss_difference": 5.71132829918497e-08,
+            "max_gradient_difference": 4.901816197389053e-08
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 2,
+            "max_loss_difference": 1.435982994735241e-07,
+            "mean_absolute_loss_difference": 4.851437651609558e-08,
+            "max_gradient_difference": 2.633669105023273e-08
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 6.000146868245793e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 1.1804055333186625e-07,
+            "max_gradient_difference": 3.1964631830305734e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 5.82263481874179e-08,
+            "max_gradient_difference": 2.4923044961155938e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.775697455741465e-07,
+            "mean_absolute_loss_difference": 6.094505522469262e-08,
+            "max_gradient_difference": 2.2351741790771484e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 4.76837158203125e-07,
+            "mean_absolute_loss_difference": 7.984834127228169e-08,
+            "max_gradient_difference": 1.7881393432617188e-07
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.0116567611694336e-07,
+            "mean_absolute_loss_difference": 6.042133549044593e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.7881390590446244e-07,
+            "mean_absolute_loss_difference": 7.373529342658003e-08,
+            "max_gradient_difference": 4.621697868856245e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7881393432617188e-07,
+            "mean_absolute_loss_difference": 6.647277217552983e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.210719347000122e-07,
+            "mean_absolute_loss_difference": 6.102317939848945e-08,
+            "max_gradient_difference": 2.386522446329309e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 4.252884622246711e-08,
+            "max_gradient_difference": 3.725290298461914e-08
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 1.7872844182420522e-07,
+            "mean_absolute_loss_difference": 6.409293007436645e-08,
+            "max_gradient_difference": 5.0177252575167586e-08
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 4.76837158203125e-07,
+            "mean_absolute_loss_difference": 6.542253316865754e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          }
+        }
+      }
+    },
+    "five_mean": {
+      "terminal": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 63,
+          "max_loss_difference": 3.814697265625e-06,
+          "mean_absolute_loss_difference": 4.8197271951266885e-08,
+          "max_gradient_difference": 1.7881393432617188e-07
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 25,
+            "max_loss_difference": 1.1899195584419431e-07,
+            "mean_absolute_loss_difference": 3.022983108280641e-08,
+            "max_gradient_difference": 9.720604055019066e-08
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 5,
+            "max_loss_difference": 1.192014877915426e-07,
+            "mean_absolute_loss_difference": 3.785619995255729e-08,
+            "max_gradient_difference": 9.987022053792316e-08
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.688276090623276e-08,
+            "max_gradient_difference": 1.7881393432617188e-07
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 1.1659221854642965e-07,
+            "max_gradient_difference": 2.4302140744225653e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 3.857518393601822e-08,
+            "max_gradient_difference": 7.93206140770053e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 6.705522537231445e-08,
+            "mean_absolute_loss_difference": 1.4580272988951037e-08,
+            "max_gradient_difference": 8.940696716308594e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 9,
+            "max_loss_difference": 3.814697265625e-06,
+            "mean_absolute_loss_difference": 1.240052398543412e-07,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 2.8249035111116427e-08,
+            "max_gradient_difference": 8.195638656616211e-08
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 5,
+            "max_loss_difference": 1.1920590026193167e-07,
+            "mean_absolute_loss_difference": 3.1161970781568016e-08,
+            "max_gradient_difference": 7.56494173970168e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.1920928955078125e-07,
+            "mean_absolute_loss_difference": 1.786461112374127e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 8,
+            "max_loss_difference": 1.1920635500928256e-07,
+            "mean_absolute_loss_difference": 4.2876958872284376e-08,
+            "max_gradient_difference": 5.220739751621295e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 3.144014115719074e-08,
+            "max_gradient_difference": 1.1920928955078125e-07
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 6,
+            "max_loss_difference": 1.1917462217070351e-07,
+            "mean_absolute_loss_difference": 3.7561633803306904e-08,
+            "max_gradient_difference": 8.569113418843699e-08
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 4.76837158203125e-07,
+            "mean_absolute_loss_difference": 3.2307575281720347e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          }
+        }
+      },
+      "five_mean": {
+        "total": {
+          "rows": 800,
+          "old_zero_gradient_stable_signal": 33,
+          "max_loss_difference": 1.9073486328125e-06,
+          "mean_absolute_loss_difference": 7.225803244637063e-08,
+          "max_gradient_difference": 1.1324882507324219e-06
+        },
+        "by_engine_label": {
+          "ambient.json/0": {
+            "rows": 198,
+            "old_zero_gradient_stable_signal": 7,
+            "max_loss_difference": 1.6851117834448814e-07,
+            "mean_absolute_loss_difference": 5.964771077060504e-08,
+            "max_gradient_difference": 3.8571524640929056e-08
+          },
+          "edge-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 8,
+            "max_loss_difference": 1.7881382063933415e-07,
+            "mean_absolute_loss_difference": 7.430765691651686e-08,
+            "max_gradient_difference": 6.858034140577729e-08
+          },
+          "edge-tts/1": {
+            "rows": 38,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.8067657947540283e-07,
+            "mean_absolute_loss_difference": 6.259536178276903e-08,
+            "max_gradient_difference": 4.470348358154297e-08
+          },
+          "human.json/0": {
+            "rows": 102,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.1920930376163597e-07,
+            "mean_absolute_loss_difference": 1.1745624561854129e-07,
+            "max_gradient_difference": 1.2468886367855703e-08
+          },
+          "kokoro/0": {
+            "rows": 55,
+            "old_zero_gradient_stable_signal": 3,
+            "max_loss_difference": 1.7721322365105152e-07,
+            "mean_absolute_loss_difference": 6.214835934770235e-08,
+            "max_gradient_difference": 3.3334234927906436e-08
+          },
+          "kokoro/1": {
+            "rows": 39,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.759035512804985e-07,
+            "mean_absolute_loss_difference": 6.320698986428397e-08,
+            "max_gradient_difference": 4.470348358154297e-08
+          },
+          "macos-say/0": {
+            "rows": 50,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.9073486328125e-06,
+            "mean_absolute_loss_difference": 9.775694564950754e-08,
+            "max_gradient_difference": 1.1324882507324219e-06
+          },
+          "macos-say/1": {
+            "rows": 34,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 1.7881393432617188e-07,
+            "mean_absolute_loss_difference": 5.037363237647696e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "openai-tts/0": {
+            "rows": 45,
+            "old_zero_gradient_stable_signal": 1,
+            "max_loss_difference": 1.2689270079135895e-07,
+            "mean_absolute_loss_difference": 6.128184537601555e-08,
+            "max_gradient_difference": 1.1878144690058434e-08
+          },
+          "openai-tts/1": {
+            "rows": 28,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.086162567138672e-07,
+            "mean_absolute_loss_difference": 5.869431518590318e-08,
+            "max_gradient_difference": 2.9802322387695312e-08
+          },
+          "piper/0": {
+            "rows": 58,
+            "old_zero_gradient_stable_signal": 5,
+            "max_loss_difference": 1.1920931797249068e-07,
+            "mean_absolute_loss_difference": 6.210904501813275e-08,
+            "max_gradient_difference": 4.3721769316107384e-08
+          },
+          "piper/1": {
+            "rows": 25,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 2.384185791015625e-07,
+            "mean_absolute_loss_difference": 8.279341301431486e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          },
+          "qwen/0": {
+            "rows": 47,
+            "old_zero_gradient_stable_signal": 4,
+            "max_loss_difference": 1.7870388546725735e-07,
+            "mean_absolute_loss_difference": 6.672853203326667e-08,
+            "max_gradient_difference": 1.713822506133056e-08
+          },
+          "qwen/1": {
+            "rows": 36,
+            "old_zero_gradient_stable_signal": 0,
+            "max_loss_difference": 4.76837158203125e-07,
+            "mean_absolute_loss_difference": 7.221865416795481e-08,
+            "max_gradient_difference": 5.960464477539063e-08
+          }
+        }
+      }
+    }
+  },
+  "sigmoid_logits_vs_original_probability_max_delta": {
+    "initial": 0.0,
+    "terminal": 0.0,
+    "five_mean": 0.0
+  },
+  "audit": {
+    "scope": "Audit saved stable-loss values/gradients with independent NumPy float64 math.",
+    "source_result_sha256": "ca9c8a59fb28a2176f33f36aed3763b679ebcb6a53a7fa72cdbdc84c3c8ce06a",
+    "audit_source_sha256": "382c49f1f0d47919a8d54a4f9409b7c8cd8739b8063b821318a96f4850437206",
+    "scalar_oracle_max_error": {
+      "loss": 5.0790143646395336e-08,
+      "gradient": 2.4176390556185368e-08
+    },
+    "probability_float64_oracle_max_error": {
+      "initial": 1.0173061681939544e-07,
+      "terminal": 1.0610726619564304e-07,
+      "five_mean": 9.078687146502062e-08
+    },
+    "actual_training_diagnostic": {
+      "initial": {
+        "terminal": {
+          "rows": 800,
+          "loss_oracle_max_error": 1.395562296835351e-07,
+          "gradient_oracle_max_error": 7.043784089333371e-08,
+          "old_zero_gradient_stable_gt_1e_minus_8": 29,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 9.942509393567889e-08,
+          "affected_max_abs_stable_gradient": 9.942509393567889e-08
+        },
+        "five_mean": {
+          "rows": 800,
+          "loss_oracle_max_error": 1.9903425840794853e-07,
+          "gradient_oracle_max_error": 2.9185302174994376e-08,
+          "old_zero_gradient_stable_gt_1e_minus_8": 12,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 1.1920928955078125e-07,
+          "affected_max_abs_stable_gradient": 3.6629071331617524e-08
+        }
+      },
+      "terminal": {
+        "terminal": {
+          "rows": 800,
+          "loss_oracle_max_error": 1.8375524568625679e-07,
+          "gradient_oracle_max_error": 1.2188622322550913e-07,
+          "old_zero_gradient_stable_gt_1e_minus_8": 50,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 9.525066957394301e-08,
+          "affected_max_abs_stable_gradient": 9.525066246851566e-08
+        },
+        "five_mean": {
+          "rows": 800,
+          "loss_oracle_max_error": 1.986707831580503e-07,
+          "gradient_oracle_max_error": 7.405679441907509e-08,
+          "old_zero_gradient_stable_gt_1e_minus_8": 26,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 1.1920928955078125e-07,
+          "affected_max_abs_stable_gradient": 5.0177252575167586e-08
+        }
+      },
+      "five_mean": {
+        "terminal": {
+          "rows": 800,
+          "loss_oracle_max_error": 1.9048396904253195e-07,
+          "gradient_oracle_max_error": 7.867839102448926e-08,
+          "old_zero_gradient_stable_gt_1e_minus_8": 63,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 9.987022053792316e-08,
+          "affected_max_abs_stable_gradient": 9.987022053792316e-08
+        },
+        "five_mean": {
+          "rows": 800,
+          "loss_oracle_max_error": 2.0609506234947617e-07,
+          "gradient_oracle_max_error": 7.096642523629626e-08,
+          "old_zero_gradient_stable_gt_1e_minus_8": 33,
+          "old_zero_gradient_stable_gt_1e_minus_6": 0,
+          "affected_wrong_decision_rows": 0,
+          "affected_max_stable_loss": 1.1920928955078125e-07,
+          "affected_max_abs_stable_gradient": 6.858034140577729e-08
+        }
+      }
+    },
+    "decision": "Artificial high-confidence wrong logits expose a real numerical hazard, but these800 old training draws show only tiny lost gradients on confidently correct examples. Do not attribute recognition failure to clipping or retrain on this evidence.",
+    "limits": [
+      "Not independent model inference, original probability-BCE gradient replay, or verification of reported per-engine groups.",
+      "No optimizer, validation/new/final scoring, hardware, acoustic or recognition acceptance."
+    ]
+  },
+  "limits": [
+    "A numerical defect is not evidence of a recognition fix or the sole cause of any GPU or Mac model failure.",
+    "Old synthetic training draws are correlated; this is not held-out validation, FAR, acoustic or P4 acceptance.",
+    "No optimizer, checkpoint/threshold tuning, new/final data, audio device or board access."
+  ]
+}

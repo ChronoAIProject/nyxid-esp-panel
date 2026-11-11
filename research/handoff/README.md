@@ -1898,6 +1898,57 @@ and selected training/old-validation feature slices. No new/final scoring,
 audio playback/recording, or board operation occurred. GPU v38 continues
 under its separate frozen protocol; no causal comparison to it is made.
 
+### Sequence-loss numerical stability: hazard confirmed, failure cause unsupported
+
+The [preregistered diagnostic](../wakeword_p4/training/plans/mac-sequence-loss-stability-probe-v1.json)
+was pushed at `e32f0d6` before actual-checkpoint inference. Artificial logits
+show that sigmoid probabilities followed by a reduction and probability BCE
+can lose gradients on saturated wrong examples: all logits20 with label0
+produce old loss15.94/zero gradients, rather than loss20/gradient0.2 per
+element for five scores. The analogous negative-logit positive case fails too.
+
+The new optional `sequence_loss.py` computes the same mathematical
+`BCE(mean(sigmoid(logits)))` using logsumexp of log-sigmoids. It shares original
+variables via a training-only logits graph; original probability scorer and
+window/export graphs are unchanged. It is neither BCE of mean logits nor mean
+of individual BCEs. Terminal BCE uses `logits[:, -1:]`. Apply original class
+weights and batch reduction outside this per-example loss. Five tests cover
+independent moderate-value/gradient formulae, extremes, terminal built-in BCE,
+compiled variable lengths and objective differences.
+
+The [actual result](../wakeword_p4/results/mac-sequence-loss-stability-probe-v1.json)
+does **not** support clipping as the cause of the old screen's recognition
+failure. Its first50 stored batches supply800 correlated training draws,
+evaluated at the initial and both final checkpoints with zero updates.
+`sigmoid(logits)` matches the original probability graph exactly for all three
+models and all original variables stay unchanged. Depending on model/reduction,
+12..63 rows lose a tiny gradient above1e-8, but all are confidently correct.
+No affected row has loss above1.1921e-7 or gradient above1e-7; none loses a
+gradient above1e-6. No retraining or recognition-fix claim follows this result.
+
+Independent NumPy float64 log-domain formulae verify all stored stable losses
+and gradients, with actual-sample maximum errors2.061e-7 and1.219e-7.
+The sigmoid float64 comparison retains maximum1.062e-7, rather than calling
+it exact64-bit agreement. This audit is not independent model inference or a
+replay of the original probability-BCE gradients. The
+[evidence manifest](assets-mac-sequence-loss-stability-probe-v1.json) links all
+logits, labels, losses, gradients, original reports, source and tests.
+
+```sh
+python -m unittest discover -s research/wakeword_p4/training -p test_sequence_loss.py
+python research/wakeword_p4/training/probe_sequence_loss.py \
+  --features "$OLD_FEATURES_SIX_LONG" --initial "$ORIGINAL_TRANSFER6_LONG335" \
+  --study "$ORIGINAL_MATCHED_SCREEN" --upstream "$PINNED_MICROWAKEWORD" \
+  --plan research/wakeword_p4/training/plans/mac-sequence-loss-stability-probe-v1.json \
+  --output "$FRESH_LOSS_PROBE"
+python research/wakeword_p4/training/audit_sequence_loss.py \
+  --study "$FRESH_LOSS_PROBE" --output "$FRESH_LOSS_AUDIT_JSON"
+```
+
+No validation/new/final source, audio device, board or firmware operation was
+used. This opt-in helper is available for a future independently frozen GPU
+experiment; it neither diagnoses the existing GPU trainer nor changes v38.
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
