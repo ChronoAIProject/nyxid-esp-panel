@@ -1957,3 +1957,20 @@ and 3,173,537 bytes. All 342 listed member lengths/hashes and the exact
 smoke, actual INT8 artifact, sources/plans/launches/logs, complete inference
 scores and reconstruction audits are retained; external dependencies and the
 missing complete scalar feature cache are explicit. No deployment follows.
+
+### Broader existing training-only compact supervision
+
+The new [bank preparation plan](plans/compact-broad-bank-v1.json) removes the
+earlier eight-pair-per-stratum source cap. It retains every eligible original
+same-voice/render Cartesian partner at complete-phrase midpoint, including all
+four existing environment renders. The full feature-cache bytes are hashed
+in addition to its index. No teacher model, new audio or validation score is
+used to select these sources. Two independent tests check exact Cartesian
+coverage, stable ordering, binary roles, matched voice/render and rejection
+of reserved, ambiguous or unavailable sources.
+
+Repeated crops and source counts are separate from pair count. Uniform pair
+sampling changes engine/phrase exposure from the previous capped bank; a new
+matched binary-only control is required. Cross-study changes cannot isolate
+the effect of sample count. A prepared bank alone is not wake evidence.
+This remains silent research without speaker, microphone or board access.
