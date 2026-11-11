@@ -1,0 +1,64 @@
+{
+  "scope": "Old training Piper endpoint-code diagnostic, not a source reconstruction",
+  "converter_source_sha256": "b6068e38ca986fc3c1cd55b631878aeb619ebe5a65b32fd9f8a870c7e8e694d8",
+  "converter": "def audio_float_to_int16(\n    audio: np.ndarray, max_wav_value: float = 32767.0\n) -> np.ndarray:\n    \"\"\"Normalize audio and convert to int16 range\"\"\"\n    audio_norm = audio * (max_wav_value / max(0.01, np.max(np.abs(audio))))\n    audio_norm = np.clip(audio_norm, -max_wav_value, max_wav_value)\n    audio_norm = audio_norm.astype(\"int16\")\n    return audio_norm",
+  "script_sha256": "798f12a9a1705f4f36c4d3f53f933301fc523507a076d11bcc6627f1a4fcbd2e",
+  "examples": [
+    {
+      "input": [
+        0.0,
+        0.10000000149011612,
+        0.20000000298023224,
+        0.4000000059604645,
+        0.20000000298023224,
+        0.10000000149011612,
+        0.0
+      ],
+      "input_peak": 0.4000000059604645,
+      "output": [
+        0,
+        8191,
+        16383,
+        32767,
+        16383,
+        8191,
+        0
+      ],
+      "endpoint_codes": 1
+    },
+    {
+      "input": [
+        -0.0,
+        -0.10000000149011612,
+        -0.20000000298023224,
+        -0.4000000059604645,
+        -0.20000000298023224,
+        -0.10000000149011612,
+        -0.0
+      ],
+      "input_peak": 0.4000000059604645,
+      "output": [
+        0,
+        -8191,
+        -16383,
+        -32767,
+        -16383,
+        -8191,
+        0
+      ],
+      "endpoint_codes": 0
+    }
+  ],
+  "piper_files": 2039,
+  "absolute_pcm_peak_counts": {
+    "32766": 372,
+    "32767": 1667
+  },
+  "signed_endpoint_file_counts": {
+    "min_-32767": 1627,
+    "max_32767": 40
+  },
+  "original_failed_zero_endpoint_check_retracted": false,
+  "training_data_changed": false,
+  "limits": "Pinned local converter peak-normalizes to32767 before cast; bounded nonclipped float fixture can produce32767. Actual Mac archive files not matched to local GPU generation manifest (0/40 earlier failures), so this is mechanism plausibility, not proof of original native waveform integrity or exact generation provenance. -32767 is within PCM range and is not counted by asymmetric -32768/32767 endpoint gate. Native float and generation provenance remain required; do not relax gate retrospectively."
+}

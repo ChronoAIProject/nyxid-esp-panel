@@ -4201,3 +4201,16 @@ controlled diagnostic and cannot establish all quality gates from these data.
 Original containers do not prove uncropped phrase/phonetic truth or complete
 TTS provenance. Preserve failures and coordinate native-generation review via
 Issue13. New/final PCM not accessed. All details and audit code retained.
+
+### Old Piper PCM endpoint mechanism diagnostic (2026-11-11)
+
+Pinned local upstream converter b6068e38ca986fc3c1cd55b631878aeb619ebe5a65b32fd9f8a870c7e8e694d8
+scales peak to32767 then casts. Isolated AST function on bounded float peak.4
+produces a32767code without preexisting clipping; negative mirror produces-32767
+and passes asymmetric endpoint check. All2039original Piper training WAV hashes
+rechecked:abspeak32767in1667,32766in372;min-32767in1627,max32767in40.
+This is consistent with peak normalization, not proof of its exact use on Mac
+sources. None of40earlier failures matches local GPU generation manifest hashes.
+Native float/provenance still missing for this claim; failed endpoint gate retained,
+no retrospective relaxation or data changes. Do not call40files proven clipped
+or the other2554proven distortion-free. Issue13 coordination continues.
