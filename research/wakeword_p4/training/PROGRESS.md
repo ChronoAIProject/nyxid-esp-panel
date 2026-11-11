@@ -904,6 +904,34 @@ names. Run `compare_paired_ranking.py --plan <plan> --artifacts <study>
 --output <new-report>` to verify the schedules, PTQ inputs and fixed-reference
 counts. No board changes, playback, or independent final audio were used.
 
+### Auxiliary whole-phrase classification
+
+The [frozen comparison](plans/microwake-paired-phrases-v1.json) trains a
+four-way head to identify Hey Nyx, Hey Mix, Hey Next and Hey Nick from the
+existing encoder. Both arms use the same 8,000 pair draws, weighted binary
+loss, optimizer path and representative inputs. The control's INT8 bytes
+match the previous paired control exactly. Both exports retain one binary
+output and the same input and operator inventory; the extra head exists
+only during training.
+
+The [validation result](../results/microwake-paired-phrases-v1.json) rejects
+the treatment. At the fixed .97 reference, mean recall across the synthetic
+sources rises from 73.97% to 80.48%, but shared development background goes
+from zero to one wake over 7.324 hours. Hey Mix increases from 21 to 28 false
+views out of 136; Hey Next from 17 to 21 of 160; Hey Nick from 1 to 2 of 172.
+Even at .996 the treatment retains the background wake and its worst
+engine/corpus false fraction is 3.04%, above the prespecified 1% gate.
+This tests joint training as implemented; it does not show that the head's
+class predictions could safely act as a second runtime detector. No final
+test data, audio playback, microphone capture or board flashing was used.
+
+To reproduce, reuse the verified pair inputs and common arguments above,
+use `--paired-phrase-gain 0` and `--paired-phrase-gain .35` in separate
+`model-phrase_control` and `model-phrase_aux` directories, and run the
+validation-only grid from the plan with `evaluate_stream.py --threshold-grid`.
+`compare_paired_ranking.py` verifies the exported interface, paired input
+schedule, calibration and validation exposure and generates the report.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
