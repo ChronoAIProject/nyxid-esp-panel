@@ -45,19 +45,23 @@ def main():
     (args.output/'plan.json').write_bytes(args.plan.read_bytes())
     (args.output/'rows.json').write_text(json.dumps(rows, indent=2)+'\n')
     results = {kind: fit(kind, x, labels, plan, args.initial_weights, args.output,
-                        tap=setting['tap'], head_initialization=setting['initialization'])
+                        tap=setting['tap'], head_initialization=setting['initialization'],
+                        conditional_gain=setting.get('conditional_gain'))
                for kind, setting in plan['arm_settings'].items()}
     control, treatment = results[plan['control_arm']], results[plan['treatment_arm']]
-    parent = json.loads((args.parent_study/'study/full-fit-phones.json').read_bytes())
+    parent = json.loads((args.parent_study/plan.get('parent_control_result', 'study/full-fit-phones.json')).read_bytes())
     if any(control[a] != parent[b] for a, b in (
         ('encoder_weights_after_sha256', 'encoder_weights_after_sha256'),
-        ('head_weights_after_sha256', 'head_weights_sha256'),
+        ('head_weights_after_sha256', plan.get('parent_head_hash_key', 'head_weights_sha256')),
         ('draw_schedule_sha256', 'draw_schedule_sha256'), ('summary', 'summary'))):
         raise ValueError('Prior full-fit phone control does not replay')
-    if (any(control[k] != treatment[k] for k in ('binary_weights_before_sha256',
-            'encoder_weights_before_sha256', 'draw_schedule_sha256', 'head_parameters', 'parameters'))
-            or control['head_weights_before_sha256'] == treatment['head_weights_before_sha256']):
-        raise ValueError('Paired initializer-only comparison differs')
+    if any(control[k] != treatment[k] for k in ('binary_weights_before_sha256',
+            'encoder_weights_before_sha256', 'draw_schedule_sha256', 'head_parameters', 'parameters')):
+        raise ValueError('Paired representation, parameter count or draws differ')
+    same_initialization = (plan['arm_settings'][plan['control_arm']]['initialization']
+                           == plan['arm_settings'][plan['treatment_arm']]['initialization'])
+    if (control['head_weights_before_sha256'] == treatment['head_weights_before_sha256']) != same_initialization:
+        raise ValueError('Paired initial head tensors disagree with the plan')
     report = {'plan_sha256': sha(args.plan), 'rows_sha256': sha(args.output/'rows.json'),
         'parent_deep_control_replayed': True,
         'arms': {kind: {'result': f'{kind}.json', 'result_sha256': sha(args.output/f'{kind}.json'),
@@ -65,6 +69,9 @@ def main():
                         'parameters': value['parameters'], 'initial_diagnostic': value['initial_diagnostic']}
                  for kind, value in results.items()},
         'advance': treatment['fit_gate_passed'], 'accepted': False, 'limits': plan['limits']}
+    for kind, value in results.items():
+        if 'conditional_objective' in value:
+            report['arms'][kind]['conditional_objective'] = value['conditional_objective']
     (args.output/'result.json').write_text(json.dumps(report, indent=2)+'\n')
     print(json.dumps({'complete': True, **report}), flush=True)
 

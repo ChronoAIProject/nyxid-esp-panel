@@ -62,7 +62,8 @@ def phone_head(initialization, seed):
     return tf.keras.Model(h, tf.keras.layers.Dense(10, kernel_initializer=kernel)(h))
 
 
-def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization='glorot'):
+def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization='glorot',
+        conditional_gain=None):
     import tensorflow as tf
     from transfer import build_model
     tf.keras.utils.set_random_seed(726)
@@ -76,7 +77,8 @@ def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization
     disconnected_before = weights_sha(disconnected)
     head = phone_head(head_initialization, plan['head_seed'])
     head_before = weights_sha(head.weights)
-    full, update = update_factory(encoder, head, plan)
+    update_plan = plan if conditional_gain is None else {**plan, 'conditional_ctc_gain': conditional_gain}
+    full, update = update_factory(encoder, head, update_plan)
     packed, lengths = targets(labels, 'phones')
     initial_diagnostic = None
     if plan.get('initial_diagnostic_crop_ids'):
@@ -97,7 +99,10 @@ def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization
     for step in range(1, plan['steps']+1):
         selected = rng.choice(ids, size=plan['batch_size'], replace=True).astype(np.int32)
         digest.update(selected.astype('<i4', copy=False).tobytes())
-        loss, norm = update(x[selected], packed[selected], lengths[selected])
+        if conditional_gain:
+            loss, norm = update(x[selected], packed[selected], lengths[selected], labels[selected])
+        else:
+            loss, norm = update(x[selected], packed[selected], lengths[selected])
         if step % 250 == 0 or step == plan['steps']:
             item = {'step': step, 'loss': float(loss), 'gradient_norm_before_clip': float(norm)}
             history.append(item)
@@ -138,6 +143,11 @@ def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization
         'fit_gate_passed': fits(measured, plan['fit_gate']), 'seconds': time.monotonic()-started}
     if initial_diagnostic is not None:
         result['initial_diagnostic'] = initial_diagnostic
+    if conditional_gain is not None:
+        values = scores.astype(np.float64)
+        shifted = values-values.max(-1, keepdims=True)
+        result['conditional_objective'] = {'gain': conditional_gain,
+            'mean_intent_nll': float(np.mean(np.log(np.exp(shifted).sum(-1))-shifted[ids, labels]))}
     (output/f'{kind}.json').write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps({'tap': kind, 'complete': True, **measured}), flush=True)
     tf.keras.backend.clear_session()

@@ -164,6 +164,16 @@ def main():
         require(greedy == arm['decoded'], 'Greedy sequences differ')
         scores = np.asarray(arm['scores'])
         require(scores.shape == (len(rows), 4) and np.isfinite(scores).all(), 'Invalid class scores')
+        if 'conditional_gain' in setting:
+            shifted = scores-scores.max(-1, keepdims=True)
+            conditional = {'gain': setting['conditional_gain'],
+                'mean_intent_nll': float(np.mean(np.log(np.exp(shifted).sum(-1))
+                                               -shifted[ids, labels]))}
+            require(arm['conditional_objective'] == info['conditional_objective']
+                    and conditional['gain'] == arm['conditional_objective']['gain']
+                    and abs(conditional['mean_intent_nll']-arm['conditional_objective']['mean_intent_nll'])
+                    <= plan.get('metric_roundoff_tolerance', 0),
+                    'Conditional objective accounting differs')
         checked, seen, max_delta = [], set(), 0.
         for i, row in enumerate(rows):
             key = row['engine'], row['class']
@@ -215,10 +225,10 @@ def main():
     treatment = plan.get('treatment_arm', 'local')
     deep = json.loads((root/'study'/f'{control}.json').read_bytes())
     local = json.loads((root/'study'/f'{treatment}.json').read_bytes())
-    parent = json.loads((args.parent_study/'study/full-fit-phones.json').read_bytes())
+    parent = json.loads((args.parent_study/plan.get('parent_control_result', 'study/full-fit-phones.json')).read_bytes())
     require(all(deep[a] == parent[b] for a, b in (
         ('encoder_weights_after_sha256', 'encoder_weights_after_sha256'),
-        ('head_weights_after_sha256', 'head_weights_sha256'), ('summary', 'summary'),
+        ('head_weights_after_sha256', plan.get('parent_head_hash_key', 'head_weights_sha256')), ('summary', 'summary'),
         ('draw_schedule_sha256', 'draw_schedule_sha256'))), 'Parent control replay differs')
     paired_fields = ('binary_weights_before_sha256', 'draw_schedule_sha256', 'head_parameters')
     if settings[control]['initialization'] == settings[treatment]['initialization']:

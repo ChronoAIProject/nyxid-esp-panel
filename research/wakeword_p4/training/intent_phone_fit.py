@@ -59,6 +59,17 @@ def hypothesis_scores(logits, kind):
     return np.asarray(tf.reshape(-losses, [count, len(CLASSES)]))
 
 
+def conditional_intent_losses(logits, intent_ids):
+    """Four fixed phone-string likelihoods as a differentiable intent objective."""
+    import tensorflow as tf
+    labels, lengths = targets(np.arange(len(CLASSES)), 'phones')
+    count = tf.shape(logits)[0]
+    losses = ctc_loss(tf.tile(labels, [count, 1]), tf.tile(lengths, [count]),
+                      tf.repeat(logits, len(CLASSES), axis=0))
+    scores = tf.reshape(-losses, [count, len(CLASSES)])
+    return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=intent_ids, logits=scores)
+
+
 def update_factory(encoder, head, plan):
     import tensorflow as tf
     full = tf.keras.Model(encoder.input, head(encoder.output))
@@ -67,12 +78,18 @@ def update_factory(encoder, head, plan):
         raise ValueError('Optimizer groups overlap')
     encoder_adam = tf.keras.optimizers.Adam(plan['encoder_learning_rate'])
     head_adam = tf.keras.optimizers.Adam(plan['head_learning_rate'])
+    conditional_gain = float(plan.get('conditional_ctc_gain', 0))
+    if not np.isfinite(conditional_gain) or conditional_gain < 0:
+        raise ValueError('Expected a finite nonnegative conditional CTC gain')
 
     @tf.function
-    def update(x, labels, lengths):
+    def compiled_update(x, labels, lengths, intent_ids=None):
         with tf.GradientTape() as tape:
-            losses = ctc_loss(labels, lengths, full(x, training=True))
+            logits = full(x, training=True)
+            losses = ctc_loss(labels, lengths, logits)
             loss = tf.reduce_mean(losses/tf.cast(lengths, losses.dtype))
+            if conditional_gain:
+                loss += conditional_gain*tf.reduce_mean(conditional_intent_losses(logits, intent_ids))
             tf.debugging.assert_all_finite(loss, 'Nonfinite intent CTC loss')
         variables = encoder_variables+head_variables
         gradients = tape.gradient(loss, variables)
@@ -85,6 +102,13 @@ def update_factory(encoder, head, plan):
         encoder_adam.apply_gradients(zip(clipped[:boundary], encoder_variables, strict=True))
         head_adam.apply_gradients(zip(clipped[boundary:], head_variables, strict=True))
         return loss, norm
+
+    def update(x, labels, lengths, intent_ids=None):
+        # Validate before tracing: an invalid first tf.function call must not
+        # partially initialize/cache Adam and break the subsequent valid call.
+        if conditional_gain and intent_ids is None:
+            raise ValueError('Conditional CTC requires the original intent classes')
+        return compiled_update(x, labels, lengths, intent_ids)
 
     return full, update
 

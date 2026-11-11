@@ -2776,3 +2776,31 @@ independent float64 CTC samples. All four preflight tests pass with raw logs
 retained. Neutral logits are exactly zero, so the argmax blank count is a
 tie convention, not a trained blank preference. This isolates an initialization
 effect on these fixed fitted-bank metrics; it establishes no wake acceptance.
+
+## Conditional phone-intent discrimination, preregistered
+
+The [separate training-only plan](plans/intent-phone-conditional-discrimination-v1.json)
+addresses remaining near-word discrimination after neutral initialization,
+without extending that failed fit or running held-engine folds. Both arms
+start from fresh original binary tensors and the same zero phone head, use
+identical 3,112 crops/draws/1,000 updates/optimizers/clip, and retain generative
+CTC NLL divided by true token length. Treatment adds gain-one cross-entropy
+over the four raw phone-string CTC log likelihoods, using original intent
+labels. Control gain zero must replay the prior neutral encoder/head hashes
+and every summary metric. No gain/seed sweep, class weighting or extra budget.
+
+Two conditional tests pass independent NumPy float64 likelihood/gradient
+reconstruction and the combined objective/rejected-invalid-then-valid update.
+Nine existing target/math/optimizer/initialization/tap tests also pass. An
+initial test exposed invalid first-call validation occurring inside a traced
+Adam function; validation now occurs before tracing. A regression command
+initially omitted the pinned upstream path and was rerun with it. Both failed
+and successful raw logs remain retained. TF2.21 logs nonfatal MLIR While
+shape-optimizer errors; actual numerical checks and updates pass. No numerical
+tolerance or detector-quality gate changes in response to these logs.
+
+The same unchanged fitted-bank gate precedes any separate held-engine study.
+This is closed-set training research, not ordinary-speech false-wake or
+independent pronunciation evidence. Source/plan/runtime/launches, both final
+checkpoints/logits and read-only reconstruction will be retained. All work is
+silent and excludes audio devices, production hardware and the capture path.

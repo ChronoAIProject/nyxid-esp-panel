@@ -1,0 +1,140 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "unique_crops": 3112,
+  "steps": 1000,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "encoder_learning_rate": 0.0002,
+  "head_learning_rate": 0.003,
+  "global_clipnorm": 5.0,
+  "target_policy": "Original synthesis intent only, with the original alias mapping for Nyx/Nix/Nicks. These are fixed dictionary-like hypotheses, not measured phones, teacher decodes or human pronunciation truth. Retain original binary source roles. Correct true CTC lengths 6/6/7/5; zero padding is excluded by true lengths.",
+  "readout": "For each held/fitted crop, raw CTC log likelihood for each of the four predefined intent strings with equal priors. No score length correction, forced probability normalization, fitted margin or wake threshold. Unequal phone target lengths are retained. Also record greedy exact strings/edit rates and normalized true-label loss. Forced-choice metrics are not open-set false-wake rates.",
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "initial_diagnostic_crop_ids": [
+    0,
+    1,
+    768,
+    896,
+    1024,
+    1025,
+    1344,
+    1424,
+    1504,
+    1505,
+    1912,
+    1980,
+    2048,
+    2049,
+    2624,
+    2768,
+    2912,
+    2913,
+    2969,
+    3025
+  ],
+  "reference_crop_ids": [
+    0,
+    1,
+    768,
+    896,
+    1024,
+    1025,
+    1344,
+    1424,
+    1504,
+    1505,
+    1912,
+    1980,
+    2048,
+    2049,
+    2624,
+    2768,
+    2912,
+    2913,
+    2969,
+    3025
+  ],
+  "reference_loss_tolerance": 0.0002,
+  "metric_roundoff_tolerance": 1e-12,
+  "scope": "Training-only generative versus combined conditional phone CTC intent fit; no wake acceptance.",
+  "repository_plan_path": "research/wakeword_p4/training/plans/intent-phone-conditional-discrimination-v1.json",
+  "training_script": "intent_phone_initialization.py",
+  "control_arm": "generative",
+  "treatment_arm": "conditional",
+  "arm_settings": {
+    "generative": {
+      "tap": "deep",
+      "initialization": "zero",
+      "conditional_gain": 0
+    },
+    "conditional": {
+      "tap": "deep",
+      "initialization": "zero",
+      "conditional_gain": 1
+    }
+  },
+  "parent_control_result": "study/zero.json",
+  "parent_head_hash_key": "head_weights_after_sha256",
+  "hypothesis": "Neutral initialization fixes much of complete phone-sequence fit but Mix->Nyx remains415/448. Per-token generative CTC averages the local identity error over shared target phones and does not explicitly normalize among near-phrase hypotheses. Test adding a fixed four-intent conditional likelihood cross-entropy,with original intent labels,no pronunciation edits or teacher labels. A change in this full-fit recipe cannot establish a general causal diagnosis or open-set wake improvement.",
+  "objective": "For each sample,retain CTC_NLL(true_phone_string)/true_token_length. Treatment adds exactly1*CE(softmax of the four raw phone-string CTC log likelihoods),true intent. Equal intent prior,no fitted score/length adjustment. Mean each term over the same32 original examples. Conditional likelihoods sum the same CTC paths as the existing readout;compute loss/gradient in TensorFlow without NumPy. Control gain0 avoids conditional graph work and must replay prior zero-head tensor hashes,draw schedule and all summary metrics.",
+  "optimization": "Fresh original binary tensors and zero610-parameter head for each arm. Same67x60 deep encoder,all3112 unique crops,1000 updates,batch32,draw seed1223,encoder/head Adam(.0002/.003),shared global clip5. Only conditional objective gain differs0/1. No augmentation,class reweighting,warmup,extra steps,seed/gain sweep,validation,checkpoint choice or resume. Both final checkpoints retained regardless of outcomes.",
+  "audit": "Reconstruct all actual crops/initial representations/logits. Replay prior neutral control exactly;require identical initial binary,encoder,head tensors,head size,total parameters and sample schedule across arms. Reload both final checkpoints and replay all3112x67x10 logits and four-class likelihoods bitwise. Reconstruct all greedy strings,metrics,conditional objectives and gates. Independent NumPy float64 CTC checks20 frozen crops/four hypotheses. Allow only predeclared1e-12 float metric reduction roundoff;integer counts and stored summary references exact. No full optimizer-trajectory replay claim.",
+  "parent_study_sha256": {
+    "plan.json": "3be8c1d88e7d05d6f51c63879423b099cf40555b8bd7b74b9477b862cfe26e61",
+    "study/rows.json": "1d0f9ee4955bdc2f70d2b7e3d6215da3f294cd0cab45eed70402b2efa0f9bfba",
+    "study/zero.json": "bf09bffd273402badf47f3a35f71b70a5490984329d9812d48cb2f671ecc04b2",
+    "study/zero.weights.h5": "3fa89bbdc7aa7ec1bd60b921ec1d0ca70460e4288adbc4cb2b617ade9ccfb8be",
+    "study/result.json": "fc7d65d7ae2438dcb73313da89d9a3f2c65bbe77f96ac22ee3fac4ab2d997dde",
+    "input-result-audit.json": "6f1a035cc01793f78d488ea1b5a601e292754747e90e354bbf070b05a1a75b7a"
+  },
+  "source_sha256": {
+    "intent_phone_initialization.py": "107a29d914d31e7956730eea18ba1ff07ff3120a7d12a17db2fbdf936e8e91eb",
+    "test_conditional_intent_ctc.py": "1041361c61e2c3b52808c78e061e199f2e35c1a279feddcb14e79b6a200eb41f",
+    "test_intent_phone_initialization.py": "5191e145aa6e5821518086a1e1c7cf7b27cb808c3f22061a45a00ff8909a5c56",
+    "test_intent_phone_fit.py": "7bf7aab4db7b95fcbc3b62881603da1b64efe5e9382b17aeb7c4f54563571d84",
+    "intent_phone_taps.py": "235d692dd7c643e97ef7c68281e527208072de13d448ebc6c605e4adb97d966c",
+    "test_intent_phone_taps.py": "7c714a867b2b00984d593a42c235e05db971a85f95356f1797bce955c8348b2a",
+    "intent_phone_fit.py": "f3468a981c4019f5680ff5b00396523d1d5941cf94553d7480d904a90bfe7162",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "ctc_reference.py": "4029ac30053e83d1e2bd3bcff9a9df300d734d821323ed692ea1c70f227b1145"
+  },
+  "audit_source_sha256": {
+    "audit_intent_phone_taps.py": "cfd1f84f0b2ff67299a40eb91f9cae4aca1e6675d4b325d302ed42feb5b8e95c",
+    "audit_intent_phone_fit.py": "b73d5e13aa3181a13d446a2d99d2a3fde080a185c3394fac7f215fb187df4234",
+    "audit_compact_study.py": "ebcc9b2300e170bbe846cd06e21fb95ef366761f761e6afcc1149b361e8a84b3"
+  },
+  "launcher_sha256": "ef217a97f70bcf7d4c0cef3b69983c4d0e0e37bbe73c931f2ce76c720105e2c8",
+  "preflight_test_logs": {
+    "intent-phone-conditional-tests.log": "f2234025f3f14ec278d04d1f7f00e8972c9a99d8b3971d4aefcea03af2bafd8b",
+    "intent-phone-conditional-tests-fixed.log": "d0dec782035f863ae904fc7e1f00fbe68ca3014064fa2db70621d9722119683a",
+    "intent-phone-conditional-regression-tests.log": "a72ee38c05bc91cfe3096b9bc2198858921250ee2089d9096731ea0ac7604336",
+    "intent-phone-conditional-regression-tests-fixed.log": "21479493dd6114a1571b6bfb814a02e2ee89bd4f9d651e24070e8977bd573cce"
+  },
+  "preflight_notes": "Initial combined-objective test exposed an invalid-first-call tf.function/Adam initialization bug. Intent-presence validation now occurs before tracing;the same object handles a subsequent valid call. One regression command omitted the required upstream path;rerun supplies it. Corrected conditional tests2/2 and existing intent/initialization/tap tests9/9 pass. Raw failed/passing logs retained. TF2.21 logs nonfatal MLIR CTC While shape-optimizer failures;the actual loss/gradient reference checks and optimizer tests pass. No numerical/quality tolerance was changed in response.",
+  "advance_action": "Only if the conditional arm passes all unchanged fitted-bank criteria,design a separate predeclared held-engine representation study. No automatic fold,open-set wake validation,firmware,threshold selection or hardware follows. Failure rejects this exact gain1 recipe;do not extend steps or sweep gains.",
+  "limits": "Fixed dictionary-like synthesis-intent phones are not verified pronunciations. Training corpus and initializer already exposed;full-bank fit cannot establish unseen-speaker/engine generalization,open-set wake FAR,latency,P4 resources or long call stability. Initialization comparison is on one fixed corpus,encoder,optimizer and budget;it cannot establish a general initialization rule or the unique cause of all prior wake failures. No reserved quality data,audio device,board,firmware,PCM speed or capture/AEC/FIFO change. Conditional forced-choice intent likelihood is closed-set and cannot establish silence/ordinary-speech rejection. Full fitted-bank success alone cannot justify MCU deployment."
+}
