@@ -1812,3 +1812,13 @@ the new treatment validation and comparison both exit zero. Both exports
 retain the original operators/interface, 25,831 parameters and 61,712 bytes.
 These are size/graph checks, not new P4 timing or resource measurements.
 No audio device or board was accessed. The full goal remains open.
+
+The [cached error-change audit](../results/microwake-compact-phrase-ctc-wake-changes-v1.json)
+reconstructs all clip maxima/timebases and continuous event locations without
+new inference. It finds 77 gained and 34 lost positive views, and 22 added
+versus seven corrected false views. False source identities increase from
+38 to 45 (nine added, two removed). Both continuous events remain at the
+same cached step 17,473, 524.36 seconds into the LibriSpeech stream, within
+`1183-133256-0018` at 1.94 seconds. This is cached event timing, not a phonetic
+endpoint. That validation utterance is not added to training. Improved compact
+sequence fit still has not removed the scalar detector's existing error.
