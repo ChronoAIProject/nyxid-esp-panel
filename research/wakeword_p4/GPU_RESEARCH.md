@@ -4271,3 +4271,17 @@ No threshold selection,newFAR,new/final,training or promotion. Frozenv30 retaine
 Next examine positive full-source temporal support alongside the proven negative
 support change before another intervention;do not repeat negative-only sampling
 or local five-score supplement as solved approaches.
+
+### Positive complete-container temporal support census (2026-11-11)
+
+All4602eligible training positives per v40/v41,all savedfloatscore hashes checked.
+Conservative original Mac sample ledger yields13..100valid integer windowends,
+103663phase-aligned five positions;2variants have no valid five due to phase.
+Initial code incorrectly asserted every variant had one;casepackindex2/end338..350
+exposed the phase gap(firststreamend339,last351). Corrected census retains2zero
+cases,no source excluded. Under this ledger fullsupport highthreshold variants
+v402468->v411374;support positions24917->7844. At.5 variants3524->3306.
+Global peakinside support1017->409. These are savedsequence diagnostics with
+known streaming residuals,not phonetic/receptive-field truth or acceptance.
+Pre-register v42positive candidate full-interval sampling,keeping v41negative RNG
+exact;no optimization started. Oldquality limitations retained,freezev30.
