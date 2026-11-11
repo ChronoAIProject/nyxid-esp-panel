@@ -3148,3 +3148,9 @@ Kokoro Nick99/100、Mix96/100、Next93/100；Qwen Nick21/24、Mix20/20、Next23/
 仅保留24160样本内且实际149帧卷积支持覆盖全部PCM的源，防止错误完整性声明。
 该修正规则已重跑梯度及两步导出检查，旧v1流程日志保留，不作为正式训练结果。
 计划4090-v34-plan.json；正式脚本experiments/v34_phrase_auxiliary.sh。
+
+v34正式任务session2782/PID26851存活；初始化所有字段与v30一致，
+实际manifest/训练器/辅助模块SHA与预注册一致，weight0.1。
+修正phase后目标组Piper2585/Kokoro285/Qwen27；Nick312/99/21，
+Next277/93/22，Mix262/95/20；均按完整源有效支持筛选，未引入最终数据。
+启动审计results/4090-v34-startup-audit.json；不作为发音正确或质量证据。

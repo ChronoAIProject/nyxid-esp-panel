@@ -1,0 +1,47 @@
+{
+  "role": "v34 startup initialization and auxiliary-input protocol audit; not quality evidence",
+  "all_baseline_initialization_fields_equal": true,
+  "initialization_sha256": "0997eae9819ad443e999bf8099ea4ce90192635386d3e44c19e1bd8f726b3c94",
+  "preregistered_sources_and_manifest_hashes_match": true,
+  "actual_auxiliary": {
+    "classes": {
+      "Hey Nyx.": 0,
+      "Hey Nicks.": 0,
+      "Hey Nix!": 0,
+      "Hey Nicks?": 0,
+      "Hey Nick.": 1,
+      "Hey Next.": 2,
+      "Hey Mix.": 3
+    },
+    "weight": 0.1,
+    "seed": 67726,
+    "batch_size": 24,
+    "samples_per_class": 6,
+    "manifest_sha256": "d21718f42dabaaf6818871cae93685aa3cce11f5a943b486d87fadba6d1887d4",
+    "groups": {
+      "0": {
+        "piper": 2585,
+        "kokoro": 285,
+        "qwen-cuda": 27
+      },
+      "1": {
+        "piper": 312,
+        "kokoro": 99,
+        "qwen-cuda": 21
+      },
+      "3": {
+        "piper": 262,
+        "kokoro": 95,
+        "qwen-cuda": 20
+      },
+      "2": {
+        "piper": 277,
+        "kokoro": 93,
+        "qwen-cuda": 22
+      }
+    },
+    "policy": "Separate 24 complete-source variant0 crops, equal classes and equal engines within class; shift end+1 and exclude sources exceeding24160samples to account for teacher60 unused suffix frame; no extra binary supervision, no augmentation; original binary batch and loss unchanged; deploy binary model only",
+    "limits": "Text intentions, not verified phone classes. No ambient class or phonetic endpoint truth. Extra forward pass/gradient changes training compute."
+  },
+  "limits": "Confirms recorded startup inputs; does not establish pronunciation, full training completion or deployed quality."
+}
