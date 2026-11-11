@@ -1847,6 +1847,30 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 Coordinate Mac/P4 and RTX 4090 research in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
+### Experimental threshold literal precision
+
+The [metadata-only precision audit](../wakeword_p4/results/threshold-literal-precision-v1.json)
+compares all 1,276 attainable sums of five UINT8 outputs at each of the fixed
+138 development thresholds. Python and an independently compiled C++ program
+agree on all differences. Only `.8` changes a comparison solely because the
+packager emits a float32 literal: the actual threshold is
+`0.800000011920929`. Sum1024 triggers against the Python threshold but not
+the firmware threshold; sum512 changes the half-threshold rearm comparison.
+For example, `[205,205,205,205,204] / 256` averages to `.8`.
+
+```sh
+python research/wakeword_p4/training/audit_threshold_literal_precision.py \
+  --gpu-revision a172906 --output "$FRESH_PRECISION_JSON"
+```
+
+This isolates literal conversion with exact dyadic output scores and a double
+sum. It does not establish NumPy convolution ordering equivalence or any actual
+candidate's event impact. It changes neither the fixed grid nor firmware event
+policy. Keep the existing training experiment; compare a frozen candidate's
+saved events using its actual firmware arithmetic before claiming equivalence.
+The generic Mac candidate runner already records the host and firmware paths
+separately. No model, audio, new/final dataset or board is used by this audit.
+
 ### Independent v40 report reconciliation
 
 The [v40 review](../wakeword_p4/results/gpu-v40-report-review-v1.json)
