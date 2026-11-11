@@ -2082,3 +2082,27 @@ rejection of a wrong stride interface. No numerical export or development
 diagnostic has launched at this commit. A pass permits only a separately frozen
 precision comparison; it establishes no recognition, false-wake, latency,
 P4 resource, real-speaker or voice-call acceptance. All work remains silent.
+
+The [completed numerical export](../results/scalar-precision-export-smoke-v1.json)
+passes both unchanged models on all 20 fixed training sources. Float TFLite
+is 144,004 bytes per model. Maximum all-step SavedModel/float-TFLite deltas
+are 1.73e-6 (binary control) and 4.05e-6 (compact CTC); complete-window deltas
+are 3.52e-6 and 4.86e-6, below the frozen 1e-4 gate. Every float reset and
+256-step chunk replay is exact, as is the inherited original INT8 adapter.
+No weights or calibration examples change. This is only numerical evidence.
+
+The [separate precision-quality diagnostic](plans/scalar-precision-diagnostic-v1.json)
+now freezes full development inference on both float/INT8 pairs. Every
+precision sees the same actual feature bytes, including startup/reset steps;
+fresh INT8 outputs must replay every previous cached value exactly. In
+addition to the full scalar binary, all 35 actual continuous feature files
+are now hash-bound, rather than relying on their index or source-WAV hashes.
+The exact original 21-point grid, smoothing and independent latch counts stay
+fixed. Report strict-gate existence and fixed-.97 clip disagreements without
+selecting a new inference rule, threshold or deployment candidate.
+
+Two independent accounting tests verify that precision can both add and
+remove detections and that both group limits plus zero events are required.
+With the two actual-TFLite adapter tests, four focused checks pass. No full
+precision diagnostic has launched at this commit. Physical latency, hardware
+costs, real-speaker performance and voice stability remain outside this run.
