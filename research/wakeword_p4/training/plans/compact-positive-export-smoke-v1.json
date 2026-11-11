@@ -1,0 +1,69 @@
+{
+  "scope": "Training-only retained compact-head export smoke after ordinary-positive supervision; no fitting or development inference.",
+  "hypothesis": "Numerically validate retention of the newly supervised compact temporal head before any separate fixed inference comparison. The scalar-only training recipe failed, which does not evaluate its discarded temporal head as an inference filter.",
+  "parent_study_plan_sha256": "4e26fb15413a236ca3a63f8a129ad48b3c8809cbc5d00079529580326b39ac23",
+  "parent_study_result_sha256": "ba3228d164f4f802fd5fef39985a8345e9423b95a8e12538c9f389f6d6e88e3d",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "model_files_sha256": {
+    "best.weights.h5": "b6d79a019ab34b3e5495d5fea8be7852e340df3bae8a7e9f0886215ebd066b37",
+    "phone-step-3000.weights.h5": "e0e5cdd7f0ada81b41719362272101823dd1265eb72cef66ffda662c70af0cca",
+    "training.json": "9933e45c9c1a72c56c10dca040c38b5f64aea77aef087414061503231ca6855b",
+    "hey_nyx.tflite": "3ed3766fe0377f978b0a393f0f767f1d97121bd996e4ee4a2c9d8cf4934e6d8e"
+  },
+  "source_sha256": {
+    "compact_sequence_inference.py": "0bacf7da9fc62353ce4588e1db2bdbf6777de5755d37bb214a51a8a4f4104416",
+    "test_compact_sequence_inference.py": "46e118ae2b5d32f5bd5e74750558d999425e499807b51424b5f9d96d15653764",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f"
+  },
+  "calibration_seed": 519,
+  "calibration_windows": 100,
+  "smoke_bank_row_ids": [
+    0,
+    1,
+    1281,
+    2561,
+    3840,
+    3841,
+    4321,
+    4801,
+    5280,
+    5281,
+    5961,
+    6641,
+    7320,
+    7321,
+    8185,
+    9049,
+    9912,
+    9913,
+    9969,
+    10025
+  ],
+  "maximum_float_alignment_delta": 0.0001,
+  "model": "Same final trained encoder and binary head plus its retained Dense(6) ordered CTC head. Check all scalar weights remain identical when loading the auxiliary checkpoint. Retain all67 temporal logits per streaming step, sharing the existing encoder and history. This unoptimized reference increases output/compute; no low-cost P4 claim.",
+  "calibration": "Two unchanged full-frame boundaries0/26 followed by100 original broad-bank row IDs selected without replacement with RNG519. Cartesian pairs repeat crops; distinct row IDs are not distinct feature windows. Yield every complete3-frame slice in row order, record exact input digest/IDs. No held-out features or source audio.",
+  "smoke": "First training-bank source per engine/class, exactly20 predeclared IDs. Replay each complete original cached feature sequence. Compare every complete aligned335-frame window against corresponding float streaming outputs at start=3*(step+1)-335, for both scalar and all67x6 logits. Each maximum delta must be<=1e-4. Quantized interpreter recreation must replay both outputs exactly, and256-step feature chunking must match an unchunked invocation exactly. Quantization differences are reported, not wake-acceptance criteria.",
+  "future_fixed_inference_rule": "Only after this numerical pass, freeze a separate same-artifact binary versus binary*P_occurrence comparison. Occurrence means the CTC collapsed sequence contains contiguous [hey,nyx] with arbitrary context, using the already independently tested fixed recurrence. Require a pre-validation adapter gate with the original 40 training sources plus the known 823-frame training source across the 256-step boundary. No alternate score, scale, window, learned correction or threshold expansion.",
+  "advance_action": "A complete numerical pass permits preregistering the actual inference-rule wake comparison, including fixed thresholds and continuous event accounting. It does not permit a firmware change, final scoring or Hi ESP parity claim.",
+  "limits": "Training-only cached original synthetic/public features already seen in optimization. Parent scalar-only recipe rejected. No held-out features, development/test inference, fitting, threshold selection, source WAV access, playback, microphone, board, firmware, PCM speed or audio producer change. Exact-product calculations here test chunk/replay semantics only, not wake quality. The retained full-history head is an unoptimized reference with unmeasured P4 resource, physical latency and real-speaker quality.",
+  "procedure_correction": "Retain the previously tested independent nonstreaming checkpoint reference after upstream conversion mutates layer modes. No new tolerance or reset/chunking relaxation.",
+  "parent_input_audit_sha256": "3b5b873446222c689a72c0a655c4244c67ca0e69b2dda2806dfdc3283ddbe94f",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "calibration_unique_feature_windows": 96,
+  "required_calibration_inputs_sha256": "d7dbf1e2a67efaf8ce56cca1d393ceaa471597584d8504d1c491a9b8258105b3"
+}

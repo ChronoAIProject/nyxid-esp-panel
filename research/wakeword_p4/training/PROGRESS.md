@@ -2506,3 +2506,14 @@ launches, runtime, logs and audit scripts/results are retained. External full
 feature caches and the original initializer/bank are separately byte-bound;
 the prior background/broad bank archives are declared dependencies. Overall
 goal remains active with no qualifying deployment candidate.
+
+## Retained ordinary-positive head: separate numerical plan
+
+The [training-only export plan](plans/compact-positive-export-smoke-v1.json)
+freezes the rejected treatment's actual scalar/auxiliary checkpoint bytes,
+parent input audit/result and original training-only calibration policy.
+It retains the six-class temporal head without fitting, verifies unchanged
+binary weights, full float window/stream alignment, INT8 reset/chunk replay
+and exact parent calibration-input replay. A pass permits a separate frozen
+occurrence-rule development comparison with an actual long-source boundary
+gate; no held-out quality inference, firmware or acceptance follows here.
