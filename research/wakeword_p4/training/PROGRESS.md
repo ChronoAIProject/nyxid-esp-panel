@@ -1141,6 +1141,12 @@ binary control or `--phrase-output` for the treatment. Run the unchanged
 validation-only grid and `compare_phrase_output.py --plan <plan>
 --artifacts <paired-run> --output <new-report.json>`.
 
+The [handoff asset](../../handoff/assets-phrase-output-v1.json) identifies
+the public research archive containing both original models/checkpoints,
+training and calibration reports, validation scores, exact initializer and
+pairing bounds. Its per-file manifest and public download hash are verified.
+It is explicitly unaccepted and contains no room audio or device state.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
