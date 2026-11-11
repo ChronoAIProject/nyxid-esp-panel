@@ -1,6 +1,7 @@
 """Verify a matched training-only phoneme-supervision comparison."""
 import argparse
 import json
+import math
 from pathlib import Path
 
 from compare_paired_ranking import interface, sha
@@ -67,12 +68,22 @@ def main():
                 or any(train['source_files_sha256'][k] != v for k, v in plan['source_sha256'].items())
                 or phone['bank_sha256'] != plan['phone_bank_sha256'] or phone['draws'] != steps*8
                 or phone.get('objective', 'joint') != plan.get('phone_objective', 'joint')
+                or phone.get('encoder_ratio_cap') != plan.get('encoder_ratio_cap')
                 or phone['gain'] != gain or train['training_prefix_batches'] != 16
                 or train['paired_near_words'] is not None or train['phrase_output']
                 or cal['feature_index_sha256'] != plan['feature_index_sha256']['features.json']
                 or cal['smoothing_steps'] != 5 or cal['threshold_grid'] != plan['threshold_grid']
                 or cal['negative_selection_metric'] != 'max_corpus_false_rate'):
             raise ValueError('Training or validation differs from the frozen phone experiment')
+        if plan.get('encoder_ratio_cap') is not None:
+            balance = phone['encoder_balance']
+            if gain and (not balance['enabled'] or balance['steps'] != steps
+                         or not 0 < balance['balanced_steps'] <= steps
+                         or not math.isfinite(balance['maximum_scaled_encoder_ratio'])
+                         or balance['maximum_scaled_encoder_ratio'] > plan['encoder_ratio_cap']+1e-6):
+                raise ValueError('Encoder balancing is missing or exceeds its frozen bound')
+            if not gain and (balance['enabled'] or balance['steps']):
+                raise ValueError('Binary-only control unexpectedly applies encoder balancing')
         iface = interface(model/'hey_nyx.tflite')
         if any(op in ('SOFTMAX',) for op in iface['operators']):
             raise ValueError('The training-only head leaked into the export')

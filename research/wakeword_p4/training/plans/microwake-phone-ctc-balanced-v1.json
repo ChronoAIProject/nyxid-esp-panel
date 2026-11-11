@@ -1,0 +1,155 @@
+{
+  "scope": "Predeclared matched CTC study with bounded auxiliary encoder gradients, separate from rejected joint CTC and frozen-head studies.",
+  "hypothesis": "The full mixed-batch fixed-state diagnostic found highly variable auxiliary/binary encoder gradient norm ratios and weak directional agreement, but little global-clipping suppression. Test whether capping the scaled auxiliary encoder gradient norm at 0.25 of the binary encoder norm preserves wake discrimination while retaining sequence supervision. This is a new optimization hypothesis, not a proven cause of the previous regression.",
+  "parent_plan_sha256": "3e5ceac46390513f90493d0eee43d55c62ef93360520c7faed7bbafdaba88c56",
+  "source_sha256": {
+    "compare_phone_distillation.py": "e53dc19e6a2fff6f68d0e0c0c388a9a175cfee3c40aeb1370b5f36d8bcc7696c",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "phone_distillation.py": "9e9b9275f5d2677ef3178d908544d25fa83ad9a791a2ea585a81647232673155",
+    "phone_gradient_audit.py": "19b5708a81d28dad4ca1a00f4d6933929cc968bdc2f227c8c8b9efa0e257d134",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+    "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+    "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+    "test_phone_encoder_balance.py": "f489cdd05ce4d0305307203f493d227281fbb1905c79331377ecda19042c30dd",
+    "test_phone_gradient_audit.py": "fb6e475f72ebde11672e9be90f2fbb425ee6fde093ab71742b6c1363b1456b47",
+    "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1",
+    "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+    "train_stream.py": "fd9fff2bbfe6eaee661adc0a4bb839b98d704da9495ded9ac6c765efc955cbdd",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "3000",
+    "--eval-interval",
+    "3000",
+    "--learning-rate",
+    "0.0002",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6",
+    "--phone-objective",
+    "ctc",
+    "--phone-warmup-steps",
+    "5000",
+    "--phone-warmup-learning-rate",
+    ".003",
+    "--phone-encoder-ratio-cap",
+    "0.25"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs per training batch replace eight positive and eight TTS-negative slots, fixed seed431 pair permutations, same fixed complete windows in both arms. No original source labels are replaced by teacher classes.",
+  "arms": {
+    "control": 0.0,
+    "phonetic": 0.1
+  },
+  "advance": "Require identical first 16 training batches, pair draw schedule, frozen-head warmups, representative inputs, scalar INT8 export and validation exposure. Treatment must have zero continuous development events, <=1% worst engine/corpus and engine false fraction, and >=3 percentage points macro recall over control. Select control at its best recall in the same strict gate, else a 2% zero-event gate, else its minimum-false zero-event point, preserving prior policy. Only if control has no zero-event grid point, compare with its frozen .97 reference and additionally require treatment worst-group false fraction <=control .97 worst-group fraction. This is a development advancement screen, not Hi ESP parity or firmware approval.",
+  "limits": "Development validation only, with unchanged 21-point threshold grid and separate negative corpora. Training weak labels and fit are not human transcripts or real-speaker evidence. No room recording or speaker playback. No firmware or production/OTA update. Passing permits subsequent independent tests, not a claim of Hi ESP parity, measured P4 resources or complete call stability.",
+  "objective": "Both arms keep the same 118 training pairs, original binary wake labels, weighted BCE and draw schedule. Full-resolution teacher greedy CTC paths yield 236 nonempty weak sequences (1364 phone labels). Both share 5000 frozen-encoder head updates at .003. Run exactly 3000 joint steps from binary LR .0002 with the existing common .5/.8 schedule; control auxiliary gain 0, treatment .1. CTC loss is mean NLL divided by target length over 67 encoder outputs. Discard auxiliary head for normal scalar INT8 export. Only on the shared encoder, multiply the gain-scaled auxiliary gradient by min(1, 0.25 * binary_encoder_norm / scaled_auxiliary_encoder_norm), using a zero-safe ratio. Binary and auxiliary head gradient definitions remain unchanged before common global clipping and Adam. The logged scalar loss remains BCE+gain*CTC. The zero-gain control retains the original gradient path.",
+  "phone_bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "phone_bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "phone_objective": "ctc",
+  "warmup": {
+    "steps": 5000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seed": 1223,
+    "objective": "ctc"
+  },
+  "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+  "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+  "sequence_bank_audit_sha256": "4ae5f49a83d787c15f6764d76a7107087dd2eb56c1bfa1c0f3a8441e60ba549e",
+  "required_prefix_replay": {
+    "step": 1000,
+    "head_weights_sha256": "c2aa842d0dd2b4e787448c78dc9a799bd76d9e8ce64f09e3008f7a58200bfe43",
+    "fit": {
+      "ctc_loss": 2.0292396909099515,
+      "sequences": 236,
+      "exact_sequences": 0,
+      "target_phones": 1364,
+      "phone_edits": 1227,
+      "phone_error_rate": 0.8995601173020528
+    },
+    "parent_result_sha256": "d7c5237a6ca4d606a937afbcbf9a3af76352bd89b7d795d913883aef99a89e4f"
+  },
+  "prior_failed_studies": {
+    "results/microwake-phone-ctc-head-fit-v1.json": "d7c5237a6ca4d606a937afbcbf9a3af76352bd89b7d795d913883aef99a89e4f",
+    "results/microwake-phone-ctc-long-fit-v1.json": "36ee04b82a0d299479fd94d2674def2335ed4787a62e74c49fd1117337c57977",
+    "results/microwake-phone-ctc-joint-v1.json": "47c1cfa2f18a6ede1d7f93e692319253e6a886e12ce6273e49b441e8871792f4"
+  },
+  "study_boundary": "Rerun both arms from their original initializer and warmup seed; do not reuse checkpoints as resumed optimization. Freeze one encoder ratio cap at .25, gain .1, 3000 steps and the existing threshold grid. No cap/gain/threshold sweep after validation. Prior failed gates remain unchanged. Balanced training may advance only through the existing wake-quality gate. No audio device access or firmware changes.",
+  "control_fallback_reference": 0.97,
+  "required_warmup_replay": {
+    "steps": 5000,
+    "head_weights_sha256": "e1326b9bd1fb8f3e8061b29f9391d99752bbff44d0fd6a9b3d23581c9e06470c",
+    "result_sha256": "36ee04b82a0d299479fd94d2674def2335ed4787a62e74c49fd1117337c57977",
+    "binary_optimizer_policy": "Must remain unchanged within warmup and match between arms. The new .0002 binary optimizer need not match the prior .00005 optimizer state.",
+    "weights_file_sha256": "eaad4ec50c46036e464d7277c1244af31009add1468e2739e9359c48d3083313"
+  },
+  "diagnostic_sha256": {
+    "microwake-phone-full-gradient-v1.json": "eea7418ebbf939151a9a07ac8235731ba3321da12cf5904257a817309b92bb1f",
+    "microwake-phone-ctc-wake-changes-v1.json": "71cfdd86024a0e5a296cbcedc7a0280d3256692684073740c47b4d86c5550d5d"
+  },
+  "encoder_ratio_cap": 0.25,
+  "required_control_replay": {
+    "model_sha256": "46f17c6221da6868f2786c96a06202b43b4a4f22e1266daf896ff971dd21d43c",
+    "training_prefix_sha256": "822a0c05675856fd89b0bfb7ff1bdce176e8a99a2bb9fb576762bdf7a856fa39",
+    "scope": "Verify exact binary-only control replay before interpreting the comparison; metadata source hashes intentionally differ."
+  },
+  "required_encoder_balance": "Treatment must execute exactly 3000 balanced-gradient steps with at least one downscaled auxiliary encoder gradient; all observed scaled encoder ratios must be finite and <=.25+1e-6. Zero-gain control must report balancing disabled and zero balancing steps."
+}

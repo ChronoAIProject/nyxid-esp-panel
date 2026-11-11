@@ -81,17 +81,42 @@ class Sampler:
                 'sequence': self.sequence_metadata}
 
 
-def supervisor(model, targets, gain, objective='joint'):
+def balance_encoder_gradients(binary, phone, encoder_indices, gain, ratio_cap):
+    """Limit only the scaled auxiliary encoder gradient; preserve both heads."""
+    import tensorflow as tf
+
+    bn = tf.linalg.global_norm([binary[i] for i in encoder_indices])
+    pn = gain*tf.linalg.global_norm([phone[i] for i in encoder_indices])
+    scale = tf.where(pn > 0, tf.minimum(1., tf.math.divide_no_nan(ratio_cap*bn, pn)), 1.)
+    mixed = [b+gain*p*(scale if i in encoder_indices else 1.)
+             for i, (b, p) in enumerate(zip(binary, phone, strict=True))]
+    return mixed, scale, tf.math.divide_no_nan(scale*pn, bn)
+
+
+def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
     import tensorflow as tf
 
     if objective not in ('joint', 'conditional', 'ctc'):
         raise ValueError('Unknown phone objective')
+    if encoder_ratio_cap is not None and (not np.isfinite(encoder_ratio_cap) or not 0 < encoder_ratio_cap <= 1):
+        raise ValueError('Encoder ratio cap must be finite and in (0, 1]')
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
     logits = tf.keras.layers.Dense(VOCAB, name='training_phone_logits',
         kernel_initializer=tf.keras.initializers.GlorotUniform(seed=919))(temporal)
     teacher = tf.constant(targets)
     full = tf.keras.Model(model.input, (model.output, logits))
+    bounded = encoder_ratio_cap is not None and gain > 0
+    if bounded:
+        classifier = {id(v) for v in model.get_layer('classifier').trainable_variables}
+        binary_variables = {id(v) for v in model.trainable_variables}
+        encoder_indices = frozenset(i for i, v in enumerate(full.trainable_variables)
+                                    if id(v) in binary_variables-classifier)
+        balance_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
+        balanced_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
+        scale_sum = tf.Variable(0., trainable=False)
+        scale_min = tf.Variable(1., trainable=False)
+        maximum_ratio = tf.Variable(0., trainable=False)
 
     def phone_loss(q, phones):
         if objective == 'ctc':
@@ -119,7 +144,7 @@ def supervisor(model, targets, gain, objective='joint'):
 
     @tf.function
     def train(x, y, weights):
-        with tf.GradientTape() as tape:
+        with tf.GradientTape(persistent=bounded) as tape:
             probability, phones = full(x, training=True)
             binary = tf.reduce_mean(tf.keras.losses.binary_crossentropy(y[:, :1], probability)*weights)
             ids = tf.cast(y[:, 1], tf.int32)
@@ -128,8 +153,31 @@ def supervisor(model, targets, gain, objective='joint'):
             phonetic = phone_loss(q, tf.boolean_mask(phones, present))
             loss = binary+gain*phonetic
         variables = full.trainable_variables
-        model.optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
+        if bounded:
+            gradients = []
+            for task in (binary, phonetic):
+                values = tape.gradient(task, variables)
+                gradients.append([g if g is not None else tf.zeros_like(v)
+                                  for g, v in zip(values, variables, strict=True)])
+            combined, scale, ratio = balance_encoder_gradients(
+                *gradients, encoder_indices, gain, encoder_ratio_cap)
+            balance_steps.assign_add(1)
+            balanced_steps.assign_add(tf.cast(scale < 1, tf.int64))
+            scale_sum.assign_add(scale)
+            scale_min.assign(tf.minimum(scale_min, scale))
+            maximum_ratio.assign(tf.maximum(maximum_ratio, ratio))
+        else:
+            combined = tape.gradient(loss, variables)
+        model.optimizer.apply_gradients(zip(combined, variables))
         return loss
+
+    def balance_metadata():
+        return {'enabled': bounded, 'steps': int(balance_steps) if bounded else 0,
+                'balanced_steps': int(balanced_steps) if bounded else 0,
+                'mean_scale': float(scale_sum/tf.cast(balance_steps, tf.float32)) if bounded and int(balance_steps) else None,
+                'minimum_scale': float(scale_min) if bounded else None,
+                'maximum_scaled_encoder_ratio': float(maximum_ratio) if bounded else None,
+                'scope': 'Encoder auxiliary gradient capped before shared global clipping and Adam; auxiliary-head gradient and binary classifier gradient retain their original definitions. Logged loss remains BCE+gain*phone_loss.'}
 
     def audit(features):
         if objective == 'ctc':
@@ -240,4 +288,5 @@ def supervisor(model, targets, gain, objective='joint'):
     train.phone_loss = phone_loss
     train.warmup = warmup
     train.auxiliary_model = full
+    train.balance_metadata = balance_metadata
     return train

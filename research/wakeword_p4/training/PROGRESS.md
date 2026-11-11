@@ -1574,3 +1574,27 @@ and replay duration checks passed. The real recording route rejects known
 automation captures; the fixture route rejects cross-origin submission and
 does not serve audio back. No real audio has been collected or scored at
 this snapshot. The pilot does not replace matched tests on the P4.
+
+### Bounded auxiliary encoder experiment
+
+The [balanced CTC plan](plans/microwake-phone-ctc-balanced-v1.json) freezes one
+training-only optimization change before either new run: cap the gain-scaled
+auxiliary encoder gradient norm at .25 of the binary encoder gradient norm.
+Both runs replay the same original 5,000-step head warmup and 3,000-step joint
+schedule, with gains zero and .1. Binary and auxiliary head derivatives retain
+their definitions before shared global clipping and Adam. The zero-gain path
+bypasses balancing. The cap limits gradient norms, not Adam parameter movement;
+the logged scalar loss remains BCE+gain*CTC. The inference graph is unchanged.
+
+Eighteen focused phone tests pass, including an actual CTC optimizer update
+checked against an independently computed NumPy gradient/clip calculation,
+zero-norm cases, original binary-only optimizer equivalence and invalid caps.
+The comparison requires finite observed encoder ratios within the frozen bound,
+all joint steps accounted for and at least one actual downscaling in treatment.
+The plan also binds the old warmup checkpoint and binary control export for
+replay auditing. Existing failed studies, validation grid and advancement gates
+are retained; no cap sweep or new firmware candidate is authorized by the plan.
+
+This study runs silently from cached features. There is no speaker playback,
+microphone recording or board operation. Future audible testing needs advance
+notice of its content and duration. The full Hi ESP comparison remains open.

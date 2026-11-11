@@ -54,6 +54,8 @@ def main():
                         help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
+    parser.add_argument("--phone-encoder-ratio-cap", type=float,
+                        help="Bound scaled auxiliary encoder gradient norm relative to binary encoder gradient")
     parser.add_argument("--phone-objective", choices=("joint", "conditional", "ctc"), default="joint",
                         help="Phone posterior KL, or nonblank phone KL weighted by teacher nonblank mass")
     parser.add_argument("--phone-warmup-steps", type=int, default=0,
@@ -121,6 +123,10 @@ def main():
         parser.error("Phrase output requires transfer60 paired training without auxiliary/ranking loss or export-only")
     if not 0 <= args.phone_gain <= 1 or (args.phone_gain and not args.phone_bank):
         parser.error("Phone gain requires a bank and must be in [0, 1]")
+    if args.phone_encoder_ratio_cap is not None and (not args.phone_bank
+            or not np.isfinite(args.phone_encoder_ratio_cap) or not 0 < args.phone_encoder_ratio_cap <= 1
+            or args.phone_gradient_audit_plan):
+        parser.error("Encoder gradient cap requires a phone bank and a finite ratio in (0, 1], without gradient audit")
     if (args.phone_warmup_steps < 0 or not np.isfinite(args.phone_warmup_learning_rate)
             or args.phone_warmup_learning_rate <= 0 or (args.phone_warmup_steps and not args.phone_bank)):
         parser.error("Phone warmup requires a phone bank, nonnegative steps and positive finite learning rate")
@@ -302,7 +308,8 @@ def main():
     model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
     if phone_sampler:
         from phone_distillation import supervisor as phone_supervisor
-        train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective)
+        train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective,
+                                             args.phone_encoder_ratio_cap)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -518,6 +525,8 @@ def main():
               "phrase_output": args.phrase_output,
               "phone_distillation": None if not phone_sampler else {
                   **phone_sampler.metadata(), "gain": args.phone_gain, "objective": args.phone_objective,
+                  "encoder_ratio_cap": args.phone_encoder_ratio_cap,
+                  "encoder_balance": train_with_phones.balance_metadata(),
                   "initial_fit": initial_phone_fit,
                   "warmup": phone_warmup},
               "initial_target_probability_max_error": initial_probability_error,
