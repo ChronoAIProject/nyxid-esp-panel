@@ -1064,3 +1064,19 @@ The unauthenticated public download and all 85 listed hashes are verified.
 The audit runtime and training-environment versions observed after the run are
 explicitly distinguished. This is rejected research, with no audio, board
 state, credentials or firmware, and all processing was silent.
+
+The [compact encoder-fit supplement](assets-compact-phrase-ctc-encoder-fit-v1.json)
+contains the separately frozen representation-learning diagnostic. The full
+frozen-head reference replays exactly; training the encoder and head for the
+same 1,000 updates fits all 236 training rows, including greedy two-token
+order. This qualifies only the design of a later mixed-source wake study.
+It is not independent recall, false-wake or deployment evidence.
+
+The root is
+`workspace/home-wake-research-20261110/compact-phrase-ctc-encoder-fit-v1`.
+Executed sources, plans, final encoder/head/frozen-reference weights, raw row
+scores, log, launch and input/result audit are retained. Use the manifest's
+bank/initializer dependencies; the full scalar feature cache is separate.
+H5 weights do not retain Adam slots. The unauthenticated download and all 88
+listed member hashes are verified. No audio, device state or firmware is
+included, and the complete Hi ESP comparison remains open.

@@ -1745,6 +1745,12 @@ Unlike a longer head-only run, it supports a separately frozen full
 mixed-source wake comparison. There is still no validation/final-set score,
 INT8 export, audio-device use or firmware change from this diagnostic.
 
+The [public encoder-fit supplement](../../handoff/assets-compact-phrase-ctc-encoder-fit-v1.json)
+retains executed sources, both heads and the trained encoder, complete fitted
+row scores, plan, launch/log and input/result audit. The unauthenticated
+download and all 88 listed member hashes are verified. Bank/initializer
+dependencies are explicit and the full scalar feature cache remains separate.
+
 ### Full mixed-source compact-sequence comparison
 
 The [new full-study plan](plans/microwake-compact-phrase-ctc-v1.json) freezes
@@ -1771,3 +1777,14 @@ The original binary control export/input identities must replay. Training-bank
 fit alone cannot pass. Both final models/checkpoints and all development
 score traces will be retained even on rejection. No study has launched at
 this commit; all processing will stay silent and use cached features.
+
+Both full-study arms launched from `25ad5c0` with immutable source snapshots.
+The complete 1,000-step warmups match between arms and preserve binary weights
+and optimizer. They reproduce the old training-fit counts (17/236 exact)
+and cache, with last-bit head differences from the separate dense-label
+implementation; no exact head-weight replay across those implementations is
+claimed. The [compact study auditor](../../handoff/audit_compact_study.py)
+checks committed/executed plans, source, inputs, arguments, warmup, pair/target
+and representative schedules and the original binary export after completion,
+before new INT8 validation. Joint training and wake evaluation remain pending
+at this snapshot. No speaker, microphone or board is accessed.
