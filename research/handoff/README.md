@@ -1690,3 +1690,43 @@ listed member hashes and lengths. Full scalar/background caches remain
 external and byte-bound; no source audio, credentials, firmware or device state
 is included. Use the captured postprocessing/diagnostics with fresh output
 paths after the launcher completes; preserve historical source/launch records.
+
+## Training-only source-balanced word sampling
+
+The [sampling inventory](../wakeword_p4/results/intent-source-sampling-inventory-v1.json)
+measures unequal weights caused by Cartesian partners and correlated crops.
+The [separate fixed plan](../wakeword_p4/training/plans/intent-source-balanced-sampling-v1.json)
+compares uniform unique crops with equal engine/class/source-hash/render/crop
+sampling at the original1,000-update word-CTC budget. The hierarchy uses only
+the current fold's training IDs. Original loss, labels, initialization and
+optimizers remain fixed; equalization changes class priors and multiple levels
+of exposure together. The default old sampling path retains exact RNG behavior.
+
+The [completed result](../wakeword_p4/results/intent-source-balanced-sampling-v1.json)
+does not advance. All six controls exactly replay previous final tensors,
+scores, decodes, metrics and draws. All12 fits and the separate saved-score
+audit pass. Mean held-engine macro accuracy changes81.1866% ->81.3372%, while
+Nyx recall falls90.8105% ->86.1872% and confusers assigned Nyx decrease74 ->53
+among1,360 crops. This is still3.89706%, above the unchanged1% gate, and the
+Nyx regression exceeds1pp. Improved fitted-bank accuracy99.2929% /zero fitted
+confuser errors does not establish transfer or open-set wake acceptance.
+
+The [complete evidence archive](assets-intent-source-balanced-sampling-v1.json)
+contains all12 final checkpoints, complete intent scores/decodes, exact
+probability vectors, crop/source metadata, sources/plan/runtime/commands,
+preflight tests and original binary initializer. It retains the initial
+wrong-directory failure before fitting and the corrected-path run separately.
+The fresh anonymous download verifies all280 listed member hashes/lengths.
+Full scalar features and the bank are separate byte-bound inputs. No audio,
+credentials, full feature cache, firmware or device state is included.
+
+To reproduce, use the pinned Python environment and upstream revision from the
+plan. Start `launch_intent_sampling.py` with a fresh `--artifacts` directory and
+`--repository`, `--upstream`, `--features`, `--bank`, `--initial-weights` paths.
+`--bank` must point directly to the directory containing `bank.json` and
+`bank.npz` (`compact-broad-bank-v1/bank` in the extracted workspace). The launcher
+freezes committed sources and runs both training and read-only accounting.
+`package_intent_sampling.py --help` documents evidence packaging and independent
+public-download verification. The previous word/phone generalization archive
+retains reference control records. No failed gate permits board deployment;
+real-speaker, matched Hi ESP, P4 and long-call evidence remains outstanding.

@@ -1,0 +1,225 @@
+{
+  "scope": "Training-only paired whole-word CTC sampling experiment; no binary wake validation or deployment.",
+  "training_source_commit": "b6bca80d908ed9b2e421ffc677f73d65a71ecfe7",
+  "plan_sha256": "fb222b51dc50f3ff5f02418c6a22fdf224c13e76a1e8cf230a4c23dea1ee9487",
+  "launch_sha256": "a7f9ef9b9babd7c2bf24c91e7962cd171a50096c1981239f08f3913d4acf796e",
+  "raw_result_sha256": "d91f97ce9af24f516040bddcf5a0247c80ba8b03b6f58e05e14cab26e4897f6e",
+  "audit_sha256": "d91f97ce9af24f516040bddcf5a0247c80ba8b03b6f58e05e14cab26e4897f6e",
+  "sampling_inventory_sha256": "ff0c23118b4790e0258b06de9dff7878485f99020746a005237ecd71f667c8d7",
+  "original_control_all_six_folds_replayed": true,
+  "final_fits": 12,
+  "software_tests": 8,
+  "software_log_sha256": "ea8d7512c51d8f6e2fffb8a97942560db8d169e0aeab0f0b46e8234c029eba92",
+  "diagnostic_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_engine_macro_gain": 0.03,
+    "maximum_nyx_recall_regression": 0.01
+  },
+  "engine_macro_accuracy": {
+    "control": 0.8118662884977222,
+    "balanced": 0.813371953516255
+  },
+  "aggregate_held_engine": {
+    "control": {
+      "confusion": [
+        [
+          1591,
+          69,
+          56,
+          36
+        ],
+        [
+          55,
+          336,
+          49,
+          8
+        ],
+        [
+          12,
+          43,
+          372,
+          21
+        ],
+        [
+          7,
+          22,
+          20,
+          415
+        ]
+      ],
+      "rows": 3112,
+      "macro_accuracy": 0.8457146793530828,
+      "recall_by_phrase": {
+        "nyx": 0.9081050228310502,
+        "mix": 0.75,
+        "next": 0.8303571428571429,
+        "nick": 0.8943965517241379
+      },
+      "nyx_recall": 0.9081050228310502,
+      "confuser_false_nyx": 74,
+      "confuser_rows": 1360,
+      "confuser_false_nyx_fraction": 0.054411764705882354
+    },
+    "balanced": {
+      "confusion": [
+        [
+          1510,
+          126,
+          49,
+          67
+        ],
+        [
+          39,
+          358,
+          36,
+          15
+        ],
+        [
+          9,
+          35,
+          372,
+          32
+        ],
+        [
+          5,
+          23,
+          19,
+          417
+        ]
+      ],
+      "rows": 3112,
+      "macro_accuracy": 0.8475108320961828,
+      "recall_by_phrase": {
+        "nyx": 0.8618721461187214,
+        "mix": 0.7991071428571429,
+        "next": 0.8303571428571429,
+        "nick": 0.8987068965517241
+      },
+      "nyx_recall": 0.8618721461187214,
+      "confuser_false_nyx": 53,
+      "confuser_rows": 1360,
+      "confuser_false_nyx_fraction": 0.03897058823529412
+    }
+  },
+  "full_fit": {
+    "control": {
+      "confusion": [
+        [
+          1749,
+          2,
+          1,
+          0
+        ],
+        [
+          7,
+          424,
+          12,
+          5
+        ],
+        [
+          2,
+          5,
+          440,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          463
+        ]
+      ],
+      "rows": 3112,
+      "macro_accuracy": 0.981175981847628,
+      "recall_by_phrase": {
+        "nyx": 0.9982876712328768,
+        "mix": 0.9464285714285714,
+        "next": 0.9821428571428571,
+        "nick": 0.9978448275862069
+      },
+      "nyx_recall": 0.9982876712328768,
+      "confuser_false_nyx": 9,
+      "confuser_rows": 1360,
+      "confuser_false_nyx_fraction": 0.006617647058823529,
+      "mean_ctc_nll_per_token": 0.07400421371113672,
+      "greedy_exact_sequences": 2983,
+      "target_tokens": 6224,
+      "greedy_edits": 130,
+      "greedy_token_error_rate": 0.020886889460154243
+    },
+    "balanced": {
+      "confusion": [
+        [
+          1722,
+          25,
+          3,
+          2
+        ],
+        [
+          0,
+          445,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          446,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          464
+        ]
+      ],
+      "rows": 3112,
+      "macro_accuracy": 0.9929289995107632,
+      "recall_by_phrase": {
+        "nyx": 0.9828767123287672,
+        "mix": 0.9933035714285714,
+        "next": 0.9955357142857143,
+        "nick": 1.0
+      },
+      "nyx_recall": 0.9828767123287672,
+      "confuser_false_nyx": 0,
+      "confuser_rows": 1360,
+      "confuser_false_nyx_fraction": 0.0,
+      "mean_ctc_nll_per_token": 0.09556900506843945,
+      "greedy_exact_sequences": 2969,
+      "target_tokens": 6224,
+      "greedy_edits": 148,
+      "greedy_token_error_rate": 0.02377892030848329
+    }
+  },
+  "held_engine_macro_by_fold": {
+    "edge-tts": {
+      "control": 0.876953125,
+      "balanced": 0.896484375
+    },
+    "kokoro": {
+      "control": 0.9020833333333333,
+      "balanced": 0.9083333333333333
+    },
+    "macos-say": {
+      "control": 0.8360294117647059,
+      "balanced": 0.8080882352941176
+    },
+    "openai-tts": {
+      "control": 0.8408564814814815,
+      "balanced": 0.826388888888889
+    },
+    "piper": {
+      "control": 0.6034090909090909,
+      "balanced": 0.627564935064935
+    }
+  },
+  "advance": false,
+  "accepted": false,
+  "first_launch": "Wrong bank directory; failed before loading samples or fitting. Original failed launch and logs retained; corrected-path launch uses identical frozen source/plan.",
+  "audit_scope": "Training cache/index/bank bytes, fold/source coverage, all probability vectors by independent rational counts, draw schedules, saved-score classifications, exact control final tensors/scores/decodes and gate. Does not independently replay treatment optimization or establish wake quality.",
+  "limits": "Only previously fitted training-source features. The binary initializer already saw all source engines. Held-engine applies solely to these new fine-tunes and is not independent acceptance. Original synthesis intent and proxy crop endpoints are not verified phonetic truth. Waveform hashes, render variants and Cartesian pairs are not independent human speakers. Equalizing source exposure changes class priors and training draws together, not isolated effects of engine balance. No new threshold/loss/init sweep, reserved-quality scoring, audio device, microphone, speaker, board/OTA, production device, PCM speed or single I2S/AEC/AGC/FIFO changes. Real-user acoustic recall, matched Hi ESP endpoint latency/FAR,P4 resources and long-call/reconnect evidence remain required."
+}

@@ -3080,3 +3080,42 @@ only from the new fine-tune. Equal source hashes are not independent human
 speakers, and balancing changes several exposure levels together. This is
 silent training-feature research; no reserved quality scores, audio devices,
 board, firmware/OTA, PCM speed or single I2S/AEC/AGC/FIFO path is touched.
+
+## Source-balanced sampling completed: fitted improvement does not transfer
+
+The [completed result](../results/intent-source-balanced-sampling-v1.json)
+rejects the frozen sampling recipe. All12 final fits and the separate read-only
+audit exit zero. All six uniform-crop controls exactly replay the preceding
+word runs' encoder/head/classifier tensors, full scores and greedy decodes,
+draw schedules, coverage and summary metrics. The hierarchy is checked against
+independent rational counts and all12 saved probability vectors/draw schedules.
+The original8 math/sampling tests pass; no gate or budget changes follow.
+
+| Metric | Uniform unique crops | Hierarchical source balance |
+| --- | ---: | ---: |
+| Mean held-engine macro accuracy | 81.1866% | 81.3372% |
+| Aggregate held-engine macro accuracy | 84.5715% | 84.7511% |
+| Held-engine Nyx intent recall | 90.8105% | 86.1872% |
+| Held-engine confusers assigned Nyx | 74/1,360 | 53/1,360 |
+| Full fitted-bank macro accuracy | 98.1176% | 99.2929% |
+| Full fitted-bank confusers assigned Nyx | 9/1,360 | 0/1,360 |
+
+Held-engine errors remain3.89706% versus the fixed <=1% intent-confusion gate;
+Nyx recall falls4.62329pp, exceeding the allowed1pp regression. The fitted
+bank's zero confuser errors cannot substitute for held-engine performance or
+open-set wake rejection. This exact recipe changes class priors and several
+exposure levels together; it does not isolate engine, source or render balance,
+prove a unique cause, or rule out every sampling strategy. No same-recipe
+weight sweep, extra fit, mixed-source wake experiment or firmware follows.
+
+The first launcher used the bank's parent directory and failed before reading
+samples/fitting. That original failed directory, source, launch and log remain
+unchanged. The corrected-path run uses the identical committed source/plan at
+`b6bca80`; it does not resume or extend a partially trained model. Both launches,
+all12 final checkpoints, complete scores/probabilities/rows, frozen sources,
+runtime/commands, preflight log and original initializer are retained in the
+[public evidence archive](../../handoff/assets-intent-source-balanced-sampling-v1.json).
+A fresh anonymous download verifies all280 listed member hashes and lengths.
+The source cache and bank remain separately byte-bound dependencies. No audio,
+reserved quality evaluation, board or production setting was touched; the
+full Hi ESP parity objective remains active and unachieved.
