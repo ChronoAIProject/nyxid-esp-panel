@@ -89,3 +89,26 @@ Nyx 0次事件，单侧95%上界0.278802079/h；Hi ESP 1次，上界0.441494490/
 完整比较见 `results/4090-v30-hiesp-ami-independent-comparison-v1.json`。
 三组已评分最终数据见 `results/4090-independent-data-usage-ledger-v1.json`，
 准备manifest的未评分字段仅描述历史准备状态，不代表当前数据仍未触碰。
+
+## 2026-11-11 补充：可继续推进的替代路线
+
+再次直接读取microWakeWord、openWakeWord、Kokoro pipeline/model与Silero官方源码/README；
+响应哈希见 `results/4090-alternative-research-sources-v1.json`。
+本次没有通用网页搜索服务，使用官方GitHub源码检索；不声称覆盖所有最新论文。
+
+1. **先做标签策略消融。** v32仅将v30的prefix-negative替换数16改为0，恢复原混淆负例槽。
+   主RNG原始抽样保留，其他训练条件不变。它检验边界不确定样本作为负例是否有害，
+   不证明旧标签错误，也不是新的正例标注。可能增加早触发，必须并列报告。
+   预注册 `results/4090-v32-plan.json`；所有最终集不评分。
+2. **预训练语音特征参照。** openWakeWord公开采用冻结共享语音embedding加小型头，支持全TTS正例。
+   可在4090/PC上建立独立架构参照，判断短板是否限于小模型表示；若有效再研究蒸馏到MCU。
+   这是一条候选研究路线，上游证据不保证蒸馏成功；此前embedding实验须先审计，避免重复。
+   openWakeWord上游明确认为自身模型通常仍太大，不可直接当成现有MCU替换。
+3. **新合成时保存原生duration作训练辅助。** Kokoro模型确实返回pred_dur，pipeline可构造词时间戳。
+   但join_timestamps包含 `TODO: Is -3 an appropriate offset?`，说明偏移仍是实现假设。
+   因此只可随新PCM同时保存辅助边界，不能给旧PCM重合成后追认标签，不能替代验收金标准。
+4. **两级过滤有适用边界。** openWakeWord的已知说话人verifier需要相应声音数据且降低新用户响应；
+   VAD主要抑制非语音噪声，对Hey Mix等真实语音混淆不构成通用修复。暂不优先加入。
+
+独立试听参考仍是最终召回/末音素延迟验收缺口，但并不阻止有明确假设的开发集消融。
+这次继续训练与整体目标恢复，不把缺口消失或验收达成作为预设结果。

@@ -1,0 +1,34 @@
+{
+  "role": "Preregistered development-only prefix-negative ablation; not final acceptance",
+  "baseline": "v30",
+  "candidate": "v32",
+  "change": {
+    "prefix_negatives": [
+      16,
+      0
+    ]
+  },
+  "interpretation": "Restore original confusing-negative slots; does not establish prefix labels were wrong. Original main RNG draws are preserved by existing implementation.",
+  "unchanged": [
+    "features-gpu-ami-extra-v1",
+    "teacher60",
+    "context150",
+    "frozenBN",
+    "initial reconstructed weights",
+    "120000 steps",
+    "5000 eval interval",
+    "negative_candidates1",
+    "source_exponent0",
+    "negative_weight20",
+    "stratified ambient",
+    "export calibration"
+  ],
+  "selection": "Same original dense and expanded zero-event development calibration as v30; compare proxy source-macro hits, early events and each continuous negative corpus; do not call proxy endpoints phonetic truth.",
+  "final_data": "No scoring or reuse of the three already-scored independent final datasets. Fresh preregistered data and qualified pronunciation/endpoint references required for acceptance.",
+  "risks": [
+    "Earlier triggering may increase when prefixes cease being supervised negative",
+    "Removing prefix replacements restores 16 confusing-negative slots, so effective negative composition changes",
+    "Positive development metrics remain proxy-window diagnostics"
+  ],
+  "script_sha256": "8f87e3cb2ffddf303b746b672947c09d76d7aa3cf780ccb1421a90e5fe085ceb"
+}
