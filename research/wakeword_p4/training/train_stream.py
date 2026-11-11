@@ -42,6 +42,7 @@ def main():
     parser.add_argument("--full-source-pack", type=Path)
     parser.add_argument("--full-source-temporal-pack", type=Path)
     parser.add_argument("--five-score-pack", type=Path)
+    parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
@@ -77,6 +78,8 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.complete_coverage_pack and (not args.full_source_pack or args.full_source_temporal_pack or args.five_score_pack or args.time_mask_width or args.frequency_mask_width):
+        parser.error('complete coverage requires original full-source BCE without sequence/jitter/masking')
     if args.full_source_temporal_pack and not args.full_source_pack:
         parser.error('temporal expansion requires full-source base pack')
     if args.five_score_pack and (not args.full_source_pack or args.full_source_temporal_pack
@@ -224,6 +227,12 @@ def main():
         full_source = FullSourceBatch(args.full_source_pack, args.full_source_temporal_pack)
         (root/'full_source.json').write_text(json.dumps(full_source.report, indent=2)+'\n')
 
+    complete_coverage = None
+    if args.complete_coverage_pack:
+        from complete_coverage import CompleteCoverage
+        complete_coverage = CompleteCoverage(args.complete_coverage_pack)
+        (root/'complete_coverage.json').write_text(json.dumps(complete_coverage.report,indent=2)+'\n')
+
     def batch(mine=True, augment=True):
         noise = []
         for _ in range(48):
@@ -235,6 +244,8 @@ def main():
         x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))
         if full_source is not None:
             x[:80] = full_source.first80()
+            if complete_coverage is not None:
+                x[:80] = complete_coverage.replace(x[:80])
         if args.prefix_negatives:
             # Keep baseline RNG and all original draws unchanged. Only replace
             # the selected confusing-negative slots before the same permutation.
@@ -453,6 +464,7 @@ def main():
               "tensorflow": tf.__version__, "gpus": [g.name for g in gpus],
               "gpu_details": [tf.config.experimental.get_device_details(g) for g in gpus],
               "selected_step": selected_step,
+              "complete_coverage": complete_coverage.report if complete_coverage is not None else None,
               "five_score": five_score.report if five_score is not None else None,
               "validation_window_phase": window_phase,
               "source_exponent": args.source_exponent,

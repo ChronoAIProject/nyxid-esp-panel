@@ -4062,3 +4062,13 @@ identity/canonical-source/variant,negative Nick/Next/Mix balanced;aliases once.
 Pinned Mac saved features retained with measured Linux frontend limitation.
 No optimization or candidate scoring yet;sampler audits and4090smoke required
 before120k. Original138point gate,new/final isolation unchanged.
+
+### v40 sampler integrated and GPU smoke passed (2026-11-11)
+
+Independent50batch/2000draw audit reproduces phrase/engine/identity/canonical
+source/variant indices exactly;labels exact,retained British and48ambient exact,
+base full-source RNG unchanged. Pinned Mac saved features normalized once.
+Original128BCE/representative export now uses preregistered half-slot replacement.
+Two-step4090smoke session88884 exited0;export audit confirms finite weights,
+frozenBN unchanged,int8[1,3,40] to uint8[1,1]. No recognition/FAR claim.
+Formal120k runner ready after these checks;new/final untouched.
