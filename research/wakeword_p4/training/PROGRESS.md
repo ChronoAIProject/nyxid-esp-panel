@@ -1431,7 +1431,7 @@ Adam slots; the exact longer replay starts from the original seed/bank.
 The full-resolution bank is a separate dependency. No source audio, board
 configuration, firmware or credentials are included.
 
-### Joint-encoder CTC comparison: predeclared
+### Joint-encoder CTC comparison
 
 The [joint study](plans/microwake-phone-ctc-joint-v1.json) tests a different
 hypothesis from the failed frozen-readout studies: whether sequence supervision
@@ -1461,6 +1461,31 @@ edits. All 236 sequences reproduce the earlier readout audit exactly. This
 teacher target alone cannot distinguish that pair, but the collision is not
 proof of a bad recording or binary label. No target, source role, warmup,
 joint-training recipe or quality gate is changed by the diagnostic.
+
+The [completed INT8 comparison](../results/microwake-phone-ctc-joint-v1.json)
+rejects this recipe. At the frozen .97 reference, macro proxy recall increases
+from 81.86% to 84.48% (+2.62 points), but false near-word views increase from
+74 to 87 of 3,744 and the worst engine/corpus fraction rises from 6.25% to
+7.29%. Both have one continuous event in 7.324 hours; neither has a zero-event
+point anywhere in the frozen 21-point grid, including .996. The opt-in fallback
+comparison therefore still finds no qualified treatment. No board change or
+reserved scoring follows from this result.
+
+Both replayed warmup H5 files exactly match the previous 5,000-step file.
+Every warmup history/head/draw/cache identity reproduces the old run. Both
+binary models and their .0002 optimizers stay unchanged during that warmup;
+the new optimizer is intentionally different from the old .00005 optimizer.
+The two joint runs have identical first 16 training batches, 24,000 pair draws,
+source schedules, representative inputs and one fixed final checkpoint.
+The scalar INT8 interface/operator inventory is unchanged: 25,831 inference
+parameters and 61,712 bytes each, with no auxiliary head in the export.
+
+Joint learning does reduce auxiliary phone error: 65.62% after warmup becomes
+38.64% in treatment (13/236 exact weak sequences), versus 61.29% in the
+binary control (3/236). This establishes that the representation is trainable
+on this auxiliary task; it does not establish better wake discrimination.
+The launched sources, checks, checkpoints and complete validation results are
+retained. Training and validation both used no speaker, microphone or hardware.
 
 ### Human pilot preparation
 
