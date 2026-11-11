@@ -73,7 +73,7 @@ class PhoneBinary:
 
 class FullSourceBatch(PhoneBinary):
     """Entire phrase batch from audited complete synthetic sources, no extra loss."""
-    def __init__(self, root):
+    def __init__(self, root, temporal_root=None):
         super().__init__(root, source_balanced=True)
         if self.report['pack_sha256']!='c0c389fc4a22e1fb9807d99e8a7a98e0e028696d2047dd27dce81f1de8fef096':
             raise ValueError('Require frozen full-source pack')
@@ -81,6 +81,29 @@ class FullSourceBatch(PhoneBinary):
         self.report={k:v for k,v in self.report.items() if k in ('pack_sha256','report_sha256','groups')}
         self.report.update(seed=97726,positive_slots=32,confusing_negative_slots=48,
             policy='Replace first80 phrase slots with complete-source crops; equal checkpoint groups before voices, equal negative phrase choice. Original48 ambient slots/weights retained; no supplementary BCE or head. Groups do not certify physical-person independence.')
+        self.temporal = None
+        if temporal_root is not None:
+            temporal_root=Path(temporal_root)
+            temporal_report=json.loads((temporal_root/'report.json').read_text())
+            expected='b84d6b6fb95c50c23084d3fd8c5390d7756d731d87c3f5b754fe68de565ab9bd'
+            if (sha(temporal_root/'training.npz')!=expected or temporal_report['pack_sha256']!=expected
+                    or temporal_report['base_pack_sha256']!=self.report['pack_sha256']
+                    or temporal_report['final_data_used'] or temporal_report['wake_models_scored_for_inclusion']):
+                raise ValueError('Require pinned training-only temporal pack')
+            z=np.load(temporal_root/'training.npz',allow_pickle=False)
+            self.temporal=z['x'];self.temporal_groups={}
+            for j,parent in enumerate(z['base_index']):
+                self.temporal_groups.setdefault(int(parent),[]).append(j)
+            if set(self.temporal_groups)!=set(range(len(self.x))):
+                raise ValueError('Temporal expansion must preserve every base example')
+            for parent,ids in self.temporal_groups.items():
+                zero=[j for j in ids if z['offset'][j]==0]
+                if len(zero)!=1:raise ValueError('Require unique offset0')
+                np.testing.assert_array_equal(self.temporal[zero[0]],self.x[parent])
+            self.temporal_rng=np.random.default_rng(107726)
+            self.report['temporal']={'pack_sha256':expected,'report_sha256':sha(temporal_root/'report.json'),
+                'seed':107726,'offset_range_frames':[0,14],'included':len(self.temporal),
+                'policy':'Original v37 base RNG unchanged; independent uniform valid offset after base draw, preserving long-source mass.'}
 
     def first80(self):
         indices=[]
@@ -92,4 +115,7 @@ class FullSourceBatch(PhoneBinary):
             indices.append(int(self.rng.choice(voices[voice])))
         expected=np.asarray([1]*32+[0]*48,dtype=np.float32)
         np.testing.assert_array_equal(self.y[indices],expected)
+        if self.temporal is not None:
+            ids=[int(self.temporal_rng.choice(self.temporal_groups[i])) for i in indices]
+            return np.clip(self.temporal[ids].astype(np.float32)/25.6,0,26)
         return np.clip(self.x[indices].astype(np.float32)/25.6,0,26)

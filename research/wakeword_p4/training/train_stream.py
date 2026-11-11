@@ -40,6 +40,7 @@ def main():
                         help="Keep sampled prefixes but give their unverified labels zero training weight")
     parser.add_argument("--phone-binary-pack", type=Path)
     parser.add_argument("--full-source-pack", type=Path)
+    parser.add_argument("--full-source-temporal-pack", type=Path)
     parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
@@ -75,6 +76,8 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.full_source_temporal_pack and not args.full_source_pack:
+        parser.error('temporal expansion requires full-source base pack')
     if args.full_source_pack and (args.architecture!='teacher60' or frames!=150 or bn_policy!='frozen'
             or args.phone_binary_pack or args.phrase_auxiliary_manifest or args.prefix_negatives
             or args.mask_prefix_loss or args.label_smoothing or args.negative_candidates!=1
@@ -214,7 +217,7 @@ def main():
     full_source = None
     if args.full_source_pack:
         from phone_binary import FullSourceBatch
-        full_source = FullSourceBatch(args.full_source_pack)
+        full_source = FullSourceBatch(args.full_source_pack, args.full_source_temporal_pack)
         (root/'full_source.json').write_text(json.dumps(full_source.report, indent=2)+'\n')
 
     def batch(mine=True, augment=True):
