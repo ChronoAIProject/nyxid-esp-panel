@@ -1,0 +1,65 @@
+{
+  "scope": "Previously scored validation only; retrospective best threshold, no new operating point selected",
+  "model_sha256": "921081f23ef620c840b2e397891602d52e1e3e5b8e33bfc8c0ccc8e9e18c0383",
+  "probability_ceiling": 0.99609375,
+  "logit_tensor_quantization": {
+    "scale": 0.5807101726531982,
+    "zero": 74
+  },
+  "count_order": [
+    "negative",
+    "positive"
+  ],
+  "at_probability_ceiling_by_engine_corpus": {
+    "piper:synthetic": [
+      18,
+      1247
+    ],
+    "kokoro:kokoro-corpus": [
+      2,
+      26
+    ],
+    "openai-tts:openai-corpus": [
+      1,
+      46
+    ],
+    "macos-say:mac-corpus": [
+      2,
+      121
+    ],
+    "edge-tts:edge-corpus": [
+      16,
+      141
+    ]
+  },
+  "strict_gate_best": {
+    "uint8_probability": {
+      "min_threshold": 0.9960937500000001,
+      "limiting_group": "openai-tts:openai-corpus",
+      "positive_hits": 0,
+      "positive_variants": 2392,
+      "macro_recall": 0.0,
+      "max_negative_group_rate": 0.0,
+      "ambient_maximum": 0.9750000000000001
+    },
+    "reconstructed_probability": {
+      "min_threshold": 0.9999620426080124,
+      "limiting_group": "edge-tts:edge-corpus",
+      "positive_hits": 615,
+      "positive_variants": 2392,
+      "macro_recall": 0.44873015873015876,
+      "max_negative_group_rate": 0.008928571428571428,
+      "ambient_maximum": 0.9735016895723857
+    },
+    "logit": {
+      "min_threshold": 10.22049903869629,
+      "limiting_group": "edge-tts:edge-corpus",
+      "positive_hits": 622,
+      "positive_variants": 2392,
+      "macro_recall": 0.4502480158730159,
+      "max_negative_group_rate": 0.008928571428571428,
+      "ambient_maximum": 3.948829174041748
+    }
+  },
+  "limits": "Internal logits are still INT8. Reconstructed probability is a sigmoid of dequantized logits, not float-model inference. No held-out test, board firmware or audio changed."
+}

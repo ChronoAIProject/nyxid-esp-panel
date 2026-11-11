@@ -1014,6 +1014,24 @@ the frozen direct-score report. Use the
 the standard streaming training command. Run the frozen validation grid
 and verify the outputs with `compare_matched_confusers.py`.
 
+The [output ceiling probe](../results/microwake-matched-confuser-score-ceiling-v1.json)
+replays all 6,136 development clips and 35 continuous streams of the mined
+model. Its saved probability score arrays reproduce exactly. The worst
+Edge corpus has 16 negative views (7 sources) at the maximum representable
+probability, including nine “Hey Next” and five “Hey Mix” views. In this
+development set the existing probability cannot satisfy the 1% group gate
+without suppressing all activations.
+
+The same model's INT8 tensor before sigmoid separates some of the tied
+examples. Under the same gate, exact search over the retained validation
+scores allows 44.87% macro recall with reconstructed probabilities or
+45.02% with mean logits. Removing output saturation helps, but the best
+tradeoff still loses most of the useful recall. This is an upper bound on
+the recall achievable by thresholding each tested score on this particular
+set. It does not justify a firmware score-format change or establish a new
+calibration. Reproduce with `probe_score_ceiling.py` using the frozen hard
+model, original feature view and `validation-hard` directory.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
