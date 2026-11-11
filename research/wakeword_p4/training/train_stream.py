@@ -36,6 +36,8 @@ def main():
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto")
     parser.add_argument("--prefix-negatives", type=int, default=0,
                         help="Replace this many of 48 confusing negatives with training-positive prefixes")
+    parser.add_argument("--mask-prefix-loss", action="store_true",
+                        help="Keep sampled prefixes but give their unverified labels zero training weight")
     parser.add_argument("--hard-ambient-index", type=Path)
     parser.add_argument("--hard-ambient-count", type=int, default=0,
                         help="Replace this many of48 ambient slots with audited training-only real-speech hard windows")
@@ -62,6 +64,8 @@ def main():
         parser.error("reconstructed weights require teacher60/teacher120, context150 and fixed batchnorm statistics")
     if not 0 <= args.prefix_negatives <= 48:
         parser.error("prefix negatives must be 0..48")
+    if args.mask_prefix_loss and not args.prefix_negatives:
+        parser.error("mask-prefix-loss requires positive prefix-negatives")
     if not 0 <= args.hard_ambient_count <= 48 or bool(args.hard_ambient_index) != (args.hard_ambient_count > 0):
         parser.error("hard ambient index and count1..48 must be supplied together")
     if args.negative_candidates < 1:
@@ -209,6 +213,10 @@ def main():
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
         weights = np.array([1.]*32+[20.]*96, dtype=np.float32)
+        if args.mask_prefix_loss:
+            # Do not replace inputs, advance RNGs, or renormalize other weights.
+            # Frozen BN prevents these ignored inputs changing batch statistics.
+            weights[32:32+args.prefix_negatives] = 0.
         order = rng.permutation(len(x))
         x = x[order]
         if augment:
@@ -390,6 +398,8 @@ def main():
               "label_smoothing": args.label_smoothing,
               "label_smoothing_policy": "Training BCE targets y*(1-epsilon)+epsilon/2; sample weights unchanged; evaluation labels/windows unchanged",
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
+              "mask_prefix_loss": args.mask_prefix_loss,
+              "mask_prefix_loss_policy": "Zero weight on all sampled prefix slots only; inputs, label placeholders, other weights and RNG draws unchanged; no claim of verified phonetic completeness",
               "hard_ambient": ({**hard_ambient.report, "count_per_batch": args.hard_ambient_count,
                                 "seed": 30726, "remaining_broad_ambient_slots": 48-args.hard_ambient_count,
                                 "policy": "Audited training-only mined windows; replace ambient slots after original draws; label0 weight20; disabled for INT8 calibration; no new independent exposure."}

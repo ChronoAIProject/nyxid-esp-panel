@@ -1,0 +1,25 @@
+{
+  "role": "Preregistered v33 development-only prefix label masking ablation",
+  "baseline": "v30",
+  "change": "Keep 16 sampled prefix inputs, set only their training sample weights from20 to0. Other weights not renormalized; batch size128 unchanged.",
+  "not_selective_truth": "All16 prefix slots treated as uncertain because no verified phone completeness labels exist. This does not retain a verified incomplete subset or prove any old label wrong.",
+  "unchanged": [
+    "main and prefix RNG draws",
+    "original confusing-negative replacements",
+    "INT8 representative input sampling strategy",
+    "teacher60/context150",
+    "frozen BN",
+    "120000steps/eval5000",
+    "training features and initialization",
+    "original dense/expanded development protocol"
+  ],
+  "risks": [
+    "Less total negative gradient weight",
+    "Early triggers may rise",
+    "Frozen BN is essential to avoid ignored slots affecting batch statistics",
+    "Original export calibration tensors expected same sampling sequence, but no bitwise equivalence claim before audit"
+  ],
+  "final_data": "No existing independent final data scored or used. New independent references required for ultimate acceptance.",
+  "trainer_sha256": "d16039a9af3ed283edaf220c943f2b54774c4f7fa223c3966ca45fafbb5aadb1",
+  "script_sha256": "2ce8e4e4c53768990ce74d57d09b1603f4d01173e995505d97823f4a38206eaa"
+}
