@@ -1,0 +1,153 @@
+{
+  "scope": "Training-only compact phrase CTC temporal representation learning after the rejected frozen-head recipe.",
+  "plan_sha256": "c380317fdac25d76c87d580d43cfd891518671baf7dfbc93c02c6fe423679949",
+  "raw_result_sha256": "ed06fe83344cc0bc1b28bae6a41d0469b07f4baab842079104a3306c999dc449",
+  "audit_sha256": "ef8d73c3454b24fc9b7f52aa2fa33590a5d06996e15e1c33fe989792be71bff4",
+  "audit": {
+    "plan_sha256": "c380317fdac25d76c87d580d43cfd891518671baf7dfbc93c02c6fe423679949",
+    "raw_result_sha256": "ed06fe83344cc0bc1b28bae6a41d0469b07f4baab842079104a3306c999dc449",
+    "launch_sha256": "12a1613cf1992a273a123b36fa97ebe1125bf0c307a1b2cf2b502f48c47cea50",
+    "executed_source_matches_frozen_plan": true,
+    "exact_full_frozen_reference_replayed": true,
+    "same_32000_row_draws": true,
+    "encoder_changed": true,
+    "binary_classifier_unchanged_asserted_in_training": true,
+    "training_process_terminal": true,
+    "checkpoint_sha256": {
+      "encoder.weights.h5": "a891c108ecdf4c2df4370853c701a6e8885d25438668cd3a9e022fe5db1c02d8",
+      "frozen-head.weights.h5": "0577c9115d65ab532d7c557ca89414171590744cc45198aad884a2ab93c145eb",
+      "trainable-head.weights.h5": "ca7e9f98756ccdac9fd1d15682ea0cf0ea73badf4aa006e213682ec1d6be56fe"
+    },
+    "limits": "Source, schedule and raw result audit; no independent re-inference or wake acceptance."
+  },
+  "frozen_reference_summary": {
+    "confusion": [
+      [
+        115,
+        1,
+        0,
+        2
+      ],
+      [
+        1,
+        36,
+        2,
+        0
+      ],
+      [
+        0,
+        3,
+        33,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        40
+      ]
+    ],
+    "rows": 236,
+    "macro_accuracy": 0.9359517601043025,
+    "recall_by_phrase": {
+      "nyx": 0.9745762711864406,
+      "mix": 0.9230769230769231,
+      "next": 0.8461538461538461,
+      "nick": 1.0
+    },
+    "nyx_recall": 0.9745762711864406,
+    "confuser_false_nyx": 1,
+    "confuser_rows": 118,
+    "confuser_false_nyx_fraction": 0.00847457627118644,
+    "greedy_exact_sequence_fraction": 0.07203389830508475,
+    "mean_normalized_ctc_loss": 1.0003442764282227
+  },
+  "trainable_summary": {
+    "confusion": [
+      [
+        118,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        39,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        39,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        40
+      ]
+    ],
+    "rows": 236,
+    "macro_accuracy": 1.0,
+    "recall_by_phrase": {
+      "nyx": 1.0,
+      "mix": 1.0,
+      "next": 1.0,
+      "nick": 1.0
+    },
+    "nyx_recall": 1.0,
+    "confuser_false_nyx": 0,
+    "confuser_rows": 118,
+    "confuser_false_nyx_fraction": 0.0,
+    "greedy_exact_sequence_fraction": 1.0,
+    "mean_normalized_ctc_loss": 0.002152777975425124
+  },
+  "history": [
+    {
+      "step": 250,
+      "loss": 0.6882480382919312,
+      "gradient_norm_before_clip": 2.8907902240753174,
+      "seconds": 2.672285416047089
+    },
+    {
+      "step": 500,
+      "loss": 0.04893117398023605,
+      "gradient_norm_before_clip": 1.3868391513824463,
+      "seconds": 4.777542207972147
+    },
+    {
+      "step": 750,
+      "loss": 0.002924969419836998,
+      "gradient_norm_before_clip": 0.14872612059116364,
+      "seconds": 6.886064250022173
+    },
+    {
+      "step": 1000,
+      "loss": 0.000962086021900177,
+      "gradient_norm_before_clip": 0.0764295756816864,
+      "seconds": 8.992014416027814
+    }
+  ],
+  "runtime": {
+    "python": "3.12.13 (main, Mar 25 2026, 03:16:06) [Clang 22.1.1 ]",
+    "packages": {
+      "tensorflow": "2.21.0",
+      "numpy": "2.5.4",
+      "keras": "3.15.1",
+      "h5py": "3.14.0"
+    }
+  },
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "advance_to_full_study_design": true,
+  "accepted": false,
+  "interpretation": "At the unchanged1000-step training-only budget, compact two-token CTC with the trainable encoder fits all236 rows and passes all five fixed fit gates. The complete frozen-head control exactly replays. The recipe changes encoder training and its optimizer/combined clipping; it is not an isolated optimizer-effect claim. This supports designing a full mixed-source binary-wake comparison, not open-set wake quality or Hi ESP parity.",
+  "limits": "All236 rows are fitted training synthesis-intent labels from a tiny correlated bank already seen by the initializer. A trainable encoder can overfit them. No independent generalization, open-set silence/ordinary-speech FAR, human pronunciation, keyword-end latency, P4 resources or call stability evidence. No validation/test scoring, teacher-label replacement, speaker playback, microphone capture, board access or PCM/audio-pipeline change."
+}

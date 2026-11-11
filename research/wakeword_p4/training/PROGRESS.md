@@ -1727,3 +1727,20 @@ launched at this snapshot. Five focused tests cover the existing path-sum and
 source/label checks plus an independent first-step Adam/gradient calculation,
 shared clipping, encoder/head updates, untouched classifier and read-only
 measurement. All processing is silent and uses cached features.
+
+The [completed encoder-learning diagnostic](../results/compact-phrase-ctc-encoder-fit-v1.json)
+passes all five unchanged fit criteria. On the 236 fitted training rows,
+macro accuracy, Nyx recall and greedy exact sequences are all 100%; none of
+the 118 confusers is assigned Nyx. Normalized CTC loss is .002153. This is
+training fit on already-seen correlated sources, not recognition acceptance.
+All scores/row predictions and other fields of the complete frozen-head
+reference replay exactly. Both runs draw the same 32,000 row IDs, and the
+original encoder cache reproduces. Encoder weights change as intended;
+the disconnected original binary classifier remains fixed. All 1,000 joint
+updates finish in about nine seconds, excluding replay, loading and scoring.
+
+The recipe changes representation training and its optimizer/combined clip;
+it does not isolate an optimizer effect or establish phonetic correctness.
+Unlike a longer head-only run, it supports a separately frozen full
+mixed-source wake comparison. There is still no validation/final-set score,
+INT8 export, audio-device use or firmware change from this diagnostic.
