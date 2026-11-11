@@ -1,0 +1,62 @@
+{
+  "scope": "Training-only offline phone targets; original binary labels retained.",
+  "source_sha256": "ae1d04b48b58ff4f0de5b72095c28457a475b9f64bb8b6ff1ae279a78098fe66",
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "teacher_files_sha256": {
+    "config.json": "4609fb49b7e1d28aecb2840da1926c40bd915bc6f1120a940afacf7159bbfb13",
+    "identity.json": "3b5b3a569a8a7b50c1b9508f27f3f74fb34c93915c2ffba9eab206e85e25e3fd",
+    "preprocessor_config.json": "a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335",
+    "pytorch_model.bin": "3173bde9e9ce490fa0f989e413c42f25bc1820c020adc1e6b9b87025b3cfcc5e",
+    "special_tokens_map.json": "bb7068de1150661a10b55f9e4b12a0e77af8bf91f5e45e1b58afaf1d0e17f675",
+    "tokenizer_config.json": "1273ec458332cc55226ec596904bae811420755ace7e5d69462b61c4f480b457",
+    "vocab.json": "d732ab2456c0c017930001dc9af0b41b3b93d25b2eb9740bf9d925508d7d87d0"
+  },
+  "background_manifest_sha256": "9a818dd49e55d65e82de89dccff245d729e711777bb3ac55541af5a3c875623f",
+  "pairs_per_stratum_limit": 8,
+  "pair_count": 118,
+  "strata": {
+    "edge-tts:hey mix": 8,
+    "edge-tts:hey next": 8,
+    "edge-tts:hey nick": 8,
+    "kokoro:hey mix": 8,
+    "kokoro:hey next": 8,
+    "kokoro:hey nick": 8,
+    "macos-say:hey mix": 8,
+    "macos-say:hey next": 8,
+    "macos-say:hey nick": 8,
+    "openai-tts:hey mix": 8,
+    "openai-tts:hey next": 8,
+    "openai-tts:hey nick": 8,
+    "piper:hey mix": 7,
+    "piper:hey next": 7,
+    "piper:hey nick": 8
+  },
+  "frames": 335,
+  "encoder_steps": 67,
+  "vocabulary": 392,
+  "blank": 0,
+  "data_sha256": "762cd247ede0011f9408fecc3e74ab70ba9f95a47fdbb3709935dad2fdb28c02",
+  "limits": "Teacher transformer sees the complete training crop. Posterior timestamps are model coordinates, not human phone endpoints. No teacher prediction replaces a source wake label. No nontraining waveform or score was accessed.",
+  "posterior_diagnostic": {
+    "mean_blank_probability": 0.9312613010406494,
+    "nonblank_argmax_frames": 578,
+    "total_frames": 15812
+  },
+  "bank_index_sha256": "1b01ae0fbbba29cda6fea93236d3f9c9d1b848a7def48ac005d45ad76da08010",
+  "unique_sources_by_label": {
+    "0": 118,
+    "1": 109
+  },
+  "validation": {
+    "three_unit_tests_passed": true,
+    "actual_encoder_gradient_support_frames": 137,
+    "actual_encoder_gradient_stride_frames": 3,
+    "gradient_support_steps_checked": [
+      0,
+      33,
+      66
+    ],
+    "all_rendered_feature_crops_match_original_cache": true
+  }
+}

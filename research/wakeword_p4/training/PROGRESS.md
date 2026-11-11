@@ -1187,6 +1187,51 @@ Run `python -m unittest discover -s research/wakeword_p4/training
 checks. Per-view outputs remain outside the checkout; the published summary
 binds the exact retained report hash.
 
+### Training-only temporal phone supervision
+
+The [phone-target preparation](../results/microwake-phone-bank-v1.json)
+selects 118 same-voice pairs from the existing training split, across five
+engines and three near words. It retains the original binary labels. The
+teacher processes each exact 337-hop PCM support window and produces 392
+phone posteriors; these are averaged over the trailing 30 ms of each of
+67 encoder steps. All 236 rendered feature crops match the original cache.
+The source and reserved-waveform checks precede preparation and are repeated
+by the training loader.
+
+The actual transfer60 graph's gradients confirm 137-frame receptive fields
+at stride three for the first, middle and last encoder steps. Three tests
+verify teacher-frame endpoints, binary source roles/reserved-source rejection,
+and equality with a normal weighted binary optimizer step when the phone
+gain is zero. The teacher sees the complete training crop, so its timestamps
+are supervision coordinates, not measured causal phone boundaries.
+
+The [frozen 1,000-step comparison](plans/microwake-phone-distillation-v1.json)
+uses the same 118 pairs in both arms. A training-only Dense phone head on
+the 67 encoder states adds teacher/student KL with gain zero or .01.
+Blank supervision has weight .05; nonblank evidence raises this toward one.
+The classifier's original weighted binary loss remains in both arms. The
+phone head is discarded before export.
+
+The [INT8 result](../results/microwake-phone-distillation-v1.json) rejects
+this recipe. At the fixed .97 reference, both arms have 73 false clips out
+of 3,744 and one continuous event / 7.324 h. Macro synthetic proxy recall
+moves from 81.04% to 80.32%; the worst engine/corpus false fraction moves
+from 4.17% to 5.21%. Neither arm has a zero-event point in the frozen grid.
+Both have the exact same first 16 training batches, 8,000 pair draws,
+representative inputs, scalar INT8 interface, operator inventory and 25,831
+inference parameters. This bounded experiment does not reject phonetic
+pretraining in general; it provides no candidate for firmware promotion.
+
+Reproduce preparation with `prepare_phone_bank.py --features <features>
+--windows <paired-bounds> --backgrounds <original-backgrounds> --phone-model
+<pinned-model> --output <bank>` in the pinned phoneme environment. In the
+training environment, use the plan's common arguments, initializer and
+`train_stream.py --phone-bank <bank> --phone-gain 0|.01`; then run the frozen
+validation-only grid and `compare_phone_distillation.py --plan <plan>
+--artifacts <paired-run> --output <new-report>`. The three tests run with
+`python -m unittest discover -s research/wakeword_p4/training
+-p test_phone_distillation.py`. No board, microphone or speaker was used.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

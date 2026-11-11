@@ -52,6 +52,8 @@ def main():
                         help="Training-only multiclass loss for the same-voice phrase pairs")
     parser.add_argument("--phrase-output", action="store_true",
                         help="Train competing phrase/background classes; export only the target probability")
+    parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
+    parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
     parser.add_argument("--matched-confuser-bank", type=Path, help="Training-only same-speaker ambient negative bank")
     parser.add_argument("--matched-confuser-arm", choices=ARMS)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
@@ -102,6 +104,13 @@ def main():
                                or args.paired_near_word_gain or args.architecture != "transfer60"
                                or args.export_only):
         parser.error("Phrase output requires transfer60 paired training without auxiliary/ranking loss or export-only")
+    if not 0 <= args.phone_gain <= 1 or (args.phone_gain and not args.phone_bank):
+        parser.error("Phone gain requires a bank and must be in [0, 1]")
+    if args.phone_bank and (args.architecture != "transfer60" or frames != 335 or args.export_only
+                           or args.near_word_windows or args.paired_near_words or args.phrase_output
+                           or args.paired_phrase_gain is not None or args.matched_confuser_bank
+                           or args.hard_negative_fraction or args.negative_focus_gain):
+        parser.error("Phone supervision requires ordinary 335-frame transfer60 training with a phone bank only")
     initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
@@ -119,6 +128,10 @@ def main():
     raw = np.memmap(args.features/"features.bin", mode="r", dtype="<u2").reshape(-1, 40)
     index_bytes = (args.features/"features.json").read_bytes()
     records = json.loads(index_bytes)
+    phone_sampler = None
+    if args.phone_bank:
+        from phone_distillation import Sampler as PhoneSampler
+        phone_sampler = PhoneSampler(args.phone_bank, records, hashlib.sha256(index_bytes).hexdigest(), frames)
     windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
     pair_sampler = PairSampler(records, windows, frames) if args.paired_near_words else None
     confusers = (MatchedConfusers(args.matched_confuser_bank, args.matched_confuser_arm, frames)
@@ -209,6 +222,8 @@ def main():
             y = np.concatenate((y, ids), axis=1)
         if mine and confusers:
             confusers.apply(samples, current_step)
+        if mine and phone_sampler:
+            y = np.concatenate((y, phone_sampler.apply(samples)), axis=1)
         x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -266,6 +281,9 @@ def main():
     loss_fn = (pair_training_loss(args.paired_near_word_gain) if pair_sampler
                else focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
     model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
+    if phone_sampler:
+        from phone_distillation import supervisor as phone_supervisor
+        train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -370,7 +388,8 @@ def main():
                     np.asarray(model(x, training=False))-np.asarray(binary_initial_model(x, training=False)))))
                 if initial_probability_error > 1e-5:
                     raise ValueError("Expanded head changed the initial target probability")
-            loss = float(train_phrase_output(x, y, weights) if args.phrase_output
+            loss = float(train_with_phones(x, y, weights) if phone_sampler
+                         else train_phrase_output(x, y, weights) if args.phrase_output
                          else train_with_phrases(x, y, weights) if train_phrases
                          else model.train_on_batch(x, y, sample_weight=weights))
             if step % 500 == 0:
@@ -440,6 +459,8 @@ def main():
                   "gain": args.paired_near_word_gain, **pair_sampler.metadata()},
               "paired_phrase_gain": args.paired_phrase_gain,
               "phrase_output": args.phrase_output,
+              "phone_distillation": None if not phone_sampler else {
+                  **phone_sampler.metadata(), "gain": args.phone_gain},
               "initial_target_probability_max_error": initial_probability_error,
               "training_prefix_batches": min(args.steps, 16),
               "training_prefix_sha256": training_prefix_digest.hexdigest(),
