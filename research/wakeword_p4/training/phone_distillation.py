@@ -111,6 +111,63 @@ def supervisor(model, targets, gain):
                 'nonblank_frames': nonblank_total, 'nonblank_correct': nonblank_correct,
                 'blank_frames': blank_total, 'blank_correct': blank_correct}
 
+    def warmup(features, steps, learning_rate, batch_size=32):
+        """Fit only the new head to cached, frozen training encoder states."""
+        if steps < 1 or not np.isfinite(learning_rate) or learning_rate <= 0 or batch_size < 1:
+            raise ValueError('Invalid phone-head warmup settings')
+        if len(features) != len(targets) or not len(features):
+            raise ValueError('Warmup features must cover the complete phone bank')
+
+        def digest(variables):
+            result = hashlib.sha256()
+            for variable in variables:
+                result.update(variable.numpy().tobytes())
+            return result.hexdigest()
+
+        before = digest(model.weights)
+        optimizer_before = digest(model.optimizer.variables)
+        initial_fit = audit(features)
+        encoder = tf.keras.Model(model.input, temporal)
+        cache = np.concatenate([
+            np.asarray(encoder(np.clip(features[start:start+32].astype(np.float32)/25.6, 0, 26),
+                               training=False))
+            for start in range(0, len(features), 32)
+        ])
+        head = full.get_layer('training_phone_logits')
+        optimizer = tf.keras.optimizers.Adam(learning_rate, global_clipnorm=5)
+
+        @tf.function
+        def update(z, q):
+            with tf.GradientTape() as tape:
+                logp = tf.nn.log_softmax(head(z), axis=-1)
+                divergence = tf.reduce_sum(q*(tf.math.log(tf.maximum(q, 1e-30))-logp), axis=-1)
+                weight = .05+.95*(1-q[..., 0])
+                loss = tf.reduce_sum(weight*divergence)/tf.reduce_sum(weight)
+            variables = head.trainable_variables
+            optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
+
+        rng = np.random.default_rng(1223)
+        schedule = hashlib.sha256()
+        history = []
+        for step in range(1, steps+1):
+            ids = rng.integers(0, len(features), size=batch_size, dtype=np.int64)
+            schedule.update(ids.astype('<i8', copy=False).tobytes())
+            update(cache[ids], targets[ids])
+            if step % 250 == 0 or step == steps:
+                history.append({'step': step, 'fit': audit(features)})
+        if before != digest(model.weights) or optimizer_before != digest(model.optimizer.variables):
+            raise ValueError('Phone-head warmup changed the binary model or its optimizer')
+        return {'steps': steps, 'learning_rate': learning_rate, 'batch_size': batch_size,
+                'seed': 1223, 'schedule_sha256': schedule.hexdigest(),
+                'head_weights_sha256': digest(head.weights),
+                'encoder_cache_sha256': hashlib.sha256(cache.astype('<f4', copy=False).tobytes()).hexdigest(),
+                'binary_weights_before_sha256': before, 'binary_weights_after_sha256': digest(model.weights),
+                'binary_optimizer_before_sha256': optimizer_before,
+                'binary_optimizer_after_sha256': digest(model.optimizer.variables),
+                'initial_fit': initial_fit, 'history': history,
+                'scope': 'Training-bank fit only; separate optimizer and cached inference-mode encoder states.'}
+
     train.audit = audit
+    train.warmup = warmup
     train.auxiliary_model = full
     return train

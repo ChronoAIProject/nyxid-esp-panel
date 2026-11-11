@@ -82,6 +82,47 @@ class PhonePreparationTest(unittest.TestCase):
         for a, b in zip(control.get_weights(), auxiliary.get_weights(), strict=True):
             np.testing.assert_allclose(a, b, rtol=0, atol=1e-7)
 
+    def test_warmup_fits_only_head_and_zero_gain_still_matches_binary_update(self):
+        import tensorflow as tf
+        tf.keras.utils.set_random_seed(37)
+
+        def make():
+            x = tf.keras.Input((STEPS, 60))
+            z = tf.keras.layers.Dense(60, use_bias=False, kernel_initializer='identity')(x)
+            probability = tf.keras.layers.Dense(1, activation='sigmoid', name='classifier')(
+                tf.keras.layers.Flatten()(z))
+            model = tf.keras.Model(x, probability)
+            model.compile(optimizer=tf.keras.optimizers.Adam(5e-5, global_clipnorm=5),
+                          loss='binary_crossentropy')
+            return model
+
+        control, auxiliary = make(), make()
+        auxiliary.set_weights(control.get_weights())
+        labels = (np.arange(4)[:, None]+np.arange(STEPS)[None, :]) % 4
+        features = np.eye(60, dtype=np.uint16)[labels]*256
+        targets = np.eye(VOCAB, dtype=np.float32)[labels]
+        train = supervisor(auxiliary, targets, 0.)
+        before = auxiliary.get_weights()
+        report = train.warmup(features, steps=25, learning_rate=.02, batch_size=4)
+        for a, b in zip(before, auxiliary.get_weights(), strict=True):
+            np.testing.assert_array_equal(a, b)
+        self.assertEqual(int(auxiliary.optimizer.iterations), 0)
+        self.assertEqual(report['binary_weights_before_sha256'], report['binary_weights_after_sha256'])
+        self.assertEqual(report['binary_optimizer_before_sha256'], report['binary_optimizer_after_sha256'])
+        self.assertLess(report['history'][-1]['fit']['weighted_kl'], report['initial_fit']['weighted_kl']*.5)
+        self.assertEqual(report['history'][-1]['fit']['nonblank_correct'], int((labels != 0).sum()))
+        y = np.array([[1.], [0.], [1.], [0.]], np.float32)
+        ids = np.arange(1, 5, dtype=np.float32)[:, None]
+        weights = np.array([1., 5., 1., 5.], np.float32)
+        x = features.astype(np.float32)/25.6
+        train(x, np.concatenate((y, ids), axis=1), weights)
+        control.train_on_batch(x, y, sample_weight=weights)
+        for a, b in zip(control.get_weights(), auxiliary.get_weights(), strict=True):
+            np.testing.assert_allclose(a, b, rtol=0, atol=1e-7)
+        for steps, rate in ((0, .02), (1, float('nan'))):
+            with self.assertRaises(ValueError):
+                train.warmup(features, steps=steps, learning_rate=rate)
+
 
 if __name__ == '__main__':
     unittest.main()

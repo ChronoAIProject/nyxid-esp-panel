@@ -1,0 +1,87 @@
+{
+  "scope": "Training-only frozen-encoder auxiliary-head fit diagnostic; no joint training, export or validation.",
+  "plan_sha256": "e4d386f28ab74cf2c5c0981371812b6113a455e36dc813d4b814432b6855b61d",
+  "raw_diagnostic_sha256": "4578a10a9cb654dc00a5c6a9c98f845e7cb45ff9bbac767e380686c5c439c4f7",
+  "checks": {
+    "binary_weights_unchanged": true,
+    "binary_optimizer_unchanged": true,
+    "warmup_metadata_reproduced": true,
+    "cache_reproduced": true,
+    "head_reproduced": true,
+    "source_hashes": true,
+    "no_joint_training_export_or_validation_files": true
+  },
+  "initial_fit": {
+    "weighted_kl": 5.317448414563324,
+    "nonblank_frames": 578,
+    "nonblank_correct": 0,
+    "blank_frames": 15234,
+    "blank_correct": 5
+  },
+  "history": [
+    {
+      "step": 250,
+      "fit": {
+        "weighted_kl": 0.9703065315237455,
+        "nonblank_frames": 578,
+        "nonblank_correct": 36,
+        "blank_frames": 15234,
+        "blank_correct": 14798
+      }
+    },
+    {
+      "step": 500,
+      "fit": {
+        "weighted_kl": 0.847214061245124,
+        "nonblank_frames": 578,
+        "nonblank_correct": 48,
+        "blank_frames": 15234,
+        "blank_correct": 14696
+      }
+    },
+    {
+      "step": 750,
+      "fit": {
+        "weighted_kl": 0.8049303585562418,
+        "nonblank_frames": 578,
+        "nonblank_correct": 52,
+        "blank_frames": 15234,
+        "blank_correct": 14682
+      }
+    },
+    {
+      "step": 1000,
+      "fit": {
+        "weighted_kl": 0.7822283732902625,
+        "nonblank_frames": 578,
+        "nonblank_correct": 71,
+        "blank_frames": 15234,
+        "blank_correct": 14606
+      }
+    }
+  ],
+  "relative_kl_reduction": 0.8528940363299227,
+  "nonblank_top1_fraction": 0.12283737024221453,
+  "blank_top1_fraction": 0.9587764211631876,
+  "gate": {
+    "minimum_relative_kl_reduction": 0.5,
+    "minimum_nonblank_top1_fraction": 0.5,
+    "minimum_blank_top1_fraction": 0.9,
+    "action": "Do not score new validation unless both arms have identical warmup caches/schedules/head weights, unchanged original binary weights/optimizer, and the phone head passes these training-bank fit criteria. If the gate fails, report the diagnostic without tuning against validation."
+  },
+  "gate_passed": false,
+  "advance": false,
+  "auxiliary_checkpoint": {
+    "file": "phone-warmup.weights.h5",
+    "sha256": "6fc1d3cf7484f2a030b597845674689005a59e97439a8c4f31986670763491b3",
+    "bytes": 271864
+  },
+  "first_joint_attempt": {
+    "plan_sha256": "94723fbfd11d8371761d24204e3bf64f462a04b88d00f8bf58d73ae29599a951",
+    "log_sha256": "785eb77af5301bf0776234e5db38ff377390dae1464eec1d56e6ee1007cc0e89",
+    "status": "Interrupted after failing warmup was inspected. The original harness had no automatic pause before joint training/float validation. It completed 1000 binary updates and entered float validation before interruption. No validation summary, checkpoint selection, INT8 export or INT8 validation was produced. No control arm was run. These partial joint results are not used.",
+    "progress_bytes": 0
+  },
+  "conclusion": "A faster head-only optimizer reduces training-bank KL substantially but nonblank top-1 agreement still fails the preregistered 50% fit gate. It is not enough to establish a useful phone readout. This does not prove that the encoder contains no phonetic information or that a different distillation target cannot help. No candidate is promoted. The warmup-only replay reproduces the head/cache exactly and returns before all joint training and validation.",
+  "limits": "Sparse teacher argmax frames and training-bank fit only; top-1 agreement is not a wake-word metric. No new acoustic evidence, runtime change or firmware change."
+}

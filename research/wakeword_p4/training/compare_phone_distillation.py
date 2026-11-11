@@ -25,6 +25,14 @@ def main():
         details = json.loads((val/'validation-details.json').read_bytes())
         digest = sha(model/'hey_nyx.tflite')
         phone = train['phone_distillation']
+        warmup = phone.get('warmup')
+        if plan.get('warmup'):
+            if (not warmup or any(warmup[k] != v for k, v in plan['warmup'].items())
+                    or warmup['binary_weights_before_sha256'] != warmup['binary_weights_after_sha256']
+                    or warmup['binary_optimizer_before_sha256'] != warmup['binary_optimizer_after_sha256']):
+                raise ValueError('Phone warmup differs or changes the binary model/optimizer')
+        elif warmup:
+            raise ValueError('Unplanned phone-head warmup')
         if (train['model_sha256'] != digest or cal['model_sha256'] != digest
                 or train['initial_weights_sha256'] != plan['init']['sha256']
                 or any(train['source_files_sha256'][k] != v for k, v in plan['source_sha256'].items())
@@ -42,6 +50,7 @@ def main():
             'prefix': train['training_prefix_sha256'],
             'schedule': phone['schedule_sha256'],
             'ptq': train['representative_training_inputs_sha256'],
+            'warmup': warmup,
             'interface': iface, 'parameters': train['parameters'],
             'clips': [(r['source'], r['variant'], r['label']) for r in details['validation']],
             'ambient': [(r['source_type'], r['hours']) for r in details['ambient']],
@@ -76,6 +85,7 @@ def main():
               'shared_training_prefix_sha256': shared['control']['prefix'],
               'shared_draw_schedule_sha256': shared['control']['schedule'],
               'shared_ptq_input_sha256': shared['control']['ptq'],
+              'shared_warmup': shared['control']['warmup'],
               'interface': shared['control']['interface'], 'inference_parameters': shared['control']['parameters'],
               'strict_gate': strict, 'control_comparator': control,
               'advance': bool(treatment and control and treatment['macro_recall'] >= control['macro_recall']+.03),

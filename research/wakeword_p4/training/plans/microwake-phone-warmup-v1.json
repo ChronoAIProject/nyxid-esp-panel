@@ -1,0 +1,107 @@
+{
+  "scope": "Frozen-encoder auxiliary-head warmup followed by matched temporal phone supervision; development validation only.",
+  "hypothesis": "The new auxiliary head was underfit at the encoder fine-tuning rate. Fitting this head first with frozen encoder states may provide useful phonetic gradients during the unchanged joint training.",
+  "parent_plan_sha256": "57e4df3b3f1c1d1d365db022a11c4012ed449b9f0ca4cd1166aca894dd70976f",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "c2cb32befc31c0b6a2b8d3e6cdf959d25196f33fb3c9557aaabf0ed8f607a7d9",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "ae1d04b48b58ff4f0de5b72095c28457a475b9f64bb8b6ff1ae279a78098fe66",
+    "phone_distillation.py": "6ac040d5bb8e8da7fd4dca61db9a2a669a7610b6a49935cb4e36659cee85b0bd",
+    "compare_phone_distillation.py": "f386b561f931ce73ef39cded0e3f308ec3a74c7a18bb1c50d35847f0e9f7c416",
+    "test_phone_distillation.py": "824ab02ad2cd79d7875215f6c5706d940d1794bf694459cc366582e64cb1b72a"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6",
+    "--phone-warmup-steps",
+    "1000",
+    "--phone-warmup-learning-rate",
+    "0.003"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs per training batch replace eight positive and eight TTS-negative slots, fixed seed431 pair permutations, same fixed complete windows in both arms. No original source labels are replaced by teacher classes.",
+  "arms": {
+    "control": 0.0,
+    "phonetic": 0.01
+  },
+  "advance": "Require matched source schedules, first 16 training batches, representative inputs and validation exposure. Treatment must have zero continuous development events and <=1% worst engine/corpus and engine false fraction, with >=3 recall points over binary control. Use control best recall within the same strict gate, otherwise within a 2% false fraction, otherwise the zero-event control point with minimum worst-group false fraction (ties: highest recall, then lowest threshold). No final scoring or board change without promotion.",
+  "limits": "118 training-only pairs, 236 rendered windows. Offline teacher sees each complete training crop. Model-coordinate timestamps are not human phone endpoints. This experiment does not establish independent generalization, acoustic latency or P4 acceptance.",
+  "objective": "Both arms use identical 118-pair windows with original binary labels and weighted BCE. Only treatment adds gain .01 times teacher/student phoneme KL on the 67 temporal encoder outputs. A 392-class auxiliary head is discarded before export. Frame weights .05+.95*(1-P(blank)) preserve blank learning and emphasize sparse phone spikes. Both arms first perform the same 1,000 head-only Adam updates at .003 on cached inference-mode encoder states. Use a separate optimizer and RNG; neither base weights nor base optimizer may change. All joint-training settings remain fixed.",
+  "phone_bank_sha256": "1b01ae0fbbba29cda6fea93236d3f9c9d1b848a7def48ac005d45ad76da08010",
+  "phone_bank_data_sha256": "762cd247ede0011f9408fecc3e74ab70ba9f95a47fdbb3709935dad2fdb28c02",
+  "warmup": {
+    "steps": 1000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seed": 1223
+  },
+  "warmup_gate": {
+    "minimum_relative_kl_reduction": 0.5,
+    "minimum_nonblank_top1_fraction": 0.5,
+    "minimum_blank_top1_fraction": 0.9,
+    "action": "Do not score new validation unless both arms have identical warmup caches/schedules/head weights, unchanged original binary weights/optimizer, and the phone head passes these training-bank fit criteria. If the gate fails, report the diagnostic without tuning against validation."
+  }
+}

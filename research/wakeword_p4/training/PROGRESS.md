@@ -1257,6 +1257,40 @@ establish better wake discrimination. The full auxiliary checkpoint is now
 retained as `phone-step-1000.weights.h5`, with its identity in the report.
 No new validation exposure, board, microphone or speaker use was needed.
 
+### Frozen-encoder phone-head fit
+
+The [head-fit diagnostic](../results/microwake-phone-head-fit-v1.json)
+uses a separate Adam optimizer at .003 for 1,000 updates on cached frozen
+encoder states. Binary weights and their optimizer remain byte-identical.
+The existing joint-training RNG and pair schedule are untouched. A test
+verifies fitting on known targets, unchanged binary weights/optimizer,
+and continued zero-gain equivalence with the ordinary binary update.
+All four phone-supervision tests pass.
+
+Training-bank KL falls from 5.3174 to .7822 (85.29%); blank argmax agreement
+reaches 14,606/15,234 (95.88%). Nonblank agreement remains only 71/578
+(12.28%), below the preregistered 50% head-fit requirement. This is not a
+demonstrated useful phone readout, despite the improved aggregate loss.
+It does not prove absence of phonetic information or reject every possible
+distillation target. No firmware candidate follows from this diagnostic.
+
+The first joint harness lacked an automatic pause after warmup. By the time
+the failed head fit was inspected it had completed 1,000 updates and entered
+float validation; it was interrupted before any validation summary, selected
+checkpoint or INT8 export. No control arm or INT8 validation was run. Those
+partial joint results are not used. The retained plan and executed source
+snapshot identify this attempt explicitly.
+
+The diagnostic now has a dedicated `--phone-warmup-only --steps 0` path.
+A replay with the [head-fit plan](plans/microwake-phone-head-fit-v1.json)
+produces the exact same cache and head hashes, saves the auxiliary checkpoint
+and returns before joint training or validation. Use the plan's common
+arguments with the existing feature directory, initializer and `--phone-bank`
+to reproduce it. Its output contains source/input identities; the matched
+comparison helper also checks head/cache/schedule equality and unchanged
+binary state when warmup is explicitly planned. No microphone, speaker or
+board was used in either run.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

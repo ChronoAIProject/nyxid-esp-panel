@@ -54,6 +54,11 @@ def main():
                         help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
+    parser.add_argument("--phone-warmup-steps", type=int, default=0,
+                        help="Fit only the auxiliary phone head on frozen training states before joint training")
+    parser.add_argument("--phone-warmup-learning-rate", type=float, default=.003)
+    parser.add_argument("--phone-warmup-only", action="store_true",
+                        help="With --steps 0, save the training-bank head-fit diagnostic and stop before joint training/validation")
     parser.add_argument("--matched-confuser-bank", type=Path, help="Training-only same-speaker ambient negative bank")
     parser.add_argument("--matched-confuser-arm", choices=ARMS)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
@@ -68,7 +73,10 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
-    if args.export_only:
+    if args.phone_warmup_only:
+        if args.export_only or args.steps != 0 or not args.phone_bank or args.phone_warmup_steps < 1:
+            parser.error("--phone-warmup-only requires --steps 0, a phone bank and positive warmup steps without export-only")
+    elif args.export_only:
         if not args.initial_weights or args.steps != 0:
             parser.error("--export-only requires --initial-weights and --steps 0")
     elif args.steps < 1:
@@ -106,6 +114,9 @@ def main():
         parser.error("Phrase output requires transfer60 paired training without auxiliary/ranking loss or export-only")
     if not 0 <= args.phone_gain <= 1 or (args.phone_gain and not args.phone_bank):
         parser.error("Phone gain requires a bank and must be in [0, 1]")
+    if (args.phone_warmup_steps < 0 or not np.isfinite(args.phone_warmup_learning_rate)
+            or args.phone_warmup_learning_rate <= 0 or (args.phone_warmup_steps and not args.phone_bank)):
+        parser.error("Phone warmup requires a phone bank, nonnegative steps and positive finite learning rate")
     if args.phone_bank and (args.architecture != "transfer60" or frames != 335 or args.export_only
                            or args.near_word_windows or args.paired_near_words or args.phrase_output
                            or args.paired_phrase_gain is not None or args.matched_confuser_bank
@@ -371,6 +382,18 @@ def main():
     validation_phase = (-effective_frames)%flags.stride if args.align_stream else 0
     history = []
     initial_phone_fit = train_with_phones.audit(phone_sampler.features) if phone_sampler else None
+    phone_warmup = None
+    if args.phone_warmup_steps:
+        phone_warmup = train_with_phones.warmup(phone_sampler.features, args.phone_warmup_steps,
+                                               args.phone_warmup_learning_rate)
+        train_with_phones.auxiliary_model.save_weights(root/"phone-warmup.weights.h5")
+        (root/"phone-warmup.json").write_text(json.dumps({
+            **phone_warmup, "bank_sha256": phone_sampler.bank_sha256,
+            "initial_weights_sha256": initial_weights_hash,
+            "source_files_sha256": source_hashes}, indent=2)+"\n")
+        print(json.dumps({"phone_warmup": phone_warmup}), flush=True)
+    if args.phone_warmup_only:
+        return
     training_prefix_digest = hashlib.sha256()
     initial_probability_error = None
     best = None
@@ -465,7 +488,8 @@ def main():
               "paired_phrase_gain": args.paired_phrase_gain,
               "phrase_output": args.phrase_output,
               "phone_distillation": None if not phone_sampler else {
-                  **phone_sampler.metadata(), "gain": args.phone_gain, "initial_fit": initial_phone_fit},
+                  **phone_sampler.metadata(), "gain": args.phone_gain, "initial_fit": initial_phone_fit,
+                  "warmup": phone_warmup},
               "initial_target_probability_max_error": initial_probability_error,
               "training_prefix_batches": min(args.steps, 16),
               "training_prefix_sha256": training_prefix_digest.hexdigest(),
