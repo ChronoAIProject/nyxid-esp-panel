@@ -2422,6 +2422,7 @@ plans, launches/runtime and audits. The previous retained background-head
 archive supplies the unchanged model; full feature caches remain external and
 byte-bound. All evidence is shared on the research branch. The full Hi ESP
 objective remains active, with no qualifying deployment candidate.
+
 ## Ordinary-positive compact supervision, preregistered 2026-11-11
 
 The [matched plan](plans/microwake-positive-ctc-v1.json) tests the verified
@@ -2456,3 +2457,52 @@ This run is silent and touches no board. Scalar rejection, if observed, will
 not imply rejection of every possible use of its temporal head; a head export
 and inference comparison would require a separate frozen stage. Full Hey Nyx
 versus Hi ESP parity remains unachieved.
+
+## Ordinary-positive scalar comparison completed: rejected
+
+Both immutable 3,000-step runs exited zero at source `cf6184a`. The control
+exactly replays parent background-treatment scalar SHA256
+`3f7c1532b6a8ad213f552fcc579006290fe6d18f2632aa7fa45fcb9619cbccec`,
+both historical input prefixes, full warmup, pair draw schedule and PTQ inputs.
+The [completed result](../results/microwake-positive-ctc-v1.json) binds actual
+scalar/background feature bytes, source snapshots, commands and data draws.
+
+Independent reconstruction verifies all 72,000 ordinary positive crops in each
+arm: all are eligible in this realized schedule, from 3,603 source hashes and
+10,183 source/render combinations. This includes 6,760 Piper continuation
+draws. Both full traces match exactly; applied eligible counters agree.
+Three in-memory adversarial metadata cases (gain, applied count and parent
+three-column prefix) are rejected without altering original evidence files.
+
+Fixed .97 macro recall changes 79.0650% -> 79.6334%; near-word false views
+77 -> 75 /3,744, but continuous events increase 1 -> 3 /7.323822 h. Neither
+arm has a strict <=1% worst-group, zero-event point in the frozen grid. The
+frozen control comparator is .98 /78.1811% under the minimum-false-zero-event
+policy; the treatment comparator is absent. Advancement fails. This verifies
+that adding ordinary-positive CTC at this gain does not repair the scalar
+model's tradeoff; it does not prove the original coverage gap caused held-out
+errors or reject all possible temporal-head inference uses.
+
+The supplementary auditor reconstructs both full 6,136-clip /1,429,512-step
+and 35-stream /878,709-step development results, all maxima, timebases, grids
+and the rejection. Sixteen software tests passed. Both scalar exports remain
+61,712 B /25,831 parameters; no qualifying firmware or Hi ESP parity claim.
+Everything was silent, with no hardware, final/test inference, speed or audio
+pipeline change. All training, validation and audit processes are terminal.
+
+GPU branch `c8dcd2c` was also read: v32's completed shared-calibration prefix
+ablation is rejected. Removing prefix negatives yields 72.8385% macro proxy
+hits, 25 early triggers and nonzero DiPCo/Libri events; its v30 counterpart
+retains 82.0833%, one early trigger and zero events in those development sets.
+These are separate development results; no threshold/model replacement follows.
+
+The [complete ordinary-positive study archive](../../handoff/assets-microwake-positive-ctc-v1.json)
+is public: 10,730,213 bytes, SHA256
+`747d22651392be4750679cdaf5727cbd60c4bd97bba70106904711b229e97959`.
+A fresh unauthenticated download verifies all 340 listed hashes/lengths and
+the exact 341-member inventory. Both frozen source snapshots, weights,
+SavedModels, scalar INT8, complete positive draw traces, development scores,
+launches, runtime, logs and audit scripts/results are retained. External full
+feature caches and the original initializer/bank are separately byte-bound;
+the prior background/broad bank archives are declared dependencies. Overall
+goal remains active with no qualifying deployment candidate.

@@ -1379,3 +1379,44 @@ feature caches remain external. Actual logits, independent probability audit,
 identities are included. Its fresh public unauthenticated download verifies
 all426 listed member lengths/hashes and the exact427-member inventory. No
 source waveform, device state, credential or firmware is included.
+
+### Ordinary-positive compact CTC coverage experiment
+
+The [matched plan](../wakeword_p4/training/plans/microwake-positive-ctc-v1.json)
+adds compact `[hey,nyx]` CTC to existing complete ordinary-positive crops,
+keeping paired and ambient losses, all draws, crops, augmentation, warmup and
+PTQ inputs fixed. Gain 0 exactly replays the parent background-treatment
+scalar model and historical prefixes; gain 1 is the treatment. The fourth
+label marker follows shuffle. Actual per-step crops and eligibility are
+retained and independently reconstructed: 72,000 eligible draws per arm,
+including 6,760 Piper continuation draws, from 3,603 source hashes.
+
+The [completed result](../wakeword_p4/results/microwake-positive-ctc-v1.json)
+is rejected: fixed .97 macro recall 79.0650% -> 79.6334%, false near-word views
+77 -> 75 /3,744, continuous events 1 -> 3 /7.323822 h. No strict point exists
+in either frozen grid. Sixteen software checks, three adversarial metadata
+rejections and complete score-accounting reconstruction passed. Software
+correctness does not establish wake quality; no head-based inference use or
+firmware acceptance is implied by this scalar-only result.
+
+The [public archive](assets-microwake-positive-ctc-v1.json) retains the complete
+run at `workspace/home-wake-research-20261110/microwake-positive-ctc-v1`:
+both immutable training source copies, checkpoints, SavedModels, scalar INT8,
+positive exposure traces, actual launches/logs/runtime, full development score
+traces and all audit code/results. The 341-member inventory and all 340 listed
+hashes/lengths were checked after a fresh unauthenticated download. Dependencies
+are the prior background study and broad bank archives; complete scalar and
+background features remain external and byte-bound. No credentials, device
+state, source waveforms or deployable firmware are included.
+
+Use [launch_positive_ctc_study.py](launch_positive_ctc_study.py) for a fresh
+reproduction after restoring the original feature/initializer/bank inputs and
+pinned runtime. Required arguments are `--artifacts` (fresh directory),
+`--repository`, `--upstream`, `--features`, `--bank`, `--initial-weights`,
+`--prior-study` (parent background run) and `--background-inputs` (inventory).
+The launcher checks committed source/plan identities, copies private source
+snapshots, runs both arms and stops on a failed parent replay. Historical
+absolute launches remain provenance; relocated experiments need fresh launches.
+For existing local evidence, input audit uses `audit_compact_study.py` with
+`--plan-repository-path research/wakeword_p4/training/plans/microwake-positive-ctc-v1.json`;
+the supplementary `audit_scalar_wake_scores.py` reconstructs the saved scores.

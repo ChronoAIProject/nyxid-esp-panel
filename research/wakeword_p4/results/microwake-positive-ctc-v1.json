@@ -1,0 +1,2690 @@
+{
+  "scope": "Matched ordinary-positive compact CTC supervision, development only.",
+  "plan_sha256": "4e26fb15413a236ca3a63f8a129ad48b3c8809cbc5d00079529580326b39ac23",
+  "checkout_revision": "cf6184a99198a599f7afff37cf5a1aa28f503bfb",
+  "study_launch_sha256": "f32ac53600d5fa55592de46405393fd07972041606893b5b55272b99fc2f209e",
+  "input_audit_sha256": "3b5b873446222c689a72c0a655c4244c67ca0e69b2dda2806dfdc3283ddbe94f",
+  "cached_score_audit_sha256": "0e5ab9c875c3cc60b47eec979cd45052176b98fbd7931521a36b273a4cd12f9c",
+  "negative_input_audit_sha256": "aa1d8a0968770b4ec317a379829082afb7134704259aff6115d37c29233cbebf",
+  "software_checks_sha256": "0663d2b8345c0547ee278d9e3820b01b1312f13e4de7e7b9af8182207b61f9bd",
+  "software_tests": 16,
+  "full_scalar_features_and_background_bytes_bound": true,
+  "original_background_control_replayed": true,
+  "all_maxima_timebases_events_grids_and_gate_reproduced": true,
+  "development_advance": false,
+  "accepted": false,
+  "control_comparator_policy": "minimum_false_zero_event",
+  "control_comparator": {
+    "threshold": 0.98,
+    "macro_recall": 0.7818105158730158,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour_upper_95": 0.40903945817584486,
+    "max_source_false_rate": 0.041666666666666664,
+    "max_corpus_false_rate": 0.041666666666666664,
+    "hard_negative_false_rate": 0.018696581196581196
+  },
+  "treatment_comparator": null,
+  "strict_gate": {
+    "control": null,
+    "phonetic": null
+  },
+  "arms": {
+    "control": {
+      "model_sha256": "3f7c1532b6a8ad213f552fcc579006290fe6d18f2632aa7fa45fcb9619cbccec",
+      "model_bytes": 61712,
+      "parameters": 25831,
+      "ordinary_positive": {
+        "gain": 0.0,
+        "steps": 3000,
+        "examples": 72000,
+        "target": [
+          1,
+          2
+        ],
+        "target_meaning": "Compact synthesis-intent [hey,nyx], not a transcript of continuation speech.",
+        "normalization": "Mean eligible-example CTC NLL divided by two target tokens; zero for an empty cohort.",
+        "exposure": {
+          "steps": 3000,
+          "examples": 72000,
+          "eligible_examples": 72000,
+          "eligible_distinct_sources": 3603,
+          "eligible_distinct_renders": 10183,
+          "counts": [
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks!",
+              "eligible": true,
+              "examples": 1527
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 1521
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 1478
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nix.",
+              "eligible": true,
+              "examples": 1545
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 1545
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nicks.",
+              "eligible": true,
+              "examples": 1487
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nix!",
+              "eligible": true,
+              "examples": 1448
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nyx.",
+              "eligible": true,
+              "examples": 1514
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 4004
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 4034
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 3997
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks!",
+              "eligible": true,
+              "examples": 1474
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 1560
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 1546
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nix.",
+              "eligible": true,
+              "examples": 1536
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 1537
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nicks.",
+              "eligible": true,
+              "examples": 1443
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nix!",
+              "eligible": true,
+              "examples": 1497
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nyx.",
+              "eligible": true,
+              "examples": 1467
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 3941
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 3978
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 4045
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, can you hear me?",
+              "eligible": true,
+              "examples": 1793
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, check the volume.",
+              "eligible": true,
+              "examples": 1683
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, turn on the light.",
+              "eligible": true,
+              "examples": 1613
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, what time is it?",
+              "eligible": true,
+              "examples": 1671
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 5234
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 3938
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 4018
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 3926
+            }
+          ],
+          "trace_file": "positive-exposure.jsonl",
+          "trace_sha256": "c1be4f65847657d8308c8591c1e87f91ec7bbd88f72de1206e959f5d091c9d26",
+          "trace_encoding": "One JSON line per training step; draws [feature_index, crop_end, eligible, uint16_crop_sha256] in unpaired positive slot order, before augmentation/shuffle."
+        }
+      },
+      "fixed_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.7906498015873016,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 1,
+        "ambient_false_per_hour_upper_95": 0.6477307032380661,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.020566239316239316
+      },
+      "fixed_0_97_false_views": 77,
+      "fixed_0_97_groups": [
+        {
+          "engine": "piper",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 800,
+          "fixed_0_97_hits": 679
+        },
+        {
+          "engine": "piper",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 96,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 92,
+          "fixed_0_97_hits": 13
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, what time is it?",
+          "label": 1,
+          "views": 216,
+          "fixed_0_97_hits": 187
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 100,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, turn on the light.",
+          "label": 1,
+          "views": 260,
+          "fixed_0_97_hits": 209
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, can you hear me?",
+          "label": 1,
+          "views": 336,
+          "fixed_0_97_hits": 302
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 68,
+          "fixed_0_97_hits": 21
+        },
+        {
+          "engine": "piper",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 76,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 76,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, check the volume.",
+          "label": 1,
+          "views": 308,
+          "fixed_0_97_hits": 258
+        },
+        {
+          "engine": "piper",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 128,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 116,
+          "fixed_0_97_hits": 6
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 84,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 120,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 104,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 80,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 116,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 120,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 72,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 88,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 60,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 11
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nix!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 11
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 11
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 14
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nix!",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 18
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 20
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 15
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 15
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nix.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nix!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 15
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 15
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 21
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nicks.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 26
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks!",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 19
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 24
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nix.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 19
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nix!",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 22
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 18
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nyx.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 13
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 9
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 2
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 2
+        },
+        {
+          "engine": "edge-tts",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey!",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey there.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nyx.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nix the plan.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "The nicks on the surface.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Ask Nicks about it.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey!",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey there.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nix.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nyx.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks, turn on the light.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nix the plan.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "The nicks on the surface.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Ask Nicks about it.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks is ready.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, what time is it?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        }
+      ],
+      "fixed_0_97_false_near_words": [
+        {
+          "engine": "piper",
+          "text": "Hey Mix.",
+          "false_views": 21
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next.",
+          "false_views": 13
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next.",
+          "false_views": 9
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next, what time is it?",
+          "false_views": 6
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick, turn on the light.",
+          "false_views": 4
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Mix.",
+          "false_views": 4
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Mix.",
+          "false_views": 4
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Mix.",
+          "false_views": 4
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Alex.",
+          "false_views": 2
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next, what time is it?",
+          "false_views": 2
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nice.",
+          "false_views": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick.",
+          "false_views": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick, turn on the light.",
+          "false_views": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Six.",
+          "false_views": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick.",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nexus.",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Six.",
+          "false_views": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey there.",
+          "false_views": 1
+        }
+      ],
+      "validation_accounting": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "a40271a1c069d29535d9f2e2c92c1f13aa4fa0b3dbef8fd4d61ff5562a8c5369",
+        "details_sha256": "4e36f862fbf89c07f6a36afe9722639f071b96bb91baac352de38d42ea101c95"
+      }
+    },
+    "phonetic": {
+      "model_sha256": "3ed3766fe0377f978b0a393f0f767f1d97121bd996e4ee4a2c9d8cf4934e6d8e",
+      "model_bytes": 61712,
+      "parameters": 25831,
+      "ordinary_positive": {
+        "gain": 1.0,
+        "steps": 3000,
+        "examples": 72000,
+        "target": [
+          1,
+          2
+        ],
+        "target_meaning": "Compact synthesis-intent [hey,nyx], not a transcript of continuation speech.",
+        "normalization": "Mean eligible-example CTC NLL divided by two target tokens; zero for an empty cohort.",
+        "exposure": {
+          "steps": 3000,
+          "examples": 72000,
+          "eligible_examples": 72000,
+          "eligible_distinct_sources": 3603,
+          "eligible_distinct_renders": 10183,
+          "counts": [
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks!",
+              "eligible": true,
+              "examples": 1527
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 1521
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 1478
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nix.",
+              "eligible": true,
+              "examples": 1545
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 1545
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nicks.",
+              "eligible": true,
+              "examples": 1487
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nix!",
+              "eligible": true,
+              "examples": 1448
+            },
+            {
+              "engine": "edge-tts",
+              "text": "Hey, Nyx.",
+              "eligible": true,
+              "examples": 1514
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 4004
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 4034
+            },
+            {
+              "engine": "kokoro",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 3997
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks!",
+              "eligible": true,
+              "examples": 1474
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 1560
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 1546
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nix.",
+              "eligible": true,
+              "examples": 1536
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 1537
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nicks.",
+              "eligible": true,
+              "examples": 1443
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nix!",
+              "eligible": true,
+              "examples": 1497
+            },
+            {
+              "engine": "macos-say",
+              "text": "Hey, Nyx.",
+              "eligible": true,
+              "examples": 1467
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 3941
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 3978
+            },
+            {
+              "engine": "openai-tts",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 4045
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, can you hear me?",
+              "eligible": true,
+              "examples": 1793
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, check the volume.",
+              "eligible": true,
+              "examples": 1683
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, turn on the light.",
+              "eligible": true,
+              "examples": 1613
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx, what time is it?",
+              "eligible": true,
+              "examples": 1671
+            },
+            {
+              "engine": "piper",
+              "text": "Hey Nyx.",
+              "eligible": true,
+              "examples": 5234
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nicks.",
+              "eligible": true,
+              "examples": 3938
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nicks?",
+              "eligible": true,
+              "examples": 4018
+            },
+            {
+              "engine": "qwen",
+              "text": "Hey Nix!",
+              "eligible": true,
+              "examples": 3926
+            }
+          ],
+          "trace_file": "positive-exposure.jsonl",
+          "trace_sha256": "c1be4f65847657d8308c8591c1e87f91ec7bbd88f72de1206e959f5d091c9d26",
+          "trace_encoding": "One JSON line per training step; draws [feature_index, crop_end, eligible, uint16_crop_sha256] in unpaired positive slot order, before augmentation/shuffle."
+        }
+      },
+      "fixed_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.7963343253968254,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.020032051282051284
+      },
+      "fixed_0_97_false_views": 75,
+      "fixed_0_97_groups": [
+        {
+          "engine": "piper",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 800,
+          "fixed_0_97_hits": 675
+        },
+        {
+          "engine": "piper",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 96,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 92,
+          "fixed_0_97_hits": 12
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, what time is it?",
+          "label": 1,
+          "views": 216,
+          "fixed_0_97_hits": 183
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 100,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, turn on the light.",
+          "label": 1,
+          "views": 260,
+          "fixed_0_97_hits": 204
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, can you hear me?",
+          "label": 1,
+          "views": 336,
+          "fixed_0_97_hits": 302
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 68,
+          "fixed_0_97_hits": 20
+        },
+        {
+          "engine": "piper",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 76,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 76,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nyx, check the volume.",
+          "label": 1,
+          "views": 308,
+          "fixed_0_97_hits": 257
+        },
+        {
+          "engine": "piper",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 128,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 116,
+          "fixed_0_97_hits": 6
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 84,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 120,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 104,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 80,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 116,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 120,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 108,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 72,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 88,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "piper",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 60,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 10
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nix!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 11
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 12
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 3
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 14
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nix!",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 18
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 24,
+          "fixed_0_97_hits": 20
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 8,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nicks.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nix.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nix!",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey, Nyx.",
+          "label": 1,
+          "views": 16,
+          "fixed_0_97_hits": 16
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "macos-say",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 21
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nicks.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 26
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks!",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 20
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nicks?",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 23
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nix.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 20
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nix!",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 21
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nyx.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 19
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, Nyx.",
+          "label": 1,
+          "views": 28,
+          "fixed_0_97_hits": 13
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nick.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 9
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Mix.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 4
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Six.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Max.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nice.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nexus.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Alex.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hi ESP.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Siri.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nick, turn on the light.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next, what time is it?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 2
+        },
+        {
+          "engine": "edge-tts",
+          "text": "The next thing is ready.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "I mixed the ingredients.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "I heard Nick speaking.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Take the next exit.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hello, can you hear me?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "How can I help you?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Please check the volume.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Thanks, that is all.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey!",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey there.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nix.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nyx.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks, turn on the light.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nix the plan.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "The nicks on the surface.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Ask Nicks about it.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Nicks is ready.",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey, what time is it?",
+          "label": 0,
+          "views": 16,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey!",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey there.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nix.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nyx.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks, turn on the light.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nix the plan.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "The nicks on the surface.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Ask Nicks about it.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nicks is ready.",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey, what time is it?",
+          "label": 0,
+          "views": 28,
+          "fixed_0_97_hits": 0
+        }
+      ],
+      "fixed_0_97_false_near_words": [
+        {
+          "engine": "piper",
+          "text": "Hey Mix.",
+          "false_views": 20
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next.",
+          "false_views": 12
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next.",
+          "false_views": 9
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Next, what time is it?",
+          "false_views": 6
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nick, turn on the light.",
+          "false_views": 4
+        },
+        {
+          "engine": "openai-tts",
+          "text": "Hey Mix.",
+          "false_views": 4
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Mix.",
+          "false_views": 4
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Mix.",
+          "false_views": 3
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Next, what time is it?",
+          "false_views": 2
+        },
+        {
+          "engine": "piper",
+          "text": "How can I help you?",
+          "false_views": 1
+        },
+        {
+          "engine": "piper",
+          "text": "Hey Nice.",
+          "false_views": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick.",
+          "false_views": 1
+        },
+        {
+          "engine": "kokoro",
+          "text": "Hey Nick, turn on the light.",
+          "false_views": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Six.",
+          "false_views": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Nick.",
+          "false_views": 1
+        },
+        {
+          "engine": "macos-say",
+          "text": "Hey Next, what time is it?",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Nexus.",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Six.",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Hey Alex.",
+          "false_views": 1
+        },
+        {
+          "engine": "edge-tts",
+          "text": "Nyx.",
+          "false_views": 1
+        }
+      ],
+      "validation_accounting": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "f532f087634ca4f6722b4c8c5774f25faea82859cea4f77be7bd44851218ce1b",
+        "details_sha256": "e15e62b276cb6299ff624685728e565a58aceeb4c5e8dd7ea8051a256f5aba0e"
+      }
+    }
+  },
+  "limits": "Reused development data and unchanged threshold grid/gates. Original synthesis timing is proxy geometry, not verified pronunciation/phoneme endpoints. Added keyword-only compact targets ignore continuation content by task definition. Truncated crops retain BCE and receive no added CTC. Auxiliary head discarded from scalar export. Scalar rejection would not reject all possible temporal-head inference uses, which require a separate frozen export/quality stage. No final/test inference, threshold extension, validation-residual fitting, audio playback, microphone capture, board/OTA, production device, PCM speed or audio pipeline change. Independent real-speaker recall, latency, P4 resources and long-call stability remain unproven.",
+  "next_stage_boundary": "No qualifying firmware claim follows. A separate temporal-head export/inference recipe must be frozen and numerically validated before any head-based wake-quality comparison; scalar failure alone does not reject all uses of the head."
+}
