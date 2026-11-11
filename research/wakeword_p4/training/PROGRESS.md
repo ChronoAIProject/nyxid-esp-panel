@@ -3305,3 +3305,31 @@ to the canonical [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/
 #14 was a concurrently opened duplicate and is closed. No threshold change,
 source filtering or candidate acceptance follows. The next candidate still
 needs the complete Hi ESP comparison and active voice-path verification.
+
+## Fixed v30 scores cannot be repaired by a scalar threshold on this corpus
+
+The [plan](plans/gpu-v30-mac-score-separation-v1.json) and implementation were
+committed at `c5cb028` before computing score-order bounds. All 350 saved
+outputs and original event booleans verify. Two Tessa confusers reach the
+UINT8 output contract's maximum five-score sum, 1275/1280; every target-intent
+maximum is at most 1274/1280. A scalar threshold that excludes all 90 Nyx
+confusers thus accepts no positive clip. Six target-intent sources have only
+zero scores, so a positive threshold cannot trigger more than 44/50 even
+before considering false clips. The old 48/50 Hi ESP result is a descriptive
+reference, not a new acceptance criterion or independent population metric.
+
+The [result](../results/gpu-v30-mac-score-separation-v1.json) retains all source
+maxima, voice distributions and branch core AST hashes. The
+[separate audit](../results/gpu-v30-mac-score-separation-v1-audit.json) reconstructs
+integer windows and detector-return indices with different array accounting,
+including exact strongest-positive/confuser byte witnesses. These checks
+select no threshold and infer no model. They do not diagnose pronunciation,
+float-checkpoint behavior or actual GPU/Mac platform agreement.
+
+GPU snapshot `d33e9ad` starts the distinct v37 full-source supervision
+replacement after its sampler/export smoke checks; there is no performance
+conclusion in that snapshot. Issue #13 requests a native GPU-host CPU replay
+of these exact 350 Mac inputs against the complete expected frontend/output
+hashes. Existing training stays intact. A future same-checkpoint float/INT8
+comparison is conditional on the original float artifact, not a request to
+retrain, change labels or retune the frozen v30.

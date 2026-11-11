@@ -1,0 +1,83 @@
+{
+  "scope": "Verify the integer separation certificate with alternate window accounting.",
+  "passed": true,
+  "accepted": false,
+  "analysis_sha256": "80a5528dd86420658bdb7243e33bd5d9eed108d9a4ab3599c22633f23552f7ba",
+  "auditor_sha256": "2545d539ce6d8573f604819016a0b8533d5c789ca8a7a80dc5f61e672d67a1ae",
+  "sources_checked": 350,
+  "highest_positive_sum": 1274,
+  "highest_confuser_sum": 1275,
+  "denominator": 1280,
+  "zero_confuser_false_clips_positive_upper_bound": 0,
+  "nonzero_positive_upper_bound": 44,
+  "proof": "At any positive scalar threshold, excluding every confuser requires exceeding its largest observed score; only strictly higher positive maxima could then trigger. Zero-output positives cannot trigger. Zero-score prime leaves the first real-source event armed.",
+  "strongest_positive_witnesses": [
+    {
+      "path": "rendered/Moira-2-3.wav",
+      "target": "hey_nyx",
+      "sha256": "0eb290460923dacf20bb044552c594c9680de221718ddd1ed377f3a2c4f4a306",
+      "five_output_bytes": [
+        254,
+        255,
+        255,
+        255,
+        255
+      ],
+      "five_score_sum": 1274,
+      "denominator": 1280,
+      "window_start_raw_score_index_zero_based": 215,
+      "source_relative_detector_block_end": 49920
+    },
+    {
+      "path": "rendered/Moira-3-3.wav",
+      "target": "hey_nyx",
+      "sha256": "89f1de96dff5642c763ff0ce25c0e24183baa23c43ff1779250bc24d76e449c7",
+      "five_output_bytes": [
+        254,
+        255,
+        255,
+        255,
+        255
+      ],
+      "five_score_sum": 1274,
+      "denominator": 1280,
+      "window_start_raw_score_index_zero_based": 279,
+      "source_relative_detector_block_end": 80640
+    }
+  ],
+  "strongest_confuser_witnesses": [
+    {
+      "path": "rendered/Tessa-11-3.wav",
+      "target": "none",
+      "sha256": "8210e059b5ad8331932bad6cc52015e0fc7cb283f470fe239794ef38c9f3ab2b",
+      "five_output_bytes": [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "five_score_sum": 1275,
+      "denominator": 1280,
+      "window_start_raw_score_index_zero_based": 273,
+      "source_relative_detector_block_end": 77760
+    },
+    {
+      "path": "rendered/Tessa-16-3.wav",
+      "target": "none",
+      "sha256": "88352a51c83fc275a09c1f60988f991ad763b8c9f4950f7ae566f5ea9471256c",
+      "five_output_bytes": [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "five_score_sum": 1275,
+      "denominator": 1280,
+      "window_start_raw_score_index_zero_based": 264,
+      "source_relative_detector_block_end": 73440
+    }
+  ],
+  "limits": "Exact certificate for these saved INT8 traces and synthesis-intent labels. No new inference, float-checkpoint comparison, phonetic truth, population FAR/recall, physical latency or active-call acceptance."
+}

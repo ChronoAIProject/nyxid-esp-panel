@@ -1912,3 +1912,51 @@ not the earlier frontend frame endpoint. Any prime events remain separate
 (zero observed). Report this gap in [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13)
 for GPU development. No model promotion, threshold fitting or automatic source
 relabeling follows from these results.
+
+### v30 score separation: a threshold cannot repair this regression
+
+The [frozen analysis](../wakeword_p4/training/plans/gpu-v30-mac-score-separation-v1.json)
+at `c5cb028` computes necessary separation bounds directly from the complete
+saved traces; it does not select or propose another threshold. The
+[result](../wakeword_p4/results/gpu-v30-mac-score-separation-v1.json) checks all
+350 output hashes and the original event booleans. Prime windows are all zero.
+Two Tessa confusers (`Hey Next.`/`Hey Nexus.`, variant 3) each reach five
+consecutive output bytes `[255,255,255,255,255]`: average 1275/1280, or
+0.99609375, the maximum representable by this output contract. The highest
+positive average is only 1274/1280. A threshold high enough to exclude those
+confusers therefore admits **zero** positive clips. Both original host and
+firmware averaging give this bound.
+
+Additionally, six target-intent clips have only zero scores; at most 44/50
+could ever trigger with a positive scalar threshold, even ignoring confusers.
+The retained Hi ESP 48/50 remains a descriptive reused-data reference, not a
+newly introduced acceptance gate. These are exact score-order facts about
+the present INT8 traces. They neither establish source pronunciation nor
+separate learned-model, quantization or platform causes.
+
+The [separate audit](../wakeword_p4/results/gpu-v30-mac-score-separation-v1-audit.json)
+uses an array-window view and independently constructed raw-score return
+positions, and retains exact byte windows, source hashes and block ends for
+the strongest positive/confuser witnesses. No new threshold grid or model
+inference is performed. The pinned branches' `features()` and `Detector`
+location-free ASTs are identical; native-library/runtime/platform equivalence
+still needs actual cross-host comparison. That request, and a possible later
+same-checkpoint float/INT8 diagnostic, are in issue #13. Existing v37 training
+is not interrupted.
+
+Reproduce using the preceding public full study (not the compact Git summary):
+
+```sh
+python research/wakeword_p4/training/analyze_mac_score_separation.py \
+  --artifacts "$FULL_MAC_STUDY" \
+  --plan research/wakeword_p4/training/plans/gpu-v30-mac-score-separation-v1.json \
+  --output "$FRESH_SEPARATION"
+python research/wakeword_p4/training/verify_mac_score_separation.py \
+  --study "$FULL_MAC_STUDY" --analysis "$FRESH_SEPARATION" \
+  --output "$FRESH_SEPARATION/audit.json"
+```
+
+For the AST comparison, fetch the pinned GPU branch objects first. Full inputs
+are `study/result.json` and `study/scores.npz` in
+`gpu-v30-mac-regression-v1.tar.gz`. No WAV, model execution, audio device,
+board, firmware or reserved data is accessed by this analysis.

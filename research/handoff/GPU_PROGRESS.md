@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `5f57b62` (fetched again 2026-11-12); see the
+Latest observed GPU commit: `d33e9ad` (fetched again 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -948,3 +948,22 @@ The issue update is consistent with that checked-in report. No new candidate
 handoff or P4 deployment follows. The GPU track next investigates main versus
 full-source auxiliary supervision, and the Mac's separate regression supplies
 an additional concrete gap rather than a proposed threshold adjustment.
+
+### v37 snapshot and native cross-host comparison request
+
+`d33e9ad` freezes a complete phrase-supervision replacement, rather than
+another supplementary weak loss: the original 32 positive/48 phrase-negative
+slots come from its checked complete-source pack, while the 48 ambient slots,
+architecture/initialization/frozen BN/optimizer remain. The source distribution
+also changes, so this is not an isolated endpoint ablation. Its sampler and
+two-step export checks pass, and the issue reports the original 120k run
+started. A commit/issue description is not a live-process verification.
+
+The Mac [score certificate](../wakeword_p4/results/gpu-v30-mac-score-separation-v1.json)
+finds saturated confuser outputs above every positive maximum; scalar
+threshold changes cannot repair the current 350-source regression. Both
+branches have identical `features()`/`Detector` core ASTs, but native inference
+agreement is still open. The Mac requested exact GPU-host CPU replay and full
+frontend/output comparison in issue #13 without restarting v37. If identical,
+an original same-checkpoint float artifact could separate quantization effects
+from the learned scores. No model or threshold change follows from that request.
