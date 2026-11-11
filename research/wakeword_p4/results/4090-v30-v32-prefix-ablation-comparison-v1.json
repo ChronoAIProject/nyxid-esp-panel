@@ -1,0 +1,121 @@
+{
+  "role": "Shared-input quantization development comparison; not independent acceptance",
+  "representative_inputs_sha256": "52a484b1d6d3ee0375cd2b29bef144ab92ddfe0984fb97861d96e3457c4ff9ca",
+  "shared_manifest_and_export_source_verified": true,
+  "candidates": [
+    {
+      "candidate": "v30",
+      "model_sha256": "b744c466e6bde704eeb1e5cffe232a13505400f8c3f52953a9563b31dea90d85",
+      "dense_threshold": 0.9375,
+      "dense_proxy_macro_hits": 0.8208333333333333,
+      "dense_premature_events": 1,
+      "negative_corpora": [
+        {
+          "corpus": "mandarin",
+          "events_at_dense_threshold": 0,
+          "hours": 6.913985190972223
+        },
+        {
+          "corpus": "dipco",
+          "events_at_dense_threshold": 0,
+          "hours": 0.7544878472222222
+        },
+        {
+          "corpus": "libri-dev-other",
+          "events_at_dense_threshold": 0,
+          "hours": 5.121184826388888
+        }
+      ],
+      "expanded_working_point_exists": true,
+      "expanded_threshold": 0.9375,
+      "expanded_selected": {
+        "english": {
+          "threshold": 0.9375,
+          "positive_variants": 2160,
+          "recall": 0.8435185185185186,
+          "detected": 1822,
+          "latency_ms_median": 120.00000000000011,
+          "latency_ms_p95": 170.00000000000037,
+          "premature_positive_events": 1,
+          "macro_recall": 0.8208333333333333,
+          "recall_by_engine": {
+            "piper": 0.85,
+            "kokoro": 0.7916666666666666
+          },
+          "hard_negative_variants": 3520,
+          "hard_negative_false_rate": 0.008238636363636363,
+          "max_source_false_rate": 0.01,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_false_events": 0,
+          "ambient_false_per_hour": 0.0,
+          "ambient_false_per_hour_upper_95": 2.4864743173555475
+        },
+        "negative_corpora": [
+          {
+            "corpus": "eval-v30-common-calibration-v1-mandarin-validation",
+            "source_hours": 6.913985190972223,
+            "false_events": 0,
+            "false_per_hour": 0.0,
+            "false_per_hour_upper_95": 0.43328589674528056
+          },
+          {
+            "corpus": "eval-v30-common-calibration-v1-dipco-validation",
+            "source_hours": 0.7544878472222222,
+            "false_events": 0,
+            "false_per_hour": 0.0,
+            "false_per_hour_upper_95": 3.9705507313117065
+          },
+          {
+            "corpus": "eval-v30-common-calibration-v1-libri-dev-other-validation",
+            "source_hours": 5.121184826388888,
+            "false_events": 0,
+            "false_per_hour": 0.0,
+            "false_per_hour_upper_95": 0.584968591275464
+          }
+        ],
+        "eligible": true
+      }
+    },
+    {
+      "candidate": "v32",
+      "model_sha256": "34df915c60ddcb103f4c46f6147ddc755cdd0e88671fa233d8a7fa92341b5196",
+      "dense_threshold": 0.96875,
+      "dense_proxy_macro_hits": 0.7283854166666667,
+      "dense_premature_events": 25,
+      "negative_corpora": [
+        {
+          "corpus": "mandarin",
+          "events_at_dense_threshold": 0,
+          "hours": 6.913985190972223
+        },
+        {
+          "corpus": "dipco",
+          "events_at_dense_threshold": 1,
+          "hours": 0.7544878472222222
+        },
+        {
+          "corpus": "libri-dev-other",
+          "events_at_dense_threshold": 2,
+          "hours": 5.121184826388888
+        }
+      ],
+      "expanded_working_point_exists": false,
+      "expanded_threshold": null,
+      "expanded_selected": null
+    }
+  ],
+  "report_hashes": {
+    "4090-v30-common-calibration-validation-v1.json": "422dc04a70b906fd75cdacf94eea33c8c5d95f0a33d262b4f1263b7e23c9ef56",
+    "4090-v30-common-calibration-expanded-validation-v1.json": "942a270c8719c2c012cb82c1d5387e431d49f0b06eda2d481ac568b90f9cc86f",
+    "4090-v30-common-calibration-mandarin-validation-v1.json": "b749d26a4c42f1443f5825f28995da8e0c5bca27e295f945be99600c0a266b57",
+    "4090-v30-common-calibration-dipco-validation-v1.json": "d40e807d8c7974d0abd0f535de40a06364b9c98680e4dd36d2e3f4d5d453bf7d",
+    "4090-v30-common-calibration-libri-dev-other-validation-v1.json": "b8d4fd6b126bca162ab3b522e5f72035c2cc775c3accfaf85e93c73ab01812fc",
+    "4090-v32-common-calibration-validation-v1.json": "ac2b749abfe652d2f720afcb7a849ec2a4dcba3505bb055a6dad683423bc755c",
+    "4090-v32-common-calibration-expanded-validation-v1.json": "d3c3df633614df9da5a5c2cf593f722f38398b5e4cedc956139e7b8e05cf53a0",
+    "4090-v32-common-calibration-mandarin-validation-v1.json": "3daca220a3497ecb39804bf91f79c5abf0b85231283a909a95b730fe590985f4",
+    "4090-v32-common-calibration-dipco-validation-v1.json": "043bf924e2ad3d6cb2cf12dd7a13b5952ab4795601f0c7a08e315ec64a2d8261",
+    "4090-v32-common-calibration-libri-dev-other-validation-v1.json": "a19b78bd9f541ca62b354826e6097be8c7a5846a997c38816730bec11fd6f345"
+  },
+  "decision": "Reject v32 replacing frozen v30. Both original and shared-calibration v32 lack a working point on the predeclared expanded grid. Removing prefix-negative replacements did not improve this recipe. Does not prove all prefix labels correct or all alternative label strategies ineffective.",
+  "limits": "Repeated development data; proxy positive windows and early events are not verified phonetic endpoints. Shared representative inputs reduce calibration input confounding but checkpoint selection and learned states differ. No final data scored, no Hi ESP recall/latency acceptance."
+}
