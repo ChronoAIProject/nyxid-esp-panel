@@ -13,6 +13,7 @@ import tensorflow as tf
 
 from features import FRAMES
 from evaluate import events, smooth, THRESHOLDS
+from matched_confuser_windows import ARMS, MatchedConfusers
 from near_word_windows import key as near_word_key, load_windows, map_end
 from paired_training import CONFUSERS, PAIRS_PER_BATCH, Sampler as PairSampler, training_loss as pair_training_loss
 
@@ -49,6 +50,8 @@ def main():
                         help="Training-only ranking penalty for the same-voice pairs")
     parser.add_argument("--paired-phrase-gain", type=float,
                         help="Training-only multiclass loss for the same-voice phrase pairs")
+    parser.add_argument("--matched-confuser-bank", type=Path, help="Training-only same-speaker ambient negative bank")
+    parser.add_argument("--matched-confuser-arm", choices=ARMS)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
                         help="Choose TTS engines by square-root corpus size or equally; sample clips within each engine")
     parser.add_argument("--hard-negative-fraction", type=float, default=0.,
@@ -80,6 +83,9 @@ def main():
         parser.error("Choose a pretrained encoder or learned initial weights, not both")
     if not 0 <= args.hard_negative_fraction <= 1 or args.hard_negative_pool < 1 or args.hard_negative_start_step < 0:
         parser.error("Invalid hard-negative mining settings")
+    if (bool(args.matched_confuser_bank) != bool(args.matched_confuser_arm) or
+            (args.matched_confuser_bank and (args.export_only or args.hard_negative_fraction))):
+        parser.error("Matched confusers require a bank and arm without online mining or export-only mode")
     if args.near_word_windows and (args.export_only or args.hard_negative_fraction):
         parser.error("Near-word rescheduling requires training without hard-negative mining")
     if ((args.paired_near_words and (not args.near_word_windows or args.negative_focus_gain))
@@ -109,6 +115,8 @@ def main():
     records = json.loads(index_bytes)
     windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
     pair_sampler = PairSampler(records, windows, frames) if args.paired_near_words else None
+    confusers = (MatchedConfusers(args.matched_confuser_bank, args.matched_confuser_arm, frames)
+                 if args.matched_confuser_bank else None)
     scheduled = changed = 0
     groups = {}
     for split in ("training", "validation", "testing"):
@@ -193,6 +201,8 @@ def main():
                 ids = np.zeros_like(y)
                 ids[:PAIRS_PER_BATCH, 0] = ids[32:32+PAIRS_PER_BATCH, 0] = np.arange(1, PAIRS_PER_BATCH + 1)
             y = np.concatenate((y, ids), axis=1)
+        if mine and confusers:
+            confusers.apply(samples, current_step)
         x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -396,6 +406,7 @@ def main():
               "paired_near_words": None if not pair_sampler else {
                   "gain": args.paired_near_word_gain, **pair_sampler.metadata()},
               "paired_phrase_gain": args.paired_phrase_gain,
+              "matched_confusers": confusers.metadata() if confusers else None,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
                                        "pool_multiplier": args.hard_negative_pool,

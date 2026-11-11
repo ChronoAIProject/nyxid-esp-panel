@@ -1,0 +1,86 @@
+{
+  "scope": "Matched training-only natural speech confuser ablation. Development validation only.",
+  "hypothesis": "A few same-speaker high score speech negatives can reduce false events in the high-recall auxiliary initialization.",
+  "parent_plan_sha256": "8a17cdd1ca510eead4c02cfdbf9f628013c06d5621dd17fa5338e5ba480e5b64",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "f2902ed53f42d82589eba766c43c0d8f7f1afe26f993265117e42bc8c1da263e",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "model-phrase_aux",
+    "file": "best.weights.h5",
+    "sha256": "24fbca84e3a3a246fba155a83b3c4ecece156374ef69f4d79e892fa43575478b"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs replace eight positive and eight TTS negative slots in each 128-row training batch in both arms. Same engine, corpus, fixed voice/preset, delivery metadata and rendering variant; exclude voice-description-only Qwen and multi-voice Piper. Independent seed 381 and same within-band phase draw; original representative inputs remain unchanged.",
+  "arms": [
+    "ordinary",
+    "hard"
+  ],
+  "advance": "Require 250 identical speaker/window pair draws and the same representative input digest and exported interface. A candidate must have zero continuous development events and <=1% worst-source and worst-source/corpus false fraction, and retain macro recall within 3 points of the ordinary arm at a matched feasible gate. Report fixed .97 and whole grid. Keep final sets sealed.",
+  "limits": "Only 22 distinct training utterances from 20 speakers; the development screen does not prove independent generalization or board parity.",
+  "objective": "Same weighted BCE, same positive and synthetic-negative pairs. Each fourth training batch replaces one ambient negative slot, with a matched same-speaker ordinary or mined window. Both use identical schedule, augmentation randomness and export calibration inputs.",
+  "bank_sha256": "f97b0d68ee5dfb190c59060073c8bb539dc25a1b91a3ad34c25c76ec9f688ac9",
+  "bank_data_sha256": "845cbae9ab35ae4b76affc31e9f2f821098689fda7978561e5cd23f4a2683f67"
+}
