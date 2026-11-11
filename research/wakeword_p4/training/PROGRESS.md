@@ -1032,6 +1032,32 @@ set. It does not justify a firmware score-format change or establish a new
 calibration. Reproduce with `probe_score_ceiling.py` using the frozen hard
 model, original feature view and `validation-hard` directory.
 
+### Phone cues at the first wake score crossing
+
+The [offline phone probe](../results/microwake-causal-phone-verifier-v1.json)
+reconstructs all 97 detector inputs and matches their cached features. It
+uses all 41 false clips (21 original sources) and 56 distinct positive
+sources that crossed the mined model's fixed .994 development reference.
+The pinned Wav2Vec2 phone model decodes up to 2.4 s of PCM ending at the
+first crossing. It detects an /m/ in 14 of 15 standalone “Hey Mix” clips
+and a /t/ in 10 of 18 standalone “Hey Next” clips at that point.
+
+Requiring the full phone sequence for “Hey Nyx” rejects all 41 false clips
+but retains only 5 of 56 positives at the crossing. Another 240 ms raises
+that to 6 of 56; even the complete clean source yields only 9 of 56. Some
+near-word cues are already available at the crossing, but this phone
+readout is unsuitable for a verifier. These synthetic development clips
+cannot establish human pronunciation coverage or acoustic latency. No
+audio was played, no microphone was used, and no firmware was changed.
+
+To reproduce, use the local model and Python dependencies pinned by
+`plans/microwake-near-word-errors-v1.json`. Run
+`probe_causal_phone_verifier.py --features <features-expanded-human335>
+--validation <validation-hard> --backgrounds <original-render-backgrounds>
+--phone-model <phoneme-audit-model> --output <new-report.json>`, using the
+matched fine-tune's `validation-hard` directory. The checked-in result
+retains aggregate counts only.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
