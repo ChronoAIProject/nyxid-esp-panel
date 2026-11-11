@@ -146,10 +146,17 @@ def fit(kind, fold, x, labels, rows, train_ids, test_ids, plan, initial, output)
         kernel_initializer=tf.keras.initializers.GlorotUniform(seed=plan['head_seed']))(inputs))
     full, update = update_factory(encoder, head, plan)
     packed, lengths = targets(labels, kind)
+    probabilities = None
+    if plan.get('intent_sampling', 'uniform-crop') != 'uniform-crop':
+        from intent_sampling import hierarchical_probabilities
+        if plan['intent_sampling'] != 'engine-class-source-render-crop':
+            raise ValueError('Unknown intent sampling policy')
+        probabilities = hierarchical_probabilities(rows, train_ids)
     rng = np.random.default_rng(plan['draw_seed'])
     schedule, history, started = hashlib.sha256(), [], time.monotonic()
     for step in range(1, plan['steps']+1):
-        ids = rng.choice(train_ids, size=plan['batch_size'], replace=True).astype(np.int32)
+        ids = rng.choice(train_ids, size=plan['batch_size'], replace=True,
+                         p=probabilities).astype(np.int32)
         schedule.update(ids.astype('<i4', copy=False).tobytes())
         loss, norm = update(x[ids], packed[ids], lengths[ids])
         if step % 250 == 0 or step == plan['steps']:

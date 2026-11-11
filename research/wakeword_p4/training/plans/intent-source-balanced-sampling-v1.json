@@ -1,0 +1,151 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "unique_crops": 3112,
+  "classes": [
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "word_tokens": [
+    "blank",
+    "hey",
+    "nyx",
+    "mix",
+    "next",
+    "nick"
+  ],
+  "steps": 1000,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "encoder_learning_rate": 0.0002,
+  "head_learning_rate": 0.003,
+  "global_clipnorm": 5.0,
+  "diagnostic_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_engine_macro_gain": 0.03,
+    "maximum_nyx_recall_regression": 0.01
+  },
+  "scope": "Training-only paired whole-word CTC sampling experiment; no binary wake validation or deployment.",
+  "hypothesis": "Cartesian pair replication and uniform unique-crop sampling give unequal engine/class/source weights. Test one hierarchical alternative with equal engine, intent, original source hash, render variant and then crop mass. This tests the sampling recipe, not a proven cause of wake failures.",
+  "parent_result_sha256": "a1971feb9be4b5f93c08d5f8821d168c9aeb47a45527967e12c065a4898c9152",
+  "parent_plan_sha256": "6252177b040f091550e83bf4f749dd4de9a9835d7018628fc6678d98653037e6",
+  "inventory_sha256": "ff0c23118b4790e0258b06de9dff7878485f99020746a005237ecd71f667c8d7",
+  "policies": {
+    "control": "uniform-crop",
+    "balanced": "engine-class-source-render-crop"
+  },
+  "folds": "One full-bank fit and five leave-one-engine-out new fine-tunes per arm. Both use the exact original binary initializer, Glorot word head, loss,1000 updates,batch32,Adam rates and clip5; only row sampling differs. Every retained engine must cover all four intent classes. Build hierarchy from the training fold only. One final checkpoint; no tuning, additional seed, budget extension, validation, export or threshold selection.",
+  "control_replay": {
+    "full-fit": {
+      "summary": "e9d21450c53967be7297618356ae926bfeeab81dc194f59286896d83bd968e51",
+      "draw_schedule_sha256": "f950e037a7255c95742335022b9525086a7637842e9627ce2207d90928ec270b",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "19c8fe09fb547b76dc7ae007c35ec6d6ffaf5268ada05b42ccee09454a72696a",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "6bc08112a54e2917edd27fc36eeb17cfcf5e4be249bafa285e926d5ab86f167a",
+      "scores": "19096ac18c486305b668bf846abbbfd8c6f6da5f2cf8cc224f00e0bc62bed1a3",
+      "decoded": "014b8460e7825f8d051f993e0589eab1995c77eb30717c542b26be86fe82cb38",
+      "train_ids": "f571b49f0b8c3251311785d93be9efee507863890275f2dead08b4d78053dc25",
+      "test_ids": "f571b49f0b8c3251311785d93be9efee507863890275f2dead08b4d78053dc25",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    },
+    "edge-tts": {
+      "summary": "b5bfce181cbda87c0a8045fb577fb80320f152fc05b949375981779ecfbc3790",
+      "draw_schedule_sha256": "c98c89f43beb868dde373e13b1ab4ac6fe322da493b25c88348b5ed437df3fef",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "0222edade46a146fd7099bfb41d7d9e151ceb9b361a10a5a42ca4607cb11b6d2",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "6decaf0646fcf2caa4639ae04dc1d901b255914095da07b44c7e373a6dc99280",
+      "scores": "2dd4e1ab6ae05fbf7511172ab4aefa3fc19474989c7893b198401ad5407a532a",
+      "decoded": "f53af4a396cbfef248f4ecc3e7f9eb4516afbf4f1371d3c23935c78f917f6e64",
+      "train_ids": "f18e3a2b2473a47b4b39042e48c2fc22d81aefebe8c546712df273488f160578",
+      "test_ids": "fc62683cb885804aa761521dac50ca182266277dfd9a25d937c70969d3e37362",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    },
+    "kokoro": {
+      "summary": "796747c4fa84b7024ca2c47f21ac1640eb877704fb517710082ee2545264d323",
+      "draw_schedule_sha256": "718ffea56b93e27da336bf078c534bf7ba62e29db3577fc19c7799422f612c22",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "cb785f055b33de5f613efb3e8851c83299cf9c271074ffbb503ab608bd406eed",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "bfd18af286b050d876f7a79792dd4af6947ed49f04f5fb871dd09798e86a84e1",
+      "scores": "427f3f021089e30d5404024cbf9eb68b64f24cfafba03daf65c4eea083ce80f3",
+      "decoded": "755c799b9ed011ba96ff7544ff6d38bda36054215a3b7e82b4012f55e2290204",
+      "train_ids": "1652366dc6b126ec0df0c03d0184256c58776c0ce14813f858a28df17a8fe99e",
+      "test_ids": "055ec5489f3ec90e2966d56dace86f120c5741ffc68a7f42bd26fcf5f5381a9d",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    },
+    "macos-say": {
+      "summary": "499d3bf6fdbcdcee518906e2d66a9a49017220c7af93042eeaf32a8bfba0da50",
+      "draw_schedule_sha256": "a4967285de5593e002605559ad62c1a9e4426230d3fa3a386a911410962d8931",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "ab0fee07bdac29e2b162b442906f8b6b1209c919e6b727c0343dba7bddf9db74",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "7b12dbaced538e53a31a36d2b0ba897219d4c5995de28786712a1ee15f650f45",
+      "scores": "b7b5735ed19f2bb5dbb355cf06b1b896b1d75fbda0d434d8efae8055ec5ea7ad",
+      "decoded": "e2ca15253ac1324332d061b18e3d372b84a0f3ba1fd9c36a39fe1e08877d079e",
+      "train_ids": "c90d5fc0ba3f057d3fe381dc74580dccf5b19366248a7c84de600091de95c00a",
+      "test_ids": "f95780a6bf70e77e2acf90cc90244b49ff80f355e006c717caa441dd787ae6f1",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    },
+    "openai-tts": {
+      "summary": "422f48ab8d82410b33bb8bed10a00997865430271ed639a803927bdbec5dba87",
+      "draw_schedule_sha256": "3c3a47110fd48322a0c55f599c64b219c62f05f291e880c36ba8d461170255e7",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "c3fcfdc34ae22c215a0b202e277b7871806ef686607a7c835eae5506c81fc5f8",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "99ebe1ed2ca99f11d74f688321a6817049798d216f30cd35c6047834b5a78444",
+      "scores": "595ffe550b5cb01b49ff983c8a7c954ba3f89cb2507938ed45acf2040a584d73",
+      "decoded": "54bec45467e6b53a6595d0cdf4e79149445e3915bd58c58e15a9b1fa1d77cd1a",
+      "train_ids": "b5a787e32ebc26f8d0f5c202ca55d0dbc23a3a5186bd653e8bce427628efa254",
+      "test_ids": "a67d4c5d893a563e5137adbc875f9be1266d20fb1d906414cdfa34b361006f7b",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    },
+    "piper": {
+      "summary": "d8c50928937bd0b76691b40b709dbe3b38e88fe3066cdb029ec8d69f8052f4b1",
+      "draw_schedule_sha256": "b86e3a5cf479067470733eefb6692de10084b6f5234efd88bab70906772601fa",
+      "encoder_weights_before_sha256": "6ac88ef5f2e65c570a6cf1377a89de9e5264c0788197c4a13fbd9c90d2ba8a4c",
+      "encoder_weights_after_sha256": "e9bb322e25618101bd8de9afd6ca95b0e05ba4fd89bb1dd2d34bfaaea8aee44b",
+      "classifier_weights_sha256": "5f5bb5565e811a8303f108494b38ccfe3dbd6b369367e58430e07fa848e8e291",
+      "head_weights_sha256": "b4f80bd2368363847feb53849e8048576724253573f2536641647b8c6e5b489c",
+      "scores": "358ead29fcda499b283c8d7b733192dcb1816aec42f0e09b3c671dbafe71a962",
+      "decoded": "1ef71c898852904fc01ca5c80c4c6cdb0c4a657b9baab895c3a7171fad93d4be",
+      "train_ids": "c8579436f898546d2ba6d5b53c90a3d78c8ae2d1f4d9a17f4d3afa4ee04e40b6",
+      "test_ids": "d7f9e318f3088345c26247115f68d7426c7c66467d74f7ba27eec8cf645726a5",
+      "parameters": "bfb7ac474f6b25beea63c50df58d3893a1030631843e05c039b816202a884191"
+    }
+  },
+  "optimization": "Original two-token word CTC NLL/2 only. No conditional term, new label, added data, auxiliary BCE or initialization change. Draw with replacement from float64 hierarchy probabilities and original seed1223; the ordinary control retains the original numpy choice p=None path.",
+  "advance_action": "Use the exact original intent-generalization diagnostic gate: aggregate macro>=95%,Nyx>=95%,confusers assigned Nyx<=1%,engine-macro gain>=3pp,Nyx regression<=1pp. Pass permits a separately designed mixed-source experiment only. Failure rejects this frozen sampling recipe without further same-recipe sweeps.",
+  "limits": "Only previously fitted training-source features. The binary initializer already saw all source engines. Held-engine applies solely to these new fine-tunes and is not independent acceptance. Original synthesis intent and proxy crop endpoints are not verified phonetic truth. Waveform hashes, render variants and Cartesian pairs are not independent human speakers. Equalizing source exposure changes class priors and training draws together, not isolated effects of engine balance. No new threshold/loss/init sweep, reserved-quality scoring, audio device, microphone, speaker, board/OTA, production device, PCM speed or single I2S/AEC/AGC/FIFO changes. Real-user acoustic recall, matched Hi ESP endpoint latency/FAR,P4 resources and long-call/reconnect evidence remain required.",
+  "source_sha256": {
+    "intent_phone_fit.py": "70be2a04ca7a0dab548cbb0ca8621f86a2bfae20a8812b25583049823eccf8e3",
+    "intent_sampling.py": "45777398658c934cf141c4bab2da15db1486a2e7eb68bc8a732a33863b415843",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "study_intent_sampling.py": "fa3ca5fc1a6e30d88f5a60d44427f10f9073e56a6c2260f4b3814f3a787f5259",
+    "test_intent_phone_fit.py": "7bf7aab4db7b95fcbc3b62881603da1b64efe5e9382b17aeb7c4f54563571d84",
+    "test_intent_sampling.py": "4fbd0a6564a1908fd82838a69eed65ce9af2424c08caafc9a8f8c763714882e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "launcher_sha256": "0f1c7cccb399d663cb71f3c30720885736921324425c3a908c6f8a6835793191"
+}

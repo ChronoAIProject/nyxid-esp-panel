@@ -3042,3 +3042,41 @@ immutable sources, actual commands/runtime, raw logs and complete scores.
 Its fresh unauthenticated download verifies all 397 listed member hashes and
 lengths. No source audio, credentials, full feature caches or device state is
 included. No board or audio device was used; Hi ESP parity remains unachieved.
+
+## Source-balanced word sampling diagnostic, preregistered
+
+The GPU branch now advances to `a8e8949`: v33's global prefix-loss masking
+also fails its fixed development comparison, so neither removal nor global
+masking replaces v30. This Mac study does not repeat those policies, rejected
+loss gains or encoder initializers.
+
+The [training-only exposure inventory](../results/intent-source-sampling-inventory-v1.json)
+quantifies another possible limitation: full Cartesian pairing allocates
+37.9447% of row probability to Edge and 2.05534% to Piper. Deduplicating to
+3,112 crops removes Cartesian replication but retains unequal engine, class,
+source and render mass. Nyx has 1,752 crops versus 448/448/464 confusers.
+These are measured training weights, not a demonstrated cause of wake errors.
+
+The [fixed sampling plan](plans/intent-source-balanced-sampling-v1.json)
+compares original uniform-crop word CTC with a single hierarchical alternative:
+equal engine, intent class, original waveform hash, render variant and crop
+within a render. Only the fold's training IDs construct the hierarchy. Both
+arms retain the original encoder/head initialization, two-token objective,
+1,000 updates, batch32, seeds, Adam rates and global clip. One full-bank fit
+plus five engine folds per arm retains all12 final checkpoints and scores.
+Each ordinary control must replay all previous final tensor hashes, complete
+scores/decodes, draws, fold coverage and summary metrics before treatment.
+
+Three focused tests check unequal source/render/crop masses, selected-fold
+isolation and exact control RNG compatibility, and invalid source/class
+rejection. An independent rational-counting audit reconstructs every saved
+probability vector and draw schedule, then all classifications and the
+unchanged original diagnostic gate. That gate still requires >=95% aggregate
+macro and Nyx recall, <=1% confusers assigned Nyx, >=3pp engine-macro gain and
+<=1pp Nyx regression. No tuning or automatic mixed-source training follows.
+
+The initializer already saw these source engines; held-engine means held
+only from the new fine-tune. Equal source hashes are not independent human
+speakers, and balancing changes several exposure levels together. This is
+silent training-feature research; no reserved quality scores, audio devices,
+board, firmware/OTA, PCM speed or single I2S/AEC/AGC/FIFO path is touched.
