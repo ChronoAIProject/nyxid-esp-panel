@@ -3634,3 +3634,22 @@ v36原训练会话持续运行（PID90180，/proc starttime1516616），已观�
 另独立审计默认v35抽样10批完全一致；v36实抽300批4800条得到
 kokoro1542/cori1654/alba1604，原128输入逐值保留、8正8负及BCE缩放逐值检查通过。
 审计4090-v36-sampler-audit.json。原训练不因观察超时重启。
+
+## 新开发数据预留（v36结果之前）
+
+在v36训练仍运行且未产生导出/新来源评分时，先提交270ad79固定SLR83新开发协议，
+再生成音频。不改变已失败v30/v35的旧开发门槛或报告；旧开发回归不是新独立验收。
+固定Piper southern_english_female low/native16k和northern_english_male medium/native22050，
+两模型卡及OpenSLR83原始页面均指向UK/Ireland crowdsourced corpus，CC BY-SA4.0。
+不是VCTK、不是当前训练源；仍不能保证物理人/全局预训练独立，只覆盖两个preset。
+来源manifest SHA10f1c7b0351c6349fb200245b4ccb8a5cd68d929bd0759cfbc911838d51431d8。
+原始页面保存在.local源目录，哈希入报告；许可和引用保留在协议。
+30条=2声音×.85/1/1.15×5词，30/30机械质量通过；保留native float与全长PCM，
+输入音素/token/scales/软件版本均保存，无可用音素duration，不声明声学音素真值。
+源哈希/原生和PCM长度复核，30个PCM唯一；与804个既有训练/开发PCM无字节重复。
+报告4090-slr83-development-{v1,manifest-v1,audit-v1}。当前未作唤醒模型评分。
+同时固定VoxConverse此前未用dev2/dev3元数据（仅元数据，无下载/评分），
+first2 remaining dev indices，报告4090-voxconverse-new-development-plan-v1。
+新stage不把新曝光合并旧dev0/1来挽救旧FAR；背景完整性/重复审计是评分前条件。
+新阈值规则、零混淆词误触发、FAR95<=.5/h等在生成前固定；最终集仍不访问。
+v36原训练观察至24000/120000步；原后处理PID91294仍绑定等待，不重启。
