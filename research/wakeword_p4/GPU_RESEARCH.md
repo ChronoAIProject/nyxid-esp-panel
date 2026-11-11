@@ -4236,3 +4236,14 @@ sampling alone failed joint gate;no new/final scored or promotion,freezev30.
 All original reports retained. Quality source limitations remain. Next work must
 measure whether the intervention reduced training-history false peaks before
 another change, rather than repeat sampler/loss changes without evidence.
+
+### v41 matched training-support diagnostic (2026-11-11)
+
+Original session30464 exit0,all6597variants and prior saved-score hashes verified.
+Matched1995negatives:fullINT8maxfive>=.5 v40115 ->v4129;at.99609375 35->0.
+Original centerfloat negative>=.5 0->23;at.99609375 0->1. Positive4602 fullINT8
+>=.5 4224->4254,at.99609375 3256->2423. Actual temporal sampling changes training
+support,but does not fix old-development confusion/FAR. Selected checkpoints differ,
+no isolated causal/generalization proof. All scores/reports preserved. Next same
+v41weight fullfloat comparison required before quantization attribution;no new/final,
+no promotion,freezev30. Avoid repeating temporal sampling alone as solved approach.
