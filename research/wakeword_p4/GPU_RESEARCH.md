@@ -3235,3 +3235,12 @@ threshold=0.91796875，smoothing_steps=5；未重新导出、校准或训练。
 下载地址与验证记录：results/gpu-v30-p4-handoff-v1-download.json；
 清单：results/gpu-v30-p4-handoff-v1-manifest.json。
 只交接模型/研究元数据；PCM自测、P4输出/资源与同条件Hi ESP对照由Mac侧开展。
+
+## 显式音素、未裁切合成pilot预声明
+
+Kokoro 0.4.9支持is_phonemes=True、trim=False。固定Hey Nyx输入hˈeɪ nˈɪks，
+并生成Nick/Next/Mix混淆词；4个已有training声音×3速度×4短语=48条。
+只用训练声音，不声称新独立留出数据，不读取最终集，不评分唤醒模型。
+原生24k float波形npy与16k PCM16 WAV同时保留，核对token/duration与样本数。
+自动门槛在推理前固定：有限值、0.2–5秒、RMS≥0.001、零abs(sample)≥1；
+完整原生输出不裁切。生成末端不冒充末音素真值。见synthetic_phone_pilot.py。
