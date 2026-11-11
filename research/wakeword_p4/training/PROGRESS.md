@@ -1598,3 +1598,17 @@ are retained; no cap sweep or new firmware candidate is authorized by the plan.
 This study runs silently from cached features. There is no speaker playback,
 microphone recording or board operation. Future audible testing needs advance
 notice of its content and duration. The full Hi ESP comparison remains open.
+
+Both frozen runs launched from commit `5c7806e` into
+`microwake-phone-ctc-balanced-v1`, using private immutable source snapshots.
+The same warmup progress is reproduced through step 1,500 in both live
+processes; this is auxiliary training progress, not wake recognition evidence.
+The reusable [input auditor](../../handoff/audit_phone_study.py) verifies the
+committed plan, executed snapshots, input paths, bank and index hashes,
+complete prior warmup replay, preserved binary state, shared batches/draws/PTQ,
+the encoder bound and the exact original control export before validation.
+It successfully re-audits the completed joint study and rejects a deliberately
+changed plan before scoring. Its report explicitly does not claim to hash
+the entire external scalar feature cache. Use its `--help` for the explicit
+input paths; it accesses no audio device or firmware. Final balanced-study
+training and wake validation are still pending at this snapshot.
