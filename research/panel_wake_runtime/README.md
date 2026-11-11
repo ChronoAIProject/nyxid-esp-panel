@@ -239,7 +239,7 @@ object-only `-Wno-error=format-truncation` exception in both builds; product
 source and detector compiler flags were unchanged. Acoustic recall, word-end
 latency, room false wakes and long-call/echo/reconnect checks remain open.
 Coordinate subsequent candidates through
-[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
 ## Temporary board test
 

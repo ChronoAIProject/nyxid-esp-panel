@@ -1,0 +1,28 @@
+{
+  "scope": "Frozen v30 on the complete already-consumed Mac paired regression, versus retained official Hi ESP P4 PCM results. Not independent or acoustic acceptance.",
+  "source_asset": "paired-mac-regression-v1.tar.gz",
+  "manifest_sha256": "c776e3790d4df96774e5a9b4b3d0526135621d93e69c6caa25959f9772f0b39f",
+  "baseline_sha256": "df1cf05a694c14a284b92760bb300c75fc6bc58eafbd329ed2c99b2a20f51770",
+  "profile_sha256": "fdf4911db5063ff0e648ab68cca10d82bab8a362d2a8d42418df9aece4880918",
+  "source_count": 350,
+  "target_counts": {"hey_nyx": 50, "hi_esp": 50, "none": 250},
+  "voices": ["Daniel", "Karen", "Moira", "Samantha", "Tessa"],
+  "variants": [0, 3],
+  "sample_rate": 16000,
+  "pcm_speed_changed": false,
+  "v30_prime_samples": 56160,
+  "v30_block_samples": 480,
+  "v30_threshold": 0.91796875,
+  "smoothing_steps": 5,
+  "refractory_steps": 67,
+  "host_versions": {"ai-edge-litert": "2.3.0", "pymicro-features": "2.0.2", "numpy": "2.5.4", "scipy": "1.17.0", "soundfile": "0.13.1"},
+  "policy": "Every manifest row in original order, whole original PCM after application zero prime, tail zeros only to complete 480-sample blocks. Reset and exactly replay each stream twice. No source/model/threshold selection from results.",
+  "event_accounting": "Retain original float64 five-score convolution events and separately firmware double-sum/divide events. Convert one-based raw score step s to returning detector block end 480*(s+1), minus the prime. Keep any prime events separately, all original-source and padded-tail events, and every host/device-policy difference.",
+  "reports": "Any-event and existing estimated-end [-100,+800] ms window by voice/variant; shared ordinary, Nyx-near, ESP-near and opposite-phrase groups separately. Estimated synthesis/RMS endpoints are not phonetic ground truth.",
+  "limits": [
+    "All sources previously informed Mac development; 350 correlated clips do not establish new speaker coverage or final acceptance.",
+    "Hi ESP is a retained standalone P4 measurement; new v30 scoring is host INT8 reference with a separate one-fixture P4 agreement. Do not call this a 350-clip v30 P4 run.",
+    "Both engines have their own pinned zero-priming and block geometry; source PCM bytes remain unchanged. Neither source offsets nor estimated endpoints establish acoustic latency.",
+    "No new final/reserved data, speaker playback, microphone recording, USB/board/firmware, service permissions or production device operation."
+  ]
+}

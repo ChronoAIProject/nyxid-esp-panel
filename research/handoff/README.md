@@ -1829,7 +1829,7 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 ## Original GPU v30: silent full-app P4 probe completed
 
 Coordinate Mac/P4 and RTX 4090 research in
-[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 The [result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json) verifies the
 original model, all 179 host/P4 output bytes and event step 144. All 12
 preselected training-only reset traces reproduce: eight vary and four stay

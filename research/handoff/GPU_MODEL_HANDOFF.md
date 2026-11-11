@@ -1,7 +1,7 @@
 # GPU detector handoff to the P4
 
 Current cross-machine coordination:
-[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 The original v30 handoff has now been received and tested in the complete P4
 application; see the completed probe below. Earlier availability observations
 are dated historical snapshots.
@@ -216,4 +216,4 @@ UART and microphone audio are excluded. Commands, dependency pins and the
 The missing-model blocker is resolved. Recognition, acoustic/word-end latency,
 room false wakes and active long-call/echo/reconnect comparison remain open;
 v30 is not promoted. Post future completed GPU evaluations and original model
-archives to issue #14, preserving the existing experiment protocol.
+archives to issue #13, preserving the existing experiment protocol.

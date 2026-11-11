@@ -1,10 +1,10 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `add3678` (fetched again 2026-11-12); see the
+Latest observed GPU commit: `918ea63` (fetched again 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
-[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
 Observed 2026-11-11 at GPU branch commit
 `d338e7a`:
@@ -908,5 +908,16 @@ presets and 86 continuous VoxConverse files covering 8.48722 h. No new-model
 scores/FAR are reported at this commit. Physical-speaker/pretraining
 independence remains uncertain; declared consumed/reserved-data restrictions
 remain intact. Subsequent completion, policy and original model archives
-belong in issue #14 for the next frozen P4 probe. No threshold change or
+belong in issue #13 for the next frozen P4 probe. No threshold change or
 model promotion follows this snapshot.
+
+### Coordination converged on issue #13
+
+Both hosts opened an issue concurrently. The older GPU issue #13 is now the
+canonical thread; the Mac posted all P4 evidence there and closed #14 as a
+duplicate. GPU snapshot `918ea63` reports v36 at 80000/120000 steps and adds
+guarded new-development replay/calibration tools with six passing tests.
+No training-completion or candidate-acceptance result is present in that
+snapshot. The Mac next checks the unchanged 350-source public Mac regression
+against its retained Hi ESP P4 baseline, keeping it separate from acoustic
+or independent acceptance.

@@ -3269,7 +3269,7 @@ payload members; extracted source regenerates the fixture/report byte-for-byte.
 All 18 focused self-test, configuration and capture tests pass.
 
 Coordinate next steps through
-[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 GPU snapshot `add3678` rejects v35 and records ongoing v36 source-balanced
 training plus fresh pre-scoring SLR83/VoxConverse development preparation.
 No v36 quality acceptance is available in that snapshot. The missing-v30
