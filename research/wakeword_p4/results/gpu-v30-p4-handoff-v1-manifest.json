@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "gpu-v30-p4-handoff-v1",
+  "repository": "ChronoAIProject/nyxid-esp-panel",
+  "source_commit": "f212a40fdae2f077572383187937a4c4d3a525fa",
+  "source_commit_meaning": "Original v30 research publication commit; ignored model artifact authenticated by model_sha256 in its byte-identical original training report, not a tracked model blob.",
+  "frozen_parameters": {
+    "threshold": 0.91796875,
+    "smoothing_steps": 5
+  },
+  "trigger_notes": "Original float64 five-score convolution; rearm below half threshold; 67-step refractory; reset at stream boundaries.",
+  "scope": "Frozen original export and original research metadata only. No PCM vectors or P4 equivalence claim.",
+  "files": [
+    {
+      "name": "hey_nyx.tflite",
+      "size_bytes": 54440,
+      "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "source_path": ".local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite",
+      "source_commit": "f212a40fdae2f077572383187937a4c4d3a525fa"
+    },
+    {
+      "name": "training.json",
+      "size_bytes": 152118,
+      "sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+      "source_path": ".local/wakeword/model-gpu-v30-ami-extra/training.json",
+      "source_commit": "f212a40fdae2f077572383187937a4c4d3a525fa"
+    },
+    {
+      "name": "4090-v30-expanded-calibration.json",
+      "size_bytes": 220807,
+      "sha256": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+      "source_path": "research/wakeword_p4/results/4090-v30-expanded-calibration.json",
+      "source_commit": "f212a40fdae2f077572383187937a4c4d3a525fa"
+    }
+  ],
+  "manifest_self_hash": "Not embedded recursively; manifest is covered by archive SHA256 and external verification report."
+}

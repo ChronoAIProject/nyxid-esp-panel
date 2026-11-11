@@ -3222,3 +3222,16 @@ CTC经常输出HEYNIX等连写。事后仅删除空格的敏感性诊断为正20
 下一研究决策：停止使用无参考ASR一致率自动清洗；优先取得盲听发音/末音素标注，
 再在训练/开发范围核验音素监督或数据修复假设。没有参考时，不启动无明确依据的新参数轮训。
 v30仍冻结，最终达标目标继续active；现有最终集不可重用作为新独立验收。
+
+## 冻结v30交接Mac/P4（2026-11-11）
+
+按用户要求原样打包hey_nyx.tflite、原始training.json、原始expanded-calibration报告及manifest。
+模型54440 bytes，SHA256 04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c。
+两份报告逐字节核对原始发布commit f212a40fdae2f077572383187937a4c4d3a525fa；
+模型为未跟踪原始产物，以同commit训练报告记录的模型哈希认证，不声称模型blob已在Git内。
+threshold=0.91796875，smoothing_steps=5；未重新导出、校准或训练。
+已上传现有research-hey-nyx-20261110 Release，并无认证重新下载核验归档及全部4成员。
+归档SHA256 60000e37f1b01c408f48f6310bfa7c6d0e837fe6d808127aab9de9a88e1e3cb5。
+下载地址与验证记录：results/gpu-v30-p4-handoff-v1-download.json；
+清单：results/gpu-v30-p4-handoff-v1-manifest.json。
+只交接模型/研究元数据；PCM自测、P4输出/资源与同条件Hi ESP对照由Mac侧开展。
