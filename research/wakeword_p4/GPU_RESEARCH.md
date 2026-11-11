@@ -3535,3 +3535,14 @@ v35仍原进程115000步以上，尚未用其分数选新开发阈值；官方�
 随后应用已预注册新开发阈值规则。任何缺产物或失败不重启训练/评估。
 不改原训练、checkpoint选择或旧阈值，所有阈值选择仅使用已声明development数据；
 未自动发布、未自动访问最终数据、未自动升级v30。
+
+v35正式训练完整终结exit0，120000步1849.5秒，选中35000步；54440bytes/22801参数。
+模型SHA897b5e0bccf1ed23e38d3c0492144c2c1a52dd0e1094ded78600b87e2993569b。
+全部H5数据集有限值，frozenBN快照不变，单[1,3,40]输入/[1,1]uint8输出；
+训练和导出审计4090-v35-{training,export-audit}.json。后处理原会话已启动开发回归，未升级。
+
+HiESP新背景87条同PCM复放完整终结exit0，8.173672725694447h中1事件，
+upper95 .5803834675/h；v30同曝光2事件upper95 .7702527166/h，双方均未过.5/h。
+逐录音官方CRC/stage/manifest/PCM与Nyx特征来源/曝光关联全87条核验。
+报告4090-hiesp-voxconverse-development-v1.json及4090-v30-hiesp-voxconverse-development-comparison-v1.json。
+不以1对2事件解释匹配总体FAR或显著胜负，不访问最终数据，不额外加曝光挽救此次开发结果。
