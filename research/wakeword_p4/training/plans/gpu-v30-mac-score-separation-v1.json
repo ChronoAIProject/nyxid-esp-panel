@@ -1,0 +1,30 @@
+{
+  "scope": "Exact score-separation diagnostics on the already-consumed frozen v30 Mac regression. No model inference, threshold selection or acceptance.",
+  "full_result_sha256": "47ccac0cfd8d9b3809aa62e6b9f8232e70ea1d12655959648a4067b3a608c57b",
+  "scores_sha256": "374a399faa3f2acfc0603ef358767d08844f811f1d59f595c7fb7c90dacd8f29",
+  "mac_commit": "1234fb1ea52261252eb05595b71485a9f6fade86",
+  "gpu_commit": "d33e9ad",
+  "sources": 350,
+  "positive_sources": 50,
+  "nyx_confuser_sources": 90,
+  "ordinary_sources": 100,
+  "prime_samples": 56160,
+  "block_samples": 480,
+  "score_window": 5,
+  "threshold": 0.91796875,
+  "descriptive_hiesp_reference_hits": 48,
+  "method": [
+    "Verify complete source/result identities and all saved UINT8 output hashes; preserve every source and its original order.",
+    "Use exact integer sums of each five-score window, denominator 1280, restricted to returning block ends after the application prime. Also retain actual original float64-convolution maxima.",
+    "Check that the common prime cannot trigger at any positive threshold and that score-existence at the frozen threshold reproduces each retained source event boolean.",
+    "For zero Nyx-confuser false clips, a monotone scalar threshold must strictly exceed the largest confuser score. Count positive maxima strictly above that score as an optimistic upper bound; keep ties explicit. Repeat for the original host arithmetic.",
+    "Count positive sources with any nonzero score. If fewer than the descriptive Hi ESP reference hits, no positive threshold can reach that reference even before false clips are considered.",
+    "Retain worst-confuser witnesses and per-voice score distributions; do not propose a new threshold, relabel, crop or discard any waveform.",
+    "Compare location-free ASTs of features() and Detector in the pinned Mac and GPU commits. Code equivalence does not establish native-library/platform equivalence."
+  ],
+  "limits": [
+    "Necessary score-separation bounds for these reused synthesis-intent labels, not population recall/FAR or proof of a pronunciation or training defect.",
+    "The Hi ESP 48/50 is a descriptive retained baseline; it is not a newly selected acceptance gate or a matched-FAR population statement.",
+    "Original source/prime padding and detector return geometry remain unchanged. No new inference, audio, board, firmware or reserved-data operation."
+  ]
+}
