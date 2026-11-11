@@ -2057,3 +2057,28 @@ are retained. The broader-bank dependency and external full scalar feature
 cache are explicit; H5 files omit Adam slots. The shared research branch and
 release contain the completed evidence. This remains a rejected fixed recipe,
 not a general claim that more data or compact sequence supervision cannot work.
+
+### Same-weight scalar precision diagnostic
+
+The previous goal turn made concrete progress: the broader bank and matched
+training/validation, full cached reconstruction and verified publication all
+completed. Both models failed; no process remains live and no deployment is
+qualified. The GPU research branch still has no new model handoff.
+
+Earlier representative-count/boundary experiments already failed to repair
+older checkpoints. The broader models' training-time float validation also
+contains errors, but its windowed/startup accounting cannot quantify the
+actual streaming INT8 contribution. The [separate training-only export plan](plans/scalar-precision-export-smoke-v1.json)
+therefore freezes numerical feasibility before a possible new quality run.
+It converts each unchanged original SavedModel to float TFLite without fitting
+or recalibration, compares every streaming step (including startup) against
+the saved float graph and all complete windows against the original H5 model,
+and checks exact float reset/chunking plus unchanged inherited INT8 replay.
+Twenty fixed training sources cover five engines and four intent classes.
+
+Two actual-TFLite tests independently verify a stateful recurrence across a
+256-step boundary, fresh reset, input clipping, incomplete final steps and
+rejection of a wrong stride interface. No numerical export or development
+diagnostic has launched at this commit. A pass permits only a separately frozen
+precision comparison; it establishes no recognition, false-wake, latency,
+P4 resource, real-speaker or voice-call acceptance. All work remains silent.

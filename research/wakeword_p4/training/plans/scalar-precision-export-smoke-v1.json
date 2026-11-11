@@ -1,0 +1,215 @@
+{
+  "scope": "Training-only same-weight scalar float export and streaming-state/alignment smoke before any precision-quality diagnostic.",
+  "hypothesis": "Establish that a float TFLite diagnostic reproduces the original saved float stream and complete causal windows, while the unchanged INT8 adapter reproduces the original path. Numerical fidelity alone is not wake quality.",
+  "parent_study_plan_sha256": "44e05b19a55b6f29873edf5392561e6dc30132ab7d7bd6073b230d37c2326d81",
+  "parent_comparison_sha256": "19514194ca423c44f2cf340176397a9e583b1218cfcb5025d9b10bde00d20e1c",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "model_files_sha256": {
+    "control": {
+      "best.weights.h5": "8254de05e1330030ca2b0371ea294c47cf3623aae836d836a31e89f4d3b917d2",
+      "hey_nyx.tflite": "270242cba83fb285f2ef3a6c5ee962a84e68956e99e82e5c21fb31598be622ec",
+      "saved_model/fingerprint.pb": "d637abd73b73793a1bd0bac0bd21bcee11283d953702ba2be3c004204589597f",
+      "saved_model/saved_model.pb": "78f659fbbf368182ef0a935a6fbee22ce858f35bb042e54b32bef61d44ecb607",
+      "saved_model/variables/variables.data-00000-of-00001": "94eaf5ebba47e712c955b7a334b732c7e260da3d8b30b05855b3fcbd50b7d1ee",
+      "saved_model/variables/variables.index": "64503bb5d119803b194bcafe9adc8a6ca5e098c97273b007099b63fa88ceb327",
+      "training.json": "aeafff46d624ba74629c35bbe47e50f7f9a022018085d4c9dade9ab8148aa058"
+    },
+    "phonetic": {
+      "best.weights.h5": "62b450877480133332d5a0ba670abe8fd83e3a9f6a8d9d10215a9dc3dd031170",
+      "hey_nyx.tflite": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+      "saved_model/fingerprint.pb": "26bd6f9e4ee49aface01a0cc047067e0d54cb9f1ef200e0cf9defffd44ba406c",
+      "saved_model/saved_model.pb": "8096a3f498fd6aa77dbaa4a2cca85285d3fde2991afb484da8595a8a2cb78c6b",
+      "saved_model/variables/variables.data-00000-of-00001": "3ff5116cf06149d0b1eca2425f79f83b13909608d1c306eddd670549efdd12b6",
+      "saved_model/variables/variables.index": "0ffe433ef352981bf9549e6123df4cc396c5216fc8afda79a2a6fdb027609c86",
+      "training.json": "6e655660c1e2351bd031a85fa5a3de2667bf9c7d1e5543e9400a925ae54537a3"
+    }
+  },
+  "source_sha256": {
+    "scalar_precision.py": "e236b37db022a6bc47b1398224b18a23a7e7c94323a0c92f37f7391272c573a2",
+    "test_scalar_precision.py": "33c775faa940b8612a8ede6fc61a38f41a56efb5c2724dd727df849cc57500c5",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "smoke_sources": [
+    {
+      "path": "edge-corpus/training/en-US-AvaMultilingualNeural/002.wav",
+      "variant": 0,
+      "sha256": "00f57dc5c71276498281e5531e5b4f9e2d1393667b153215a8d90e2f7203fc82",
+      "label": 1,
+      "class": 0,
+      "engine": "edge-tts"
+    },
+    {
+      "path": "edge-corpus/training/en-US-AvaMultilingualNeural/010.wav",
+      "variant": 0,
+      "sha256": "0686faa027545fc82a46f680918daed9bf814565a2b297b108a1b7a63c89c58a",
+      "label": 0,
+      "class": 1,
+      "engine": "edge-tts"
+    },
+    {
+      "path": "edge-corpus/training/en-ZA-LukeNeural/009.wav",
+      "variant": 0,
+      "sha256": "05768a57c6e1ca3ee06e1b12193a945ef9349f6c09f6e7b0b7ddd478bee0877c",
+      "label": 0,
+      "class": 2,
+      "engine": "edge-tts"
+    },
+    {
+      "path": "edge-corpus/training/en-US-EmmaMultilingualNeural/008.wav",
+      "variant": 0,
+      "sha256": "145f1dfbebff507fda765197a343819560fa121c4526c68b49fb47cad0b9292b",
+      "label": 0,
+      "class": 3,
+      "engine": "edge-tts"
+    },
+    {
+      "path": "kokoro-corpus/training/af_nova/000.wav",
+      "variant": 0,
+      "sha256": "00f98a4d083ed718edcdee0afb3bd16c52fd4901a599ae4edd1dc32c8696099c",
+      "label": 1,
+      "class": 0,
+      "engine": "kokoro"
+    },
+    {
+      "path": "kokoro-corpus/training/bf_isabella/005.wav",
+      "variant": 0,
+      "sha256": "2061c2f5e8dc64fd199b63dbba922913a44c6afbc994869b742aeb950f47184f",
+      "label": 0,
+      "class": 1,
+      "engine": "kokoro"
+    },
+    {
+      "path": "kokoro-corpus/training/bm_fable/004.wav",
+      "variant": 0,
+      "sha256": "124917b691b904cc6136aa00a48ffa90cb2a8d65fdd356602640b0e6507f772f",
+      "label": 0,
+      "class": 2,
+      "engine": "kokoro"
+    },
+    {
+      "path": "kokoro-corpus/training/af_aoede/003.wav",
+      "variant": 0,
+      "sha256": "00587488883664527d74df3f20ca2b72a5455a1ebf7e2be2fc8df0c289f8b5d2",
+      "label": 0,
+      "class": 3,
+      "engine": "kokoro"
+    },
+    {
+      "path": "mac-corpus/training/Rocko-0/002.wav",
+      "variant": 0,
+      "sha256": "01da94e4c816ffd525cc7a4ce17eccecf58fcbecd87bb0844b14dffa9d9ef9ff",
+      "label": 1,
+      "class": 0,
+      "engine": "macos-say"
+    },
+    {
+      "path": "mac-corpus/training/Fred-0/010.wav",
+      "variant": 0,
+      "sha256": "03478fdfd97cf2338c18af69f02b742a59c17232f9c5d9d84a74eefc78ecce64",
+      "label": 0,
+      "class": 1,
+      "engine": "macos-say"
+    },
+    {
+      "path": "mac-corpus/training/Rocko-1/009.wav",
+      "variant": 0,
+      "sha256": "086a981fbf2b924d5fb38ec0cfe48985d11d034a0018b75016cfa92aa1a3abf7",
+      "label": 0,
+      "class": 2,
+      "engine": "macos-say"
+    },
+    {
+      "path": "mac-corpus/training/Grandma-0/008.wav",
+      "variant": 0,
+      "sha256": "01db97e78feac6a3979606c9a1b5f34cd2a89f90b6f5d03b263441f7f2a1c3c7",
+      "label": 0,
+      "class": 3,
+      "engine": "macos-say"
+    },
+    {
+      "path": "openai-balanced/training/ballad/007.wav",
+      "variant": 0,
+      "sha256": "027e88d501cdb9752b1093ab81940180ea2476561c1bce4067d891808b4a86a6",
+      "label": 1,
+      "class": 0,
+      "engine": "openai-tts"
+    },
+    {
+      "path": "openai-balanced/training/fable/075.wav",
+      "variant": 0,
+      "sha256": "0030983ba3ad0392bbf7fdd3232cbfcb86102c722909190bbcaa3c787dd0418f",
+      "label": 0,
+      "class": 1,
+      "engine": "openai-tts"
+    },
+    {
+      "path": "openai-balanced/training/alloy/074.wav",
+      "variant": 0,
+      "sha256": "03395518cf97daa9eff7049d0cad0e01e45bd5dc1f63d46e8a5595b5bdd1a309",
+      "label": 0,
+      "class": 2,
+      "engine": "openai-tts"
+    },
+    {
+      "path": "openai-balanced/training/alloy/073.wav",
+      "variant": 0,
+      "sha256": "05067204c462a7eb2ad49574a9b050bbf41558d8b254e1b839f57dfa7c7b8440",
+      "label": 0,
+      "class": 3,
+      "engine": "openai-tts"
+    },
+    {
+      "path": "synthetic/training/1/00045.wav",
+      "variant": 0,
+      "sha256": "03f6be271863c3872184715cb37f7aee6e950453b3c8636db350f65f3659d4db",
+      "label": 1,
+      "class": 0,
+      "engine": "piper"
+    },
+    {
+      "path": "synthetic/training/0/00256.wav",
+      "variant": 0,
+      "sha256": "05db6529d1899340beebfc4dfb553145f835c2a3deb8b72b52f583054adfad04",
+      "label": 0,
+      "class": 1,
+      "engine": "piper"
+    },
+    {
+      "path": "synthetic/training/0/02299.wav",
+      "variant": 0,
+      "sha256": "3280c1cd920696efd2be6afe2a7a418b188b80712c44ab01d30583b1cf2134fb",
+      "label": 0,
+      "class": 2,
+      "engine": "piper"
+    },
+    {
+      "path": "synthetic/training/0/02160.wav",
+      "variant": 0,
+      "sha256": "1d4aadee9eb2e5904f9202f63b0783a3a01a062a5aa312fb8e63f6156302737d",
+      "label": 0,
+      "class": 3,
+      "engine": "piper"
+    }
+  ],
+  "maximum_float_alignment_delta": 0.0001,
+  "required_checks": [
+    "Original model/checkpoint/SavedModel and full scalar feature bytes match.",
+    "All20 fixed training sources cover five engines and four intent classes.",
+    "Float TFLite matches saved float streaming at every step, including startup, within1e-4.",
+    "Every complete335-frame causal window matches float TFLite within1e-4.",
+    "Float reset/recreation and256-step chunking replay exactly.",
+    "Inherited INT8 path matches the original adapter byte-exactly."
+  ],
+  "advance_action": "Only if both models pass, separately freeze a full same-source float/INT8 development diagnostic. No training, recalibration, threshold tuning or deployment decision is permitted here.",
+  "limits": "Existing training features and model files only. No weak labels or waveforms are changed, and normal PCM speed / single audio producer remain untouched. No validation/test feature inference, speaker playback, microphone recording, hardware/OTA or production board access. Float TFLite is an offline reference with unmeasured P4 resource/latency cost. A numerical pass is not wake acceptance."
+}
