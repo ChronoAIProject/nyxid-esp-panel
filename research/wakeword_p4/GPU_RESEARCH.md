@@ -4247,3 +4247,14 @@ support,but does not fix old-development confusion/FAR. Selected checkpoints dif
 no isolated causal/generalization proof. All scores/reports preserved. Next same
 v41weight fullfloat comparison required before quantization attribution;no new/final,
 no promotion,freezev30. Avoid repeating temporal sampling alone as solved approach.
+
+### v41 same-weight float full-history training diagnostic (2026-11-11)
+
+Original session9393 exit0,all6597variants.1995negatives fullsequencefloat26>=.5
+versusINT829;both0at.99609375.4602positives float4214>=.5,2528at highthreshold,
+versusINT84254/2423. Highthreshold positive-support reduction also exists before
+quantization.20actual floatstream witnesses,maxsequence residual.00702512264251709;
+no exact/all6597actualstream claim. All variables unchanged,optimizer0.
+Next actual exported float replay on all380already-consumed olddev clips started,
+fixed.99609375,INT8fulltrace exact-reproduction required. Diagnostic only,no
+new/final,FARrescue,thresholdselection or promotion;frozenv30 retained.
