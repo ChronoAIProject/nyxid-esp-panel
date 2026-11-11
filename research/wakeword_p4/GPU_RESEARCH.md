@@ -3154,3 +3154,11 @@ v34正式任务session2782/PID26851存活；初始化所有字段与v30一致，
 修正phase后目标组Piper2585/Kokoro285/Qwen27；Nick312/99/21，
 Next277/93/22，Mix262/95/20；均按完整源有效支持筛选，未引入最终数据。
 启动审计results/4090-v34-startup-audit.json；不作为发音正确或质量证据。
+
+## v34训练/导出完成
+
+完整120000步，选中80000步，训练及导出2056.4s；54440B、22801参数。
+原INT8模型SHA ddb05cd3b83d1c6884aacbb290044ad4808b9a78c17dd4dddc6f236a69157e07。
+基线固定字段全部与v30相同；辅助权重/manifest/代码SHA符合预注册，保存best辅助权重SHA。
+报告4090-v34-training.json与4090-v34-training-configuration-audit.json。
+原session2782继续完整开发评估，未评分任何最终数据，尚无候选优劣结论。
