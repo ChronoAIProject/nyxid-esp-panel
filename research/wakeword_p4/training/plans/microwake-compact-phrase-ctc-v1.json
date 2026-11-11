@@ -1,0 +1,133 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs per training batch replace eight positive and eight TTS-negative slots, fixed seed431 pair permutations, same fixed complete windows in both arms. No original source labels are replaced by teacher classes.",
+  "arms": {
+    "control": 0.0,
+    "phonetic": 0.1
+  },
+  "advance": "Require identical first 16 training batches, pair draw schedule, frozen-head warmups, representative inputs, scalar INT8 export and validation exposure. Treatment must have zero continuous development events, <=1% worst engine/corpus and engine false fraction, and >=3 percentage points macro recall over control. Select control at its best recall in the same strict gate, else a 2% zero-event gate, else its minimum-false zero-event point, preserving prior policy. Only if control has no zero-event grid point, compare with its frozen .97 reference and additionally require treatment worst-group false fraction <=control .97 worst-group fraction. This is a development advancement screen, not Hi ESP parity or firmware approval.",
+  "control_fallback_reference": 0.97,
+  "phone_bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "phone_bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "phone_objective": "ctc",
+  "scope": "Separately preregistered compact original-intent sequence supervision versus binary-only wake training; development validation only.",
+  "hypothesis": "Compact two-token CTC can learn the fitted training bank when the encoder trains. Test whether that learnable task improves the actual scalar wake detector against an identically trained binary-only control. Training-bank fit is not the advancement decision.",
+  "parent_fit_plan_sha256": "c380317fdac25d76c87d580d43cfd891518671baf7dfbc93c02c6fe423679949",
+  "parent_fit_result_sha256": "c9141464a9db15860924e57d6a7fdf748384e12fb291889fdb25ceccfbf4531b",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+    "bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+    "rows": 236,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "source_sha256": {
+    "compact_phrase_ctc.py": "d5bc3f675e216b14bf1c1831e6c857edba19da5b7b7b75fc67577962e855e2ba",
+    "compare_phone_distillation.py": "e53dc19e6a2fff6f68d0e0c0c388a9a175cfee3c40aeb1370b5f36d8bcc7696c",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "phone_distillation.py": "a5f1701b22a0652d0e0ade3f4f237b8b16b1973cb387b2e7d2b68a7f1c05bcaf",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+    "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+    "test_compact_phrase_ctc.py": "85afeb095b1442e69becafac3a183c4cf019584ac4b2a861347938a747aed269",
+    "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+    "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1",
+    "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+    "train_stream.py": "6debf47cfeb5f6544acfb981b27143409ccc71f6c5801ebd0014d61f1df9afc5",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "3000",
+    "--eval-interval",
+    "3000",
+    "--learning-rate",
+    "0.0002",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6",
+    "--phone-objective",
+    "ctc",
+    "--phone-warmup-steps",
+    "1000",
+    "--phone-warmup-learning-rate",
+    ".003"
+  ],
+  "warmup": {
+    "steps": 1000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seed": 1223,
+    "objective": "ctc"
+  },
+  "required_control_replay": {
+    "model_sha256": "46f17c6221da6868f2786c96a06202b43b4a4f22e1266daf896ff971dd21d43c",
+    "training_prefix_sha256": "822a0c05675856fd89b0bfb7ff1bdce176e8a99a2bb9fb576762bdf7a856fa39",
+    "representative_training_inputs_sha256": "66a81e63b81913c18df02e3402a0fba573c452050063b7d1fa647f416b810986"
+  },
+  "objective": "Original weighted binary BCE remains primary. Both arms use the same118 training pairs and original binary labels. On those paired windows only, a Dense(6) temporal head has the two-token CTC target [hey, original nyx|mix|next|nick synthesis-intent class], normalized by2. No teacher labels or posteriors are used. Both arms share1000 frozen-head updates at.003, then exactly3000 joint updates at binary LR.0002 with the existing.5/.8 schedule; auxiliary gain0 versus.1. Export discards the auxiliary head and retains the existing scalar inference graph. The separately fitted diagnostic encoder/head weights are not imported.",
+  "warmup_policy": "Binary weights and optimizer must remain unchanged, and complete warmup metadata must match between arms. The new warmup has compact labels rather than the earlier392-phone task; no assertion of replaying that older auxiliary head is made.",
+  "limits": "Reused development validation and the unchanged21-point threshold grid, with separate negative corpora. Synthesis intent is not human pronunciation truth; the118-pair bank is tiny and correlated. Training fit is not open-set quality. No threshold sweep outside the grid, final/test scoring, speaker playback, microphone recording, firmware/OTA or production-board operation. A pass permits subsequent independent evaluation only; it does not establish real-speaker recall, precise endpoint latency, P4 resources, call stability or Hi ESP parity.",
+  "study_boundary": "New compact-label joint study after the separately frozen encoder-fit diagnostic passed. No extension or gate change to any rejected frozen-head or weak-phone study. The original full scalar feature cache and all source labels/splits remain unchanged. Keep full immutable executed sources, launch metadata, warmup, final binary/auxiliary checkpoints, model export and development score traces."
+}

@@ -53,6 +53,8 @@ def main():
     parser.add_argument("--phrase-output", action="store_true",
                         help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
+    parser.add_argument("--compact-phrase-plan", type=Path,
+                        help="Use frozen original-intent two-token CTC targets instead of teacher phones")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
     parser.add_argument("--phone-encoder-ratio-cap", type=float,
                         help="Bound scaled auxiliary encoder gradient norm relative to binary encoder gradient")
@@ -79,6 +81,9 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.compact_phrase_plan and (not args.phone_bank or args.phone_objective != "ctc"
+            or args.phone_encoder_ratio_cap is not None or args.phone_gradient_audit_plan):
+        parser.error("Compact phrase targets require a phone bank and CTC, without gradient cap/audit")
     if args.phone_gradient_audit_plan and (not args.phone_bank or not args.initial_weights
             or args.phone_warmup_steps or args.phone_warmup_only or args.export_only):
         parser.error("Gradient audit requires a phone bank and explicit binary state, without warmup or export")
@@ -154,9 +159,13 @@ def main():
     records = json.loads(index_bytes)
     phone_sampler = None
     if args.phone_bank:
-        from phone_distillation import Sampler as PhoneSampler
-        phone_sampler = PhoneSampler(args.phone_bank, records, hashlib.sha256(index_bytes).hexdigest(),
-                                     frames, args.phone_objective)
+        if args.compact_phrase_plan:
+            from compact_phrase_ctc import Sampler as CompactSampler
+            phone_sampler = CompactSampler(args.phone_bank, args.features, args.compact_phrase_plan)
+        else:
+            from phone_distillation import Sampler as PhoneSampler
+            phone_sampler = PhoneSampler(args.phone_bank, records, hashlib.sha256(index_bytes).hexdigest(),
+                                         frames, args.phone_objective)
     windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
     pair_sampler = PairSampler(records, windows, frames) if args.paired_near_words else None
     confusers = (MatchedConfusers(args.matched_confuser_bank, args.matched_confuser_arm, frames)

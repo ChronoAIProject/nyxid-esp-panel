@@ -102,7 +102,7 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
         raise ValueError('Encoder ratio cap must be finite and in (0, 1]')
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
-    logits = tf.keras.layers.Dense(VOCAB, name='training_phone_logits',
+    logits = tf.keras.layers.Dense(targets.shape[-1], name='training_phone_logits',
         kernel_initializer=tf.keras.initializers.GlorotUniform(seed=919))(temporal)
     teacher = tf.constant(targets)
     full = tf.keras.Model(model.input, (model.output, logits))

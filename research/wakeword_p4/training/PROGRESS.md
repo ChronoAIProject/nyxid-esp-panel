@@ -1744,3 +1744,30 @@ it does not isolate an optimizer effect or establish phonetic correctness.
 Unlike a longer head-only run, it supports a separately frozen full
 mixed-source wake comparison. There is still no validation/final-set score,
 INT8 export, audio-device use or firmware change from this diagnostic.
+
+### Full mixed-source compact-sequence comparison
+
+The [new full-study plan](plans/microwake-compact-phrase-ctc-v1.json) freezes
+a binary-only versus compact-sequence auxiliary comparison before launching.
+Both start from the original binary initializer, not the overfitted diagnostic
+encoder. Both share the same 118 original training pairs, source batches,
+eight pair draws per batch, augmentation and representative inputs. A shared
+1,000-step frozen-head warmup is followed by 3,000 joint updates at .0002 with
+the existing schedule. Auxiliary gain is zero versus .1; the original weighted
+binary loss remains primary. No teacher output supplies the compact labels.
+
+The training-only head now derives its vocabulary dimension from its explicit
+target tensor. The old 392-phone path is unchanged when selected; the new
+opt-in sampler reuses its pair-slot scheduling but verifies the exact cached
+training crops and source/index/plan bindings. Seventeen focused tests pass,
+including original phone behavior, compact loss versus independent TensorFlow
+CTC/BCE, binary pair roles, matched draws, source mismatch rejection and the
+unchanged scalar inference graph. No production audio or firmware is modified.
+
+The existing 21-point development grid and strict advancement criteria remain:
+zero continuous events, at most 1% worst engine/corpus and engine false views,
+and at least three macro-recall points over the specified control comparator.
+The original binary control export/input identities must replay. Training-bank
+fit alone cannot pass. Both final models/checkpoints and all development
+score traces will be retained even on rejection. No study has launched at
+this commit; all processing will stay silent and use cached features.
