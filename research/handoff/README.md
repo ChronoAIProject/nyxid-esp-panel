@@ -1233,3 +1233,52 @@ lengths/hashes pass against `CONTENTS-scalar-precision-diagnostic-v1.json`.
 No source waveform, device state, credential or firmware is included. Work
 was silent and used no microphone or board. Physical wake latency, P4 costs,
 real-speaker performance and voice-call stability remain unproven.
+
+The [explicit ambient compact-target study](../wakeword_p4/results/microwake-background-ctc-v1.json)
+keeps compact CTC gain .1 in both arms and adds per-frame empty-target CTC
+loss on the existing 48 ambient-negative slots at gain zero versus one.
+The marker travels with each sample through the shuffle; ordinary TTS
+negatives retain their existing role. Both models are retrained with the
+same 5,060-pair bank, 1,000-step frozen-head warmup and 3,000 joint updates.
+Each arm observes 144,000 marked background examples. Test arrays are unopened.
+
+The zero-gain control exactly replays the parent compact-CTC INT8 model,
+legacy first 16 batches, full warmup, pair schedule and PTQ input. Its original
+development cache is reused only after replay and byte-bound input checks.
+All 347 training and 35 development background NPY containers and canonical
+uint16 payloads are hash-bound in `background-inputs.json`, along with the
+original scalar binary and bank. Exact-array and metadata disjointness are
+checked; these do not establish semantic labels or absence of partial overlap.
+
+The result is rejected: at .97, macro proxy recall changes 81.1458% → 79.0650%,
+continuous events 3 → 1 over 7.323822 hours, and false near-word views 76 → 77.
+Worst-group false fraction remains 4.1667%; neither model has a strict point
+in the original grid. No firmware or inference rule is changed.
+
+To reproduce the independent accounting with a fresh output filename:
+
+```sh
+"$WAKE_PYTHON" research/handoff/audit_scalar_wake_scores.py \
+  --artifacts "$WAKE_OUTPUT/microwake-background-ctc-v1" \
+  --features "$WAKE_FEATURES" \
+  --output "$WAKE_OUTPUT/microwake-background-ctc-v1/rechecked-scores.json"
+```
+
+The original training and finishing commands, runtime versions and immutable
+sources are in `study-launch.json`, model `launch.json` and `postprocessing/`.
+The supplementary audit reconstructs complete traces and the gate. A changed
+plan is rejected before input/scoring access. All processing stayed silent;
+no microphone, speaker, board, production device or final/test inference ran.
+
+The [complete background-study archive](assets-microwake-background-ctc-v1.json)
+uses root `workspace/home-wake-research-20261110/microwake-background-ctc-v1`.
+It retains both original scalar SavedModels, H5/INT8 models, initializer,
+immutable source/plan/launch/runtime records, background-byte inventory,
+control-cache provenance, full development traces and all audits. The parent
+broad-study and broader-bank archives are explicit dependencies. The complete
+scalar/background feature tree is external; historical launch paths are
+provenance and must not be rewritten in place on a relocated machine.
+
+The public unauthenticated download verifies the exact 325-member inventory
+and all 324 listed lengths/hashes. No source audio, device state, credential
+or firmware is included. H5 files are weight checkpoints without Adam slots.

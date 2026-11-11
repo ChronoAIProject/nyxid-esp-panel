@@ -2199,3 +2199,43 @@ PTQ input before its previous development scores may be reused as control.
 Fresh treatment validation retains the unchanged grid, gates and full traces;
 an input/replay failure stops comparison. No new training has launched at this
 commit. All work remains silent; hardware and the full Hi ESP goal are untouched.
+
+The [completed matched background study](../results/microwake-background-ctc-v1.json)
+launched from immutable `6130e12` and fails the unchanged advancement gate.
+The zero-background control exactly reproduces the parent compact-CTC INT8
+model `31537348…`, legacy first 16 mixed batches, PTQ inputs, complete warmup
+and pair schedule. Both arms count exactly 3,000 updates / 144,000 explicitly
+marked ambient examples. Actual training/development background bytes and
+the original full scalar cache are reverified before control scores are reused.
+
+At the fixed .97 reference, macro proxy recall changes from 81.1458% to
+79.0650%; continuous events change from three to one over 7.323822 hours,
+and false near-word views change from 76 to 77 / 3,744. The worst engine/corpus
+fraction is still 4.1667%. Neither arm has a strict 1% / zero-continuous-event
+point anywhere in the frozen grid. Treatment has zero events from .98 upward,
+but its .98 macro recall 78.1811% and unchanged worst-group fraction do not
+qualify. Counts are recomputed independently at every threshold; equal counts
+do not assert equal event locations. This single recipe does not establish
+that background supervision cannot help other models or inference heads.
+
+Both scalar exports remain 61,712 bytes / 25,831 parameters. The repeated
+training-bank sequence fit is 8,860/10,120 exact rows for control and 8,855
+for treatment; this does not measure independent phrase recognition. The
+read-only auditor reconstructs all 6,136 clips / 1,429,512 smoothed steps and
+35 continuous sources / 878,709 steps per arm, all maxima, timebases, grids,
+event counts and the rejection. A changed background gain in the frozen plan
+is rejected before model/score access. Twenty training and four input/accounting
+checks pass. Both training jobs and validation are terminal. No final/test
+inference, threshold extension, audio device or hardware operation occurred;
+the full Hi ESP objective remains active.
+
+The [complete background-study archive](../../handoff/assets-microwake-background-ctc-v1.json)
+is public: 4,527,026 bytes, SHA256
+`b417a8c1b9d1bfbad0817f6888d1caa2b1330a122bd8502cefd5c12955694dbb`.
+A fresh unauthenticated download verifies the exact 325-member inventory and
+all 324 listed lengths/hashes. Both original scalar SavedModels are retained,
+alongside H5/INT8 exports, immutable sources/plans, launch/runtime records,
+control-reuse provenance, full development traces and independent audits.
+The broader-study and broader-bank archives are explicit dependencies; full
+scalar/background features remain external and byte-bound. This is evidence
+of a completed rejected recipe, with no qualifying deployment or parity claim.

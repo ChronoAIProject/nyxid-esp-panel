@@ -1,0 +1,116 @@
+{
+  "scope": "Matched ambient empty-target supervision for the compact-CTC scalar wake model; development only.",
+  "decision": "Rejected by frozen development advancement gate; no deployment.",
+  "advance": false,
+  "accepted": false,
+  "plan_sha256": "63e32e91dc6305edaa81446f7aa83043c1119819918c9788f77eb99fc004e24c",
+  "comparison_sha256": "b8d9c7d9b482aa3d540a68f32a7884637d133680707e51f2fb8cd4aeef350bbf",
+  "study_launch_sha256": "7f3495d131644aadda3fec886d125b56f94543a875abad38df40b2f2e76cecb7",
+  "input_audit_sha256": "73fbe2526087450f0e91f043c68b1e919da3ca55ef5989cb37d88f82e115f387",
+  "cached_score_audit_sha256": "e4900d8b2e92cdce41d1379d535d685101e2d906a956c7a806ca43600ca9f4c1",
+  "changed_plan_rejection_sha256": "2ef6507226ec6a47b21e55930c56775cc73f74ea1dcceb327ddaa2214d588203",
+  "background_inputs_sha256": "18724af73cabd4c6f6a4d302956e45026829f410300ee9e502994c4096a04b28",
+  "actual_background_feature_files": {
+    "training": 347,
+    "validation": 35
+  },
+  "control_source": "Parent broad-study compact-CTC model, retrained at background gain0; exact model/legacy prefix/warmup/pair schedule/PTQ replay passes before cache reuse.",
+  "strict_gate": {
+    "control": null,
+    "phonetic": null
+  },
+  "control_comparator_policy": "minimum_false_zero_event",
+  "control_comparator": {
+    "threshold": 0.99,
+    "macro_recall": 0.7716369047619048,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour_upper_95": 0.40903945817584486,
+    "max_source_false_rate": 0.041666666666666664,
+    "max_corpus_false_rate": 0.041666666666666664,
+    "hard_negative_false_rate": 0.017094017094017096
+  },
+  "treatment_comparator": null,
+  "arms": {
+    "control": {
+      "background_supervision": {
+        "gain": 0.0,
+        "steps": 3000,
+        "examples": 144000,
+        "frames_per_example": 67,
+        "target": "Empty compact sequence for explicitly marked existing ambient negatives; mean all-blank NLL per frame. Marker follows the batch shuffle; positive and paired rows are rejected."
+      },
+      "model_sha256": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8114583333333332,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.0202991452991453
+      },
+      "reference_false_near_word_views": 76,
+      "fitted_training_sequence_diagnostic": {
+        "ctc_loss": 0.19851451178077653,
+        "sequences": 10120,
+        "exact_sequences": 8860,
+        "target_phones": 20240,
+        "phone_edits": 1317,
+        "phone_error_rate": 0.06506916996047431
+      },
+      "cached_reconstruction": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "491b5deae314388b0de37e2b68ef08b8c71d3da5292e59814fb95913eb8aef27",
+        "details_sha256": "1a3fccf77787682a29f0abfa887d86239770a770896db02967499a783df83719"
+      }
+    },
+    "phonetic": {
+      "background_supervision": {
+        "gain": 1.0,
+        "steps": 3000,
+        "examples": 144000,
+        "frames_per_example": 67,
+        "target": "Empty compact sequence for explicitly marked existing ambient negatives; mean all-blank NLL per frame. Marker follows the batch shuffle; positive and paired rows are rejected."
+      },
+      "model_sha256": "3f7c1532b6a8ad213f552fcc579006290fe6d18f2632aa7fa45fcb9619cbccec",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.7906498015873016,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 1,
+        "ambient_false_per_hour_upper_95": 0.6477307032380661,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.020566239316239316
+      },
+      "reference_false_near_word_views": 77,
+      "fitted_training_sequence_diagnostic": {
+        "ctc_loss": 0.19839145398952746,
+        "sequences": 10120,
+        "exact_sequences": 8855,
+        "target_phones": 20240,
+        "phone_edits": 1333,
+        "phone_error_rate": 0.0658596837944664
+      },
+      "cached_reconstruction": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "a40271a1c069d29535d9f2e2c92c1f13aa4fa0b3dbef8fd4d61ff5562a8c5369",
+        "details_sha256": "4e36f862fbf89c07f6a36afe9722639f071b96bb91baac352de38d42ea101c95"
+      }
+    }
+  },
+  "all_maxima_timebases_events_grids_and_gate_reproduced": true,
+  "limits": "Reused development validation and unchanged21-point grid/gates. Existing training-only ambient negatives receive an extra compact task label without a transcript; their original binary role is unchanged. Byte and metadata disjointness does not prove semantic labels, absence of partial overlaps or independent split design. Synthesis intent is not pronunciation truth. Auxiliary head discarded from scalar export. No final/test inference, threshold extension, validation-residual fitting, audio playback, microphone capture, board/OTA, production device, PCM speed or audio pipeline change. Real-speaker recall, physical latency, P4 resources and call stability remain unproven."
+}
