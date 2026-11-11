@@ -3015,3 +3015,12 @@ inputs SHA52a484b1d6d3ee0375cd2b29bef144ab92ddfe0984fb97861d96e3457c4ff9ca。
 原v30模型未覆盖，完整SavedModel文件哈希/训练报告/输入哈希保存在
 results/4090-v30-common-calibration-export-v1.json。
 补充开发评估session2842已启动，v32原训练session80679继续运行。
+
+共享校准v30的原英语开发评估完成（session2842退出0）：
+阈值0.9375，代理macro命中率82.0833333%，1822/2160，早触发1，
+Piper85%、Kokoro79.1666667%，ambient0/1.204811267h。
+这是补充导出自己的开发工作点，不能替换原v30冻结阈值或宣称音素延迟；
+早触发完整保留，不用改端点窗口消除。
+结果results/4090-v30-common-calibration-validation-v1.json。
+接着用experiments/common_calibration_negatives.sh v30跑原三组连续开发负例，
+session54432；未使用最终集。v32原训练session80679继续运行。
