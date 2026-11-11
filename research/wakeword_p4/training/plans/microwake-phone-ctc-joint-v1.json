@@ -1,0 +1,137 @@
+{
+  "scope": "Predeclared matched joint-encoder CTC study, separate from the failed frozen-head prescreens.",
+  "hypothesis": "A frozen scalar-wake encoder may not linearly expose enough phone information. Test whether updating that encoder with sequence supervision improves wake-word validation against an equally trained binary-only control; auxiliary transcription is diagnostic, not the wake-quality decision.",
+  "parent_plan_sha256": "49d5c957bcb92351e880d2e914da89f4d0317602d128e3223e60e312d9c42c4c",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "9d6a656022236ee14a3e30747baedd3e5c62192dbd4caa8e7cf09e532e63043d",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+    "phone_distillation.py": "50846b64b221e0a760290d003ea78475644cfb6e215ff0fff5d6290f229d6355",
+    "compare_phone_distillation.py": "0ec4eb69f5982f5f8c5b5714bb7177f6c94c141969ffc18b6d8caa1c415abd30",
+    "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+    "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+    "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "3000",
+    "--eval-interval",
+    "3000",
+    "--learning-rate",
+    "0.0002",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6",
+    "--phone-objective",
+    "ctc",
+    "--phone-warmup-steps",
+    "5000",
+    "--phone-warmup-learning-rate",
+    ".003"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs per training batch replace eight positive and eight TTS-negative slots, fixed seed431 pair permutations, same fixed complete windows in both arms. No original source labels are replaced by teacher classes.",
+  "arms": {
+    "control": 0.0,
+    "phonetic": 0.1
+  },
+  "advance": "Require identical first 16 training batches, pair draw schedule, frozen-head warmups, representative inputs, scalar INT8 export and validation exposure. Treatment must have zero continuous development events, <=1% worst engine/corpus and engine false fraction, and >=3 percentage points macro recall over control. Select control at its best recall in the same strict gate, else a 2% zero-event gate, else its minimum-false zero-event point, preserving prior policy. Only if control has no zero-event grid point, compare with its frozen .97 reference and additionally require treatment worst-group false fraction <=control .97 worst-group fraction. This is a development advancement screen, not Hi ESP parity or firmware approval.",
+  "limits": "Development validation only, with unchanged 21-point threshold grid and separate negative corpora. Training weak labels and fit are not human transcripts or real-speaker evidence. No room recording or speaker playback. No firmware or production/OTA update. Passing permits subsequent independent tests, not a claim of Hi ESP parity, measured P4 resources or complete call stability.",
+  "objective": "Both arms keep the same 118 training pairs, original binary wake labels, weighted BCE and draw schedule. Full-resolution teacher greedy CTC paths yield 236 nonempty weak sequences (1364 phone labels). Both share 5000 frozen-encoder head updates at .003. Run exactly 3000 joint steps from binary LR .0002 with the existing common .5/.8 schedule; control auxiliary gain 0, treatment .1. CTC loss is mean NLL divided by target length over 67 encoder outputs. Discard auxiliary head for normal scalar INT8 export.",
+  "phone_bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "phone_bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+  "phone_objective": "ctc",
+  "warmup": {
+    "steps": 5000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seed": 1223,
+    "objective": "ctc"
+  },
+  "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+  "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+  "sequence_bank_audit_sha256": "4ae5f49a83d787c15f6764d76a7107087dd2eb56c1bfa1c0f3a8441e60ba549e",
+  "required_prefix_replay": {
+    "step": 1000,
+    "head_weights_sha256": "c2aa842d0dd2b4e787448c78dc9a799bd76d9e8ce64f09e3008f7a58200bfe43",
+    "fit": {
+      "ctc_loss": 2.0292396909099515,
+      "sequences": 236,
+      "exact_sequences": 0,
+      "target_phones": 1364,
+      "phone_edits": 1227,
+      "phone_error_rate": 0.8995601173020528
+    },
+    "parent_result_sha256": "d7c5237a6ca4d606a937afbcbf9a3af76352bd89b7d795d913883aef99a89e4f"
+  },
+  "prior_failed_studies": {
+    "results/microwake-phone-ctc-head-fit-v1.json": "d7c5237a6ca4d606a937afbcbf9a3af76352bd89b7d795d913883aef99a89e4f",
+    "results/microwake-phone-ctc-long-fit-v1.json": "36ee04b82a0d299479fd94d2674def2335ed4787a62e74c49fd1117337c57977"
+  },
+  "study_boundary": "Previous frozen-head fit gates and failed results remain unchanged. This plan tests joint representation learning rather than qualifying a frozen readout. No additional head-only budget, recipe sweep, or retuning after validation. Both arms run the same fixed warmup and joint schedule; only auxiliary gradient gain differs.",
+  "control_fallback_reference": 0.97,
+  "required_warmup_replay": {
+    "steps": 5000,
+    "head_weights_sha256": "e1326b9bd1fb8f3e8061b29f9391d99752bbff44d0fd6a9b3d23581c9e06470c",
+    "result_sha256": "36ee04b82a0d299479fd94d2674def2335ed4787a62e74c49fd1117337c57977",
+    "binary_optimizer_policy": "Must remain unchanged within warmup and match between arms. The new .0002 binary optimizer need not match the prior .00005 optimizer state."
+  }
+}

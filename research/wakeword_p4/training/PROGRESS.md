@@ -1431,6 +1431,28 @@ Adam slots; the exact longer replay starts from the original seed/bank.
 The full-resolution bank is a separate dependency. No source audio, board
 configuration, firmware or credentials are included.
 
+### Joint-encoder CTC comparison: predeclared
+
+The [joint study](plans/microwake-phone-ctc-joint-v1.json) tests a different
+hypothesis from the failed frozen-readout studies: whether sequence supervision
+can improve the encoder's actual wake discrimination. Both arms replay the
+same 5,000-update frozen-head warmup, then train for exactly 3,000 steps with
+the same binary learning rate (.0002), batches and schedule. Auxiliary CTC
+gain is zero for control and .1 for treatment. Auxiliary transcription remains
+diagnostic; previous failed fit gates and reports are unchanged. No further
+head-only budget is selected, and the study makes no board change.
+
+The comparison now optionally supports a predeclared control reference when
+the binary control has no zero-event grid point. This new plan freezes .97
+before training. Treatment must still have zero continuous events, at most
+1% worst engine/corpus false fraction, at least three recall points over that
+control, and a worst-group false fraction no larger than control's. Without
+the explicit plan option, historical comparison behavior remains unchanged.
+Three focused tests check opt-in behavior, both false-rate limits, continuous
+event rejection, an existing viable control and the recall margin. Passing
+only permits further independent evaluation; it does not establish Hi ESP
+parity or authorize a firmware update. This study uses no speaker or microphone.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

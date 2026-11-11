@@ -6,6 +6,35 @@ from pathlib import Path
 from compare_paired_ranking import interface, sha
 
 
+def operating_points(arms, fallback_reference=None):
+    """Choose frozen-grid points; optionally compare against a bad control."""
+    def rate(row):
+        return max(row['max_source_false_rate'], row['max_corpus_false_rate'])
+
+    def best(name, fraction):
+        return max((r for r in arms[name]['grid'] if r['ambient_false_events'] == 0 and rate(r) <= fraction),
+                   key=lambda r: (r['macro_recall'], -r['threshold']), default=None)
+
+    strict = {name: best(name, .01) for name in arms}
+    control, policy = strict['control'], 'strict_gate'
+    if control is None:
+        control, policy = best('control', .02), 'two_percent_gate'
+    if control is None:
+        control = min((r for r in arms['control']['grid'] if r['ambient_false_events'] == 0),
+                      key=lambda r: (rate(r), -r['macro_recall'], r['threshold']), default=None)
+        policy = 'minimum_false_zero_event' if control else 'none'
+    treatment = strict['phonetic']
+    if control is None and fallback_reference is not None:
+        control = next((r for r in arms['control']['grid'] if r['threshold'] == fallback_reference), None)
+        if control is None:
+            raise ValueError('Frozen control reference is absent from the grid')
+        policy = 'frozen_reference_with_false_rate_dominance'
+        treatment = best('phonetic', min(.01, rate(control)))
+    return {'strict_gate': strict, 'control_comparator': control,
+            'control_comparator_policy': policy, 'treatment_comparator': treatment,
+            'advance': bool(treatment and control and treatment['macro_recall'] >= control['macro_recall']+.03)}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('plan', 'artifacts', 'output'):
@@ -69,27 +98,13 @@ def main():
     if shared['control'] != shared['phonetic']:
         raise ValueError('Input prefix, draw schedule, calibration input, exposure or export interface differs')
 
-    def rate(row):
-        return max(row['max_source_false_rate'], row['max_corpus_false_rate'])
-
-    def best(name, fraction):
-        return max((r for r in arms[name]['grid'] if r['ambient_false_events'] == 0 and rate(r) <= fraction),
-                   key=lambda r: (r['macro_recall'], -r['threshold']), default=None)
-
-    strict = {name: best(name, .01) for name in arms}
-    control = strict['control'] or best('control', .02)
-    if control is None:
-        control = min((r for r in arms['control']['grid'] if r['ambient_false_events'] == 0),
-                      key=lambda r: (rate(r), -r['macro_recall'], r['threshold']), default=None)
-    treatment = strict['phonetic']
     report = {'scope': plan['scope'], 'plan_sha256': sha(a.plan),
               'shared_training_prefix_sha256': shared['control']['prefix'],
               'shared_draw_schedule_sha256': shared['control']['schedule'],
               'shared_ptq_input_sha256': shared['control']['ptq'],
               'shared_warmup': shared['control']['warmup'],
               'interface': shared['control']['interface'], 'inference_parameters': shared['control']['parameters'],
-              'strict_gate': strict, 'control_comparator': control,
-              'advance': bool(treatment and control and treatment['macro_recall'] >= control['macro_recall']+.03),
+              **operating_points(arms, plan.get('control_fallback_reference')),
               'arms': arms, 'limits': plan['limits']}
     with a.output.open('x') as f:
         json.dump(report, f, indent=2)
