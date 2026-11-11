@@ -1,0 +1,52 @@
+{
+  "role": "Predeclared expanded development protocol comparison; not independent matched-population FAR acceptance",
+  "candidates": [
+    {
+      "candidate": "v30",
+      "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "expanded_working_point": true,
+      "threshold": 0.91796875,
+      "proxy_macro_hit_rate": 0.8255208333333333,
+      "proxy_hits": 1847,
+      "premature_events": 0,
+      "separate_negative_events": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "candidate": "v32",
+      "model_sha256": "be9130507b6f350c6bfe9209d3329d928d956b5565cbbad2fcefa8fa418870d3",
+      "expanded_working_point": false,
+      "threshold": null,
+      "proxy_macro_hit_rate": null,
+      "proxy_hits": null,
+      "premature_events": null,
+      "separate_negative_events": null
+    },
+    {
+      "candidate": "v33",
+      "model_sha256": "a38e15ad99082e17619a0ba7fdfa8ef16272c1701a18ee7227aa65a336f24e19",
+      "expanded_working_point": true,
+      "threshold": 0.99,
+      "proxy_macro_hit_rate": 0.5390625,
+      "proxy_hits": 1139,
+      "premature_events": 3,
+      "separate_negative_events": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_report_hashes": {
+    "4090-v30-expanded-calibration.json": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+    "4090-v32-expanded-calibration.json": "228cd21d1f8671f76231d9427e549c13877e0af400fb0207e907106728c23d6e",
+    "4090-v33-expanded-calibration.json": "ab89a7e8cc8c516b0450969ca5ad4c5a40136c822957645ebfabec8e21c21c14"
+  },
+  "decision": "Reject v33 replacing v30; masking all16 unverified prefix slots reduced proxy hits and retained premature triggers. Preserve v30 model and threshold.",
+  "interpretation": "Does not prove every prefix label correct, nor rule out selectively verified prefix masking. Compared end-to-end training recipes with unchanged architecture and v33 input-sampling policy; original export representative tensors were not recorded for exact equality.",
+  "next_research": "Do not repeat global prefix removal/masking. Investigate auxiliary phrase supervision only with an explicit valid-window or clip-aggregation protocol, or independently audit training pronunciation. Missing phone references still block ultimate latency/recall acceptance.",
+  "final_data_used": false
+}
