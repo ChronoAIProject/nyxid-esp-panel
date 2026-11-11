@@ -66,3 +66,20 @@ This can connect the standalone coefficient observation to actual feature
 outputs on these inputs, without claiming to inspect the installed extension's
 private state. Build failures and all nonidentical outputs remain in the new
 directory. No threshold or feature tolerance is chosen from this diagnostic.
+
+Mac execution at `97f84c0` completed: all30 rendered PCM and saved-array hashes
+verified; installed wheel and default native rebuild each match all30 saved
+arrays exactly. No-contraction matches29/30. Its sole changed element is pack466,
+frame380/channel39:177→133, with coefficient293 changing1401/2695→1400/2696.
+This local contraction experiment still does not explain the Linux32/33
+differences. It does show why a one-unit coefficient difference need not mean
+a one-unit feature difference near the log/noise floor.
+
+[Complete report](../results/frontend-native-mac-v1.json) and
+[public evidence index](../../handoff/assets-frontend-native-mac-v1.json) preserve
+all90 output arrays, all differences, source/binary hashes and compiler commands.
+The221373-byte archive was anonymously downloaded again; all10 payload members
+passed length/SHA and safe-path checks. It contains no audio, firmware, native
+binaries, board state or credentials. Original training WAVs/pack and the
+unmodified upstream C++ source remain external dependencies. This is numerical
+diagnosis on30 training witnesses, not recognition or Hi ESP acceptance.
