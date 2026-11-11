@@ -1,0 +1,22 @@
+{
+  "scope": "Training-only matched-voice acoustic-neighbour diagnosis to prepare pronunciation review; no model scoring or quality advancement.",
+  "hypothesis": "The poor held-engine transfer may partly reflect inconsistent synthesized pronunciations or weak acoustic distinctions among intended aliases and confusers. Quantify feature-distance ordering before selecting a bounded human-review queue. Distance inversions alone cannot establish a mislabeled source or a unique cause.",
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+  "expected_source_paths": 778,
+  "expected_source_hashes": 744,
+  "selection": "All778 source paths present in variant0 of the existing compact training bank. Verify original16k mono PCM16 WAV hashes, source counts, cached-feature identity, split exclusion and metadata voice groups. No classifier scores or validation/final audio enter selection.",
+  "distance": "Use existing variant0 cached features only. Last/first10ms RMS bins above0.005*source peak (floor1e-6) plus fixed cached-frame guards[-4,+6] define an activity proxy, not phone boundaries. Divide features by25.6; center/L2-normalize each frame, cosine cost, monotone DTW moves(1,0),(0,1),(1,1), minimum summed path cost*2/(left_frames+right_frames). Both constant spectral frames have cost0. No feature resynthesis, PCM resampling, modified playback speed, fitted normalization, threshold or metric search.",
+  "grouping": "Use the original paired_training.voice_key including engine/preset/style/rate and variant0; these metadata groups are not certified human speakers. Collapse identical source SHA within each group before neighbour comparisons, retaining every path/alias/crop identity. Identical SHA must share intent.",
+  "comparison": "For each wake source in a group with>=2 distinct positive source hashes, find its closest other positive and closest source in each ofMix/Next/Nick. Compare negative distance minus positive-reference distance. Retain all pair distances including missing/uncomputed markers. Groups with a single unique positive cannot supply this reference and remain explicitly unscored.",
+  "review_per_engine_class": 3,
+  "review_selection": "Preserve the first3 lowest margins per engine/confuser class, with anchor ID then negative ID as deterministic ties. These are training-review candidates, not independent testing or already human-reviewed labels. No source is filtered/relabelled, no new model fitted, and no replay follows automatically.",
+  "limits": "Cosine/DTW geometry, source RMS activity proxies and TTS intent are not phonetic truth. Variant0 frontend history, duration, silence, voice/style and spectral normalization can influence distance; a closer confuser does not prove a perceptual collision or classifier inability. Source hashes and alias paths are not independent people. This audit cannot establish target recall, FAR, endpoint latency, P4 resources, call stability or Hi ESP parity. No reserved-quality scoring, playback, microphone, USB/board/OTA, production board, PCM speed or single I2S/AEC/AGC/FIFO change.",
+  "source_sha256": {
+    "audit_phrase_neighbours.py": "2adb74c06306c94060d19f642319f8166a2fed808ad1f7964e88d6d615b6912c",
+    "test_phrase_neighbours.py": "de43395ea2994b2c5a340f500ea609542f6c720b79ef297f8052aab355fa075a",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c"
+  }
+}

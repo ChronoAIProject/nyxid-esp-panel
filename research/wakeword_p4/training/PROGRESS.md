@@ -3119,3 +3119,28 @@ A fresh anonymous download verifies all280 listed member hashes and lengths.
 The source cache and bank remain separately byte-bound dependencies. No audio,
 reserved quality evaluation, board or production setting was touched; the
 full Hi ESP parity objective remains active and unachieved.
+
+## Training acoustic-neighbour audit, preregistered
+
+GPU `f301771` has started v34's separately preregistered complete-source phrase
+auxiliary task; the Mac does not duplicate that training. Here the
+[new frozen diagnosis](plans/phrase-neighbours-v1.json) checks source geometry
+before another recipe: all778 variant0 training paths /744 waveform hashes in
+the broad bank, using original WAV identities and existing cached features.
+Three numerical/selection tests pass exhaustive DTW path costs, symmetry,
+gain/offset/repeated-frame invariance and reserved-source rejection.
+
+Within each original metadata voice group, identical waveform hashes collapse
+before a wake query compares its nearest distinct wake source with the nearest
+Mix, Next and Nick. First/last RMS activity bins and fixed guards are only a
+coarse source activity proxy. Constant spectral-frame handling and distance
+normalization are fixed in advance. No PCM is warped; DTW aligns feature
+indices to compute distances only. Retain all source/crop identities, selected
+cached feature arrays, distance matrices and deterministic review candidates.
+
+The metadata inventory has129 voice groups; only106 have at least two unique
+wake sources. Piper supplies just1 such group out of24, which limits its
+reference comparison. A distance inversion cannot establish bad pronunciation,
+mislabeling or classifier inability. Original labels remain intact; no new
+training, quality acceptance, reserved scoring, microphone, playback, USB/board,
+firmware/OTA, production device or single I2S/AEC/AGC/FIFO change follows.
