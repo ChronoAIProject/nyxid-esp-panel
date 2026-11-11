@@ -113,3 +113,28 @@ were independently reconstructed from the original arrays plus16 explicit
 deltas. This removes the need to download another full-array archive. Complete
 actual Linux hashes still need independent comparison; the original GPU report
 only supplies summaries. Training and device behavior remain untouched.
+
+## Numeric P4 witnesses
+
+Next freeze, before preparation/build/flash, the same30 training-witness PCM
+streams in a standalone IDF5.5.4 / esp-micro-speech-features1.2.3 app. Embed
+the original rendered PCM with only final hop padding and the immutable Mac
+feature references. Run one fresh frontend per full stream, using the actual
+unmodified embedded component. Print SHA256 of its actual window/weight tables,
+actual211/293 pairs and all30 complete output arrays, plus mismatch counts,
+maxima and up to8 differences per input. Do not override tables, infer a model,
+start I2S, access microphones/speakers/network or write NVS in this app.
+
+`prepare_p4.py` verifies the immutable source/record/report, original WAV,
+rendered PCM and full Mac-array hashes before writing the project/fixture.
+Use `run_probe.py --frontend-witness --baud 460800` only on the MAC-verified
+USB development panel, when its current exact original app/active slot and
+service/listener are confirmed idle. Bind the probe binary hash, restore image,
+ELF identity, app offset and slot size explicitly. The guarded runner restores
+the original app and verifies its selected service and Hi ESP listener on
+success or ordinary failure. Preserve private recovery images and UART logs
+outside git; publish only synthetic fixture/numeric results and source.
+
+The comparison will report actual Mac/Linux agreement and all residuals without
+loosening tolerances or calling it recognition/Hi ESP parity. v40 training and
+its immutable data stay unchanged; the dining-room production board is excluded.

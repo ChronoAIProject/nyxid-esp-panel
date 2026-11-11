@@ -21,6 +21,10 @@ import serial
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", required=True)
+    parser.add_argument("--baud", type=int, default=1500000,
+                        choices=(115200, 230400, 460800, 921600, 1500000))
+    parser.add_argument("--frontend-witness", action="store_true",
+                        help="Collect numeric frontend table/stream hashes instead of model probe output")
     parser.add_argument("--expected-mac", required=True)
     parser.add_argument("--status-url", required=True)
     parser.add_argument("--restore-app", type=Path, required=True)
@@ -57,7 +61,7 @@ def main():
         return value.stdout
 
     def flash(path, log):
-        esptool(["--baud", "1500000", "--before", "default_reset", "--after", "hard_reset",
+        esptool(["--baud", str(args.baud), "--before", "default_reset", "--after", "hard_reset",
                  "write_flash", hex(args.app_offset), str(path)], log)
 
     before = status()
@@ -70,7 +74,7 @@ def main():
         raise ValueError("USB chip does not match the development panel")
     result = {"probe_bin_sha256": probe_hash, "probe_bin_bytes": args.probe_bin.stat().st_size,
               "vectors_manifest_sha256": hashlib.sha256(args.vectors_manifest.read_bytes()).hexdigest(),
-              "vectors": manifest, "models": [],
+              "vectors": manifest, "models": [], "frontend_witnesses": [], "frontend_deltas": [],
               "scope": "Standalone numeric compatibility/resources only; no recognition acceptance"}
 
     def interrupted(_signum, _frame):
@@ -90,20 +94,26 @@ def main():
                 if line:
                     log.write(line+"\n")
                     log.flush()
-                match = re.search(r"(PROBE_FRONTEND|PROBE_MODEL|P4_WAKE_PROBE_DONE) (\{.*\})", line)
+                markers = ("P4_FRONTEND_TABLE|P4_FRONTEND_WITNESS|P4_FRONTEND_DELTA|P4_FRONTEND_DONE"
+                           if args.frontend_witness else "PROBE_FRONTEND|PROBE_MODEL|P4_WAKE_PROBE_DONE")
+                match = re.search(r"("+markers+r") (\{.*\})", line)
                 if match:
                     marker, data = match.groups()
                     value = json.loads(data)
                     if marker == "PROBE_MODEL":
                         result["models"].append(value)
+                    elif marker == "P4_FRONTEND_WITNESS":
+                        result["frontend_witnesses"].append(value)
+                    elif marker == "P4_FRONTEND_DELTA":
+                        result["frontend_deltas"].append(value)
                     else:
                         result[marker] = value
                     print(match.group(0), flush=True)
-                    if marker == "P4_WAKE_PROBE_DONE":
+                    if marker in ("P4_WAKE_PROBE_DONE", "P4_FRONTEND_DONE"):
                         break
                 if "abort()" in line or "Guru Meditation" in line:
                     raise RuntimeError("Probe firmware failed; see private UART log")
-            if "P4_WAKE_PROBE_DONE" not in result:
+            if ("P4_FRONTEND_DONE" if args.frontend_witness else "P4_WAKE_PROBE_DONE") not in result:
                 raise TimeoutError("Numeric probe did not complete")
     finally:
         # A normal cancellation still restores. Do not SIGKILL or remove power.
@@ -129,6 +139,19 @@ def main():
         result["restored"] = {"app_sha256": after["app_sha256"], "nyx_state": "up", "wake_listening": True}
         (args.output/"report.json").write_text(json.dumps(result, indent=2)+"\n")
         print("Original app, service selection and Hi ESP listening verified", flush=True)
+
+    if args.frontend_witness:
+        expected = manifest['witnesses']
+        if (len(result['frontend_witnesses']) != len(expected)
+                or result['P4_FRONTEND_DONE'] != {'streams': len(expected), 'all_inputs_consumed': True}
+                or 'P4_FRONTEND_TABLE' not in result):
+            raise RuntimeError('Incomplete frontend witness capture')
+        for actual, row in zip(result['frontend_witnesses'], expected, strict=True):
+            if (actual['pack_index'], actual['frames']) != (row['pack_index'], row['frames']):
+                raise RuntimeError('Frontend witness identity or shape mismatch')
+            if not re.fullmatch('[0-9a-f]{64}', actual['raw_sha256']):
+                raise RuntimeError('Malformed frontend output hash')
+        return  # Numerical differences are observations, not an acceptance gate.
 
     flags = ("frontend", "pretrained_model", "mac_exported_model", "frontend_to_pretrained", "frontend_to_mac_exported")
     if not all(result["P4_WAKE_PROBE_DONE"][k] for k in flags) or len(result["models"]) != 4:
