@@ -3959,3 +3959,21 @@ max.177049,float3/4 vsINT83/4 probe hits; not MCU parity. Expanded temporal cove
 alone failed confusion gates. No newSLR83/dev2-dev3/finals or promotion. Preserve
 v30. A separately preregistered sequence-loss experiment can now follow actual
 shared-sequence mapping evidence; don't merge it into v38 or relabel failures.
+
+### v39 preregistration and stable five-score gradient validation (2026-11-11)
+
+Independent v39 plan uses v37 baseline128 BCE plus weight1 sequence16 supplement
+(8positive/8confusing,negativeweight20), not v38 jitter. Source/voice/phrase balanced
+eligible162frame segments yielding five scores; original whole generated signal
+fits all five.817included/185excluded from supplement only; all1002 remain main
+BCE. No Mac350/new/final training, no score-based inclusion. Pack SHA
+ e5e731ff9fe390100b58d153002648cc238edf6e7daefcc58ea39929d256efc7.
+Mac e32f0d6 flagged probability-BCE saturation before any v39 optimization;
+sequence_loss.py imported unchanged SHA d023acc12ba808df4273d134bec33dbbdfd19dcf17b8a0485fd3fd7fb8944dda.
+Stable logsumexp(logsigmoid) computes exact BCE(mean probability), not mean logits
+or mean BCE. +/-20 wrong-label tests loss20/eachgradient+/-0.2. Actual v37 first16
+training segments: all15 variable gradients match independent overlapping-window
+logits, max1.1368683772161603e-13; gradientL1.000107626, sigmoid logits agree with
+probability scorer; all original variables unchanged,optimizer0. Saturated examples
+make small gradients; no general training/recognition claim. Training integration,
+GPU two-step export and formal120k remain to run before any candidate gate.
