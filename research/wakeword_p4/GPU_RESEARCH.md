@@ -3991,3 +3991,16 @@ Formal session77297/PID129206 started once after audited integration e491229.
 Unique postprocessor authenticates seed117726/sequence pack and no temporal jitter
 before original historical/synthetic/oldVox138-point exploration. No new/final data,
 threshold extension or automatic promotion; frozenv30 retained pending full gates.
+
+### Mac independent v39 update evidence received (2026-11-11)
+
+Issue13 Mac68c210b independently checks e491229 compiled update on random CPU
+teacher60/frozen nondefault BN with non-saturated gradients. GPU anonymously
+retrieved3340201B archive SHAea112859514fcf54027157a594cca03705c2e165416fe53f25d3b6c1a75d6814,
+verified exact9member CONTENTS and every payload size/SHA; training and two sequence
+helpers byte-identical locally. Original report imported unchanged and receipt
+added. Reported combinedloss15.84808445,sequencegradientL1264.9831,15combined-gradient
+maxdelta9.5367431640625e-7,31updated arrays exact under same incoming gradients,
+iterationdelta1/frozenBN unchanged. GPU did not rerun this Mac random experiment;
+not actual-GPU/recognition evidence or independent-gradient-exactness claim.
+Current formal v39 remains unchanged; no new/final data.
