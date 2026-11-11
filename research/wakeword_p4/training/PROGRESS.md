@@ -1319,6 +1319,26 @@ logit independence, zero loss for an all-blank target, finite gradients,
 source isolation/timing, frozen warmup and zero-gain optimizer equivalence.
 All training launches use the existing immutable source snapshot wrapper.
 
+The [INT8 comparison](../results/microwake-phone-conditional-v1.json) rejects
+the .01-gain recipe. At .97, macro synthetic proxy recall moves from
+81.04% to 81.25%, false near-word views from 73 to 75/3,744, and the worst
+engine/corpus fraction from 4.17% to 5.21%. Each arm has one continuous
+event / 7.324 h; neither has a zero-event grid point. Both retain 25,831
+inference parameters, the same scalar interface, first 16 training batches,
+pair schedule and PTQ inputs. The zero-gain control INT8 bytes match the
+earlier original recipe exactly, so its existing validation is reused.
+
+The [training-bank gradient audit](../results/microwake-phone-gradient-audit-v1.json)
+checks all 236 crops in 15 batches without updating weights. At gain .01,
+phone-to-binary encoder gradient norm ratios range from .00031 to 39.91
+(median .0637); the large range reflects almost-zero binary loss in easy
+batches and very large binary gradients in hard batches. Gradient cosine
+ranges from -.115 to .163 (median .041). The auxiliary signal is therefore
+neither uniformly negligible nor consistently aligned with binary learning.
+These paired-only batches do not represent the full mixed training batches.
+One bounded .1-gain continuation is planned to test the interaction; these
+gradient statistics alone do not predict an improvement.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
