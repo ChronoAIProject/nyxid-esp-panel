@@ -1831,6 +1831,73 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 Coordinate Mac/P4 and RTX 4090 research in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
+### Matched terminal versus five-score short training screen
+
+The protocol and runner were pushed at `2aad2df` before formal validation
+scoring. This is the old Mac folded-bias `transfer60` model with335-frame
+context and25831 parameters, not GPU teacher60/150 or v38. Both arms start
+from the same original checkpoint and consume identical500 batches of16
+samples, with Adam1e-4, clipnorm5 and negative weight20. The only treatment
+is BCE of the mean of five consecutive scores instead of the final score.
+There is no threshold, checkpoint or intermediate-result selection.
+
+At the fixed old historical threshold `.994`, the
+[audited result](../wakeword_p4/results/mac-five-score-short-screen-v1.json)
+is mixed; neither arm is promoted:
+
+| Model | Positive any hit /174 | Estimated-end window hit /174 | Negative false clips /160 |
+| --- | ---: | ---: | ---: |
+| Original checkpoint |74|71|3|
+| Terminal BCE, step500 |82|72|5|
+| Five-score mean BCE, step500 |79|69|4|
+
+Five-mean has fewer false clips than terminal, but also fewer hits. Both
+fine-tuned models regress on Mac voices. The five validation engines have
+32 positive rows each except Kokoro24 and Mac54. Mac's54 rows correspond
+to27 paths but only16 source hashes; these correlated aliases and variants
+remain as frozen before scoring. This is a small reused synthetic subset
+and one seed, not evidence of statistical superiority, real pronunciation,
+background FAR, INT8/P4 equivalence or equality to Hi ESP.
+
+The independent accounting audit reconstructs every500-step draw, confirms
+the same batch-byte SHA in both arms, checks the exact frozen334-row
+selection and all three input-feature hash lists, and recomputes all41763
+mature scores' events per model with independent scalar five-score sums.
+The local model's effective receptive field is335 frames. Phase1 first
+mature raw score is one-based112; its first five-score mean ends at116.
+Returning block offsets are `480*(one_based_score_step+1)`. The old
+endpoint metadata remains a proxy, not measured phonetic completion.
+
+The original `validation-selection.json` has a metadata merge defect:
+64 source rows already contain `index`, which shadows their feature row
+position. Actual training/evaluation positions are unaffected. Original
+bytes are retained. Read `audit.json::actual_validation_feature_row_indices`
+in selection order, or `*-evaluation.json::details[*].index`. The audit
+checks these against original metadata, score keys and full feature hashes.
+
+The [public evidence manifest](assets-mac-five-score-short-screen-v1.json)
+binds original scores, draws, evaluations, both final weights, initial
+weights, protocol and source. No WAVs, device state, firmware or credentials
+are included. Original feature arrays and upstream dependencies are needed
+to reproduce training; this evidence archive is not a complete dataset.
+
+```sh
+python research/wakeword_p4/training/screen_five_score_training.py \
+  --features "$OLD_FEATURES_SIX_LONG" --initial "$ORIGINAL_TRANSFER6_LONG335" \
+  --upstream "$PINNED_MICROWAKEWORD" \
+  --plan research/wakeword_p4/training/plans/mac-five-score-short-screen-v1.json \
+  --output "$FRESH_SCREEN_DIRECTORY"
+python research/wakeword_p4/training/audit_five_score_screen.py \
+  --study "$FRESH_SCREEN_DIRECTORY" --features "$OLD_FEATURES_SIX_LONG" \
+  --initial "$ORIGINAL_TRANSFER6_LONG335" --output "$FRESH_AUDIT_JSON"
+```
+
+This audit replays stored draws and scores; it is not independent inference
+or proof of process filesystem access. It opens only training ambient arrays
+and selected training/old-validation feature slices. No new/final scoring,
+audio playback/recording, or board operation occurred. GPU v38 continues
+under its separate frozen protocol; no causal comparison to it is made.
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
