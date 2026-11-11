@@ -1,0 +1,200 @@
+{
+  "scope": "Measure potential teacher60 frame support on an all-positive diagnostic graph.\n\nNo learned checkpoint, PCM, feature inference dataset, classifier decision,\ntraining or device is used. Positive normalized weights keep every possible\npath active, allowing the logits/input Jacobian to expose structural support.\nThis does not measure a trained model's actual dependence on source phonemes.\n",
+  "source_sha256": "6e2070592f49da118de479270a43d903301a8b1ccf690e687e05d56869690de7",
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "60,60,60,60",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [9], [13], [21]",
+    "--first_conv_filters",
+    "30",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "parameters": 22801,
+  "tensorflow": "2.21.0",
+  "pack_records_sha256": "757f1e6df724943c0e0bf68b9fe7de9b3402cbcebb9cf6c87a89e876ee9af090",
+  "input_window_frames": 150,
+  "analytic_first_conv_outputs": 49,
+  "potential_effective_frames": 149,
+  "support": [
+    {
+      "score_index": 0,
+      "first_frame": 0,
+      "last_frame_exclusive": 149,
+      "used_frame_count": 149,
+      "minimum_positive_input_gradient": 8.123762285094926e-08,
+      "maximum_input_gradient": 0.00046264822594821453,
+      "unused_input_frames": [
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ]
+    },
+    {
+      "score_index": 1,
+      "first_frame": 3,
+      "last_frame_exclusive": 152,
+      "used_frame_count": 149,
+      "minimum_positive_input_gradient": 8.123762285094926e-08,
+      "maximum_input_gradient": 0.00046264822594821453,
+      "unused_input_frames": [
+        0,
+        1,
+        2,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ]
+    },
+    {
+      "score_index": 2,
+      "first_frame": 6,
+      "last_frame_exclusive": 155,
+      "used_frame_count": 149,
+      "minimum_positive_input_gradient": 8.123762285094926e-08,
+      "maximum_input_gradient": 0.00046264822594821453,
+      "unused_input_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ]
+    },
+    {
+      "score_index": 3,
+      "first_frame": 9,
+      "last_frame_exclusive": 158,
+      "used_frame_count": 149,
+      "minimum_positive_input_gradient": 8.123762285094926e-08,
+      "maximum_input_gradient": 0.00046264822594821453,
+      "unused_input_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        158,
+        159,
+        160,
+        161
+      ]
+    },
+    {
+      "score_index": 4,
+      "first_frame": 12,
+      "last_frame_exclusive": 161,
+      "used_frame_count": 149,
+      "minimum_positive_input_gradient": 8.123762285094926e-08,
+      "maximum_input_gradient": 0.00046264822594821453,
+      "unused_input_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        161
+      ]
+    }
+  ],
+  "frontend_emission": [
+    {
+      "hop": 1,
+      "feature_emitted": false
+    },
+    {
+      "hop": 2,
+      "feature_emitted": false
+    },
+    {
+      "hop": 3,
+      "feature_emitted": true
+    },
+    {
+      "hop": 4,
+      "feature_emitted": true
+    },
+    {
+      "hop": 5,
+      "feature_emitted": true
+    },
+    {
+      "hop": 6,
+      "feature_emitted": true
+    },
+    {
+      "hop": 7,
+      "feature_emitted": true
+    },
+    {
+      "hop": 8,
+      "feature_emitted": true
+    },
+    {
+      "hop": 9,
+      "feature_emitted": true
+    },
+    {
+      "hop": 10,
+      "feature_emitted": true
+    }
+  ],
+  "all_candidate_bounds_match_measured_frame_support": true,
+  "candidate_variants_checked": 7782,
+  "candidate_bounds_checked": 38910,
+  "unused_final_sequence_frame_perturbation_exactly_invariant": true,
+  "variables_unchanged_after_diagnostic_assignment": true,
+  "optimizer_steps": 0,
+  "arrays_sha256": "838b1c8d443c1ef73937a4bf5db27a6bc522041914c5a3d7adc257d9e326a3c9",
+  "limits": [
+    "Assigned diagnostic weights are not a learned checkpoint or candidate, and are not exported for deployment.",
+    "Potential model frame support agrees with the existing conservative sample ledger; no crop repair or shifted data is introduced.",
+    "Sample interval mapping uses the pinned30ms/10ms frontend framing contract. Emission timing checks alone are not a frontend dependency proof.",
+    "Frontend adaptive state may depend on older PCM outside nominal windows. No claim that these are the only influential PCM samples.",
+    "No source pronunciation, learned-model sensitivity, streaming score, cross-host numerical, recognition, P4 or Hi ESP acceptance evidence."
+  ]
+}

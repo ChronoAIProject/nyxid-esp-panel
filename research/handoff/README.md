@@ -2111,6 +2111,41 @@ complete raw histories, both crop arrays, labels, alias/source/condition
 records, original input inventory, report/audit, frozen sources/plan/tests
 and test log. Original WAVs remain in the separate public synthetic snapshot.
 
+### Potential model support agrees with the candidate crop ledger
+
+The structural diagnostic was pushed at `c8cc10a` before execution. The
+[result](../wakeword_p4/results/teacher150-support-probe-v1.json) uses the
+unchanged teacher60/150 graph with deliberately assigned positive normalized
+kernels and identity frozen BN. Positive inputs keep all paths active; logits
+avoid sigmoid saturation. No learned checkpoint or source PCM is opened.
+
+The full logits/input Jacobian shows that the five outputs use exactly149
+consecutive feature frames, starting at0,3,6,9,12. Every used channel has a
+positive gradient (minimum8.12376e-8); all other gradients are exactly zero.
+The last input frame161 can change from1 to100 without changing any score.
+The analytic first Conv5/stride3 produces49 outputs on150 input frames and
+consumes frames0..148; the subsequent valid trunk/Dense head combines them.
+Thus each150-frame crop's final frame is unused, as the existing ledger assumes.
+
+With30ms feature windows/10ms hops, these149-frame supports map to the saved
+`[(e+d-150)*160, (e+d+1)*160)` sample intervals. All38,910 candidate bounds
+agree and include the full source/RIR by that ledger. A fresh public frontend
+first emits on hop3 and every later hop while consuming160 samples each.
+This timing check alone is not a frontend dependency proof; adaptive frontend
+state can depend on older samples outside nominal windows.
+
+This validates potential structural support, not a trained model's phonetic
+sensitivity, streaming-score equivalence or recognition. No crop shift, data
+repair, training, device or firmware change follows. The
+[evidence manifest](assets-teacher150-support-probe-v1.json) binds the complete
+Jacobian, input/logit tensors, report and frozen sources. Reproduce with:
+
+```sh
+python research/wakeword_p4/training/probe_teacher_support.py \
+  --upstream "$PINNED_MICROWAKEWORD" \
+  --pack-records "$CANDIDATE_PACK/records.json" --output "$FRESH_SUPPORT_PROBE"
+```
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
