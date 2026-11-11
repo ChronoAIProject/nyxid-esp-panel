@@ -4131,3 +4131,18 @@ full-history five-mean after complete-context warmup:4224/4602positive,
 First reset exact;not event accuracy or independent acceptance. Offlinefloat
 vsfullINT8 confounds phase/state/quantization;next same-weight floatfull-history
 comparison required before attributing cause. No new/final or training changes.
+
+### v40 same-checkpoint float history diagnostic (2026-11-11)
+
+All6597 eligible variants evaluated with shared float sequence scorer; zero
+optimizer updates and all window variables unchanged. Among1995negatives,
+windowfloat0>=.5, full-sequence float103>=.5 versus INT8115; at.99609375,
+float43 versus INT835. Positive counts at.5:window4216,float4192,INT84224
+of4602. Thus high negative scores exist before quantization in the full-sequence
+calculation; this does not establish a sole temporal or quantization cause.
+Actual exported float streaming checked on20 first engine/task witnesses only;
+maximum absolute residual0.0017456412315368652, retained in original report.
+Do not claim exact equivalence or all6597 actual streaming replays. Next diagnostic
+must locate high-score temporal support and resolve/measure streaming residuals
+before a new training intervention. No new/final scored; v40 remains rejected,
+frozenv30 retained. Coordination continues in GitHub Issue13.
