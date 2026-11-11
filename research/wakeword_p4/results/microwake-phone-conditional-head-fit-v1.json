@@ -1,0 +1,72 @@
+{
+  "scope": "Training-bank prescreen only; authorizes the preregistered matched experiment, not firmware promotion.",
+  "plan_sha256": "1f6119f880e3da33b7c0fe3c238966a1fb7a82b0be7fbdb9071caced55edbb83",
+  "raw_diagnostic_sha256": "9be77121566459691c59605afb49c340888c8e7d528dfd33cfede1a3cd1dd967",
+  "checks": {
+    "source_hashes": true,
+    "bank_identity": true,
+    "initializer_identity": true,
+    "weights_unchanged": true,
+    "optimizer_unchanged": true,
+    "settings": true
+  },
+  "initial_fit": {
+    "weighted_kl": 5.161421382408544,
+    "nonblank_frames": 578,
+    "nonblank_correct": 0,
+    "blank_frames": 15234,
+    "blank_correct": null
+  },
+  "history": [
+    {
+      "step": 250,
+      "fit": {
+        "weighted_kl": 1.3761753764160927,
+        "nonblank_frames": 578,
+        "nonblank_correct": 342,
+        "blank_frames": 15234,
+        "blank_correct": null
+      }
+    },
+    {
+      "step": 500,
+      "fit": {
+        "weighted_kl": 1.2379751081466983,
+        "nonblank_frames": 578,
+        "nonblank_correct": 347,
+        "blank_frames": 15234,
+        "blank_correct": null
+      }
+    },
+    {
+      "step": 750,
+      "fit": {
+        "weighted_kl": 1.182547547188304,
+        "nonblank_frames": 578,
+        "nonblank_correct": 366,
+        "blank_frames": 15234,
+        "blank_correct": null
+      }
+    },
+    {
+      "step": 1000,
+      "fit": {
+        "weighted_kl": 1.1522757688329868,
+        "nonblank_frames": 578,
+        "nonblank_correct": 368,
+        "blank_frames": 15234,
+        "blank_correct": null
+      }
+    }
+  ],
+  "relative_kl_reduction": 0.7767522386836618,
+  "nonblank_top1_fraction": 0.6366782006920415,
+  "gate": {
+    "minimum_relative_kl_reduction": 0.5,
+    "minimum_nonblank_top1_fraction": 0.5,
+    "action": "First run --phone-warmup-only --steps 0. Do not launch joint training or score validation unless this training-only head-fit gate passes and binary weights/optimizer are unchanged. This establishes fit only, not acoustic quality."
+  },
+  "gate_passed": true,
+  "checkpoint_sha256": "b04d8f0ce1787dbdb80178eb2fe1cbb745d6fa829845d6ccb5752abe4891de02",
+  "limits": "CTC nonblank argmax frames are alignment spikes, not a silence/voicing annotation or an independent speech test."
+}

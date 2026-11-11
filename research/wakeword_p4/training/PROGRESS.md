@@ -1298,6 +1298,27 @@ listed member hash are verified. It depends on the original phone-bank
 handoff and remains explicitly unaccepted. These studies stay silent; any
 future room playback needs advance notice of its content and duration.
 
+### Conditional phone identity supervision
+
+CTC blank is an alignment marker, not a physical silence/voicing label. The
+earlier head-fit counts cover sparse teacher alignment spikes; they must not
+be read as all voiced frames. The
+[conditional study](plans/microwake-phone-conditional-v1.json) separates
+phone identity from blank by normalizing teacher/student probabilities over
+the 391 nonblank outputs and weighting KL by the teacher's nonblank mass.
+The original binary wake labels and loss, paired source bank and exported
+inference graph remain unchanged.
+
+The [frozen-encoder prescreen](../results/microwake-phone-conditional-head-fit-v1.json)
+passes the predefined fit gate. After 1,000 head-only updates, conditional
+KL decreases from 5.1614 to 1.1523 (77.68%) and nonblank top-1 agreement is
+368/578 (63.67%). Original binary weights and their optimizer are unchanged.
+This is training-bank fit, not recognition acceptance. Five tests verify
+the original and conditional losses against numerical references, blank
+logit independence, zero loss for an all-blank target, finite gradients,
+source isolation/timing, frozen warmup and zero-gain optimizer equivalence.
+All training launches use the existing immutable source snapshot wrapper.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
