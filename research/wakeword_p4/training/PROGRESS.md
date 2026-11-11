@@ -2360,3 +2360,25 @@ also replay every parent same-artifact clip and continuous score exactly.
 The explicit event selector defaults to the old exact event; firmware and
 audio are untouched. Eleven recurrence/adapter/accounting/gate tests pass.
 No occurrence development inference has launched at this commit.
+
+The first occurrence protocol stops at its numerical gate before development
+inference: all40 selected sources replay scalar/product exactly, but the
+longest is252 steps, so none crosses the256-step boundary. The launcher fails
+its explicit cross-chunk assertion; original launch/plan and failure are retained.
+This is a preparation error, not an inference-quality result or missing board.
+
+The [corrected protocol](plans/keyword-occurrence-inference-v2.json) keeps all40
+original replays and adds the first original training positive variant0 source
+with at least771 feature frames. This predeclared extra source must replay
+the entire scalar and67x6 logits exactly across chunks, then match the new
+adapter's scalar/product exactly. The model, grammar, development data/grid,
+smoothing, latch and advancement gate are unchanged. No held-out score exists
+for the failed protocol, and no tolerance or gate is relaxed.
+
+Training metadata/bank inspection also confirms a coverage gap: all1,702
+distinct Piper training continuation sources (6,808 correlated renders) are
+absent from the compact paired bank. The shared encoder sees them through
+BCE, but the temporal head's paired CTC loss selects only the bank slots;
+background CTC selects ambient negatives. This suggests a separate future
+ordinary-positive supervision study, rather than attributing every miss to
+exact-window semantics. It does not prove the cause of held-out errors.
