@@ -1949,6 +1949,34 @@ No validation/new/final source, audio device, board or firmware operation was
 used. This opt-in helper is available for a future independently frozen GPU
 experiment; it neither diagnoses the existing GPU trainer nor changes v38.
 
+### Independent compiled v39 update check
+
+The [random CPU probe](../wakeword_p4/results/gpu-v39-independent-update-probe-v1.json)
+loads `FiveScoreTraining.step` unchanged from GPU commit `e491229`, checks its
+source and helper hashes, and executes it on a teacher60/150 graph with frozen
+nondefault BN and informative random weights. Main labels are32+/96-, sequence
+labels8+/8-, negative weight20, sequence weight1. No real data/checkpoint is read;
+constructor and pack sampler are deliberately bypassed.
+
+Both compiled paths yield combined loss15.84808445, with sequence gradient
+L1=264.9831. All15 gradient groups agree with an independent five-overlapping-
+window calculation to maximum9.5368e-7. A recording Adam delegates the actual
+update unchanged and captures its incoming gradients; ordinary Adam applied to
+the same initial reference and captured gradients yields exactly the same31
+model variable arrays. Optimizer iterations increase by1, original variables
+change, and frozen BN remains exact. This checks the update composition, not
+GPU initialization, data authentication/sampling, convergence or wake quality.
+
+The [public manifest](assets-gpu-v39-independent-update-probe-v1.json) retains
+random inputs, labels, weights, gradients, initial weights and original source.
+It is not a deployable model release. Reproduce in a checkout containing the
+pinned GPU commit and upstream revision with TensorFlow2.21:
+
+```sh
+python research/wakeword_p4/training/probe_gpu_sequence_update.py \
+  --upstream "$PINNED_MICROWAKEWORD" --output "$FRESH_UPDATE_PROBE"
+```
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
