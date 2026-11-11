@@ -1,0 +1,149 @@
+{
+  "scope": "Separately frozen broad existing-training-source compact CTC versus matched binary-only wake study; development validation only.",
+  "decision": "Rejected by unchanged development advancement gate; not eligible for deployment.",
+  "advance": false,
+  "plan_sha256": "44e05b19a55b6f29873edf5392561e6dc30132ab7d7bd6073b230d37c2326d81",
+  "comparison_sha256": "19514194ca423c44f2cf340176397a9e583b1218cfcb5025d9b10bde00d20e1c",
+  "study_launch_sha256": "1731b6a5ee997fcacfc8246bc965e45014fd22e3e0933cd4956600efc3add15d",
+  "input_audit_sha256": "83c6dee612e9c29beb7cac85b317010fd9a0e8df20dab6c658bd51e5225ba386",
+  "cached_score_audit_sha256": "0cdea5017291d95db3aa7d381755554a3217a2939e0afda42c8ff13a5e557b6e",
+  "changed_plan_rejection_sha256": "60d09b9f728ebb824800c1b65067c55a89059e6f7991d767a56bce5db478ad42",
+  "bank_coverage": {
+    "pairs": 5060,
+    "rows": 10120,
+    "unique_crops": 3112,
+    "unique_sources": 744,
+    "positive_sources": 404,
+    "negative_sources": 340,
+    "pairs_by_stratum": {
+      "edge-tts:hey mix": 640,
+      "edge-tts:hey next": 640,
+      "edge-tts:hey nick": 640,
+      "kokoro:hey mix": 240,
+      "kokoro:hey next": 240,
+      "kokoro:hey nick": 240,
+      "macos-say:hey mix": 340,
+      "macos-say:hey next": 340,
+      "macos-say:hey nick": 340,
+      "openai-tts:hey mix": 432,
+      "openai-tts:hey next": 432,
+      "openai-tts:hey nick": 432,
+      "piper:hey mix": 28,
+      "piper:hey next": 28,
+      "piper:hey nick": 48
+    },
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "control_comparator_policy": "minimum_false_zero_event",
+  "control_comparator": {
+    "threshold": 0.994,
+    "macro_recall": 0.7031696428571428,
+    "ambient_hours": 7.323822222222223,
+    "ambient_false_events": 0,
+    "ambient_false_per_hour_upper_95": 0.40903945817584486,
+    "max_source_false_rate": 0.03125,
+    "max_corpus_false_rate": 0.03125,
+    "hard_negative_false_rate": 0.011217948717948718
+  },
+  "treatment_comparator": null,
+  "arms": {
+    "control": {
+      "model_sha256": "270242cba83fb285f2ef3a6c5ee962a84e68956e99e82e5c21fb31598be622ec",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.7825694444444444,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 2,
+        "ambient_false_per_hour_upper_95": 0.8596322290250369,
+        "max_source_false_rate": 0.052083333333333336,
+        "max_corpus_false_rate": 0.052083333333333336,
+        "hard_negative_false_rate": 0.017895299145299144
+      },
+      "reference_false_near_word_views": 67,
+      "strict_gate": null,
+      "zero_event_grid_points": 3,
+      "best_minimum_false_zero_event": {
+        "threshold": 0.994,
+        "macro_recall": 0.7031696428571428,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 0,
+        "ambient_false_per_hour_upper_95": 0.40903945817584486,
+        "max_source_false_rate": 0.03125,
+        "max_corpus_false_rate": 0.03125,
+        "hard_negative_false_rate": 0.011217948717948718
+      },
+      "fitted_training_sequence_diagnostic": {
+        "ctc_loss": 1.0626047402031338,
+        "sequences": 10120,
+        "exact_sequences": 12,
+        "target_phones": 20240,
+        "phone_edits": 15105,
+        "phone_error_rate": 0.7462944664031621
+      },
+      "cached_reconstruction": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "82a8076a11a875658cfd6db39b51773fd64260dc29d7397731a16a6e182792bd",
+        "details_sha256": "e7cb2f9de0343760c8196530da99d5a969b286f049b06b4c74063ab901d3466c"
+      }
+    },
+    "phonetic": {
+      "model_sha256": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+      "model_bytes": 61712,
+      "inference_parameters": 25831,
+      "reference_0_97": {
+        "threshold": 0.97,
+        "macro_recall": 0.8114583333333332,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 3,
+        "ambient_false_per_hour_upper_95": 1.0586898879667346,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.0202991452991453
+      },
+      "reference_false_near_word_views": 76,
+      "strict_gate": null,
+      "zero_event_grid_points": 5,
+      "best_minimum_false_zero_event": {
+        "threshold": 0.99,
+        "macro_recall": 0.7716369047619048,
+        "ambient_hours": 7.323822222222223,
+        "ambient_false_events": 0,
+        "ambient_false_per_hour_upper_95": 0.40903945817584486,
+        "max_source_false_rate": 0.041666666666666664,
+        "max_corpus_false_rate": 0.041666666666666664,
+        "hard_negative_false_rate": 0.017094017094017096
+      },
+      "fitted_training_sequence_diagnostic": {
+        "ctc_loss": 0.19851451178077653,
+        "sequences": 10120,
+        "exact_sequences": 8860,
+        "target_phones": 20240,
+        "phone_edits": 1317,
+        "phone_error_rate": 0.06506916996047431
+      },
+      "cached_reconstruction": {
+        "clip_count": 6136,
+        "clip_steps": 1429512,
+        "continuous_sources": 35,
+        "continuous_steps": 878709,
+        "calibration_sha256": "491b5deae314388b0de37e2b68ef08b8c71d3da5292e59814fb95913eb8aef27",
+        "details_sha256": "1a3fccf77787682a29f0abfa887d86239770a770896db02967499a783df83719"
+      }
+    }
+  },
+  "all_maxima_timebases_events_grids_and_gate_reproduced": true,
+  "audit_runtime_correction": "First supplementary audit launch accidentally chose system Python without ai_edge_litert; original failure retained. Rerun uses pinned training Python with unchanged code, traces and tolerance.",
+  "limits": "Reused development validation and unchanged21-point grid with separate negative corpora. All existing nontraining source hashes remain excluded from fitting; the full scalar feature-cache hash binds bytes but does not certify split design. Synthesis intent is not human pronunciation truth. Cartesian pairs repeat crops and change engine/phrase exposure relative to the capped study. No source count, numerical fit or development pass establishes Hi ESP parity. No threshold extension, residual-error training, final/test scoring, playback, microphone capture, firmware/OTA, board access or audio pipeline/speed change. Real-speaker recall, endpoint latency, P4 resources and call stability remain separate requirements."
+}

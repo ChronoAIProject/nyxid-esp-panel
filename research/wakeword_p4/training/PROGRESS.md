@@ -2018,3 +2018,31 @@ the newer summary helper in a run's immutable source snapshot; the preceding
 capped study predates that helper and is not covered by this supplementary
 script. Its separate input/control-replay audit still passes. No new wake
 result or fit gate is inferred while the broader-bank jobs are running.
+
+The [completed broader-bank comparison](../results/microwake-compact-broad-ctc-v1.json)
+rejects this recipe under the unchanged gate. At the fixed .97 reference,
+binary-only macro proxy recall is 78.2569%, versus 81.1458% with compact CTC.
+False near-word views rise from 67 to 76/3,744, and continuous events rise
+from two to three in 7.323822 hours. Neither arm has a strict 1%/zero-event
+point anywhere in the frozen grid. The control's minimum-false zero-event
+point is .994 (70.3170% macro, 3.125% worst-group false fraction); treatment's
+is .99 (77.1637% macro, 4.1667% worst-group false fraction). No threshold
+extension, alternative score combination, final scoring or firmware follows.
+
+Both scalar INT8 models remain 61,712 bytes / 25,831 parameters; auxiliary
+heads are discarded at export. CTC fits 8,860/10,120 repeated training rows,
+with normalized loss .19851, but that does not establish generalization.
+The new matched control is essential: pair exposure and engine/phrase weights
+differ from the previous capped study, so this does not isolate a causal
+effect of data quantity across studies.
+
+Input audit verifies original committed/executed source/plan identities,
+the broader bank, full scalar feature bytes, identical head warmup, first
+16 mixed batches, pair schedule and PTQ inputs. Six focused tests pass.
+The supplementary auditor reconstructs each arm's 6,136 clips / 1,429,512
+smoothed steps, 35 continuous sources / 878,709 steps, all maxima/timebases,
+independent events, full grids and the rejection. Its initial preparation
+accidentally recorded system Python without LiteRT; that failed launch/log
+are retained. Rerunning with the pinned training Python changes no code,
+scores or tolerances and passes. Both training/evaluation jobs are terminal.
+No speaker, microphone or board was used. The full Hi ESP goal remains open.
