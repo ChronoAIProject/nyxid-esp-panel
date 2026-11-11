@@ -3922,3 +3922,16 @@ INT8[1,3,40]→UINT8[1,1],54312B SHA93de6f90dd4c8a129eb6e2653ca8d47b00e65ebb7a27
 Formal120k runner session84703/PID118009 started once; same old-stage gate,
 no new/final data and no automatic promotion. Unique postprocessor verifies temporal
 pack/seed plus original full-source recipe before any historical evaluation.
+
+### Mac shared-sequence helper on actual v37 (2026-11-11)
+
+Issue13 Mac3baa61e provided shared-variable continuous scorer, imported unchanged
+helper SHA1df37cc65e14a81c9b41e7e52c262e4d32cc514859a1459344c2401dbb425f55.
+CPU actual v37 weights and all1002 previously saved training streams: normalized
+raw/25.6 clipped0..26, phase1, stream output49 onward.90115 mature outputs compared;
+sequence vs saved GPU float stream max4.649162292480469e-6; sequence vs original
+batched aligned windows max.010274291038513184. All22801parameters/shared variables
+and weights unchanged, optimizer0. Does not erase prior real-weight residual or
+prove backend cause, gradients, INT8/MCU or recognition improvement. No new/final
+sets or audio regeneration. v38 continues unmodified; future five-score-loss
+experiment must be separately preregistered after current experiment completes.
