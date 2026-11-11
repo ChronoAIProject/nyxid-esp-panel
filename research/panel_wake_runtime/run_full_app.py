@@ -49,6 +49,9 @@ def run_acceptance(command, log, timeout):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--port", required=True)
+    p.add_argument("--baud", type=int, default=1500000,
+                   choices=(115200, 230400, 460800, 921600, 1500000),
+                   help="Flash and restoration speed for the verified USB link")
     p.add_argument("--expected-mac", required=True)
     p.add_argument("--status-url", required=True)
     p.add_argument("--restore-app", type=Path, required=True)
@@ -86,7 +89,7 @@ def main():
         return result.stdout
 
     def flash(path, filename):
-        esptool(["--baud", "1500000", "--before", "default_reset", "--after", "hard_reset",
+        esptool(["--baud", str(args.baud), "--before", "default_reset", "--after", "hard_reset",
                  "write_flash", hex(args.app_offset), str(path)], filename)
 
     before = status()
@@ -103,6 +106,7 @@ def main():
               "experimental_bin_sha256": hashlib.sha256(args.experimental_app.read_bytes()).hexdigest(),
               "experimental_elf_sha256": args.expected_experimental_elf_sha256,
               "experimental_wake_word": args.experimental_wake_word,
+              "flash_baud": args.baud,
               "restored": False}
 
     def wait_ready(digest, word):

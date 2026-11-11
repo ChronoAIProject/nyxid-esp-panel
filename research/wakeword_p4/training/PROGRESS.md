@@ -3241,3 +3241,36 @@ recipe: no predeclared expanded-grid threshold clears all development gates.
 The frozen v30 remains the GPU reference. These corpora differ from the Mac
 review queue; the present phoneme observations neither invalidate GPU inputs
 nor explain v34's failure. See the updated GPU handoff notes for provenance.
+
+## Original GPU v30 received: silent P4 numeric/idle comparison completed
+
+On 2026-11-12 the original model/training/calibration arrive in a public
+hash-bound archive, matching the frozen intake. The full P4 application
+passes 179/179 output bytes and host/device event step 144. The all-zero
+legacy Daniel fixture is retained as a rejected numeric diagnostic. All
+12 preselected training-only reset traces reproduce: eight vary and four
+stay zero. The first planned Edge source supplies the fixture, not a new
+quality evaluation sample.
+
+Both raw-input arms complete 120-second idle measurements, 121 status
+samples and passing capture audits. Normalized detector elapsed fractions
+are 8.4141%/8.7575%. Candidate minimum internal/DMA headroom is 69644 bytes
+lower; SDK configs and dependency versions/component hashes match. No new
+RX overflows occur in counted intervals, while startup counters are already
+765/749 and the candidate also runs its diagnostic at startup. These idle
+observations are not CPU, acoustic-latency or active-call acceptance.
+
+Both runs restore the original app/service/Hi ESP listener. No playback,
+microphone PCM recording, production-board or audio-pipeline change. The
+[result](../results/gpu-v30-p4-probe-v1.json) and
+[public evidence](../../handoff/assets-gpu-v30-p4-probe-v1.json) retain all
+diagnostics and original reports/model. Anonymous download verifies 43
+payload members; extracted source regenerates the fixture/report byte-for-byte.
+All 18 focused self-test, configuration and capture tests pass.
+
+Coordinate next steps through
+[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+GPU snapshot `add3678` rejects v35 and records ongoing v36 source-balanced
+training plus fresh pre-scoring SLR83/VoxConverse development preparation.
+No v36 quality acceptance is available in that snapshot. The missing-v30
+artifact impasse has ended; full Hi ESP parity remains unproved.

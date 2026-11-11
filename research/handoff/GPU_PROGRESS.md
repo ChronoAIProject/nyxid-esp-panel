@@ -1,8 +1,10 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `c8dcd2c` (fetched again 2026-11-12); see the
+Latest observed GPU commit: `add3678` (fetched again 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
+Post cross-machine updates and candidate handoffs to
+[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
 
 Observed 2026-11-11 at GPU branch commit
 `d338e7a`:
@@ -882,3 +884,29 @@ model SHA values and successful GPU export reports do not supply its bytes.
 The Mac's separate 97-source phoneme observation study cannot replace this
 handoff, human pronunciation references or P4 acceptance. No playback or
 production-board operation follows this read-only branch inspection.
+
+### GPU snapshot through `add3678`, original v30 now received
+
+The original v30 archive now matches the frozen Mac intake. Its full-app P4
+probe passes 179 fixture output bytes and event step 144. Both matched
+120-second idle arms pass capture accounting and restore the original app,
+service and listener. See [the result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json)
+and [verified public evidence](assets-gpu-v30-p4-probe-v1.json). This resolves
+the earlier missing-artifact blocker; it does not accept wake quality.
+
+GPU v35's new-development gate rejects promotion: 4 events in 8.17367 h at
+its historical threshold, upper95 1.11988/h, and no passing point in the
+fixed 138-point grid. The branch then freezes v36 source-balanced training
+with Kokoro/Alba/Cori checkpoints and preserves old sampling by default.
+Its two-step export and sampler audits pass; these are not trained-model
+quality results. Latest notes observe the original v36 at 24000/120000 steps
+with its postprocessor waiting. This is a commit snapshot, not an independent
+live-process check.
+
+Before scoring, the branch audits 90 new SLR83 development replays from two
+presets and 86 continuous VoxConverse files covering 8.48722 h. No new-model
+scores/FAR are reported at this commit. Physical-speaker/pretraining
+independence remains uncertain; declared consumed/reserved-data restrictions
+remain intact. Subsequent completion, policy and original model archives
+belong in issue #14 for the next frozen P4 probe. No threshold change or
+model promotion follows this snapshot.

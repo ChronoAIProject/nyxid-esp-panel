@@ -1825,3 +1825,31 @@ python research/handoff/verify_review_phonemes.py \
 `package_review_phonemes.py --help` documents packaging and public-download
 verification. This study uses no playback, microphone, board, firmware or
 reserved wake-quality scoring. Full Hi ESP parity remains unproved.
+
+## Original GPU v30: silent full-app P4 probe completed
+
+Coordinate Mac/P4 and RTX 4090 research in
+[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+The [result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json) verifies the
+original model, all 179 host/P4 output bytes and event step 144. All 12
+preselected training-only reset traces reproduce: eight vary and four stay
+zero. The rejected all-zero legacy Daniel fixture remains in the evidence.
+These diagnostics are not recognition acceptance estimates.
+
+Both raw-input arms complete 120-second idle measurements, with identical
+SDK config and matching dependency versions/component hashes. Normalized
+detector elapsed fractions are 8.4141%/8.7575%, with no new RX overflows in
+the counted intervals. v30 minimum internal/DMA free memory is 69644 bytes
+lower. Startup counts are already 765/749; v30 also runs its diagnostic.
+CPU utilization, acoustic latency and active-call capacity remain unmeasured.
+Both guarded tests restore the original app/service/Hi ESP listener; no
+playback, microphone PCM recording or production-board operation occurs.
+
+The [public archive manifest](assets-gpu-v30-p4-probe-v1.json) binds all 43
+payload members and a fresh anonymous download. Extracted source regenerates
+the fixture/report byte-for-byte and both capture audits. It includes the
+model/reports, synthetic fixture, all diagnostic traces and numeric timing;
+firmware, SDK config, board state/backups and raw UART stay private. See the
+[runtime procedure](../panel_wake_runtime/README.md#completed-v30-silent-development-probe)
+for reproduction commands, dependency pins and the 460800-baud USB fallback.
+Full Hi ESP parity remains open.

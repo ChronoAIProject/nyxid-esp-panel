@@ -50,7 +50,7 @@ contains 1,256 detector calls on the USB development board. At 512 samples
 per call, average/max elapsed time is 2.917/16.104 ms, and the calls account
 for 9.12% of the 40.17 s observed wall time. The measurement includes
 scheduling and is not CPU utilization. The original app and voice service
-were restored and rechecked; the resource comparison with v30 remains open.
+were restored and rechecked. The completed matched v30 comparison is below.
 The [capture baseline](../wakeword_p4/results/hiesp-idle-capture-baseline-v1.json)
 observed 110.53 seconds across complete timing windows, with no additional
 RX overflows and cumulative byte difference from -64 to +832 bytes.
@@ -175,6 +175,71 @@ The fixture generator checks both TFLite subgraphs against the existing P4
 operator list, validates the streaming tensors, and regenerates the frontend
 and output bytes after reset. These host checks do not prove board arithmetic
 or resource fit. See [GPU model handoff](../handoff/GPU_MODEL_HANDOFF.md).
+
+### Completed v30 silent development probe
+
+The [2026-11-12 full-app result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json)
+verifies the original GPU model, all 179 output bytes with zero mismatches,
+and host/device event step 144. The unchanged legacy Daniel source produces
+only zero outputs under v30 and was rejected as an uninformative fixture.
+A preselected 12-source training-only queue retains eight varied-output and
+four all-zero cases, all reset-reproducible. Its first Edge source supplies
+the numeric fixture. These are not recognition or pronunciation estimates.
+
+Both raw-input arms use byte-identical SDK configuration and matching
+dependency versions/component hashes. Each measures 120 seconds and 121
+heap/status samples. Excluding the first retained timing window, v30 uses
+9.694275 seconds of detector elapsed time over 115.215178 seconds (8.4141%);
+Hi ESP uses 10.120067 over 115.558424 seconds (8.7575%). The different
+480/512-sample blocks require this normalized comparison. Minimum internal/DMA
+free bytes are 215807/176195 for v30 and 285451/245839 for Hi ESP. Both capture
+audits pass with zero **new** RX overflows in the counted intervals. Startup
+counters were already 765/749; v30 also runs its self-test at startup. Startup
+conditions are not identical or demonstrated lossless. These are idle
+elapsed-time/heap observations, not CPU utilization, latency or active-call fit.
+
+Both guarded runs restore the original app, service and Hi ESP listener.
+No playback, microphone PCM recording or production-board operation occurred.
+The [public evidence manifest](../handoff/assets-gpu-v30-p4-probe-v1.json)
+binds all 43 payload members and a verified anonymous download. It includes
+model/reports, synthetic fixture, complete diagnostic traces, numeric-only
+timing and source. Firmware, SDK config, recovery backups, device identifiers
+and raw UART remain private. The final self-test audit hashes the completed
+UART; the earlier prefix audit is retained with an explicit name.
+
+To reproduce from retained private runner outputs without touching a board:
+
+```sh
+python research/panel_wake_runtime/audit_runtime_selftest.py \
+  --uart "$PRIVATE_PROBE/board/uart-private.log" \
+  --fixture-report "$PRIVATE_PROBE/v30-prime-selftest.json" \
+  --output "$PRIVATE_PROBE/selftest-verdict-final.json"
+python research/panel_wake_runtime/diagnose_gpu_sources.py \
+  --model "$PRIVATE_PROBE/payload/hey_nyx.tflite" \
+  --plan "$PRIVATE_PROBE/diagnostic-training-sources-plan.json" \
+  --features "$ORIGINAL_FEATURES" --output "$FRESH_DIAGNOSTIC"
+python research/panel_wake_runtime/summarize_gpu_p4_probe.py \
+  --artifacts "$PRIVATE_PROBE"
+```
+
+Use fresh output paths; retained evidence is never replaced. Host inference
+used `ai-edge-litert==2.3.0`, `pymicro-features==2.0.2` and the reference
+interpreter; the summary also uses PyYAML. It verifies raw timing against the
+capture reports and checks both resolved dependency identities. Public
+numeric-only records can be checked separately with the included auditors.
+Extracted source reproduces the complete fixture/report byte-for-byte and
+both capture audits.
+
+A 1500000-baud USB backup read failed, then completed at 460800.
+`run_full_app.py --baud 460800` uses the selected speed for both flash and
+restoration; the default stays unchanged. The research pin fixes
+`esp_lv_decoder==0.5.0` to prevent unrelated resolver drift. The existing
+Calculator `format-truncation` warning required a private generated Ninja
+object-only `-Wno-error=format-truncation` exception in both builds; product
+source and detector compiler flags were unchanged. Acoustic recall, word-end
+latency, room false wakes and long-call/echo/reconnect checks remain open.
+Coordinate subsequent candidates through
+[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
 
 ## Temporary board test
 

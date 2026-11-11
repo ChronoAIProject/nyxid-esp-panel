@@ -1,5 +1,11 @@
 # GPU detector handoff to the P4
 
+Current cross-machine coordination:
+[issue #14](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/14).
+The original v30 handoff has now been received and tested in the complete P4
+application; see the completed probe below. Earlier availability observations
+are dated historical snapshots.
+
 This is the artifact contract for a physical development probe. It does not
 accept a model for release or change service permissions. The GPU track's
 `teacher60` model and the Mac track's 80 ms embedding have different inputs;
@@ -175,3 +181,39 @@ member or access the GPU host's filesystem. The exact v30 binary needed for
 the existing intake remains 54,440 bytes with SHA-256
 `04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c`;
 the common-calibration export is a different binary and must not replace it.
+
+## Original v30 received and P4 probe completed, 2026-11-12
+
+The GPU's `gpu-v30-p4-handoff-v1.tar.gz` was anonymously downloaded from
+`research-hey-nyx-20261110`: 55854 bytes, SHA-256
+`60000e37f1b01c408f48f6310bfa7c6d0e837fe6d808127aab9de9a88e1e3cb5`.
+All four members and all three payload identities match the frozen Mac intake.
+No metadata normalization or operating-point change was needed.
+
+The [complete P4 application result](../wakeword_p4/results/gpu-v30-p4-probe-v1.json)
+matches all 179 host output bytes and event step 144. Its synthetic fixture
+uses normal 16 kHz PCM, 56160 zero prime samples and only tail padding.
+All 12 preselected training-only reset traces reproduce; eight vary and four
+yield only zero. The first planned Edge source supplies the fixture. The
+all-zero legacy Daniel source remains a rejected diagnostic, not an omitted
+control or recognition acceptance result.
+
+Both raw-input 120-second idle arms pass capture conservation, with identical
+SDK configuration and matching dependency versions/component hashes.
+Normalized detector elapsed fractions are 8.4141%/8.7575%; v30 has 69644 fewer
+bytes of minimum internal/DMA free memory. No new overflows occur in the
+counted intervals; startup counts and the extra diagnostic are explicit
+limitations. Both runs restore the original app/service/Hi ESP listener.
+
+The [public evidence manifest](assets-gpu-v30-p4-probe-v1.json) binds all 43
+payload members, including original reports/model, complete diagnostic scores,
+synthetic fixture, numeric timing and source. A fresh anonymous download
+verifies every member; extracted code regenerates the fixture/report
+byte-for-byte and both capture audits. Private board state, firmware, raw
+UART and microphone audio are excluded. Commands, dependency pins and the
+460800-baud USB fallback are in the [runtime README](../panel_wake_runtime/README.md).
+
+The missing-model blocker is resolved. Recognition, acoustic/word-end latency,
+room false wakes and active long-call/echo/reconnect comparison remain open;
+v30 is not promoted. Post future completed GPU evaluations and original model
+archives to issue #14, preserving the existing experiment protocol.

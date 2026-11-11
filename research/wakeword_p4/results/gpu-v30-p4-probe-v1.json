@@ -1,0 +1,208 @@
+{
+  "format": "nyx-gpu-v30-p4-probe-v1",
+  "accepted": false,
+  "scope": "Silent full-app numeric self-test and matched steady idle resources; no acoustic acceptance.",
+  "source_commit": "65ed37c57d034ae7e077700fa3c66cce919f53a0",
+  "summarizer_sha256": "afc7558abfa571ee8bad55b85fe5d235b0788f64529dfe1b21336151e7bc230e",
+  "model_binding": {
+    "scope": "Experimental firmware build; recognition acceptance is not implied",
+    "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "model_bytes": 54440,
+    "calibration_sha256": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+    "training_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+    "selftest_sha256": "6285851a48fa14f36dcb237011c9f65c43c11e80d6df478ce98ca379c6e44356",
+    "architecture": "teacher60",
+    "threshold": 0.91796875,
+    "input_frames": 150,
+    "sample_rate": 16000,
+    "frontend_hop_samples": 160,
+    "model_stride_frames": 3,
+    "smoothing_steps": 5,
+    "refractory_steps": 67,
+    "validation_policy_operating_point": null,
+    "strict_validation_operating_point": true,
+    "prepare_source_sha256": "7f2eabf1f8bea58d9dc8ff520adb80d36948490fded072c5be3b6a3329a02ec1",
+    "gpu_profile_sha256": "fdf4911db5063ff0e648ab68cca10d82bab8a362d2a8d42418df9aece4880918",
+    "gpu_source_commit": "24c93258fbf2ce88e2f7b71d3219c29941dfafd8",
+    "validation_window_phase": 1
+  },
+  "selftest": {
+    "scope": "Check one full-app exact-PCM verdict against its bound host fixture report.",
+    "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "fixture_sha256": "6285851a48fa14f36dcb237011c9f65c43c11e80d6df478ce98ca379c6e44356",
+    "outputs": 179,
+    "mismatches": 0,
+    "activation_steps": [
+      144
+    ],
+    "limits": "Checks the firmware-reported comparison and event steps for this fixture only; no acoustic recognition, latency or general MCU equivalence claim."
+  },
+  "training_only_diagnostic": {
+    "sources": 12,
+    "varied_output_sources": 8,
+    "reset_reproducible": true,
+    "first_source_rule": "First two lexicographic positive training/variant-0 paths per engine, frozen before scoring.",
+    "recognition_acceptance": false,
+    "rejected_legacy_source_all_outputs_zero": true
+  },
+  "build_comparison": {
+    "identical_sdkconfig_sha256": "bc5d97fe8ff05ede5161ebc1e6d937d2b1d95d69624660e0534a5de1b0a64b17",
+    "dependency_component_count": 68,
+    "all_dependency_versions_and_component_hashes_match": true,
+    "same_raw_idle_input_and_timing_instrumentation": true,
+    "calculator_only_generated_ninja_warning_exception": "-Wno-error=format-truncation"
+  },
+  "arms": {
+    "v30": {
+      "app_elf_sha256": "3618c8a5b3e410c7e616c81476c0038c6127fc878043c29cee42d7b646ea43b4",
+      "app_bin_sha256": "a502627dcde27a7359687b45ce76d5fdedf99031934626804f4e53d4aad33f37",
+      "app_bin_bytes": 6152016,
+      "restored_original_app_service_and_listener": true,
+      "flash_baud": 460800,
+      "idle_seconds_requested": 120,
+      "status_samples": 121,
+      "steady_timing": {
+        "complete_windows": 23,
+        "calls": 3841,
+        "block_samples": 480,
+        "wall_seconds": 115.215178,
+        "detector_elapsed_seconds": 9.694275,
+        "detector_elapsed_wall_fraction": 0.08414060689122053,
+        "mean_call_elapsed_ms": 2.5238935173131996,
+        "max_call_elapsed_ms": 5.829,
+        "min_stack_free_bytes": 11760,
+        "first_retained_window_excluded": true
+      },
+      "heap_summary_bytes": {
+        "free": {
+          "min": 20814628,
+          "median": 20818104,
+          "max": 20818380
+        },
+        "spiram_free": {
+          "min": 20728960,
+          "median": 20729004,
+          "max": 20729280
+        },
+        "dma_free": {
+          "min": 176195,
+          "median": 179627,
+          "max": 179627
+        },
+        "dma_largest_free": {
+          "min": 126976,
+          "median": 126976,
+          "max": 126976
+        },
+        "internal_free": {
+          "min": 215807,
+          "median": 219239,
+          "max": 219239
+        },
+        "internal_largest_free": {
+          "min": 126976,
+          "median": 126976,
+          "max": 126976
+        }
+      },
+      "capture": {
+        "passed": true,
+        "input_seconds": 115.216,
+        "first_retained_rx_overflows": 765,
+        "new_rx_overflows": 0,
+        "cumulative_rx_read_balance_range_bytes": [
+          -64,
+          768
+        ],
+        "backlog_bound_bytes": 6784
+      },
+      "evidence_sha256": {
+        "idle_report": "7f31b40668e4f8a6f9d0bc9840162c990fdc9940cbb508356fce1fccbd9f3cea",
+        "runner_report": "6aa41479c53ee397feea8b399f5c5b25d3b966bc09b025e914a75a0cb11ea1ea",
+        "private_final_uart": "4f18b604e7e25f85b899ed13c39c700ff7c115f866bc7baff09380adc01e359a",
+        "public_counts": "c305fa6d0167bc1d28f54c07035d58e197c8dba72e1ac45131802207ccab1d64"
+      }
+    },
+    "hiesp": {
+      "app_elf_sha256": "8de8e5135285f3bee41fc640638ccbf3cddf07da30f3f753cbaef2d665b84095",
+      "app_bin_sha256": "d3651d808bddbbf8a405312ea8d411576f37a3eff27d985e3558ea487c157937",
+      "app_bin_bytes": 6189744,
+      "restored_original_app_service_and_listener": true,
+      "flash_baud": 460800,
+      "idle_seconds_requested": 120,
+      "status_samples": 121,
+      "steady_timing": {
+        "complete_windows": 23,
+        "calls": 3611,
+        "block_samples": 512,
+        "wall_seconds": 115.558424,
+        "detector_elapsed_seconds": 10.120067,
+        "detector_elapsed_wall_fraction": 0.08757532899548717,
+        "mean_call_elapsed_ms": 2.802566325117696,
+        "max_call_elapsed_ms": 5.451,
+        "min_stack_free_bytes": 11760,
+        "first_retained_window_excluded": true
+      },
+      "heap_summary_bytes": {
+        "free": {
+          "min": 20233948,
+          "median": 20237408,
+          "max": 20237740
+        },
+        "spiram_free": {
+          "min": 20078612,
+          "median": 20078664,
+          "max": 20078912
+        },
+        "dma_free": {
+          "min": 245839,
+          "median": 249271,
+          "max": 249559
+        },
+        "dma_largest_free": {
+          "min": 126976,
+          "median": 126976,
+          "max": 126976
+        },
+        "internal_free": {
+          "min": 285451,
+          "median": 288883,
+          "max": 288979
+        },
+        "internal_largest_free": {
+          "min": 126976,
+          "median": 126976,
+          "max": 126976
+        }
+      },
+      "capture": {
+        "passed": true,
+        "input_seconds": 115.552,
+        "first_retained_rx_overflows": 749,
+        "new_rx_overflows": 0,
+        "cumulative_rx_read_balance_range_bytes": [
+          -64,
+          832
+        ],
+        "backlog_bound_bytes": 6784
+      },
+      "evidence_sha256": {
+        "idle_report": "85179a17f3780d0efcc94924840ef48de19816dc85c9ed413e2e51d3351872aa",
+        "runner_report": "26be5d99109815f239359149381d5260bf5e2b338be379d30613724cf7fdc4af",
+        "private_final_uart": "ca378b61827abc15370dc25d9e913bac608aa486e8df9e9343b569a7eea5077c",
+        "public_counts": "ac1d94fa6386aa02929bce46e5b5bfaab10e3ebe37b3e150f906e72a9087ea58"
+      }
+    }
+  },
+  "speaker_playback": false,
+  "microphone_pcm_recording": false,
+  "production_board_touched": false,
+  "limits": [
+    "Detect elapsed time includes scheduling; it is neither CPU utilization nor acoustic latency.",
+    "Different detector block sizes require time-normalized comparisons.",
+    "Startup loss is not accepted as zero: initial overflow counts differ and v30 runs its diagnostic during startup.",
+    "The single synthetic numeric fixture and reused training-source diagnostics are not recall/false-wake tests.",
+    "Heap minima are idle observations, not proof of active-call resource capacity.",
+    "Real-user/acoustic recognition, word-end latency, continuous room negatives and active long-call/echo/reconnect comparison remain open."
+  ]
+}
