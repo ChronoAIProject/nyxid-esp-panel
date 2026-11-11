@@ -53,6 +53,13 @@ def main():
     if args.output.exists():
         parser.error('Use a fresh evaluation directory')
     plan = json.loads(args.plan.read_bytes())
+    ctc_event = plan.get('ctc_event', 'exact')
+    detector_class = Detector
+    if ctc_event == 'occurrence':
+        from keyword_occurrence import OccurrenceDetector
+        detector_class = OccurrenceDetector
+    elif ctc_event != 'exact':
+        raise ValueError('Unknown CTC event')
     if any(sha(Path(__file__).parent/name) != digest for name, digest in plan['source_sha256'].items()):
         raise ValueError('Executed evaluation source differs')
     smoke_path = args.export/'result.json'
@@ -68,7 +75,7 @@ def main():
         raise ValueError('Unreviewed event policy')
     args.output.mkdir(parents=True, exist_ok=False)
     (args.output/'plan.json').write_bytes(args.plan.read_bytes())
-    detector = Detector(args.export/'compact_dual.tflite')
+    detector = detector_class(args.export/'compact_dual.tflite')
     raw = np.memmap(args.features/'features.bin', mode='r', dtype='<u2').reshape(-1, 40)
     rows = json.loads((args.features/'features.json').read_bytes())
     selected = [r for r in rows if r['split'] == 'validation']
@@ -123,8 +130,10 @@ def main():
     for arm in ARMS:
         arms[arm]['reference_0_97'] = next(r for r in arms[arm]['grid'] if r['threshold'] == .97)
     result = {'scope': __doc__, 'plan_sha256': sha(args.plan), 'model_sha256': plan['model_sha256'],
+        'ctc_event': ctc_event,
         'arm_definitions': {'control': 'Binary output of the same dual INT8 model',
-                            'phonetic': 'Binary times absolute CTC P([hey,nyx]); no forced choice'},
+                            'phonetic': ('Binary times absolute CTC P([hey,nyx] occurs); arbitrary surrounding symbols'
+                                if ctc_event == 'occurrence' else 'Binary times absolute CTC P([hey,nyx]); no forced choice')},
         **operating_points(arms, .97), 'arms': arms, 'accepted': False,
         'limits': plan['limits']}
     (args.output/'ambient-details.json').write_text(json.dumps(ambient, indent=2)+'\n')

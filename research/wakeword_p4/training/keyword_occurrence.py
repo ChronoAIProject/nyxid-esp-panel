@@ -6,6 +6,8 @@ a forced-choice phrase posterior or calibrated human wake confidence.
 """
 import numpy as np
 
+from compact_sequence_inference import Detector as ExactDetector
+
 
 def log_probability(logits):
     values = np.asarray(logits, np.float64)
@@ -26,3 +28,14 @@ def log_probability(logits):
         found = np.logaddexp(found, hey+frame[:, 2])
         none, hey = next_none, next_hey
     return np.minimum(found, 0.)  # Bound only accumulated floating roundoff.
+
+
+class OccurrenceDetector(ExactDetector):
+    """Preserve the original INT8 input/state path; change only the CTC event."""
+    def predict(self, raw):
+        binary, combined = [], []
+        for at in range(0, len(raw)-2, 768):
+            p, logits = self.raw_outputs(raw[at:at+768])
+            binary.extend(p)
+            combined.extend(p*np.exp(log_probability(logits)))
+        return np.asarray(binary, np.float32), np.asarray(combined, np.float64)

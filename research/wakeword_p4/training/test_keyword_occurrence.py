@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 
 from compact_sequence_inference import target_log_probability
-from keyword_occurrence import log_probability
+from keyword_occurrence import log_probability, OccurrenceDetector
 from phone_sequences import collapse
 
 
@@ -48,6 +48,31 @@ class KeywordOccurrenceTest(unittest.TestCase):
         for bad in [np.zeros((2, 6)), np.zeros((1, 4, 5)), np.full((1, 4, 6), np.nan)]:
             with self.assertRaises(ValueError):
                 log_probability(bad)
+
+    def test_adapter_keeps_order_and_state_across_bounded_chunks(self):
+        class Fixture(OccurrenceDetector):
+            def __init__(self):
+                self.steps = 0; self.calls = []
+
+            def raw_outputs(self, raw):
+                count = len(raw)//3
+                ids = np.asarray(raw[:count*3:3, 0], int)//3
+                np.testing.assert_array_equal(ids, np.arange(self.steps, self.steps+count))
+                self.steps += count; self.calls.append(count)
+                logits = np.full((count, 67, 6), -20.)
+                logits[..., 0] = 20
+                logits[:, 10, 0] = logits[:, 20, 0] = -20
+                logits[:, 10, 1] = logits[:, 20, 2] = 20
+                logits[:, 30, 0] = -20; logits[:, 30, 3] = 20
+                return np.full(count, .9, np.float32), logits
+
+        raw = np.repeat(np.arange(1552)[:, None], 40, axis=1)
+        detector = Fixture()
+        scalar, occurrence = detector.predict(raw)
+        self.assertEqual(detector.calls, [256, 256, 5])
+        self.assertEqual(len(scalar), 517)
+        np.testing.assert_array_equal(scalar, np.full(517, .9, np.float32))
+        self.assertTrue((occurrence > .899999).all())
 
 
 if __name__ == '__main__':

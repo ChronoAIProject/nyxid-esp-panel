@@ -65,6 +65,13 @@ def audit(args):
     result = json.loads((output/'result.json').read_bytes())
     require(result['plan_sha256'] == sha(root/'plan.json') and result['model_sha256'] == plan['model_sha256'],
             'Result binding differs')
+    require(result.get('ctc_event', 'exact') == plan.get('ctc_event', 'exact'), 'CTC event differs')
+    prior = getattr(args, 'prior_inference', None)
+    if plan.get('binary_replay_parent_files_sha256'):
+        require(prior is not None, 'Missing binary replay parent')
+        prior = prior.resolve()
+        for name, digest in plan['binary_replay_parent_files_sha256'].items():
+            require(sha(prior/name) == digest, 'Binary replay parent differs: '+name)
     index = json.loads((args.features/'features.json').read_bytes())
     selected = [r for r in index if r['split'] == 'validation']
     reserved = {r['sha256'] for r in index if r['split'] != 'validation'}
@@ -124,6 +131,20 @@ def audit(args):
     for arm in arms:
         require(arms[arm]['grid'] == result['arms'][arm]['grid'], 'Grid metrics differ: '+arm)
     require(all(result[k] == v for k, v in operating_points(arms, .97).items()), 'Advancement gate differs')
+    if plan.get('binary_replay_parent_files_sha256'):
+        with (output/'clip-scores.jsonl').open() as current, (prior/'evaluation/clip-scores.jsonl').open() as original:
+            for left, right in zip(current, original, strict=True):
+                left, right = json.loads(left), json.loads(right)
+                require({k: v for k, v in left.items() if k != 'arms'}
+                        == {k: v for k, v in right.items() if k != 'arms'}
+                        and left['arms']['control'] == right['arms']['control'],
+                        'Same-artifact binary clip replay differs')
+        require(ambient['control'] == json.loads((prior/'evaluation/ambient-details.json').read_bytes())['control'],
+                'Same-artifact binary continuous metadata differs')
+        for item in ambient['control']:
+            require(np.array_equal(np.load(output/item['array'], allow_pickle=False),
+                                   np.load(prior/'evaluation'/item['array'], allow_pickle=False)),
+                    'Same-artifact binary continuous score replay differs')
     return {'source_sha256': sha(Path(__file__)), 'plan_sha256': sha(root/'plan.json'),
         'raw_result_sha256': sha(output/'result.json'), 'launch_sha256': sha(root/'launch.json'),
         'frozen_source_plan_export_and_indices_match': True,
@@ -133,6 +154,7 @@ def audit(args):
         'full_scalar_and_background_bytes_hashed': bool(plan.get('feature_data_sha256')
                                                        and plan.get('background_inputs_sha256')),
         'pointwise_product_dominance_verified': True, 'continuous_event_counts_measured_independently': True,
+        'parent_binary_scores_replayed_exactly': bool(plan.get('binary_replay_parent_files_sha256')),
         'continuous_arrays': event_locations,
         'limits': 'Cached-score reconstruction only. Full scalar/background bytes are checked only when explicitly hash-bound in the plan; index hashes alone do not bind array bytes. No new inference, independent wake acceptance, pronunciation, physical endpoint, P4 resource or call stability proof.'}
 
@@ -143,6 +165,7 @@ def main():
         parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--plan-repository-path',
         default='research/wakeword_p4/training/plans/compact-sequence-inference-v1.json')
+    parser.add_argument('--prior-inference', type=Path)
     args = parser.parse_args()
     result = audit(args)
     with args.output.open('x') as stream:

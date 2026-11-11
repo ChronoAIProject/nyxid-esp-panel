@@ -2333,3 +2333,30 @@ does not explain this training geometry. No occurrence inference has launched
 at this commit. Complete logits/probabilities and endpoint traces will be
 retained without selecting any new threshold/window or advancement gate.
 All work stays silent, without fitting, hardware or audio pipeline changes.
+
+The completed 40-source training diagnostic confirms that exact-event
+semantics is only a partial explanation. At fixed .97, five isolated Nyx
+sources have scalar/exact/occurrence detections 5/2/4; the20 Piper continuation
+sources have16/0/6. Each five-source mix/next/nick cohort has zero detections
+for all three scores. At the scalar peak, greedy output contains the keyword
+on only2/20 continuations, both exact; surrounding output alone cannot explain
+the missing keyword at that time. These are optimization-seen diagnostics,
+not quality or causal context estimates. All40 traces /8,513 steps are retained.
+
+A supplementary auditor independently reconstructs exact probabilities with
+TensorFlow CTC and occurrence with probability-domain transition matrices.
+Maximum deltas are2.18e-6 /2.11e-15, within separately stated1e-5 /1e-12
+numerical allowances. It rechecks committed/executed source/plan/model and
+full feature bytes, every trace, maximum, endpoint, greedy sequence and cohort.
+The neutral67-step six-class occurrence prior is.9024687 (exact event6.32e-47),
+so accepting a training-score increase as wake quality would be unsound.
+
+The [separate fixed occurrence inference plan](plans/keyword-occurrence-inference-v1.json)
+now requires the unchanged full development grid/gate. It uses the same dual
+INT8 artifact, with no new PTQ or fitting. A pre-inference40-source gate requires
+the bounded adapter to replay all original scalar and occurrence-product steps
+exactly, including chunk boundaries. Fresh development binary scores must
+also replay every parent same-artifact clip and continuous score exactly.
+The explicit event selector defaults to the old exact event; firmware and
+audio are untouched. Eleven recurrence/adapter/accounting/gate tests pass.
+No occurrence development inference has launched at this commit.
