@@ -1920,3 +1920,31 @@ Only the original validation feature rows/arrays will be scored, with every
 step retained. The strict 1%/zero-event and +3-point advancement gates remain.
 No inference-quality run has launched at this commit; no final data or board
 operation is permitted by this experiment.
+
+The [completed inference comparison](../results/compact-sequence-inference-v1.json)
+rejects this fixed absolute-product rule. At .97, matched binary macro proxy
+recall 84.2034% becomes 40.2247%, false near-word views fall from 88 to 24
+of 3,744, and continuous events fall from one to zero in 7.323822 hours.
+The strict 1%/zero-event gate has a product point at .99, but macro recall
+there is only 1.53125% (17/2,392 positive variants detected overall). Highest
+product macro recall anywhere in the original grid is 85.2133% at .05,
+with six continuous events and 9.375% worst-group false views. This is not
+a usable advancement over the matched binary comparator. No alternative
+score normalization, threshold extension, final scoring or firmware follows.
+
+The [read-only cached-score auditor](../../handoff/audit_compact_inference.py)
+reconstructs all 6,136 clips/1,429,512 smoothed steps, 35 continuous sources/
+878,709 smoothed steps, every clip maximum/timebase, both independent event
+counts, all 21-point grids and the advancement decision. Product dominance
+is checked on all retained scores, and a deliberately changed plan is
+rejected before reconstruction. Source/plan/export/feature-index identities
+match; the full external scalar feature cache is not hashed by that claim.
+The evaluation process is terminal. No speaker, microphone or board was used.
+
+Both rules use the same actual dual INT8 invocations. Its training-only PTQ
+set differs from the earlier scalar export, so no cross-export byte identity
+is asserted. This comparison isolates the fixed inference rule on this one
+artifact. Retaining ordered output can reject errors, but the present model
+and absolute score lose too much correct speech. Training-bank fit remains
+insufficient evidence of broader phrase discrimination. The full Hi ESP goal
+stays active and no candidate from these studies is qualified for deployment.
