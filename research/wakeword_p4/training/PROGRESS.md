@@ -1886,3 +1886,37 @@ loads a separate non-streaming reference from the same checkpoints after
 conversion. Only reference construction changes. Source weights, all training
 inputs, calibration selection, numeric tolerance and reset/chunking criteria
 remain fixed. A new output directory will preserve the original failure.
+
+The [completed corrected export](../results/compact-sequence-export-smoke-v2.json)
+passes all 20 fixed sources, covering 2,603 complete aligned windows. Maximum
+float window/stream deltas are 3.58e-6 for the scalar and 1.24e-5 for sequence
+logits, below 1e-4. Every quantized recreation/reset and 256-step chunk replay
+is exact. All scalar weights match the original checkpoint. The resulting
+INT8 artifact is identical to the first attempt's export; correcting the
+reference construction did not change the model or PTQ inputs.
+
+The two-output export is 63,680 bytes and 26,197 parameters, versus the
+scalar's 61,712 bytes and 25,831 parameters. Maximum observed float/INT8
+differences are .26570 for scalar probability and 2.04884 for individual
+logits. These are numerical diagnostics on selected training sources, not
+acceptable wake-quality, measured P4 resource or latency results. The
+full-history output is still an unoptimized research interface.
+
+### Absolute compact CTC probability at inference
+
+The [new inference-only plan](plans/compact-sequence-inference-v1.json)
+freezes the actual development comparison before scores are read. Binary
+and binary-times-absolute-CTC scores come from the same INT8 invocation and
+share identical source resets, timestamps and validation exposure. The
+two-token path probability includes all 67 states and does not normalize
+among four forced choices. No weights, score scale or extra threshold are
+fitted. The existing 21-point grid, smoothing and latch/refractory stay fixed.
+
+Four focused tests pass: exhaustive CTC paths, word order/blank/other/repeated
+paths and invalid inputs, independent macro/worst-corpus accounting, and a
+counterexample showing that pointwise reduction can split a latched event.
+Both continuous event streams will therefore be counted independently.
+Only the original validation feature rows/arrays will be scored, with every
+step retained. The strict 1%/zero-event and +3-point advancement gates remain.
+No inference-quality run has launched at this commit; no final data or board
+operation is permitted by this experiment.
