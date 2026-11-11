@@ -3301,3 +3301,11 @@ RIR延迟[0,160,480,960]样本、幅值[1,.25,-.12,.06]，full卷积保留960样
 2秒前置/1秒后置，teacher60有效支持151hops；完整signal及回声尾部不适配则报告并不入pack。
 只生成training二分类特征，不新增辅助头，不评分或选阈值；原始400条全部保留。
 实现prepare_phone_features.py，完整记录每variant参数和pack索引。
+
+训练特征包完成：1200个尝试variant中930个完整signal适配、270个因上下文不适配而报告排除。
+保留全部400源；pack为930×150×40 uint16，Nyx240条、混淆词690条，覆盖20个training声音。
+读回npz核验shape/dtype/二分类标签与全部930索引对应、完整支持区间及pack SHA。
+pack SHA256 c2fd2212d9c8c648d0444e5fccce27d8c572c206280b1c70153f325e0f9e3c8a。
+完整报告4090-synthetic-phone-features-v1.json；尚未训练或评分，不宣称模型改善。
+后续可用独立RNG平衡二分类额外样本，与原v30主batch保持可审计的损失比例，
+同时需要单独声明候选选择与新开发数据协议，不能把训练包当验证集选阈值。
