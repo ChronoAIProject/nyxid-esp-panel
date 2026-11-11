@@ -1871,6 +1871,26 @@ saved events using its actual firmware arithmetic before claiming equivalence.
 The generic Mac candidate runner already records the host and firmware paths
 separately. No model, audio, new/final dataset or board is used by this audit.
 
+### v41 independent report review
+
+The [v41 review](../wakeword_p4/results/gpu-v41-report-review-v1.json) independently
+reconstructs all24 checkpoint ranks, the138-point rejection, and all6597 matched
+training diagnostic summaries/transitions from GPU revision `2e06d24`.
+
+```sh
+python research/wakeword_p4/training/review_gpu_v41_reports.py \
+  --revision 2e06d24 --output "$FRESH_V41_REVIEW_JSON"
+```
+
+The negative timeline intervention reduces training INT8 max-five negatives at
+the historical threshold from35 to0, while positive support falls3256 to2423.
+v41's same-checkpoint float sequence has2528/4602 high-threshold positives,
+so limited positive support is also present before INT8. The20 actual float streaming witnesses
+retain a maximum `.00702512264251709` residual, without claiming all6597 actual
+streams. v41 still has no eligible old-development point and is rejected. This
+review checks committed identities/calculations; it does not reload weights or
+score arrays, infer audio, touch reserved sets or perform hardware acceptance.
+
 ### Independent v40 report reconciliation
 
 The [v40 review](../wakeword_p4/results/gpu-v40-report-review-v1.json)
