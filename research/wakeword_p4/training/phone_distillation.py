@@ -218,7 +218,11 @@ def supervisor(model, targets, gain, objective='joint'):
             schedule.update(ids.astype('<i8', copy=False).tobytes())
             update(cache[ids], targets[ids])
             if step % 250 == 0 or step == steps:
-                history.append({'step': step, 'fit': audit(features)})
+                fit = audit(features)
+                history.append({'step': step, 'fit': fit,
+                                'head_weights_sha256': digest(head.weights),
+                                'schedule_sha256': schedule.hexdigest()})
+                print(json.dumps({'phone_warmup_step': step, **fit}), flush=True)
         if before != digest(model.weights) or optimizer_before != digest(model.optimizer.variables):
             raise ValueError('Phone-head warmup changed the binary model or its optimizer')
         return {'steps': steps, 'learning_rate': learning_rate, 'batch_size': batch_size,

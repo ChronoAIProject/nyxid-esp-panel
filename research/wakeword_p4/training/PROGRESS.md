@@ -1366,6 +1366,28 @@ and all listed member identities are verified; both studies remain
 unaccepted. These results are available to the GPU research branch without
 any captured room audio or device configuration.
 
+### Full-resolution teacher sequences
+
+The [retained sequence bank](../results/microwake-phone-sequence-bank-v1.json)
+regenerates the same 236 training windows and keeps all 168 original teacher
+frames before 30 ms averaging. Features, the original 67-step probabilities,
+row order and source/PCM identities match the previous bank exactly.
+All full-resolution probabilities are finite, nonnegative and normalized.
+Their greedy CTC collapse yields 1,364 phone labels in 236 nonempty strings
+of length 3–11, with no special tokens. The longest minimum valid student
+path is eleven steps, within the existing 67 outputs. These remain weak
+teacher predictions, not human transcripts or new binary wake labels.
+
+The [sequence CTC plan](plans/microwake-phone-ctc-v1.json) uses the same
+training-only paired draws and original BCE. It sums over phone alignments
+rather than forcing sparse teacher frame timestamps onto the encoder.
+The auxiliary loss is CTC NLL divided by target length, with a separate
+frozen-encoder head-fit prescreen and the original scalar inference export.
+Nine tests cover full-resolution/aligned-target consistency and tampering,
+source isolation, repeated phone packing, impossible/empty sequence rejection,
+edit counts, CTC agreement with exhaustive paths, finite gradients and
+zero-gain binary optimizer equivalence for all three objectives.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

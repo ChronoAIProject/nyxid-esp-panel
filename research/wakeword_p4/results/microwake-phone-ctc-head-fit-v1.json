@@ -1,0 +1,81 @@
+{
+  "scope": "Frozen-encoder 1000-update CTC head-fit prescreen only.",
+  "plan_sha256": "03c1ec84ede2f4cc0e2242ba781dd5dc39c6e181648857332cfdf00d7fac9174",
+  "raw_diagnostic_sha256": "31f5bfe4b4996821290b9e4d4599bd16e93cdb262d38e5dc828c0314aeba0e2a",
+  "checkpoint_sha256": "3ee9354e43baf0a0a83c53e2018bf29cbe3bab34f0888f4e16a0c44ae4e0a901",
+  "head_weights_sha256": "c2aa842d0dd2b4e787448c78dc9a799bd76d9e8ce64f09e3008f7a58200bfe43",
+  "checks": {
+    "bank_identity": true,
+    "source_hashes": true,
+    "initializer": true,
+    "binary_weights_unchanged": true,
+    "binary_optimizer_unchanged": true,
+    "settings": true,
+    "no_joint_training_or_validation": true
+  },
+  "initial_fit": {
+    "ctc_loss": 64.28876055701305,
+    "sequences": 236,
+    "exact_sequences": 0,
+    "target_phones": 1364,
+    "phone_edits": 4239,
+    "phone_error_rate": 3.1077712609970676
+  },
+  "history": [
+    {
+      "step": 250,
+      "fit": {
+        "ctc_loss": 2.9455463320521984,
+        "sequences": 236,
+        "exact_sequences": 0,
+        "target_phones": 1364,
+        "phone_edits": 1364,
+        "phone_error_rate": 1.0
+      }
+    },
+    {
+      "step": 500,
+      "fit": {
+        "ctc_loss": 2.3884463997210488,
+        "sequences": 236,
+        "exact_sequences": 0,
+        "target_phones": 1364,
+        "phone_edits": 1356,
+        "phone_error_rate": 0.9941348973607038
+      }
+    },
+    {
+      "step": 750,
+      "fit": {
+        "ctc_loss": 2.1552396750046037,
+        "sequences": 236,
+        "exact_sequences": 0,
+        "target_phones": 1364,
+        "phone_edits": 1334,
+        "phone_error_rate": 0.9780058651026393
+      }
+    },
+    {
+      "step": 1000,
+      "fit": {
+        "ctc_loss": 2.0292396909099515,
+        "sequences": 236,
+        "exact_sequences": 0,
+        "target_phones": 1364,
+        "phone_edits": 1227,
+        "phone_error_rate": 0.8995601173020528
+      }
+    }
+  ],
+  "relative_ctc_loss_reduction": 0.9684355449797424,
+  "exact_sequence_fraction": 0.0,
+  "gate": {
+    "minimum_relative_ctc_loss_reduction": 0.5,
+    "maximum_phone_error_rate": 0.5,
+    "minimum_exact_sequence_fraction": 0.25,
+    "action": "Run only the frozen-encoder head fit first. Do not launch joint training or score validation unless all fit criteria pass and original binary weights/optimizer remain unchanged. Do not adjust these criteria using results."
+  },
+  "gate_passed": false,
+  "advance": false,
+  "limits": "The short-budget head still emits mostly blank; NLL reduction alone is insufficient. No joint training or wake validation has been launched. A longer head-only fit can test ongoing optimization without changing encoder weights or loosening the fit gate."
+}
