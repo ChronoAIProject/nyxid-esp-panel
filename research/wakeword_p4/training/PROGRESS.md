@@ -1496,6 +1496,33 @@ requires the original scalar feature cache, which is not in this supplement.
 No source audio, room recording, board state, credential or firmware is added.
 The recipe remains rejected and the full Hi ESP comparison goal remains open.
 
+The [fixed-reference change audit](../results/microwake-phone-ctc-wake-changes-v1.json)
+reconstructs every cached clip maximum/timebase and the original calibrations'
+counts without running inference. Treatment gains 66 positive views and loses
+35. For negatives, it adds 19 false views and removes six: Piper contributes
+nine additions, Edge eight, and Kokoro/OpenAI one each. False source identities
+increase from 38 to 42 (seven newly affected, three fully corrected), using
+engine/WAV hash/intended phrase rather than treating correlated views or
+synthetic voice tokens as independent people. The changed phrase/engine/view
+records are retained, including ordinary speech and partial-word errors.
+
+All 35 continuous validation sources are accounted for. Both events occur
+at the exact same cached score step, 524.36 seconds into the same public
+LibriSpeech stream, within `1183-133256-0018` at 1.94 seconds. Joined PCM,
+source FLAC hash and source-start offset reproduce the earlier background
+confuser diagnosis. This is a stream timestamp, not a phonetic endpoint or
+a new causal localization. The old validation utterance is not added to
+training. This broader error pattern does not support attributing the
+regression just to the one identical weak teacher pair, or another frozen-head
+optimization budget. Model discrimination is still unresolved; no labels,
+thresholds, runtime paths, devices or final datasets change in this audit.
+
+Reproduce with `audit_phone_wake_changes.py --artifacts <joint-study>
+--features <original-scalar-features> --result
+research/wakeword_p4/results/microwake-phone-ctc-joint-v1.json
+--output <fresh-report.json>` in the training environment. The complete audit
+report is versioned so the GPU branch can inspect every changed view.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
