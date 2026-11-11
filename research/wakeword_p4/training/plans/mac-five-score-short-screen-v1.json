@@ -1,0 +1,34 @@
+{
+  "scope": "Matched short optimization screen on old six-engine development features; not candidate acceptance or a v38 comparison.",
+  "feature_metadata_sha256": {
+    "features.json": "7b64926572e988a2792980d34f122cabe03f4fe9fc5ccf3108993da6ef3dfb58",
+    "human.json": "8038ca081d037c68d744517c2c95fc4319da44eef611586930483afb6ed0c142",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "initial_weights_sha256": "33dfba087b935192331bb0993d2ad2e858e3bad65e2c31f875a605bcfd1a9bf4",
+  "initial_training_sha256": "1f78ef461d748925614ce8ba5afb7082d9a9e9f4dbdded590e8a91a47bc71b53",
+  "architecture": "Original local transfer60 folded-bias graph, 335-frame context, 25831 parameters. Distinct from GPU teacher60/150 and v38.",
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "window_frames": 335,
+  "sequence_crop_frames": 347,
+  "seed": 97729,
+  "steps": 500,
+  "learning_rate": 0.0001,
+  "gradient_clipnorm": 5,
+  "batch": {"positive": 4, "confusing_negative": 6, "ambient_negative": 6},
+  "negative_weight": 20,
+  "positive_end_jitter_frames_inclusive": [15, 27],
+  "sampling": "Uniform training engine then uniform row; positive valid jitter15..27, negative uniform complete crop; ambient uniform training row/start. Both arms reset the identical RNG and use identical full batch bytes; no mining or augmentation changes.",
+  "arms": {"terminal": "BCE of final score", "five_mean": "BCE of mean of five consecutive scores"},
+  "validation": "Old validation only: sort original source SHA per engine/label, first16 source IDs (all if fewer), variants0/3, whole original feature sequence. No testing rows or new/final datasets accessed.",
+  "threshold": 0.994,
+  "threshold_origin": "Previously used historical float validation grid endpoint for the fixed local warm start. Fixed descriptive operating point; no search or acceptance selection.",
+  "evaluation": "Initial model and fixed step500 of each arm; no intermediate checkpoint/model/threshold selection. Save all mature-context score traces and fixed-policy events, any-hit and existing estimated-end window counts, by engine. No hardware or acoustic latency inference.",
+  "preflight": "On first training batch, shared sequence/window scores must match within1e-4 before any optimization. A separate --smoke executes two steps per arm without validation scoring; its result cannot replace final screen.",
+  "limits": [
+    "Small correlated already-consumed synthetic development subset and a single initialization/seed; neither human generalization nor statistical superiority is established.",
+    "Batched valid-convolution scorer covers mature receptive fields, not initial stream buffers; actual exported INT8/whole-stream/P4/FAR verification remains required.",
+    "Positive endpoint is the old metadata proxy; jitter supports five windows after it but does not certify phonetic completeness.",
+    "No PCM generation, playback, microphone recording, device/firmware/settings change or production-board access."
+  ]
+}
