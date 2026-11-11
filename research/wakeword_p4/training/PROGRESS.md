@@ -1388,6 +1388,22 @@ source isolation, repeated phone packing, impossible/empty sequence rejection,
 edit counts, CTC agreement with exhaustive paths, finite gradients and
 zero-gain binary optimizer equivalence for all three objectives.
 
+The [1,000-update CTC prescreen](../results/microwake-phone-ctc-head-fit-v1.json)
+fails the fixed fit gate: normalized CTC loss decreases from 64.2888 to
+2.0292, but greedy phone error remains 89.96% with zero exact sequences.
+The original binary weights and optimizer remain unchanged. No joint
+training, exported candidate or new wake validation follows from this run.
+Phone error is still falling between steps 750 and 1,000, motivating one
+[5,000-step head-only budget](plans/microwake-phone-ctc-long-fit-v1.json)
+with unchanged fit/quality gates. It must reproduce the original head hash
+and fit at step 1,000. Observation now records head/draw digests and fit
+every 250 updates; loss, optimizer and RNG are unchanged.
+
+The [full-resolution data handoff](../../handoff/assets-phone-sequence-bank-v1.json)
+contains the exact bank, source/target audits, frozen plans and source needed
+by the GPU work. The public archive and every listed member were downloaded
+and hash-verified. It adds no waveforms, room audio, firmware or device state.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

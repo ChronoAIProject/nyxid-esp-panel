@@ -960,3 +960,20 @@ under the same parent's `phone-conditional-handoff`. The public download and
 all listed member hashes are verified. No room audio, device state or
 firmware is included, and no board, microphone or speaker was used. This is
 unaccepted research, not a production update.
+
+The [full-resolution phone-bank handoff](assets-phone-sequence-bank-v1.json)
+preserves all original 168 teacher outputs for each of the same 236 training
+windows. Existing features and averaged probabilities remain byte-exact;
+source identities and binary wake labels are unchanged. Its root is
+`workspace/home-wake-research-20261110/microwake-phone-sequence-v1/bank`.
+Supporting source, plans and audits are in the sibling
+`phone-sequence-bank-handoff` directory. The prior phone-distillation asset
+supplies the initializer; use the original feature-index identities.
+
+The original full-resolution paths have 1,364 phone labels in 236 nonempty
+strings. They are weak teacher predictions, not human-reviewed transcripts.
+The archive does not claim that CTC fitting or wake quality passes. Verify
+the manifest archive hash and `CONTENTS-microwake-phone-sequence-bank-v1.json`
+member identities before extraction into fresh staging. The actual public
+download and all listed hashes are verified. No waveforms, microphone audio,
+device state, credentials or firmware are included.
