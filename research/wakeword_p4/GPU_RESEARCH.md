@@ -3405,3 +3405,13 @@ ONNX CPU成功加载，输入input/input_lengths/scales/sid，109声音分区20/
 来源报告4090-piper-vctk-source-v1.json，原模型卡4090-piper-vctk-model-card-v1.md，
 接口报告4090-piper-vctk-onnx-schema-v1.json；未执行语音生成或唤醒评分。
 保留最终声音仅为预先隔离，不表示最终协议或独立验收已经完成。
+
+## VCTK开发生成预声明
+
+固定20development声音×length multiplier .9/1/1.1×Nyx/HiESP/Nick/Next/Mix=300条。
+Nyx文本固定Hey Nicks.，eSpeak en-gb-x-rp音素/token完整保存，未知音素直接拒绝。
+scales继承配置noise .333/noise_w .333，length_scale=1.4×multiplier；不按唤醒评分调整。
+ONNX只输出waveform，无duration/显式随机种子接口，明确记录不可得，不伪造token时长或字节复现保证。
+保存全长22.05k原生float npy与16k PCM16，零裁切；有限值、0.2–5秒、RMS≥.001、
+浮点abs≥1和PCM16饱和值均为0作为质量门槛，失败也保留清单。
+只生成开发部分，不访问89个reserved_final声音。生成后冻结全部哈希，未评分前推送元数据。
