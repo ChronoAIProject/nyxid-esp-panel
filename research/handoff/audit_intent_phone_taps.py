@@ -22,8 +22,8 @@ def main():
     plan = json.loads((root/'plan.json').read_bytes())
     launch = json.loads((root/'launch.json').read_bytes())
     result = json.loads((root/'study/result.json').read_bytes())
-    committed = subprocess.check_output(['git', 'show', launch['checkout_revision']+
-        ':research/wakeword_p4/training/plans/intent-phone-local-tap-v1.json'], cwd=args.repository)
+    committed = subprocess.check_output(['git', 'show', launch['checkout_revision']+':'+
+        plan.get('repository_plan_path', 'research/wakeword_p4/training/plans/intent-phone-local-tap-v1.json')], cwd=args.repository)
     require(hashlib.sha256(committed).hexdigest() == sha(root/'plan.json') == launch['plan_sha256']
             == sha(root/'study/plan.json') == result['plan_sha256'], 'Frozen plans differ')
     for name, digest in plan['source_sha256'].items():
@@ -43,7 +43,8 @@ def main():
     for name, digest in plan['parent_study_sha256'].items():
         require(sha(args.parent_study/name) == digest, 'Parent evidence differs: '+name)
     command = launch['command']
-    require(Path(command[1]).resolve() == root/'source/intent_phone_taps.py', 'Wrong execution source')
+    require(Path(command[1]).resolve() == root/'source'/plan.get('training_script', 'intent_phone_taps.py'),
+            'Wrong execution source')
     require(command[2::2] == ['--plan', '--upstream', '--features', '--bank', '--initial-weights',
                             '--parent-study', '--output'], 'Wrong execution options')
     for option, path in (('--plan', root/'plan.json'), ('--features', args.features),
@@ -87,7 +88,9 @@ def main():
         schedule.update(rng.choice(ids, size=plan['batch_size'], replace=True).astype('<i4').tobytes())
     references = [[1, 2, 3, 4, 5, 6], [1, 2, 7, 4, 5, 6], [1, 2, 3, 8, 5, 6, 9], [1, 2, 3, 4, 5]]
     reports = {}
-    for kind in ('deep', 'local'):
+    settings = plan.get('arm_settings', {'deep': {'tap': 'deep', 'initialization': 'glorot'},
+                                         'local': {'tap': 'local', 'initialization': 'glorot'}})
+    for kind, setting in settings.items():
         info = result['arms'][kind]
         path = root/'study'/f'{kind}.json'
         require(info['result'] == path.name and sha(path) == info['result_sha256'], 'Result bytes differ')
@@ -102,15 +105,36 @@ def main():
         binary, _ = build_model(335)
         binary.load_weights(args.initial_weights)
         require(weights_sha(binary.weights) == arm['binary_weights_before_sha256'], 'Initial binary tensors differ')
-        encoder = encoder_tap(binary, kind)
+        encoder = encoder_tap(binary, setting['tap'])
         require(weights_sha(encoder.weights) == arm['encoder_weights_before_sha256'], 'Initial encoder differs')
         trainable_ids = {id(v) for v in encoder.trainable_variables}
         disconnected = [v for v in binary.weights if id(v) not in trainable_ids]
         require(weights_sha(disconnected) == arm['disconnected_weights_before_sha256'], 'Disconnected initial weights differ')
         h = tf.keras.Input((67, 60))
-        head = tf.keras.Model(h, tf.keras.layers.Dense(10,
-            kernel_initializer=tf.keras.initializers.GlorotUniform(seed=plan['head_seed']))(h))
+        require(setting['initialization'] in ('glorot', 'zero'), 'Unknown head initialization')
+        initialization = (tf.keras.initializers.GlorotUniform(seed=plan['head_seed'])
+                          if setting['initialization'] == 'glorot' else tf.keras.initializers.Zeros())
+        head = tf.keras.Model(h, tf.keras.layers.Dense(10, kernel_initializer=initialization)(h))
         require(weights_sha(head.weights) == arm['head_weights_before_sha256'], 'Initial head differs')
+        if plan.get('initial_diagnostic_crop_ids'):
+            diagnostic = arm['initial_diagnostic']
+            require(diagnostic == info['initial_diagnostic']
+                    and sha(root/'study'/diagnostic['array']) == diagnostic['array_sha256'], 'Initial diagnostic differs')
+            with np.load(root/'study'/diagnostic['array'], allow_pickle=False) as initial:
+                initial_ids, initial_states, initial_logits = initial['ids'], initial['states'], initial['logits']
+            require(initial_ids.tolist() == plan['initial_diagnostic_crop_ids']
+                    and np.array_equal(encoder(x[initial_ids], training=False), initial_states)
+                    and np.array_equal(head(initial_states, training=False), initial_logits),
+                    'Actual initial representation/logits do not replay')
+            probability = np.asarray(tf.nn.softmax(initial_logits, axis=-1))
+            reconstructed = {'array': diagnostic['array'], 'array_sha256': diagnostic['array_sha256'],
+                'minimum_logit': float(initial_logits.min()), 'maximum_logit': float(initial_logits.max()),
+                'mean_entropy': float(-np.mean(np.sum(probability*np.log(np.maximum(probability, 1e-30)), axis=-1))),
+                'mean_maximum_probability': float(probability.max(-1).mean()),
+                'argmax_counts': np.bincount(initial_logits.argmax(-1).ravel(), minlength=10).tolist()}
+            require(reconstructed == diagnostic, 'Initial diagnostic metric reconstruction differs')
+            if setting['initialization'] == 'zero':
+                require(np.count_nonzero(initial_logits) == 0, 'Zero head is not neutral')
         full = tf.keras.Model(encoder.input, head(encoder.output))
         full.load_weights(root/'study'/arm['checkpoint'])
         require(weights_sha(encoder.weights) == arm['encoder_weights_after_sha256']
@@ -168,7 +192,8 @@ def main():
             stored = arm['summary'][key]
             if isinstance(value, float):
                 delta = abs(value-stored)
-                require(delta <= (1e-12 if correction else 0), 'Metric reconstruction differs: '+key)
+                require(delta <= (1e-12 if correction else plan.get('metric_roundoff_tolerance', 0)),
+                        'Metric reconstruction differs: '+key)
                 metric_deltas[key] = delta
             else:
                 require(value == stored, 'Metric reconstruction differs: '+key)
@@ -186,17 +211,27 @@ def main():
             'maximum_full_likelihood_replay_delta': score_replay_delta,
             'checkpoint_sha256': arm['checkpoint_sha256'], 'result_sha256': sha(path)}
         tf.keras.backend.clear_session()
-    deep = json.loads((root/'study/deep.json').read_bytes())
-    local = json.loads((root/'study/local.json').read_bytes())
+    control = plan.get('control_arm', 'deep')
+    treatment = plan.get('treatment_arm', 'local')
+    deep = json.loads((root/'study'/f'{control}.json').read_bytes())
+    local = json.loads((root/'study'/f'{treatment}.json').read_bytes())
     parent = json.loads((args.parent_study/'study/full-fit-phones.json').read_bytes())
     require(all(deep[a] == parent[b] for a, b in (
         ('encoder_weights_after_sha256', 'encoder_weights_after_sha256'),
         ('head_weights_after_sha256', 'head_weights_sha256'), ('summary', 'summary'),
         ('draw_schedule_sha256', 'draw_schedule_sha256'))), 'Parent control replay differs')
-    require(all(deep[k] == local[k] for k in ('binary_weights_before_sha256', 'head_weights_before_sha256',
-        'draw_schedule_sha256', 'head_parameters')), 'Paired initial/draw/head identities differ')
+    paired_fields = ('binary_weights_before_sha256', 'draw_schedule_sha256', 'head_parameters')
+    if settings[control]['initialization'] == settings[treatment]['initialization']:
+        paired_fields += ('head_weights_before_sha256',)
+    else:
+        require(deep['head_weights_before_sha256'] != local['head_weights_before_sha256'],
+                'Distinct head initializations unexpectedly agree')
+    require(all(deep[k] == local[k] for k in paired_fields), 'Paired initial/draw/head identities differ')
+    if settings[control]['tap'] == settings[treatment]['tap']:
+        require(deep['encoder_weights_before_sha256'] == local['encoder_weights_before_sha256']
+                and deep['parameters'] == local['parameters'], 'Matched encoder differs')
     require(result['parent_deep_control_replayed'] and result['accepted'] is False
-            and result['advance'] == reports['local']['fit_gate_passed'], 'Final decision differs')
+            and result['advance'] == reports[treatment]['fit_gate_passed'], 'Final decision differs')
     report = {'plan_sha256': sha(root/'plan.json'), 'source_commit': launch['checkout_revision'],
         'actual_auditor_sha256': sha(Path(__file__)),
         'audit_correction_sha256': sha(args.audit_correction) if args.audit_correction else None,

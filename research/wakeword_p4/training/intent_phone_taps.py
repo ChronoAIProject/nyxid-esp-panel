@@ -49,24 +49,48 @@ def fits(metrics, gate):
         and metrics['mean_ctc_nll_per_token'] <= gate['maximum_mean_normalized_ctc_loss'])
 
 
-def fit(kind, x, labels, plan, initial, output):
+def phone_head(initialization, seed):
+    """Equal-width phone head with explicit, auditable initialization policy."""
+    import tensorflow as tf
+    if initialization == 'glorot':
+        kernel = tf.keras.initializers.GlorotUniform(seed=seed)
+    elif initialization == 'zero':
+        kernel = tf.keras.initializers.Zeros()
+    else:
+        raise ValueError('Unknown phone-head initialization')
+    h = tf.keras.Input((67, 60))
+    return tf.keras.Model(h, tf.keras.layers.Dense(10, kernel_initializer=kernel)(h))
+
+
+def fit(kind, x, labels, plan, initial, output, *, tap=None, head_initialization='glorot'):
     import tensorflow as tf
     from transfer import build_model
     tf.keras.utils.set_random_seed(726)
     binary, _ = build_model(335)
     binary.load_weights(initial)
     binary_before = weights_sha(binary.weights)
-    encoder = encoder_tap(binary, kind)
+    encoder = encoder_tap(binary, tap if tap is not None else kind)
     encoder_before = weights_sha(encoder.weights)
     trainable_ids = {id(v) for v in encoder.trainable_variables}
     disconnected = [v for v in binary.weights if id(v) not in trainable_ids]
     disconnected_before = weights_sha(disconnected)
-    h = tf.keras.Input((67, 60))
-    head = tf.keras.Model(h, tf.keras.layers.Dense(10,
-        kernel_initializer=tf.keras.initializers.GlorotUniform(seed=plan['head_seed']))(h))
+    head = phone_head(head_initialization, plan['head_seed'])
     head_before = weights_sha(head.weights)
     full, update = update_factory(encoder, head, plan)
     packed, lengths = targets(labels, 'phones')
+    initial_diagnostic = None
+    if plan.get('initial_diagnostic_crop_ids'):
+        diagnostic_ids = np.asarray(plan['initial_diagnostic_crop_ids'], np.int32)
+        states = np.asarray(encoder(x[diagnostic_ids], training=False))
+        values = np.asarray(head(states, training=False))
+        probabilities = np.asarray(tf.nn.softmax(values, axis=-1))
+        initial_array = output/f'{kind}-initial.npz'
+        np.savez_compressed(initial_array, ids=diagnostic_ids, states=states, logits=values)
+        initial_diagnostic = {'array': initial_array.name, 'array_sha256': sha(initial_array),
+            'minimum_logit': float(values.min()), 'maximum_logit': float(values.max()),
+            'mean_entropy': float(-np.mean(np.sum(probabilities*np.log(np.maximum(probabilities, 1e-30)), axis=-1))),
+            'mean_maximum_probability': float(probabilities.max(-1).mean()),
+            'argmax_counts': np.bincount(values.argmax(-1).ravel(), minlength=10).tolist()}
     ids = np.arange(len(x), dtype=np.int32)
     rng = np.random.default_rng(plan['draw_seed'])
     digest, history, started = hashlib.sha256(), [], time.monotonic()
@@ -112,6 +136,8 @@ def fit(kind, x, labels, plan, initial, output):
         'checkpoint': checkpoint.name, 'checkpoint_sha256': sha(checkpoint),
         'logits': arrays.name, 'logits_sha256': sha(arrays),
         'fit_gate_passed': fits(measured, plan['fit_gate']), 'seconds': time.monotonic()-started}
+    if initial_diagnostic is not None:
+        result['initial_diagnostic'] = initial_diagnostic
     (output/f'{kind}.json').write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps({'tap': kind, 'complete': True, **measured}), flush=True)
     tf.keras.backend.clear_session()

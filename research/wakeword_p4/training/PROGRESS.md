@@ -2732,3 +2732,31 @@ A fresh unauthenticated download verifies all 132 members and 131 listed
 member hashes/lengths. Both failed/corrected audit records are included.
 All fit, audit and publication processes are terminal; no deployed model
 changed and the continuing Hi ESP objective remains active.
+
+## Neutral phone-head initialization comparison, preregistered
+
+The [new training-only plan](plans/intent-phone-neutral-initialization-v1.json)
+checks a distinct optimization hypothesis after the failed local tap. On the
+predefined first crop per engine/class, the existing random head has no
+`HH/EY/M` argmax frames and strongly favors `K` (937/1,340 frames). Its
+mean token entropy is 1.86156, so this is not evidence of extreme numerical
+softmax saturation. An exactly zero kernel/bias instead starts every frame
+with a uniform ten-token distribution; CTC probabilities of unequal-length
+strings are still unequal. These initial logits/states will be retained and
+reconstructed for both arms, before fitting.
+
+Both arms use the same 67x60 deep encoder, 610-parameter head, original binary
+tensors, full 3,112 unique training crops, row schedule, optimizers, combined
+clip and 1,000 updates. Only initial head kernel changes. Random control must
+replay the prior actual full-fit tensor hashes and metrics. Zero initialization
+mathematically gives zero encoder gradient on the first step; no compensating
+step or warmup is added. Two focused tests pass uniform/input-independent
+initial logits and zero-first/nonzero-second encoder updates. The two actual
+graph receptive-field/disconnected-suffix tests also pass; raw logs are kept.
+
+The unchanged fit gate precedes any separately planned held-engine stage.
+No seed sweep, budget extension, wake inference, export or device action is
+authorized by this diagnostic alone. The existing fit/launcher/auditor are
+parameterized and snapshotted instead of duplicating the whole pipeline.
+Historical studies retain their immutable committed/executed sources.
+Everything remains silent; no production board or audio pipeline is touched.

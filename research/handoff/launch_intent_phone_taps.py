@@ -16,10 +16,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('artifacts', 'repository', 'upstream', 'features', 'bank', 'initial-weights', 'parent-study'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--plan', type=Path,
+        default=Path('research/wakeword_p4/training/plans/intent-phone-local-tap-v1.json'))
     args = parser.parse_args()
     repo, root = args.repository.resolve(), args.artifacts.resolve()
-    relative = 'research/wakeword_p4/training/plans/intent-phone-local-tap-v1.json'
-    plan_path = repo/relative
+    plan_path = (repo/args.plan).resolve()
+    relative = plan_path.relative_to(repo).as_posix()
     plan = json.loads(plan_path.read_bytes())
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
     require(subprocess.check_output(['git', 'show', revision+':'+relative], cwd=repo)
@@ -41,7 +43,8 @@ def main():
     options = ['--plan', str(root/'plan.json'), '--upstream', str(args.upstream.resolve()),
         '--features', str(args.features.resolve()), '--bank', str(args.bank.resolve()),
         '--initial-weights', str(args.initial_weights.resolve()), '--parent-study', str(args.parent_study.resolve())]
-    command = [sys.executable, str(source/'intent_phone_taps.py'), *options, '--output', str(root/'study')]
+    command = [sys.executable, str(source/plan.get('training_script', 'intent_phone_taps.py')),
+               *options, '--output', str(root/'study')]
     audit_command = [sys.executable, str(auditing/'audit_intent_phone_taps.py'),
         '--artifacts', str(root), '--repository', str(repo), '--features', str(args.features.resolve()),
         '--bank', str(args.bank.resolve()), '--initial-weights', str(args.initial_weights.resolve()),
