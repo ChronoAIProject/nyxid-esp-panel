@@ -1,0 +1,44 @@
+{
+  "scope": "Read-only review of GPU committed report accounting and frozen control fields; not model inference or raw-score revalidation.",
+  "gpu_revision": "aefc28a61cb92577b87a35bb855e97a7a73a8966",
+  "input_sha256": {
+    "4090-v39-rejection-v1.json": "e21827be9c2fb0d96721505212dbace31a21181d00e984b15902f71bad6e199e",
+    "4090-v39-reused-development-exploratory-calibration-v1.json": "d9b5d84d96cc99a5a15c62acc63a8f7c27bf4ec34eb322c7315d4d24928c5285",
+    "4090-v39-export-audit.json": "44ce1d248b5da65189f1e9b5273ea79e1365a6b9f2fc403df7b54bf9724759c8",
+    "4090-v39-training.json": "806e4eadfbec9097d84a9c59bc8c3ce7b70ff515104f52c71ee0d4f9f387ff88",
+    "4090-v39-phone-development-v1.json": "c37c2bf7348ae9dbe6d329c9439397295a814277a2ef925981dadaa56ffa18a7",
+    "4090-v39-vctk-development-v1.json": "6c204996a5aab3cdb24ef242f8292b027d3ec995fec31c1f23216d7a8d3ac849",
+    "4090-v39-voxconverse-development-v1.json": "ebfacdbc4c5456fbaf68241916ac4a5e83338d13715c60a00e4001b060c9e44e"
+  },
+  "model_sha256": "eaa826469fe4669a8b0c7ff355a1a26f07589b691478ad9a2955c4f266a19096",
+  "selected_step": 120000,
+  "all_reviewed_report_model_hashes_agree": true,
+  "export_binds_actual_training_report_bytes": true,
+  "v37_control_fields_equal": [
+    "context_frames",
+    "initial_weights_sha256",
+    "classifier_initial_sha256",
+    "batchnorm_initial",
+    "batchnorm_selected",
+    "seed",
+    "recipe",
+    "parameters",
+    "steps",
+    "architecture_args",
+    "full_source",
+    "prefix_negatives",
+    "negative_weight",
+    "effective_training_batch_size",
+    "ambient_sampling"
+  ],
+  "fixed_grid_points": 138,
+  "eligible_points": 0,
+  "maximum_reported_grid_macro_recomputed": 0.3645833333333333,
+  "minimum_reported_negative_false_clips_recomputed": 8,
+  "zero_event_upper95_recomputed": 0.36650993673097787,
+  "decision": "Reject v39; do not deploy or score reserved new/final data.",
+  "limits": [
+    "Replays committed aggregate grid values; no underlying score files, model weights, GPU process or new/final data are accessed.",
+    "Historical thresholds differ across candidates; this is not a matched-FAR causal comparison or Hi ESP equivalence."
+  ]
+}
