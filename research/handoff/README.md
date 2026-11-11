@@ -1882,6 +1882,65 @@ measurement, not a phonetic boundary or isolated cause. This review does not
 rerun models, authenticate saved raw-score arrays, access audio/new/final sets,
 or establish Hi ESP parity.
 
+### Replaying the next frozen candidate on Mac350
+
+`replay_candidate_mac_regression.py` accepts a separately committed candidate
+profile. It preserves all 350 source WAVs, complete original PCM speed, original
+56160-sample application prime, tail padding and the retained Hi ESP baseline.
+Every new frontend array must hash-identically to the original Mac study.
+Models must retain the reviewed teacher60/context150, INT8 `[1,3,40]` to UINT8
+`[1,1]` interface and original five-score/67-step policy. The output uses both
+host threshold arithmetic and the firmware's float32 threshold explicitly.
+
+Before scoring a new candidate, freeze its model/training/calibration hashes,
+calibration filename and selected threshold in a new profile, following
+`training/plans/candidate-mac-regression-compatibility-v1.json`. Remove that
+compatibility profile's `reference_scores_sha256` for a new model. Keep its
+source-plan/reference hashes and geometry. Candidate selection and calibration
+must already be complete; this runner neither selects thresholds nor accepts
+models. The original v30 runner and reports remain unchanged.
+
+```sh
+python research/wakeword_p4/training/replay_candidate_mac_regression.py \
+  --sources "$PUBLIC_MAC_PAIRED" --model-dir "$FROZEN_CANDIDATE" \
+  --profile "$COMMITTED_CANDIDATE_PROFILE" \
+  --reference "$ORIGINAL_V30_MAC_STUDY/result.json" --output "$FRESH_REPLAY"
+```
+
+The original full result and scores are in `gpu-v30-mac-regression-v1.tar.gz`.
+For the one-time compatibility regression, use the committed compatibility
+profile, original v30 payload and additionally
+`--reference-scores "$ORIGINAL_V30_MAC_STUDY/scores.npz"`. The
+[result](../wakeword_p4/results/candidate-mac-runner-compatibility-v1.json)
+checks every original frontend hash, all **94940 UINT8 bytes**, every event and
+voice/variant aggregate; the entire scores NPZ is also byte-identical. This
+tests the new runner, without adding quality, hardware or acoustic evidence.
+
+### Original Piper PCM endpoint provenance
+
+The GPU endpoint diagnostic identified 40 original Piper files with one
+`+32767` sample each. The
+[Mac source audit](../wakeword_p4/results/original-piper-endpoint-provenance-v1.json)
+matches all 40 WAV/PCM hashes to their original synthetic generation manifest;
+eight belong to the current task sampler. It retains each matching manifest
+record, original metadata hashes and exact converter text. The local converter,
+its pinned upstream version and the GPU diagnostic function are identical.
+The unchanged generator wrapper resamples and then peak-normalizes to 32767
+before integer conversion. Endpoint presence alone does not establish clipping.
+
+No original native float arrays were found in that dataset, and the wrapper
+writes WAV/JSON only. Its generation metadata lacks a source/invocation hash,
+so original native-float integrity remains unverified. Preserve the failed
+mechanical check and original data; do not substitute a new MPS synthesis run
+or retroactively relax the gate.
+
+```sh
+python3 research/wakeword_p4/training/audit_original_piper_endpoints.py \
+  --gpu-revision a172906 --original-dataset "$ORIGINAL_MAC_SYNTHETIC" \
+  --pack "$PUBLIC_OLD_COMPLETE_PACK" --upstream "$PINNED_PIPER_GENERATOR" \
+  --output "$FRESH_ENDPOINT_AUDIT_JSON"
+```
+
 ### Matched terminal versus five-score short training screen
 
 The protocol and runner were pushed at `2aad2df` before formal validation

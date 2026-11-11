@@ -1,0 +1,92 @@
+{
+  "scope": "Compatibility regression of the new profile-based candidate replay entry. No new model quality or P4 evidence.",
+  "implementation_frozen_at": "fbe5f3c",
+  "sources": 350,
+  "all_original_frontend_hashes_match": true,
+  "quantized_output_bytes_verified": 94940,
+  "all_output_bytes_and_host_device_events_match": true,
+  "all_cohort_aggregates_match": true,
+  "full_result_sha256": "4a2dc6694bb0c9aae0634aa286fb44ba7b11c291ad6f21747df4a2d3e1b8e9e1",
+  "scores_npz_sha256": "374a399faa3f2acfc0603ef358767d08844f811f1d59f595c7fb7c90dacd8f29",
+  "scores_npz_identical_to_original": true,
+  "profile_sha256": "9cc09c92fcfaf0fb7f337111352f939b7e57518f6fa355712b06b8b1a32ee12b",
+  "source_sha256": "cdddf036c3f14bb45960142617cca3b243094f760adeec20a491854147758211",
+  "helper_source_sha256": {
+    "wakeword_p4/training/evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "wakeword_p4/training/features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "wakeword_p4/training/detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "wakeword_p4/training/prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef",
+    "wakeword_p4/training/replay_gpu_mac_regression.py": "0e107db87bc236f78e603fdfeef3c3783ab1554db655e2f8eaeae2edc78e2d49",
+    "wakeword_baseline/compare.py": "ffd21a0d5b24a248c55d7438c4e37de33befc5354b5f4d34ba3a6f9ae146cb7f"
+  },
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "reference_sha256": "47ccac0cfd8d9b3809aa62e6b9f8232e70ea1d12655959648a4067b3a608c57b",
+  "source_plan_sha256": "c7569b5eceef7d3204ed4a8622dec32a41519bda4766764d15237941ae078442",
+  "interface": {
+    "operators": [
+      "ASSIGN_VARIABLE",
+      "CALL_ONCE",
+      "CONCATENATION",
+      "CONV_2D",
+      "DEPTHWISE_CONV_2D",
+      "EXPAND_DIMS",
+      "FULLY_CONNECTED",
+      "LOGISTIC",
+      "QUANTIZE",
+      "READ_VARIABLE",
+      "RESHAPE",
+      "STRIDED_SLICE",
+      "VAR_HANDLE"
+    ],
+    "subgraphs": 2,
+    "input_shape": [
+      1,
+      3,
+      40
+    ],
+    "input_quantization": [
+      0.10196078568696976,
+      -128
+    ],
+    "output_shape": [
+      1,
+      1
+    ],
+    "output_quantization": [
+      0.00390625,
+      0
+    ]
+  },
+  "host_versions": {
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1"
+  },
+  "candidate_threshold": 0.91796875,
+  "firmware_threshold": 0.91796875,
+  "accepted": false,
+  "new_quality_evidence": false,
+  "limits": [
+    "Previously consumed correlated synthetic sources; no phonetic/human recall or matched-FAR claim.",
+    "Candidate is host INT8 reference; Hi ESP uses retained P4 results. Not a candidate P4 acoustic test.",
+    "Original PCM speed and full streams retained; only original zero prime and final block padding added.",
+    "Source offsets are processing positions, not verified phonetic endpoints or acoustic latency.",
+    "No threshold selection, training, new/final audio, playback, microphone, service or board operation."
+  ],
+  "invalid_input_checks": {
+    "wrong-model": {
+      "rejected": true,
+      "output_not_created": true
+    },
+    "mismatched-threshold": {
+      "rejected": true,
+      "output_not_created": true
+    },
+    "omitted-declared-scores": {
+      "rejected": true,
+      "output_not_created": true
+    }
+  }
+}
