@@ -3478,3 +3478,10 @@ VoxConverse dev0分片下载完整终结exit0，485283393 bytes/LFS SHA核验通
 449464339bytes，固定LFS SHA58fc6ff493c18018c97a7c7a0466db763dfef6a5f6367a3b9aec74355254b8eb。
 下载器拒绝覆盖任何已存在文件，不因等待/超时重复启动；审计器增加显式开发分片参数。
 两片均完成后将按编码/PCM哈希与录音路径查重复，再统计总原生时长；无评分前不报FAR。
+
+新增prepare_voxconverse_features.py：在两片完整审计/容器哈希通过后，先核对跨分片录音路径、
+编码SHA和PCM SHA均无重复，才抽取完整嵌入WAV并生成MicroFrontend缓存。
+原WAV编码字节保持不变，PCM不归一化/重采样/裁切，不拼接额外静音；frontend内部末尾对齐不算曝光。
+输出官方复放manifest与Nyx cache；共享schema中的speaker字段明确仅为recording ID，不冒充全局人物。
+无转写的连续背景中任何事件都保留计数，不以可能包含目标短语为由事后删除。
+新特征准备不评分或选阈值、不访问保留test分片；源码语法检查通过。
