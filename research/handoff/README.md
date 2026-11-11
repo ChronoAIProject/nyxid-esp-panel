@@ -2045,6 +2045,72 @@ binds all3,393 source records, original report, descriptive accounting,
 source/plan/tests and test log. Original WAVs remain in the separately published
 synthetic-audio snapshot; none is included in this evidence archive.
 
+### Candidate complete-container feature data: built and audited
+
+The separate data-construction protocol/runner/tests were pushed at `6f2cea3`
+before feature extraction. They use only the2,632 whole-container rows above;
+the55 exact-zero recoveries remain excluded. Exact original WAV aliases share
+one canonical source while all original metadata rows remain in `sources.json`.
+The [data report](../wakeword_p4/results/old-complete-container-pack-v1.json)
+contains2,594 unique original WAVs and7,782 rendered variants:
+
+| Engine | Unique positive sources | Unique negative sources |
+| --- | ---: | ---: |
+| Kokoro |58|94|
+| macOS Say |65|75|
+| OpenAI TTS |26|41|
+| Piper |1298|741|
+| Qwen |87|109|
+| Total |1534|1060|
+
+Original PCM16 is decoded at its original16k rate. Rendering follows the
+existing British pack's three fixed conditions: dry,25dB white noise, and
+full960-sample RIR plus15dB white noise; RMS/gain rules and path-derived seeds
+are frozen. Each stream includes32,000 leading and16,000 trailing samples,
+and runs through one fresh MicroFrontend with its full history. The original
+frontend source is unchanged. No source is trimmed or resampled, and no
+synthetic feature history, crop padding or temporal jitter is introduced.
+
+`training.npz` holds `x[7782,150,40]`, `sequence_x[7782,162,40]` as uint16,
+and `y[7782]` as float32. Each `raw/*.npy` retains the complete frontend output.
+`records.json` binds canonical paths, aliases via source index, conditions,
+raw/PCM/crop hashes, crop ends and all five conservative sample bounds.
+
+The [independent auditor](../wakeword_p4/results/old-complete-container-pack-v1-audit.json)
+enumerates source support to reconstruct the exact selection and alias groups,
+reverifies every canonical original WAV hash, checks all7,782 saved raw arrays
+and all38,910 overlapping crops, and reconstructs labels/counts. Thirty fixed
+witnesses (first canonical source per engine/label, all three conditions) are
+independently decoded/rendered and frontend-extracted; input PCM and full raw
+features match exactly. That uses separate rendering code and source decoding
+with the same public frontend, not an independent frontend implementation or
+a complete second extraction of all7,782 variants. Three focused tests pass.
+
+This is **candidate input data**. It does not define a source/voice/alias
+sampler or a model-training experiment. No model was scored or trained, no
+validation/new/final WAV was opened, and current GPU v39 is unchanged.
+Source pronunciation, model receptive fields, streaming scores and cross-host
+numerical agreement remain unverified; synthetic conditions are correlated.
+The pack cannot establish any improvement or Hi ESP parity.
+
+```sh
+python research/wakeword_p4/training/prepare_old_complete_sources.py \
+  --inventory "$SUPPORT_INVENTORY/sources.jsonl" \
+  --source-root "$ORIGINAL_OUTPUT_ROOT" \
+  --plan research/wakeword_p4/training/plans/old-complete-container-pack-v1.json \
+  --output "$FRESH_CANDIDATE_PACK"
+python research/wakeword_p4/training/audit_old_complete_sources.py \
+  --study "$FRESH_CANDIDATE_PACK" --inventory "$SUPPORT_INVENTORY/sources.jsonl" \
+  --source-root "$ORIGINAL_OUTPUT_ROOT" --output "$FRESH_AUDIT_JSON"
+```
+
+Use Python3.12.13, NumPy2.5.4, SciPy1.17.0, SoundFile0.13.1 and
+pymicro-features2.0.2. TensorFlow is unnecessary for data construction/audit.
+The public manifest `assets-old-complete-container-pack-v1.json` binds the
+complete raw histories, both crop arrays, labels, alias/source/condition
+records, original input inventory, report/audit, frozen sources/plan/tests
+and test log. Original WAVs remain in the separate public synthetic snapshot.
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
