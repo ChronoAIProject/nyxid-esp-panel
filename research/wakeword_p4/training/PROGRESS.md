@@ -2303,3 +2303,33 @@ runtime versions, complete paired traces, byte inventories and independent
 audits/rejection checks. The completed background-training archive is the
 explicit dependency; full scalar/background features stay external. All
 evidence is shared on the research branch; no training/evaluation job remains.
+
+### Keyword occurrence semantics diagnostic
+
+The preceding goal turn completed both matched background training and the
+separate retained-head comparison, audits and verified publication. Both fixed
+recipes were rejected; this is progress and does not qualify deployment.
+The GPU branch remains at `3b52402`, with no new downloadable model handoff.
+
+Code inspection identifies a semantic distinction, not a demonstrated cause
+of the held-out failure: exact whole-window CTC requires the collapsed sequence
+to equal `[hey,nyx]`, whereas a keyword may occur inside a longer sequence.
+The [training-only occurrence diagnostic](plans/keyword-occurrence-training-diagnostic-v1.json)
+freezes 20 existing bank smoke sources plus five training sources for each
+of four Piper continuation texts. It reads no new validation/test features.
+Piper-only continuation and other cohorts are confounded, so comparisons do
+not isolate a causal context effect. Original synthesis intent is retained.
+
+The three-state log recurrence sums all paths with adjacent distinct collapsed
+tokens `[hey,nyx]`, allowing arbitrary surrounding symbols. Five tests pass:
+every path of lengths one through five is independently collapsed/enumerated,
+with explicit blank/repeat/order/context, exact-event dominance and invalid
+geometry checks. This is a mathematical event, not calibrated wake confidence;
+the diagnostic also reports a neutral 67-step prior to expose chance growth.
+
+Metadata inspection finds training positive estimated endpoints at frame411
+or later, after the335-frame history fills. Missing full-history startup alone
+does not explain this training geometry. No occurrence inference has launched
+at this commit. Complete logits/probabilities and endpoint traces will be
+retained without selecting any new threshold/window or advancement gate.
+All work stays silent, without fitting, hardware or audio pipeline changes.

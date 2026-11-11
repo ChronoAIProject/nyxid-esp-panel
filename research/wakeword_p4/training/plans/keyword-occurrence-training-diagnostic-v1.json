@@ -1,0 +1,384 @@
+{
+  "scope": "Training-only diagnostic of exact-window versus contiguous keyword-occurrence CTC on one unchanged dual INT8 artifact.",
+  "hypothesis": "An entire-window CTC target and a keyword-occurrence event are different semantic tasks. Verify recurrence math independently, then measure how much exact-window output loses probability to surrounding symbols on fixed training sources; do not infer the cause of held-out failure from semantics alone.",
+  "model_sha256": "746efafd96cc8ba5cee6773a8346226ce5a60df40a5ab1251267b505dd3f317b",
+  "parent_inference_result_sha256": "0c22b6dadc08286050688291dc6e0e1dc735171bc8f2b6b5f67688acc4c78121",
+  "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "sources": [
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/000.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "d648348421679690540151938ebb602182b98fd5557c8a2e48523add05c8d723",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/010.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "639f13ca94a2598526738db19558a6b8463f6eba3a653ee1f168c2c1ac60501f",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/009.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "1173df28a1ec7fdc81ef5c5e89a54da72f4e1f3e10c83900fc76f5ee4903ac47",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "edge-corpus/training/en-AU-NatashaNeural/008.wav",
+      "variant": 0,
+      "engine": "edge-tts",
+      "sha256": "ee2cd2eb9a28ad39b41e27457031d068dd7304a21029c788a90f6a75e1e9f92f",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/000.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "60e63a101b83329116dcf344b69bda3ee0cb2aca2cf2fb8c72cb9c07b0845ecd",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/005.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "46277029d3ca8ad8c412a0699f949c129beb6743cc6e9ec25ffbc6a7e788d385",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/004.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "6148c594583d58936a39cdbb0b8b8359aa8ea39d3932cd118c42971fd4a412a6",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "kokoro-corpus/training/af_alloy/003.wav",
+      "variant": 0,
+      "engine": "kokoro",
+      "sha256": "20f09dc3626ca818e5656f4f702c0d1be630c2dc42e11418b8f20c6526f0aa06",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/000.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "57d8d7b69282f204c69391eb50085efeb45260c90756292849fb26a08af9a6b5",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/010.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "79ea5e1fe04ab351605a6e024fb7961b2c5416fc26097b5ee383879580df2060",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/009.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "5536542d4652297a7ff8a36d2eac9cc21bdcde876888015765fcd610588d62c7",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "mac-corpus/training/Albert-0/008.wav",
+      "variant": 0,
+      "engine": "macos-say",
+      "sha256": "8025a44a3770a351c9e0747a07f81e72a39cf4569bff5c399336ffd79f694198",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "openai-balanced/training/alloy/000.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "6c74a6c1f38de098459991886f4d72a6d59f6073133160e2b5a929a73f44a2c9",
+      "label": 1,
+      "text": "Hey Nicks.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "openai-balanced/training/alloy/011.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "6580b8ff79ad77238395cd8843de9524f9fb54a0066e027ecebd4e66e2b2b32e",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "openai-balanced/training/alloy/010.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "9f822a66590222076c7c0fafe905d946a22e6c511a055fdee3badb8b8282f2e5",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "openai-balanced/training/alloy/009.wav",
+      "variant": 0,
+      "engine": "openai-tts",
+      "sha256": "4a974df55b9e008245b2c06173b845e88111f40c045d37e32ce9b42033f0f7a2",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "synthetic/training/1/02857.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "4322befd1a205b21ae75767ab7c0815d26d55018ce1019f8a4000b92cbce65ec",
+      "label": 1,
+      "text": "Hey Nyx.",
+      "cohort": "isolated_nyx"
+    },
+    {
+      "path": "synthetic/training/0/00256.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "05db6529d1899340beebfc4dfb553145f835c2a3deb8b72b52f583054adfad04",
+      "label": 0,
+      "text": "Hey Mix.",
+      "cohort": "isolated_mix"
+    },
+    {
+      "path": "synthetic/training/0/00291.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "eb5fd82c947e6dd3ddcb3c1f33e9e059c244031a814a6e29339f9139c0ec97eb",
+      "label": 0,
+      "text": "Hey Next.",
+      "cohort": "isolated_next"
+    },
+    {
+      "path": "synthetic/training/0/00426.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "bcdea49a1f247e83a97f11ce1f35a07750817f918810f587ec23eafc72758a93",
+      "label": 0,
+      "text": "Hey Nick.",
+      "cohort": "isolated_nick"
+    },
+    {
+      "path": "synthetic/training/1/01823.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "d86fa9bac84f0882474cb70e83fb78af496dd5f79b1a3940687b1378d2c95a02",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02336.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e5b90066e7d80080219bc4046cf6b4803581fed8b9c644dc055addb6c0c84581",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02256.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "a1b2bfeb673730410d8de17e870b885a1d341b0c56d32d11c054d66668fb8928",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02748.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "c556a64f0f050a25c75751c9e1b1d62e3b0780873de31e1a9b604cdd44f07612",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01188.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e24a2ccd3cbded3327b1869a8e74a6a9d0c9785425f2c7d67736c8f91a6aabc2",
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01068.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "19b0af007ff8d2205896d5c56bdad671228ef37743c74148831aa5fd133480f9",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00417.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "4dfeedc882740a87dbda93cd71391b490ec84cf5bcba4657d01ea4f6abbd7493",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00108.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "879a1cf461bb1bcd949e1746289d4f896c889ea516666bdce779776706460ad7",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02128.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "fcdac008c19a0447e68784b24429a2fd66eb9e6552ec0b800697cdc423dfb006",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01484.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "2fc739472b1798fecdee5be8cf558eaa89ccc6fa4a28a0e173c821888defbe6a",
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00025.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "31e3770dd2f29027a3a4d1d8c9031e029d6ccb2e23a7f815b92773bf1d1dc5e5",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00021.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "454b140a06eed32a3987d83c2b3651da253121279bda105929a84e0d726902e0",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01483.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "ca2b0f5bfcf15fad6e54723b0596d8d8fe3982a5d9af2dbb1311633ae804f40b",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00637.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "9157a6c6f975a0613702f0e4ff83788973403e83e2bd5a97c64d8ad1feafe4ad",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02579.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "abc3492b39cd02f1de0ecc667b3f0f59ed96af9300671d8be85a8cfde89dafa4",
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00463.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "bd056820de7da7aeef19753b86b33209f30993db6247b9100f5b95f4f3f6be93",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02932.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "18bbab01eb7085bab221194715971bab5a232ce24946559204af9f64afdd0edf",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/02616.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "3dddac94a1abe68ac3c76185953a623940819393458265a9945bc559ed46ddbe",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/01601.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "e5a791f37a4ccc6f4de51cad98e15b1d989e05f078fa7c7253d503fce1e8060c",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    },
+    {
+      "path": "synthetic/training/1/00276.wav",
+      "variant": 0,
+      "engine": "piper",
+      "sha256": "889c74b8038096f4ec922e45dbf2e0a4fa4a7ce3f2ae8a6490cd770b0c16c2e6",
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "cohort": "piper_continuation"
+    }
+  ],
+  "source_sha256": {
+    "diagnose_keyword_occurrence.py": "83fda73df893a6a5d45d45a86edb6f3fa4dbc42b9fe14dec77ca8dbd5e9ccf58",
+    "keyword_occurrence.py": "cce1fdc86f3e0b1f9f31189cc3b53241a0a2e2f4cb10f86cc1ef2ed3e995f145",
+    "test_keyword_occurrence.py": "d31a19b44570a77c1273909c29ff25972cf78ae3a72aefa7c42475186080826a",
+    "compact_sequence_inference.py": "0bacf7da9fc62353ce4588e1db2bdbf6777de5755d37bb214a51a8a4f4104416",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c"
+  },
+  "source_selection": "First same20 broad-bank engine/class sources used by prior numerical smoke, plus first5 distinct unrendered training hashes for each of four exact Piper continuation texts. Fixed before any occurrence-model inference. Continuation cohort is Piper-only; differences across cohorts cannot establish a causal context effect.",
+  "observation": "Metadata inspection before this plan found all training positive estimated endpoints above335 frames (minimum411). Missing full-history startup alone cannot explain this training geometry. No raw held-out source array or new held-out score was read for that inspection.",
+  "recurrence": "Sum probability over all CTC paths whose collapsed sequence contains adjacent distinct tokens[hey1,nyx2]. Blank0 and repeated symbols obey CTC collapse; arbitrary symbols may precede/follow the match. Three log states: no pending hey, suffix hey, absorbing match. This retains out-of-grammar competition inside the match and does not renormalize a four-choice vocabulary.",
+  "measurement": "Record complete scalar/logit/exact/occurrence traces and original smoothed endpoint accounting. Report all maxima and greedy sequences at the scalar peak, fixed.97 views and a neutral67-step six-class prior. No threshold/window/gain selection or advancement decision.",
+  "limits": "Optimization-seen training sources, small deterministic diagnostic cohorts and correlated renderer/text exposure. Recurrence is an event probability, not calibrated wake confidence; chance occurrence can grow with window length. Piper-only continuation is confounded with engine/voice/wording. Source text is synthesis intent, not pronunciation truth. No fitting, new export, score-scale tuning, validation/test inference, audio/source-WAV access, playback, microphone, board, production device, PCM speed or audio producer changes. This cannot qualify an inference rule or establish Hi ESP recall, FAR, latency, resources or voice stability."
+}
