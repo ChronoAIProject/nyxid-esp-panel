@@ -3323,3 +3323,9 @@ pack SHA256 c2fd2212d9c8c648d0444e5fccce27d8c572c206280b1c70153f325e0f9e3c8a。
 该训练结果仅候选研究；之后仍需新开发阈值协议、新冻结合成集和负曝光门槛才能升级v30。
 原三个最终集不访问；两步GPU全流程smoke通过后才启动正式任务，模型/报告hash完整保存。
 代码phone_binary.py、train_stream.py；命令experiments/v35_phone_binary.sh。
+
+v35两步CUDA全流水线smoke已终结exit0：初始权重与classifier初始化SHA匹配v30，
+BN初始/选中snapshot完全相同，H5全部数据集有限值；22801参数，单[1,3,40]输入、[1,1]uint8输出。
+smoke模型54312bytes（不要求新导出字节与v30相同）；原v30及其交接包未修改。
+保存4090-v35-smoke-training.json与4090-v35-smoke-audit.json；仅管线检查非性能证据。
+按已预注册命令启动正式120k训练，额外batch16，总代数loss与主batch保留检查通过。
