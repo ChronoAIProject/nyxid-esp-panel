@@ -1190,3 +1190,46 @@ PYTHONHASHSEED=0 "$WAKE_PYTHON" research/handoff/audit_scalar_wake_scores.py \
 This command checks saved accounting without replaying model invocations.
 The full comparison and input-audit commands are retained in the study's
 launch files. No speaker, microphone or board operation is required.
+
+The [same-weight scalar precision supplement](assets-scalar-precision-diagnostic-v1.json)
+contains the training-only float export smoke and subsequent complete
+float/INT8 development diagnostic. Both float TFLite exports reproduce the
+original saved streaming graphs and full windows within 4.86e-6; float reset
+and 256-step chunking replay exactly. The new INT8 adapter inherits the
+original path unchanged. These checks validate the arithmetic comparison,
+not wake quality or P4 suitability.
+
+Neither original model has a strict point in float or INT8 within the frozen
+21-point grid. At .97, control float/INT8 macro proxy recalls are
+79.4013%/78.2569%, with 70/67 false near-word views and two continuous events
+each; compact CTC recalls are 79.2009%/81.1458%, with 73/76 false near-word
+views and three events each. Exposure is the same 7.323822 development hours.
+The result rules out a precision-only explanation for the absent strict point
+under these weights/inputs/grid. It does not show that quantization is harmless:
+large local score differences remain, and precision both adds and removes
+clip detections. Equal event counts do not prove equal event locations.
+
+The roots are `workspace/home-wake-research-20261110/scalar-precision-export-smoke-v1`
+and `scalar-precision-diagnostic-v1`. The archive retains immutable sources,
+plans, launches/runtime versions, both float models, complete paired clip
+scores, both precisions' continuous traces, original INT8 models/H5 weights,
+and the original scalar SavedModels needed for export reconstruction. Original
+SavedModels supplement the dependency archive, which omitted them. H5 files
+alone do not provide optimizer-resume checkpoints. Exact original commands
+and paths remain provenance; a new host should record its own fresh launch
+with its relocated inputs rather than edit those historical records.
+
+Fresh INT8 inference replays every original clip/continuous score exactly.
+The read-only auditor binds committed plans and actual commands, source/model
+bytes, parent evidence, the full scalar binary and all 35 actual continuous
+feature files. It reconstructs all maxima, timestamps, independent events,
+full grids, strict-point existence, contingencies and error aggregates.
+The existing broad-study archive is the explicit dependency. The full scalar
+and continuous feature tree remains external; index hashes alone cannot
+replace those byte checks. No final/test inference or deployment follows.
+
+The unauthenticated public download, archive SHA256 and all 356 listed member
+lengths/hashes pass against `CONTENTS-scalar-precision-diagnostic-v1.json`.
+No source waveform, device state, credential or firmware is included. Work
+was silent and used no microphone or board. Physical wake latency, P4 costs,
+real-speaker performance and voice-call stability remain unproven.

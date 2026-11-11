@@ -2155,3 +2155,15 @@ preserving consistent targets for known confusers. Do not assign blank to all
 negative slots indiscriminately: the same near-word source can appear in the
 ordinary TTS sampler as well as a paired slot. No such training or new inference
 rule has been implemented, frozen or scored by this diagnostic.
+
+The [complete scalar precision supplement](../../handoff/assets-scalar-precision-diagnostic-v1.json)
+is publicly published: 43,949,699 bytes, SHA256
+`66db67740ba63feeb22642c9fee2dc5b25d8e9b37184c826a363485d514d5f12`.
+A fresh unauthenticated download verifies all 356 listed lengths/hashes and
+the exact 357-member inventory. Both numerical smoke and full diagnostic,
+immutable sources/plans/launches/runtime, all paired traces, reconstruction
+audit and changed-plan rejection are retained. Original scalar SavedModels
+are included to supplement the previous broad-study dependency; full scalar
+and continuous features remain external and byte-bound. All evidence is
+synced to the shared research branch. No qualifying model or Hi ESP parity
+claim is made, and the full objective remains active.
