@@ -1420,3 +1420,40 @@ absolute launches remain provenance; relocated experiments need fresh launches.
 For existing local evidence, input audit uses `audit_compact_study.py` with
 `--plan-repository-path research/wakeword_p4/training/plans/microwake-positive-ctc-v1.json`;
 the supplementary `audit_scalar_wake_scores.py` reconstructs the saved scores.
+
+### Retained ordinary-positive head: numerical pass, quality rejection
+
+The [separate export plan](../wakeword_p4/training/plans/compact-positive-export-smoke-v1.json)
+and [numerical result](../wakeword_p4/results/compact-positive-export-smoke-v1.json)
+retain the rejected treatment's temporal head. All 20 fixed training sources
+pass float window/stream alignment and INT8 reset/chunk checks. The original
+training-only calibration input digest replays exactly. The 63,680-byte dual
+model is a reference implementation with unmeasured P4 cost and latency.
+
+The [separately frozen occurrence plan](../wakeword_p4/training/plans/compact-positive-occurrence-v1.json)
+first verifies 41 training sources /8,787 raw steps, including the actual long
+source across 256 steps. Monolithic versus chunked scalar, all logits and
+products match exactly; independent probability-domain reconstruction differs
+by at most 3.21965e-15. Every new-model trace is retained. The [complete result](../wakeword_p4/results/compact-positive-occurrence-v1.json)
+is rejected: at .97, macro recall 78.3631% binary versus 58.8254% product,
+false near-word views 71 versus 28 and continuous events 2 versus 0. The best
+strict product point .994 reaches only 31.6131% macro recall (9 false views,
+zero continuous events), below the frozen binary comparator's 69.4876%.
+The independent score auditor reconstructs all clips, streams and the gate.
+
+The [public supplement](assets-compact-positive-inference-v1.json) includes both
+`compact-positive-export-smoke-v1` and `compact-positive-occurrence-v1` roots
+under `workspace/home-wake-research-20261110/`. It retains SavedModel, dual
+INT8, actual training traces, complete development score traces, frozen source,
+plans, launches, logs and audit code/results. Parent ordinary-positive training
+and broad-bank archives provide dependencies. Full features remain external.
+No source WAV, credential, device state or firmware is included.
+
+For a fresh run, use [launch_positive_inference.py](launch_positive_inference.py)
+with `--artifacts` (new directory), `--repository`, `--features`, `--export`
+(validated new dual export) and `--training-study` (positive-supervision run).
+It validates actual bytes and stops before development inference if the
+training-only adapter gate fails. For retained local results, run
+`audit_compact_inference.py` with the usual artifacts/repository/export/features
+arguments and `--plan-repository-path research/wakeword_p4/training/plans/compact-positive-occurrence-v1.json`.
+Historical paths are provenance; relocated experiments need fresh launches.

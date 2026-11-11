@@ -2533,3 +2533,40 @@ logits/scalars/products across actual 256-step chunks, and independently
 reconstructs probabilities in the probability domain. Prior-model trace
 values are not expected to replay after weights change. Same fixed 21-point
 grid, false-event policy and advancement rule; no threshold/score fitting.
+
+## Positive-supervised occurrence inference completed: rejected
+
+The [completed occurrence result](../results/compact-positive-occurrence-v1.json)
+fails advancement. Its new-model numerical gate passes all 41 training sources
+/8,787 raw steps, including the real 256-step boundary. Every scalar, all
+67x6 logits and product replays exactly; independent probability-domain
+reconstruction has maximum absolute delta 3.21965e-15. Actual monolithic
+new-model traces are retained, without comparing them to old-model values.
+
+At .97, same-artifact binary -> occurrence product changes macro recall
+78.3631% -> 58.8254%, false near-word views 71 -> 28 /3,744, and continuous
+events 2 -> 0 /7.323822 h. The best strict product point .994 has 31.6131%
+macro recall, 9 false views, zero continuous events and .8929% worst-corpus
+fraction. Its frozen binary comparator is .996 /69.4876%, selected by the
+minimum-false-zero-event policy. Recall gain fails decisively; no deployment.
+This is a same-artifact inference comparison. It does not isolate the causal
+effect of ordinary-positive supervision across separately quantized exports.
+
+The read-only auditor binds source/plan/export/full scalar and background
+bytes and reconstructs every 6,136 clip /1,429,512 smoothed-step and 35 stream
+/878,709 step trace, timebase, event, grid and decision. A separate cached
+adapter audit reconstructs all source identities, shapes, probability values,
+products and actual long-source boundary. All processes are terminal. No
+fitting, final/test scoring, audio device, hardware or pipeline change occurred.
+
+The [complete retained-head supplement](../../handoff/assets-compact-positive-inference-v1.json)
+is public: 3,241,478 bytes, SHA256
+`d5bbae087cb51563bc74fb74ffb1b10d7e626d90387d96ecd2f38358039bea06`.
+It retains both numerical-export and occurrence-inference roots, SavedModel,
+dual INT8, actual calibration identity, 41 complete training traces, full
+development scores, immutable sources/launches/logs and all audits. The parent
+positive-supervision and broad-bank archives are dependencies; full feature
+caches remain external and byte-bound. Overall Hi ESP objective remains
+active, with both this scalar recipe and retained-head inference rejected.
+A fresh unauthenticated download verifies the exact 335-member inventory and
+all 334 listed hashes/lengths in the retained-head supplement.
