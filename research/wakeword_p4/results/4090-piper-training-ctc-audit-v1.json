@@ -1,0 +1,72 @@
+{
+  "role": "Frozen training-only cross-family ASR consistency diagnostic",
+  "manifest_sha256": "78cf35c78f71c246a85eeabb285bedaafbe92a1980aaa21411741835f12e880b",
+  "source_sha256": "9fe7df8a3f22e2ddd0ba455cd3320d5b20d64055f51594ba6558f1d197a56a57",
+  "ctc_source": {
+    "repo": "facebook/wav2vec2-base-960h",
+    "revision": "22aad52d435eb6dbaf354bdad9b0da84ce7d6156",
+    "files": {
+      "model.safetensors": {
+        "sha256": "8aa76ab2243c81747a1f832954586bc566090c83a0ac167df6f31f0fa917d74a",
+        "bytes": 377607901,
+        "lfs_sha256": "8aa76ab2243c81747a1f832954586bc566090c83a0ac167df6f31f0fa917d74a"
+      },
+      "config.json": {
+        "sha256": "d3ec255c063d9f95057b553b19c20135b259875834a4fe9deb218a6be25b4cf3",
+        "bytes": 1596,
+        "lfs_sha256": null
+      },
+      "preprocessor_config.json": {
+        "sha256": "b225d617c025463b9e157e06afea8b90dc7078fc70b013c533328423e0486b4a",
+        "bytes": 159,
+        "lfs_sha256": null
+      },
+      "special_tokens_map.json": {
+        "sha256": "bb7068de1150661a10b55f9e4b12a0e77af8bf91f5e45e1b58afaf1d0e17f675",
+        "bytes": 85,
+        "lfs_sha256": null
+      },
+      "tokenizer_config.json": {
+        "sha256": "dc790594f5bc351a4311c6624f40acd95850d4aaf2a5cb3c656c9b610720b608",
+        "bytes": 163,
+        "lfs_sha256": null
+      },
+      "vocab.json": {
+        "sha256": "19727f8944fe6459fc3f240ae2c198395b740f6a029bd23e06656266b83bcf64",
+        "bytes": 291,
+        "lfs_sha256": null
+      },
+      "README.md": {
+        "sha256": "fc52a0adfa64e446800f9944c6cf9b90da3127aba548860ea5714516ec8c18c7",
+        "bytes": 4431,
+        "lfs_sha256": null
+      }
+    }
+  },
+  "whisper_details_sha256": "0aeb33e566ad0ca3f78c069de4cfe0a51470eec0d4a6728b3e2bd464be6ec333",
+  "details_sha256": "ccc4fecf90a65011ba1ff6ccc495260b870bb8e25a0d885247805857285c30fc",
+  "counts": {
+    "negative/clips": 100,
+    "negative/ctc_alias_agreement": 26,
+    "negative/whisper_alias_agreement": 79,
+    "negative/both_agree": 24,
+    "negative/both_disagree": 19,
+    "negative/cross_family_disagreement": 57,
+    "positive/clips": 100,
+    "positive/ctc_alias_agreement": 4,
+    "positive/whisper_alias_agreement": 80,
+    "positive/both_agree": 4,
+    "positive/both_disagree": 20,
+    "positive/cross_family_disagreement": 76
+  },
+  "runtime": {
+    "torch": "2.15.0+cu132",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "model_dtype": "torch.float32",
+    "decoding": "CTC greedy, no LM/prompt/VAD/resampling"
+  },
+  "audio_or_labels_changed": false,
+  "wake_models_scored": false,
+  "final_data_used": false,
+  "limits": "ASR agreement/disagreement is not pronunciation truth, phonetic endpoints or wake recall. Models have different vocabularies and training distributions; two recognizers agreeing can share errors. No filtering or automatic relabeling."
+}

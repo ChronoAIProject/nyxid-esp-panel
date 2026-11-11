@@ -3190,3 +3190,17 @@ v30维持原冻结模型/阈值；比较4090-v30-v34-auxiliary-comparison-v1.jso
 ASR无论一致或不一致均不是发音真值/音素边界，不作唤醒质量或HiESP验收。
 代码training/audit_training_ctc.py，预声明results/4090-ctc-training-audit-plan-v1.json。
 依赖在.local/wakeword/ctc-audit-env隔离安装，模型固定版本下载/哈希校验进行中。
+
+## CTC跨家族审核完成：不同识别器分歧不足以证明错读
+
+固定200训练WAV完整完成，CUDA4090 FP32、贪心CTC，无LM/VAD提示。
+模型revision/LFS SHA全部核验，依赖版本与来源报告保留。
+原声明严格别名一致：CTC正4/100、负26/100；同WAV Whisper small.en正80、负79。
+CTC经常输出HEYNIX等连写。事后仅删除空格的敏感性诊断为正20、负28；
+原始严格结果不改，不增加HAY/PAY等事后词汇别名或编辑距离容差。
+两种归一化都不表示发音正确率；该CTC在这些短合成词上的词法/分词偏差明显，
+不能把其低一致率当作训练语料大规模错读证据，也不能自动筛除/重标。
+所有200条转写及跨家族对照在4090-piper-training-ctc-details-v1.jsonl；
+主报告4090-piper-training-ctc-audit-v1.json，空格诊断4090-ctc-training-spacing-sensitivity-v1.json。
+模型来源4090-ctc-model-source-v1.json，运行版本4090-ctc-audit-environment-v1.json。
+审核未读取任何独立最终音频或唤醒分数；没有发音/末音素金标准与达标结论。
