@@ -1,0 +1,39 @@
+{
+  "role": "Frozen shared training-only INT8 representative inputs",
+  "features_index_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "inputs_sha256": "52a484b1d6d3ee0375cd2b29bef144ab92ddfe0984fb97861d96e3457c4ff9ca",
+  "seed": 57726,
+  "frames": 150,
+  "groups": [
+    [
+      "kokoro",
+      0
+    ],
+    [
+      "kokoro",
+      1
+    ],
+    [
+      "piper",
+      0
+    ],
+    [
+      "piper",
+      1
+    ],
+    [
+      "qwen-cuda",
+      0
+    ],
+    [
+      "qwen-cuda",
+      1
+    ]
+  ],
+  "windows": 120,
+  "policy": "20 distinct variant0 training rows per available engine/label; uniform crop; no augmentation, prefix replacement, validation, final data, or model-score selection",
+  "limits": "No separate ambient rows; diagnostic calibration choice, not a demonstrated optimal deployment calibration",
+  "source_sha256": "3eeb2296af191cac320ba2b21e30e95b29f248faeb149f78523be9f92f1f3e22",
+  "manifest_sha256": "0274332dd4a1cd2a3556413366fbe39b4619776a653182fd1fa767b4dabfc227",
+  "evaluation": "Supplementary comparison only, after original preregistered exports. Export both frozen SavedModels on the exact same inputs and conversion order; no retraining. Run original validation-only dense/expanded calibration separately for each; retain all original results. No final data scoring. Not phonetic recall or latency acceptance."
+}

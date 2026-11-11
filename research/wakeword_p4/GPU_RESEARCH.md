@@ -2998,3 +2998,14 @@ v32是端到端prefix策略消融，不能把INT8差异全部归因于训练梯�
 不修改正在运行的代码、不覆盖原导出，保留浮点与INT8探针。
 若需严格训练因果隔离，须另外预声明并对双方冻结权重使用完全相同的代表输入序列重新导出。
 审计results/4090-v32-export-calibration-coupling-audit.json。
+
+### 同代表输入的补充量化对照预注册
+
+为减少原prefix策略与INT8代表输入耦合，预注册补充导出；不改v32原任务。
+common_calibration_export.py固定seed57726，对每个引擎/标签组选择20个variant0训练行，
+均匀裁150帧，共120窗，保存实际float32输入；无模型分数选择/验证/最终数据。
+inputs SHA52a484b1d6d3ee0375cd2b29bef144ab92ddfe0984fb97861d96e3457c4ff9ca。
+双方冻结SavedModel分别使用同一输入顺序及原转换配置；保留所有原导出。
+补充校准不含独立ambient行，不声称其为最优校准或MCU等价；
+分别按原开发门槛评估，不根据结果修改代表输入，不取代原预注册结果。
+预注册results/4090-v30-v32-common-calibration-preregistration-v1.json。
