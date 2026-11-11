@@ -3244,3 +3244,10 @@ Kokoro 0.4.9支持is_phonemes=True、trim=False。固定Hey Nyx输入hˈeɪ nˈ�
 原生24k float波形npy与16k PCM16 WAV同时保留，核对token/duration与样本数。
 自动门槛在推理前固定：有限值、0.2–5秒、RMS≥0.001、零abs(sample)≥1；
 完整原生输出不裁切。生成末端不冒充末音素真值。见synthetic_phone_pilot.py。
+
+显式音素pilot完成48/48，全48条通过预声明机械质量门槛；原生波形与duration映射核验通过。
+另逐条读回WAV确认16k单声道PCM16、样本数/哈希一致且无int16饱和值；
+原生npy逐条读回确认单声道有限值和样本数。
+报告4090-synthetic-phone-pilot-v1.json与全清单4090-synthetic-phone-pilot-manifest-v1.jsonl。
+本轮未训练、未评分，因此没有模型提升结论；下一步需在训练用途内比较完整短语合成输入，
+并制定声音来源分区与新开发协议，不能把本pilot复用的训练声音声明为独立测试。
