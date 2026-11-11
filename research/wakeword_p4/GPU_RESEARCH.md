@@ -3774,3 +3774,27 @@ v37_after_training.py校验完整120k、batch128、full_source seed97726/固定p
 phone补充为空、prefix0、BN不变及model SHA后才执行导出审计和同旧开发回归。
 继承原Kokoro/VCTK官方同PCM缓存及Vox完整流；固定网格，不自动使用新开发/最终数据。
 脚本语法检查通过。低训练loss不是性能或泛化证据，正式结果仍需完整回归。
+
+## 收到Mac/P4实测与Mac350已消费开发回归（Issue13）
+
+Mac已在Issue13回报d8e24475...的P4单fixture/idle证据，以及1234fb1e...的
+350条既有Mac合成回归；GPU端匿名下载公开包并校验全部成员：
+probe包159107bytes、SHAd58df89b1090e5976fcce9d3bed51ee9ecc45a93c9bc8ec9528976d3a1cd38b2、43成员；
+Mac regression包235455bytes、SHAc0abb4e489b2be3ea752b2ec64efb764bb91720190971d7d167b09c47c420a61、24成员。
+两包模型原字节54440/04aa4564...一致，CONTENTS完整覆盖、逐成员大小/SHA通过。
+接收记录4090-mac-evidence-receipt-v1.json；原始Mac紧凑报告/审计按原字节引入本分支。
+
+Mac报告单P4 fixture179输出字节与事件step144一致、两120秒idle/capture通过，
+但accepted=false，不涵盖整库P4数值一致、识别验收或active-call资源。
+Mac350回归v30 host11/50目标触发 vs retained HiESP P4 48/50；
+普通句子双方0/100、Nyx混淆v30 3/90 vs HiESP0/90；ESP混淆的发音未确认，不能合并作公平胜负。
+GPU独立核验NPZ所有350条94940个uint8输出SHA/数量，再按五分数整数sum>=1175、
+2*sum<1175重武装、67步refractory重算全部事件，host与firmware保存event steps完全一致。
+复现声音计数Daniel0/10、Karen4/10、Moira4/10、Samantha0/10、Tessa3/10。
+审计4090-mac-saved-output-audit-v1.json明确GPU未重跑PCM/前端推理或硬件。
+
+将Mac350登记为已消费描述性开发回归：不得训练或选阈值，不是新的独立最终集，
+不改v30阈值、不删失败声音、不以单fixture说明350条v30都已实机测过。
+其prime56160及480/512块协议与GPU简短padding不同，后续候选必须沿用其冻结原PCM/prime，
+并按各自已选阈值报告来源/协议差异，而不是把不同协议摘要直接合并。
+v37原训练不改、不重启，现有新开发和最终分区仍保持未评分。
