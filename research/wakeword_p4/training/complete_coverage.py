@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 class CompleteCoverage:
-    def __init__(self, root):
+    def __init__(self, root, negative_timeline=False):
         root=Path(root)
         expected={'training.npz':'bb01f3219db10f31e1095af4912c1807ec38b0b3c640c4676186c1b77a620aa1',
           'sources.json':'0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981',
@@ -47,6 +47,22 @@ class CompleteCoverage:
           policy='Equal phrase for negatives, engine, conditioning identity, canonical WAV, variant; aliases once. Original British draws occur first; remaining British/ambient slots untouched.',
           source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
 
+        self.negative_timeline = negative_timeline
+        self.temporal_rng = np.random.default_rng(137726)
+        self.raw_negatives = {}
+        if negative_timeline:
+            for i,r in enumerate(self.records):
+                row=self.sources[r['source_index']]['aliases'][0]
+                if row['label'] or row['phrase'] not in self.phrases:
+                    continue
+                raw=np.load(root/r['raw'],allow_pickle=False)
+                assert raw.dtype==np.uint16 and raw.ndim==2 and raw.shape[1]==40 and len(raw)>=150
+                assert hashlib.sha256(raw.tobytes()).hexdigest()==r['raw_sha256']
+                self.raw_negatives[i]=raw
+            self.report['negative_timeline'] = dict(seed=137726,
+                policy='Uniform integer end150..len(raw),24 candidate negatives only',
+                authenticated_variants=len(self.raw_negatives))
+
     def draw_indices(self):
         ids=[]
         for j in range(40):
@@ -61,5 +77,10 @@ class CompleteCoverage:
     def replace(self, british):
         ids=self.draw_indices();result=british.copy()
         samples=np.clip(self.x[ids].astype(np.float32)/25.6,0,26)
+        if self.negative_timeline:
+            for j,i in enumerate(ids[16:],16):
+                raw=self.raw_negatives[i]
+                end=int(self.temporal_rng.integers(150,len(raw)+1))
+                samples[j]=np.clip(raw[end-150:end].astype(np.float32)/25.6,0,26)
         result[:16]=samples[:16];result[32:56]=samples[16:]
         return result

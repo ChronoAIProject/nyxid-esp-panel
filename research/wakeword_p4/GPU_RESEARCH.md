@@ -4162,3 +4162,15 @@ sole cause. Diagnostic selected union only, not all1995actual float streams or
 independent acceptance. No optimizer updates, all window variables unchanged;
 new/final untouched and frozenv30 retained. Next intervention must explicitly
 address full-source temporal support rather than repeat center-only coverage.
+
+### v41 negative complete-timeline intervention prechecks (2026-11-11)
+
+Preregistered38207a3. Only24candidate negative windows change relativev40;
+source/variant draws preserved,independent137726 uniform raw endpoints150..N.
+All1995negative raw arrays hash/shape authenticated.50batch audit1200crops
+matches independent source RNG/crops; retainedslots exact. v40default sampler
+regression also passes50batches. Two-step4090smoke exit0,35.4s,selected1,
+54312B SHA730ccac17567dc1941d745628f993097d2ac94da9dfea458a619307bd2f1c9c2.
+Finite weights,frozenBN exact,int8[1,3,40] to uint8[1,1]. Not accuracy evidence.
+Formal120k is authorized after these passed prechecks; same historical gate,
+new/final untouched. No promotion; frozenv30 retained.
