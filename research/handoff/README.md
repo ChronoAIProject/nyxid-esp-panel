@@ -1853,3 +1853,62 @@ firmware, SDK config, board state/backups and raw UART stay private. See the
 [runtime procedure](../panel_wake_runtime/README.md#completed-v30-silent-development-probe)
 for reproduction commands, dependency pins and the 460800-baud USB fallback.
 Full Hi ESP parity remains open.
+
+## Frozen v30 on the complete Mac paired regression
+
+The [2026-11-12 result](../wakeword_p4/results/gpu-v30-mac-regression-v1.json)
+replays all 350 original public Mac sources at normal speed under the original
+v30 policy and full-app 56160-sample zero prime. Every source WAV hash and PCM
+CRC agrees with its retained Hi ESP P4 result. All 350 reset replays agree
+exactly. The original host convolution and firmware sum/divide policies give
+the same events on this set; neither threshold nor source selection changes.
+
+| Reused synthetic metric | v30 host INT8 | Retained Hi ESP P4 |
+| --- | ---: | ---: |
+| Own target, any event | 11/50 | 48/50 |
+| Own target, estimated end [-100,+800] ms | 11/50 | 32/50 |
+| Same ordinary sentences, false-event clips | 0/100 | 0/100 |
+| Same Nyx near words, false-event clips | 3/90 | 0/90 |
+| ESP near words, pronunciation uncertain | 0/60 | 14/60 |
+
+The v30 negative events are Tessa `Hey Next.` variant 3 and `Hey Nexus.`
+variants 0/3. Target hits by voice are Daniel 0/10, Karen 4/10, Moira 4/10,
+Samantha 0/10 and Tessa 3/10. Variants are correlated. Different target words
+and phrase-specific confusers do not define one common false-wake population;
+the 3/90 comparison uses identical Nyx-negative PCM. These are reused synthesis
+intent labels, not verified pronunciations or new real-user recall. Hi ESP
+comes from the prior standalone P4 run; new v30 inference runs on the host.
+The separate 179-byte fixture proves only its measured P4 numeric agreement.
+No acoustic, word-end latency or active-call acceptance follows here.
+
+The [saved-output audit](../wakeword_p4/results/gpu-v30-mac-regression-v1-audit.json)
+recomputes all source CRCs/frontend hashes and checks 94940 quantized output
+bytes, integer firmware-policy events, host-policy events and critical counts
+for every voice/variant cohort. It is accounting, not independent inference
+or pronunciation truth. A fresh execution of extracted source/model/plan
+reproduces the complete result JSON byte-for-byte and every output byte.
+The [public evidence manifest](assets-gpu-v30-mac-regression-v1.json) verifies
+all 24 payload members through anonymous download. Original source WAVs remain
+in `paired-mac-regression-v1.tar.gz`; no audio is played or recorded.
+
+The replay recipe was frozen at `00bd0d9`. Use the current research branch
+for both commands below and the plan's pinned host versions:
+
+```sh
+python research/wakeword_p4/training/replay_gpu_mac_regression.py \
+  --sources "$PUBLIC_MAC_PAIRED" --model-dir "$ORIGINAL_V30_PAYLOAD" \
+  --plan research/wakeword_p4/training/plans/gpu-v30-mac-regression-v1.json \
+  --output "$FRESH_STUDY"
+python research/wakeword_p4/training/verify_gpu_mac_regression.py \
+  --sources "$PUBLIC_MAC_PAIRED" --artifacts "$FRESH_STUDY" \
+  --output "$FRESH_STUDY/audit.json"
+```
+
+The replay was committed before scoring; the auditor was added afterward.
+`package_gpu_mac_regression.py --help` documents publication and anonymous
+verification. All original PCM and full traces are retained; the source-relative
+offset is the returning 480-sample detector block end after subtracting prime,
+not the earlier frontend frame endpoint. Any prime events remain separate
+(zero observed). Report this gap in [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13)
+for GPU development. No model promotion, threshold fitting or automatic source
+relabeling follows from these results.

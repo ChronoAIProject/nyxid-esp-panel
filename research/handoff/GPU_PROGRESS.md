@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `918ea63` (fetched again 2026-11-12); see the
+Latest observed GPU commit: `5f57b62` (fetched again 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -921,3 +921,30 @@ No training-completion or candidate-acceptance result is present in that
 snapshot. The Mac next checks the unchanged 350-source public Mac regression
 against its retained Hi ESP P4 baseline, keeping it separate from acoustic
 or independent acceptance.
+
+The Mac regression is now complete:
+[v30 result](../wakeword_p4/results/gpu-v30-mac-regression-v1.json),
+[saved-output audit](../wakeword_p4/results/gpu-v30-mac-regression-v1-audit.json),
+[verified public archive](assets-gpu-v30-mac-regression-v1.json).
+v30 host own-target hits are 11/50 versus the retained Hi ESP P4 48/50;
+identical Nyx confusers give 3/90 versus 0/90. All 350 reset replays and
+94940 output bytes reproduce, with no host/device-policy event difference.
+This is a reused synthesis-intent regression, not confirmed pronunciation,
+new real-user/acoustic recall or a 350-clip v30 P4 run. Preserve the failed
+cases; no model/threshold or source-label change is selected from this result.
+
+### GPU v36 completed and rejected at `5f57b62`
+
+The original run completes 120000 steps and selects its 100000-step checkpoint
+under the existing rule. Export SHA is
+`73b3ee6ea081fa23884ab99c6254fb5174c0a7dbc35561b198349f13cdae143b`.
+Its development regression then rejects promotion: at historical .95703125,
+VCTK target hits are 40/60 but shared-negative false clips are 20/180; old Vox
+has 6 events/8.17367 h, upper95 1.44885/h. None of the fixed 138 grid points
+passes. The branch verifies 467 saved traces and preserves the failed result;
+new SLR83/dev2-dev3 scores and final data remain unused. See
+[the rejection](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/5f57b62/research/wakeword_p4/results/4090-v36-rejection-v1.json).
+The issue update is consistent with that checked-in report. No new candidate
+handoff or P4 deployment follows. The GPU track next investigates main versus
+full-source auxiliary supervision, and the Mac's separate regression supplies
+an additional concrete gap rather than a proposed threshold adjustment.

@@ -3274,3 +3274,34 @@ GPU snapshot `add3678` rejects v35 and records ongoing v36 source-balanced
 training plus fresh pre-scoring SLR83/VoxConverse development preparation.
 No v36 quality acceptance is available in that snapshot. The missing-v30
 artifact impasse has ended; full Hi ESP parity remains unproved.
+
+## Frozen v30 Mac regression: recognition gap remains explicit
+
+Plan and replay committed at `00bd0d9` before scoring. All 350 sources from
+the public paired Mac regression are replayed after the normal full-app zero
+prime at unchanged 16 kHz speed, threshold .91796875, five-score mean and
+67-step refractory. All WAV hashes/PCM CRCs match the retained Hi ESP P4
+baseline, and every reset replay matches exactly. No reserved/new data,
+speaker, microphone, board, firmware or service operation is involved.
+
+The [result](../results/gpu-v30-mac-regression-v1.json) reports v30 11/50 own-
+target any-event hits versus Hi ESP 48/50; estimated-end-window hits 11/50
+versus 32/50. Shared ordinary negatives are 0/100 for both. Same Nyx near-word
+PCM gives v30 3/90 versus Hi ESP 0/90: Tessa Next variant 3 and Nexus variants
+0/3. ESP near words retain pronunciation uncertainty (v30 0/60, Hi ESP 14/60);
+do not combine these into a misleading common-distribution comparison.
+Neither source intent nor reused synthetic counts verify pronunciation,
+real-user recognition or acoustic latency. New v30 inference is host INT8;
+the Hi ESP side is the retained standalone P4 measurement.
+
+All 94940 quantized outputs, full score traces and source/cohort details are
+retained. A separate saved-output audit recomputes frontend bytes and integer
+event decisions plus all critical cohort counts. Host convolution and device
+sum/divide produce identical events on all 350 streams. Re-executing extracted
+code/model/plan reproduces the complete JSON and output bytes exactly.
+The [public archive](../../handoff/assets-gpu-v30-mac-regression-v1.json) passes
+anonymous download and all 24 payload hashes. This evidence is being reported
+to the canonical [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13);
+#14 was a concurrently opened duplicate and is closed. No threshold change,
+source filtering or candidate acceptance follows. The next candidate still
+needs the complete Hi ESP comparison and active voice-path verification.
