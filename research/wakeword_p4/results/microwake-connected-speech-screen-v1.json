@@ -1,0 +1,108 @@
+{
+  "scope": "Training-only retrospective diagnostic; paired near/ordinary score windows, no calibration",
+  "aligned_sha256": "dd8254987abaa0aa330d2e2e03286d667a23b6938db578117aa3dbe3de591a70",
+  "matched_utterances": 367,
+  "matched_speakers": 64,
+  "window_score_steps": 20,
+  "column_order": [
+    "near",
+    "ordinary"
+  ],
+  "models": {
+    "phrase_control": {
+      "model_sha256": "c8c7e66b6f212f2b18c1e26c9f3bd27176fc0bd249361447fc641ac1d3f83ce5",
+      "counts_above": {
+        "0.5": [
+          0,
+          0
+        ],
+        "0.9": [
+          0,
+          0
+        ],
+        "0.97": [
+          0,
+          0
+        ]
+      },
+      "p95": [
+        0.0,
+        0.0
+      ],
+      "pairs_near_larger_tied_smaller": [
+        2,
+        363,
+        2
+      ]
+    },
+    "phrase_aux": {
+      "model_sha256": "1919dcf10e4d422c2420d6cdda5a718813fe5044c759bc2dea58807382330af7",
+      "counts_above": {
+        "0.5": [
+          0,
+          0
+        ],
+        "0.9": [
+          0,
+          0
+        ],
+        "0.97": [
+          0,
+          0
+        ]
+      },
+      "p95": [
+        0.0,
+        0.0
+      ],
+      "pairs_near_larger_tied_smaller": [
+        1,
+        365,
+        1
+      ]
+    }
+  },
+  "limits": "Dictionary candidates and ASR times are approximate. The control window excludes the matched spans, but its words were not otherwise phonetically or acoustically reviewed.",
+  "candidate_summary": {
+    "scope": "Original training partition only; phonetic text candidates, not acoustic alignments",
+    "dictionary_sha256": "81917843c7f44ce2b094ac63873c2c7a4cf802040792c455ba3ca406891c3d22",
+    "manifest_sha256": "fb4dfe63e5088ad94424fc35747335dd2bb51e1e5d5149e55308610748b62204",
+    "index_sha256": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "target_phones": [
+      "HH",
+      "EY",
+      "N",
+      "IH",
+      "K",
+      "S"
+    ],
+    "training_speakers": 64,
+    "training_utterances": 7424,
+    "candidate_utterances": 476,
+    "candidate_speakers": 64,
+    "spans_by_distance": {
+      "3": 652,
+      "2": 3
+    }
+  },
+  "alignment_summary": {
+    "scope": "Training-only natural speech; word times estimated by unprompted offline ASR",
+    "candidate_sha256": "5833c81a17155613cb4bc077af047b33650963e64b5ba8de81a7ba0a406a2e5d",
+    "index_sha256": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "asr_model_sha256": "1a5afae06a4db91c975c9a9d78be5cc110ee4ea022ad57d55492e4550e936b2a",
+    "sources": 379,
+    "speakers": 64,
+    "spans_by_distance": {
+      "3": 502,
+      "2": 1
+    }
+  },
+  "score_clock_control": {
+    "scope": "Already scored positive control for the score clock; never added to training pool",
+    "reproduced_false_wake_sample": 8390240,
+    "score_peak": 0.9921875000000001,
+    "expected_false_wake_sample": 8390240
+  },
+  "decision": "No acoustic score enrichment in this pool. Do not oversample these windows by dictionary distance alone.",
+  "training_performed": false
+}

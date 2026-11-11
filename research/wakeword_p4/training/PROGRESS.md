@@ -945,6 +945,32 @@ of joining the audiobook chapters. It does not isolate a phoneme or establish
 how common that acoustic pattern is. The source stays in development
 validation; future training must use separate speakers and utterances.
 
+The [connected speech screen](../results/microwake-connected-speech-screen-v1.json)
+tests whether dictionary similarity can find those negatives among the 7,424
+utterances from the existing 64 LibriSpeech training speakers. It checks
+one- to three-word spans against the unstressed CMU phones for Hey Nyx,
+accepts up to two edits or three with a terminal S/Z, and excludes exact
+aliases. The pinned local Whisper pass aligns 503 spans in 379 utterances
+using agreement with the source transcript and adjacent words. It does not
+change the sample rate or labels.
+
+Among 367 utterances with a disjoint same-utterance ordinary comparison,
+neither model scores any near or ordinary window at or above .5. More than
+98% of the pairs tie for each model. Reapplying the same local-context
+score clock to the previous validation confuser reproduces its first crossing
+at sample 8390240. That control was scored separately and is not in the
+training pool. Do not oversample this pool by dictionary distance alone;
+the experiment did not find acoustically difficult negatives for these
+models. This is a training diagnostic, not a model update or a new FAR test.
+
+To reproduce, fetch `cmudict.dict` from CMUdict commit
+`74790861f652b15e4ac49015a90074ad62a27690`; the candidate script checks its
+hash. Run `connected_speech_candidates.py` against the `human-negatives96`
+manifest/extracted corpus and `features-expanded-human335/human.json`.
+Use the offline ASR environment and the existing `assets/asr-tiny-en`
+for `align_connected_speech.py`, then score with `score_connected_speech.py`
+using the same feature view and the paired phrase experiment exports.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
