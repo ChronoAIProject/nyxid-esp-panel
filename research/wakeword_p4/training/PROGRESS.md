@@ -1644,3 +1644,14 @@ This is cached event time, not a phonetic endpoint or a fresh causal test.
 The validation utterance is not added to training. Limiting auxiliary pressure
 alone has not resolved wake discrimination; training-bank phone fit is not
 the acceptance target. All processing remained silent and used no device.
+
+The [public balanced-study supplement](../../handoff/assets-phone-ctc-balanced-v1.json)
+retains both runs and their executed sources/checkpoints, postprocessing
+commands/scripts, complete development scores/event arrays and supporting
+gradient/error diagnostics. Its unauthenticated public download and all 279
+listed member hashes are verified. Bank/initializer dependencies are explicit;
+the complete original scalar feature cache remains separate. No source audio,
+device state, credential or firmware is included. This is a rejected research
+recipe, and recognition, real-speaker/room generalization, precise P4 latency,
+resources and long call/reconnect parity remain unproven. The full goal stays
+open; no additional cap or threshold sweep is selected from these results.

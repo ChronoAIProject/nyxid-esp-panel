@@ -1020,3 +1020,28 @@ not include that complete feature cache. Verify the archive SHA256 and all
 into fresh staging. The actual public download and all 262 listed member
 hashes are verified. No source audio, room recording, device configuration,
 credential or firmware is included. This is unaccepted research.
+
+The [bounded-encoder CTC supplement](assets-phone-ctc-balanced-v1.json)
+adds the separately frozen .25 auxiliary/binary encoder gradient norm cap,
+with the same 5,000-step warmup and 3,000-step joint recipe. Its study root is
+`workspace/home-wake-research-20261110/microwake-phone-ctc-balanced-v1`;
+supporting plans, result reports, the full mixed-batch gradient diagnostic and
+input auditor are in the sibling `phone-ctc-balanced-handoff` directory.
+Executed sources, binary/auxiliary checkpoints, scalar INT8 exports, commands,
+raw scores/event traces and silent postprocessing scripts are retained.
+
+This recipe also fails. At .97, macro proxy recall rises from 81.86% to
+83.23%, while false near-word views rise from 74 to 83/3,744. Both models
+retain one continuous event/7.324 hours and no zero-event grid point. The
+cap is active on 2,343/3,000 joint steps and meets its observed norm bound.
+The original control export, calibration JSON and full validation-details
+JSON replay byte-exactly. Improved weak-phone fit is not wake acceptance.
+
+Use the same full-resolution bank and initializer dependencies as above.
+The original complete scalar feature cache is still a separate requirement;
+it is not in this supplement. H5 files store weights, not Adam slots. Verify
+the manifest archive SHA256 and `CONTENTS-microwake-phone-ctc-balanced-v1.json`
+member hashes before extraction into fresh staging. The public download and
+all 279 listed member hashes are verified. No source waveform, room recording,
+device state, credential or firmware is included. The study ran silently and
+did not access a speaker, microphone or board. It remains unaccepted research.
