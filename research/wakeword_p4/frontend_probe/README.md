@@ -138,3 +138,41 @@ outside git; publish only synthetic fixture/numeric results and source.
 The comparison will report actual Mac/Linux agreement and all residuals without
 loosening tolerances or calling it recognition/Hi ESP parity. v40 training and
 its immutable data stay unchanged; the dining-room production board is excluded.
+
+Completed on the USB development P4; guarded runner exited0 and a fresh HTTP
+query verified original0.6.27/app identity/ota_0, selected service and Hi ESP
+listening. [Actual result](../results/frontend-p4-witness-v1.json):
+
+- Mac full arrays29/30 exact. Only pack466/frame380/channel39 differs177→133.
+- Linux full arrays15/30 exact; Mac no-contraction outputs30/30 exact. This
+  last observation concerns output bytes, not identical coefficient tables.
+- P4 window/weights hashes equal default Mac, but its unweights hash equals
+  no-contraction Mac. Actual pairs211=2470/1626 and293=1401/2696. Upstream
+  independent rounding can produce a pair sum4097; do not normalize it away.
+- All30 complete P4 arrays reconstruct/hash-verify from original raw arrays
+  and the sole captured delta. That delta is outside all five training windows;
+  all150 windows for these30 witnesses remain exact versus Mac. This does not
+  establish equivalence for the other7752 candidate inputs.
+
+[Public evidence](../../handoff/assets-frontend-p4-witness-v1.json) is2629879B,
+SHA256 `04b665526a9ab2474a31a42595d6585f90cca5db7e855984983cb754647edfa2`.
+Anonymous download, safe unique regular paths and all28 payload hashes/lengths
+pass. Extracted public source regenerates the4,824,372-byte synthetic fixture
+and the entire result byte-for-byte. Firmware/SDK config/recovery images,
+credentials, complete private UART and device identifiers are excluded.
+
+After extracting the archive, re-audit without a board or original WAVs:
+
+```sh
+python source/research/wakeword_p4/frontend_probe/summarize_p4.py \
+  --artifacts artifacts --study /path/to/old-complete-container-pack-v1 \
+  --mac-native artifacts/mac-native.json --mac-tables artifacts/mac-tables.json \
+  --linux-receipt artifacts/linux-receipt-original.json \
+  --numeric-log artifacts/numeric-markers.log --output audit-reproduced.json
+```
+
+The frozen training pack supplies immutable raw arrays; no feature/model
+inference is needed for this re-audit. The probe does not measure recognition,
+false wakes, latency or active-call stability and cannot accept Hey Nyx as
+Hi ESP parity. No model, training-data or production-firmware changes follow
+automatically from this numerical diagnosis.
