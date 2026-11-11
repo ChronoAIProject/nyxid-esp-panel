@@ -1,0 +1,103 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "initializer_sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "unique_crops": 3112,
+  "steps": 1000,
+  "batch_size": 32,
+  "head_seed": 919,
+  "draw_seed": 1223,
+  "encoder_learning_rate": 0.0002,
+  "head_learning_rate": 0.003,
+  "global_clipnorm": 5.0,
+  "scope": "Training-only fresh local-versus-deep intent-phone fit; no wake evaluation or deployment.",
+  "hypothesis": "The final encoder states have137-frame receptive fields. A shallower41-frame tap may retain local phone transitions better. Test a smaller causal representation at exactly the same67 feature-right-endpoints, with identical head capacity, targets, draws, optimizers and budget. This is a representation/parameterization recipe comparison, not an isolated receptive-field causal proof.",
+  "arms": {
+    "deep": {
+      "feature_receptive_field": 137,
+      "first_right_endpoint": 136,
+      "last_right_endpoint": 334,
+      "stride": 3,
+      "states": 67,
+      "channels": 60
+    },
+    "local": {
+      "feature_receptive_field": 41,
+      "first_right_endpoint": 136,
+      "last_right_endpoint": 334,
+      "stride": 3,
+      "states": 67,
+      "channels": 60,
+      "tap": "Post-ReLU pointwise_1,99 states, discard first32 states"
+    }
+  },
+  "optimization": "Fresh original binary initializer for each arm, deep then local; same1000 updates,batch32,seed1223,ten-token Dense head seed919,mean true-length-normalized CTC,separate Adam(.0002 encoder,.003 head),shared global clip5. No augmentation,head warmup,validation,extra budget or checkpoint selection. Local excludes the last two depthwise/pointwise blocks; disconnected suffix/classifier stays fixed. All unique training crops are fitted/scored once. No held-engine folds or automatic follow-on run.",
+  "target_policy": "Original synthesis intent only, with the original alias mapping for Nyx/Nix/Nicks. These are fixed dictionary-like hypotheses, not measured phones, teacher decodes or human pronunciation truth. Retain original binary source roles. Correct true CTC lengths 6/6/7/5; zero padding is excluded by true lengths.",
+  "fit_gate": {
+    "minimum_macro_accuracy": 0.95,
+    "minimum_nyx_recall": 0.95,
+    "maximum_confuser_false_nyx_fraction": 0.01,
+    "minimum_greedy_exact_sequence_fraction": 0.9,
+    "maximum_mean_normalized_ctc_loss": 0.5
+  },
+  "deep_control": "Require exact replay of previous full-fit-phone encoder/head tensor hashes,row draw hash and all summary metrics. Paired arms require identical initial binary tensors,head tensors,head capacity and row draw schedule.",
+  "readout": "For each held/fitted crop, raw CTC log likelihood for each of the four predefined intent strings with equal priors. No score length correction, forced probability normalization, fitted margin or wake threshold. Unequal phone target lengths are retained. Also record greedy exact strings/edit rates and normalized true-label loss. Forced-choice metrics are not open-set false-wake rates.",
+  "reference_crop_ids": [
+    0,
+    1,
+    768,
+    896,
+    1024,
+    1025,
+    1344,
+    1424,
+    1504,
+    1505,
+    1912,
+    1980,
+    2048,
+    2049,
+    2624,
+    2768,
+    2912,
+    2913,
+    2969,
+    3025
+  ],
+  "reference_loss_tolerance": 0.0002,
+  "audit": "Rebuild all actual feature crops and dedup groups; replay row draws; reload both saved checkpoints and compare all3112x67x10 logits bitwise at original batch32; reconstruct every greedy sequence and all metrics/gates; compare all four raw likelihoods on first crop per engine/class to independent NumPy float64 CTC. Earlier independent loss/gradient audit covers TensorFlow CTC math. No optimizer-trajectory replay claim.",
+  "parent_study_sha256": {
+    "plan.json": "6252177b040f091550e83bf4f749dd4de9a9835d7018628fc6678d98653037e6",
+    "study/rows.json": "1d0f9ee4955bdc2f70d2b7e3d6215da3f294cd0cab45eed70402b2efa0f9bfba",
+    "study/full-fit-phones.json": "079da66acd6cc47945c97473e334fecd3a2fd955af806713f9a0305df0c201bb",
+    "study/full-fit-phones.weights.h5": "51ee663f097165a9d21ab4f084194963a6e784407e80b31fd964358aea02fb87"
+  },
+  "source_sha256": {
+    "intent_phone_taps.py": "d987a643af91d3f4adf367ea7fc49d463e6b90d817e585e0e22a4b01549b6301",
+    "test_intent_phone_taps.py": "7c714a867b2b00984d593a42c235e05db971a85f95356f1797bce955c8348b2a",
+    "intent_phone_fit.py": "3c2a6b6360ea8165968050b3d0ad7a3a5e0eb06cf85a7161bed96795fd52e742",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "ctc_reference.py": "4029ac30053e83d1e2bd3bcff9a9df300d734d821323ed692ea1c70f227b1145"
+  },
+  "audit_source_sha256": {
+    "audit_intent_phone_taps.py": "4dc9a2fa385457d7a5018759df0ee7cae2dc8f740b831487a3c19ac83cbf20dd",
+    "audit_intent_phone_fit.py": "b73d5e13aa3181a13d446a2d99d2a3fde080a185c3394fac7f215fb187df4234",
+    "audit_compact_study.py": "ebcc9b2300e170bbe846cd06e21fb95ef366761f761e6afcc1149b361e8a84b3"
+  },
+  "limits": "Dictionary-like synthesis-intent phones are not verified pronunciations. All3112 crops/744 source hashes and the initializer have prior corpus exposure. This full-fit diagnostic cannot establish independent generalization,open-set false wakes,latency,resources or call stability. Taps use different encoder depths/trainable counts; equal head size/right endpoints/budget do not isolate causality. A local fit pass only supports designing a separate predeclared held-engine study; failure rejects this exact recipe without extending the budget. No reserved quality set,audio device,board,firmware,speed or pipeline changes."
+}

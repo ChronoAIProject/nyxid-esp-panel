@@ -2668,3 +2668,22 @@ as a 3,279,110-byte archive, SHA256
 `db689897aee56a3579804f1727134d4b4a7c6650a1bb271324eb7e650b67e26b`.
 A fresh unauthenticated download verifies all 254 members and 253 listed
 member hashes, including both fitted checkpoints and actual numerical traces.
+
+## Local/deep phone representation fit, preregistered
+
+The [separate plan](plans/intent-phone-local-tap-v1.json) tests a shorter local
+representation after the rejected phone recipe and numerical agreement. The
+final encoder has a 137-feature receptive field; a post-activation
+`pointwise_1` tap has 41. Cropping its first 32 states aligns both arms to
+exactly the same 67 feature endpoints, 136+3*j, ending at 334. Both use the
+same ten-token 610-parameter head, original binary initialization, 3,112 unique
+training crops, row draws, optimizers, clipping and 1,000 updates. Encoder
+depth/parameter count differ, so this is not an isolated causal RF experiment.
+
+The deep arm must replay the preceding actual full-fit phone tensor hashes
+and metrics. The local arm must pass the unchanged compact-encoder full-fit
+gate before a separate held-engine study can be designed; no automatic fold,
+validation, extra fitting, export or hardware follows. Two focused tests pass
+actual graph-gradient receptive fields at first/middle/last states and the
+local update's untouched disconnected suffix/classifier. Evidence will retain
+both full logits and checkpoints for read-only replay. Work stays silent.
