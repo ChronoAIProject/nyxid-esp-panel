@@ -1,0 +1,21 @@
+{
+  "scope": "Build candidate complete-source data only from the original training-only inventory; no training or score selection.",
+  "inventory_sha256": "56dba01d2ae8f1d9bc470673012e675b1e3c7079896d491e20afef0d52108014",
+  "frontend_source_sha256": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+  "pymicro_features_version": "2.0.2",
+  "numpy_version": "2.5.4",
+  "scipy_version": "1.17.0",
+  "selection": "All2632 rows whose full original WAV container plus full RIR960 fits all five current150-frame windows. Do not use exact-zero support to recover more rows. Group exact original WAV hashes into2594 canonical sources, assert same engine/label/length, keep every alias metadata row and original label. Canonical is lexicographically first original path; order by canonical path.",
+  "variants": [0, 1, 2],
+  "rendering": "Copy existing GPU prepare_british_features.py three fixed conditions: source float64 PCM16/32768, original speed/container, RMS .08, 32000 leading and16000 trailing samples. Variant0 dry/no noise; variant1 dry/white noise25dB; variant2 full fftconvolve RIR[1@0,.25@160,-.12@480,.06@960],white noise15dB. Per canonical path and variant SHA-prefix64 RNG seed from path+':{variant}:phone-v1'. Final gain limits peak to.95. No waveform crop or phonetic endpoint; retain full convolution length.",
+  "features": "One new MicroFrontend per full rendered stream, exact PCM rounding/clipping once before features(). Keep real frontend history and all raw uint16 arrays. e=ceil((32000+signal_samples)/160)-1. Main is raw[e-150:e], sequence is raw[e-150:e+12]; retain fixed phase and all sample bounds. Output x[N,150,40],sequence_x[N,162,40],y[N]. No artificial feature padding/reset or temporal jitter.",
+  "expected_unique_sources": 2594,
+  "expected_variants": 7782,
+  "limits": [
+    "This is candidate input data, not a training/sampling protocol, a model, a detector result or a replacement for v39.",
+    "Source labels are preserved intended texts; no phonetic truth or pronunciation audit is claimed. Exact alias grouping does not make TTS conditions/blends independent speakers.",
+    "Conservative sample bounds and crop/history validation do not establish model receptive-field, streaming-score or cross-host numerical equivalence.",
+    "Canonical WAVs are reverified at construction; all alias source bytes were verified by the preceding frozen inventory. No claim of opening each alias again.",
+    "No validation/new/final WAVs, detector scoring, training, TTS generation, audio playback/recording, board, firmware, service or production-device operation."
+  ]
+}
