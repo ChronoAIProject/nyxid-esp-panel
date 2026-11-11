@@ -102,3 +102,14 @@ predicted arrays and hashes. The existing GPU report lacks full Linux output
 hashes: matching its summaries alone cannot establish full-array Linux parity.
 Ask GPU to compare actual full hashes independently before making that claim.
 No model or recognition inference is part of this intervention.
+
+The intervention completed and reproduces all published Linux observations for
+all30 inputs:16 unchanged full arrays,14 changed arrays,16 changed elements,
+the same maxima and first differences. The default native control and wheel
+still match all30 originals. [Report and lossless full-output
+deltas](../results/frontend-linux-weight-intervention-v1.json) bind original
+saved arrays and predict every complete Linux array hash; all30 predictions
+were independently reconstructed from the original arrays plus16 explicit
+deltas. This removes the need to download another full-array archive. Complete
+actual Linux hashes still need independent comparison; the original GPU report
+only supplies summaries. Training and device behavior remain untouched.
