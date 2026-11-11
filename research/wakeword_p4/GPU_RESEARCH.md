@@ -3945,3 +3945,17 @@ and export audit copied unchanged. Original postprocessor PID118594/session79006
 verified temporal pack/seed107726/base recipe and started historical regression.
 No new/final data, threshold extension or automatic promotion. Export evidence
 only, not accuracy/FAR/MCU acceptance; retain v30 until full gates pass.
+
+### v38 temporal coverage rejected (2026-11-11)
+
+Original postprocessor session79006 exited0. Original reports copied unchanged.
+Historical INT8 .99609375 nonviable:606/2160proxy positives/macro.367448,
+hard-negative false1.9886%/maxsource2.7083%. Kokoro any11/16,commonfalse4/48;
+VCTK any16/60,commonfalse11/180,cross0. Old Vox87fullstreams/8.173672725694447h
+zero events,upper95.3665099367309777/h. All138points reject/selectednull;maximum
+syntheticmacro.6854167 but minimum15 negative false clips, so no usable threshold.
+All467 saved traces authenticated by calibrator. Probe reset passes,MAE.001607912,
+max.177049,float3/4 vsINT83/4 probe hits; not MCU parity. Expanded temporal coverage
+alone failed confusion gates. No newSLR83/dev2-dev3/finals or promotion. Preserve
+v30. A separately preregistered sequence-loss experiment can now follow actual
+shared-sequence mapping evidence; don't merge it into v38 or relabel failures.
