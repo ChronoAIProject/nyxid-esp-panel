@@ -127,6 +127,46 @@ idf.py -B build-hey-nyx \
   -DNYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION="$WAKE_CALIBRATION" build
 ```
 
+The reviewed GPU `teacher60` path defaults to the original frozen v30 profile.
+For a later frozen candidate, explicitly add
+`-DNYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE="$CANDIDATE_PROFILE"` and
+`-DNYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST="$MODEL_BOUND_SELFTEST"`.
+The profile identifies the exact model bytes, training/calibration report hashes,
+selected checkpoint, source commit and frozen event policy. Its topology,
+context, validation phase and smoothing must match the existing reviewed
+`plans/gpu-v30-runtime-v1.json`, with `accepted: false`. A candidate profile
+requires its model and cannot configure the separate embedding adapter.
+
+Set `calibration_schema: "joint-development-v1"` for a completed 120000-step
+candidate with an externally selected eligible development point; its frozen
+calibration must have `validation_only: true`, `viable_operating_point: true`
+and `final_data_used: false`. The packager binds that selected threshold and
+all report bytes. The existing external calibration tools own the selection
+and gate calculations. A missing/ineligible point or mismatched report/model
+stops packaging. Original v30 uses the unchanged `expanded-english-v1` layout
+by default. Neither profile represents recognition or acoustic acceptance.
+
+The direct packaging equivalent is `prepare_runtime.py --gpu-profile
+"$CANDIDATE_PROFILE"` with its existing model, calibration, output and self-test
+arguments. Full model-specific PCM/INT8 self-testing remains required; metadata
+fixtures used by unit tests are not deployable models. The generated manifest
+records the selected profile SHA. The same original-v30 artifacts packaged by
+the default path and the explicit-profile path produce identical model,
+self-test, configuration and manifest bytes.
+
+The [configuration/build validation](../wakeword_p4/results/runtime-candidate-profile-validation-v1.json)
+retains the 16 focused test results, two CMake rejection boundaries and a
+complete P4 build through the explicit original-v30 profile. All four
+CMake-generated files match direct packaging byte-for-byte. The build retains
+the prior Calculator-only generated-Ninja warning exception and its original
+failure; it is not a clean unmodified build or a new candidate hardware test.
+No image was flashed. Re-run the focused metadata checks with:
+
+```sh
+python3 -m unittest discover -s research/panel_wake_runtime -p test_prepare_runtime.py -v
+python3 -m unittest discover -s research/panel_wake_runtime -p test_audit_runtime_selftest.py -v
+```
+
 For an already provisioned development profile, include the documented
 `NYX_PANEL_NODE_DEV_MODE`, `NYX_PANEL_AGENT_DEV_API_URL` and
 `NYX_PANEL_AGENT_DEV_LOGIN_URL` build options. Keep all registry versions pinned

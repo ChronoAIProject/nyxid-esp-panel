@@ -9,6 +9,9 @@ set(_generated "${CMAKE_CURRENT_BINARY_DIR}/generated")
 file(MAKE_DIRECTORY "${_generated}")
 set(NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE "" CACHE PATH "Private frozen embedding/equal-mean bundle for resource diagnostics")
 if(NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE)
+    if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE)
+        message(FATAL_ERROR "A teacher60 candidate profile cannot configure an embedding bundle")
+    endif()
     option(NYX_PANEL_EXPERIMENTAL_WAKE_IRAM "Measure hot detector code in internal RAM" OFF)
     set(_wake_linker_fragments)
     if(NYX_PANEL_EXPERIMENTAL_WAKE_IRAM)
@@ -84,6 +87,12 @@ idf_component_register(SRCS "panel_wake_runtime.cpp" INCLUDE_DIRS "."
     PRIV_INCLUDE_DIRS "${_generated}"
     REQUIRES esp-sr esp-tflite-micro esp-micro-speech-features esp_timer)
 set(_selftest_args)
+set(_candidate_profile_args)
+if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE)
+    list(APPEND _candidate_profile_args --gpu-profile "${NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE}")
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+        "${NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE}")
+endif()
 if(NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST)
     list(APPEND _selftest_args --selftest "${NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST}")
     target_compile_definitions(${COMPONENT_LIB} PRIVATE PANEL_WAKE_SELFTEST=1)
@@ -94,6 +103,7 @@ execute_process(
         --calibration "${NYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION}"
         --output "${_generated}"
         ${_selftest_args}
+        ${_candidate_profile_args}
     RESULT_VARIABLE _prepare_result
     COMMAND_ERROR_IS_FATAL ANY)
 get_filename_component(_model_directory "${NYX_PANEL_EXPERIMENTAL_WAKE_MODEL}" DIRECTORY)

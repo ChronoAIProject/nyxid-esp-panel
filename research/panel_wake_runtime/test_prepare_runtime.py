@@ -161,7 +161,7 @@ class PrepareRuntime(unittest.TestCase):
                 self.assertFalse(output.exists())
                 fixture_path.write_bytes(fixture)
                 calibration_path.write_text(json.dumps(calibration) + "\n")
-                with self.assertRaisesRegex(ValueError, "original GPU v30"):
+                with self.assertRaisesRegex(ValueError, "exact frozen GPU"):
                     prepare_runtime.main()
                 self.assertFalse(output.exists())
                 calibration_path.write_text(json.dumps(calibration))
@@ -172,6 +172,65 @@ class PrepareRuntime(unittest.TestCase):
         self.assertEqual(manifest["input_frames"], 150)
         self.assertEqual(manifest["gpu_source_commit"], profile["source_commit"])
         self.assertEqual((output / "wake_selftest.bin").read_bytes(), fixture)
+
+    def test_explicit_candidate_authenticates_selected_reports_and_selftest(self):
+        # This is a metadata boundary fixture, never a deployable model/profile.
+        profile = json.loads(prepare_runtime.GPU_PROFILE.read_bytes())
+        profile.update(model_sha256=self.digest, model_bytes=self.model.stat().st_size,
+                       calibration_schema="joint-development-v1", selected_step=45000)
+        fields = ("model_sha256", "model_bytes", "architecture", "architecture_args",
+                  "selected_step", "validation_window_phase")
+        training = {key: profile[key] for key in fields} | {"context_frames": 150, "steps": 120000}
+        calibration = {"model_sha256": self.digest, "threshold": profile['threshold'],
+                       "selected": {"threshold": profile['threshold'], "eligible": True},
+                       "sliding_window": 5, "validation_only": True,
+                       "viable_operating_point": True, "final_data_used": False}
+        training_path = self.root / 'training.json'
+        calibration_path = self.root / 'calibration.json'
+        profile_path = self.root / 'candidate.json'
+        fixture_path = self.root / 'fixture.bin'
+        outputs = 55
+        samples = (outputs+1)*480
+        fixture_path.write_bytes(b'NYXKWS01'+bytes.fromhex(self.digest)
+                                 + struct.pack('<II', samples, outputs)+bytes(samples*2)+bytes(range(outputs)))
+        output = self.root / 'output'
+        argv = ['prepare_runtime.py', '--model', str(self.model), '--calibration', str(calibration_path),
+                '--gpu-profile', str(profile_path), '--selftest', str(fixture_path), '--output', str(output)]
+
+        def write_metadata(candidate, calibrated):
+            training_path.write_text(json.dumps(training))
+            calibration_path.write_text(json.dumps(calibrated))
+            candidate = {**candidate,
+                         'training_report_sha256': hashlib.sha256(training_path.read_bytes()).hexdigest(),
+                         'calibration_sha256': hashlib.sha256(calibration_path.read_bytes()).hexdigest()}
+            profile_path.write_text(json.dumps(candidate))
+
+        for name, candidate, calibrated in [
+                ('rejected calibration', profile, {**calibration, 'viable_operating_point': False}),
+                ('no selected point', profile, {**calibration, 'selected': None}),
+                ('selected threshold differs', profile, {**calibration, 'selected': {'threshold': .5, 'eligible': True}}),
+                ('unreviewed topology', {**profile, 'architecture_args': ['--stride', '2']}, calibration),
+                ('unknown schema', {**profile, 'calibration_schema': 'unknown'}, calibration),
+                ('acceptance claimed', {**profile, 'accepted': True}, calibration)]:
+            with self.subTest(name=name):
+                write_metadata(candidate, calibrated)
+                with patch.object(sys, 'argv', argv), self.assertRaises(ValueError):
+                    prepare_runtime.main()
+                self.assertFalse(output.exists())
+        write_metadata(profile, calibration)
+        selftest_at = argv.index('--selftest')
+        without_selftest = argv[:selftest_at] + argv[selftest_at+2:]
+        with patch.object(sys, 'argv', argv):
+            # An explicit candidate still cannot omit a model-specific self-test.
+            with patch.object(sys, 'argv', without_selftest), self.assertRaises(ValueError):
+                prepare_runtime.main()
+            self.assertFalse(output.exists())
+            prepare_runtime.main()
+        manifest = json.loads((output/'manifest.json').read_bytes())
+        self.assertEqual(manifest['gpu_profile_sha256'], hashlib.sha256(profile_path.read_bytes()).hexdigest())
+        self.assertEqual(manifest['training_report_sha256'], hashlib.sha256(training_path.read_bytes()).hexdigest())
+        self.assertEqual(manifest['threshold'], profile['threshold'])
+        self.assertEqual((output/'wake_selftest.bin').read_bytes(), fixture_path.read_bytes())
 
 
 if __name__ == "__main__":

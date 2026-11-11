@@ -1,0 +1,97 @@
+{
+  "scope": "Explicit frozen teacher60 research-profile packaging and full ESP32-P4 build integration. No model quality or hardware acceptance.",
+  "source_sha256": {
+    "CMakeLists.txt": "d0c4b2c15b5e449b88d74c03fe3b0b8c1f8a126325e67b04b69e843cea85ad43",
+    "research/panel_wake_runtime/CMakeLists.txt": "a59f3ae22705c4250fb63de33fe4d2b84b1a37dbcb576e8962605f21c05d3f9f",
+    "research/panel_wake_runtime/prepare_runtime.py": "5e3fa4de1a17ab372bc808ac072028787b61405b10363d1e2e21b06bcc4030e2",
+    "research/panel_wake_runtime/test_prepare_runtime.py": "bda01b90ab7f8cb38242d1ce5c2e5112edda676ebf2ff20bf712ae32047fdad4"
+  },
+  "profile_sha256": "fdf4911db5063ff0e648ab68cca10d82bab8a362d2a8d42418df9aece4880918",
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "calibration_sha256": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+  "training_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+  "prepare_runtime_test_methods_passed": 13,
+  "selftest_auditor_test_methods_passed": 3,
+  "explicit_profile_rejection_cases": [
+    "ineligible calibration",
+    "no selected point",
+    "selected threshold mismatch",
+    "unreviewed topology",
+    "unknown schema",
+    "acceptance claim",
+    "missing model-specific self-test"
+  ],
+  "cmake_boundary_checks": {
+    "orphan-profile": {
+      "rejected": true,
+      "expected_configuration_error": "A wake calibration requires its model"
+    },
+    "embedding-profile-conflict": {
+      "rejected": true,
+      "expected_configuration_error": "cannot configure an embedding bundle"
+    }
+  },
+  "packaged_products": {
+    "hey_nyx_model.bin": {
+      "bytes": 54440,
+      "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "default_explicit_cmake_identical": true
+    },
+    "wake_selftest.bin": {
+      "bytes": 173027,
+      "sha256": "6285851a48fa14f36dcb237011c9f65c43c11e80d6df478ce98ca379c6e44356",
+      "default_explicit_cmake_identical": true
+    },
+    "wake_config.h": {
+      "bytes": 229,
+      "sha256": "f960fded27b8ab80a53944f145e5658f3f6a19209fcafe34538b31f9c22570ac",
+      "default_explicit_cmake_identical": true
+    },
+    "manifest.json": {
+      "bytes": 1061,
+      "sha256": "6393784468393e399acbe1e907f793c301ade3238cd32a9ec2ce944b65c70af5",
+      "default_explicit_cmake_identical": true
+    }
+  },
+  "initial_build": {
+    "exit_code": 2,
+    "elapsed_seconds": 106.005,
+    "profile": "explicit original v30; no device operation",
+    "build_completed": false
+  },
+  "initial_build_failure": "Pre-existing Calculator format-truncation warning treated as error; same as earlier v30/Hi ESP research builds.",
+  "calculator_only_generated_ninja_exception": {
+    "scope": "Same Calculator-only generated Ninja exception as prior v30/Hi ESP builds; source and detector flags unchanged.",
+    "original_ninja_sha256": "0d2599aa5d846e32d144c8d534618283d287b4f72c792b3844fc9e18765578a5",
+    "patched_ninja_sha256": "1edf56b645e1f078047b3409da1ac039fad6293f65fdee45fbc0725bfe4d8076",
+    "only_object": "esp-idf/brookesia_app_calculator/CMakeFiles/__idf_brookesia_app_calculator.dir/esp_brookesia_app_calculator.cpp.obj",
+    "added_flag": "-Wno-error=format-truncation"
+  },
+  "completed_build": {
+    "exit_code": 0,
+    "elapsed_seconds": 6.919,
+    "build_completed": true,
+    "calculator_only_generated_ninja_exception": true
+  },
+  "firmware_bytes": 6152016,
+  "firmware_sha256": "1e117e021414b96f20ae35a36ac0fb5a2632d6ebd8061fb1b7df71a5cc548936",
+  "elf_sha256": "127fdbf95dd8c56d25a73b8c9a53ee0be5aa6d835dbfdd0e9aa7c906dda45e15",
+  "dependency_binding": {
+    "all_dependency_versions_and_component_hashes_unchanged": true,
+    "dependencies": 68,
+    "original_lock_sha256": "cfcb3e10a756c909dccc57b18f833828724254f282c0745f0cec1cfe541faf4c",
+    "resolved_lock_sha256": "bc35c143e7beb05a6fe690fafb091e863595a35da9704717a6a874a16748af68",
+    "limits": "Resolver metadata adds existing decoder to direct_dependencies, normalizes one registry trailing slash and updates manifest_hash. No dependency version/component hash changed."
+  },
+  "accepted": false,
+  "device_operated": false,
+  "audio_io_performed": false,
+  "limits": [
+    "Actual build uses the original v30 model/calibration through the explicit-profile CMake option. New joint-development report handling is covered by metadata fixtures, not an actual new candidate or P4 run.",
+    "Compiler exception affects only the pre-existing Calculator object in a private generated Ninja file; classifier/audio compiler flags and product source are unchanged.",
+    "Initial compiler failure is retained. A successful build with this exception is not a clean unmodified full-build result.",
+    "Firmware/ELF, SDK configuration, full build logs and resolver snapshots remain private; no firmware was flashed or published.",
+    "No PCM-speed, I2S/AEC/AGC, ordered wake FIFO, inference/event-policy, production board, new-development or final-data change.",
+    "Wake recognition, false wakes, phonetic latency, resources and long-call/reconnect comparison still require actual candidate evidence."
+  ]
+}
