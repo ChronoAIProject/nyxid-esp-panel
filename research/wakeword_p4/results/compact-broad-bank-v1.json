@@ -1,0 +1,41 @@
+{
+  "scope": "Completed uncapped training-only compact bank preparation; no model quality decision.",
+  "plan_sha256": "3762ddd835276a7c6dace43e0a2d077bdb30cd33b0bb39974b52fcb7b8dac193",
+  "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+  "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "coverage": {
+    "pairs": 5060,
+    "rows": 10120,
+    "unique_crops": 3112,
+    "unique_sources": 744,
+    "positive_sources": 404,
+    "negative_sources": 340,
+    "pairs_by_stratum": {
+      "edge-tts:hey mix": 640,
+      "edge-tts:hey next": 640,
+      "edge-tts:hey nick": 640,
+      "kokoro:hey mix": 240,
+      "kokoro:hey next": 240,
+      "kokoro:hey nick": 240,
+      "macos-say:hey mix": 340,
+      "macos-say:hey next": 340,
+      "macos-say:hey nick": 340,
+      "openai-tts:hey mix": 432,
+      "openai-tts:hey next": 432,
+      "openai-tts:hey nick": 432,
+      "piper:hey mix": 28,
+      "piper:hey next": 28,
+      "piper:hey nick": 48
+    },
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "launch_sha256": "5122575a5ecddbf12d9718f1f2aa4fc6f0bb5a43016d4278eeecfa07ca65821e",
+  "limits": "Only existing training features and metadata are read; all nontraining source hashes are excluded. All four cached environment renders and all eligible positive partners are retained, so repeated feature crops are explicit and correlated. Uniform pair sampling changes engine/phrase exposure compared with the prior capped bank; cross-study changes cannot be attributed solely to sample count. Original labels and PCM speed are unchanged. No validation/test scoring, playback, room recording, firmware, board or production device access. A successfully built bank is not wake acceptance."
+}

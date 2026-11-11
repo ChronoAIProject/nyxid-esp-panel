@@ -1974,3 +1974,20 @@ sampling changes engine/phrase exposure from the previous capped bank; a new
 matched binary-only control is required. Cross-study changes cannot isolate
 the effect of sample count. A prepared bank alone is not wake evidence.
 This remains silent research without speaker, microphone or board access.
+
+The [completed bank](../results/compact-broad-bank-v1.json) retains 5,060
+Cartesian pairs / 10,120 rows, with 3,112 distinct crops from 744 source hashes
+(404 positive, 340 negative). Those counts distinguish repeated partners and
+environment renders from independent source speech. Exact expected coverage
+and the entire 2,984,015,040-byte scalar cache SHA256 are verified.
+
+The [new mixed-source study](plans/microwake-compact-broad-ctc-v1.json) freezes
+both fresh binary-only and gain-.1 compact CTC arms before training or scoring.
+The original initializer, 1,000 head warmup / 3,000 joint-update budgets,
+binary/auxiliary losses, scalar export, 21-point grid and advancement gates
+stay fixed. Only the training bank and its resulting pair-exposure schedule
+change; both arms share them exactly. No previous control scores are reused.
+The read-only auditor now takes pair count from the bound bank and verifies
+the full scalar cache when its hash is supplied. Old replay requirements stay
+enforced for plans that request them. No training or validation has launched
+at this commit, and no board operation is part of the experiment.

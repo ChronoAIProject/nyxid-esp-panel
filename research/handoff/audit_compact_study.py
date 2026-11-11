@@ -34,8 +34,16 @@ def audit(args):
     require(sha(args.initial_weights) == plan['init']['sha256'], 'Initializer differs')
     for name, digest in plan['feature_index_sha256'].items():
         require(sha(args.features/name) == digest, 'Feature index differs: '+name)
+    if plan.get('feature_data_sha256'):
+        require(sha(args.features/'features.bin') == plan['feature_data_sha256'],
+                'Full scalar feature cache differs')
     require(sha(args.bank/'bank.json') == plan['phone_bank_sha256'], 'Bank metadata differs')
     require(sha(args.bank/'bank.npz') == plan['phone_bank_data_sha256'], 'Bank array differs')
+    if plan.get('bank_plan_sha256'):
+        bank = json.loads((args.bank/'bank.json').read_bytes())
+        require(bank['plan_sha256'] == plan['bank_plan_sha256']
+                and bank['feature_data_sha256'] == plan['feature_data_sha256']
+                and bank['coverage'] == plan['bank_coverage'], 'Broader bank provenance differs')
     common = plan['common_train_args']
     steps = int(common[common.index('--steps')+1])
     shared, arms = {}, {}
@@ -71,7 +79,8 @@ def audit(args):
         phone = train['phone_distillation']
         require(phone['gain'] == gain and phone['objective'] == 'ctc' and phone['vocabulary'] == 6,
                 'Compact objective differs: '+arm)
-        require(phone['bank_sha256'] == plan['phone_bank_sha256'] and phone['pairs'] == 118
+        require(phone['bank_sha256'] == plan['phone_bank_sha256']
+                and phone['pairs'] == plan['compact_bank']['rows']//2
                 and phone['draws'] == steps*8 and phone['compact_phrase_plan_sha256'] == sha(root/'plan.json'),
                 'Compact input/draw identity differs: '+arm)
         require(phone['sequence']['tokens'] == ['blank', 'hey', 'nyx', 'mix', 'next', 'nick'],
@@ -84,7 +93,7 @@ def audit(args):
             require(warmup[f'binary_{group}_before_sha256'] == warmup[f'binary_{group}_after_sha256'],
                     'Warmup changes binary '+group+': '+arm)
         if arm == 'control':
-            for key, digest in plan['required_control_replay'].items():
+            for key, digest in plan.get('required_control_replay', {}).items():
                 require(train[key] == digest, 'Original binary control replay differs: '+key)
         shared[arm] = {'warmup': warmup, 'prefix': train['training_prefix_sha256'],
             'draw_schedule': phone['schedule_sha256'], 'sequence': phone['sequence'],
@@ -97,8 +106,11 @@ def audit(args):
     return {'source_sha256': sha(Path(__file__)), 'plan_sha256': sha(root/'plan.json'),
         'checkout_revision': revision, 'frozen_source_plan_and_launch_match': True,
         'bank_initializer_and_index_identities_match': True, 'warmup_preserves_binary_state': True,
-        'original_binary_control_replayed': True, 'shared_training_inputs': shared['control'],
-        'arms': arms, 'limits': 'Read-only inputs/replay audit. The feature index does not hash the entire external scalar feature cache; compact sampler checked exact bank crops during training. No wake-quality, pronunciation, P4 resource or call-stability acceptance.'}
+        'original_binary_control_replayed': bool(plan.get('required_control_replay')),
+        'shared_training_inputs': shared['control'],
+        'arms': arms,
+        'full_scalar_feature_cache_hashed': bool(plan.get('feature_data_sha256')),
+        'limits': 'Read-only inputs/replay audit. Full scalar feature bytes are verified only when the plan explicitly supplies feature_data_sha256; compact sampler also checks exact bank crops during training. No wake-quality, pronunciation, P4 resource or call-stability acceptance.'}
 
 
 def main():
