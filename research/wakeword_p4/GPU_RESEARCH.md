@@ -4027,3 +4027,16 @@ and rejection;no newSLR83/newVox/final scored,no promotion,frozenv30 retained.
 Mac is separately building six-engine complete-container training-only candidate
 features under6f2cea3;not imported or mixed into v39. Future intervention needs
 verified data and a separately frozen hypothesis/recipe,not blind weight changes.
+
+### Mac complete-container candidate received (2026-11-11)
+
+Anonymously downloaded975895a archive91611008B SHA
+26d58635fa21c022245a1ccdadee44299ce29a02e815bf1701a4c7ef160cb396.
+All7795 payload size/SHA and safe unique regular paths verified. Independently
+checked7782saved raw arrays,labels,crops and38910overlapping windows/sample bounds.
+2594canonical sources retain2632alias rows. Actual included engines are five:
+Kokoro,macOS,OpenAI,Piper,Qwen; earlier six-engine shorthand was inaccurate for
+this included pack. Original Mac report/audit preserved unchanged.
+Original WAV binding and cross-host30witnesses still pending; no model scoring
+or training/new/final access. This receipt alone does not authorize promotion
+or establish source independence,pronunciation truth or frontend parity.
