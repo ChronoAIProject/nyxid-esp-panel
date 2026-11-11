@@ -3767,3 +3767,10 @@ v37两步4090冒烟完整exit0、26.5秒，全部权重有限、BN不变，流�
 配方核对实际batch128、无phone补充BCE、full_source seed97726、prefix0。
 导出审计4090-v37-smoke-export-audit.json。smoke不是性能结论。
 只有该审计通过后启动正式120k；仍不消费新开发/最终数据，v30保持冻结。
+
+v37正式原训练PID103771/starttime1736905观察至9000/120000步。
+已启动唯一后处理PID104582，绑定该PID/启动时间等待，不启动或重启训练。
+v37_after_training.py校验完整120k、batch128、full_source seed97726/固定pack、
+phone补充为空、prefix0、BN不变及model SHA后才执行导出审计和同旧开发回归。
+继承原Kokoro/VCTK官方同PCM缓存及Vox完整流；固定网格，不自动使用新开发/最终数据。
+脚本语法检查通过。低训练loss不是性能或泛化证据，正式结果仍需完整回归。
