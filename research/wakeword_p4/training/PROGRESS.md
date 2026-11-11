@@ -2804,3 +2804,63 @@ This is closed-set training research, not ordinary-speech false-wake or
 independent pronunciation evidence. Source/plan/runtime/launches, both final
 checkpoints/logits and read-only reconstruction will be retained. All work is
 silent and excludes audio devices, production hardware and the capture path.
+
+## Conditional discrimination completed: improvement, unchanged fit gate fails
+
+The [completed conditional result](../results/intent-phone-conditional-discrimination-v1.json)
+retains both 1,000-step runs. Gain-zero control exactly replays the preceding
+neutral encoder/head tensors, draw schedule and every summary metric, including
+all four recorded loss/norm history points. Both arms have identical initial
+zero heads and binary/encoder tensors, 22,420 parameters and 32,000 row draws.
+The only planned recipe change is the conditional objective gain.
+
+| Fitted-bank metric | Generative only | Plus conditional intent loss |
+| --- | ---: | ---: |
+| Mean four-intent accuracy | 69.0050% | 92.9754% |
+| Nyx recall | 98.9726% | 98.6872% |
+| Mix recall | 28/448 | 337/448 |
+| Confusers assigned Nyx | 542/1,360 | 114/1,360 |
+| Complete greedy phone targets | 2,107/3,112 | 2,332/3,112 |
+| CTC NLL per token | .205870 | .200785 |
+| Conditional intent NLL | .491087 | .123601 |
+
+The new objective changes the fitted discrimination substantially, but still
+fails macro accuracy >=95%, confuser fraction <=1% (actual 8.38235%), and
+greedy exact >=90% (actual 74.9357%). No held-engine inference, step/gain
+extension, open-set wake evaluation or firmware follows this failed gate.
+Dictionary intent uncertainty and corpus/initializer exposure still apply.
+
+All training and read-only audit processes exit zero. Both full 3,112x67x10
+checkpoint logit arrays, every four-class likelihood and initial diagnostics
+replay bitwise; crops, schedules, counts, conditional NLL and gates reconstruct.
+Independent NumPy float64 CTC maximum loss delta is 8.08986e-6 control and
+2.17421e-5 treatment, within the unchanged 2e-4 numerical allowance. The only
+float reduction discrepancy is 5.55e-17 in treatment mean token loss, within
+the predeclared 1e-12 roundoff allowance. All raw software test failures/fixes,
+passing outputs, launches/runtime/source/plans and checkpoints are retained.
+
+This yields a training-objective insight, not a new qualified wake detector.
+A useful next direction is to test conditional discrimination with the already
+better-fitted two-word auxiliary targets before another complete mixed-source
+wake study; that needs its own plan and exact control, and has not launched.
+Continue preserving all original acceptance requirements, untouched quality
+sets, original PCM speed and single I2S/AEC/AGC/FIFO. No board or audio device
+was accessed. The latest GPU branch remains c8dcd2c; the full goal is active.
+
+The [complete combined evidence](../../handoff/assets-intent-phone-neutral-and-conditional-v1.json)
+is public: 29,395,877 bytes, SHA256
+`ea2f9561857f9a73115093f5b51d4e36d2c049925c8212f5560d364d8d01aa40`.
+A fresh unauthenticated download verifies all 263 members and 262 listed
+hashes/lengths, including all four checkpoints, complete initial/final logits,
+raw failed/passing software logs, source/launch/runtime and both actual audits.
+No source audio, full scalar feature cache, credentials, board state or firmware
+is included. Parent data/checkpoint archive dependencies are explicit.
+
+For the next word-objective comparison, the retained original full-fit word
+control is confirmed at 98.1176% macro, 99.8288% Nyx recall, 9/1,360
+confuser-to-Nyx, 2,983/3,112 exact strings and .0740042 CTC NLL/token. It
+passes the existing fitted-bank gate; its previously observed held-engine
+macro remains only 81.1866%, so fitted performance is not independent
+recognition. Do not repeat rejected phone recipes as a substitute for an
+actual mixed-source wake/generalization comparison. All jobs in this cycle
+are terminal and published. Original full Hi ESP parity remains unachieved.

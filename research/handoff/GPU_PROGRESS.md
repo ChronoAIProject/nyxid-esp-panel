@@ -1,6 +1,7 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `3b52402`; see the dated snapshots below.
+Latest observed GPU commit: `c8dcd2c` (fetched again 2026-11-12); see the
+dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 
 Observed 2026-11-11 at GPU branch commit

@@ -1,0 +1,176 @@
+{
+  "plan_sha256": "6436146dfe62ed980e84387ef83869ef598ffadf396500337819b10fec674797",
+  "rows_sha256": "1d0f9ee4955bdc2f70d2b7e3d6215da3f294cd0cab45eed70402b2efa0f9bfba",
+  "parent_deep_control_replayed": true,
+  "arms": {
+    "generative": {
+      "result": "generative.json",
+      "result_sha256": "18b19d7d9f9063611fa0f559615b280db3f4a96e2c08fbb452d87d583c03ffe7",
+      "summary": {
+        "confusion": [
+          [
+            1734,
+            7,
+            0,
+            11
+          ],
+          [
+            415,
+            28,
+            0,
+            5
+          ],
+          [
+            122,
+            1,
+            322,
+            3
+          ],
+          [
+            5,
+            0,
+            0,
+            459
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.6900500413320736,
+        "recall_by_phrase": {
+          "nyx": 0.9897260273972602,
+          "mix": 0.0625,
+          "next": 0.71875,
+          "nick": 0.9892241379310345
+        },
+        "nyx_recall": 0.9897260273972602,
+        "confuser_false_nyx": 542,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.3985294117647059,
+        "mean_ctc_nll_per_token": 0.20586972242570784,
+        "greedy_exact_sequences": 2107,
+        "target_tokens": 18656,
+        "greedy_edits": 1225,
+        "greedy_token_error_rate": 0.06566252144082332
+      },
+      "fit_gate_passed": false,
+      "parameters": 22420,
+      "initial_diagnostic": {
+        "array": "generative-initial.npz",
+        "array_sha256": "5ab70ec5c45399200e810db720da0a954d9ec270bc8c3f694733dbd557823f33",
+        "minimum_logit": 0.0,
+        "maximum_logit": 0.0,
+        "mean_entropy": 2.3025853633880615,
+        "mean_maximum_probability": 0.10000002384185791,
+        "argmax_counts": [
+          1340,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "conditional_objective": {
+        "gain": 0,
+        "mean_intent_nll": 0.49108659104027835
+      }
+    },
+    "conditional": {
+      "result": "conditional.json",
+      "result_sha256": "ed5324d70daf3ddf7f04d2bc375c4a4c027efb2d84e7b9a120764f2cf7dfbaf3",
+      "summary": {
+        "confusion": [
+          [
+            1729,
+            22,
+            0,
+            1
+          ],
+          [
+            108,
+            337,
+            1,
+            2
+          ],
+          [
+            6,
+            2,
+            439,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            464
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.9297537508153947,
+        "recall_by_phrase": {
+          "nyx": 0.9868721461187214,
+          "mix": 0.7522321428571429,
+          "next": 0.9799107142857143,
+          "nick": 1.0
+        },
+        "nyx_recall": 0.9868721461187214,
+        "confuser_false_nyx": 114,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.0838235294117647,
+        "mean_ctc_nll_per_token": 0.200784581568658,
+        "greedy_exact_sequences": 2332,
+        "target_tokens": 18656,
+        "greedy_edits": 1001,
+        "greedy_token_error_rate": 0.05365566037735849
+      },
+      "fit_gate_passed": false,
+      "parameters": 22420,
+      "initial_diagnostic": {
+        "array": "conditional-initial.npz",
+        "array_sha256": "5ab70ec5c45399200e810db720da0a954d9ec270bc8c3f694733dbd557823f33",
+        "minimum_logit": 0.0,
+        "maximum_logit": 0.0,
+        "mean_entropy": 2.3025853633880615,
+        "mean_maximum_probability": 0.10000002384185791,
+        "argmax_counts": [
+          1340,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "conditional_objective": {
+        "gain": 1,
+        "mean_intent_nll": 0.12360076780739288
+      }
+    }
+  },
+  "advance": false,
+  "accepted": false,
+  "limits": "Fixed dictionary-like synthesis-intent phones are not verified pronunciations. Training corpus and initializer already exposed;full-bank fit cannot establish unseen-speaker/engine generalization,open-set wake FAR,latency,P4 resources or long call stability. Initialization comparison is on one fixed corpus,encoder,optimizer and budget;it cannot establish a general initialization rule or the unique cause of all prior wake failures. No reserved quality data,audio device,board,firmware,PCM speed or capture/AEC/FIFO change. Conditional forced-choice intent likelihood is closed-set and cannot establish silence/ordinary-speech rejection. Full fitted-bank success alone cannot justify MCU deployment.",
+  "scope": "Completed paired generative versus combined conditional phone CTC discrimination on fitted training crops; gate fails.",
+  "training_source_commit": "b29b76be88c25e44a5eb0c1ffd90d99ddd1804dd",
+  "raw_result_sha256": "452e4698e9453fab3b1dd90197f4c6283103777d011ad1fe4ed16e108ca43a92",
+  "input_result_audit_sha256": "62d4a9e2bc429cbc9a52e1f6a05372ebdfa32a4b49e43991ed67a27f25859d58",
+  "all_initial_and_final_checkpoint_logits_and_likelihoods_replayed": true,
+  "independent_reference_loss_deltas": {
+    "generative": 8.08986474254425e-06,
+    "conditional": 2.1742146600445267e-05
+  },
+  "software_checks": {
+    "conditional_likelihood_gradient_and_combined_update_tests": 2,
+    "existing_intent_initialization_tap_tests": 9,
+    "result": "passed",
+    "failed_and_successful_raw_logs_retained": true
+  },
+  "interpretation": "On this fixed fitted bank,adding conditional four-intent CTC loss improves macro classification69.0050%->92.9754%,confuser-to-Nyx542->114/1360,Mix recall28->337/448,and greedy exact2107->2332/3112. It fails the unchanged fit gate and supplies no independent wake-recognition or false-wake evidence. Do not extend this budget,gain-sweep,run held-engine folds or promote firmware. This is an objective effect on one fixed recipe,not a unique explanation of all prior failures."
+}

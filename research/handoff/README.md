@@ -1546,3 +1546,46 @@ Retain original absolute launch paths as provenance; relocated runs need new
 launch records. No audio, device credentials, firmware or full scalar feature
 cache is included; the prior phone study, broad bank and broad-study initializer
 archives are dependencies.
+
+### Neutral initialization and conditional intent discrimination
+
+Two separate completed fitted-bank experiments share a
+[complete evidence archive](assets-intent-phone-neutral-and-conditional-v1.json).
+The [neutral initialization plan](../wakeword_p4/training/plans/intent-phone-neutral-initialization-v1.json)
+and [result](../wakeword_p4/results/intent-phone-neutral-initialization-v1.json)
+replace only the random phone-head kernel with zero initialization. Complete
+greedy targets increase from 0 to 2,107/3,112 and mean CTC NLL/token falls
+3.18186 -> .205870, but near-word discrimination remains poor.
+
+The [separate conditional plan](../wakeword_p4/training/plans/intent-phone-conditional-discrimination-v1.json)
+and [result](../wakeword_p4/results/intent-phone-conditional-discrimination-v1.json)
+keep that neutral initialization and add gain-one cross-entropy over the four
+raw phone-string CTC likelihoods. On these same fitted training crops, mean
+intent accuracy improves 69.0050% -> 92.9754%, Mix recall 28/448 -> 337/448,
+and confusers assigned Nyx 542/1,360 -> 114/1,360. Complete greedy targets
+reach 2,332/3,112. This still fails the unchanged fit gate; neither recipe
+proceeds to held-engine scoring, wake export or hardware. These are training
+fit results, without independent speaker or open-set false-wake acceptance.
+
+Both controls replay their respective actual parent tensor hashes and metrics
+exactly. The read-only audits reload all four final checkpoints and replay
+every original logit/four-class likelihood bitwise, reconstruct initial states
+and statistics, exact crops/draws/metrics/gates, and check frozen likelihood
+samples against independent float64 CTC. Source snapshots, plans, runtime,
+launches, failed/passing test logs and final arrays are retained. The invalid
+first-call traced-Adam validation bug found by a software test was corrected
+before fitting; its raw failure remains. TF2.21's nonfatal MLIR optimizer
+messages are also visible in raw logs; numerical and update tests pass.
+
+Use `launch_intent_phone_taps.py --plan <repository-plan-path>` from each
+recorded training commit for a fresh fit with the same input options as above.
+Initialization source commit is `eabd4ff`; its parent is the original shared
+phone study. Conditional source commit is `b29b76b`; its parent is the neutral
+initialization root. Historical plans require their recorded source versions.
+For retained studies, use each executed `auditing/audit_intent_phone_taps.py`
+snapshot without an audit-correction option; it resolves the study's committed
+repository-plan path and verifies its own frozen source bytes. Original
+absolute launch paths remain provenance; relocated runs need fresh launch
+records. The original phone/broad-bank/broad-study initializer archives are
+dependencies. No source audio, credentials, device state, firmware or full
+scalar feature cache is included.
