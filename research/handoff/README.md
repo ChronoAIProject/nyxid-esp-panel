@@ -977,3 +977,21 @@ the manifest archive hash and `CONTENTS-microwake-phone-sequence-bank-v1.json`
 member identities before extraction into fresh staging. The actual public
 download and all listed hashes are verified. No waveforms, microphone audio,
 device state, credentials or firmware are included.
+
+The [CTC readout fit supplement](assets-phone-ctc-fit-v1.json) contains the
+1,000-step and 5,000-step frozen-head checkpoints, raw metadata, launched
+sources, plans, fit reports and full greedy/beam readout audit. Both runs
+fail the fixed prescreen; no joint model, wake validation or firmware
+candidate was produced. The longer run reproduces the original head weights,
+draw digest and fit at step 1,000. Binary weights and optimizer are unchanged.
+Its nine core tests and separate exhaustive beam-remapping test pass.
+
+The auxiliary H5 files contain weights, not warmup Adam slots. Reproduce the
+exact optimization from the original plan/seed rather than claiming an
+optimizer resume from H5. Use the full-resolution bank dependency above,
+and verify the archive hash and `CONTENTS-microwake-phone-ctc-fit-v1.json`
+member identities before extracting into fresh staging. Both study roots
+and the supporting `phone-ctc-fit-handoff` directory are under
+`workspace/home-wake-research-20261110`. The public download and all listed
+member hashes are verified. This remains unaccepted research with no source
+audio, device state, credentials or firmware.

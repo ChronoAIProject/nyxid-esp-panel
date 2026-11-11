@@ -1423,6 +1423,14 @@ to the P4. End-to-end encoder learning is a different, still untested
 hypothesis; its eventual decision must use wake quality rather than treating
 auxiliary transcription as the requested end state.
 
+The [CTC fit handoff](../../handoff/assets-phone-ctc-fit-v1.json) retains both
+failed prescreens' raw metadata, auxiliary checkpoints, launched sources,
+plans and the complete readout audit. Its public download and all listed
+member hashes are verified. The H5 files preserve weights, not head-warmup
+Adam slots; the exact longer replay starts from the original seed/bank.
+The full-resolution bank is a separate dependency. No source audio, board
+configuration, firmware or credentials are included.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
