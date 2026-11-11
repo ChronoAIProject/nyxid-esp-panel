@@ -4214,3 +4214,13 @@ sources. None of40earlier failures matches local GPU generation manifest hashes.
 Native float/provenance still missing for this claim; failed endpoint gate retained,
 no retrospective relaxation or data changes. Do not call40files proven clipped
 or the other2554proven distortion-free. Issue13 coordination continues.
+
+### v41 training completed and authenticated (2026-11-11)
+
+Original session58922 exit0,120000steps,2204.7s,selected25000 by unchanged
+historical selection. Model54440B SHA
+c53d37787a202da6de33c5452e4c53060864b9313ac30adcc5e0d602f95529bd.
+Original training.json/export audit retained unchanged. Finite weights,frozenBN
+exact,original int8[1,3,40] to uint8[1,1]. Original waiter session42935 authenticated
+recipe/model and started historical regression. No accuracy/FAR/promotion claim.
+Old-source PCM quality limitations remain; no unseen/final scored,freezev30.
