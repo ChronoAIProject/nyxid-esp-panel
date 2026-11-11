@@ -4072,3 +4072,9 @@ Original128BCE/representative export now uses preregistered half-slot replacemen
 Two-step4090smoke session88884 exited0;export audit confirms finite weights,
 frozenBN unchanged,int8[1,3,40] to uint8[1,1]. No recognition/FAR claim.
 Formal120k runner ready after these checks;new/final untouched.
+
+Formalv40 started once after911937b:session44285/PID147224,starttime2531106.
+Unique postprocessor session66707 authenticates exact training identity,120k,
+coverage pack/seed127726,original base seed97726,no sequence/jitter,frozenBN
+and modelSHA before unchanged historical/synthetic/oldVox138point evaluation.
+No automatic promotion/publication or new/final data access.
