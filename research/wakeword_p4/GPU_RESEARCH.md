@@ -3009,3 +3009,9 @@ inputs SHA52a484b1d6d3ee0375cd2b29bef144ab92ddfe0984fb97861d96e3457c4ff9ca。
 补充校准不含独立ambient行，不声称其为最优校准或MCU等价；
 分别按原开发门槛评估，不根据结果修改代表输入，不取代原预注册结果。
 预注册results/4090-v30-v32-common-calibration-preregistration-v1.json。
+
+共享代表输入补充导出v30完成，TF2.21 CPU转换退出0；
+模型54440B，SHA b744c466e6bde704eeb1e5cffe232a13505400f8c3f52953a9563b31dea90d85。
+原v30模型未覆盖，完整SavedModel文件哈希/训练报告/输入哈希保存在
+results/4090-v30-common-calibration-export-v1.json。
+补充开发评估session2842已启动，v32原训练session80679继续运行。
