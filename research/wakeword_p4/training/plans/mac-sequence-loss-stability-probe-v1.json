@@ -1,0 +1,208 @@
+{
+  "scope": "Numerical training-loss diagnosis on artificial logits and first50 saved training batches of the completed old Mac screen. No training or recognition acceptance.",
+  "source_screen_commit": "2aad2df",
+  "source_result_sha256": "f3a323dbbc9b8db9435480ee1d689c48c63dbed2f6dbd218cd6fd44cd110c3f9",
+  "source_draws_sha256": "de5c5a26185396feb7dca0a7c20f9bc8c7395006576bec839af3136b7afe93a2",
+  "initial_weights_sha256": "33dfba087b935192331bb0993d2ad2e858e3bad65e2c31f875a605bcfd1a9bf4",
+  "feature_metadata_sha256": {
+    "features.json": "7b64926572e988a2792980d34f122cabe03f4fe9fc5ccf3108993da6ef3dfb58",
+    "human.json": "8038ca081d037c68d744517c2c95fc4319da44eef611586930483afb6ed0c142",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "steps_selected": 50,
+  "selection": "First50 records, all16 examples per record, same order. No score-based selection. Initial and both fixed step500 checkpoints; no updates.",
+  "models": {
+    "initial": "33dfba087b935192331bb0993d2ad2e858e3bad65e2c31f875a605bcfd1a9bf4",
+    "terminal": "0901a78c6368c2182056f4938d99e3cecf61bd7fc07ecc52080e9d0ed2ba4573",
+    "five_mean": "bd56d32c8a11c90ba7ca0b91f0f64a707356d95b4b4eb4c7482dd726d2362cd2"
+  },
+  "scalar_cases": [
+    {
+      "logits": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        5.0,
+        5.0,
+        5.0,
+        5.0,
+        5.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        5.0,
+        5.0,
+        5.0,
+        5.0,
+        5.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        -20.0,
+        -20.0,
+        -20.0,
+        -20.0,
+        -20.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        -20.0,
+        -20.0,
+        -20.0,
+        -20.0,
+        -20.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        80.0,
+        80.0,
+        80.0,
+        80.0,
+        80.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        80.0,
+        80.0,
+        80.0,
+        80.0,
+        80.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1000.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1000.0
+      ],
+      "label": 1.0
+    },
+    {
+      "logits": [
+        80.0,
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0
+      ],
+      "label": 0.0
+    },
+    {
+      "logits": [
+        80.0,
+        -80.0,
+        -80.0,
+        -80.0,
+        -80.0
+      ],
+      "label": 1.0
+    }
+  ],
+  "comparison": "Existing probability BCE after final-score/mean-five reduction versus the same mathematical BCE computed from shared logits with logsumexp(logsigmoid). Record all logits/losses/dLdz and source/array/weight hashes.",
+  "signal_rule": "Count a row only if all existing dL/dz are exactly0 and stable max_abs(dL/dz)>1e-8. Also report all max/mean loss and gradient discrepancies by model/aggregation/engine/label.",
+  "limits": [
+    "A numerical defect is not evidence of a recognition fix or the sole cause of any GPU or Mac model failure.",
+    "Old synthetic training draws are correlated; this is not held-out validation, FAR, acoustic or P4 acceptance.",
+    "No optimizer, checkpoint/threshold tuning, new/final data, audio device or board access."
+  ]
+}
