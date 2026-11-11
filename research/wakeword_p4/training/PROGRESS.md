@@ -1612,3 +1612,35 @@ changed plan before scoring. Its report explicitly does not claim to hash
 the entire external scalar feature cache. Use its `--help` for the explicit
 input paths; it accesses no audio device or firmware. Final balanced-study
 training and wake validation are still pending at this snapshot.
+
+The [completed balanced comparison](../results/microwake-phone-ctc-balanced-v1.json)
+rejects this fixed recipe. At .97, macro proxy recall changes from 81.8621%
+to 83.2312% (+1.369 points), while false negative views rise from 74 to 83
+of 3,744 and the worst engine/corpus fraction rises from 6.25% to 7.29%.
+Both arms have one continuous event in 7.323822 hours and no zero-event point
+in the original 21-point grid. Minimum worst-group fractions anywhere in
+that grid remain 4.17% and 3.125%, respectively, above the fixed 1% gate.
+No cap sweep, reserved scoring, model promotion or board change follows.
+
+The bound was exercised: 2,343/3,000 joint steps downscale the auxiliary
+encoder gradient, with mean scale .4888, minimum .002002 and maximum resulting
+auxiliary/binary encoder ratio .25000003 (within float tolerance). Control
+balancing is disabled. The original control INT8 export, calibration JSON
+and complete validation-details JSON reproduce byte-exactly. Both new arms
+reproduce the old warmup H5, head/history/draw/cache identities and share
+the first 16 batches, all 24,000 pair draws and PTQ inputs. Both validations
+exit zero. The scalar export interface/operators, 25,831 inference parameters
+and 61,712 model bytes are unchanged; these are not new P4 resource timings.
+
+Auxiliary weak-phone error reaches 44.06%, between binary control's 61.29%
+and the previous uncapped treatment's 38.64%. The [cached change audit](../results/microwake-phone-ctc-balanced-wake-changes-v1.json)
+reproduces every clip maximum/timebase and all 35 continuous sources. It
+finds 62 gained positive views and 29 lost, plus 14 added false views and
+five corrected. Added false views are Piper eight, Edge five and OpenAI one.
+False source identities increase from 38 to 41 (five added, two removed).
+The continuous event again occurs at cached step 17,473, 524.36 seconds into
+the public LibriSpeech stream, within `1183-133256-0018` at 1.94 seconds.
+This is cached event time, not a phonetic endpoint or a fresh causal test.
+The validation utterance is not added to training. Limiting auxiliary pressure
+alone has not resolved wake discrimination; training-bank phone fit is not
+the acceptance target. All processing remained silent and used no device.

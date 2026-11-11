@@ -1,0 +1,2664 @@
+{
+  "scope": "Describe matched fixed-reference changes in already-scored development data.\n\nCorrelated render views are counted separately from source identities. This\ndoes not change labels, tune a threshold, run inference or qualify a model.\n",
+  "source_sha256": "281429c8f8d8a41cd7b18357cd1473bfaeae5ae46d4c97737c70687b876c6368",
+  "comparison_sha256": "160990dae77aad31e0b8f4b8689ee5894c40a3498d1749d23bdfa65ca7496695",
+  "result_sha256": "9e5b379167fe27228d8c8089bfab568c6796f0e477e57bf1cbe75a62f9be3a35",
+  "plan_sha256": "8d07d935e0baa7e05a5bc88fb1151a3fe4279133ac177b9a558908c23fdab7b1",
+  "threshold": 0.97,
+  "totals": {
+    "positive_views": 2392,
+    "positive_both": 2012,
+    "positive_neither": 289,
+    "positive_lost": 29,
+    "negative_views": 3744,
+    "negative_neither": 3656,
+    "positive_gained": 62,
+    "negative_gained": 14,
+    "negative_both": 69,
+    "negative_lost": 5
+  },
+  "negative_source_counts": {
+    "control": 38,
+    "phonetic": 41,
+    "sources_with_gained_false_views": 14,
+    "sources_with_lost_false_views": 4,
+    "added_false_source_identities": 5,
+    "removed_false_source_identities": 2
+  },
+  "negative_groups": {
+    "engine:edge-tts": {
+      "views": 896,
+      "control": 20,
+      "phonetic": 24,
+      "new": 5,
+      "corrected": 1
+    },
+    "engine:kokoro": {
+      "views": 512,
+      "control": 6,
+      "phonetic": 6,
+      "new": 0,
+      "corrected": 0
+    },
+    "engine:macos-say": {
+      "views": 320,
+      "control": 2,
+      "phonetic": 2,
+      "new": 0,
+      "corrected": 0
+    },
+    "engine:openai-tts": {
+      "views": 96,
+      "control": 6,
+      "phonetic": 7,
+      "new": 1,
+      "corrected": 0
+    },
+    "engine:piper": {
+      "views": 1920,
+      "control": 40,
+      "phonetic": 44,
+      "new": 8,
+      "corrected": 4
+    },
+    "phrase:ask nicks about it": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hello, can you hear me": {
+      "views": 196,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey": {
+      "views": 88,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey alex": {
+      "views": 156,
+      "control": 1,
+      "phonetic": 2,
+      "new": 1,
+      "corrected": 0
+    },
+    "phrase:hey max": {
+      "views": 168,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey mix": {
+      "views": 136,
+      "control": 31,
+      "phonetic": 35,
+      "new": 6,
+      "corrected": 2
+    },
+    "phrase:hey next": {
+      "views": 160,
+      "control": 20,
+      "phonetic": 20,
+      "new": 1,
+      "corrected": 1
+    },
+    "phrase:hey next, what time is it": {
+      "views": 176,
+      "control": 9,
+      "phonetic": 10,
+      "new": 2,
+      "corrected": 1
+    },
+    "phrase:hey nexus": {
+      "views": 176,
+      "control": 4,
+      "phonetic": 3,
+      "new": 0,
+      "corrected": 1
+    },
+    "phrase:hey nice": {
+      "views": 140,
+      "control": 1,
+      "phonetic": 1,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey nick": {
+      "views": 172,
+      "control": 2,
+      "phonetic": 2,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey nick, turn on the light": {
+      "views": 144,
+      "control": 4,
+      "phonetic": 5,
+      "new": 1,
+      "corrected": 0
+    },
+    "phrase:hey siri": {
+      "views": 180,
+      "control": 0,
+      "phonetic": 1,
+      "new": 1,
+      "corrected": 0
+    },
+    "phrase:hey six": {
+      "views": 188,
+      "control": 1,
+      "phonetic": 2,
+      "new": 1,
+      "corrected": 0
+    },
+    "phrase:hey there": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hey, what time is it": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:hi esp": {
+      "views": 168,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:how can i help you": {
+      "views": 184,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:i heard nick speaking": {
+      "views": 140,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:i mixed the ingredients": {
+      "views": 120,
+      "control": 0,
+      "phonetic": 1,
+      "new": 1,
+      "corrected": 0
+    },
+    "phrase:nicks": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:nicks is ready": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:nicks, turn on the light": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:nix": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:nix the plan": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:nyx": {
+      "views": 44,
+      "control": 1,
+      "phonetic": 1,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:please check the volume": {
+      "views": 144,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:take the next exit": {
+      "views": 168,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:thanks, that is all": {
+      "views": 164,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:the next thing is ready": {
+      "views": 136,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "phrase:the nicks on the surface": {
+      "views": 44,
+      "control": 0,
+      "phonetic": 0,
+      "new": 0,
+      "corrected": 0
+    },
+    "variant:0": {
+      "views": 936,
+      "control": 20,
+      "phonetic": 19,
+      "new": 2,
+      "corrected": 3
+    },
+    "variant:1": {
+      "views": 936,
+      "control": 18,
+      "phonetic": 21,
+      "new": 4,
+      "corrected": 1
+    },
+    "variant:2": {
+      "views": 936,
+      "control": 15,
+      "phonetic": 17,
+      "new": 2,
+      "corrected": 0
+    },
+    "variant:3": {
+      "views": 936,
+      "control": 21,
+      "phonetic": 26,
+      "new": 6,
+      "corrected": 1
+    }
+  },
+  "changed_views": [
+    {
+      "path": "synthetic/validation/1/00132.wav",
+      "sha256": "34ca202f9950bc7a140ad93e9a607e784a4649e4a6b761909b6e1c27aba3f692",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        8,
+        844
+      ],
+      "transition": "lost",
+      "control_maximum": 0.98359375,
+      "phonetic_maximum": 0.9578125
+    },
+    {
+      "path": "synthetic/validation/1/00132.wav",
+      "sha256": "34ca202f9950bc7a140ad93e9a607e784a4649e4a6b761909b6e1c27aba3f692",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        8,
+        844
+      ],
+      "transition": "lost",
+      "control_maximum": 0.978125,
+      "phonetic_maximum": 0.96953125
+    },
+    {
+      "path": "synthetic/validation/1/00023.wav",
+      "sha256": "9c85afbe50492fcf42972afcf6d14910dea98ae56011d9c39a883586de20e09a",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        801,
+        801
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9812500000000001,
+      "phonetic_maximum": 0.95546875
+    },
+    {
+      "path": "synthetic/validation/1/00305.wav",
+      "sha256": "4a7f152eaac754ffceeff8d5f9bd7da0c4456914fc9022777bb98d5fcdc82cad",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        821,
+        34
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9140625000000001,
+      "phonetic_maximum": 0.9828125000000001
+    },
+    {
+      "path": "synthetic/validation/1/00468.wav",
+      "sha256": "3b951a6b56e1643b682417aa0556e7716996927787070662061ab70d83cdcabd",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        484,
+        484
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95390625,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00347.wav",
+      "sha256": "0629f7f6e3b893632f123a300b702ea0e5b9763781ef6deef149eaf2c9b064d0",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        855,
+        897
+      ],
+      "transition": "gained",
+      "control_maximum": 0.8179687500000001,
+      "phonetic_maximum": 0.97890625
+    },
+    {
+      "path": "synthetic/validation/1/00019.wav",
+      "sha256": "36a5b6ac278385478a12f093b0c048f73a6dd02ff652378a558e603c3051c962",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        90,
+        90
+      ],
+      "transition": "gained",
+      "control_maximum": 0.953125,
+      "phonetic_maximum": 0.9710937500000001
+    },
+    {
+      "path": "synthetic/validation/1/00089.wav",
+      "sha256": "3da03c33a44c878682094a85685d64bebb8cbb01338ce212d160aa8f9819c78f",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        642,
+        23
+      ],
+      "transition": "lost",
+      "control_maximum": 0.984375,
+      "phonetic_maximum": 0.96640625
+    },
+    {
+      "path": "synthetic/validation/0/00218.wav",
+      "sha256": "db854492247b7b17df4e6c7a2b62feb5d56f5a3ab029f458c4462c4934d1a804",
+      "engine": "piper",
+      "variant": 1,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        167,
+        582
+      ],
+      "transition": "gained",
+      "control_maximum": 0.8132812500000001,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00418.wav",
+      "sha256": "2c08641be3711e64dbf67c7cea789e642ddcc4b43e2ca68076cdb95b57e4bb5e",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        154,
+        752
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9664062499999999,
+      "phonetic_maximum": 0.971875
+    },
+    {
+      "path": "synthetic/validation/1/00418.wav",
+      "sha256": "2c08641be3711e64dbf67c7cea789e642ddcc4b43e2ca68076cdb95b57e4bb5e",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        154,
+        752
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9382812500000001,
+      "phonetic_maximum": 0.9773437500000001
+    },
+    {
+      "path": "synthetic/validation/1/00282.wav",
+      "sha256": "209d7cbee36f7f8ea610f9fcb93288f8a9efa1cc88f74bd9b9426879e38119c6",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        552,
+        654
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9640624999999999,
+      "phonetic_maximum": 0.97578125
+    },
+    {
+      "path": "synthetic/validation/1/00337.wav",
+      "sha256": "fe03d3851941d3ce598effd7b5410b4475d54bb8273851ff45eea504e4438908",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        568,
+        382
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9671875,
+      "phonetic_maximum": 0.9953125
+    },
+    {
+      "path": "synthetic/validation/0/00417.wav",
+      "sha256": "e9c17ad494ec76afc3d54f03b5b75afcb580c8f3b98bdabd9e64f9ae32af2f5c",
+      "engine": "piper",
+      "variant": 2,
+      "label": 0,
+      "text": "Hey Next, what time is it?",
+      "speakers": [
+        457,
+        149
+      ],
+      "transition": "gained",
+      "control_maximum": 0.928125,
+      "phonetic_maximum": 0.9750000000000001
+    },
+    {
+      "path": "synthetic/validation/1/00421.wav",
+      "sha256": "2bff9c5217d9628d73e2816bc9ea131b3853f6c9a9e9c0849a764ddc87848b97",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        666,
+        666
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9703125,
+      "phonetic_maximum": 0.9414062499999999
+    },
+    {
+      "path": "synthetic/validation/1/00421.wav",
+      "sha256": "2bff9c5217d9628d73e2816bc9ea131b3853f6c9a9e9c0849a764ddc87848b97",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        666,
+        666
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9734375,
+      "phonetic_maximum": 0.90078125
+    },
+    {
+      "path": "synthetic/validation/0/00040.wav",
+      "sha256": "6cd78c5e514798a88b10f37b3b55f15dd92ba6903a7bfcdbcc8d5d6fd40a1171",
+      "engine": "piper",
+      "variant": 0,
+      "label": 0,
+      "text": "Hey Nick, turn on the light.",
+      "speakers": [
+        844,
+        882
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9656250000000001,
+      "phonetic_maximum": 0.99609375
+    },
+    {
+      "path": "synthetic/validation/1/00113.wav",
+      "sha256": "3ccbe98c001cf00f33ea59f6e0cb533f1562f266456d806bdffcd440fb18c74d",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        520,
+        520
+      ],
+      "transition": "gained",
+      "control_maximum": 0.83125,
+      "phonetic_maximum": 0.9851562500000001
+    },
+    {
+      "path": "synthetic/validation/1/00198.wav",
+      "sha256": "1e7a89ba5f4e5202ce259fe6df945f67fea6de64fcf3e02fb850e68dffd678ae",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        465,
+        465
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93984375,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00304.wav",
+      "sha256": "11f99a1b02d2c887a5a6c24d54d792f8a91032f67f26bf1dc9916afb2c1ba949",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        391,
+        320
+      ],
+      "transition": "gained",
+      "control_maximum": 0.91328125,
+      "phonetic_maximum": 0.9875
+    },
+    {
+      "path": "synthetic/validation/1/00310.wav",
+      "sha256": "cd6f8d9a14abeadb34df4ff28a7792dc3855c1ddf0d300c2d5a719de600ef523",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        880,
+        880
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93359375,
+      "phonetic_maximum": 0.97421875
+    },
+    {
+      "path": "synthetic/validation/1/00220.wav",
+      "sha256": "e89aeb990b1f2f634360d49b7fdc60c2f552c1ea47c0c2dc728940250e64be19",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        62,
+        237
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93984375,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00220.wav",
+      "sha256": "e89aeb990b1f2f634360d49b7fdc60c2f552c1ea47c0c2dc728940250e64be19",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        62,
+        237
+      ],
+      "transition": "gained",
+      "control_maximum": 0.94375,
+      "phonetic_maximum": 0.9757812500000002
+    },
+    {
+      "path": "synthetic/validation/1/00249.wav",
+      "sha256": "aec7641937cc66e3b65e3c4e3130de62b9d818257ac6ad2b7ff60d5b1be607f1",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        849,
+        882
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96015625,
+      "phonetic_maximum": 0.9937500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00201.wav",
+      "sha256": "76398a12a2973d5de892599816fbcdd40c37d1580d162e62b9cc0abe2476f088",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        852,
+        11
+      ],
+      "transition": "gained",
+      "control_maximum": 0.953125,
+      "phonetic_maximum": 0.9843750000000001
+    },
+    {
+      "path": "synthetic/validation/1/00431.wav",
+      "sha256": "4839746ea570538a78d5aea36a03ef5443e8449628dfc2adad2c00561391e899",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        75,
+        540
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9835937499999999,
+      "phonetic_maximum": 0.96640625
+    },
+    {
+      "path": "synthetic/validation/1/00423.wav",
+      "sha256": "1fa32c3a11ab658be6bd8c431a4b81beffdca16d45770df102f5bd26e14e1cba",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        354,
+        888
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95703125,
+      "phonetic_maximum": 0.9718749999999999
+    },
+    {
+      "path": "synthetic/validation/1/00424.wav",
+      "sha256": "0daf4e63021cf71a369fe16258594a276493a6430408a8674d00f9d9b220c10e",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        754,
+        212
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95703125,
+      "phonetic_maximum": 0.975
+    },
+    {
+      "path": "synthetic/validation/1/00424.wav",
+      "sha256": "0daf4e63021cf71a369fe16258594a276493a6430408a8674d00f9d9b220c10e",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        754,
+        212
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93984375,
+      "phonetic_maximum": 0.971875
+    },
+    {
+      "path": "synthetic/validation/0/00261.wav",
+      "sha256": "047a1e138b6627b2214693178fa163c50ebbc647ec28261a860eeed3c4adf97b",
+      "engine": "piper",
+      "variant": 0,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        151,
+        151
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9703124999999999,
+      "phonetic_maximum": 0.66796875
+    },
+    {
+      "path": "synthetic/validation/0/00261.wav",
+      "sha256": "047a1e138b6627b2214693178fa163c50ebbc647ec28261a860eeed3c4adf97b",
+      "engine": "piper",
+      "variant": 1,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        151,
+        151
+      ],
+      "transition": "lost",
+      "control_maximum": 0.990625,
+      "phonetic_maximum": 0.9507812499999999
+    },
+    {
+      "path": "synthetic/validation/1/00288.wav",
+      "sha256": "30998c79ac55458a6187aa9018df5292ef0edd906be196a264455d236a0993a9",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        656,
+        656
+      ],
+      "transition": "lost",
+      "control_maximum": 0.975,
+      "phonetic_maximum": 0.9585937499999999
+    },
+    {
+      "path": "synthetic/validation/1/00165.wav",
+      "sha256": "e8c73a352da041922fe6b4f65f053c4b634edda20501a2fb483ebe27a25921a8",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        552,
+        68
+      ],
+      "transition": "lost",
+      "control_maximum": 0.978125,
+      "phonetic_maximum": 0.9609375
+    },
+    {
+      "path": "synthetic/validation/1/00133.wav",
+      "sha256": "31987c1b1420cd4bf6436067e56c633403f97dc50683ff5418dceb4bf9d10b07",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "speakers": [
+        855,
+        855
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95703125,
+      "phonetic_maximum": 0.9945312500000001
+    },
+    {
+      "path": "synthetic/validation/1/00188.wav",
+      "sha256": "0b3389fd2ac9fc8deffe58fda95ecb37f7201b23a551075022ea60631843b07d",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "speakers": [
+        117,
+        117
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9679687499999999,
+      "phonetic_maximum": 0.97578125
+    },
+    {
+      "path": "synthetic/validation/0/00115.wav",
+      "sha256": "06f231b8bbbcdc0364410e77ede17d6bb587160ec32b0d4cbe6f2fd7b8d2c064",
+      "engine": "piper",
+      "variant": 3,
+      "label": 0,
+      "text": "I mixed the ingredients.",
+      "speakers": [
+        245,
+        245
+      ],
+      "transition": "gained",
+      "control_maximum": 0.79296875,
+      "phonetic_maximum": 0.97265625
+    },
+    {
+      "path": "synthetic/validation/1/00030.wav",
+      "sha256": "5b24308cc3d1b1cbb78dedf4b6b5ff7007e0530a223dcbc2b2ba132c3c432801",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        650,
+        407
+      ],
+      "transition": "lost",
+      "control_maximum": 0.97265625,
+      "phonetic_maximum": 0.9578125
+    },
+    {
+      "path": "synthetic/validation/0/00036.wav",
+      "sha256": "91c88b5b1d651d124b27ae2e1c62855037f28cd3615e5ca79a709dba264f0085",
+      "engine": "piper",
+      "variant": 2,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        307,
+        307
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9609374999999999,
+      "phonetic_maximum": 0.971875
+    },
+    {
+      "path": "synthetic/validation/1/00289.wav",
+      "sha256": "c7c174026bf92115dc44cb16d13cffd0499390ce485459191677ab57172eb8ea",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        882,
+        821
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9625,
+      "phonetic_maximum": 0.9921875
+    },
+    {
+      "path": "synthetic/validation/1/00289.wav",
+      "sha256": "c7c174026bf92115dc44cb16d13cffd0499390ce485459191677ab57172eb8ea",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        882,
+        821
+      ],
+      "transition": "gained",
+      "control_maximum": 0.87265625,
+      "phonetic_maximum": 0.9929687500000001
+    },
+    {
+      "path": "synthetic/validation/1/00142.wav",
+      "sha256": "f96a561c5def099ca0283b293c3afd887cba3de45dd11adda565825f11b6c7f4",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        629,
+        629
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96015625,
+      "phonetic_maximum": 0.9828125000000001
+    },
+    {
+      "path": "synthetic/validation/1/00141.wav",
+      "sha256": "22aaccecc6f512dc01d0a5ca005a6f8a5b43a503193f990dc25d9fdb064398af",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        204,
+        232
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9640624999999999,
+      "phonetic_maximum": 0.9937500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00038.wav",
+      "sha256": "41544c2b6f9f5f182bae91500e5ce2c883672a3a36b46930043a0e600bd19946",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        414,
+        867
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9882812500000001,
+      "phonetic_maximum": 0.9625
+    },
+    {
+      "path": "synthetic/validation/1/00038.wav",
+      "sha256": "41544c2b6f9f5f182bae91500e5ce2c883672a3a36b46930043a0e600bd19946",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        414,
+        867
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9703125,
+      "phonetic_maximum": 0.9578125
+    },
+    {
+      "path": "synthetic/validation/1/00203.wav",
+      "sha256": "0e2d425cd0c6a8f60bc3841168f776c9e96ef2e61d4429b5522d4666f6255588",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "speakers": [
+        568,
+        552
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96953125,
+      "phonetic_maximum": 0.97421875
+    },
+    {
+      "path": "synthetic/validation/1/00173.wav",
+      "sha256": "2dcd4b1cdabd0373992cc8a32109fbb82dff0daebd453b16202e90b52ba2d508",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        34,
+        552
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9890625000000001,
+      "phonetic_maximum": 0.9351562499999999
+    },
+    {
+      "path": "synthetic/validation/1/00173.wav",
+      "sha256": "2dcd4b1cdabd0373992cc8a32109fbb82dff0daebd453b16202e90b52ba2d508",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        34,
+        552
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9656250000000001,
+      "phonetic_maximum": 0.97265625
+    },
+    {
+      "path": "synthetic/validation/1/00406.wav",
+      "sha256": "fc167db766ac0d18f3155b692d863d2bacf83f36dc891b932465ae2c49e215b9",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        22,
+        108
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9703125,
+      "phonetic_maximum": 0.9210937499999999
+    },
+    {
+      "path": "synthetic/validation/1/00140.wav",
+      "sha256": "e8deede2352cf2bf060bbedeca215ff3059e18217085d1f18836a495b3df5110",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        154,
+        855
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9734375000000001,
+      "phonetic_maximum": 0.96875
+    },
+    {
+      "path": "synthetic/validation/1/00253.wav",
+      "sha256": "32f2516bfa3e64de413a7789b4a9ab9303223de9294234f221fe6932621cc73d",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        529,
+        147
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95078125,
+      "phonetic_maximum": 0.98203125
+    },
+    {
+      "path": "synthetic/validation/1/00253.wav",
+      "sha256": "32f2516bfa3e64de413a7789b4a9ab9303223de9294234f221fe6932621cc73d",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        529,
+        147
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9609374999999999,
+      "phonetic_maximum": 0.975
+    },
+    {
+      "path": "synthetic/validation/1/00086.wav",
+      "sha256": "201a9f5b69a373f6502cb9bd4b0469ee0ae59c02a11e5f87be1d32931b6fd584",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        204,
+        149
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9601562499999999,
+      "phonetic_maximum": 0.9796875
+    },
+    {
+      "path": "synthetic/validation/1/00184.wav",
+      "sha256": "457a70e5a144d77dc5acfb56e7f07383f9368a83edf73999b9391e34d0be0b0d",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        232,
+        117
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9296875000000001,
+      "phonetic_maximum": 0.97578125
+    },
+    {
+      "path": "synthetic/validation/1/00364.wav",
+      "sha256": "beab9ffeef131862de26cd071edc45ab4bf0bc985d6e035d5b4e9dd1ba78acc9",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        199,
+        90
+      ],
+      "transition": "gained",
+      "control_maximum": 0.959375,
+      "phonetic_maximum": 0.97265625
+    },
+    {
+      "path": "synthetic/validation/1/00364.wav",
+      "sha256": "beab9ffeef131862de26cd071edc45ab4bf0bc985d6e035d5b4e9dd1ba78acc9",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        199,
+        90
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9578125000000001,
+      "phonetic_maximum": 0.9875
+    },
+    {
+      "path": "synthetic/validation/1/00111.wav",
+      "sha256": "0b5f9dbd5cd83921acb32805b392c841485784c33e2b6b4cae80aea9471b4245",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "speakers": [
+        117,
+        414
+      ],
+      "transition": "gained",
+      "control_maximum": 0.89765625,
+      "phonetic_maximum": 0.9890625000000001
+    },
+    {
+      "path": "synthetic/validation/0/00472.wav",
+      "sha256": "da5fc72faeca601721ce4f3f89396988517d4480cb4f5bb03e4363e84d2d3780",
+      "engine": "piper",
+      "variant": 0,
+      "label": 0,
+      "text": "Hey Nexus.",
+      "speakers": [
+        844,
+        568
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9734375,
+      "phonetic_maximum": 0.9468749999999999
+    },
+    {
+      "path": "synthetic/validation/1/00031.wav",
+      "sha256": "9887fdcc269672a0ec24c350a32c11c63aef0a68dd9834a6db3215a11c33cb08",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        204,
+        237
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9671875,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00245.wav",
+      "sha256": "6bdfe003a6af0795da8f86c0d3ea698186185cab67fe36a0db5bda9eb9b1c445",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        754,
+        634
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96015625,
+      "phonetic_maximum": 0.9796874999999999
+    },
+    {
+      "path": "synthetic/validation/1/00354.wav",
+      "sha256": "3b0f89b39220a27f8b1836defe8ccc921118461dafcf81327045e633908d1ae3",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        880,
+        879
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9656250000000001,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/0/00344.wav",
+      "sha256": "2f243cc27c9afad84b560110a4f1da7fbc8f2da9a0b56dc79d6cdc09372729e1",
+      "engine": "piper",
+      "variant": 0,
+      "label": 0,
+      "text": "Hey Next.",
+      "speakers": [
+        399,
+        546
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9734375,
+      "phonetic_maximum": 0.95078125
+    },
+    {
+      "path": "synthetic/validation/1/00022.wav",
+      "sha256": "22e90d93a84e2778705a4f51f48151c914caae3103e1a62f1805b2a95ed5e4c8",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        613,
+        407
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9789062500000001,
+      "phonetic_maximum": 0.9554687499999999
+    },
+    {
+      "path": "synthetic/validation/1/00022.wav",
+      "sha256": "22e90d93a84e2778705a4f51f48151c914caae3103e1a62f1805b2a95ed5e4c8",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        613,
+        407
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9257812500000001,
+      "phonetic_maximum": 0.9843750000000001
+    },
+    {
+      "path": "synthetic/validation/1/00448.wav",
+      "sha256": "79c27547b3c065746faa3fc5ebd104fdf84774e053e26b9167202eb424080bb5",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        292,
+        251
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9382812500000001,
+      "phonetic_maximum": 0.9710937500000001
+    },
+    {
+      "path": "synthetic/validation/1/00016.wav",
+      "sha256": "385a3f4fb388b5feba8f0f738aaabaa0b6ac9838602e6ca88b20181e816a8960",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        650,
+        650
+      ],
+      "transition": "lost",
+      "control_maximum": 0.97265625,
+      "phonetic_maximum": 0.9210937499999999
+    },
+    {
+      "path": "synthetic/validation/1/00261.wav",
+      "sha256": "9945892d61f36117c9a53416048d4743db8657f60b04f5b0267e0fac159982bb",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        648,
+        621
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96015625,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "synthetic/validation/1/00043.wav",
+      "sha256": "0e5a80fc2c263bd949541be55bd9491f151ca2094011bf0850ce58de90dcd63f",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        495,
+        108
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95390625,
+      "phonetic_maximum": 0.9843750000000001
+    },
+    {
+      "path": "synthetic/validation/1/00443.wav",
+      "sha256": "ae7d09a03582243240ec00710ff78a1f2de883abc4fadc780b75d8f20669d250",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx, turn on the light.",
+      "speakers": [
+        11,
+        117
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9601562499999999,
+      "phonetic_maximum": 0.9773437500000001
+    },
+    {
+      "path": "synthetic/validation/1/00200.wav",
+      "sha256": "c226f9b5d43e00143d180b034e53442cc2cc94443e12cfd3ca1498e89b2d9719",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        307,
+        310
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93828125,
+      "phonetic_maximum": 0.984375
+    },
+    {
+      "path": "synthetic/validation/1/00041.wav",
+      "sha256": "e9f346cbad0da0a04bd23daa3de1881d5f19ae88bac054e07f5d4fb33af951ff",
+      "engine": "piper",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        159,
+        518
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95390625,
+      "phonetic_maximum": 0.975
+    },
+    {
+      "path": "synthetic/validation/0/00427.wav",
+      "sha256": "2e09cd0350c03b2cd1bb804d1da61117c3b1eea0cc7c4d0336f8ed5f4d68b342",
+      "engine": "piper",
+      "variant": 1,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        592,
+        599
+      ],
+      "transition": "gained",
+      "control_maximum": 0.7773437500000001,
+      "phonetic_maximum": 0.99609375
+    },
+    {
+      "path": "synthetic/validation/0/00448.wav",
+      "sha256": "9503cb236d32b189a3fa0e00c96a695c892af41913cbda40e50692995215dac3",
+      "engine": "piper",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        713,
+        62
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9023437500000001,
+      "phonetic_maximum": 0.9953125
+    },
+    {
+      "path": "synthetic/validation/1/00120.wav",
+      "sha256": "0f2fe595e44fd26941f836dd5241af86231b62f8ff8f8f84e4a71aff7b2834bc",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        167,
+        722
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9757812499999999,
+      "phonetic_maximum": 0.9296875
+    },
+    {
+      "path": "synthetic/validation/1/00476.wav",
+      "sha256": "7d06d1735458361866bf4865f238051fbca4ce538424046542058d7f87383899",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        564,
+        661
+      ],
+      "transition": "gained",
+      "control_maximum": 0.946875,
+      "phonetic_maximum": 0.9859375000000001
+    },
+    {
+      "path": "synthetic/validation/1/00139.wav",
+      "sha256": "9a9f0acf151c83c6e4c2c1d1132c192c6f016ca9e7762c8f6b07dc0e1b9e798e",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, what time is it?",
+      "speakers": [
+        752,
+        613
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9875,
+      "phonetic_maximum": 0.96796875
+    },
+    {
+      "path": "synthetic/validation/1/00413.wav",
+      "sha256": "b411165edb9e470d9f3cee724bd25ab09e890377d10e360befa58dc5ffc9bc24",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        844,
+        90
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9796875,
+      "phonetic_maximum": 0.9453125
+    },
+    {
+      "path": "synthetic/validation/1/00413.wav",
+      "sha256": "b411165edb9e470d9f3cee724bd25ab09e890377d10e360befa58dc5ffc9bc24",
+      "engine": "piper",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        844,
+        90
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9757812499999999,
+      "phonetic_maximum": 0.9609375
+    },
+    {
+      "path": "synthetic/validation/1/00413.wav",
+      "sha256": "b411165edb9e470d9f3cee724bd25ab09e890377d10e360befa58dc5ffc9bc24",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        844,
+        90
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9867187500000001,
+      "phonetic_maximum": 0.95078125
+    },
+    {
+      "path": "synthetic/validation/1/00265.wav",
+      "sha256": "854ff6760cdbae541b173666bcbf05c89ef8d55444dcfa71c21ca99bed8db00e",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        802,
+        245
+      ],
+      "transition": "gained",
+      "control_maximum": 0.94140625,
+      "phonetic_maximum": 0.97265625
+    },
+    {
+      "path": "synthetic/validation/1/00312.wav",
+      "sha256": "ebe03f47d60ffa4870ed7ac8080ca5f83a0592175d5eb0d16cd11f25e6120640",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, can you hear me?",
+      "speakers": [
+        621,
+        457
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9531250000000001,
+      "phonetic_maximum": 0.9796874999999999
+    },
+    {
+      "path": "synthetic/validation/1/00042.wav",
+      "sha256": "b8d05c07e67e5a5f180a2ac5ef2bd18aa3b2cb725a4ec7ac6294fc03e450af26",
+      "engine": "piper",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nyx, check the volume.",
+      "speakers": [
+        752,
+        813
+      ],
+      "transition": "lost",
+      "control_maximum": 0.97265625,
+      "phonetic_maximum": 0.89296875
+    },
+    {
+      "path": "synthetic/validation/0/00052.wav",
+      "sha256": "8f26044f059a6badf3766b2daa72e05c6e3571d4b8ab0b6dee8c98f1baa14174",
+      "engine": "piper",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        307,
+        844
+      ],
+      "transition": "gained",
+      "control_maximum": 0.946875,
+      "phonetic_maximum": 0.97421875
+    },
+    {
+      "path": "synthetic/validation/1/00122.wav",
+      "sha256": "d74efcfcce77b1ef6e69f97f536f3d9db2238ca3d7ef6a95818cd7615671ac99",
+      "engine": "piper",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        484,
+        300
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9625000000000001,
+      "phonetic_maximum": 0.9929687500000001
+    },
+    {
+      "path": "kokoro-corpus/validation/am_liam/001.wav",
+      "sha256": "dbe872ebabf65afdb3591c827a61137af3b91154a0433c65d7849db4a3d8113a",
+      "engine": "kokoro",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nix!",
+      "speakers": [
+        "am_liam"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9328125,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "openai-corpus/validation/sage/002.wav",
+      "sha256": "f674bc8657f7e4b4a38e7d7389d2a07802bb66f3b108aca76d9f2197f356b739",
+      "engine": "openai-tts",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nicks?",
+      "speakers": [
+        "sage"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.946875,
+      "phonetic_maximum": 0.975
+    },
+    {
+      "path": "openai-corpus/validation/sage/004.wav",
+      "sha256": "52342cdac72e446431f204df84d799be68b0483ccf3791a8b96672f242e2cb2c",
+      "engine": "openai-tts",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nix!",
+      "speakers": [
+        "sage"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.975,
+      "phonetic_maximum": 0.96640625
+    },
+    {
+      "path": "openai-corpus/validation/sage/010.wav",
+      "sha256": "882bdf30dd5ac0549e88d185c138f3b5b1aaa451f8f90b9e41c4140dbae1235b",
+      "engine": "openai-tts",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Next.",
+      "speakers": [
+        "sage"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.953125,
+      "phonetic_maximum": 0.97265625
+    },
+    {
+      "path": "mac-corpus/validation/Flo-0/003.wav",
+      "sha256": "9f8507b056550fa139b1417f8e52b7539d9715d9eff22ab6ca71b1e0731dd691",
+      "engine": "macos-say",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nicks?",
+      "speakers": [
+        "Flo"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.97890625,
+      "phonetic_maximum": 0.96328125
+    },
+    {
+      "path": "mac-corpus/validation/Flo-0/006.wav",
+      "sha256": "ce4dd60dc37903963c64790a6f645358f582a3692ade055f29c91ea8cbb32a88",
+      "engine": "macos-say",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        "Flo"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.8312500000000002,
+      "phonetic_maximum": 0.971875
+    },
+    {
+      "path": "mac-corpus/validation/Flo-1/001.wav",
+      "sha256": "f42a85a72c1f5324c04886322bcca3b81a89b9d36a7b90542df2dd724fcd9565",
+      "engine": "macos-say",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey, Nicks.",
+      "speakers": [
+        "Flo"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9023437500000001,
+      "phonetic_maximum": 0.9781250000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-GB-RyanNeural/005.wav",
+      "sha256": "17ab6cba0cf327a94470f116297d530f029149913d378e5e770359f75b6d03fa",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey, Nix!",
+      "speakers": [
+        "Ryan"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9875,
+      "phonetic_maximum": 0.9609375
+    },
+    {
+      "path": "edge-corpus/validation/en-GB-RyanNeural/017.wav",
+      "sha256": "93ea902ef7130aa180685c2f3c5ecc9003950ad07cbd1401eb1884f897f5f67e",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Siri.",
+      "speakers": [
+        "Ryan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.475,
+      "phonetic_maximum": 0.9796875
+    },
+    {
+      "path": "edge-corpus/validation/en-GB-ThomasNeural/011.wav",
+      "sha256": "7257931ee93d53bbb264f5df3789f562d108fa5f2b4752cbc0e6b385af040e72",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Six.",
+      "speakers": [
+        "Thomas"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9632812500000001,
+      "phonetic_maximum": 0.99609375
+    },
+    {
+      "path": "edge-corpus/validation/en-GB-ThomasNeural/019.wav",
+      "sha256": "4e672193fbda571f9c249af1a1e518b53de4bb1e1d9d1847cc84c758f28bc048",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 0,
+      "text": "Hey Next, what time is it?",
+      "speakers": [
+        "Thomas"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.7703125000000001,
+      "phonetic_maximum": 0.978125
+    },
+    {
+      "path": "edge-corpus/validation/en-GB-ThomasNeural/019.wav",
+      "sha256": "4e672193fbda571f9c249af1a1e518b53de4bb1e1d9d1847cc84c758f28bc048",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 0,
+      "text": "Hey Next, what time is it?",
+      "speakers": [
+        "Thomas"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.9828125,
+      "phonetic_maximum": 0.95859375
+    },
+    {
+      "path": "edge-corpus/validation/en-HK-YanNeural/005.wav",
+      "sha256": "56d8b273e11b1e3f599ed0e8af22b6cbf269dd3d64a5320503f64d7776bca919",
+      "engine": "edge-tts",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey, Nix!",
+      "speakers": [
+        "Yan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9500000000000001,
+      "phonetic_maximum": 0.9859375
+    },
+    {
+      "path": "edge-corpus/validation/en-HK-YanNeural/005.wav",
+      "sha256": "56d8b273e11b1e3f599ed0e8af22b6cbf269dd3d64a5320503f64d7776bca919",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey, Nix!",
+      "speakers": [
+        "Yan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.96015625,
+      "phonetic_maximum": 0.99609375
+    },
+    {
+      "path": "edge-corpus/validation/en-HK-YanNeural/010.wav",
+      "sha256": "e5103436c788dd31a82859247d66b4289e025292045da5b0d03bc398f6b4c2e4",
+      "engine": "edge-tts",
+      "variant": 0,
+      "label": 0,
+      "text": "Hey Mix.",
+      "speakers": [
+        "Yan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9257812500000001,
+      "phonetic_maximum": 0.9828125000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/000.wav",
+      "sha256": "323c959198bde2569124bcefc2d425fdfd89d4bf623109ce0e79a4f46011198a",
+      "engine": "edge-tts",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nicks.",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93984375,
+      "phonetic_maximum": 0.9890625000000002
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/001.wav",
+      "sha256": "9281715781ff89004a6ce15c3b19ef3133c5812fdf63ca2980949f0964484a61",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey, Nicks.",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.97578125,
+      "phonetic_maximum": 0.96328125
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/002.wav",
+      "sha256": "2379e22a240958df8bebe2a2a434fd898a75eb3f5142e8c65525322a0dd4fd14",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nicks!",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.93984375,
+      "phonetic_maximum": 0.9843750000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/002.wav",
+      "sha256": "2379e22a240958df8bebe2a2a434fd898a75eb3f5142e8c65525322a0dd4fd14",
+      "engine": "edge-tts",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nicks!",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.946875,
+      "phonetic_maximum": 0.9828125000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/006.wav",
+      "sha256": "a634173faa94d4e277f6d89be171d4b1dbf1a8c5d5a0634fb9d6ebd4e5ec5441",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.78828125,
+      "phonetic_maximum": 0.9859375000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-IE-EmilyNeural/006.wav",
+      "sha256": "a634173faa94d4e277f6d89be171d4b1dbf1a8c5d5a0634fb9d6ebd4e5ec5441",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nyx.",
+      "speakers": [
+        "Emily"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.95390625,
+      "phonetic_maximum": 0.9953125
+    },
+    {
+      "path": "edge-corpus/validation/en-SG-WayneNeural/003.wav",
+      "sha256": "83fae20f1d0afef6724145577ab1a4f33e8c3e1417b1a9c98bda9580258cf396",
+      "engine": "edge-tts",
+      "variant": 3,
+      "label": 1,
+      "text": "Hey Nicks?",
+      "speakers": [
+        "Wayne"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.8906250000000001,
+      "phonetic_maximum": 0.97578125
+    },
+    {
+      "path": "edge-corpus/validation/en-SG-WayneNeural/015.wav",
+      "sha256": "3d216bd34d63932834a6122e08374da491a849268ff717e7c1aeb8ca1d2e33a8",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 0,
+      "text": "Hey Alex.",
+      "speakers": [
+        "Wayne"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9140625000000001,
+      "phonetic_maximum": 0.9812500000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-US-SteffanNeural/000.wav",
+      "sha256": "40fa6593422c6bd76fd60e4be9026864421d53fdac45296766206c224876650a",
+      "engine": "edge-tts",
+      "variant": 2,
+      "label": 1,
+      "text": "Hey Nicks.",
+      "speakers": [
+        "Steffan"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.98984375,
+      "phonetic_maximum": 0.9578125
+    },
+    {
+      "path": "edge-corpus/validation/en-US-SteffanNeural/002.wav",
+      "sha256": "3b2a867b797fe730ef166297f9b609ca438f13e0e52c3ddb5a11fff6c9ba8077",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nicks!",
+      "speakers": [
+        "Steffan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.909375,
+      "phonetic_maximum": 0.9750000000000001
+    },
+    {
+      "path": "edge-corpus/validation/en-US-SteffanNeural/003.wav",
+      "sha256": "ec6246c5307e6f93a24fe476c558aa70ce74a7bb266b675d94bf22f83a455f99",
+      "engine": "edge-tts",
+      "variant": 1,
+      "label": 1,
+      "text": "Hey Nicks?",
+      "speakers": [
+        "Steffan"
+      ],
+      "transition": "lost",
+      "control_maximum": 0.990625,
+      "phonetic_maximum": 0.9523437499999999
+    },
+    {
+      "path": "edge-corpus/validation/en-US-SteffanNeural/004.wav",
+      "sha256": "ee3807bddc4edb2e691c24c6cfbf8199f04793ff38130efd175f3a95198a7d63",
+      "engine": "edge-tts",
+      "variant": 0,
+      "label": 1,
+      "text": "Hey Nix.",
+      "speakers": [
+        "Steffan"
+      ],
+      "transition": "gained",
+      "control_maximum": 0.9140625000000001,
+      "phonetic_maximum": 0.9750000000000001
+    }
+  ],
+  "ambient": [
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/7976.npy",
+      "speaker": 7976,
+      "feature_sha256": "8571e3b33a3a74ad9ee76746ee312102993c85d2f2172a8b86a59356be7ead18",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13991111111111112,
+      "arms": {
+        "control": {
+          "score_sha256": "852f7ef1f0ae2e9afea1eb50c9bb6f9a4d72d583a23c974178e1060b33e4b5e6",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "d0f561e55aad5c00da02c76ab48e9dcd81c2bda1fa8ed41900e511152902caca",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/5895.npy",
+      "speaker": 5895,
+      "feature_sha256": "9f89990b24fcf3f059a965e71d5311053049221767405da20be703a7cd7e7cbb",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13818333333333335,
+      "arms": {
+        "control": {
+          "score_sha256": "6beaff6b3587b5e4019fdeeecb0fbfef77ed0287f1b7fedd29d79f468d701f28",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "5901895eafb0a3f9e10cc03334e180dc63896a501d8b9a9d0b43a19a66a4edfc",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/3170.npy",
+      "speaker": 3170,
+      "feature_sha256": "7874076b1afae318d148b1f3e635f48dfad79759f537cb63f138031ec93f383d",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13769444444444445,
+      "arms": {
+        "control": {
+          "score_sha256": "21a6808cc52d2fbffe0c063f7562f9e30973e6e3853f40d603fc5cdcfc3d1bc8",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "9ecfb8ef3072f9e44b21abb5630eeb6191b537ff63f63fdb00c6defb8c970e32",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/84.npy",
+      "speaker": 84,
+      "feature_sha256": "ca63ae93d719be81ed7d6e6b4d3a398d3cd8ab319fe4bea85f63873cc85c7452",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.137325,
+      "arms": {
+        "control": {
+          "score_sha256": "91b437dd1a7d4e18c94c1d7e6b4a50dda42cfc185fe758050fa0fd48dad152ef",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "610aa8f6e31039c4b7b48983427d35598ec04c401616ae32f57f15a46417e13d",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/3853.npy",
+      "speaker": 3853,
+      "feature_sha256": "455c32dacffd60183d8238d84f9667dfa35ba0764fd7a67731680c977afb76f9",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13733055555555554,
+      "arms": {
+        "control": {
+          "score_sha256": "89b7a2207b7f4d372173d0945920ce29c83d95d4824530f7286a6a1d9973f326",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "89b7a2207b7f4d372173d0945920ce29c83d95d4824530f7286a6a1d9973f326",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/8842.npy",
+      "speaker": 8842,
+      "feature_sha256": "60181d17609fbc6561f179885c1770aa857b03034349016541d5f134c85498eb",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.138075,
+      "arms": {
+        "control": {
+          "score_sha256": "6a4c0b8909ae49fd92392beb3d8f458c7b59612f46b75f700c0d5dcba82220c0",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "6a4c0b8909ae49fd92392beb3d8f458c7b59612f46b75f700c0d5dcba82220c0",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/1272.npy",
+      "speaker": 1272,
+      "feature_sha256": "351fd703db4ea62de18bf89a2de5e1d3cc5d60475d9885c5e9393fc173af1148",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13770833333333332,
+      "arms": {
+        "control": {
+          "score_sha256": "284253a06eaefc9d75bd61c944e576fb9002357221e7e6b231f39ffd88b2ce48",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "5fc95663a940443c3f484a525379aeba3a67e3c34fcc8df52577e65a039b0f45",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/human-source/human/validation/2803.npy",
+      "speaker": 2803,
+      "feature_sha256": "a8affcec759dd0631e6ab3719c38bd44db593f06a99c6d0b62221898b38bd1bc",
+      "pcm_sha256": null,
+      "source_type": "speech",
+      "hours": 0.13981944444444444,
+      "arms": {
+        "control": {
+          "score_sha256": "35755bb654373d0dedcfadd8fb7f3986b8866974e2052b9f06636f3526ba06cc",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "b6cbaf2dc01a5a86b1e91ace54f900a558488b5463bae637bcf401f0232e4422",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/1183.npy",
+      "speaker": "1183",
+      "feature_sha256": "12f19fe745963054941175604e0debfaf58bc29c906e37ed3d4dd6bf61885ef5",
+      "pcm_sha256": "cb645cc13468b3a8da0e4ab0d9421eb58e279635eb532370d4ba047120d96f1d",
+      "source_type": "speech",
+      "hours": 0.1656,
+      "arms": {
+        "control": {
+          "score_sha256": "537ef106599ebc5cb522ea286c2d3a769485ba7c9d69e80263255daffda7686e",
+          "event_steps": [
+            17473
+          ],
+          "event_end_seconds": [
+            524.36
+          ],
+          "event_end_locations": [
+            {
+              "utterance": "1183-133256-0018",
+              "end_seconds_within_utterance": 1.94,
+              "source_start_sample": 8358720,
+              "flac_sha256": "81e27a1c693341f110135a0d99393b96489545f27c283dd5b0a1a6da4dfa6fb5",
+              "transcript_sha256": "787932525b5eb260b780d0dce76d4bcd6b05614cda336a6144fdb36010d97600"
+            }
+          ]
+        },
+        "phonetic": {
+          "score_sha256": "db70e79671ca7f7979884590287ef4977fff06fdb760df2ce03949e4fae1b644",
+          "event_steps": [
+            17473
+          ],
+          "event_end_seconds": [
+            524.36
+          ],
+          "event_end_locations": [
+            {
+              "utterance": "1183-133256-0018",
+              "end_seconds_within_utterance": 1.94,
+              "source_start_sample": 8358720,
+              "flac_sha256": "81e27a1c693341f110135a0d99393b96489545f27c283dd5b0a1a6da4dfa6fb5",
+              "transcript_sha256": "787932525b5eb260b780d0dce76d4bcd6b05614cda336a6144fdb36010d97600"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/1743.npy",
+      "speaker": "1743",
+      "feature_sha256": "c54034ea2e1ee428119cf4598efdb5b63cc4086d84b6ee9a41093b32e9d9d206",
+      "pcm_sha256": "eca6f1f8416681777cf50ddadfa156e875e84eb70b30a3039bd81193886f162d",
+      "source_type": "speech",
+      "hours": 0.36062222222222223,
+      "arms": {
+        "control": {
+          "score_sha256": "e7725400b4746fc853f672a7232f3cbf0c3b522baf0cdb336595f53687bba231",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "fd34738583271ac950341773cf0b12ff35642c52fad1b16844ef88de86814de5",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/19.npy",
+      "speaker": "19",
+      "feature_sha256": "a2c44150387b1eb5538926e56c61a143401a884324b8825d20492565fc9cbaf3",
+      "pcm_sha256": "aa79f725f17b2c93a37cebd955fbe06a7d9c042c6482ed42cbe1e9ae7dfb8ef2",
+      "source_type": "speech",
+      "hours": 0.4259388888888889,
+      "arms": {
+        "control": {
+          "score_sha256": "4d7fb059423215d20a06153b029f98e9c44cbb55a99108c9fdf7fb9ca7dc4349",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "c31eceb61104d3ee8cc900464131affe000d4ff2b154d0c255132033d1ed4c06",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/233.npy",
+      "speaker": "233",
+      "feature_sha256": "43499cf4346e8525532cfd9a8ccfb2df5046e437335d1c2ee9dd5b4f8fcaa988",
+      "pcm_sha256": "c6ee4deeccb9d3850eb374b4a45a5d11a2e2818412de9a1191ca53afeacca9c0",
+      "source_type": "speech",
+      "hours": 0.41812777777777776,
+      "arms": {
+        "control": {
+          "score_sha256": "44c45ee8ceb02cb348af6378dfa202db454583cf410b3dca709e3917beed3b64",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "6a2afe63a5cb3e4d460e5c1bdba4faed8040ec213bb6716fc569c14192e6638f",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/3879.npy",
+      "speaker": "3879",
+      "feature_sha256": "18ac076ea853db8cbfdea54cc9f2539a04430b825c31ce7bbf4086f3b287dc83",
+      "pcm_sha256": "b92bf2bb4ce13bc22221bcfa8be9a80ca6383ec9297c94deba1d000ea2a64602",
+      "source_type": "speech",
+      "hours": 0.4247694444444445,
+      "arms": {
+        "control": {
+          "score_sha256": "8e38e4535a7f95a8d53f2446e9736a28e6ea893a40c6cbfda2a523c9248f9b85",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "a53ccf16cb60dada6451acacab67973397b9869f72feb4174c2fc061d4c17dc4",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/445.npy",
+      "speaker": "445",
+      "feature_sha256": "ee045e5f5f0d512e139df942c7eb9184b6ef8a0b348b283e52e18a8be4a2cab2",
+      "pcm_sha256": "f7134be40084fb3f8ce84a59078875c67cd626b85cb8b3df380a06555a7e6ab1",
+      "source_type": "speech",
+      "hours": 0.18802777777777777,
+      "arms": {
+        "control": {
+          "score_sha256": "80561746ac05a6448925d511f32bff5842f716ee7ddbab8fdac0a0b1873dfea0",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "a369b081dd831c524f0129e270f2225186787a19b2187e05fbff634c70f7087a",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/5339.npy",
+      "speaker": "5339",
+      "feature_sha256": "0752e7c303bbe1e0a60200009586e377c3bb97bef9f26371134da04c001c06b1",
+      "pcm_sha256": "db8c0e4504c621e0782e2756a1369772ee526352b233d14e6ffb6ef8eeb191ac",
+      "source_type": "speech",
+      "hours": 0.42646944444444446,
+      "arms": {
+        "control": {
+          "score_sha256": "948c29645f0995382e30e75d68f4478a1449b3d9fc90d09eb2347dd8f32a5f33",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "948c29645f0995382e30e75d68f4478a1449b3d9fc90d09eb2347dd8f32a5f33",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/5688.npy",
+      "speaker": "5688",
+      "feature_sha256": "b08ed68c2ce251d9959cd150f72259b36d9c00ae58687795d7e3d8fd38022922",
+      "pcm_sha256": "c925aa24d86590e00c1fab57e19e4f7c37f9713ebedf508c43deb267c5e5820c",
+      "source_type": "speech",
+      "hours": 0.42638055555555554,
+      "arms": {
+        "control": {
+          "score_sha256": "3d88d01af45cdf4d0d2fa62f53107a03e70616d51f742a2dfc7b522adbc6a26b",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "6d4887f8f760523e8b6d34bb55e761ca2f2deb05a0cfd7a966e4f50a81c52b80",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/6000.npy",
+      "speaker": "6000",
+      "feature_sha256": "e6c4302fa09b3143150497f293a0b5895fe4737636f5642800e51c7e85730254",
+      "pcm_sha256": "6d04e8b3b352d988f72429612fe751be36fd505914bd9fc832a45a919eb895d9",
+      "source_type": "speech",
+      "hours": 0.3055777777777778,
+      "arms": {
+        "control": {
+          "score_sha256": "28f3207e8cddcc0e3ee2838463a29380b34d717a9aaea7d7a56fc4ebb0c09203",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "8572eabc213aab7182b090bd2bcce17d13adf4efbfb03a98e5e3448d40a29ed7",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/6081.npy",
+      "speaker": "6081",
+      "feature_sha256": "827d6bcc424983c4ff3a0993f95637b6d6bc7a5a7c5c63195cc3cfb4c1c6bf26",
+      "pcm_sha256": "66180fa1cfb9a87e64469c298ad29ef47fa7bc85b0d55794b893e9e2942fcc2e",
+      "source_type": "speech",
+      "hours": 0.42512500000000003,
+      "arms": {
+        "control": {
+          "score_sha256": "c0a49973bedb6601e656bb7ab5568049b1e4a5822df0de74fc8d39ec7fab32a5",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "daf1955552de5827c2cd72f71b48cff855461f4c8af2588124a10522012b48fc",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/6272.npy",
+      "speaker": "6272",
+      "feature_sha256": "e8964e428be16cbb633501640aeb20cce4d8acb78e7764866ff92d35b1ad1cef",
+      "pcm_sha256": "73847a64982a1220dbc87822a072b744076c1c0bf1a2e9fb4432ef0235bee156",
+      "source_type": "speech",
+      "hours": 0.42536666666666667,
+      "arms": {
+        "control": {
+          "score_sha256": "2dd147dd929b9f3b68ab22a25b5ac6f8cde2bfb19018ed83fdf0997b05b72094",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "449318d80d82bfdf902becef87079d707c660c1c57f713b50a4d117862b742dd",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/7067.npy",
+      "speaker": "7067",
+      "feature_sha256": "2f0a674a0601590843bdca1449e420b6388fba9a6cf5d38ac287b5d17a4a4fe4",
+      "pcm_sha256": "19a5328abc962f625988698bb840811ee161d495e30726181116d3345720068d",
+      "source_type": "speech",
+      "hours": 0.4257277777777778,
+      "arms": {
+        "control": {
+          "score_sha256": "0ad6debe289047d7405ed052ea477cd6b6f2f0f2b395bfb0bdbdd59dfffdec07",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "e31dd2f3cc09c4ba671bab5d8c4a4155a9b0fe719167bb3e09ae3d7d2f6fb0c9",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/7190.npy",
+      "speaker": "7190",
+      "feature_sha256": "d4d7a969f48842921d5e241cbf95167b356c5962af046352bc4a5aa38d954b73",
+      "pcm_sha256": "984b20f26a974eec7f6143be3efe5837baff9a2001c21d59291e83c15c0e0c96",
+      "source_type": "speech",
+      "hours": 0.42760277777777783,
+      "arms": {
+        "control": {
+          "score_sha256": "adda7b0cabecf00d980ebfadf5e99029f65c6fb24bd41a1198fd963d6e6d245d",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "390112ad2639e4c7513915426b4e0983f66aaf5dfc8ff86f504abdbcbb05cb88",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/7635.npy",
+      "speaker": "7635",
+      "feature_sha256": "bdb5e12d80c980db93cbe725dc9724480c551c1dd3b3291799e698d542d27e0a",
+      "pcm_sha256": "d133729a8f9190db45677ffccc05c53dfc8e964e14ca2d6d828ff395e15ee8be",
+      "source_type": "speech",
+      "hours": 0.4243638888888889,
+      "arms": {
+        "control": {
+          "score_sha256": "f9a9e31a32e0ffbea45e5dd2777c575f2d0be6cbd37035e7ed174df43e2d3af4",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "8bf08fadec519b25a7dc8cdea6e47a6e4a74b4e6464a1ceb58695899900ece65",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/8108.npy",
+      "speaker": "8108",
+      "feature_sha256": "9ae0e27d01f28d598a08a8b7adb71d69ec1b264bf8da2e33bddc86f14c716450",
+      "pcm_sha256": "82c528a9a41a5ab61fcb852ee28a557d94024f6772703ff0d0fa8a6f28fe5ce7",
+      "source_type": "speech",
+      "hours": 0.423325,
+      "arms": {
+        "control": {
+          "score_sha256": "fba60ee1dc6146b872be265fb6c7c67f09c10f6b85a6830a2fed59983b1ddc6d",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "f8e94070458986716c122ce7b9897313380bff42b743a0f9455af00a55fe520b",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "base-human/human-source/base-human/additional-human/features/8630.npy",
+      "speaker": "8630",
+      "feature_sha256": "bd1a6bc66142cc561921fc8549fdeae17a283673bc3bf8bb3807a7f42e5f1494",
+      "pcm_sha256": "49e3196aba8620a3a918d5dab5e2a36cd45f80af82764cd15ffbf666b9aaa52e",
+      "source_type": "speech",
+      "hours": 0.3972055555555556,
+      "arms": {
+        "control": {
+          "score_sha256": "03f406d4deb8830fb56b14d9e688b5f455fec429c7a7db97b7cd3aa85879e345",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "6b27e8ea7937e7e1d3a2b0f839c5321ba4be53adf50886867a65bc99eff7ad7f",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/000.npy",
+      "speaker": null,
+      "feature_sha256": "12a3f052ff2fedaeab4e9f2e67413245c301cb8aab9540cccb1abe0abe8d44d4",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.0058111111111111115,
+      "arms": {
+        "control": {
+          "score_sha256": "cf42a7793e35abf9ed629700bbf45eb31388b2db3eab896621e8b969af92dfef",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "c9dec5a41fbc0d77f5d1bb4facce033ced05d80cb9379fec56a0a929b92d2f34",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/007.npy",
+      "speaker": null,
+      "feature_sha256": "90c539ff9b8ffd1e1b96c1cac5473d33c45a97d23c138c5a8059d24a5a87e54b",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.039161111111111105,
+      "arms": {
+        "control": {
+          "score_sha256": "6a1fa5efd15da08802fbec8ec83ddf8b5a8f45ebbfd2dd973fccea1c9ff8d19c",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "d93610ba9c08051fec9ce3b87613ba48642b3eac49107b1ca5fffb204d58c0ef",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/008.npy",
+      "speaker": null,
+      "feature_sha256": "b62e5a12f12b14b801d52d5873f262f7f47934235fe9393c145f6cfe9a034cf2",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.009116666666666667,
+      "arms": {
+        "control": {
+          "score_sha256": "ea6e65e5c89114e8a573427cae9c5d7e2f122e93d9477df8fcbe8b6306537d27",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "a22ac73516c3323dd767d4a9e2b6ff52e264273d34afe9710b39179d056e249c",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/015.npy",
+      "speaker": null,
+      "feature_sha256": "159d85e0d9a7f6b1b07c2a84faa9e515e7ee1ab2eb0be7c244b8ce37a6ea021d",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.0061,
+      "arms": {
+        "control": {
+          "score_sha256": "2de694ca157e673e496c5dc2d139431ba5f30b3a48b6dab03637dbfd19677a7f",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "1732470184a8ef6a81fdcaeb923013360d0aef98bbd9e941af744fdc980a2733",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/017.npy",
+      "speaker": null,
+      "feature_sha256": "ae291446329ff8bd3e0f415ee79088f81229dc70a823cdaae9b1549dae67c0aa",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.010661111111111113,
+      "arms": {
+        "control": {
+          "score_sha256": "5ad9cb2a155d5a8314e2282f963e515d68d67acb395dd990bca794e7b97dc511",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "70b5d0314651e0c0163fe62835bcf3e1108a0aed1b48bdc84a63d7e04afbce30",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/018.npy",
+      "speaker": null,
+      "feature_sha256": "1d68c79cf870de76a353825e5efffd0350eb58df11544e2b8a7e35cdd996e271",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.008658333333333334,
+      "arms": {
+        "control": {
+          "score_sha256": "c3927ba7471808a2384e153cd023740a674b65d7562eded0c3d0271ba0efd8f9",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "702d45b60b3e6b8548b752305b26c073c22025aa33fd9834b3b5ea9533382602",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/023.npy",
+      "speaker": null,
+      "feature_sha256": "62a8afcdcb032388cd9760874f976f363acd177981186768f7f139c0a372494e",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.009230555555555556,
+      "arms": {
+        "control": {
+          "score_sha256": "81ebd3f1fcbabef5aca494ba926ade0a80e4642ce2830d8ee49f6b69129797db",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "fdc434455d1d92cdd57d60c4bccfbe8e91061f1ff045805601c57c7782f74d7e",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/039.npy",
+      "speaker": null,
+      "feature_sha256": "a5b07cb1a10a47f8fa18c90f06ebe580b60b37c60e27643b67c3b7edd6ce0467",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.011613888888888889,
+      "arms": {
+        "control": {
+          "score_sha256": "441093bd68d1fda95aedbcc3c9b250a4b9d7191e3d2bca927af345a6db05c084",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "448bb4d035d57adef7e407f3a05be34d2acd611526ac1f37bbaf01a0ad27ae82",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/041.npy",
+      "speaker": null,
+      "feature_sha256": "2ac935bf2371438ca7f6900185af147bc467d937325492572859c6a1957b17e6",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.013075,
+      "arms": {
+        "control": {
+          "score_sha256": "bb460c249a30ec494c77690f0b4668e7c95e2761ea7e7a29945b75415e0e4c3d",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "ccff7e028bebb40c235c9eaadf129bbe1998e2128dde624f0f8f3e27f8fd08b2",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/049.npy",
+      "speaker": null,
+      "feature_sha256": "a398d1966f310a70aed1b3ce1efa4712eb58273b3a1598264d92c0a57cad5fce",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.007983333333333334,
+      "arms": {
+        "control": {
+          "score_sha256": "6594a45657a214683b57193723d32f7cf7ad7d91f1a60c8968301441f96decdf",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "a51064b37eec52fd5242bcc600c77f7c9df5d796cd3f0e6431404b7c9342882d",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    },
+    {
+      "feature_path": "ambient/validation/053.npy",
+      "speaker": null,
+      "feature_sha256": "9c78b169023da389122c2a4a56c9db95bbe8402c3f2df6b6effab05aef8b6327",
+      "pcm_sha256": null,
+      "source_type": "environment",
+      "hours": 0.0061333333333333335,
+      "arms": {
+        "control": {
+          "score_sha256": "c51e07f18dc92ceb630a90b9e04b2e105508bd8bbf3c8efe3da044d2e1ea9cd4",
+          "event_steps": [],
+          "event_end_seconds": []
+        },
+        "phonetic": {
+          "score_sha256": "89a6a216f2e101aeefa584f91e5244ad91a0192184adcf7c5b778e35539ef341",
+          "event_steps": [],
+          "event_end_seconds": []
+        }
+      }
+    }
+  ],
+  "limits": "Reused development scores only, with correlated render variants. Synthetic voice tokens are not human identities. Source counts use engine, original WAV SHA and intended phrase because aliases can share WAVs. Paired source-level improvement/correction sets can overlap when different views change in opposite directions. Cache event time is not a phonetic endpoint. No teacher prediction is used to relabel a source; no model, threshold, runtime, board or audio path is changed."
+}
