@@ -3798,3 +3798,18 @@ GPU独立核验NPZ所有350条94940个uint8输出SHA/数量，再按五分数整
 其prime56160及480/512块协议与GPU简短padding不同，后续候选必须沿用其冻结原PCM/prime，
 并按各自已选阈值报告来源/协议差异，而不是把不同协议摘要直接合并。
 v37原训练不改、不重启，现有新开发和最终分区仍保持未评分。
+
+### Mac350 cross-host CPU diagnostic (2026-11-11)
+
+Issue #13 requested actual native execution beyond saved-output auditing. Independent
+CPU replay uses frozen v30 and all 350 authenticated original WAVs, 56160-zero
+prime, 480-block tail alignment, per-stream frontend/model reset, BUILTIN_REF
+one-thread LiteRT, unchanged speed and threshold. All 94940 outputs retained
+locally at `.local/wakeword/mac-cpu-replay-v1/scores.npz` with SHA in report.
+101/350 frontend hashes differ from Mac; only one output stream differs, with
+two output bytes different. First output difference is Tessa-1-3.wav index271,
+Linux5 vs Mac8. All fixed integer-policy event steps agree. Mac frontend arrays
+are absent from its archive, so first differing frontend element is not yet
+located. This is consumed diagnostic evidence, not new acceptance; actual
+runtime versions and per-source hashes are in results/4090-mac-cpu-replay-v1.json.
+No v37 restart, calibration, retraining, or new dataset consumption.
