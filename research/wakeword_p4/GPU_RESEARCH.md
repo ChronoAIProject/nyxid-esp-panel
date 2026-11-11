@@ -4110,3 +4110,13 @@ Original training report copied unchanged;export audit verifies finite weights,
 frozenBN exact,int8[1,3,40] to uint8[1,1]. Unique original postprocessor
 authenticated recipe and started historical regression. No accuracy/FAR claim
 or promotion;no new/final data consumed,frozenv30 retained.
+
+### v40 rejected after fixed joint gate (2026-11-11)
+
+Original postprocessor66707 exit0;467saved score traces authenticated.
+Fixed138points:0eligible,maxmacro.7270833333333333,min14negative false clips.
+Historical threshold0.99609375:Kokoro{'target_any': [8, 16], 'common_false': [4, 48], 'cross_false': 0},VCTK{'target_any': [30, 60], 'common_false': [8, 180], 'cross_false': 2}.
+OldVox0events/8.173672725694447h,upper950.3665099367309777/h.
+Data coverage alone failed confusion gate. Original reports retained;no new/final
+scored,no promotion,freezev30. Next work must diagnose actual training support/
+confusion mechanism before another intervention;do not blind-tune mix/loss weights.
