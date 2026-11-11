@@ -28,6 +28,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--assets', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--training-partitions', type=Path, help='Existing generator metadata; expand to every historical training voice only')
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=False)
     for name, expected in [('kokoro-v1.0.onnx', MODEL_SHA), ('voices-v1.0.bin', VOICES_SHA)]:
@@ -38,11 +39,22 @@ def main():
     engine = Kokoro.from_session(session, str(a.assets/'voices-v1.0.bin'))
     # Already-used TRAINING voices only: this pilot is never an independent test.
     voices = ['af_bella', 'am_onyx', 'bf_isabella', 'bm_fable']
+    speeds = (.9, 1., 1.1)
+    role = 'training-only-mechanical-pilot'
+    partition_sha = None
+    if a.training_partitions:
+        partitions = json.loads(a.training_partitions.read_text())['voice_partitions']
+        voices = partitions['training']
+        assert len(voices) == len(set(voices)) == 20
+        assert not set(voices) & (set(partitions['validation']) | set(partitions['testing']))
+        partition_sha = sha(a.training_partitions)
+        speeds = (.8, .9, 1., 1.1, 1.2)
+        role = 'training-only-explicit-phone-expansion'
     phrases = [('hey_nyx', 'hˈeɪ nˈɪks'), ('hey_nick', 'hˈeɪ nˈɪk'),
                ('hey_next', 'hˈeɪ nˈɛkst'), ('hey_mix', 'hˈeɪ mˈɪks')]
     rows = []
     for voice in voices:
-        for speed in (.9, 1., 1.1):
+        for speed in speeds:
             for target, phones in phrases:
                 assert all(c in engine.tokenizer.vocab for c in phones)
                 session.requested_speed = speed; session.calls = []
@@ -64,7 +76,7 @@ def main():
                 clipped = int(np.count_nonzero(np.abs(pcm) >= 1))
                 # Preregistered mechanical gates, not listening or phoneme truth.
                 passed = finite and .2 <= len(pcm)/16000 <= 5 and rms >= .001 and clipped == 0
-                rows.append(dict(role='training-only-mechanical-pilot', voice=voice, speed=speed,
+                rows.append(dict(role=role, split='training', voice=voice, speed=speed,
                     target=target, phonemes=phones, token_ids=tokens.tolist(), native_durations=duration.tolist(),
                     native_samples=len(native), samples=len(pcm), native_rate=rate, rate=16000,
                     raw_path=raw.name, raw_sha256=sha(raw), path=wav.name, sha256=sha(wav),
@@ -75,6 +87,7 @@ def main():
     manifest.write_text(''.join(json.dumps(r)+'\n' for r in rows))
     report = dict(clips=len(rows), passed=sum(r['quality_pass'] for r in rows), voices=voices,
         model_sha256=MODEL_SHA, voices_sha256=VOICES_SHA, script_sha256=sha(Path(__file__)),
+        role=role, speeds=speeds, historical_partitions_sha256=partition_sha,
         kokoro_version=importlib.metadata.version('kokoro-onnx'), manifest_sha256=sha(manifest),
         gates='finite; mono16k; duration[0.2,5]s; RMS>=0.001; zero abs(sample)>=1; complete native output; exact input tokens and duration mapping',
         limits='Reused training voices and same generator; not independent data. Generated end is whole untrimmed output end, not final phoneme truth. Explicit phones constrain input, not acoustic correctness.',
