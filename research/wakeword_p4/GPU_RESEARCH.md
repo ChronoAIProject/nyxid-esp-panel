@@ -4014,3 +4014,16 @@ Export audit confirms finite saved weights,frozenBN unchanged,int8[1,3,40] to
 uint8[1,1]. Unique original postprocessor authenticated recipe and started historical
 regression. Export contract only; no accuracy/FAR/MCU parity or promotion claim.
 No new/final data consumed; frozenv30 retained pending full gates.
+
+### v39 rejected after completed fixed regression (2026-11-11)
+
+Original postprocessor session55928 exited0. Historical threshold.8984375:
+Kokoro target any9/16,common false2/48;VCTK8/60,false6/180,cross0.
+OldVox87 full streams8.173672725694447h,0events,upper95.3665099367309777/h.
+Authenticated467traces;fixed138point grid has0eligible points,max synthetic macro
+0.3645833333333333,minimum negative false clips8.
+Sequence loss alone failed joint positive/confusion gate. Preserve original reports
+and rejection;no newSLR83/newVox/final scored,no promotion,frozenv30 retained.
+Mac is separately building six-engine complete-container training-only candidate
+features under6f2cea3;not imported or mixed into v39. Future intervention needs
+verified data and a separately frozen hypothesis/recipe,not blind weight changes.
