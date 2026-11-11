@@ -18,6 +18,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tests/requirements-host.txt
+      - name: Install host test dependencies
+        run: python3 -m pip install -r tests/requirements-host.txt
       - run: sudo apt-get update && sudo apt-get install -y libssl-dev
       - run: cmake -S tests/host -B build-host && cmake --build build-host -j2
       - run: ctest --test-dir build-host --output-on-failure

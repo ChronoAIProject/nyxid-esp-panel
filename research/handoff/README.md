@@ -7,6 +7,22 @@ full-panel runtime. Track the independent
 Production still uses **Hi ESP**. Hey Nyx is **not accepted
 as an equivalent replacement**. The dining-room production panel is excluded.
 
+## Run lightweight host tests
+
+Firmware CI pins Python3.12 and installs only the numeric test dependency:
+
+```sh
+python3.12 -m venv .local/host-tests
+.local/host-tests/bin/python -m pip install -r tests/requirements-host.txt
+.local/host-tests/bin/python -m unittest discover -s research/handoff -v
+.local/host-tests/bin/python -m unittest discover -s tests/release -v
+```
+
+These15 research accounting tests and11 release tests require no TensorFlow,
+CUDA, model/audio datasets, secrets or device. A fresh environment without
+NumPy fails three test-module imports; install the pinned host requirements
+before discovery. The separate GPU environment below is for model research.
+
 ## Start on Linux
 
 ```sh
