@@ -54,7 +54,7 @@ def main():
                         help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--phone-bank", type=Path, help="Training-only paired phoneme posterior bank")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
-    parser.add_argument("--phone-objective", choices=("joint", "conditional"), default="joint",
+    parser.add_argument("--phone-objective", choices=("joint", "conditional", "ctc"), default="joint",
                         help="Phone posterior KL, or nonblank phone KL weighted by teacher nonblank mass")
     parser.add_argument("--phone-warmup-steps", type=int, default=0,
                         help="Fit only the auxiliary phone head on frozen training states before joint training")
@@ -144,7 +144,8 @@ def main():
     phone_sampler = None
     if args.phone_bank:
         from phone_distillation import Sampler as PhoneSampler
-        phone_sampler = PhoneSampler(args.phone_bank, records, hashlib.sha256(index_bytes).hexdigest(), frames)
+        phone_sampler = PhoneSampler(args.phone_bank, records, hashlib.sha256(index_bytes).hexdigest(),
+                                     frames, args.phone_objective)
     windows, windows_hash = load_windows(args.near_word_windows, index_bytes, records, frames) if args.near_word_windows else ({}, None)
     pair_sampler = PairSampler(records, windows, frames) if args.paired_near_words else None
     confusers = (MatchedConfusers(args.matched_confuser_bank, args.matched_confuser_arm, frames)

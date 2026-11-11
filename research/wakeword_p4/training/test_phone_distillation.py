@@ -1,5 +1,6 @@
 """Check phone timestamps, source isolation, sampler labels and control loss."""
 import hashlib
+import itertools
 import json
 from pathlib import Path
 import tempfile
@@ -55,6 +56,25 @@ class PhonePreparationTest(unittest.TestCase):
                 np.testing.assert_array_equal(data[i], x[positive])
                 np.testing.assert_array_equal(data[32+i], x[negative])
             self.assertEqual(sampler.metadata()['draws'], 8)
+            with self.assertRaises(ValueError):
+                Sampler(path, original, 'fixed-index', FRAMES, 'ctc')
+            teacher = np.zeros((4, 168, VOCAB), np.float32)
+            for i in range(4):
+                teacher[i, :, i+1] = 1
+            aligned = np.stack([align_posteriors(row) for row in teacher])
+            np.savez_compressed(path/'bank.npz', features=x, posteriors=aligned, teacher_posteriors=teacher)
+            meta.update(retained_teacher_frames=168, teacher_frame_stride_samples=320,
+                        teacher_frame_support_samples=400, data_sha256=digest(path/'bank.npz'))
+            (path/'bank.json').write_text(json.dumps(meta))
+            ctc = Sampler(path, original, 'fixed-index', FRAMES, 'ctc')
+            np.testing.assert_array_equal(ctc.targets[:, 0].argmax(-1), [1, 2, 3, 4])
+            self.assertTrue((ctc.targets[:, 1:].argmax(-1) == 0).all())
+            teacher[0, -1, 1] = 0; teacher[0, -1, 2] = 1
+            np.savez_compressed(path/'bank.npz', features=x, posteriors=aligned, teacher_posteriors=teacher)
+            meta['data_sha256'] = digest(path/'bank.npz')
+            (path/'bank.json').write_text(json.dumps(meta))
+            with self.assertRaises(ValueError):
+                Sampler(path, original, 'fixed-index', FRAMES, 'ctc')
             original[0]['split'] = 'validation'
             with self.assertRaises(ValueError):
                 Sampler(path, original, 'fixed-index', FRAMES)
@@ -74,11 +94,17 @@ class PhonePreparationTest(unittest.TestCase):
         weights = np.array([1., 5., 1., 5.], np.float32)
         q = np.full((4, STEPS, VOCAB), 1/VOCAB, np.float32)
         ids = np.arange(1, 5, dtype=np.float32)[:, None]
-        for objective in ('joint', 'conditional'):
+        for objective in ('joint', 'conditional', 'ctc'):
             with self.subTest(objective=objective):
                 control, auxiliary = make(), make()
                 auxiliary.set_weights(control.get_weights())
-                train = supervisor(auxiliary, q, 0., objective)
+                targets = q.copy()
+                if objective == 'ctc':
+                    targets[:] = 0
+                    targets[..., 0] = 1
+                    targets[:, 0, 0] = 0
+                    targets[:, 0, 1] = 1
+                train = supervisor(auxiliary, targets, 0., objective)
                 train(x, np.concatenate((y, ids), axis=1), weights)
                 control.train_on_batch(x, y, sample_weight=weights)
                 for a, b in zip(control.get_weights(), auxiliary.get_weights(), strict=True):
@@ -154,6 +180,26 @@ class PhonePreparationTest(unittest.TestCase):
         gradient = tape.gradient(loss, logits).numpy()
         self.assertTrue(np.isfinite(gradient).all())
         np.testing.assert_array_equal(gradient[..., 0], 0)
+
+    def test_ctc_loss_matches_exhaustive_paths_with_repeated_labels(self):
+        import tensorflow as tf
+        from phone_sequences import collapse
+        x = tf.keras.Input((STEPS*60,))
+        model = tf.keras.Model(x, tf.keras.layers.Dense(1, activation='sigmoid', name='classifier')(x))
+        train = supervisor(model, np.zeros((1, STEPS, VOCAB), np.float32), .01, 'ctc')
+        logits = np.array([[[.4, .1, -.2], [-.3, .2, .7], [.1, .9, .2]]], np.float32)
+        probabilities = np.asarray(tf.nn.softmax(logits))[0]
+        for sequence in ([1, 1], [1, 2], [2]):
+            target = np.zeros((1, 3, 3), np.float32); target[..., 0] = 1
+            for i, token in enumerate(sequence):
+                target[0, i, 0] = 0; target[0, i, token] = 1
+            total = sum(np.prod([probabilities[i, token] for i, token in enumerate(path)])
+                        for path in itertools.product(range(3), repeat=3) if collapse(path) == sequence)
+            self.assertAlmostEqual(float(train.phone_loss(target, logits)), -np.log(total)/len(sequence), places=5)
+            with tf.GradientTape() as tape:
+                variable = tf.Variable(logits)
+                loss = train.phone_loss(target, variable)
+            self.assertTrue(np.isfinite(tape.gradient(loss, variable).numpy()).all())
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 """Training-only paired phonetic targets and temporal auxiliary supervision."""
 import hashlib
 import json
+from collections import Counter
 
 import numpy as np
 
@@ -10,7 +11,7 @@ FRAMES, STEPS, VOCAB = 335, 67, 392
 
 
 class Sampler:
-    def __init__(self, path, records, index_sha256, frames):
+    def __init__(self, path, records, index_sha256, frames, objective='joint'):
         meta = json.loads((path/'bank.json').read_bytes())
         self.bank_sha256 = sha(path/'bank.json')
         if (frames != FRAMES or meta['feature_index_sha256'] != index_sha256
@@ -20,6 +21,9 @@ class Sampler:
         with np.load(path/'bank.npz', allow_pickle=False) as data:
             self.features = data['features']
             self.targets = data['posteriors']
+            if objective == 'ctc' and 'teacher_posteriors' not in data:
+                raise ValueError('CTC requires retained full-resolution teacher frames')
+            teacher_frames = data['teacher_posteriors'] if objective == 'ctc' else None
         rows = meta['rows']
         count = meta['pair_count']
         if (self.features.shape != (2*count, FRAMES, 40) or self.features.dtype != np.uint16
@@ -36,6 +40,21 @@ class Sampler:
                     or row['label'] != 1-i%2 or row['pair'] != i//2
                     or hashlib.sha256(self.features[i].tobytes()).hexdigest() != row['feature_sha256']):
                 raise ValueError('Phone target changes source labels or includes reserved audio')
+        self.sequence_metadata = None
+        if objective == 'ctc':
+            from prepare_phone_bank import align_posteriors
+            from phone_sequences import pack_teacher_targets
+            if (meta.get('retained_teacher_frames') != 168 or teacher_frames.shape != (2*count, 168, VOCAB)
+                    or teacher_frames.dtype != np.float32 or meta.get('teacher_frame_stride_samples') != 320
+                    or meta.get('teacher_frame_support_samples') != 400
+                    or not np.array_equal(np.stack([align_posteriors(row) for row in teacher_frames]), self.targets)):
+                raise ValueError('Full-resolution teacher identity or aligned targets differ')
+            self.targets, sequences = pack_teacher_targets(teacher_frames, STEPS)
+            self.sequence_metadata = {
+                'sequence_sha256': hashlib.sha256(json.dumps(sequences, separators=(',', ':')).encode()).hexdigest(),
+                'teacher_posteriors_sha256': hashlib.sha256(teacher_frames.astype('<f4', copy=False).tobytes()).hexdigest(),
+                'length_histogram': dict(sorted(Counter(map(len, sequences)).items())),
+                'encoding': 'Full168 greedy CTC collapse; nonempty labels padded by blank zero to 67 steps.'}
         self.rng = np.random.default_rng(431)
         self.order = iter(())
         self.draws = 0
@@ -58,13 +77,14 @@ class Sampler:
 
     def metadata(self):
         return {'bank_sha256': self.bank_sha256, 'pairs': self.count, 'draws': self.draws,
-                'schedule_sha256': self.digest.hexdigest(), 'steps': STEPS, 'vocabulary': VOCAB}
+                'schedule_sha256': self.digest.hexdigest(), 'steps': STEPS, 'vocabulary': VOCAB,
+                'sequence': self.sequence_metadata}
 
 
 def supervisor(model, targets, gain, objective='joint'):
     import tensorflow as tf
 
-    if objective not in ('joint', 'conditional'):
+    if objective not in ('joint', 'conditional', 'ctc'):
         raise ValueError('Unknown phone objective')
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
@@ -74,6 +94,13 @@ def supervisor(model, targets, gain, objective='joint'):
     full = tf.keras.Model(model.input, (model.output, logits))
 
     def phone_loss(q, phones):
+        if objective == 'ctc':
+            labels = tf.argmax(q, axis=-1, output_type=tf.int32)
+            lengths = tf.math.count_nonzero(labels, axis=-1, dtype=tf.int32)
+            losses = tf.nn.ctc_loss(labels, phones, lengths,
+                tf.fill((tf.shape(phones)[0],), tf.shape(phones)[1]),
+                logits_time_major=False, blank_index=0)
+            return tf.reduce_mean(losses/tf.cast(tf.maximum(lengths, 1), losses.dtype))
         if objective == 'conditional':
             # CTC blank is an alignment marker, not an acoustic silence label.
             # Fit the phone identity separately; uncertain/blank frames carry
@@ -105,6 +132,23 @@ def supervisor(model, targets, gain, objective='joint'):
         return loss
 
     def audit(features):
+        if objective == 'ctc':
+            from phone_sequences import collapse, edit_distance
+            total_loss = edits = phones = exact = 0
+            for start in range(0, len(features), 32):
+                x = np.clip(features[start:start+32].astype(np.float32)/25.6, 0, 26)
+                q = targets[start:start+32]
+                logits = full(x, training=False)[1]
+                total_loss += float(phone_loss(tf.constant(q), logits))*len(x)
+                for reference, prediction in zip(q.argmax(-1), np.asarray(logits).argmax(-1), strict=True):
+                    reference = reference[reference != 0].tolist()
+                    prediction = collapse(prediction)
+                    edits += edit_distance(reference, prediction)
+                    phones += len(reference)
+                    exact += reference == prediction
+            return {'ctc_loss': total_loss/len(features), 'sequences': len(features),
+                    'exact_sequences': exact, 'target_phones': phones, 'phone_edits': edits,
+                    'phone_error_rate': edits/phones}
         total_weight = total_kl = 0.
         nonblank_total = nonblank_correct = blank_total = blank_correct = 0
         for start in range(0, len(features), 32):
