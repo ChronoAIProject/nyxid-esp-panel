@@ -3813,3 +3813,14 @@ are absent from its archive, so first differing frontend element is not yet
 located. This is consumed diagnostic evidence, not new acceptance; actual
 runtime versions and per-source hashes are in results/4090-mac-cpu-replay-v1.json.
 No v37 restart, calibration, retraining, or new dataset consumption.
+
+### v37 full-source training completed (2026-11-11)
+
+Original training session exited0 after120000 steps; selected historical float
+checkpoint85000. Original training/export audit copied unchanged to results.
+Model54440B SHA09c5191e9b8a1ebe5ebfdfd62e22ea49f520d0eae4fe826910ec614187705d06,
+22801parameters,1459.0s report runtime. Export audit confirms finite saved weights,
+frozen BN unchanged, int8[1,3,40] to uint8[1,1]. Original queued postprocessor
+PID104582 authenticated recipe/batch128/pack/seed/model and began historical
+regression. This is export evidence only, not accuracy/FAR/MCU equivalence;
+no promotion or unused development/final exposure.
