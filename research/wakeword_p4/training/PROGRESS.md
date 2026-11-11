@@ -1781,10 +1781,34 @@ this commit; all processing will stay silent and use cached features.
 Both full-study arms launched from `25ad5c0` with immutable source snapshots.
 The complete 1,000-step warmups match between arms and preserve binary weights
 and optimizer. They reproduce the old training-fit counts (17/236 exact)
-and cache, with last-bit head differences from the separate dense-label
-implementation; no exact head-weight replay across those implementations is
+and cache, with small numerical head differences between implementations
+(maximum kernel difference 5.61e-6); no exact head-weight replay is
 claimed. The [compact study auditor](../../handoff/audit_compact_study.py)
 checks committed/executed plans, source, inputs, arguments, warmup, pair/target
 and representative schedules and the original binary export after completion,
 before new INT8 validation. Joint training and wake evaluation remain pending
 at this snapshot. No speaker, microphone or board is accessed.
+
+The [completed full compact-sequence study](../results/microwake-compact-phrase-ctc-v1.json)
+rejects the recipe. At .97, macro proxy recall changes from 81.8621% to
+84.1017% (+2.2396 points), while false near-word views rise from 74 to 89
+of 3,744. Worst engine/corpus false fraction rises from 6.25% to 7.2917%.
+Both have one continuous event in 7.323822 hours; neither has a zero-event
+point in the fixed 21-point grid. There is no strict-gate treatment point,
+and no threshold extension, final scoring or firmware promotion follows.
+
+Compact training fit does improve to 233/236 exact two-token sequences
+(98.73%), four token edits in 472 labels, and normalized loss .06564, versus
+17/236 exact and loss 1.08923 in control. This still does not qualify the
+actual scalar wake output. The compact head is discarded at scalar export;
+its retained checkpoint is research evidence, not a deployed verifier.
+
+The original binary control export, first 16 batches and representative inputs
+reproduce exactly. Both arms share the full warmup, all 24,000 pair draws,
+compact targets and PTQ inputs. The read-only audit passes and rejects a
+deliberately changed plan before scoring. The control's prior development
+score files are copied byte-exact only after its export/input replay passes;
+the new treatment validation and comparison both exit zero. Both exports
+retain the original operators/interface, 25,831 parameters and 61,712 bytes.
+These are size/graph checks, not new P4 timing or resource measurements.
+No audio device or board was accessed. The full goal remains open.
