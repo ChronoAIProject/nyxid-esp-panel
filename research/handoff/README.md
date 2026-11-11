@@ -1457,3 +1457,52 @@ training-only adapter gate fails. For retained local results, run
 `audit_compact_inference.py` with the usual artifacts/repository/export/features
 arguments and `--plan-repository-path research/wakeword_p4/training/plans/compact-positive-occurrence-v1.json`.
 Historical paths are provenance; relocated experiments need fresh launches.
+
+### Shared intent-phone versus atomic word diagnostic
+
+The [frozen plan](../wakeword_p4/training/plans/intent-phone-generalization-v1.json)
+tests a distinct training-only representation hypothesis after the prior
+scalar/head-filter failures. It replaces the four atomic second-word labels
+with shared dictionary-like phone strings, without using ASR labels or changing
+source intent. The original Cartesian bank reduces to 3,112 exact unique
+feature crops. A full fitted diagnostic and five engine-held-out fine-tunes
+compare both recipes at 1,000 steps each, keeping initialization and row draws
+paired. Parent encoder exposure, different head sizes and true target lengths
+are explicitly limited; these are not independent speaker/wake tests.
+
+The [completed result](../wakeword_p4/results/intent-phone-generalization-v1.json)
+rejects this recipe: engine-macro accuracy 81.1866% words versus 57.0649%
+phones, confusers predicted Nyx 74/1,360 versus 526/1,360. All 12 final
+checkpoints/scores, 3,112 actual crop identities, fold source exclusions,
+draw schedules and metrics are retained and independently audited. The phone
+head fails to fit complete greedy strings even on the full training bank;
+there is no automatic follow-on wake training, validation or firmware action.
+
+The [separate numerical plan](../wakeword_p4/training/plans/intent-phone-numerics-v1.json)
+and [result](../wakeword_p4/results/intent-phone-numerics-v1.json) check both
+frozen full-fit checkpoints on 60 predefined training crops. Compiled TF2.21
+CTC loss and logit gradients closely match an independent float64 expanded-state
+forward/backward reference. Actual phone loss/gradient maximum deltas are
+3.98431e-6 /4.61202e-7, with no missing gradient above reference magnitude .001.
+Fixed synthetic logits and exact-path/finite-difference reference tests are
+also retained. This does not support attributing the fit failure to a large
+CTC numerical error; it does not prove a unique optimization/data cause.
+
+The [public evidence archive](assets-intent-phone-generalization-v1.json)
+contains both `intent-phone-generalization-v1` and `intent-phone-numerics-v1`
+under `workspace/home-wake-research-20261110/`: actual checkpoints, crop/fold
+inventories, score files, numerical logits/losses/gradients, immutable source,
+plans, launches, runtime, logs and all audits. The broad-bank and original
+broad-study archives supply bank/initializer dependencies; full scalar features
+remain external and byte-bound. No source audio, credential, device state or
+firmware is included.
+
+Use [launch_intent_phone_fit.py](launch_intent_phone_fit.py) for a fresh training
+diagnostic with `--artifacts`, `--repository`, `--upstream`, `--features`,
+`--bank` and `--initial-weights` in the pinned runtime. For existing artifacts,
+[audit_intent_phone_fit.py](audit_intent_phone_fit.py) accepts those same input
+paths except upstream (read from the launch), plus `--output`. The independent
+numerical script [audit_intent_ctc_numerics.py](../wakeword_p4/training/audit_intent_ctc_numerics.py)
+uses `--plan`, `--study` (the completed representation run), `--upstream`,
+`--features`, `--bank`, `--initial-weights` and a fresh `--output`. Original
+absolute launch paths remain provenance; relocated runs must record new launches.

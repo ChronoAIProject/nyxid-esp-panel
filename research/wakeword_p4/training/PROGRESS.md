@@ -2617,3 +2617,54 @@ independent stable float64 forward/backward recurrence, also on fixed large
 synthetic logits. Three reference tests pass exhaustive path/posterior math,
 finite-difference gradients and logit-shift invariance. No fitting or wake
 validation is part of this diagnostic.
+
+## Shared-phone recipe rejected; compiled CTC numerics agree with reference
+
+The [completed representation result](../results/intent-phone-generalization-v1.json)
+retains all twelve planned final checkpoints and score files. Both arms use
+exactly the same row draw schedule and initial binary tensors in every fold.
+The independent audit reconstructs all 3,112 unique feature crops and original
+10,120-row grouping, all held-engine source exclusions, all 384,000 row draws,
+every classification/greedy/loss metric and the diagnostic rejection. Three
+in-memory changes to fold coverage, aggregate metrics and decision are all
+rejected without altering actual evidence.
+
+| Metric | Whole-word CTC | Shared intent-phone CTC |
+| --- | ---: | ---: |
+| Mean of held-engine macro accuracies | 81.1866% | 57.0649% |
+| Aggregate held-engine macro accuracy | 84.5715% | 60.8836% |
+| Aggregate Nyx intent recall | 90.8105% | 91.2100% |
+| Held-engine confusers predicted Nyx | 74/1,360 | 526/1,360 |
+| Full fitted-bank exact greedy strings | 2,983/3,112 | 0/3,112 |
+| Full fitted-bank CTC NLL per token | .0740042 | 3.18186 |
+
+The increased Nyx fraction comes with substantially worse intent discrimination;
+this exact 1,000-update recipe fails and does not proceed to mixed-source wake
+training, export or deployment. A full-fit failure limits this target/optimizer
+recipe; it does not prove all phoneme representations impossible. The head-size,
+target-length and initializer-exposure limitations in the frozen plan remain.
+
+The [completed numerical diagnostic](../results/intent-phone-numerics-v1.json)
+loads and tensor-hash-verifies both actual full-fit checkpoints, then checks
+the frozen first-three-crops per engine/class against independent float64 CTC.
+On the 60 actual phone samples, maximum compiled TensorFlow loss delta is
+3.98431e-6 and logit-gradient delta 4.61202e-7 (relative L2 2.85481e-7).
+The word arm has deltas 1.55214e-6 /2.54585e-7. Neither has a zero gradient
+where reference magnitude exceeds .001. Large synthetic logits up to +/-194
+also retain gradients: maximum loss delta 6.56302e-4 and gradient delta
+1.36695e-5. These observations do not support a large numerical CTC fault as
+the cause of this fitted-head failure, and do not establish a unique cause.
+
+The reference passes three exhaustive-path/posterior/finite-difference tests;
+the target/optimizer implementation passes five checks. A supplementary
+read-only audit reconstructs all retained actual/synthetic reference losses,
+gradients, deltas, frozen source/plan and parent checkpoint identities. This
+does not replay the complete optimizer trajectory or confer wake acceptance.
+All processes are terminal, work was silent, no reserved quality set was
+scored and no device or audio pipeline changed. The full Hi ESP goal is open.
+
+The combined evidence is [published](../../handoff/assets-intent-phone-generalization-v1.json)
+as a 3,279,110-byte archive, SHA256
+`db689897aee56a3579804f1727134d4b4a7c6650a1bb271324eb7e650b67e26b`.
+A fresh unauthenticated download verifies all 254 members and 253 listed
+member hashes, including both fitted checkpoints and actual numerical traces.
