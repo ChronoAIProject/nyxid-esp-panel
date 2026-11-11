@@ -1,0 +1,61 @@
+{
+  "role": "Actual training feature auxiliary gradient/shape smoke check; not recognition quality",
+  "finite_combined_loss": 0.47383829951286316,
+  "auxiliary_gradient_reaches_binary_model_variables": 13,
+  "frozen_bn_unchanged": true,
+  "binary_parameters": 22801,
+  "binary_output_shape": [
+    null,
+    1
+  ],
+  "class_counts": [
+    6,
+    6,
+    6,
+    6
+  ],
+  "binary_and_joint_inference_identical_before_step": true,
+  "auxiliary": {
+    "classes": {
+      "Hey Nyx.": 0,
+      "Hey Nicks.": 0,
+      "Hey Nix!": 0,
+      "Hey Nicks?": 0,
+      "Hey Nick.": 1,
+      "Hey Next.": 2,
+      "Hey Mix.": 3
+    },
+    "weight": 0.1,
+    "seed": 67726,
+    "batch_size": 24,
+    "samples_per_class": 6,
+    "manifest_sha256": "d21718f42dabaaf6818871cae93685aa3cce11f5a943b486d87fadba6d1887d4",
+    "groups": {
+      "0": {
+        "piper": 2585,
+        "kokoro": 285,
+        "qwen-cuda": 27
+      },
+      "1": {
+        "piper": 312,
+        "kokoro": 99,
+        "qwen-cuda": 21
+      },
+      "3": {
+        "piper": 262,
+        "kokoro": 95,
+        "qwen-cuda": 20
+      },
+      "2": {
+        "piper": 277,
+        "kokoro": 93,
+        "qwen-cuda": 22
+      }
+    },
+    "policy": "Separate 24 complete-source variant0 crops, equal classes and equal engines within class; shift end+1 and exclude sources exceeding24160samples to account for teacher60 unused suffix frame; no extra binary supervision, no augmentation; original binary batch and loss unchanged; deploy binary model only",
+    "limits": "Text intentions, not verified phone classes. No ambient class or phonetic endpoint truth. Extra forward pass/gradient changes training compute."
+  },
+  "source_sha256": "24bfdae4078b40113fe6b4a858240626bc09351c112659a47660c73d84887b8a",
+  "limits": "One batch on existing training features and v30 weights; not independent evaluation or deployed export proof.",
+  "check_script_sha256": "028450997d003a2ed08fbcb2766c1348717610446c99064316f9bddede54579b"
+}

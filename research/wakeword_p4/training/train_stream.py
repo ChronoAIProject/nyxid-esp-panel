@@ -38,6 +38,8 @@ def main():
                         help="Replace this many of 48 confusing negatives with training-positive prefixes")
     parser.add_argument("--mask-prefix-loss", action="store_true",
                         help="Keep sampled prefixes but give their unverified labels zero training weight")
+    parser.add_argument("--phrase-auxiliary-manifest", type=Path)
+    parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
     parser.add_argument("--hard-ambient-index", type=Path)
     parser.add_argument("--hard-ambient-count", type=int, default=0,
                         help="Replace this many of48 ambient slots with audited training-only real-speech hard windows")
@@ -66,6 +68,10 @@ def main():
         parser.error("prefix negatives must be 0..48")
     if args.mask_prefix_loss and not args.prefix_negatives:
         parser.error("mask-prefix-loss requires positive prefix-negatives")
+    if args.phrase_auxiliary_manifest and (args.architecture != 'teacher60' or frames != 150 or bn_policy != 'frozen'
+            or args.mask_prefix_loss or args.label_smoothing != 0
+            or not 0 < args.phrase_auxiliary_weight <= 1):
+        parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
     if not 0 <= args.hard_ambient_count <= 48 or bool(args.hard_ambient_index) != (args.hard_ambient_count > 0):
         parser.error("hard ambient index and count1..48 must be supplied together")
     if args.negative_candidates < 1:
@@ -273,6 +279,14 @@ def main():
     loss = (tf.keras.losses.BinaryCrossentropy(label_smoothing=args.label_smoothing)
             if args.label_smoothing else "binary_crossentropy")
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss=loss)
+    auxiliary = None
+    if args.phrase_auxiliary_manifest:
+        from phrase_auxiliary import PhraseAuxiliary
+        if model.losses:
+            raise ValueError('Auxiliary protocol does not support regularization losses')
+        auxiliary = PhraseAuxiliary(model, args.features, args.phrase_auxiliary_manifest,
+                                    args.phrase_auxiliary_weight)
+        (root/'phrase_auxiliary.json').write_text(json.dumps(auxiliary.report, indent=2)+'\n')
     # Valid stride-3, kernel-5 convolution consumes only 179 of 180
     # input frames. Phase 0 windows therefore end one 10 ms frame before
     # the streaming output they used to be compared with. Shift by the
@@ -341,7 +355,11 @@ def main():
             if step == int(args.steps*.5): model.optimizer.learning_rate.assign(3e-4)
             if step == int(args.steps*.8): model.optimizer.learning_rate.assign(1e-4)
             x, y, weights = batch()
-            loss = float(model.train_on_batch(x, y, sample_weight=weights))
+            if auxiliary is None:
+                loss = float(model.train_on_batch(x, y, sample_weight=weights))
+            else:
+                auxiliary_x, auxiliary_y = auxiliary.batch()
+                loss = float(auxiliary.step(x, y, weights, auxiliary_x, auxiliary_y))
             if step % 500 == 0:
                 print(json.dumps({"step": step, "loss": loss, "seconds": round(time.monotonic()-started, 1)}), flush=True)
             if step % args.eval_interval == 0 or step == args.steps:
@@ -355,6 +373,8 @@ def main():
                     best = rank
                     selected_step = step
                     model.save_weights(root/"best.weights.h5")
+                    if auxiliary is not None:
+                        auxiliary.network.save_weights(root/'best_auxiliary.weights.h5')
     model.load_weights(root/"best.weights.h5")
     bn_selected = snapshot(model)
     if bn_policy in ("frozen", "affine") and bn_selected["moving_statistics_sha256"] != bn_initial["moving_statistics_sha256"]:
@@ -399,6 +419,7 @@ def main():
               "label_smoothing_policy": "Training BCE targets y*(1-epsilon)+epsilon/2; sample weights unchanged; evaluation labels/windows unchanged",
               "negative_candidates": args.negative_candidates, "mining_seed": 4726,
               "mask_prefix_loss": args.mask_prefix_loss,
+              "phrase_auxiliary": auxiliary.report if auxiliary is not None else None,
               "mask_prefix_loss_policy": "Zero weight on all sampled prefix slots only; inputs, label placeholders, other weights and RNG draws unchanged; no claim of verified phonetic completeness",
               "hard_ambient": ({**hard_ambient.report, "count_per_batch": args.hard_ambient_count,
                                 "seed": 30726, "remaining_broad_ambient_slots": 48-args.hard_ambient_count,

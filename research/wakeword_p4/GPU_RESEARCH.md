@@ -3131,3 +3131,20 @@ Kokoro Nick99/100、Mix96/100、Next93/100；Qwen Nick21/24、Mix20/20、Next23/
 这是声学支持而非正确发音/音素边界证明；不推广为增强/RIR尾音覆盖。
 后续辅助头可以仅对这些完整源crop用意图类别训练，保留原二分类随机窗口任务，
 但必须预声明额外监督权重/类别映射/校准与检查点规则；本轮尚未启动新训练。
+
+## v34短语辅助分类预注册与端到端检查
+
+保留v30二分类batch128/prefix16、原权重/抽样/导出策略；额外24个完整源训练窗口，
+四类target/Nick/Next/Mix各6条、类内等引擎、独立RNG67726，无增强，CE权重0.1。
+使用共享binary Dense前的特征建立训练专用4类头，原binary BCE+0.1CE共同更新一次Adam。
+只按原binary开发规则选检查点与阈值；保存best_auxiliary权重，但导出原binary模型。
+这不是经核验的音素类别，也不是不增加训练计算的纯架构对照。
+120k/5k、teacher60/context150/frozenBN、原初始化与开发语料不变；最终集不评分。
+
+实际训练特征梯度检查通过：辅助loss更新13个共享变量、BN不变、binary原预测不变，
+24窗类别各6；两步完整训练/检查点/INT8转换检查通过，导出仍单uint8概率、22801参数。
+结果4090-phrase-auxiliary-smoke-v1.json、4090-phrase-auxiliary-export-check-v2.json。
+原152hop审计仅为feature覆盖；teacher60忽略最后输入帧，所以辅助crop end+1，
+仅保留24160样本内且实际149帧卷积支持覆盖全部PCM的源，防止错误完整性声明。
+该修正规则已重跑梯度及两步导出检查，旧v1流程日志保留，不作为正式训练结果。
+计划4090-v34-plan.json；正式脚本experiments/v34_phrase_auxiliary.sh。

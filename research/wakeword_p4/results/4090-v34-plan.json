@@ -1,0 +1,38 @@
+{
+  "role": "Preregistered v34 development-only short-phrase auxiliary experiment",
+  "baseline": "v30",
+  "change": "Original binary BCE plus0.1*4-class sparse categorical CE on separate24 complete-source crops per step. Original binary batch128/prefix16 and weights unchanged.",
+  "classes": [
+    "Hey Nyx/Nicks/Nix",
+    "Hey Nick",
+    "Hey Next",
+    "Hey Mix"
+  ],
+  "sampling": "Variant0 training-only full-PCM support manifest;6 per class, equal engines within class; independent numpy RNG67726; no score selection or auxiliary validation.",
+  "full_manifest_sha256": "d21718f42dabaaf6818871cae93685aa3cce11f5a943b486d87fadba6d1887d4",
+  "weight": 0.1,
+  "steps": 120000,
+  "eval_interval": 5000,
+  "binary_checkpoint_selection": "Original v30 binary-only continuous development selection; auxiliary CE never selects checkpoint or threshold.",
+  "deployment": "Remove auxiliary head by exporting original binary model only; preserve best joint weights for reproducibility.",
+  "unchanged": [
+    "teacher60/context150/frozenBN",
+    "reconstructed initialization",
+    "original binary batch and prefix16",
+    "negative candidates1",
+    "original feature splits",
+    "original INT8 calibration input strategy",
+    "original dense/expanded development protocol"
+  ],
+  "risks": [
+    "Intended texts may be mispronounced",
+    "Extra task and forward pass change gradient mix and compute; not a pure extra-data-free architecture comparison",
+    "No auxiliary silence/ambient class; only full-source crops are supervised",
+    "Potential source or clean-speech shortcuts; need full binary ambient/early-trigger evaluation"
+  ],
+  "final_data": "No use of three scored final datasets; fresh independent reference/data needed for acceptance.",
+  "trainer_sha256": "0048464d3c973e0388ccfe989ec92bc7e1c5f6c63d189f7df0c73addf8d366e5",
+  "auxiliary_source_sha256": "24bfdae4078b40113fe6b4a858240626bc09351c112659a47660c73d84887b8a",
+  "script_sha256": "0d8300328c47525eafba8b7457335237520c4243712dbef7606ba8b0dd3581da",
+  "crop_phase_correction": "teacher60 ignores last input frame; shift full-source support end+1, exclude sources >24160 samples, require actual model-used support covers full PCM. Older support audit describes152-hop feature support only."
+}
