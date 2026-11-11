@@ -1,0 +1,168 @@
+{
+  "plan_sha256": "3be8c1d88e7d05d6f51c63879423b099cf40555b8bd7b74b9477b862cfe26e61",
+  "rows_sha256": "1d0f9ee4955bdc2f70d2b7e3d6215da3f294cd0cab45eed70402b2efa0f9bfba",
+  "parent_deep_control_replayed": true,
+  "arms": {
+    "glorot": {
+      "result": "glorot.json",
+      "result_sha256": "67a6b4a5f195c4cf83c20c9b56b78441f3d8b453fe228b2fd31de8647dd298d5",
+      "summary": {
+        "confusion": [
+          [
+            1741,
+            0,
+            0,
+            11
+          ],
+          [
+            439,
+            3,
+            2,
+            4
+          ],
+          [
+            114,
+            0,
+            331,
+            3
+          ],
+          [
+            8,
+            0,
+            0,
+            456
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.680503949040646,
+        "recall_by_phrase": {
+          "nyx": 0.9937214611872146,
+          "mix": 0.006696428571428571,
+          "next": 0.7388392857142857,
+          "nick": 0.9827586206896551
+        },
+        "nyx_recall": 0.9937214611872146,
+        "confuser_false_nyx": 561,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.4125,
+        "mean_ctc_nll_per_token": 3.1818550670915986,
+        "greedy_exact_sequences": 0,
+        "target_tokens": 18656,
+        "greedy_edits": 12573,
+        "greedy_token_error_rate": 0.6739386792452831
+      },
+      "fit_gate_passed": false,
+      "parameters": 22420,
+      "initial_diagnostic": {
+        "array": "glorot-initial.npz",
+        "array_sha256": "dbe5e09248cec08dde6dcd10c6a6290ba774b9ba876febd1c111cecd2e9bb636",
+        "minimum_logit": -5.541415691375732,
+        "maximum_logit": 5.287950038909912,
+        "mean_entropy": 1.8615554571151733,
+        "mean_maximum_probability": 0.3181314170360565,
+        "argmax_counts": [
+          159,
+          0,
+          0,
+          93,
+          1,
+          937,
+          127,
+          0,
+          7,
+          16
+        ]
+      }
+    },
+    "zero": {
+      "result": "zero.json",
+      "result_sha256": "bf09bffd273402badf47f3a35f71b70a5490984329d9812d48cb2f671ecc04b2",
+      "summary": {
+        "confusion": [
+          [
+            1734,
+            7,
+            0,
+            11
+          ],
+          [
+            415,
+            28,
+            0,
+            5
+          ],
+          [
+            122,
+            1,
+            322,
+            3
+          ],
+          [
+            5,
+            0,
+            0,
+            459
+          ]
+        ],
+        "rows": 3112,
+        "macro_accuracy": 0.6900500413320736,
+        "recall_by_phrase": {
+          "nyx": 0.9897260273972602,
+          "mix": 0.0625,
+          "next": 0.71875,
+          "nick": 0.9892241379310345
+        },
+        "nyx_recall": 0.9897260273972602,
+        "confuser_false_nyx": 542,
+        "confuser_rows": 1360,
+        "confuser_false_nyx_fraction": 0.3985294117647059,
+        "mean_ctc_nll_per_token": 0.20586972242570784,
+        "greedy_exact_sequences": 2107,
+        "target_tokens": 18656,
+        "greedy_edits": 1225,
+        "greedy_token_error_rate": 0.06566252144082332
+      },
+      "fit_gate_passed": false,
+      "parameters": 22420,
+      "initial_diagnostic": {
+        "array": "zero-initial.npz",
+        "array_sha256": "5ab70ec5c45399200e810db720da0a954d9ec270bc8c3f694733dbd557823f33",
+        "minimum_logit": 0.0,
+        "maximum_logit": 0.0,
+        "mean_entropy": 2.3025853633880615,
+        "mean_maximum_probability": 0.10000002384185791,
+        "argmax_counts": [
+          1340,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "advance": false,
+  "accepted": false,
+  "limits": "Fixed dictionary-like synthesis-intent phones are not verified pronunciations. Training corpus and initializer already exposed;full-bank fit cannot establish unseen-speaker/engine generalization,open-set wake FAR,latency,P4 resources or long call stability. Initialization comparison is on one fixed corpus,encoder,optimizer and budget;it cannot establish a general initialization rule or the unique cause of all prior wake failures. No reserved quality data,audio device,board,firmware,PCM speed or capture/AEC/FIFO change.",
+  "scope": "Completed paired random versus neutral phone-head initialization diagnostic; fitted-bank gate fails.",
+  "training_source_commit": "eabd4ffe8945fac39728b5436e8822cf4150fb73",
+  "raw_result_sha256": "fc7d65d7ae2438dcb73313da89d9a3f2c65bbe77f96ac22ee3fac4ab2d997dde",
+  "input_result_audit_sha256": "6f1a035cc01793f78d488ea1b5a601e292754747e90e354bbf070b05a1a75b7a",
+  "all_initial_states_logits_final_checkpoint_logits_and_likelihoods_replayed": true,
+  "independent_reference_loss_deltas": {
+    "glorot": 0.00010218691832619697,
+    "zero": 8.08986474254425e-06
+  },
+  "software_checks": {
+    "neutral_initialization_and_encoder_gradient_tests": 2,
+    "tap_graph_and_scope_tests": 2,
+    "result": "passed",
+    "raw_logs_retained": true
+  },
+  "interpretation": "Neutral initialization materially improves fitted sequence loss/exact strings on this fixed recipe,but near-word discrimination remains poor. Full-fit macro68.05%->69.01%,exact0->2107/3112,confuser-to-Nyx561->542/1360. This rejects promotion of this initialization recipe alone. It does not prove useful generalization,open-set FAR or the unique cause of other wake failures."
+}

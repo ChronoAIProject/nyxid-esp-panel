@@ -2760,3 +2760,19 @@ authorized by this diagnostic alone. The existing fit/launcher/auditor are
 parameterized and snapshotted instead of duplicating the whole pipeline.
 Historical studies retain their immutable committed/executed sources.
 Everything remains silent; no production board or audio pipeline is touched.
+
+The [neutral-initialization result](../results/intent-phone-neutral-initialization-v1.json)
+is complete and audited. Random control exactly replays prior tensors/metrics.
+Zero initialization reduces CTC NLL/token 3.18186 -> .205870 and increases
+complete greedy strings 0 -> 2,107/3,112, but macro intent accuracy only
+68.0504% -> 69.0050%; confusers assigned Nyx remain 542/1,360 (versus 561).
+Mix recall is 28/448 (6.25%), versus 3/448. The unchanged full-fit gate fails;
+no held-engine/wake inference or hardware follows this recipe alone.
+
+Both frozen runs exit zero. The read-only audit replays both actual initial
+20-crop representations/logits/statistics, all final checkpoint logits and
+four-class likelihoods bitwise, all crop identities/draws/counts/gates, and
+independent float64 CTC samples. All four preflight tests pass with raw logs
+retained. Neutral logits are exactly zero, so the argmax blank count is a
+tie convention, not a trained blank preference. This isolates an initialization
+effect on these fixed fitted-bank metrics; it establishes no wake acceptance.
