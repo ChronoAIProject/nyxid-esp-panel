@@ -1,0 +1,48 @@
+{
+  "inputs": [
+    {
+      "name": "input",
+      "type": "tensor(int64)",
+      "shape": [
+        "batch_size",
+        "phonemes"
+      ]
+    },
+    {
+      "name": "input_lengths",
+      "type": "tensor(int64)",
+      "shape": [
+        "batch_size"
+      ]
+    },
+    {
+      "name": "scales",
+      "type": "tensor(float)",
+      "shape": [
+        3
+      ]
+    },
+    {
+      "name": "sid",
+      "type": "tensor(int64)",
+      "shape": [
+        1
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "tensor(float)",
+      "shape": [
+        "batch_size",
+        1,
+        1,
+        "Unsqueezeoutput_dim_3"
+      ]
+    }
+  ],
+  "audio_generated": false,
+  "wake_models_scored": false,
+  "source_sha256": "d5617812335a4741d615cc30de40643feeaeb4ebfbd45699d66b222f05294c2f"
+}

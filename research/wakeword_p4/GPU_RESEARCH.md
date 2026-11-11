@@ -3399,3 +3399,9 @@ HF树声明ONNX 76952753 bytes，LFS SHA 4e9fc85ab9009385319fc6bae7f55577f8a2d7e
 本轮只下载/冻结来源及分区，不生成最终音频、不评分或选阈值。
 后续先用development生成质量流程和阈值协议；最终89声音须另行冻结协议后才生成/评分。
 不以新来源替换既有最终集记录；原三个最终集继续封存。v35继续原训练任务。
+
+VCTK模型与元数据固定版本下载完成，ONNX大小/LFS SHA匹配；三文件重新读回SHA均通过。
+ONNX CPU成功加载，输入input/input_lengths/scales/sid，109声音分区20/89无交集。
+来源报告4090-piper-vctk-source-v1.json，原模型卡4090-piper-vctk-model-card-v1.md，
+接口报告4090-piper-vctk-onnx-schema-v1.json；未执行语音生成或唤醒评分。
+保留最终声音仅为预先隔离，不表示最终协议或独立验收已经完成。
