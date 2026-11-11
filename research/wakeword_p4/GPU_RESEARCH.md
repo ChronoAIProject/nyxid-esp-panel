@@ -3493,3 +3493,12 @@ PCM SHA、采样数及原生曝光秒数。源音频不切分、无音量归一�
 报告4090-voxconverse-development-{combined-audit,cache,feature-index,replay-manifest}-v1.json。
 仍无唤醒评分，8.17h不是FAR通过证明；保留test分片未访问。
 v35最新100000/120000步，后处理等待同进程，未更改训练数据或候选选择。
+
+## VoxConverse开发连续背景v30评分预声明
+
+87条8.173672725694447h，v30原始SHA/threshold .91796875/sliding_window5，
+不选阈值、不改音频；每录音重置，计入所有事件，原生秒数为曝光分母。
+背景无转写，不能认证完全无目标短语；不事后剔除任何事件，报告全背景激活计数与名义Poisson上界。
+仅开发，不解释为独立最终或新来源验收。比较可用原始scores后续开发网格分析，不用test。
+共享evaluate_frozen_human增加显式identity-unit=recording，并披露cache来源限制，
+只改标识解释和报告文案，事件/评分算法未改；旧使用默认speaker保持兼容。

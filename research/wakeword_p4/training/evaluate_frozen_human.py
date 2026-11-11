@@ -23,6 +23,8 @@ def main():
                    help='Descriptive corpus label only; does not alter evaluation')
     p.add_argument("--split", choices=("validation", "testing"), default="validation",
                    help="testing is the pre-existing development regression, never independent final")
+    p.add_argument('--identity-unit', choices=('speaker','recording'), default='speaker',
+                   help='Interpret the legacy speaker-key identifiers explicitly')
     a = p.parse_args()
     if a.output.exists():
         p.error('Use a fresh evaluation directory')
@@ -36,7 +38,7 @@ def main():
         raise ValueError('Changed stream index')
     rows = [r for r in json.loads((a.features/'human.json').read_text()) if r['split'] == a.split]
     if not rows or len({r['speaker'] for r in rows}) != len(rows):
-        raise ValueError('Need unique development speaker streams')
+        raise ValueError('Need unique development stream identifiers')
     a.output.mkdir(parents=True)
     detector, results, started = Detector(a.model), [], time.monotonic()
     for row in rows:
@@ -67,12 +69,14 @@ def main():
                   detector_source_sha256=sha(Path(__file__).with_name('evaluate.py')),
                   source_hours=hours, false_events=count, false_per_hour=count/hours,
                   false_per_hour_upper_95=float(.5*chi2.ppf(.95, 2*(count+1))/hours),
-                  event_policy=f'{window}-score mean; rising latch;67-step refractory; reset between speakers; all events counted',
+                  identity_unit=a.identity_unit,
+                  identity_scope=cache.get('speaker_id_scope', 'Historical speaker/session IDs'),
+                  event_policy=f'{window}-score mean; rising latch;67-step refractory; reset between {a.identity_unit}s; all events counted',
                   exposure_policy='Original WAV seconds; exclude utterance gaps/alignment padding',
                   seconds=round(time.monotonic()-started, 1), speakers=results,
                   positive_recall_measured=False, development_regression_scored=a.split == "testing",
                   independent_final_scored=False,
-                  limits=f'Development {a.corpus_name} negative audio only; Poisson event-count bound assumes stationary rate and does not establish general acoustic coverage, positive recall, deployment performance, or Hi ESP equivalence.')
+                  limits=f'Development {a.corpus_name} negative audio only; Poisson event-count bound assumes stationary rate and does not establish general acoustic coverage, positive recall, deployment performance, or Hi ESP equivalence. Source-specific limits: {cache.get("limits", "Historical development source limits apply")}')
     (a.output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report), flush=True)
 
 
