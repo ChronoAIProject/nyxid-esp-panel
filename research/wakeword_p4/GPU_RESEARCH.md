@@ -3824,3 +3824,21 @@ frozen BN unchanged, int8[1,3,40] to uint8[1,1]. Original queued postprocessor
 PID104582 authenticated recipe/batch128/pack/seed/model and began historical
 regression. This is export evidence only, not accuracy/FAR/MCU equivalence;
 no promotion or unused development/final exposure.
+
+### v37 rejected after complete exploratory regression (2026-11-11)
+
+Original postprocessor session2676 exited0; no duplicate jobs. Original reports
+copied unchanged. Historical INT8 threshold.99609375 was explicitly nonviable:
+544/2160 proxy positives, macro.285677; hard-negative false clip1.5625% and max
+source2.1354%. Mandarin/DiPCo/Libri-dev-other zero events at that threshold.
+Kokoro target any7/16 with3/48 common-negative false clips; VCTK14/60 with9/180.
+Old Vox87 recordings/8.173672725694447h had zero events, upper95.3665099367309777/h.
+The fixed138-point two-source/old-Vox grid selectednull: max synthetic macro.4
+below.48125 and minimum12 negative false clips, despite passing background.
+Calibrator authenticated all467 saved score traces. No new SLR83/dev2-dev3/final
+exposure. Streaming probe reset passed, MAE.00079089/max.241607; float1/4 vs INT8
+0/4 probe hits, not a general quantization-loss conclusion. Reject v37 and retain
+v30; no threshold extension, voice removal or endpoint/phonetic causal claim.
+Full phrase-distribution replacement alone did not meet the synthetic goal.
+Further work should diagnose score/representation and same-checkpoint quantization
+before another long training run, preserving all failures and source splits.
