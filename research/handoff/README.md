@@ -1633,3 +1633,35 @@ actual log/exit and the secondary fixed-reference breakdown; its original
 absolute feature path needs updating for a relocated fresh run. Preserve the
 historical sources and launch paths as provenance; never overwrite retained
 scores or claim cached reconstruction is independent inference/acceptance.
+
+### Prepared word encoder initialization comparison
+
+The [new plan](../wakeword_p4/training/plans/microwake-word-encoder-initialization-v1.json)
+tests the retained training-only full-fit word encoder as a different initial
+tensor group for the original scalar BCE plus .1 word CTC recipe. Both arms
+keep the original scalar classifier at transfer, then train it normally during
+the same 3,000 downstream updates. The old word head and optimizer are discarded;
+both fresh auxiliary heads receive the same 1,000-step frozen-encoder warmup
+recipe and row draws. Encoder-dependent caches/head fits intentionally differ.
+Control must still replay its original complete warmup and scalar model exactly.
+The unchanged development grid and quality gates apply. No result or accepted
+model is claimed by preparing these weights.
+
+The [prepared initializer archive](assets-word-encoder-initializer-v1.json)
+contains all 28 byte-bound preparation files, original scalar initializer,
+conversion/verification code, raw parent word checkpoint/report/plan/audit,
+actual commands/logs and synthetic roundtrip probes. A fresh unauthenticated
+download verifies all 30 listed member hashes and lengths. It contains no
+audio or full feature caches. Training-only intent labels, corpus exposure,
+weak held-engine generalization and retrospective initializer choice remain
+limitations; no preparation probe measures wake quality.
+
+Use training source commit `2e9277f` with the same launcher/input options as
+the preceding study, changing `--plan` to
+`research/wakeword_p4/training/plans/microwake-word-encoder-initialization-v1.json`
+and adding `--treatment-initializer <extracted word-encoder-initializer-v1>`.
+The parent control remains `microwake-compact-broad-ctc-v1`. The launcher checks
+the complete prepared inventory before copying it into the new run and points
+only treatment at its scalar weights. Original features, background inventory,
+bank and pinned upstream/runtime remain separate dependencies. The live Mac
+run and any later full results retain their own commands, raw logs and audits.
