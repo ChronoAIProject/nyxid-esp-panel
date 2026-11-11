@@ -4258,3 +4258,16 @@ no exact/all6597actualstream claim. All variables unchanged,optimizer0.
 Next actual exported float replay on all380already-consumed olddev clips started,
 fixed.99609375,INT8fulltrace exact-reproduction required. Diagnostic only,no
 new/final,FARrescue,thresholdselection or promotion;frozenv30 retained.
+
+### v41 actual float old-development replay (2026-11-11)
+
+Original session43081 exit0;all380olddev fullINT8smoothed traces reproduce exactly.
+Actual exportedfloat streams at fixed.99609375:Kokoro targetany9/16,negative3/64;
+VCTK26/60,negative10/240,identical INT8 counts. Clip-level event-present decisions
+agree380/380;8clips have differing event indices,so no exact numerical/timing parity.
+Thus these13confusion clips already fail in float;quantization is not necessary
+for these observed failures. Not proof of sole cause or universalfloat/INT8parity.
+No threshold selection,newFAR,new/final,training or promotion. Frozenv30 retained.
+Next examine positive full-source temporal support alongside the proven negative
+support change before another intervention;do not repeat negative-only sampling
+or local five-score supplement as solved approaches.
