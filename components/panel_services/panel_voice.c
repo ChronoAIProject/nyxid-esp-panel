@@ -859,6 +859,92 @@ static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,
         if(wn->detect(model,scratch)<0)return false;
     return true;
 }
+
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+typedef struct {
+    unsigned calls,pcm_samples,max_us,total_us;
+    int64_t start_us;
+    uint64_t samples;
+} wake_clock_t;
+
+typedef struct {
+    uint64_t sample_end;
+    int64_t start_us,end_us;
+    uint32_t rx_bytes,rx_overflows;
+} wake_clock_event_t;
+#endif
+
+static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,
+    int16_t *scratch,size_t *used,int chunk,const int16_t *pcm,size_t count,bool *dirty
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+    ,wake_clock_t *clock,wake_clock_event_t *event,bool measure_dma
+#endif
+    )
+{
+    bool hit=false;
+    for(size_t at=0;at<count;++at) {
+        scratch[(*used)++]=pcm[at];
+        if(*used!=(size_t)chunk)continue;
+        *used=0;*dirty=true;
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+        const int64_t start=esp_timer_get_time();
+        if(!clock->start_us)clock->start_us=start;
+#endif
+        int detected=wn->detect(model,scratch);
+#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+        const int64_t end=esp_timer_get_time();
+        const unsigned elapsed=(unsigned)(end-start);
+        clock->calls++;clock->pcm_samples+=(unsigned)chunk;
+        clock->samples+=(unsigned)chunk;clock->total_us+=elapsed;
+        if(elapsed>clock->max_us)clock->max_us=elapsed;
+        if(detected>0 && !hit) {
+            // One past the first returning detector block, after priming.
+            event->sample_end=clock->samples;event->start_us=start;event->end_us=end;
+            if(measure_dma)nyx_wake_capture_counters(&event->rx_bytes,&event->rx_overflows);
+        }
+#endif
+        if(detected<0)return -1;
+        if(detected>0)hit=true;
+    }
+    return hit;
+}
+
+#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
+static void probe_wake_clock(const esp_wn_iface_t *wn,model_iface_data_t *model,
+    int16_t *scratch,int detector_chunk,int read_chunk,bool *dirty)
+{
+    extern const uint8_t start[] asm("_binary_panel_wake_clock_pcm_start");
+    extern const uint8_t end[] asm("_binary_panel_wake_clock_pcm_end");
+    const size_t bytes=end-start;
+    if(bytes==0 || bytes>16000*2*10 || bytes%((size_t)read_chunk*2) ||
+            bytes%((size_t)detector_chunk*2)) {
+        ESP_LOGE("panel.wake.fixture","Invalid fixture geometry");return;
+    }
+    // Run once after the real model's priming, before the codec is resumed.
+    // A positive test result is never sent to call startup or preroll.
+    const uint32_t crc=(uint32_t)crc32(0,start,bytes);
+    wake_clock_t clock={.start_us=esp_timer_get_time()};
+    size_t used=0;
+    for(size_t at=0;at<bytes/2;at+=(size_t)read_chunk) {
+        const int64_t read_us=esp_timer_get_time();
+        wake_clock_event_t event={0};
+        int result=feed_wake_model(wn,model,scratch,&used,detector_chunk,
+            (const int16_t *)start+at,(size_t)read_chunk,dirty,&clock,&event,false);
+        if(result<0)break;
+        if(result>0) {
+            ESP_LOGI("panel.wake.fixture",
+                "crc32=%u samples=%u read_chunk=%d detect_chunk=%d start_us=%lld "
+                "sample_end=%llu read_end=%u read_us=%lld detect_start_us=%lld detect_end_us=%lld",
+                (unsigned)crc,(unsigned)(bytes/2),read_chunk,detector_chunk,(long long)clock.start_us,
+                (unsigned long long)event.sample_end,(unsigned)(at+read_chunk),(long long)read_us,
+                (long long)event.start_us,(long long)event.end_us);
+            return;
+        }
+    }
+    ESP_LOGE("panel.wake.fixture","Expected detector event missing");
+}
+#endif
+
 const char *panel_voice_wake_word(void)
 {
 #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
@@ -886,6 +972,9 @@ static void wake_task(void *arg)
     int16_t agc_input[160],agc_output[160];
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
     unsigned wake_epoch=0;
+#endif
+#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
+    bool fixture_tested=false;
 #endif
     for (;;) {
         atomic_store(&wake_listening,false);
@@ -947,6 +1036,12 @@ static void wake_task(void *arg)
             ESP_LOGW("panel.wake","Research Hi ESP baseline: raw idle mic; call and preroll remain AEC/AGC");
 #endif
         }
+#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
+        if(!fixture_tested) {
+            fixture_tested=true;
+            probe_wake_clock(wn,model,detect,wn_chunk,chunk,&model_dirty);
+        }
+#endif
         esp_err_t err=product_codec_dev_resume();
         if(err==ESP_OK)err=product_codec_mute_set(false);
         // The pinned WakeNet9 clean() dereferences unallocated lazy queues on
@@ -970,22 +1065,20 @@ static void wake_task(void *arg)
         xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
         wake_status("listening");
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
-        int64_t wake_window_started=esp_timer_get_time();
-        unsigned wake_calls=0,wake_pcm_samples=0,wake_max_us=0,wake_total_us=0,wake_read_bytes=0;
-        uint64_t epoch_read_samples=0,epoch_detect_samples=0;
+        wake_clock_t clock={.start_us=esp_timer_get_time()};
+        unsigned wake_read_bytes=0;
+        uint64_t epoch_read_samples=0;
         uint32_t epoch_rx_bytes,epoch_rx_overflows;
         nyx_wake_capture_counters(&epoch_rx_bytes,&epoch_rx_overflows);
         ESP_LOGI("panel.wake.clock",
             "begin epoch=%u start_us=%lld read_chunk=%d detect_chunk=%d rx_bytes=%u rx_overflows=%u",
-            ++wake_epoch,(long long)wake_window_started,chunk,wn_chunk,(unsigned)epoch_rx_bytes,(unsigned)epoch_rx_overflows);
+            ++wake_epoch,(long long)clock.start_us,chunk,wn_chunk,(unsigned)epoch_rx_bytes,(unsigned)epoch_rx_overflows);
 #endif
         while(err==ESP_OK) {
             size_t got=0;err=product_i2s_read(capture,chunk*4,&got,1000);
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
             const int64_t read_done_us=esp_timer_get_time();
-            int64_t trigger_start_us=0,trigger_end_us=0;
-            uint64_t trigger_sample_end=0;
-            uint32_t trigger_rx_bytes=0,trigger_rx_overflows=0;
+            wake_clock_event_t event={0};
 #endif
             xSemaphoreTake(wake_lock,portMAX_DELAY);
             voice_call_t *c=wake_call;
@@ -1041,59 +1134,35 @@ static void wake_task(void *arg)
                 // baseline uses this same input path for a matched comparison.
                 wake_pcm=mic;wake_samples=(size_t)chunk;
 #endif
-                for(size_t at=0;at<wake_samples;++at) {
-                    detect[wn_used++]=wake_pcm[at];
-                    if(wn_used==(size_t)wn_chunk) {
-                        wn_used=0;
-                        model_dirty=true;
+                int detected=feed_wake_model(wn,model,detect,&wn_used,wn_chunk,wake_pcm,wake_samples,&model_dirty
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
-                        const int64_t wake_detect_started=esp_timer_get_time();
-                        if(!wake_window_started)wake_window_started=wake_detect_started;
+                    ,&clock,&event,true
 #endif
-                        int detected=wn->detect(model,detect);
-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
-                        const int64_t wake_detect_finished=esp_timer_get_time();
-                        const unsigned elapsed=(unsigned)(wake_detect_finished-wake_detect_started);
-                        wake_calls++;
-                        wake_pcm_samples+=(unsigned)wn_chunk;
-                        epoch_detect_samples+=(unsigned)wn_chunk;
-                        wake_total_us+=elapsed;
-                        if(elapsed>wake_max_us)wake_max_us=elapsed;
-                        if(detected>0 && !triggered) {
-                            // One-past-end sample of the first returning
-                            // detector block, excluding synthetic priming.
-                            trigger_sample_end=epoch_detect_samples;
-                            trigger_start_us=wake_detect_started;
-                            trigger_end_us=wake_detect_finished;
-                            nyx_wake_capture_counters(&trigger_rx_bytes,&trigger_rx_overflows);
-                        }
-#endif
-                        if(detected<0){err=ESP_FAIL;wake_status("error");break;}
-                        if(detected>0)triggered=true;
-                    }
-                }
+                    );
+                if(detected<0){err=ESP_FAIL;wake_status("error");}
+                triggered=detected>0;
             }
             xSemaphoreGive(wake_lock);
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
             // Both engines use the same measurement boundary. Report outside
             // the audio lock and never during a call, warmup, or failed read.
             if(c || triggered) {
-                wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=wake_read_bytes=0;
-                wake_window_started=0;
+                clock=(wake_clock_t){.samples=clock.samples};
+                wake_read_bytes=0;
             } else if(err==ESP_OK) {
                 wake_read_bytes+=(unsigned)got;
-                if(wake_pcm_samples>=16000*5) {
+                if(clock.pcm_samples>=16000*5) {
                     const int64_t now=esp_timer_get_time();
                     uint32_t rx_bytes, rx_overflows;
                     nyx_wake_capture_counters(&rx_bytes,&rx_overflows);
                     ESP_LOGI("panel.wake.timing",
                         "calls=%u pcm_samples=%u wall_us=%lld detect_us=%u max_us=%u stack_free=%u "
                         "end_us=%lld read_bytes=%u pending_samples=%u rx_bytes=%u rx_overflows=%u",
-                        wake_calls,wake_pcm_samples,(long long)(now-wake_window_started),wake_total_us,wake_max_us,
+                        clock.calls,clock.pcm_samples,(long long)(now-clock.start_us),clock.total_us,clock.max_us,
                         (unsigned)uxTaskGetStackHighWaterMark(NULL),(long long)now,wake_read_bytes,(unsigned)wn_used,
                         (unsigned)rx_bytes,(unsigned)rx_overflows);
-                    wake_calls=wake_pcm_samples=wake_total_us=wake_max_us=wake_read_bytes=0;
-                    wake_window_started=now;
+                    clock=(wake_clock_t){.start_us=now,.samples=clock.samples};
+                    wake_read_bytes=0;
                 }
             }
 #endif
@@ -1117,9 +1186,9 @@ static void wake_task(void *arg)
                 ESP_LOGI("panel.wake.clock",
                     "event epoch=%u sample_end=%llu read_end=%llu read_us=%lld detect_start_us=%lld "
                     "detect_end_us=%lld rx_bytes=%u rx_overflows=%u",
-                    wake_epoch,(unsigned long long)trigger_sample_end,(unsigned long long)epoch_read_samples,
-                    (long long)read_done_us,(long long)trigger_start_us,(long long)trigger_end_us,
-                    (unsigned)trigger_rx_bytes,(unsigned)trigger_rx_overflows);
+                    wake_epoch,(unsigned long long)event.sample_end,(unsigned long long)epoch_read_samples,
+                    (long long)read_done_us,(long long)event.start_us,(long long)event.end_us,
+                    (unsigned)event.rx_bytes,(unsigned)event.rx_overflows);
 #endif
                 if(call_result!=ESP_OK) {
                     atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);break;

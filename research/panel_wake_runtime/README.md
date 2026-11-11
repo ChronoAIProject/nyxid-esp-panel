@@ -85,6 +85,36 @@ verified two idle epoch markers and 35.17 seconds of continuous capture
 accounting, with zero new overflows. The original app and Hi ESP listener
 were restored. No positive event was exercised in that check.
 
+To exercise a positive detector return without any playback or recording, use
+`rendered/Daniel-5-0.wav` from the [public paired Mac regression asset](../handoff/README.md#portable-paired-pcm-baseline).
+The standalone board benchmark already measured its first return at sample
+46080 with pinned WakeNet9 `DET_MODE_95` and 63 zero priming blocks. Prepare
+the exact PCM and build the raw Hi ESP timing arm with one additional option:
+
+```sh
+python research/panel_wake_runtime/probe_event_clock.py prepare "$WAV" "$PRIVATE_PCM"
+idf.py -B "$PRIVATE_BUILD" -DNYX_PANEL_RESEARCH_WAKE_CLOCK_PCM="$PRIVATE_PCM" build
+```
+
+Use the guarded full-app runner below with `--experimental-wake-word 'Hi ESP'`.
+Pass this command after the runner's `--`:
+
+```sh
+python research/panel_wake_runtime/probe_event_clock.py audit \
+  "$PRIVATE_PCM" "$RUN_OUTPUT/uart-private.log" "$PRIVATE_REPORT"
+```
+
+The probe runs once after priming and feeds the same block accumulator
+and timer as the normal listener. A separate `panel.wake.fixture` marker
+binds the board's PCM CRC, block geometry, sample position and timer order
+to the expected result. The test input stays out of the call and preroll;
+the model is recreated before normal listening. The probe does not measure
+the microphone, I2S or acoustic latency. Remove the cached option with
+`-DNYX_PANEL_RESEARCH_WAKE_CLOCK_PCM=` before building other timing arms.
+The [positive USB board check](../wakeword_p4/results/hiesp-event-clock-positive-v1.json)
+matched sample 46080 exactly and verified normal listening before and after
+restoring the original app.
+
 ## Build
 
 Use the release's ESP-IDF 5.5.4 environment and dependency versions. Set the
