@@ -1822,3 +1822,11 @@ same cached step 17,473, 524.36 seconds into the LibriSpeech stream, within
 `1183-133256-0018` at 1.94 seconds. This is cached event timing, not a phonetic
 endpoint. That validation utterance is not added to training. Improved compact
 sequence fit still has not removed the scalar detector's existing error.
+
+The [public full-study supplement](../../handoff/assets-compact-phrase-ctc-v1.json)
+preserves both complete runs, their executed sources, binary/auxiliary weights,
+scalar exports, full development traces, audits and postprocessing procedure.
+The unauthenticated download and all 279 listed member hashes are verified.
+Bank/initializer dependencies and the separate scalar-feature-cache requirement
+are explicit. There is no source audio, device state or firmware. No job from
+this study remains running and none of its models is accepted for deployment.

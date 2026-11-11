@@ -1080,3 +1080,26 @@ bank/initializer dependencies; the full scalar feature cache is separate.
 H5 weights do not retain Adam slots. The unauthenticated download and all 88
 listed member hashes are verified. No audio, device state or firmware is
 included, and the complete Hi ESP comparison remains open.
+
+The [full compact-sequence supplement](assets-compact-phrase-ctc-v1.json)
+retains the subsequent binary-only versus compact CTC auxiliary experiment.
+Both share 1,000 frozen-head warmup and 3,000 mixed-source joint updates.
+The original binary control export and input/PTQ identities replay exactly;
+its prior development score files are reused byte-exact after that audit.
+The new treatment's full validation and comparison finish successfully, but
+the recipe fails the fixed advancement gate: macro proxy recall improves
+at .97 while false near-word views increase, and one continuous event remains.
+The fitted sequence head is retained for research and discarded from both
+scalar exports. It does not qualify the detector for deployment.
+
+The study root is
+`workspace/home-wake-research-20261110/microwake-compact-phrase-ctc-v1`.
+Executed sources, launch/plan, warmup and final binary/auxiliary weights,
+scalar INT8 models, all development scores/event arrays, read-only input audit,
+changed-plan rejection check and cached error-change analysis are included.
+Supporting postprocessing scripts and their provenance are retained under
+`repo/research`. Bank/initializer dependencies are explicit, and the full
+scalar feature cache is separate. H5 files do not contain Adam slots.
+The unauthenticated public download and all 279 listed member hashes are
+verified. No source audio, device state or firmware is included. Processing
+stayed silent, and real-speaker, latency, resource and call parity remain open.
