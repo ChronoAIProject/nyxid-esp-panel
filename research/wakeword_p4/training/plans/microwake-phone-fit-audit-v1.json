@@ -1,0 +1,89 @@
+{
+  "scope": "Exact recipe replay to audit phonetic head learning and preserve its checkpoint; no new model selection.",
+  "hypothesis": "Training the encoder to retain teacher phone posteriors can improve near-word discrimination without adding any inference head.",
+  "parent_plan_sha256": "57e4df3b3f1c1d1d365db022a11c4012ed449b9f0ca4cd1166aca894dd70976f",
+  "source_sha256": {
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "train_stream.py": "fc63d1d53d0ba1a2af2f463bff7783a00250a550698ada6e0382f2776990f67e",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "ae1d04b48b58ff4f0de5b72095c28457a475b9f64bb8b6ff1ae279a78098fe66",
+    "phone_distillation.py": "e1685a0d6ebd0c15293f7788af173632202d62e32f3455a51f92109a7c53f3e2"
+  },
+  "windows_sha256": "c64330e2a02fbd2b819cf9b32da4aad775669bf5cf7b1e5785efb83396530809",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "1000",
+    "--eval-interval",
+    "1000",
+    "--learning-rate",
+    "0.00005",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "6"
+  ],
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Eight pairs per training batch replace eight positive and eight TTS-negative slots, fixed seed431 pair permutations, same fixed complete windows in both arms. No original source labels are replaced by teacher classes.",
+  "arms": {
+    "phonetic": 0.01
+  },
+  "advance": "No advancement from replay. Require exact original INT8 bytes before reusing existing development results.",
+  "limits": "118 training-only pairs, 236 rendered windows. Offline teacher sees each complete training crop. Model-coordinate timestamps are not human phone endpoints. This experiment does not establish independent generalization, acoustic latency or P4 acceptance.",
+  "objective": "Both arms use identical 118-pair windows with original binary labels and weighted BCE. Only treatment adds gain .01 times teacher/student phoneme KL on the 67 temporal encoder outputs. A 392-class auxiliary head is discarded before export. Frame weights .05+.95*(1-P(blank)) preserve blank learning and emphasize sparse phone spikes.",
+  "phone_bank_sha256": "1b01ae0fbbba29cda6fea93236d3f9c9d1b848a7def48ac005d45ad76da08010",
+  "phone_bank_data_sha256": "762cd247ede0011f9408fecc3e74ab70ba9f95a47fdbb3709935dad2fdb28c02",
+  "expected_int8_sha256": "dd0855205e92b2025ef2c52feed16e1c81fa6c12be4d9ca285c158211a0242c2"
+}

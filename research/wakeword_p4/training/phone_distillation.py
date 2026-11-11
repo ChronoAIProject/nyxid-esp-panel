@@ -89,4 +89,28 @@ def supervisor(model, targets, gain):
         model.optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
         return loss
 
+    def audit(features):
+        total_weight = total_kl = 0.
+        nonblank_total = nonblank_correct = blank_total = blank_correct = 0
+        for start in range(0, len(features), 32):
+            x = np.clip(features[start:start+32].astype(np.float32)/25.6, 0, 26)
+            q = targets[start:start+32]
+            logits = np.asarray(full(x, training=False)[1])
+            logp = np.asarray(tf.nn.log_softmax(logits, axis=-1))
+            divergence = np.sum(q*(np.log(np.maximum(q, 1e-30))-logp), axis=-1)
+            weight = .05+.95*(1-q[..., 0])
+            total_kl += float(np.sum(weight*divergence))
+            total_weight += float(weight.sum())
+            labels, prediction = q.argmax(-1), logits.argmax(-1)
+            nonblank = labels != 0
+            nonblank_total += int(nonblank.sum())
+            nonblank_correct += int(((prediction == labels) & nonblank).sum())
+            blank_total += int((~nonblank).sum())
+            blank_correct += int(((prediction == labels) & ~nonblank).sum())
+        return {'weighted_kl': total_kl/total_weight,
+                'nonblank_frames': nonblank_total, 'nonblank_correct': nonblank_correct,
+                'blank_frames': blank_total, 'blank_correct': blank_correct}
+
+    train.audit = audit
+    train.auxiliary_model = full
     return train

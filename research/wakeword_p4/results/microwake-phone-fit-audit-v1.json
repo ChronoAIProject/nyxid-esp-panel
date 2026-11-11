@@ -1,0 +1,42 @@
+{
+  "scope": "Exact recipe replay to audit phonetic head learning and preserve its checkpoint; no new model selection.",
+  "plan_sha256": "c08ef778901d368e817dfc71045f47e0ea0da190fe70f42d5f0afb6a441da2be",
+  "training_sha256": "a472bcb7328bb9ef3d21410abdbf862cbf7518879f2fe37672cde05c547df677",
+  "model_sha256": "dd0855205e92b2025ef2c52feed16e1c81fa6c12be4d9ca285c158211a0242c2",
+  "equivalence_checks": {
+    "model_sha256": true,
+    "training_prefix_sha256": true,
+    "representative_training_inputs_sha256": true,
+    "initial_weights_sha256": true,
+    "phone_schedule": true,
+    "expected_int8": true,
+    "source_hashes": true
+  },
+  "before": {
+    "weighted_kl": 5.317448414563324,
+    "nonblank_frames": 578,
+    "nonblank_correct": 0,
+    "blank_frames": 15234,
+    "blank_correct": 5
+  },
+  "after": {
+    "weighted_kl": 4.230047474787855,
+    "nonblank_frames": 578,
+    "nonblank_correct": 95,
+    "blank_frames": 15234,
+    "blank_correct": 6364
+  },
+  "after_nonblank_top1_fraction": 0.1643598615916955,
+  "after_blank_top1_fraction": 0.4177497702507549,
+  "relative_weighted_kl_reduction": 0.2044967538937127,
+  "auxiliary_checkpoint": {
+    "file": "phone-step-1000.weights.h5",
+    "sha256": "a214d80d87bbed9983392879c15293a4ed41e7aae9f87d8ed165353b420b51b4",
+    "bytes": 271864
+  },
+  "prior_validation_result_sha256": "69404bc017e43d2ba63f9f887b3fd6280a1510cee2e11fc668a3a53667c7a9ac",
+  "validation_reused": true,
+  "advance": false,
+  "conclusion": "Exact replay confirms weak training-bank phone fit (95/578 nonblank and 6364/15234 blank argmax matches). The experiment did not test a well-fitted phone head. This motivates a frozen-encoder head-fit diagnostic; it does not prove that better phone fit will improve wake-word generalization.",
+  "limits": "Training-bank diagnostics only. No extra validation exposure, speaker playback, microphone recording, firmware or runtime change."
+}

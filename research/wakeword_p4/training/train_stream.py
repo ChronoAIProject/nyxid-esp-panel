@@ -370,6 +370,7 @@ def main():
     effective_frames = (frames-flags.first_conv_kernel_size)//flags.stride*flags.stride+flags.first_conv_kernel_size
     validation_phase = (-effective_frames)%flags.stride if args.align_stream else 0
     history = []
+    initial_phone_fit = train_with_phones.audit(phone_sampler.features) if phone_sampler else None
     training_prefix_digest = hashlib.sha256()
     initial_probability_error = None
     best = None
@@ -399,6 +400,10 @@ def main():
                 item = {"step": step, "selected": selected, "grid": grid,
                         "checkpoint": f"step-{step}.weights.h5",
                         "seconds": round(time.monotonic()-started, 1)}
+                if phone_sampler:
+                    item["phone_fit"] = train_with_phones.audit(phone_sampler.features)
+                    item["phone_checkpoint"] = f"phone-step-{step}.weights.h5"
+                    train_with_phones.auxiliary_model.save_weights(root/item["phone_checkpoint"])
                 # Keep the measured checkpoints. A later audit of selection
                 # criteria must not require recreating discarded weights.
                 model.save_weights(root/item["checkpoint"])
@@ -460,7 +465,7 @@ def main():
               "paired_phrase_gain": args.paired_phrase_gain,
               "phrase_output": args.phrase_output,
               "phone_distillation": None if not phone_sampler else {
-                  **phone_sampler.metadata(), "gain": args.phone_gain},
+                  **phone_sampler.metadata(), "gain": args.phone_gain, "initial_fit": initial_phone_fit},
               "initial_target_probability_max_error": initial_probability_error,
               "training_prefix_batches": min(args.steps, 16),
               "training_prefix_sha256": training_prefix_digest.hexdigest(),

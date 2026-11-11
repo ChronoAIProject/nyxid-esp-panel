@@ -1239,6 +1239,24 @@ archive download are verified. The training-only phone head's own weights
 were not retained; the handoff reproduces its training from the supplied
 initializer and bank. The archive is explicitly unaccepted.
 
+### Phone-head fit audit
+
+The [audit replay](../results/microwake-phone-fit-audit-v1.json) preserves
+the auxiliary head and measures its unaugmented training-bank fit before
+and after the original 1,000 steps. The exported INT8 bytes, first 16 batch
+hashes, pair schedule, initializer and representative inputs match the
+previous phonetic arm exactly. Its existing rejected validation therefore
+applies without rescoring.
+
+Weighted phone KL decreases from 5.3174 to 4.2300 (20.45%). Nonblank argmax
+agreement is 95/578 (16.44%); blank agreement is 6,364/15,234 (41.77%). This
+is weak fit even on the training bank. The 392-way auxiliary layer used the
+encoder's small fine-tuning rate; that remains a hypothesis about the cause,
+not a demonstrated explanation. Better training fit would not by itself
+establish better wake discrimination. The full auxiliary checkpoint is now
+retained as `phone-step-1000.weights.h5`, with its identity in the report.
+No new validation exposure, board, microphone or speaker use was needed.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
