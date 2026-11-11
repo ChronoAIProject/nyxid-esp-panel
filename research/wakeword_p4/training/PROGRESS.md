@@ -2167,3 +2167,35 @@ are included to supplement the previous broad-study dependency; full scalar
 and continuous features remain external and byte-bound. All evidence is
 synced to the shared research branch. No qualifying model or Hi ESP parity
 claim is made, and the full objective remains active.
+
+### Explicit ambient compact-target supervision
+
+The [new matched plan](plans/microwake-background-ctc-v1.json) tests the separate
+background-supervision hypothesis. Both arms keep paired compact CTC gain .1,
+the full 5,060-pair bank, original initializer, 1,000-step frozen-head warmup
+and 3,000 mixed-source updates. Only additional ambient gain differs: zero
+versus one, inside the existing .1 auxiliary gain. The unique empty-sequence
+CTC path is normalized per frame. This is a compact-task negative target,
+not a claim that ordinary speech is acoustic silence or a phone transcript.
+
+An explicit third label column marks the existing 48 ambient-negative slots
+before batch shuffle. Positive, paired and ordinary unpaired TTS rows never
+receive that target. Both arms must observe 144,000 marked examples; source
+draws, SpecAugment, pair schedule, PTQ input, scalar graph and inference rule
+remain matched. Twenty focused training checks pass, including independent
+blank-path math/gradient, combined loss, marker shuffle/rejection and exact
+four-update zero-gain model/Adam replay. Two background-input tests additionally
+verify actual payload hashing, cross-split aliases and unopened test arrays.
+
+All 347 training and 35 development background NPY files and canonical uint16
+payloads are frozen in a separate inventory. Metadata identities across all
+splits and exact-array training/development disjointness pass; test arrays are
+not opened. This does not certify semantic labels, partial-overlap absence or
+split design. The original scalar binary and broader bank stay byte-bound.
+
+The zero-background arm must exactly replay the parent's compact-CTC scalar
+INT8 export, legacy first 16 mixed batches, complete warmup, pair schedule and
+PTQ input before its previous development scores may be reused as control.
+Fresh treatment validation retains the unchanged grid, gates and full traces;
+an input/replay failure stops comparison. No new training has launched at this
+commit. All work remains silent; hardware and the full Hi ESP goal are untouched.

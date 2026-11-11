@@ -93,13 +93,20 @@ def balance_encoder_gradients(binary, phone, encoder_indices, gain, ratio_cap):
     return mixed, scale, tf.math.divide_no_nan(scale*pn, bn)
 
 
-def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
+def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, background_gain=None):
     import tensorflow as tf
 
     if objective not in ('joint', 'conditional', 'ctc'):
         raise ValueError('Unknown phone objective')
     if encoder_ratio_cap is not None and (not np.isfinite(encoder_ratio_cap) or not 0 < encoder_ratio_cap <= 1):
         raise ValueError('Encoder ratio cap must be finite and in (0, 1]')
+    if background_gain is not None:
+        if (objective != 'ctc' or encoder_ratio_cap is not None
+                or not np.isfinite(background_gain) or not 0 <= background_gain <= 1):
+            raise ValueError('Background CTC needs a finite gain in [0,1], CTC and no encoder cap')
+        from background_ctc import mask as background_mask, empty_target_loss
+        background_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
+        background_examples = tf.Variable(0, dtype=tf.int64, trainable=False)
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
     logits = tf.keras.layers.Dense(targets.shape[-1], name='training_phone_logits',
@@ -151,6 +158,10 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
             present = ids > 0
             q = tf.gather(teacher, tf.boolean_mask(ids, present)-1)
             phonetic = phone_loss(q, tf.boolean_mask(phones, present))
+            if background_gain is not None:
+                ambient = background_mask(y)
+                if background_gain:
+                    phonetic += background_gain*empty_target_loss(tf.boolean_mask(phones, ambient))
             loss = binary+gain*phonetic
         variables = full.trainable_variables
         if bounded:
@@ -169,7 +180,17 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
         else:
             combined = tape.gradient(loss, variables)
         model.optimizer.apply_gradients(zip(combined, variables))
+        if background_gain is not None:
+            background_steps.assign_add(1)
+            background_examples.assign_add(tf.math.count_nonzero(ambient))
         return loss
+
+    def background_metadata():
+        if background_gain is None:
+            return None
+        return {'gain': background_gain, 'steps': int(background_steps),
+                'examples': int(background_examples), 'frames_per_example': STEPS,
+                'target': 'Empty compact sequence for explicitly marked existing ambient negatives; mean all-blank NLL per frame. Marker follows the batch shuffle; positive and paired rows are rejected.'}
 
     def balance_metadata():
         return {'enabled': bounded, 'steps': int(balance_steps) if bounded else 0,
@@ -289,4 +310,5 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None):
     train.warmup = warmup
     train.auxiliary_model = full
     train.balance_metadata = balance_metadata
+    train.background_metadata = background_metadata
     return train

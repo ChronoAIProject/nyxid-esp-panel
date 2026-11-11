@@ -37,6 +37,12 @@ def audit(args):
     if plan.get('feature_data_sha256'):
         require(sha(args.features/'features.bin') == plan['feature_data_sha256'],
                 'Full scalar feature cache differs')
+    if plan.get('background_inputs_sha256'):
+        from background_inputs import inventory
+        require(sha(root/'background-inputs.json') == plan['background_inputs_sha256'],
+                'Frozen background inventory differs')
+        require(inventory(args.features) == json.loads((root/'background-inputs.json').read_bytes()),
+                'Actual training/validation background bytes differ')
     require(sha(args.bank/'bank.json') == plan['phone_bank_sha256'], 'Bank metadata differs')
     require(sha(args.bank/'bank.npz') == plan['phone_bank_data_sha256'], 'Bank array differs')
     if plan.get('bank_plan_sha256'):
@@ -53,9 +59,13 @@ def audit(args):
         train = json.loads((directory/'training.json').read_bytes())
         command = execution['command']
         start = command.index('--architecture')
-        require(start == 16 and command[start:] == common, 'Training options differ: '+arm)
-        require(command[2:start:2] == ['--output', '--upstream', '--features', '--initial-weights',
-            '--phone-bank', '--phone-gain', '--compact-phrase-plan'], 'Input options differ: '+arm)
+        background_gain = plan.get('background_gains', {}).get(arm)
+        options = ['--output', '--upstream', '--features', '--initial-weights',
+            '--phone-bank', '--phone-gain', '--compact-phrase-plan']
+        if background_gain is not None:
+            options.append('--phone-background-gain')
+        require(start == 2+2*len(options) and command[start:] == common, 'Training options differ: '+arm)
+        require(command[2:start:2] == options, 'Input options differ: '+arm)
         for option, expected in (('--output', directory), ('--upstream', args.upstream),
                 ('--features', args.features), ('--initial-weights', args.initial_weights),
                 ('--phone-bank', args.bank), ('--compact-phrase-plan', root/'plan.json')):
@@ -87,6 +97,14 @@ def audit(args):
                 'Compact vocabulary differs: '+arm)
         require(phone['encoder_ratio_cap'] is None and not phone['encoder_balance']['enabled'],
                 'Unplanned gradient cap: '+arm)
+        if background_gain is not None:
+            background = phone['background']
+            require(float(command[command.index('--phone-background-gain')+1]) == background_gain
+                    and background['gain'] == background_gain and background['steps'] == steps
+                    and background['examples'] == steps*48 and background['frames_per_example'] == 67,
+                    'Background objective/cohort count differs: '+arm)
+        else:
+            require(phone.get('background') is None, 'Unplanned background supervision: '+arm)
         warmup = phone['warmup']
         require(all(warmup[k] == v for k, v in plan['warmup'].items()), 'Warmup recipe differs: '+arm)
         for group in ('weights', 'optimizer'):
@@ -94,7 +112,11 @@ def audit(args):
                     'Warmup changes binary '+group+': '+arm)
         if arm == 'control':
             for key, digest in plan.get('required_control_replay', {}).items():
-                require(train[key] == digest, 'Original binary control replay differs: '+key)
+                require(train[key] == digest, 'Original control replay differs: '+key)
+            if plan.get('required_control_warmup'):
+                require(warmup == plan['required_control_warmup'], 'Original control warmup replay differs')
+                require(phone['schedule_sha256'] == plan['required_control_schedule_sha256'],
+                        'Original control pair schedule replay differs')
         shared[arm] = {'warmup': warmup, 'prefix': train['training_prefix_sha256'],
             'draw_schedule': phone['schedule_sha256'], 'sequence': phone['sequence'],
             'sources': train['sources'], 'ptq_inputs': train['representative_training_inputs_sha256']}
@@ -110,6 +132,7 @@ def audit(args):
         'shared_training_inputs': shared['control'],
         'arms': arms,
         'full_scalar_feature_cache_hashed': bool(plan.get('feature_data_sha256')),
+        'training_and_validation_background_bytes_hashed': bool(plan.get('background_inputs_sha256')),
         'limits': 'Read-only inputs/replay audit. Full scalar feature bytes are verified only when the plan explicitly supplies feature_data_sha256; compact sampler also checks exact bank crops during training. No wake-quality, pronunciation, P4 resource or call-stability acceptance.'}
 
 

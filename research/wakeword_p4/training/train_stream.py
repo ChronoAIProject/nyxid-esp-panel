@@ -56,6 +56,8 @@ def main():
     parser.add_argument("--compact-phrase-plan", type=Path,
                         help="Use frozen original-intent two-token CTC targets instead of teacher phones")
     parser.add_argument("--phone-gain", type=float, default=0., help="Training-only temporal phone KL loss gain")
+    parser.add_argument("--phone-background-gain", type=float,
+                        help="Opt-in compact CTC empty-target loss on explicit ambient-negative markers; zero is the matched control")
     parser.add_argument("--phone-encoder-ratio-cap", type=float,
                         help="Bound scaled auxiliary encoder gradient norm relative to binary encoder gradient")
     parser.add_argument("--phone-objective", choices=("joint", "conditional", "ctc"), default="joint",
@@ -81,6 +83,10 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.phone_background_gain is not None and (not args.compact_phrase_plan
+            or not np.isfinite(args.phone_background_gain) or not 0 <= args.phone_background_gain <= 1
+            or args.phone_gain <= 0):
+        parser.error("Background CTC requires a compact phrase plan, positive phone gain and background gain in [0,1]")
     if args.compact_phrase_plan and (not args.phone_bank or args.phone_objective != "ctc"
             or args.phone_encoder_ratio_cap is not None or args.phone_gradient_audit_plan):
         parser.error("Compact phrase targets require a phone bank and CTC, without gradient cap/audit")
@@ -258,6 +264,9 @@ def main():
             confusers.apply(samples, current_step)
         if mine and phone_sampler:
             y = np.concatenate((y, phone_sampler.apply(samples)), axis=1)
+            if args.phone_background_gain is not None:
+                from background_ctc import mark_ambient
+                y = mark_ambient(y, 48)
         x = scale(samples)
         # A stronger negative penalty follows the upstream always-listening
         # recipe; its operating threshold is calibrated, not assumed to be .97.
@@ -318,7 +327,7 @@ def main():
     if phone_sampler:
         from phone_distillation import supervisor as phone_supervisor
         train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective,
-                                             args.phone_encoder_ratio_cap)
+                                             args.phone_encoder_ratio_cap, args.phone_background_gain)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -440,6 +449,7 @@ def main():
     if args.phone_warmup_only:
         return
     training_prefix_digest = hashlib.sha256()
+    legacy_training_prefix_digest = hashlib.sha256()
     initial_probability_error = None
     best = None
     started = time.monotonic()
@@ -452,6 +462,9 @@ def main():
             if step <= 16:
                 for value in (x, y, weights):
                     training_prefix_digest.update(value.astype("<f4", copy=False).tobytes())
+                if args.phone_background_gain is not None:
+                    for value in (x, y[:, :2], weights):
+                        legacy_training_prefix_digest.update(value.astype("<f4", copy=False).tobytes())
             if step == 1 and args.phrase_output:
                 initial_probability_error = float(np.max(np.abs(
                     np.asarray(model(x, training=False))-np.asarray(binary_initial_model(x, training=False)))))
@@ -536,11 +549,14 @@ def main():
                   **phone_sampler.metadata(), "gain": args.phone_gain, "objective": args.phone_objective,
                   "encoder_ratio_cap": args.phone_encoder_ratio_cap,
                   "encoder_balance": train_with_phones.balance_metadata(),
+                  "background": train_with_phones.background_metadata(),
                   "initial_fit": initial_phone_fit,
                   "warmup": phone_warmup},
               "initial_target_probability_max_error": initial_probability_error,
               "training_prefix_batches": min(args.steps, 16),
               "training_prefix_sha256": training_prefix_digest.hexdigest(),
+              "legacy_training_prefix_sha256": (legacy_training_prefix_digest.hexdigest()
+                                                 if args.phone_background_gain is not None else None),
               "matched_confusers": confusers.metadata() if confusers else None,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
