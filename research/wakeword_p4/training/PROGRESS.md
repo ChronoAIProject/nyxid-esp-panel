@@ -2006,3 +2006,15 @@ A fresh unauthenticated download verifies all 95 listed member hashes and
 the exact 96-member inventory. The full scalar cache remains separate, but
 its original index and complete-phrase bounds are included. This publishes
 training data preparation, not a completed study or deployment candidate.
+
+The supplementary [scalar cached-score auditor](../../handoff/audit_scalar_wake_scores.py)
+is ready for the new study's completed exports. It reconstructs keyword-window
+maxima, exact clip timestamps, each continuous event stream, complete grids
+and advancement from retained traces. Counts and structure must match exactly;
+float metrics allow only 1e-15 absolute summation-order roundoff. Two tests
+reject an early-prefix peak used as keyword evidence, changed source/timestamps,
+nonfinite scores, changed counts and material metric drift. This auditor needs
+the newer summary helper in a run's immutable source snapshot; the preceding
+capped study predates that helper and is not covered by this supplementary
+script. Its separate input/control-replay audit still passes. No new wake
+result or fit gate is inferred while the broader-bank jobs are running.
