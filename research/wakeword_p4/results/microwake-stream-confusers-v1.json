@@ -1,0 +1,181 @@
+{
+  "scope": "Training-only hard negative mining, not acceptance",
+  "source_manifest_sha256": "22fe52491ff2afc3340356ea6778b51c8fe2c3b889562df14c9217f93c1f401f",
+  "partition_index_sha256": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+  "speaker_count": 155,
+  "hours": 63.08540864583334,
+  "thresholds": [
+    0.5,
+    0.9,
+    0.97
+  ],
+  "models": {
+    "phrase_control": {
+      "model_sha256": "c8c7e66b6f212f2b18c1e26c9f3bd27176fc0bd249361447fc641ac1d3f83ce5",
+      "events": {
+        "0.5": 15,
+        "0.9": 4,
+        "0.97": 3
+      },
+      "max_score": 0.99609375,
+      "speakers_with_confusers": 13
+    },
+    "phrase_aux": {
+      "model_sha256": "1919dcf10e4d422c2420d6cdda5a718813fe5044c759bc2dea58807382330af7",
+      "events": {
+        "0.5": 18,
+        "0.9": 5,
+        "0.97": 4
+      },
+      "max_score": 0.99609375,
+      "speakers_with_confusers": 17
+    }
+  },
+  "retained_mining_report_sha256": "09985845a5cd0ad391c59ba8c6fbbffe30cfc00d3ce7861ccec4d5a29db43cc5",
+  "unique_utterances_above_0_5": 22,
+  "unique_utterances_above_0_97": 4,
+  "high_score_utterances": [
+    {
+      "utterance": "163-121908-0000",
+      "source_sha256": "3ebdd90a78abbb5c28b8ca9a40ec2cc4ab576b88c040b4522e7066b089e1f6dd",
+      "near_peak": [
+        {
+          "start": 0.0,
+          "end": 1.04,
+          "word": "She"
+        },
+        {
+          "start": 1.04,
+          "end": 1.6,
+          "word": "ceased,"
+        }
+      ],
+      "hits": [
+        {
+          "model": "phrase_control",
+          "first_sample": 16640,
+          "peak_sample": 18560,
+          "peak_score": 0.9851562500000001,
+          "relative_peak_s": 1.16
+        },
+        {
+          "model": "phrase_aux",
+          "first_sample": 16640,
+          "peak_sample": 18560,
+          "peak_score": 0.99609375,
+          "relative_peak_s": 1.16
+        }
+      ]
+    },
+    {
+      "utterance": "26-495-0000",
+      "source_sha256": "ca3d16e0404fdc1ae3b0a1eb856cb551a09bce3da1f3dfdb92fa4db2f48f1191",
+      "near_peak": [
+        {
+          "start": 0.0,
+          "end": 0.52,
+          "word": "in"
+        },
+        {
+          "start": 0.52,
+          "end": 2.0,
+          "word": "1665."
+        }
+      ],
+      "hits": [
+        {
+          "model": "phrase_control",
+          "first_sample": 9920,
+          "peak_sample": 12800,
+          "peak_score": 0.9773437500000001,
+          "relative_peak_s": 0.8
+        },
+        {
+          "model": "phrase_aux",
+          "first_sample": 9440,
+          "peak_sample": 12800,
+          "peak_score": 0.9953125,
+          "relative_peak_s": 0.8
+        }
+      ]
+    },
+    {
+      "utterance": "625-132118-0041",
+      "source_sha256": "226ce7020d7244daf8f52b0ec63b81326c3cf05011a4a440cdcfdcf6cf21e03b",
+      "near_peak": [
+        {
+          "start": 9.760000000000002,
+          "end": 10.56,
+          "word": "Idle"
+        },
+        {
+          "start": 10.56,
+          "end": 11.1,
+          "word": "words."
+        }
+      ],
+      "hits": [
+        {
+          "model": "phrase_control",
+          "first_sample": 22357280,
+          "peak_sample": 22359200,
+          "peak_score": 0.99609375,
+          "relative_peak_s": 11.235
+        },
+        {
+          "model": "phrase_aux",
+          "first_sample": 22357280,
+          "peak_sample": 22358720,
+          "peak_score": 0.99609375,
+          "relative_peak_s": 11.205
+        }
+      ]
+    },
+    {
+      "utterance": "831-130746-0042",
+      "source_sha256": "2ad8205dbb0bb481b6cec6726340fbce20516d15261abb4acb2f74d808a7a7b1",
+      "near_peak": [
+        {
+          "start": 14.72,
+          "end": 14.86,
+          "word": "you"
+        },
+        {
+          "start": 14.86,
+          "end": 15.02,
+          "word": "think"
+        },
+        {
+          "start": 15.02,
+          "end": 15.2,
+          "word": "they"
+        },
+        {
+          "start": 15.2,
+          "end": 15.44,
+          "word": "will"
+        },
+        {
+          "start": 15.44,
+          "end": 15.64,
+          "word": "follow"
+        },
+        {
+          "start": 15.64,
+          "end": 16.22,
+          "word": "us?"
+        }
+      ],
+      "hits": [
+        {
+          "model": "phrase_aux",
+          "first_sample": 20863520,
+          "peak_sample": 20864960,
+          "peak_score": 0.9789062500000001,
+          "relative_peak_s": 16.28
+        }
+      ]
+    }
+  ],
+  "limits": "Original LibriSpeech training partition only. Multiple high groups can belong to a single utterance. Offline word times are approximate and do not identify individual causal phonemes. No new threshold, held-out audio, board test or training in this screen."
+}

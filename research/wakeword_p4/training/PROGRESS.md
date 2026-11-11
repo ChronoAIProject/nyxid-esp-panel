@@ -971,6 +971,25 @@ Use the offline ASR environment and the existing `assets/asr-tiny-en`
 for `align_connected_speech.py`, then score with `score_connected_speech.py`
 using the same feature view and the paired phrase experiment exports.
 
+The [direct score scan](../results/microwake-stream-confusers-v1.json) then
+replays all 63.085 h from the 155 remaining LibriSpeech training speakers
+through both frozen paired-phrase models. It verifies each feature array and
+the original speaker partition; none of these streams comes from validation
+or final testing. At .97 the control and auxiliary model produce 3 and 4
+events, respectively. There are 22 distinct source utterances above .5
+across the two models, and four above .97. Local word alignment places the
+four near “she ceased”, the spoken year 1665, “idle words”, and “you think
+they will follow us?”. These are approximate locations, not phoneme labels.
+The four examples do not support prioritizing one phrase from the dictionary.
+
+Run `mine_stream_confusers.py` against `human-negatives-remaining`, the
+original `features-expanded-human335/human.json`, and the paired phrase
+experiment. It saves source-clock positions without exporting audio. The
+positions let the next matched fine-tune compare mined negatives with
+ordinary windows from the same speakers, keeping the development and final
+sets untouched. This scan is source selection; its counts are not a new
+estimate of production false wakes.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four
