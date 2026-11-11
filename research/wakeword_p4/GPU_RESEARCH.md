@@ -4285,3 +4285,15 @@ Global peakinside support1017->409. These are savedsequence diagnostics with
 known streaming residuals,not phonetic/receptive-field truth or acceptance.
 Pre-register v42positive candidate full-interval sampling,keeping v41negative RNG
 exact;no optimization started. Oldquality limitations retained,freezev30.
+
+### v42 integration and prechecks completed (2026-11-11)
+
+Preregistered bdb6eb1. Independent147726positive-end sampler uses complete Mac
+container ledger;source and v41negative RNG exact. All4602positive rawSHA/shape/
+originalcrop authenticated.50batch independent800positive/1200negative crops,
+retainedslots and v41negative RNG/crops exact. Two-step4090smoke exit0,42.0s,
+54312B SHA1f204ab8b8bb48ce9e9843545d4dc6e375376c9d7734671c7f3be3ec9927bda1.
+Finite weights,frozenBN exact,originalstreamINT8contract valid. Not accuracy/FAR.
+Formal120k authorized after these passed prechecks;unchanged historical gate.
+Quality provenance/endpoint failures retained;research diagnostic,no promotion,
+new/final untouched,frozenv30 retained.

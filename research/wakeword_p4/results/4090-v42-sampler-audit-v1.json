@@ -1,0 +1,164 @@
+{
+  "batches": 50,
+  "negative_crops": 1200,
+  "positive_crops": 800,
+  "v41_negative_crops_rng_exact": true,
+  "all_crops_and_retained_slots_exact": true,
+  "source_rng_exact": true,
+  "temporal_end_min": 150,
+  "temporal_end_max": 432,
+  "sampler": {
+    "input_sha256": {
+      "training.npz": "bb01f3219db10f31e1095af4912c1807ec38b0b3c640c4676186c1b77a620aa1",
+      "sources.json": "0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981",
+      "records.json": "757f1e6df724943c0e0bf68b9fe7de9b3402cbcebb9cf6c87a89e876ee9af090",
+      "report.json": "2c2c49dd90a6c3547a78b190de420619ea25d79344d9efd9b8a69c7bc6dc0751"
+    },
+    "seed": 127726,
+    "positive_slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "negative_slots": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "groups": {
+      "kokoro/positive": {
+        "identities": 20,
+        "canonical_sources": 58
+      },
+      "kokoro/hey nick": {
+        "identities": 20,
+        "canonical_sources": 20
+      },
+      "kokoro/hey next": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "kokoro/hey mix": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "macos-say/positive": {
+        "identities": 12,
+        "canonical_sources": 65
+      },
+      "macos-say/hey nick": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey next": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey mix": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "openai-tts/hey nick": {
+        "identities": 6,
+        "canonical_sources": 10
+      },
+      "openai-tts/hey next": {
+        "identities": 6,
+        "canonical_sources": 11
+      },
+      "openai-tts/hey mix": {
+        "identities": 8,
+        "canonical_sources": 15
+      },
+      "openai-tts/positive": {
+        "identities": 6,
+        "canonical_sources": 26
+      },
+      "qwen/positive": {
+        "identities": 32,
+        "canonical_sources": 87
+      },
+      "qwen/hey nick": {
+        "identities": 30,
+        "canonical_sources": 30
+      },
+      "qwen/hey next": {
+        "identities": 28,
+        "canonical_sources": 28
+      },
+      "qwen/hey mix": {
+        "identities": 25,
+        "canonical_sources": 25
+      },
+      "piper/hey next": {
+        "identities": 144,
+        "canonical_sources": 144
+      },
+      "piper/hey mix": {
+        "identities": 142,
+        "canonical_sources": 142
+      },
+      "piper/hey nick": {
+        "identities": 150,
+        "canonical_sources": 151
+      },
+      "piper/positive": {
+        "identities": 1223,
+        "canonical_sources": 1298
+      }
+    },
+    "excluded_canonical_by_phrase": {
+      "hi esp": 187,
+      "hey nexus": 208
+    },
+    "feature_environment": "Pinned Mac saved uint16 features; measured Linux frontend differences retained",
+    "policy": "Equal phrase for negatives, engine, conditioning identity, canonical WAV, variant; aliases once. Original British draws occur first; remaining British/ambient slots untouched.",
+    "source_sha256": "08d1aada4a4e665388257241ae70a131571de268c33114f76effad0dd8dfc196",
+    "negative_timeline": {
+      "seed": 137726,
+      "policy": "Uniform integer end150..len(raw),24 candidate negatives only",
+      "authenticated_variants": 1995
+    },
+    "positive_timeline": {
+      "seed": 147726,
+      "policy": "Uniform end crop_end..min(350,len(raw)),16 candidate positives only; conservative original sample ledger",
+      "authenticated_variants": 4602
+    }
+  },
+  "training_run": false,
+  "model_scored": false
+}

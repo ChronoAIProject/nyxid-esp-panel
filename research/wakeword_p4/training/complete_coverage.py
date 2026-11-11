@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 class CompleteCoverage:
-    def __init__(self, root, negative_timeline=False):
+    def __init__(self, root, negative_timeline=False, positive_timeline=False):
         root=Path(root)
         expected={'training.npz':'bb01f3219db10f31e1095af4912c1807ec38b0b3c640c4676186c1b77a620aa1',
           'sources.json':'0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981',
@@ -63,6 +63,27 @@ class CompleteCoverage:
                 policy='Uniform integer end150..len(raw),24 candidate negatives only',
                 authenticated_variants=len(self.raw_negatives))
 
+        self.positive_timeline = positive_timeline
+        self.positive_rng = np.random.default_rng(147726)
+        self.raw_positives = {}
+        if positive_timeline:
+            if not negative_timeline:
+                raise ValueError('Positive timeline requires v41 negative timeline')
+            for i,r in enumerate(self.records):
+                if not r['label']:
+                    continue
+                raw=np.load(root/r['raw'],allow_pickle=False)
+                assert raw.dtype==np.uint16 and raw.shape==(r['raw_shape'][0],40)
+                assert hashlib.sha256(raw.tobytes()).hexdigest()==r['raw_sha256']
+                low=r['feature_crop_end'];high=min(350,len(raw))
+                assert 150<=low<=high
+                assert (high-150)*160<=32000 and (low+1)*160>=32000+r['signal_samples']
+                np.testing.assert_array_equal(raw[low-150:low],self.x[i])
+                self.raw_positives[i]=raw
+            self.report['positive_timeline'] = dict(seed=147726,
+                policy='Uniform end crop_end..min(350,len(raw)),16 candidate positives only; conservative original sample ledger',
+                authenticated_variants=len(self.raw_positives))
+
     def draw_indices(self):
         ids=[]
         for j in range(40):
@@ -77,6 +98,11 @@ class CompleteCoverage:
     def replace(self, british):
         ids=self.draw_indices();result=british.copy()
         samples=np.clip(self.x[ids].astype(np.float32)/25.6,0,26)
+        if self.positive_timeline:
+            for j,i in enumerate(ids[:16]):
+                raw=self.raw_positives[i]
+                end=int(self.positive_rng.integers(self.records[i]['feature_crop_end'],min(350,len(raw))+1))
+                samples[j]=np.clip(raw[end-150:end].astype(np.float32)/25.6,0,26)
         if self.negative_timeline:
             for j,i in enumerate(ids[16:],16):
                 raw=self.raw_negatives[i]
