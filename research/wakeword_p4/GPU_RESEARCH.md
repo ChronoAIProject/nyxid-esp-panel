@@ -4100,3 +4100,13 @@ Installed micro_features_cpp.abi3.so SHA
 7c88ffb22e174fcd1fad58d4e2a850452a192f9ca32448e47d13fd3ebadb32f4.
 Supports the single-pair explanation for these30witness differences only,
 not P4 or recognition causality/universal parity. No v40/wheel/data changes.
+
+### v40 training and export completed (2026-11-11)
+
+Original session44285 exit0,120000steps,1909.3s,selected45000under unchanged
+historical checkpoint rule. Model54440B SHA
+0b48cd96e8837b27c2df73c709c3360da9f06079f61eb9464922bae438bb98e4.
+Original training report copied unchanged;export audit verifies finite weights,
+frozenBN exact,int8[1,3,40] to uint8[1,1]. Unique original postprocessor
+authenticated recipe and started historical regression. No accuracy/FAR claim
+or promotion;no new/final data consumed,frozenv30 retained.
