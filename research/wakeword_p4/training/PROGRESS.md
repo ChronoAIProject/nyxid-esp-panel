@@ -2599,3 +2599,21 @@ comparison uses a documented 4e-6 absolute numerical allowance. This is a
 software-math check, not a detector-quality gate or a relaxed wake criterion.
 Full feature/bank/checkpoint bytes and all final fold scores/draws are audited.
 Work remains silent and excludes the dining-room production device.
+
+The twelve fixed fits and independent crop/fold/score audit now complete.
+Shared phones fail the diagnostic gate: engine-macro accuracy 57.0649%
+versus words 81.1866%; aggregate macro 60.8836% versus 84.5715%. Nyx recall
+91.2100% versus 90.8105% hides a much larger confuser-to-Nyx error fraction,
+526/1,360 versus 74/1,360. Even the fitted full-bank phone head has zero
+exact greedy strings, versus 2,983/3,112 for the word head. Keep all failures;
+do not extend this fixed fit budget or proceed to open-set wake training.
+
+The [separate numerical plan](plans/intent-phone-numerics-v1.json) now checks
+whether this stalled phone fit exposes a numerical problem rather than
+assuming a phonetic-representation limitation. It reads both frozen full-fit
+checkpoints on the first three training crops per engine/class (60 total).
+Compiled float32 TensorFlow CTC losses/logit gradients are compared to an
+independent stable float64 forward/backward recurrence, also on fixed large
+synthetic logits. Three reference tests pass exhaustive path/posterior math,
+finite-difference gradients and logit-shift invariance. No fitting or wake
+validation is part of this diagnostic.
