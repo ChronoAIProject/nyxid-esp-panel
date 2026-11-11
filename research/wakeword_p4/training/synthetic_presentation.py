@@ -101,14 +101,22 @@ def main():
     p.add_argument('--scores', type=Path, required=True)
     p.add_argument('--manifest', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--threshold-calibration', type=Path, help='Optional same-model selected development threshold')
     a = p.parse_args()
     if a.output.exists():
         p.error('Fresh report required')
     report, clips = load(a.scores, a.manifest)
-    result = dict(model_sha256=report['model_sha256'], threshold=report['threshold'],
+    threshold = report['threshold']
+    if a.threshold_calibration:
+        calibration = json.loads(a.threshold_calibration.read_text())
+        assert calibration['model_sha256'] == report['model_sha256'] and calibration['validation_only']
+        threshold = calibration['threshold']
+        assert threshold is not None and 0 < threshold < 1
+    result = dict(model_sha256=report['model_sha256'], threshold=threshold,
+        selected_calibration_sha256=sha(a.threshold_calibration) if a.threshold_calibration else None,
         source_report_sha256=sha(a.scores/'report.json'), manifest_sha256=sha(a.manifest),
         source_sha256=sha(Path(__file__)),
-        summaries={engine: metrics(clips, report['threshold'], engine) for engine in ('nyx', 'hiesp')},
+        summaries={engine: metrics(clips, threshold, engine) for engine in ('nyx', 'hiesp')},
         final_data_used=False,
         limits='Development only. Lead..full generation/RIR end+800ms is a synthetic presentation interval, not verified complete-phoneme detection. Negative latency is valid relative to generated silence/tail, not proof of predictive detection. Augmentations/voices correlated; no human or hardware latency claim. Official threshold independently frozen .63, not matched population FAR.')
     a.output.write_text(json.dumps(result, indent=2)+'\n')

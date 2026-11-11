@@ -1,9 +1,11 @@
 """Critical presentation-window and candidate-promotion gate boundaries."""
 import copy
+from pathlib import Path
+import tempfile
 import unittest
 import numpy as np
 from calibrate_slr83_development import passes
-from synthetic_presentation import metrics
+from synthetic_presentation import metrics, sha, trace
 
 
 def clip(target='hey_nyx', pulse=None, lead=2720, end=4160, native_end=3200):
@@ -17,6 +19,21 @@ def clip(target='hey_nyx', pulse=None, lead=2720, end=4160, native_end=3200):
 
 
 class PresentationTests(unittest.TestCase):
+    def test_changed_truncated_or_nonfinite_trace_is_rejected(self):
+        # 52800 PCM samples =330 hops ->328 frontend frames ->109 scores ->105 means.
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'scores.npy'
+            np.save(path, np.zeros(105))
+            self.assertEqual(len(trace(path, sha(path), 52800)), 105)
+            with self.assertRaises(AssertionError):
+                trace(path, '0'*64, 52800)
+            np.save(path, np.zeros(104))
+            with self.assertRaises(AssertionError):
+                trace(path, sha(path), 52800)
+            np.save(path, np.full(105, np.nan))
+            with self.assertRaises(AssertionError):
+                trace(path, sha(path), 52800)
+
     def test_generation_and_rir_references_are_distinct(self):
         m = metrics([clip(pulse=0)], .5)
         self.assertEqual(m['presentation_trigger_clips'], 1)

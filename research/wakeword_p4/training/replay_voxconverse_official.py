@@ -1,4 +1,4 @@
-"""Official Hi ESP baseline on frozen87 full development background recordings."""
+"""Official Hi ESP baseline on exact frozen full development background recordings."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor,as_completed
 import hashlib
@@ -20,9 +20,11 @@ def sha(p):
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('manifest','qemu','elf','nm','flash','output'): p.add_argument('--'+name,type=Path,required=True)
 a=p.parse_args()
-assert sha(a.manifest)=='d2f7f82e5153af2fe6c11479fd01c0d969553dee23505af309314a1bcc75b3a9'
+expected_counts={'d2f7f82e5153af2fe6c11479fd01c0d969553dee23505af309314a1bcc75b3a9':87,
+    'c65b0e566384bc3c54d36d4766d6e7abed731e01263354f5d05a924a454b2170':86}
+recordings=expected_counts[sha(a.manifest)]
 m=json.loads(a.manifest.read_text());rows=m['records']
-assert len(rows)==87 and m['continuous_recordings'] and not m['independent_final_audio_accessed']
+assert len(rows)==recordings and m['continuous_recordings'] and not m['independent_final_audio_accessed']
 for r in rows:
     assert r['role']=='development-negative-validation' and r['split']=='validation'
     path=a.manifest.parent/r['path'];pcm,rate=sf.read(path,dtype='int16')
@@ -47,12 +49,12 @@ results={}
 with ThreadPoolExecutor(4) as pool:
     for future in as_completed([pool.submit(run,item) for item in enumerate(rows)]):
         i,result=future.result();results[i]=result
-        print(json.dumps({'completed':len(results),'planned':87}),flush=True)
-reports=[results[i] for i in range(87)]
+        print(json.dumps({'completed':len(results),'planned':recordings}),flush=True)
+reports=[results[i] for i in range(recordings)]
 for field in ('source_sha256','qemu_sha256','elf_sha256','flash_sha256','threshold_getter_after_set'):
     assert len({r[field] for r in reports})==1
 hours=sum(r['samples']/16000 for r in rows)/3600;count=sum(len(r['events']) for r in reports)
-report=dict(role='Hi ESP continuous development background diagnostic, not final',recordings=87,
+report=dict(role='Hi ESP continuous development background diagnostic, not final',recordings=recordings,
     source_hours=hours,events=count,events_per_hour=count/hours,upper_95=float(.5*chi2.ppf(.95,2*(count+1))/hours),
     manifest_sha256=sha(a.manifest),source_sha256=sha(Path(__file__)),reports=reports,
     final_data_used=False,threshold_selected=False,
