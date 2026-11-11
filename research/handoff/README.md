@@ -1993,6 +1993,58 @@ python research/wakeword_p4/training/probe_gpu_sequence_update.py \
   --upstream "$PINNED_MICROWAKEWORD" --output "$FRESH_UPDATE_PROBE"
 ```
 
+### Existing six-engine training sources: complete-signal support inventory
+
+The source-only protocol and three passing tests were pushed at `0f627e4`
+before the [inventory](../wakeword_p4/results/old-isolated-signal-support-v1.json)
+ran. It selects all3,393 training rows with the frozen isolated target/confuser
+phrases from the original portable waveform manifest. Every original WAV hash,
+mono16k PCM16 header and length passed; none is all zero. Original PCM stays
+unchanged. Exact nonzero sample bounds are digital support, not phonetic ends.
+
+Under the current GPU150-frame conservative sample ledger, requiring all five
+windows to cover the source plus the full960-sample RIR extension gives:
+
+| Engine | Selected rows | Whole WAV fits | Exact nonzero support fits | Unique eligible WAV hashes |
+| --- | ---: | ---: | ---: | ---: |
+| Edge |416|0|0|0|
+| Kokoro |160|152|152|152|
+| macOS Say |221|178|218|170|
+| OpenAI TTS |333|67|72|72|
+| Piper |2039|2039|2039|2039|
+| Qwen |224|196|206|206|
+| Total |3393|2632|2687|2639|
+
+Whole original containers already provide five-engine source coverage beyond
+the current Kokoro/Alba/Cori pack; excluding only native exact-zero padding
+adds55 correlated rows (45 new distinct hashes). Thus zero padding is a modest
+source-count limitation here. Edge fits neither the single dry window nor the
+five-window geometry. No rate change, amplitude threshold or phonetic trimming
+is proposed. Eligible rows comprise1,610 positive and1,077 negative labels;
+Mac aliases, Qwen condition IDs and Piper blends are not independent humans.
+Labels remain the existing intended texts, with no new pronunciation review.
+
+These are source-span feasibility counts, **not a validated feature pack**.
+Actual frontend history, raw feature crops, full convolution behavior, alias
+grouping and sampling need separate validation before a future experiment.
+No inference, training, validation/new/final source WAVs, audio devices, board
+or firmware was used. Running GPU v39 remains unchanged; this audit provides
+no recognition, false-wake, latency or Hi ESP acceptance evidence.
+
+```sh
+python -m unittest discover -s research/wakeword_p4/training -p test_complete_signal.py
+python research/wakeword_p4/training/inventory_complete_signal.py \
+  --manifest "$PORTABLE_WAVEFORM_INVENTORY_V2/waveforms.jsonl" \
+  --source-root "$ORIGINAL_OUTPUT_ROOT" \
+  --plan research/wakeword_p4/training/plans/old-isolated-signal-support-v1.json \
+  --output "$FRESH_SUPPORT_INVENTORY"
+```
+
+The public evidence manifest `assets-old-isolated-signal-support-v1.json`
+binds all3,393 source records, original report, descriptive accounting,
+source/plan/tests and test log. Original WAVs remain in the separately published
+synthetic-audio snapshot; none is included in this evidence archive.
+
 ### Cross-host report and floating-model diagnostic receipt
 
 GPU commit `ee0becbf3d8716d14a977afbe52b2e5e5aa0ecee` reports the original v30
