@@ -3387,3 +3387,15 @@ score_phone_development.py逐条核验80条官方report的manifest/PCM/模型来
 v35_after_training.py绑定当前训练PID及/proc启动时间，原进程终结后核验120k产物和模型SHA，
 再运行historical_regression及新开发音历史阈值诊断。无完整产物即失败，不启动新训练。
 后处理仅排队；训练未终结时不会读取半成品评估，不自动发布或升级模型。
+
+## 新合成来源VCTK与声音保留预声明
+
+检查本项目研究代码/报告未发现VCTK/lessac已用记录。固定rhasspy/piper-voices
+revision ae9d8352b73c1b1750748843e753a504b00e05b0的en_GB-vctk-medium，
+HF树声明ONNX 76952753 bytes，LFS SHA 4e9fc85ab9009385319fc6bae7f55577f8a2d7ee77fd9159a5500eb6531f41e6。
+模型卡说明109个VCTK声音、22.05k、由Lessac medium微调。新权重/语料，不是新模型架构。
+下载固定模型/配置/MODEL_CARD并记录全部SHA，按排序声音名+Python Random88726预分区：
+20个development、89个reserved_final；不用于训练。声音ID不能证明所有物理身份或预训练无交集。
+本轮只下载/冻结来源及分区，不生成最终音频、不评分或选阈值。
+后续先用development生成质量流程和阈值协议；最终89声音须另行冻结协议后才生成/评分。
+不以新来源替换既有最终集记录；原三个最终集继续封存。v35继续原训练任务。
