@@ -3604,3 +3604,22 @@ ONNX无可用音素时长/随机种子，不宣称位级重生成或声学音素
 这是不同命名语料的新训练来源小样，不是候选性能改善证据；尚未启动新模型训练。
 下一步设计覆盖多个独立训练声音的来源组合及预注册采样配方，避免重复v35。
 冻结v30及Mac交接归档未改，最终保留声音/背景分片未访问。
+
+## v36来源平衡数据干预预注册与GPU冒烟
+
+固定Cori high checkpoint，SHA470b4dd634c98f8a4850d7626ffc3dfc90774628eeef6605a6dd8f88f30a5903，
+114219352bytes；模型卡称24h LibriVox、从头训练500epochs、public domain。
+不假定Cori与Alba初始化Cori Samuel物理独立；它们是checkpoint来源组。
+Cori训练小样12/12机械质量通过，PCM/native哈希复核，未使用任何VCTK声音。
+Alba所有12条原音能完整装入24160样本支持区间；不据此推断音素边界。
+新training-only pack固定400Kokoro+12Alba+12Cori，三增强共1272尝试，
+1002纳入、270完整保留但不训练的超上下文变体；新增72裁片全纳入。
+原Kokoro930裁片与标签逐值完全不变；pack SHA c0c389fc4a22e1fb9807d99e8a7a98e0e028696d2047dd27dce81f1de8fef096。
+新假设是checkpoint来源覆盖而非单纯加大v35同来源样本：先均衡三来源，再均衡声音。
+原main128、extra16、.1附加BCE、negative20、seed87726、frozenBN及checkpoint选择不变。
+训练逻辑默认路径保持原v35随机抽样顺序；新--phone-source-balanced显式启用。
+完整预注册experiments/v36_british_source_balanced.md。
+4090两步冒烟exit0，权重全部有限、BN前后一致，流式int8[1,3,40]到uint8[1,1]，
+模型54312bytes（两步冒烟模型，不是冻结v30）；审计4090-v36-smoke-audit.json。
+正式120k仅在冒烟审计通过后启动；现有已消费开发集只可作探索回归，不冒充新独立验收。
+不得以已有开发集结果直接升级，三旧最终集封存、89保留声音和test背景不访问。

@@ -39,6 +39,7 @@ def main():
     parser.add_argument("--mask-prefix-loss", action="store_true",
                         help="Keep sampled prefixes but give their unverified labels zero training weight")
     parser.add_argument("--phone-binary-pack", type=Path)
+    parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
     parser.add_argument("--hard-ambient-index", type=Path)
@@ -73,6 +74,8 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.phone_source_balanced and not args.phone_binary_pack:
+        parser.error("source balancing requires phone binary pack")
     if args.phone_binary_pack and (args.architecture != 'teacher60' or frames != 150 or bn_policy != 'frozen' or args.phrase_auxiliary_manifest or args.label_smoothing):
         parser.error('phone pack requires teacher60/context150 frozenBN, original BCE, no auxiliary head')
     if not 0 <= args.hard_ambient_count <= 48 or bool(args.hard_ambient_index) != (args.hard_ambient_count > 0):
@@ -285,7 +288,7 @@ def main():
     phone_binary = None
     if args.phone_binary_pack:
         from phone_binary import PhoneBinary
-        phone_binary = PhoneBinary(args.phone_binary_pack)
+        phone_binary = PhoneBinary(args.phone_binary_pack, source_balanced=args.phone_source_balanced)
         (root/'phone_binary.json').write_text(json.dumps(phone_binary.report, indent=2)+'\n')
     auxiliary = None
     if args.phrase_auxiliary_manifest:
