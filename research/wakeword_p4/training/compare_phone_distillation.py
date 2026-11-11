@@ -7,6 +7,29 @@ from pathlib import Path
 from compare_paired_ranking import interface, sha
 
 
+def initializer_identities(plan):
+    """Different initializers require an explicit, complete paired-study map."""
+    original = plan['init']['sha256']
+    if 'arm_initializer_sha256' not in plan:
+        return {arm: original for arm in plan['arms']}
+    identities = plan['arm_initializer_sha256']
+    if (not isinstance(identities, dict) or set(identities) != set(plan['arms'])
+            or identities.get('control') != original
+            or any(not isinstance(value, str) or len(value) != 64
+                   or any(c not in '0123456789abcdef' for c in value)
+                   for value in identities.values())):
+        raise ValueError('Invalid explicit initializer comparison')
+    return identities
+
+
+def warmup_identity(warmup, plan):
+    """Compare the full replay by default; recipe/draws in an init study."""
+    if 'arm_initializer_sha256' not in plan:
+        return warmup
+    initializer_identities(plan)
+    return {key: warmup[key] for key in (*plan['warmup'], 'schedule_sha256')}
+
+
 def operating_points(arms, fallback_reference=None):
     """Choose frozen-grid points; optionally compare against a bad control."""
     def rate(row):
@@ -42,6 +65,7 @@ def main():
         p.add_argument('--'+name, type=Path, required=True)
     a = p.parse_args()
     plan = json.loads(a.plan.read_bytes())
+    initializers = initializer_identities(plan)
     steps = int(plan['common_train_args'][plan['common_train_args'].index('--steps')+1])
     fields = ('threshold', 'macro_recall', 'ambient_hours', 'ambient_false_events',
               'ambient_false_per_hour_upper_95', 'max_source_false_rate',
@@ -73,7 +97,7 @@ def main():
         elif warmup:
             raise ValueError('Unplanned phone-head warmup')
         if (train['model_sha256'] != digest or cal['model_sha256'] != digest
-                or train['initial_weights_sha256'] != plan['init']['sha256']
+                or train['initial_weights_sha256'] != initializers[name]
                 or any(train['source_files_sha256'][k] != v for k, v in plan['source_sha256'].items())
                 or phone['bank_sha256'] != plan['phone_bank_sha256'] or phone['draws'] != steps*8
                 or phone.get('objective', 'joint') != plan.get('phone_objective', 'joint')
@@ -100,7 +124,7 @@ def main():
             'prefix': train['training_prefix_sha256'],
             'schedule': phone['schedule_sha256'],
             'ptq': train['representative_training_inputs_sha256'],
-            'warmup': warmup,
+            'warmup': warmup_identity(warmup, plan) if warmup else warmup,
             'interface': iface, 'parameters': train['parameters'],
             'clips': [(r['source'], r['variant'], r['label']) for r in details['validation']],
             'ambient': [(r['source_type'], r['hours']) for r in details['ambient']],

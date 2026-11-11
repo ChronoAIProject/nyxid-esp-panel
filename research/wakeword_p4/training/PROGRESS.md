@@ -2944,3 +2944,53 @@ this run; elapsed host time is not a P4 resource or latency measurement.
 No audio devices or boards were used. GPU reference remains `c8dcd2c`. The full
 Hi ESP comparison goal remains active and unachieved; independent real-user,
 matched acoustic, P4 resource and long-call/reconnect evidence is still needed.
+
+## Word encoder initialization study, preregistered
+
+The [separate initialization plan](plans/microwake-word-encoder-initialization-v1.json)
+tests staged representation learning after conditional joint loss failed.
+It imports the retained original full-bank word CTC control's encoder into
+the original scalar model, preserving its original classifier at transfer.
+The word head and pretraining optimizer are discarded. Both downstream arms
+use the same original BCE plus .1 word CTC, 1,000 frozen-head warmup steps and
+3,000 mixed-source updates. There is no conditional objective or new runtime
+head. Only the encoder initializer differs; both scalar classifiers train
+normally afterward. No new pretraining or best-fold/checkpoint search occurs.
+
+The selected word checkpoint is the original training-only full fit: 98.1176%
+four-intent macro and 9/1,360 confusers assigned Nyx. Its earlier held-engine
+macro is only 81.1866%, and the original binary encoder already saw those
+engines/sources. Fitted success and this retrospective initializer choice
+cannot establish independent generalization. This experiment tests whether
+that existing representation changes actual scalar wake rejection.
+
+Conversion loads the exact nested encoder/head checkpoint, checks all tensor
+groups against the original pretraining report, preserves the disconnected
+binary classifier and verifies exact save/reload tensors and synthetic probes.
+No probe is a quality measurement. The prepared scalar file is SHA256
+`1216b938b0a6e7b556deaab98e4c339db252457716c0f2891e6aecd8c8fb06c0`.
+The plan binds all 28 preparation files, including original checkpoint,
+reports/plan/audit, executed conversion source, commands and passing logs.
+
+Between arms, warmup cache/head fits intentionally differ because the encoder
+differs. Recipe and exact row draws must still match, and each warmup must
+preserve its own binary/optimizer state. Control must replay the original full
+warmup, scalar SHA31537348..., first input batches, pair schedule and PTQ
+inputs exactly before old development scores can be reused. The input audit
+retains both complete warmups. Existing studies still require complete
+between-arm warmup equality by default; only an explicit complete initializer
+map enables this separate comparison policy.
+
+Three transfer/provenance/policy tests and three unchanged operating-point
+regressions pass. The revised auditor also passes a full read-only regression
+on the actual completed conditional study, including its original tensor,
+source, full feature/background and warmup identities. Historical logs are
+retained. Both exports must retain the original scalar interface and parameter
+count. The same 21-point grid and strict zero-continuous-event, <=1% worst
+engine/corpus false fraction and >=3-point macro improvement rule apply.
+No quality gate is loosened for a different initializer.
+
+This is silent cached-feature research. No reserved quality data, audio
+device, microphone, speaker, board, firmware/OTA, original PCM speed or
+single I2S/AEC/AGC/FIFO path is touched. No development pass can establish
+Hi ESP parity; real-user/acoustic, P4 and long-call/reconnect evidence remains.

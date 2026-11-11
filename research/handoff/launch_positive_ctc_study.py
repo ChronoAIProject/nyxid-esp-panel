@@ -19,11 +19,22 @@ def main():
         parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--plan', type=Path,
         default=Path('research/wakeword_p4/training/plans/microwake-positive-ctc-v1.json'))
+    parser.add_argument('--treatment-initializer', type=Path,
+        help='Prepared scalar encoder initializer; requires an explicit initializer-comparison plan')
     args = parser.parse_args()
     repo, root = args.repository.resolve(), args.artifacts.resolve()
     plan_source = (repo/args.plan).resolve()
     plan_relative = plan_source.relative_to(repo).as_posix()
     plan = json.loads(plan_source.read_bytes())
+    require(('arm_initializer_sha256' in plan) == bool(args.treatment_initializer),
+            'Prepared initializer and explicit comparison plan must be supplied together')
+    if args.treatment_initializer:
+        expected = plan['encoder_initialization']['preparation_files_sha256']
+        actual = {p.relative_to(args.treatment_initializer).as_posix()
+                  for p in args.treatment_initializer.rglob('*') if p.is_file()}
+        require(actual == set(expected), 'Prepared initializer inventory differs')
+        for name, digest in expected.items():
+            require(sha(args.treatment_initializer/name) == digest, 'Prepared initializer differs: '+name)
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
     require(subprocess.check_output(['git', 'show', revision+':'+plan_relative], cwd=repo)
             == plan_source.read_bytes(), 'Plan is not committed')
@@ -38,6 +49,8 @@ def main():
     shutil.copyfile(plan_source, root/'plan.json')
     shutil.copyfile(args.background_inputs, root/'background-inputs.json')
     shutil.copyfile(Path(__file__), root/'launcher.py')
+    if args.treatment_initializer:
+        shutil.copytree(args.treatment_initializer, root/'initialization')
     post = root/'postprocessing'
     post.mkdir()
     for name in plan['postprocessing_source_sha256']:
@@ -47,9 +60,11 @@ def main():
     os.environ.update(flags)
     commands = {}
     for arm, gain in plan['arms'].items():
+        initial = (root/'initialization/binary.weights.h5'
+            if args.treatment_initializer and arm == 'phonetic' else args.initial_weights.resolve())
         commands[arm] = [sys.executable, str(repo/'research/wakeword_p4/training/run_training.py'),
             '--output', str(root/f'model-{arm}'), '--upstream', str(args.upstream.resolve()),
-            '--features', str(args.features.resolve()), '--initial-weights', str(args.initial_weights.resolve()),
+            '--features', str(args.features.resolve()), '--initial-weights', str(initial),
             '--phone-bank', str(args.bank.resolve()), '--phone-gain', str(gain),
             '--compact-phrase-plan', str(root/'plan.json')]
         for field, option in (('background_gains', '--phone-background-gain'),
