@@ -4224,3 +4224,15 @@ Original training.json/export audit retained unchanged. Finite weights,frozenBN
 exact,original int8[1,3,40] to uint8[1,1]. Original waiter session42935 authenticated
 recipe/model and started historical regression. No accuracy/FAR/promotion claim.
 Old-source PCM quality limitations remain; no unseen/final scored,freezev30.
+
+### v41 rejected after complete historical regression (2026-11-11)
+
+Original session42935 exit0;467score traces reauthenticated. Fixed138points,
+zeroeligible,maxmacro.725,min13negative false clips. Historical.99609375:
+Kokoro targetany9/16,commonfalse3/48,cross0;VCTK26/60,common10/180,cross0.
+OldVox87fullrecordings/8.173672725694447h:1event,upper95.5803834674561834/h,
+failing.5/h. Do not remove event or merge newhours. Complete-timeline negative
+sampling alone failed joint gate;no new/final scored or promotion,freezev30.
+All original reports retained. Quality source limitations remain. Next work must
+measure whether the intervention reduced training-history false peaks before
+another change, rather than repeat sampler/loss changes without evidence.
