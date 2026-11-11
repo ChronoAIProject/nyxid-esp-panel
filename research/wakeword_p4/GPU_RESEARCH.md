@@ -4186,3 +4186,18 @@ unchanged. Negative guard checks on v37/v38/v39/v40 all reject at old-stage gate
 No passing candidate yet; actual unseen scoring path not exercised. New/final
 remain unscored. v41 original training/session58922 and waiter/session42935 live;
 first5000step internal validation completed. No new training or threshold changes.
+
+### Retrospective original training PCM mechanical audit (2026-11-11)
+
+All2594canonical original training WAV/filePCM hashes reverified. MonoPCM16/16k,
+nonempty/nonzero,.2..5s,RMS>=.001 pass2594/2594. Zero-fullscale check fails40:
+allPiper,exactly1fullscale sample each (HiESP29,Nexus3,Nyx6,Nick1,Next1).
+Eight sources are in v40/v41 task coverage. Fullscale code is not proof of
+flattened waveform clipping; native float/quantization provenance needed.
+No filtering,attenuation,relabeling,data replacement or training restart.
+This is a failed retrospective mechanical check, not a claim that inherited
+training sources meet the new SLR83 quality specification. v41 remains a
+controlled diagnostic and cannot establish all quality gates from these data.
+Original containers do not prove uncropped phrase/phonetic truth or complete
+TTS provenance. Preserve failures and coordinate native-generation review via
+Issue13. New/final PCM not accessed. All details and audit code retained.
