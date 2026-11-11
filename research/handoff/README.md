@@ -1730,3 +1730,42 @@ freezes committed sources and runs both training and read-only accounting.
 public-download verification. The previous word/phone generalization archive
 retains reference control records. No failed gate permits board deployment;
 real-speaker, matched Hi ESP, P4 and long-call evidence remains outstanding.
+
+## Matched-voice training acoustic neighbours
+
+The [frozen diagnostic](../wakeword_p4/training/plans/phrase-neighbours-v1.json)
+reads only the778 variant0 training paths /744 waveform hashes in the existing
+broad bank. Original source WAVs establish fixed RMS activity proxies; cached
+features supply centered cosine/DTW distances. Source audio is preserved at
+its original rate. No alignment is played or passed to a classifier.
+
+The [result](../wakeword_p4/results/phrase-neighbours-v1.json) retains129 voice
+groups, collapses34 exact-waveform aliases and computes1,703 required pairs.
+Only106 groups provide a distinct-positive reference; Piper has just one,
+with Nick comparisons only. Of1,139 anchor/confuser comparisons,124 order a
+confuser closer than the nearest distinct wake source. These are correlated
+feature comparisons, not independent speakers, pronunciation errors or wake
+false accepts. A fixed per-engine/class ranking yields38 review triplets,
+including comparison cases without inversions. No human labels are available
+for this queue, and no sample is filtered, relabeled or sent to new training.
+
+The [independent accounting](../wakeword_p4/results/phrase-neighbours-v1-audit.json)
+uses SciPy correlation costs and a full-table recurrence. All1,703 distances
+agree within2.77556e-16; retained feature arrays exactly match the original
+cache, and every comparison/cohort/review selection reconstructs. The full
+inventory has zero exact waveform/intent conflicts. These checks validate
+the measurement, without proving a perceptual collision or a cause.
+
+The [complete archive](assets-phrase-neighbours-v1.json) includes source/plan,
+launch/runtime, all selected cached feature arrays and distance matrices,
+source identities, comparison/review metadata, tests and independent audit
+code/logs. The anonymous download verifies all19 listed hashes/lengths. No
+source PCM, full scalar cache, credentials, firmware or device state is included.
+
+At source commit `8a490ac`, run `audit_phrase_neighbours.py --plan <frozen-plan>
+--features <features-expanded-human335> --bank <compact-broad-bank-v1/bank>
+--output <fresh-directory>`. Then run `verify_phrase_neighbours.py --artifacts
+<that-directory> --features <same-features> --output <fresh-audit.json>`.
+`package_phrase_neighbours.py --help` describes publication verification.
+Original WAV/cache inputs remain byte-bound separately. Later listening or
+human pronunciation review requires a separate step; no audio was played here.

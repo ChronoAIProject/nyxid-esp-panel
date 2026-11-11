@@ -3144,3 +3144,37 @@ reference comparison. A distance inversion cannot establish bad pronunciation,
 mislabeling or classifier inability. Original labels remain intact; no new
 training, quality acceptance, reserved scoring, microphone, playback, USB/board,
 firmware/OTA, production device or single I2S/AEC/AGC/FIFO change follows.
+
+## Acoustic-neighbour audit completed: review queue, no label correction
+
+The [completed training-only audit](../results/phrase-neighbours-v1.json)
+checks all778 source paths /744 waveform hashes,129 metadata voice groups
+and1,703 required pair distances. It collapses34 exact-waveform alias paths.
+There are106 groups with a distinct-positive control; Piper contributes only
+one such group, with Nick comparisons only. Missing references stay missing.
+
+Among1,139 correlated anchor/confuser comparisons,124 have the confuser closer
+than the nearest distinct wake source under this fixed spectral DTW metric.
+For example, Mix is closer for15/160 Edge anchors,13/51 Mac anchors and35/108
+OpenAI anchors. These counts are neither pronunciation error rates nor wake
+false accepts. The metric also reflects duration, frontend history, style and
+normalization. No cross-intent exact waveform collision is found, and these
+distances cannot establish a mislabeled source or a unique cause of poor
+generalization. The unchanged bounded rule selects38 triplets for later
+pronunciation review, including noninversion comparison cases.
+
+The [separate audit](../results/phrase-neighbours-v1-audit.json) uses SciPy's
+correlation-distance kernel and a full-table shortest-path recurrence instead
+of the original centered-dot-product/rolling-row implementation. All1,703
+distances agree within2.77556e-16 (fixed allowance1e-12). Every retained feature
+array exactly matches the original scalar cache; all comparisons, cohorts and
+review selections reconstruct. All3 focused tests pass. No human has reviewed
+this queue yet; source intent labels and all models remain unchanged.
+
+The [public evidence](../../handoff/assets-phrase-neighbours-v1.json) retains
+the immutable source/plan/launch/runtime, original cached-feature excerpts,
+all distance arrays/identities/comparisons, review queue, separate auditor and
+raw logs. Its fresh anonymous download verifies all19 listed member hashes
+and lengths. Original source WAVs and the full feature cache remain separately
+byte-bound dependencies. This silent cycle uses no reserved quality data,
+microphone, playback, USB/board or firmware; Hi ESP parity is still unproven.

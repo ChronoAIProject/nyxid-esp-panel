@@ -1,0 +1,129 @@
+{
+  "scope": "Training-only matched-voice acoustic-neighbour diagnosis to prepare pronunciation review; no model scoring or quality advancement.",
+  "plan_sha256": "d799ff4f977a2fd09d3e4bf3a593d0335232f35cd39372eb1789a5172bf91c6a",
+  "source_paths": 778,
+  "source_hashes": 744,
+  "voice_groups": 129,
+  "control_groups": 106,
+  "collapsed_alias_paths": 34,
+  "computed_pair_distances": 1703,
+  "cohorts": [
+    {
+      "engine": "edge-tts",
+      "class": 1,
+      "anchors": 160,
+      "negative_closer_than_positive_reference": 15,
+      "ties": 0,
+      "median_margin": 0.07626877031186463
+    },
+    {
+      "engine": "edge-tts",
+      "class": 2,
+      "anchors": 160,
+      "negative_closer_than_positive_reference": 2,
+      "ties": 0,
+      "median_margin": 0.15158198242810073
+    },
+    {
+      "engine": "edge-tts",
+      "class": 3,
+      "anchors": 160,
+      "negative_closer_than_positive_reference": 0,
+      "ties": 0,
+      "median_margin": 0.16371595329149763
+    },
+    {
+      "engine": "kokoro",
+      "class": 1,
+      "anchors": 60,
+      "negative_closer_than_positive_reference": 0,
+      "ties": 0,
+      "median_margin": 0.06165532292301777
+    },
+    {
+      "engine": "kokoro",
+      "class": 2,
+      "anchors": 60,
+      "negative_closer_than_positive_reference": 0,
+      "ties": 0,
+      "median_margin": 0.14191516729775422
+    },
+    {
+      "engine": "kokoro",
+      "class": 3,
+      "anchors": 60,
+      "negative_closer_than_positive_reference": 0,
+      "ties": 0,
+      "median_margin": 0.15550054545871575
+    },
+    {
+      "engine": "macos-say",
+      "class": 1,
+      "anchors": 51,
+      "negative_closer_than_positive_reference": 13,
+      "ties": 0,
+      "median_margin": 0.04836608183805277
+    },
+    {
+      "engine": "macos-say",
+      "class": 2,
+      "anchors": 51,
+      "negative_closer_than_positive_reference": 7,
+      "ties": 0,
+      "median_margin": 0.07786656958807736
+    },
+    {
+      "engine": "macos-say",
+      "class": 3,
+      "anchors": 51,
+      "negative_closer_than_positive_reference": 6,
+      "ties": 0,
+      "median_margin": 0.08266114199949143
+    },
+    {
+      "engine": "openai-tts",
+      "class": 1,
+      "anchors": 108,
+      "negative_closer_than_positive_reference": 35,
+      "ties": 0,
+      "median_margin": 0.05010785974210541
+    },
+    {
+      "engine": "openai-tts",
+      "class": 2,
+      "anchors": 108,
+      "negative_closer_than_positive_reference": 22,
+      "ties": 0,
+      "median_margin": 0.1014944208806006
+    },
+    {
+      "engine": "openai-tts",
+      "class": 3,
+      "anchors": 108,
+      "negative_closer_than_positive_reference": 22,
+      "ties": 0,
+      "median_margin": 0.08470611817421461
+    },
+    {
+      "engine": "piper",
+      "class": 3,
+      "anchors": 2,
+      "negative_closer_than_positive_reference": 2,
+      "ties": 0,
+      "median_margin": -0.026579429293350346
+    }
+  ],
+  "review_candidates": 38,
+  "accepted": false,
+  "evidence_sha256": {
+    "features.npz": "e3a938a5eb1a6b377dbbeda8a655bc8b1c4c8407f33154949b4f3ed5addf7813",
+    "plan.json": "d799ff4f977a2fd09d3e4bf3a593d0335232f35cd39372eb1789a5172bf91c6a",
+    "review-candidates.json": "cb6a923b07d6b252f176991044e8ce26adeee69a6686f95f608bb93b370869bc",
+    "comparisons.json": "35f5a4a485886743adc85615fa941f4bfd7a42d5babec9b7b2aa76e1bff7d4aa",
+    "distances.npz": "5c376d27e3092879ad5fa5b660d72998785e7c53e877fe7998ec6fe1764ce91a",
+    "groups.json": "e3aafb9994ce967a13d132bc31f86b2df982c685361fa7edeb4e3f0bc52e9a2b",
+    "inventory.json": "e81a8ff4e22e23a9ad10eda7bd9f21ac77832701edc71647a3a37b69f26c852b",
+    "launch.json": "ce8f525d64fc7e17a248c7c64511de1a63125437e6a85793b0619af2f7663879"
+  },
+  "limits": "Cosine/DTW geometry, source RMS activity proxies and TTS intent are not phonetic truth. Variant0 frontend history, duration, silence, voice/style and spectral normalization can influence distance; a closer confuser does not prove a perceptual collision or classifier inability. Source hashes and alias paths are not independent people. This audit cannot establish target recall, FAR, endpoint latency, P4 resources, call stability or Hi ESP parity. No reserved-quality scoring, playback, microphone, USB/board/OTA, production board, PCM speed or single I2S/AEC/AGC/FIFO change."
+}
