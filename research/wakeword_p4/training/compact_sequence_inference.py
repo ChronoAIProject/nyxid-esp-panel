@@ -127,6 +127,10 @@ def main():
                                             modes.Modes.STREAM_INTERNAL_STATE_INFERENCE)
     streaming(np.zeros((1, 3, 40), np.float32))
     streaming.export(str(args.output/'saved_model'))
+    # The upstream converter mutates layer modes on its input before cloning.
+    # Load an independent window reference after conversion; the original
+    # model no longer has non-streaming semantics.
+    reference = build_dual(args.model/'best.weights.h5', args.model/'phone-step-3000.weights.h5')
     saved = tf.saved_model.load(str(args.output/'saved_model'))
     function = saved.signatures['serving_default']
     initial = [v.numpy() for v in saved.variables]
@@ -185,7 +189,7 @@ def main():
             raise ValueError('No complete causal window in selected training clip')
         windows = np.stack([scaled[at:at+335] for at in starts[valid]])
         expected = [np.concatenate(v) for v in zip(*[
-            [np.asarray(x) for x in full(windows[at:at+32], training=False)]
+            [np.asarray(x) for x in reference(windows[at:at+32], training=False)]
             for at in range(0, len(windows), 32)], strict=True)]
         detector.reset()
         quant_p, quant_q = detector.raw_outputs(source)

@@ -1,0 +1,67 @@
+{
+  "scope": "Training-only two-output compact sequence export/alignment/reset/quantization diagnostic. No wake-quality evaluation or firmware.",
+  "hypothesis": "The retained ordered head can be exported with the unchanged scalar head and aligned causal history. Numerical feasibility is required before testing whether absolute ordered CTC probability helps inference.",
+  "parent_study_plan_sha256": "c79c035e02bd46005f353ced90fd3a8b391d6ea7a8c5a3a88e057cb0932dd1fe",
+  "parent_study_result_sha256": "97539263f69fc1eca61f74b1be2dd794bdf972a32edd3f1a6aee1d8e01f1211d",
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+    "bank_data_sha256": "dec346c7beb5cafab9b315a78f51709711572e1e0b3f5131f1a8fccb5422985b",
+    "rows": 236,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "model_files_sha256": {
+    "best.weights.h5": "9a9f4b3769764ffcbab1843519f82b7495767e2ac403fadce935353231019614",
+    "phone-step-3000.weights.h5": "ea3d54adafb4cda1caef2955687c04426ff20b62c3a9ec2737817a262ff22e6b",
+    "training.json": "cc803e4083bc03db9615a40f376ec0bb3b3c49f78bf36fe7d9505e51b6d47147",
+    "hey_nyx.tflite": "e0c305f1e8c84a8a9b4a79d1b4eae007a8960759f930c9696402ea2206dace11"
+  },
+  "source_sha256": {
+    "compact_sequence_inference.py": "0bacf7da9fc62353ce4588e1db2bdbf6777de5755d37bb214a51a8a4f4104416",
+    "test_compact_sequence_inference.py": "46e118ae2b5d32f5bd5e74750558d999425e499807b51424b5f9d96d15653764",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f"
+  },
+  "calibration_seed": 519,
+  "calibration_windows": 100,
+  "smoke_bank_row_ids": [
+    0,
+    1,
+    17,
+    33,
+    48,
+    49,
+    65,
+    81,
+    96,
+    97,
+    113,
+    129,
+    144,
+    145,
+    161,
+    177,
+    192,
+    193,
+    207,
+    221
+  ],
+  "maximum_float_alignment_delta": 0.0001,
+  "model": "Same final trained encoder and binary head plus its retained Dense(6) ordered CTC head. Check all scalar weights remain identical when loading the auxiliary checkpoint. Retain all67 temporal logits per streaming step, sharing the existing encoder and history. This unoptimized reference increases output/compute; no low-cost P4 claim.",
+  "calibration": "Use two full-frame boundaries0/26 followed by100 distinct original training-bank windows selected without replacement by RNG519. Yield every complete3-frame slice, in row order. Record exact input digest and selected bank IDs. No held-out features or source audio are read.",
+  "smoke": "First training-bank source per engine/class, exactly20 predeclared IDs. Replay each complete original cached feature sequence. Compare every complete aligned335-frame window against corresponding float streaming outputs at start=3*(step+1)-335, for both scalar and all67x6 logits. Each maximum delta must be<=1e-4. Quantized interpreter recreation must replay both outputs exactly, and256-step feature chunking must match an unchunked invocation exactly. Quantization differences are reported, not wake-acceptance criteria.",
+  "future_fixed_inference_rule": "After smoke passes, a separate frozen development experiment may compare the binary output from this same dual INT8 artifact with binary*exp(log P_CTC([hey,nyx])) across its67 logits. The probability sums all paths collapsing to exactly [hey,nyx], retaining blank, out-of-grammar and repeated-token mass instead of normalizing four forced choices. No score/threshold is evaluated or selected in this export study.",
+  "advance_action": "A complete numerical pass permits preregistering the actual inference-rule wake comparison, including fixed thresholds and continuous event accounting. It does not permit a firmware change, final scoring or Hi ESP parity claim.",
+  "limits": "Training-only cached synthetic/public features from a tiny correlated bank already seen during optimization. Reusing the full67-state output is a correctness reference, not an optimized MCU design. No open-set FAR/recall or calibrated human wake probability is established. No validation/test scores, source WAV access, speaker playback, microphone capture, board access, PCM-speed change or second audio reader.",
+  "parent_procedure_error_result_sha256": "7571d169d8a0cc27afaa402c25d4609ff0dc3cfd959c044cc1875153614c1cc7",
+  "parent_procedure_plan_sha256": "8bba06e3e14f8a36016efd22d827fc3b16233bd5d540fc4af048f6503a801aaa",
+  "procedure_correction": "Rebuild an independent checkpoint-loaded non-streaming reference after upstream streaming conversion mutates the original layer modes. Dataset, weights, PTQ IDs, tolerance and reset/chunking gates are unchanged; no earlier wake-quality scores exist."
+}

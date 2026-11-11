@@ -1,0 +1,16 @@
+{
+  "scope": "Training-only export diagnostic terminated on a numerical-reference construction error; no wake-quality scores.",
+  "plan_sha256": "8bba06e3e14f8a36016efd22d827fc3b16233bd5d540fc4af048f6503a801aaa",
+  "launch_sha256": "4e320a19dccc2682f799a6ac807706886d08543b04cbb680044aa699f3d2f1ce",
+  "log_sha256": "6924d4fd8655c820bd948965d45ec71f1044014bc96d285aae8c72789c0cbd04",
+  "source_sha256": "cb3e149765dd95e7cd4337e6bc6766955e1a5dc693367adf97652a5eb4b19166",
+  "status": "procedure_error",
+  "training_process_terminal": true,
+  "quantized_model_created_sha256": "83f8872f13e140f6aa857cb84ac51befbeb2885a6b603eb82c8d1a2812e77474",
+  "numerical_smoke_completed": false,
+  "advance": false,
+  "accepted": false,
+  "cause": "Upstream to_streaming_inference changes the original model layer modes before cloning it. The script then attempted a non-streaming batched window call on that mutated model, whose original layers had no streaming states.",
+  "correction": "Build a separate checkpoint-loaded reference model after conversion. Preserve this failed run and freeze a new source revision before rerunning the same data and numeric gates.",
+  "limits": "An export artifact exists but has not passed the complete alignment/reset/chunking smoke. This is a procedure failure, not a measured recognition-quality failure. No wake-validation, audio device or board was accessed."
+}

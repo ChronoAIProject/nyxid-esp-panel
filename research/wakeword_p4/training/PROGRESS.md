@@ -1873,3 +1873,16 @@ binary score times the absolute probability of exactly [hey,nyx], not a
 four-phrase forced-choice posterior. No rule or threshold is scored here.
 Only a pass permits a separately frozen actual wake-inference comparison.
 This remains silent, offline research with no firmware or board operation.
+
+The [first export attempt](../results/compact-sequence-export-smoke-v1.json)
+terminates on a procedure error before numerical smoke completion: upstream
+streaming conversion mutates the input model's layer modes, so the subsequent
+batched window call on that object fails without streaming states. The INT8
+artifact exists but is not qualified by this incomplete smoke. The immutable
+source, original plan and failure log are retained; no wake validation ran.
+
+The [corrected frozen procedure](plans/compact-sequence-export-smoke-v2.json)
+loads a separate non-streaming reference from the same checkpoints after
+conversion. Only reference construction changes. Source weights, all training
+inputs, calibration selection, numeric tolerance and reset/chunking criteria
+remain fixed. A new output directory will preserve the original failure.
