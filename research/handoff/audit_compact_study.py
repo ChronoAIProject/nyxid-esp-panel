@@ -61,12 +61,15 @@ def audit(args):
         start = command.index('--architecture')
         background_gain = plan.get('background_gains', {}).get(arm)
         positive_gain = plan.get('positive_gains', {}).get(arm)
+        intent_gain = plan.get('intent_gains', {}).get(arm)
         options = ['--output', '--upstream', '--features', '--initial-weights',
             '--phone-bank', '--phone-gain', '--compact-phrase-plan']
         if background_gain is not None:
             options.append('--phone-background-gain')
         if positive_gain is not None:
             options.append('--phone-positive-gain')
+        if intent_gain is not None:
+            options.append('--compact-intent-gain')
         require(start == 2+2*len(options) and command[start:] == common, 'Training options differ: '+arm)
         require(command[2:start:2] == options, 'Input options differ: '+arm)
         for option, expected in (('--output', directory), ('--upstream', args.upstream),
@@ -117,6 +120,14 @@ def audit(args):
         else:
             require(phone.get('ordinary_positive') is None, 'Unplanned positive supervision: '+arm)
             positive_checked = None
+        if intent_gain is not None:
+            intent = phone['intent']
+            require(float(command[command.index('--compact-intent-gain')+1]) == intent_gain
+                    and intent['gain'] == intent_gain and intent['steps'] == steps
+                    and intent['paired_examples'] == steps*16 and intent['classes'] == 4
+                    and intent['warmup_applied'] is False, 'Intent objective/cohort differs: '+arm)
+        else:
+            require(phone.get('intent') is None, 'Unplanned intent supervision: '+arm)
         warmup = phone['warmup']
         require(all(warmup[k] == v for k, v in plan['warmup'].items()), 'Warmup recipe differs: '+arm)
         for group in ('weights', 'optimizer'):

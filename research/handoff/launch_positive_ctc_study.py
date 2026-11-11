@@ -1,4 +1,4 @@
-"""Launch the frozen ordinary-positive CTC comparison from immutable copies."""
+"""Launch a frozen compact CTC comparison from immutable source copies."""
 import argparse
 from datetime import datetime, timezone
 from importlib.metadata import version
@@ -17,10 +17,12 @@ def main():
     for name in ('artifacts', 'repository', 'upstream', 'features', 'bank', 'initial-weights',
                  'prior-study', 'background-inputs'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--plan', type=Path,
+        default=Path('research/wakeword_p4/training/plans/microwake-positive-ctc-v1.json'))
     args = parser.parse_args()
     repo, root = args.repository.resolve(), args.artifacts.resolve()
-    plan_relative = 'research/wakeword_p4/training/plans/microwake-positive-ctc-v1.json'
-    plan_source = repo/plan_relative
+    plan_source = (repo/args.plan).resolve()
+    plan_relative = plan_source.relative_to(repo).as_posix()
     plan = json.loads(plan_source.read_bytes())
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
     require(subprocess.check_output(['git', 'show', revision+':'+plan_relative], cwd=repo)
@@ -49,9 +51,13 @@ def main():
             '--output', str(root/f'model-{arm}'), '--upstream', str(args.upstream.resolve()),
             '--features', str(args.features.resolve()), '--initial-weights', str(args.initial_weights.resolve()),
             '--phone-bank', str(args.bank.resolve()), '--phone-gain', str(gain),
-            '--compact-phrase-plan', str(root/'plan.json'),
-            '--phone-background-gain', str(plan['background_gains'][arm]),
-            '--phone-positive-gain', str(plan['positive_gains'][arm]), *plan['common_train_args']]
+            '--compact-phrase-plan', str(root/'plan.json')]
+        for field, option in (('background_gains', '--phone-background-gain'),
+                              ('positive_gains', '--phone-positive-gain'),
+                              ('intent_gains', '--compact-intent-gain')):
+            if arm in plan.get(field, {}):
+                commands[arm] += [option, str(plan[field][arm])]
+        commands[arm] += plan['common_train_args']
     postcommand = [sys.executable, str(post/'finish_background_ctc_study.py'),
         '--artifacts', str(root), '--repository', str(repo), '--upstream', str(args.upstream.resolve()),
         '--features', str(args.features.resolve()), '--bank', str(args.bank.resolve()),

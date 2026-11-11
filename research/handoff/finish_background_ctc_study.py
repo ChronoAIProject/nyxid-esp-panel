@@ -1,4 +1,4 @@
-"""Audit background supervision, replay the prior CTC control, score treatment."""
+"""Audit a compact auxiliary study, replay its prior control, score treatment."""
 import argparse
 import json
 from pathlib import Path

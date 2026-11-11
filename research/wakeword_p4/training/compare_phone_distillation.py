@@ -55,6 +55,15 @@ def main():
         details = json.loads((val/'validation-details.json').read_bytes())
         digest = sha(model/'hey_nyx.tflite')
         phone = train['phone_distillation']
+        expected_intent = plan.get('intent_gains', {}).get(name)
+        actual_intent = phone.get('intent')
+        if expected_intent is None:
+            if actual_intent is not None:
+                raise ValueError('Unplanned compact intent objective')
+        elif (actual_intent is None or actual_intent['gain'] != expected_intent
+              or actual_intent['steps'] != steps or actual_intent['paired_examples'] != steps*16
+              or actual_intent['classes'] != 4 or actual_intent['warmup_applied']):
+            raise ValueError('Compact intent objective differs from the plan')
         warmup = phone.get('warmup')
         if plan.get('warmup'):
             if (not warmup or any(warmup[k] != v for k, v in plan['warmup'].items())

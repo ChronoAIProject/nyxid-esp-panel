@@ -94,7 +94,7 @@ def balance_encoder_gradients(binary, phone, encoder_indices, gain, ratio_cap):
 
 
 def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, background_gain=None,
-               positive_gain=None):
+               positive_gain=None, intent_gain=None):
     import tensorflow as tf
 
     if objective not in ('joint', 'conditional', 'ctc'):
@@ -116,6 +116,13 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
         from positive_ctc import mask as positive_mask, keyword_loss
         positive_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
         positive_examples = tf.Variable(0, dtype=tf.int64, trainable=False)
+    if intent_gain is not None:
+        if (objective != 'ctc' or targets.shape[-1] != 6 or encoder_ratio_cap is not None
+                or not np.isfinite(intent_gain) or not 0 <= intent_gain <= 1 or gain <= 0):
+            raise ValueError('Intent CTC needs compact targets, positive auxiliary gain and finite intent gain in [0,1]')
+        from conditional_ctc import compact_loss
+        intent_steps = tf.Variable(0, dtype=tf.int64, trainable=False)
+        intent_examples = tf.Variable(0, dtype=tf.int64, trainable=False)
     temporal = tf.keras.layers.Reshape((STEPS, 60), name='training_phone_sequence')(
         model.get_layer('classifier').input)
     logits = tf.keras.layers.Dense(targets.shape[-1], name='training_phone_logits',
@@ -167,6 +174,8 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
             present = ids > 0
             q = tf.gather(teacher, tf.boolean_mask(ids, present)-1)
             phonetic = phone_loss(q, tf.boolean_mask(phones, present))
+            if intent_gain:
+                phonetic += intent_gain*compact_loss(q, tf.boolean_mask(phones, present))
             if background_gain is not None:
                 ambient = background_mask(y[:, :3] if positive_gain is not None else y)
                 if background_gain:
@@ -199,7 +208,17 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
         if positive_gain is not None:
             positive_steps.assign_add(1)
             positive_examples.assign_add(tf.math.count_nonzero(ordinary_positive))
+        if intent_gain is not None:
+            intent_steps.assign_add(1)
+            intent_examples.assign_add(tf.math.count_nonzero(present))
         return loss
+
+    def intent_metadata():
+        if intent_gain is None:
+            return None
+        return {'gain': intent_gain, 'steps': int(intent_steps), 'paired_examples': int(intent_examples),
+                'classes': 4, 'warmup_applied': False,
+                'objective': 'Paired original-intent cross-entropy over raw CTC likelihoods; no score/length correction. Added inside the existing auxiliary gain; omitted from frozen-head warmup and scalar export.'}
 
     def positive_metadata():
         if positive_gain is None:
@@ -336,4 +355,5 @@ def supervisor(model, targets, gain, objective='joint', encoder_ratio_cap=None, 
     train.balance_metadata = balance_metadata
     train.background_metadata = background_metadata
     train.positive_metadata = positive_metadata
+    train.intent_metadata = intent_metadata
     return train

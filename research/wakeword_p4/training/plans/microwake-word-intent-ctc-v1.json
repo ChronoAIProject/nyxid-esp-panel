@@ -1,0 +1,311 @@
+{
+  "upstream_commit": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "feature_dir": "features-expanded-human335",
+  "feature_index_sha256": {
+    "features.json": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "human.json": "b6886142cf66ff24379018f12ab0f0c0f1c3c67450bcb2d9a51ef5d40cfcebba",
+    "ambient.json": "8ec9bb6e3b649c5b18839ea4fd858c7350dfac98a0e3bc33a6a12ed94b22abae"
+  },
+  "init": {
+    "directory": "microwake-dialogue-confusers-v1/model-hard",
+    "file": "best.weights.h5",
+    "sha256": "ea2f5192cdab81ddce15a44d32a6442184f44bac4a4435a5971062b1740e04de"
+  },
+  "validation_args": [
+    "--validation-only",
+    "--separate-negative-corpora"
+  ],
+  "threshold_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.85,
+    0.9,
+    0.925,
+    0.95,
+    0.97,
+    0.98,
+    0.985,
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996
+  ],
+  "pair_sampling": "Uniform seed431 pair permutations over the full5060 Cartesian same-voice/render pairs. Eight pairs replace eight positive and eight TTS-negative slots per128-example batch, with original binary labels and complete midpoint windows. The10120 retained rows contain3112 unique crops from744 source hashes (404 positive,340 negative), including four correlated environment renders. Engines/phrases are not uniform at these pair slots.",
+  "arms": {
+    "control": 0.1,
+    "phonetic": 0.1
+  },
+  "advance": "Require identical first 16 training batches, pair draw schedule, frozen-head warmups, representative inputs, scalar INT8 export and validation exposure. Treatment must have zero continuous development events, <=1% worst engine/corpus and engine false fraction, and >=3 percentage points macro recall over control. Select control at its best recall in the same strict gate, else a 2% zero-event gate, else its minimum-false zero-event point, preserving prior policy. Only if control has no zero-event grid point, compare with its frozen .97 reference and additionally require treatment worst-group false fraction <=control .97 worst-group fraction. This is a development advancement screen, not Hi ESP parity or firmware approval.",
+  "control_fallback_reference": 0.97,
+  "phone_bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+  "phone_bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+  "phone_objective": "ctc",
+  "scope": "Paired full mixed-source scalar wake training with an additional conditional two-word CTC intent loss; reused development validation only.",
+  "hypothesis": "Word CTC already passes the unique-crop fitted-bank gate,while the phone conditional diagnostic shows a discrimination effect without wake acceptance. Test the conditional objective directly in the full mixed-source word-auxiliary wake trainer,where the scalar binary BCE remains primary. No phone recipe is promoted and no new phone fit/held-engine stage is run.",
+  "compact_bank": {
+    "feature_index_sha256": "a0971b3e513ce80bb800ccb55f39215008a2222e462ac0ba43f997f86374c283",
+    "bank_sha256": "0bd681054c86b5fd327dc3addb6414aed272b2642c976e93ca47932b9a87405d",
+    "bank_data_sha256": "1af81c49b017171b5b4ea62f24e431295d0c8757e97fe0479e7b023e2b4eebec",
+    "rows": 10120,
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "source_sha256": {
+    "compact_phrase_ctc.py": "d5bc3f675e216b14bf1c1831e6c857edba19da5b7b7b75fc67577962e855e2ba",
+    "compare_paired_ranking.py": "9649371c6710b23737a164a8ab4e536f7a0bbeadc88ddf6d7e2032d6e0c007e5",
+    "compare_phone_distillation.py": "fb79f85d304c459fbc19ad373bab365dc10baa657885a8a15448afabf85f16f1",
+    "conditional_ctc.py": "816d550577488d3b0d51673bfbfaeac83de1e8005a7d8379d421cb92508dddf2",
+    "ctc_reference.py": "4029ac30053e83d1e2bd3bcff9a9df300d734d821323ed692ea1c70f227b1145",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "evaluate_compact_sequence.py": "4d1b52a9ec85c4a6050cf96d85f5c281efefefb2075bde75ec3bdc64983d94ba",
+    "evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c",
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "matched_confuser_windows.py": "9897e65bd0d4faaa105c0403dfd16182bcfcaa8dcbb440b4671d0b5d409a60e3",
+    "near_word_windows.py": "f5019f25e1e4f4418b90889d0b2748af5694c97ee1f9965dfd80099e0868bcaf",
+    "paired_training.py": "459bf74450555f84ea83366d821760976dba1334e3f0894a09888c129cdc72f7",
+    "phone_distillation.py": "c136aa6c90512600cc31fff95ed3ff5da09d33a32346b03dde8f4950baecfd81",
+    "phone_sequences.py": "7ba5a48e4c9bf7e2ac754e3575280017c1e01c79a94d22cd8fd5eab7c74a319f",
+    "phrase_ctc_readout.py": "6717da9e169673622314603cbf04bad05667d1b76cef648d6fe2c7eff905960c",
+    "phrase_output.py": "5a466ea610b2c8e927ef82941cdf7783431db87793e3c9c628eadd1b705259aa",
+    "prepare_phone_bank.py": "9eb9d69a5f987cf913e582b6ea1a71fd36c1fd8b8c52d0266f689558f9bb8294",
+    "run_training.py": "5ef9e1cabd665133111b45bd0472347877d1f23757718a296b68f25cab23f26a",
+    "test_compact_intent_ctc.py": "e5ef529efc519446346b8d4d571315ca5d74e1795b7cdfa08f4109e53e69294a",
+    "test_compact_phrase_ctc.py": "85afeb095b1442e69becafac3a183c4cf019584ac4b2a861347938a747aed269",
+    "test_phone_distillation.py": "ae4da678753768bcaaa46d835cbf7dc69fa2d9aeb107be59c2555f62e94c4343",
+    "test_phone_operating_points.py": "40150a245ae2a9b2c14a5f4b7d79abcd0406d9a0723082cde9d0b3eb5f97e9f1",
+    "test_phone_sequences.py": "a09e2c4216cc27151788831c05923bcc823af5a1c1fd1f09f290afc7c8074db9",
+    "train_stream.py": "19fa45c6075660fa1592435ad47b757706e04dbd8b3505e20e997caebcf56324",
+    "transfer.py": "ba859bfe22c3b4d3187fa044637ec12fdac09816176fae991f44dc1a8006f608"
+  },
+  "common_train_args": [
+    "--architecture",
+    "transfer60",
+    "--input-frames",
+    "335",
+    "--steps",
+    "3000",
+    "--eval-interval",
+    "3000",
+    "--learning-rate",
+    "0.0002",
+    "--negative-weight",
+    "5",
+    "--source-sampling",
+    "uniform",
+    "--specaugment",
+    "--align-stream",
+    "--threads",
+    "3",
+    "--phone-objective",
+    "ctc",
+    "--phone-warmup-steps",
+    "1000",
+    "--phone-warmup-learning-rate",
+    ".003"
+  ],
+  "warmup": {
+    "steps": 1000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seed": 1223,
+    "objective": "ctc"
+  },
+  "objective": "Original weighted binary BCE plus0.1*(paired two-token CTC NLL/2 + intent_gain*four-intent conditional CTC cross-entropy). Conditional classes use original synthesis intent and raw equal-prior CTC likelihoods for [hey,nyx|mix|next|nick],with no fitted score/length adjustment. Only the16 paired slots per128 mixed-source batch receive the new conditional term. Intent gain0/1 is the sole recipe difference;no background/ordinary-positive auxiliary targets or encoder caps are added.",
+  "warmup_policy": "Both arms replay the original1000-step frozen-head CTC-only warmup exactly,including initial/final fits,head/cache/draw hashes and unchanged binary weights/optimizer. Conditional intent loss is excluded from warmup. Then both perform exactly3000 original mixed-source updates with the same draw schedule,augmentation,optimizer schedule and fixed final checkpoint. No gain/seed/step sweep or checkpoint search.",
+  "limits": "Training uses only original training sources. Reused development validation is not untouched acceptance;synthetic source intent is not human pronunciation truth. The bank has5060 Cartesian pairs but only3112 distinct crops/744 source hashes,with unchanged pair-role/source weighting. New conditional intent supervision is training-only and discarded before the existing scalar INT8 export. No audio device,playback,microphone,board,firmware/OTA,PCM speed,or I2S/AEC/AGC/FIFO changes. Independent real-speaker/room recall,matched Hi ESP recognition/FAR/latency,P4 resources and long-call/reconnect stability remain required;no development pass alone completes the goal.",
+  "study_boundary": "Fresh paired full mixed-source wake study. Both arms start from the original binary initializer,not previously fitted word/phone encoders. Replay the original auxiliary-gain0.1 scalar control exactly before reusing its byte-bound complete development scores. Evaluate the new treatment once at the same fixed21-point grid,using the unchanged strict gate/comparator policy. Cache reconstruction must reproduce all score maxima,timebases,events,grids and the decision. No reserved quality data,inference combination rule or firmware action.",
+  "parent_study_plan_sha256": "44e05b19a55b6f29873edf5392561e6dc30132ab7d7bd6073b230d37c2326d81",
+  "bank_plan_sha256": "3762ddd835276a7c6dace43e0a2d077bdb30cd33b0bb39974b52fcb7b8dac193",
+  "bank_coverage": {
+    "pairs": 5060,
+    "rows": 10120,
+    "unique_crops": 3112,
+    "unique_sources": 744,
+    "positive_sources": 404,
+    "negative_sources": 340,
+    "pairs_by_stratum": {
+      "edge-tts:hey mix": 640,
+      "edge-tts:hey next": 640,
+      "edge-tts:hey nick": 640,
+      "kokoro:hey mix": 240,
+      "kokoro:hey next": 240,
+      "kokoro:hey nick": 240,
+      "macos-say:hey mix": 340,
+      "macos-say:hey next": 340,
+      "macos-say:hey nick": 340,
+      "openai-tts:hey mix": 432,
+      "openai-tts:hey next": 432,
+      "openai-tts:hey nick": 432,
+      "piper:hey mix": 28,
+      "piper:hey next": 28,
+      "piper:hey nick": 48
+    },
+    "engines": [
+      "edge-tts",
+      "kokoro",
+      "macos-say",
+      "openai-tts",
+      "piper"
+    ]
+  },
+  "feature_data_sha256": "475cc756441bac8ccdb0c17a86a1f8fae86308eba95770c79d253d7834ced3e8",
+  "postprocessing_source_sha256": {
+    "audit_compact_study.py": "05092b75304432a7a454e751040f320ef63544312513d1df64335581410473d3",
+    "finish_background_ctc_study.py": "e8fcea1d69af1338a14fb482169d4d95c9021fb566abd21c90e8cee017979fd7",
+    "background_inputs.py": "018e7ac72579081a734c44679f9a6c0bb3acac642f5e57baa49d2152fdff8d10",
+    "audit_scalar_wake_scores.py": "43812d49e90ab890d92bff281cab63a8dff325ba9a37234a7bb37396a7788e6f"
+  },
+  "intent_gains": {
+    "control": 0,
+    "phonetic": 1
+  },
+  "required_control_replay": {
+    "model_sha256": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+    "training_prefix_sha256": "ab6b424b0c3e34563a2e913ffd90cb750cf6e988111a9ae9cec92e6f56426bd3",
+    "representative_training_inputs_sha256": "66a81e63b81913c18df02e3402a0fba573c452050063b7d1fa647f416b810986"
+  },
+  "required_control_warmup": {
+    "steps": 1000,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "objective": "ctc",
+    "seed": 1223,
+    "schedule_sha256": "39eb9d5ad97260b1ee2da67b3556bf35314095aa11d5131d551fb7d531a44781",
+    "head_weights_sha256": "90f5e4e3dbea5788a3e0df6cd7f1514ce1d287d60527d53b692796c5b59392b8",
+    "encoder_cache_sha256": "4a1b9a44f54a864c2e71a89f56d44028f80b9b3d5296c3bc02c696c30c75c0e2",
+    "binary_weights_before_sha256": "956b02b3b2d1f1863079193989b3a5162db3b62e0fea9a06ee29804e4c3d609e",
+    "binary_weights_after_sha256": "956b02b3b2d1f1863079193989b3a5162db3b62e0fea9a06ee29804e4c3d609e",
+    "binary_optimizer_before_sha256": "0757cd421c9bfd21a57c90c29816930512f340294dab2861bdae8f950f45cd54",
+    "binary_optimizer_after_sha256": "0757cd421c9bfd21a57c90c29816930512f340294dab2861bdae8f950f45cd54",
+    "initial_fit": {
+      "ctc_loss": 43.56684001877374,
+      "sequences": 10120,
+      "exact_sequences": 0,
+      "target_phones": 20240,
+      "phone_edits": 61101,
+      "phone_error_rate": 3.018824110671937
+    },
+    "history": [
+      {
+        "step": 250,
+        "fit": {
+          "ctc_loss": 1.6245230067859997,
+          "sequences": 10120,
+          "exact_sequences": 0,
+          "target_phones": 20240,
+          "phone_edits": 20126,
+          "phone_error_rate": 0.9943675889328063
+        },
+        "head_weights_sha256": "9f4186ce5d67facfde43186c204b1512b2d20cae350d0cd9f1a40df98edc8323",
+        "schedule_sha256": "d9d9fd613e181cc4e0b57e876cc7db025318bebb161b194b5ea2fec439e93a11"
+      },
+      {
+        "step": 500,
+        "fit": {
+          "ctc_loss": 1.2171518944940076,
+          "sequences": 10120,
+          "exact_sequences": 9,
+          "target_phones": 20240,
+          "phone_edits": 18301,
+          "phone_error_rate": 0.904199604743083
+        },
+        "head_weights_sha256": "86a344edf765377685f56223b92c86499d6196e7f6f4e0e6d8711ee7a5540f37",
+        "schedule_sha256": "6d368e4d44ef2ab47c13fe6054022d99ffbc3bbda035f5a0963b4f46a17dfb6b"
+      },
+      {
+        "step": 750,
+        "fit": {
+          "ctc_loss": 1.0969794586241952,
+          "sequences": 10120,
+          "exact_sequences": 21,
+          "target_phones": 20240,
+          "phone_edits": 16213,
+          "phone_error_rate": 0.8010375494071146
+        },
+        "head_weights_sha256": "4f7726542cde13232cace4eb9660e5e9f8f9860747753d861a2aca506b008e09",
+        "schedule_sha256": "0d24f8b2bc34d613fc62f8a495a8a6d328b5ec545101ce49d1101e40b1638c18"
+      },
+      {
+        "step": 1000,
+        "fit": {
+          "ctc_loss": 0.9954510931912147,
+          "sequences": 10120,
+          "exact_sequences": 3,
+          "target_phones": 20240,
+          "phone_edits": 14407,
+          "phone_error_rate": 0.7118083003952569
+        },
+        "head_weights_sha256": "90f5e4e3dbea5788a3e0df6cd7f1514ce1d287d60527d53b692796c5b59392b8",
+        "schedule_sha256": "39eb9d5ad97260b1ee2da67b3556bf35314095aa11d5131d551fb7d531a44781"
+      }
+    ],
+    "scope": "Training-bank fit only; separate optimizer and cached inference-mode encoder states."
+  },
+  "required_control_schedule_sha256": "104c779f39a6a5c8d2c6169ed088811dd750dff8022bd8e0443ec5030234947a",
+  "control_replay_definition": "Original broad-bank compact CTC auxiliary gain0.1 baseline,with the unchanged scalar binary inference graph.",
+  "prior_control_files_sha256": {
+    "validation-phonetic/ambient-validation-024.npy": "f12e26e0222f518165a265f8f2595e6547ebeadb675a93722f63275ef9ee150d",
+    "validation-phonetic/ambient-validation-025.npy": "5901895eafb0a3f9e10cc03334e180dc63896a501d8b9a9d0b43a19a66a4edfc",
+    "validation-phonetic/ambient-validation-026.npy": "a8771cce2151a101422554a38746f96d0c24ef47ceb3215a5e7dddea61938ee3",
+    "validation-phonetic/ambient-validation-027.npy": "74cd9bf7fceed168b7de6612d4fec33e26b8880abbfedad6f6ae372482d8e975",
+    "validation-phonetic/ambient-validation-028.npy": "89b7a2207b7f4d372173d0945920ce29c83d95d4824530f7286a6a1d9973f326",
+    "validation-phonetic/ambient-validation-029.npy": "6a4c0b8909ae49fd92392beb3d8f458c7b59612f46b75f700c0d5dcba82220c0",
+    "validation-phonetic/ambient-validation-030.npy": "ab7ca3ed89df8c876149c5f8382b3ca305684e4b1110cbafe1eb208b785f1890",
+    "validation-phonetic/ambient-validation-031.npy": "a720de1f4426f0730fdbd0cea7ef4799384491e8b6be43f9e0c00b9e68ef1b28",
+    "validation-phonetic/ambient-validation-043.npy": "6df074a35d616dcb83cc80d56105249dcdf2ce8ef4de5d9b6a51eef495d70bc3",
+    "validation-phonetic/ambient-validation-048.npy": "913b0a4fd98b2ee3817059c8440e84a0602f5784c15ac635eea8bd7ff0f66dfb",
+    "validation-phonetic/ambient-validation-051.npy": "e22141795849971618e952c617f84cee67a8d23c86235d4186e44c8b51f4d12b",
+    "validation-phonetic/ambient-validation-056.npy": "bfe1914cf0e1b1952cfce64c5a8bed10b7f88e51aaa0737ad38a2c2f393ab1e0",
+    "validation-phonetic/ambient-validation-073.npy": "5eae2a0cdefda46fe690ab8f5e38503d177d20411c521f6c453d9d79210aeaaa",
+    "validation-phonetic/ambient-validation-084.npy": "d65b99fc211dbb58016efe70f4db0d9debc92f27e521ec1f76e4a126c7441859",
+    "validation-phonetic/ambient-validation-093.npy": "39e560b8713ed80294f81fda259f94af2ae0fa97b2a456381fb28860dee8e21c",
+    "validation-phonetic/ambient-validation-099.npy": "44cf2b4d711fa05412b3160500dfd34bc713f122198bfd3ccb317083fef90a21",
+    "validation-phonetic/ambient-validation-103.npy": "36505f92a9486dff5819dd01aa225618f934a960e4293ecef97dcb07e60ee4f4",
+    "validation-phonetic/ambient-validation-106.npy": "b26ed9ac7f1a4486494c177015978df3c71bcb07fc8a958ce763afc8c6209cbe",
+    "validation-phonetic/ambient-validation-109.npy": "0c43956f07e4fd7cae2f14eeffe74761e68a8720825f887df75555ab3c14cc55",
+    "validation-phonetic/ambient-validation-114.npy": "d4ac93024ebf06c162c8346b443416a1e3a2b674d8de57a6ae38eba5624e09ba",
+    "validation-phonetic/ambient-validation-116.npy": "e1c51ca88883c899d148e0ea5d2cb6e178245ab757066c2015c4ce5254cf303c",
+    "validation-phonetic/ambient-validation-121.npy": "3bc68c0dac2ad9bbaada688993835b30b96c364c25606be9aee3f43025b7c4f4",
+    "validation-phonetic/ambient-validation-125.npy": "ad51a1eafcbe834958915f4cf22a3494f6e6e9bf613e3081372c53dc2ac58dff",
+    "validation-phonetic/ambient-validation-130.npy": "87ee49c2c0cfcb3e321dbc0a892111a1f6110e83406fdc52c9cde9bb0b3573a8",
+    "validation-phonetic/ambient-validation-350.npy": "c9dec5a41fbc0d77f5d1bb4facce033ced05d80cb9379fec56a0a929b92d2f34",
+    "validation-phonetic/ambient-validation-357.npy": "cb019ed4449beb40740842dc3f761a8e4db510e36968050ddd26c13cd8b92ce1",
+    "validation-phonetic/ambient-validation-358.npy": "afc33d7567962dd18f55624d3d59ea839315a1ee71513113773874026c967b87",
+    "validation-phonetic/ambient-validation-365.npy": "e2b1d65648c5a168f09e0380ea9d8849ca0bc150715bb98d11bbf79f522bea15",
+    "validation-phonetic/ambient-validation-367.npy": "c00972baf97b4de45b1716caaa60f8fe95ca3e2ea8ade8b40100c828861fc64d",
+    "validation-phonetic/ambient-validation-368.npy": "b570b3cc6ecfbcd10d01c7ef4cf7efa4087801eddd4b4645ca073d568c71be9d",
+    "validation-phonetic/ambient-validation-373.npy": "db6e69091c651a75f0ecfcfc4d72a47a68380a39526ad6809bd8292048e7be4a",
+    "validation-phonetic/ambient-validation-389.npy": "1903969294aa7edd5e1080ced271e5bfefb5c1ca5cf40d896f999992915aedd5",
+    "validation-phonetic/ambient-validation-391.npy": "ab178933bf189630fcde0de08d40495d425e91c19bf1a5aa855e84b167ddde60",
+    "validation-phonetic/ambient-validation-399.npy": "e95cd4762ab805e18becc89b442517e022fbf0a8113874f1d503a7a285e0b39e",
+    "validation-phonetic/ambient-validation-403.npy": "aaf3f9f4455e8e2c51c32cd81ab972dc503697b4c6903a7fc2cdbcdb9f1c613c",
+    "validation-phonetic/threshold.json": "491b5deae314388b0de37e2b68ef08b8c71d3da5292e59814fb95913eb8aef27",
+    "validation-phonetic/validation-details.json": "1a3fccf77787682a29f0abfa887d86239770a770896db02967499a783df83719",
+    "model-phonetic/training.json": "6e655660c1e2351bd031a85fa5a3de2667bf9c7d1e5543e9400a925ae54537a3",
+    "model-phonetic/hey_nyx.tflite": "31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe",
+    "model-phonetic/best.weights.h5": "62b450877480133332d5a0ba670abe8fd83e3a9f6a8d9d10215a9dc3dd031170",
+    "model-phonetic/phone-warmup.json": "aab2e81a4d7e5eec4e5f46f37b2f2f37f807136ed87730cb9167818827e284de",
+    "model-phonetic/phone-warmup.weights.h5": "f9197827c4f702d17741ca422d53c745fe513762f183a40c6afce1950d57a085",
+    "model-phonetic/source/evaluate_stream.py": "2bffcecb4bd5f43ca721c1b588b9dc8752df0dada78833b915b68dcb9681187c"
+  },
+  "background_inputs_sha256": "18724af73cabd4c6f6a4d302956e45026829f410300ee9e502994c4096a04b28",
+  "preflight_test_logs": {
+    "compact-intent-ctc-tests.log": "134655cab304e492534dbd5e61b71a962af9bf4a30aaf5b5932c53fc88a8bdd0",
+    "compact-intent-legacy-tests.log": "f42af378876120d94f932f6905b34cfc11de5c2f86ed498737d59a123b125e48"
+  },
+  "launcher_sha256": "ba2bfcceace1b7877a621f7429802347736fec921fb14088dbd5d87d6d5a4eb2"
+}

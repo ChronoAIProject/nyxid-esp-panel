@@ -2864,3 +2864,33 @@ macro remains only 81.1866%, so fitted performance is not independent
 recognition. Do not repeat rejected phone recipes as a substitute for an
 actual mixed-source wake/generalization comparison. All jobs in this cycle
 are terminal and published. Original full Hi ESP parity remains unachieved.
+
+## Full mixed-source conditional word CTC wake study, preregistered
+
+The [new plan](plans/microwake-word-intent-ctc-v1.json) moves the objective
+insight to the existing two-word auxiliary in actual scalar wake training.
+The prior word fitted bank already passes (98.1176% macro/9 false Nyx);
+there is no promotion or extension of either failed phone recipe. Both new
+arms replay the original binary initializer, 1,000 frozen-head CTC warmup,
+all ordinary/paired/background draws, augmentation and 3,000 mixed-source
+updates. Existing binary BCE remains primary, with paired auxiliary gain .1.
+Treatment alone adds gain-one four-intent conditional likelihood CE inside
+that auxiliary term. Only the original 16 paired slots per128 examples get
+this term. Warmup is unchanged; no background/ordinary-positive auxiliary
+loss, class weighting, gain sweep or new runtime head is added.
+
+The new control must replay prior broad-bank gain-.1 scalar SHA256
+`31537348bd0e0068fe0e3d956af2b593001c7b81840fb337698b158ff4120cfe`,
+complete warmup, input prefix, pair schedule and PTQ input hash before the
+byte-bound original development scores can be reused. New treatment gets
+one full validation at the same21-point grid, source/corpus accounting and
+strict advancement/comparator policy. Full raw features and actual background
+arrays are byte-bound; no reserved quality set is scored.
+
+Four new software checks pass independent float64 CTC value/gradient math,
+zero-gain legacy update replay (including binary/auxiliary/Adam tensors),
+correct BCE+auxiliary objective, unchanged scalar graph and CTC-only warmup,
+empty cohorts and invalid settings. The two existing compact sampler/loss
+tests also pass. Raw logs are retained. Frozen source/plan/launch/runtime,
+scalar and auxiliary checkpoints, warmup, INT8 and development arrays will be
+retained. This study is silent and excludes all boards and audio devices.

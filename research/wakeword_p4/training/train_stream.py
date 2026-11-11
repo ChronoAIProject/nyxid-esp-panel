@@ -60,6 +60,8 @@ def main():
                         help="Opt-in compact CTC empty-target loss on explicit ambient-negative markers; zero is the matched control")
     parser.add_argument("--phone-positive-gain", type=float,
                         help="Opt-in compact CTC on complete ordinary positive crops; zero replays background-only supervision")
+    parser.add_argument("--compact-intent-gain", type=float,
+                        help="Training only: paired intent cross-entropy over four compact CTC hypotheses; warmup unchanged")
     parser.add_argument("--phone-encoder-ratio-cap", type=float,
                         help="Bound scaled auxiliary encoder gradient norm relative to binary encoder gradient")
     parser.add_argument("--phone-objective", choices=("joint", "conditional", "ctc"), default="joint",
@@ -85,6 +87,10 @@ def main():
     parser.add_argument("--align-stream", action="store_true",
                         help="Align float validation windows to the streaming convolution phase")
     args = parser.parse_args()
+    if args.compact_intent_gain is not None and (not args.compact_phrase_plan
+            or args.phone_gain <= 0 or not np.isfinite(args.compact_intent_gain)
+            or not 0 <= args.compact_intent_gain <= 1):
+        parser.error("Intent CTC requires compact targets, positive auxiliary gain and intent gain in [0,1]")
     if args.phone_positive_gain is not None and (not args.compact_phrase_plan
             or args.phone_background_gain is None or not np.isfinite(args.phone_positive_gain)
             or not 0 <= args.phone_positive_gain <= 1 or args.phone_gain <= 0):
@@ -348,7 +354,7 @@ def main():
         from phone_distillation import supervisor as phone_supervisor
         train_with_phones = phone_supervisor(model, phone_sampler.targets, args.phone_gain, args.phone_objective,
                                              args.phone_encoder_ratio_cap, args.phone_background_gain,
-                                             args.phone_positive_gain)
+                                             args.phone_positive_gain, args.compact_intent_gain)
 
     @tf.function
     def train_phrase_output(x, y, weights):
@@ -575,6 +581,7 @@ def main():
                   "encoder_ratio_cap": args.phone_encoder_ratio_cap,
                   "encoder_balance": train_with_phones.balance_metadata(),
                   "background": train_with_phones.background_metadata(),
+                  "intent": train_with_phones.intent_metadata(),
                   "ordinary_positive": (None if positive_exposure is None else {
                       **train_with_phones.positive_metadata(), "exposure": positive_exposure.metadata()}),
                   "initial_fit": initial_phone_fit,
