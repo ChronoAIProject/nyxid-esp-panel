@@ -1104,6 +1104,43 @@ are exactly the 16 still present at .992 in the new mined arm, including
 the 1% gate, so no candidate advances to firmware testing. More ordinary
 dialogue alone has not resolved those specific confusions.
 
+### Competing phrase probabilities
+
+The [frozen comparison](plans/microwake-phrase-output-v1.json) changes the
+output head rather than discarding the extra phrase predictions. The
+treatment predicts other/background, Hey Nyx, Hey Mix, Hey Next and Hey
+Nick. All positive windows train the Nyx class; the complete paired
+near-word windows train their specific classes, while ordinary negative
+windows train background. Only the Nyx probability is exported. Initial
+non-target biases make their summed exponential one, preserving the
+original sigmoid probability; the first 128 actual training windows
+verify a maximum difference of 3.58e-7.
+
+Both 1,000-step arms have identical first-16-batch feature/label/weight
+hashes, 8,000 same-voice pair draws, representative inputs and development
+exposure. The [INT8 result](../results/microwake-phrase-output-v1.json)
+rejects promotion. At .97, macro synthetic proxy recall rises from 77.12%
+to 80.23%, and continuous development events fall from one to zero over
+7.324 h, but false clips increase from 69 to 78 out of 3,744. The worst
+engine/corpus false fraction rises from 5.21% to 7.29%. No point in the
+frozen grid meets the 1% gate. Increasing the cached-score threshold to
+.998 suppresses every positive and negative view, so a stricter threshold
+does not rescue this export. Neither result proves real-speaker recall.
+
+The scalar input/output shapes and types remain unchanged. The treatment
+grows from 61,712 to 78,512 bytes, replacing LOGISTIC with SOFTMAX plus a
+fixed one-hot projection. Its actual output quantization is recorded and
+used by evaluation; it differs from the sigmoid's fixed scale. MCU
+arithmetic, operator support, resource use and acoustic behavior are
+unproven. No board, microphone or speaker was used.
+
+For reproduction, use the plan's exact initializer, feature view, source
+hashes and common arguments with `train_stream.py --near-word-windows
+<windows.json> --paired-near-words`. Add `--paired-phrase-gain 0` for the
+binary control or `--phrase-output` for the treatment. Run the unchanged
+validation-only grid and `compare_phrase_output.py --plan <plan>
+--artifacts <paired-run> --output <new-report.json>`.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

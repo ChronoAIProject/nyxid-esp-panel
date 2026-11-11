@@ -50,6 +50,8 @@ def main():
                         help="Training-only ranking penalty for the same-voice pairs")
     parser.add_argument("--paired-phrase-gain", type=float,
                         help="Training-only multiclass loss for the same-voice phrase pairs")
+    parser.add_argument("--phrase-output", action="store_true",
+                        help="Train competing phrase/background classes; export only the target probability")
     parser.add_argument("--matched-confuser-bank", type=Path, help="Training-only same-speaker ambient negative bank")
     parser.add_argument("--matched-confuser-arm", choices=ARMS)
     parser.add_argument("--source-sampling", choices=("sqrt", "uniform"), default="sqrt",
@@ -96,6 +98,10 @@ def main():
     if train_phrases and (not 0 <= args.paired_phrase_gain <= 2 or not args.paired_near_words
                           or args.paired_near_word_gain or args.architecture != "transfer60"):
         parser.error("Paired phrase classification requires transfer60 pairs, no ranking loss, and gain in [0, 2]")
+    if args.phrase_output and (not args.paired_near_words or args.paired_phrase_gain is not None
+                               or args.paired_near_word_gain or args.architecture != "transfer60"
+                               or args.export_only):
+        parser.error("Phrase output requires transfer60 paired training without auxiliary/ranking loss or export-only")
     initial_weights_hash = hashlib.sha256(args.initial_weights.read_bytes()).hexdigest() if args.initial_weights else None
     source_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                      for p in Path(__file__).parent.glob("*.py")}
@@ -195,7 +201,7 @@ def main():
         y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]
         if mine and pair_sampler:
             classes = pair_sampler.apply(samples, sequence)
-            if train_phrases:
+            if train_phrases or args.phrase_output:
                 ids = classes[:, None]
             else:
                 ids = np.zeros_like(y)
@@ -246,6 +252,11 @@ def main():
         model = mixednet.model(flags, (frames, 40), None)
     if args.initial_weights:
         model.load_weights(args.initial_weights)
+    binary_initial_model = model
+    phrase_model = None
+    if args.phrase_output:
+        from phrase_output import expand_binary
+        model, phrase_model = expand_binary(model)
     def focused_negative_loss(y_true, y_pred):
         binary = tf.keras.losses.binary_crossentropy(y_true, y_pred)
         focus = tf.stop_gradient(tf.square(y_pred))
@@ -255,6 +266,17 @@ def main():
     loss_fn = (pair_training_loss(args.paired_near_word_gain) if pair_sampler
                else focused_negative_loss if args.negative_focus_gain else "binary_crossentropy")
     model.compile(optimizer=tf.keras.optimizers.Adam(args.learning_rate, global_clipnorm=5), loss=loss_fn)
+
+    @tf.function
+    def train_phrase_output(x, y, weights):
+        with tf.GradientTape() as tape:
+            probabilities = phrase_model(x, training=True)
+            labels = tf.where(y[:, 0] > .5, 1, tf.cast(y[:, 1], tf.int32))
+            losses = tf.keras.losses.sparse_categorical_crossentropy(labels, probabilities)
+            loss = tf.reduce_mean(losses * weights)
+        variables = phrase_model.trainable_variables
+        model.optimizer.apply_gradients(zip(tape.gradient(loss, variables), variables))
+        return loss
 
     if train_phrases:
         # The auxiliary head sees the same encoder state as the binary head.
@@ -330,6 +352,8 @@ def main():
     effective_frames = (frames-flags.first_conv_kernel_size)//flags.stride*flags.stride+flags.first_conv_kernel_size
     validation_phase = (-effective_frames)%flags.stride if args.align_stream else 0
     history = []
+    training_prefix_digest = hashlib.sha256()
+    initial_probability_error = None
     best = None
     started = time.monotonic()
     with (root/"progress.jsonl").open("w") as log:
@@ -338,7 +362,16 @@ def main():
             if step == int(args.steps*.5): model.optimizer.learning_rate.assign(args.learning_rate*.3)
             if step == int(args.steps*.8): model.optimizer.learning_rate.assign(args.learning_rate*.1)
             x, y, weights = batch()
-            loss = float(train_with_phrases(x, y, weights) if train_phrases
+            if step <= 16:
+                for value in (x, y, weights):
+                    training_prefix_digest.update(value.astype("<f4", copy=False).tobytes())
+            if step == 1 and args.phrase_output:
+                initial_probability_error = float(np.max(np.abs(
+                    np.asarray(model(x, training=False))-np.asarray(binary_initial_model(x, training=False)))))
+                if initial_probability_error > 1e-5:
+                    raise ValueError("Expanded head changed the initial target probability")
+            loss = float(train_phrase_output(x, y, weights) if args.phrase_output
+                         else train_with_phrases(x, y, weights) if train_phrases
                          else model.train_on_batch(x, y, sample_weight=weights))
             if step % 500 == 0:
                 print(json.dumps({"step": step, "loss": loss, "seconds": round(time.monotonic()-started, 1)}), flush=True)
@@ -406,6 +439,10 @@ def main():
               "paired_near_words": None if not pair_sampler else {
                   "gain": args.paired_near_word_gain, **pair_sampler.metadata()},
               "paired_phrase_gain": args.paired_phrase_gain,
+              "phrase_output": args.phrase_output,
+              "initial_target_probability_max_error": initial_probability_error,
+              "training_prefix_batches": min(args.steps, 16),
+              "training_prefix_sha256": training_prefix_digest.hexdigest(),
               "matched_confusers": confusers.metadata() if confusers else None,
               "source_sampling": args.source_sampling,
               "hard_negative_mining": {"fraction": args.hard_negative_fraction,
