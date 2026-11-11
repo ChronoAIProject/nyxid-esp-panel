@@ -117,7 +117,8 @@ def main():
                   hiesp_threshold_getter_values=sorted({r['threshold_getter_after_set'] for r in replay.values()}),
                   summaries={engine:summarize(results,engine) for engine in ('nyx','hiesp')},records=results,
                   independent_final_audio_accessed=False,
-                  limits='Four reused validation TTS presets;12 targets per engine, no representative recall claim. Native frontends, padding and trigger policies retained, reset per clip. Endpoints are energy proxies, not phonetic truth; fixed -100..+800ms window. Thresholds previously fixed independently, not matched general false-wake rates. Audio-time latency only; no hardware latency. No ASR-based filtering.')
+                  endpoint_protocol=manifest.get('endpoint_protocol', 'Historical endpoint metadata; not phonetic truth'),
+                  limits='Reused development TTS presets, no representative recall claim. Native frontends, padding and trigger policies retained, reset per clip. Endpoint protocol disclosed separately; fixed -100..+800ms diagnostic window. Thresholds fixed independently, not matched general false-wake rates. Audio-time latency only; no hardware latency. No ASR-based filtering.')
     (a.output/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result['summaries']),flush=True)
 
