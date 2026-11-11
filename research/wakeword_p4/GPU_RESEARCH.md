@@ -3502,3 +3502,11 @@ v35最新100000/120000步，后处理等待同进程，未更改训练数据或�
 仅开发，不解释为独立最终或新来源验收。比较可用原始scores后续开发网格分析，不用test。
 共享evaluate_frozen_human增加显式identity-unit=recording，并披露cache来源限制，
 只改标识解释和报告文案，事件/评分算法未改；旧使用默认speaker保持兼容。
+
+v30开发背景完整87条评分终结exit0，全部score trace SHA与事件数重算通过。
+8.173672725694447h中2事件，rate .2446880450/h，单侧95%上界.7702527166/h，
+不满足.5/h门槛；不是证明真实总体FAR>.5/h。全部事件原样保留，不因无转写剔除。
+完整报告4090-v30-voxconverse-development-v1.json，阈值未重新选择。
+下一步官方HiESP同87条完整PCM固定.63复放，4并发，每条600秒host截止，
+完整DONE计数/CRC/stage核验，任何失败不产整体summary。开发用途，不访问最终集。
+实现replay_voxconverse_official.py，短/tmp输出；本次仅排队该新评估，不重启训练。
