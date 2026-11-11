@@ -167,3 +167,11 @@ single activation at step 226. It stayed in idle listen for the 40-second
 resource check, and the original app and Hi ESP listener were restored.
 See [the procedure check](../wakeword_p4/results/legacy-app-prime-selftest-v1.json).
 This validates the diagnostic procedure; v30 still needs its own test.
+
+Rechecked on 2026-11-12 through GPU `b6ca5a4`: v34 is rejected and v30 stays
+the reference. The named research release assets still do not identify a GPU
+model/fixture handoff. This inventory check does not inspect every archive
+member or access the GPU host's filesystem. The exact v30 binary needed for
+the existing intake remains 54,440 bytes with SHA-256
+`04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c`;
+the common-calibration export is a different binary and must not replace it.

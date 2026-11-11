@@ -3203,3 +3203,41 @@ role/identity/voice rejection. Runtime, all model support files/weights and
 review source identities are frozen. No new data split, wake quality score,
 API/network inference, speaker, microphone, board/OTA, production device or
 PCM/audio-producer change. The complete Hi ESP objective remains unchanged.
+
+## Frozen review queue completed: phoneme observations do not justify filtering
+
+The [completed result](../results/review-phoneme-consistency-v1.json) at
+`3acc9a0` retains all 97 original training WAV predictions and frame logits
+for the 38 fixed triplets. Model loading is complete, without missing,
+unexpected or mismatched keys. All three focused tests pass.
+
+Of the 25 spectral-inversion triplets, phone predictions instead put the
+positive closer in 17, tie in 6 and put the negative closer in 2. The 13
+noninversion triplets produce 10 positive-closer predictions and 3 ties.
+No prediction is empty. This directly limits using spectral proximity to
+diagnose synthesis errors. The two negative-closer examples are Edge
+`en-IE-ConnorNeural/006.wav` (Nyx predicted as spelled letters) and OpenAI
+`cedar/002.wav` (Nicks predicted as Next). Kokoro `af_nova/000.wav` also
+shares a predicted sequence with Next. None is a confirmed mispronunciation:
+this recognizer can err, and no human listening outcome is included.
+Original intentions, training membership and all model checkpoints stay intact.
+Do not repeat the earlier failed matched phoneme-quality screening experiment
+or apply these observations as automatic source filters.
+
+The [separate saved-output audit](../results/review-phoneme-consistency-v1-audit.json)
+verifies every original WAV identity/rate/length and all 2,674,616 float32
+logits. Independent CTC collapse and full-table/Fraction edit calculations
+reconstruct all sequences, orders, cohorts and predicted-string collisions.
+This is accounting rather than independent inference or pronunciation truth.
+The [complete archive](../../handoff/assets-review-phoneme-consistency-v1.json)
+retains logits/predictions/comparisons, frozen source/plan/runtime/model JSON,
+tests, logs and auditor. A fresh anonymous download verifies all 23 listed
+member hashes and lengths. Weights, source PCM and private listening material
+are excluded; external input hashes remain pinned. No audio device, board,
+reserved quality set or firmware was touched. Hi ESP parity remains unproved.
+
+GPU snapshot `b6ca5a4` completes v34 and rejects its auxiliary four-class
+recipe: no predeclared expanded-grid threshold clears all development gates.
+The frozen v30 remains the GPU reference. These corpora differ from the Mac
+review queue; the present phoneme observations neither invalidate GPU inputs
+nor explain v34's failure. See the updated GPU handoff notes for provenance.

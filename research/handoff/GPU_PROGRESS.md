@@ -861,3 +861,24 @@ The two listening pages have no human annotation exports yet; their
 development review is separate from future independent real-speaker recall,
 end-of-word latency, and P4 resource and call acceptance. The Mac-side
 whole-phrase training comparison has completed without a viable new model.
+
+### GPU snapshot through `b6ca5a4`
+
+Read on 2026-11-12. V32 (remove prefix negatives), v33 (mask prefix loss)
+and v34 (additional four-class complete-phrase auxiliary loss) all complete
+and are rejected as replacements for the frozen v30. V34's original dense
+development point has 75.1823% proxy macro hits and 14 early events; the
+three continuous development negative corpora have 3/1/1 events. No threshold
+in its fixed expanded grid clears all zero-event development gates, including
+the highest 0.99609375 point. These are development outcomes, not final-test
+or human pronunciation results. The scalar INT8 export has the expected
+single output and 54,440-byte size; this does not establish MCU compatibility.
+See [the comparison](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/b6ca5a4/research/wakeword_p4/results/4090-v30-v34-auxiliary-comparison-v1.json).
+
+V30 remains unchanged at threshold 0.91796875. The research release inventory
+still has no separately named GPU/v30 model and fixture bundle. Existing
+Mac runtime preparation remains ready for the original hash-bound binary;
+model SHA values and successful GPU export reports do not supply its bytes.
+The Mac's separate 97-source phoneme observation study cannot replace this
+handoff, human pronunciation references or P4 acceptance. No playback or
+production-board operation follows this read-only branch inspection.

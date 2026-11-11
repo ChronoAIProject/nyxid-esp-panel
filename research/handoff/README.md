@@ -1769,3 +1769,59 @@ At source commit `8a490ac`, run `audit_phrase_neighbours.py --plan <frozen-plan>
 `package_phrase_neighbours.py --help` describes publication verification.
 Original WAV/cache inputs remain byte-bound separately. Later listening or
 human pronunciation review requires a separate step; no audio was played here.
+
+## Frozen review queue: unprompted phoneme observations
+
+The [fixed plan](../wakeword_p4/training/plans/review-phoneme-consistency-v1.json)
+decodes all 97 original training WAVs needed by the 38 frozen triplets with
+the pinned, unprompted `facebook/wav2vec2-lv-60-espeak-cv-ft` recognizer.
+It uses whole 16 kHz PCM, CPU float32 and local weights only. The expected
+text never enters inference; every frame logit and greedy CTC sequence is
+retained. Model loading reports no missing, mismatched or unexpected keys.
+
+In the [completed result](../wakeword_p4/results/review-phoneme-consistency-v1.json),
+the 25 spectral-inversion triplets have 17 positive-closer phone predictions,
+6 ties and 2 negative-closer predictions. The 13 noninversion triplets have
+10 positive-closer predictions and 3 ties; there are no empty predictions.
+Spectral distance therefore cannot automatically identify bad pronunciation.
+The two negative-closer cases are Edge `en-IE-ConnorNeural/006.wav`
+(intended “Hey Nyx.”; predicts spelled N Y X) and OpenAI `cedar/002.wav`
+(intended “Hey Nicks?”; predicts the same phones as “Hey Next.”).
+Kokoro `af_nova/000.wav` also shares its predicted sequence with a Next source.
+These are fallible recognizer observations, not confirmed pronunciation errors,
+actual waveform collisions, corpus-wide error estimates or replacement labels.
+They do not establish an error in the GPU track's different training corpus.
+No human listening result is recorded in this evidence, and no sample is
+removed or relabeled. No new training or model promotion follows this study.
+
+The [separate accounting audit](../wakeword_p4/results/review-phoneme-consistency-v1-audit.json)
+checks original WAV hashes/rates/lengths and all 2,674,616 saved float32
+logits, then reconstructs greedy CTC sequences, exact phone-distance orders,
+cohorts and predicted-string collision groups. It uses a full-table edit recurrence,
+`Fraction` comparisons and `itertools.groupby` CTC decoding. This verifies
+saved-output accounting, not independent model inference or pronunciation.
+All three focused tests passed before inference.
+
+The [public evidence archive](assets-review-phoneme-consistency-v1.json)
+contains all logits/predictions/comparisons, frozen source/plan/runtime/model
+support JSON, raw logs/tests and the independent auditor. A fresh anonymous
+download verifies all 23 listed member hashes and lengths. The 1.26 GB public
+recognizer weights, original source audio and private listening material are
+excluded; their required input identities remain pinned in the plan.
+
+To reproduce inference at source `3acc9a0`, use the plan's pinned environment:
+
+```sh
+PYTHONHASHSEED=0 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 python \
+  research/wakeword_p4/training/review_phoneme_consistency.py \
+  --plan research/wakeword_p4/training/plans/review-phoneme-consistency-v1.json \
+  --neighbours <phrase-neighbours-v1> --features <features-expanded-human335> \
+  --model <pinned-phoneme-model> --output <fresh-study-directory>
+python research/handoff/verify_review_phonemes.py \
+  --artifacts <study-directory> --neighbours <phrase-neighbours-v1> \
+  --features <features-expanded-human335> --output <fresh-audit.json>
+```
+
+`package_review_phonemes.py --help` documents packaging and public-download
+verification. This study uses no playback, microphone, board, firmware or
+reserved wake-quality scoring. Full Hi ESP parity remains unproved.

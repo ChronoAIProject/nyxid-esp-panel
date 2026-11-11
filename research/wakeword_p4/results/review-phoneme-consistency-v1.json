@@ -1,0 +1,47 @@
+{
+  "scope": "Unprompted pretrained phoneme consistency on97 original training WAVs from the frozen38-triplet acoustic review queue; no wake training, automatic relabeling or quality advancement.",
+  "plan_sha256": "52e5a1eefd7a34f1c13036d76b918b216b22af6767b7e314c481606c5a4e1ab0",
+  "source_commit": "3acc9a0792faf8800a80fbf57179f8ab86a0db81",
+  "source_paths": 97,
+  "review_triplets": 38,
+  "phone_order_by_spectral_cohort": {
+    "spectral_inversion": {
+      "tie": 6,
+      "positive_closer": 17,
+      "negative_closer": 2
+    },
+    "spectral_noninversion": {
+      "positive_closer": 10,
+      "tie": 3
+    }
+  },
+  "different_intent_identical_predicted_sequence_groups": [
+    [
+      46,
+      299
+    ],
+    [
+      70,
+      298,
+      302,
+      550,
+      558,
+      579,
+      708
+    ],
+    [
+      183,
+      200
+    ]
+  ],
+  "empty_predictions": 0,
+  "accepted": false,
+  "evidence_sha256": {
+    "launch.json": "c1b970cc7d2b8f62c037bc248888b9a67678e9fbde0eec57a1523d6045b3379b",
+    "model-loading.json": "ea8462ce1fb5161e28a2547070c1a7915315f32097d1aec2ca40a21e18831d85",
+    "predictions.jsonl": "baed12e24a545910358078958a3e563b0323dfea9b901ec887e8385b60854f5d",
+    "logits.npz": "d46fcbf49b3779c918beb14b5e5a17f5341420f6351c496585ff1f65ad507d9a",
+    "comparisons.json": "8ba711aa5300fa3db2d91c2d182759aea52b2fe2e045f0b15aa8f313c18281a7"
+  },
+  "limits": "This learned phoneme model was already observed to make errors on these synthesizers. Predictions, edit-distance order and cross-intent predicted-string collisions are not verified pronunciation, actual waveform collisions, human wake recall or true phone endpoint labels. The deliberately selected correlated97 sources/38 triplets cannot rank TTS engine quality or estimate corpus-wide label errors. No labels, splits or checkpoints change. No validation/final scoring, API keys, network inference, speaker, microphone, board/USB, firmware/OTA, production board, original PCM speed or single I2S/AEC/AGC/FIFO modification. Full Hi ESP acoustic recognition/FAR/latency,P4 resources and long-call/reconnect stability remain unproven."
+}
