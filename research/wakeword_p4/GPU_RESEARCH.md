@@ -3251,3 +3251,10 @@ Kokoro 0.4.9支持is_phonemes=True、trim=False。固定Hey Nyx输入hˈeɪ nˈ�
 报告4090-synthetic-phone-pilot-v1.json与全清单4090-synthetic-phone-pilot-manifest-v1.jsonl。
 本轮未训练、未评分，因此没有模型提升结论；下一步需在训练用途内比较完整短语合成输入，
 并制定声音来源分区与新开发协议，不能把本pilot复用的训练声音声明为独立测试。
+
+## 显式音素pilot冻结v30诊断预声明
+
+48条训练来源pilot全部复放，不选阈值：v30原模型，threshold .91796875，原float64五分数均值。
+每条只添加1.8秒前静音/1秒后静音，保留全波形，重置重复核验输出。
+报告所有事件/分数及相对整个生成末端的偏移，不把any-event计数当完整短语召回。
+训练来源诊断不用于阈值/最终验收；不读取既有最终集；见score_phone_pilot.py。
