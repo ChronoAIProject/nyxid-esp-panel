@@ -4146,3 +4146,19 @@ Do not claim exact equivalence or all6597 actual streaming replays. Next diagnos
 must locate high-score temporal support and resolve/measure streaming residuals
 before a new training intervention. No new/final scored; v40 remains rejected,
 frozenv30 retained. Coordination continues in GitHub Issue13.
+
+### v40 actual float negative-stream localization (2026-11-11)
+
+Replayed actual exported float streaming for all118training negatives in the
+union of prior floatsequence/INT8 fullhistory maxfive>=.5. Actual float103>=.5,
+43>=.99609375, matching aggregate sequence counts; max individual output
+sequence/actual residual.008029580116271973, so no exact-equivalence claim.
+For103high clips peak-five final feature end minus training crop end ranged
+-59..69frames,median32:19earlier,1equal,83later. For43at historical threshold:
+-17..69,median36:2earlier,1equal,40later (Next23/Mix17/Nick3).
+Processing frame positions only, not phonetic boundaries or event latency.
+This supports investigating missing temporal negative support, not proof of a
+sole cause. Diagnostic selected union only, not all1995actual float streams or
+independent acceptance. No optimizer updates, all window variables unchanged;
+new/final untouched and frozenv30 retained. Next intervention must explicitly
+address full-source temporal support rather than repeat center-only coverage.
