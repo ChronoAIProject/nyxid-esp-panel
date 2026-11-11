@@ -3024,3 +3024,10 @@ Piper85%、Kokoro79.1666667%，ambient0/1.204811267h。
 结果results/4090-v30-common-calibration-validation-v1.json。
 接着用experiments/common_calibration_negatives.sh v30跑原三组连续开发负例，
 session54432；未使用最终集。v32原训练session80679继续运行。
+
+共享校准v30补充连续负例全部完成（session54432退出0）：
+Mandarin0/6.913985191h、DiPCo0/0.754487847h、Libri-dev-other0/5.121184826h。
+扩展开发门槛仍选0.9375，代理macro82.0833333%、早触发1。
+分别保存三组报告及4090-v30-common-calibration-expanded-validation-v1.json。
+这些是重复开发评测，短时长和选择偏差不允许独立FAR验收解释；
+同代表输入对照的v32一侧尚未完成，不能下双方差异结论。
