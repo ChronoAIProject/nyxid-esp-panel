@@ -1847,6 +1847,41 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 Coordinate Mac/P4 and RTX 4090 research in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
+### Independent v40 report reconciliation
+
+The [v40 review](../wakeword_p4/results/gpu-v40-report-review-v1.json)
+reconciles committed GPU evidence through `df9e63c`. It authenticates the
+completed training/export/diagnostic source hashes, 15 v37 control fields,
+all 138 fixed gate calculations, historical event counts, all 6597 training
+variant records and the selected 118-negative actual-streaming report.
+Training source is read at completed v40 revision `4974646`, since later
+commits extend the sampler for v41. Diagnostic source is read at the report
+revision. Both revisions and every consumed file hash are retained.
+
+```sh
+git fetch origin research-hye-nyx-voice-gpu
+python3 research/wakeword_p4/training/review_gpu_v40_reports.py \
+  --revision df9e63c --training-revision 4974646 \
+  --pack "$PUBLIC_OLD_COMPLETE_PACK" --output "$FRESH_V40_REVIEW_JSON"
+```
+
+`PUBLIC_OLD_COMPLETE_PACK` contains `training.npz`, `sources.json`,
+`records.json` and `report.json` from the existing complete-container asset.
+All four pinned hashes and the metadata-derived eligible index set are checked.
+Omitting `--pack` explicitly omits that optional input check from the result.
+The script needs Python's standard library only. Re-running with the original
+pack regenerated the complete review JSON byte-for-byte.
+
+The decision remains rejection: no eligible grid point, at least 14 negative
+false clips. At historical threshold `.99609375`, all 35 INT8 high training
+negatives are also high in the shared float full-sequence graph; eight more
+are float-only. Actual exported float streaming on the selected 118-negative
+union agrees on threshold classifications, with maximum output residual
+`.008029580116271973` retained. Its peak support is a processing-frame
+measurement, not a phonetic boundary or isolated cause. This review does not
+rerun models, authenticate saved raw-score arrays, access audio/new/final sets,
+or establish Hi ESP parity.
+
 ### Matched terminal versus five-score short training screen
 
 The protocol and runner were pushed at `2aad2df` before formal validation

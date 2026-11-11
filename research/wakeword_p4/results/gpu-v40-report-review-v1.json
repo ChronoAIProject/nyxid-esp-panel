@@ -1,0 +1,776 @@
+{
+  "scope": "Independent aggregate/report and optional original-pack metadata reconciliation; no inference or raw-score revalidation.",
+  "gpu_revision": "df9e63c65a9d6fdb3329e976722f1364e3abbdb3",
+  "input_sha256": {
+    "results/4090-v40-training.json": "dfe1607a372c9cf5f0006924f743db70fbce076eb874a21a3f41dc532a94fff6",
+    "results/4090-v40-export-audit.json": "b58215aca23f03e640f8c93d2127b3c9b295850b2df159d6907edca52e3b1dda",
+    "results/4090-v40-rejection-v1.json": "55842a7ee0acd4dfe56045d993f1cf793c635aac494844d5485dee14121ea5d4",
+    "results/4090-v40-reused-development-exploratory-calibration-v1.json": "5f18cf9de459009a2012320b7559da0b634ad0ad1d937efd4433329e8a252388",
+    "results/4090-v40-phone-development-v1.json": "bd073a8225b241894d390f9d1ac8ea3f3750078964d474345e7e7e4a429ac022",
+    "results/4090-v40-vctk-development-v1.json": "a3569332b966da28e4d0d1ffbb7cf690d5b2422d3b45f3aca68eca5f876db3f3",
+    "results/4090-v40-voxconverse-development-v1.json": "d100dab1576a6f92bb554334833d7291bb54b8b9dd0181819a3a9830b0c191e0",
+    "results/4090-v40-training-support-v1.json": "a25600a35c0f27a585cce96a7203352fe23c7bacda61c2cb119aa921c48e6d5c",
+    "results/4090-v40-float-history-v1.json": "2becbb24099980609e91a96ae356393f4f7d970d262b6e07bddd5fd969ed7e03",
+    "results/4090-v40-negative-stream-localization-v1.json": "60a0bbd9f61d408d2e9f6fbe0fed127f45e634b714a2e481447410c96ffa68cf",
+    "results/4090-v37-training.json": "5e1bfec9201660b42f545d73c21cedfdba94fa05f150c4ac3fafe04cc4b1f518",
+    "4974646ba0a10202353c4127fdd51afa60a4ef30:training/audit_stream_export.py": "d145b6e9ca634cc3bca75d1b4eea171b31cfe03d938c9987a2c377e075d3cd58",
+    "4974646ba0a10202353c4127fdd51afa60a4ef30:training/complete_coverage.py": "f81157a54d087a62a37bbc80539ba4c0ffee06016caefc44aea2df2a10f5e2de",
+    "df9e63c65a9d6fdb3329e976722f1364e3abbdb3:experiments/v40_training_support_probe.py": "3eede8c1a915a78e42c966b5877e2e156913e42ce927715107f8e77a624b9b0f",
+    "df9e63c65a9d6fdb3329e976722f1364e3abbdb3:experiments/v40_float_history_probe.py": "ec18e9eb5cd836302cbb98d02b011181e528b6840cdd19ca2a559f9567774e6f",
+    "df9e63c65a9d6fdb3329e976722f1364e3abbdb3:experiments/v40_negative_stream_localization.py": "9c54fbba378ab4cc7061eea267d60b7ac8ae59ef0b7115e9182c742f3164d639"
+  },
+  "model_sha256": "0b48cd96e8837b27c2df73c709c3360da9f06079f61eb9464922bae438bb98e4",
+  "export_binds_training_bytes": true,
+  "v37_control_fields_equal": [
+    "context_frames",
+    "initial_weights_sha256",
+    "classifier_initial_sha256",
+    "batchnorm_initial",
+    "batchnorm_selected",
+    "seed",
+    "recipe",
+    "parameters",
+    "steps",
+    "architecture_args",
+    "full_source",
+    "prefix_negatives",
+    "negative_weight",
+    "effective_training_batch_size",
+    "ambient_sampling"
+  ],
+  "source_hash_bindings_verified": {
+    "training/audit_stream_export.py": {
+      "revision": "4974646ba0a10202353c4127fdd51afa60a4ef30",
+      "sha256": "d145b6e9ca634cc3bca75d1b4eea171b31cfe03d938c9987a2c377e075d3cd58"
+    },
+    "training/complete_coverage.py": {
+      "revision": "4974646ba0a10202353c4127fdd51afa60a4ef30",
+      "sha256": "f81157a54d087a62a37bbc80539ba4c0ffee06016caefc44aea2df2a10f5e2de"
+    },
+    "experiments/v40_training_support_probe.py": {
+      "revision": "df9e63c65a9d6fdb3329e976722f1364e3abbdb3",
+      "sha256": "3eede8c1a915a78e42c966b5877e2e156913e42ce927715107f8e77a624b9b0f"
+    },
+    "experiments/v40_float_history_probe.py": {
+      "revision": "df9e63c65a9d6fdb3329e976722f1364e3abbdb3",
+      "sha256": "ec18e9eb5cd836302cbb98d02b011181e528b6840cdd19ca2a559f9567774e6f"
+    },
+    "experiments/v40_negative_stream_localization.py": {
+      "revision": "df9e63c65a9d6fdb3329e976722f1364e3abbdb3",
+      "sha256": "9c54fbba378ab4cc7061eea267d60b7ac8ae59ef0b7115e9182c742f3164d639"
+    }
+  },
+  "fixed_grid_points": 138,
+  "eligible_points": 0,
+  "maximum_grid_macro": 0.7270833333333333,
+  "minimum_grid_negative_false_clips": 14,
+  "zero_event_poisson_upper95": 0.366509936730978,
+  "historical": {
+    "kokoro": {
+      "target_any": [
+        8,
+        16
+      ],
+      "common_false": [
+        4,
+        48
+      ],
+      "cross_false": 0,
+      "false_by_intended_phrase_voice": [
+        {
+          "phrase": "hey_mix",
+          "voice": "af_sky",
+          "clips": 3
+        },
+        {
+          "phrase": "hey_mix",
+          "voice": "bm_george",
+          "clips": 1
+        }
+      ]
+    },
+    "vctk": {
+      "target_any": [
+        30,
+        60
+      ],
+      "common_false": [
+        8,
+        180
+      ],
+      "cross_false": 2,
+      "false_by_intended_phrase_voice": [
+        {
+          "phrase": "hey_mix",
+          "voice": "p252",
+          "clips": 1
+        },
+        {
+          "phrase": "hey_mix",
+          "voice": "p334",
+          "clips": 3
+        },
+        {
+          "phrase": "hey_mix",
+          "voice": "p361",
+          "clips": 1
+        },
+        {
+          "phrase": "hey_next",
+          "voice": "p334",
+          "clips": 2
+        },
+        {
+          "phrase": "hey_nick",
+          "voice": "p361",
+          "clips": 1
+        },
+        {
+          "phrase": "hi_esp",
+          "voice": "p238",
+          "clips": 2
+        }
+      ]
+    }
+  },
+  "training_support_summary": {
+    "0": {
+      "examples": 1995,
+      "0.5": {
+        "window_float": 0,
+        "float_full_max_five": 103,
+        "full_int8_max_five": 115
+      },
+      "0.99609375": {
+        "window_float": 0,
+        "float_full_max_five": 43,
+        "full_int8_max_five": 35
+      }
+    },
+    "1": {
+      "examples": 4602,
+      "0.5": {
+        "window_float": 4216,
+        "float_full_max_five": 4192,
+        "full_int8_max_five": 4224
+      },
+      "0.99609375": {
+        "window_float": 3794,
+        "float_full_max_five": 3341,
+        "full_int8_max_five": 3256
+      }
+    }
+  },
+  "full_history_transitions": {
+    "label=0/threshold=0.5": {
+      "both_high": 100,
+      "float_only": 3,
+      "int8_only": 15,
+      "both_low": 1877
+    },
+    "label=0/threshold=0.99609375": {
+      "both_high": 35,
+      "float_only": 8,
+      "int8_only": 0,
+      "both_low": 1952
+    },
+    "label=1/threshold=0.5": {
+      "both_high": 4178,
+      "float_only": 14,
+      "int8_only": 46,
+      "both_low": 364
+    },
+    "label=1/threshold=0.99609375": {
+      "both_high": 3229,
+      "float_only": 112,
+      "int8_only": 27,
+      "both_low": 1234
+    }
+  },
+  "negative_groups": [
+    {
+      "engine": "kokoro",
+      "phrase": "hey mix",
+      "variant": 0,
+      "examples": 19,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey mix",
+      "variant": 1,
+      "examples": 19,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey mix",
+      "variant": 2,
+      "examples": 19,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey next",
+      "variant": 0,
+      "examples": 19,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey next",
+      "variant": 1,
+      "examples": 19,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey next",
+      "variant": 2,
+      "examples": 19,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey nick",
+      "variant": 0,
+      "examples": 20,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey nick",
+      "variant": 1,
+      "examples": 20,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "kokoro",
+      "phrase": "hey nick",
+      "variant": 2,
+      "examples": 20,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey mix",
+      "variant": 0,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey mix",
+      "variant": 1,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey mix",
+      "variant": 2,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey next",
+      "variant": 0,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey next",
+      "variant": 1,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey next",
+      "variant": 2,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey nick",
+      "variant": 0,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey nick",
+      "variant": 1,
+      "examples": 17,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "macos-say",
+      "phrase": "hey nick",
+      "variant": 2,
+      "examples": 17,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey mix",
+      "variant": 0,
+      "examples": 15,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey mix",
+      "variant": 1,
+      "examples": 15,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 1,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey mix",
+      "variant": 2,
+      "examples": 15,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey next",
+      "variant": 0,
+      "examples": 11,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey next",
+      "variant": 1,
+      "examples": 11,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey next",
+      "variant": 2,
+      "examples": 11,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey nick",
+      "variant": 0,
+      "examples": 10,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey nick",
+      "variant": 1,
+      "examples": 10,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "openai-tts",
+      "phrase": "hey nick",
+      "variant": 2,
+      "examples": 10,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey mix",
+      "variant": 0,
+      "examples": 142,
+      "float_high_at_0.5": 3,
+      "float_high_at_0.99609375": 1,
+      "int8_high_at_0.5": 4,
+      "int8_high_at_0.99609375": 1
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey mix",
+      "variant": 1,
+      "examples": 142,
+      "float_high_at_0.5": 11,
+      "float_high_at_0.99609375": 5,
+      "int8_high_at_0.5": 10,
+      "int8_high_at_0.99609375": 4
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey mix",
+      "variant": 2,
+      "examples": 142,
+      "float_high_at_0.5": 19,
+      "float_high_at_0.99609375": 9,
+      "int8_high_at_0.5": 20,
+      "int8_high_at_0.99609375": 6
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey next",
+      "variant": 0,
+      "examples": 144,
+      "float_high_at_0.5": 12,
+      "float_high_at_0.99609375": 7,
+      "int8_high_at_0.5": 12,
+      "int8_high_at_0.99609375": 7
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey next",
+      "variant": 1,
+      "examples": 144,
+      "float_high_at_0.5": 13,
+      "float_high_at_0.99609375": 9,
+      "int8_high_at_0.5": 15,
+      "int8_high_at_0.99609375": 9
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey next",
+      "variant": 2,
+      "examples": 144,
+      "float_high_at_0.5": 14,
+      "float_high_at_0.99609375": 7,
+      "int8_high_at_0.5": 15,
+      "int8_high_at_0.99609375": 6
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey nick",
+      "variant": 0,
+      "examples": 151,
+      "float_high_at_0.5": 3,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 4,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey nick",
+      "variant": 1,
+      "examples": 151,
+      "float_high_at_0.5": 10,
+      "float_high_at_0.99609375": 3,
+      "int8_high_at_0.5": 11,
+      "int8_high_at_0.99609375": 2
+    },
+    {
+      "engine": "piper",
+      "phrase": "hey nick",
+      "variant": 2,
+      "examples": 151,
+      "float_high_at_0.5": 5,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 6,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey mix",
+      "variant": 0,
+      "examples": 25,
+      "float_high_at_0.5": 3,
+      "float_high_at_0.99609375": 1,
+      "int8_high_at_0.5": 3,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey mix",
+      "variant": 1,
+      "examples": 25,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey mix",
+      "variant": 2,
+      "examples": 25,
+      "float_high_at_0.5": 2,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 2,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey next",
+      "variant": 0,
+      "examples": 28,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey next",
+      "variant": 1,
+      "examples": 28,
+      "float_high_at_0.5": 1,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey next",
+      "variant": 2,
+      "examples": 28,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 1,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey nick",
+      "variant": 0,
+      "examples": 30,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey nick",
+      "variant": 1,
+      "examples": 30,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    },
+    {
+      "engine": "qwen",
+      "phrase": "hey nick",
+      "variant": 2,
+      "examples": 30,
+      "float_high_at_0.5": 0,
+      "float_high_at_0.99609375": 0,
+      "int8_high_at_0.5": 0,
+      "int8_high_at_0.99609375": 0
+    }
+  ],
+  "actual_float_streaming_witnesses": 20,
+  "maximum_reported_sequence_streaming_residual": 0.0017456412315368652,
+  "selected_negative_actual_streaming": {
+    "selection": "Union of prior sequence-float or INT8 max-five >= .5, training negatives only",
+    "variants": 118,
+    "maximum_reported_residual": 0.008029580116271973,
+    "summary": {
+      "0.5": {
+        "actual_high": 103,
+        "later": 83,
+        "earlier": 19,
+        "equal": 1,
+        "median_processing_frame_shift": 32,
+        "phrases": {
+          "hey mix": 44,
+          "hey next": 40,
+          "hey nick": 19
+        },
+        "sequence_actual_classification_differences": 0
+      },
+      "0.99609375": {
+        "actual_high": 43,
+        "later": 40,
+        "earlier": 2,
+        "equal": 1,
+        "median_processing_frame_shift": 36,
+        "phrases": {
+          "hey mix": 17,
+          "hey next": 23,
+          "hey nick": 3
+        },
+        "sequence_actual_classification_differences": 0
+      }
+    }
+  },
+  "original_pack_check": {
+    "all_four_pinned_file_hashes_match": true,
+    "canonical_sources": 2594,
+    "eligible_variants": 6597,
+    "groups": {
+      "kokoro/positive": {
+        "identities": 20,
+        "canonical_sources": 58
+      },
+      "kokoro/hey nick": {
+        "identities": 20,
+        "canonical_sources": 20
+      },
+      "kokoro/hey next": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "kokoro/hey mix": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "macos-say/positive": {
+        "identities": 12,
+        "canonical_sources": 65
+      },
+      "macos-say/hey nick": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey next": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey mix": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "openai-tts/hey nick": {
+        "identities": 6,
+        "canonical_sources": 10
+      },
+      "openai-tts/hey next": {
+        "identities": 6,
+        "canonical_sources": 11
+      },
+      "openai-tts/hey mix": {
+        "identities": 8,
+        "canonical_sources": 15
+      },
+      "openai-tts/positive": {
+        "identities": 6,
+        "canonical_sources": 26
+      },
+      "qwen/positive": {
+        "identities": 32,
+        "canonical_sources": 87
+      },
+      "qwen/hey nick": {
+        "identities": 30,
+        "canonical_sources": 30
+      },
+      "qwen/hey next": {
+        "identities": 28,
+        "canonical_sources": 28
+      },
+      "qwen/hey mix": {
+        "identities": 25,
+        "canonical_sources": 25
+      },
+      "piper/hey next": {
+        "identities": 144,
+        "canonical_sources": 144
+      },
+      "piper/hey mix": {
+        "identities": 142,
+        "canonical_sources": 142
+      },
+      "piper/hey nick": {
+        "identities": 150,
+        "canonical_sources": 151
+      },
+      "piper/positive": {
+        "identities": 1223,
+        "canonical_sources": 1298
+      }
+    },
+    "excluded_canonical_by_phrase": {
+      "hi esp": 187,
+      "hey nexus": 208
+    }
+  },
+  "decision": "Reject v40; retain v30 as a frozen research reference, without a parity claim.",
+  "limits": [
+    "No GPU session, model bytes, weights, saved score arrays, audio, board, new development or final set accessed.",
+    "Full float sequence is a shared offline graph. Actual streaming covers 20 initial witnesses plus a selected 118-negative union, not all 6597 variants; observed residuals are not all-source bounds.",
+    "Peak shifts compare the final processing frame of five scores to the stored crop end, not a phonetic boundary or isolated failure cause.",
+    "Maximum five-score values are not latched-event accuracy. Different historical thresholds do not establish matched-FAR improvement.",
+    "Intended phrase/voice metadata is not phonetic truth or independent human identity."
+  ]
+}
