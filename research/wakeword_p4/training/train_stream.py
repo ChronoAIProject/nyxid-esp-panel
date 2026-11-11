@@ -38,6 +38,7 @@ def main():
                         help="Replace this many of 48 confusing negatives with training-positive prefixes")
     parser.add_argument("--mask-prefix-loss", action="store_true",
                         help="Keep sampled prefixes but give their unverified labels zero training weight")
+    parser.add_argument("--phone-binary-pack", type=Path)
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
     parser.add_argument("--hard-ambient-index", type=Path)
@@ -72,6 +73,8 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.phone_binary_pack and (args.architecture != 'teacher60' or frames != 150 or bn_policy != 'frozen' or args.phrase_auxiliary_manifest or args.label_smoothing):
+        parser.error('phone pack requires teacher60/context150 frozenBN, original BCE, no auxiliary head')
     if not 0 <= args.hard_ambient_count <= 48 or bool(args.hard_ambient_index) != (args.hard_ambient_count > 0):
         parser.error("hard ambient index and count1..48 must be supplied together")
     if args.negative_candidates < 1:
@@ -279,6 +282,11 @@ def main():
     loss = (tf.keras.losses.BinaryCrossentropy(label_smoothing=args.label_smoothing)
             if args.label_smoothing else "binary_crossentropy")
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-3, global_clipnorm=5), loss=loss)
+    phone_binary = None
+    if args.phone_binary_pack:
+        from phone_binary import PhoneBinary
+        phone_binary = PhoneBinary(args.phone_binary_pack)
+        (root/'phone_binary.json').write_text(json.dumps(phone_binary.report, indent=2)+'\n')
     auxiliary = None
     if args.phrase_auxiliary_manifest:
         from phrase_auxiliary import PhraseAuxiliary
@@ -355,6 +363,8 @@ def main():
             if step == int(args.steps*.5): model.optimizer.learning_rate.assign(3e-4)
             if step == int(args.steps*.8): model.optimizer.learning_rate.assign(1e-4)
             x, y, weights = batch()
+            if phone_binary is not None:
+                x, y, weights = phone_binary.append(x, y, weights)
             if auxiliary is None:
                 loss = float(model.train_on_batch(x, y, sample_weight=weights))
             else:
@@ -414,6 +424,8 @@ def main():
               "features_index_sha256": hashlib.sha256((args.features/"features.json").read_bytes()).hexdigest(),
               "feature_metadata_sha256": feature_metadata_hashes,
               "architecture": args.architecture, "architecture_args": architecture_args,
+              "phone_binary": phone_binary.report if phone_binary is not None else None,
+              "effective_training_batch_size": 144 if phone_binary is not None else 128,
               "batch_size": 128, "negative_weight": 20, "history": history,
               "label_smoothing": args.label_smoothing,
               "label_smoothing_policy": "Training BCE targets y*(1-epsilon)+epsilon/2; sample weights unchanged; evaluation labels/windows unchanged",

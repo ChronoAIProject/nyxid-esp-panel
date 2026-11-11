@@ -3309,3 +3309,17 @@ pack SHA256 c2fd2212d9c8c648d0444e5fccce27d8c572c206280b1c70153f325e0f9e3c8a。
 完整报告4090-synthetic-phone-features-v1.json；尚未训练或评分，不宣称模型改善。
 后续可用独立RNG平衡二分类额外样本，与原v30主batch保持可审计的损失比例，
 同时需要单独声明候选选择与新开发数据协议，不能把训练包当验证集选阈值。
+
+## v35 显式音素二分类额外监督预注册
+
+假设：完整源PCM且具声音/速度覆盖、噪声/RIR增强的额外二分类样本，
+可改善v30在phone pilot的声音漏触发，不重用v34失败的四类辅助头CE配方。
+原v30初始化/teacher60/context150/frozenBN、128主batch、prefix16全部保留。
+每步独立RNG87726额外取16条：8Nyx、8混淆词（Nick/Next/Mix等概率），类内等声音再等行抽样。
+总目标 main128 weightedBCE + .1*extra16 weightedBCE，负例仍weight20；
+拼接144时以144/128与.1*144/16权重补偿Keras分母，代数核验通过。
+原主batch样本/随机数生成与representative输入函数不改，不添加辅助头；独立额外采样不用于校准。
+120k步，每5k用原历史开发协议选checkpoint（明确为已消费开发，不冒称新独立验收）。
+该训练结果仅候选研究；之后仍需新开发阈值协议、新冻结合成集和负曝光门槛才能升级v30。
+原三个最终集不访问；两步GPU全流程smoke通过后才启动正式任务，模型/报告hash完整保存。
+代码phone_binary.py、train_stream.py；命令experiments/v35_phone_binary.sh。
