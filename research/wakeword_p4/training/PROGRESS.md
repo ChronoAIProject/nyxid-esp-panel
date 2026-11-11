@@ -1404,6 +1404,25 @@ contains the exact bank, source/target audits, frozen plans and source needed
 by the GPU work. The public archive and every listed member were downloaded
 and hash-verified. It adds no waveforms, room audio, firmware or device state.
 
+The [5,000-update prescreen](../results/microwake-phone-ctc-long-fit-v1.json)
+also fails: normalized CTC loss reaches 1.5525, phone error 65.62%, and exact
+weak sequences 4/236. The head weights, fit and draw digest at step 1,000
+reproduce the original run exactly. Binary weights/optimizer remain unchanged;
+no joint training, wake validation or firmware candidate was produced. No
+further head-only budget is selected from this curve.
+
+The [fixed beam readout audit](../results/microwake-phone-ctc-readout-v1.json)
+helps separate greedy blank preference from the remaining representation/fit
+gap. With the same weights, greedy decoding emits 539 phones versus 1,364
+teacher labels; beam width 32 emits 880 and reduces phone error from 65.62%
+to 50.44%, with only 6/236 exact sequences. A separate exhaustive-path test
+checks blank-first remapping, repeated labels and batch order. Greedy totals
+reproduce the prior audit, and every model weight remains unchanged. This
+does not change the failed fit gate, prove phonetic truth or add a decoder
+to the P4. End-to-end encoder learning is a different, still untested
+hypothesis; its eventual decision must use wake quality rather than treating
+auxiliary transcription as the requested end state.
+
 ### Human pilot preparation
 
 The [paired recording pilot](../human_pilot/README.md) can collect four

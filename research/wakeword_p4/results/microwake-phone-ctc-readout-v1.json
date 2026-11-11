@@ -1,0 +1,43 @@
+{
+  "scope": "Compare greedy/beam CTC readouts on the fixed training bank; no model update.",
+  "source_sha256": "3856c99b6872a4dc46d5deb56997a7dea2de0e6fdde041c718e6d707c97aa4cd",
+  "bank_sha256": "90ddde6a6b8ca4ae37089fb0b0a42e024f485d7e1b43c043d2c2d74fb986aa9e",
+  "sequence": {
+    "sequence_sha256": "927da537b468d8ca4c2997e4bb0a27c95de912f03bfafdeeb3f380b7f5120438",
+    "teacher_posteriors_sha256": "8c21b10165a8175e9c669fff61ab705ebe2cf4fae40a5dea0b861f7eac5b881e",
+    "length_histogram": {
+      "3": 6,
+      "4": 14,
+      "5": 63,
+      "6": 112,
+      "7": 29,
+      "8": 10,
+      "9": 1,
+      "11": 1
+    },
+    "encoding": "Full168 greedy CTC collapse; nonempty labels padded by blank zero to 67 steps."
+  },
+  "checkpoint_sha256": "eaad4ec50c46036e464d7277c1244af31009add1468e2739e9359c48d3083313",
+  "weights_unchanged": true,
+  "beam_width": 32,
+  "sequences": 236,
+  "target_phones": 1364,
+  "totals": {
+    "greedy": {
+      "edits": 895,
+      "decoded_phones": 539,
+      "exact_sequences": 4,
+      "phone_error_rate": 0.656158357771261
+    },
+    "beam32": {
+      "edits": 688,
+      "decoded_phones": 880,
+      "exact_sequences": 6,
+      "phone_error_rate": 0.5043988269794721
+    }
+  },
+  "limits": "Training-only weak teacher labels. No fit gate is changed, no candidate promoted, and no beam decoder is added to runtime. Neither readout proves wake recognition, phonetic truth or acoustic parity.",
+  "raw_report_sha256": "3cdcdc2b965f5c340ef112882806c021647cd7e353a25b74e1186524ad2571b1",
+  "advance": false,
+  "conclusion": "A fixed beam readout recovers some omitted phones but still has 50.44% phone error and only six exact weak sequences. Greedy blank preference accounts for part of the gap, not the entire failed fit. This diagnostic changes no fit gate or weights and adds no runtime decoder. It does not establish intrinsic absence of encoder information."
+}
