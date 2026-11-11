@@ -4078,3 +4078,15 @@ Unique postprocessor session66707 authenticates exact training identity,120k,
 coverage pack/seed127726,original base seed97726,no sequence/jitter,frozenBN
 and modelSHA before unchanged historical/synthetic/oldVox138point evaluation.
 No automatic promotion/publication or new/final data access.
+
+### Standalone Linux/Mac frontend coefficients compared (2026-11-11)
+
+Mac4e7ad51 driver copied unchanged;authenticated PyPI2.0.2sdist compiled in
+isolated CPU directory without changing installed wheel orv40. All original
+header/translation-unit hashes match Mac. Linux tableSHA
+1336813ab90ed846b095af1d840b6b4f77ad299be0cd127b342abdddbd28876f.
+Against defaultMac:only weight2112471vs2470/unweight2111625vs1626 differ;
+index211belongs block33(start208,width12). Window/all other integer tables exact.
+22diagnostic mel float bit entries differ. No-contractMac additionally differs
+at293. This is a concrete coefficient discrepancy near observed channel32/33,
+not proof of installed-wheel/P4/runtime causality. v40unchanged;no model/audioIO.
