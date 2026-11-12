@@ -4749,3 +4749,8 @@ Original treatment completed120000 updates in4708.6s; original selection5000. Or
 ### Phrase ranking control historical gate rejected (2026-11-12 UTC)
 
 All original historical reports copied byte-for-byte;467 saved score traces authenticated. Original fixed138-point joint calibration has no viable operating point; control rejected. Original sequence continues treatment historical evaluation. No new dev/final access or v30 replacement.
+
+
+### Phrase ranking matched experiment rejected (2026-11-12 UTC)
+
+Original sequence finished both historical evaluations. Treatment original reports copied byte-for-byte and467 saved score hashes authenticated. Both fixed138-point joint grids have0eligible operating points. Full comparison receipt preserves separate macro/false extrema and limitations; no new-data rescue, promotion or Hi ESP equivalence. Retain frozenv30 and quarantine untouched dev/finals. Next research hypothesis must address retained failure evidence rather than sweep this coefficient.
