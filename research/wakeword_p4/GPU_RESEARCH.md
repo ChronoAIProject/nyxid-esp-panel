@@ -4970,3 +4970,7 @@ Same original sequence session93786 has proceeded automatically to common120k ar
 ### Common formal first50 actual-input audit
 
 Original sequence93786 remains live; common arm passed immutable first50 audit. All source draws/original windows and main tensors match authenticated original batches; paired tensors match independent offline waveform frontend reconstruction. Saved actual network inputs steps1/2 match elementwise, initialization inventory matches fresh smoke, first50 loss rows continuous finite. Prefix-only evidence, not full-run or quality acceptance. No execution files changed, restart, or newdev/final access. Issue13 remains the Mac coordination channel; frozen v30 handoff unchanged.
+
+### Common formal5000 checkpoint retained
+
+Original sequence93786/trainer504191 remains live. First common5000 progress record preserved byte-identically (3956B, SHA30a6def5fca99526aa7ccda8d4defdadc9b0a979eac2e2cbcd71feb26231a918). Zero original float-selection eligible points; fallback threshold.994, macro recall.33125, max-source false rate.015. Background0/1.204811h gives one-sided95% FAR upper2.48647/h, not the required .5/h. This is reused float training-validation only, not INT8/independent acceptance. No same-threshold cross-arm conclusion drawn from separately selected fallback points. Continue pinned120k plan, no restart/config edits/newdev/final use; v30 retained.
