@@ -5006,3 +5006,7 @@ Original trainer504191 remains live; fixed120k plan one-third complete. Original
 ### Common formal45000 checkpoint retained
 
 Original45000 record3954B SHA8820bcafa703bdbfb69164801dcf5f50c581c1d9f53cee5169496c2a339c1396 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.5234375/max-source false.0234375, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, fixed120k plan unchanged. No restart/newdev/final use or acceptance claim; v30 retained.
+
+### Common formal50000 checkpoint retained
+
+Original50000 record4014B SHAbdfaed23539b263e129112cbfc1a0436da6aa07f16328d3ec71347d72b996322 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.47890625/max-source false.03072917, background0/1.204811h, one-sided95% upper2.48647/h. Original trainer504191 remains live, fixed120k unchanged. No restart/newdev/final use or acceptance claim; v30 retained.
