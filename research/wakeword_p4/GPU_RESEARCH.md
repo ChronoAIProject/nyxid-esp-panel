@@ -4982,3 +4982,7 @@ Original trainer504191 remains live without restart. Original10000 record preser
 ### Common formal15000 checkpoint retained
 
 Original15000 progress record preserved byte-identically,4077B SHA b29dbd0805ff4292dcdbe8b6aaf56ec74169f98d09fc793257ef0da1cf98970c. Zero float-selection eligible points; fallback.994 macro.47994792/max-source false.02291667, background0/1.204811h, one-sided95% upper2.48647/h. Higher fallback recall does not establish improved tradeoff or acceptance. Original trainer504191 remains live; observed first13247 complete loss rows continuous and finite. Continue fixed120k without restart/newdev/final use, v30 retained.
+
+### Common formal20000 checkpoint retained
+
+Original sequence93786/trainer504191 remains live. Original20000 record4101B SHA b4daad425154b7992008d7b7001853ff7626024c2d3d9f4ea310ffd24c24fa91 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.47317708/max-source false.01302083, background0/1.204811h, one-sided95% upper2.48647/h. No acceptance, same-threshold advantage, or full-run claim. Fixed120k continues unchanged; no restart/newdev/final use, v30 retained.
