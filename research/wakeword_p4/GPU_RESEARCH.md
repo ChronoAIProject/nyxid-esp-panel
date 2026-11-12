@@ -5072,3 +5072,9 @@ Original sequence93786 completed full matched input audit:120000 ordered source 
 ### Independent matched-noise historical scoring complete
 
 Original sequence93786 finished independent historical postprocess and automatically entered common postprocess (PID531568 live observed). All11 original independent reports copied byte-identically with source/hash/size receipt. Unchanged138-point reused joint gate has5eligible points; selected.98828125 macro.57916667 (phone10/16,VCTK32/60), negative false clips0/304 and pre-generation positive events0, background0/8.17367273h gives upper95.36650994/h. This is exploratory historical/reused development, not independent acceptance, no v30 replacement. Common scores and same-threshold comparison pending. No newdev/final access or restart.
+
+### Matched-noise formal sequence completed; common-noise hypothesis rejected
+
+Original sequence93786 exited0; both original postprocess arms completed without restart. All11 common original reports copied byte-identically with source/hash/size receipt. Common fixed138-point reused joint gate has0eligible points, minimum negative false clips2, maximum macro.74375 (extrema need not share threshold). Independent has5eligible points, previously documented.
+
+Same-threshold audit covers all138 original points: common macro lower87/higher51/equal0 vs independent; negative false clips higher138/lower0/equal0; background events lower114/equal10/higher14. No point improves recall without more false clips/background. Reject shared-noise hypothesis/promotion on this matched seed and reused protocol; no independent generalization/unique mechanism claim. Independent historical viability remains exploratory and requires untouched development/independent acceptance before any replacement. Newdev/finals unconsumed by this experiment, v30 retained.
