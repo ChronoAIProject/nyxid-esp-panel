@@ -51,6 +51,7 @@ def main():
     parser.add_argument("--paired-rendering-coefficient", type=float, choices=(0., 1.),
                         help="Matched paired-BCE control0/rendering-consistency treatment1")
     parser.add_argument("--paired-objective", choices=("consistency", "phrase-ranking", "temporal-tail-risk"), default="consistency")
+    parser.add_argument("--paired-noise-condition", choices=("independent", "common"))
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -408,6 +409,12 @@ def main():
             paired_class = PairedTemporalTraining
         paired_rendering = paired_class(model, balanced_coverage,
             args.factorized_coverage_pack, args.paired_rendering_coefficient)
+        if args.paired_noise_condition:
+            assert args.paired_objective == 'phrase-ranking' and args.paired_rendering_coefficient == 1.
+            from matched_noise_sampler import MatchedNoiseSampler
+            paired_rendering.sampler = MatchedNoiseSampler(paired_rendering.sampler, args.paired_noise_condition)
+            paired_rendering.report['noise_condition'] = args.paired_noise_condition
+            paired_rendering.report['noise_sampler_sha256'] = hashlib.sha256(Path(__file__).with_name('matched_noise_sampler.py').read_bytes()).hexdigest()
         paired_rendering.report['numerical_policy'] = dict(op_determinism=True, tf32=False,
             scope='New matched execution policy; original probe and v1 failures preserved')
         model.save_weights(root/'actual-initialization.weights.h5')
@@ -490,6 +497,9 @@ def main():
                 x, y, weights = phone_binary.append(x, y, weights)
             if paired_rendering is not None:
                 sx,sy,sw = paired_rendering.sampler.batch()
+                if args.paired_noise_condition and step <= 2:
+                    np.savez_compressed(root/f'actual-network-input-step{step}.npz', main_x=x,main_y=y,main_weight=weights,pair_x=sx,pair_y=sy,pair_weight=sw)
+
                 main_sha = hashlib.sha256(x.tobytes()+y.tobytes()+weights.tobytes()).hexdigest()
                 trace = dict(main_tensor_sha256=main_sha, **paired_rendering.sampler.last_trace)
                 trace_text = json.dumps(trace,sort_keys=True)+'\n'

@@ -1,0 +1,83 @@
+{
+  "script_sha256": "ddd789cf72f8e9f5872056576e245a5f9aff8cf9258d646cb213027ffcc0f4f2",
+  "fresh_optimizer_updates_per_condition": 2,
+  "initialization_inventory_exact": true,
+  "source_draws_and_original_windows_exact": true,
+  "actual_network_pair_tensors_equal_independent_offline_render": true,
+  "main_labels_weights_equal_original_first2": true,
+  "first_main_bce_exact": true,
+  "paired_network_inputs_differ": true,
+  "receipts": {
+    "independent": {
+      "training_sha256": "bee97cd97d9879d1b17dcd3fb867ec92482289a8f5843b2110782ac59f91646b",
+      "model_sha256": "56186dfe3a705756cda238394d452ece73fa800abb8cbef7207ea4b433047a0c",
+      "model_bytes": 54312,
+      "losses": [
+        {
+          "step": 1,
+          "total": 21.598712921142578,
+          "main_bce": 12.048437118530273,
+          "pair_bce": 8.054183959960938,
+          "ranking": 1.4960908889770508,
+          "ranking_encoder_norm": 12.317634582519531,
+          "supervised_encoder_norm": 296.4518127441406
+        },
+        {
+          "step": 2,
+          "total": 28.3389835357666,
+          "main_bce": 12.502678871154785,
+          "pair_bce": 14.293174743652344,
+          "ranking": 1.5431305170059204,
+          "ranking_encoder_norm": 17.391374588012695,
+          "supervised_encoder_norm": 362.8263244628906
+        }
+      ],
+      "input_files": [
+        {
+          "name": "actual-network-input-step1.npz",
+          "sha256": "996dfbda2632e31e2c65890a48b191a8eda018576d5fcfc3f3ce0b1ef53c028b"
+        },
+        {
+          "name": "actual-network-input-step2.npz",
+          "sha256": "e7c3c2c4c051fbc2530b65db6118ae1f4450847b058f98512b757d1b56c79718"
+        }
+      ]
+    },
+    "common": {
+      "training_sha256": "2a05b12f2ce2580b18d7d391e4ab756e3dd1ee1d2aa2f68de2b89f8161721046",
+      "model_sha256": "4d443c2ba98beb0c6bfcaf0fb49d6e30b0f74a1396962d58f145f37dc2dd76c4",
+      "model_bytes": 54312,
+      "losses": [
+        {
+          "step": 1,
+          "total": 21.999021530151367,
+          "main_bce": 12.048437118530273,
+          "pair_bce": 8.411449432373047,
+          "ranking": 1.5391358137130737,
+          "ranking_encoder_norm": 13.202330589294434,
+          "supervised_encoder_norm": 307.1269836425781
+        },
+        {
+          "step": 2,
+          "total": 28.598724365234375,
+          "main_bce": 12.513880729675293,
+          "pair_bce": 14.525093078613281,
+          "ranking": 1.5597490072250366,
+          "ranking_encoder_norm": 17.55248260498047,
+          "supervised_encoder_norm": 368.2091979980469
+        }
+      ],
+      "input_files": [
+        {
+          "name": "actual-network-input-step1.npz",
+          "sha256": "89b0fc99848b2ef046473a4225afef31aa3c7df1976dbcb22e0a21f53907df3d"
+        },
+        {
+          "name": "actual-network-input-step2.npz",
+          "sha256": "1851b0e66d2321c63f07d6373f8b733371d05da665518faaccea34ebf2778614"
+        }
+      ]
+    }
+  },
+  "limits": "Two-update integration and export-size smoke only. Not quality acceptance, numerical streaming parity or development evaluation. No promotion."
+}
