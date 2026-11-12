@@ -4540,3 +4540,8 @@ Implemented phase-separated no-model pipeline. First all8064sources×quiet/combi
 ## Factorial reference verification complete
 
 Original8064source quiet+combined arms all16128 exact float64/WAV/frontend/gains reproduced,original bytes untouched. Original reference receipt copied byte-for-byte toresults,scriptc36a726bdaea5859f40ce0728689cfa7383678be8aece89c459e2f3d4a779175. Then launched controls phase session32274,all8064sources noise15-only and RIR-only;no wake model scoring until independent control array/PCM/frontend/ledger checks. No training/newdev/final or promotion.
+
+
+## All rendering controls generated; independent audit running
+
+All8064sources×noise-only/RIR-only16128controls generated with intermediates,original controls report copied byte-for-byte. Independent audit script checks everyfilehash/array/PCM/frontend andcompletecontainer,source/armgrid,seeds,gains andnoise realizedSNR. Original audit PID276154/session27312 observed live,7001/16128 verified. No model scores/optimizer/newdev/finals yet;do not infer quality pass from generator all_exact field,which in controls means only generation completion until independent audit finishes.
