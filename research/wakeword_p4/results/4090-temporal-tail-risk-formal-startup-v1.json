@@ -1,0 +1,70 @@
+{
+  "exec_session": 33314,
+  "processes": [
+    {
+      "pid": 409484,
+      "parent_pid": 16546,
+      "start_ticks": 7685669,
+      "state": "S",
+      "argv": [
+        "bash",
+        "research/wakeword_p4/experiments/temporal_tail_risk_formal_sequence_v1.sh"
+      ]
+    },
+    {
+      "pid": 409487,
+      "parent_pid": 409486,
+      "start_ticks": 7685681,
+      "state": "D",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/train_stream.py",
+        "--device",
+        "cuda",
+        "--paired-objective",
+        "temporal-tail-risk",
+        "--paired-rendering-coefficient",
+        "0",
+        "--upstream",
+        ".local/wakeword/microWakeWord",
+        "--features",
+        ".local/wakeword/features-gpu-ami-extra-v1",
+        "--output",
+        ".local/wakeword/model-temporal-tail-risk-control-formal-v1",
+        "--architecture",
+        "teacher60",
+        "--context-frames",
+        "150",
+        "--batchnorm-policy",
+        "frozen",
+        "--initial-weights",
+        ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5",
+        "--ambient-sampling",
+        "stratified",
+        "--prefix-negatives",
+        "0",
+        "--source-exponent",
+        "0",
+        "--full-source-pack",
+        ".local/wakeword/british-training-features-v1",
+        "--factorized-coverage-pack",
+        ".local/wakeword/factorized-training-features-v1",
+        "--us-temporal-coverage",
+        "--us-coverage-pack",
+        ".local/wakeword/us-training-features-v1",
+        "--negative-container-mixture",
+        "--positive-full-timeline",
+        "--negative-full-timeline",
+        "--complete-coverage-pack",
+        ".local/wakeword/mac-evidence-import-v1/old-complete-container-pack-v1/study",
+        "--steps",
+        "120000",
+        "--eval-interval",
+        "5000",
+        "--event-validation"
+      ]
+    }
+  ],
+  "pins_commit": "c384f78",
+  "scope": "Observed original sequence and control trainer live; not completion or quality evidence."
+}
