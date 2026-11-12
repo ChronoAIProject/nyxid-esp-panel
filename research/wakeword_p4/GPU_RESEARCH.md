@@ -4498,3 +4498,8 @@ Correction: v44 and v45 both selected35000; different weights/training trajector
 ## v46 original training/export completed (2026-11-12)
 
 Original RTX4090 run completed120000 steps in2629.9s,selected10000 by original rule. Original model54440 bytes SHA256 5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417. Original training SHA bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858; training/export audit copied byte-for-byte into results. All saved weights finite,frozenBN unchanged,int8[1,3,40] to uint8[1,1] contract passed. Original waiter authenticated balanced207726/end217726/slots and inherited recipe then started historical regression. Export only,not acceptance; full historical/138-point gates pending,no new development/finals accessed,no promotion,v30 retained.
+
+
+## v46 rejected at old-stage gates (2026-11-12)
+
+Original postprocessor finished. Fixed138points:0eligible,maxmacro 0.7458333333333333,minimum negativefalseclips 4. Historical .99609375/smoothing5:Kokoro any7/16,commonfalse1/48,cross0;VCTK any32/60,commonfalse3/180,cross0. Vox8.173672725694447h,3events,upper95 .9486135288434813/h fails .5. All467scorefiles SHA authenticated. Original reports copied byte-for-byte;unseen check-only rejects at old gate before unseen data access. V30retained,no newdevelopment/finals used. Balanced source plus temporal mixture did not pass;different selected checkpoint and trajectory confound isolated causal claims. No automatic v47.
