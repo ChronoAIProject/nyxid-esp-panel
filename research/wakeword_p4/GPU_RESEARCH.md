@@ -4799,3 +4799,8 @@ Integrated explicit temporal-tail-risk mode retaining original main sampler and 
 ### Temporal-risk formal original sequence launched
 
 Fixed commands fc50373 and214 execution source/data/preflight hashes c384f78 pushed and delivered via Issue13 before launch. Fresh verifier passed; original sequence session33314 PID409484/start7685669 and control trainer409487/start7685681 observed live. One120k per arm, control then treatment, full120k input audit before unchanged historical-only postprocess. No auto-restart or newdev/final route. Startup receipt preserves exact argv/PID/start identity. This is execution startup only, not completed gradient updates, export or quality acceptance; v30 retained. Do not rerun freshness verifier or launch this sequence again after outputs exist.
+
+
+### Live temporal-risk control startup authenticated
+
+Original sequence409484/start7685669 and trainer409487/start7685681 still live at2026-11-12T12:36:13UTC;1706 complete loss rows observed. All214 fixed execution hashes unchanged. Actual initialization inventory exactly matches fresh smoke, allfirst50 temporal draws exactly match original independently authenticated zero-update probe, first actual loss/norm observation equals control smoke exactly. No restart or modification of pinned training files. Bounded startup evidence only; full120k pair audit and historical quality gates pending. Newdev/finals untouched, v30 retained.
