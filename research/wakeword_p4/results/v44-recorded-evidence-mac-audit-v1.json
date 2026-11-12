@@ -1,0 +1,121 @@
+{
+  "scope": "Independent source/report-link and recorded-count arithmetic audit; no score-array or model replay",
+  "gpu_commit": "75cdd0d25a6fce96acab50e40dc97278d138e548",
+  "model_sha256": "88de16e71b5f49b5e85d226b74a07aa036324dcaab48e6f58c9c8a9343608652",
+  "input_report_sha256": {
+    "4090-v44-training-v1.json": "4888acb2ca1e27e1150e7f453e1bbbcaea66e8444422269c3c2f5f0403720ff0",
+    "4090-v43-training.json": "cdd5127a5f42fdf242fbea12fb5abe287bb62f2f42025943c7ed52c6ee666b32",
+    "4090-v44-export-audit-v1.json": "1b4a8f332596dabb7d5eb6365c039f723aef0c2b558cf260ca8b6d182111e37a",
+    "4090-v44-validation-v1.json": "5b6598c0aef2b2b375c7181589676d689c8bb05a681f95edcf40e7741bae5319",
+    "4090-v44-phone-development-v1.json": "7776ce006189735477551e7ed15b61f4a6b94f62ea5d02df25368ef7b9b4082e",
+    "4090-v44-vctk-development-v1.json": "baf232840e4a6fa930d3034dcda8ee545b599d7fdc69f372cbbc4b2e0a554f30",
+    "4090-v44-voxconverse-development-v1.json": "2ce12435ffb3be5174059269b9d5dffd79b42fb6a38a18e68069c3dd1ead6655",
+    "4090-v44-reused-development-exploratory-calibration-v1.json": "a6419eefde651c8b0295108f4305fdde252f78b83e660078a04e849c401962bb",
+    "4090-v44-score-receipt-v1.json": "e7ff7ad82b78d5ad7b7174706c8d212e4a5aa5c0324b8dc745b5c5af73c7c1cc",
+    "4090-v44-rejection-v1.json": "e197c2135c58ef16d43a6e83ae12db34b1d9d57ad58c8ffce04d3dce29204d64"
+  },
+  "source_files_authenticated": 157,
+  "unchanged_v43_recipe_fields": [
+    "ambient_sampling",
+    "ambient_sampling_coverage",
+    "architecture",
+    "architecture_args",
+    "batch_size",
+    "batchnorm_initial",
+    "batchnorm_policy",
+    "batchnorm_selected",
+    "classifier_initial_sha256",
+    "classifier_reset",
+    "complete_coverage",
+    "context_frames",
+    "effective_training_batch_size",
+    "feature_metadata_sha256",
+    "features_index_sha256",
+    "five_score",
+    "frozen_batchnorm",
+    "full_source",
+    "gpu_details",
+    "gpus",
+    "hard_ambient",
+    "initial_weights_sha256",
+    "label_smoothing",
+    "label_smoothing_policy",
+    "mask_prefix_loss",
+    "mask_prefix_loss_policy",
+    "mining_policy",
+    "mining_seed",
+    "model_bytes",
+    "negative_candidates",
+    "negative_weight",
+    "parameters",
+    "phone_binary",
+    "phrase_auxiliary",
+    "prefix_negatives",
+    "recipe",
+    "scope",
+    "seed",
+    "selection",
+    "source_exponent",
+    "sources",
+    "spec_augment",
+    "steps",
+    "tensorflow",
+    "validation_detection",
+    "validation_window_phase"
+  ],
+  "recorded_checkpoints_recomputed": 24,
+  "float_grid_points_recomputed": 264,
+  "float_eligible_points": 0,
+  "selected_step": 35000,
+  "selected_float_row": {
+    "threshold": 0.994,
+    "recall": 0.36574074074074076,
+    "macro_recall": 0.3953125,
+    "recall_by_engine": {
+      "piper": 0.3572916666666667,
+      "kokoro": 0.43333333333333335
+    },
+    "hard_negative_false_rate": 0.00909090909090909,
+    "max_source_false_rate": 0.015,
+    "ambient_hours": 1.2048112673611107,
+    "ambient_events": 0,
+    "ambient_faph": 0.0
+  },
+  "joint_grid_points_recomputed": 138,
+  "joint_eligible_points": 0,
+  "minimum_negative_false_clips": 11,
+  "maximum_poisson_upper95_absolute_difference": 2.220446049250313e-16,
+  "score_receipt_report_links_checked": 467,
+  "historical_saved_event_counts": {
+    "phone": {
+      "positive_clips": 16,
+      "positive_any_event_clips": 4,
+      "common_negative": {
+        "clips": 48,
+        "false_events": 2,
+        "false_activation_clips": 2
+      },
+      "cross-target_negative": {
+        "clips": 16,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    },
+    "vctk": {
+      "positive_clips": 60,
+      "positive_any_event_clips": 34,
+      "common_negative": {
+        "clips": 180,
+        "false_events": 9,
+        "false_activation_clips": 9
+      },
+      "cross-target_negative": {
+        "clips": 60,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    }
+  },
+  "script_sha256": "a190e68e8ddc6a3ff2b481a5c6c088489873a2c3282449e0aa0a43db38218225",
+  "limits": "Saved counts/choices/hash links verified only. GPU receipt score-file claims not independently rehashed on Mac; no waveform, score array, inference, actual-float/INT8 replay, unused development, final, board, playback or microphone access. No recognition/FAR/latency/resource/call parity or promotion."
+}

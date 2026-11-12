@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `d33e9ad` (fetched again 2026-11-12); see the
+Latest observed GPU commit: `75cdd0d` (fetched 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -1007,3 +1007,48 @@ and P4 paths remain ready for an eligible frozen handoff; human/acoustic,
 resource, immediate-speech and long-call/reconnect parity remain unproved.
 Further cross-machine tasks and results belong in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
+
+### GPU v44 completed and rejected at `75cdd0d`
+
+The original one-run training completed 120000 steps in 2298.0 seconds and
+selected step35000. The 54440-byte export has SHA
+`88de16e71b5f49b5e85d226b74a07aa036324dcaab48e6f58c9c8a9343608652`.
+The new US training mixture replaces eight positive and twelve negative slots
+with the authenticated 324-variant training-only pack. Other inherited recipe
+metadata matches v43; this intervention changes the distribution of sources
+and endpoints and is not isolated source-only causality.
+
+The fixed 138-point old-development gate has zero eligible points, a maximum
+macro clip-trigger fraction of .6895833333333333 and at least eleven synthetic
+negative false clips at every point. At the frozen historical threshold
+.99609375, target clips with any event are 4/16 Kokoro and 34/60 VCTK; common
+negative false clips are 2/48 and 9/180. Old Vox has zero events in
+8.173672725694447 source hours, upper95 .3665099367309777/h. That background
+result alone does not rescue the joint rejection. Different selected v43/v44
+checkpoints and worse positive results prevent attributing the reduction in
+negative false clips to a single causal mechanism or declaring an improvement.
+
+The [Mac recorded-evidence audit](../wakeword_p4/results/v44-recorded-evidence-mac-audit-v1.json)
+authenticates all 157 saved source-file hashes and the training/export and
+development report links. It recomputes all 24 saved checkpoint choices
+(264 float grid points), reproducing step35000; none of those recorded float
+points is eligible. It also recomputes the 138 joint eligibility/macro/Poisson
+calculations, historical event-list counts, and all 467 score-receipt links.
+The maximum Poisson upper-bound difference is 2.220446049250313e-16.
+This is metadata, source and recorded-count arithmetic verification, not
+independent model inference, score-array replay or Mac rehashing of GPU score
+files. The explicit report limitations remain part of the result.
+
+To reproduce with the fetched GPU git objects, from the repository root:
+
+```sh
+python3 research/handoff/audit_v44_recorded_evidence.py --output /tmp/v44-recorded-evidence-fresh.json
+```
+
+V44 is rejected; the original v30 research reference remains frozen, and the
+development panel keeps its original firmware. The follow-up diagnostic in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6812540383)
+requests complete inherited/new-US training-cohort support and actual-float
+versus INT8 correspondence on the already consumed old-development clips.
+Those results must inform any next preregistered intervention. No unused
+development/final scoring, automatic v45 or failed-model P4 rollout follows.
