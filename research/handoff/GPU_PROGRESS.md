@@ -1382,3 +1382,27 @@ the rejected continuation, authorize board rollout or characterize GPU v46.
   --continuation /path/to/us-embedding-continuation-v1 \
   --output /tmp/us-operating-point-audit-fresh.json
 ```
+
+### Fresh original Hi ESP idle baseline while awaiting v46
+
+The [60-second development baseline](../wakeword_p4/results/hiesp-idle-headroom-20261112-v2.json)
+completed61read-only status samples on the original0.6.27/Hi ESP app, app SHA
+`0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8`,
+ota_0. Live nonempty service/agent and daily/management slug identities match
+the private status previously verified against the USB development chip. No
+new chip query/reset, firmware write, speaker operation or PCM capture occurred.
+The dining-room panel was not accessed.
+
+Connection, selected service, idle listener and detection count remained
+unchanged throughout; uptime was monotonic. Internal free heap stays273387bytes
+and largest internal/DMA block126976bytes; DMA free233775bytes. Total free heap
+ranges19612140..19612180bytes. This is a fresh idle headroom/readiness baseline,
+not CPU timing, RX conservation, acoustic quality, long-call/reconnect evidence
+or comparison with any candidate.
+
+CI43153738297 for `b5954b5` completed successfully for host and both P4 profiles.
+CI43154374212 for the saved-score audit `b7a7e3d` has passed host and is still
+building P4 at this snapshot. Original v46 status/completion has been requested
+through issue #13; no new remote-process observation or quality result has
+arrived. A report from an earlier turn alone does not prove it is live now, and
+elapsed observation alone does not justify restarting it.
