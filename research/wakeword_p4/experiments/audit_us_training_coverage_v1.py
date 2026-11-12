@@ -30,6 +30,7 @@ for i,(r,g) in enumerate(zip(rows,grid)):
  np.testing.assert_array_equal(scales,r['scales'])
  for key,digest in [('native_path','native_sha256'),('float16k_path','float16k_sha256'),('path','sha256')]:assert sha(root/r[key])==r[digest]
  native=np.load(root/r['native_path'],allow_pickle=False);x=np.load(root/r['float16k_path'],allow_pickle=False)
+ assert native.dtype==x.dtype==np.dtype('float32')
  rate=cfg['audio']['sample_rate'];div=math.gcd(rate,16000);expected=resample_poly(native,16000//div,rate//div) if rate!=16000 else native.copy()
  np.testing.assert_array_equal(expected,x)
  pcm,sr=sf.read(root/r['path'],dtype='int16');info=sf.info(root/r['path'])
@@ -48,6 +49,6 @@ for i,(r,g) in enumerate(zip(rows,grid)):
  assert r['native_durations'] is None and all(r['checks'].values()) and r['quality_pass'] is True
  checks.append(dict(path=r['path'],samples=len(pcm),rms=rms,verified=True))
 assert len(list(root.glob('*.wav')))==108 and len(list(root.glob('*.npy')))==216
-out=dict(scope='Independent read-only audit of every retained training-only output; no ONNX/wake-model inference',clips=108,verified=108,original_report_sha256=sha(root/'report.json'),manifest_sha256=sha(root/'manifest.jsonl'),run_sha256=sha(root/'run.json'),source_sha256=sha(source/'source.json'),audit_script_sha256=sha(Path(__file__)),checks=['all source/output/PCM hashes','exact preregistered grid/order/training split','config phonemes/token IDs/scales','native-to-resampled array equality','PCM16 exactly reproduces pinned libsndfile conversion (same library, not independent rounding implementation)','full lengths and independent mechanical quality gates'],details=checks,limits='Mechanical synthesis integrity only; no phonetic truth, physical speaker independence, historical corpus repair, model acceptance or deterministic generation claim. New development/finals not accessed.')
+out=dict(scope='Independent read-only audit of every retained training-only output; no ONNX/wake-model inference',clips=108,verified=108,float_dtype='float32',pcm_dtype='int16',original_report_sha256=sha(root/'report.json'),manifest_sha256=sha(root/'manifest.jsonl'),run_sha256=sha(root/'run.json'),source_sha256=sha(source/'source.json'),audit_script_sha256=sha(Path(__file__)),checks=['all source/output/PCM hashes','exact preregistered grid/order/training split','config phonemes/token IDs/scales','native-to-resampled array equality','PCM16 exactly reproduces pinned libsndfile conversion (same library, not independent rounding implementation)','full lengths and independent mechanical quality gates'],details=checks,limits='Mechanical synthesis integrity only; no phonetic truth, physical speaker independence, historical corpus repair, model acceptance or deterministic generation claim. New development/finals not accessed.')
 Path('research/wakeword_p4/results/4090-us-training-coverage-audit-v1.json').write_text(json.dumps(out,indent=2)+'\n')
 print(json.dumps({k:v for k,v in out.items() if k!='details'}))
