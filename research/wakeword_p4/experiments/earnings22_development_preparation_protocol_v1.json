@@ -1,0 +1,29 @@
+{
+  "schema": "earnings22-development-preparation-protocol-v1",
+  "source_reservation_sha256": "b10b875cbbcfb09bd9b5c2aa41ccb31450b48bc9f7f7c3ce62c4547595135d53",
+  "preparer_sha256": "990859b1a03bd501a54df45795b365dd0a76116d5c92c22cdefe1f6fe12ba001",
+  "frontend_source_sha256": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+  "host_versions": {
+    "numpy": "2.5.4",
+    "soundfile": "0.13.1",
+    "scipy": "1.17.0",
+    "pymicro-features": "2.0.2"
+  },
+  "ffmpeg_version_prefix": "ffmpeg version 9.0.2 ",
+  "decode_policy": "Full complete official MP3 decode, one audio stream, CPU flags0, single thread, bitexact flags; decode native float stdout separately for hash/frame count. Mono16k PCM16 via FFmpeg swr with no dither. No -ss/-t/trim/tempo/rate-pitch manipulation, denoise, gain, normalization, silence removal or internal gaps.",
+  "duration_gate": "Decoded16k sample duration must equal full native decoded frame duration within one16k sample. Original mediaSHA/size must match pinned LFS object. Metadata durations are descriptive, not truncation limits.",
+  "frontend_policy": "Existing continuous_wav_features: one persistent MicroFrontend per whole recording,10s I/O blocks, exactly one final <=159-sample zero pad. uint16 frames x40; no wake detector, thresholds or model inference.",
+  "mechanical_policy": "All12 files mandatory; authenticate every pointer/transcript/metadata before raw media decode. Original transcript exact target-alias text scan must be empty or readiness stops with all sources retained. No retry/replacement/subset or score-based exclusion. Preserve partial output/errors.",
+  "publication_policy": "No raw media, decoded waveform, native decoded samples or derived frontend payload redistribution: upstream license explicitly covers transcripts/text only. Publish scripts, attributable source metadata, hashes and upstream URLs. Runtime/PCM hashes must be compared before any cross-machine same-PCM claim.",
+  "score_policy": "No wake-model scoring in this stage. A separate frozen profile/threshold/baseline/event/FAR protocol is required before first inference. Development only, never training/final.",
+  "limits": [
+    "Country by Ticker is company metadata, not certified speaker country/accent. Physical speakers can recur across calls and source/pretraining overlap is unknown.",
+    "Original transcript screening is incomplete evidence: omitted/mistranscribed targets can remain. No ASR/model scoring used for selection.",
+    "Financial calls are domain-limited; pauses, music and operator announcements remain. Not household-noise or Mandarin coverage.",
+    "At least12whole recording clusters, not independent utterances or a general population. Nominal Poisson bounds do not account for clustering.",
+    "Audio is gapless-decoded compressed source: preserve full decoded logical audio, not claim bit-identical to an unavailable pre-MP3 master. Mono mixing and rational sample-rate conversion are declared transforms.",
+    "Runtime/model/frontend identity and exact decoded PCM must be verified before future same-input comparisons; ffmpeg bitexact flags alone do not prove cross-platform equality.",
+    "New development exposure does not rescue failed old gates or authorize candidate promotion. All three existing final sets remain untouched.",
+    "No playback, microphone, firmware/OTA, audio-producer/AEC/AGC/FIFO change or dining-room production-board operation."
+  ]
+}
