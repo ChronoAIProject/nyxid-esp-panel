@@ -177,6 +177,11 @@ numerical-rescue attempts, weight/coefficient changes or formal-run restarts
 follow from this optional cross-platform check. The same-GPU matched-arm
 execution evidence and this stricter cross-platform limitation are distinct.
 
+The [published diagnostic archive](assets-mac-paired-fp32-control-v1.json)
+contains the strict comparison, full-TF control report and original saved
+arrays, with a payload manifest. Its release asset size and SHA256 match the
+local archive; it preserves the failed full-comparison result.
+
 All measurements are silent, use already examined training data or synthetic
 numbers, and leave new development/final data and both physical boards alone.
 V46/v47 remain rejected, v30 is retained, and matched Hi ESP recognition/FAR,
