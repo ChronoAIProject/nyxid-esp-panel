@@ -1,0 +1,51 @@
+{
+  "scope": "Authenticate v47 pack records and independently reconstruct its first draws.\n\nGit metadata/source and schedule arithmetic only. No original NPZ/raw array is\nread here, and GPU tensor/RNG-preservation audit claims remain GPU-executed.\n",
+  "gpu_commit": "1518be4177556901cde3919665ffd9d96c7c2768",
+  "numpy_version": "2.4.3",
+  "input_sha256": {
+    "4090-factorized-training-pack-original-v1.json": "7b798653f73e2dcd3b01fd5b7092c947a26b9c8ec2525ff295de2e6478042e44",
+    "4090-factorized-training-pack-audit-v1.json": "baf14742b284ba71aeb3f8ee3fa936f60fd595a4e11697d39468d2bffb0c74c3",
+    "4090-v47-sampler-precheck-v1.json": "f8e824903934671b360b134750442a2625480e2e93da0f13248ffd6a900dd2c5",
+    "4090-piper-balanced-training-features-original-v1.json": "93733755fec50b41cf71fcc8e2efa9fdfc14956a61e8b50e98e4bd110d5248b3",
+    "4090-balanced-rendering-factorial-controls-v1.json": "fb3f71531d3ad15cbb90f23636c5ac8b113b1ae8103c79df68163c5b55b078ab"
+  },
+  "implementation_sha256": {
+    "experiments/assemble_factorized_training_pack_v1.py": "aa2b73215d07430d1dc8b4b8dbbac5fe27a2ecd6dd5eddf3c413b6819148fa65",
+    "experiments/audit_factorized_training_pack_v1.py": "890776be0b79114cf3906ad8af22d20d8ae233b5ec1d0f54e7d722ae24018ce2",
+    "experiments/v47_sampler_precheck.py": "ead9a0875d443720aad0ac2f4a62ab367fee08c773faaf1a35df53b7c24be78f",
+    "training/factorized_coverage.py": "7f7c47df21a6599c3663b1eae01e798fec098f4a13d270ecc73f5018d9d5ea7e",
+    "training/train_stream.py": "d12bc3902c82a5f3b91f823f9a056b9bef04af5d374dcfa9b504aa3f12921a18"
+  },
+  "pack_sha256": "1a6cbf491c624c58cf96cfdac882966a7863927f546ac553075248caacfaaf5f",
+  "connected_records": 40320,
+  "original_subset_connected": 24192,
+  "control_subset_connected": 16128,
+  "groups": 2688,
+  "variants_per_group": 15,
+  "arms": {
+    "quiet": 8064,
+    "noise25": 8064,
+    "combined": 8064,
+    "noise15": 8064,
+    "rir": 8064
+  },
+  "all_legal_endpoint_intervals_exact": true,
+  "schedule_draws": 1000,
+  "source_phrase_census_matches_gpu": true,
+  "locally_reconstructed_trace_sha256": "fa92be747954f68aa9eded146dfeb7be97d2497e9b0801fb4f7c350b2ef040c9",
+  "other_executable_recipe_flags_identical": true,
+  "all_checks_pass": true,
+  "execution_source_ref": "37d940dd019a29e4745a5f8fa97ef4dcaed22dca",
+  "execution_input_sha256": {
+    "4090-v47-execution-source-pins-v1.json": "05240f59f95fdda7f8591a616b10dfffed61c8a3d0503a397907915f8022f198",
+    "4090-v47-smoke-training-v1.json": "3c13f1ec462a4e45c346b43c0be81b9da427d83cad510e1a01ee3092bee512c2",
+    "4090-v47-smoke-export-audit-v1.json": "12e55cc50a760d17e9fd68e2b0d31e546b2ee365a4d8724661db53ec1cab7106"
+  },
+  "original_training_sources_authenticated": 160,
+  "pinned_execution_sources_authenticated": 5,
+  "inherited_initialization_and_other_recipe_records_identical": true,
+  "original_smoke_export_record_contract_matches": true,
+  "accepted": false,
+  "script_sha256": "a7c6619a47665b5068d6a65219ee656a053bddf8e0731461b4b7f332aede55d3",
+  "limits": "Original git records/source and arithmetic only. GPU raw/NPZ files and tensor batches were not received/replayed on Mac. The local ordered source/end trace is independently reconstructed; GPU report retains only the source/phrase census, so equality of every original GPU ordered draw/end cannot be independently verified from that report. GPU untouched-slot/RNG and finite-weight/export claims remain GPU-executed; Mac authenticates their source/record identities. No inference, optimization, model acceptance, heldout/final or device/audio access."
+}

@@ -1524,3 +1524,63 @@ earlier failed v22 affine-BN result. Mac reviewed that prior failure and its own
 failed near-word ranking/phone/CTC studies before discussing further changes;
 none is relabeled as an unexplored hypothesis. No new training or device/audio
 operation was started by Mac in this phase.
+
+### Factorized v47 records, schedule and original smoke authenticated on Mac
+
+GPU froze `a4faf65` before its new pack or training: retain all8064training
+sources and all24192original variants, and add the16128audited noise15-only/
+RIR-only controls. The resulting40320variants give15choices per conditioning
+ID/phrase. The20balanced slots and source/end seeds remain unchanged. Original
+conditions move from probability1/3to1/5; each new condition receives1/5.
+Changing cardinality also changes selected draws. This is a coverage-mixture
+experiment, not an isolated noise-only intervention or additional batch mass.
+
+Mac [comment6814959552](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6814959552)
+aligned with this earlier-frozen experiment. The later clean/noisy representation
+consistency idea is only a future hypothesis; it is neither added to v47 nor
+another concurrent training run. GPU `1518be4` reports full40320array/crop/label/
+subset checks and its50batch/1000draw tensor/RNG precheck passed. GPU `37d940d`
+supplies the original2step smoke and five executable source pins; `99a3ba0`
+records formal startup PID281170/start4934229/session44843 and waiter
+PID281771/start4936506/session17410. These are GPU startup reports, not a direct
+Mac observation that the processes remain live now. No completed formal output
+or recognition quality is established by startup or elapsed time.
+
+The [executed independent Mac audit](../wakeword_p4/results/v47-pack-schedule-mac-v1.json)
+authenticates the original pack report SHA
+`7b798653f73e2dcd3b01fd5b7092c947a26b9c8ec2525ff295de2e6478042e44`
+and pack reference SHA
+`1a6cbf491c624c58cf96cfdac882966a7863927f546ac553075248caacfaaf5f`.
+All40320metadata/origin/raw-file-hash links match the24192original subset and
+16128controls. Every672allowedID×4phrase×3speed×5condition occurs exactly
+once, and every recorded complete-container legal endpoint interval reproduces.
+An independent integer-index RNG implementation reconstructs1000ordered
+source/end choices and matches the GPU report's complete source/phrase census.
+The [local ordered trace](../wakeword_p4/results/v47-pack-schedule-mac-v1-trace.json)
+SHA is `fa92be747954f68aa9eded146dfeb7be97d2497e9b0801fb4f7c350b2ef040c9`.
+The original GPU report retains only that census, not its full ordered trace;
+therefore Mac does not claim independent equality of every GPU source/end or
+tensor. All original160training source files and five execution pins authenticate.
+Relative to v46, only the trainer changes among inherited sources; one separate
+FactorizedCoverage helper is added. Normalizing candidate-specific pack/output/
+log paths leaves the executable recipe identical. Other recorded initialization
+and recipe fields match v46; original smoke/export report links agree. Finite
+weights, fixed BN and INT8 interface are authenticated GPU-executed claims,
+not independent Mac weight/model inference.
+
+```sh
+python3 -B research/handoff/audit_v47_pack_schedule_mac.py \
+  --output /tmp/v47-pack-schedule-fresh.json \
+  --trace /tmp/v47-pack-schedule-fresh-trace.json
+```
+
+The checkpoint retention suggestion in
+[comment6815005477](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6815005477)
+does not authorize restarting or modifying the already-started formal run.
+Original v47 recipe/selection and the full historical rejection gates remain
+fixed; unseen/final access and board rollout require their existing gates.
+V46 remains rejected, v30 retained, and the full Hi ESP objective remains unmet.
+No Mac audio, model training, PCM capture, firmware change or dining-room access
+occurred in this phase. CI43156687253 for `50001d2` finished host and both P4
+profiles successfully; `b463098` CI43157558621 had passed host and was still
+building the two P4 profiles at the last observation.
