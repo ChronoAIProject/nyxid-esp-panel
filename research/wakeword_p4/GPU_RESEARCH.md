@@ -4664,3 +4664,8 @@ Certified derivedprobeinitialization fromactualpre-update controlsmokesnapshot:2
 ## Deterministic full-FP32 first-batch replay
 
 Certified initialization and saved first actual batch replayed without updates on CPU and CUDA, twice per device. Each device repeats all losses and full supervised/D gradients exactly; all variables unchanged. CPU/CUDA arrays pass original rtol1e-5/atol1e-5 elementwise comparison (max absolute supervised gradient difference1.90735e-5, relative tolerance also applies). This is a new explicit execution policy (op determinism enabled, TF32 disabled), only first batch, not retroactive passage of old probe or failed v1 smokes. Original lambda1 unchanged. Matched trainer now records/applies this policy for both arms; fresh v2 two-step smoke scripts prepared before execution. Formal training still pending.
+
+
+## Fresh v2 matched smokes pass
+
+Execution8858a9a, control/treatment each2updates,41.4/42.7s. Initial inventories and full ordered main/pair sampling trace exact between arms; all pre-update first-step observed losses and encodergradient norms now exactly equal. Main/pair/D losses match new CUDA full-FP32 first-batch reference at original1e-5 tolerances. Both54312B INT8 exports pass finite/frozenBN/shape/dtype audits. This clears fresh smoke engineering checks only, does not erase v1 failure or establish acceptance. Formal120k scripts prepared, execution pins/postprocessing still required before launch; no new/final data accessed.
