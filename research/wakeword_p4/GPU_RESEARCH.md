@@ -5162,3 +5162,7 @@ Preserved author TTS index and pinned HFC male card with hashes in future-synthe
 ### Direct Jenny artifact identity checked without inference
 
 Downloaded author direct model/config only. Model63531379B SHAd33f72ffbabcbbcb673ff6fac06949e8b1a0e56fca0ffd97ae557ac614bab8f1; config7084B SHA39bae6c39dac08347a1232ecfafae9e0d18028c180b23a0a4da18105948a3330. Fixed Piper repository original LFS pointer identifies63221984B SHA62ba183a504cfcd8816ec1b50ee856ed318ccc9dd22fd0bedd7d839c95dfa20e. Export bytes demonstrably differ; this does not authenticate scratch training or independent lineage. Original config, pointer and retrieval receipt preserved. No inference/audio generation/source reservation. Live formal run unchanged.
+
+### Jenny primary dataset metadata and license preserved
+
+Pinned dioco-group/jenny-tts-dataset README atad714a8d15fa010b4ccc024df678822695238070 and original Kaggle mirror metadata with byte hashes. Primary22419 raw prompts differs from mirror20977 RNNoise/VAD/SOX processed prompts; inspected author model metadata lacks exact training manifest. Primary license supplies Jenny/Dioco interface attribution and commercial permission. This is documentary evidence, not proof of model training lineage or physical-speaker independence. No audio generation/inference or source reservation; formal training unchanged.
