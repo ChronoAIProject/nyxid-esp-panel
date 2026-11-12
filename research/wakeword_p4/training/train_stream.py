@@ -52,6 +52,7 @@ def main():
                         help="Matched paired-BCE control0/rendering-consistency treatment1")
     parser.add_argument("--paired-objective", choices=("consistency", "phrase-ranking", "temporal-tail-risk"), default="consistency")
     parser.add_argument("--paired-noise-condition", choices=("independent", "common"))
+    parser.add_argument("--paired-draw-noise-condition", choices=("fixed", "per_draw"))
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -73,6 +74,8 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    if args.paired_draw_noise_condition and (args.paired_noise_condition or args.paired_objective != 'phrase-ranking' or args.paired_rendering_coefficient != 1.):
+        parser.error('Per-draw noise requires phrase-ranking coefficient1 and no other noise intervention')
     if args.paired_objective in ('phrase-ranking', 'temporal-tail-risk') and args.paired_rendering_coefficient is None:
         parser.error('Phrase ranking requires explicit matched coefficient')
     # Matched arms share an explicit numerical policy; historical runs retain theirs.
@@ -415,6 +418,11 @@ def main():
             paired_rendering.sampler = MatchedNoiseSampler(paired_rendering.sampler, args.paired_noise_condition)
             paired_rendering.report['noise_condition'] = args.paired_noise_condition
             paired_rendering.report['noise_sampler_sha256'] = hashlib.sha256(Path(__file__).with_name('matched_noise_sampler.py').read_bytes()).hexdigest()
+        if args.paired_draw_noise_condition:
+            from per_draw_noise_sampler import PerDrawNoiseSampler
+            paired_rendering.sampler = PerDrawNoiseSampler(paired_rendering.sampler, args.paired_draw_noise_condition)
+            paired_rendering.report['draw_noise_condition'] = args.paired_draw_noise_condition
+            paired_rendering.report['draw_noise_sampler_sha256'] = hashlib.sha256(Path(__file__).with_name('per_draw_noise_sampler.py').read_bytes()).hexdigest()
         paired_rendering.report['numerical_policy'] = dict(op_determinism=True, tf32=False,
             scope='New matched execution policy; original probe and v1 failures preserved')
         model.save_weights(root/'actual-initialization.weights.h5')
@@ -497,7 +505,7 @@ def main():
                 x, y, weights = phone_binary.append(x, y, weights)
             if paired_rendering is not None:
                 sx,sy,sw = paired_rendering.sampler.batch()
-                if args.paired_noise_condition and step <= 2:
+                if (args.paired_noise_condition or args.paired_draw_noise_condition) and step <= 2:
                     np.savez_compressed(root/f'actual-network-input-step{step}.npz', main_x=x,main_y=y,main_weight=weights,pair_x=sx,pair_y=sy,pair_weight=sw)
 
                 main_sha = hashlib.sha256(x.tobytes()+y.tobytes()+weights.tobytes()).hexdigest()
