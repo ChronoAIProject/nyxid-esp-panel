@@ -4503,3 +4503,8 @@ Original RTX4090 run completed120000 steps in2629.9s,selected10000 by original r
 ## v46 rejected at old-stage gates (2026-11-12)
 
 Original postprocessor finished. Fixed138points:0eligible,maxmacro 0.7458333333333333,minimum negativefalseclips 4. Historical .99609375/smoothing5:Kokoro any7/16,commonfalse1/48,cross0;VCTK any32/60,commonfalse3/180,cross0. Vox8.173672725694447h,3events,upper95 .9486135288434813/h fails .5. All467scorefiles SHA authenticated. Original reports copied byte-for-byte;unseen check-only rejects at old gate before unseen data access. V30retained,no newdevelopment/finals used. Balanced source plus temporal mixture did not pass;different selected checkpoint and trajectory confound isolated causal claims. No automatic v47.
+
+
+## v46 balanced training fit diagnostic started
+
+After formal rejection,run full24192variant balanced training-only INT8 census with original frozen model and authenticated pack/raw bytes. Save every fullstream trace;fixed descriptive thresholds .5/.992/.99609375,positive container support and negative maxima/events,all conditioning IDs/phrases/variants included. No threshold selection,optimizer,heldout/final access or promotion. Script v46_balanced_training_support_probe.py adapted from existing US census,INT8 only;cannot separate float/quantization causes. PID271429/session83665 observed live. Results pending;no automatic next training.
