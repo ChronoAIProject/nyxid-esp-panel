@@ -1,0 +1,91 @@
+{
+  "scope": "Compare received GPU CPU/CUDA first-batch arrays to independent Mac replay.\n\nNo model rerun, coefficient change, tolerance fit or original-failure revision.\nUse the original numerical comparison's fixed atol=rtol=1e-5; save every result\nincluding mismatches rather than treating cross-runtime similarity as universal.\n",
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "received_manifest_sha256": "42ded8db01351090b5e53d6d859eec2cf90db9cdfd199007a40d6b1a384a4a56",
+  "mac_report_sha256": "217583d788f265ce5f4c3d7245b435213b32369d24c7106eb0aeca123c5aca7f",
+  "same_certified_numerical_initialization_and_actual_first_batch": true,
+  "comparisons": {
+    "cpu_vs_cuda": {
+      "metrics": {
+        "elements": 3,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 1.4901161193847656e-08,
+        "maximum_fraction_of_fixed_bound": 0.001429639655321885,
+        "relative_l2_error": 1.0190068932087353e-09
+      },
+      "supervised": {
+        "elements": 21841,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 1.9073486328125e-05,
+        "maximum_fraction_of_fixed_bound": 0.20914523805224713,
+        "relative_l2_error": 2.1596430650042745e-07
+      },
+      "consistency": {
+        "elements": 21841,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 1.1920928955078125e-07,
+        "maximum_fraction_of_fixed_bound": 0.009513734478996266,
+        "relative_l2_error": 4.100301920850399e-07
+      }
+    },
+    "mac_independent_derivatives_vs_cpu": {
+      "metrics": {
+        "elements": 3,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 1.3678674264383517e-06,
+        "maximum_fraction_of_fixed_bound": 0.014729075511066692,
+        "relative_l2_error": 1.27472255376306e-07
+      },
+      "supervised": {
+        "elements": 21841,
+        "mismatched_elements": 2,
+        "passed": false,
+        "maximum_absolute_error": 3.0517578125e-05,
+        "maximum_fraction_of_fixed_bound": 1.3308378190593104,
+        "relative_l2_error": 3.7725048238439956e-07
+      },
+      "consistency": {
+        "elements": 21841,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 3.5762786865234375e-07,
+        "maximum_fraction_of_fixed_bound": 0.02700084593650319,
+        "relative_l2_error": 9.575837397828094e-07
+      }
+    },
+    "mac_independent_derivatives_vs_cuda": {
+      "metrics": {
+        "elements": 3,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 1.3678674264383517e-06,
+        "maximum_fraction_of_fixed_bound": 0.014729075511066692,
+        "relative_l2_error": 1.2748424617503224e-07
+      },
+      "supervised": {
+        "elements": 21841,
+        "mismatched_elements": 2,
+        "passed": false,
+        "maximum_absolute_error": 2.288818359375e-05,
+        "maximum_fraction_of_fixed_bound": 1.3309301153424462,
+        "relative_l2_error": 2.5674314658849783e-07
+      },
+      "consistency": {
+        "elements": 21841,
+        "mismatched_elements": 0,
+        "passed": true,
+        "maximum_absolute_error": 4.172325134277344e-07,
+        "maximum_fraction_of_fixed_bound": 0.03150098834350928,
+        "relative_l2_error": 9.626912611234672e-07
+      }
+    }
+  },
+  "all_passed": false,
+  "script_sha256": "1e4c43d934a4a66a4ffad25e99773ba560f244bde2ccde887bacfc37526b0da2",
+  "limits": "First saved batch only, Mac uses NumPy output derivatives plus CPU encoder autodiff while GPU reports use TF full autodiff. No all50 new-policy comparison, universal export equivalence, original-probe/v1-smoke passage, coefficient change, training improvement, Hi ESP or P4 acceptance claim."
+}
