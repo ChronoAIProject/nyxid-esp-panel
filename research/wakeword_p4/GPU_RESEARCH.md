@@ -5158,3 +5158,7 @@ Original newline-complete record preserved byte-identically (4084B SHA17598c09b7
 ### Additional source metadata: distinct Jenny checkpoint claim
 
 Preserved author TTS index and pinned HFC male card with hashes in future-synthetic-source-lineage-review-v2. Author direct Jenny is described as scratch287epochs, unlike previously reviewed Cori-finetuned Piper Jenny; same voice name does not identify checkpoint bytes or lineage. Model/config identity, license and physical-speaker overlap remain unverified; no reservation or model/audio download/scoring. HFC male explicitly derives from existing Lessac. John/Bryce have upstream-base limitations; Norman/ManyVoice LibriVox physical-speaker overlap unresolved. Existing live experiment unchanged.
+
+### Direct Jenny artifact identity checked without inference
+
+Downloaded author direct model/config only. Model63531379B SHAd33f72ffbabcbbcb673ff6fac06949e8b1a0e56fca0ffd97ae557ac614bab8f1; config7084B SHA39bae6c39dac08347a1232ecfafae9e0d18028c180b23a0a4da18105948a3330. Fixed Piper repository original LFS pointer identifies63221984B SHA62ba183a504cfcd8816ec1b50ee856ed318ccc9dd22fd0bedd7d839c95dfa20e. Export bytes demonstrably differ; this does not authenticate scratch training or independent lineage. Original config, pointer and retrieval receipt preserved. No inference/audio generation/source reservation. Live formal run unchanged.
