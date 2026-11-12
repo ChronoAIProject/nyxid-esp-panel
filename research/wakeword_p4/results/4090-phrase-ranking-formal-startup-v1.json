@@ -1,0 +1,71 @@
+{
+  "observed_at": "2026-11-12T09:28:50.919425+00:00",
+  "session_id": 30026,
+  "processes": [
+    {
+      "role": "sequence",
+      "pid": 357646,
+      "starttime_ticks": "6570551",
+      "state": "S",
+      "argv": [
+        "bash",
+        "research/wakeword_p4/experiments/phrase_ranking_formal_sequence_v1.sh"
+      ]
+    },
+    {
+      "role": "control",
+      "pid": 357649,
+      "starttime_ticks": "6570554",
+      "state": "R",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/train_stream.py",
+        "--device",
+        "cuda",
+        "--paired-objective",
+        "phrase-ranking",
+        "--paired-rendering-coefficient",
+        "0",
+        "--upstream",
+        ".local/wakeword/microWakeWord",
+        "--features",
+        ".local/wakeword/features-gpu-ami-extra-v1",
+        "--output",
+        ".local/wakeword/model-phrase-ranking-control-formal-v1",
+        "--architecture",
+        "teacher60",
+        "--context-frames",
+        "150",
+        "--batchnorm-policy",
+        "frozen",
+        "--initial-weights",
+        ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5",
+        "--ambient-sampling",
+        "stratified",
+        "--prefix-negatives",
+        "0",
+        "--source-exponent",
+        "0",
+        "--full-source-pack",
+        ".local/wakeword/british-training-features-v1",
+        "--factorized-coverage-pack",
+        ".local/wakeword/factorized-training-features-v1",
+        "--us-temporal-coverage",
+        "--us-coverage-pack",
+        ".local/wakeword/us-training-features-v1",
+        "--negative-container-mixture",
+        "--positive-full-timeline",
+        "--negative-full-timeline",
+        "--complete-coverage-pack",
+        ".local/wakeword/mac-evidence-import-v1/old-complete-container-pack-v1/study",
+        "--steps",
+        "120000",
+        "--eval-interval",
+        "5000",
+        "--event-validation"
+      ]
+    }
+  ],
+  "last_observed_flushed_step": 1017,
+  "initial_inventory_exact_to_smoke": true
+}
