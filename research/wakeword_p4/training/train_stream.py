@@ -46,6 +46,8 @@ def main():
     parser.add_argument("--us-coverage-pack", type=Path)
     parser.add_argument("--balanced-coverage-pack", type=Path)
     parser.add_argument("--factorized-coverage-pack", type=Path)
+    parser.add_argument("--paired-gradient-probe", action="store_true",
+                        help="Only inspect50 original-init main+paired batches; no updates/export")
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -67,6 +69,8 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    if args.paired_gradient_probe and not args.factorized_coverage_pack:
+        parser.error('Paired gradient probe requires the v47 factorized main recipe')
     if not 0 <= args.label_smoothing <= .2:
         parser.error("label smoothing must be finite and within0..0.2")
     bn_policy = args.batchnorm_policy or ("frozen" if args.freeze_batchnorm else "train")
@@ -376,6 +380,10 @@ def main():
         auxiliary = PhraseAuxiliary(model, args.features, args.phrase_auxiliary_manifest,
                                     args.phrase_auxiliary_weight)
         (root/'phrase_auxiliary.json').write_text(json.dumps(auxiliary.report, indent=2)+'\n')
+    if args.paired_gradient_probe:
+        from paired_gradient_probe import run_gradient_probe
+        run_gradient_probe(model, batch, balanced_coverage, args.factorized_coverage_pack, root)
+        return
     # Valid stride-3, kernel-5 convolution consumes only 179 of 180
     # input frames. Phase 0 windows therefore end one 10 ms frame before
     # the streaming output they used to be compared with. Shift by the
