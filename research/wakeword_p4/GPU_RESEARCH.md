@@ -4508,3 +4508,8 @@ Original postprocessor finished. Fixed138points:0eligible,maxmacro 0.74583333333
 ## v46 balanced training fit diagnostic started
 
 After formal rejection,run full24192variant balanced training-only INT8 census with original frozen model and authenticated pack/raw bytes. Save every fullstream trace;fixed descriptive thresholds .5/.992/.99609375,positive container support and negative maxima/events,all conditioning IDs/phrases/variants included. No threshold selection,optimizer,heldout/final access or promotion. Script v46_balanced_training_support_probe.py adapted from existing US census,INT8 only;cannot separate float/quantization causes. PID271429/session83665 observed live. Results pending;no automatic next training.
+
+
+## v46 complete balanced training fit census
+
+All24192 original variants replayed,all saved score hashes and maxima/counts independently authenticated. Original23MBreport preserved byte-for-byte. At .99609375:18144negative variants8fullstream eventclips;6048positive variants5120any-event,5119container-support hits. At .5:118negativeeventclips,5916positiveany,5913support. No zero-support variants. Fit remains imperfect;not purely development-only failure. Started identical pack census with frozenv45 for matched descriptive comparison;v45 never trained on these fresh sources,so this compares prior coverage/generalization to v46 training fit,not independent evaluation or isolated causal architecture effect. No optimizer/newdev/final access/threshold selection/promotion.
