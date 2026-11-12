@@ -2097,6 +2097,11 @@ passes with no host/firmware event differences. The same auditor also passes
 all94940originalv30outputs and cohort counts in the
 [compatibility check](../wakeword_p4/results/candidate-mac-auditor-v30-compatibility-v1.json).
 These are accounting checks, not additional model inference or P4 acceptance.
+The [public archive](assets-v46-original-historical-mac-v1.json) includes the
+original model/reports, all outputs, complete result, reference and source.
+An anonymous download authenticates all26payload files. Extracting the archived
+source and rerunning it against the unchanged external paired-PCM asset
+reproduces the full result, score NPZ and accounting report byte-for-byte.
 To audit any completed candidate replay:
 
 ```sh
