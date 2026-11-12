@@ -4896,3 +4896,7 @@ Same original formal sequence remains live. Sixth original progress record30000 
 ### Independent formal35000 checkpoint retained
 
 Original session93786 still live. Seventh progress record35000 preserved byte-identically;0float-eligible points. Fallback.994 macro.471875, maximum-source confusion.01666667, background1/1.204811h=.8300055/h, one-sided95% upper3.93743/h. No quality acceptance or change in failure pattern. Fixed training continues, no restart/config change/newdev/final access; v30 retained. Original checkpoint/audit pushed without repetitive Issue status.
+
+### Independent formal40000 checkpoint retained
+
+Same original formal session93786 remains live. Eighth progress record40000 preserved byte-identically;0float-eligible points. Fallback.994 macro.54973958, maximum-source confusion.028125, background0/1.204811h, one-sided95% upper2.48647/h. First third of fixed120k independent run completed; no quality acceptance, common arm still pending. No restart/config changes/newdev/final access, v30 retained. Checkpoint/audit pushed; unchanged failure pattern, no repetitive Issue status.
