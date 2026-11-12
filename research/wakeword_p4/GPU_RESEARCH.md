@@ -4978,3 +4978,7 @@ Original sequence93786/trainer504191 remains live. First common5000 progress rec
 ### Common formal10000 checkpoint retained
 
 Original trainer504191 remains live without restart. Original10000 record preserved byte-identically (4043B, SHA95733866b38c563acb8af57a15587391e04bc0c90ad39d928f3b814b66f9debe). Three original float-selection eligible points; selected.99 macro.36223958/max-source false.00833333, background0/1.204811h. These are float heuristic selection points only; one-sided95% FAR upper remains2.48647/h, not independent acceptance, no claim of shared-noise advantage. Fixed120k plan continues, v30/newdev/finals unchanged.
+
+### Common formal15000 checkpoint retained
+
+Original15000 progress record preserved byte-identically,4077B SHA b29dbd0805ff4292dcdbe8b6aaf56ec74169f98d09fc793257ef0da1cf98970c. Zero float-selection eligible points; fallback.994 macro.47994792/max-source false.02291667, background0/1.204811h, one-sided95% upper2.48647/h. Higher fallback recall does not establish improved tradeoff or acceptance. Original trainer504191 remains live; observed first13247 complete loss rows continuous and finite. Continue fixed120k without restart/newdev/final use, v30 retained.
