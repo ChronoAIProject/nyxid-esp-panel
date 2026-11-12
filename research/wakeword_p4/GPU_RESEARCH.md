@@ -4545,3 +4545,8 @@ Original8064source quiet+combined arms all16128 exact float64/WAV/frontend/gains
 ## All rendering controls generated; independent audit running
 
 All8064sources×noise-only/RIR-only16128controls generated with intermediates,original controls report copied byte-for-byte. Independent audit script checks everyfilehash/array/PCM/frontend andcompletecontainer,source/armgrid,seeds,gains andnoise realizedSNR. Original audit PID276154/session27312 observed live,7001/16128 verified. No model scores/optimizer/newdev/finals yet;do not infer quality pass from generator all_exact field,which in controls means only generation completion until independent audit finishes.
+
+
+## All factorial controls audited; frozen v46 scoring started
+
+Independent16128control array/file/PCM/frontend/sourcegrid/container replay all passed. Noise-only realizedSNR14.988397332051138..15.011287016865243dB;headroomgain1all. Audit report records allpass and originalcontrol/ref hashes;shared pinnedlibraries limitation retained. Started all8064source×4arm frozenv46 INT8 census(session output retained);quiet/combined use authenticated prior traces,noise/RIR controls newly inferred. Fixed.5/.992/.99609375,fulltrace/warmed/container metrics separately;no training/newdev/final/selection/promotion.
