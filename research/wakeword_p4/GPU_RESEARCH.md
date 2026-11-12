@@ -4567,3 +4567,8 @@ Historicalv22 already tried fixedBNstatistics/trainableaffine and failed:40ksele
 ## v47 factorized pack audit and sampler implementation
 
 All40320rawlinks/crops/labels/metadata authenticated;original24192subsetexact,new16128controlsexact,672seed726trainingIDs exact,2688groups each15variants,all5arms8064. PackSHA1a6cbf491c624c58cf96cfdac882966a7863927f546ac553075248caacfaaf5f;reportSHA7b798653f73e2dcd3b01fd5b7092c947a26b9c8ec2525ff295de2e6478042e44. Originalreport copiedbyte-for-byte. Independent dataaudit saved. Implemented separate FactorizedCoverage and mutuallyexclusive trainer flag,oldBalancedCoverage code untouched;v47samplerprecheckPID279551/session33014 running. No GPUtrain/smoke yet. Formalrequiresprecheck+smoke+postprocessor/exacthashrecipepinning,oldgates/newdataisolationunchanged.
+
+
+## v47 smoke passed and execution pinned
+
+Independent40320pack audit and50batch/1000draw/legalendpoint precheck passed. RTX4090two-step smoke45.8s,selected1,54312bytes SHAbbca7175b1f7e928c0e992f63c095c3cf0f2601877662de6d6925259c8c9263c. Finiteweights/frozenBN/int8[1,3,40]→uint8[1,1] exportpassed;not performanceacceptance. Originalsmoketraining/audit copiedbyte-for-byte. Formal recipe/postprocessor/historical shell/trainer/helper exacthashes pinned before formal startup. Postprocessor verifies15groups,newpack/report,allinheritedseeds/slots,then oldregression/phone/VCTK/Vox/138points only,no automatic unseen/promotion. Ready for one120k run;v30retained.
