@@ -1,0 +1,93 @@
+{
+  "schema": "bryce-heldout-development-independent-audit-v1",
+  "scope": "Saved source/config/phoneme-duration/PCM integrity only; no wake-model inference or acoustic quality acceptance.",
+  "auditor_sha256": "59363b07b359b974c61486dab839531b0c1dc3a5910dbade58b0f31f1d656c39",
+  "plan_sha256": "9bcb29aceb08cb3d1fd3c9061b77a1d1c68c51b0b5a4a6477620f3501655f528",
+  "manifest_sha256": "31adf5d810a50662591da86d1be7a50fbee6042b8e26fc8d091b4ddfb089e909",
+  "generator_sha256": "3ce883ef54b2ca03e4addd79812ef9effa1eff3bcdd222e37e7f47f4f6a9f59c",
+  "native_files_verified": 42,
+  "wav_files_verified": 126,
+  "native_distribution": {
+    "kristin": 21,
+    "norman": 21
+  },
+  "render_distribution": {
+    "quiet": 42,
+    "noise25": 42,
+    "combined15": 42
+  },
+  "alignment_duration_samples_exact": true,
+  "all_raw_sources_and_rir_tails_preserved": true,
+  "independent_quantized_pcm_max_abs_difference": 1,
+  "independently_reconstructed_wav_bytes_exact": true,
+  "prefix_reference_ms": {
+    "kristin/hey_mix": {
+      "min": 719.8185941043084,
+      "max": 859.1383219954648
+    },
+    "kristin/hey_next": {
+      "min": 754.6485260770975,
+      "max": 824.3083900226758
+    },
+    "kristin/hey_nick": {
+      "min": 568.8888888888889,
+      "max": 626.9387755102041
+    },
+    "kristin/hey_nyx": {
+      "min": 743.0385487528345,
+      "max": 777.8684807256236
+    },
+    "kristin/hey_nyx_command": {
+      "min": 522.4489795918367,
+      "max": 568.8888888888889
+    },
+    "kristin/hi_esp": {
+      "min": 1184.2176870748299,
+      "max": 1369.9773242630386
+    },
+    "kristin/hi_esp_command": {
+      "min": 882.358276643991,
+      "max": 905.578231292517
+    },
+    "norman/hey_mix": {
+      "min": 743.0385487528345,
+      "max": 835.9183673469388
+    },
+    "norman/hey_next": {
+      "min": 812.6984126984127,
+      "max": 870.7482993197278
+    },
+    "norman/hey_nick": {
+      "min": 847.5283446712018,
+      "max": 1358.3673469387754
+    },
+    "norman/hey_nyx": {
+      "min": 650.1587301587301,
+      "max": 801.0884353741496
+    },
+    "norman/hey_nyx_command": {
+      "min": 1010.0680272108843,
+      "max": 1265.487528344671
+    },
+    "norman/hi_esp": {
+      "min": 1497.687074829932,
+      "max": 2182.675736961451
+    },
+    "norman/hi_esp_command": {
+      "min": 1381.5873015873017,
+      "max": 1462.857142857143
+    }
+  },
+  "source_speed": "Native length_scale=1; rational sample-rate conversion; wall-clock duration within one16k sample.",
+  "wake_models_scored": false,
+  "training_data": false,
+  "acceptance_pass": null,
+  "limits": [
+    "Same Piper architecture as current sources; distinct target voice/checkpoint is not statistically independent TTS or proof of physical-speaker disjointness.",
+    "Author identifies LibriVox collections, but exact utterance/physical-reader manifest and overlap with LibriSpeech/LibriTTS background/pretraining remain unknown. Disclose this limit instead of claiming complete independence.",
+    "No current training recipe names Kristin/Norman target checkpoints; novelty is scoped to named target-voice models, not absence of all possible base-corpus exposure.",
+    "Synthetic generation/ID-duration references do not prove human generalization or real final-phone timing. No acoustic playback, microphone recording, P4 quality, latency/resource or long-call claim.",
+    "No human listening/recording prerequisite, no dining-room device access.",
+    "Two target voices and correlated stochastic/acoustic variants are a source-heldout development probe, not126 independent people or an independent final test."
+  ]
+}
