@@ -1,0 +1,1023 @@
+{
+  "context_frames": 150,
+  "initial_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+  "classifier_reset": true,
+  "classifier_initial_sha256": "a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54",
+  "frozen_batchnorm": [
+    "batch_normalization",
+    "batch_normalization_1",
+    "batch_normalization_2",
+    "batch_normalization_3"
+  ],
+  "batchnorm_policy": "frozen",
+  "batchnorm_initial": {
+    "layers": [
+      "batch_normalization",
+      "batch_normalization_1",
+      "batch_normalization_2",
+      "batch_normalization_3"
+    ],
+    "moving_statistics_sha256": "aaca90e4b713c56c164189d62c3632733f90c61948485c0475127d7b01083299",
+    "affine_sha256": "2dd4a15dc23a775bb927318229ddeb931cd001d4f791528b499e6db9da1ce76c"
+  },
+  "seed": 726,
+  "batchnorm_selected": {
+    "layers": [
+      "batch_normalization",
+      "batch_normalization_1",
+      "batch_normalization_2",
+      "batch_normalization_3"
+    ],
+    "moving_statistics_sha256": "aaca90e4b713c56c164189d62c3632733f90c61948485c0475127d7b01083299",
+    "affine_sha256": "2dd4a15dc23a775bb927318229ddeb931cd001d4f791528b499e6db9da1ce76c"
+  },
+  "recipe": "stream-v2",
+  "parameters": 22801,
+  "steps": 2,
+  "tensorflow": "2.21.0",
+  "gpus": [
+    "/physical_device:GPU:0"
+  ],
+  "gpu_details": [
+    {
+      "compute_capability": [
+        8,
+        9
+      ],
+      "device_name": "NVIDIA GeForce RTX 4090"
+    }
+  ],
+  "selected_step": 1,
+  "us_coverage": {
+    "seed": 167726,
+    "pack_sha256": "4a0d6febb8c0cd72b6bc58d26123d71b3cf3aa06736e013fd6ccae27dc58e6da",
+    "report_sha256": "e73f3c3cb95b2c97a079a5cf4b4fe75d7289f588b7febb42947b37631f355f0c",
+    "source_sha256": "47b286cd2e77f391f174bf19e99bfe8669539a26a7939d0f37a3d2ead16f30d6",
+    "positive_slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "negative_slots": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+    ],
+    "policy": "After all v43 draws, equal negative phrase/preset/uniform sorted eligible variant; all other slots/RNG unchanged",
+    "groups": {
+      "hey_nyx/lessac": 27,
+      "hey_nick/lessac": 27,
+      "hey_next/lessac": 27,
+      "hey_mix/lessac": 27,
+      "hey_nyx/ryan": 27,
+      "hey_nick/ryan": 27,
+      "hey_next/ryan": 27,
+      "hey_mix/ryan": 27,
+      "hey_nyx/ljspeech": 27,
+      "hey_nick/ljspeech": 27,
+      "hey_next/ljspeech": 27,
+      "hey_mix/ljspeech": 27
+    }
+  },
+  "complete_coverage": {
+    "input_sha256": {
+      "training.npz": "bb01f3219db10f31e1095af4912c1807ec38b0b3c640c4676186c1b77a620aa1",
+      "sources.json": "0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981",
+      "records.json": "757f1e6df724943c0e0bf68b9fe7de9b3402cbcebb9cf6c87a89e876ee9af090",
+      "report.json": "2c2c49dd90a6c3547a78b190de420619ea25d79344d9efd9b8a69c7bc6dc0751"
+    },
+    "seed": 127726,
+    "positive_slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "negative_slots": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "groups": {
+      "kokoro/positive": {
+        "identities": 20,
+        "canonical_sources": 58
+      },
+      "kokoro/hey nick": {
+        "identities": 20,
+        "canonical_sources": 20
+      },
+      "kokoro/hey next": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "kokoro/hey mix": {
+        "identities": 19,
+        "canonical_sources": 19
+      },
+      "macos-say/positive": {
+        "identities": 12,
+        "canonical_sources": 65
+      },
+      "macos-say/hey nick": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey next": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "macos-say/hey mix": {
+        "identities": 12,
+        "canonical_sources": 17
+      },
+      "openai-tts/hey nick": {
+        "identities": 6,
+        "canonical_sources": 10
+      },
+      "openai-tts/hey next": {
+        "identities": 6,
+        "canonical_sources": 11
+      },
+      "openai-tts/hey mix": {
+        "identities": 8,
+        "canonical_sources": 15
+      },
+      "openai-tts/positive": {
+        "identities": 6,
+        "canonical_sources": 26
+      },
+      "qwen/positive": {
+        "identities": 32,
+        "canonical_sources": 87
+      },
+      "qwen/hey nick": {
+        "identities": 30,
+        "canonical_sources": 30
+      },
+      "qwen/hey next": {
+        "identities": 28,
+        "canonical_sources": 28
+      },
+      "qwen/hey mix": {
+        "identities": 25,
+        "canonical_sources": 25
+      },
+      "piper/hey next": {
+        "identities": 144,
+        "canonical_sources": 144
+      },
+      "piper/hey mix": {
+        "identities": 142,
+        "canonical_sources": 142
+      },
+      "piper/hey nick": {
+        "identities": 150,
+        "canonical_sources": 151
+      },
+      "piper/positive": {
+        "identities": 1223,
+        "canonical_sources": 1298
+      }
+    },
+    "excluded_canonical_by_phrase": {
+      "hi esp": 187,
+      "hey nexus": 208
+    },
+    "feature_environment": "Pinned Mac saved uint16 features; measured Linux frontend differences retained",
+    "policy": "Equal phrase for negatives, engine, conditioning identity, canonical WAV, variant; aliases once. Original British draws occur first; remaining British/ambient slots untouched.",
+    "source_sha256": "d90e235715705d1678e7ada665a2a9940979ae847880c2a7c8e783d3287eafa0",
+    "negative_timeline": {
+      "seed": 137726,
+      "policy": "Uniform integer end150..len(raw),24 candidate negatives only",
+      "authenticated_variants": 1995
+    },
+    "positive_timeline": {
+      "seed": 147726,
+      "policy": "Uniform end crop_end..min(350,len(raw)),16 candidate positives only; conservative original sample ledger",
+      "authenticated_variants": 4602
+    },
+    "negative_container_mixture": {
+      "seed": 157726,
+      "candidate_negative_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "batch_slots": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "policy": "Consume all v42 timeline draws, override first12 negative ends uniformly crop_end..min(350,len(raw))"
+    }
+  },
+  "five_score": null,
+  "validation_window_phase": 1,
+  "source_exponent": 0.0,
+  "ambient_sampling": "stratified",
+  "ambient_sampling_coverage": {
+    "human:unspecified": {
+      "rows": 275,
+      "original_hours": 103.81573951388896,
+      "row_probability": 0.19586894586894493,
+      "duration_probability": 0.8082906345630422,
+      "effective_probability": 0.16666666666666685,
+      "effective_probability_after_hard_replacement": 0.16666666666666685
+    },
+    "human:mandarin": {
+      "rows": 8,
+      "original_hours": 3.566425277777778,
+      "row_probability": 0.005698005698005699,
+      "duration_probability": 0.0277675443472713,
+      "effective_probability": 0.16666666666666666,
+      "effective_probability_after_hard_replacement": 0.16666666666666666
+    },
+    "human:farfield-dialogue": {
+      "rows": 14,
+      "original_hours": 5.532821996527777,
+      "row_probability": 0.009971509971509975,
+      "duration_probability": 0.043077554746884,
+      "effective_probability": 0.16666666666666666,
+      "effective_probability_after_hard_replacement": 0.16666666666666666
+    },
+    "ambient:unspecified": {
+      "rows": 45,
+      "original_hours": 0.7505726215277776,
+      "row_probability": 0.03205128205128203,
+      "duration_probability": 0.005843823136848818,
+      "effective_probability": 0.16666666666666666,
+      "effective_probability_after_hard_replacement": 0.16666666666666666
+    },
+    "ambient:noise": {
+      "rows": 930,
+      "original_hours": 6.226310295138892,
+      "row_probability": 0.6623931623931572,
+      "duration_probability": 0.048476929635230495,
+      "effective_probability": 0.1666666666666669,
+      "effective_probability_after_hard_replacement": 0.1666666666666669
+    },
+    "ambient:music": {
+      "rows": 132,
+      "original_hours": 8.546757534722227,
+      "row_probability": 0.09401709401709417,
+      "duration_probability": 0.06654351357072284,
+      "effective_probability": 0.16666666666666655,
+      "effective_probability_after_hard_replacement": 0.16666666666666655
+    }
+  },
+  "validation_detection": "latched events after full receptive-field warmup",
+  "features_index_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "feature_metadata_sha256": {
+    "features.json": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+    "human.json": "e36e4943b5988dae68705efa7787f7859355cec77ccc3095864ee4d2d0854a56",
+    "ambient.json": "19f38c3a1d949e2ae47b724bae3332f9e55933d18f6e947e1892f9acaf71962d",
+    "augmentation.json": "446f0f5fac9a71af67b338732efa590e5114fd5a3f6ab82ca7e48cf35c03cc19",
+    "negative-additions.json": "fa3bf454e7c5832a640de2ca6bb9c2f2626a182d83e16352a506f72d2ac9a2a4",
+    "base-provenance.json": "d3ffe681db3d7ca7c2ae5c20a4a12ba24531d8d2599943da43fef6ec8af804d5",
+    "dialogue-augmentation.json": "38c82eaa558620903bf10bde0e386ada368768872ff9d803d7799c1c9816baea"
+  },
+  "architecture": "teacher60",
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "60,60,60,60",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [9], [13], [21]",
+    "--first_conv_filters",
+    "30",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "phone_binary": null,
+  "full_source": {
+    "pack_sha256": "c0c389fc4a22e1fb9807d99e8a7a98e0e028696d2047dd27dce81f1de8fef096",
+    "report_sha256": "5e2e4394f5da89a9dac057b80e81996d969985921a40db0643d77f818ee70e36",
+    "groups": {
+      "hey_nyx": {
+        "kokoro/af_bella": 9,
+        "kokoro/af_nicole": 5,
+        "kokoro/af_nova": 14,
+        "kokoro/af_kore": 14,
+        "kokoro/af_alloy": 9,
+        "kokoro/af_river": 15,
+        "kokoro/af_jessica": 15,
+        "kokoro/af_heart": 9,
+        "kokoro/af_aoede": 15,
+        "kokoro/am_onyx": 15,
+        "kokoro/am_fenrir": 15,
+        "kokoro/am_santa": 15,
+        "kokoro/am_michael": 9,
+        "kokoro/am_eric": 15,
+        "kokoro/am_adam": 12,
+        "kokoro/am_echo": 14,
+        "kokoro/bf_isabella": 9,
+        "kokoro/bf_lily": 12,
+        "kokoro/bm_fable": 14,
+        "kokoro/bm_lewis": 5,
+        "alba/alba": 9,
+        "cori/cori": 9
+      },
+      "hey_nick": {
+        "kokoro/af_bella": 9,
+        "kokoro/af_nicole": 11,
+        "kokoro/af_nova": 15,
+        "kokoro/af_kore": 14,
+        "kokoro/af_alloy": 12,
+        "kokoro/af_river": 14,
+        "kokoro/af_jessica": 15,
+        "kokoro/af_heart": 9,
+        "kokoro/af_aoede": 15,
+        "kokoro/am_onyx": 15,
+        "kokoro/am_fenrir": 15,
+        "kokoro/am_santa": 15,
+        "kokoro/am_michael": 9,
+        "kokoro/am_eric": 15,
+        "kokoro/am_adam": 12,
+        "kokoro/am_echo": 15,
+        "kokoro/bf_isabella": 12,
+        "kokoro/bf_lily": 12,
+        "kokoro/bm_fable": 15,
+        "kokoro/bm_lewis": 6,
+        "alba/alba": 9,
+        "cori/cori": 9
+      },
+      "hey_next": {
+        "kokoro/af_bella": 8,
+        "kokoro/af_nicole": 5,
+        "kokoro/af_nova": 12,
+        "kokoro/af_kore": 11,
+        "kokoro/af_alloy": 8,
+        "kokoro/af_river": 12,
+        "kokoro/af_jessica": 15,
+        "kokoro/af_heart": 9,
+        "kokoro/af_aoede": 15,
+        "kokoro/am_onyx": 15,
+        "kokoro/am_fenrir": 12,
+        "kokoro/am_santa": 14,
+        "kokoro/am_michael": 5,
+        "kokoro/am_eric": 15,
+        "kokoro/am_adam": 9,
+        "kokoro/am_echo": 12,
+        "kokoro/bf_isabella": 5,
+        "kokoro/bf_lily": 9,
+        "kokoro/bm_fable": 12,
+        "kokoro/bm_lewis": 3,
+        "alba/alba": 9,
+        "cori/cori": 9
+      },
+      "hey_mix": {
+        "kokoro/af_bella": 8,
+        "kokoro/af_nicole": 5,
+        "kokoro/af_nova": 12,
+        "kokoro/af_kore": 12,
+        "kokoro/af_alloy": 6,
+        "kokoro/af_river": 14,
+        "kokoro/af_jessica": 15,
+        "kokoro/af_heart": 8,
+        "kokoro/af_aoede": 15,
+        "kokoro/am_onyx": 15,
+        "kokoro/am_fenrir": 14,
+        "kokoro/am_santa": 15,
+        "kokoro/am_michael": 9,
+        "kokoro/am_eric": 15,
+        "kokoro/am_adam": 12,
+        "kokoro/am_echo": 14,
+        "kokoro/bf_isabella": 9,
+        "kokoro/bf_lily": 12,
+        "kokoro/bm_fable": 14,
+        "kokoro/bm_lewis": 5,
+        "alba/alba": 9,
+        "cori/cori": 9
+      }
+    },
+    "seed": 97726,
+    "positive_slots": 32,
+    "confusing_negative_slots": 48,
+    "policy": "Replace first80 phrase slots with complete-source crops; equal checkpoint groups before voices, equal negative phrase choice. Original48 ambient slots/weights retained; no supplementary BCE or head. Groups do not certify physical-person independence."
+  },
+  "effective_training_batch_size": 128,
+  "batch_size": 128,
+  "negative_weight": 20,
+  "history": [
+    {
+      "step": 1,
+      "selected": {
+        "threshold": 0.97,
+        "recall": 0.0,
+        "macro_recall": 0.0,
+        "recall_by_engine": {
+          "piper": 0.0,
+          "kokoro": 0.0
+        },
+        "hard_negative_false_rate": 0.0,
+        "max_source_false_rate": 0.0,
+        "ambient_hours": 1.2048112673611107,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "grid": [
+        {
+          "threshold": 0.5,
+          "recall": 0.42083333333333334,
+          "macro_recall": 0.3588541666666667,
+          "recall_by_engine": {
+            "piper": 0.43854166666666666,
+            "kokoro": 0.2791666666666667
+          },
+          "hard_negative_false_rate": 1.0,
+          "max_source_false_rate": 1.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 1193,
+          "ambient_faph": 990.1965829162764
+        },
+        {
+          "threshold": 0.7,
+          "recall": 0.7287037037037037,
+          "macro_recall": 0.4153645833333333,
+          "recall_by_engine": {
+            "piper": 0.8182291666666667,
+            "kokoro": 0.0125
+          },
+          "hard_negative_false_rate": 0.9985795454545454,
+          "max_source_false_rate": 0.99875,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 1190,
+          "ambient_faph": 987.7065663624215
+        },
+        {
+          "threshold": 0.8,
+          "recall": 0.737037037037037,
+          "macro_recall": 0.4200520833333333,
+          "recall_by_engine": {
+            "piper": 0.8276041666666667,
+            "kokoro": 0.0125
+          },
+          "hard_negative_false_rate": 0.9400568181818182,
+          "max_source_false_rate": 0.9489583333333333,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 778,
+          "ambient_faph": 645.7442929663563
+        },
+        {
+          "threshold": 0.9,
+          "recall": 0.030555555555555555,
+          "macro_recall": 0.0171875,
+          "recall_by_engine": {
+            "piper": 0.034375,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.10056818181818182,
+          "max_source_false_rate": 0.13541666666666666,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 63,
+          "ambient_faph": 52.29034763095173
+        },
+        {
+          "threshold": 0.95,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 1,
+          "ambient_faph": 0.8300055179516147
+        },
+        {
+          "threshold": 0.97,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.98,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.985,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.99,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.992,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.994,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        }
+      ],
+      "seconds": 20.0
+    },
+    {
+      "step": 2,
+      "selected": {
+        "threshold": 0.95,
+        "recall": 0.0,
+        "macro_recall": 0.0,
+        "recall_by_engine": {
+          "piper": 0.0,
+          "kokoro": 0.0
+        },
+        "hard_negative_false_rate": 0.0,
+        "max_source_false_rate": 0.0,
+        "ambient_hours": 1.2048112673611107,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "grid": [
+        {
+          "threshold": 0.5,
+          "recall": 0.4356481481481482,
+          "macro_recall": 0.36354166666666665,
+          "recall_by_engine": {
+            "piper": 0.45625,
+            "kokoro": 0.2708333333333333
+          },
+          "hard_negative_false_rate": 1.0,
+          "max_source_false_rate": 1.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 1230,
+          "ambient_faph": 1020.9067870804861
+        },
+        {
+          "threshold": 0.7,
+          "recall": 0.7402777777777778,
+          "macro_recall": 0.421875,
+          "recall_by_engine": {
+            "piper": 0.83125,
+            "kokoro": 0.0125
+          },
+          "hard_negative_false_rate": 0.9980113636363637,
+          "max_source_false_rate": 0.998125,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 1171,
+          "ambient_faph": 971.9364615213408
+        },
+        {
+          "threshold": 0.8,
+          "recall": 0.6805555555555556,
+          "macro_recall": 0.3901041666666667,
+          "recall_by_engine": {
+            "piper": 0.7635416666666667,
+            "kokoro": 0.016666666666666666
+          },
+          "hard_negative_false_rate": 0.8923295454545455,
+          "max_source_false_rate": 0.9114583333333334,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 680,
+          "ambient_faph": 564.403752207098
+        },
+        {
+          "threshold": 0.9,
+          "recall": 0.017592592592592594,
+          "macro_recall": 0.009895833333333333,
+          "recall_by_engine": {
+            "piper": 0.019791666666666666,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.06335227272727273,
+          "max_source_false_rate": 0.0875,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 38,
+          "ambient_faph": 31.540209682161358
+        },
+        {
+          "threshold": 0.95,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.97,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.98,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.985,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.99,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.992,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        },
+        {
+          "threshold": 0.994,
+          "recall": 0.0,
+          "macro_recall": 0.0,
+          "recall_by_engine": {
+            "piper": 0.0,
+            "kokoro": 0.0
+          },
+          "hard_negative_false_rate": 0.0,
+          "max_source_false_rate": 0.0,
+          "ambient_hours": 1.2048112673611107,
+          "ambient_events": 0,
+          "ambient_faph": 0.0
+        }
+      ],
+      "seconds": 33.9
+    }
+  ],
+  "label_smoothing": 0.0,
+  "label_smoothing_policy": "Training BCE targets y*(1-epsilon)+epsilon/2; sample weights unchanged; evaluation labels/windows unchanged",
+  "negative_candidates": 1,
+  "mining_seed": 4726,
+  "mask_prefix_loss": false,
+  "phrase_auxiliary": null,
+  "mask_prefix_loss_policy": "Zero weight on all sampled prefix slots only; inputs, label placeholders, other weights and RNG draws unchanged; no claim of verified phonetic completeness",
+  "hard_ambient": null,
+  "prefix_negatives": {
+    "count_per_batch": 0,
+    "seed": 20726,
+    "gap_frames_inclusive": [
+      15,
+      35
+    ],
+    "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."
+  },
+  "spec_augment": {
+    "time_mask_width": 0,
+    "frequency_mask_width": 0,
+    "seed": 10726,
+    "fill": 0,
+    "policy": "One mask per enabled axis per training sample; width uniform inclusive 0..maximum; independent RNG; disabled for validation and INT8 calibration"
+  },
+  "mining_policy": "Training-only highest-scoring window per sampled confusing-negative row; baseline RNG preserved; disabled for INT8 calibration",
+  "seconds": 39.5,
+  "model_bytes": 54312,
+  "model_sha256": "2352aa9d9048eb451e5237acc849c43eaa9d09997ad488ad6fec8ac0f1764902",
+  "source_files_sha256": {
+    "audit_speech.py": "f16076fee9ae63cc718d4c85a08086356277b2d6aa67c800d835b26ab17a773e",
+    "check_phrase_auxiliary.py": "028450997d003a2ed08fbcb2766c1348717610446c99064316f9bddede54579b",
+    "select_training_asr.py": "9dfa7874dbbc774fc1c1bf8b16ea69eab6fbbd179b905b0b25fed07d94271a63",
+    "audit_comparison_asr.py": "7457af7cd080cb1a80242d8d12951d356ee3359457fd66f8c3e65b469f06d56d",
+    "synthetic_phone_pilot.py": "9307f809909c31e46c05f72cdd9544152728d3d739d0bd3b10c1b63f9e53402e",
+    "embedding_probe.py": "78cb3fddcf6d8354e24d7e200965f3566b838c0691c5dd0f911ac07dd208d13e",
+    "audit_rirs.py": "da7eaca8a981c0bb97bba8e2be4ad41a1f424b2f57e73591916a7755a2d1dad0",
+    "audit_embedding_confusions.py": "abe3f1efad2ab4f323a8b079a702156eba543635be7ed0f6f371a195bcffb35c",
+    "prepare_sequence_features.py": "1d6d651b289ad59e894014efa51f5810b4dce6539a27e71493520699ab81da5b",
+    "download_aishell_subset.py": "44965953dfebb8f79df742104f25e0e22826838dd4fb426ac980a7b0ff3c9f99",
+    "compare_hiesp_negative.py": "36fd3caaacc31593e70b1bf7a058b6dc1192817f4a01e244224ebcd31e923f4c",
+    "compare_hiesp_corpus.py": "7aee72d18f72f223af7938dff6c0f9b6d9410c5428132a065aee02039d404c4e",
+    "ctc_spacing_diagnostic.py": "735e013d3f1df0a82663c847abc5978c7b1f6a0a6e403f644fe945c13df50418",
+    "openai_samples.py": "5c28b9b4fd44297e2d12d2d73866f62dc9afaa13aa5254e8fa9f4c7eabd76ec9",
+    "negative_sampling.py": "620ada162e65b3cad389f5a12ce23a6388c7793e14cf98092ec43ad367e922c6",
+    "audit_training_phrase.py": "cca01f98fbe0a30f66d9beb79771b8c2827b328c37ef33fcc908a86b5d291df0",
+    "attach_training_negatives.py": "45554a8ed0036049fd206c58bc92012bd3484e4e9b29f615e13d8c74c97897c1",
+    "check_review_collection.py": "8808be865c507db920abebe8d12f3c8de25ceaca10843c0b43733d7c20886317",
+    "select_asr_pilot.py": "02b4a210dd07e6e01788cd417c6ab1fa9fa62ccd25e3c84c35042d6f47b9d929",
+    "summarize_stream_errors.py": "8d9abc52a64d40fffbb721d388c49cbf2b2e6149f98a5a03f713a5f00ad95dec",
+    "phrase_auxiliary.py": "24bfdae4078b40113fe6b4a858240626bc09351c112659a47660c73d84887b8a",
+    "comparison_validation.py": "77c9da1989542e7867caec9bb2801e46509f375ca7f4df034fe111776b94b30b",
+    "audit_saturated_windows.py": "9b344104a2e76383960bc3a7309ee9edb9302be7883c9c10299fea73cfa2485a",
+    "audit_official_hiesp_controls.py": "257883e816b4c0ccbf80981ac0615e504387da6d3e59b59a0faa22c93d503e73",
+    "freeze_negatives.py": "cd504cc527be22f6c65fb89b4d14a834634c434c9cb8b178ce33e9b19dc52f62",
+    "prepare_hiesp_independent_negatives.py": "1992861ef5163082e151d28019a28bb459646e415d867c824f4918b18cc47869",
+    "synthetic_presentation.py": "49deba60669c1c49f779bd333a6d9fcf9790334287fff0236fef38eb24785194",
+    "prepare_ami_independent.py": "d8a30174b381e6033173349feda22314cb7804c3385d10b3bd25bb3a7e6e986c",
+    "audit_embedding_head.py": "de7920161fd17bf63841e1c7ee85ce1c26d29aa62af3cd217fd2d78160ec362b",
+    "features.py": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+    "sequence_scorer.py": "1df37cc65e14a81c9b41e7e52c262e4d32cc514859a1459344c2401dbb425f55",
+    "audit_training_ambient_candidates.py": "51de09e3a0a8c6accb0b6e1c11ba6daeb4fb0f879ed76b346dd5215d2f5e87df",
+    "evaluate.py": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+    "compare_hiesp_developer_probes.py": "4512991506d5587bebca8dfdcbc2f65ce778a72d3b3ea20611eb39bf7a30db2b",
+    "prepare_voxconverse_source.py": "f9077908d71dc4c70d9fb14da6bb3e8c86c33c3aac64b839cf222a299c1699cb",
+    "quarantine_negative_aliases.py": "822997b5457fa3e75218afc423258ffb0bd858bdb78d2d1c9b447d809393e835",
+    "score_phone_development.py": "f73302aaa0bc82c02e0fa86ca427ea28717975aaa2ac46a59f97f944836469fe",
+    "common_calibration_export.py": "3eeb2296af191cac320ba2b21e30e95b29f248faeb149f78523be9f92f1f3e22",
+    "batchnorm_policy.py": "4b701af5e7725dbda3b01ab821b7cd8ac6c7942e7bbc17748820dda5da1005a0",
+    "widen_mww_pretrained.py": "370a17cd5909666d6b4358f60f726e05a84265215e7efc566c631595b7c1e786",
+    "embedding_cache.py": "13fa3de7d5510cc532eb9f91c39ee4a67c9eddd04cb1e9bee085c826107d3773",
+    "diagnose_early_events.py": "d71f2cbaf8399f8b4beaca6d32160508f5c4cc1b4f529c8a34d5f1aebdcc1faa",
+    "prepare_musan.py": "8d55cc4f5abeb620ad27b389f546592b1672f12b890b48ba3ce226db57f23ec8",
+    "evaluate_independent_paired.py": "0518b555a2e7e961e9239189ab211171d9dc8d83d0d5089f6db7b8ee41f8a61b",
+    "audit_ambient_sampling.py": "94e9ecc1d90e34f7c481b38d30a830150e1ccd00c89f40ec3d5c0f50b513cb5d",
+    "evaluate_frozen_human.py": "20a2f5a28b5069a735490f28e44d4affa50dfaca6014fe9f1054cba667c7386d",
+    "collect_review_annotations.py": "477894f831646379f2b1e3c1884fd391e60fb5cc6d0db8b0437c0d226f18819e",
+    "prepare_hiesp_negative.py": "f7517f92898a36c5d193a94d748011c46b39df21a0d559ce5118cfe2bba53bc1",
+    "append_training_human.py": "9aa948feae9af6263983a976545c7255bf93f5c61aa80bef7aa197a16a60be38",
+    "prepare_alignment_development.py": "a1300c6d9204eec0b9c6c530c63c0c2385f45aa48b5bb9e06a861e8e0d68fc59",
+    "qwen_samples.py": "f9d64ef36a26ea4145b0d59524ef580cc98bb9f974695e506193998b380c8d4f",
+    "calibrate_phone_development.py": "f89ea35e9e81db13b885f0b7259ef336bafd69e752aafa391bb2c3aa3c6d1415",
+    "check_independent_dialogue_guards.py": "a215e78a91fff15cbf0e9d077c5dc7ccf8e1a72268dcbbc8de905d82ab2e21df",
+    "audit_training_ctc.py": "9fe7df8a3f22e2ddd0ba455cd3320d5b20d64055f51594ba6558f1d197a56a57",
+    "audit_synthesis_durations.py": "b3697efd9fa9f5fa1ff7f7c5c58bf5ac7edba47446a926c9dcbaad70d5b0d751",
+    "append_dialogue_features.py": "b7e04d16f2b548e89d7375fb2992fbbbf9650eddff1429b0b3b2e5de38fb874f",
+    "download_libri_training.py": "5291f83fef7b75d4eeee7be82d01ebdacfd385ff6ecdbd4c3684b92a89d20e21",
+    "calibrate_multicorpus.py": "584c0411f300e13dc244089dde013cdb3488e29c42ae51992bc2cee6fd108eed",
+    "prepare_independent_paired.py": "4cc6042d910639d1a7addfe46d4fc771387060c46392f8a8729d80ff0926146c",
+    "ctc_natural_control.py": "6f08b14a32e9f409455abdb4dd251590787e874dc364b1d65dca5d7144dc16db",
+    "prepare_temporal_features.py": "0ecdf2ce6d97933ecd146f49eaae2c0c1601d4cc52276a4ebd1ed10306613f49",
+    "us_coverage.py": "47b286cd2e77f391f174bf19e99bfe8669539a26a7939d0f37a3d2ead16f30d6",
+    "rescore_asr_aliases.py": "24cf6c910334863e5b8be11a39491fdad3c8fda1acd9ef16feede4a2ea45218a",
+    "prepare_alignment_shift.py": "c5d1d1cfb674fc2faca4498b6ac0d4c8e297e1c752de8fbdb4c4611f97792b07",
+    "generate_alba_training_pilot.py": "88b36be9655d296109165791677901d462cf0f5e1e251b03af3ce82274912b79",
+    "compare_candidates.py": "79246adeb08ee0d5cccccc70a33358862a19bae83fa6fb15daf65fda70b4b83e",
+    "prepare_blind_endpoint_review.py": "15cf1a3f937dbc246de73170795989bd2d64d31ce8bec4c1b51b9a4f1c7308df",
+    "prepare_manifest_human_features.py": "39ca32844edf0265fd588f588bdd373245edf701b794d80b074fca12e7ab4fe1",
+    "audit_phrase_crop_support.py": "178fa2c4679348d56854a26ba3ac81b4f7356e277c758a182fb22f50cfeaa73a",
+    "sequence_loss.py": "d023acc12ba808df4273d134bec33dbbdfd19dcf17b8a0485fd3fd7fb8944dda",
+    "calibrate_hiesp_development.py": "b9a363b39c32ec2fe821541e2da98481b71c867bda2fabd226a4c43717b0d279",
+    "prepare_training_prefix_review.py": "9ad93f048629408f473b265667e56fdcac3d6975d6d53565f51e3099fc39477c",
+    "audit_comparison.py": "0d35b92dbbc96d8ec893b1e4ee97326d207d8b4a9c387e33727068c48a40f3cb",
+    "collect_alignment_development.py": "57d396badb72cdefcb1952b0c93213137294a438a0b91de9097e8f3b1bc9d371",
+    "audit_reference_endpoint.py": "6421e78757e66ed1dec512da61ffa76b0c36e32a82b2af57b68a2afb27c2976d",
+    "replay_voxconverse_official.py": "cf539711a2c5034073a431b8840e4749142f4cc91961b0aa6d3b84def058843e",
+    "comparison_holdout.py": "fb5b98e9ce00bfca4fa6de8f01040a1dea5d3edc88b4b1a1e683b63d57f24bdf",
+    "check_blind_endpoint_review_ui.py": "b4a52175cf8bb38c177276e03ab465fd9f6686b135d159cab5c791d09266c9f0",
+    "prepare_ldc_alignment_reference.py": "52aa2c5dea24245e3902222013e09cf2532446f987b4ed115b892b640019129b",
+    "generate_hiesp_probe.py": "633059942c27fdf95593a86582c90c6b13a1851884713ac5a2e8ee7d88d6e878",
+    "evaluate_independent_dialogue.py": "ffd110b5a9c69126effbdf4ee114354f63205b6dce51c5d48f4d6f8e24396ace",
+    "prepare_libri_development.py": "8767a11caf37b121e3d14b3735bf76c7b29e77989b2b1a83f4a45154dd629543",
+    "audit_manifest.py": "2b2d26e2b3023ef20c3e81dadf8cff275fba43b9e9bca9c6fe2874277ffa6779",
+    "stream_data.py": "754c9f2b7644a71643e2da9b7cae936d9791c1d1edb013e1fb1609b2a674d18b",
+    "audit_stream_export.py": "d145b6e9ca634cc3bca75d1b4eea171b31cfe03d938c9987a2c377e075d3cd58",
+    "mine_training_ambient.py": "52548f5279c23151d2ee5c9f385000b6ea4cb2e0f6f835b1f1cf90be71b9c43e",
+    "audit_phone_training.py": "71d09dd51a76306ed9c7d7fcc0e672335c0a630d08c8c124876d4b95a99a5d9c",
+    "train_embedding_head.py": "34be1bc1394c79bcb197831694d308f22cfec7a15d570a8844b65f141e9873dc",
+    "prepare_phone_replay.py": "9487ee322acf09bd04b605513128f4aa2978f14c78a5e0684cf822f02f26c285",
+    "compare_independent_negative_engines.py": "04073b403786ccc9501ce852a831f9abb7524377ba9f9047ac74cc406f34965e",
+    "prepare_official_hiesp_probe.py": "c35259bfe8d5452a60e4162830d132a6675cb91e23e4d19d4732fe0b0a6bcc09",
+    "rescore_paired_development.py": "43952db5ff85a6c1bee11986e70c25900fcdb57ea52310fb3fafa31762b012f3",
+    "prepare_new_vox_development.py": "abfff625895c411de1a31b2ea3527f75f95ee8a24d0e955c39307bc428f583a6",
+    "prepare_hiesp_manifest_validation.py": "11e9e0c163decc3a5595c0d7e716a0ec010df8d1ce6db417b1c885b1044d8314",
+    "spec_augment.py": "f5cf659ee3fab7c32c60b4985db1788be4718479b453ff582ecadb6dc75454d9",
+    "generate_slr83_development.py": "440d1d05491bfc67973b36285aa516cf19a4442c7677bd7eea33ace4e50cdf1e",
+    "generate_teacher_probes.py": "f50c69612549715f539780d1827433b13c77180911366f1970473caa38a6b4e2",
+    "probe_mww_reconstruction.py": "f8c4d42ad54355b31af6e540952abaf3725d654f8b44c1f6b8c1ed33262e2864",
+    "prepare_voxconverse_features.py": "e60039a0d3bc4cca2753f08a0f1a3dc19222a3056b9b457c7f5d1db08395f7fb",
+    "audit_read_speech_events.py": "7e3aaf1fe2ed5c89e5fc5f3def284ab648c1bb0c30790242a975de8dd4832ce6",
+    "compare_independent_dialogue_engines.py": "cfd47bb3f27fe3c8a6b8e1f60742ec4b2dbdb22c9214a0364e964ae998109fab",
+    "prepare_slr83_replay.py": "b3bd0ff1f7d59ecddef880a9e64c5a5e92f84fd41ec98e99ad676154ddc36e82",
+    "generate_vctk_development.py": "ff270c3554f3895d0aab896b01766635e3fddf79d9ce0b127697a4b69cd06cd7",
+    "audit_quantized_score_boundaries.py": "3bdb639346bdfd9340286b68dd5d5928d272d3857d1377e51291cc3e6a2d669b",
+    "phone_binary.py": "2ffd4759c037cd04d59551730b3900eea6ac5769692fe7e5bda9725eddb81d6a",
+    "mac_eval_samples.py": "41b8c6d96b16363d5696d656f6cd32ee55e369ea47b4597646e11b627419b597",
+    "prepare_hiesp_libri_validation.py": "46576472e21b39078e342467293de14b0d30efa0c263624cad4e7bc01b020377",
+    "test_events.py": "a78dc0ad5520b40048b09e6b19bab2909e908f07213f014ec9ac2d1d2b06d741",
+    "train.py": "173f921b25e25ec3811aa4521c8ddb6f5207d4fa5abeb98fe5f8e4f61ab03b0c",
+    "compare_calibration_exports.py": "86a83404eb7b83695f11b68f994b0174cd0b6fd3fa951ea52701c5f062408232",
+    "prepare_dipco_training_channels.py": "934e122b9e4ec7f6fad517befca9b0392e7298e68e53c32014d3127ab9454884",
+    "prepare_ami_training.py": "36c61276a12485e948fdf24fa9705f5f2b0ee79e7235b9af637ee46c84ea4999",
+    "score_phone_pilot.py": "ab90934879a761ecc8f64a7e799f82f1a4692d7a70b0bb3b872e0adaf57b69b1",
+    "extract_aishell_subset.py": "16e708ea59afe00e52aeeae6f255a85909c4320f48b95b54f4b1d691274d7a0f",
+    "reconstruct_mww_pretrained.py": "8af43947c4054490908383ade47335e2564bfd1ed8c0105b81a55f84d5720e70",
+    "summarize_hiesp_development.py": "f30f548b03c6573437688fdcea6354c45b0e2a5a9f05544ef3a3d2c5d5da2c5e",
+    "probe_bn_affine.py": "c2ef1647adc73de5d6e1946bd494d8983066914cc0a8715eb7c1059e1fd3452a",
+    "audit_alignment_shift.py": "d1889204d53f5cbd8ac8653438bc3dcbf71e50d9e9f0b37e101cf75143c6d89a",
+    "evaluate_stream.py": "e27c666049519264c51a9abb679dffde4940fac185998bd5abbc0962d620b42a",
+    "prepare_british_features.py": "69cb6e619e7a44ccceab2f3add8bff07c9f157da89176f1a8bc75e1d97e738a2",
+    "five_score_training.py": "81445b8774c37aaeb43fdb58e52ba6226ebf481332f704d7f597af1c9b3907b2",
+    "append_room_features.py": "cc2bbaae7825bd02159b2f501660dda134de38af1644ddd0132ce01f29a30dfb",
+    "evaluate_independent_negatives.py": "d6ecdc34406357570757ad0b4796ce602c9845d7abc7b6adc56343d393a92893",
+    "compare_streaming.py": "2ae89d49a5adcf7cdd409211292a249b864871c7a052d32371e8e12cc8c65bfe",
+    "gpu_python.py": "ba91f202efe4895f09ea71fae5bdec9456a7ed7d30d2cda60af8c07492c8f0b2",
+    "complete_coverage.py": "d90e235715705d1678e7ada665a2a9940979ae847880c2a7c8e783d3287eafa0",
+    "audit_mixture_word_overlap.py": "1e81a9951dfc1c93d4547ce5f1ba3e0b682dd3263d702229f383967bd0462a4c",
+    "annotate_comparison_validation.py": "f7e001f182a4c0d0f81b4ff14f0c134368f3f39c6f735e869b7397bf904ea8fa",
+    "verify_embedding_schedule.py": "12ced632c5a16b6943adedc4ccaf86aa7bb1d3cb81098e7434f0d7a5014d4490",
+    "prepare_phone_features.py": "daf3c1c41ad2f08c5ba1be1196df9b9d05945c6126d3cdd3adf974292b913124",
+    "download_alignment_models.py": "74334a9ac7bb0e8ac8ee22897bc35a8ee1e6837c9756b29fc7309b59b108d641",
+    "mlx_samples.py": "d44980214fb4b00c467c6181250db5412b8c527c073970804cded91f2d42b34f",
+    "audit_features.py": "949c75d7aaf26546a8d2b6b77dacf8363125cf003000b09600f3dc3b52155997",
+    "audit_training_prefix_content.py": "0534ea1843ae31569889304a7f8ae8668b9947852d4ddeebbd05b4f7e8905b47",
+    "audit_export_initializers.py": "651fad2d41e229cca5bd1580b84465f4ce8b46180eb0287b05a88ff2cc11f7ae",
+    "hard_ambient.py": "eba050baed958e4fd14e0cd98d7264aa8bb1e043a5d994c28ccf0392dac6d784",
+    "diagnose_vctk_sources.py": "d3fab7a971dd13579129e6ba1c89a5333279c500071108d15aa72e3d1f3b157c",
+    "phrases.py": "959d2b8e0351ceea777f753b7f16d7481a9eb55792c2961d9c8f75371ef28fdf",
+    "calibrate_slr83_development.py": "864e3969f8837f95688d2b7ccd88e0e683d0d0130a86bb1299e0c2bd950f3007",
+    "generate_near_negatives.py": "b319487ff27d16491a8fef4271d2ad2dbab512a93fbe25e7950eb6ca7b32708b",
+    "train_stream.py": "b94b913a6453c6566b3b12cb5a8337e6ad00b2c00108e29fb6d3f9657b482bbf",
+    "test_synthetic_presentation.py": "41e1910b0ef07d2ab4034e9d84e8579bf3213e9df7bb5faba169af12281d1bf7",
+    "generate.py": "5d3af0fd301a9683418178b52bd315396048f1b5e968f17c2dccc204d75a042b",
+    "generate_british_training_pilot.py": "cbdb3e7d618d9590c097e6d8227bf61ae8b5efc928409086a78a0ce0ae009c41",
+    "backgrounds.py": "caf5a6b72134671b5deeb1ae8359f8924f5b42350fa4c6d9b3ae86af66df6938",
+    "kokoro_samples.py": "30a0131d4123f725d5ca72c23d21882bbc5c068888b10a01e65e1a5cd4031bf2",
+    "download_voxconverse_development.py": "fffad6397df6d8dba923f4cfd2bd822d24c8c6383c1712e6ac26223e7ba4cdc9",
+    "audit_dialogue_features.py": "37782bd22196700d415e364a2a3eaf30c2b0219b6ff3458e8c89fd20f50edd00",
+    "probe_vctk_gain.py": "7227c5d9fceb483b72be42a99052b7f78a8c6fb206e37bbcf942f64e82f0069f",
+    "audit_voxconverse_shard.py": "d51c3cf83fd3d40c5f5d738082185f9dc76af4ba78e489987772d21780af220b",
+    "prepare_libri_training.py": "3a63a2c939d6df3a26dddf7305ee9e73bf878803fcb157293d03556834540802",
+    "compare_paired_validation.py": "d24476cf4d33bac88b2d37416f9dcf8281e9056695bd028e85156c385f24d332",
+    "prepare_us_training_features_v1.py": "96550d26d5f1f08065db89aa20d294e96f53d061c871f8352f8a0d1593dcd6bf",
+    "download_dipco_development.py": "497c265f6f01f445e50cd15dc4e04973424df15ca5633b4336c8819a9798768a",
+    "ambient_sampling.py": "22fee8cf1b1876dbc87a5310758151ccccba2ee957b4c8365a1ef2170f35fb1c",
+    "prepare_vctk_source.py": "f0dc8552ed22fb53985a43215b807f6f542ec082ee071af7ba0d1a73f5bc6c26",
+    "prepare_independent_dialogue_inputs.py": "79b62d410fe05814d17180c2ac4b7ce65d5d9bc2ea8b80c83029b06a6b7054bc"
+  },
+  "sources": {
+    "0": {
+      "piper": 60000,
+      "kokoro": 20000,
+      "qwen-cuda": 2680
+    },
+    "1": {
+      "piper": 60000,
+      "kokoro": 3000,
+      "qwen-cuda": 300
+    }
+  },
+  "selection": "Float continuous validation <=0.5 ambient events/h and <=1% confusing clips per source; then maximize mean source recall. Quantized validation must be recalibrated.",
+  "scope": "Research candidate. Same v1 evaluation sets are development regressions; real-user acceptance remains unmeasured."
+}
