@@ -5022,3 +5022,7 @@ Original trainer504191 remains live beyond half of fixed120k; first60744 complet
 ### Common formal65000 checkpoint retained
 
 Original65000 record4039B SHA4502c8005a4821f2bd4070540786f5be63546460a0b6189d02292c49dfc85bfa preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.51276042/max-source false.02083333, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, fixed120k unchanged. No restart/newdev/final use or acceptance/cross-arm advantage claim; v30 retained.
+
+### Common formal70000 checkpoint retained
+
+Original70000 record3992B SHA8a36f103e3e8384e38201ff5cdca4f8c84b77e363ba7607c9f6097afde0e9a74 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.53307292/max-source false.0296875, background0/1.204811h, one-sided95% upper2.48647/h. Original trainer504191 remains live, fixed120k unchanged. No restart/newdev/final use or acceptance/cross-arm advantage claim; v30 retained.
