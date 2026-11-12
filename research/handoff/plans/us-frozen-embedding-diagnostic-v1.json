@@ -1,0 +1,36 @@
+{
+  "scope": "Training-only diagnostic of the existing frozen Mac embedding ensemble on all 108 original US synthesis clips; no model fitting or acceptance",
+  "source_manifest_sha256": "350315d41263ef24d593fa46b1291ccc3ef21c95682840d65ccfcf1f1ea7369f",
+  "source_clips": 108,
+  "voices": ["lessac", "ryan", "ljspeech"],
+  "phrases": ["hey_nyx", "hey_nick", "hey_next", "hey_mix"],
+  "clips_per_voice_phrase": 9,
+  "original_frozen_model_plan": "head-equal-mean-regression-plan-v1.json",
+  "original_frozen_model_plan_sha256": "2f0daa919cad9e0670181d11ccbb8ca8b9e0d7ac7692df6c1e2097c16d399122",
+  "threshold": 0.4,
+  "smoothing_steps": 3,
+  "refractory_steps": 25,
+  "rearm_fraction": 0.5,
+  "sample_rate": 16000,
+  "step_samples": 1280,
+  "lead_zero_samples": 38400,
+  "tail_zero_samples": 16000,
+  "positive_reference_window_seconds": [-0.1, 0.8],
+  "pcm_policy": "Preserve original serialized integer PCM exactly; only prepend/append the declared zeros. No resampling, gain, augmentation, trimming or playback.",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1",
+    "ai-edge-litert": "2.3.0",
+    "tensorflow": "2.21.0"
+  },
+  "outputs": "Retain all 108 embeddings, member scores, exact equal-mean scores, times, event offsets, source/rendered PCM identities and aggregate voice/phrase counts, including failures.",
+  "decision": "This probes whether an existing different representation generalizes to the new training cohort. It does not change v46, select a threshold, train another model, certify pronunciation, access unused development/final data or promote firmware. Any fitting follow-up requires its own evidence-based plan.",
+  "limitations": [
+    "These are training-only synthetic clips, not independent human or acceptance observations.",
+    "The three presets share Piper ancestry and do not establish independent physical speakers.",
+    "Full generated-container ends are process references, not acoustic phoneme boundaries.",
+    "This 80 ms embedding ensemble and GPU 10 ms MicroFrontend detector have different frontends, training and event policies; no controlled architecture-only comparison is implied.",
+    "No board, microphone, speaker, firmware or audio-producer access. Dining-room production board excluded."
+  ]
+}
