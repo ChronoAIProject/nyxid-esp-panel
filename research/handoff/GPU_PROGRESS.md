@@ -1262,3 +1262,86 @@ claim of identical remaining sample draws. Bind completed feature hashes before
 fitting. Original temporal head stays frozen, and all new candidate selection
 uses only the unchanged original validation. No new candidate has been trained
 or accepted at this snapshot.
+
+### Original US sampler replay completed on Mac
+
+GPU `3418074` delivered the original feature archive through
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6814209886).
+Mac authenticated its2706061bytes/SHA
+`c8c5ecc906306f360423a9635545032f35fa6db4687259c16853dd289a2fa9ce`,
+the exact327-member allowlist and all326 original payload size/hash/source
+identities before extraction. No features were regenerated. The frozen
+`b0c1eb4` plan/script then ran unchanged in Python3.12.13/NumPy2.4.6.
+
+The [actual result](../wakeword_p4/results/v45-us-feature-sampler-mac-v1.json)
+passes all324raw file/data hashes,324complete endpoint ledgers,324original low
+crops and50batches/1000independently selected source/end/tensor comparisons.
+All108untouched slots and input sentinels stay exact. Helper-local source and
+endpoint RNG states and GPU source-choice counts reproduce. The full draw
+trace SHA is
+`714c23f8e584fa18df4a73eb6d455579684d3e77fa3a575958837cbdddce4116`.
+The [evidence archive](assets-us-feature-sampler-mac-v1.json) retains the trace,
+unchanged plan/script/original helper, result and archive authentication receipt.
+This completes the previously pending replay; it does not test the full
+main/British/ambient trainer RNG, model accuracy, physical boundaries or P4.
+
+GPU also explicitly confirmed that v46 combines new sources with a6+6
+complete/full-timeline mixture in slots44..55, and that v44/v45 both selected
+step35000. The original v46 training continues; no new quality result is
+available at this snapshot and no restart is requested.
+
+### Matched Mac US continuation completed and rejected
+
+Both dense-head arms actually trained with the same current trainer SHA
+`51fe6745c2e27e0211e4eae307a6cb75d5fa411a5f44306b7ce296190fcd4b8c`,
+initial weights, seed728,10000steps and the pre-frozen plans in `3fc2fb2`.
+All216 new features passed their original hash/shape/label checks; all108quiet
+embeddings exactly reproduce the frozen training-cohort diagnostic. Training
+completed in19.894s/control and19.859s/treatment. Both PTQ representative
+arrays have SHA
+`ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386`.
+No original control result was substituted for this new matched run.
+
+The [actual summary](../wakeword_p4/results/us-embedding-continuation-mac-v1.json)
+binds original outputs, plans and all eight checkpoint model hashes. Selection
+uses the unchanged original validation only:
+
+| Arm/output | Selected step | Threshold | Macro recall | Maximum confuser rate | Continuous events/7.30378h | Upper95 events/h |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Control dense |7500|.6|.932500|.110714|3|1.061595|
+| Treatment dense |5000|.4|.911825|.125000|3|1.061595|
+| Control equal mean |7500|.4|.946845|.128571|2|.861991|
+| Treatment equal mean |5000|.3|.944851|.140625|3|1.061595|
+
+Equal-mean plans were frozen in `10655f5` before calibration and keep the
+original temporal member unchanged. Neither dense nor ensemble arm has a
+strict eligible operating point. The new-source treatment is worse on macro
+recall and maximum confuser rate at these independently selected points; the
+ensemble also has more continuous false events. Reject this continuation;
+do not advance it to paired/long regression, unused development or board use.
+This single-seed, three-preset, dense-only test changes engine mass5→6 and
+does not establish that US coverage is generally harmful or predict GPU v46.
+
+The [completed evidence archive](assets-us-embedding-continuation-mac-v1.json)
+retains both arms' eight checkpoints, training-only PTQ arrays, complete
+validation score traces, both ensemble reports,216new features, original
+plans and logs. The earlier108-source frozen diagnostic is independently
+available through its [verified archive](assets-us-frozen-embedding-diagnostic-v1.json).
+`package_us_mac_results.py` packages these existing outputs and verifies every
+member again after anonymous public download; it performs no training or
+audio operation. Its first packaging attempt stopped on a generated Python
+cache after finishing one local archive. The corrected packager skips caches;
+the fresh second package completed, with training/results unchanged.
+
+```sh
+python3 -B research/handoff/package_us_mac_results.py \
+  --models /path/to/embedding-feasibility \
+  --continuation /path/to/us-embedding-continuation-v1 \
+  --sampler /path/to/us-feature-sampler-mac-v1 --output /tmp/us-mac-evidence-fresh
+# Upload the two resulting archives to the research prerelease, then:
+python3 -B research/handoff/package_us_mac_results.py \
+  --output /tmp/us-mac-evidence-fresh --verify-public
+```
+
+These are completed offline experiments, not evidence of Hi ESP parity. No
+playback, microphone, board or dining-room production device was accessed.

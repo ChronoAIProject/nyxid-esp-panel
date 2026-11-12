@@ -1,0 +1,297 @@
+{
+  "scope": "Actual matched Mac dense-head continuation and frozen equal-mean calibration; original validation only, no wake acceptance",
+  "stage_plan_sha256": "74885c9b91df2d8ab2529da7083384c5f5e17af729978b27252283abdfd40d36",
+  "fitting_plan_source_commit": "3fc2fb2111b576a2e38128401092becf4b4dcd71",
+  "ensemble_plan_source_commit": "10655f515b034b7b3db296b9d585770d97f6e264",
+  "feature_precheck_sha256": "3a8b0c29be7fc42864b8c8a9ba89c61b8ce2a46105ca719c210194c3592776ea",
+  "feature_rows_added": 216,
+  "original_training_pcm_sources": 108,
+  "arms": {
+    "control": {
+      "training_complete_sha256": "3e82020ab1b00a6aca9558aca0d09269e2bf81c32bd3aaa42ff922aaaca148a4",
+      "training_report_sha256": "74332d55d19602b05b7fe0912e765e37fa5e567c01c8022440c0de42bc3ea391",
+      "training_seconds": 19.89422404090874,
+      "training_rows": 40627,
+      "training_frames": 7027603,
+      "fitting_plan_sha256": "1a435b047650b4b72d5b3a4a39c3909508d4a02917ced2c91ecfbf8f7e2b0a69",
+      "trainer_sha256": "51fe6745c2e27e0211e4eae307a6cb75d5fa411a5f44306b7ce296190fcd4b8c",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "representative_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "checkpoint_selection_sha256": "bf19dab87e433164f62e7c1f8dc3e1e7853763940c5a99c8d19c48800062a4e9",
+      "all_checkpoint_models": {
+        "2500": "d399003ffc6a1f92d91ebc4dffe0d21d718534d1ffcf21063ae3fc5b712d9e55",
+        "5000": "001379b852a3cbe4623ee2e565dcba761ab22edd8427343ff6cf24f9bebcd9ca",
+        "7500": "d79215659b9da0283269960154e122cfa6ad7fdcedaa645cafdeeb7855fdac27",
+        "10000": "154648074ded4fae45fea1ca1431b65421a883ef5be73ccd4598ff4d180b44ae"
+      },
+      "selected_step": 7500,
+      "selected_head_sha256": "d79215659b9da0283269960154e122cfa6ad7fdcedaa645cafdeeb7855fdac27",
+      "dense_selected": {
+        "threshold": 0.6,
+        "positive_variants": 1196,
+        "recall": 0.9464882943143813,
+        "macro_recall": 0.9325000000000001,
+        "recall_by_engine": {
+          "edge-tts": 0.875,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.9541666666666667
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 31,
+            "false_rate": 0.11071428571428571
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 2,
+            "false_rate": 0.011904761904761904
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 12,
+            "false_rate": 0.075
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 13,
+            "false_rate": 0.08125
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 98,
+            "false_rate": 0.10208333333333333
+          }
+        },
+        "max_corpus_false_rate": 0.11071428571428571,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 183.37500000000028,
+        "positive_latency_p95_ms": 289.1250000000003
+      },
+      "dense_strict_eligible": false,
+      "mean_plan_sha256": "b7864610968cf09e19e6ce515e9c4c30386288740833e45ae40aba86adc9005d",
+      "mean_calibration_sha256": "a29da6aab8ca4f9df7424e48b97b1a4302844474f40129227191ed0379986616",
+      "mean_details_sha256": "69cc82aa4a06ed6d596221e928d4bfeefc5ab4ebd7825717d8d0378f918f6705",
+      "mean_selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.9724080267558528,
+        "macro_recall": 0.9468452380952381,
+        "recall_by_engine": {
+          "edge-tts": 0.9196428571428571,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.98125
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 36,
+            "false_rate": 0.12857142857142856
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 5,
+            "false_rate": 0.02976190476190476
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 14,
+            "false_rate": 0.0875
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 16,
+            "false_rate": 0.1
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 5,
+            "false_rate": 0.10416666666666667
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 121,
+            "false_rate": 0.12604166666666666
+          }
+        },
+        "max_corpus_false_rate": 0.12857142857142856,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 2,
+        "continuous_events_per_hour": 0.27383089420999784,
+        "continuous_events_per_hour_upper_95": 0.8619913986194038,
+        "positive_latency_median_ms": 129.12500000000017,
+        "positive_latency_p95_ms": 231.06250000000017
+      },
+      "mean_strict_eligible": false
+    },
+    "treatment": {
+      "training_complete_sha256": "c515aad40932c8bda521bcbdf01c29bfc361ddc91dda49e9c079c903a58e2d59",
+      "training_report_sha256": "9edc96d6d01f5330ad03f656962b33706cb28083fb9a8477dc59db9f0d0a03f3",
+      "training_seconds": 19.85868824995123,
+      "training_rows": 40843,
+      "training_frames": 7038771,
+      "fitting_plan_sha256": "a41ac72f7c2263049d0626dde7d00dc9a110bdb40c8208d75533fa3fe8064cdb",
+      "trainer_sha256": "51fe6745c2e27e0211e4eae307a6cb75d5fa411a5f44306b7ce296190fcd4b8c",
+      "initial_weights_sha256": "70f9ca7c98b7fbb5f87c2d6f5e99d32683d5d3bb2c005e00a919246007ff15e1",
+      "representative_sha256": "ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386",
+      "checkpoint_selection_sha256": "b48dc28990f1804d97950a44a09f3d42cade6bc91fe9d08a377a11cf72c2225e",
+      "all_checkpoint_models": {
+        "2500": "d255c521291cb8a7fd1ec322262f49fd4d9164050a53c3db55e45c4a58a8e439",
+        "5000": "9c76e91dc8a35521428bda29660e8224d859790be1318a5696d94c868974f075",
+        "7500": "32a7eab5d07ebe7132ebc08e97324c9bcf5d0d4957ec3707c055ccf92b952744",
+        "10000": "72e57912f2c3c710a6fa828b966d3cfbcd3fa85f55e29dcd47400e9d93a8785c"
+      },
+      "selected_step": 5000,
+      "selected_head_sha256": "9c76e91dc8a35521428bda29660e8224d859790be1318a5696d94c868974f075",
+      "dense_selected": {
+        "threshold": 0.4,
+        "positive_variants": 1196,
+        "recall": 0.93561872909699,
+        "macro_recall": 0.9118253968253967,
+        "recall_by_engine": {
+          "edge-tts": 0.8660714285714286,
+          "kokoro": 0.9583333333333334,
+          "macos-say": 0.984375,
+          "openai-tts": 0.8055555555555556,
+          "piper": 0.9447916666666667
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 32,
+            "false_rate": 0.11428571428571428
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 9,
+            "false_rate": 0.05357142857142857
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 13,
+            "false_rate": 0.08125
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 1,
+            "false_rate": 0.010416666666666666
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 11,
+            "false_rate": 0.06875
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 6,
+            "false_rate": 0.125
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 104,
+            "false_rate": 0.10833333333333334
+          }
+        },
+        "max_corpus_false_rate": 0.125,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 152.37500000000014,
+        "positive_latency_p95_ms": 276.375
+      },
+      "dense_strict_eligible": false,
+      "mean_plan_sha256": "7bd0c860f32b1f666fc3b8328c6372e611fd319d086898926300d8b5e0f6b3dc",
+      "mean_calibration_sha256": "c64602a784393794d74dad75f40b3a8a995afd9e96f23cc8cafbe0ce1e093420",
+      "mean_details_sha256": "6e73a315a40668908ed01ae1158d11d9ca5aeac0c1170a6e2aa38e25f141a1c0",
+      "mean_selected": {
+        "threshold": 0.3,
+        "positive_variants": 1196,
+        "recall": 0.9707357859531772,
+        "macro_recall": 0.9448511904761905,
+        "recall_by_engine": {
+          "edge-tts": 0.9107142857142857,
+          "kokoro": 1.0,
+          "macos-say": 1.0,
+          "openai-tts": 0.8333333333333334,
+          "piper": 0.9802083333333333
+        },
+        "negative_variants": 1872,
+        "confusing_corpora": {
+          "edge-tts:edge-corpus": {
+            "variants": 280,
+            "false_variants": 37,
+            "false_rate": 0.13214285714285715
+          },
+          "edge-tts:edge-partials": {
+            "variants": 168,
+            "false_variants": 8,
+            "false_rate": 0.047619047619047616
+          },
+          "kokoro:kokoro-corpus": {
+            "variants": 160,
+            "false_variants": 15,
+            "false_rate": 0.09375
+          },
+          "kokoro:kokoro-partials": {
+            "variants": 96,
+            "false_variants": 0,
+            "false_rate": 0.0
+          },
+          "macos-say:mac-corpus": {
+            "variants": 160,
+            "false_variants": 17,
+            "false_rate": 0.10625
+          },
+          "openai-tts:openai-corpus": {
+            "variants": 48,
+            "false_variants": 6,
+            "false_rate": 0.125
+          },
+          "piper:synthetic": {
+            "variants": 960,
+            "false_variants": 135,
+            "false_rate": 0.140625
+          }
+        },
+        "max_corpus_false_rate": 0.140625,
+        "continuous_hours": 7.303777777777778,
+        "continuous_events": 3,
+        "continuous_events_per_hour": 0.41074634131499677,
+        "continuous_events_per_hour_upper_95": 1.0615953502205029,
+        "positive_latency_median_ms": 108.43749999999997,
+        "positive_latency_p95_ms": 211.68750000000003
+      },
+      "mean_strict_eligible": false
+    }
+  },
+  "accepted": false,
+  "continuation_advanced": false,
+  "conclusion": "Neither dense nor equal-mean arm has a strict eligible operating point. At independently selected original-validation points the treatment has lower macro recall and higher maximum confuser rate than its matched control; the equal mean also has more continuous false events. Reject this continuation.",
+  "limits": "Only one matched dense continuation seed and three Piper presets. Treatment changes engine mass from five to six, leaving original temporal head frozen. This does not show that all US coverage is harmful or establish a controlled comparison with GPU v46. No extra threshold search, new heldout, waveform playback, microphone, P4 or production operation was performed."
+}
