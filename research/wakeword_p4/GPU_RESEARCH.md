@@ -4436,3 +4436,7 @@ Implemented9f16671 US-only temporal plan. All324raw/file/data/shape/lowcrop/ends
 ### 2026-11-12 UTC — Mac v44 diagnostic metadata audit reproduced
 
 Imported original Mac1066df5 report unchanged, verified audit source SHA, ran exact original script on pinned9f16671 git objects; parsed JSON identical (byte status inreceipt). Original380identity/event correspondences,13witnesses,6597old/324UScohort counts/groups and4window ledgers corroborated. This is metadata arithmetic/hash-link evidence only, not independent model/trace-array replay. No change to originalv45 PID235075/start4081425 or newdev/finals.
+
+### 2026-11-12 UTC — original v45 training and export completed
+
+Original PID235075/start4081425 completed120000steps in2464.8s, original rule selected35000. Model54440B SHAf5d175a0172d4fde70dce746fa358331c3fcdf590139c2e76113fe14c45e30af. Original training SHA77d09bedd336c41f49c9c4cb5cf949b1c248f2727c76b417ced49bcd134bc7f0; original training/export audit copied byte-for-byte. All saved weights finite, frozenBN unchanged, int8[1,3,40]→uint8[1,1] contract passes. Original postprocessor PID235635 authenticated US seeds167726/177726, fixed slots/pack and inherited recipe before starting original historical regression. This proves export contract only, not accuracy/FAR/acceptance; no promotion or newdev/final access, v30 retained.
