@@ -44,6 +44,7 @@ def main():
     parser.add_argument("--five-score-pack", type=Path)
     parser.add_argument("--us-temporal-coverage", action="store_true")
     parser.add_argument("--us-coverage-pack", type=Path)
+    parser.add_argument("--balanced-coverage-pack", type=Path)
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -89,6 +90,8 @@ def main():
         parser.error("positive-full-timeline requires negative-full-timeline")
     if args.us_temporal_coverage and not args.us_coverage_pack:
         parser.error("US temporal coverage requires US pack")
+    if args.balanced_coverage_pack and not (args.us_coverage_pack and args.us_temporal_coverage):
+        parser.error("Balanced coverage requires unchanged v45 US temporal recipe")
     if args.us_coverage_pack and not (args.complete_coverage_pack and args.negative_container_mixture):
         parser.error("US coverage requires unchanged v43 complete/container mixture recipe")
     if args.negative_full_timeline and not args.complete_coverage_pack:
@@ -254,6 +257,12 @@ def main():
         us_coverage = USCoverage(args.us_coverage_pack, temporal=args.us_temporal_coverage)
         (root/"us_coverage.json").write_text(json.dumps(us_coverage.report,indent=2)+"\n")
 
+    balanced_coverage = None
+    if args.balanced_coverage_pack:
+        from balanced_coverage import BalancedCoverage
+        balanced_coverage = BalancedCoverage(args.balanced_coverage_pack)
+        (root/"balanced_coverage.json").write_text(json.dumps(balanced_coverage.report,indent=2)+"\n")
+
     def batch(mine=True, augment=True):
         noise = []
         for _ in range(48):
@@ -269,6 +278,8 @@ def main():
                 x[:80] = complete_coverage.replace(x[:80])
         if us_coverage is not None:
             x[:80] = us_coverage.replace(x[:80])
+        if balanced_coverage is not None:
+            x[:80] = balanced_coverage.replace(x[:80])
         if args.prefix_negatives:
             # Keep baseline RNG and all original draws unchanged. Only replace
             # the selected confusing-negative slots before the same permutation.
@@ -488,6 +499,7 @@ def main():
               "gpu_details": [tf.config.experimental.get_device_details(g) for g in gpus],
               "selected_step": selected_step,
               "us_coverage": us_coverage.report if us_coverage is not None else None,
+              "balanced_coverage": balanced_coverage.report if balanced_coverage is not None else None,
               "complete_coverage": complete_coverage.report if complete_coverage is not None else None,
               "five_score": five_score.report if five_score is not None else None,
               "validation_window_phase": window_phase,
