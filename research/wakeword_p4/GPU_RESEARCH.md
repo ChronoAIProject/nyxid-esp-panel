@@ -5166,3 +5166,7 @@ Downloaded author direct model/config only. Model63531379B SHAd33f72ffbabcbbcb67
 ### Jenny primary dataset metadata and license preserved
 
 Pinned dioco-group/jenny-tts-dataset README atad714a8d15fa010b4ccc024df678822695238070 and original Kaggle mirror metadata with byte hashes. Primary22419 raw prompts differs from mirror20977 RNNoise/VAD/SOX processed prompts; inspected author model metadata lacks exact training manifest. Primary license supplies Jenny/Dioco interface attribution and commercial permission. This is documentary evidence, not proof of model training lineage or physical-speaker independence. No audio generation/inference or source reservation; formal training unchanged.
+
+### Fixed formal35000 float checkpoint rejected
+
+Original record preserved byte-identically (4201B SHA45aa7736037c1a7752f2ac8db17040bd777d9826e5d345b876c8eb827e9b9043). Eleven-point training grid0eligible; fallback.994 macro.471875/max-source false.0166666667, ambient1/1.2048112674h (.830005518/h). Both training selection limits fail. Fallback not pass, no INT8/independent acceptance/cross-arm claim. Original trainer remained live through35000; unchanged run continues to120k, per_draw pending. v30 frozen.
