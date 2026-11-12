@@ -86,6 +86,67 @@ reconstructed initialization can support numerical reproduction only after
 checking original encoder/BN source values and classifier bytes, and must be
 identified as reconstructed rather than an original same-instance snapshot.
 
+## Actual network replay and optimizer-method check
+
+The [derived initialization asset](assets-gpu-derived-probe-initialization-v1.json)
+has now been received and authenticated. Mac loaded both the original certified
+initializer and the delivered derived H5 into the same original teacher60graph:
+all29nonhead variables are exactly equal, head bytes equal the original recorded
+hash, and the complete31variable inventory matches. No seed is used to recover
+the original head. This certifies the numerical definition, while retaining the
+missing historical-instance snapshot distinction.
+
+[`replay_paired_init_gradients_mac.py`](replay_paired_init_gradients_mac.py) ran
+all50original batches with CPU encoder autodiff and independently derived NumPy
+BCE/consistency output gradients. Its
+[actual-network result](../wakeword_p4/results/paired-init-autodiff-mac-v1.json)
+records all200gradient comparisons; all model/BN values remain unchanged and
+there are no optimizer updates. Relative to the original GPU numerical policy,
+maximum gradient relative L2differences are.006333main/.007842pair/.005755combined/
+.014112consistency; maximum main/pair loss differences are.000611/.003076.
+These are observed differences, not a claimed equivalence or a passed original
+smoke. Mac median ratio166.791498still gives coefficient1under the frozen rule;
+the actual experiment's coefficient remains the original frozen1, not a new fit.
+
+Mac's first main/pair/D losses are12.0484383848/8.2868505151/.0423019226. They
+agree with the newly explicit deterministic/full-FP32GPU CPU reference at
+`8858a9a` within the original1e-5absolute/relative tolerance (maximum loss
+absolute difference1.368e-6). This finite first-batch comparison supports
+using a common new numerical policy; it does not retroactively pass the old
+GPU probe or isolate one kernel/flag as its cause.
+
+[`probe_paired_update_mac.py`](probe_paired_update_mac.py) then exercised the
+unchanged pinned training-step method against an independent first-step Adam
+formula, using these actual inputs and oracle gradients. The
+[completed source-visible result](../wakeword_p4/results/paired-update-method-mac-v2.json)
+passes both coefficients with exactly one optimizer update and unchanged
+nontrainable BN values. Maximum parameter-step error is4.8364e-8(control) and
+5.1470e-8(treatment), within the predeclared two-float32-ULP-plus2e-6bound.
+This tests the method, not sampler construction or all120kupdates. The initial
+[exec-only result](../wakeword_p4/results/paired-update-method-mac-v1.json)
+also passed, but emitted an AutoGraph source-unavailable fallback; it is retained.
+V2exposes the exact same pinned source as real temporary Python files and reruns
+the same inputs/bounds through normal source-visible tracing, without that
+warning. All three tested helper file hashes match the formal execution receipt
+at`baf105a`; all170pinned source hashes also match its recorded source commit.
+
+Reproduce after downloading the two authenticated initialization/probe assets:
+
+```sh
+python -B research/handoff/replay_paired_init_gradients_mac.py \
+  --probe "$PROBE" --initialization "$DERIVED_INITIALIZATION" \
+  --v46-model "$ORIGINAL_V46" --upstream "$MICROWAKEWORD" \
+  --output "$FRESH_MAC_REPLAY"
+python -B research/handoff/probe_paired_update_mac.py \
+  --probe "$PROBE" --initialization "$DERIVED_INITIALIZATION" \
+  --replay "$FRESH_MAC_REPLAY" --v46-model "$ORIGINAL_V46" \
+  --upstream "$MICROWAKEWORD" --output "$FRESH_MAC_STEP_REPORT"
+```
+
+Use the pinned Mac TensorFlow2.21/Keras3.15.1/NumPy2.5.4research environment.
+Neither this new numerical policy nor these checks establish wake quality,
+full training success, matched Hi ESP parity, P4 resources or call stability.
+
 All measurements are silent, use already examined training data or synthetic
 numbers, and leave new development/final data and both physical boards alone.
 V46/v47 remain rejected, v30 is retained, and matched Hi ESP recognition/FAR,

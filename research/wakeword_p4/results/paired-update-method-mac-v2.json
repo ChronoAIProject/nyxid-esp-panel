@@ -1,0 +1,232 @@
+{
+  "scope": "Check the pinned training-step method against an independent Adam first step.\n\nUse certified numerical initialization and the first actual saved batch. The\noracle gradients come from independent NumPy loss derivatives plus CPU encoder\nautodiff, not the helper's losses. This method-only check does not instantiate\nor certify its sampler/constructor or prove whole-training equivalence.\n",
+  "helper_commit": "ef6864aa5bdbb701383b69ac78ba90e003a0ae83",
+  "source_sha256": {
+    "paired_rendering_sampler": "08ba181aa8f9b2376f13d60fe06597a2a8b73784270d190babc194456205a700",
+    "rendering_consistency": "c02cd2d6c9538edc2068d3874280fa8983c7b7d1753be02336d567f14bd63cab",
+    "paired_rendering_training": "b1ba5ae840b5db716d2036b1108c0e0be80dc85929f5715005d9828ce6beec8c"
+  },
+  "exact_pinned_source_files_available_to_autograph": true,
+  "reference_replay_report_sha256": "217583d788f265ce5f4c3d7245b435213b32369d24c7106eb0aeca123c5aca7f",
+  "reports": [
+    {
+      "coefficient": 0.0,
+      "optimizer_updates": 1,
+      "observed_total_main_pair_consistency_encoder_norms": [
+        20.335289001464844,
+        12.04843807220459,
+        8.286850929260254,
+        0.04230191931128502,
+        301.4352111816406,
+        1.4358956813812256
+      ],
+      "independent_combined_gradient_norm": 329.4137137440937,
+      "all_nontrainable_bn_values_unchanged": true,
+      "per_variable": [
+        {
+          "path": "stream/conv2d/kernel",
+          "maximum_step_absolute_error": 4.7688222307093735e-08,
+          "maximum_fraction_of_fixed_bound": 0.023833013042013303,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d/kernel",
+          "maximum_step_absolute_error": 2.1537160392777477e-08,
+          "maximum_fraction_of_fixed_bound": 0.010456939125385496,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d/bias",
+          "maximum_step_absolute_error": 6.779087069258213e-09,
+          "maximum_fraction_of_fixed_bound": 0.0033895435346291067,
+          "passed": true
+        },
+        {
+          "path": "conv2d_1/kernel",
+          "maximum_step_absolute_error": 1.1299673336178252e-08,
+          "maximum_fraction_of_fixed_bound": 0.005647206982416001,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_1/kernel",
+          "maximum_step_absolute_error": 2.135334030298544e-08,
+          "maximum_fraction_of_fixed_bound": 0.010367688943192357,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_1/bias",
+          "maximum_step_absolute_error": 6.910344388507891e-09,
+          "maximum_fraction_of_fixed_bound": 0.0034543679115496824,
+          "passed": true
+        },
+        {
+          "path": "conv2d_2/kernel",
+          "maximum_step_absolute_error": 4.836370389262913e-08,
+          "maximum_fraction_of_fixed_bound": 0.021606193025810638,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_2/kernel",
+          "maximum_step_absolute_error": 3.5148314429214907e-08,
+          "maximum_fraction_of_fixed_bound": 0.01706556378107605,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_2/bias",
+          "maximum_step_absolute_error": 6.8540984227236784e-09,
+          "maximum_fraction_of_fixed_bound": 0.0034266502967647532,
+          "passed": true
+        },
+        {
+          "path": "conv2d_3/kernel",
+          "maximum_step_absolute_error": 3.328793579887926e-08,
+          "maximum_fraction_of_fixed_bound": 0.015707715119508307,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_3/kernel",
+          "maximum_step_absolute_error": 2.126832571365013e-08,
+          "maximum_fraction_of_fixed_bound": 0.010326411803159212,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_3/bias",
+          "maximum_step_absolute_error": 9.502482592352139e-09,
+          "maximum_fraction_of_fixed_bound": 0.0047511030208792675,
+          "passed": true
+        },
+        {
+          "path": "conv2d_4/kernel",
+          "maximum_step_absolute_error": 2.4187069689110552e-08,
+          "maximum_fraction_of_fixed_bound": 0.011413252012611553,
+          "passed": true
+        },
+        {
+          "path": "dense/kernel",
+          "maximum_step_absolute_error": 1.4090650396481053e-08,
+          "maximum_fraction_of_fixed_bound": 0.0069418830794842875,
+          "passed": true
+        },
+        {
+          "path": "dense/bias",
+          "maximum_step_absolute_error": 6.703030198387458e-09,
+          "maximum_fraction_of_fixed_bound": 0.003351515099193729,
+          "passed": true
+        }
+      ],
+      "all_steps_within_fixed_bound": true
+    },
+    {
+      "coefficient": 1.0,
+      "optimizer_updates": 1,
+      "observed_total_main_pair_consistency_encoder_norms": [
+        20.37759017944336,
+        12.04843807220459,
+        8.286850929260254,
+        0.04230191931128502,
+        301.4352111816406,
+        1.4358956813812256
+      ],
+      "independent_combined_gradient_norm": 329.99825231293966,
+      "all_nontrainable_bn_values_unchanged": true,
+      "per_variable": [
+        {
+          "path": "stream/conv2d/kernel",
+          "maximum_step_absolute_error": 3.480310043304548e-08,
+          "maximum_fraction_of_fixed_bound": 0.01642268208461037,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d/kernel",
+          "maximum_step_absolute_error": 2.0478387136643045e-08,
+          "maximum_fraction_of_fixed_bound": 0.009942872865717541,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d/bias",
+          "maximum_step_absolute_error": 8.3078243317972e-09,
+          "maximum_fraction_of_fixed_bound": 0.0041539121658986,
+          "passed": true
+        },
+        {
+          "path": "conv2d_1/kernel",
+          "maximum_step_absolute_error": 1.686926796543736e-08,
+          "maximum_fraction_of_fixed_bound": 0.008430708128318731,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_1/kernel",
+          "maximum_step_absolute_error": 2.1188697065140094e-08,
+          "maximum_fraction_of_fixed_bound": 0.010287749699385059,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_1/bias",
+          "maximum_step_absolute_error": 6.850843978049859e-09,
+          "maximum_fraction_of_fixed_bound": 0.003425023263839405,
+          "passed": true
+        },
+        {
+          "path": "conv2d_2/kernel",
+          "maximum_step_absolute_error": 5.146993545452651e-08,
+          "maximum_fraction_of_fixed_bound": 0.022993883241973927,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_2/kernel",
+          "maximum_step_absolute_error": 2.0444183063692348e-08,
+          "maximum_fraction_of_fixed_bound": 0.009926265759573425,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_2/bias",
+          "maximum_step_absolute_error": 6.8572435208379134e-09,
+          "maximum_fraction_of_fixed_bound": 0.0034270259271141,
+          "passed": true
+        },
+        {
+          "path": "conv2d_3/kernel",
+          "maximum_step_absolute_error": 3.186256413031073e-08,
+          "maximum_fraction_of_fixed_bound": 0.015035119130241633,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_3/kernel",
+          "maximum_step_absolute_error": 2.226509527637234e-08,
+          "maximum_fraction_of_fixed_bound": 0.010506322044809448,
+          "passed": true
+        },
+        {
+          "path": "depthwise_conv2d_3/bias",
+          "maximum_step_absolute_error": 1.28763103426216e-08,
+          "maximum_fraction_of_fixed_bound": 0.006436656520430169,
+          "passed": true
+        },
+        {
+          "path": "conv2d_4/kernel",
+          "maximum_step_absolute_error": 2.4236816741508155e-08,
+          "maximum_fraction_of_fixed_bound": 0.011436726358747581,
+          "passed": true
+        },
+        {
+          "path": "dense/kernel",
+          "maximum_step_absolute_error": 1.3987046965525246e-08,
+          "maximum_fraction_of_fixed_bound": 0.006890841936308367,
+          "passed": true
+        },
+        {
+          "path": "dense/bias",
+          "maximum_step_absolute_error": 6.675139993484944e-09,
+          "maximum_fraction_of_fixed_bound": 0.003337569996742472,
+          "passed": true
+        }
+      ],
+      "all_steps_within_fixed_bound": true
+    }
+  ],
+  "maximum_control_treatment_parameter_difference": 0.001992420293390751,
+  "all_passed": true,
+  "script_sha256": "fabf8b5eb9fed1fe1692b3a145d6e6296c0c328183354fbb2a7aa346753e6d3a",
+  "tensorflow_version": "2.21.0",
+  "limits": "First actual batch at certified derived initialization on Mac CPU only. No constructor/sampler/trace replay, original GPU smoke passage, convergence, matched120k run or wake-quality/P4 acceptance is inferred."
+}

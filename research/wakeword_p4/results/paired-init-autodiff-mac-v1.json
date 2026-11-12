@@ -1,0 +1,2111 @@
+{
+  "scope": "Replay all50 original batches with a certified derived initialization on Mac.\n\nThe original historical instance H5 was not saved. Authenticate the delivered\nderived state against the original encoder/BN initializer and original head\nbytes, then run CPU encoder autodiff with independent NumPy loss derivatives.\nReport cross-runtime gradient differences descriptively, without fitting a\ntolerance/weight or reclassifying an original failed GPU smoke.\n",
+  "original_probe_sha256": "0cb06dcb3276125d56b0bc260ef7c6be7e57921fed03b4b799a482e3d675e42f",
+  "derived_h5_sha256": "21f53feec03bdd73ae51cbc92091bf723d9de5fba07e3aa337c818ed722fe350",
+  "original_initializer_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+  "original_head_bytes_sha256": "a41cc84a5e15a42a13ee9fe02e38242fca4dd9afe67a19ba736587970b46fc54",
+  "derived_full_inventory_matches": true,
+  "nonhead_variables_equal_original_initializer": 29,
+  "original_same_instance_snapshot_available": false,
+  "original_batches": 50,
+  "independent_numpy_loss_derivatives": true,
+  "cpu_encoder_autodiff": true,
+  "optimizer_updates": 0,
+  "all_model_and_bn_variables_unchanged": true,
+  "traces": [
+    {
+      "step": 1,
+      "main_bce": 12.048438384796022,
+      "pair_bce": 8.286850515067144,
+      "consistency": 0.042301922620461105,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0001932832947986185,
+        "pair_bce": 0.0007463127966360616,
+        "consistency": 5.106956884978753e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 151.07444270665297,
+          "original_gpu_norm": 151.0008788987068,
+          "relative_l2_error": 0.0031456708033814865,
+          "maximum_absolute_error": 0.11153334379196167,
+          "cosine": 0.9999951733985908
+        },
+        "pair": {
+          "actual_norm": 220.07527924636415,
+          "original_gpu_norm": 220.05173144226723,
+          "relative_l2_error": 0.0005060493563939836,
+          "maximum_absolute_error": 0.042392730712890625,
+          "cosine": 0.9999998776957157
+        },
+        "supervised": {
+          "actual_norm": 329.4137137440937,
+          "original_gpu_norm": 329.3466119672871,
+          "relative_l2_error": 0.0014987730393358218,
+          "maximum_absolute_error": 0.11474483460187912,
+          "cosine": 0.9999988978196743
+        },
+        "consistency": {
+          "actual_norm": 1.4358960685781357,
+          "original_gpu_norm": 1.435357993966095,
+          "relative_l2_error": 0.0011660722650125334,
+          "maximum_absolute_error": 0.0005726516246795654,
+          "cosine": 0.999999390630442
+        }
+      }
+    },
+    {
+      "step": 2,
+      "main_bce": 13.088803631705577,
+      "pair_bce": 14.813624434133533,
+      "consistency": 0.0489350062313155,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005651884848525413,
+        "pair_bce": -0.00043196235084153045,
+        "consistency": 1.6114533193473113e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 168.53458659245146,
+          "original_gpu_norm": 168.5205073741605,
+          "relative_l2_error": 0.0013710923571463249,
+          "maximum_absolute_error": 0.0719226598739624,
+          "cosine": 0.9999990636210738
+        },
+        "pair": {
+          "actual_norm": 296.36769847959056,
+          "original_gpu_norm": 296.34950473964824,
+          "relative_l2_error": 0.0009372919066735986,
+          "maximum_absolute_error": 0.06111717224121094,
+          "cosine": 0.9999995626533313
+        },
+        "supervised": {
+          "actual_norm": 427.00649685275266,
+          "original_gpu_norm": 426.984885023162,
+          "relative_l2_error": 0.0008175883570973868,
+          "maximum_absolute_error": 0.07098174095153809,
+          "cosine": 0.999999667072428
+        },
+        "consistency": {
+          "actual_norm": 1.6501047555146005,
+          "original_gpu_norm": 1.6491001627161805,
+          "relative_l2_error": 0.008593100580906154,
+          "maximum_absolute_error": 0.002979494631290436,
+          "cosine": 0.9999632872236635
+        }
+      }
+    },
+    {
+      "step": 3,
+      "main_bce": 12.505126353836104,
+      "pair_bce": 13.261420257506325,
+      "consistency": 0.0631180891074822,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00036585655207943546,
+        "pair_bce": 0.00030232232566085315,
+        "consistency": 1.4837948291074321e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 163.38185352026085,
+          "original_gpu_norm": 163.4120394226507,
+          "relative_l2_error": 0.0014346263653311772,
+          "maximum_absolute_error": 0.08403614163398743,
+          "cosine": 0.9999989877978449
+        },
+        "pair": {
+          "actual_norm": 279.51786945823545,
+          "original_gpu_norm": 279.5809213408858,
+          "relative_l2_error": 0.000909174040293036,
+          "maximum_absolute_error": 0.057000160217285156,
+          "cosine": 0.9999996120440644
+        },
+        "supervised": {
+          "actual_norm": 403.9273584728743,
+          "original_gpu_norm": 404.0216290114521,
+          "relative_l2_error": 0.000858279450101203,
+          "maximum_absolute_error": 0.09147489070892334,
+          "cosine": 0.9999996588201291
+        },
+        "consistency": {
+          "actual_norm": 2.3591074215527237,
+          "original_gpu_norm": 2.35841848227289,
+          "relative_l2_error": 0.0009835556791961259,
+          "maximum_absolute_error": 0.0004394054412841797,
+          "cosine": 0.9999995591047154
+        }
+      }
+    },
+    {
+      "step": 4,
+      "main_bce": 12.9273375587733,
+      "pair_bce": 5.056948998618248,
+      "consistency": 0.10805287998199678,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000519840213517142,
+        "pair_bce": 0.00017724339974201087,
+        "consistency": 2.333562851167259e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 151.21284977547336,
+          "original_gpu_norm": 151.26249826936868,
+          "relative_l2_error": 0.0029486112684830616,
+          "maximum_absolute_error": 0.1658569574356079,
+          "cosine": 0.9999957053027639
+        },
+        "pair": {
+          "actual_norm": 108.78810394499483,
+          "original_gpu_norm": 108.7566598614626,
+          "relative_l2_error": 0.003197034409704796,
+          "maximum_absolute_error": 0.08324122428894043,
+          "cosine": 0.9999949327466917
+        },
+        "supervised": {
+          "actual_norm": 230.00360295665888,
+          "original_gpu_norm": 230.02937629623383,
+          "relative_l2_error": 0.0024334994513330868,
+          "maximum_absolute_error": 0.16540759801864624,
+          "cosine": 0.9999970449860133
+        },
+        "consistency": {
+          "actual_norm": 3.6579898564645474,
+          "original_gpu_norm": 3.657219149057802,
+          "relative_l2_error": 0.003909982120251191,
+          "maximum_absolute_error": 0.00456729531288147,
+          "cosine": 0.9999923798305649
+        }
+      }
+    },
+    {
+      "step": 5,
+      "main_bce": 13.667970664671662,
+      "pair_bce": 12.99115416476673,
+      "consistency": 0.03567736327366529,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0003309176647636747,
+        "pair_bce": -0.0011382394080747815,
+        "consistency": 1.3613251015523464e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 160.98098374288654,
+          "original_gpu_norm": 160.94139313150362,
+          "relative_l2_error": 0.0029833131445303517,
+          "maximum_absolute_error": 0.17182254791259766,
+          "cosine": 0.9999955812648382
+        },
+        "pair": {
+          "actual_norm": 232.3202518211902,
+          "original_gpu_norm": 232.33610680811054,
+          "relative_l2_error": 0.0005154949364565119,
+          "maximum_absolute_error": 0.05022835731506348,
+          "cosine": 0.9999998694520341
+        },
+        "supervised": {
+          "actual_norm": 318.20012963902803,
+          "original_gpu_norm": 318.2009736175235,
+          "relative_l2_error": 0.001531336890905023,
+          "maximum_absolute_error": 0.16405677795410156,
+          "cosine": 0.9999988275040708
+        },
+        "consistency": {
+          "actual_norm": 1.0477679824424384,
+          "original_gpu_norm": 1.0473145265245833,
+          "relative_l2_error": 0.001673393029427902,
+          "maximum_absolute_error": 0.0004443041980266571,
+          "cosine": 0.9999986941748387
+        }
+      }
+    },
+    {
+      "step": 6,
+      "main_bce": 11.809741879397386,
+      "pair_bce": 12.815716621289818,
+      "consistency": 0.03104946791465277,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005360594453875933,
+        "pair_bce": -0.0024138718742445775,
+        "consistency": 1.0133081030792163e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 146.2956099519482,
+          "original_gpu_norm": 146.215247472214,
+          "relative_l2_error": 0.003342175723764296,
+          "maximum_absolute_error": 0.12815189361572266,
+          "cosine": 0.9999945689554903
+        },
+        "pair": {
+          "actual_norm": 247.252430126439,
+          "original_gpu_norm": 247.21036298151225,
+          "relative_l2_error": 0.002125378783157024,
+          "maximum_absolute_error": 0.09984064102172852,
+          "cosine": 0.9999977562428004
+        },
+        "supervised": {
+          "actual_norm": 320.58212241693326,
+          "original_gpu_norm": 320.5297774241826,
+          "relative_l2_error": 0.0021286379492166415,
+          "maximum_absolute_error": 0.10299563407897949,
+          "cosine": 0.9999977481526932
+        },
+        "consistency": {
+          "actual_norm": 0.7403035306249196,
+          "original_gpu_norm": 0.7401895561754777,
+          "relative_l2_error": 0.0009716478206766233,
+          "maximum_absolute_error": 0.00022775959223508835,
+          "cosine": 0.9999995398760393
+        }
+      }
+    },
+    {
+      "step": 7,
+      "main_bce": 13.085830045338593,
+      "pair_bce": 11.434990002231103,
+      "consistency": 0.09393774505019617,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004078620710750158,
+        "pair_bce": -8.385030795921011e-05,
+        "consistency": 2.2237852816103798e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 157.44607763703087,
+          "original_gpu_norm": 157.46902631988698,
+          "relative_l2_error": 0.0025728372641078707,
+          "maximum_absolute_error": 0.11935091018676758,
+          "cosine": 0.9999967003926234
+        },
+        "pair": {
+          "actual_norm": 204.37143525539986,
+          "original_gpu_norm": 204.5259489850058,
+          "relative_l2_error": 0.0031484821711927646,
+          "maximum_absolute_error": 0.11261701583862305,
+          "cosine": 0.9999953253678003
+        },
+        "supervised": {
+          "actual_norm": 313.9915507883757,
+          "original_gpu_norm": 314.111951965393,
+          "relative_l2_error": 0.002199152914368767,
+          "maximum_absolute_error": 0.15640878677368164,
+          "cosine": 0.9999976544261215
+        },
+        "consistency": {
+          "actual_norm": 3.482114601609981,
+          "original_gpu_norm": 3.4838260401042165,
+          "relative_l2_error": 0.004028913284481813,
+          "maximum_absolute_error": 0.0033898279070854187,
+          "cosine": 0.9999920006637222
+        }
+      }
+    },
+    {
+      "step": 8,
+      "main_bce": 12.673531212531296,
+      "pair_bce": 6.0337258849550475,
+      "consistency": 0.08568421645652623,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000439963616164718,
+        "pair_bce": 0.00046077112448106305,
+        "consistency": 4.20852195591459e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 161.04390089656917,
+          "original_gpu_norm": 161.2934690842104,
+          "relative_l2_error": 0.004807486677410692,
+          "maximum_absolute_error": 0.19455718994140625,
+          "cosine": 0.999989625039986
+        },
+        "pair": {
+          "actual_norm": 158.97610088285668,
+          "original_gpu_norm": 158.9805626945773,
+          "relative_l2_error": 0.0012283058976959122,
+          "maximum_absolute_error": 0.038720130920410156,
+          "cosine": 0.9999992460049759
+        },
+        "supervised": {
+          "actual_norm": 278.75345327971417,
+          "original_gpu_norm": 279.0370654744041,
+          "relative_l2_error": 0.0028205782047582193,
+          "maximum_absolute_error": 0.16274642944335938,
+          "cosine": 0.9999965351782152
+        },
+        "consistency": {
+          "actual_norm": 2.8209997521902865,
+          "original_gpu_norm": 2.8181233154010408,
+          "relative_l2_error": 0.005962992469028525,
+          "maximum_absolute_error": 0.0044600218534469604,
+          "cosine": 0.9999827598636748
+        }
+      }
+    },
+    {
+      "step": 9,
+      "main_bce": 12.891168961212074,
+      "pair_bce": 12.986309857352904,
+      "consistency": 0.019222581890166908,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0006109383850940731,
+        "pair_bce": -0.002676157966920556,
+        "consistency": 7.895883859306008e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 158.35004941570014,
+          "original_gpu_norm": 158.40901258536636,
+          "relative_l2_error": 0.002758764834849795,
+          "maximum_absolute_error": 0.1612708568572998,
+          "cosine": 0.9999962624913703
+        },
+        "pair": {
+          "actual_norm": 275.6597343022313,
+          "original_gpu_norm": 275.73218475129727,
+          "relative_l2_error": 0.0007972101868529828,
+          "maximum_absolute_error": 0.04766206443309784,
+          "cosine": 0.9999997166740264
+        },
+        "supervised": {
+          "actual_norm": 363.10274057480666,
+          "original_gpu_norm": 363.20141732648085,
+          "relative_l2_error": 0.0013692887866564119,
+          "maximum_absolute_error": 0.1585397720336914,
+          "cosine": 0.9999990991860206
+        },
+        "consistency": {
+          "actual_norm": 0.4959433110554069,
+          "original_gpu_norm": 0.4968376548523364,
+          "relative_l2_error": 0.0057544740124512465,
+          "maximum_absolute_error": 0.0008960440754890442,
+          "cosine": 0.9999850362090049
+        }
+      }
+    },
+    {
+      "step": 10,
+      "main_bce": 11.819319732439853,
+      "pair_bce": 5.663994748216728,
+      "consistency": 0.08522101189580333,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -6.293510165100713e-05,
+        "pair_bce": 0.0003203936635056692,
+        "consistency": 8.684355882526695e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 150.71965766560123,
+          "original_gpu_norm": 150.74228212471445,
+          "relative_l2_error": 0.0021192837358406076,
+          "maximum_absolute_error": 0.07764077186584473,
+          "cosine": 0.9999977652458718
+        },
+        "pair": {
+          "actual_norm": 149.81205314001218,
+          "original_gpu_norm": 149.61095379077406,
+          "relative_l2_error": 0.00784209858544078,
+          "maximum_absolute_error": 0.2735899090766907,
+          "cosine": 0.9999701941760296
+        },
+        "supervised": {
+          "actual_norm": 266.15048270626534,
+          "original_gpu_norm": 266.0991945907081,
+          "relative_l2_error": 0.004387735557382006,
+          "maximum_absolute_error": 0.2762889862060547,
+          "cosine": 0.999990394314212
+        },
+        "consistency": {
+          "actual_norm": 2.575798248445083,
+          "original_gpu_norm": 2.575985170820147,
+          "relative_l2_error": 0.005537486935330642,
+          "maximum_absolute_error": 0.0033339858055114746,
+          "cosine": 0.999984669639524
+        }
+      }
+    },
+    {
+      "step": 11,
+      "main_bce": 12.18030748434288,
+      "pair_bce": 11.730742184332685,
+      "consistency": 0.0253815693731092,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00047674112098761157,
+        "pair_bce": -0.0021651108943654407,
+        "consistency": 1.0304706790306012e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 152.89153553858424,
+          "original_gpu_norm": 152.77667549739235,
+          "relative_l2_error": 0.004132949721154888,
+          "maximum_absolute_error": 0.16073226928710938,
+          "cosine": 0.9999917481812579
+        },
+        "pair": {
+          "actual_norm": 244.60093998189018,
+          "original_gpu_norm": 244.62174932654412,
+          "relative_l2_error": 0.000573993219450835,
+          "maximum_absolute_error": 0.025691986083984375,
+          "cosine": 0.9999998388704193
+        },
+        "supervised": {
+          "actual_norm": 326.9262819551642,
+          "original_gpu_norm": 326.89682516348927,
+          "relative_l2_error": 0.001920674259422515,
+          "maximum_absolute_error": 0.1470317840576172,
+          "cosine": 0.9999981597309608
+        },
+        "consistency": {
+          "actual_norm": 0.6948983528141115,
+          "original_gpu_norm": 0.6946967969365881,
+          "relative_l2_error": 0.0006473077005419812,
+          "maximum_absolute_error": 0.00010654143989086151,
+          "cosine": 0.9999998326340979
+        }
+      }
+    },
+    {
+      "step": 12,
+      "main_bce": 11.246839374914872,
+      "pair_bce": 10.069744977400806,
+      "consistency": 0.04541414507003794,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004426532833701202,
+        "pair_bce": -0.0002623468179443478,
+        "consistency": 1.2355822048282228e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 161.11805439820398,
+          "original_gpu_norm": 161.13393477189487,
+          "relative_l2_error": 0.0018256668479062583,
+          "maximum_absolute_error": 0.06078529357910156,
+          "cosine": 0.9999983381629327
+        },
+        "pair": {
+          "actual_norm": 211.5932348825285,
+          "original_gpu_norm": 211.58496149134504,
+          "relative_l2_error": 0.0007685151093951356,
+          "maximum_absolute_error": 0.0355757474899292,
+          "cosine": 0.9999997054682626
+        },
+        "supervised": {
+          "actual_norm": 321.60739875103314,
+          "original_gpu_norm": 321.5937233617384,
+          "relative_l2_error": 0.0010251332388152388,
+          "maximum_absolute_error": 0.0580291748046875,
+          "cosine": 0.9999994754773631
+        },
+        "consistency": {
+          "actual_norm": 1.5081472696900287,
+          "original_gpu_norm": 1.509780439957976,
+          "relative_l2_error": 0.006208794658329002,
+          "maximum_absolute_error": 0.0026947706937789917,
+          "cosine": 0.9999812902622695
+        }
+      }
+    },
+    {
+      "step": 13,
+      "main_bce": 12.270755775207427,
+      "pair_bce": 6.631741466352629,
+      "consistency": 0.11386883826217947,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000481598144624229,
+        "pair_bce": 0.00017160398690663214,
+        "consistency": 1.782746277151359e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 160.892713732249,
+          "original_gpu_norm": 160.91243685246468,
+          "relative_l2_error": 0.0016451217968105232,
+          "maximum_absolute_error": 0.06678071618080139,
+          "cosine": 0.9999986541339386
+        },
+        "pair": {
+          "actual_norm": 120.61364397242814,
+          "original_gpu_norm": 120.57648650139343,
+          "relative_l2_error": 0.0015079947871241128,
+          "maximum_absolute_error": 0.048262596130371094,
+          "cosine": 0.999998910794396
+        },
+        "supervised": {
+          "actual_norm": 246.79070683786006,
+          "original_gpu_norm": 246.78621130279296,
+          "relative_l2_error": 0.0012409793303754322,
+          "maximum_absolute_error": 0.06137537956237793,
+          "cosine": 0.9999992301650913
+        },
+        "consistency": {
+          "actual_norm": 3.8995959681841623,
+          "original_gpu_norm": 3.8962969340404197,
+          "relative_l2_error": 0.0050249845462639,
+          "maximum_absolute_error": 0.0070175230503082275,
+          "cosine": 0.9999877436018066
+        }
+      }
+    },
+    {
+      "step": 14,
+      "main_bce": 11.903982668409661,
+      "pair_bce": 11.668103305286778,
+      "consistency": 0.06035014861570082,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0003781027695382022,
+        "pair_bce": -7.542186367004433e-06,
+        "consistency": 1.4590707881075027e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 145.51350781941835,
+          "original_gpu_norm": 145.33014013845326,
+          "relative_l2_error": 0.0038699690460461374,
+          "maximum_absolute_error": 0.15932083129882812,
+          "cosine": 0.9999933160868537
+        },
+        "pair": {
+          "actual_norm": 217.8281699514933,
+          "original_gpu_norm": 217.83159446181412,
+          "relative_l2_error": 0.0006008859714192889,
+          "maximum_absolute_error": 0.03447532653808594,
+          "cosine": 0.9999998195887618
+        },
+        "supervised": {
+          "actual_norm": 317.1058425104435,
+          "original_gpu_norm": 317.0034385951313,
+          "relative_l2_error": 0.0019067128172944427,
+          "maximum_absolute_error": 0.165618896484375,
+          "cosine": 0.9999982349698152
+        },
+        "consistency": {
+          "actual_norm": 1.708359584290747,
+          "original_gpu_norm": 1.707932231943101,
+          "relative_l2_error": 0.0006778072127793473,
+          "maximum_absolute_error": 0.0004241163842380047,
+          "cosine": 0.9999998016424018
+        }
+      }
+    },
+    {
+      "step": 15,
+      "main_bce": 11.977182632013026,
+      "pair_bce": 5.764690392954532,
+      "consistency": 0.07573858300238243,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00035452313834127835,
+        "pair_bce": 0.00011681888836978516,
+        "consistency": 1.1172387891916769e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 162.41933601427704,
+          "original_gpu_norm": 162.43310745222217,
+          "relative_l2_error": 0.0028586511911432083,
+          "maximum_absolute_error": 0.16304701566696167,
+          "cosine": 0.9999959173045554
+        },
+        "pair": {
+          "actual_norm": 159.3684258607638,
+          "original_gpu_norm": 159.36363915484614,
+          "relative_l2_error": 0.00013811686544288462,
+          "maximum_absolute_error": 0.0037751197814941406,
+          "cosine": 0.9999999909132303
+        },
+        "supervised": {
+          "actual_norm": 281.33611843933744,
+          "original_gpu_norm": 281.34808010325804,
+          "relative_l2_error": 0.0016536618055056035,
+          "maximum_absolute_error": 0.1628892421722412,
+          "cosine": 0.9999986335470064
+        },
+        "consistency": {
+          "actual_norm": 2.4033248251470685,
+          "original_gpu_norm": 2.4030809456491795,
+          "relative_l2_error": 0.0010262925235836073,
+          "maximum_absolute_error": 0.0007681325078010559,
+          "cosine": 0.9999994785644688
+        }
+      }
+    },
+    {
+      "step": 16,
+      "main_bce": 13.137947176374169,
+      "pair_bce": 12.773990202195625,
+      "consistency": 0.05664214468876094,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005644813406746607,
+        "pair_bce": -0.00025124525310538104,
+        "consistency": 8.150705492204757e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 173.8374775204395,
+          "original_gpu_norm": 173.86506498058608,
+          "relative_l2_error": 0.0027281005210432322,
+          "maximum_absolute_error": 0.1904752254486084,
+          "cosine": 0.9999962907335672
+        },
+        "pair": {
+          "actual_norm": 239.0492460439006,
+          "original_gpu_norm": 239.0715182634373,
+          "relative_l2_error": 0.0005390299603687402,
+          "maximum_absolute_error": 0.02552032470703125,
+          "cosine": 0.9999998590497361
+        },
+        "supervised": {
+          "actual_norm": 342.9399088911687,
+          "original_gpu_norm": 342.9810516074423,
+          "relative_l2_error": 0.001444515263732545,
+          "maximum_absolute_error": 0.18043017387390137,
+          "cosine": 0.9999989637582722
+        },
+        "consistency": {
+          "actual_norm": 1.918892843795613,
+          "original_gpu_norm": 1.918479186668093,
+          "relative_l2_error": 0.0004930307207151031,
+          "maximum_absolute_error": 0.00019977986812591553,
+          "cosine": 0.9999999017269341
+        }
+      }
+    },
+    {
+      "step": 17,
+      "main_bce": 12.017262433663248,
+      "pair_bce": 6.765856102667621,
+      "consistency": 0.0954644203765837,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000498796805501911,
+        "pair_bce": 0.0007088935001409169,
+        "consistency": 1.4853535458214662e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 155.74323773549892,
+          "original_gpu_norm": 155.7273826779897,
+          "relative_l2_error": 0.0024302770424494574,
+          "maximum_absolute_error": 0.16251301765441895,
+          "cosine": 0.9999970523597903
+        },
+        "pair": {
+          "actual_norm": 177.96160870742528,
+          "original_gpu_norm": 177.66650230684118,
+          "relative_l2_error": 0.005998240164487541,
+          "maximum_absolute_error": 0.18083786964416504,
+          "cosine": 0.9999834175834557
+        },
+        "supervised": {
+          "actual_norm": 293.22223543468743,
+          "original_gpu_norm": 292.97049269055975,
+          "relative_l2_error": 0.003969503587958351,
+          "maximum_absolute_error": 0.1800823211669922,
+          "cosine": 0.9999924971459604
+        },
+        "consistency": {
+          "actual_norm": 2.820619904703415,
+          "original_gpu_norm": 2.820073058818201,
+          "relative_l2_error": 0.0016184062005284874,
+          "maximum_absolute_error": 0.0011063218116760254,
+          "cosine": 0.9999987094318651
+        }
+      }
+    },
+    {
+      "step": 18,
+      "main_bce": 11.971286013847628,
+      "pair_bce": 11.940812670349839,
+      "consistency": 0.03949064116419379,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00038413690920791055,
+        "pair_bce": 0.00020750677562020314,
+        "consistency": 7.809209237735759e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 144.2956858493766,
+          "original_gpu_norm": 144.33306232150014,
+          "relative_l2_error": 0.0016595531186732481,
+          "maximum_absolute_error": 0.09950578212738037,
+          "cosine": 0.9999986561238221
+        },
+        "pair": {
+          "actual_norm": 264.3472650387022,
+          "original_gpu_norm": 263.540376246065,
+          "relative_l2_error": 0.007405934705324761,
+          "maximum_absolute_error": 0.5569467544555664,
+          "cosine": 0.9999773325544651
+        },
+        "supervised": {
+          "actual_norm": 349.9543150136053,
+          "original_gpu_norm": 349.1914974535682,
+          "relative_l2_error": 0.005755414781635631,
+          "maximum_absolute_error": 0.5890588760375977,
+          "cosine": 0.9999858545761409
+        },
+        "consistency": {
+          "actual_norm": 1.2835868409208722,
+          "original_gpu_norm": 1.283572656649416,
+          "relative_l2_error": 0.0025893731039859404,
+          "maximum_absolute_error": 0.0006245025433599949,
+          "cosine": 0.9999966476715675
+        }
+      }
+    },
+    {
+      "step": 19,
+      "main_bce": 11.980429355273394,
+      "pair_bce": 8.01990349327184,
+      "consistency": 0.07217918935068449,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000523861279340565,
+        "pair_bce": 0.0008471730814108014,
+        "consistency": 4.9382711251599876e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 157.97717322121866,
+          "original_gpu_norm": 158.0814554464512,
+          "relative_l2_error": 0.0030707535694595974,
+          "maximum_absolute_error": 0.12097784783691168,
+          "cosine": 0.9999954998525172
+        },
+        "pair": {
+          "actual_norm": 224.95774170058138,
+          "original_gpu_norm": 224.8502870614319,
+          "relative_l2_error": 0.000980623321155063,
+          "maximum_absolute_error": 0.044208526611328125,
+          "cosine": 0.9999996335554867
+        },
+        "supervised": {
+          "actual_norm": 331.1343359910647,
+          "original_gpu_norm": 331.15403065500396,
+          "relative_l2_error": 0.0016251791805933038,
+          "maximum_absolute_error": 0.12538844347000122,
+          "cosine": 0.999998681086384
+        },
+        "consistency": {
+          "actual_norm": 2.517951710497863,
+          "original_gpu_norm": 2.5188465353241516,
+          "relative_l2_error": 0.00696918843230401,
+          "maximum_absolute_error": 0.004157260060310364,
+          "cosine": 0.9999757697003685
+        }
+      }
+    },
+    {
+      "step": 20,
+      "main_bce": 13.550887629917472,
+      "pair_bce": 5.60598070008929,
+      "consistency": 0.0965419392416797,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005554700581136274,
+        "pair_bce": 0.000242537094905515,
+        "consistency": 1.3789100440531055e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 176.08410389296608,
+          "original_gpu_norm": 176.13501462914692,
+          "relative_l2_error": 0.0014354908995559807,
+          "maximum_absolute_error": 0.0613250732421875,
+          "cosine": 0.9999990111702862
+        },
+        "pair": {
+          "actual_norm": 123.42123540899642,
+          "original_gpu_norm": 123.31177893401512,
+          "relative_l2_error": 0.005120456151091086,
+          "maximum_absolute_error": 0.09845638275146484,
+          "cosine": 0.9999872956936925
+        },
+        "supervised": {
+          "actual_norm": 268.0857744713412,
+          "original_gpu_norm": 267.97609302755154,
+          "relative_l2_error": 0.0025011004544690106,
+          "maximum_absolute_error": 0.11689186096191406,
+          "cosine": 0.999996957255097
+        },
+        "consistency": {
+          "actual_norm": 3.1719433754408173,
+          "original_gpu_norm": 3.1712792802633767,
+          "relative_l2_error": 0.0009530380507803763,
+          "maximum_absolute_error": 0.0012569278478622437,
+          "cosine": 0.999999567875842
+        }
+      }
+    },
+    {
+      "step": 21,
+      "main_bce": 12.105400272106728,
+      "pair_bce": 12.033514745075204,
+      "consistency": 0.03876916955450629,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00026779582540115143,
+        "pair_bce": -0.00010990397264798446,
+        "consistency": 8.492574487671545e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 153.2303397349633,
+          "original_gpu_norm": 153.1802038462786,
+          "relative_l2_error": 0.0017625724638601747,
+          "maximum_absolute_error": 0.06548690795898438,
+          "cosine": 0.9999985007225305
+        },
+        "pair": {
+          "actual_norm": 260.97846926157195,
+          "original_gpu_norm": 260.5971560563644,
+          "relative_l2_error": 0.006373783954891442,
+          "maximum_absolute_error": 0.3399925231933594,
+          "cosine": 0.9999807860723472
+        },
+        "supervised": {
+          "actual_norm": 360.1443761198908,
+          "original_gpu_norm": 359.6296951603826,
+          "relative_l2_error": 0.00473932491911751,
+          "maximum_absolute_error": 0.3768348693847656,
+          "cosine": 0.9999898080686602
+        },
+        "consistency": {
+          "actual_norm": 1.145529114860871,
+          "original_gpu_norm": 1.1449567337746935,
+          "relative_l2_error": 0.0027835582927556463,
+          "maximum_absolute_error": 0.0007578209042549133,
+          "cosine": 0.9999962527324522
+        }
+      }
+    },
+    {
+      "step": 22,
+      "main_bce": 14.788591373116422,
+      "pair_bce": 12.652136616737442,
+      "consistency": 0.1338156954608939,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005531428747893585,
+        "pair_bce": -0.001211352317733727,
+        "consistency": 3.399413452365163e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 171.01987085372744,
+          "original_gpu_norm": 171.05010185879806,
+          "relative_l2_error": 0.0023733672616817647,
+          "maximum_absolute_error": 0.1552872657775879,
+          "cosine": 0.999997198686934
+        },
+        "pair": {
+          "actual_norm": 270.64080045056556,
+          "original_gpu_norm": 270.6706386756293,
+          "relative_l2_error": 0.002016007483184575,
+          "maximum_absolute_error": 0.11443328857421875,
+          "cosine": 0.999997973709762
+        },
+        "supervised": {
+          "actual_norm": 388.6543681967752,
+          "original_gpu_norm": 388.73412038426096,
+          "relative_l2_error": 0.0018049056671090382,
+          "maximum_absolute_error": 0.15042591094970703,
+          "cosine": 0.9999983918728916
+        },
+        "consistency": {
+          "actual_norm": 4.8743338582743405,
+          "original_gpu_norm": 4.870749764266943,
+          "relative_l2_error": 0.003478828420418026,
+          "maximum_absolute_error": 0.004120916128158569,
+          "cosine": 0.9999942238572087
+        }
+      }
+    },
+    {
+      "step": 23,
+      "main_bce": 12.203295959023007,
+      "pair_bce": 13.487362843794518,
+      "consistency": 0.031023773059586483,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00044320723675816964,
+        "pair_bce": -0.0012026011517711765,
+        "consistency": 9.356692770915581e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 145.32158035475132,
+          "original_gpu_norm": 145.32813096308604,
+          "relative_l2_error": 0.00076148646968975,
+          "maximum_absolute_error": 0.02564485464245081,
+          "cosine": 0.9999997110720149
+        },
+        "pair": {
+          "actual_norm": 248.4225084460398,
+          "original_gpu_norm": 248.3812274728051,
+          "relative_l2_error": 0.002124086435416912,
+          "maximum_absolute_error": 0.2921028137207031,
+          "cosine": 0.9999977583122048
+        },
+        "supervised": {
+          "actual_norm": 322.62730098356786,
+          "original_gpu_norm": 322.60512833719184,
+          "relative_l2_error": 0.0016883742024309516,
+          "maximum_absolute_error": 0.2964439392089844,
+          "cosine": 0.9999985771559741
+        },
+        "consistency": {
+          "actual_norm": 0.8576570600011962,
+          "original_gpu_norm": 0.8575323178962914,
+          "relative_l2_error": 0.0022960649303624572,
+          "maximum_absolute_error": 0.0007388554513454437,
+          "cosine": 0.9999973750049971
+        }
+      }
+    },
+    {
+      "step": 24,
+      "main_bce": 13.507126990579021,
+      "pair_bce": 10.028917437632844,
+      "consistency": 0.04899982949964436,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00027733681355712747,
+        "pair_bce": -0.0018795670668634301,
+        "consistency": 1.0362176817976798e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 162.7926811704766,
+          "original_gpu_norm": 162.79683228087202,
+          "relative_l2_error": 0.0023880947220289482,
+          "maximum_absolute_error": 0.16359210014343262,
+          "cosine": 0.9999971487541882
+        },
+        "pair": {
+          "actual_norm": 210.66783087609144,
+          "original_gpu_norm": 210.68791869733823,
+          "relative_l2_error": 0.0001502668832952004,
+          "maximum_absolute_error": 0.006526947021484375,
+          "cosine": 0.9999999932545243
+        },
+        "supervised": {
+          "actual_norm": 297.48320658527024,
+          "original_gpu_norm": 297.4945538262942,
+          "relative_l2_error": 0.0013104336353972573,
+          "maximum_absolute_error": 0.16353678703308105,
+          "cosine": 0.9999991420765525
+        },
+        "consistency": {
+          "actual_norm": 1.105707284362602,
+          "original_gpu_norm": 1.105539505312837,
+          "relative_l2_error": 0.00048048206530618755,
+          "maximum_absolute_error": 0.00011455081403255463,
+          "cosine": 0.9999998961001352
+        }
+      }
+    },
+    {
+      "step": 25,
+      "main_bce": 12.415292804458911,
+      "pair_bce": 12.265670804309684,
+      "consistency": 0.04548317457593048,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0003432581631592768,
+        "pair_bce": -0.00015255994812868323,
+        "consistency": 9.602709179760971e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 152.4821452377786,
+          "original_gpu_norm": 152.46384121876386,
+          "relative_l2_error": 0.0025048020260673666,
+          "maximum_absolute_error": 0.11167335510253906,
+          "cosine": 0.9999968705656886
+        },
+        "pair": {
+          "actual_norm": 216.48961705531676,
+          "original_gpu_norm": 216.65751842259326,
+          "relative_l2_error": 0.004753614518862442,
+          "maximum_absolute_error": 0.26505279541015625,
+          "cosine": 0.9999889933278839
+        },
+        "supervised": {
+          "actual_norm": 314.904909838149,
+          "original_gpu_norm": 315.0602815701275,
+          "relative_l2_error": 0.003495154475833155,
+          "maximum_absolute_error": 0.266845703125,
+          "cosine": 0.9999940105919992
+        },
+        "consistency": {
+          "actual_norm": 1.2868179112477742,
+          "original_gpu_norm": 1.2864929984239548,
+          "relative_l2_error": 0.0017528912568279445,
+          "maximum_absolute_error": 0.0006846487522125244,
+          "cosine": 0.9999984959584987
+        }
+      }
+    },
+    {
+      "step": 26,
+      "main_bce": 12.288056239511931,
+      "pair_bce": 6.267361498533403,
+      "consistency": 0.07150550221245511,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00029100475076404564,
+        "pair_bce": 0.000757075010453967,
+        "consistency": 1.1600900103880818e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 135.63797432573753,
+          "original_gpu_norm": 135.55604542813126,
+          "relative_l2_error": 0.002904074687661513,
+          "maximum_absolute_error": 0.08053445816040039,
+          "cosine": 0.9999959682562908
+        },
+        "pair": {
+          "actual_norm": 168.67265018064901,
+          "original_gpu_norm": 168.67961047731035,
+          "relative_l2_error": 0.0022816936502678456,
+          "maximum_absolute_error": 0.07480144500732422,
+          "cosine": 0.9999973976809972
+        },
+        "supervised": {
+          "actual_norm": 264.8692379827522,
+          "original_gpu_norm": 264.85707989014674,
+          "relative_l2_error": 0.002115170518005348,
+          "maximum_absolute_error": 0.14326858520507812,
+          "cosine": 0.9999977641830784
+        },
+        "consistency": {
+          "actual_norm": 2.200788187070562,
+          "original_gpu_norm": 2.20533293034371,
+          "relative_l2_error": 0.005599113102374779,
+          "maximum_absolute_error": 0.002674877643585205,
+          "cosine": 0.9999864204234222
+        }
+      }
+    },
+    {
+      "step": 27,
+      "main_bce": 12.197132807013922,
+      "pair_bce": 10.257374334980714,
+      "consistency": 0.025422136361435692,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0003311822438902823,
+        "pair_bce": -0.0014490597946767991,
+        "consistency": 1.0953346923629759e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 155.41841579820098,
+          "original_gpu_norm": 155.0637539536916,
+          "relative_l2_error": 0.006332689087514305,
+          "maximum_absolute_error": 0.19844341278076172,
+          "cosine": 0.9999826039550078
+        },
+        "pair": {
+          "actual_norm": 200.91135820361401,
+          "original_gpu_norm": 200.9338478516465,
+          "relative_l2_error": 0.00037377049426043433,
+          "maximum_absolute_error": 0.038405418395996094,
+          "cosine": 0.9999999364043645
+        },
+        "supervised": {
+          "actual_norm": 278.80735537483594,
+          "original_gpu_norm": 278.6551232766043,
+          "relative_l2_error": 0.0035511085873579915,
+          "maximum_absolute_error": 0.19987106323242188,
+          "cosine": 0.9999938474024695
+        },
+        "consistency": {
+          "actual_norm": 0.7983708261714934,
+          "original_gpu_norm": 0.7981855344130196,
+          "relative_l2_error": 0.0007908921652198797,
+          "maximum_absolute_error": 0.0001589469611644745,
+          "cosine": 0.9999997142558962
+        }
+      }
+    },
+    {
+      "step": 28,
+      "main_bce": 12.959083779980318,
+      "pair_bce": 4.932889256026867,
+      "consistency": 0.09667181315447879,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005195296510294156,
+        "pair_bce": 0.00019100620997214435,
+        "consistency": 1.838150050234577e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 150.08227798605984,
+          "original_gpu_norm": 150.01951813649242,
+          "relative_l2_error": 0.0025457871108714204,
+          "maximum_absolute_error": 0.19305896759033203,
+          "cosine": 0.9999968483085723
+        },
+        "pair": {
+          "actual_norm": 101.48352130628567,
+          "original_gpu_norm": 101.54096661257847,
+          "relative_l2_error": 0.00665360749125232,
+          "maximum_absolute_error": 0.15648937225341797,
+          "cosine": 0.9999780123426816
+        },
+        "supervised": {
+          "actual_norm": 223.99849014176573,
+          "original_gpu_norm": 223.9338267212367,
+          "relative_l2_error": 0.003347737398470288,
+          "maximum_absolute_error": 0.19595050811767578,
+          "cosine": 0.9999944396243177
+        },
+        "consistency": {
+          "actual_norm": 3.044159718893626,
+          "original_gpu_norm": 3.04579777610451,
+          "relative_l2_error": 0.002194798471296748,
+          "maximum_absolute_error": 0.001481384038925171,
+          "cosine": 0.9999977348308241
+        }
+      }
+    },
+    {
+      "step": 29,
+      "main_bce": 11.316200114692052,
+      "pair_bce": 11.99671860477188,
+      "consistency": 0.025807779736377445,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00036539891878817343,
+        "pair_bce": -0.0025566027476511266,
+        "consistency": 1.0509497977938959e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 149.8828135022439,
+          "original_gpu_norm": 149.8781169501073,
+          "relative_l2_error": 0.002760779523028779,
+          "maximum_absolute_error": 0.09119367599487305,
+          "cosine": 0.9999961896585794
+        },
+        "pair": {
+          "actual_norm": 259.2251078162393,
+          "original_gpu_norm": 259.32696189131684,
+          "relative_l2_error": 0.0026989889114231148,
+          "maximum_absolute_error": 0.1610565185546875,
+          "cosine": 0.9999964334600697
+        },
+        "supervised": {
+          "actual_norm": 326.18122230543804,
+          "original_gpu_norm": 326.339931778056,
+          "relative_l2_error": 0.0025053567577484155,
+          "maximum_absolute_error": 0.16431903839111328,
+          "cosine": 0.9999969783835394
+        },
+        "consistency": {
+          "actual_norm": 0.6524233509056783,
+          "original_gpu_norm": 0.6523305929923332,
+          "relative_l2_error": 0.009063075212692857,
+          "maximum_absolute_error": 0.0023049667943269014,
+          "cosine": 0.999958946281121
+        }
+      }
+    },
+    {
+      "step": 30,
+      "main_bce": 11.959943644030567,
+      "pair_bce": 13.367728622602348,
+      "consistency": 0.01954925068922258,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00033391334248022986,
+        "pair_bce": -0.0020481031666950145,
+        "consistency": 8.028087093596425e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 144.4030467472003,
+          "original_gpu_norm": 144.39709732548633,
+          "relative_l2_error": 0.004227315199027326,
+          "maximum_absolute_error": 0.2907404899597168,
+          "cosine": 0.9999910661199906
+        },
+        "pair": {
+          "actual_norm": 254.86441707928046,
+          "original_gpu_norm": 254.89191498623217,
+          "relative_l2_error": 0.0005850358337223076,
+          "maximum_absolute_error": 0.030719995498657227,
+          "cosine": 0.9999998346678185
+        },
+        "supervised": {
+          "actual_norm": 327.097042298644,
+          "original_gpu_norm": 327.1180886732978,
+          "relative_l2_error": 0.0019837877874644824,
+          "maximum_absolute_error": 0.3201611042022705,
+          "cosine": 0.9999980342362711
+        },
+        "consistency": {
+          "actual_norm": 0.5150788089080359,
+          "original_gpu_norm": 0.5149783260128872,
+          "relative_l2_error": 0.0013825075303005808,
+          "maximum_absolute_error": 0.0001522991806268692,
+          "cosine": 0.999999063555214
+        }
+      }
+    },
+    {
+      "step": 31,
+      "main_bce": 11.974813377268823,
+      "pair_bce": 7.576719932975789,
+      "consistency": 0.05916112616509976,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00021656810471171184,
+        "pair_bce": 0.0008656315231521106,
+        "consistency": 6.585864730498936e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 153.45055978420308,
+          "original_gpu_norm": 153.46085047612223,
+          "relative_l2_error": 0.0023176116094189626,
+          "maximum_absolute_error": 0.16167902946472168,
+          "cosine": 0.9999973164066094
+        },
+        "pair": {
+          "actual_norm": 191.19444043472618,
+          "original_gpu_norm": 191.29579407436356,
+          "relative_l2_error": 0.0019853161433128126,
+          "maximum_absolute_error": 0.10466384887695312,
+          "cosine": 0.9999981686478286
+        },
+        "supervised": {
+          "actual_norm": 306.37596986196115,
+          "original_gpu_norm": 306.431943042467,
+          "relative_l2_error": 0.0016592419143412742,
+          "maximum_absolute_error": 0.15927469730377197,
+          "cosine": 0.9999986398922256
+        },
+        "consistency": {
+          "actual_norm": 1.6041501293440756,
+          "original_gpu_norm": 1.604229297570316,
+          "relative_l2_error": 0.002607041622433867,
+          "maximum_absolute_error": 0.000669531524181366,
+          "cosine": 0.9999966027170306
+        }
+      }
+    },
+    {
+      "step": 32,
+      "main_bce": 11.56130571138582,
+      "pair_bce": 11.857254751066698,
+      "consistency": 0.02619561165933825,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0003531478671092714,
+        "pair_bce": -0.0005381032423841248,
+        "consistency": 1.1063966800943514e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 144.3575368351508,
+          "original_gpu_norm": 144.35527757021927,
+          "relative_l2_error": 0.0013201199097348693,
+          "maximum_absolute_error": 0.04820120334625244,
+          "cosine": 0.9999991287778199
+        },
+        "pair": {
+          "actual_norm": 231.7994718997997,
+          "original_gpu_norm": 231.81944355516305,
+          "relative_l2_error": 0.0007026410265078787,
+          "maximum_absolute_error": 0.032257080078125,
+          "cosine": 0.9999997568379091
+        },
+        "supervised": {
+          "actual_norm": 321.4977129852429,
+          "original_gpu_norm": 321.5122975666492,
+          "relative_l2_error": 0.0007995191109891139,
+          "maximum_absolute_error": 0.07498705387115479,
+          "cosine": 0.9999996813990182
+        },
+        "consistency": {
+          "actual_norm": 0.836260777553114,
+          "original_gpu_norm": 0.8360137514839466,
+          "relative_l2_error": 0.0006651131407297411,
+          "maximum_absolute_error": 8.878856897354126e-05,
+          "cosine": 0.9999998225191691
+        }
+      }
+    },
+    {
+      "step": 33,
+      "main_bce": 13.272988352771891,
+      "pair_bce": 7.766047244706735,
+      "consistency": 0.08912092529202825,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005902910269366402,
+        "pair_bce": -0.0004389232009796018,
+        "consistency": 2.7299746526543434e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 164.14080114318926,
+          "original_gpu_norm": 164.0410439440117,
+          "relative_l2_error": 0.002769194254150394,
+          "maximum_absolute_error": 0.30100059509277344,
+          "cosine": 0.999996352906516
+        },
+        "pair": {
+          "actual_norm": 171.40180693024024,
+          "original_gpu_norm": 171.36559359379459,
+          "relative_l2_error": 0.0015294279370801868,
+          "maximum_absolute_error": 0.053122520446777344,
+          "cosine": 0.9999988529959939
+        },
+        "supervised": {
+          "actual_norm": 294.10253209578576,
+          "original_gpu_norm": 293.9649147647424,
+          "relative_l2_error": 0.0017862487024777874,
+          "maximum_absolute_error": 0.30813002586364746,
+          "cosine": 0.9999985149314881
+        },
+        "consistency": {
+          "actual_norm": 3.3875293504420387,
+          "original_gpu_norm": 3.3864009750468944,
+          "relative_l2_error": 0.005557277354438232,
+          "maximum_absolute_error": 0.004990056157112122,
+          "cosine": 0.9999846189730184
+        }
+      }
+    },
+    {
+      "step": 34,
+      "main_bce": 11.78890928388291,
+      "pair_bce": 10.683864976145419,
+      "consistency": 0.05171385035294164,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004917704994138461,
+        "pair_bce": 0.0008310329691489926,
+        "consistency": 6.9737471925096495e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 149.99052484443348,
+          "original_gpu_norm": 150.0318530751622,
+          "relative_l2_error": 0.000613989159198776,
+          "maximum_absolute_error": 0.03075265884399414,
+          "cosine": 0.9999998494071174
+        },
+        "pair": {
+          "actual_norm": 255.6163497756787,
+          "original_gpu_norm": 256.14395404005825,
+          "relative_l2_error": 0.00522844194709217,
+          "maximum_absolute_error": 0.3656578063964844,
+          "cosine": 0.9999884292435653
+        },
+        "supervised": {
+          "actual_norm": 351.90930310883437,
+          "original_gpu_norm": 352.3984113049814,
+          "relative_l2_error": 0.003835985016805951,
+          "maximum_absolute_error": 0.3720130920410156,
+          "cosine": 0.999993596912449
+        },
+        "consistency": {
+          "actual_norm": 1.64172219209273,
+          "original_gpu_norm": 1.6420596605442164,
+          "relative_l2_error": 0.009928195487206132,
+          "maximum_absolute_error": 0.005052648484706879,
+          "cosine": 0.9999507264589931
+        }
+      }
+    },
+    {
+      "step": 35,
+      "main_bce": 12.409641039051468,
+      "pair_bce": 12.059734424097643,
+      "consistency": 0.025596620253450116,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005075815540003248,
+        "pair_bce": -0.00307647372950548,
+        "consistency": 1.1224038130482061e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 163.06333043023787,
+          "original_gpu_norm": 163.02414394971433,
+          "relative_l2_error": 0.0023566972540363757,
+          "maximum_absolute_error": 0.13319921493530273,
+          "cosine": 0.9999972525388495
+        },
+        "pair": {
+          "actual_norm": 277.4554107833577,
+          "original_gpu_norm": 277.5302774358189,
+          "relative_l2_error": 0.000661490926982998,
+          "maximum_absolute_error": 0.04908943176269531,
+          "cosine": 0.9999998175509704
+        },
+        "supervised": {
+          "actual_norm": 355.2538941079896,
+          "original_gpu_norm": 355.3300010966942,
+          "relative_l2_error": 0.001273910660999205,
+          "maximum_absolute_error": 0.1441669464111328,
+          "cosine": 0.9999992113448826
+        },
+        "consistency": {
+          "actual_norm": 0.6960498810419721,
+          "original_gpu_norm": 0.6958693223153,
+          "relative_l2_error": 0.008174941715586415,
+          "maximum_absolute_error": 0.002059353981167078,
+          "cosine": 0.9999666274861171
+        }
+      }
+    },
+    {
+      "step": 36,
+      "main_bce": 12.380086944223336,
+      "pair_bce": 11.28334374755509,
+      "consistency": 0.04363226427174356,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005111240139683559,
+        "pair_bce": 0.0005135092128050189,
+        "consistency": 6.946757800843639e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 163.7841898959633,
+          "original_gpu_norm": 163.79254256593975,
+          "relative_l2_error": 0.0017889481349317295,
+          "maximum_absolute_error": 0.08317756652832031,
+          "cosine": 0.9999984010510128
+        },
+        "pair": {
+          "actual_norm": 234.7701316281813,
+          "original_gpu_norm": 234.86785283373843,
+          "relative_l2_error": 0.0016643970084813415,
+          "maximum_absolute_error": 0.10786962509155273,
+          "cosine": 0.9999987009074455
+        },
+        "supervised": {
+          "actual_norm": 337.0291976462893,
+          "original_gpu_norm": 337.0991351855094,
+          "relative_l2_error": 0.0013876159987954203,
+          "maximum_absolute_error": 0.09861183166503906,
+          "cosine": 0.9999990585872491
+        },
+        "consistency": {
+          "actual_norm": 1.342633953429311,
+          "original_gpu_norm": 1.3429687902295944,
+          "relative_l2_error": 0.003608212757600359,
+          "maximum_absolute_error": 0.0009073168039321899,
+          "cosine": 0.9999935198663669
+        }
+      }
+    },
+    {
+      "step": 37,
+      "main_bce": 12.661432276605984,
+      "pair_bce": 11.240577579453628,
+      "consistency": 0.02609401151271434,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00021075165329342838,
+        "pair_bce": -0.0025225868671725493,
+        "consistency": 8.1896010217207e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 155.61149201302922,
+          "original_gpu_norm": 155.62329329704312,
+          "relative_l2_error": 0.0026251691766296234,
+          "maximum_absolute_error": 0.08244350552558899,
+          "cosine": 0.99999655685757
+        },
+        "pair": {
+          "actual_norm": 238.81193035747177,
+          "original_gpu_norm": 238.86489180213596,
+          "relative_l2_error": 0.002965979251473639,
+          "maximum_absolute_error": 0.14836406707763672,
+          "cosine": 0.9999956250937069
+        },
+        "supervised": {
+          "actual_norm": 324.10782970378426,
+          "original_gpu_norm": 324.04216170423507,
+          "relative_l2_error": 0.0023898763944040693,
+          "maximum_absolute_error": 0.15935897827148438,
+          "cosine": 0.9999971653539045
+        },
+        "consistency": {
+          "actual_norm": 0.7084756339759021,
+          "original_gpu_norm": 0.7079905053185458,
+          "relative_l2_error": 0.0016677911729786241,
+          "maximum_absolute_error": 0.0002635866403579712,
+          "cosine": 0.9999988447905199
+        }
+      }
+    },
+    {
+      "step": 38,
+      "main_bce": 12.0008978612111,
+      "pair_bce": 14.196958754592469,
+      "consistency": 0.039634135778214535,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004487269236648217,
+        "pair_bce": -0.00020578092999201658,
+        "consistency": 7.07548406322922e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 150.15248728645983,
+          "original_gpu_norm": 150.1809834337964,
+          "relative_l2_error": 0.0028957894031221908,
+          "maximum_absolute_error": 0.1435387134552002,
+          "cosine": 0.9999958244112218
+        },
+        "pair": {
+          "actual_norm": 268.95759240395233,
+          "original_gpu_norm": 268.95455980291126,
+          "relative_l2_error": 0.0017817610852708134,
+          "maximum_absolute_error": 0.15177154541015625,
+          "cosine": 0.9999984127451832
+        },
+        "supervised": {
+          "actual_norm": 363.89939223650435,
+          "original_gpu_norm": 363.90953314944505,
+          "relative_l2_error": 0.001764257265813013,
+          "maximum_absolute_error": 0.15655899047851562,
+          "cosine": 0.9999984440430637
+        },
+        "consistency": {
+          "actual_norm": 1.144310427199756,
+          "original_gpu_norm": 1.14615835449789,
+          "relative_l2_error": 0.014112267940852822,
+          "maximum_absolute_error": 0.00540494080632925,
+          "cosine": 0.9999015629609322
+        }
+      }
+    },
+    {
+      "step": 39,
+      "main_bce": 13.171114898417965,
+      "pair_bce": 11.804583510456897,
+      "consistency": 0.027367709435159218,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00036337306640987777,
+        "pair_bce": -0.0017385873214230685,
+        "consistency": 9.812645250809049e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 164.71167410526573,
+          "original_gpu_norm": 164.72053321352044,
+          "relative_l2_error": 0.0025556983246610397,
+          "maximum_absolute_error": 0.16348481178283691,
+          "cosine": 0.999996735473749
+        },
+        "pair": {
+          "actual_norm": 233.14457927636983,
+          "original_gpu_norm": 233.17986254945845,
+          "relative_l2_error": 0.0009502497412329883,
+          "maximum_absolute_error": 0.04913473129272461,
+          "cosine": 0.9999995598940161
+        },
+        "supervised": {
+          "actual_norm": 311.75082843895547,
+          "original_gpu_norm": 311.7729444073648,
+          "relative_l2_error": 0.0015346086103055036,
+          "maximum_absolute_error": 0.16654396057128906,
+          "cosine": 0.9999988249208188
+        },
+        "consistency": {
+          "actual_norm": 0.7909787131940306,
+          "original_gpu_norm": 0.7930092003332871,
+          "relative_l2_error": 0.009689903521574037,
+          "maximum_absolute_error": 0.002367071807384491,
+          "cosine": 0.9999562188222934
+        }
+      }
+    },
+    {
+      "step": 40,
+      "main_bce": 11.6046846821147,
+      "pair_bce": 12.007667363310166,
+      "consistency": 0.05847639037757607,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00040641285600351296,
+        "pair_bce": -0.0003568523880765895,
+        "consistency": 2.4022594983297285e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 151.87749182293632,
+          "original_gpu_norm": 151.89195303654412,
+          "relative_l2_error": 0.001513418490590802,
+          "maximum_absolute_error": 0.07658654451370239,
+          "cosine": 0.9999988592058335
+        },
+        "pair": {
+          "actual_norm": 228.52031103712667,
+          "original_gpu_norm": 228.57469014764598,
+          "relative_l2_error": 0.00533430968397989,
+          "maximum_absolute_error": 0.3742971420288086,
+          "cosine": 0.9999857974906918
+        },
+        "supervised": {
+          "actual_norm": 349.8005230357007,
+          "original_gpu_norm": 349.81972051205366,
+          "relative_l2_error": 0.0035225268339496136,
+          "maximum_absolute_error": 0.3838653564453125,
+          "cosine": 0.9999937970677547
+        },
+        "consistency": {
+          "actual_norm": 2.2411457257478298,
+          "original_gpu_norm": 2.2407766881308055,
+          "relative_l2_error": 0.003985198007871429,
+          "maximum_absolute_error": 0.0028100423514842987,
+          "cosine": 0.9999920739654719
+        }
+      }
+    },
+    {
+      "step": 41,
+      "main_bce": 12.054203490597164,
+      "pair_bce": 11.775976553369462,
+      "consistency": 0.03782134585020984,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00041153015478911925,
+        "pair_bce": -0.0024982543697955606,
+        "consistency": 1.1497064809448676e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 163.21978799174414,
+          "original_gpu_norm": 163.06478590050378,
+          "relative_l2_error": 0.003282360807532974,
+          "maximum_absolute_error": 0.19788387417793274,
+          "cosine": 0.9999950695181187
+        },
+        "pair": {
+          "actual_norm": 243.0979284921199,
+          "original_gpu_norm": 243.14088829167252,
+          "relative_l2_error": 0.0021742223930152054,
+          "maximum_absolute_error": 0.12112569808959961,
+          "cosine": 0.9999976515726794
+        },
+        "supervised": {
+          "actual_norm": 320.71101427124006,
+          "original_gpu_norm": 320.7147355101384,
+          "relative_l2_error": 0.0021830507807610025,
+          "maximum_absolute_error": 0.1842050850391388,
+          "cosine": 0.9999976171843109
+        },
+        "consistency": {
+          "actual_norm": 1.0149157894956065,
+          "original_gpu_norm": 1.0108474199644715,
+          "relative_l2_error": 0.009184636916523454,
+          "maximum_absolute_error": 0.0023612678050994873,
+          "cosine": 0.9999660569857103
+        }
+      }
+    },
+    {
+      "step": 42,
+      "main_bce": 13.11400022607152,
+      "pair_bce": 8.978011049634356,
+      "consistency": 0.03606698185501236,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0005990018337538316,
+        "pair_bce": 0.0010880607427541378,
+        "consistency": 4.532638169706116e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 169.87079212733644,
+          "original_gpu_norm": 169.89889713430142,
+          "relative_l2_error": 0.002358719655847116,
+          "maximum_absolute_error": 0.1501636505126953,
+          "cosine": 0.9999972314450235
+        },
+        "pair": {
+          "actual_norm": 202.75383156364052,
+          "original_gpu_norm": 202.7263617343674,
+          "relative_l2_error": 0.0005075038672982102,
+          "maximum_absolute_error": 0.024189472198486328,
+          "cosine": 0.9999998804165136
+        },
+        "supervised": {
+          "actual_norm": 315.2773123639967,
+          "original_gpu_norm": 315.2696806125436,
+          "relative_l2_error": 0.0013138832862212377,
+          "maximum_absolute_error": 0.15120792388916016,
+          "cosine": 0.9999991371692326
+        },
+        "consistency": {
+          "actual_norm": 1.167780039422831,
+          "original_gpu_norm": 1.1675148101594715,
+          "relative_l2_error": 0.0013745648878595333,
+          "maximum_absolute_error": 0.00032809749245643616,
+          "cosine": 0.9999990812984526
+        }
+      }
+    },
+    {
+      "step": 43,
+      "main_bce": 12.86036722746261,
+      "pair_bce": 11.040088487534282,
+      "consistency": 0.03235182128592723,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00047833833328780884,
+        "pair_bce": -0.00249879273915532,
+        "consistency": 7.405502045088053e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 161.03825088944362,
+          "original_gpu_norm": 161.06073765991988,
+          "relative_l2_error": 0.0012131103007765756,
+          "maximum_absolute_error": 0.09844732284545898,
+          "cosine": 0.9999992738267263
+        },
+        "pair": {
+          "actual_norm": 249.1016665660521,
+          "original_gpu_norm": 249.6587899505126,
+          "relative_l2_error": 0.00663488514899929,
+          "maximum_absolute_error": 0.418243408203125,
+          "cosine": 0.999980435373972
+        },
+        "supervised": {
+          "actual_norm": 328.4702387001391,
+          "original_gpu_norm": 328.9090857475819,
+          "relative_l2_error": 0.005010232569574448,
+          "maximum_absolute_error": 0.41780662536621094,
+          "cosine": 0.9999883233171177
+        },
+        "consistency": {
+          "actual_norm": 0.8212827579664768,
+          "original_gpu_norm": 0.8208930218416773,
+          "relative_l2_error": 0.0035202155214125747,
+          "maximum_absolute_error": 0.0007368922233581543,
+          "cosine": 0.9999939196318307
+        }
+      }
+    },
+    {
+      "step": 44,
+      "main_bce": 11.608229550629492,
+      "pair_bce": 9.144498039497984,
+      "consistency": 0.07938674097761991,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.000248041838769808,
+        "pair_bce": 4.880548919494743e-05,
+        "consistency": 1.1861379002359174e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 150.98311264997653,
+          "original_gpu_norm": 151.0139105102896,
+          "relative_l2_error": 0.0013687287190143696,
+          "maximum_absolute_error": 0.04314422607421875,
+          "cosine": 0.9999990838998913
+        },
+        "pair": {
+          "actual_norm": 194.7212465950172,
+          "original_gpu_norm": 194.77794372877094,
+          "relative_l2_error": 0.0013323911381443215,
+          "maximum_absolute_error": 0.05792999267578125,
+          "cosine": 0.9999991544863418
+        },
+        "supervised": {
+          "actual_norm": 307.1992673937306,
+          "original_gpu_norm": 307.2740943655289,
+          "relative_l2_error": 0.0009966111994417686,
+          "maximum_absolute_error": 0.051204681396484375,
+          "cosine": 0.9999995329199814
+        },
+        "consistency": {
+          "actual_norm": 2.8173023254010983,
+          "original_gpu_norm": 2.816263903363068,
+          "relative_l2_error": 0.003329215768732633,
+          "maximum_absolute_error": 0.0019135549664497375,
+          "cosine": 0.9999945281572036
+        }
+      }
+    },
+    {
+      "step": 45,
+      "main_bce": 11.777997489118938,
+      "pair_bce": 5.6334127735473984,
+      "consistency": 0.1412348108140757,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004658745285226473,
+        "pair_bce": 0.00018399470828711628,
+        "consistency": 1.9933447056058595e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 169.02282556891447,
+          "original_gpu_norm": 169.01144136590764,
+          "relative_l2_error": 0.0015582281004756355,
+          "maximum_absolute_error": 0.10194861888885498,
+          "cosine": 0.9999987883127321
+        },
+        "pair": {
+          "actual_norm": 111.92733684836486,
+          "original_gpu_norm": 111.94592932876162,
+          "relative_l2_error": 0.002051768865259467,
+          "maximum_absolute_error": 0.052013516426086426,
+          "cosine": 0.999997908566933
+        },
+        "supervised": {
+          "actual_norm": 257.7258412844358,
+          "original_gpu_norm": 257.73841020174325,
+          "relative_l2_error": 0.001412380174703261,
+          "maximum_absolute_error": 0.12680554389953613,
+          "cosine": 0.9999990037316068
+        },
+        "consistency": {
+          "actual_norm": 4.454484903851721,
+          "original_gpu_norm": 4.4570258499494875,
+          "relative_l2_error": 0.002989965864742895,
+          "maximum_absolute_error": 0.002850249409675598,
+          "cosine": 0.9999956901014447
+        }
+      }
+    },
+    {
+      "step": 46,
+      "main_bce": 12.526218220236668,
+      "pair_bce": 14.264445709080382,
+      "consistency": 0.01725232948630225,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0004102740260272242,
+        "pair_bce": -0.0004745255997935516,
+        "consistency": 7.953244141451626e-06
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 150.5513598267005,
+          "original_gpu_norm": 150.56396990504732,
+          "relative_l2_error": 0.0011108928494476858,
+          "maximum_absolute_error": 0.04829287528991699,
+          "cosine": 0.999999386414373
+        },
+        "pair": {
+          "actual_norm": 279.94523288431685,
+          "original_gpu_norm": 280.03529675923266,
+          "relative_l2_error": 0.0014720415520900441,
+          "maximum_absolute_error": 0.09334564208984375,
+          "cosine": 0.9999989679333801
+        },
+        "supervised": {
+          "actual_norm": 362.45809838010166,
+          "original_gpu_norm": 362.55835200600825,
+          "relative_l2_error": 0.0012208810666023203,
+          "maximum_absolute_error": 0.090118408203125,
+          "cosine": 0.999999292760032
+        },
+        "consistency": {
+          "actual_norm": 0.49383508905842577,
+          "original_gpu_norm": 0.4933011657049887,
+          "relative_l2_error": 0.004631141351718594,
+          "maximum_absolute_error": 0.00044862180948257446,
+          "cosine": 0.9999898729640725
+        }
+      }
+    },
+    {
+      "step": 47,
+      "main_bce": 12.37074537833765,
+      "pair_bce": 12.626969813351256,
+      "consistency": 0.03558769401916927,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00024537483617770306,
+        "pair_bce": -0.0011715898469866204,
+        "consistency": 1.1533022016944894e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 155.71271684737147,
+          "original_gpu_norm": 155.73343632606023,
+          "relative_l2_error": 0.0015640664681361755,
+          "maximum_absolute_error": 0.12052616477012634,
+          "cosine": 0.999998785536885
+        },
+        "pair": {
+          "actual_norm": 222.01121052081757,
+          "original_gpu_norm": 221.95572160871814,
+          "relative_l2_error": 0.0025008814994951604,
+          "maximum_absolute_error": 0.09365510940551758,
+          "cosine": 0.9999969048196371
+        },
+        "supervised": {
+          "actual_norm": 319.2501752319475,
+          "original_gpu_norm": 319.27645180084545,
+          "relative_l2_error": 0.0019069292814874127,
+          "maximum_absolute_error": 0.1380467414855957,
+          "cosine": 0.9999981850476618
+        },
+        "consistency": {
+          "actual_norm": 0.9577743990972982,
+          "original_gpu_norm": 0.9602636679875715,
+          "relative_l2_error": 0.013219630008298289,
+          "maximum_absolute_error": 0.004131002351641655,
+          "cosine": 0.9999157622723357
+        }
+      }
+    },
+    {
+      "step": 48,
+      "main_bce": 11.764093581386796,
+      "pair_bce": 7.740155114131977,
+      "consistency": 0.12479300334995948,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0002611244237513688,
+        "pair_bce": -0.0003005133094289292,
+        "consistency": 1.742228811942026e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 143.29560399355242,
+          "original_gpu_norm": 143.41560570467095,
+          "relative_l2_error": 0.0037739534070744957,
+          "maximum_absolute_error": 0.1711597442626953,
+          "cosine": 0.9999932230349907
+        },
+        "pair": {
+          "actual_norm": 141.2913909729237,
+          "original_gpu_norm": 141.3288035433294,
+          "relative_l2_error": 0.0020654931951927663,
+          "maximum_absolute_error": 0.0636434555053711,
+          "cosine": 0.9999979013517329
+        },
+        "supervised": {
+          "actual_norm": 260.07031649245545,
+          "original_gpu_norm": 260.22284228342585,
+          "relative_l2_error": 0.0023867836569925966,
+          "maximum_absolute_error": 0.20416259765625,
+          "cosine": 0.9999973218394117
+        },
+        "consistency": {
+          "actual_norm": 3.7001431011020647,
+          "original_gpu_norm": 3.696184020649899,
+          "relative_l2_error": 0.002525835401379238,
+          "maximum_absolute_error": 0.002333521842956543,
+          "cosine": 0.9999973865330473
+        }
+      }
+    },
+    {
+      "step": 49,
+      "main_bce": 12.067073121764464,
+      "pair_bce": 8.92875228441822,
+      "consistency": 0.04932593298013874,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.0002524702765516196,
+        "pair_bce": 0.0005439332829659804,
+        "consistency": -7.252687626302379e-07
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 149.18376194879042,
+          "original_gpu_norm": 149.15504089949692,
+          "relative_l2_error": 0.003916358448106264,
+          "maximum_absolute_error": 0.1596231460571289,
+          "cosine": 0.9999923510804763
+        },
+        "pair": {
+          "actual_norm": 210.25171342431017,
+          "original_gpu_norm": 210.1933569424491,
+          "relative_l2_error": 0.002425482530178364,
+          "maximum_absolute_error": 0.13244056701660156,
+          "cosine": 0.9999970978628439
+        },
+        "supervised": {
+          "actual_norm": 316.7008414820222,
+          "original_gpu_norm": 316.5857863971364,
+          "relative_l2_error": 0.0025021783349069696,
+          "maximum_absolute_error": 0.18120384216308594,
+          "cosine": 0.9999969367038126
+        },
+        "consistency": {
+          "actual_norm": 1.565072259615768,
+          "original_gpu_norm": 1.5719407175074738,
+          "relative_l2_error": 0.008891520301986014,
+          "maximum_absolute_error": 0.0034963488578796387,
+          "cosine": 0.9999698847314277
+        }
+      }
+    },
+    {
+      "step": 50,
+      "main_bce": 11.53651665143585,
+      "pair_bce": 5.996009594253472,
+      "consistency": 0.10087862330415269,
+      "loss_difference_from_original_gpu": {
+        "main_bce": -0.00046016283416960846,
+        "pair_bce": 0.00042844419854048965,
+        "consistency": 1.4920708918772507e-05
+      },
+      "gradient_comparisons": {
+        "main": {
+          "actual_norm": 149.61556797343653,
+          "original_gpu_norm": 149.62541589510766,
+          "relative_l2_error": 0.001630827819632772,
+          "maximum_absolute_error": 0.10664916038513184,
+          "cosine": 0.9999986722788747
+        },
+        "pair": {
+          "actual_norm": 126.87190161914855,
+          "original_gpu_norm": 126.57574071442527,
+          "relative_l2_error": 0.004950120082016013,
+          "maximum_absolute_error": 0.1938018798828125,
+          "cosine": 0.9999905076789306
+        },
+        "supervised": {
+          "actual_norm": 248.32997100741517,
+          "original_gpu_norm": 248.181508913019,
+          "relative_l2_error": 0.0026817084460417644,
+          "maximum_absolute_error": 0.19157791137695312,
+          "cosine": 0.9999965851840639
+        },
+        "consistency": {
+          "actual_norm": 2.6702227542798465,
+          "original_gpu_norm": 2.669920054207754,
+          "relative_l2_error": 0.0008637311765770501,
+          "maximum_absolute_error": 0.0005388148128986359,
+          "cosine": 0.9999996334526399
+        }
+      }
+    }
+  ],
+  "largest_loss_absolute_difference_from_original_gpu": {
+    "main_bce": 0.0006109383850940731,
+    "pair_bce": 0.00307647372950548,
+    "consistency": 3.399413452365163e-05
+  },
+  "largest_gradient_relative_l2_difference_from_original_gpu": {
+    "main": 0.006332689087514305,
+    "pair": 0.00784209858544078,
+    "supervised": 0.005755414781635631,
+    "consistency": 0.014112267940852822
+  },
+  "mac_median_supervised_encoder_norm": 256.2934451501011,
+  "mac_median_consistency_encoder_norm": 1.5366097646528933,
+  "mac_R": 166.79149843096013,
+  "mac_fixed_rule_coefficient": 1.0,
+  "original_fixed_coefficient": 1.0,
+  "gradients_sha256": "13a7cfe1b20585c2eac6b3849c91bf6ef88fd63535e70744bbad3a6ac6f98a90",
+  "tensorflow_version": "2.21.0",
+  "numpy_version": "2.5.4",
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "upstream_source_sha256": {
+    "microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+    "microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+    "microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+    "microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+    "microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+    "microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+    "microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+    "microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    "microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+    "microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    "microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+    "microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+    "microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+    "microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+    "microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717"
+  },
+  "script_sha256": "3f9c3ca22285db8c52a04e87a5b983aba291c6850d885529b54f19b614d79f6a",
+  "numpy_derivative_source_sha256": "a39b84e9f4fedeaccd6531f717e30da470abb24172afc3038630880e26d25d79",
+  "limits": "Derived numerical state, not recovered historical instance. Original GPU versus Mac CPU float gradient differences are descriptive, not a universal equivalence or passed-smoke claim. No original probe restart, coefficient revision, parameter update, development scoring, hardware operation or model acceptance."
+}
