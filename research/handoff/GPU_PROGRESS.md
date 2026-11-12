@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `35e359c` (fetched 2026-11-12); see the
+Latest reviewed GPU commit: `636fec1` (fetched 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -1184,3 +1184,37 @@ Mac plan/script **b0c1eb4** and allCI43145940398 passed; actual raw-array and
 sampler replay remains **unrun** until original bytes arrive. The prioritized
 request is in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813445691).
+
+### Balanced Piper coverage: independent Mac metadata check
+
+GPU `23aa605` records a training-only joint conditioning-ID/phrase coverage
+hypothesis. Its `c683002` pilot retains384 attempts; `cfd83b8` freezes a
+separate8064-attempt full grid and `636fec1` starts that generation. The pilot
+is not reused in the full corpus. These source changes are intended to test
+generalization; they do not establish that the shared-float failures are fixed.
+
+The [Mac metadata audit](../wakeword_p4/results/balanced-piper-metadata-mac-v1.json)
+recomputes coverage from the original authenticated2594-source/record metadata,
+enumerating every alias. Piper sources have no multiple-alias ambiguity here.
+It reproduces the original672-ID partition and all four coverage/count ledgers:
+positive644IDs/1298sources; Nick216/151, Next217/144 and Mix208/142. These are
+conditioning-ID memberships, not672 independent people or realized voices.
+It also checks all384 pilot identities/grid positions, original run/manifest/
+plan/generator hashes, recorded token-duration sums and resampling lengths.
+The four recorded phone sequences differ as intended; this does not prove
+their acoustic realization. All metadata checks passed under NumPy2.4.6.
+
+```sh
+/path/to/numpy-2.4.6-venv/bin/python research/handoff/audit_balanced_piper_metadata_mac.py \
+  --original-metadata /path/to/old-complete-container-pack-v1 \
+  --output /tmp/balanced-piper-metadata-fresh.json
+```
+
+No pilot waveform/quality/conversion or model/score replay was performed on
+Mac; no microphone, speaker or board was accessed. Review and prioritized
+original-US feature handoff request were posted through
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813561339).
+The frozen324-array sampler replay remains pending that separate original
+feature pack. Full synthesis reports and later feature/training plans require
+their own review; this metadata result does not accept a new model or authorize
+unused-development/final access.
