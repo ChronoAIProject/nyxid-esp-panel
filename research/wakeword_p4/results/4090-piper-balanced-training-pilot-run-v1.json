@@ -1,0 +1,103 @@
+{
+  "role": "balanced-pilot-training-only",
+  "seed": 187726,
+  "ids": [
+    437,
+    187,
+    420,
+    488,
+    490,
+    36,
+    468,
+    839,
+    822,
+    229,
+    185,
+    270,
+    166,
+    790,
+    239,
+    37,
+    134,
+    866,
+    623,
+    280,
+    422,
+    751,
+    695,
+    91,
+    250,
+    698,
+    293,
+    762,
+    123,
+    458,
+    379,
+    583
+  ],
+  "multipliers": [
+    0.9,
+    1.0,
+    1.1
+  ],
+  "phrases": [
+    [
+      "hey_nyx",
+      "Hey Nicks."
+    ],
+    [
+      "hey_nick",
+      "Hey Nick."
+    ],
+    [
+      "hey_next",
+      "Hey Next."
+    ],
+    [
+      "hey_mix",
+      "Hey Mix."
+    ]
+  ],
+  "draws": 1,
+  "device": "NVIDIA GeForce RTX 4090",
+  "torch_cuda": "13.2",
+  "source_revision": "b5b36e266576693ea47db129fbfe6bbc06164762",
+  "model_sha256": "e95ee53770bf598c354a6e6dbfc95ccb259aeeb501d35a86be8a767429ab0ff6",
+  "config_sha256": "119118e510d0b8a7a0c8649a0668640d6db9b00239e874169d964853a8d15848",
+  "plan_sha256": "d4882ce08664a4b4a16174ddd303740be950a98131372826f48f5e8ff6b8cad8",
+  "coverage_sha256": "c8614930f91a1e1f7d6537f5618494125989cc12e32cb8d5cb0b81ebef899b50",
+  "script_sha256": "12b4c7fbc82fd90d12373763c8a4dbe9cc903781484050db54f6e9d282d58165",
+  "source_files": {
+    "augment.py": "fe06986934254ebe876b12afefd47a2ff45ff1a7bce0445915367e00bf48f57c",
+    "generate_samples.py": "b6068e38ca986fc3c1cd55b631878aeb619ebe5a65b32fd9f8a870c7e8e694d8",
+    "piper_train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "piper_train/__main__.py": "f09939c35db436de5488e4ea4a3c5f6547dddaa4ce527206240290730ebd6cef",
+    "piper_train/_resources.py": "d96f98779f31ac2ac56ee2bc204b32c4b47aa00c69a26ed2127b290f83dd9c7f",
+    "piper_train/norm_audio/__init__.py": "3ed44bcf74856138471d33ad92e8a00f4b8025ffed1421ac920734cf64a58ae8",
+    "piper_train/norm_audio/trim.py": "fd9b04dd26216a14127447412de4b0c8524672f11bb7ee44fe59d6c134f8b5c6",
+    "piper_train/norm_audio/vad.py": "0d71df443d2aa85279d858cfbeb2f92e537a91e256b9cf4d7fa4cd871a700bfe",
+    "piper_train/vits/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "piper_train/vits/attentions.py": "c9cfd5885f3347ccfaf03ce9866555567dbb7fdc4aff9c22f12e084cb5d540bd",
+    "piper_train/vits/commons.py": "26c0fc09d67765c618b9b621c3c4a8e61202073885942aca2ebbf594c0d10833",
+    "piper_train/vits/config.py": "a12b94221c3d026ec14392700e0b423be3f5cd1c8dee73e047e5355ee9dc265b",
+    "piper_train/vits/dataset.py": "0cb2c6482927dc617dba4b684e9ac7d4445b959d7c18eebe42c0a540a59af7ca",
+    "piper_train/vits/lightning.py": "88924d013d7e8e6d3062f4df072f53fde65aa4337ad8f9f2f587471299c0a6ca",
+    "piper_train/vits/losses.py": "8feb8836105c63155716f16eb627b04294eec3ea85f89e8cea174955e38aa8d1",
+    "piper_train/vits/mel_processing.py": "86e2236d081ec1298cdfd85dcd166f654088edf4cd48c98b700bf77fccd86fc9",
+    "piper_train/vits/models.py": "eb88105d8fc762e1b0e74a85d1da38583e428ab92e66bef0bde06a2c9c75fbe6",
+    "piper_train/vits/modules.py": "0cc35ebf9836de0912ab510fd0647e8c3237d03be8cb7df9938ab8cd828ed58d",
+    "piper_train/vits/transforms.py": "3a7f2123c58f0fa9e83ff5f444aac6bf917327b6e7985546942f9227f52e018d",
+    "piper_train/vits/utils.py": "7b18b2aed3c76e79c6bdc1d649b687f7e811eacac7e593c794a8aa57620752b4",
+    "piper_train/vits/wavfile.py": "a106624c8addc34a0b4db715c0a7c65f27b55ad2ad7baa8aff9daa57088cbdf7"
+  },
+  "source_diff": "diff --git a/generate_samples.py b/generate_samples.py\nindex 1978c89..ea3ac49 100755\n--- a/generate_samples.py\n+++ b/generate_samples.py\n@@ -11,7 +11,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union\n \n import numpy as np\n import torch\n-import torchaudio\n import webrtcvad\n from piper_phonemize import phonemize_espeak\n \n@@ -24,6 +23,7 @@ logging.basicConfig(level=logging.DEBUG)\n \n # Main generation function\n def generate_samples(\n+    # torchaudio is loaded only by the legacy file-generation API below.\n     text: Union[List[str], str],\n     output_dir: Union[str, Path],\n     max_samples: Optional[int] = None,\n@@ -75,6 +75,7 @@ def generate_samples(\n     _LOGGER.debug(\"Loading %s\", model)\n     model_path = Path(model)\n \n+    import torchaudio\n     torch_model = torch.load(model_path)\n     torch_model.eval()\n     _LOGGER.info(\"Successfully loaded the model\")\n",
+  "versions": {
+    "torch": "2.15.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0",
+    "piper-phonemize": "1.1.0"
+  },
+  "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "determinism_limit": "Seed and order recorded, exact CUDA generation replay not asserted; no retries/normalization/trimming"
+}
