@@ -34,7 +34,7 @@ np.savez_compressed(out/'scores.npz',**arrays)
 summary={}
 for d in details:
  key=d['engine']+'/'+('positive' if d['label'] else d['phrase'])
- g=summary.setdefault(key,dict(examples=0,window_half=0,window_historical=0,full_five_half=0,full_five_historical=0));g['examples']+=1
+ g=summary.setdefault(key,dict(examples=0,window_half=0,window_reference=0,full_five_half=0,full_five_reference=0));g['examples']+=1
  for name,score,t in [('window_half',d['window_float'],.5),('window_reference',d['window_float'],.99609375),('full_five_half',d['full_int8_max_five'],.5),('full_five_reference',d['full_int8_max_five'],.99609375)]:g[name]+=int(score>=t)
 report=dict(scope='All6597 old-source variants eligible for v42 sampling; reused training-only diagnostic',model_sha256=sha(root/'hey_nyx.tflite'),training_sha256=sha(root/'training.json'),pack_sha256=sha(pack/'training.npz'),script_sha256=sha(Path(__file__)),scores_sha256=sha(out/'scores.npz'),first_reset_exact=True,reference_threshold=0.99609375,reference_scope='Fixed v41 comparison threshold; not v42 historical threshold or threshold selection',summary=summary,details=details,limits='Window float vs full INT8 confounds quantization/phase/state; not isolated causal evidence or phonetic recall. Full max-five is descriptive, not latched-event accuracy or a new threshold. Excludes395 non-task canonical rows as preregistered sampler; no new/final/model training.')
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(summary),flush=True)
