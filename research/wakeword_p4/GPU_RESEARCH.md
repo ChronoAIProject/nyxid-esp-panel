@@ -4577,3 +4577,8 @@ Independent40320pack audit and50batch/1000draw/legalendpoint precheck passed. RT
 ## v47 original formal startup verified
 
 OriginalformalPID281170/start4934229/session44843 alive;waiterPID281771/start4936506/session17410 waits on exacttrainingidentity. Initialrandomhead/frozenBN match,pinnedexecsources unchanged. Actualtraining1000/120000observed;no restart or recipechange. Issue6815011788 records formalstartup. Completeexport/historicalgates stillpending;no acceptance/newdev/final access.
+
+
+## v47 formal training and export complete
+
+Original run completed 120000 steps in 2692.3 seconds on RTX 4090; selected step 5000 under unchanged checkpoint selection. Original training and export audit copied byte-for-byte. Model 54440 bytes SHA256 c6c9037c50c66230a783788678328d12a73e011dec5c97b94f74deba5e58cdd9; training SHA256 8a6b35c3b4e619660a751133176532f7d8a8535d8df30dfdfec09bc936d6b06f. Saved weights finite, frozen BN unchanged, int8 [1,3,40] to uint8 [1,1] contract passed. Original waiter authenticated the factorized pack, 2688 groups of 15, and inherited recipe before starting historical regression. Historical gates still pending; export contract is not accuracy/FAR acceptance. V30 retained, no new development/final access or promotion.
