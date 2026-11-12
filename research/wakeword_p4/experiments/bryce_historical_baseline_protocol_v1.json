@@ -1,0 +1,65 @@
+{
+  "schema": "bryce-historical-baseline-protocol-v1",
+  "role": "Historical references on new source-heldout development only; no candidate promotion or final acceptance",
+  "generation_plan_sha256": "9bcb29aceb08cb3d1fd3c9061b77a1d1c68c51b0b5a4a6477620f3501655f528",
+  "data_manifest_sha256": "31adf5d810a50662591da86d1be7a50fbee6042b8e26fc8d091b4ddfb089e909",
+  "v30_scorer_sha256": "fda0ae59df6e06f7049ce01897e843cf1ed1518517470a14e2e4fccb15a0052e",
+  "helper_source_sha256": {
+    "research/wakeword_p4/training/features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "research/wakeword_p4/training/evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "research/wakeword_p4/training/detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "research/wakeword_p4/training/prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef",
+    "research/wakeword_p4/training/replay_gpu_mac_regression.py": "0e107db87bc236f78e603fdfeef3c3783ab1554db655e2f8eaeae2edc78e2d49",
+    "research/wakeword_baseline/compare.py": "ffd21a0d5b24a248c55d7438c4e37de33befc5354b5f4d34ba3a6f9ae146cb7f"
+  },
+  "target_counts": {
+    "hey_nyx": 36,
+    "hi_esp": 36,
+    "hey_nick": 18,
+    "hey_next": 18,
+    "hey_mix": 18
+  },
+  "host_versions": {
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1"
+  },
+  "v30": {
+    "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "training_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+    "calibration_sha256": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "refractory_steps": 67,
+    "prime_samples": 56160,
+    "block_samples": 480
+  },
+  "hiesp": {
+    "engine": "wn9_hiesp",
+    "mode": "DET_MODE_95",
+    "threshold_requested": 0.63,
+    "threshold_getter_expected": 0.62496001,
+    "chunk_samples": 512,
+    "prime_samples": 0,
+    "runner_and_binary_pins": "GPU must freeze actual runner/QEMU/ELF/flash SHA256 before official inference; this plan alone does not authorize unpinned engine replay.",
+    "paired_metadata_policy": "Create an exact derived replay manifest binding the original generation manifest and generator-reference endpoint semantics. Existing paired validator must explicitly accept its frozen metadata; do not masquerade as a transport probe or invent human endpoint labels."
+  },
+  "reference_window_samples": [
+    -1600,
+    12800
+  ],
+  "source_policy": "Every original WAV in manifest order; authenticate entire cohort before model load. Preserve full PCM/native speed. No trimming, gate-based source exclusions, retries or regenerated audio.",
+  "v30_policy": "Reset frontend/model per clip; application zero prime56160, then full source plus final zero padding to480. Two exact model replays. Shared existing host and firmware event policies, five scores,67-step refractory. Retain both policy event lists and any differences. One-based raw score step s returns at480*(s+1)-56160 source samples.",
+  "classification_policy": "Report whole-source/padded-tail any-event and generator-prefix [-100,+800]ms window separately. Signed first-event and window-first-event timing; premature/late counts retained. Nyx Nick/Next/Mix common confusers; Hi ESP opposite phrase. Break out voices/conditions and bare vs command; do not treat variants as independent speakers.",
+  "background_policy": "No continuous background in this126-clip study. Report no FAR or matched-FAR conclusion. Do not substitute inserted lead/trailing silence or pooled different historical stages for a background test.",
+  "candidate_policy": "This v1 executes historical v30 only; official Hi ESP is a separate pinned GPU run. No in-progress formal checkpoint, failed model rescue, threshold search or training updates. Any future candidate requires a separate byte-pinned historical-threshold profile after its original regression gate; final sets untouched.",
+  "limits": [
+    "Two correlated Piper target voices, not independent TTS families or126 independent people. LibriVox reader/pretraining overlap unknown.",
+    "Generator token duration is a synthesis reference, not verified acoustic phonetic timing. Signed audio-time events are not wall-clock hardware latency.",
+    "Native detectors keep their different fixed block/prime/internal trigger policies; preserve every source PCM byte and disclose geometry.",
+    "Fixed historical thresholds were chosen elsewhere; no matched general-population FAR calibration or representative recall claim.",
+    "No playback, recording, device flashing, production-board access or final testing. No human listening/recording prerequisite for this synthetic research."
+  ]
+}
