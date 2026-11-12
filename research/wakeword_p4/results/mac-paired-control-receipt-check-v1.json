@@ -1,0 +1,101 @@
+{
+  "schema": "mac-paired-control-receipt-check-v1",
+  "gpu_commit": "99cd4cdb5bb8f8ef354674499552b037e219daad",
+  "training_report": {
+    "path": "research/wakeword_p4/results/4090-paired-control-formal-training-v1.json",
+    "bytes": 444480,
+    "sha256": "aaf1df422ed740d4ab9d483de506ceaf78ce412f5825cb89be187fe2902d27d1"
+  },
+  "execution_pins": {
+    "path": "research/wakeword_p4/results/4090-paired-formal-execution-pins-v1.json",
+    "sha256": "b8f3f5952f252be1ef96b5218d24f4a548aabfedfee64e27500a2998e715f360",
+    "source_commit": "12ea13b9ba064542fa8cc73c93f7e09580cc6ad9"
+  },
+  "checks": {
+    "training_report_sha256_matches_export_receipt": true,
+    "model_id_consistent_across_three_reports": true,
+    "reported_model_bytes_54440": true,
+    "training_and_optimizer_updates_120000": true,
+    "all_24_original_checkpoint_steps_present": true,
+    "selected_step_consistent_5000": true,
+    "all_164_reported_training_sources_match_execution_pins": true,
+    "control_coefficient_unchanged": true,
+    "paired_supervision_40_windows_10_positive_30_negative": true,
+    "consistency_32_pairs": true,
+    "reported_single_update_and_original_head": true,
+    "reported_numerical_policy_matches_pins": true,
+    "reported_batchnorm_initial_and_selected_identical": true,
+    "reported_architecture_unchanged": true,
+    "completion_retains_pending_gates_and_no_acceptance": true
+  },
+  "source_mismatches": {},
+  "all_checks_passed": true,
+  "reported_model": {
+    "sha256": "51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19",
+    "bytes": 54440,
+    "selected_step": 5000
+  },
+  "remote_process_observation": {
+    "source": "https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6818089787",
+    "reported_at_utc": "2026-11-12T07:58:03Z",
+    "sequence_pid": 314584,
+    "sequence_starttime_ticks": "5559859",
+    "treatment": {
+      "pid": 331749,
+      "starttime_ticks": "6018884",
+      "state": "S",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/train_stream.py",
+        "--device",
+        "cuda",
+        "--paired-rendering-coefficient",
+        "1",
+        "--upstream",
+        ".local/wakeword/microWakeWord",
+        "--features",
+        ".local/wakeword/features-gpu-ami-extra-v1",
+        "--output",
+        ".local/wakeword/model-paired-treatment-formal-v1",
+        "--architecture",
+        "teacher60",
+        "--context-frames",
+        "150",
+        "--batchnorm-policy",
+        "frozen",
+        "--initial-weights",
+        ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5",
+        "--ambient-sampling",
+        "stratified",
+        "--prefix-negatives",
+        "0",
+        "--source-exponent",
+        "0",
+        "--full-source-pack",
+        ".local/wakeword/british-training-features-v1",
+        "--factorized-coverage-pack",
+        ".local/wakeword/factorized-training-features-v1",
+        "--us-temporal-coverage",
+        "--us-coverage-pack",
+        ".local/wakeword/us-training-features-v1",
+        "--negative-container-mixture",
+        "--positive-full-timeline",
+        "--negative-full-timeline",
+        "--complete-coverage-pack",
+        ".local/wakeword/mac-evidence-import-v1/old-complete-container-pack-v1/study",
+        "--steps",
+        "120000",
+        "--eval-interval",
+        "5000",
+        "--event-validation"
+      ]
+    },
+    "scope": "GPU operator report, not direct Mac process polling; valid only at that observation"
+  },
+  "acceptance_claim": false,
+  "limits": [
+    "Checks committed JSON report bytes and consistency against original execution pins; does not independently inspect GPU process memory or retained raw training traces.",
+    "Model binary, complete sampling/loss traces and all-120k matched-arm comparison are not received here. Export shape/finite-weight checks remain GPU-reported.",
+    "Historical INT8 gate, Mac350 candidate regression, P4 numerical/resources/acoustic/long-call parity remain pending."
+  ]
+}
