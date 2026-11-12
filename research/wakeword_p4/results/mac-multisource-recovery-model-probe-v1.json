@@ -1,0 +1,199 @@
+{
+  "scope": "Measure erased training draws at derived initialization and rejected v46 weights.\n\nThis is a partial-loss diagnostic, not a new trained candidate or matched run.\n",
+  "script_sha256": "793ca19dbbc333f03b2397303a221c8751a545be1af684f68173a972344a87b4",
+  "preflight_sha256": "d2bcf01728ba202128d201f690169d0fe26c63c342b2ea91cd9642d59ee65024",
+  "feature_sha256": "56a767391fe1a36ac56dcec8b448bdb8aa1e6ed754ccf6b971ec09e0e8bdef6d",
+  "windows": 1000,
+  "optimizer_updates": 0,
+  "models": {
+    "derived_initialization": {
+      "weights_sha256": "21f53feec03bdd73ae51cbc92091bf723d9de5fba07e3aa337c818ed722fe350",
+      "by_engine": {
+        "kokoro": {
+          "positive": {
+            "windows": 88,
+            "mean_unweighted_bce": 1.1187557788943499,
+            "mean_probability": 0.35544733061972894,
+            "wrong_logit_sign_windows": 73,
+            "absolute_logit_derivative_mass": 0.4431299601989363
+          },
+          "confusing_negative": {
+            "windows": 115,
+            "mean_unweighted_bce": 0.5251404131897711,
+            "mean_probability": 0.3843124459716869,
+            "wrong_logit_sign_windows": 16,
+            "absolute_logit_derivative_mass": 6.905614263553748
+          }
+        },
+        "macos-say": {
+          "positive": {
+            "windows": 80,
+            "mean_unweighted_bce": 1.0726213134593372,
+            "mean_probability": 0.3874749222745392,
+            "wrong_logit_sign_windows": 62,
+            "absolute_logit_derivative_mass": 0.382828173578413
+          },
+          "confusing_negative": {
+            "windows": 110,
+            "mean_unweighted_bce": 0.5379501186862705,
+            "mean_probability": 0.384927594976652,
+            "wrong_logit_sign_windows": 25,
+            "absolute_logit_derivative_mass": 6.615943038661206
+          }
+        },
+        "openai-tts": {
+          "positive": {
+            "windows": 73,
+            "mean_unweighted_bce": 1.2213219471827041,
+            "mean_probability": 0.33102777435715347,
+            "wrong_logit_sign_windows": 64,
+            "absolute_logit_derivative_mass": 0.38152322243693587
+          },
+          "confusing_negative": {
+            "windows": 105,
+            "mean_unweighted_bce": 0.4686733678471709,
+            "mean_probability": 0.3541774006683607,
+            "wrong_logit_sign_windows": 21,
+            "absolute_logit_derivative_mass": 5.810722979715292
+          }
+        },
+        "piper": {
+          "positive": {
+            "windows": 75,
+            "mean_unweighted_bce": 0.7470865727094512,
+            "mean_probability": 0.5194243055069866,
+            "wrong_logit_sign_windows": 38,
+            "absolute_logit_derivative_mass": 0.281587320992
+          },
+          "confusing_negative": {
+            "windows": 152,
+            "mean_unweighted_bce": 0.9255572596382057,
+            "mean_probability": 0.5472190244200814,
+            "wrong_logit_sign_windows": 85,
+            "absolute_logit_derivative_mass": 12.996451829976934
+          }
+        },
+        "qwen": {
+          "positive": {
+            "windows": 84,
+            "mean_unweighted_bce": 1.055088336631602,
+            "mean_probability": 0.3819695040629031,
+            "wrong_logit_sign_windows": 65,
+            "absolute_logit_derivative_mass": 0.40558251295871983
+          },
+          "confusing_negative": {
+            "windows": 118,
+            "mean_unweighted_bce": 0.466745134837416,
+            "mean_probability": 0.34879449347105507,
+            "wrong_logit_sign_windows": 23,
+            "absolute_logit_derivative_mass": 6.430898473372578
+          }
+        }
+      },
+      "mean_partial_main128_bce": 1.2045024299621583,
+      "gradient_norm_min": 11.242988450967374,
+      "gradient_norm_max": 27.296714954055673,
+      "zero_gradient_batches": 0,
+      "all_gradients_connected_finite": true,
+      "repeated_first_batch_exact": true,
+      "all_variables_and_bn_unchanged": true
+    },
+    "rejected_v46": {
+      "weights_sha256": "16b01e2f17473121c635801e324f5cf550c2ea0b72f8a054c04d845a0f596027",
+      "by_engine": {
+        "kokoro": {
+          "positive": {
+            "windows": 88,
+            "mean_unweighted_bce": 3.934233389988259,
+            "mean_probability": 0.6857420026067303,
+            "wrong_logit_sign_windows": 27,
+            "absolute_logit_derivative_mass": 0.2160523732078728
+          },
+          "confusing_negative": {
+            "windows": 115,
+            "mean_unweighted_bce": 0.05332489229332672,
+            "mean_probability": 0.019878471489443827,
+            "wrong_logit_sign_windows": 2,
+            "absolute_logit_derivative_mass": 0.35719128457594385
+          }
+        },
+        "macos-say": {
+          "positive": {
+            "windows": 80,
+            "mean_unweighted_bce": 12.301863052227503,
+            "mean_probability": 0.12024630331686618,
+            "wrong_logit_sign_windows": 71,
+            "absolute_logit_derivative_mass": 0.5498460604269586
+          },
+          "confusing_negative": {
+            "windows": 110,
+            "mean_unweighted_bce": 0.14599089768531207,
+            "mean_probability": 0.04340002512961837,
+            "wrong_logit_sign_windows": 5,
+            "absolute_logit_derivative_mass": 0.7459379319153155
+          }
+        },
+        "openai-tts": {
+          "positive": {
+            "windows": 73,
+            "mean_unweighted_bce": 2.172645450377815,
+            "mean_probability": 0.642558973756788,
+            "wrong_logit_sign_windows": 26,
+            "absolute_logit_derivative_mass": 0.2038530852793318
+          },
+          "confusing_negative": {
+            "windows": 105,
+            "mean_unweighted_bce": 0.15161604581174795,
+            "mean_probability": 0.03201321296106187,
+            "wrong_logit_sign_windows": 3,
+            "absolute_logit_derivative_mass": 0.5252167751424213
+          }
+        },
+        "piper": {
+          "positive": {
+            "windows": 75,
+            "mean_unweighted_bce": 0.8541208272556264,
+            "mean_probability": 0.7934144082226017,
+            "wrong_logit_sign_windows": 16,
+            "absolute_logit_derivative_mass": 0.12104624518206937
+          },
+          "confusing_negative": {
+            "windows": 152,
+            "mean_unweighted_bce": 0.14241440713265788,
+            "mean_probability": 0.047312707647122906,
+            "wrong_logit_sign_windows": 6,
+            "absolute_logit_derivative_mass": 1.1236768066191691
+          }
+        },
+        "qwen": {
+          "positive": {
+            "windows": 84,
+            "mean_unweighted_bce": 8.193323612487056,
+            "mean_probability": 0.36343874438567897,
+            "wrong_logit_sign_windows": 53,
+            "absolute_logit_derivative_mass": 0.41774332399689823
+          },
+          "confusing_negative": {
+            "windows": 118,
+            "mean_unweighted_bce": 0.1745589628872238,
+            "mean_probability": 0.049004806088151665,
+            "wrong_logit_sign_windows": 6,
+            "absolute_logit_derivative_mass": 0.9035261122502964
+          }
+        }
+      },
+      "mean_partial_main128_bce": 0.6013098110258579,
+      "gradient_norm_min": 1.4558275019835656,
+      "gradient_norm_max": 74.98197558729903,
+      "zero_gradient_batches": 0,
+      "all_gradients_connected_finite": true,
+      "repeated_first_batch_exact": true,
+      "all_variables_and_bn_unchanged": true
+    }
+  },
+  "details_sha256": "8810e32bbaa66f8088760c7c59d7385cbb0d0200e651c3dd493d06e6a98eb251",
+  "tensorflow": "2.21.0",
+  "numpy": "2.5.4",
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "limits": "Training-source-only partial BCE over20 recovered windows per batch, divided by128. No actual main128/paired40 replacement, training update, new candidate, independent quality evaluation or current-GPU-result claim. Derived initialization is not a recovered original probe instance. V46 is already rejected; logit sign is a fixed training diagnostic, not a detector threshold. No coefficient/threshold tuning, new/final data, playback, recording, board or production operation."
+}
