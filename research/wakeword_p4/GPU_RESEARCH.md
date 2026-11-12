@@ -4888,3 +4888,7 @@ Original session93786/PID478492 remains live; fourth original progress record200
 ### Independent formal25000 checkpoint retained
 
 Original session93786 remains live; fifth original progress record25000 preserved byte-identically. Grid0float-eligible points; fallback.992 macro.53255208, maximum-source confusion.0375, background2/1.204811h=1.660011/h, one-sided95% upper5.225543/h. Same continuing float failure pattern; no model-quality acceptance or config changes. Newdev/final untouched, v30 retained; await fixed120k independent/common sequence. Record pushed on branch; no repetitive Issue status comment for unchanged conclusion.
+
+### Independent formal30000 checkpoint retained
+
+Same original formal sequence remains live. Sixth original progress record30000 preserved byte-identically;0float-eligible points. Fallback.994 macro.4765625, maximum-source confusion.0197916667, background0/1.204811h (one-sided95% upper2.48647/h). First quarter of fixed120k run completed, no quality acceptance. Execution sources/config unchanged, no restart or newdev/final access; v30 retained. Original checkpoint plus size/SHA audit pushed; unchanged failure pattern does not warrant repetitive Issue comment.
