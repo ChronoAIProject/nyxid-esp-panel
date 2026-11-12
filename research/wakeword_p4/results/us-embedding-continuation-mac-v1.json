@@ -292,6 +292,12 @@
   },
   "accepted": false,
   "continuation_advanced": false,
-  "conclusion": "Neither dense nor equal-mean arm has a strict eligible operating point. At independently selected original-validation points the treatment has lower macro recall and higher maximum confuser rate than its matched control; the equal mean also has more continuous false events. Reject this continuation.",
-  "limits": "Only one matched dense continuation seed and three Piper presets. Treatment changes engine mass from five to six, leaving original temporal head frozen. This does not show that all US coverage is harmful or establish a controlled comparison with GPU v46. No extra threshold search, new heldout, waveform playback, microphone, P4 or production operation was performed."
+  "conclusion": "All four preselected operating points fail the strict low-false criteria. Other original grid points satisfy those criteria at macro recall below .49. At identical threshold .4 the treatment mean has lower near-phrase false rate and lower recall, with the same continuous false event count. This continuation has not established sufficient recall/false-wake quality or Hi ESP parity and remains rejected.",
+  "limits": "Only one matched dense continuation seed and three Piper presets. Treatment changes engine mass from five to six, leaving original temporal head frozen. This does not show that all US coverage is harmful or establish a controlled comparison with GPU v46. No extra threshold search, new heldout, waveform playback, microphone, P4 or production operation was performed.",
+  "interpretation_correction": {
+    "archived_original_summary_sha256": "24edcc591c0460e93cf65c43d3d9b24bb499b89c473d714b517103d6ba509fd2",
+    "original_archive_summary_unchanged": true,
+    "corrected_by": "us-embedding-operating-point-audit-mac-v2.json",
+    "reason": "The original report inferred no eligible grid points from the preselected points only, and its independently selected-threshold comparison was not a same-threshold comparison. Raw metrics and training outputs are unchanged."
+  }
 }

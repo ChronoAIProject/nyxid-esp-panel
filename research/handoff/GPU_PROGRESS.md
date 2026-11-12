@@ -1302,9 +1302,12 @@ arrays have SHA
 `ec753bdf73e9a94a9c43997468b48032c580dd0d7eb361e9ab13b2d3fffbd386`.
 No original control result was substituted for this new matched run.
 
-The [actual summary](../wakeword_p4/results/us-embedding-continuation-mac-v1.json)
-binds original outputs, plans and all eight checkpoint model hashes. Selection
-uses the unchanged original validation only:
+The [summary](../wakeword_p4/results/us-embedding-continuation-mac-v1.json)
+binds original outputs, plans and all eight checkpoint model hashes. Its
+archived version claimed no strict eligible grid point exists; the complete
+saved-score audit below corrects that claim. The canonical summary records
+this correction and the unchanged original archive report's hash for
+provenance. Selection uses the unchanged original validation only:
 
 | Arm/output | Selected step | Threshold | Macro recall | Maximum confuser rate | Continuous events/7.30378h | Upper95 events/h |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -1314,10 +1317,11 @@ uses the unchanged original validation only:
 | Treatment equal mean |5000|.3|.944851|.140625|3|1.061595|
 
 Equal-mean plans were frozen in `10655f5` before calibration and keep the
-original temporal member unchanged. Neither dense nor ensemble arm has a
-strict eligible operating point. The new-source treatment is worse on macro
-recall and maximum confuser rate at these independently selected points; the
-ensemble also has more continuous false events. Reject this continuation;
+original temporal member unchanged. All four preselected operating points
+fail the strict low-false criteria. The new-source treatment has lower macro
+recall and higher maximum confuser rate at these independently selected points;
+the ensemble also has more continuous false events. These different thresholds
+do not prove uniformly worse score separation. Reject this continuation;
 do not advance it to paired/long regression, unused development or board use.
 This single-seed, three-preset, dense-only test changes engine mass5→6 and
 does not establish that US coverage is generally harmful or predict GPU v46.
@@ -1345,3 +1349,36 @@ python3 -B research/handoff/package_us_mac_results.py \
 
 These are completed offline experiments, not evidence of Hi ESP parity. No
 playback, microphone, board or dining-room production device was accessed.
+
+### Corrected operating-point interpretation from all original saved scores
+
+The [post-hoc audit](../wakeword_p4/results/us-embedding-operating-point-audit-mac-v2.json)
+authenticates both frozen member manifests and all continuous score files,
+reconstructs all3068 clip means and35continuous means per arm with independent
+integer numerator arithmetic, and reproduces all19original-grid continuous
+event counts and clip rates. Original plans, weights, thresholds and raw
+validation outputs remain unchanged. This is saved-score recomputation, not
+new model inference or new validation data.
+
+The original helper's `eligible` predicate only requires observed continuous
+false events≤.5/h and maximum near-phrase rate≤.01; it has no minimum recall.
+Contrary to the previous summary's overstatement, high original thresholds
+do meet that predicate. Their highest macro recall is .464444/control mean
+and .484008/treatment mean, far below evidence of Hi ESP parity. In particular,
+.999 yields zero detections of anything; that cannot establish success.
+
+At the same historical ensemble threshold.4, control→treatment macro recall
+is .946845→.938690 and maximum confuser rate .128571→.116667; both have
+2continuous events/7.30378h. Adding these sources thus trades some sensitivity
+for fewer near-phrase false positives at that fixed threshold. It is incorrect
+to call every measure worse on that comparison. The selected dense checkpoints
+still differ7500/5000, so this post-hoc comparison cannot isolate source mass
+from checkpoint effects. It does not select an alternative threshold, rescue
+the rejected continuation, authorize board rollout or characterize GPU v46.
+
+```sh
+/path/to/numpy-venv/bin/python -B research/handoff/audit_us_embedding_operating_points_mac.py \
+  --models /path/to/embedding-feasibility \
+  --continuation /path/to/us-embedding-continuation-v1 \
+  --output /tmp/us-operating-point-audit-fresh.json
+```
