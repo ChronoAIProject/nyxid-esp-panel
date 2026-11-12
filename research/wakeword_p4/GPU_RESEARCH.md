@@ -4555,3 +4555,10 @@ Independent16128control array/file/PCM/frontend/sourcegrid/container replay all 
 ## All-source rendering factorial completed
 
 All8064sources×4arms32256traces complete;every scorehash/event/support/group and8064sourcepairs independently recomputed,allmatch. Historical .99609375:positive completecontainer supportquiet1849,noise-only1382,RIR-only1846,combined1363 /2016;negative fulltrace/warmed events0,6,1,8 /6048. Combined positiveany1364vscontainer1363 explicitlydistinguished. Under thisfixedrecipe noise15 sensitivitylargerthan RIR-only aggregate;not global RIR/noise causal conclusion or explanation of unaugmenteddevelopment/backgrounderrors. Noise-onlyprefixSNR14.988..15.011,headroom1all;RIRnormalization/tail remaininterventions. Original33MBreport copiedbyte-for-byte,audit+pairedpatterns saved. No threshold selection/newdev/final/training/promotion;v46rejected,v30retained. Need separate justified training hypothesis,not removal of difficult noisy variants or scoring heldout to rescuev46.
+
+
+## Full factorial frontend-range census and historical BN check
+
+All32256original/new raw feature arrays authenticated;fulltrace and generatedsignal-frame-endpoint regions grouped byarm. No raw/25.6 values exceed26 inanyarm (quietmax658,noiseonlyfullmax649,RIRmax658,combinedmax649),so input upper clipping not explanation inthiscorpus. Signalregion zero fractionquiet.520432,noiseonly.688943,RIR.558987,combined.708591. Descriptive frontend representation change,not evidence of phonetic deletion or automatic causal attribution. All40bandmeans/counts retained. No alteredfrontend/modelinference/training/newdev/final.
+
+Historicalv22 already tried fixedBNstatistics/trainableaffine and failed:40kselected10k,macro.725521vs v19 .816146,sameoldgrid. Do not blindly repeat affineBN asnewidea. This priorrecipe differs fromv46,so notuniversalproof, butmere noise sensitivitydoesnotjustifyrepeatingit. Mac50001d2 reports completed159source/24checkpoint/264floatgrid/467receipt/138point metadataaudit,originalcalibrationgapclosed;explicitlynotindependentinference.
