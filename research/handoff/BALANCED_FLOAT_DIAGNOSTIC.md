@@ -1,0 +1,103 @@
+# Frozen v46 all-window representation diagnostic
+
+Prepared after v47's complete rejection at GPU `6bb87cf`, on2026-11-12.
+Coordination and the decision to do this diagnostic are in
+[Issue13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6815817541).
+This is a measurement protocol, **not** another training recipe or acceptance
+test. No loss, coefficient, threshold or model is selected from it.
+
+## Fixed inputs and question
+
+Use the rejected original selected10000 v46 weights, original TFLite and
+training report. Their exact identities are fixed in
+[`measure_balanced_float_representation.py`](measure_balanced_float_representation.py).
+The original selected5000 v47 and its later report have different training
+trajectories; they are not substituted into this v46 measurement.
+
+Authenticate all40320 raw uint16 NPY files against the original factorized
+report SHA `7b798653f73e2dcd3b01fd5b7092c947a26b9c8ec2525ff295de2e6478042e44`
+before any model inference. This retains all8064sources,672conditioning IDs,
+three speeds, four phrases and five conditions. The raw NPZ is not required.
+Generated source containers do not certify phonetic endpoints or independent
+human speakers. These are previously examined training sources.
+
+The question is whether noise/RIR displacement and near-word separation are
+visible in the **actual full300dimensional Dense input** and its fixed sigmoid
+classifier. Preserve the ordered five-by-sixty input; do not temporal-average,
+normalize it before measuring its norm, pick a score maximum, or shift each arm
+to its own generation end. RIR extends its container60ms.
+
+For each ID/speed group, use **every common absolute** end across its20cells:
+`e % 3 == 0`, `max(feature_crop_end) <= e <= min(350, min(raw_length)-1)`.
+Extract the known phase1 full window `[e-149:e+1]`. Every2016group has a legal
+common interval. This follows the existing stride-three model, without changing
+source PCM or a deployed audio pipeline.
+
+## Measurements and weighting
+
+For each phrase compare quiet to each other arm. For each arm compare Hey Nyx
+to each of Hey Nick/Next/Mix, always at the same absolute end. Retain Euclidean
+distance, cosine distance, both original vector norms, actual classifier-logit
+change, and displacement parallel/orthogonal to its fixed weight vector.
+Also retain original probability and logit summaries for each cell. Positive
+near-word `logit_delta` means the near word's logit exceeds Nyx's; it is not an
+event or a measured FAR.
+
+Zero-vector cosine and zero-head projections are undefined and explicitly
+counted, without adding an epsilon to invent a direction. Average defined
+windows within each group, then the three speed means within an ID, then IDs
+equally. Record undefined windows, partial groups and IDs lacking a defined
+speed; no confidence intervals or independence claims are attached. All group
+arrays and their hashes remain available for reanalysis, including every time
+position and all300components.
+
+If the original SavedModel is supplied, first compare its complete nonstate
+variable inventory against the loaded H5 graph and check all60traces from the
+first numeric training ID, including every speed/phrase/arm. Reset all six
+buffers per trace and repeat the first trace. Compare original-export scores
+at every chosen common end against the H5 full-window probabilities, with fixed
+`atol=rtol=2e-5`. This finite preflight is not universal export equivalence.
+Current received SavedModel file hashes are recorded; its historical training
+record did not previously bind those per-file hashes. Omitting SavedModel is
+explicitly reported and cannot establish export parity.
+
+Only two CPU inference threads are used. Output consists of20cell arrays per
+group, classifier weights, full group summaries, an aggregate report and all
+source identities. Neither feature extraction nor audio hardware is invoked.
+
+## Reproduce
+
+After independently verifying and extracting the original handoff archives:
+
+```sh
+/Users/auric/tmp/output/wakeword-macos-research/.venv/bin/python -B \
+  research/handoff/measure_balanced_float_representation.py \
+  --records /path/to/factorized-training-features-v1/report.json \
+  --feature-root /path/to/parent-of-original-feature-directories \
+  --model-dir /path/to/original-v46-model \
+  --saved-model /path/to/original-v46-model/saved_model \
+  --upstream /Users/auric/tmp/output/wakeword-macos-research/microWakeWord \
+  --output /path/to/fresh-diagnostic-output
+```
+
+The feature root contains the original sibling directories
+`piper-balanced-training-features-v1/artifacts` and
+`balanced-rendering-factorial-v1/artifacts`. Paths in the authenticated report
+are preserved. Model directory contains original `training.json`,
+`best.weights.h5` and `hey_nyx.tflite`.
+
+The separate
+[`probe_balanced_float_pipeline_mac.py`](probe_balanced_float_pipeline_mac.py)
+uses only generated random inputs/weights and an original-format local export.
+[Its completed result](../wakeword_p4/results/balanced-float-pipeline-smoke-mac-v1.json)
+checks60traces, original-format variable inventories/resets, all257measurement
+keys and aggregation. Five numeric/cohort tests exercise known distances,
+undefined vectors, common-time boundaries, missing cells and equal-ID weighting;
+all20handoff tests pass. These checks prepare the implementation and do not
+replace inference on the original v46 artifacts.
+
+Training-fit distances cannot establish generalization, causal explanations of
+old development errors, improvement from an untrained representation loss,
+Hi ESP parity, P4 latency/resources or long-call/reconnect stability. Existing
+rejections, original event gates, unused-development/final boundaries and the
+excluded dining-room production panel remain in force.
