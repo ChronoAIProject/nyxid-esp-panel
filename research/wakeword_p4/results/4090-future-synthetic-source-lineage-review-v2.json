@@ -1,0 +1,24 @@
+{
+  "retrieved_utc": "2026-11-12T21:28:44.342966+00:00",
+  "scope": "Metadata only; no model/audio downloaded/generated/scored, no source reservation.",
+  "files": {
+    "bryce-tts-index": {
+      "url": "https://brycebeattie.com/files/tts/",
+      "saved_path": "research/wakeword_p4/results/4090-future-source-bryce-tts-index-v1.html",
+      "bytes": 12973,
+      "sha256": "5cda2d8bf3d33ea677ae96faadabf0175d4d6cb18993d13d4cf93e6495d610b3"
+    },
+    "piper-hfc-male-card": {
+      "url": "https://huggingface.co/rhasspy/piper-voices/resolve/2f358b6a560e3a913ebf509b2f3344f20b367f94/en/en_US/hfc_male/medium/MODEL_CARD",
+      "saved_path": "research/wakeword_p4/results/4090-future-source-piper-hfc-male-card-v1.md",
+      "bytes": 352,
+      "sha256": "acd9f3607969454dead836c1939d4906a7b7b618f38dfd2c282856d13e4e968c"
+    }
+  },
+  "findings": {
+    "author_jenny": "Author index describes direct jenny.onnx as trained from scratch for287epochs on~30h Jenny Dioco. Previously reviewed Piper Jenny card describes Cori fine-tuning. Treat as distinct checkpoint claims; cannot transfer either claim to other bytes. Direct model identity, dataset license, speaker/pretraining overlap still require authentication before reservation.",
+    "hfc_male": "Pinned Piper card explicitly says fine-tuned from Lessac medium, already represented in training. New target corpus does not establish pretraining independence.",
+    "other_author_voices": "John is finetuned from Kristin; Bryce from unspecified unreleased base. Norman/ManyVoice claim scratch LibriVox training, but physical-speaker overlap unresolved."
+  },
+  "next_action": "If needed, authenticate direct author Jenny model/config bytes and corpus lineage before freezing new-source development/acceptance protocol. No inference until protocol frozen."
+}

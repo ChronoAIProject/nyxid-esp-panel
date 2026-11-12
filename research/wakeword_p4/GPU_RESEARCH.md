@@ -5154,3 +5154,7 @@ Original newline-complete record preserved byte-identically (4132B SHAaebeb9b332
 ### Fixed formal30000 float checkpoint
 
 Original newline-complete record preserved byte-identically (4084B SHA17598c09b7386931d51b4a5337e21de5bc0ff917375034a1c337a70dc2d8a0df). Eleven-point training grid0eligible; returned fallback.994 macro.4765625/max-source false.0197916667, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass, not INT8 or independent acceptance. Original PID555098 confirmed live beyond30000; no restart/config change/newdev/final access, per_draw pending. v30 remains frozen.
+
+### Additional source metadata: distinct Jenny checkpoint claim
+
+Preserved author TTS index and pinned HFC male card with hashes in future-synthetic-source-lineage-review-v2. Author direct Jenny is described as scratch287epochs, unlike previously reviewed Cori-finetuned Piper Jenny; same voice name does not identify checkpoint bytes or lineage. Model/config identity, license and physical-speaker overlap remain unverified; no reservation or model/audio download/scoring. HFC male explicitly derives from existing Lessac. John/Bryce have upstream-base limitations; Norman/ManyVoice LibriVox physical-speaker overlap unresolved. Existing live experiment unchanged.
