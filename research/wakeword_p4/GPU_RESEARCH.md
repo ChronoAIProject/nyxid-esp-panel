@@ -5194,3 +5194,7 @@ Original record preserved byte-identically (3973B SHA58663e27075013e952e8b781f56
 ### Fixed formal65000 float checkpoint rejected
 
 Original record preserved byte-identically (4065B SHA7fba13c0896c1128ad288e30859568bf07931b134ad04188fa25aa92c4d8d48e). Eleven-point training grid0eligible; fallback.992 macro.4989583333/max-source false.0208333333, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before per_draw starts. v30 frozen.
+
+### Fixed formal70000 float checkpoint rejected
+
+Original record preserved byte-identically (4037B SHA9df2c3a2eb0c5cdc0074d1ef63e47eeb1ac8379ef5db945081d254d8a976015d). Eleven-point training grid0eligible; fallback.994 macro.4841145833/max-source false.0229166667, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before per_draw starts. v30 frozen.
