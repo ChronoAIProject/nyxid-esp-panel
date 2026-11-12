@@ -1,0 +1,669 @@
+{
+  "scope": "Independent read-only audit of every retained training-only output; no ONNX/wake-model inference",
+  "clips": 108,
+  "verified": 108,
+  "original_report_sha256": "446d5efb1e8755b6b48345ee5affbe4cfcf0d96afd27c7ce62a306dceb46f31f",
+  "manifest_sha256": "350315d41263ef24d593fa46b1291ccc3ef21c95682840d65ccfcf1f1ea7369f",
+  "run_sha256": "0363de82118b7d3822c09e86682e7923c8bc48af97cfe7894c13398b3445f10a",
+  "source_sha256": "76f36ee23be647b674c5450548c90eebec1bde51bba3d9d9dab1273e904903de",
+  "audit_script_sha256": "a907ef5845bea2a78e0f507c643b068dcf495730d112af6cd8343db0a4dd0b95",
+  "checks": [
+    "all source/output/PCM hashes",
+    "exact preregistered grid/order/training split",
+    "config phonemes/token IDs/scales",
+    "native-to-resampled array equality",
+    "PCM16 exactly reproduces pinned libsndfile conversion (same library, not independent rounding implementation)",
+    "full lengths and independent mechanical quality gates"
+  ],
+  "details": [
+    {
+      "path": "lessac-0.9-hey_nyx-0.wav",
+      "samples": 11146,
+      "rms": 0.14439031900627944,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_nyx-1.wav",
+      "samples": 11332,
+      "rms": 0.13766685305743187,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_nyx-2.wav",
+      "samples": 10403,
+      "rms": 0.14213653479965002,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_nick-0.wav",
+      "samples": 10775,
+      "rms": 0.13790013370694393,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_nick-1.wav",
+      "samples": 10403,
+      "rms": 0.1514707380923773,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_nick-2.wav",
+      "samples": 12075,
+      "rms": 0.1357196387832759,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_next-0.wav",
+      "samples": 12818,
+      "rms": 0.12503977395650462,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_next-1.wav",
+      "samples": 12632,
+      "rms": 0.14493169866306008,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_next-2.wav",
+      "samples": 9846,
+      "rms": 0.14533495005056413,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_mix-0.wav",
+      "samples": 11332,
+      "rms": 0.13328391069790904,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_mix-1.wav",
+      "samples": 10775,
+      "rms": 0.15232242456880238,
+      "verified": true
+    },
+    {
+      "path": "lessac-0.9-hey_mix-2.wav",
+      "samples": 12261,
+      "rms": 0.1345232053971689,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nyx-0.wav",
+      "samples": 12261,
+      "rms": 0.13780566209978726,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nyx-1.wav",
+      "samples": 12632,
+      "rms": 0.1396454861845778,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nyx-2.wav",
+      "samples": 10960,
+      "rms": 0.1446100938029999,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nick-0.wav",
+      "samples": 12632,
+      "rms": 0.1412062682387752,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nick-1.wav",
+      "samples": 12446,
+      "rms": 0.1437729321393815,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_nick-2.wav",
+      "samples": 12446,
+      "rms": 0.15368825198782918,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_next-0.wav",
+      "samples": 14118,
+      "rms": 0.13936426197890966,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_next-1.wav",
+      "samples": 14118,
+      "rms": 0.14132318935823435,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_next-2.wav",
+      "samples": 11518,
+      "rms": 0.14842397103089694,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_mix-0.wav",
+      "samples": 12261,
+      "rms": 0.11671504668912419,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_mix-1.wav",
+      "samples": 12446,
+      "rms": 0.14292871722791153,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.0-hey_mix-2.wav",
+      "samples": 10589,
+      "rms": 0.14576924517664744,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nyx-0.wav",
+      "samples": 13189,
+      "rms": 0.1307144350909446,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nyx-1.wav",
+      "samples": 11332,
+      "rms": 0.15033285866781865,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nyx-2.wav",
+      "samples": 14676,
+      "rms": 0.1170336682595211,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nick-0.wav",
+      "samples": 9846,
+      "rms": 0.16608992147297794,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nick-1.wav",
+      "samples": 11518,
+      "rms": 0.14074358890657807,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_nick-2.wav",
+      "samples": 11518,
+      "rms": 0.1252586034072869,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_next-0.wav",
+      "samples": 13004,
+      "rms": 0.12806132652366242,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_next-1.wav",
+      "samples": 13189,
+      "rms": 0.12453353818590075,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_next-2.wav",
+      "samples": 13189,
+      "rms": 0.1415806822504111,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_mix-0.wav",
+      "samples": 12075,
+      "rms": 0.14821025895575962,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_mix-1.wav",
+      "samples": 12075,
+      "rms": 0.15382335054532892,
+      "verified": true
+    },
+    {
+      "path": "lessac-1.1-hey_mix-2.wav",
+      "samples": 10960,
+      "rms": 0.13636125039918576,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nyx-0.wav",
+      "samples": 7802,
+      "rms": 0.0767425064434641,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nyx-1.wav",
+      "samples": 8174,
+      "rms": 0.08319365509644211,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nyx-2.wav",
+      "samples": 8731,
+      "rms": 0.07563833039811706,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nick-0.wav",
+      "samples": 7431,
+      "rms": 0.08630148070297727,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nick-1.wav",
+      "samples": 7245,
+      "rms": 0.09036187668798855,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_nick-2.wav",
+      "samples": 6688,
+      "rms": 0.08590629015636402,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_next-0.wav",
+      "samples": 8917,
+      "rms": 0.10002423026226412,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_next-1.wav",
+      "samples": 8360,
+      "rms": 0.09958435404886423,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_next-2.wav",
+      "samples": 8545,
+      "rms": 0.09912566798968707,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_mix-0.wav",
+      "samples": 8174,
+      "rms": 0.10105614843571714,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_mix-1.wav",
+      "samples": 7802,
+      "rms": 0.09110801396243232,
+      "verified": true
+    },
+    {
+      "path": "ryan-0.9-hey_mix-2.wav",
+      "samples": 7988,
+      "rms": 0.0957952337351187,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nyx-0.wav",
+      "samples": 8731,
+      "rms": 0.08363165740875209,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nyx-1.wav",
+      "samples": 9288,
+      "rms": 0.08363003201824154,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nyx-2.wav",
+      "samples": 8731,
+      "rms": 0.08487531841604629,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nick-0.wav",
+      "samples": 8360,
+      "rms": 0.08182685353345069,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nick-1.wav",
+      "samples": 7059,
+      "rms": 0.07901937440395287,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_nick-2.wav",
+      "samples": 7059,
+      "rms": 0.08226831619997724,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_next-0.wav",
+      "samples": 9474,
+      "rms": 0.10389730455719909,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_next-1.wav",
+      "samples": 9103,
+      "rms": 0.10338038143835167,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_next-2.wav",
+      "samples": 8545,
+      "rms": 0.10098705482472704,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_mix-0.wav",
+      "samples": 8731,
+      "rms": 0.09141292381722962,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_mix-1.wav",
+      "samples": 7802,
+      "rms": 0.0926446087663827,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.0-hey_mix-2.wav",
+      "samples": 8360,
+      "rms": 0.09788947901991603,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nyx-0.wav",
+      "samples": 9660,
+      "rms": 0.08297727646238758,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nyx-1.wav",
+      "samples": 9103,
+      "rms": 0.08218287472649745,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nyx-2.wav",
+      "samples": 9288,
+      "rms": 0.08539140620401099,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nick-0.wav",
+      "samples": 8917,
+      "rms": 0.08660194136310391,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nick-1.wav",
+      "samples": 7802,
+      "rms": 0.08134394961310049,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_nick-2.wav",
+      "samples": 7802,
+      "rms": 0.08450816226708911,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_next-0.wav",
+      "samples": 9846,
+      "rms": 0.10395347300532805,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_next-1.wav",
+      "samples": 10217,
+      "rms": 0.10482352735716473,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_next-2.wav",
+      "samples": 9660,
+      "rms": 0.09783149843530757,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_mix-0.wav",
+      "samples": 8917,
+      "rms": 0.0995082942034553,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_mix-1.wav",
+      "samples": 9103,
+      "rms": 0.09083748909285304,
+      "verified": true
+    },
+    {
+      "path": "ryan-1.1-hey_mix-2.wav",
+      "samples": 8731,
+      "rms": 0.10138532501979723,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nyx-0.wav",
+      "samples": 13004,
+      "rms": 0.036722745431569795,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nyx-1.wav",
+      "samples": 12818,
+      "rms": 0.03878439620331614,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nyx-2.wav",
+      "samples": 13375,
+      "rms": 0.045527228122046,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nick-0.wav",
+      "samples": 9474,
+      "rms": 0.038711371002453594,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nick-1.wav",
+      "samples": 10960,
+      "rms": 0.035122741242050906,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_nick-2.wav",
+      "samples": 10403,
+      "rms": 0.036546176173564364,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_next-0.wav",
+      "samples": 12818,
+      "rms": 0.04280022659725264,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_next-1.wav",
+      "samples": 12818,
+      "rms": 0.04435294692100701,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_next-2.wav",
+      "samples": 12632,
+      "rms": 0.04557896216150133,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_mix-0.wav",
+      "samples": 12446,
+      "rms": 0.03699523179355573,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_mix-1.wav",
+      "samples": 12632,
+      "rms": 0.04415044314616383,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-0.9-hey_mix-2.wav",
+      "samples": 11889,
+      "rms": 0.03482640184863617,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nyx-0.wav",
+      "samples": 13932,
+      "rms": 0.039396546233480184,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nyx-1.wav",
+      "samples": 13561,
+      "rms": 0.03528611170859026,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nyx-2.wav",
+      "samples": 13561,
+      "rms": 0.04353086712923652,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nick-0.wav",
+      "samples": 11332,
+      "rms": 0.040724194137465745,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nick-1.wav",
+      "samples": 10775,
+      "rms": 0.036341953588216604,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_nick-2.wav",
+      "samples": 11146,
+      "rms": 0.04138366949528924,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_next-0.wav",
+      "samples": 13561,
+      "rms": 0.04174569941871073,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_next-1.wav",
+      "samples": 13004,
+      "rms": 0.04428790340636615,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_next-2.wav",
+      "samples": 13561,
+      "rms": 0.03883731865835317,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_mix-0.wav",
+      "samples": 13189,
+      "rms": 0.04717168158091507,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_mix-1.wav",
+      "samples": 13004,
+      "rms": 0.03677623941347913,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.0-hey_mix-2.wav",
+      "samples": 13189,
+      "rms": 0.0432367739436766,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nyx-0.wav",
+      "samples": 13561,
+      "rms": 0.03882109356874035,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nyx-1.wav",
+      "samples": 14490,
+      "rms": 0.03419221952541328,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nyx-2.wav",
+      "samples": 15047,
+      "rms": 0.039798199545334735,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nick-0.wav",
+      "samples": 11703,
+      "rms": 0.03604475465730547,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nick-1.wav",
+      "samples": 11703,
+      "rms": 0.04605091999948096,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_nick-2.wav",
+      "samples": 11146,
+      "rms": 0.0389001282176715,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_next-0.wav",
+      "samples": 14676,
+      "rms": 0.03909339516181682,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_next-1.wav",
+      "samples": 14490,
+      "rms": 0.05329568726404852,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_next-2.wav",
+      "samples": 14676,
+      "rms": 0.0414442233390285,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_mix-0.wav",
+      "samples": 13932,
+      "rms": 0.04217117491295884,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_mix-1.wav",
+      "samples": 14118,
+      "rms": 0.0463549208777004,
+      "verified": true
+    },
+    {
+      "path": "ljspeech-1.1-hey_mix-2.wav",
+      "samples": 14304,
+      "rms": 0.04139488287928451,
+      "verified": true
+    }
+  ],
+  "limits": "Mechanical synthesis integrity only; no phonetic truth, physical speaker independence, historical corpus repair, model acceptance or deterministic generation claim. New development/finals not accessed."
+}
