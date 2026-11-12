@@ -1,0 +1,218 @@
+{
+  "scope": "Exercise the pinned float inference graph using synthetic features only.\n\nNo received candidate, training feature, development/final data, microphone or\ndevice is accessed. This prepares the Mac runtime for a later original-artifact\ndiagnostic; random weights cannot establish candidate or MCU performance.\n",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.13",
+  "versions": {
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "numpy": "2.5.4",
+    "h5py": "3.14.0",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2"
+  },
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "upstream_python_sha256": {
+    "microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+    "microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+    "microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+    "microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+    "microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+    "microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+    "microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+    "microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    "microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+    "microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    "microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+    "microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+    "microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+    "microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+    "microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717"
+  },
+  "imported_upstream_modules": {
+    "microwakeword": {
+      "path": "microwakeword/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "microwakeword.layers.average_pooling2d": {
+      "path": "microwakeword/layers/average_pooling2d.py",
+      "sha256": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089"
+    },
+    "microwakeword.layers.modes": {
+      "path": "microwakeword/layers/modes.py",
+      "sha256": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0"
+    },
+    "microwakeword.layers.stream": {
+      "path": "microwakeword/layers/stream.py",
+      "sha256": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7"
+    },
+    "microwakeword.layers.strided_drop": {
+      "path": "microwakeword/layers/strided_drop.py",
+      "sha256": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a"
+    },
+    "microwakeword.mixednet": {
+      "path": "microwakeword/mixednet.py",
+      "sha256": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d"
+    },
+    "microwakeword.utils": {
+      "path": "microwakeword/utils.py",
+      "sha256": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717"
+    }
+  },
+  "recipe_ref": "65ebbcce0c87bb8a51cb5abfcd56a1c9bfe0ab4f",
+  "recipe_path": "research/wakeword_p4/results/4090-v46-training.json",
+  "recipe_sha256": "bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858",
+  "architecture_args": [
+    "--residual_connection",
+    "0,0,0,0",
+    "--stride",
+    "3",
+    "--pointwise_filters",
+    "60,60,60,60",
+    "--repeat_in_block",
+    "1,1,1,1",
+    "--mixconv_kernel_sizes",
+    "[5], [9], [13], [21]",
+    "--first_conv_filters",
+    "30",
+    "--first_conv_kernel_size",
+    "5"
+  ],
+  "context_frames": 150,
+  "parameters": 22801,
+  "weight_source": "Locally seeded random initialization only; no candidate weights loaded",
+  "initial_random_weight_sha256": "af7a378dc9d1f85657f2aa5dcaa72dcbde451946f98c817b28a3e66a44fdb512",
+  "temporary_random_h5_sha256": "be732beef7b58df7d9956a01d6f357643e2b53a3978e1d6f80d7e91edb84938a",
+  "random_h5_roundtrip_exact": true,
+  "penultimate_flattened_shape": [
+    300
+  ],
+  "state_buffers": [
+    {
+      "name": "states",
+      "path": "stream_6/states",
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ]
+    },
+    {
+      "name": "states",
+      "path": "stream_7/states",
+      "shape": [
+        1,
+        4,
+        1,
+        30
+      ]
+    },
+    {
+      "name": "states",
+      "path": "stream_8/states",
+      "shape": [
+        1,
+        8,
+        1,
+        60
+      ]
+    },
+    {
+      "name": "states",
+      "path": "stream_9/states",
+      "shape": [
+        1,
+        12,
+        1,
+        60
+      ]
+    },
+    {
+      "name": "states",
+      "path": "stream_10/states",
+      "shape": [
+        1,
+        20,
+        1,
+        60
+      ]
+    },
+    {
+      "name": "states",
+      "path": "stream_11/states",
+      "shape": [
+        1,
+        4,
+        1,
+        60
+      ]
+    }
+  ],
+  "nonstate_weights_unchanged": true,
+  "results": [
+    {
+      "name": "zeros",
+      "raw_shape": [
+        450,
+        40
+      ],
+      "raw_sha256": "d7967a6f7d2dd3204ed70cc72c705e33a573aef8431b69c5bbd39e5b5cd67384",
+      "steps": 150,
+      "unused_tail_frames": 0,
+      "compared_mature_windows": 100,
+      "known_window_phase": 1,
+      "maximum_embedding_error": 0.0,
+      "maximum_probability_error": 0.0,
+      "phase0_maximum_embedding_error": 0.0,
+      "all_reset_outputs_exact": true,
+      "embedding_sha256": "ec5a689d3fdf19351fc26dadaae55e6968fe42c9d18d760dd35f74981bd20115",
+      "score_sha256": "81d10a52d26121f8e82a485fa0a6d28f7bb12ab71924e553212ff6edea25620d"
+    },
+    {
+      "name": "random_feature_range",
+      "raw_shape": [
+        604,
+        40
+      ],
+      "raw_sha256": "6e8630913f2fc8da859ec532a05a000afd49b1950034328ddac70cc187e50d0e",
+      "steps": 201,
+      "unused_tail_frames": 1,
+      "compared_mature_windows": 152,
+      "known_window_phase": 1,
+      "maximum_embedding_error": 7.450580596923828e-09,
+      "maximum_probability_error": 5.960464477539063e-08,
+      "phase0_maximum_embedding_error": 0.008774885907769203,
+      "all_reset_outputs_exact": true,
+      "embedding_sha256": "b838d80c40d5063d0a824c488902136f3c2da0062338cbb1cd4c7b1c79640614",
+      "score_sha256": "6af2f9a99014a584a9e6629adcd4cd21a4b651e150712483c15cabccae82ad55"
+    },
+    {
+      "name": "raw_uint16_extremes",
+      "raw_shape": [
+        452,
+        40
+      ],
+      "raw_sha256": "48ca724070e3140129f403d9a677dd1d6af06f9a9def1695c92a166076c11250",
+      "steps": 150,
+      "unused_tail_frames": 2,
+      "compared_mature_windows": 101,
+      "known_window_phase": 1,
+      "maximum_embedding_error": 1.0244548320770264e-08,
+      "maximum_probability_error": 2.9802322387695312e-08,
+      "phase0_maximum_embedding_error": 0.0024374788627028465,
+      "all_reset_outputs_exact": true,
+      "embedding_sha256": "3d8a7abc3d5bb19431e622a090bb7fb5aac23e86a989036728deced5b8e3b30a",
+      "score_sha256": "eabc5518eff5fcdff1f270fba842b45c2b8aa1c3bca522c64910c1bf2a505124"
+    }
+  ],
+  "all_checks_pass": true,
+  "script_sha256": "cabbf75b9c57942d3d828355cb0cae483c9ba408f69c3de31952d54508cdbdf1",
+  "accepted": false,
+  "original_v46_model_received_or_inferred": false,
+  "training_or_development_or_final_data_accessed": false,
+  "limits": "Local clean pinned-upstream graph and synthetic-input runtime compatibility only. GPU upstream working-tree bytes are not authenticated by its training record. Random H5 roundtrip does not prove original candidate H5 compatibility. No original SavedModel, weights, features, INT8, recognition, FAR, Hi ESP, P4, audio playback/capture or promotion evidence."
+}
