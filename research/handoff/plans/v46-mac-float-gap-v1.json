@@ -1,0 +1,25 @@
+{
+  "scope": "Original v46 SavedModel on all reused Mac350, with raw float inputs and dequantized original INT8 inputs; inspect INT8-zero targets without choosing a threshold.",
+  "int8_result_sha256": "a50d4d04ee66272cf2a4a978490b96e82f73477cb225907e7e61c839357b5893",
+  "int8_scores_sha256": "779e83b0447aa1cedd0e5a697860ec9d835899a9ed2c52bc867ca63b4101927f",
+  "training_sha256": "bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858",
+  "tflite_sha256": "5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417",
+  "manifest_sha256": "c776e3790d4df96774e5a9b4b3d0526135621d93e69c6caa25959f9772f0b39f",
+  "baseline_sha256": "df1cf05a694c14a284b92760bb300c75fc6bc58eafbd329ed2c99b2a20f51770",
+  "saved_model_files": {
+    "fingerprint.pb": "e82bc37fe09dc887c898487ab349b40830b33b9a8734f0b82f67b08302ae2a37",
+    "saved_model.pb": "1e9f898266c9def25b0619288cf0b0e0349cb7d91d488994180009d3a1b05ce7",
+    "variables/variables.data-00000-of-00001": "1eb8124ae76c65bf9b32f15a998a29752db95377be5f66a90e4d0be6d7273c7d",
+    "variables/variables.index": "8baff8a576516f7d423fe53f88199a1ff99be4ac36c2c6edd25e86b50c0c012f"
+  },
+  "input_quantization": [0.10196078568696976, -128],
+  "threshold": 0.99609375,
+  "versions": {"tensorflow": "2.21.0", "numpy": "2.5.4", "pymicro-features": "2.0.2", "soundfile": "0.13.1"},
+  "method": "All350 original sources and frontend hashes; same original PCM speed, 56160 prime, tail block padding and stride3. Reset all6 buffers per stream and replay every float mode exactly twice. Compare first complete source with direct signature calls under prior atol=rtol=2e-5. Preserve all float32 outputs, weights unchanged. Original/dequantized inputs isolate an input-rounding sensitivity; float vs INT8 also includes remaining export/runtime differences. No new model export or calibration.",
+  "limits": [
+    "Already consumed correlated synthetic intention labels; no fresh human, matched population FAR, phonetic or physical acceptance.",
+    "SavedModel bytes are the authenticated received original export; its identity does not by itself prove universal export/runtime equivalence.",
+    "Dequantized input is an input-sensitivity control, not a reconstructed INT8 computation. Fixed-threshold counts and maxima are descriptive, not a new threshold, gate or model selection.",
+    "No GPU formal-run change, fitting, new/final data, playback, recording, board access or alteration of single-I2S/AEC/AGC/FIFO."
+  ]
+}
