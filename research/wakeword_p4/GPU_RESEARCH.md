@@ -4884,3 +4884,7 @@ Original trainer continues beyond15336 updates, same session93786/PID478492. Pre
 ### Independent formal20000 checkpoint, no float-eligible point
 
 Original session93786/PID478492 remains live; fourth original progress record20000 preserved byte-identically. Grid again0float-eligible points. Fallback threshold.994: macro.48645833, maximum-source confusion.0225, background0/1.204811h (one-sided95% upper2.48647/h). Since5000 the next three checkpoints are float-ineligible; no inference that later or common checkpoints pass. Fixed training continues without early changes. No newdev/final access, v30 retained; full matched formal results pending.
+
+### Independent formal25000 checkpoint retained
+
+Original session93786 remains live; fifth original progress record25000 preserved byte-identically. Grid0float-eligible points; fallback.992 macro.53255208, maximum-source confusion.0375, background2/1.204811h=1.660011/h, one-sided95% upper5.225543/h. Same continuing float failure pattern; no model-quality acceptance or config changes. Newdev/final untouched, v30 retained; await fixed120k independent/common sequence. Record pushed on branch; no repetitive Issue status comment for unchanged conclusion.
