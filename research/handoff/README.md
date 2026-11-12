@@ -2075,6 +2075,36 @@ rejected joint calibration, select a new threshold or make the model eligible
 for P4 deployment. Compare all original voice/variant counts with retained v30
 and Hi ESP, while leaving the current GPU matched formal run unchanged.
 
+The [completed v46 replay](../wakeword_p4/results/v46-original-historical-mac-v1.json)
+retains all350sources and94940UINT8 outputs, with identical original frontend
+hashes and two exact reset replays per source. At its unchanged historical
+threshold, v46 detects12/50targets versus retained v30's11/50 and Hi ESP's48/50.
+The shared100ordinary sentences produce0false clips for all three; the same
+90Nyx-near clips produce5/3/0false clips, respectively. V46's false phrases
+are Hey Alex (3), Hey Nexus (1) and Hey Six (1). Target hits by voice are
+Daniel0, Karen3, Moira0, Samantha6 and Tessa3, each out of10. The remaining
+60ESP-near clips and50opposite-target clips have0v46events; Hi ESP's14ESP-near
+events remain explicitly retained, with unverified synthetic pronunciation.
+Different historical thresholds do not make this a matched-FAR comparison or
+isolate a training change's cause. The gap remains large on these old sources.
+
+[`audit_candidate_mac_regression.py`](../wakeword_p4/training/audit_candidate_mac_regression.py)
+independently reconstructs firmware events from exact-rational integer sums,
+recomputes all frontend bytes and checks every aggregate/cohort count, without
+importing the producer's event helpers. The
+[v46 audit](../wakeword_p4/results/v46-original-historical-mac-v1-audit.json)
+passes with no host/firmware event differences. The same auditor also passes
+all94940originalv30outputs and cohort counts in the
+[compatibility check](../wakeword_p4/results/candidate-mac-auditor-v30-compatibility-v1.json).
+These are accounting checks, not additional model inference or P4 acceptance.
+To audit any completed candidate replay:
+
+```sh
+python research/wakeword_p4/training/audit_candidate_mac_regression.py \
+  --sources "$PUBLIC_MAC_PAIRED" --artifacts "$CANDIDATE_MAC_REPLAY" \
+  --reference "$ORIGINAL_V30_MAC_STUDY/result.json" --output "$FRESH_AUDIT"
+```
+
 ### Original Piper PCM endpoint provenance
 
 The GPU endpoint diagnostic identified 40 original Piper files with one
