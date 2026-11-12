@@ -1,0 +1,145 @@
+{
+  "scope": "Compare the GPU's pinned TensorFlow loss to the independent NumPy derivative.\n\nFormula/runtime check only: no original model, initialization, sampler, training\nupdate or coefficient selection. Actual-network preflight is separate.\n",
+  "implementation_commit": "c3f89a9d08e6c55f19cc675d0601c7dd7d55651d",
+  "implementation_sha256": "c02cd2d6c9538edc2068d3874280fa8983c7b7d1753be02336d567f14bd63cab",
+  "independent_numpy_source_sha256": "a39b84e9f4fedeaccd6531f717e30da470abb24172afc3038630880e26d25d79",
+  "script_sha256": "11fd621d581240d6f383464a20d7e5c94422f243d2a42af090d4991115c18eee",
+  "tensorflow_version": "2.21.0",
+  "numpy_version": "2.5.4",
+  "comparisons": [
+    {
+      "case": "normal3",
+      "dtype": "float64",
+      "dimensions": 3,
+      "loss": 1.075017880614773,
+      "gradient_norm": 0.1593893357652363,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 1.3877787807814457e-17,
+      "gradient_error_scale": 1.0,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "normal3",
+      "dtype": "float32",
+      "dimensions": 3,
+      "loss": 1.0750179290771484,
+      "gradient_norm": 0.15938933239320666,
+      "loss_absolute_error": 4.745810766593195e-08,
+      "gradient_maximum_absolute_error": 6.113695424914134e-09,
+      "gradient_error_scale": 1.0,
+      "tolerance": 2e-06
+    },
+    {
+      "case": "normal300",
+      "dtype": "float64",
+      "dimensions": 300,
+      "loss": 0.9928510222197541,
+      "gradient_norm": 0.014562708923233384,
+      "loss_absolute_error": 1.1102230246251565e-16,
+      "gradient_maximum_absolute_error": 2.168404344971009e-19,
+      "gradient_error_scale": 1.0,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "normal300",
+      "dtype": "float32",
+      "dimensions": 300,
+      "loss": 0.9928510189056396,
+      "gradient_norm": 0.014562708589701975,
+      "loss_absolute_error": 3.4636227219664306e-09,
+      "gradient_maximum_absolute_error": 1.2978797919206697e-10,
+      "gradient_error_scale": 1.0,
+      "tolerance": 2e-06
+    },
+    {
+      "case": "zero",
+      "dtype": "float64",
+      "dimensions": 3,
+      "loss": 1.0,
+      "gradient_norm": 0.0,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 0.0,
+      "gradient_error_scale": 1.0,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "zero",
+      "dtype": "float32",
+      "dimensions": 3,
+      "loss": 1.0,
+      "gradient_norm": 0.0,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 0.0,
+      "gradient_error_scale": 1.0,
+      "tolerance": 2e-06
+    },
+    {
+      "case": "constant_unit",
+      "dtype": "float64",
+      "dimensions": 3,
+      "loss": 0.0,
+      "gradient_norm": 0.0,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 0.0,
+      "gradient_error_scale": 1.0,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "constant_unit",
+      "dtype": "float32",
+      "dimensions": 3,
+      "loss": 0.0,
+      "gradient_norm": 0.0,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 0.0,
+      "gradient_error_scale": 1.0,
+      "tolerance": 2e-06
+    },
+    {
+      "case": "tiny",
+      "dtype": "float64",
+      "dimensions": 3,
+      "loss": 1.000008673928758,
+      "gradient_norm": 451306.5727289817,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 0.0,
+      "gradient_error_scale": 140149.59372519274,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "tiny",
+      "dtype": "float32",
+      "dimensions": 3,
+      "loss": 1.0000087022781372,
+      "gradient_norm": 451306.57751392445,
+      "loss_absolute_error": 2.834911194682377e-08,
+      "gradient_maximum_absolute_error": 0.006746480648871511,
+      "gradient_error_scale": 140149.59657214498,
+      "tolerance": 2e-06
+    },
+    {
+      "case": "one_zero_quiet",
+      "dtype": "float64",
+      "dimensions": 3,
+      "loss": 1.0460487349732863,
+      "gradient_norm": 5412694.891652036,
+      "loss_absolute_error": 0.0,
+      "gradient_maximum_absolute_error": 6.938893903907228e-18,
+      "gradient_error_scale": 5306184.692950737,
+      "tolerance": 1e-12
+    },
+    {
+      "case": "one_zero_quiet",
+      "dtype": "float32",
+      "dimensions": 3,
+      "loss": 1.0460487604141235,
+      "gradient_norm": 5412694.692727646,
+      "loss_absolute_error": 2.4584637881019944e-08,
+      "gradient_maximum_absolute_error": 0.17016344517469406,
+      "gradient_error_scale": 5306184.670163445,
+      "tolerance": 2e-06
+    }
+  ],
+  "all_passed": true,
+  "limits": "Pinned loss implementation only. This does not establish actual-network head disconnection, BN invariance, initialization gradient scale or training effectiveness."
+}
