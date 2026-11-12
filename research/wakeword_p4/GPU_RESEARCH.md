@@ -4804,3 +4804,8 @@ Fixed commands fc50373 and214 execution source/data/preflight hashes c384f78 pus
 ### Live temporal-risk control startup authenticated
 
 Original sequence409484/start7685669 and trainer409487/start7685681 still live at2026-11-12T12:36:13UTC;1706 complete loss rows observed. All214 fixed execution hashes unchanged. Actual initialization inventory exactly matches fresh smoke, allfirst50 temporal draws exactly match original independently authenticated zero-update probe, first actual loss/norm observation equals control smoke exactly. No restart or modification of pinned training files. Bounded startup evidence only; full120k pair audit and historical quality gates pending. Newdev/finals untouched, v30 retained.
+
+
+### Mac independent support feedback received while temporal control runs
+
+Issue13 comment6823741277 /Macf11ad5e received and original report imported byte-identically. All6 referenced local report hashes match. Positive support proposal is separate future preflight, not an amendment to live temporal experiment. Original enumerated candidate grid has no full-original-PCM candidate for34180/60000Piper,200/3000Kokoro,30/300Qwen rows. This does not prove no endpoint outside that grid exists, nor target/phoneme truncation. Before any replacement experiment, enumerate feasibility and explicit handling without silently removing/reweighting sources, and distinguish full long-command PCM from target support. Preserve original temporal pins, no parallel formaltraining/newdev/final use.
