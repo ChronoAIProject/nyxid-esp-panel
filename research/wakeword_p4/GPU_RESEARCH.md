@@ -4684,3 +4684,8 @@ Found inherited v47 root format `model-gpu-{tag}-ami-extra` did not match fixed 
 ## Deterministic first-batch arrays handed to Mac
 
 Original CPU/CUDA arrays and reports, original comparison and execution script released as gpu-paired-numerical-replay-v1.tar.gz,325906B,SHA f4ca8bedceefd4234802446d1dd0075391a0700ad1cb1c1fec1ef02c4d4daf09. Anonymous redownload archive/manifest/all6payloads authenticated against original bytes. Enables independent verification of new numerical policy; only first batch, not original50batch re-estimation or retroactive v1 passage. Formal control continues unchanged.
+
+
+## Mac independent network autodiff and Adam receipt
+
+Mac63c6082 original archive16108076B SHA043a156d8662d29e9d060c80e0004f15926225b0228371214271cc832924bd1b anonymously downloaded; manifest and all4payload sizes/SHA verified. Report pins certified derived initialization and all50actualbatches,0updates/unchangedvariables; allthree currenthelper bytes exact. Independent NumPy output derivatives + CPUencoderautodiff and firstAdam formula checks were executed byMac, not rerun here. FirstMaclosses versus newCPUfullFP32reference pass original1e-5 tolerance,maxabs1.3678674e-6. OriginalGPUgradientrelative-L2 differences remain nonzero and retained, not rewritten as pass. Macsingle-step update reports pass their fixed bounds, not fullsampler/120k/acceptance evidence. Formal sequence314584/start5559859 and control314586/start5559860 confirmedlive; norestart.
