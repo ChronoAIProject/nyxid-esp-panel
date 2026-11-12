@@ -4936,3 +4936,7 @@ Original session93786 remains live. Sixteenth progress record80000 preserved byt
 ### Independent formal85000 checkpoint retained
 
 Original session93786 remains live. Seventeenth progress record85000 preserved byte-identically;0float-eligible points. Fallback.992 macro.4671875, maximum-source confusion.02083333, background0/1.204811h (one-sided95% upper2.48647/h). Fixed120k plan continues without restart/config changes; no acceptance/newdev/final access, v30 retained. Original record/audit pushed without repetitive Issue status.
+
+### Independent formal90000 checkpoint retained
+
+Original session93786 remains live. Eighteenth progress record90000 preserved byte-identically;0float-eligible points. Fallback.994 macro.4734375, maximum-source confusion.03020833, background0/1.204811h (one-sided95% upper2.48647/h). Three-quarters of fixed120k independent run complete, common still pending; no acceptance/restart/config changes/newdev/final access, v30 retained. Original record/audit pushed without repetitive Issue status.
