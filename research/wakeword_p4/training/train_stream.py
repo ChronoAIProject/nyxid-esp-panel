@@ -48,6 +48,8 @@ def main():
     parser.add_argument("--factorized-coverage-pack", type=Path)
     parser.add_argument("--paired-gradient-probe", action="store_true",
                         help="Only inspect50 original-init main+paired batches; no updates/export")
+    parser.add_argument("--paired-rendering-coefficient", type=float, choices=(0., 1.),
+                        help="Matched paired-BCE control0/rendering-consistency treatment1")
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -71,6 +73,8 @@ def main():
     args = parser.parse_args()
     if args.paired_gradient_probe and not args.factorized_coverage_pack:
         parser.error('Paired gradient probe requires the v47 factorized main recipe')
+    if args.paired_rendering_coefficient is not None and (not args.factorized_coverage_pack or args.paired_gradient_probe):
+        parser.error('Matched rendering requires factorized main recipe, separate from no-update probe')
     if not 0 <= args.label_smoothing <= .2:
         parser.error("label smoothing must be finite and within0..0.2")
     bn_policy = args.batchnorm_policy or ("frozen" if args.freeze_batchnorm else "train")
@@ -384,6 +388,20 @@ def main():
         from paired_gradient_probe import run_gradient_probe
         run_gradient_probe(model, batch, balanced_coverage, args.factorized_coverage_pack, root)
         return
+    paired_rendering = None
+    paired_trace_chain = hashlib.sha256()
+    if args.paired_rendering_coefficient is not None:
+        from paired_rendering_training import PairedRenderingTraining
+        paired_rendering = PairedRenderingTraining(model, balanced_coverage,
+            args.factorized_coverage_pack, args.paired_rendering_coefficient)
+        model.save_weights(root/'actual-initialization.weights.h5')
+        inventory = [dict(path=v.path, shape=list(v.shape), dtype=str(v.dtype),
+            value_sha256=hashlib.sha256(v.numpy().tobytes()).hexdigest()) for v in model.variables]
+        (root/'actual-initialization-inventory.json').write_text(json.dumps(inventory,indent=2)+'\n')
+        paired_rendering.report['initialization_snapshot_sha256'] = hashlib.sha256((root/'actual-initialization.weights.h5').read_bytes()).hexdigest()
+        paired_rendering.report['initialization_inventory_sha256'] = hashlib.sha256((root/'actual-initialization-inventory.json').read_bytes()).hexdigest()
+        paired_trace_log = (root/'paired-sampling-trace.jsonl').open('w')
+        paired_loss_log = (root/'paired-losses.jsonl').open('w')
     # Valid stride-3, kernel-5 convolution consumes only 179 of 180
     # input frames. Phase 0 windows therefore end one 10 ms frame before
     # the streaming output they used to be compared with. Shift by the
@@ -454,7 +472,20 @@ def main():
             x, y, weights = batch()
             if phone_binary is not None:
                 x, y, weights = phone_binary.append(x, y, weights)
-            if five_score is not None:
+            if paired_rendering is not None:
+                sx,sy,sw = paired_rendering.sampler.batch()
+                main_sha = hashlib.sha256(x.tobytes()+y.tobytes()+weights.tobytes()).hexdigest()
+                trace = dict(main_tensor_sha256=main_sha, **paired_rendering.sampler.last_trace)
+                trace_text = json.dumps(trace,sort_keys=True)+'\n'
+                paired_trace_chain.update(trace_text.encode())
+                paired_trace_log.write(trace_text)
+                values = [float(v) for v in paired_rendering.step(x,y,weights,sx,sy,sw)]
+                loss = values[0]
+                assert int(model.optimizer.iterations) == step
+                paired_loss_log.write(json.dumps(dict(step=step, total=values[0], main_bce=values[1],
+                    pair_bce=values[2], consistency=values[3], supervised_encoder_norm=values[4],
+                    consistency_encoder_norm=values[5]))+'\n')
+            elif five_score is not None:
                 sx,sy,sw=five_score.batch()
                 loss=float(five_score.step(x,y,weights,sx,sy,sw))
             elif auxiliary is None:
@@ -477,6 +508,14 @@ def main():
                     model.save_weights(root/"best.weights.h5")
                     if auxiliary is not None:
                         auxiliary.network.save_weights(root/'best_auxiliary.weights.h5')
+    if paired_rendering is not None:
+        paired_trace_log.close(); paired_loss_log.close()
+        assert paired_rendering.sampler.draws == args.steps
+        paired_rendering.report.update(optimizer_updates=int(model.optimizer.iterations),
+            ordered_sampling_sha256=paired_trace_chain.hexdigest(),
+            sampling_trace_sha256=hashlib.sha256((root/'paired-sampling-trace.jsonl').read_bytes()).hexdigest(),
+            loss_trace_sha256=hashlib.sha256((root/'paired-losses.jsonl').read_bytes()).hexdigest(),
+            first50_paired_trace=paired_rendering.sampler.trace)
     model.load_weights(root/"best.weights.h5")
     bn_selected = snapshot(model)
     if bn_policy in ("frozen", "affine") and bn_selected["moving_statistics_sha256"] != bn_initial["moving_statistics_sha256"]:
@@ -517,6 +556,7 @@ def main():
               "balanced_coverage": balanced_coverage.report if balanced_coverage is not None else None,
               "complete_coverage": complete_coverage.report if complete_coverage is not None else None,
               "five_score": five_score.report if five_score is not None else None,
+              "paired_rendering": paired_rendering.report if paired_rendering is not None else None,
               "validation_window_phase": window_phase,
               "source_exponent": args.source_exponent,
               "ambient_sampling": args.ambient_sampling, "ambient_sampling_coverage": ambient_coverage,

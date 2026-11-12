@@ -19,6 +19,8 @@ class PairedRenderingSampler:
         self.arms = ['quiet', 'noise25', 'combined', 'noise15', 'rir']
         self.rng = np.random.default_rng(227726)
         self.trace = []
+        self.draws = 0
+        self.last_trace = None
 
     def batch(self):
         speed = float(self.rng.choice([.9, 1., 1.1]))
@@ -33,8 +35,11 @@ class PairedRenderingSampler:
         assert windows.shape == (40, 150, 40) and windows.dtype == np.uint16
         labels = np.array([r['target'] == 'hey_nyx' for r in rows], dtype=np.float32)[:, None]
         assert labels.sum() == 10
-        trace = dict(block=len(self.trace), voices=voices, speed=speed, endpoint_inclusive=end,
+        trace = dict(block=self.draws, voices=voices, speed=speed, endpoint_inclusive=end,
             pack_indices=[r['pack_index'] for r in rows],
             window_sha256=[hashlib.sha256(x.tobytes()).hexdigest() for x in windows])
-        self.trace.append(trace)
+        self.last_trace = trace
+        if self.draws < 50:
+            self.trace.append(trace)
+        self.draws += 1
         return np.clip(windows.astype(np.float32)/25.6, 0, 26), labels, np.where(labels[:, 0] > 0, 1., 20.).astype(np.float32)
