@@ -1,0 +1,113 @@
+{
+  "schema": "mac-temporal-tail-risk-startup-receipt-v1",
+  "gpu_commit": "843299962e644e50ee9316c938ce041532cb82b3",
+  "pins_commit": "c384f78",
+  "startup_report": {
+    "path": "research/wakeword_p4/results/4090-temporal-tail-risk-formal-startup-v1.json",
+    "sha256": "830d924ad124f060d6f47d34b69c2c2d3a580add49d673deb54b6a63e35696cf"
+  },
+  "execution_pins": {
+    "path": "research/wakeword_p4/results/4090-temporal-tail-risk-execution-pins-v1.json",
+    "sha256": "f664fdf6d36efd4941563f4101bc90c066f40cc6f6d492237d4989efac51c0fe"
+  },
+  "sequence": {
+    "exec_session": 33314,
+    "processes": [
+      {
+        "pid": 409484,
+        "parent_pid": 16546,
+        "start_ticks": 7685669,
+        "state": "S",
+        "argv": [
+          "bash",
+          "research/wakeword_p4/experiments/temporal_tail_risk_formal_sequence_v1.sh"
+        ]
+      },
+      {
+        "pid": 409487,
+        "parent_pid": 409486,
+        "start_ticks": 7685681,
+        "state": "D",
+        "argv": [
+          "/usr/bin/python3",
+          "research/wakeword_p4/training/train_stream.py",
+          "--device",
+          "cuda",
+          "--paired-objective",
+          "temporal-tail-risk",
+          "--paired-rendering-coefficient",
+          "0",
+          "--upstream",
+          ".local/wakeword/microWakeWord",
+          "--features",
+          ".local/wakeword/features-gpu-ami-extra-v1",
+          "--output",
+          ".local/wakeword/model-temporal-tail-risk-control-formal-v1",
+          "--architecture",
+          "teacher60",
+          "--context-frames",
+          "150",
+          "--batchnorm-policy",
+          "frozen",
+          "--initial-weights",
+          ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5",
+          "--ambient-sampling",
+          "stratified",
+          "--prefix-negatives",
+          "0",
+          "--source-exponent",
+          "0",
+          "--full-source-pack",
+          ".local/wakeword/british-training-features-v1",
+          "--factorized-coverage-pack",
+          ".local/wakeword/factorized-training-features-v1",
+          "--us-temporal-coverage",
+          "--us-coverage-pack",
+          ".local/wakeword/us-training-features-v1",
+          "--negative-container-mixture",
+          "--positive-full-timeline",
+          "--negative-full-timeline",
+          "--complete-coverage-pack",
+          ".local/wakeword/mac-evidence-import-v1/old-complete-container-pack-v1/study",
+          "--steps",
+          "120000",
+          "--eval-interval",
+          "5000",
+          "--event-validation"
+        ]
+      }
+    ],
+    "pins_commit": "c384f78",
+    "scope": "Observed original sequence and control trainer live; not completion or quality evidence."
+  },
+  "pins_summary": {
+    "source_commit": "fc50373c83007d11345994de4446e0528f800171",
+    "steps_per_arm": 120000,
+    "runs_per_arm": 1,
+    "automatic_restarts": false,
+    "temporal_coefficients": [
+      0,
+      1
+    ],
+    "ranking_coefficient": 1,
+    "objective": "main BCE + last pair BCE + ranking1 + coefficient*weighted temporal logmeanexp frame BCE",
+    "selection": "Original24 checkpoints every5000/float selection/PTQ",
+    "gates": "Unchanged original138 historical points; no new dev/final access"
+  },
+  "checks": {
+    "sequence_and_control_reported_live_or_sleeping": true,
+    "one_sequence_and_one_control": true,
+    "one_control_then_treatment": true,
+    "steps_per_arm_120000": true,
+    "no_automatic_restarts": true,
+    "ranking_fixed_one": true,
+    "unchanged_historical_gate": true,
+    "acceptance_claim_false": true
+  },
+  "acceptance_claim": false,
+  "limits": [
+    "This is a receipt of a remote startup observation and pinned command metadata, not a training completion, model quality, P4, acoustic, latency, resource, or long-call result.",
+    "Do not restart this sequence because a later observation is stale or missing."
+  ],
+  "all_checks_passed": true
+}
