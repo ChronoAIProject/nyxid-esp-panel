@@ -1,5 +1,6 @@
 """Verify the integer separation certificate with alternate window accounting."""
 import argparse
+from fractions import Fraction
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +25,10 @@ def main():
     assert sha(args.analysis/'plan.json') == result['plan_sha256']
     assert sha(args.analysis/'source.py') == result['source_sha256']
     parent = json.loads((args.study/'result.json').read_bytes())
+    schema = plan.get('report_schema', 'v30-original-v1')
+    assert schema in ('v30-original-v1', 'candidate-mac-v1')
+    output_hash_field = 'output_sha256' if schema == 'candidate-mac-v1' else 'quantized_output_sha256'
+    threshold_sum = Fraction.from_float(plan['threshold'])*1280
     traces = np.load(args.study/'scores.npz', allow_pickle=False)
     assert len(parent['source_details']) == len(result['source_scores']) == 350
     checked, witnesses = [], []
@@ -31,7 +36,7 @@ def main():
         assert all(saved[k] == source[k] for k in ('path','target','voice','variant','text','sha256'))
         raw = traces[f'output_{index}']
         assert raw.dtype == np.uint8 and raw.ndim == 1
-        assert hashlib.sha256(raw.tobytes()).hexdigest() == source['quantized_output_sha256']
+        assert hashlib.sha256(raw.tobytes()).hexdigest() == source[output_hash_field]
         windows = np.lib.stride_tricks.sliding_window_view(raw, 5)
         sums = windows.sum(axis=1, dtype=np.int64)
         # Obtain return positions by first constructing *all raw-score* block
@@ -43,7 +48,7 @@ def main():
         top = valid[np.argmax(sums[valid])]
         maximum = int(sums[top])
         assert maximum == saved['max_five_score_sum'] and saved['denominator'] == 1280
-        assert (maximum >= 1175) == bool(source['firmware_arithmetic']['events'])
+        assert (maximum >= threshold_sum) == bool(source['firmware_arithmetic']['events'])
         checked.append((source, maximum))
         witnesses.append({'path': source['path'], 'target': source['target'],
             'sha256': source['sha256'], 'five_output_bytes': windows[top].tolist(),
