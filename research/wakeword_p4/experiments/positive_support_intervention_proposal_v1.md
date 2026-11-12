@@ -1,6 +1,10 @@
 # Positive target-support intervention (proposal)
 
-Status: proposal only. No formal training or model promotion is authorized by this file.
+Status: withdrawn after integration preflight (`dd3ce80`). Do not implement or launch this proposal.
+
+The actual main-batch construction overwrites every `sample(1, 32)` positive before the network sees it: `full_source.first80()` replaces the first 80 slots, followed by coverage replacements. The surviving 32 positive slots are 16 fixed full-source, 8 US-coverage, and 8 factorized-coverage slots. Changing any of the 63,300 inherited positive rows therefore leaves the actual batch, labels, and weights unchanged. See [the active-slot audit](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/dd3ce80/research/wakeword_p4/results/4090-active-positive-slot-audit-v1.json) and [Issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6829047232).
+
+The source-support counts below describe inherited sampler draws only. They do not describe the positive examples that reach the network and cannot explain this model's failures. The proposed insertion point was rejected before gradients, smoke, or formal training. The remaining text preserves the withdrawn proposal; it is not a current experiment plan. Follow Issue #13 for current work.
 
 The completed phrase-ranking experiment improved same-threshold discrimination but both arms failed the unchanged 138-point joint gate. At the fixed historical threshold `0.99609375`, treatment changed the saved synthetic result from 25/76 target streams and 6 false clips to 35/76 target streams and 2 false clips. This leaves a large absolute positive-coverage gap.
 

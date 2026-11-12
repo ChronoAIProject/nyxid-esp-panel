@@ -1082,12 +1082,33 @@
   "interpretation": [
     "Phrase ranking improved same-threshold discrimination: 138/138 grid points had fewer negative false clips, but the unchanged joint gate still had zero eligible points in both arms.",
     "At fixed 0.99609375 on the saved synthetic streams, treatment changed positive hits from 25/76 to 35/76 while negative false clips changed from 6 to 2; this remains far below a qualified candidate and does not support promotion.",
-    "Training candidate windows frequently lack complete original PCM support, especially Piper (509618/1500000 = 0.3397453333). This is a sampler/coverage diagnostic, not proof of bad labels or phonetic truncation.",
-    "Long positive prompts have materially lower complete-source fit than the short Hey Nyx positive. This creates a testable absolute-coverage hypothesis distinct from phrase ranking.",
+    "The inherited training candidate windows frequently lack complete original PCM support, especially Piper (509618/1500000 = 0.3397453333), but these positives are all overwritten before the network. These counts do not describe effective model inputs.",
+    "The inherited long-prompt support difference does not support the proposed actual-network intervention because no inherited positive survives batch replacement.",
     "The older v40/v41 temporal support census is diagnostic only: it cannot establish current-model causality, and it does not authorize changing the gate.",
-    "Full-source support is not itself a target-phone timing label. Any future intervention must first authenticate target-interval metadata, explicitly retain no-legal-endpoint groups, and stop before formal training if that cannot be done."
+    "The original endpoint intervention was withdrawn at integration. Any future hypothesis must first identify effective network inputs; full-source support remains separate from target-phone timing."
   ],
-  "next_preflight": {
+  "acceptance_claim": false,
+  "limits": [
+    "All conclusions are limited to authenticated historical/development reports and saved synthetic traces.",
+    "No new model training, P4 flashing, acoustic playback, microphone recording, latency, resource, or long-call test was performed by this audit.",
+    "Support coverage is an engineering property; it does not prove pronunciation, acoustic validity, or human generalization."
+  ],
+  "status": "superseded: proposed intervention rejected at actual network integration",
+  "integration_correction": {
+    "evidence_commit": "dd3ce80",
+    "evidence_path": "research/wakeword_p4/results/4090-active-positive-slot-audit-v1.json",
+    "issue_comment": "https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6829047232",
+    "finding": "All sample(1,32) positives are overwritten by full_source.first80() and coverage replacements before reaching the network.",
+    "surviving_positive_slots": {
+      "full_source_fixed": 16,
+      "us_coverage": 8,
+      "factorized_coverage": 8,
+      "original_main_sampler": 0
+    },
+    "scope_correction": "The inherited 63300 positive rows still consume RNG draws but contribute no actual positive input slots. The support counts below remain historical sampler diagnostics only; they cannot explain actual model-input coverage or authorize this intervention.",
+    "decision": "Withdraw original sampler endpoint intervention before gradients, smoke or formal training. Do not repeat v38 jitter or v39 five-score loss as a new experiment."
+  },
+  "historical_next_preflight_withdrawn": {
     "name": "positive-target-support matched preflight",
     "control": "original main128 + pair40 BCE sampler, exact current pins",
     "treatment": "same training-only source IDs and metadata; first enumerate authenticated target-phone-supported legal endpoints. For a group with at least one legal endpoint, apply a deterministic same-source/same-metadata endpoint substitution. For a group with no legal endpoint, retain the original draw and mark unsupported_fallback.",
@@ -1108,11 +1129,5 @@
       "unsupported_fallback is not explicitly accounted for",
       "preflight changes source/phrase/speed/rendering populations or normal audio path"
     ]
-  },
-  "acceptance_claim": false,
-  "limits": [
-    "All conclusions are limited to authenticated historical/development reports and saved synthetic traces.",
-    "No new model training, P4 flashing, acoustic playback, microphone recording, latency, resource, or long-call test was performed by this audit.",
-    "Support coverage is an engineering property; it does not prove pronunciation, acoustic validity, or human generalization."
-  ]
+  }
 }
