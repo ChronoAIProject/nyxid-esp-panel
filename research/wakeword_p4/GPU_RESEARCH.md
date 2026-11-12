@@ -4535,3 +4535,8 @@ All24192variants grouped by original speed/phrase/variant and all8064sources pai
 ## Rendering factorial implementation and original-arm verification
 
 Implemented phase-separated no-model pipeline. First all8064sources×quiet/combined reproduce float64/WAV/frontend and gains exactly;controls forbidden until full reference receipt. Source bytes/manifests pinned. Clarified before controls/scoring: speech normalized to .08 before noise,so original plan noise-RIR RMS wording incorrect. Noise-only uses exact normalized combined noise vector prefix,with length/realized-SNR difference disclosed;all intermediate arrays retained for newcontrols. Reference session97108 running;no new controls or scores yet.
+
+
+## Factorial reference verification complete
+
+Original8064source quiet+combined arms all16128 exact float64/WAV/frontend/gains reproduced,original bytes untouched. Original reference receipt copied byte-for-byte toresults,scriptc36a726bdaea5859f40ce0728689cfa7383678be8aece89c459e2f3d4a779175. Then launched controls phase session32274,all8064sources noise15-only and RIR-only;no wake model scoring until independent control array/PCM/frontend/ledger checks. No training/newdev/final or promotion.
