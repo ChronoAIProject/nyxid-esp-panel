@@ -4432,3 +4432,7 @@ Preregisterv45 changes only existingUS20slots time sampling:8positivecomplete,6n
 ### 2026-11-12 UTC — v45 all-endpoint and sampler audit,4090 smoke passed
 
 Implemented9f16671 US-only temporal plan. All324raw/file/data/shape/lowcrop/endsets independently exact. Fiftybatches/1000USsource+temporal draws match independent enumerations/seeds167726/177726;originalBritish/complete/source/positive/negative/container RNG states and other60phrase slots unchanged. Original48ambient generation code unmodified. Two-step4090smoke exit0 in43.7s,selected1,54312B SHAe206977a71777335871cf1a9619e8f88656c85626bbc622725cfd896a6cc7f37. All saved weights finite,frozenBN unchanged,int8[1,3,40]→uint8[1,1] contract passes. Original training/audit reports copied unchanged;formal120k plus original historical-only postprocessor prepared with177726/slots validation. No accuracy/FAR/promotion claim,oldqualitylimits/v30/newdev/finals preserved.
+
+### 2026-11-12 UTC — Mac v44 diagnostic metadata audit reproduced
+
+Imported original Mac1066df5 report unchanged, verified audit source SHA, ran exact original script on pinned9f16671 git objects; parsed JSON identical (byte status inreceipt). Original380identity/event correspondences,13witnesses,6597old/324UScohort counts/groups and4window ledgers corroborated. This is metadata arithmetic/hash-link evidence only, not independent model/trace-array replay. No change to originalv45 PID235075/start4081425 or newdev/finals.
