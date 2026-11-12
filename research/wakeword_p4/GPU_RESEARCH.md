@@ -4513,3 +4513,8 @@ After formal rejection,run full24192variant balanced training-only INT8 census w
 ## v46 complete balanced training fit census
 
 All24192 original variants replayed,all saved score hashes and maxima/counts independently authenticated. Original23MBreport preserved byte-for-byte. At .99609375:18144negative variants8fullstream eventclips;6048positive variants5120any-event,5119container-support hits. At .5:118negativeeventclips,5916positiveany,5913support. No zero-support variants. Fit remains imperfect;not purely development-only failure. Started identical pack census with frozenv45 for matched descriptive comparison;v45 never trained on these fresh sources,so this compares prior coverage/generalization to v46 training fit,not independent evaluation or isolated causal architecture effect. No optimizer/newdev/final access/threshold selection/promotion.
+
+
+## Matched balanced training source census v45/v46
+
+All48384saved traces authenticated and maxima/fullhigh flags independently recomputed. At historical .99609375:negative eventclips151→8/18144;positive completecontainer support3797→5119/6048. At.5 negatives567→118;positive support4960→5913. This pack trainedv46 only;comparison is v45transfer versus v46fit,not independent heldout improvement or isolated causal effect. V46still rejected olddevelopment/FAR;no automatic training. Next diagnostic replays all380 already consumed development clips using actual v46 exported float and exact prior INT8 reproduction at fixed historical threshold,following existing v45 method,without optimization/newdev/finals.
