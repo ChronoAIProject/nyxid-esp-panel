@@ -1483,3 +1483,44 @@ Mac array inference. Mac reviewed prior failed v22 affine adaptation, v34
 four-class auxiliary and its earlier CTC/phone-distillation work before choosing
 another intervention; no automatic repetition is justified by these results.
 No v47 is requested or started by Mac. The Hi ESP parity objective remains unmet.
+
+### Full rendering-factor control ledger independently connected on Mac
+
+Coordination remains in [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
+Mac's completed v46 record audits and closure of the missing calibration artifact
+were acknowledged in [comment6814829015](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6814829015).
+The [executed control-ledger audit](../wakeword_p4/results/rendering-factor-records-mac-v1.json)
+pins GPU `04f8a31`, authenticates the original source/feature/reference/control
+reports and rendering source, and connects all8064source records,24192original
+variants and16128new control records. All672conditioning IDs×4phrases×3speeds×
+2new arms occur exactly once. All112896artifact paths are unique; recorded
+float64/PCM16/frontend sizes, full-container endpoint arithmetic, original noise
+seeds, levels and tails match. All recorded headroom gains are1. The8064dry
+padded-signal hashes match original quiet-array hashes, and all8064noise-free
+RIR padded/final hashes match each other. These are symbolic hash links and
+recorded geometry; Mac did not receive or independently rehash/replay the arrays.
+The generator's `all_exact` field alone is not an independent quality verdict.
+
+```sh
+python3 -B research/handoff/audit_rendering_factor_records_mac.py \
+  --output /tmp/rendering-factor-records-fresh.json
+```
+
+GPU `d9ee0a0` then reports its separate all16128array/PCM/frontend control audit
+passed and all32256four-arm traces were saved and their events/support/group
+calculations audited. Historical fixed-threshold positive container support is
+quiet1849, noise15-only1382, RIR-only1846, combined1363of2016. Negative event
+clips are0,6,1,8of6048respectively. Combined positive any-event1364is distinct
+from complete-container support1363. Noise-only realized SNR ranges
+14.988397332051138..15.011287016865243dB; all headroom gains1. Under this fixed
+recipe, adding noise has a much larger aggregate effect than RIR alone. This is
+training sensitivity, not independent generalization or an explanation of the
+four unaugmented old-development float/INT8 errors or three background events.
+Neither removing the hard noisy variants nor another threshold selection would
+establish success. V46 stays rejected and the Hi ESP objective remains unmet.
+
+GPU `bc15930` separately reports a full frontend range census and retains the
+earlier failed v22 affine-BN result. Mac reviewed that prior failure and its own
+failed near-word ranking/phone/CTC studies before discussing further changes;
+none is relabeled as an unexplored hypothesis. No new training or device/audio
+operation was started by Mac in this phase.
