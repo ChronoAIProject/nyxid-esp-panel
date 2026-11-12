@@ -4679,3 +4679,8 @@ Fresh v2 smokes pass. Prepared one120k run per arm, original5k checkpoint/PTQ/se
 ## Formal postprocessor path correction during unchanged control run
 
 Found inherited v47 root format `model-gpu-{tag}-ami-extra` did not match fixed formal commands' `model-{tag}`. Corrected only that path before scoring. Original execution pins preserved; separate correction receipt records old/new postprocessor SHA. Both arm root expressions checked against actual command output directories; all other pinned files including trainer/helpers remain byte-identical. No training restart, recipe/selection/gate changes or new-data access.
+
+
+## Deterministic first-batch arrays handed to Mac
+
+Original CPU/CUDA arrays and reports, original comparison and execution script released as gpu-paired-numerical-replay-v1.tar.gz,325906B,SHA f4ca8bedceefd4234802446d1dd0075391a0700ad1cb1c1fec1ef02c4d4daf09. Anonymous redownload archive/manifest/all6payloads authenticated against original bytes. Enables independent verification of new numerical policy; only first batch, not original50batch re-estimation or retroactive v1 passage. Formal control continues unchanged.
