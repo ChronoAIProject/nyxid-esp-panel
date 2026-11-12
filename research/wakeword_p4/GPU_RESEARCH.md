@@ -4744,3 +4744,8 @@ Fresh control completed120000 updates in4738.8s; original selection5000. Origina
 ### Phrase ranking treatment completed and full input audit passed (2026-11-12 UTC)
 
 Original treatment completed120000 updates in4708.6s; original selection5000. Original training.json preserved unchanged. Export54440B SHA598f9245fc02bd3262a286c89e5c50bcfe2fef6195fc265bc5eb11f05a7af591 passes finite/frozenBN/INT8[1,3,40] to UINT8[1,1] contract. Original sequence full120k input audit passed: actual initialization inventories and complete ordered sampling traces exact; each arm120000 sampling/loss rows with authenticated hashes and saved snapshots; first observations exact excluding total. Historical-only postprocessing now runs in original sequence; no quality acceptance or new dev/final access.
+
+
+### Phrase ranking control historical gate rejected (2026-11-12 UTC)
+
+All original historical reports copied byte-for-byte;467 saved score traces authenticated. Original fixed138-point joint calibration has no viable operating point; control rejected. Original sequence continues treatment historical evaluation. No new dev/final access or v30 replacement.
