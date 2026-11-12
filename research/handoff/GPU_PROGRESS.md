@@ -1406,3 +1406,80 @@ building P4 at this snapshot. Original v46 status/completion has been requested
 through issue #13; no new remote-process observation or quality result has
 arrived. A report from an earlier turn alone does not prove it is live now, and
 elapsed observation alone does not justify restarting it.
+
+### Original v46 completed; historical quality gate rejects it
+
+GPU `65ebbcc` retains the original training and export report. The original
+120000-step run completed in2629.9seconds, selected10000, with54440-byte model
+SHA `5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417`.
+The [actual independent Mac record audit](../wakeword_p4/results/v46-training-record-mac-audit-v1.json)
+authenticates all159original training source files, training/export links,
+unchanged inherited recipe and US coverage,2688balanced groups/672conditioning
+IDs with9variants each, source/end seeds and slots. It recomputes all24saved
+checkpoint choices and264original float-grid points: none meet the original
+float low-false criteria. The recorded selection at10000reproduces. Its .994
+point has macro recall .380729 and maximum source false rate .010625.
+This is source/report/selection arithmetic, not independent model or array
+inference. Finite weights, frozen BN and INT8 interface remain GPU-executed
+export claims with authenticated report/source links.
+
+GPU `5e4d7b3` and
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6814581595)
+report the original postprocessor's complete rejection: fixed138points,
+0eligible, minimum4negative false clips and maximum macro .745833. Historical
+.99609375/smoothing5 gives target-any7/16Kokoro and32/60VCTK, common false1/48
+and3/180, cross-target0. OldVox has3events/8.173672725694447h, upper95
+.9486135288434813/h, failing .5/h. This improves the consumed-development
+near-phrase counts relative to v45 while losing recall and still failing
+background; it does not establish overall improvement or isolated causality.
+V46 is rejected, no board rollout or unused-development/final access follows.
+
+The complete historical-report audit initially awaited the original
+calibration bytes. The three historical reports reference calibration SHA
+`958ba828dac95143d924c2b620bf4d846d5f8a4cd6b0271c3f47bc62f242ff8b`,
+which was missing from the first handoff. The explicit original-file request
+and audit scope were sent through
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6814637400).
+GPU `b0fd341` supplied the byte-exact original report; Mac authenticated its
+SHA before running `audit_v46_old_stage_record_mac.py`. The
+[completed actual audit](../wakeword_p4/results/v46-old-stage-record-mac-audit-v1.json)
+connects all467saved-report/receipt hash references, reconstructs the historical
+saved event totals and recomputes every138joint-grid macro/eligibility/Poisson
+calculation. All checks pass, maximum upper95 discrepancy4.440892098500626e-16.
+This independently verifies recorded rejection arithmetic, **not** the GPU's
+original model/score-array inference or its file rehash operation. No inference,
+new exposure, threshold selection or device operation occurs in the Mac audit.
+
+```sh
+python3 -B research/handoff/audit_v46_training_record_mac.py \
+  --output /tmp/v46-training-record-fresh.json
+# After receiving the byte-exact historical calibration report:
+python3 -B research/handoff/audit_v46_old_stage_record_mac.py \
+  --historical-calibration /path/to/original-v46-validation-report.json \
+  --output /tmp/v46-old-stage-record-fresh.json
+```
+
+GPU `f34587e`/`687081a` also retain an all24192-training-variant comparison of
+v45 transfer versus v46 training fit, with48384saved-score hashes. GPU reports
+historical-threshold negative full-trace event clips151→8 and positive
+complete-container support3797→5119of6048. These are training fit/transfer,
+not independent generalization; source exposure and selected checkpoints differ.
+The raw full-trace event counter includes pre-full-receptive-field warmup,
+whereas complete-container support excludes it. Mac requested separately named
+warmed counts from the saved traces rather than stopping/restarting the census.
+GPU `b0fd341` subsequently adds separately named full-trace, warmed-five,
+warmed-restarted-event and container-support clip counts from the original
+48384saved arrays. At historical threshold v46 negative full/warmed counts
+are both8, container support7; positive full/warmed5120, container5119. Thus
+the naming correction does not remove the eight training negative event clips.
+
+The same commit reports actual-float versus original INT8 replay on all380
+consumed old-development clips, with380original INT8 traces reproduced exactly.
+Of304negatives,300fail neither mode and4fail both; neither float-only nor
+INT8-only failures occur. The4residual negative failures therefore do not
+require quantization. Background actual-float remains unmeasured, so this
+does not explain its3events. These are GPU report/array audits, not independent
+Mac array inference. Mac reviewed prior failed v22 affine adaptation, v34
+four-class auxiliary and its earlier CTC/phone-distillation work before choosing
+another intervention; no automatic repetition is justified by these results.
+No v47 is requested or started by Mac. The Hi ESP parity objective remains unmet.

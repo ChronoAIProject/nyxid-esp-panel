@@ -1,0 +1,40 @@
+{
+  "scope": "Authenticate original v46 source/recipe records and recompute float choices.\n\nRecorded metadata and selection arithmetic only; no model or score-array replay.\nThis does not replace the pending original INT8 and old-stage joint evaluation.\n",
+  "gpu_commit": "65ebbcce0c87bb8a51cb5abfcd56a1c9bfe0ab4f",
+  "model_sha256": "5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417",
+  "input_reports_sha256": {
+    "4090-v46-training.json": "bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858",
+    "4090-v46-export-audit.json": "0c6c080ced24112229a26cc151697c23d2894301981ccb6e1d7dd19b6434243b",
+    "4090-v45-training-v1.json": "77d09bedd336c41f49c9c4cb5cf949b1c248f2727c76b417ced49bcd134bc7f0"
+  },
+  "original_training_sources_authenticated": 159,
+  "inherited_recipe_unchanged": true,
+  "us_coverage_unchanged": true,
+  "balanced_conditioning_ids": 672,
+  "balanced_groups": 2688,
+  "balanced_variants_per_group": 9,
+  "balanced_source_sha256": "31b57144e50a462c679f22350300330363b5147ebf34d51350e699e2ee6c1beb",
+  "checkpoints_recomputed": 24,
+  "float_grid_points_recomputed": 264,
+  "float_eligible_points": 0,
+  "selected_step": 10000,
+  "selected_float_point": {
+    "threshold": 0.994,
+    "recall": 0.3787037037037037,
+    "macro_recall": 0.3807291666666667,
+    "recall_by_engine": {
+      "kokoro": 0.38333333333333336,
+      "piper": 0.378125
+    },
+    "hard_negative_false_rate": 0.010227272727272727,
+    "max_source_false_rate": 0.010625,
+    "ambient_hours": 1.2048112673611107,
+    "ambient_events": 0,
+    "ambient_faph": 0.0
+  },
+  "original_export_record_contract_matches": true,
+  "all_checks_pass": true,
+  "accepted": false,
+  "script_sha256": "1e5e65684c78e2ad8ada14ab0155a88044108b6237a19974019a7aab7d4f33eb",
+  "limits": "Source/report bytes and saved-record selection arithmetic only. Recorded finite weights, frozen BN and export interface were not independently executed or rehashed against model bytes on Mac. No model/weights/feature/score-array replay, full trainer RNG proof, INT8 acceptance, unused-development/final access, P4 or audio operation. v46 combines source replacement with temporal-mixture change; no isolated causal or parity claim. Full old-stage evaluation requires separate evidence; do not restart or duplicate the original run."
+}

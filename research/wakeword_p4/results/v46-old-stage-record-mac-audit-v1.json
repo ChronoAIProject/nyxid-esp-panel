@@ -1,0 +1,58 @@
+{
+  "scope": "Recompute the original v46 historical gate from authenticated saved reports.\n\nThe missing original threshold report is an explicit input with a pinned SHA.\nNo raw score, feature, model or waveform arrays are loaded by this audit.\n",
+  "gpu_commit": "5e4d7b3e15d2a4a6879acbe4e834da33c1c1d60b",
+  "model_sha256": "5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417",
+  "input_report_sha256": {
+    "4090-v46-phone-development-historical-threshold-v1.json": "c694ff050f86c044c0f9311d31b72dda51536bb5dbacdc73c42daf350af4ab3e",
+    "4090-v46-vctk-development-historical-threshold-v1.json": "014fa5da35f2d8856f58e0f299e644fff66d436a85cc4029201aa99e7310e561",
+    "4090-v46-voxconverse-development-v1.json": "d08a1751e5e542d6b56f9dd1fa928e514eb893a683f118e9ee011b1409c7d063",
+    "4090-v46-reused-development-exploratory-calibration-v1.json": "9f0a87ff2a6b8274bd4040caa85e8ba5a66691ddd57422c7bd511e0b2b032d08",
+    "4090-v46-score-receipt-v1.json": "df8b17475e509a5fa79f0828e9078b2055b8dcc095a28d0700590b39b882a5a1",
+    "4090-v46-rejection-summary-v1.json": "33d0452f28f82f4f02154e9c546b1d59014fab2582f1d83ce09b6fd9adb3fedb"
+  },
+  "original_historical_calibration_sha256": "958ba828dac95143d924c2b620bf4d846d5f8a4cd6b0271c3f47bc62f242ff8b",
+  "score_receipt_report_links_checked": 467,
+  "historical_saved_event_counts": {
+    "phone": {
+      "positive_clips": 16,
+      "positive_any_event_clips": 7,
+      "common_negative": {
+        "clips": 48,
+        "false_events": 1,
+        "false_activation_clips": 1
+      },
+      "cross-target_negative": {
+        "clips": 16,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    },
+    "vctk": {
+      "positive_clips": 60,
+      "positive_any_event_clips": 32,
+      "common_negative": {
+        "clips": 180,
+        "false_events": 3,
+        "false_activation_clips": 3
+      },
+      "cross-target_negative": {
+        "clips": 60,
+        "false_events": 0,
+        "false_activation_clips": 0
+      }
+    }
+  },
+  "historical_background_events": 3,
+  "historical_background_hours": 8.173672725694447,
+  "historical_background_upper95": 0.9486135288434813,
+  "joint_grid_points_recomputed": 138,
+  "joint_eligible_points": 0,
+  "minimum_negative_false_clips": 4,
+  "maximum_macro": 0.7458333333333333,
+  "maximum_poisson_upper95_absolute_difference": 4.440892098500626e-16,
+  "script_sha256": "c0f95898a00c78996938e89ca0b5ec21cf8b4152532277011e6c72b273950af2",
+  "all_checks_pass": true,
+  "accepted": false,
+  "poisson_implementation_sha256": "a190e68e8ddc6a3ff2b481a5c6c088489873a2c3282449e0aa0a43db38218225",
+  "limits": "Recorded report/hash-link/count arithmetic only. Mac does not independently rehash/replay the GPU score files, weights, model or feature arrays. No unused-development/final, audio, P4 operation or parity proof. Original rejection remains in force."
+}
