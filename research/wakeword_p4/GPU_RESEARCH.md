@@ -5030,3 +5030,7 @@ Original70000 record3992B SHA8a36f103e3e8384e38201ff5cdca4f8c84b77e363ba7607c9f6
 ### Common formal75000 checkpoint retained
 
 Original75000 record4038B SHAe318d8a4c4a72df38247980a2802503889d85b76cd44d3ef80086e44ebe1743b preserved byte-identically. Zero float-selection eligible points; fallback.992 macro.50625/max-source false.02447917, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, fixed120k unchanged. No restart/newdev/final use or acceptance/cross-arm advantage claim; v30 retained.
+
+### Common formal80000 checkpoint retained
+
+Original80000 record3946B SHAd01e3323dbd8065c0d7aa31b5942828d88bdbe04647fb804cc54aef6d2b77f47 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.4703125/max-source false.01979167, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, two-thirds of fixed120k completed without restart/config change. No newdev/final use or acceptance/cross-arm advantage claim; v30 retained.
