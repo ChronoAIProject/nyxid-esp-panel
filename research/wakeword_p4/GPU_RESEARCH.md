@@ -4872,3 +4872,7 @@ Original formal sequence session93786 and independent trainer PID478492 confirme
 ### Independent formal first5000 checkpoint, training continues
 
 Original session93786/PID478492 verified live, passed5000 and continued beyond5209 loss rows. First progress JSON record preserved byte-identically with external size/SHA receipt. Original float training-validation selected threshold.99, macro recall.4125 (Piper.3416667/Kokoro.4833333), maximum-source confusion rate.00875, background0events/1.204811h. These are reused float selection diagnostics, not final calibrated INT8 quality. Even0events on this duration has Poisson one-sided95% upper about2.49/h, not<=.5/h; provisional float criterion is weaker than acceptance. No manual selection/config changes, no early stop, newdev/final untouched; v30 preserved. Full120k independent and matched common remain pending.
+
+### Independent formal10000 checkpoint has no float-eligible point
+
+Original sequence still live and training beyond10167 updates. Second original progress record10000 copied byte-identically. Under original float criterion ambient<=.5/h and maximum-source confusion<=.01, grid has0eligible points; recorded fallback threshold.994 gives macro.38515625, maximum-source confusion.0104166667 and0events/1.204811h. This is weaker reused-validation evidence and already fails even that float criterion; not formal joint acceptance or final candidate failure before preregistered run completes. No manual reselect/restart/config changes, no newdev/final access. Full run/common pending, v30 retained.
