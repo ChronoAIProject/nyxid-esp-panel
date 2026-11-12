@@ -1954,6 +1954,27 @@ python3 research/wakeword_p4/training/audit_negative_timeline_mass.py \
   --pack "$ORIGINAL_COMPLETE_CONTAINER_PACK" --output "$FRESH_NEGATIVE_MASS_JSON"
 ```
 
+### Original Mac Piper generation provenance
+
+The [Mac receipt](../wakeword_p4/results/mac-piper-generation-provenance-v1.json)
+matches all2039 canonical Piper source hashes, including all40 endpoint-check
+failures, to the original training manifest. The original generation report
+records MPS,16kHz and the same checkpoint SHA as the present model file. Current
+conversion-function text exactly matches the GPU mechanism report. These are
+metadata/source observations, not proof of the historical runtime or unclipped
+native signals. The original dataset directory contains WAV files and two JSON
+files; no native-float file is found there. Reviewed `generate.py` persists PCM
+WAV/JSON only. Runtime versions and source/config hashes were not recorded per
+original run; the present Torch/Torchaudio2.8.0 lock cannot fill that gap. The40
+original endpoint failures remain. No audio decoding or regeneration occurs.
+
+```sh
+python3 research/wakeword_p4/training/audit_mac_piper_provenance.py \
+  --generation-root "$ORIGINAL_MAC_PIPER_DATASET" --upstream "$MAC_PIPER_UPSTREAM" \
+  --pack "$ORIGINAL_COMPLETE_CONTAINER_PACK" --tts-lock "$ORIGINAL_TTS_LOCK" \
+  --gpu-revision 7a14bc0 --output "$FRESH_PIPER_PROVENANCE_JSON"
+```
+
 ### Compiled teacher BCE saturation probe
 
 The [actual-recipe probe](../wakeword_p4/results/compiled-teacher-bce-gradient-probe-v1.json)
