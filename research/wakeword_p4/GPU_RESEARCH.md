@@ -4486,3 +4486,10 @@ Implemented7c0fa8c,onlyremaininginheritedslots8..15/44..55 replacedafterallv45dr
 ### 2026-11-12 UTC — balanced corpus exact isolation during unchanged v46
 
 Training-only metadata audit authenticated originalfullmanifest and all672IDs against originalseed726 trainingpartition. All8064native/WAV/PCM hashes unique,0cross-label exactduplicates;0exactfile/PCM matches to2594inheritedcanonical sources. Suppliedsourcefile/renderedPCM metadata for380consumed olddevelopment clips has0exactmatches. IntentionaloldtrainingLibriTTS identity ancestry persists;not672newphysicalpeople,globalpretrainingdisjointness,cleanoriginaldevPCM or perceptualuniqueness proof. Existingfullartifactaudit supplies fileintegrity;this is metadata-onlycomparison. No reservedgeneration/replaymanifest,waveform,features orscores accessed; no modelinference or originalv46 PID257013/start4501271 restart/recipechange. Originalwaiter257576/start4503383 continues.
+
+
+## Original US feature handoff and comparison corrections (2026-11-12)
+
+Mac pending Issue13 request fulfilled: original training.npz/report.json and all324 original raw NPY copied without regeneration. Release gpu-us-training-features-v1.tar.gz,2706061 bytes,SHA256 c8c5ecc906306f360423a9635545032f35fa6db4687259c16853dd289a2fa9ce. Anonymous curl redownload and all326 payload sizes/SHA verified;327 total members including manifest. URL: https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/gpu-us-training-features-v1.tar.gz
+
+Correction: v44 and v45 both selected35000; different weights/training trajectories remain confounded, but selected-step difference is not an explanation for that pair. v46 replaces negative44..55 previously all fulltimeline with six complete+six fulltimeline, as well as replacing source cohort. It is a combined source/time-window intervention, not isolated source coverage causality. Original preregistered run continues unchanged.
