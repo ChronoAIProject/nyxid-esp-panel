@@ -1,0 +1,35 @@
+{
+  "scope": "Read-only mechanical integrity of the original 108 training-only US Piper outputs; no model scoring, playback, recording or device I/O.",
+  "gpu_metadata_revision": "107173c",
+  "source_sha256": "76f36ee23be647b674c5450548c90eebec1bde51bba3d9d9dab1273e904903de",
+  "run_sha256": "0363de82118b7d3822c09e86682e7923c8bc48af97cfe7894c13398b3445f10a",
+  "manifest_sha256": "350315d41263ef24d593fa46b1291ccc3ef21c95682840d65ccfcf1f1ea7369f",
+  "report_sha256": "446d5efb1e8755b6b48345ee5affbe4cfcf0d96afd27c7ce62a306dceb46f31f",
+  "host_versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0"
+  },
+  "grid": {
+    "voices": ["lessac", "ryan", "ljspeech"],
+    "length_multipliers": [0.9, 1.0, 1.1],
+    "target_texts": {
+      "hey_nyx": "Hey Nicks.",
+      "hey_nick": "Hey Nick.",
+      "hey_next": "Hey Next.",
+      "hey_mix": "Hey Mix."
+    },
+    "draws": [0, 1, 2]
+  },
+  "checks": [
+    "Authenticate the original four metadata files before reading waveforms; authenticate every declared source/output artifact.",
+    "Require the complete original ordered grid and every training-only role; reject duplicates, unsafe paths and omitted files.",
+    "Check recorded phones against config symbols and reconstruct token IDs/scales; do not claim independent phonemizer or pronunciation verification.",
+    "Preserve all original native/16k floats; recompute complete resampling with pinned packages and require exact array equality for process agreement.",
+    "Decode original PCM with Python wave; check complete mono PCM16 16k geometry and raw PCM hashes independently of soundfile decoding.",
+    "Repeat the pinned soundfile PCM conversion in memory and compare raw serialized samples; explicitly record libsndfile version and shared-converter limitation.",
+    "Independently check finite/nonzero arrays, .2..5s duration, RMS>=.001, no native/resampled full-scale values or PCM endpoints, complete lengths and generation-end reference."
+  ],
+  "mismatch_policy": "Retain originals and report all numerical resampling/PCM differences. No repair, normalization, re-generation, filtering, tolerance-based pass or retries. Missing authenticated inputs stop the audit.",
+  "limits": "Mechanical process agreement only. Cross-platform discrepancies do not by themselves establish corrupt audio. No physical-speaker/pretraining independence, phonetic truth, historical corpus repair, quality acceptance, model fitting/promotion or access to new development/final sets."
+}

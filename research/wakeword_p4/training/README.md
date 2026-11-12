@@ -566,3 +566,35 @@ No candidate from this directory is automatically flashed. For standalone P4
 numeric probes, follow the parent README's app-only flash and guaranteed restore
 procedure on the development board. The dining-room production board remains
 on its normal published firmware/Hi ESP wake engine.
+
+## Original US training-pilot integrity on Mac
+
+The GPU's first 108-attempt US Piper pilot retains the complete native and
+resampled floats alongside PCM. The Mac's
+[`us-coverage-mac-integrity-v1.json`](plans/us-coverage-mac-integrity-v1.json)
+binds the original metadata and ordered grid before receiving waveform bytes.
+Install the separate `../requirements-us-coverage-audit.lock` in an isolated
+environment; leave the existing TensorFlow/feature environments unchanged.
+
+```sh
+python training/audit_us_coverage_mac.py \
+  --data "$ORIGINAL_US_PILOT" --source "$ORIGINAL_US_PIPER_SOURCES" \
+  --output "$PRIVATE_AUDIT_REPORT"
+```
+
+Run from `research/wakeword_p4`, or adjust the script path from repository
+root. The data directory must contain the original `run.json`, `report.json`,
+`manifest.jsonl`, all 108 WAVs and 216 NPY files. The source directory must
+contain the original `source.json` and every declared model/config/card.
+No models are loaded for inference. Metadata and all declared artifact hashes
+are checked before waveform processing. The audit reconstructs token IDs from
+the recorded phones, replays full resampling, reads PCM using Python `wave`,
+and compares the original PCM with an in-memory pinned soundfile conversion.
+The last comparison shares libsndfile; it is not an independent rounding
+algorithm or phonetic validation. The report records that library's version.
+
+Cross-platform numerical differences remain in the report and fail exact
+process agreement; the audit never repairs inputs or changes a tolerance to
+pass them. Mechanical agreement does not qualify the material's pronunciation,
+speaker independence or any wake model. This script never plays/records audio,
+accesses a board, trains a model or reads new-development/final data.
