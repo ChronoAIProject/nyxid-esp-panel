@@ -1,0 +1,40 @@
+{
+  "scope": "Predeclared one-run-per-arm paired consistency experiment; reused historical development only",
+  "input_audit": {
+    "steps_per_arm": 120000,
+    "initialization_inventory_exact": true,
+    "all_ordered_input_draws_exact": true,
+    "trace_sha256": "ff32e53b256d38ad9ee1c6d365fdae331cb1d3320a71dbd4c7aaf4438d8eb7e7",
+    "first_step_observations_exact": true,
+    "acceptance_claim": false
+  },
+  "arms": {
+    "control": {
+      "coefficient": 0.0,
+      "selected_step": 5000,
+      "model_sha256": "51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19",
+      "calibration_sha256": "fda11a824dd3108c225e1be4ddc7b3d4b25a01ae8f32a3b9be456fc37483e14e",
+      "grid_points": 138,
+      "eligible_points": 0,
+      "max_macro": 0.6458333333333333,
+      "minimum_negative_false_clips": 6,
+      "rejected": true
+    },
+    "treatment": {
+      "coefficient": 1.0,
+      "selected_step": 5000,
+      "model_sha256": "64f8fe18c5362edb0a9855da866aa0e63891bbd1bc7bee98ac16d488a6d8db2f",
+      "calibration_sha256": "a50149f803dee7f8361ef5ed06f0d73b873193334257ec76d36f93ba32656f61",
+      "grid_points": 138,
+      "eligible_points": 0,
+      "max_macro": 0.5458333333333334,
+      "minimum_negative_false_clips": 1,
+      "rejected": true
+    }
+  },
+  "acceptance_claim": false,
+  "v30_retained": true,
+  "new_development_or_final_used": false,
+  "limits": "Single seed, no uncertainty estimate across training runs. Same new paired BCE in both arms; isolates D under this recipe, not versus historical v47. Grid extrema may occur at different thresholds and cannot be combined as one operating point.",
+  "conclusion": "Both arms rejected at unchanged joint gate. D did not produce an eligible operating point; no acceptance or Hi ESP equivalence. Do not launch another coefficient sweep or tune on untouched data to rescue this experiment."
+}

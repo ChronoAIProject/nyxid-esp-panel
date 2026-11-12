@@ -4709,3 +4709,8 @@ Original treatment completed 120000 updates in 4614.6 s, selected step5000 by un
 ### Paired control historical gate rejected (2026-11-12 UTC)
 
 Original control postprocessor finished normally and sequence advanced to treatment. Fixed 138-point reused historical development grid: 0 eligible; max macro 0.6458333333333333; minimum negative false clips 6. All 467 saved score traces independently hash-match their original reports and model. Original reports retained byte-for-byte. Control rejected; no threshold/grid rescue or untouched development/final access. Treatment historical evaluation remains running. v30 retained.
+
+
+### Paired treatment historical gate rejected; matched experiment ended (2026-11-12 UTC)
+
+Original sequence session7001 exited code0; treatment historical postprocessor ended normally. Fixed138 points: treatment0 eligible, maximum macro .5458333333333334, minimum negative false clips1; control0 eligible, max macro .6458333333333333, minimum false clips6. Extrema are not a joint operating point. Both original selected checkpoints are5000. All467 treatment score traces hash-match original reports/model; originals retained. VoxConverse at original per-arm historical thresholds:0 events/8.173672725694447h, one-sided upper95 .3665099367309777/h in both, insufficient to pass joint synthetic gate. Both rejected, v30 retained; no new dev/final, threshold changes or coefficient sweep. Single matched seed does not establish universal benefit or failure of consistency learning. Next intervention must address phrase discrimination without collapsing target coverage and be specified before training, using these old failures only; no automatic new training launched.
