@@ -2067,6 +2067,14 @@ checks every original frontend hash, all **94940 UINT8 bytes**, every event and
 voice/variant aggregate; the entire scores NPZ is also byte-identical. This
 tests the new runner, without adding quality, hardware or acoustic evidence.
 
+The separately frozen `v46-original-historical-mac-v1.json` profile schedules
+an additional descriptive replay of the original rejected v46 model on these
+same350sources. It uses the original historical English report and threshold
+`.99609375`, whose `viable_operating_point` is false. It does not replace the
+rejected joint calibration, select a new threshold or make the model eligible
+for P4 deployment. Compare all original voice/variant counts with retained v30
+and Hi ESP, while leaving the current GPU matched formal run unchanged.
+
 ### Original Piper PCM endpoint provenance
 
 The GPU endpoint diagnostic identified 40 original Piper files with one
