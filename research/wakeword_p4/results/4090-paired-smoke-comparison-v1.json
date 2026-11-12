@@ -1,0 +1,144 @@
+{
+  "initialization_inventory_exact_between_arms": true,
+  "full_smoke_sampling_trace_exact_between_arms": true,
+  "first_batch_main_tensor_matches_original_probe": true,
+  "optimizer_updates_per_arm": 2,
+  "export_contracts_pass": true,
+  "strict_first_step_probe_numerical_comparison_passed": false,
+  "comparison_rtol": 1e-05,
+  "comparison_atol": 1e-05,
+  "first_steps": {
+    "control": {
+      "step": 1,
+      "total": 20.335853576660156,
+      "main_bce": 12.048588752746582,
+      "pair_bce": 8.287263870239258,
+      "consistency": 0.04230174422264099,
+      "supervised_encoder_norm": 301.315673828125,
+      "consistency_encoder_norm": 1.4350944757461548
+    },
+    "treatment": {
+      "step": 1,
+      "total": 20.378009796142578,
+      "main_bce": 12.048855781555176,
+      "pair_bce": 8.28685188293457,
+      "consistency": 0.04230189323425293,
+      "supervised_encoder_norm": 301.302001953125,
+      "consistency_encoder_norm": 1.4358659982681274
+    }
+  },
+  "original_probe_first_step": {
+    "step": 1,
+    "main_bce": 12.04863166809082,
+    "pair_bce": 8.286104202270508,
+    "consistency": 0.042296815663576126,
+    "encoder": {
+      "supervised_norm": 301.36391199399435,
+      "consistency_norm": 1.4353579939660948,
+      "cosine": 0.44318194589441584
+    },
+    "head": {
+      "supervised_norm": 132.849476333205,
+      "consistency_norm": 0.0,
+      "cosine": null
+    },
+    "per_variable": [
+      {
+        "path": "stream/conv2d/kernel",
+        "supervised_norm": 8.325268852609728,
+        "consistency_norm": 0.05330882509886794,
+        "cosine": 0.18253925948604988
+      },
+      {
+        "path": "depthwise_conv2d/kernel",
+        "supervised_norm": 48.74182961658229,
+        "consistency_norm": 0.1724655387934803,
+        "cosine": 0.31373122053117075
+      },
+      {
+        "path": "depthwise_conv2d/bias",
+        "supervised_norm": 0.8259312277606312,
+        "consistency_norm": 0.00829566589064663,
+        "cosine": 0.4070410694514699
+      },
+      {
+        "path": "conv2d_1/kernel",
+        "supervised_norm": 282.21106994372974,
+        "consistency_norm": 1.388492654715881,
+        "cosine": 0.47430198231071297
+      },
+      {
+        "path": "depthwise_conv2d_1/kernel",
+        "supervised_norm": 26.997821083678893,
+        "consistency_norm": 0.15243575638004558,
+        "cosine": 0.3730197683947097
+      },
+      {
+        "path": "depthwise_conv2d_1/bias",
+        "supervised_norm": 19.457367184565165,
+        "consistency_norm": 0.1031448084658035,
+        "cosine": 0.07954640991287441
+      },
+      {
+        "path": "conv2d_2/kernel",
+        "supervised_norm": 14.995019815371585,
+        "consistency_norm": 0.08263487807186853,
+        "cosine": 0.29716283716062103
+      },
+      {
+        "path": "depthwise_conv2d_2/kernel",
+        "supervised_norm": 23.23278366236347,
+        "consistency_norm": 0.12598316635485357,
+        "cosine": 0.18649028569845694
+      },
+      {
+        "path": "depthwise_conv2d_2/bias",
+        "supervised_norm": 15.230672436606156,
+        "consistency_norm": 0.0454561953142372,
+        "cosine": 0.12329306712907356
+      },
+      {
+        "path": "conv2d_3/kernel",
+        "supervised_norm": 33.84182390576413,
+        "consistency_norm": 0.1250681814154396,
+        "cosine": 0.045161781220745795
+      },
+      {
+        "path": "depthwise_conv2d_3/kernel",
+        "supervised_norm": 24.868053401059267,
+        "consistency_norm": 0.08139855801000691,
+        "cosine": 0.03125133459066989
+      },
+      {
+        "path": "depthwise_conv2d_3/bias",
+        "supervised_norm": 10.476455892228952,
+        "consistency_norm": 0.01946951506698963,
+        "cosine": -0.13969610774939067
+      },
+      {
+        "path": "conv2d_4/kernel",
+        "supervised_norm": 68.94822885440578,
+        "consistency_norm": 0.13563484836754197,
+        "cosine": 0.022404863295048195
+      },
+      {
+        "path": "dense/kernel",
+        "supervised_norm": 132.18661563832214,
+        "consistency_norm": 0.0,
+        "cosine": null
+      },
+      {
+        "path": "dense/bias",
+        "supervised_norm": 13.254508972167969,
+        "consistency_norm": 0.0,
+        "cosine": null
+      }
+    ],
+    "min_embedding_norm": 9.706750869750977,
+    "zero_embedding_norms": 0,
+    "main_tensor_sha256": "57b35ab03ac655f188dfa18b58e4563358c1e4bd505130b7a91ca8e01bcef72f",
+    "pair_tensor_sha256": "81fa0a89a7966fac7085ca3c798475a99713d72a02e1bb063ab3c54bdb13003b"
+  },
+  "formal_training_ready": false,
+  "limits": "Input/initialization exact, but first-step GPU numerical comparison failed. Preserve both smokes; no tolerance/coefficient rescue or formal training."
+}
