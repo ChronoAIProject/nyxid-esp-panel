@@ -4739,3 +4739,8 @@ Fresh2-step engineering preflight passed. Commands/source pins prepared for one1
 ### Phrase ranking control completed; treatment started (2026-11-12 UTC)
 
 Fresh control completed120000 updates in4738.8s; original selection5000. Original training.json copied unchanged. Both paired trace files contain120000 rows. Export audit passes finite weights/frozenBN and INT8[1,3,40] to UINT8[1,1],54440B; model SHA51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19 (byte-identical to prior consistency control; this does not replace the scheduled cross-arm audit). Original sequence launched treatment PID377186; actual starttime recorded in receipt. No restart, quality acceptance or new dev/final access. Full treatment/input audit/historical gates remain pending.
+
+
+### Phrase ranking treatment completed and full input audit passed (2026-11-12 UTC)
+
+Original treatment completed120000 updates in4708.6s; original selection5000. Original training.json preserved unchanged. Export54440B SHA598f9245fc02bd3262a286c89e5c50bcfe2fef6195fc265bc5eb11f05a7af591 passes finite/frozenBN/INT8[1,3,40] to UINT8[1,1] contract. Original sequence full120k input audit passed: actual initialization inventories and complete ordered sampling traces exact; each arm120000 sampling/loss rows with authenticated hashes and saved snapshots; first observations exact excluding total. Historical-only postprocessing now runs in original sequence; no quality acceptance or new dev/final access.
