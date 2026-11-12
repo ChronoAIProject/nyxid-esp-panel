@@ -1108,3 +1108,26 @@ eligible frozen candidate still needs unused-development, Mac350, exact-PCM,
 P4/acoustic/resource and immediate-speech/long-call/reconnect evidence before
 any Hi ESP parity or production claim. The restaurant production panel is
 not involved.
+
+### Mac original-US feature replay plan, before receiving the pack
+
+A training-only original-feature handoff was requested in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813095697).
+The [frozen Mac plan](plans/v45-us-feature-sampler-mac-v1.json) and
+`audit_v45_us_feature_sampler_mac.py` pin original pack/report/helper/precheck
+hashes and NumPy2.4.6. They authenticate all324 original raw arrays, enumerate
+sample-ledger endpoints and low crops, then compare50batches/1000 independently
+drawn source/end/tensor choices against the original helper. Deterministic
+128-slot inputs check all108 untouched slots. Source-count totals must match
+the published GPU precheck; the complete1000-draw trace is retained.
+
+This preparation has only had its CLI, JSON and whitespace checked; the actual
+raw-pack replay has **not** run at this snapshot. No model inference,
+recognition/latency/resource acceptance or full main/British/ambient trainer
+RNG replay is implied. The original v45 process continues independently.
+Once original bytes arrive and are authenticated, use a fresh private output:
+
+```sh
+/path/to/numpy-2.4.6-venv/bin/python research/handoff/audit_v45_us_feature_sampler_mac.py \
+  --pack /path/to/original-us-feature-pack --output /tmp/v45-sampler-replay-fresh
+```
