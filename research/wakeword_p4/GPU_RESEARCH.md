@@ -4876,3 +4876,7 @@ Original session93786/PID478492 verified live, passed5000 and continued beyond52
 ### Independent formal10000 checkpoint has no float-eligible point
 
 Original sequence still live and training beyond10167 updates. Second original progress record10000 copied byte-identically. Under original float criterion ambient<=.5/h and maximum-source confusion<=.01, grid has0eligible points; recorded fallback threshold.994 gives macro.38515625, maximum-source confusion.0104166667 and0events/1.204811h. This is weaker reused-validation evidence and already fails even that float criterion; not formal joint acceptance or final candidate failure before preregistered run completes. No manual reselect/restart/config changes, no newdev/final access. Full run/common pending, v30 retained.
+
+### Independent formal15000 checkpoint remains float-ineligible
+
+Original trainer continues beyond15336 updates, same session93786/PID478492. Preserved third original progress record byte-identically using reusable observation-only checkpoint collector. No original float-eligible point; fallback.994 gives macro.5427083, maximum-source confusion.0328125, background1event/1.204811h=.8300055/h. Higher recall coincides with more confusion/background; this is reused float validation, not a matched common-noise comparison or independent acceptance. No execution source changes, manual reselect, restarts or newdev/final access; planned full training continues, v30 retained.
