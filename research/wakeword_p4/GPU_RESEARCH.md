@@ -5150,3 +5150,7 @@ Original record preserved byte-identically (3939B SHAe0b7cebf621d3d0cc96dfd44dc9
 ### Fixed formal25000 float checkpoint rejected
 
 Original newline-complete record preserved byte-identically (4132B SHAaebeb9b332fdf87f766912ac690fe689070b516e45444dbee0b5e0315a3797e0). Eleven-point training grid0eligible; returned fallback.992 macro.5325520833/max-source false.0375, ambient2/1.2048112673611107h (1.6600110359/h). Both training selection limits fail; fallback not pass. Original fixed trainer PID555098 observed live at25000, no restart/config changes/newdev/final access; per_draw pending. Reused float selection only, not INT8 or independent acceptance; v30 frozen.
+
+### Fixed formal30000 float checkpoint
+
+Original newline-complete record preserved byte-identically (4084B SHA17598c09b7386931d51b4a5337e21de5bc0ff917375034a1c337a70dc2d8a0df). Eleven-point training grid0eligible; returned fallback.994 macro.4765625/max-source false.0197916667, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass, not INT8 or independent acceptance. Original PID555098 confirmed live beyond30000; no restart/config change/newdev/final access, per_draw pending. v30 remains frozen.
