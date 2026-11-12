@@ -4990,3 +4990,7 @@ Original sequence93786/trainer504191 remains live. Original20000 record4101B SHA
 ### Common formal25000 checkpoint retained
 
 Original25000 record4010B SHA3c5fbabf54d2bc4edabfb6842760c038d44296442dc106903577d0523376acb6 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.45/max-source false.01145833, background0/1.204811h (one-sided95% upper2.48647/h). Original sequence/trainer remains live; fixed120k continues unchanged, no restart or newdev/final access. No quality acceptance or shared-noise advantage inferred, v30 retained.
+
+### Common formal30000 checkpoint retained
+
+Original trainer504191 remains live, quarter of fixed120k updates completed. Original30000 record3997B SHA04ad9b76211cd6f9206d4781c283d8a76119ceebdd025c8f4f98e7ee9b9e9368 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.51145833/max-source false.02291667, background0/1.204811h (one-sided95% upper2.48647/h). No acceptance or cross-arm advantage claim; no restart/config changes/newdev/final use. v30 retained.
