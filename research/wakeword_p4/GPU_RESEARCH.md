@@ -4754,3 +4754,8 @@ All original historical reports copied byte-for-byte;467 saved score traces auth
 ### Phrase ranking matched experiment rejected (2026-11-12 UTC)
 
 Original sequence finished both historical evaluations. Treatment original reports copied byte-for-byte and467 saved score hashes authenticated. Both fixed138-point joint grids have0eligible operating points. Full comparison receipt preserves separate macro/false extrema and limitations; no new-data rescue, promotion or Hi ESP equivalence. Retain frozenv30 and quarantine untouched dev/finals. Next research hypothesis must address retained failure evidence rather than sweep this coefficient.
+
+
+### Phrase ranking full same-threshold diagnosis (2026-11-12 UTC)
+
+Authenticated both original historical calibration JSONs and retained all138 matching thresholds, identical group exposures and background hours. Treatment false clips lower at138/138; macro higher106/lower32; background events lower64/equal39/higher35. At94 points macro improves without increasing either false clips or background events. This differs from the earlier consistency pair (macro lower everywhere), but all original gates still reject both arms. Correlated thresholds and one seed are descriptive evidence, not independent trials or acceptance. No threshold chosen, inference rerun, new dev/final access, coefficient sweep or training started. Next diagnosis should identify the retained confusion/background failures using existing authenticated traces before specifying any new intervention; frozenv30 remains unchanged.
