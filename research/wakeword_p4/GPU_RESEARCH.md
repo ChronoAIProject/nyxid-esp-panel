@@ -4694,3 +4694,8 @@ Mac63c6082 original archive16108076B SHA043a156d8662d29e9d060c80e0004f15926225b0
 ## Optional strict Mac full-gradient mismatch retained
 
 Mac3564de9/993929d first-batch cross-platform comparison reports all_passed:false:2/21841 supervisedcomponents exceed originalatol/rtol1e-5 versus bothLinuxCPU/CUDA; losses and allDcomponents pass. Independentderivative and bounded eager/graphfullTF controls retain same2mismatches, exactrepeat,0updates/modelBNunchanged. Platform/kernelcause not isolated; no tolerance adjustment, repeatednumericalrescue or formalrestart. Archive324674B SHA889ca05f52ca503cd62cd90e93132446d56e0a21e4804905b69d496bb71fcd69 anonymouslydownloaded and manifest/all3payloadsverified. Originalcomparison/TFcontrolreports copied byte-identically intoresults; arrays retainedlocal. LinuxCPU/CUDApass is not universalcross-platformequivalence; originalfailuresremain. This optionalcheck ends here while fixedformaltraining continues.
+
+
+## Formal control completed; original sequence advanced to treatment
+
+Control314586/start5559860 completed120000updates,4566.5s,originalselectionstep5000. OriginaltrainingSHAaaf1df422ed740d4ab9d483de506ceaf78ce412f5825cb89be187fe2902d27d1;54440BmodelSHA51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19. Completionexportaudit finite/frozenBN/INT8shape/dtype passes. Bothsampling/loss120000rows,reporthashes/snapshot/inventoryverified;initialinventoryexactv2smoke. This is controlarmcompletion/exportonly, not acceptance or matchedall120ksamplingequalityyet. Sameoriginalsequence314584/start5559859 automaticallystarted treatment331749/start6018884,coefficient1,once120k. No restart,newdev/finalaccess orpromotion. Historicalscoring remains scheduledafterbothrunsandfullinputaudit.
