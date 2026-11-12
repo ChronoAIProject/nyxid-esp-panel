@@ -4674,3 +4674,8 @@ Execution8858a9a, control/treatment each2updates,41.4/42.7s. Initial inventories
 ## Fixed formal execution pins
 
 Fresh v2 smokes pass. Prepared one120k run per arm, original5k checkpoint/PTQ/selection and all inherited main recipe checks. Complete120k ordered main/pair sampling and initialinventory must match before scoring. Sequence fails closed, no automatic retries. Postprocessor uses only original historical corpora and unchanged138-point calibration implementation, never newdev/final or automatic promotion. Execution receipt pins trainer/helper/commands/postprocessors and explicit deterministic full-FP32 policy; originallambda1 and v1 failures unchanged.
+
+
+## Formal postprocessor path correction during unchanged control run
+
+Found inherited v47 root format `model-gpu-{tag}-ami-extra` did not match fixed formal commands' `model-{tag}`. Corrected only that path before scoring. Original execution pins preserved; separate correction receipt records old/new postprocessor SHA. Both arm root expressions checked against actual command output directories; all other pinned files including trainer/helpers remain byte-identical. No training restart, recipe/selection/gate changes or new-data access.

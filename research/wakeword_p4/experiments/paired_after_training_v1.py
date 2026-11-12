@@ -35,7 +35,7 @@ def historical(root, tag):
         '--threshold',str(threshold),'--upstream','.local/wakeword/microWakeWord',
         '--output',f'.local/wakeword/{tag}-streaming-probe.json',gpu=True)
 
-root=Path(f'.local/wakeword/model-gpu-{tag}-ami-extra')
+root=Path(f'.local/wakeword/model-{tag}')
 training=json.loads((root/'training.json').read_text())
 if (training['steps']!=120000 or training['effective_training_batch_size']!=128
         or hashlib.sha256((root/'hey_nyx.tflite').read_bytes()).hexdigest()!=training['model_sha256']):
