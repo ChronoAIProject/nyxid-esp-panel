@@ -5134,3 +5134,7 @@ During the unchanged live formal run, inspected three previously unmentioned Pip
 ### Fresh-noise fixed formal first5000 float checkpoint
 
 Original sequence65524 continues beyond5000 updates without restart. Preserved original progress JSONL record byte-identically (3915B SHA26957a4f6b5400ba783e9c3f341094168125f382564535f21823148a179984df). Training-internal float selection at.99: macro.4125, max-source false.00875, ambient0/1.2048112673611107h;3 training-float eligible grid points. Zero-event one-sided95 FAR upper2.486474317/h, not<=.5/h. This is reused float selection only, not INT8 or independent acceptance, no cross-arm advantage claim. Per_draw arm pending; fixed120k continues. v30 remains frozen.
+
+### Fixed formal10000 float checkpoint, zero eligible points
+
+Original10000 JSONL preserved byte-identically (4048B SHA1ce14230c6e75d0af18e265ffa9ef7f9b14980e02dfaee4375fc2a1aa1b81e9d). All11 grid points fail original training selection gate; returned fallback.994 has macro.38515625/max-source false.010416666666666666, background0/1.2048112673611107h (upper95 2.486474317/h). This is not a gate pass or replacement of the better5000 selected checkpoint. Original session65524 continues beyond10000, no restart/pinned changes/newdev/final access; per_draw pending. No quality improvement or acceptance claim; v30 stays frozen.
