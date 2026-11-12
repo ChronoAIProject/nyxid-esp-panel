@@ -5146,3 +5146,7 @@ Original JSONL preserved byte-identically (4176B SHAbf8199c9b04e92960297af3e46b2
 ### Fixed formal20000 float checkpoint
 
 Original record preserved byte-identically (3939B SHAe0b7cebf621d3d0cc96dfd44dc9a28a5e3b927d439c73a9cee1fd17dc3dd45b9). Eleven-point training grid0eligible; fallback.994 macro.4864583333/max-source false.0225, ambient0/1.204811h (upper95 2.486474317/h). Fallback not pass. Original session65524 remains live beyond20000, no restart/config changes/newdev/final access; per_draw pending, v30 frozen.
+
+### Fixed formal25000 float checkpoint rejected
+
+Original newline-complete record preserved byte-identically (4132B SHAaebeb9b332fdf87f766912ac690fe689070b516e45444dbee0b5e0315a3797e0). Eleven-point training grid0eligible; returned fallback.992 macro.5325520833/max-source false.0375, ambient2/1.2048112673611107h (1.6600110359/h). Both training selection limits fail; fallback not pass. Original fixed trainer PID555098 observed live at25000, no restart/config changes/newdev/final access; per_draw pending. Reused float selection only, not INT8 or independent acceptance; v30 frozen.
