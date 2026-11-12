@@ -4550,3 +4550,8 @@ All8064sources×noise-only/RIR-only16128controls generated with intermediates,or
 ## All factorial controls audited; frozen v46 scoring started
 
 Independent16128control array/file/PCM/frontend/sourcegrid/container replay all passed. Noise-only realizedSNR14.988397332051138..15.011287016865243dB;headroomgain1all. Audit report records allpass and originalcontrol/ref hashes;shared pinnedlibraries limitation retained. Started all8064source×4arm frozenv46 INT8 census(session output retained);quiet/combined use authenticated prior traces,noise/RIR controls newly inferred. Fixed.5/.992/.99609375,fulltrace/warmed/container metrics separately;no training/newdev/final/selection/promotion.
+
+
+## All-source rendering factorial completed
+
+All8064sources×4arms32256traces complete;every scorehash/event/support/group and8064sourcepairs independently recomputed,allmatch. Historical .99609375:positive completecontainer supportquiet1849,noise-only1382,RIR-only1846,combined1363 /2016;negative fulltrace/warmed events0,6,1,8 /6048. Combined positiveany1364vscontainer1363 explicitlydistinguished. Under thisfixedrecipe noise15 sensitivitylargerthan RIR-only aggregate;not global RIR/noise causal conclusion or explanation of unaugmenteddevelopment/backgrounderrors. Noise-onlyprefixSNR14.988..15.011,headroom1all;RIRnormalization/tail remaininterventions. Original33MBreport copiedbyte-for-byte,audit+pairedpatterns saved. No threshold selection/newdev/final/training/promotion;v46rejected,v30retained. Need separate justified training hypothesis,not removal of difficult noisy variants or scoring heldout to rescuev46.
