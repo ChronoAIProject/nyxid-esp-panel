@@ -160,6 +160,12 @@ counts and zero-cohort ranges without importing the producer's smoothing or
 event policy. It passes and retains those residuals. No acoustic/P4, fresh
 human, reserved-data, new-model acceptance or GPU-run change follows.
 
+The [published raw-output archive](assets-v46-mac-float-gap-v1.json) contains the
+full result, both float score streams, audit, frozen plan and source snapshots.
+An anonymous download authenticates all six payloads and reproduces the whole
+saved-array audit byte-for-byte. Model and PCM dependencies remain the existing
+original public artifacts; the archive is not a self-contained inference bundle.
+
 ```sh
 python research/handoff/measure_v46_mac_float_gap.py \
   --sources "$PUBLIC_MAC_PAIRED" --model-dir "$ORIGINAL_V46_MODEL" \
