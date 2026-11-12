@@ -1,0 +1,103 @@
+{
+  "scope": "Pure synthetic single-keyword loss compatibility, not selection or model training",
+  "script_sha256": "e01c02b266bbdc7c64ddce2d1c6b9fba83c5909e06c68de8133aad9d0220ca1d",
+  "inputs": [
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.5,
+      0.8660254037844386
+    ],
+    [
+      -1.0,
+      0.2
+    ],
+    [
+      0.2,
+      -1.0
+    ]
+  ],
+  "labels": [
+    true,
+    true,
+    false,
+    false
+  ],
+  "temperature_example_only": 1.0,
+  "examples": {
+    "target_only": {
+      "loss": 0.0,
+      "finite_difference_gradient": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "gradient_norm": 0.0
+    },
+    "all_nonself": {
+      "loss": 0.6108830959407031,
+      "finite_difference_gradient": [
+        [
+          0.0,
+          -0.5676299467127777
+        ],
+        [
+          -0.39920299810813903,
+          0.23047995840741461
+        ],
+        [
+          0.025408985598884822,
+          0.12704492797777078
+        ],
+        [
+          0.2296122644351861,
+          0.045922452895919
+        ]
+      ],
+      "gradient_norm": 0.7786555690831692
+    }
+  },
+  "permutation_invariant": true,
+  "positive_rescaling_invariant": true,
+  "analytic_gradient": [
+    [
+      0.0,
+      -0.5676299467378261
+    ],
+    [
+      -0.39920299807924203,
+      0.23047995840235613
+    ],
+    [
+      0.025408985595872274,
+      0.1270449279793613
+    ],
+    [
+      0.22961226445350932,
+      0.04592245289070187
+    ]
+  ],
+  "analytic_finite_difference_match": true,
+  "guards": {
+    "zero_norm": true,
+    "one_target": true
+  },
+  "collapsed_loss": 1.09861228866811,
+  "collapsed_gradient_norm": 0.0,
+  "limits": "All-nonself denominator avoids the two-target identically-zero defect, but complete normalized collapse remains stationary. Unknowns are not positive pairs. No convergence, anti-collapse, margin, FAR, augmentation or training-effectiveness claim; no loss/temperature/weight selected."
+}
