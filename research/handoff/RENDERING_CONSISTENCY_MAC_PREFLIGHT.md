@@ -56,6 +56,36 @@ actual-network head disconnection, unchanged BN/weights, identical main/paired
 sampling or usable gradient scale. Those original-initialization50-batch
 checks and fixed-coefficient execution receipt remain GPU prerequisites.
 
+## Received original initialization arrays
+
+The GPU completed the original50-batch probe at`5c0eaad`, with no optimizer
+updates, reporting exact unchanged model/BN variables and disconnected head
+gradients for D. Its [original four payloads](assets-gpu-paired-init-gradient-probe-v1.json)
+have been downloaded and all sizes/hashes verified. The original CLI had exited
+without saving an instance H5 or full variable inventory; this missing artifact
+is explicitly retained, without recreating it as a historical snapshot.
+
+The independent [Mac saved-array/source-window audit](audit_paired_init_arrays_mac.py)
+has [completed](../wakeword_p4/results/paired-init-array-audit-mac-v1.json): all50
+actual main128/pair40 tensor hashes, labels/weights and750per-variable gradient
+records match. An independently indexed RNG schedule matches every ordered
+pair source and endpoint. All2000paired windows are reconstructed directly
+from the authenticated original uint16raw arrays and exactly match both their
+original window hashes and saved scaled float32inputs. Main historical tensors
+were not saved during v47; their historical equality is not claimed here.
+
+Saved supervised gradients equal main+pair to maximum absolute error
+3.814697265625e-6 under the original1e-5arithmetic tolerance. D's saved head
+entries are exactly zero. Mac recomputation gives median encoder norms
+256.3368631130569(supervised) and1.5408605787327252(D), R166.3595439140121,
+and the preregistered coefficient**1.0**. The scaled gradient ratio spans
+.0018603...0189365;17/50batches have negative gradient cosine. This is an
+initialization-only scale observation, not later training balance or benefit.
+No original-network autodiff is claimed by this saved-array audit. A later
+reconstructed initialization can support numerical reproduction only after
+checking original encoder/BN source values and classifier bytes, and must be
+identified as reconstructed rather than an original same-instance snapshot.
+
 All measurements are silent, use already examined training data or synthetic
 numbers, and leave new development/final data and both physical boards alone.
 V46/v47 remain rejected, v30 is retained, and matched Hi ESP recognition/FAR,
