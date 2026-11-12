@@ -4819,3 +4819,8 @@ Both original arms completed120000 updates and exported54440B INT8 models. Contr
 ### Temporal-risk matched formal sequence failed historical joint gate
 
 Original session33314 exited0 after both120k arms, full input audit and both unchanged historical postprocessors. Each fixed138-point grid has0 eligible points and no selected threshold. Control maxmacro0.66875/minimum synthetic falseclips1; treatment maxmacro0.8166666666666667/minimum falseclips10 (extrema need not share threshold). Temporal treatment does not solve joint persistence/discrimination requirement and is rejected for promotion. Original evaluation/calibration/export/streaming JSON reports copied byte-identically with source paths, sizes and SHA256 in4090-temporal-tail-risk-formal-results-v1.json. No newdev/final data consumed; v30 retained. Full objective remains unachieved.
+
+
+### Temporal-risk failure localized from authenticated saved traces
+
+Authenticated467 original score arrays per arm (380synthetic+87background); reconstructed all138 original calibration aggregates exactly. At every matched threshold treatment macro is higher and synthetic falseclips are also higher (138/138); background eventcount is higher121/138, equal17, lower0. No same-threshold recall gain without increased falseclips/background. At original maximum0.99609375 control residual is p245-1.1-hey_next; treatment10 negatives span Nick/Next/Mix and Kokoro/VCTK voices. This is a broad discrimination cost, not proof of a unique mechanism or phoneme defect. Scripts preserve every threshold and original score/report hashes, no inference, training or threshold selection. Next hypothesis must explain this tradeoff rather than sweep temporal coefficient or relax gate.
