@@ -1,0 +1,41 @@
+{
+  "scope": "Numerical counterexample for copying MACR's target-only pull to one keyword.\n\nImplements the printed equation (1), not the complete MACR loss or a wake model.\nNo data, optimizer, gradients to model weights, inference or device is used.\n",
+  "source": "https://www.isca-archive.org/interspeech_2026/zhang26ha_interspeech.pdf",
+  "source_equation": 1,
+  "temperature": 0.1,
+  "single_keyword_pair_examples": [
+    {
+      "angle_degrees": 0,
+      "cosine": 1.0,
+      "printed_pull_loss": 0.0,
+      "angle_derivative": 0.0
+    },
+    {
+      "angle_degrees": 60,
+      "cosine": 0.5000000000000001,
+      "printed_pull_loss": 0.0,
+      "angle_derivative": 0.0
+    },
+    {
+      "angle_degrees": 90,
+      "cosine": 6.123233995736766e-17,
+      "printed_pull_loss": 0.0,
+      "angle_derivative": 0.0
+    },
+    {
+      "angle_degrees": 180,
+      "cosine": -1.0,
+      "printed_pull_loss": 0.0,
+      "angle_derivative": 0.0
+    }
+  ],
+  "three_target_examples": {
+    "collapsed": 2.079441541679836,
+    "separated_120_degree_simplex": 2.0794415416798353,
+    "analytic_value": 2.0794415416798357
+  },
+  "all_analytic_identities_reproduced": true,
+  "implication": "With one target keyword and two target examples, equation1 is identically zero regardless of their angle. With three target examples, equal pairwise logits attain the same pull loss for collapsed and separated regular-simplex embeddings. Copying this component alone therefore does not guarantee target compactness in the single-keyword case.",
+  "limits": "Not a criticism or reproduction of the paper's multi-keyword experiment. The separate margin push and CE may still change embeddings. No full-objective failure, model/gradient failure, new recipe, data quality, wake performance or parity is claimed.",
+  "script_sha256": "87d1a13eb5b46e9c2f432c825ae08dab56e3e8211377bc5e134e9f699d072ebc"
+}

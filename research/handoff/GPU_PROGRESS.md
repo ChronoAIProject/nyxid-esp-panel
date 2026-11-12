@@ -1584,3 +1584,29 @@ No Mac audio, model training, PCM capture, firmware change or dining-room access
 occurred in this phase. CI43156687253 for `50001d2` finished host and both P4
 profiles successfully; `b463098` CI43157558621 had passed host and was still
 building the two P4 profiles at the last observation.
+
+### Primary literature narrows the later representation hypothesis
+
+The [source review](CONTRASTIVE_KWS_READING.md) records primary2022I2CR and
+2026MACR PDFs, original byte hashes, visually inspected equations/figures/tables,
+actual model/data/event settings and limitations relative to our single-keyword
+MicroFrontend/P4 objective. No paper result is represented as our quality
+evidence. MACR studies strict streaming false-alarm budgets, while I2CR studies
+multi-view noisy command classification; neither proves custom Hey Nyx parity.
+
+The [executed single-target equation probe](../wakeword_p4/results/single-target-pull-probe-v1.json)
+adds a concrete compatibility result: MACR's printed target-only pull has a
+singleton denominator for two same-keyword target examples and is identically
+zero at every pair angle. For three target examples, identical and120degree
+simplex embeddings attain the same3log2pull value. This limits a blind
+single-target copy of that component; it is not a test of the full CE/push
+objective or the paper's actual multi-keyword experiment. The printed I2CR
+denominator/self convention also needs an explicit implementation contract.
+
+The later candidate therefore remains a separately specified single-keyword
+representation study with explicit masks/alignment and a matched control,
+conditional on the complete v47 result. No loss, coefficient, mining, altered
+PCM, model, optimizer or extra run is introduced by the review. GPU v47 and its
+original postprocessor remain unchanged. The completed Mac v47 audit/trace and
+execution-source evidence were handed off in
+[comment6815118180](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6815118180).
