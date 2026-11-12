@@ -115,6 +115,36 @@ The [positive USB board check](../wakeword_p4/results/hiesp-event-clock-positive
 matched sample 46080 exactly and verified normal listening before and after
 restoring the original app.
 
+## Development identity and boot readiness
+
+Use the known development USB port and verify its complete chip MAC before
+making requests to a cached LAN address or flashing. The existing full-app
+runner enforces the MAC before its experimental flash. A separate read-only
+chip query uses the normal IDF environment:
+
+```sh
+python -m esptool --chip esp32p4 --port "$DEVELOPMENT_PORT" \
+  --before default_reset --after hard_reset chip_id
+```
+
+This restarts the app; it does not write flash. For UART console diagnostics,
+use 115200 baud, set DTR/RTS false before opening, and answer both terminal
+probes: `ESC[5n` with `ESC[0n`, and `ESC[6n` with `ESC[1;80R`.
+Wait for `panel>` and let the console settle before sending `nyx-status`.
+Keep raw output private; print only necessary status fields. A bridge open
+can still reboot the app, so retain one serial connection while waiting for
+boot readiness rather than repeatedly reopening it.
+
+The [2026-11-12 identity/readiness observation](../wakeword_p4/results/development-readiness-20261112-v1.json)
+verifies the expected USB chip MAC and original restore app. In that same
+continuous console observation, status at 10.8 seconds had no IP and Nyx down;
+at 25.9 seconds it had an IP and Nyx up. This was a transient boot state.
+After the chip-query reboot, fresh HTTP status matches the original app hash,
+OTA slot and nonempty voice-service ID; Nyx is up, voice idle and Hi ESP
+listening. No credentials or Wi-Fi settings were changed. Before each actual
+experiment, use the full-app runner's complete readiness checks again; this
+single observation is not an ongoing resource, acoustic or call measurement.
+
 ## Build
 
 Use the release's ESP-IDF 5.5.4 environment and dependency versions. Set the
