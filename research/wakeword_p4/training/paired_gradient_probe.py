@@ -75,6 +75,11 @@ def run_gradient_probe(model, main_batch, coverage, pack, output):
         if step%10 == 0: print(json.dumps(dict(probe_batches=step+1, total=50)), flush=True)
     for a, v in zip(before, model.variables): np.testing.assert_array_equal(a, v.numpy())
     assert int(model.optimizer.iterations) == 0
+    # Future probes preserve this actual unchanged instance, never a seeded rebuild.
+    model.save_weights(output/'probe-initialization.weights.h5')
+    inventory = [dict(path=v.path, shape=list(v.shape), dtype=str(v.dtype),
+        value_sha256=hashlib.sha256(v.numpy().tobytes()).hexdigest()) for v in model.variables]
+    (output/'probe-variable-inventory.json').write_text(json.dumps(inventory, indent=2)+'\n')
     ns = np.array([r['encoder']['supervised_norm'] for r in traces])
     nd = np.array([r['encoder']['consistency_norm'] for r in traces])
     assert np.isfinite(ns).all() and np.isfinite(nd).all() and np.all(ns > 0) and np.all(nd > 0)
@@ -84,6 +89,8 @@ def run_gradient_probe(model, main_batch, coverage, pack, output):
     np.savez_compressed(output/'probe-batches.npz', **{k: np.stack(v) for k, v in batch_arrays.items()})
     report = dict(scope='Actual original initialization, first50 unchanged main128 plus paired40 batches; no optimizer updates',
         script_sha256=sha(Path(__file__)), initialization_sha256=sha(output/'initialization.json'),
+        model_snapshot_sha256=sha(output/'probe-initialization.weights.h5'),
+        variable_inventory_sha256=sha(output/'probe-variable-inventory.json'),
         variable_layout=[dict(path=v.path, shape=list(v.shape), size=int(np.prod(v.shape)), encoder=i in encoder) for i, v in enumerate(variables)],
         gradients_sha256=sha(output/'probe-gradients.npz'), batches_sha256=sha(output/'probe-batches.npz'),
         main_sampler_source_sha256=sha(Path(__file__).with_name('train_stream.py')),
