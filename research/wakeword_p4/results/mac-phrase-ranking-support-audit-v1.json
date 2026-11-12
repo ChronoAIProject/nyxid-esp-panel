@@ -1,0 +1,1109 @@
+{
+  "schema": "hey-nyx-phrase-ranking-support-audit-v1",
+  "source_commit": "72b20a71dc75caaf13a39743bb176e314b667de9",
+  "scope": "Independent Mac-side audit of the completed phrase-ranking failure and training-only support reports; no new/final data, inference, threshold selection, or model promotion.",
+  "inputs": {
+    "phrase_ranking_comparison": {
+      "path": "research/wakeword_p4/results/4090-phrase-ranking-formal-comparison-v1.json",
+      "sha256": "b709535050b03e534607bb6b1b40a8e21a04ba971f2d86d85342e549330ebc8a"
+    },
+    "same_threshold_audit": {
+      "path": "research/wakeword_p4/results/4090-phrase-ranking-same-threshold-audit-v1.json",
+      "sha256": "3704fae53e82d9bf766dd77a4a53db4354522c02ddb6f2431eb130f1384bccaa"
+    },
+    "failure_inventory": {
+      "path": "research/wakeword_p4/results/4090-phrase-ranking-failure-inventory-v1.json",
+      "sha256": "95aedfb39f60aa29ec29e3288df013f3157c9647366b4172ae2e16fa1b1f4bc1"
+    },
+    "full_source_support": {
+      "path": "research/wakeword_p4/results/4090-training-full-source-support-audit-v1.json",
+      "sha256": "c71665974c14b43150efcc30c4530207b9caa422d6fc0f44c62dae89b6dcac11"
+    },
+    "phrase_crop_support": {
+      "path": "research/wakeword_p4/results/4090-training-phrase-crop-support-v1.json",
+      "sha256": "03729714949fce90713eac3496618a044fb9210686bd7ab1511c83faf6466c91"
+    },
+    "positive_temporal_support": {
+      "path": "research/wakeword_p4/results/4090-positive-temporal-support-v1.json",
+      "sha256": "0559bdff0d26b53b3117b06d0c973159cf6da19dbb68e36b2ed313c3ef98e0ad"
+    }
+  },
+  "fixed_threshold_result": {
+    "threshold_index": 137,
+    "threshold": 0.99609375,
+    "arms": {
+      "control": {
+        "model_sha256": "51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19",
+        "synthetic_positive_streams": 76,
+        "synthetic_negative_streams": 304,
+        "historical_threshold": 0.99609375,
+        "positive_hits": 25,
+        "negative_false_events": 6,
+        "positive_group_hits": {
+          "phone:af_sky:0.85": [
+            1,
+            1
+          ],
+          "phone:af_sky:0.95": [
+            1,
+            1
+          ],
+          "phone:af_sky:1.05": [
+            1,
+            1
+          ],
+          "phone:af_sky:1.15": [
+            1,
+            1
+          ],
+          "phone:am_liam:0.85": [
+            1,
+            1
+          ],
+          "phone:am_liam:0.95": [
+            1,
+            1
+          ],
+          "phone:am_liam:1.05": [
+            1,
+            1
+          ],
+          "phone:am_liam:1.15": [
+            1,
+            0
+          ],
+          "phone:bf_alice:0.85": [
+            1,
+            0
+          ],
+          "phone:bf_alice:0.95": [
+            1,
+            0
+          ],
+          "phone:bf_alice:1.05": [
+            1,
+            0
+          ],
+          "phone:bf_alice:1.15": [
+            1,
+            0
+          ],
+          "phone:bm_george:0.85": [
+            1,
+            0
+          ],
+          "phone:bm_george:0.95": [
+            1,
+            0
+          ],
+          "phone:bm_george:1.05": [
+            1,
+            0
+          ],
+          "phone:bm_george:1.15": [
+            1,
+            1
+          ],
+          "vctk:p228:None": [
+            3,
+            0
+          ],
+          "vctk:p236:None": [
+            3,
+            1
+          ],
+          "vctk:p238:None": [
+            3,
+            0
+          ],
+          "vctk:p245:None": [
+            3,
+            1
+          ],
+          "vctk:p248:None": [
+            3,
+            1
+          ],
+          "vctk:p250:None": [
+            3,
+            0
+          ],
+          "vctk:p252:None": [
+            3,
+            3
+          ],
+          "vctk:p259:None": [
+            3,
+            0
+          ],
+          "vctk:p277:None": [
+            3,
+            0
+          ],
+          "vctk:p278:None": [
+            3,
+            2
+          ],
+          "vctk:p284:None": [
+            3,
+            0
+          ],
+          "vctk:p299:None": [
+            3,
+            2
+          ],
+          "vctk:p312:None": [
+            3,
+            0
+          ],
+          "vctk:p313:None": [
+            3,
+            1
+          ],
+          "vctk:p314:None": [
+            3,
+            2
+          ],
+          "vctk:p329:None": [
+            3,
+            1
+          ],
+          "vctk:p333:None": [
+            3,
+            0
+          ],
+          "vctk:p334:None": [
+            3,
+            3
+          ],
+          "vctk:p361:None": [
+            3,
+            0
+          ],
+          "vctk:p362:None": [
+            3,
+            0
+          ]
+        },
+        "positive_misses": [
+          {
+            "corpus": "phone",
+            "path": "am_liam-1.15-hey_nyx.wav",
+            "speaker_or_voice": "am_liam",
+            "speed": 1.15
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-0.85-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 0.85
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-0.95-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 0.95
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-1.05-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 1.05
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-1.15-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 1.15
+          },
+          {
+            "corpus": "phone",
+            "path": "bm_george-0.85-hey_nyx.wav",
+            "speaker_or_voice": "bm_george",
+            "speed": 0.85
+          },
+          {
+            "corpus": "phone",
+            "path": "bm_george-0.95-hey_nyx.wav",
+            "speaker_or_voice": "bm_george",
+            "speed": 0.95
+          },
+          {
+            "corpus": "phone",
+            "path": "bm_george-1.05-hey_nyx.wav",
+            "speaker_or_voice": "bm_george",
+            "speed": 1.05
+          },
+          {
+            "corpus": "vctk",
+            "path": "p314-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p314",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p362-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p362",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p362-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p362",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p362-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p362",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p329-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p329",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p329-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p329",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p312-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p312",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p312-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p312",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p312-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p312",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p284-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p284",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p284-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p284",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p284-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p284",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p278-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p278",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p299",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p277-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p277",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p277-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p277",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p277-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p277",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p313-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p313",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p313-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p313",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p238-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p238",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p238-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p238",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p238-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p238",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p236-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p236",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p236-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p236",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p245-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p245",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p245-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p245",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p248-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p248",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p248-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p248",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p361-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p361",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p361-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p361",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p361-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p361",
+            "speed": null
+          }
+        ],
+        "negative_false_clips": [
+          {
+            "corpus": "vctk",
+            "path": "p334-1.1-hey_nick.wav",
+            "speaker_or_voice": "p334",
+            "intended_phrase": "hey_nick"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p334-1.1-hey_next.wav",
+            "speaker_or_voice": "p334",
+            "intended_phrase": "hey_next"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-1.0-hey_nick.wav",
+            "speaker_or_voice": "p299",
+            "intended_phrase": "hey_nick"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-1.1-hey_nick.wav",
+            "speaker_or_voice": "p299",
+            "intended_phrase": "hey_nick"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-1.1-hey_next.wav",
+            "speaker_or_voice": "p299",
+            "intended_phrase": "hey_next"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p361-0.9-hey_nick.wav",
+            "speaker_or_voice": "p361",
+            "intended_phrase": "hey_nick"
+          }
+        ]
+      },
+      "treatment": {
+        "model_sha256": "598f9245fc02bd3262a286c89e5c50bcfe2fef6195fc265bc5eb11f05a7af591",
+        "synthetic_positive_streams": 76,
+        "synthetic_negative_streams": 304,
+        "historical_threshold": 0.99609375,
+        "positive_hits": 35,
+        "negative_false_events": 2,
+        "positive_group_hits": {
+          "phone:af_sky:0.85": [
+            1,
+            1
+          ],
+          "phone:af_sky:0.95": [
+            1,
+            1
+          ],
+          "phone:af_sky:1.05": [
+            1,
+            1
+          ],
+          "phone:af_sky:1.15": [
+            1,
+            1
+          ],
+          "phone:am_liam:0.85": [
+            1,
+            0
+          ],
+          "phone:am_liam:0.95": [
+            1,
+            0
+          ],
+          "phone:am_liam:1.05": [
+            1,
+            0
+          ],
+          "phone:am_liam:1.15": [
+            1,
+            0
+          ],
+          "phone:bf_alice:0.85": [
+            1,
+            0
+          ],
+          "phone:bf_alice:0.95": [
+            1,
+            0
+          ],
+          "phone:bf_alice:1.05": [
+            1,
+            0
+          ],
+          "phone:bf_alice:1.15": [
+            1,
+            0
+          ],
+          "phone:bm_george:0.85": [
+            1,
+            0
+          ],
+          "phone:bm_george:0.95": [
+            1,
+            0
+          ],
+          "phone:bm_george:1.05": [
+            1,
+            1
+          ],
+          "phone:bm_george:1.15": [
+            1,
+            1
+          ],
+          "vctk:p228:None": [
+            3,
+            0
+          ],
+          "vctk:p236:None": [
+            3,
+            2
+          ],
+          "vctk:p238:None": [
+            3,
+            1
+          ],
+          "vctk:p245:None": [
+            3,
+            1
+          ],
+          "vctk:p248:None": [
+            3,
+            2
+          ],
+          "vctk:p250:None": [
+            3,
+            0
+          ],
+          "vctk:p252:None": [
+            3,
+            3
+          ],
+          "vctk:p259:None": [
+            3,
+            0
+          ],
+          "vctk:p277:None": [
+            3,
+            1
+          ],
+          "vctk:p278:None": [
+            3,
+            2
+          ],
+          "vctk:p284:None": [
+            3,
+            1
+          ],
+          "vctk:p299:None": [
+            3,
+            2
+          ],
+          "vctk:p312:None": [
+            3,
+            1
+          ],
+          "vctk:p313:None": [
+            3,
+            3
+          ],
+          "vctk:p314:None": [
+            3,
+            2
+          ],
+          "vctk:p329:None": [
+            3,
+            1
+          ],
+          "vctk:p333:None": [
+            3,
+            0
+          ],
+          "vctk:p334:None": [
+            3,
+            3
+          ],
+          "vctk:p361:None": [
+            3,
+            3
+          ],
+          "vctk:p362:None": [
+            3,
+            1
+          ]
+        },
+        "positive_misses": [
+          {
+            "corpus": "phone",
+            "path": "am_liam-0.85-hey_nyx.wav",
+            "speaker_or_voice": "am_liam",
+            "speed": 0.85
+          },
+          {
+            "corpus": "phone",
+            "path": "am_liam-0.95-hey_nyx.wav",
+            "speaker_or_voice": "am_liam",
+            "speed": 0.95
+          },
+          {
+            "corpus": "phone",
+            "path": "am_liam-1.05-hey_nyx.wav",
+            "speaker_or_voice": "am_liam",
+            "speed": 1.05
+          },
+          {
+            "corpus": "phone",
+            "path": "am_liam-1.15-hey_nyx.wav",
+            "speaker_or_voice": "am_liam",
+            "speed": 1.15
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-0.85-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 0.85
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-0.95-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 0.95
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-1.05-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 1.05
+          },
+          {
+            "corpus": "phone",
+            "path": "bf_alice-1.15-hey_nyx.wav",
+            "speaker_or_voice": "bf_alice",
+            "speed": 1.15
+          },
+          {
+            "corpus": "phone",
+            "path": "bm_george-0.85-hey_nyx.wav",
+            "speaker_or_voice": "bm_george",
+            "speed": 0.85
+          },
+          {
+            "corpus": "phone",
+            "path": "bm_george-0.95-hey_nyx.wav",
+            "speaker_or_voice": "bm_george",
+            "speed": 0.95
+          },
+          {
+            "corpus": "vctk",
+            "path": "p314-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p314",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p362-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p362",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p362-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p362",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p329-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p329",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p329-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p329",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p312-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p312",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p312-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p312",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p284-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p284",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p284-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p284",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p333-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p333",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p278-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p278",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p299",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p250-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p250",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p277-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p277",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p277-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p277",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p238-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p238",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p238-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p238",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p259-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p259",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p236-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p236",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p245-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p245",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p245-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p245",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-1.0-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p228-1.1-hey_nyx.wav",
+            "speaker_or_voice": "p228",
+            "speed": null
+          },
+          {
+            "corpus": "vctk",
+            "path": "p248-0.9-hey_nyx.wav",
+            "speaker_or_voice": "p248",
+            "speed": null
+          }
+        ],
+        "negative_false_clips": [
+          {
+            "corpus": "vctk",
+            "path": "p334-1.1-hey_nick.wav",
+            "speaker_or_voice": "p334",
+            "intended_phrase": "hey_nick"
+          },
+          {
+            "corpus": "vctk",
+            "path": "p299-1.1-hey_next.wav",
+            "speaker_or_voice": "p299",
+            "intended_phrase": "hey_next"
+          }
+        ]
+      }
+    }
+  },
+  "same_threshold_counts": {
+    "macro": {
+      "lower": 32,
+      "equal": 0,
+      "higher": 106
+    },
+    "negative_false_clips": {
+      "lower": 138,
+      "equal": 0,
+      "higher": 0
+    },
+    "background_events": {
+      "lower": 64,
+      "equal": 39,
+      "higher": 35
+    },
+    "same_threshold_recall_gain_without_more_false_clips_or_background": 94
+  },
+  "training_source_support": {
+    "by_engine": {
+      "piper": {
+        "rows": 60000,
+        "candidate_draws": 1500000,
+        "full_original_pcm_draws": 509618,
+        "full_original_pcm_draw_fraction": 0.33974533333333334,
+        "rows_with_any_full_crop": 25820,
+        "source_start_missing_draws": 0,
+        "source_end_missing_draws": 990382
+      },
+      "kokoro": {
+        "rows": 3000,
+        "candidate_draws": 75000,
+        "full_original_pcm_draws": 56397,
+        "full_original_pcm_draw_fraction": 0.75196,
+        "rows_with_any_full_crop": 2800,
+        "source_start_missing_draws": 5863,
+        "source_end_missing_draws": 12960
+      },
+      "qwen-cuda": {
+        "rows": 300,
+        "candidate_draws": 7500,
+        "full_original_pcm_draws": 5130,
+        "full_original_pcm_draw_fraction": 0.684,
+        "rows_with_any_full_crop": 270,
+        "source_start_missing_draws": 450,
+        "source_end_missing_draws": 2040
+      }
+    },
+    "equal_engine_full_original_pcm_draw_fraction": 0.5919017777777777
+  },
+  "positive_long_prompt_support": {
+    "Hey Nicks.": {
+      "sources": 10,
+      "entire_source_fits": 10,
+      "fraction": 1.0
+    },
+    "Hey Nix!": {
+      "sources": 14,
+      "entire_source_fits": 13,
+      "fraction": 0.9285714285714286
+    },
+    "Hey Nyx, can you hear me?": {
+      "sources": 869,
+      "entire_source_fits": 851,
+      "fraction": 0.9792865362485615
+    },
+    "Hey Nyx, check the volume.": {
+      "sources": 815,
+      "entire_source_fits": 331,
+      "fraction": 0.40613496932515336
+    },
+    "Hey Nyx, turn on the light.": {
+      "sources": 850,
+      "entire_source_fits": 580,
+      "fraction": 0.6823529411764706
+    },
+    "Hey Nyx, what time is it?": {
+      "sources": 881,
+      "entire_source_fits": 708,
+      "fraction": 0.8036322360953462
+    },
+    "Hey Nicks?": {
+      "sources": 6,
+      "entire_source_fits": 6,
+      "fraction": 1.0
+    }
+  },
+  "historical_temporal_support_diagnostic": {
+    "v40": {
+      "positive_variants": 4602,
+      "valid_window_min": 13,
+      "valid_window_max": 100,
+      "valid_five_positions": 103663,
+      "variants_without_fullsupport_five": 2,
+      "peak_inside_support": 1017,
+      "thresholds": {
+        "0.5": {
+          "variants_with_fullsupport_hit": 3524,
+          "variants_all_support_positions_hit": 168,
+          "support_positions_hit": 39030
+        },
+        "0.99609375": {
+          "variants_with_fullsupport_hit": 2468,
+          "variants_all_support_positions_hit": 53,
+          "support_positions_hit": 24917
+        }
+      }
+    },
+    "v41": {
+      "positive_variants": 4602,
+      "valid_window_min": 13,
+      "valid_window_max": 100,
+      "valid_five_positions": 103663,
+      "variants_without_fullsupport_five": 2,
+      "peak_inside_support": 409,
+      "thresholds": {
+        "0.5": {
+          "variants_with_fullsupport_hit": 3306,
+          "variants_all_support_positions_hit": 107,
+          "support_positions_hit": 18949
+        },
+        "0.99609375": {
+          "variants_with_fullsupport_hit": 1374,
+          "variants_all_support_positions_hit": 29,
+          "support_positions_hit": 7844
+        }
+      }
+    }
+  },
+  "interpretation": [
+    "Phrase ranking improved same-threshold discrimination: 138/138 grid points had fewer negative false clips, but the unchanged joint gate still had zero eligible points in both arms.",
+    "At fixed 0.99609375 on the saved synthetic streams, treatment changed positive hits from 25/76 to 35/76 while negative false clips changed from 6 to 2; this remains far below a qualified candidate and does not support promotion.",
+    "Training candidate windows frequently lack complete original PCM support, especially Piper (509618/1500000 = 0.3397453333). This is a sampler/coverage diagnostic, not proof of bad labels or phonetic truncation.",
+    "Long positive prompts have materially lower complete-source fit than the short Hey Nyx positive. This creates a testable absolute-coverage hypothesis distinct from phrase ranking.",
+    "The older v40/v41 temporal support census is diagnostic only: it cannot establish current-model causality, and it does not authorize changing the gate."
+  ],
+  "next_preflight": {
+    "name": "positive-target-support matched preflight",
+    "control": "original main128 + pair40 BCE sampler, exact current pins",
+    "treatment": "same training-only source IDs and metadata, but deterministic positive-window replacement/reweighting so each positive draw has a verified complete-source target support window; negatives, architecture, head, BN, speed, PCM and normal audio path unchanged",
+    "required_checks": [
+      "metadata-checked source/endpoint support before score use",
+      "same initial inventory and deterministic ordered draw audit",
+      "50-batch no-update loss/gradient comparison with no parameter mutation",
+      "fresh matched 2-update control/treatment smoke and export contract",
+      "no new development/final access; original 138-point INT8 gate unchanged"
+    ],
+    "formal_if_preflight_passes": "one fresh control and one treatment, 120000 updates each, original checkpoint/PTQ/history gate; reject both if no eligible point",
+    "forbidden": "threshold rescue, coefficient sweep, score mining from validation/final, replacing the existing v30 firmware, or claiming equivalence from support metrics alone"
+  },
+  "acceptance_claim": false,
+  "limits": [
+    "All conclusions are limited to authenticated historical/development reports and saved synthetic traces.",
+    "No new model training, P4 flashing, acoustic playback, microphone recording, latency, resource, or long-call test was performed by this audit.",
+    "Support coverage is an engineering property; it does not prove pronunciation, acoustic validity, or human generalization."
+  ]
+}
