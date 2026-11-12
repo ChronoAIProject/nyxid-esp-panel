@@ -1934,6 +1934,26 @@ python research/wakeword_p4/training/audit_positive_temporal_bounds.py \
   --output "$FRESH_POSITIVE_BOUNDARY_JSON"
 ```
 
+### Negative timeline sampling changes complete-container exposure
+
+The retrospective [exact sampler calculation](../wakeword_p4/results/negative-timeline-mass-v1.json)
+uses the original authenticated metadata for all1995 candidate-negative variants,
+with equal phrase/engine/conditioning identity/source/variant probabilities and
+every legal integer endpoint. Under the original conservative source-container
+ledger, v41/v42's24 candidate-negative slots average5.96059 complete-container
+windows:24.8358% complete,54.4168% partial and20.7474% before signal begins.
+Complete fractions differ by engine, from14.7308% for OpenAI TTS to41.0857% for
+Piper. Other British/ambient slots remain unchanged. These are exact sampling
+probabilities, not actual gradient/loss mass, phonetic support, or proof of a
+failure cause. Before-signal windows can contain background, and partial windows
+can still provide useful discriminative evidence. Use this alongside the actual
+v42 fitted-set diagnostics before choosing another intervention.
+
+```sh
+python3 research/wakeword_p4/training/audit_negative_timeline_mass.py \
+  --pack "$ORIGINAL_COMPLETE_CONTAINER_PACK" --output "$FRESH_NEGATIVE_MASS_JSON"
+```
+
 ### Compiled teacher BCE saturation probe
 
 The [actual-recipe probe](../wakeword_p4/results/compiled-teacher-bce-gradient-probe-v1.json)
