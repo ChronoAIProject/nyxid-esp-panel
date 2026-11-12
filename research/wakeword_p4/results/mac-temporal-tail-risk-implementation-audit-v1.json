@@ -1,0 +1,41 @@
+{
+  "schema": "mac-temporal-tail-risk-implementation-audit-v1",
+  "gpu_commit": "843299962e644e50ee9316c938ce041532cb82b3",
+  "pins_commit": "c384f78",
+  "source_hashes": {
+    "research/wakeword_p4/training/paired_temporal_training.py": "0b9f19e8846885cc0255a232b6921d8a20e8bfe97a198ec8bcedcfe4e82dd1ac",
+    "research/wakeword_p4/training/temporal_tail_risk.py": "9d448734232f33d34f9ad8e153db4a504fdcd1f23ab1893277222955371f03b3",
+    "research/wakeword_p4/training/paired_temporal_sampler.py": "166f24f84d90bb214833a316db3714c0138defcc5d3760124d54496a30f025e8",
+    "research/wakeword_p4/training/train_stream.py": "715eafb7ae9189e17beea8045d48b4f64710cdafa3b8931d6bc31d3bd869a978",
+    "research/wakeword_p4/results/4090-temporal-tail-risk-execution-pins-v1.json": "f664fdf6d36efd4941563f4101bc90c066f40cc6f6d492237d4989efac51c0fe",
+    "research/wakeword_p4/results/4090-temporal-tail-risk-feasibility-v1.json": "40ed4a2fedb9f026bd47e8edc598cd835c5655c46d1a5f8a5107e445f9cdbb01",
+    "research/wakeword_p4/results/4090-temporal-tail-risk-network-preflight-v1.json": "63c5f2a10752c40c93630946603b6eafab30bbd282b3ac5df4a86e20b098de8a",
+    "research/wakeword_p4/results/4090-temporal-tail-risk-formal-startup-v1.json": "830d924ad124f060d6f47d34b69c2c2d3a580add49d673deb54b6a63e35696cf"
+  },
+  "checks": {
+    "risk_uses_five_frame_logits": true,
+    "risk_uses_label_directed_softplus": true,
+    "risk_uses_logmeanexp": true,
+    "risk_applies_existing_weights": true,
+    "risk_is_auxiliary_and_not_deployment_head": true,
+    "training_updates_base_plus_fixed_temporal": true,
+    "ranking_remains_fixed_one": true,
+    "control_treatment_coefficients_pinned": true,
+    "single_adam_update_per_step": true,
+    "frozen_bn_and_original_gate_pinned": true,
+    "no_automatic_restarts": true,
+    "sampler_has_five_ends": true,
+    "sampler_requires_all_windows_support": true,
+    "sampler_authenticates_raw_and_mechanical_pass": true,
+    "feasibility_all_pairs_legal": true,
+    "network_preflight_exact": true,
+    "startup_process_identity_two_processes": true,
+    "stream_cli_exposes_objective": true
+  },
+  "all_checks_passed": true,
+  "acceptance_claim": false,
+  "limits": [
+    "Static source and committed preflight/startup receipt audit; no direct GPU /proc access, no full120k output, no model quality, P4, acoustic, resource or long-call evidence.",
+    "The sampler support assertion is a training-window support invariant, not a proof of human phone timing."
+  ]
+}
