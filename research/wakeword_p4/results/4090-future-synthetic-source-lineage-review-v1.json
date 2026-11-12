@@ -1,0 +1,31 @@
+{
+  "repository": "rhasspy/piper-voices",
+  "revision": "2f358b6a560e3a913ebf509b2f3344f20b367f94",
+  "scope": "Metadata-only source discovery during live training; not a development reservation, no model/audio download or candidate inference.",
+  "files": {
+    "jenny_dioco": {
+      "url": "https://huggingface.co/rhasspy/piper-voices/resolve/2f358b6a560e3a913ebf509b2f3344f20b367f94/en/en_GB/jenny_dioco/medium/MODEL_CARD",
+      "saved_path": "research/wakeword_p4/results/4090-piper-jenny_dioco-source-review-model-card-v1.md",
+      "bytes": 475,
+      "sha256": "851f5b7ffe4b50ff3235192baef96a1943cda6b4bfa1c9badcf6cf78b6ffc292"
+    },
+    "hfc_female": {
+      "url": "https://huggingface.co/rhasspy/piper-voices/resolve/2f358b6a560e3a913ebf509b2f3344f20b367f94/en/en_US/hfc_female/medium/MODEL_CARD",
+      "saved_path": "research/wakeword_p4/results/4090-piper-hfc_female-source-review-model-card-v1.md",
+      "bytes": 531,
+      "sha256": "0e2c236f7572782e38b58f6ded23d8df231a71483cab2dd9eeae4cafcd1e354a"
+    },
+    "kristin": {
+      "url": "https://huggingface.co/rhasspy/piper-voices/resolve/2f358b6a560e3a913ebf509b2f3344f20b367f94/en/en_US/kristin/medium/MODEL_CARD",
+      "saved_path": "research/wakeword_p4/results/4090-piper-kristin-source-review-model-card-v1.md",
+      "bytes": 479,
+      "sha256": "8c181b1d5f7d8152b914faab941fcbe6b8f0495e63e5189d6f27b8c68c8393fc"
+    }
+  },
+  "findings": {
+    "jenny_dioco": "Card explicitly says finetuned from hifi_tts_92, the Cori Samuel base already used in training. Distinct target corpus does not imply independent pretraining. Dataset license requires primary-source review; no reservation.",
+    "hfc_female": "Card explicitly says finetuned from the same hifi_tts_92/Cori base. Dataset Hi-Fi Captain; card lists CC BY-NC-SA4.0. Not certified pretraining-independent; no reservation.",
+    "kristin": "Card says trained from scratch on ~11.5h LibriVox recordings. Physical speaker overlap with existing LibriTTS/LibriSpeech-derived sources unresolved; not certified independent, no reservation."
+  },
+  "decision": "Do not treat any as proven independent source. Preserve evidence; future reservation requires explicit overlap/lineage limits and protocol before scoring. No transfer to training, no consumption of three existing final sets."
+}
