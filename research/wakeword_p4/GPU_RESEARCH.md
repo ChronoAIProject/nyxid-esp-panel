@@ -5062,3 +5062,9 @@ Original110000 record4035B SHAc79028f0f33c52ceef810d0f4d1208c5a9dcee731a0e4dcb6b
 ### Common formal115000 checkpoint retained
 
 Original115000 record4036B SHA6a6a9726d29421fe3c27a9a57e50c068e4418209ab27bc67ce29e5af0eb893c6 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.57473958/max-source false.03802083, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live; fixed120k final5000 updates pending before export/full input audit/fixed historical scoring. No restart/config changes/newdev/final use or acceptance/cross-arm advantage claim; v30 retained.
+
+### Common formal120k complete; full matched input audit passed
+
+Common original run completed120000 updates, selected10000,5323.5s. All120000 loss rows consecutive finite and120000 sampling traces present; hashes match original training report. Original training608113B SHA275fd2b99cc2536477e1a52482e6f7eb6608c3bc824aa46fc7af40b4f564b106 copied byte-identically. Streaming INT8 export54440B SHA1f81950ee88f0dc2f70b0ea795b34d7a4b1e5e515e7b2de98b7e0c395bcfff93; weights finite, frozenBN unchanged, input[1,3,40]int8/output[1,1]uint8. Last120000 checkpoint itself0float-eligible, fallback.994 macro.60807292/max-source false.04635417. No quality acceptance.
+
+Original sequence93786 completed full matched input audit:120000 ordered source draws/original windows/main inputs exact across arms, initialization exact, schedule SHA6d1e5aa342fd387877355be27bed4e30a08a69036f00594e6d41ae96a5632532; all120000 paired network batches differ intentionally. Original audit copied unchanged. Original sequence automatically entered independent historical postprocess (PID529964 observed), no restart. Fixed scores pending; newdev/final untouched, v30 retained.
