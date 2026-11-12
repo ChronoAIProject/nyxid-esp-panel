@@ -598,3 +598,15 @@ process agreement; the audit never repairs inputs or changes a tolerance to
 pass them. Mechanical agreement does not qualify the material's pronunciation,
 speaker independence or any wake model. This script never plays/records audio,
 accesses a board, trains a model or reads new-development/final data.
+
+The [completed original-pilot Mac report](../results/us-coverage-mac-integrity-v1.json)
+retains **0/108 exact process-agreement passes**: resampling from the original
+native floats differs from the saved Linux arrays in all 108 clips, by at most
+8.940696716308594e-8 (0.0029296875 PCM LSB). All other checks pass, including
+exact original saved-16k-float to serialized-PCM conversion on every sample.
+The [anonymous archive receipt](../../handoff/assets-us-coverage-mac-integrity-v1.json)
+authenticates all 339 payload files and the complete 340-member archive.
+Original native/saved floats and PCM remain untouched. This records a
+cross-platform resampling disagreement, not evidence that the supplied PCM
+is corrupt, and does not authorize regenerating it, changing the gate or
+restarting a training run. Use original authenticated PCM for later work.
