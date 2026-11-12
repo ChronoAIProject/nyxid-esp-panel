@@ -5014,3 +5014,7 @@ Original50000 record4014B SHAbdfaed23539b263e129112cbfc1a0436da6aa07f16328d3ec71
 ### Common formal55000 checkpoint retained
 
 Original55000 record4018B SHA3c0b42f24850382ee1f28b62247ba9468b874c867bdcfeb604fb46efca8588f9 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.5390625/max-source false.02864583, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, fixed120k unchanged. No restart/newdev/final use, quality acceptance or cross-arm advantage claim; v30 retained.
+
+### Common formal60000 half-run checkpoint retained
+
+Original trainer504191 remains live beyond half of fixed120k; first60744 complete loss rows continuous finite. Original60000 record4173B SHA725dc394b8c36e1dd6e50b9e4f6fd0b5addf46d47b77279bcbfed0779c4f7c13 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.5796875/max-source false.04895833, background1/1.204811h (empirical.83000552/h, one-sided95% upper3.93743/h). Not qualified or acceptance; 12 checkpoints so far only10000 has float-eligible points. Fixed120k continues unchanged, no restart/newdev/final use, v30 retained. Half-run status synchronized through Issue13.
