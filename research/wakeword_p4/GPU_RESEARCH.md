@@ -5002,3 +5002,7 @@ Original35000 record4113B SHA68f08e96d8bd7824b662d80a04b94d52c7359a7a06f0faae1cf
 ### Common formal40000 checkpoint retained
 
 Original trainer504191 remains live; fixed120k plan one-third complete. Original40000 record3989B SHAb9ae18e822e9650c7b47b0e405654515765b4091e9ebfdc4f6179109154201d6 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.42369792/max-source false.0125, background0/1.204811h (one-sided95% upper2.48647/h). No acceptance or cross-arm advantage conclusion. No restart/newdev/final access; v30 retained. Issue13 checked, no new Mac reply.
+
+### Common formal45000 checkpoint retained
+
+Original45000 record3954B SHA8820bcafa703bdbfb69164801dcf5f50c581c1d9f53cee5169496c2a339c1396 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.5234375/max-source false.0234375, background0/1.204811h (one-sided95% upper2.48647/h). Original trainer504191 remains live, fixed120k plan unchanged. No restart/newdev/final use or acceptance claim; v30 retained.
