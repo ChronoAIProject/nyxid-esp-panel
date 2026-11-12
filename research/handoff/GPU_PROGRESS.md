@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `4a53689` (fetched 2026-11-12); see the
+Latest observed GPU commit: `35e359c` (fetched 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -1131,3 +1131,56 @@ Once original bytes arrive and are authenticated, use a fresh private output:
 /path/to/numpy-2.4.6-venv/bin/python research/handoff/audit_v45_us_feature_sampler_mac.py \
   --pack /path/to/original-us-feature-pack --output /tmp/v45-sampler-replay-fresh
 ```
+
+### V45 complete rejection and training/development separation
+
+Original v45 PID235075/start4081425 and its original postprocessor completed.
+Training is120000steps/2464.8s, selected35000, model54440bytes SHA
+`f5d175a0172d4fde70dce746fa358331c3fcdf590139c2e76113fe14c45e30af`.
+Export is `275f598`, complete old-stage rejection `1ed3f65`.
+All138fixed points reject: maximum macro .86875, minimum34negative false
+clips. At historical .99609375, target-any is8/16Kokoro and41/60VCTK, common
+false5/48and29/180, cross-target false0. OldVox has1event/8.173672725694447h,
+upper95 .5803834674561834/h, exceeding .5/h. V45 stays a rejected research
+model; no P4 rollout or unused-development/final access follows.
+
+The [independent Mac recorded-evidence audit](../wakeword_p4/results/v45-recorded-evidence-mac-audit-v1.json)
+authenticates157training-source hashes, original report/hash links, all24
+recorded checkpoint choices/264float points (none eligible), historical event
+accounting,467receipt links and all138joint macro/eligibility/Poisson
+calculations. Largest upper95 difference4.440892098500626e-16. Its scope is
+metadata, source bytes, saved event counts and arithmetic; GPU score-file,
+model and array replay has not been performed on Mac.
+
+```sh
+python3 research/handoff/audit_v45_recorded_evidence.py --output /tmp/v45-recorded-evidence-fresh.json
+```
+
+**V44 and v45 both select step35000.** Different selected step numbers are
+not a confound for this pair. Their trained weights/time distributions and
+representative calibration differ; same step alone does not establish a unique
+causal interpretation. This clarification was posted to
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813386733).
+
+GPU `7e459af` shows the declared new-US training gap was repaired: all243
+new-US negatives have zero fullstream max-five highs even at .5 in actualfloat
+andINT8;80/81positives have complete-container support/event clips at .99609375.
+Inherited training support rises3263→3695positive variants and59833→70550of
+103663container positions;1995negative historical high counts remain0.
+This improved training fit coexists with worse old-development false counts.
+It does not establish improved generalization.
+
+GPU `35e359c` retains actualfloat replay on380consumed old-development clips,
+with exact originalINT8 trace reproduction reported. Of304negatives,270fail
+neither mode,31fail both,3failINT8only and0floatonly. Quantization affects three
+decisions and is not necessary for the31shared failures. These are GPU replay
+results reviewed from the original reports; the new Mac audit above does not
+claim independent replay of them. Further changes need a distinct, evidence
+based data/generalization hypothesis and review of earlier failed interventions.
+No automaticv46 or further temporal rerun has been started by Mac.
+
+The original training-feature handoff remains pending as of this snapshot.
+Mac plan/script **b0c1eb4** and allCI43145940398 passed; actual raw-array and
+sampler replay remains **unrun** until original bytes arrive. The prioritized
+request is in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813445691).
