@@ -1,0 +1,29 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794463538.599443  302391 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794463538.749852  302391 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794463539.961369  302391 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1794463540.912732  302391 gpu_bfc_allocator.cc:47] Overriding orig_value setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was false.
+I0000 00:00:1794463540.912868  302391 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21452 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:01:00.0, compute capability: 8.9
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+I0000 00:00:1794463541.511012  302391 cuda_dnn.cc:461] Loaded cuDNN version 92801
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/v47_paired_phase_preflight_v1.py", line 48, in <module>
+    np.testing.assert_allclose(probability, scores[0][-1], rtol=1e-5, atol=1e-5)
+  File "/usr/local/lib/python3.11/dist-packages/numpy/testing/_private/utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/usr/local/lib/python3.11/dist-packages/numpy/testing/_private/utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-05
+
+Mismatched elements: 1 / 1 (100%)
+Max absolute difference among violations: 5.42402267e-05
+Max relative difference among violations: 5.49633705e-05
+ ACTUAL: array(0.986789)
+ DESIRED: array(0.986843)

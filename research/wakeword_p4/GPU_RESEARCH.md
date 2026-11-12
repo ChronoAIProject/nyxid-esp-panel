@@ -4628,3 +4628,8 @@ Pure synthetic 2D numerical example, no model arrays or training. Target-only an
 ## Candidate-independent paired schedule feasibility
 
 Verified all672 conditioning IDs×3speeds×4phrases×5arms exactly present. For each speed even the intersection across all IDs/phrases/arms has common complete phase1 endpoints: .9=291..336/step3 (16),1.0=297..339 (15),1.1=309..339 (11), using Mac19aed75 inclusive-end geometry. Therefore any two distinct IDs can share a valid endpoint at matched speed without filtering/mining. Separate local seed227726 generated50blocks of twoIDs/all40views; all2000 sampled originalraw file/array hashes and150×40window hashes authenticated and full ordered trace retained. No inherited sampler mutated, no model inference, no adopted batchsize/loss/coefficient or training. This prepares reproducible cross-ID/cross-render pairing while Mac independent representation measurement proceeds; IDs do not establish physical speaker diversity.
+
+
+## v47 paired phase/reset preflight with CPU control
+
+Pinned c25b94b first/last50block schedule =80views. First GPU execution stopped on window-vs-stream probability mismatch5.42402267e-5 above fixed rtol1e-5/atol1e-5; original failure log preserved. Historical compare_streaming deliberately usesCPU, whereas first new preflight had usedGPU. Repeated same80views at same tolerance with CPU2threads, no weights changes or threshold adjustment: all80 pass, max probabilityerror1.1324882507324219e-6, repeat stream reseterror0. This supports the prepared phase1 schedule on these80CPU cases, not universal GPU equivalence; GPU discrepancy remains recorded and no causal numerical-kernel diagnosis claimed. No newmodel training, no all-source/window equivalence, no newdev/final or acceptance.

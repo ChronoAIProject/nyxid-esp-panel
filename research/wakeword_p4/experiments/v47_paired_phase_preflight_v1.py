@@ -7,6 +7,10 @@ from pathlib import Path
 import numpy as np
 import tensorflow as tf
 
+tf.config.set_visible_devices([], 'GPU')
+tf.config.threading.set_intra_op_parallelism_threads(2)
+tf.config.threading.set_inter_op_parallelism_threads(2)
+
 base = Path('.local/wakeword'); root = base/'model-gpu-v47-ami-extra'
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 assert sha(root/'hey_nyx.tflite') == 'c6c9037c50c66230a783788678328d12a73e011dec5c97b94f74deba5e58cdd9'
@@ -52,6 +56,7 @@ for block in [schedule['blocks'][0], schedule['blocks'][-1]]:
     print(json.dumps(dict(completed_views=len(details), planned=80)), flush=True)
 assert len(details) == 80 and sha(root/'best.weights.h5') == weight_before
 result = dict(model_sha256=sha(root/'hey_nyx.tflite'), weights_sha256=weight_before,
+    execution_device='CPU',
     schedule_sha256=sha(schedule_path), script_sha256=sha(Path(__file__)), views=80,
     max_probability_error=max(r['absolute_error'] for r in details),
     max_reset_error=max(r['reset_max_error'] for r in details), details=details,
