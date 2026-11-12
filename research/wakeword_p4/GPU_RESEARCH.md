@@ -4734,3 +4734,8 @@ Explicit phrase-ranking mode integrated, metadata indices checked per batch, ful
 ### Phrase ranking formal execution frozen (2026-11-12 UTC)
 
 Fresh2-step engineering preflight passed. Commands/source pins prepared for one120k control and one120k treatment, coefficients0/1, no rendering D. Both explicitly calculate supervised/ranking backwards; one Adam update per step. Original initialization/main sampler/pair draw schedule/frozenBN/checkpoint/PTQ unchanged. Fresh control required rather than treating prior completed control as automatically interchangeable. Sequence fails closed, authenticates full120k cross-arm input/trace hashes before original historical-only postprocessors. No new dev/final access, restart or acceptance claim. Delivery of these pins through Issue13 precedes launch.
+
+
+### Phrase ranking control completed; treatment started (2026-11-12 UTC)
+
+Fresh control completed120000 updates in4738.8s; original selection5000. Original training.json copied unchanged. Both paired trace files contain120000 rows. Export audit passes finite weights/frozenBN and INT8[1,3,40] to UINT8[1,1],54440B; model SHA51e1e513b2c80d59091e42acf3dc79d4a2e4c89ca20a91de3519a0dd34989a19 (byte-identical to prior consistency control; this does not replace the scheduled cross-arm audit). Original sequence launched treatment PID377186; actual starttime recorded in receipt. No restart, quality acceptance or new dev/final access. Full treatment/input audit/historical gates remain pending.
