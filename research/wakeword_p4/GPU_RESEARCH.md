@@ -4974,3 +4974,7 @@ Original sequence93786 remains live; common arm passed immutable first50 audit. 
 ### Common formal5000 checkpoint retained
 
 Original sequence93786/trainer504191 remains live. First common5000 progress record preserved byte-identically (3956B, SHA30a6def5fca99526aa7ccda8d4defdadc9b0a979eac2e2cbcd71feb26231a918). Zero original float-selection eligible points; fallback threshold.994, macro recall.33125, max-source false rate.015. Background0/1.204811h gives one-sided95% FAR upper2.48647/h, not the required .5/h. This is reused float training-validation only, not INT8/independent acceptance. No same-threshold cross-arm conclusion drawn from separately selected fallback points. Continue pinned120k plan, no restart/config edits/newdev/final use; v30 retained.
+
+### Common formal10000 checkpoint retained
+
+Original trainer504191 remains live without restart. Original10000 record preserved byte-identically (4043B, SHA95733866b38c563acb8af57a15587391e04bc0c90ad39d928f3b814b66f9debe). Three original float-selection eligible points; selected.99 macro.36223958/max-source false.00833333, background0/1.204811h. These are float heuristic selection points only; one-sided95% FAR upper remains2.48647/h, not independent acceptance, no claim of shared-noise advantage. Fixed120k plan continues, v30/newdev/finals unchanged.
