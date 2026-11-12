@@ -1,0 +1,132 @@
+{
+  "scope": "Training-only diagnostic of the existing frozen Mac embedding ensemble on all 108 original US synthesis clips; no model fitting or acceptance",
+  "plan_sha256": "e0e050b345435353e90095ad26972c47dc774b1a7a13f8a043597f6103128705",
+  "script_sha256": "69ceb5aa0c63efab6a1805c58de1c8cb3d7796f89682b9759cab4624690899d2",
+  "original_model_plan_sha256": "2f0daa919cad9e0670181d11ccbb8ca8b9e0d7ac7692df6c1e2097c16d399122",
+  "source_manifest_sha256": "350315d41263ef24d593fa46b1291ccc3ef21c95682840d65ccfcf1f1ea7369f",
+  "runtime_inputs_sha256": {
+    "embedding-stream-int8-quiet.tflite": "af0e12dd0cd6f368b0c2c24b2b5f4ff0df85af8175185d8e6bb6ef07e69e233a",
+    "native-fft-window.npy": "a5c519e248a8a191e755ba27e7cb52f280f69c66cade9a7641a5b1d477b160a5",
+    "native-mel-filter.npy": "65e9e696738d9eb53b1d8a16a747a95fb200b6dc8c098ac2cd90cceefc3b967a",
+    "head-environment-expanded-v2/step-10000/head.tflite": "9a73daa1daee3e27f083e60e63c96bfd33e183be9a03d7d3b9337691fbf08840",
+    "head-temporal32-dropout-v1/step-20000/head.tflite": "616bfbbae5ac4b86694e7a536fc6a1415efc078c8d350bb9ec3593ec337c3a47"
+  },
+  "frozen_threshold": 0.4,
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1",
+    "ai-edge-litert": "2.3.0",
+    "tensorflow": "2.21.0"
+  },
+  "clips": 108,
+  "summaries": {
+    "all/hey_mix": {
+      "clips": 27,
+      "any_after_source_start": 8,
+      "reference_window_high": 8,
+      "priming_events": 0
+    },
+    "all/hey_next": {
+      "clips": 27,
+      "any_after_source_start": 2,
+      "reference_window_high": 2,
+      "priming_events": 0
+    },
+    "all/hey_nick": {
+      "clips": 27,
+      "any_after_source_start": 8,
+      "reference_window_high": 8,
+      "priming_events": 0
+    },
+    "all/hey_nyx": {
+      "clips": 27,
+      "any_after_source_start": 21,
+      "reference_window_high": 21,
+      "priming_events": 0
+    },
+    "lessac/hey_mix": {
+      "clips": 9,
+      "any_after_source_start": 6,
+      "reference_window_high": 6,
+      "priming_events": 0
+    },
+    "lessac/hey_next": {
+      "clips": 9,
+      "any_after_source_start": 2,
+      "reference_window_high": 2,
+      "priming_events": 0
+    },
+    "lessac/hey_nick": {
+      "clips": 9,
+      "any_after_source_start": 3,
+      "reference_window_high": 3,
+      "priming_events": 0
+    },
+    "lessac/hey_nyx": {
+      "clips": 9,
+      "any_after_source_start": 9,
+      "reference_window_high": 9,
+      "priming_events": 0
+    },
+    "ljspeech/hey_mix": {
+      "clips": 9,
+      "any_after_source_start": 2,
+      "reference_window_high": 2,
+      "priming_events": 0
+    },
+    "ljspeech/hey_next": {
+      "clips": 9,
+      "any_after_source_start": 0,
+      "reference_window_high": 0,
+      "priming_events": 0
+    },
+    "ljspeech/hey_nick": {
+      "clips": 9,
+      "any_after_source_start": 5,
+      "reference_window_high": 5,
+      "priming_events": 0
+    },
+    "ljspeech/hey_nyx": {
+      "clips": 9,
+      "any_after_source_start": 9,
+      "reference_window_high": 9,
+      "priming_events": 0
+    },
+    "ryan/hey_mix": {
+      "clips": 9,
+      "any_after_source_start": 0,
+      "reference_window_high": 0,
+      "priming_events": 0
+    },
+    "ryan/hey_next": {
+      "clips": 9,
+      "any_after_source_start": 0,
+      "reference_window_high": 0,
+      "priming_events": 0
+    },
+    "ryan/hey_nick": {
+      "clips": 9,
+      "any_after_source_start": 0,
+      "reference_window_high": 0,
+      "priming_events": 0
+    },
+    "ryan/hey_nyx": {
+      "clips": 9,
+      "any_after_source_start": 3,
+      "reference_window_high": 3,
+      "priming_events": 0
+    }
+  },
+  "rows_sha256": "0a96633e6e173bedea85d714504f7b99cebd7e70a76085f9c35f6df4623feb5a",
+  "seconds": 4.474337249994278,
+  "accepted": false,
+  "limitations": [
+    "These are training-only synthetic clips, not independent human or acceptance observations.",
+    "The three presets share Piper ancestry and do not establish independent physical speakers.",
+    "Full generated-container ends are process references, not acoustic phoneme boundaries.",
+    "This 80 ms embedding ensemble and GPU 10 ms MicroFrontend detector have different frontends, training and event policies; no controlled architecture-only comparison is implied.",
+    "No board, microphone, speaker, firmware or audio-producer access. Dining-room production board excluded."
+  ],
+  "decision": "This probes whether an existing different representation generalizes to the new training cohort. It does not change v46, select a threshold, train another model, certify pronunciation, access unused development/final data or promote firmware. Any fitting follow-up requires its own evidence-based plan."
+}

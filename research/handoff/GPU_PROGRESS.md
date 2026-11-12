@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest reviewed GPU commit: `636fec1` (fetched 2026-11-12); see the
+Latest reviewed GPU commit: `b6190d2` (fetched 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -1218,3 +1218,47 @@ The frozen324-array sampler replay remains pending that separate original
 feature pack. Full synthesis reports and later feature/training plans require
 their own review; this metadata result does not accept a new model or authorize
 unused-development/final access.
+
+### V46 sampler review and parallel Mac training-cohort diagnostic
+
+GPU v46 freezes `7c0fa8c` and implements/smoke-checks `b6190d2`. Its original
+training identity is PID257013/start4501271, with postprocessor257576/start4503383
+reported through issue #13. No completed v46 result is available at this
+snapshot. These are remote identities, not Mac tool handles.
+
+Source review identifies a combined intervention: after v45's US replacement,
+the remaining old negative slots44..55 all used full-timeline ends. V46's new
+balanced cohort uses six complete ends plus six full-timeline ends there, in
+addition to replacing sources. Thus v46 cannot isolate conditioning-ID coverage
+from its new-cohort temporal mixture. The reviewed implementation matches its
+frozen6+6 plan; existing training need not restart. This clarification and the
+still-pending original324-array US handoff were posted to
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6813779673).
+
+The separate Mac [frozen diagnostic](plans/us-frozen-embedding-diagnostic-v1.json)
+was pushed at `aca2864` before inference. It runs all108 authenticated original
+US training-only WAVs through the unchanged80ms INT8 backbone and original
+equal-mean heads at threshold.4/three-step smoothing. Original PCM is only
+padded by38400/16000 zeros; no source gain, resampling, speed or label changes.
+All108 inputs/model/runtime/helper identities verify. The
+[result](../wakeword_p4/results/us-frozen-embedding-diagnostic-mac-v1.json)
+has21/27 target-intent events and18/81 near-phrase false clips: Nick8/27,
+Next2/27, Mix8/27; no priming events. Source-container-window highs match these
+event-clip counts. Lessac and LJSpeech hit9/9 positives each, Ryan3/9.
+Every embedding/member/mean trace remains in the private result directory.
+
+This is a training-cohort diagnostic, not model acceptance or a controlled
+comparison to v45/v46. It does not substitute for the unrun original-raw sampler
+replay. No board, playback, microphone, unused-development or final data is
+accessed. The original ensemble is not a ready replacement for Hi ESP.
+
+The [continuation plan](plans/us-embedding-continuation-v1.json) tests adding the
+whole108-source matched cohort to the frozen-backbone route, including all
+failures. Its216 quiet/existing-augmentation feature jobs feed a matched
+dense-head control/treatment from the original same weights. The existing
+trainer is used for both; all recipe/checkpoint/PTQ/old-validation rules remain
+the same. Source-engine probabilities intentionally change in treatment; no
+claim of identical remaining sample draws. Bind completed feature hashes before
+fitting. Original temporal head stays frozen, and all new candidate selection
+uses only the unchanged original validation. No new candidate has been trained
+or accepted at this snapshot.
