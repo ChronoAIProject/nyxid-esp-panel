@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 class CompleteCoverage:
-    def __init__(self, root, negative_timeline=False, positive_timeline=False):
+    def __init__(self, root, negative_timeline=False, positive_timeline=False, negative_container_mixture=False):
         root=Path(root)
         expected={'training.npz':'bb01f3219db10f31e1095af4912c1807ec38b0b3c640c4676186c1b77a620aa1',
           'sources.json':'0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981',
@@ -47,6 +47,10 @@ class CompleteCoverage:
           policy='Equal phrase for negatives, engine, conditioning identity, canonical WAV, variant; aliases once. Original British draws occur first; remaining British/ambient slots untouched.',
           source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
 
+        if negative_container_mixture and not (negative_timeline and positive_timeline):
+            raise ValueError("Negative container mixture requires v42 positive/negative timeline")
+        self.negative_container_mixture = negative_container_mixture
+        self.container_rng = np.random.default_rng(157726)
         self.negative_timeline = negative_timeline
         self.temporal_rng = np.random.default_rng(137726)
         self.raw_negatives = {}
@@ -84,6 +88,16 @@ class CompleteCoverage:
                 policy='Uniform end crop_end..min(350,len(raw)),16 candidate positives only; conservative original sample ledger',
                 authenticated_variants=len(self.raw_positives))
 
+        if negative_container_mixture:
+            for i,raw in self.raw_negatives.items():
+                r=self.records[i];low=r['feature_crop_end'];high=min(350,len(raw))
+                assert 150<=low<=high
+                assert (high-150)*160<=32000 and (low+1)*160>=32000+r['signal_samples']
+            self.report['negative_container_mixture'] = dict(seed=157726,
+                candidate_negative_positions=list(range(12)),
+                batch_slots=list(range(32,44)),
+                policy='Consume all v42 timeline draws, override first12 negative ends uniformly crop_end..min(350,len(raw))')
+
     def draw_indices(self):
         ids=[]
         for j in range(40):
@@ -107,6 +121,11 @@ class CompleteCoverage:
             for j,i in enumerate(ids[16:],16):
                 raw=self.raw_negatives[i]
                 end=int(self.temporal_rng.integers(150,len(raw)+1))
+                samples[j]=np.clip(raw[end-150:end].astype(np.float32)/25.6,0,26)
+        if self.negative_container_mixture:
+            for j,i in enumerate(ids[16:28],16):
+                raw=self.raw_negatives[i]
+                end=int(self.container_rng.integers(self.records[i]['feature_crop_end'],min(350,len(raw))+1))
                 samples[j]=np.clip(raw[end-150:end].astype(np.float32)/25.6,0,26)
         result[:16]=samples[:16];result[32:56]=samples[16:]
         return result

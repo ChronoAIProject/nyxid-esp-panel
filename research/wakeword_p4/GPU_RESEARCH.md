@@ -4348,3 +4348,7 @@ Preserved v1 witness report; v2 adds exact high-window endpoints. Replayed origi
 ### 2026-11-12 UTC — Mac negative-mass audit receipt and v43 preregistration
 
 Original bb5854a audit script run unchanged against immutable metadata; Linux JSON byte-identical to Mac, SHA cb8e12038c897bcf75af5a007552ab2eca72d5e57743834c9c42f53fd736c2f2. Complete-container probability .2483580266015314, expected5.960592638436753/24 slots. This motivates a falsifiable distribution experiment, not causal proof: preregister v43 with12 complete-container negative endpoints plus12 retained full-timeline endpoints, same source mass and all other v42 settings. Original timeline RNG remains consumed identically; independent seed157726 for changed slots. Implementation/sampler checks/smoke required before any formal run. Quality provenance remains unresolved; v30/newdev/finals unchanged.
+
+### 2026-11-12 UTC — v43 integration prechecks passed
+
+All1995eligible negative raw arrays authenticated; every conservative legal endpoint set enumerated independently. 50batches exact independent crop reconstruction, unchanged source RNG, all v42 positive endpoints and retained12 negative endpoints, original full negative RNG state, unaffected slots. 4090two-step smoke exit0 in43.6s; step1selected;54312B SHA21b1bb60bc1a545f3bd1b39228124dc1e3dee69c3f82dc24191f4fafa99f8b6b. All saved weights finite, frozenBN unchanged, int8[1,3,40]→uint8[1,1]. Formal launch and authenticated postprocessor prepared; no promotion or new/final access.

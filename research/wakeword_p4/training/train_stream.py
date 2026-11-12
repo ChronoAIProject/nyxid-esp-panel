@@ -45,6 +45,7 @@ def main():
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
+    parser.add_argument("--negative-container-mixture", action="store_true")
     parser.add_argument("--phone-source-balanced", action="store_true")
     parser.add_argument("--phrase-auxiliary-manifest", type=Path)
     parser.add_argument("--phrase-auxiliary-weight", type=float, default=.1)
@@ -80,6 +81,8 @@ def main():
             or args.mask_prefix_loss or args.label_smoothing != 0
             or not 0 < args.phrase_auxiliary_weight <= 1):
         parser.error("phrase auxiliary requires teacher60/context150, frozenBN, original BCE and no prefix masking; weight within (0,1]")
+    if args.negative_container_mixture and not (args.negative_full_timeline and args.positive_full_timeline):
+        parser.error("negative-container-mixture requires v42 positive and negative full timeline")
     if args.positive_full_timeline and not args.negative_full_timeline:
         parser.error("positive-full-timeline requires negative-full-timeline")
     if args.negative_full_timeline and not args.complete_coverage_pack:
@@ -236,7 +239,7 @@ def main():
     complete_coverage = None
     if args.complete_coverage_pack:
         from complete_coverage import CompleteCoverage
-        complete_coverage = CompleteCoverage(args.complete_coverage_pack, negative_timeline=args.negative_full_timeline, positive_timeline=args.positive_full_timeline)
+        complete_coverage = CompleteCoverage(args.complete_coverage_pack, negative_timeline=args.negative_full_timeline, positive_timeline=args.positive_full_timeline, negative_container_mixture=args.negative_container_mixture)
         (root/'complete_coverage.json').write_text(json.dumps(complete_coverage.report,indent=2)+'\n')
 
     def batch(mine=True, augment=True):
