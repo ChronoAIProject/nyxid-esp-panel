@@ -4308,3 +4308,7 @@ All intervals equal proposedcrop_end..350;103663supported five positions;
 packindices2/371have zero,retained. No rawfeatures/scores/model inference.
 Agreement limited to sample-container/phase arithmetic,not physicalRF or phonetics.
 No v42training change;original session85259 and waiter8208 continue.
+
+### 2026-11-12 UTC — v42 formal training and export completed
+
+Original 4090 run completed 120000 steps in 2197.7 s; unchanged historical checkpoint rule selected step 15000. Original export is 54440 bytes, SHA256 `ff15ebf95001433135514babe0929bb75afa79d0e2a9755e0d61d9a6c7d81272`. Training metadata and export audit copied unchanged to results. All saved weights finite; frozen BN unchanged; int8 [1,3,40] → uint8 [1,1] export contract passed. This is not accuracy/FAR/P4 acceptance. Existing postprocessor authenticated recipe and started the preregistered historical regressions. No promotion, untouched development/final access, or change to frozen v30.
