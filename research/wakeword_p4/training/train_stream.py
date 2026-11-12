@@ -71,6 +71,10 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
+    # Matched arms share an explicit numerical policy; historical runs retain theirs.
+    if args.paired_rendering_coefficient is not None:
+        tf.config.experimental.enable_op_determinism()
+        tf.config.experimental.enable_tensor_float_32_execution(False)
     if args.paired_gradient_probe and not args.factorized_coverage_pack:
         parser.error('Paired gradient probe requires the v47 factorized main recipe')
     if args.paired_rendering_coefficient is not None and (not args.factorized_coverage_pack or args.paired_gradient_probe):
@@ -394,6 +398,8 @@ def main():
         from paired_rendering_training import PairedRenderingTraining
         paired_rendering = PairedRenderingTraining(model, balanced_coverage,
             args.factorized_coverage_pack, args.paired_rendering_coefficient)
+        paired_rendering.report['numerical_policy'] = dict(op_determinism=True, tf32=False,
+            scope='New matched execution policy; original probe and v1 failures preserved')
         model.save_weights(root/'actual-initialization.weights.h5')
         inventory = [dict(path=v.path, shape=list(v.shape), dtype=str(v.dtype),
             value_sha256=hashlib.sha256(v.numpy().tobytes()).hexdigest()) for v in model.variables]
