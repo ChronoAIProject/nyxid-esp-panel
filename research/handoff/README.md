@@ -1905,6 +1905,29 @@ python research/wakeword_p4/training/audit_positive_temporal_bounds.py \
   --output "$FRESH_POSITIVE_BOUNDARY_JSON"
 ```
 
+### Compiled teacher BCE saturation probe
+
+The [actual-recipe probe](../wakeword_p4/results/compiled-teacher-bce-gradient-probe-v1.json)
+uses `b0b8380`'s original loss/compile statements, frozen BN and the pinned
+teacher60 architecture. Random features/weights and forced head logits test
+the actual compiled BCE against direct logits BCE, in eager and compiled modes.
+All10 cases preserve the reference gradients, including rounded probabilities0/1
+at logits+/-1000. The main terminal Dense-sigmoid path retains correcting
+gradients; a probability-clipping assumption does not justify changing it.
+
+```sh
+python research/wakeword_p4/training/probe_compiled_teacher_bce.py \
+  --upstream "$PINNED_MICROWAKEWORD" --gpu-revision b0b8380 \
+  --output "$FRESH_TEACHER_BCE_JSON"
+```
+
+This Mac TF2.21/Keras3.15.1 check takes no optimizer steps or checkpoints and
+restores all diagnostic variables. It does not measure gradient coverage on
+actual trained examples or independently execute the GPU environment. The
+earlier explicit probability-mean loss probe concerns a different operation;
+its artificial clipping hazard is not evidence of a defect in this terminal
+compiled loss path. The running training recipe remains unchanged.
+
 ### Independent v40 report reconciliation
 
 The [v40 review](../wakeword_p4/results/gpu-v40-report-review-v1.json)
