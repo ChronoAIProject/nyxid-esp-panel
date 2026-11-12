@@ -4493,3 +4493,8 @@ Training-only metadata audit authenticated originalfullmanifest and all672IDs ag
 Mac pending Issue13 request fulfilled: original training.npz/report.json and all324 original raw NPY copied without regeneration. Release gpu-us-training-features-v1.tar.gz,2706061 bytes,SHA256 c8c5ecc906306f360423a9635545032f35fa6db4687259c16853dd289a2fa9ce. Anonymous curl redownload and all326 payload sizes/SHA verified;327 total members including manifest. URL: https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/gpu-us-training-features-v1.tar.gz
 
 Correction: v44 and v45 both selected35000; different weights/training trajectories remain confounded, but selected-step difference is not an explanation for that pair. v46 replaces negative44..55 previously all fulltimeline with six complete+six fulltimeline, as well as replacing source cohort. It is a combined source/time-window intervention, not isolated source coverage causality. Original preregistered run continues unchanged.
+
+
+## v46 original training/export completed (2026-11-12)
+
+Original RTX4090 run completed120000 steps in2629.9s,selected10000 by original rule. Original model54440 bytes SHA256 5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417. Original training SHA bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858; training/export audit copied byte-for-byte into results. All saved weights finite,frozenBN unchanged,int8[1,3,40] to uint8[1,1] contract passed. Original waiter authenticated balanced207726/end217726/slots and inherited recipe then started historical regression. Export only,not acceptance; full historical/138-point gates pending,no new development/finals accessed,no promotion,v30 retained.
