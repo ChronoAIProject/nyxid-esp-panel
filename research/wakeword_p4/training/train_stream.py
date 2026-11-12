@@ -45,6 +45,7 @@ def main():
     parser.add_argument("--us-temporal-coverage", action="store_true")
     parser.add_argument("--us-coverage-pack", type=Path)
     parser.add_argument("--balanced-coverage-pack", type=Path)
+    parser.add_argument("--factorized-coverage-pack", type=Path)
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -90,7 +91,9 @@ def main():
         parser.error("positive-full-timeline requires negative-full-timeline")
     if args.us_temporal_coverage and not args.us_coverage_pack:
         parser.error("US temporal coverage requires US pack")
-    if args.balanced_coverage_pack and not (args.us_coverage_pack and args.us_temporal_coverage):
+    if args.balanced_coverage_pack and args.factorized_coverage_pack:
+        parser.error("Choose one balanced or factorized coverage pack")
+    if (args.balanced_coverage_pack or args.factorized_coverage_pack) and not (args.us_coverage_pack and args.us_temporal_coverage):
         parser.error("Balanced coverage requires unchanged v45 US temporal recipe")
     if args.us_coverage_pack and not (args.complete_coverage_pack and args.negative_container_mixture):
         parser.error("US coverage requires unchanged v43 complete/container mixture recipe")
@@ -261,6 +264,10 @@ def main():
     if args.balanced_coverage_pack:
         from balanced_coverage import BalancedCoverage
         balanced_coverage = BalancedCoverage(args.balanced_coverage_pack)
+        (root/"balanced_coverage.json").write_text(json.dumps(balanced_coverage.report,indent=2)+"\n")
+    if args.factorized_coverage_pack:
+        from factorized_coverage import FactorizedCoverage
+        balanced_coverage = FactorizedCoverage(args.factorized_coverage_pack)
         (root/"balanced_coverage.json").write_text(json.dumps(balanced_coverage.report,indent=2)+"\n")
 
     def batch(mine=True, augment=True):
