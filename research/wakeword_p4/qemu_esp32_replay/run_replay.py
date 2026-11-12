@@ -70,8 +70,15 @@ def main():
               or manifest['nyx_preregistration_sha256'] != freeze['nyx_preregistration_sha256']):
             raise ValueError('Changed independent negative waveform protocol')
     if row['role'] == 'development-paired-validation':
+        # This exact preregistered synthetic manifest uses full generation/RIR
+        # boundaries, not human phonetic endpoints. Never invent endpoint labels.
+        frozen_generation_reference = (
+            sha(a.manifest) == '88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415'
+            and manifest.get('synthesis_protocol') == 'slr83-new-development-v1')
+        frozen_endpoint_metadata = (manifest.get('voice_partition_sha256')
+                                    and manifest.get('endpoint_annotation_source_sha256'))
         if (row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
-                or not manifest.get('voice_partition_sha256') or not manifest.get('endpoint_annotation_source_sha256')
+                or not (frozen_endpoint_metadata or frozen_generation_reference)
                 or manifest.get('independent_final_audio_accessed')
                 or not 0 < row.get('keyword_end', 0) <= row['samples']):
             raise ValueError('Need paired development validation with frozen endpoint metadata')
