@@ -5138,3 +5138,7 @@ Original sequence65524 continues beyond5000 updates without restart. Preserved o
 ### Fixed formal10000 float checkpoint, zero eligible points
 
 Original10000 JSONL preserved byte-identically (4048B SHA1ce14230c6e75d0af18e265ffa9ef7f9b14980e02dfaee4375fc2a1aa1b81e9d). All11 grid points fail original training selection gate; returned fallback.994 has macro.38515625/max-source false.010416666666666666, background0/1.2048112673611107h (upper95 2.486474317/h). This is not a gate pass or replacement of the better5000 selected checkpoint. Original session65524 continues beyond10000, no restart/pinned changes/newdev/final access; per_draw pending. No quality improvement or acceptance claim; v30 stays frozen.
+
+### Fixed formal15000 float checkpoint rejected by training gate
+
+Original JSONL preserved byte-identically (4176B SHAbf8199c9b04e92960297af3e46b279583bf1ad7b91f0a52a984c5d1909a2a0f5). Zero eligible11-point training float thresholds. Fallback.994 macro.5427083333 but max-source false.0328125 and1event/1.204811h (.8300055/h), failing both training selection limits. Greater recall does not establish quality gain; fallback not pass. Original session65524 remains live beyond15000; no restart/config changes/newdev/final access. v30 frozen, per_draw pending.
