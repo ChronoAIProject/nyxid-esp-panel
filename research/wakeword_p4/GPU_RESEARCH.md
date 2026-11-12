@@ -4704,3 +4704,8 @@ Control314586/start5559860 completed120000updates,4566.5s,originalselectionstep5
 ### Paired formal treatment completion and full input audit (2026-11-12 UTC)
 
 Original treatment completed 120000 updates in 4614.6 s, selected step5000 by unchanged rule. Original training JSON and completion export audit retained byte-for-byte. Model 54440 bytes, SHA256 `64f8fe18c5362edb0a9855da866aa0e63891bbd1bc7bee98ac16d488a6d8db2f`. Finite weights, frozen BN, INT8 [1,3,40] → UINT8 [1,1] export contract passed. All initialization/sampling/loss report hashes and 120000 trace rows verified. Original sequence advanced to control historical postprocessing without restart. Full cross-arm input audit passed: exact initialization inventories, all 120000 ordered main/paired draws and first-step observations. This proves matched inputs, not model quality. Fixed historical 138-point gate pending; no new dev/final access or acceptance claim. Mac control fallback interpretation retained.
+
+
+### Paired control historical gate rejected (2026-11-12 UTC)
+
+Original control postprocessor finished normally and sequence advanced to treatment. Fixed 138-point reused historical development grid: 0 eligible; max macro 0.6458333333333333; minimum negative false clips 6. All 467 saved score traces independently hash-match their original reports and model. Original reports retained byte-for-byte. Control rejected; no threshold/grid rescue or untouched development/final access. Treatment historical evaluation remains running. v30 retained.
