@@ -5170,3 +5170,7 @@ Pinned dioco-group/jenny-tts-dataset README atad714a8d15fa010b4ccc024df678822695
 ### Fixed formal35000 float checkpoint rejected
 
 Original record preserved byte-identically (4201B SHA45aa7736037c1a7752f2ac8db17040bd777d9826e5d345b876c8eb827e9b9043). Eleven-point training grid0eligible; fallback.994 macro.471875/max-source false.0166666667, ambient1/1.2048112674h (.830005518/h). Both training selection limits fail. Fallback not pass, no INT8/independent acceptance/cross-arm claim. Original trainer remained live through35000; unchanged run continues to120k, per_draw pending. v30 frozen.
+
+### Fixed formal40000 float checkpoint rejected
+
+Original record preserved byte-identically (4117B SHAa1ea4956c72dd508fbc9600dd72246cd15cdf0a2cd09c6d856a833701e8a3cae). Eleven-point training grid0eligible; fallback.994 macro.5497395833/max-source false.028125, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass; reused floating checkpoint only, no INT8/independent acceptance/cross-arm claim. Original trainer continues unchanged to120k before per_draw starts; v30 frozen.
