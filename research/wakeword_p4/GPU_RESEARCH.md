@@ -4320,3 +4320,7 @@ Complete original postprocessor finished. Fixed 138 thresholds: zero eligible. S
 ### 2026-11-12 UTC — v42 saved-score authentication and unseen guard
 
 Authenticated all 467 saved old-development NPY files (80 Kokoro, 300 VCTK, 87 Vox) against their original report SHA256 values; all match. Reproduction script and detailed receipt saved. `unseen_development.py --candidate v42 --check-only` rejected with the expected no-eligible-point error before unseen data access. The rejection remains authoritative; no candidate promotion or new training started.
+
+### 2026-11-12 UTC — v42 training support diagnostic started
+
+After old-development rejection, replay all 6597 eligible old-training variants using the selected v42 checkpoint, matching the prior v41 support probe. Retain every eligible variant and original raw feature hashes; compare center-window float and complete-history INT8 maxima/five means. Fixed reference threshold 0.99609375 is inherited solely for v41 comparison, not v42's historical 0.992 and not new threshold selection. Differences confound checkpoint selection and sampling; they cannot alone prove causality. No optimizer updates, new/final data, filtering, promotion or loss change. Original run log: `.local/wakeword/v42-training-support.log`.
