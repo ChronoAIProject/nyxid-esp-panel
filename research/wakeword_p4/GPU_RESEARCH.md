@@ -4729,3 +4729,8 @@ RTX4090 deterministic fullFP32 probe completed50 saved original batches, authent
 ### Phrase ranking fresh matched smoke passed (2026-11-12 UTC)
 
 Explicit phrase-ranking mode integrated, metadata indices checked per batch, full supervised/ranking backwards in both arms and one combined Adam update. Fresh control/treatment2 updates completed44.1/38.8s on4090. Actual initialization inventory/full two-step sampling exact; first observations exact excepttotal; losses match saved actual-network probe at original rtol/atol1e-5. First ranking1.5313886404037476, ranking encoder norm12.62767219543457, supervised encoder norm301.43511962890625. Both finite/frozenBN/INT8[1,3,40]→UINT8[1,1] exports54312B passed. No formal training started; next prepare pinned single120k-per-arm commands and unchanged historical-only gates.
+
+
+### Phrase ranking formal execution frozen (2026-11-12 UTC)
+
+Fresh2-step engineering preflight passed. Commands/source pins prepared for one120k control and one120k treatment, coefficients0/1, no rendering D. Both explicitly calculate supervised/ranking backwards; one Adam update per step. Original initialization/main sampler/pair draw schedule/frozenBN/checkpoint/PTQ unchanged. Fresh control required rather than treating prior completed control as automatically interchangeable. Sequence fails closed, authenticates full120k cross-arm input/trace hashes before original historical-only postprocessors. No new dev/final access, restart or acceptance claim. Delivery of these pins through Issue13 precedes launch.
