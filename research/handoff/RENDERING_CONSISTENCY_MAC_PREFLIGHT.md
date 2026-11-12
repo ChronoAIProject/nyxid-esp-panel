@@ -147,6 +147,36 @@ Use the pinned Mac TensorFlow2.21/Keras3.15.1/NumPy2.5.4research environment.
 Neither this new numerical policy nor these checks establish wake quality,
 full training success, matched Hi ESP parity, P4 resources or call stability.
 
+## Strict first-batch full-array comparison: limited mismatch retained
+
+The subsequently received [original deterministic replay arrays](assets-gpu-paired-numerical-replay-v1.json)
+allow a stricter comparison than the earlier three losses.
+[`compare_paired_fp32_gradients_mac.py`](compare_paired_fp32_gradients_mac.py)
+authenticates those payloads and independently applies the original
+`atol=rtol=1e-5`. The
+[completed result](../wakeword_p4/results/paired-fp32-gradient-comparison-mac-v1.json)
+has **all_passed:false**: Linux CPU/CUDA arrays match one another, while Mac's
+independent derivatives match all losses and all consistency-gradient entries,
+but2of21841supervised entries exceed the fixed bound. Their global relative
+L2error is3.77e-7against LinuxCPU and2.57e-7againstCUDA. The two components are
+`stream/conv2d/kernel[1,0,16,25]` and`[4,0,21,25]`; differences from LinuxCPU
+are1.33738e-5and1.34287e-5, respectively, at about1.19and1.33times their fixed
+element bounds. No tolerance is changed and this is not called a full pass.
+
+One bounded follow-up,
+[`probe_paired_tf_execution_mac.py`](probe_paired_tf_execution_mac.py), replaces
+the NumPy output derivatives with full float32TF autodiff on the same certified
+state and actual first batch, in both eager and source-visible graph execution.
+The [original result](../wakeword_p4/results/paired-tf-execution-mac-v1.json)
+retains exactly2supervised mismatches under the same bounds in both modes,
+while all losses and consistency entries pass. Each mode repeats exactly;
+model/BN values remain unchanged and there are0optimizer updates. This does
+not support blaming the two differences solely on NumPy derivatives or eager
+execution. The precise operation/platform cause remains unproved. No further
+numerical-rescue attempts, weight/coefficient changes or formal-run restarts
+follow from this optional cross-platform check. The same-GPU matched-arm
+execution evidence and this stricter cross-platform limitation are distinct.
+
 All measurements are silent, use already examined training data or synthetic
 numbers, and leave new development/final data and both physical boards alone.
 V46/v47 remain rejected, v30 is retained, and matched Hi ESP recognition/FAR,

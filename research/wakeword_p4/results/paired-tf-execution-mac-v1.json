@@ -1,0 +1,112 @@
+{
+  "scope": "Bounded eager/graph TF control for the first-batch derivative comparison.\n\nThe independent NumPy/encoder-backprop comparison retained two supervised\nentries outside the original1e-5element tolerance. Reproduce full float32 TF\nautodiff in eager and graph modes, without changing that result or tolerance.\nThis control distinguishes execution/derivative implementations descriptively;\nit is not another training or an isolated kernel-cause experiment.\n",
+  "mac_reference_report_sha256": "217583d788f265ce5f4c3d7245b435213b32369d24c7106eb0aeca123c5aca7f",
+  "source_visible_tf_graph": true,
+  "exact_repeat_both_modes": true,
+  "model_bn_values_unchanged": true,
+  "optimizer_updates": 0,
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "comparisons": {
+    "eager": {
+      "cpu": {
+        "metrics": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 9.5367431640625e-07,
+          "maximum_fraction_of_fixed_bound": 0.010269080722162833
+        },
+        "supervised": {
+          "passed": false,
+          "mismatched_elements": 2,
+          "maximum_absolute_error": 3.0517578125e-05,
+          "maximum_fraction_of_fixed_bound": 1.3306532240362077
+        },
+        "consistency": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 2.086162567138672e-07,
+          "maximum_fraction_of_fixed_bound": 0.016958318657321725
+        }
+      },
+      "cuda": {
+        "metrics": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 9.5367431640625e-07,
+          "maximum_fraction_of_fixed_bound": 0.010269080722162833
+        },
+        "supervised": {
+          "passed": false,
+          "mismatched_elements": 2,
+          "maximum_absolute_error": 2.288818359375e-05,
+          "maximum_fraction_of_fixed_bound": 1.3307455203195138
+        },
+        "consistency": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 2.682209014892578e-07,
+          "maximum_fraction_of_fixed_bound": 0.020250635363684533
+        }
+      }
+    },
+    "graph": {
+      "cpu": {
+        "metrics": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 9.5367431640625e-07,
+          "maximum_fraction_of_fixed_bound": 0.010269080722162833
+        },
+        "supervised": {
+          "passed": false,
+          "mismatched_elements": 2,
+          "maximum_absolute_error": 3.0517578125e-05,
+          "maximum_fraction_of_fixed_bound": 1.3306532240362077
+        },
+        "consistency": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 2.086162567138672e-07,
+          "maximum_fraction_of_fixed_bound": 0.016958318657321725
+        }
+      },
+      "cuda": {
+        "metrics": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 9.5367431640625e-07,
+          "maximum_fraction_of_fixed_bound": 0.010269080722162833
+        },
+        "supervised": {
+          "passed": false,
+          "mismatched_elements": 2,
+          "maximum_absolute_error": 2.288818359375e-05,
+          "maximum_fraction_of_fixed_bound": 1.3307455203195138
+        },
+        "consistency": {
+          "passed": true,
+          "mismatched_elements": 0,
+          "maximum_absolute_error": 2.682209014892578e-07,
+          "maximum_fraction_of_fixed_bound": 0.020250635363684533
+        }
+      }
+    }
+  },
+  "metrics": {
+    "eager": [
+      12.04843807220459,
+      8.286850929260254,
+      0.04230191931128502
+    ],
+    "graph": [
+      12.04843807220459,
+      8.286850929260254,
+      0.04230191931128502
+    ]
+  },
+  "arrays_sha256": "0f2fe541c1226a45052429e3aad1f6f88f1656cd0cedec0a4f953555585db84d",
+  "script_sha256": "cb70f5de5c33fb2595977e46e9c69d21694617c02bebfc0b94c7a14ebd21c8be",
+  "tensorflow_version": "2.21.0",
+  "limits": "First-batch controlled eager/graph full-TF execution, not unique operation causality, a replacement for independent NumPy comparison or passage of old GPU failures. Does not change fixed coefficient, training runs, event gates or deployment."
+}
