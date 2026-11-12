@@ -50,7 +50,7 @@ def main():
                         help="Only inspect50 original-init main+paired batches; no updates/export")
     parser.add_argument("--paired-rendering-coefficient", type=float, choices=(0., 1.),
                         help="Matched paired-BCE control0/rendering-consistency treatment1")
-    parser.add_argument("--paired-objective", choices=("consistency", "phrase-ranking"), default="consistency")
+    parser.add_argument("--paired-objective", choices=("consistency", "phrase-ranking", "temporal-tail-risk"), default="consistency")
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -72,7 +72,7 @@ def main():
     parser.add_argument("--event-validation", action="store_true",
                         help="Choose checkpoints by latched keyword events, not window peaks")
     args = parser.parse_args()
-    if args.paired_objective == 'phrase-ranking' and args.paired_rendering_coefficient is None:
+    if args.paired_objective in ('phrase-ranking', 'temporal-tail-risk') and args.paired_rendering_coefficient is None:
         parser.error('Phrase ranking requires explicit matched coefficient')
     # Matched arms share an explicit numerical policy; historical runs retain theirs.
     if args.paired_rendering_coefficient is not None:
@@ -403,6 +403,9 @@ def main():
         if args.paired_objective == 'phrase-ranking':
             from paired_phrase_ranking_training import PairedPhraseRankingTraining
             paired_class = PairedPhraseRankingTraining
+        elif args.paired_objective == 'temporal-tail-risk':
+            from paired_temporal_training import PairedTemporalTraining
+            paired_class = PairedTemporalTraining
         paired_rendering = paired_class(model, balanced_coverage,
             args.factorized_coverage_pack, args.paired_rendering_coefficient)
         paired_rendering.report['numerical_policy'] = dict(op_determinism=True, tf32=False,
@@ -492,12 +495,12 @@ def main():
                 trace_text = json.dumps(trace,sort_keys=True)+'\n'
                 paired_trace_chain.update(trace_text.encode())
                 paired_trace_log.write(trace_text)
-                extra = [paired_rendering.group_indices()] if args.paired_objective == 'phrase-ranking' else []
+                extra = [paired_rendering.group_indices()] if args.paired_objective in ('phrase-ranking', 'temporal-tail-risk') else []
                 values = [float(v) for v in paired_rendering.step(x,y,weights,sx,sy,sw,*extra)]
                 loss = values[0]
                 assert int(model.optimizer.iterations) == step
                 paired_loss_log.write(json.dumps(dict(step=step, total=values[0], main_bce=values[1],
-                    pair_bce=values[2], **({'ranking':values[3], 'ranking_encoder_norm':values[5]} if args.paired_objective == 'phrase-ranking' else {'consistency':values[3], 'consistency_encoder_norm':values[5]}), supervised_encoder_norm=values[4]))+'\n')
+                    pair_bce=values[2], **({'ranking':values[3], 'ranking_encoder_norm':values[5]} if args.paired_objective in ('phrase-ranking', 'temporal-tail-risk') else {'consistency':values[3], 'consistency_encoder_norm':values[5]}), supervised_encoder_norm=values[4], **({'temporal_risk':values[6], 'temporal_encoder_norm':values[7]} if args.paired_objective == 'temporal-tail-risk' else {})))+'\n')
             elif five_score is not None:
                 sx,sy,sw=five_score.batch()
                 loss=float(five_score.step(x,y,weights,sx,sy,sw))

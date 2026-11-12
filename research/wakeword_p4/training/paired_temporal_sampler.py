@@ -18,7 +18,7 @@ class PairedTemporalSampler:
         self.voices=sorted({int(r['voice']) for r in self.records})
         assert self.voices==sorted(np.random.default_rng(726).permutation(904)[:672].tolist())
         self.raw={} if authenticated_raw is None else authenticated_raw
-        self.verified=set();self.rng=np.random.default_rng(237726);self.draws=0;self.last_trace=None
+        self.verified=set();self.rng=np.random.default_rng(237726);self.draws=0;self.last_trace=None;self.trace=[]
 
     def get_raw(self,record):
         index=record['pack_index']
@@ -55,5 +55,6 @@ class PairedTemporalSampler:
         self.last_trace={'block':self.draws,'voices':voices,'speed':speed,'endpoint_inclusive':end,
           'endpoints_inclusive':ends,'pack_indices':[r['pack_index'] for r in rows],
           'window_sha256':[[hashlib.sha256(w.tobytes()).hexdigest() for w in group] for group in windows]}
+        if self.draws<50:self.trace.append(self.last_trace)
         self.draws+=1
         return np.clip(windows.astype(np.float32)/25.6,0,26),labels,np.where(labels>0,1.,20.).astype(np.float32)
