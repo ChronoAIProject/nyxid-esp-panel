@@ -1,0 +1,40 @@
+{
+  "schema": "earnings22-historical-v30-score-protocol-v1",
+  "role": "Historical software reference on complete new continuous development; no model selection or candidate acceptance",
+  "scorer_sha256": "494be603260997d71daff9b00f5ec74a09714e1b310a3029ff738e0300628665",
+  "prepared_manifest_sha256": "f4a91722915ff4079db4469f09c02c1405e0914500a83f02acf013dc274f25c1",
+  "source_reservation_sha256": "b10b875cbbcfb09bd9b5c2aa41ccb31450b48bc9f7f7c3ce62c4547595135d53",
+  "helper_source_sha256": {
+    "research/wakeword_p4/training/features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "research/wakeword_p4/training/evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "research/wakeword_p4/training/detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "research/wakeword_p4/training/prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef"
+  },
+  "host_versions": {
+    "ai-edge-litert": "2.3.0",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0"
+  },
+  "v30": {
+    "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "training_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+    "calibration_sha256": "6504c8fe535f2bd19e15a7947185b4f647680890affd211bf1fcff814af27be8",
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "refractory_steps": 67,
+    "extra_prime_samples": 0
+  },
+  "policy": "Every source in original reservation order, one reset at each whole call boundary, complete continuously computed native frontend arrays, no additional prime or gaps. This follows existing full-background reset semantics; not the application-zero-prime positive diagnostic. Two exact raw-score replays per complete call. Firmware double sum/divide five scores, threshold float32 historical .91796875, rearm half-threshold and >=67steps; retain separate host convolution events/differences.",
+  "timestamps": "One-based raw score step s has native feature-availability source endpoint (3*(s-1)+5)*160 samples. This is neither application480-sample return quantization nor wall-clock hardware/acoustic latency.",
+  "denominator": "Sum original complete decoded source samples /16000 /3600, excludes final frontend zero-pad samples. All events count, including first model warm-up/last padded chunk; no subset, event suppression or source deletion. Starts have natural frontend/model warm-up; no extra exposure is invented.",
+  "score_policy": "Historical v30 only; no current formal checkpoint, candidate or final set. No threshold grid/calibration/source or event filtering. Future Hi ESP requires byte-pinned engine and exact samePCM verification. Any future survivor requires a separate historical-threshold profile after passing old gates; do not use this cohort to rescue an old gate failure.",
+  "publication": "Only model score arrays, small reports/provenance/source code may be handed off; no source/decoded audio or frontend-array payloads.",
+  "limits": [
+    "Twelve complete recording clusters and company-country metadata do not prove speaker/pretraining independence or126independent people. Financial-call exposure is domain limited.",
+    "Transcript target-alias screen was empty, but supplied transcript omissions/errors remain unknown; counts are negative-intended background events, not verified population false-alarm labels.",
+    "Nominal Poisson upper95 does not account for clustered/correlated speakers/calls. This development score alone never establishes independent FAR acceptance.",
+    "Preparation manifest wake_models_scored=false describes its immutable preparation stage. This separate result records that v30 has now consumed the cohort as development.",
+    "Historical thresholds fixed elsewhere are not matched general-population FAR. Hi ESP not yet run; no relative quality or long-call/reconnect/P4/acoustic acceptance claim.",
+    "No training, audio-rate change, playback, recording, firmware/OTA or dining-room production-board operation. All existing final sets remain untouched."
+  ]
+}
