@@ -1084,21 +1084,30 @@
     "At fixed 0.99609375 on the saved synthetic streams, treatment changed positive hits from 25/76 to 35/76 while negative false clips changed from 6 to 2; this remains far below a qualified candidate and does not support promotion.",
     "Training candidate windows frequently lack complete original PCM support, especially Piper (509618/1500000 = 0.3397453333). This is a sampler/coverage diagnostic, not proof of bad labels or phonetic truncation.",
     "Long positive prompts have materially lower complete-source fit than the short Hey Nyx positive. This creates a testable absolute-coverage hypothesis distinct from phrase ranking.",
-    "The older v40/v41 temporal support census is diagnostic only: it cannot establish current-model causality, and it does not authorize changing the gate."
+    "The older v40/v41 temporal support census is diagnostic only: it cannot establish current-model causality, and it does not authorize changing the gate.",
+    "Full-source support is not itself a target-phone timing label. Any future intervention must first authenticate target-interval metadata, explicitly retain no-legal-endpoint groups, and stop before formal training if that cannot be done."
   ],
   "next_preflight": {
     "name": "positive-target-support matched preflight",
     "control": "original main128 + pair40 BCE sampler, exact current pins",
-    "treatment": "same training-only source IDs and metadata, but deterministic positive-window replacement/reweighting so each positive draw has a verified complete-source target support window; negatives, architecture, head, BN, speed, PCM and normal audio path unchanged",
+    "treatment": "same training-only source IDs and metadata; first enumerate authenticated target-phone-supported legal endpoints. For a group with at least one legal endpoint, apply a deterministic same-source/same-metadata endpoint substitution. For a group with no legal endpoint, retain the original draw and mark unsupported_fallback.",
     "required_checks": [
-      "metadata-checked source/endpoint support before score use",
+      "independently authenticate target-phone interval metadata; retain full-source support as a separate diagnostic",
+      "enumerate every legal endpoint and report target_supported/full_source_supported/no_legal_endpoint counts before gradients",
+      "predefine unsupported_fallback for no-legal-endpoint groups; no silent drop, reweight, pad, truncate, or speed change",
       "same initial inventory and deterministic ordered draw audit",
       "50-batch no-update loss/gradient comparison with no parameter mutation",
       "fresh matched 2-update control/treatment smoke and export contract",
       "no new development/final access; original 138-point INT8 gate unchanged"
     ],
     "formal_if_preflight_passes": "one fresh control and one treatment, 120000 updates each, original checkpoint/PTQ/history gate; reject both if no eligible point",
-    "forbidden": "threshold rescue, coefficient sweep, score mining from validation/final, replacing the existing v30 firmware, or claiming equivalence from support metrics alone"
+    "forbidden": "threshold rescue, coefficient sweep, score mining from validation/final, replacing the existing v30 firmware, or claiming equivalence from support metrics alone",
+    "stop_conditions": [
+      "target-phone endpoint metadata cannot be authenticated",
+      "legal-endpoint enumeration differs between arms or is not reproducible",
+      "unsupported_fallback is not explicitly accounted for",
+      "preflight changes source/phrase/speed/rendering populations or normal audio path"
+    ]
   },
   "acceptance_claim": false,
   "limits": [
