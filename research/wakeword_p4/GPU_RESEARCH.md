@@ -4916,3 +4916,7 @@ Original session93786 remains live. Eleventh progress record55000 preserved byte
 ### Independent formal halfway60000 checkpoint retained
 
 Original session93786/PID478492 remains live and beyond60146steps. All60146 written loss rows independently checked consecutive and finite. Twelfth original progress record60000 preserved byte-identically;0float-eligible points. Fallback.99 macro.46302083, maximum-source confusion.0109375, background0/1.204811h (one-sided95% upper2.48647/h). Half of fixed120k independent run complete, common arm not started. Training recipe's preregistered half-run learning-rate transition is unchanged. Only5000checkpoint has any original float-eligible point so far; this does not establish quality acceptance. No restarts/manual config changes/newdev/final access; v30 retained. Midpoint original/audit pushed and Issue13 updated.
+
+### Independent formal65000 checkpoint retained
+
+Original session93786 remains live. Thirteenth progress record65000 preserved byte-identically;0float-eligible points. Fallback.992 macro.49895833, maximum-source confusion.02083333, background0/1.204811h (one-sided95% upper2.48647/h). Fixed120k plan continues without restarts/manual configuration changes; no acceptance/newdev/final access, v30 retained. Original record/audit pushed without repetitive Issue status.
