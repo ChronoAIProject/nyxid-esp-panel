@@ -101,3 +101,28 @@ old development errors, improvement from an untrained representation loss,
 Hi ESP parity, P4 latency/resources or long-call/reconnect stability. Existing
 rejections, original event gates, unused-development/final boundaries and the
 excluded dining-room production panel remain in force.
+
+## Completed original-artifact measurement
+
+The [original v46 Mac result](../wakeword_p4/results/v46-balanced-float-representation-mac-v1.json)
+completed all40320raw authentications,2016groups,49031common endpoints and
+980620classifier inputs. The original SavedModel variable inventory matches
+the original H5. All60preflight streams match at1440common endpoints; maximum
+probability difference is1.341104507446289e-6. Weights remained unchanged.
+
+The separate [saved-array audit](../wakeword_p4/results/v46-balanced-float-array-audit-mac-v1.json)
+uses [an independent arithmetic implementation](audit_balanced_float_arrays_mac.py),
+without importing the measurement routines or running another model. It verifies
+every2016array-file hash, full source/time geometry, all518112group-metric
+sets and257equal-speed/equal-ID aggregate sets. Undefined counts are0. Maximum
+summary difference is2.842170943040401e-14; reconstructed classifier probability
+error is2.532690572820684e-7.
+
+Under the frozen weighting, mean Hey Nyx logit is11.153621quiet and6.068187noise15
+(paired delta-5.085434). Mean target-minus-Mix logit margin is28.229844quiet
+and17.485718noise15; corresponding cosine distance is.960541→.872614. Noise25
+does not show this same decrease (target mean12.052458); RIR-only mean10.950982
+is near quiet. These are descriptive original-training results. They do not
+identify a unique cause or establish a representation-loss remedy. They also
+use different temporal scopes/weighting from the GPU two-endpoint diagnostic;
+the numerical summaries are not claimed to be identical replications.

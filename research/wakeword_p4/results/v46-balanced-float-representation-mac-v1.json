@@ -1,0 +1,5784 @@
+{
+  "scope": "Measure the rejected original v46 on every balanced training factorial cell.\n\nNo fitting, threshold selection, new development/final data, audio hardware or\nboard access. Full classifier inputs are retained, without temporal pooling.\n",
+  "accepted": false,
+  "model_sha256": "5ac62943e862b2a8b7c92d97b1b4e89a096a2bb9d76f27b1b4b72b25a427f417",
+  "weights_sha256": "16b01e2f17473121c635801e324f5cf550c2ea0b72f8a054c04d845a0f596027",
+  "training_sha256": "bfa9cb5995c28987fc1e0f7b1b53382ce273efed6979b795122cca6df1a33858",
+  "source_report_sha256": "7b798653f73e2dcd3b01fd5b7092c947a26b9c8ec2525ff295de2e6478042e44",
+  "authenticated_raw_arrays": 40320,
+  "raw_identity_receipt_sha256": "8261e193ed021200e2ed0afdf969386b4802300fa9720ddd95b4f22bf73062a7",
+  "conditioning_ids": 672,
+  "groups": 2016,
+  "sources": 8064,
+  "phrase_order": [
+    "hey_nyx",
+    "hey_nick",
+    "hey_next",
+    "hey_mix"
+  ],
+  "arm_order": [
+    "quiet",
+    "noise25",
+    "combined",
+    "noise15",
+    "rir"
+  ],
+  "common_absolute_windows": 49031,
+  "measured_classifier_inputs": 980620,
+  "representation_shape": [
+    300
+  ],
+  "phase": 1,
+  "weighting": "Mean of defined windows within each ID/speed/phrase/arm comparison; mean three speed means within ID, then equal conditioning IDs. Undefined metric counts and partial groups retained; no confidence intervals.",
+  "metric_direction": "Nuisance left=quiet/right=other arm; near-word left=Hey Nyx/right=near word. logit_delta is right minus left, not a recognition event.",
+  "groups_sha256": "fa4d232ce4bd1b6f25d2cc0eb8651e5ed253cf0f706141c0922088809a0b7680",
+  "classifier_npz_sha256": "dd2927c4966f7d26de0bc946f8a802d81d12f44937397d35b90bf62cafa993e4",
+  "summaries": {
+    "near_word/hey_mix/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8759992124997174,
+      "min": 0.22597027424607397,
+      "max": 0.9942809763566757,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.6146063565205206,
+        "p25": 0.8338648030421281,
+        "p50": 0.9339150405885543,
+        "p75": 0.966976428962455,
+        "p95": 0.9850644474231851
+      }
+    },
+    "near_word/hey_mix/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.895864316573785,
+      "min": 10.77254379682847,
+      "max": 61.73909359670434,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.431484329737405,
+        "p25": 27.223591529653994,
+        "p50": 33.95784959125717,
+        "p75": 40.03141402600143,
+        "p95": 49.30261673332222
+      }
+    },
+    "near_word/hey_mix/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.492685494961126,
+      "min": 7.253885017604989,
+      "max": 50.7945808556366,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.436134186122201,
+        "p25": 17.22954938979219,
+        "p50": 23.08771780963625,
+        "p75": 29.101103427225482,
+        "p95": 37.43544598618358
+      }
+    },
+    "near_word/hey_mix/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -17.26638298298463,
+      "min": -34.02192793389054,
+      "max": -0.41519140169544705,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -27.248689895793817,
+        "p25": -21.606066705753815,
+        "p50": -17.011735095111426,
+        "p75": -13.1988835647442,
+        "p95": -7.880377500148011
+      }
+    },
+    "near_word/hey_mix/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.67050018145439,
+      "min": 10.593926448724746,
+      "max": 59.41351520880796,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 17.866449789919297,
+        "p25": 26.39656499176099,
+        "p50": 32.8295583710335,
+        "p75": 38.47509257220936,
+        "p95": 47.175220068038136
+      }
+    },
+    "near_word/hey_mix/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 8.915202348938605,
+      "min": 1.8882856866901554,
+      "max": 17.518079886070797,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 4.164186572143284,
+        "p25": 6.796178545302532,
+        "p50": 8.75943700121633,
+        "p75": 11.125083896204917,
+        "p95": 14.030501954881426
+      }
+    },
+    "near_word/hey_mix/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 24.39535013872292,
+      "min": 7.471484175339511,
+      "max": 51.225150904036354,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.326199111091727,
+        "p25": 18.501537140732133,
+        "p50": 23.89209679384281,
+        "p75": 29.979400544834732,
+        "p95": 38.64192245669177
+      }
+    },
+    "near_word/hey_mix/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8726143967723671,
+      "min": 0.2786899738138217,
+      "max": 0.9947965724087952,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.5834721045878359,
+        "p25": 0.8252010200317121,
+        "p50": 0.9348672147523145,
+        "p75": 0.9683082352021525,
+        "p95": 0.9841932132151417
+      }
+    },
+    "near_word/hey_mix/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 34.25868813652983,
+      "min": 11.86275766900136,
+      "max": 60.306216424437046,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.926984984247962,
+        "p25": 27.542668508629458,
+        "p50": 34.54067880850294,
+        "p75": 40.84699356107241,
+        "p95": 50.0381994652753
+      }
+    },
+    "near_word/hey_mix/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.447652656912027,
+      "min": 6.902333681575018,
+      "max": 52.340094393541506,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.48031406042052,
+        "p25": 16.986449320795586,
+        "p50": 23.16229864595073,
+        "p75": 28.97397258603051,
+        "p95": 37.08765659624599
+      }
+    },
+    "near_word/hey_mix/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -17.48571771378095,
+      "min": -34.8115693808702,
+      "max": -0.02528530756857883,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -27.585532943010946,
+        "p25": -21.669624146310383,
+        "p50": -17.52116194490597,
+        "p75": -13.235332573928837,
+        "p95": -8.298492355036656
+      }
+    },
+    "near_word/hey_mix/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.01248540516866,
+      "min": 11.638816097533223,
+      "max": 57.724728069316576,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.320834922621355,
+        "p25": 26.519456456274895,
+        "p50": 33.20180292233856,
+        "p75": 39.23935824759988,
+        "p95": 48.15085937215228
+      }
+    },
+    "near_word/hey_mix/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 9.039869825376591,
+      "min": 2.2582660565265313,
+      "max": 17.92467065824637,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 4.443726007676751,
+        "p25": 6.814946342821393,
+        "p50": 9.021743719052871,
+        "p75": 11.157809975784762,
+        "p95": 14.203944313047709
+      }
+    },
+    "near_word/hey_mix/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 24.942187612517397,
+      "min": 8.129451389395008,
+      "max": 51.90520954230009,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.631649327364899,
+        "p25": 18.598057239926277,
+        "p50": 24.1538564076382,
+        "p75": 30.633367030851584,
+        "p95": 39.54276036447365
+      }
+    },
+    "near_word/hey_mix/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9662288555982916,
+      "min": 0.41545956278266155,
+      "max": 0.9972345240114363,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8913526706947248,
+        "p25": 0.9671370928435792,
+        "p50": 0.9801661631697286,
+        "p75": 0.9874576959851545,
+        "p95": 0.9938515666618469
+      }
+    },
+    "near_word/hey_mix/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 54.48382989276063,
+      "min": 23.471038260692,
+      "max": 87.9943948549559,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 37.03942457237254,
+        "p25": 47.60402493960107,
+        "p50": 54.82485832088918,
+        "p75": 61.524163028288754,
+        "p95": 71.69681686734586
+      }
+    },
+    "near_word/hey_mix/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 39.54355321734744,
+      "min": 8.103804391513128,
+      "max": 70.53794302202918,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.673688560748914,
+        "p25": 32.1312650606261,
+        "p50": 39.631284354353724,
+        "p75": 46.915150343591364,
+        "p95": 57.57521748323891
+      }
+    },
+    "near_word/hey_mix/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -28.88045123973855,
+      "min": -49.624570787772164,
+      "max": -10.983447839189763,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -39.039261985765194,
+        "p25": -33.20618470255954,
+        "p50": -28.98805796740784,
+        "p75": -24.82023060600539,
+        "p95": -18.48955681973222
+      }
+    },
+    "near_word/hey_mix/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 52.387761283292285,
+      "min": 22.77132146998832,
+      "max": 84.18312529477431,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.747490684761175,
+        "p25": 45.79118379997755,
+        "p50": 52.6527984432856,
+        "p75": 59.14429057232972,
+        "p95": 68.82745829455776
+      }
+    },
+    "near_word/hey_mix/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.870704944958046,
+      "min": 5.655438370373833,
+      "max": 25.551967456441464,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.52037562525854,
+        "p25": 12.780074762123585,
+        "p50": 14.926112247426392,
+        "p75": 17.098049159983024,
+        "p95": 20.101533090328772
+      }
+    },
+    "near_word/hey_mix/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.13386702269264,
+      "min": 12.745396297120715,
+      "max": 65.23850351797041,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.842307666408786,
+        "p25": 30.165855349572407,
+        "p50": 35.86614437966624,
+        "p75": 42.57920730920365,
+        "p95": 50.137132555327284
+      }
+    },
+    "near_word/hey_mix/quiet/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9605412037950632,
+      "min": 0.5010730224816698,
+      "max": 0.996869578471152,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8749853391497271,
+        "p25": 0.9544221228033928,
+        "p50": 0.9771639125980162,
+        "p75": 0.9870452070566803,
+        "p95": 0.9931639013257453
+      }
+    },
+    "near_word/hey_mix/quiet/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 53.49933461830811,
+      "min": 23.855371038001696,
+      "max": 87.53049018700148,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 36.94820608790599,
+        "p25": 46.673993143844115,
+        "p50": 53.393071427253986,
+        "p75": 59.9453223557351,
+        "p95": 70.14915207117956
+      }
+    },
+    "near_word/hey_mix/quiet/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "near_word/hey_mix/quiet/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -28.229843575797673,
+      "min": -45.4729973457441,
+      "max": -11.605057166102645,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -37.48699123169958,
+        "p25": -32.017827925002294,
+        "p50": -28.00481003690797,
+        "p75": -24.463273550468088,
+        "p95": -18.94158970811797
+      }
+    },
+    "near_word/hey_mix/quiet/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 51.46378143268155,
+      "min": 23.086564202746555,
+      "max": 84.31736435750538,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.67103617314237,
+        "p25": 45.10330140869347,
+        "p50": 51.30866151145702,
+        "p75": 57.6465259871064,
+        "p95": 67.44560600037548
+      }
+    },
+    "near_word/hey_mix/quiet/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.535703440823621,
+      "min": 5.975508469515371,
+      "max": 23.414299204611137,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.753129873202987,
+        "p25": 12.59627558922104,
+        "p50": 14.419832420257851,
+        "p75": 16.486157646872616,
+        "p95": 19.302260247021003
+      }
+    },
+    "near_word/hey_mix/quiet/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.06132620758576,
+      "min": 16.016656835462246,
+      "max": 59.691206482150925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.789228248737903,
+        "p25": 32.202172579470314,
+        "p50": 37.313855488532,
+        "p75": 42.06833241923652,
+        "p95": 48.48667234863909
+      }
+    },
+    "near_word/hey_mix/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9562988227328211,
+      "min": 0.5466196117975576,
+      "max": 0.9969209428690108,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8494039624750043,
+        "p25": 0.9506293983347123,
+        "p50": 0.9750576087576819,
+        "p75": 0.986647386556243,
+        "p95": 0.9931095917875628
+      }
+    },
+    "near_word/hey_mix/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 51.09360181753567,
+      "min": 22.07440415938414,
+      "max": 82.52788542393414,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.26270458216563,
+        "p25": 44.49505399119792,
+        "p50": 50.9262121629829,
+        "p75": 57.54142865179165,
+        "p95": 68.23075146238642
+      }
+    },
+    "near_word/hey_mix/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.98468454024645,
+      "min": 11.856999452139616,
+      "max": 75.34936840740386,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.375919441515776,
+        "p25": 29.200148319585598,
+        "p50": 36.90445050008078,
+        "p75": 43.73475613326293,
+        "p95": 56.487643595471496
+      }
+    },
+    "near_word/hey_mix/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -26.599685181714374,
+      "min": -42.97416797259606,
+      "max": -10.490107502983818,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -36.15418522040939,
+        "p25": -30.170205949946926,
+        "p50": -26.43208134884896,
+        "p75": -22.728623621181693,
+        "p95": -17.737258541021095
+      }
+    },
+    "near_word/hey_mix/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 49.19927999349494,
+      "min": 21.39312272602892,
+      "max": 79.55226235387357,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 33.93950886953774,
+        "p25": 42.86745281187731,
+        "p50": 49.066376340389674,
+        "p75": 55.353980352656926,
+        "p95": 65.67589816407813
+      }
+    },
+    "near_word/hey_mix/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 13.69636681910537,
+      "min": 5.401414687839732,
+      "max": 22.12763806460966,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.133013058086467,
+        "p25": 11.703094694397741,
+        "p50": 13.610025672972133,
+        "p75": 15.53480681745539,
+        "p95": 18.615991020192176
+      }
+    },
+    "near_word/hey_mix/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 34.29839287596197,
+      "min": 16.363534151584457,
+      "max": 56.80408027608564,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 22.153175355328788,
+        "p25": 29.465583716215107,
+        "p50": 34.3613407817589,
+        "p75": 39.15603882542314,
+        "p95": 46.195780507209356
+      }
+    },
+    "near_word/hey_next/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8791189561211752,
+      "min": 0.23280223464657804,
+      "max": 0.9829791899048977,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.669169402932056,
+        "p25": 0.8477933722693047,
+        "p50": 0.9165349725877935,
+        "p75": 0.9494450930825161,
+        "p95": 0.9697816362152145
+      }
+    },
+    "near_word/hey_next/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 34.43674637422071,
+      "min": 11.712381319610245,
+      "max": 56.772059234342656,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.922402447733646,
+        "p25": 29.105978144946246,
+        "p50": 34.06497734083746,
+        "p75": 39.661309381139276,
+        "p95": 47.82561022796191
+      }
+    },
+    "near_word/hey_next/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.492685494961126,
+      "min": 7.253885017604989,
+      "max": 50.7945808556366,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.436134186122201,
+        "p25": 17.22954938979219,
+        "p50": 23.08771780963625,
+        "p75": 29.101103427225482,
+        "p95": 37.43544598618358
+      }
+    },
+    "near_word/hey_next/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -21.243379877166305,
+      "min": -35.940191082177925,
+      "max": -4.325427819214766,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -29.262977820277687,
+        "p25": -25.007920810514324,
+        "p50": -21.033947149327638,
+        "p75": -17.753172941541184,
+        "p95": -12.545704510681752
+      }
+    },
+    "near_word/hey_next/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.627136448434214,
+      "min": 11.47734930428769,
+      "max": 54.1929707266025,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.912207605763914,
+        "p25": 27.584342722197626,
+        "p50": 32.33547851883538,
+        "p75": 37.52003074472822,
+        "p95": 45.34637179917731
+      }
+    },
+    "near_word/hey_next/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.938436131635328,
+      "min": 2.2271868374324755,
+      "max": 18.50580424841446,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.459853018095242,
+        "p25": 9.146977216178687,
+        "p50": 10.830496355095187,
+        "p75": 12.876717492153738,
+        "p95": 15.067670008473888
+      }
+    },
+    "near_word/hey_next/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 25.87093719670431,
+      "min": 12.215594800863302,
+      "max": 39.23004221078214,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.30048087196715,
+        "p25": 22.534553728311405,
+        "p50": 25.88286325087864,
+        "p75": 29.19385144915052,
+        "p95": 33.4777379015332
+      }
+    },
+    "near_word/hey_next/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8768233194546656,
+      "min": 0.27427763237571035,
+      "max": 0.9833373591089387,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.6481046131638276,
+        "p25": 0.8443830306867255,
+        "p50": 0.919882854004212,
+        "p75": 0.9493179388024027,
+        "p95": 0.9688762700297261
+      }
+    },
+    "near_word/hey_next/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 34.39026808690901,
+      "min": 13.355168550967162,
+      "max": 56.91491876396369,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.808308652428142,
+        "p25": 29.044922167967023,
+        "p50": 34.318168850801996,
+        "p75": 39.58019277796525,
+        "p95": 47.13064987705034
+      }
+    },
+    "near_word/hey_next/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.447652656912027,
+      "min": 6.902333681575018,
+      "max": 52.340094393541506,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.48031406042052,
+        "p25": 16.986449320795586,
+        "p50": 23.16229864595073,
+        "p75": 28.97397258603051,
+        "p95": 37.08765659624599
+      }
+    },
+    "near_word/hey_next/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -21.20969774875757,
+      "min": -34.59327356238011,
+      "max": -5.387562769634005,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -29.35844833738394,
+        "p25": -24.90720840648674,
+        "p50": -21.126581351541954,
+        "p75": -17.68096083296102,
+        "p95": -12.687662661826081
+      }
+    },
+    "near_word/hey_next/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.584047875490704,
+      "min": 12.94756133345981,
+      "max": 54.46934059667658,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.774540209340078,
+        "p25": 27.59534692417674,
+        "p50": 32.52961937298301,
+        "p75": 37.56566889041312,
+        "p95": 44.536906923619576
+      }
+    },
+    "near_word/hey_next/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.921243213962999,
+      "min": 2.7784461777032363,
+      "max": 17.812268927382224,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.532968271608362,
+        "p25": 9.104025055139797,
+        "p50": 10.878194220945886,
+        "p75": 12.82486011526723,
+        "p95": 15.11682830863494
+      }
+    },
+    "near_word/hey_next/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 25.934452199709305,
+      "min": 11.761189756746035,
+      "max": 40.861742725602966,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.228378177570093,
+        "p25": 22.60473713749624,
+        "p50": 26.067208888805503,
+        "p75": 29.133923714691836,
+        "p95": 33.4106918751544
+      }
+    },
+    "near_word/hey_next/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9396442120015729,
+      "min": 0.4546260572349509,
+      "max": 0.9877298813451767,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8210118833274308,
+        "p25": 0.9357906886284943,
+        "p50": 0.9561056928531054,
+        "p75": 0.9693344490025096,
+        "p95": 0.9801605334686192
+      }
+    },
+    "near_word/hey_next/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 51.514193900818185,
+      "min": 24.01321525544434,
+      "max": 77.9865536027532,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.532819074535944,
+        "p25": 45.21579719538053,
+        "p50": 51.93059479602834,
+        "p75": 58.202138760733476,
+        "p95": 67.23785436882628
+      }
+    },
+    "near_word/hey_next/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 39.54355321734744,
+      "min": 8.103804391513128,
+      "max": 70.53794302202918,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.673688560748914,
+        "p25": 32.1312650606261,
+        "p50": 39.631284354353724,
+        "p75": 46.915150343591364,
+        "p95": 57.57521748323891
+      }
+    },
+    "near_word/hey_next/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -31.415322656215533,
+      "min": -47.685362934211504,
+      "max": -14.67521533461173,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -40.50663768164914,
+        "p25": -35.70204101767196,
+        "p50": -31.7146848006278,
+        "p75": -27.381936846781016,
+        "p95": -21.11463971811964
+      }
+    },
+    "near_word/hey_next/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 48.884685281637616,
+      "min": 22.77752273117458,
+      "max": 74.26596094420442,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 33.80558450021138,
+        "p25": 42.968907033766406,
+        "p50": 49.163283706060525,
+        "p75": 55.24260552795466,
+        "p95": 63.856465483047955
+      }
+    },
+    "near_word/hey_next/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 16.175924333496184,
+      "min": 7.556349983356784,
+      "max": 24.553458548880958,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.872045407490377,
+        "p25": 14.099111550919163,
+        "p50": 16.33006756638028,
+        "p75": 18.383179455869048,
+        "p95": 20.857092996084948
+      }
+    },
+    "near_word/hey_next/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.35172900697063,
+      "min": 16.51453796262273,
+      "max": 46.812351803008276,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 23.85429746542775,
+        "p25": 29.527245949033674,
+        "p50": 33.62059731862905,
+        "p75": 37.432321621106254,
+        "p95": 42.29418409208138
+      }
+    },
+    "near_word/hey_next/quiet/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9252355229780224,
+      "min": 0.512496312378215,
+      "max": 0.9821728635778374,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8014720573022693,
+        "p25": 0.9177288989918823,
+        "p50": 0.9412103299459424,
+        "p75": 0.9570000750773315,
+        "p95": 0.9709286023793694
+      }
+    },
+    "near_word/hey_next/quiet/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 50.20041937599705,
+      "min": 24.171794695574643,
+      "max": 79.95953524326227,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 34.2727533641164,
+        "p25": 44.01723780263817,
+        "p50": 50.38472606326249,
+        "p75": 56.10877742489004,
+        "p95": 64.89836668517836
+      }
+    },
+    "near_word/hey_next/quiet/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "near_word/hey_next/quiet/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -30.28532830147414,
+      "min": -43.668463285166666,
+      "max": -13.267392564557056,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -38.83224490584232,
+        "p25": -34.049000054628465,
+        "p50": -30.61250296501362,
+        "p75": -26.735261593694887,
+        "p95": -20.878380823867385
+      }
+    },
+    "near_word/hey_next/quiet/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 47.690853401183745,
+      "min": 22.88707213313673,
+      "max": 77.17078536412072,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 32.579635759858284,
+        "p25": 41.74368006808442,
+        "p50": 47.61515456381717,
+        "p75": 53.39666880102401,
+        "p95": 61.74317385413607
+      }
+    },
+    "near_word/hey_next/quiet/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 15.594083956441896,
+      "min": 6.8314542102786175,
+      "max": 22.48513458196665,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.750394389025224,
+        "p25": 13.76613486700164,
+        "p50": 15.76254801008753,
+        "p75": 17.532019471584405,
+        "p95": 19.994938844672944
+      }
+    },
+    "near_word/hey_next/quiet/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.68657920853495,
+      "min": 18.01678810709405,
+      "max": 48.90112326071692,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.317413107633453,
+        "p25": 29.390516209710626,
+        "p50": 33.59643459884613,
+        "p75": 38.13212203008026,
+        "p95": 43.09065735340499
+      }
+    },
+    "near_word/hey_next/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9230150868409387,
+      "min": 0.48964035721912774,
+      "max": 0.9810617380205001,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8154541197293655,
+        "p25": 0.9127250840059025,
+        "p50": 0.9401196878263496,
+        "p75": 0.9557044939435705,
+        "p95": 0.9696335028040253
+      }
+    },
+    "near_word/hey_next/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 49.16457646955209,
+      "min": 21.336738653353915,
+      "max": 79.11589235870743,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 34.09254879805339,
+        "p25": 43.31240737389133,
+        "p50": 49.30403331922322,
+        "p75": 55.56739589000872,
+        "p95": 63.934989748929176
+      }
+    },
+    "near_word/hey_next/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.98468454024645,
+      "min": 11.856999452139616,
+      "max": 75.34936840740386,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.375919441515776,
+        "p25": 29.200148319585598,
+        "p50": 36.90445050008078,
+        "p75": 43.73475613326293,
+        "p95": 56.487643595471496
+      }
+    },
+    "near_word/hey_next/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -29.651715823932925,
+      "min": -45.15690209399521,
+      "max": -10.217770384018058,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -37.630353196801536,
+        "p25": -33.4852657743661,
+        "p50": -29.898086494976994,
+        "p75": -26.079012631237006,
+        "p95": -20.264491979776064
+      }
+    },
+    "near_word/hey_next/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 46.706230191472834,
+      "min": 20.61568993982201,
+      "max": 76.35436907694927,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 32.34494439137347,
+        "p25": 41.00654323606668,
+        "p50": 46.66467671910637,
+        "p75": 52.63577676150612,
+        "p95": 61.06682637422905
+      }
+    },
+    "near_word/hey_next/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 15.268093155156702,
+      "min": 5.361664918759053,
+      "max": 23.251540001708094,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.434299609421428,
+        "p25": 13.428228626890053,
+        "p50": 15.394690996859325,
+        "p75": 17.2417495558012,
+        "p95": 19.37607812007511
+      }
+    },
+    "near_word/hey_next/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.88687185084262,
+      "min": 16.644722729509937,
+      "max": 47.859103894741565,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 23.330989043904943,
+        "p25": 28.377667674726062,
+        "p50": 32.903059597699205,
+        "p75": 37.26316904576953,
+        "p95": 42.398290197529846
+      }
+    },
+    "near_word/hey_nick/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9000350843901737,
+      "min": 0.32754669813943366,
+      "max": 0.9907753009960252,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.6985943185387998,
+        "p25": 0.87810081920787,
+        "p50": 0.9346127893508853,
+        "p75": 0.9592010769925717,
+        "p95": 0.9768217758848691
+      }
+    },
+    "near_word/hey_nick/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.24404290147747,
+      "min": 15.201910950694236,
+      "max": 56.98442851179315,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 22.07842899424904,
+        "p25": 27.846037596942978,
+        "p50": 33.171694965720775,
+        "p75": 38.39492095822662,
+        "p95": 44.984867366895266
+      }
+    },
+    "near_word/hey_nick/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.492685494961126,
+      "min": 7.253885017604989,
+      "max": 50.7945808556366,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.436134186122201,
+        "p25": 17.22954938979219,
+        "p50": 23.08771780963625,
+        "p75": 29.101103427225482,
+        "p95": 37.43544598618358
+      }
+    },
+    "near_word/hey_nick/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -21.109618211138713,
+      "min": -33.96736689428608,
+      "max": -8.269940742083767,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -27.990020175749557,
+        "p25": -24.252392531153852,
+        "p50": -21.113075278593648,
+        "p75": -18.122392576011055,
+        "p95": -13.768166744571314
+      }
+    },
+    "near_word/hey_nick/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 31.396526519557142,
+      "min": 14.484047827136452,
+      "max": 54.44339494058877,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.93380530803829,
+        "p25": 26.122943768224502,
+        "p50": 31.18685128773678,
+        "p75": 36.284051631212776,
+        "p95": 42.7728075310475
+      }
+    },
+    "near_word/hey_nick/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.86993851845222,
+      "min": 4.258238476502711,
+      "max": 17.48998610336938,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 7.089305620328564,
+        "p25": 9.33132071439886,
+        "p50": 10.871239868878739,
+        "p75": 12.487691779685576,
+        "p95": 14.412217038502288
+      }
+    },
+    "near_word/hey_nick/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.984953595497263,
+      "min": 16.46254922722469,
+      "max": 32.921272273911676,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.613571756168316,
+        "p25": 22.046019977874877,
+        "p50": 23.74515935883014,
+        "p75": 25.710680925022576,
+        "p95": 29.007507478863268
+      }
+    },
+    "near_word/hey_nick/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8954025917680807,
+      "min": 0.3255926349232717,
+      "max": 0.9903839312172104,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.6893223645916695,
+        "p25": 0.8736970715556989,
+        "p50": 0.9305067056901695,
+        "p75": 0.9579285357843373,
+        "p95": 0.9766036451385699
+      }
+    },
+    "near_word/hey_nick/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.93759072151814,
+      "min": 14.56888735594202,
+      "max": 56.225552656288905,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.611961065161044,
+        "p25": 27.51679888115405,
+        "p50": 32.7314696233279,
+        "p75": 37.8831865351673,
+        "p95": 45.01285969284927
+      }
+    },
+    "near_word/hey_nick/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.447652656912027,
+      "min": 6.902333681575018,
+      "max": 52.340094393541506,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.48031406042052,
+        "p25": 16.986449320795586,
+        "p50": 23.16229864595073,
+        "p75": 28.97397258603051,
+        "p95": 37.08765659624599
+      }
+    },
+    "near_word/hey_nick/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -20.868480802129252,
+      "min": -34.008756579886914,
+      "max": -5.881754102747105,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -27.832653668047506,
+        "p25": -23.94020716775481,
+        "p50": -20.880437619494348,
+        "p75": -17.917999867986385,
+        "p95": -13.538051010523326
+      }
+    },
+    "near_word/hey_nick/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 31.11487038175744,
+      "min": 13.934514479422702,
+      "max": 53.418739238826184,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.48808648147546,
+        "p25": 26.025358225022984,
+        "p50": 30.893869634317042,
+        "p75": 35.772915911345684,
+        "p95": 42.669747512986355
+      }
+    },
+    "near_word/hey_nick/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.745918425172833,
+      "min": 3.0526419878963424,
+      "max": 17.511297882649608,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.970817749214153,
+        "p25": 9.226077772427317,
+        "p50": 10.751453444531208,
+        "p75": 12.326945800036412,
+        "p95": 14.331188148585358
+      }
+    },
+    "near_word/hey_nick/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.743955277775722,
+      "min": 16.4255360979608,
+      "max": 32.702189093990576,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.3822517053398,
+        "p25": 21.637142191708925,
+        "p50": 23.57054581658152,
+        "p75": 25.532045416234112,
+        "p95": 29.047430385081025
+      }
+    },
+    "near_word/hey_nick/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9595535519048604,
+      "min": 0.46707178444992925,
+      "max": 0.9964016387647799,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8807124153981719,
+        "p25": 0.9560839723121124,
+        "p50": 0.9723975666915299,
+        "p75": 0.9816292836429819,
+        "p95": 0.9894573979024991
+      }
+    },
+    "near_word/hey_nick/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 50.73533511404273,
+      "min": 24.504043690854587,
+      "max": 78.26811065335882,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.12980357125709,
+        "p25": 44.10503876938313,
+        "p50": 50.66911025160681,
+        "p75": 57.20824926272005,
+        "p95": 66.72564134872091
+      }
+    },
+    "near_word/hey_nick/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 39.54355321734744,
+      "min": 8.103804391513128,
+      "max": 70.53794302202918,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.673688560748914,
+        "p25": 32.1312650606261,
+        "p50": 39.631284354353724,
+        "p75": 46.915150343591364,
+        "p95": 57.57521748323891
+      }
+    },
+    "near_word/hey_nick/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -31.385006613136046,
+      "min": -45.99158873661506,
+      "max": -14.703759751529399,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -40.3653536747731,
+        "p25": -35.17686296487164,
+        "p50": -31.565427302085308,
+        "p75": -27.704857152264225,
+        "p95": -22.036995946151922
+      }
+    },
+    "near_word/hey_nick/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 48.074254328529946,
+      "min": 23.223589129730044,
+      "max": 74.5884599511712,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 33.21476635598268,
+        "p25": 41.7766594085346,
+        "p50": 47.95058222541505,
+        "p75": 54.31267243653329,
+        "p95": 63.3990609285902
+      }
+    },
+    "near_word/hey_nick/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 16.16031443432974,
+      "min": 7.571047662360653,
+      "max": 23.68132479561112,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.34697175844502,
+        "p25": 14.265385011943518,
+        "p50": 16.253214050373096,
+        "p75": 18.11276235601379,
+        "p95": 20.7843450752767
+      }
+    },
+    "near_word/hey_nick/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 31.61487718068461,
+      "min": 20.848776107692753,
+      "max": 43.373878062051496,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 25.33663350920924,
+        "p25": 29.043843697519897,
+        "p50": 31.598641252280117,
+        "p75": 34.136406114964636,
+        "p95": 37.71704715970176
+      }
+    },
+    "near_word/hey_nick/quiet/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9418778979246516,
+      "min": 0.5852512692051812,
+      "max": 0.9955113087949513,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8312204446195026,
+        "p25": 0.9342120225500838,
+        "p50": 0.9583813870450968,
+        "p75": 0.9713395216106007,
+        "p95": 0.9823820804114947
+      }
+    },
+    "near_word/hey_nick/quiet/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 51.52591294694782,
+      "min": 23.851433898805563,
+      "max": 85.45489870501763,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 36.683611882552206,
+        "p25": 45.73925349195329,
+        "p50": 51.6976642761047,
+        "p75": 57.6387389676494,
+        "p95": 66.4632419554773
+      }
+    },
+    "near_word/hey_nick/quiet/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "near_word/hey_nick/quiet/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -32.071455992278246,
+      "min": -50.12886720135659,
+      "max": -12.744216144783659,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -40.77502899932916,
+        "p25": -35.694617331488715,
+        "p50": -32.43065839162477,
+        "p75": -28.299922794688026,
+        "p95": -22.851959728236462
+      }
+    },
+    "near_word/hey_nick/quiet/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 48.787631541142844,
+      "min": 22.907983563156392,
+      "max": 81.4511706358869,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 34.640046968591825,
+        "p25": 43.20272473439288,
+        "p50": 48.977173787284315,
+        "p75": 54.51153156197962,
+        "p95": 63.08102708585958
+      }
+    },
+    "near_word/hey_nick/quiet/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 16.51377103693391,
+      "min": 6.56206776239983,
+      "max": 25.81163248414353,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.766601141781335,
+        "p25": 14.571787620334558,
+        "p50": 16.698726349849977,
+        "p75": 18.379356958570835,
+        "p95": 20.9952891780586
+      }
+    },
+    "near_word/hey_nick/quiet/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.37570416195288,
+      "min": 20.630313601523874,
+      "max": 49.969059609324546,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.955242054304776,
+        "p25": 32.020265490574246,
+        "p50": 35.0993721126096,
+        "p75": 38.63287263525532,
+        "p95": 44.25095547240847
+      }
+    },
+    "near_word/hey_nick/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.941477561699269,
+      "min": 0.6304955775465056,
+      "max": 0.9967131548270983,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8385841027377849,
+        "p25": 0.9334726756151125,
+        "p50": 0.9578977341418126,
+        "p75": 0.972438580297421,
+        "p95": 0.9823525983555758
+      }
+    },
+    "near_word/hey_nick/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 50.879083981585026,
+      "min": 25.08616994976781,
+      "max": 81.89629161559897,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 36.910679275088256,
+        "p25": 44.63374961651496,
+        "p50": 51.21707563302317,
+        "p75": 56.60600222683241,
+        "p95": 66.13684710052077
+      }
+    },
+    "near_word/hey_nick/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.98468454024645,
+      "min": 11.856999452139616,
+      "max": 75.34936840740386,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.375919441515776,
+        "p25": 29.200148319585598,
+        "p50": 36.90445050008078,
+        "p75": 43.73475613326293,
+        "p95": 56.487643595471496
+      }
+    },
+    "near_word/hey_nick/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -31.739003794632417,
+      "min": -46.184189665511305,
+      "max": -14.602447508493427,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -40.142490188502386,
+        "p25": -35.33150091094911,
+        "p50": -31.92212311639813,
+        "p75": -28.131334132075445,
+        "p95": -22.748133311065505
+      }
+    },
+    "near_word/hey_nick/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 48.162293122901325,
+      "min": 23.91865187925379,
+      "max": 78.60592373248801,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 35.04495846703111,
+        "p25": 42.211125619436885,
+        "p50": 48.51524019249133,
+        "p75": 53.63009098209837,
+        "p95": 62.881076354824465
+      }
+    },
+    "near_word/hey_nick/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 16.342589551629015,
+      "min": 7.5188814250330696,
+      "max": 23.780496084936402,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.713140342210561,
+        "p25": 14.484980380448809,
+        "p50": 16.436878708716417,
+        "p75": 18.192386294376924,
+        "p95": 20.669591426871914
+      }
+    },
+    "near_word/hey_nick/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.07405269361667,
+      "min": 21.480110361824284,
+      "max": 50.25461398349298,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.15081089496843,
+        "p25": 31.696424051440342,
+        "p50": 34.83824604340522,
+        "p75": 38.327847030236455,
+        "p95": 43.616649672354875
+      }
+    },
+    "nuisance/hey_mix/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.11512558287695122,
+      "min": 0.018076233013735052,
+      "max": 0.6743458610424709,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.027491915187319103,
+        "p25": 0.04708570965931046,
+        "p50": 0.07605729429536826,
+        "p75": 0.1337881592028895,
+        "p95": 0.37052998969699996
+      }
+    },
+    "nuisance/hey_mix/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.611200868480314,
+      "min": 6.763875258662137,
+      "max": 43.70806843196389,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.65934176520269,
+        "p25": 13.644101529795606,
+        "p50": 17.608662327927917,
+        "p75": 22.308343668941095,
+        "p95": 31.113642089111043
+      }
+    },
+    "nuisance/hey_mix/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.06132620758576,
+      "min": 16.016656835462246,
+      "max": 59.691206482150925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.789228248737903,
+        "p25": 32.202172579470314,
+        "p50": 37.313855488532,
+        "p75": 42.06833241923652,
+        "p95": 48.48667234863909
+      }
+    },
+    "nuisance/hey_mix/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.938679924686765,
+      "min": -12.168648098344562,
+      "max": 18.848310467563834,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -1.4606385278118585,
+        "p25": 2.8413220390519665,
+        "p50": 5.783154458168731,
+        "p75": 8.841897430103025,
+        "p95": 13.761430383393408
+      }
+    },
+    "nuisance/hey_mix/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.218027000279655,
+      "min": 6.731295118415869,
+      "max": 42.672619138049434,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.484798878148156,
+        "p25": 13.445768009556085,
+        "p50": 17.236559504548463,
+        "p75": 21.757693760856046,
+        "p95": 30.272528822164997
+      }
+    },
+    "nuisance/hey_mix/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.604193834797004,
+      "min": 0.5147658531239401,
+      "max": 9.70509987352412,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.292335248698948,
+        "p25": 2.2240935759457066,
+        "p50": 3.323877086837349,
+        "p75": 4.639170265832184,
+        "p95": 7.085837030497757
+      }
+    },
+    "nuisance/hey_mix/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 24.39535013872292,
+      "min": 7.471484175339511,
+      "max": 51.225150904036354,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.326199111091727,
+        "p25": 18.501537140732133,
+        "p50": 23.89209679384281,
+        "p75": 29.979400544834732,
+        "p95": 38.64192245669177
+      }
+    },
+    "nuisance/hey_mix/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.11464947675703778,
+      "min": 0.016761891784792968,
+      "max": 0.7592605224133114,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.02661147168998274,
+        "p25": 0.04518475726766237,
+        "p50": 0.07374738272165547,
+        "p75": 0.1272065421589085,
+        "p95": 0.36986512392875925
+      }
+    },
+    "nuisance/hey_mix/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.343486030859864,
+      "min": 7.672791825262727,
+      "max": 41.958472248231026,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.437495043863668,
+        "p25": 13.219120660799602,
+        "p50": 17.08669451555969,
+        "p75": 22.441681971606265,
+        "p95": 30.62109699818692
+      }
+    },
+    "nuisance/hey_mix/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.06132620758576,
+      "min": 16.016656835462246,
+      "max": 59.691206482150925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.789228248737903,
+        "p25": 32.202172579470314,
+        "p50": 37.313855488532,
+        "p75": 42.06833241923652,
+        "p95": 48.48667234863909
+      }
+    },
+    "nuisance/hey_mix/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.658691917237348,
+      "min": -11.341781619377885,
+      "max": 19.964246326046233,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -1.9031833523814183,
+        "p25": 2.6401053925425737,
+        "p50": 5.481244288768138,
+        "p75": 9.047702702572051,
+        "p95": 13.589029653850382
+      }
+    },
+    "nuisance/hey_mix/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 17.96021383281427,
+      "min": 7.58901302382899,
+      "max": 40.89305563066733,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 10.338885915278496,
+        "p25": 13.026465101024833,
+        "p50": 16.77948236895347,
+        "p75": 21.91090338230861,
+        "p95": 29.821174768626022
+      }
+    },
+    "nuisance/hey_mix/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.5296440472218698,
+      "min": 0.7588589684372398,
+      "max": 10.279701452676605,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.3203299279709382,
+        "p25": 2.107531352929373,
+        "p50": 3.157822083683597,
+        "p75": 4.719698893625049,
+        "p95": 6.997066936150952
+      }
+    },
+    "nuisance/hey_mix/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 24.942187612517397,
+      "min": 8.129451389395008,
+      "max": 51.90520954230009,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.631649327364899,
+        "p25": 18.598057239926277,
+        "p50": 24.1538564076382,
+        "p75": 30.633367030851584,
+        "p95": 39.54276036447365
+      }
+    },
+    "nuisance/hey_mix/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.03214958344741513,
+      "min": 0.006652411781157615,
+      "max": 0.3329605775654929,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.011106281119647878,
+        "p25": 0.016731380729785326,
+        "p50": 0.02379554136216063,
+        "p75": 0.03465091603950146,
+        "p95": 0.06957958956990301
+      }
+    },
+    "nuisance/hey_mix/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.355588734458093,
+      "min": 5.298729044520939,
+      "max": 24.495605129586966,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.989637536378649,
+        "p25": 8.440850733447366,
+        "p50": 9.858824253070352,
+        "p75": 11.590551628608786,
+        "p95": 16.002640861424688
+      }
+    },
+    "nuisance/hey_mix/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.06132620758576,
+      "min": 16.016656835462246,
+      "max": 59.691206482150925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.789228248737903,
+        "p25": 32.202172579470314,
+        "p50": 37.313855488532,
+        "p75": 42.06833241923652,
+        "p95": 48.48667234863909
+      }
+    },
+    "nuisance/hey_mix/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.24822942094204972,
+      "min": -9.713952796132526,
+      "max": 11.553926049956578,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -4.537326499840383,
+        "p25": -2.0497348403156073,
+        "p50": 0.04629101382710055,
+        "p75": 2.3253017437874304,
+        "p95": 5.896324295218918
+      }
+    },
+    "nuisance/hey_mix/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.177697952522259,
+      "min": 5.254797943966097,
+      "max": 23.73919368579135,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.932372395939069,
+        "p25": 8.345197323795645,
+        "p50": 9.724341233324648,
+        "p75": 11.385629443718074,
+        "p95": 15.61898286009954
+      }
+    },
+    "nuisance/hey_mix/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.7396693266651904,
+      "min": 0.4491491938490039,
+      "max": 5.949180773476179,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.6944644173749205,
+        "p25": 1.1286868368138157,
+        "p50": 1.5598426332383446,
+        "p75": 2.159970245181206,
+        "p95": 3.338705035923683
+      }
+    },
+    "nuisance/hey_mix/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.13386702269264,
+      "min": 12.745396297120715,
+      "max": 65.23850351797041,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.842307666408786,
+        "p25": 30.165855349572407,
+        "p50": 35.86614437966624,
+        "p75": 42.57920730920365,
+        "p95": 50.137132555327284
+      }
+    },
+    "nuisance/hey_mix/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.008924240132529845,
+      "min": 0.0008260496439913824,
+      "max": 0.25200176687998305,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.0015786101255992762,
+        "p25": 0.0030377257836542372,
+        "p50": 0.00488543919917086,
+        "p75": 0.00822831866329643,
+        "p95": 0.022367539440892318
+      }
+    },
+    "nuisance/hey_mix/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.3040930077075705,
+      "min": 1.7299056572017892,
+      "max": 12.464404750721522,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.8282719355889347,
+        "p25": 4.016248432398703,
+        "p50": 4.988050095638466,
+        "p75": 6.447929489455575,
+        "p95": 8.622129105975624
+      }
+    },
+    "nuisance/hey_mix/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.06132620758576,
+      "min": 16.016656835462246,
+      "max": 59.691206482150925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.789228248737903,
+        "p25": 32.202172579470314,
+        "p50": 37.313855488532,
+        "p75": 42.06833241923652,
+        "p95": 48.48667234863909
+      }
+    },
+    "nuisance/hey_mix/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.427519060039775,
+      "min": -2.7702296954502987,
+      "max": 6.032288395036399,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.8666975153380464,
+        "p25": 0.5085647942129004,
+        "p50": 1.4032509006951428,
+        "p75": 2.2641733659151644,
+        "p95": 3.754812871165033
+      }
+    },
+    "nuisance/hey_mix/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.18139076401372,
+      "min": 1.7193034893222483,
+      "max": 12.086996104365825,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.7947616291411363,
+        "p25": 3.94499538311699,
+        "p50": 4.884902942798279,
+        "p75": 6.289060694857815,
+        "p95": 8.385982665696302
+      }
+    },
+    "nuisance/hey_mix/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.0792084252215532,
+      "min": 0.16902734127381777,
+      "max": 3.1060588396226483,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.3972647738833128,
+        "p25": 0.7349649521514171,
+        "p50": 0.9966356366663138,
+        "p75": 1.3820256083839877,
+        "p95": 2.0001642412497245
+      }
+    },
+    "nuisance/hey_mix/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 34.29839287596197,
+      "min": 16.363534151584457,
+      "max": 56.80408027608564,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 22.153175355328788,
+        "p25": 29.465583716215107,
+        "p50": 34.3613407817589,
+        "p75": 39.15603882542314,
+        "p95": 46.195780507209356
+      }
+    },
+    "nuisance/hey_next/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.09023340381479568,
+      "min": 0.026228931552881408,
+      "max": 0.40845816266388235,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.042800320619720576,
+        "p25": 0.06135918580334378,
+        "p50": 0.07965056819945653,
+        "p75": 0.10683687733560294,
+        "p95": 0.17324250141119757
+      }
+    },
+    "nuisance/hey_next/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.73612956671562,
+      "min": 7.543951730022247,
+      "max": 29.793343786614745,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.699569683562652,
+        "p25": 12.162939916358297,
+        "p50": 14.209858301860644,
+        "p75": 16.923687630968402,
+        "p95": 21.266158220277415
+      }
+    },
+    "nuisance/hey_next/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.68657920853495,
+      "min": 18.01678810709405,
+      "max": 48.90112326071692,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.317413107633453,
+        "p25": 29.390516209710626,
+        "p50": 33.59643459884613,
+        "p75": 38.13212203008026,
+        "p95": 43.09065735340499
+      }
+    },
+    "nuisance/hey_next/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 4.017167756181559,
+      "min": -5.587910616289047,
+      "max": 13.01643459823969,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.6807904683131254,
+        "p25": 2.1173520660155107,
+        "p50": 3.9249588353206635,
+        "p75": 5.942662176177256,
+        "p95": 8.92157025828856
+      }
+    },
+    "nuisance/hey_next/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.486515568089803,
+      "min": 7.486087721909311,
+      "max": 29.007428527749482,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.60342997578746,
+        "p25": 11.991397536044015,
+        "p50": 13.974560498275892,
+        "p75": 16.60180750144709,
+        "p95": 20.75343517288574
+      }
+    },
+    "nuisance/hey_next/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 2.4241269282453164,
+      "min": 0.5945113592806823,
+      "max": 6.702234557866909,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8834128112159216,
+        "p25": 1.5432155064662891,
+        "p50": 2.1858440847187044,
+        "p75": 3.149820592039542,
+        "p95": 4.616216559372946
+      }
+    },
+    "nuisance/hey_next/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 25.87093719670431,
+      "min": 12.215594800863302,
+      "max": 39.23004221078214,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.30048087196715,
+        "p25": 22.534553728311405,
+        "p50": 25.88286325087864,
+        "p75": 29.19385144915052,
+        "p95": 33.4777379015332
+      }
+    },
+    "nuisance/hey_next/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0887245066999625,
+      "min": 0.023360836034424414,
+      "max": 0.4141821809160487,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.04033419500517237,
+        "p25": 0.06109362681030525,
+        "p50": 0.07977384872983356,
+        "p75": 0.1043294335648268,
+        "p95": 0.17487603501882829
+      }
+    },
+    "nuisance/hey_next/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.607304935273454,
+      "min": 7.807812969632162,
+      "max": 27.675720855612415,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.588495860653497,
+        "p25": 11.92458507433296,
+        "p50": 14.059200183746396,
+        "p75": 16.763972256554894,
+        "p95": 21.381693840730506
+      }
+    },
+    "nuisance/hey_next/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.68657920853495,
+      "min": 18.01678810709405,
+      "max": 48.90112326071692,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.317413107633453,
+        "p25": 29.390516209710626,
+        "p50": 33.59643459884613,
+        "p75": 38.13212203008026,
+        "p95": 43.09065735340499
+      }
+    },
+    "nuisance/hey_next/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.9901966079371953,
+      "min": -5.237404337714737,
+      "max": 13.475507234282498,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.6826517283244032,
+        "p25": 2.110827655926232,
+        "p50": 3.840497209104117,
+        "p75": 5.89523936024456,
+        "p95": 8.994608296044163
+      }
+    },
+    "nuisance/hey_next/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 14.361099234998397,
+      "min": 7.737158002936215,
+      "max": 26.96497855149887,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.519352582767452,
+        "p25": 11.787486284416927,
+        "p50": 13.882120924934172,
+        "p75": 16.440398094469913,
+        "p95": 20.954284461213135
+      }
+    },
+    "nuisance/hey_next/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 2.397135434472839,
+      "min": 0.536268170144264,
+      "max": 6.938613611027388,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.9131689691968875,
+        "p25": 1.4805558022239484,
+        "p50": 2.189735280816821,
+        "p75": 3.1219930417464115,
+        "p95": 4.68813335869397
+      }
+    },
+    "nuisance/hey_next/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 25.934452199709305,
+      "min": 11.761189756746035,
+      "max": 40.861742725602966,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 18.228378177570093,
+        "p25": 22.60473713749624,
+        "p50": 26.067208888805503,
+        "p75": 29.133923714691836,
+        "p95": 33.4106918751544
+      }
+    },
+    "nuisance/hey_next/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.03525668248298003,
+      "min": 0.010155706642715165,
+      "max": 0.3003217428929472,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.01613343086668284,
+        "p25": 0.023585751727593134,
+        "p50": 0.030750525223955057,
+        "p75": 0.039958611021039744,
+        "p95": 0.07115944670439929
+      }
+    },
+    "nuisance/hey_next/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 8.48013943679172,
+      "min": 5.416000603082007,
+      "max": 13.902801704746926,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.422058274038277,
+        "p25": 7.479879873949387,
+        "p50": 8.319479528361814,
+        "p75": 9.253496738892856,
+        "p95": 11.13675001133309
+      }
+    },
+    "nuisance/hey_next/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.68657920853495,
+      "min": 18.01678810709405,
+      "max": 48.90112326071692,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.317413107633453,
+        "p25": 29.390516209710626,
+        "p50": 33.59643459884613,
+        "p75": 38.13212203008026,
+        "p95": 43.09065735340499
+      }
+    },
+    "nuisance/hey_next/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -0.23115726985846294,
+      "min": -5.1656904564892026,
+      "max": 5.963835678904304,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -2.535652255315508,
+        "p25": -1.219962277261733,
+        "p50": -0.286968995781616,
+        "p75": 0.6387942881475079,
+        "p95": 2.41412352036506
+      }
+    },
+    "nuisance/hey_next/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 8.402003140748732,
+      "min": 5.34507257469699,
+      "max": 13.435056121308053,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.352267918483032,
+        "p25": 7.420805664945073,
+        "p50": 8.250454331778965,
+        "p75": 9.181023762948792,
+        "p95": 11.012929823344761
+      }
+    },
+    "nuisance/hey_next/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9379002371626788,
+      "min": 0.3135388449297239,
+      "max": 3.246112590408495,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.47910530979282046,
+        "p25": 0.650131231122123,
+        "p50": 0.860036907734178,
+        "p75": 1.1018342588709302,
+        "p95": 1.7226543394920093
+      }
+    },
+    "nuisance/hey_next/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.35172900697063,
+      "min": 16.51453796262273,
+      "max": 46.812351803008276,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 23.85429746542775,
+        "p25": 29.527245949033674,
+        "p50": 33.62059731862905,
+        "p75": 37.432321621106254,
+        "p95": 42.29418409208138
+      }
+    },
+    "nuisance/hey_next/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.006239035478881582,
+      "min": 0.0011362565895877902,
+      "max": 0.08115599427166169,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.0016236094364513662,
+        "p25": 0.002891323591208761,
+        "p50": 0.004354575440963518,
+        "p75": 0.006960293345862563,
+        "p95": 0.015874232879327776
+      }
+    },
+    "nuisance/hey_next/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.4711352751805373,
+      "min": 1.494874831384165,
+      "max": 10.050906416553396,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.3260449335150546,
+        "p25": 2.889106329405664,
+        "p50": 3.3283544595764716,
+        "p75": 3.921630259122717,
+        "p95": 5.0624139641595916
+      }
+    },
+    "nuisance/hey_next/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 33.68657920853495,
+      "min": 18.01678810709405,
+      "max": 48.90112326071692,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 24.317413107633453,
+        "p25": 29.390516209710626,
+        "p50": 33.59643459884613,
+        "p75": 38.13212203008026,
+        "p95": 43.09065735340499
+      }
+    },
+    "nuisance/hey_next/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.43097314349769,
+      "min": -1.7412316091463398,
+      "max": 4.221325142596998,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.6371312560041278,
+        "p25": -0.04211347831381214,
+        "p50": 0.3815813086918809,
+        "p75": 0.8582647416550424,
+        "p95": 1.6003296969726137
+      }
+    },
+    "nuisance/hey_next/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.4209806647587286,
+      "min": 1.4822354921303915,
+      "max": 9.647912784342711,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.298824928205934,
+        "p25": 2.851690439721402,
+        "p50": 3.292053797434897,
+        "p75": 3.8607870382076546,
+        "p95": 4.972435975248121
+      }
+    },
+    "nuisance/hey_next/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.5067040817327924,
+      "min": 0.12898681494428835,
+      "max": 2.717250974404856,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.21651215748277014,
+        "p25": 0.3324990013100527,
+        "p50": 0.45787454732873756,
+        "p75": 0.6272390729655881,
+        "p95": 0.9672583195157761
+      }
+    },
+    "nuisance/hey_next/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 32.88687185084262,
+      "min": 16.644722729509937,
+      "max": 47.859103894741565,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 23.330989043904943,
+        "p25": 28.377667674726062,
+        "p50": 32.903059597699205,
+        "p75": 37.26316904576953,
+        "p95": 42.398290197529846
+      }
+    },
+    "nuisance/hey_nick/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.11622965097903777,
+      "min": 0.039439340727030786,
+      "max": 0.31611181107963154,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.06790203835436162,
+        "p25": 0.09091249314843322,
+        "p50": 0.10912097842341795,
+        "p75": 0.1345115130493399,
+        "p95": 0.1883054275231431
+      }
+    },
+    "nuisance/hey_nick/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.601586804367532,
+      "min": 10.459662416977087,
+      "max": 35.808515073759004,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.653035805133847,
+        "p25": 15.297066195567227,
+        "p50": 17.94076100708105,
+        "p75": 21.33726831612785,
+        "p95": 26.50466386677862
+      }
+    },
+    "nuisance/hey_nick/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.37570416195288,
+      "min": 20.630313601523874,
+      "max": 49.969059609324546,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.955242054304776,
+        "p25": 32.020265490574246,
+        "p50": 35.0993721126096,
+        "p75": 38.63287263525532,
+        "p95": 44.25095547240847
+      }
+    },
+    "nuisance/hey_nick/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.937057113013258,
+      "min": -10.380975865741453,
+      "max": 17.493765906287848,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.3457166951666153,
+        "p25": 3.5207183222922556,
+        "p50": 5.930625102300902,
+        "p75": 8.196777061106388,
+        "p95": 11.876818071445447
+      }
+    },
+    "nuisance/hey_nick/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.229289597213686,
+      "min": 10.37164363894248,
+      "max": 34.6444183208992,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.541106818093407,
+        "p25": 15.072360287230305,
+        "p50": 17.606115086088572,
+        "p75": 20.905742160424907,
+        "p95": 25.75554564302941
+      }
+    },
+    "nuisance/hey_nick/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.416327067757888,
+      "min": 0.9247805200457014,
+      "max": 9.007637346421468,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.518903812528485,
+        "p25": 2.2983734789433585,
+        "p50": 3.1812757459432657,
+        "p75": 4.293126646172004,
+        "p95": 6.115439670914567
+      }
+    },
+    "nuisance/hey_nick/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.984953595497263,
+      "min": 16.46254922722469,
+      "max": 32.921272273911676,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.613571756168316,
+        "p25": 22.046019977874877,
+        "p50": 23.74515935883014,
+        "p75": 25.710680925022576,
+        "p95": 29.007507478863268
+      }
+    },
+    "nuisance/hey_nick/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.12025499227313986,
+      "min": 0.041818720813282306,
+      "max": 0.3295466139512218,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.06916846382021377,
+        "p25": 0.09289093531256251,
+        "p50": 0.11519150295350385,
+        "p75": 0.13899623674668554,
+        "p95": 0.19649397648277
+      }
+    },
+    "nuisance/hey_nick/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.858138026322905,
+      "min": 10.50391355735467,
+      "max": 36.218451665755275,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.962837104350417,
+        "p25": 15.385242916664764,
+        "p50": 18.108794832739967,
+        "p75": 21.718381047285742,
+        "p95": 27.038554528926785
+      }
+    },
+    "nuisance/hey_nick/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.37570416195288,
+      "min": 20.630313601523874,
+      "max": 49.969059609324546,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.955242054304776,
+        "p25": 32.020265490574246,
+        "p50": 35.0993721126096,
+        "p75": 38.63287263525532,
+        "p95": 44.25095547240847
+      }
+    },
+    "nuisance/hey_nick/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 6.117541245369629,
+      "min": -9.757278315711565,
+      "max": 17.63258965619357,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.5508282141646128,
+        "p25": 3.677762749375902,
+        "p50": 6.192873064535567,
+        "p75": 8.402380936346312,
+        "p95": 11.899736619889854
+      }
+    },
+    "nuisance/hey_nick/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 18.475768460772933,
+      "min": 10.427276056442876,
+      "max": 35.037235864025675,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 12.798045463815946,
+        "p25": 15.132443200515576,
+        "p50": 17.7820769894486,
+        "p75": 21.265531545426978,
+        "p95": 26.315287352860803
+      }
+    },
+    "nuisance/hey_nick/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.4927362480861914,
+      "min": 0.8736870940191789,
+      "max": 9.079118467234432,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.5065566157052765,
+        "p25": 2.3433378645868537,
+        "p50": 3.307224594585246,
+        "p75": 4.4130365976082375,
+        "p95": 6.127240558956598
+      }
+    },
+    "nuisance/hey_nick/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.743955277775722,
+      "min": 16.4255360979608,
+      "max": 32.702189093990576,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.3822517053398,
+        "p25": 21.637142191708925,
+        "p50": 23.57054581658152,
+        "p75": 25.532045416234112,
+        "p95": 29.047430385081025
+      }
+    },
+    "nuisance/hey_nick/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.050559857792417215,
+      "min": 0.015759484072822242,
+      "max": 0.2518969953268341,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.025694738231794734,
+        "p25": 0.037196341320599874,
+        "p50": 0.04663938296290931,
+        "p75": 0.059626307602914375,
+        "p95": 0.08522841470662659
+      }
+    },
+    "nuisance/hey_nick/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 11.973435569008887,
+      "min": 6.851608466321274,
+      "max": 23.291558963760192,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 8.679002673831318,
+        "p25": 10.135035115216326,
+        "p50": 11.448831579054119,
+        "p75": 13.34408293029832,
+        "p95": 17.224601045524395
+      }
+    },
+    "nuisance/hey_nick/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.37570416195288,
+      "min": 20.630313601523874,
+      "max": 49.969059609324546,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.955242054304776,
+        "p25": 32.020265490574246,
+        "p50": 35.0993721126096,
+        "p75": 38.63287263525532,
+        "p95": 44.25095547240847
+      }
+    },
+    "nuisance/hey_nick/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.5852864640251318,
+      "min": -10.628256246844119,
+      "max": 10.864764139958275,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -3.6317847293248158,
+        "p25": -0.11289012604514237,
+        "p50": 1.6321846289534694,
+        "p75": 3.2735368077383042,
+        "p95": 6.545675586748029
+      }
+    },
+    "nuisance/hey_nick/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 11.792767413012971,
+      "min": 6.8055802846152735,
+      "max": 22.579323529801226,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 8.597337677777503,
+        "p25": 9.986244009041918,
+        "p50": 11.289472034458086,
+        "p75": 13.157432684384165,
+        "p95": 16.630537415946826
+      }
+    },
+    "nuisance/hey_nick/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.8104803777971605,
+      "min": 0.5899413683793115,
+      "max": 5.594327473650062,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8429536857380664,
+        "p25": 1.2001039124224884,
+        "p50": 1.5840862396669788,
+        "p75": 2.2347447696619893,
+        "p95": 3.5486898338964994
+      }
+    },
+    "nuisance/hey_nick/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 31.61487718068461,
+      "min": 20.848776107692753,
+      "max": 43.373878062051496,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 25.33663350920924,
+        "p25": 29.043843697519897,
+        "p50": 31.598641252280117,
+        "p75": 34.136406114964636,
+        "p95": 37.71704715970176
+      }
+    },
+    "nuisance/hey_nick/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.00445144010111093,
+      "min": 0.0008252699499961283,
+      "max": 0.042327136151021925,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.001512302946937332,
+        "p25": 0.0023712548922897813,
+        "p50": 0.0034111370680992444,
+        "p75": 0.005347182758307153,
+        "p95": 0.010754817920207667
+      }
+    },
+    "nuisance/hey_nick/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.2783991389303226,
+      "min": 1.7027807387401876,
+      "max": 7.707297752060323,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.2283630158238914,
+        "p25": 2.7466874320345376,
+        "p50": 3.160611709515379,
+        "p75": 3.6833340600061018,
+        "p95": 4.719731059647204
+      }
+    },
+    "nuisance/hey_nick/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.37570416195288,
+      "min": 20.630313601523874,
+      "max": 49.969059609324546,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.955242054304776,
+        "p25": 32.020265490574246,
+        "p50": 35.0993721126096,
+        "p75": 38.63287263525532,
+        "p95": 44.25095547240847
+      }
+    },
+    "nuisance/hey_nick/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.12981286360230954,
+      "min": -2.700166038381324,
+      "max": 2.6966218067979884,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.9239651946304577,
+        "p25": -0.31062458839508095,
+        "p50": 0.14491371925995947,
+        "p75": 0.5733205288914912,
+        "p95": 1.2095175526019164
+      }
+    },
+    "nuisance/hey_nick/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.2299047660740583,
+      "min": 1.6804863146711024,
+      "max": 7.620748170425464,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.1989743265237025,
+        "p25": 2.7055810235937,
+        "p50": 3.119837705185577,
+        "p75": 3.6187760197499266,
+        "p95": 4.62504118597393
+      }
+    },
+    "nuisance/hey_nick/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.4786937743897915,
+      "min": 0.17132666708488364,
+      "max": 2.023631793371376,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.23877354660629674,
+        "p25": 0.34167272235139756,
+        "p50": 0.43727205929711443,
+        "p75": 0.5645086867740716,
+        "p95": 0.8300337468784126
+      }
+    },
+    "nuisance/hey_nick/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 35.07405269361667,
+      "min": 21.480110361824284,
+      "max": 50.25461398349298,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 27.15081089496843,
+        "p25": 31.696424051440342,
+        "p50": 34.83824604340522,
+        "p75": 38.327847030236455,
+        "p95": 43.616649672354875
+      }
+    },
+    "nuisance/hey_nyx/combined/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.11586838918243203,
+      "min": 0.009857623183986907,
+      "max": 0.9233409638534839,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.017273749326998274,
+        "p25": 0.0306352349319149,
+        "p50": 0.05933847930511981,
+        "p75": 0.14449303424621204,
+        "p95": 0.3899308787533281
+      }
+    },
+    "nuisance/hey_nyx/combined/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 19.7937387013225,
+      "min": 6.470347380075965,
+      "max": 55.64430184575989,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.213975413413895,
+        "p25": 13.675638717901908,
+        "p50": 18.19694137806578,
+        "p75": 24.945486460708345,
+        "p95": 34.8773629194884
+      }
+    },
+    "nuisance/hey_nyx/combined/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "nuisance/hey_nyx/combined/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -5.024780668126276,
+      "min": -19.332040222201414,
+      "max": 6.656998130281889,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -11.757137651088275,
+        "p25": -7.9411645395786845,
+        "p50": -4.913623060518287,
+        "p75": -2.0311845602230423,
+        "p95": 2.068112446527397
+      }
+    },
+    "nuisance/hey_nyx/combined/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 19.52131315353407,
+      "min": 6.441469222259609,
+      "max": 54.764212977563055,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.105026380295499,
+        "p25": 13.533573320116526,
+        "p50": 17.972873189388125,
+        "p75": 24.603880846841033,
+        "p95": 34.37162525492864
+      }
+    },
+    "nuisance/hey_nyx/combined/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.174635834247662,
+      "min": 0.46280682691835445,
+      "max": 9.95417501416508,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.0582948475180387,
+        "p25": 1.971917984508822,
+        "p50": 2.805785984492738,
+        "p75": 4.167496806300758,
+        "p95": 6.053815556940501
+      }
+    },
+    "nuisance/hey_nyx/combined/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.492685494961126,
+      "min": 7.253885017604989,
+      "max": 50.7945808556366,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.436134186122201,
+        "p25": 17.22954938979219,
+        "p50": 23.08771780963625,
+        "p75": 29.101103427225482,
+        "p95": 37.43544598618358
+      }
+    },
+    "nuisance/hey_nyx/noise15/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.12062199678862742,
+      "min": 0.01031472089764864,
+      "max": 0.9350365300833824,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.016983155148199668,
+        "p25": 0.03132643149613998,
+        "p50": 0.06026375572494809,
+        "p75": 0.1541861206432779,
+        "p95": 0.424464969804323
+      }
+    },
+    "nuisance/hey_nyx/noise15/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 19.831347935849905,
+      "min": 6.29510766630776,
+      "max": 60.82735136477882,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.25973970813949,
+        "p25": 13.332126222301213,
+        "p50": 18.126516957082043,
+        "p75": 25.345221554813776,
+        "p95": 35.19627737289099
+      }
+    },
+    "nuisance/hey_nyx/noise15/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "nuisance/hey_nyx/noise15/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -5.085433944779371,
+      "min": -21.89105292867392,
+      "max": 5.935443536471041,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -11.835118770531363,
+        "p25": -8.139987614330497,
+        "p50": -5.00366878260991,
+        "p75": -2.0246095785520835,
+        "p95": 1.8529501810747362
+      }
+    },
+    "nuisance/hey_nyx/noise15/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 19.556248378683698,
+      "min": 6.248330355876075,
+      "max": 59.76569393390265,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.159824026542436,
+        "p25": 13.167262315236115,
+        "p50": 17.909542566806735,
+        "p75": 24.91214885687064,
+        "p95": 34.63111456053449
+      }
+    },
+    "nuisance/hey_nyx/noise15/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 3.1907869992123365,
+      "min": 0.5653134260944833,
+      "max": 11.271824887169478,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.0236722061795347,
+        "p25": 1.9177252473585316,
+        "p50": 2.8163840509351674,
+        "p75": 4.282550631338221,
+        "p95": 6.093968468987805
+      }
+    },
+    "nuisance/hey_nyx/noise15/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 23.447652656912027,
+      "min": 6.902333681575018,
+      "max": 52.340094393541506,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 11.48031406042052,
+        "p25": 16.986449320795586,
+        "p50": 23.16229864595073,
+        "p75": 28.97397258603051,
+        "p95": 37.08765659624599
+      }
+    },
+    "nuisance/hey_nyx/noise25/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.029724393718727586,
+      "min": 0.0034940941780343903,
+      "max": 0.6794461706877989,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.005978061129070711,
+        "p25": 0.00957050283959964,
+        "p50": 0.014573616791136229,
+        "p75": 0.027039796153363417,
+        "p95": 0.11006279533832737
+      }
+    },
+    "nuisance/hey_nyx/noise25/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 11.085157795184124,
+      "min": 4.016072839951332,
+      "max": 25.497697299869994,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.06637584131021,
+        "p25": 8.12584432101028,
+        "p50": 10.45529591722545,
+        "p75": 12.966169078673353,
+        "p95": 18.689114980347316
+      }
+    },
+    "nuisance/hey_nyx/noise25/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "nuisance/hey_nyx/noise25/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8988370848829302,
+      "min": -8.607690882937327,
+      "max": 8.358522631721202,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -4.206912242887358,
+        "p25": -0.8417469267152067,
+        "p50": 0.9407091239475508,
+        "p75": 2.99133655829231,
+        "p95": 5.51352563428275
+      }
+    },
+    "nuisance/hey_nyx/noise25/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.95108140001434,
+      "min": 3.999882953209853,
+      "max": 25.145839848210287,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.034129915918618,
+        "p25": 8.041268015130266,
+        "p50": 10.316585953339242,
+        "p75": 12.809003163613705,
+        "p95": 18.41580700922218
+      }
+    },
+    "nuisance/hey_nyx/noise25/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 1.6314752219780384,
+      "min": 0.26465267147574817,
+      "max": 4.432147902226654,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.5872017586651634,
+        "p25": 1.013555462040122,
+        "p50": 1.5090196567045113,
+        "p75": 2.026952130776058,
+        "p95": 3.1077748683309525
+      }
+    },
+    "nuisance/hey_nyx/noise25/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 39.54355321734744,
+      "min": 8.103804391513128,
+      "max": 70.53794302202918,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 21.673688560748914,
+        "p25": 32.1312650606261,
+        "p50": 39.631284354353724,
+        "p75": 46.915150343591364,
+        "p95": 57.57521748323891
+      }
+    },
+    "nuisance/hey_nyx/rir/cosine_distance": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.009246124866632349,
+      "min": 0.000288628686569808,
+      "max": 0.25665525493265534,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.0005945657920330985,
+        "p25": 0.0012171311500515716,
+        "p50": 0.002314424438004085,
+        "p75": 0.005756182798507431,
+        "p95": 0.03693967135173394
+      }
+    },
+    "nuisance/hey_nyx/rir/l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.081562858525685,
+      "min": 1.3628555727249871,
+      "max": 16.471608848405307,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.39185902259227,
+        "p25": 3.5520028458047443,
+        "p50": 4.774007119919351,
+        "p75": 6.219054797629307,
+        "p95": 9.171406458998547
+      }
+    },
+    "nuisance/hey_nyx/rir/left_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 37.566394531274355,
+      "min": 9.829339891479876,
+      "max": 76.22346729281057,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 19.654942317121957,
+        "p25": 29.96321823214501,
+        "p50": 37.03134903768905,
+        "p75": 44.66772926875134,
+        "p95": 57.29168364166372
+      }
+    },
+    "nuisance/hey_nyx/rir/logit_delta": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -0.20263933404352055,
+      "min": -5.53065805028217,
+      "max": 3.9164730885341075,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -2.3318378367717316,
+        "p25": -1.0541568578125564,
+        "p50": -0.22839543397869275,
+        "p75": 0.6883010724773703,
+        "p95": 1.9628249019283674
+      }
+    },
+    "nuisance/hey_nyx/rir/orthogonal_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 5.012926753872476,
+      "min": 1.3565860142414465,
+      "max": 16.2211066670614,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.374538597493508,
+        "p25": 3.5121254646393636,
+        "p50": 4.722223570618581,
+        "p75": 6.1322342712152365,
+        "p95": 9.039919273751151
+      }
+    },
+    "nuisance/hey_nyx/rir/parallel_l2": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8058500177306394,
+      "min": 0.10283318156362863,
+      "max": 2.847766585587035,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.29957246836696316,
+        "p25": 0.5185869726126472,
+        "p50": 0.7505483744951666,
+        "p75": 1.0220005714118572,
+        "p95": 1.5646831861698243
+      }
+    },
+    "nuisance/hey_nyx/rir/right_norm": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 36.98468454024645,
+      "min": 11.856999452139616,
+      "max": 75.34936840740386,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 20.375919441515776,
+        "p25": 29.200148319585598,
+        "p50": 36.90445050008078,
+        "p75": 43.73475613326293,
+        "p95": 56.487643595471496
+      }
+    },
+    "output/hey_mix/combined/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -11.137542483651584,
+      "min": -25.626833423280484,
+      "max": 0.9517184819667724,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -19.07139221002855,
+        "p25": -14.194501516508492,
+        "p50": -10.95747681174392,
+        "p75": -7.991928712311685,
+        "p95": -3.9912649756462666
+      }
+    },
+    "output/hey_mix/combined/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.031067284194165892,
+      "min": 1.756371024228491e-10,
+      "max": 0.6144893901849084,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.1733950649753312e-07,
+        "p25": 2.2225369882420812e-05,
+        "p50": 0.0006224614327927597,
+        "p75": 0.01043906587508065,
+        "p95": 0.23484625900415354
+      }
+    },
+    "output/hey_mix/noise15/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -11.417530491101001,
+      "min": -25.801725653802123,
+      "max": 1.4906503425419306,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -19.48609302810663,
+        "p25": -14.588369891997482,
+        "p50": -11.255739619531568,
+        "p75": -8.096195436752069,
+        "p95": -4.180763428317114
+      }
+    },
+    "output/hey_mix/noise15/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.03244448614336746,
+      "min": 2.646326492002661e-10,
+      "max": 0.6680724187760071,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.3458697091041559e-07,
+        "p25": 1.8097713994915193e-05,
+        "p50": 0.000412881776393884,
+        "p75": 0.009418233735376313,
+        "p95": 0.23237799953223712
+      }
+    },
+    "output/hey_mix/noise25/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -16.8279929873963,
+      "min": -32.10601137115436,
+      "max": -3.1878826374428164,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -24.281153820419576,
+        "p25": -20.270066413875153,
+        "p50": -16.73270953679281,
+        "p75": -13.488144215605722,
+        "p95": -9.35295686154477
+      }
+    },
+    "output/hey_mix/noise25/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.004016164807901059,
+      "min": 4.629673501554635e-12,
+      "max": 0.34064575131439967,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.2087332707821675e-09,
+        "p25": 7.546854590675106e-08,
+        "p50": 1.6918945407424053e-06,
+        "p75": 5.983768233995991e-05,
+        "p95": 0.0045955294131272304
+      }
+    },
+    "output/hey_mix/quiet/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -17.07622240833835,
+      "min": -28.519848903225995,
+      "max": -3.2823701346631524,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -23.04700599603922,
+        "p25": -19.75527702622305,
+        "p50": -17.233738147253277,
+        "p75": -14.483190828776628,
+        "p95": -10.434139100501454
+      }
+    },
+    "output/hey_mix/quiet/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.00199096022968226,
+      "min": 1.091626641881858e-10,
+      "max": 0.5037844876961198,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 5.569183107659668e-09,
+        "p25": 1.092696987992556e-07,
+        "p50": 9.174448792636976e-07,
+        "p75": 1.3409987114845352e-05,
+        "p95": 0.0019261371110545046
+      }
+    },
+    "output/hey_mix/rir/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -15.648703348298573,
+      "min": -28.60742188503418,
+      "max": -5.032233256975635,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -21.93171647870025,
+        "p25": -18.32199461447096,
+        "p50": -15.706751232290284,
+        "p75": -13.056363926377463,
+        "p95": -9.001339305384205
+      }
+    },
+    "output/hey_mix/rir/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.004602233095484347,
+      "min": 9.058676109981693e-10,
+      "max": 0.4261921961312747,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.9881685613819953e-08,
+        "p25": 3.582029970061178e-07,
+        "p50": 3.2895791999701054e-06,
+        "p75": 4.601689085342227e-05,
+        "p95": 0.00948142630812222
+      }
+    },
+    "output/hey_next/combined/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -15.11453937783326,
+      "min": -23.892265058867295,
+      "max": -3.5654392745398056,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -20.232103457237123,
+        "p25": -17.41000057469261,
+        "p50": -15.302487522770512,
+        "p75": -13.0546724945693,
+        "p95": -9.415604845045145
+      }
+    },
+    "output/hey_next/combined/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0036812756349650253,
+      "min": 4.776731020333922e-10,
+      "max": 0.2345700054771088,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.8721349585006145e-08,
+        "p25": 3.7867007758090817e-07,
+        "p50": 2.4285777534662637e-06,
+        "p75": 2.835934849682356e-05,
+        "p95": 0.003177112722581709
+      }
+    },
+    "output/hey_next/noise15/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -15.141510526077624,
+      "min": -24.28285162294544,
+      "max": -3.5877661296132977,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -20.137946063329977,
+        "p25": -17.434358317920754,
+        "p50": -15.402734310432235,
+        "p75": -13.048577026039311,
+        "p95": -9.386256360829067
+      }
+    },
+    "output/hey_next/noise15/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0036404135115952383,
+      "min": 1.083575568400407e-09,
+      "max": 0.3197975562586638,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.2633335213178002e-08,
+        "p25": 3.9727043659410505e-07,
+        "p50": 2.548474401142627e-06,
+        "p75": 2.2842992139536314e-05,
+        "p95": 0.0036707156055779066
+      }
+    },
+    "output/hey_next/noise25/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -19.36286440387328,
+      "min": -27.655899480179116,
+      "max": -5.750512415599654,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -25.050220592904527,
+        "p25": -22.023858327744314,
+        "p50": -19.5407058758744,
+        "p75": -16.911057052050726,
+        "p95": -12.923536186427672
+      }
+    },
+    "output/hey_next/noise25/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0012677064042976433,
+      "min": 1.647868198115735e-11,
+      "max": 0.2558574404888539,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 4.0496160938095297e-10,
+        "p25": 6.402034494710802e-09,
+        "p50": 9.470267296323562e-08,
+        "p75": 9.66943559876886e-07,
+        "p95": 9.708701595934527e-05
+      }
+    },
+    "output/hey_next/quiet/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -19.131707134014817,
+      "min": -28.690560324498183,
+      "max": -5.618293882625186,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -25.096385164180248,
+        "p25": -21.989195231553953,
+        "p50": -19.126345429714977,
+        "p75": -16.39304197946475,
+        "p95": -13.213121479756092
+      }
+    },
+    "output/hey_next/quiet/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0010226574444939726,
+      "min": 8.934921863411095e-12,
+      "max": 0.17768704713090244,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 6.796135000171246e-10,
+        "p25": 1.022029082014719e-08,
+        "p50": 1.3234840071264827e-07,
+        "p75": 1.2014160601532262e-06,
+        "p95": 8.533013132065667e-05
+      }
+    },
+    "output/hey_next/rir/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -18.700733990517126,
+      "min": -28.815426796250808,
+      "max": -3.0082601661342103,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -24.703867992467217,
+        "p25": -21.770220166453633,
+        "p50": -18.782586823832258,
+        "p75": -15.912077047226514,
+        "p95": -12.693294303679073
+      }
+    },
+    "output/hey_next/rir/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0016608702688366843,
+      "min": 5.3662554981817205e-12,
+      "max": 0.33267982356177844,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 7.148466338873506e-10,
+        "p25": 1.2245950135725585e-08,
+        "p50": 1.9406466071031965e-07,
+        "p75": 1.5192873952878295e-06,
+        "p95": 0.00019569835109890877
+      }
+    },
+    "output/hey_nick/combined/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -14.980777711805668,
+      "min": -20.560380117949304,
+      "max": -8.971403981013305,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -18.008130560652845,
+        "p25": -16.215877604197566,
+        "p50": -14.828034725208918,
+        "p75": -13.763602645178004,
+        "p95": -12.191107597646615
+      }
+    },
+    "output/hey_nick/combined/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0001638817127671279,
+      "min": 1.38340730224246e-08,
+      "max": 0.06807339826273476,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 1.589245759943967e-07,
+        "p25": 1.3003108062716304e-06,
+        "p50": 4.8413777688196574e-06,
+        "p75": 1.6307323315593914e-05,
+        "p95": 8.520952749626027e-05
+      }
+    },
+    "output/hey_nick/noise15/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -14.800293579449297,
+      "min": -20.533467648212284,
+      "max": -9.718001894431268,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -17.713185377095833,
+        "p25": -15.992100167146349,
+        "p50": -14.665011531832237,
+        "p75": -13.598222362579499,
+        "p95": -11.981191349499813
+      }
+    },
+    "output/hey_nick/noise15/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0001849456319215827,
+      "min": 8.690729539377465e-09,
+      "max": 0.05979434705548726,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 2.180016581371009e-07,
+        "p25": 1.8154264795929828e-06,
+        "p50": 5.602848155669279e-06,
+        "p75": 1.8481577690850128e-05,
+        "p95": 9.285871406251838e-05
+      }
+    },
+    "output/hey_nick/noise25/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -19.332548360793794,
+      "min": -27.293947571920672,
+      "max": -12.616761177167492,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -23.540002272990975,
+        "p25": -20.951451861075064,
+        "p50": -19.25358233214422,
+        "p75": -17.629872814137613,
+        "p95": -15.273363682620582
+      }
+    },
+    "output/hey_nick/noise25/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 2.463647533616958e-06,
+      "min": 1.2758394256317487e-11,
+      "max": 0.0007518130172856386,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 9.07752457792486e-10,
+        "p25": 8.613242907148702e-09,
+        "p50": 5.8230781393566375e-08,
+        "p75": 4.0641539209255097e-07,
+        "p95": 5.205473412996535e-06
+      }
+    },
+    "output/hey_nick/quiet/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -20.917834824818925,
+      "min": -30.11193708280147,
+      "max": -6.667971829021597,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -26.683532016097793,
+        "p25": -23.24524888624919,
+        "p50": -20.776867930365917,
+        "p75": -18.688537372552958,
+        "p95": -15.521840158652362
+      }
+    },
+    "output/hey_nick/quiet/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.0003823444280076603,
+      "min": 6.479147024675219e-13,
+      "max": 0.24133777587548286,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 3.47240907539398e-11,
+        "p25": 9.312895192610534e-10,
+        "p50": 1.1348606583116726e-08,
+        "p75": 9.330768160742303e-08,
+        "p95": 6.925876742744627e-06
+      }
+    },
+    "output/hey_nick/rir/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": -20.788021961216618,
+      "min": -30.3244048128911,
+      "max": -8.05077936358174,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -26.740721591561723,
+        "p25": -23.08878305714763,
+        "p50": -20.672089437742184,
+        "p75": -18.488749152221736,
+        "p95": -15.258803672870444
+      }
+    },
+    "output/hey_nick/rir/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.00025736228100955527,
+      "min": 3.0107882753660866e-13,
+      "max": 0.13557483812462887,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 3.577695075807336e-11,
+        "p25": 1.0696456500066143e-09,
+        "p50": 1.1807133855373946e-08,
+        "p75": 1.2172311944474703e-07,
+        "p95": 7.2859046646523e-06
+      }
+    },
+    "output/hey_nyx/combined/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 6.1288404993330445,
+      "min": -4.454709741865965,
+      "max": 16.102389559755334,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.07043630760452567,
+        "p25": 3.7699287830157187,
+        "p50": 6.247250321094123,
+        "p75": 8.573920939740757,
+        "p95": 11.528159119697802
+      }
+    },
+    "output/hey_nyx/combined/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8827569562676927,
+      "min": 0.046973098761328325,
+      "max": 0.9999955296185282,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.5389333559061328,
+        "p25": 0.8300073067383118,
+        "p50": 0.9617839363780618,
+        "p75": 0.9939869809037808,
+        "p95": 0.9997255288879779
+      }
+    },
+    "output/hey_nyx/noise15/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 6.068187222679949,
+      "min": -6.897059500956885,
+      "max": 17.060848813702524,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": -0.2593122110914436,
+        "p25": 3.7129224436980195,
+        "p50": 6.350139487471747,
+        "p75": 8.523395975994353,
+        "p95": 11.740433462182656
+      }
+    },
+    "output/hey_nyx/noise15/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.8787297426843291,
+      "min": 0.0569210481420637,
+      "max": 0.999996076930653,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.49720796239268467,
+        "p25": 0.822789178080727,
+        "p50": 0.9619010053518946,
+        "p75": 0.9948343137340457,
+        "p95": 0.9997410919267748
+      }
+    },
+    "output/hey_nyx/noise25/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 12.052458252342252,
+      "min": -1.8939506932893624,
+      "max": 24.14384927386716,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 5.082333323574308,
+        "p25": 9.290924315488278,
+        "p50": 12.207838179987608,
+        "p75": 14.827517854955511,
+        "p95": 18.733929184849448
+      }
+    },
+    "output/hey_nyx/noise25/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9788123811782972,
+      "min": 0.2294285798521661,
+      "max": 0.9999999982723291,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8384435647925701,
+        "p25": 0.994071509967102,
+        "p50": 0.9996860042128328,
+        "p75": 0.9999785873975254,
+        "p95": 0.9999994298205386
+      }
+    },
+    "output/hey_nyx/quiet/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 11.15362116745932,
+      "min": -0.6757740216477229,
+      "max": 25.350058551950383,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 4.329577447381014,
+        "p25": 8.460715523914857,
+        "p50": 11.075526684618772,
+        "p75": 13.81199874735622,
+        "p95": 18.301864032109894
+      }
+    },
+    "output/hey_nyx/quiet/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9745624624500406,
+      "min": 0.35862868948762,
+      "max": 0.9999999954844966,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8543896019729414,
+        "p25": 0.9880428214013961,
+        "p50": 0.9993710476642861,
+        "p75": 0.9999476283618868,
+        "p95": 0.999998800927057
+      }
+    },
+    "output/hey_nyx/rir/logit": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 10.9509818334158,
+      "min": -0.12931922601111268,
+      "max": 24.70447597532343,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 4.555269275878439,
+        "p25": 8.104030379166245,
+        "p50": 10.877214514999547,
+        "p75": 13.536120013438907,
+        "p95": 17.997590420175932
+      }
+    },
+    "output/hey_nyx/rir/probability": {
+      "count": 672,
+      "defined": 672,
+      "undefined": 0,
+      "mean": 0.9750713049003624,
+      "min": 0.42761816084850574,
+      "max": 0.9999999963875973,
+      "total_conditioning_ids": 672,
+      "undefined_conditioning_ids": 0,
+      "undefined_groups": 0,
+      "partially_defined_groups": 0,
+      "undefined_windows": 0,
+      "quantiles": {
+        "p05": 0.8504142689610675,
+        "p25": 0.9870610614095489,
+        "p50": 0.9993079730402644,
+        "p75": 0.9999413298705478,
+        "p95": 0.999998675820587
+      }
+    }
+  },
+  "original_saved_model_preflight": {
+    "performed": true,
+    "saved_model_current_file_sha256": {
+      "fingerprint.pb": "e82bc37fe09dc887c898487ab349b40830b33b9a8734f0b82f67b08302ae2a37",
+      "saved_model.pb": "1e9f898266c9def25b0619288cf0b0e0349cb7d91d488994180009d3a1b05ce7",
+      "variables/variables.data-00000-of-00001": "1eb8124ae76c65bf9b32f15a998a29752db95377be5f66a90e4d0be6d7273c7d",
+      "variables/variables.index": "8baff8a576516f7d423fe53f88199a1ff99be4ac36c2c6edd25e86b50c0c012f"
+    },
+    "nonstate_variable_inventory_matches_h5": true,
+    "state_buffers": 6,
+    "first_trace_reset_exact": true,
+    "first_numeric_conditioning_id": "0",
+    "traces": [
+      {
+        "source": "0-0.9-hey_nyx.wav",
+        "arm": "quiet",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 1.6391277313232422e-07,
+        "stream_probability_range": 0.4414937198162079
+      },
+      {
+        "source": "0-0.9-hey_nyx.wav",
+        "arm": "noise25",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 8.344650268554688e-07,
+        "stream_probability_range": 0.28961074352264404
+      },
+      {
+        "source": "0-0.9-hey_nyx.wav",
+        "arm": "combined",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 3.5762786865234375e-07,
+        "stream_probability_range": 0.9076244831085205
+      },
+      {
+        "source": "0-0.9-hey_nyx.wav",
+        "arm": "noise15",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 5.662441253662109e-07,
+        "stream_probability_range": 0.475598007440567
+      },
+      {
+        "source": "0-0.9-hey_nyx.wav",
+        "arm": "rir",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 9.834766387939453e-07,
+        "stream_probability_range": 0.986351728439331
+      },
+      {
+        "source": "0-0.9-hey_nick.wav",
+        "arm": "quiet",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 118,
+        "maximum_probability_error": 1.2789769243681803e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-0.9-hey_nick.wav",
+        "arm": "noise25",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 118,
+        "maximum_probability_error": 9.549694368615746e-12,
+        "stream_probability_range": 0.0019234667997807264
+      },
+      {
+        "source": "0-0.9-hey_nick.wav",
+        "arm": "combined",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 3.92901711165905e-10,
+        "stream_probability_range": 0.001708300202153623
+      },
+      {
+        "source": "0-0.9-hey_nick.wav",
+        "arm": "noise15",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 118,
+        "maximum_probability_error": 1.1641532182693481e-10,
+        "stream_probability_range": 0.001708300202153623
+      },
+      {
+        "source": "0-0.9-hey_nick.wav",
+        "arm": "rir",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 1.0516032489249483e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-0.9-hey_next.wav",
+        "arm": "quiet",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 2.8421709430404007e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-0.9-hey_next.wav",
+        "arm": "noise25",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 9.414691248821327e-14,
+        "stream_probability_range": 0.0018452375661581755
+      },
+      {
+        "source": "0-0.9-hey_next.wav",
+        "arm": "combined",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 8.549250196665525e-11,
+        "stream_probability_range": 0.0017889742739498615
+      },
+      {
+        "source": "0-0.9-hey_next.wav",
+        "arm": "noise15",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 120,
+        "maximum_probability_error": 4.001776687800884e-11,
+        "stream_probability_range": 0.0017889742739498615
+      },
+      {
+        "source": "0-0.9-hey_next.wav",
+        "arm": "rir",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 5.968558980384842e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-0.9-hey_mix.wav",
+        "arm": "quiet",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 3.552713678800501e-14,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-0.9-hey_mix.wav",
+        "arm": "noise25",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 1.942890293094024e-16,
+        "stream_probability_range": 0.0018880941206589341
+      },
+      {
+        "source": "0-0.9-hey_mix.wav",
+        "arm": "combined",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 124,
+        "maximum_probability_error": 1.8189894035458565e-12,
+        "stream_probability_range": 0.001710143405944109
+      },
+      {
+        "source": "0-0.9-hey_mix.wav",
+        "arm": "noise15",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 122,
+        "maximum_probability_error": 3.467448550509289e-12,
+        "stream_probability_range": 0.001710143405944109
+      },
+      {
+        "source": "0-0.9-hey_mix.wav",
+        "arm": "rir",
+        "speed": 0.9,
+        "compared_windows": 25,
+        "stream_steps": 124,
+        "maximum_probability_error": 2.0605739337042905e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_nyx.wav",
+        "arm": "quiet",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 0.0,
+        "stream_probability_range": 0.9999271035194397
+      },
+      {
+        "source": "0-1.0-hey_nyx.wav",
+        "arm": "noise25",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 5.960464477539063e-08,
+        "stream_probability_range": 0.9999415874481201
+      },
+      {
+        "source": "0-1.0-hey_nyx.wav",
+        "arm": "combined",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 126,
+        "maximum_probability_error": 5.960464477539063e-08,
+        "stream_probability_range": 0.9984204173088074
+      },
+      {
+        "source": "0-1.0-hey_nyx.wav",
+        "arm": "noise15",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 5.960464477539063e-08,
+        "stream_probability_range": 0.9992085695266724
+      },
+      {
+        "source": "0-1.0-hey_nyx.wav",
+        "arm": "rir",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 126,
+        "maximum_probability_error": 0.0,
+        "stream_probability_range": 0.9999788403511047
+      },
+      {
+        "source": "0-1.0-hey_nick.wav",
+        "arm": "quiet",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 117,
+        "maximum_probability_error": 9.325873406851315e-15,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_nick.wav",
+        "arm": "noise25",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 117,
+        "maximum_probability_error": 3.597122599785507e-14,
+        "stream_probability_range": 0.0018412750214338303
+      },
+      {
+        "source": "0-1.0-hey_nick.wav",
+        "arm": "combined",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 119,
+        "maximum_probability_error": 8.640199666842818e-12,
+        "stream_probability_range": 0.0016656008083373308
+      },
+      {
+        "source": "0-1.0-hey_nick.wav",
+        "arm": "noise15",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 117,
+        "maximum_probability_error": 1.77351466845721e-11,
+        "stream_probability_range": 0.001665600691922009
+      },
+      {
+        "source": "0-1.0-hey_nick.wav",
+        "arm": "rir",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 119,
+        "maximum_probability_error": 4.107825191113079e-15,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_next.wav",
+        "arm": "quiet",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 1.1937117960769683e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_next.wav",
+        "arm": "noise25",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 7.194245199571014e-14,
+        "stream_probability_range": 0.0019787682686001062
+      },
+      {
+        "source": "0-1.0-hey_next.wav",
+        "arm": "combined",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 1.1596057447604835e-11,
+        "stream_probability_range": 0.0017655068077147007
+      },
+      {
+        "source": "0-1.0-hey_next.wav",
+        "arm": "noise15",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 5.6843418860808015e-12,
+        "stream_probability_range": 0.0017655068077147007
+      },
+      {
+        "source": "0-1.0-hey_next.wav",
+        "arm": "rir",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 1.3642420526593924e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_mix.wav",
+        "arm": "quiet",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 2.8421709430404007e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.0-hey_mix.wav",
+        "arm": "noise25",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 6.050715484207103e-15,
+        "stream_probability_range": 0.0020406157709658146
+      },
+      {
+        "source": "0-1.0-hey_mix.wav",
+        "arm": "combined",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 7.105427357601002e-13,
+        "stream_probability_range": 0.0017580111743882298
+      },
+      {
+        "source": "0-1.0-hey_mix.wav",
+        "arm": "noise15",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 122,
+        "maximum_probability_error": 1.3073986337985843e-12,
+        "stream_probability_range": 0.0017580111743882298
+      },
+      {
+        "source": "0-1.0-hey_mix.wav",
+        "arm": "rir",
+        "speed": 1.0,
+        "compared_windows": 23,
+        "stream_steps": 124,
+        "maximum_probability_error": 1.6200374375330284e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_nyx.wav",
+        "arm": "quiet",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 5.960464477539063e-08,
+        "stream_probability_range": 0.9998626112937927
+      },
+      {
+        "source": "0-1.1-hey_nyx.wav",
+        "arm": "noise25",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 2.384185791015625e-07,
+        "stream_probability_range": 0.998232901096344
+      },
+      {
+        "source": "0-1.1-hey_nyx.wav",
+        "arm": "combined",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 125,
+        "maximum_probability_error": 8.940696716308594e-08,
+        "stream_probability_range": 0.19235192239284515
+      },
+      {
+        "source": "0-1.1-hey_nyx.wav",
+        "arm": "noise15",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 1.341104507446289e-06,
+        "stream_probability_range": 0.9563117623329163
+      },
+      {
+        "source": "0-1.1-hey_nyx.wav",
+        "arm": "rir",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 125,
+        "maximum_probability_error": 5.960464477539063e-08,
+        "stream_probability_range": 0.9999603033065796
+      },
+      {
+        "source": "0-1.1-hey_nick.wav",
+        "arm": "quiet",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 118,
+        "maximum_probability_error": 2.5579538487363607e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_nick.wav",
+        "arm": "noise25",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 118,
+        "maximum_probability_error": 3.730349362740526e-14,
+        "stream_probability_range": 0.002165774581953883
+      },
+      {
+        "source": "0-1.1-hey_nick.wav",
+        "arm": "combined",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 120,
+        "maximum_probability_error": 1.1641532182693481e-10,
+        "stream_probability_range": 0.0018062987364828587
+      },
+      {
+        "source": "0-1.1-hey_nick.wav",
+        "arm": "noise15",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 118,
+        "maximum_probability_error": 2.6193447411060333e-10,
+        "stream_probability_range": 0.0018062988528981805
+      },
+      {
+        "source": "0-1.1-hey_nick.wav",
+        "arm": "rir",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 120,
+        "maximum_probability_error": 1.5631940186722204e-13,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_next.wav",
+        "arm": "quiet",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 122,
+        "maximum_probability_error": 1.6484591469634324e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_next.wav",
+        "arm": "noise25",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 122,
+        "maximum_probability_error": 3.552713678800501e-13,
+        "stream_probability_range": 0.0018902455922216177
+      },
+      {
+        "source": "0-1.1-hey_next.wav",
+        "arm": "combined",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 124,
+        "maximum_probability_error": 7.73070496506989e-12,
+        "stream_probability_range": 0.0017691315151751041
+      },
+      {
+        "source": "0-1.1-hey_next.wav",
+        "arm": "noise15",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 122,
+        "maximum_probability_error": 1.0459189070388675e-11,
+        "stream_probability_range": 0.0017691315151751041
+      },
+      {
+        "source": "0-1.1-hey_next.wav",
+        "arm": "rir",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 124,
+        "maximum_probability_error": 1.7053025658242404e-12,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_mix.wav",
+        "arm": "quiet",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 7.638334409421077e-14,
+        "stream_probability_range": 0.09026975929737091
+      },
+      {
+        "source": "0-1.1-hey_mix.wav",
+        "arm": "noise25",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 1.176836406102666e-14,
+        "stream_probability_range": 0.0018926167394965887
+      },
+      {
+        "source": "0-1.1-hey_mix.wav",
+        "arm": "combined",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 125,
+        "maximum_probability_error": 3.730349362740526e-14,
+        "stream_probability_range": 0.0017504466231912374
+      },
+      {
+        "source": "0-1.1-hey_mix.wav",
+        "arm": "noise15",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 123,
+        "maximum_probability_error": 6.217248937900877e-15,
+        "stream_probability_range": 0.0017504466231912374
+      },
+      {
+        "source": "0-1.1-hey_mix.wav",
+        "arm": "rir",
+        "speed": 1.1,
+        "compared_windows": 24,
+        "stream_steps": 125,
+        "maximum_probability_error": 7.247535904753022e-13,
+        "stream_probability_range": 0.09026975929737091
+      }
+    ],
+    "all60_predeclared_training_traces_match": true,
+    "limits": "Finite first-ID/three-speed/four-phrase/five-arm preflight, not universal export equivalence. Current received SavedModel hashes are reported; historical export record did not bind these per-file hashes."
+  },
+  "upstream_revision": "4665173cd35f1cff9a61e06fc427f124766c488e",
+  "upstream_source_sha256": {
+    "microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+    "microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+    "microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+    "microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+    "microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+    "microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+    "microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+    "microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    "microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+    "microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    "microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+    "microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+    "microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+    "microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+    "microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717"
+  },
+  "imported_upstream_module_sha256": {
+    "microwakeword": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "microwakeword.layers.average_pooling2d": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    "microwakeword.layers.modes": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "microwakeword.layers.stream": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "microwakeword.layers.strided_drop": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    "microwakeword.mixednet": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "numpy": "2.5.4",
+    "h5py": "3.14.0"
+  },
+  "python": "3.12.13",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "weights_unchanged": true,
+  "script_sha256": "d2b36a3a01bc948bb9fe130d76b7d6e5c2acfa83c141f226055ef180b7d9a93b",
+  "metrics_source_sha256": "ae8f8daf83f354c42fd33bee66eef8bb225182c20eb752239dbb392862549156",
+  "seconds": 38.731759333983064,
+  "limits": [
+    "Frozen selected10000 v46 original weights; training-only conditioning grid already examined. No generalization, independent-speaker or causal explanation of development errors.",
+    "Quiet/noise/RIR/combined conditions retain original gains, noise and tails. Common absolute positions avoid selecting different peaks; this does not isolate every rendering factor.",
+    "Complete generated containers and stored source boundaries are not verified phonetic endpoints.",
+    "The 300-dimensional Dense input retains five ordered positions. No extra embedding loss, temporal reduction, fitting, threshold choice or INT8/new-development/final/P4/audio operation.",
+    "Local clean upstream bytes are authenticated. GPU historical upstream bytes require a separate receipt; any finite original-export preflight is reported at its actual scope."
+  ]
+}
