@@ -4572,3 +4572,8 @@ All40320rawlinks/crops/labels/metadata authenticated;original24192subsetexact,ne
 ## v47 smoke passed and execution pinned
 
 Independent40320pack audit and50batch/1000draw/legalendpoint precheck passed. RTX4090two-step smoke45.8s,selected1,54312bytes SHAbbca7175b1f7e928c0e992f63c095c3cf0f2601877662de6d6925259c8c9263c. Finiteweights/frozenBN/int8[1,3,40]→uint8[1,1] exportpassed;not performanceacceptance. Originalsmoketraining/audit copiedbyte-for-byte. Formal recipe/postprocessor/historical shell/trainer/helper exacthashes pinned before formal startup. Postprocessor verifies15groups,newpack/report,allinheritedseeds/slots,then oldregression/phone/VCTK/Vox/138points only,no automatic unseen/promotion. Ready for one120k run;v30retained.
+
+
+## v47 original formal startup verified
+
+OriginalformalPID281170/start4934229/session44843 alive;waiterPID281771/start4936506/session17410 waits on exacttrainingidentity. Initialrandomhead/frozenBN match,pinnedexecsources unchanged. Actualtraining1000/120000observed;no restart or recipechange. Issue6815011788 records formalstartup. Completeexport/historicalgates stillpending;no acceptance/newdev/final access.
