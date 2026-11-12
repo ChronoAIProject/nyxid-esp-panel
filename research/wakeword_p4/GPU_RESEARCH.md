@@ -4530,3 +4530,8 @@ Mac6814637400 requested missing original calibration report. Copied exact958ba82
 ## Balanced rendering concentration and next diagnostic
 
 All24192variants grouped by original speed/phrase/variant and all8064sources paired across3renders. V46 historical negativehighs8allMixvariant2;positive929supportmisses include653variant2. Same-source positive509fail onlyvariant2;1293sources succeedallthree. Variant2 combinesRIR/noise15 whilevariant1noise25,so cannot isolate RIR/noise. Four olddev residual failures includeNick/Next/Mix and remain inactualfloat;do not explain them by this concentration. Predeclared full8064source rendering factorial quiet/noise15/RIR/RIRnoise15 using frozenv46;exactoriginalquiet/combined reproduction required before scoring. No training,newdev/finals or promotion.
+
+
+## Rendering factorial implementation and original-arm verification
+
+Implemented phase-separated no-model pipeline. First all8064sources×quiet/combined reproduce float64/WAV/frontend and gains exactly;controls forbidden until full reference receipt. Source bytes/manifests pinned. Clarified before controls/scoring: speech normalized to .08 before noise,so original plan noise-RIR RMS wording incorrect. Noise-only uses exact normalized combined noise vector prefix,with length/realized-SNR difference disclosed;all intermediate arrays retained for newcontrols. Reference session97108 running;no new controls or scores yet.

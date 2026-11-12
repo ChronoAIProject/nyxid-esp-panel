@@ -29,3 +29,10 @@ stop and report mismatch; do not relax tolerance or regenerate originals. Source
 and inference-contract checks remain required. This diagnostic cannot rescue v46,
 which remains rejected; v30 retained. Any future training needs a separate evidence-based
 preregistration; no automatic v47 or threshold/exposure rescue.
+
+Implementation clarification before controls/scoring: original code normalizes speech
+to RMS .08 before adding noise; the earlier statement that noise scaling depends
+on RIR signal RMS was inaccurate. Both use .08 as the noise reference. Use the
+exact full original combined noise vector and normalization, then truncate its
+prefix for the shorter dry container. Record lengths and realized SNR; shared prefix
+is exact but dry-container finite-sample RMS may differ. No tolerance relaxation.
