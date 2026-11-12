@@ -1,0 +1,19 @@
+{
+  "scope": "Actual batch AST executed with symbolic rows; coverage slice assignments extracted from actual source. Not acoustic/model inference.",
+  "source_sha256": {
+    "research/wakeword_p4/training/train_stream.py": "715eafb7ae9189e17beea8045d48b4f64710cdafa3b8931d6bc31d3bd869a978",
+    "research/wakeword_p4/training/phone_binary.py": "2ffd4759c037cd04d59551730b3900eea6ac5769692fe7e5bda9725eddb81d6a",
+    "research/wakeword_p4/training/complete_coverage.py": "d90e235715705d1678e7ada665a2a9940979ae847880c2a7c8e783d3287eafa0",
+    "research/wakeword_p4/training/us_coverage.py": "25c970e25c3ab8b3eebd34f3693314b6fb4848b80cecf4c677225d96069ce7b2",
+    "research/wakeword_p4/training/factorized_coverage.py": "7f7c47df21a6599c3663b1eae01e798fec098f4a13d270ecc73f5018d9d5ea7e"
+  },
+  "surviving_positive_slots": {
+    "full_source_fixed": 16,
+    "us_coverage": 8,
+    "factorized_coverage": 8,
+    "original_main_sampler": 0
+  },
+  "arbitrary_original_positive_change_entire_batch_exact": true,
+  "conclusion": "The proposed intervention in sample(1,32) is entirely overwritten before network input. Reject this insertion point before gradient/smoke/formal runs.",
+  "limits": "Symbolic dataflow evidence only; does not measure acoustic support of surviving packs. Original63300 feature rows still consumed for RNG but do not reach main training inputs. Existing metadata/feasibility receipts remain scoped to those inherited draws."
+}
