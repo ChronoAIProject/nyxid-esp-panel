@@ -1,6 +1,6 @@
 # GPU research cross-reference
 
-Latest observed GPU commit: `75cdd0d` (fetched 2026-11-12); see the
+Latest observed GPU commit: `4a53689` (fetched 2026-11-12); see the
 dated snapshots below and the latest experiments in `../wakeword_p4/training/PROGRESS.md`.
 The Mac input-control result is `../wakeword_p4/results/hiesp-input-acoustic-v1.json`.
 Post cross-machine updates and candidate handoffs to
@@ -1052,3 +1052,59 @@ requests complete inherited/new-US training-cohort support and actual-float
 versus INT8 correspondence on the already consumed old-development clips.
 Those results must inform any next preregistered intervention. No unused
 development/final scoring, automatic v45 or failed-model P4 rollout follows.
+
+### V44 diagnostic correspondence and v45 time-coverage experiment
+
+GPU `45d50d3` completes descriptive fitting/streaming diagnostics. All 1995
+inherited training negatives stay below .99609375 in recorded center-window
+float and full-stream INT8 max-five. New US supervision windows have 0/243
+negative highs and 77/81 positive highs, but full streams have 1/243 float and
+4/243 INT8 negative highs. Complete-container positive support is 72/81 float
+and 69/81 INT8. These are training-fit/support counts, not recognition parity.
+Old-development negative decisions are 291 neither, eleven both, two float
+only and zero INT8 only: every INT8 failure here also fails in actual float.
+The two one-sided records and all eleven shared failures remain published.
+
+At `9f16671`, all legal 150-frame float windows of the four selected *training*
+negative variants (indices 28,65,210,211) are enumerated. The trained windows
+have very small scores, while other legal windows peak above .998. At
+.99609375 they have 6/15/8/8 high endpoints, including 6/13/8/8 complete-container
+endpoints. This supports testing the new cohort's time coverage; it does not
+prove that window and stateful streaming inference are equivalent or that this
+is the sole cause of old-development failure. Small recorded differences from
+batching the trained-window replay are retained, rather than described as
+bit-exact score reproduction.
+
+The [Mac diagnostic metadata audit](../wakeword_p4/results/v44-diagnostic-metadata-mac-audit-v1.json)
+checks all 380 original development identities/event-index correspondences,
+13 failure witnesses, all 324 US source/variant identities and group totals,
+the 1995 inherited-negative counts, and all four selected-window endpoint
+ledgers. It checks report/source/weights-hash links, not actual model weights,
+score-array bytes, or inference. Its reproduction command is:
+
+```sh
+python3 research/handoff/audit_v44_diagnostic_metadata.py > /tmp/v44-diagnostic-metadata-fresh.json
+```
+
+Preregistration `9f16671` and implementation/precheck/smoke `4a53689` define
+v45 as one time-coverage intervention to the same 20 US batch slots. Seed167726
+source/variant choices and all inherited draws remain unchanged. Independent
+seed177726 selects complete-container endpoints for eight positives and six
+negatives, and full-timeline endpoints for six negatives. No witness-specific
+mass, new source, loss/head, or grid change is introduced. The GPU's complete
+324-endpoint audit, 50-batch/1000-draw independent sampler check and two-step
+4090 export smoke pass. Mac read the helper, trainer diff, precheck and
+postprocessor; this is source review, not independent replay of the GPU's
+unprovided feature pack.
+
+The original v45 run is reported live as PID235075/starttime4081425, remote
+session66708 at 02:34:11 UTC in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6812682048).
+These identifiers are on the GPU machine, not Mac tool handles. Observe this
+same run; expired observation does not justify restarting or duplicating it.
+Original completion/export/fixed-old-stage evaluation follows that exact
+process. No v45 accuracy or acceptance result exists at this snapshot. An
+eligible frozen candidate still needs unused-development, Mac350, exact-PCM,
+P4/acoustic/resource and immediate-speech/long-call/reconnect evidence before
+any Hi ESP parity or production claim. The restaurant production panel is
+not involved.
