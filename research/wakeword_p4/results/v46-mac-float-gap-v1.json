@@ -1,0 +1,127 @@
+{
+  "scope": "Original v46 float export on the complete reused Mac350 versus its saved INT8 stream; no export, calibration or acceptance.",
+  "accepted": false,
+  "preregistration_commit": "7f3b813",
+  "sources": 350,
+  "retained_float_outputs": 189880,
+  "int8_outputs": 94940,
+  "threshold": 0.99609375,
+  "all_mode_reset_replays_exact": true,
+  "nonstate_variables_unchanged": true,
+  "first_source_direct_signature_checks": [
+    {
+      "mode": "original",
+      "compared": 241,
+      "maximum_probability_error": 0.0
+    },
+    {
+      "mode": "dequantized",
+      "compared": 241,
+      "maximum_probability_error": 0.0
+    }
+  ],
+  "full_result_sha256": "cd042f40961a1969bdffc62d90f619c394e6e6bf64ff392d31c2c424dcc37c48",
+  "float_scores_sha256": "ff8b5fb3e60c592d07622245a1dc27013050f6ac8ee0355165350015b68b3410",
+  "source_sha256": "2cf22d1468902bfa7712f387de96ac0165e733324f48a888a7b6564728892f5c",
+  "saved_model_files": {
+    "fingerprint.pb": "e82bc37fe09dc887c898487ab349b40830b33b9a8734f0b82f67b08302ae2a37",
+    "saved_model.pb": "1e9f898266c9def25b0619288cf0b0e0349cb7d91d488994180009d3a1b05ce7",
+    "variables/variables.data-00000-of-00001": "1eb8124ae76c65bf9b32f15a998a29752db95377be5f66a90e4d0be6d7273c7d",
+    "variables/variables.index": "8baff8a576516f7d423fe53f88199a1ff99be4ac36c2c6edd25e86b50c0c012f"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.5.4",
+    "pymicro-features": "2.0.2",
+    "soundfile": "0.13.1"
+  },
+  "summaries": {
+    "original": {
+      "positives_any_event": {
+        "clips": 50,
+        "clips_with_event": 12,
+        "events": 12
+      },
+      "shared_ordinary_sentences": {
+        "clips": 100,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "nyx_specific_near_words": {
+        "clips": 90,
+        "clips_with_event": 5,
+        "events": 5
+      },
+      "hi_esp_specific_near_words_unvalidated_pronunciation": {
+        "clips": 60,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "other_wake_phrase": {
+        "clips": 50,
+        "clips_with_event": 0,
+        "events": 0
+      }
+    },
+    "dequantized": {
+      "positives_any_event": {
+        "clips": 50,
+        "clips_with_event": 12,
+        "events": 12
+      },
+      "shared_ordinary_sentences": {
+        "clips": 100,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "nyx_specific_near_words": {
+        "clips": 90,
+        "clips_with_event": 5,
+        "events": 5
+      },
+      "hi_esp_specific_near_words_unvalidated_pronunciation": {
+        "clips": 60,
+        "clips_with_event": 0,
+        "events": 0
+      },
+      "other_wake_phrase": {
+        "clips": 50,
+        "clips_with_event": 0,
+        "events": 0
+      }
+    }
+  },
+  "original_int8_zero_targets": 18,
+  "zero_target_float_peak_ranges": {
+    "original": {
+      "count": 18,
+      "minimum": 3.1455127214030654e-07,
+      "maximum": 0.0002763836528174579,
+      "below_half_uint8_output_step": 18
+    },
+    "dequantized": {
+      "count": 18,
+      "minimum": 3.1448678328160895e-07,
+      "maximum": 0.0002756431349553168,
+      "below_half_uint8_output_step": 18
+    }
+  },
+  "fixed_threshold_classification_differences": {
+    "original": [],
+    "dequantized": []
+  },
+  "maximum_abs_probability_difference_from_int8": {
+    "original": 0.2698397934436798,
+    "dequantized": 0.27183929085731506
+  },
+  "maximum_input_rounding_probability_change": 0.010466158390045166,
+  "independent_saved_array_accounting_passed": true,
+  "limits": [
+    "Already consumed correlated synthetic intention labels; no fresh human, matched population FAR, phonetic or physical acceptance.",
+    "SavedModel bytes are the authenticated received original export; its identity does not by itself prove universal export/runtime equivalence.",
+    "Dequantized input is an input-sensitivity control, not a reconstructed INT8 computation. Fixed-threshold counts and maxima are descriptive, not a new threshold, gate or model selection.",
+    "No GPU formal-run change, fitting, new/final data, playback, recording, board access or alteration of single-I2S/AEC/AGC/FIFO.",
+    "Float and INT8 pointwise residuals can reach about .27; matching classifications at one fixed historical threshold are not general numerical equivalence.",
+    "The 18 INT8-zero targets already have very small float probabilities before final output rounding. This does not identify the training or synthetic-pronunciation cause."
+  ]
+}

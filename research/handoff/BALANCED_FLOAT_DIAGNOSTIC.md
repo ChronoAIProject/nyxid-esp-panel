@@ -126,3 +126,46 @@ is near quiet. These are descriptive original-training results. They do not
 identify a unique cause or establish a representation-loss remedy. They also
 use different temporal scopes/weighting from the GPU two-endpoint diagnostic;
 the numerical summaries are not claimed to be identical replications.
+
+## Original v46 float export on reused Mac350
+
+The [frozen follow-up](plans/v46-mac-float-gap-v1.json) and
+[`measure_v46_mac_float_gap.py`](measure_v46_mac_float_gap.py) compare the exact
+received SavedModel with the complete previously saved Mac350 INT8 regression.
+Both original float features and the original INT8 input values dequantized to
+float pass through that same SavedModel. PCM speed, all frontend hashes, prime,
+tail padding, stride and the original `.99609375` threshold remain fixed.
+This performs no new export, fitting or calibration.
+
+The [completed result](../wakeword_p4/results/v46-mac-float-gap-v1.json) retains
+189880float outputs in two modes against94940original INT8 outputs. Every mode
+replays exactly twice after resetting all six state buffers; all31nonstate
+variables remain unchanged. A sequential graph wrapper matches all241direct
+signature outputs on the first complete source exactly in both modes.
+
+All three paths classify the same12/50targets and5/90Nyx-near negatives at the
+fixed historical threshold. The18INT8-zero target clips already have maximum
+single-source float probabilities between3.15e-7and.0002764; all are below half
+of one UINT8 output step (`1/512`). Their raw-float five-score maxima are at most
+`.0001139`. The recognition gap is thus present before final output rounding
+on these reused synthetic sources. This does not identify a training or
+pronunciation cause, and does not make quantization differences negligible:
+maximum pointwise float/INT8 residuals are.269840(original input) and.271839
+(dequantized input); the input-rounding sensitivity maximum is.0104662.
+Matching classifications at one fixed threshold are not general equivalence.
+
+The [independent saved-array audit](../wakeword_p4/results/v46-mac-float-gap-v1-audit.json)
+recomputes all189880outputs' hashes, `math.fsum` windows, events, per-voice/variant
+counts and zero-cohort ranges without importing the producer's smoothing or
+event policy. It passes and retains those residuals. No acoustic/P4, fresh
+human, reserved-data, new-model acceptance or GPU-run change follows.
+
+```sh
+python research/handoff/measure_v46_mac_float_gap.py \
+  --sources "$PUBLIC_MAC_PAIRED" --model-dir "$ORIGINAL_V46_MODEL" \
+  --int8-study "$V46_MAC_REPLAY" \
+  --plan research/handoff/plans/v46-mac-float-gap-v1.json --output "$FRESH_FLOAT_GAP"
+python research/handoff/audit_v46_mac_float_gap.py \
+  --float-study "$FRESH_FLOAT_GAP" --int8-study "$V46_MAC_REPLAY" \
+  --output "$FRESH_FLOAT_AUDIT"
+```

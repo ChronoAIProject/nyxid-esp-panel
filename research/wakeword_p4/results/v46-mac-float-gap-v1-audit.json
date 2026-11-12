@@ -1,0 +1,34 @@
+{
+  "scope": "Reconstruct saved float/INT8 classifications and zero-cohort score ranges.\n\nNo model inference. Uses math.fsum windows and independent event accounting,\nwithout importing the producer's smoothing or detector policy.\n",
+  "passed": true,
+  "accepted": false,
+  "float_result_sha256": "cd042f40961a1969bdffc62d90f619c394e6e6bf64ff392d31c2c424dcc37c48",
+  "float_scores_sha256": "ff8b5fb3e60c592d07622245a1dc27013050f6ac8ee0355165350015b68b3410",
+  "int8_result_sha256": "a50d4d04ee66272cf2a4a978490b96e82f73477cb225907e7e61c839357b5893",
+  "auditor_sha256": "8907aedaa316f6cc73fcc1493bbf5bfd0adad4dfc72e3b79f5b11cf23e4cfc5a",
+  "verified_float_outputs": 189880,
+  "fixed_threshold_classification_differences": {
+    "original": [],
+    "dequantized": []
+  },
+  "maximum_abs_probability_difference_from_int8": {
+    "original": 0.2698397934436798,
+    "dequantized": 0.27183929085731506
+  },
+  "maximum_input_rounding_probability_change": 0.010466158390045166,
+  "zero_target_float_peak_ranges": {
+    "original": {
+      "count": 18,
+      "minimum": 3.1455127214030654e-07,
+      "maximum": 0.0002763836528174579,
+      "below_half_uint8_output_step": 18
+    },
+    "dequantized": {
+      "count": 18,
+      "minimum": 3.1448678328160895e-07,
+      "maximum": 0.0002756431349553168,
+      "below_half_uint8_output_step": 18
+    }
+  },
+  "limits": "Exact saved-array/hash/event accounting on reused synthetic sources. No independent model inference or proof that export differences are zero; maximum residuals are retained. No training-cause, population FAR/recall or physical acceptance claim."
+}
