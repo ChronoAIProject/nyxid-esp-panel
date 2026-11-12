@@ -4316,3 +4316,7 @@ Original 4090 run completed 120000 steps in 2197.7 s; unchanged historical check
 ### 2026-11-12 UTC — v42 rejected at fixed old-development gate
 
 Complete original postprocessor finished. Fixed 138 thresholds: zero eligible. Summary: {"candidate": "v42", "status": "rejected", "grid_points": 138, "eligible_points": 0, "max_macro": 0.7333333333333334, "minimum_negative_false_clips": 20, "frozen_v30_retained": true, "untouched_development_used": false, "final_used": false, "limits": "Historical reused development rejection; not independent acceptance. Score-trace hashes require separate receipt."}. At historical threshold 0.992: Kokoro target-any 10/16, common-negative false clips 6/48, cross 0/16; VCTK target-any 38/60, common false 15/180, cross 0/60. Old Vox 8.173672725694447 h, zero events, upper95 0.3665099367309777/h. Background pass does not override synthetic failures. Original reports copied unchanged. No new-development/final access; v30 retained.
+
+### 2026-11-12 UTC — v42 saved-score authentication and unseen guard
+
+Authenticated all 467 saved old-development NPY files (80 Kokoro, 300 VCTK, 87 Vox) against their original report SHA256 values; all match. Reproduction script and detailed receipt saved. `unseen_development.py --candidate v42 --check-only` rejected with the expected no-eligible-point error before unseen data access. The rejection remains authoritative; no candidate promotion or new training started.
