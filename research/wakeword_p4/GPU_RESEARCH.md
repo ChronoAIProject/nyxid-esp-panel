@@ -4998,3 +4998,7 @@ Original trainer504191 remains live, quarter of fixed120k updates completed. Ori
 ### Common formal35000 checkpoint retained
 
 Original35000 record4113B SHA68f08e96d8bd7824b662d80a04b94d52c7359a7a06f0faae1cfd980bb591f198 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.56640625/max-source false.02916667, background0/1.204811h, one-sided95% upper2.48647/h. Higher fallback recall is accompanied by excessive confusion and is not acceptance. All239 execution pins reauthenticated unchanged this observation turn; original trainer504191 remains live. Fixed120k continues without restart/newdev/final use; v30 retained.
+
+### Common formal40000 checkpoint retained
+
+Original trainer504191 remains live; fixed120k plan one-third complete. Original40000 record3989B SHAb9ae18e822e9650c7b47b0e405654515765b4091e9ebfdc4f6179109154201d6 preserved byte-identically. Zero float-selection eligible points; fallback.994 macro.42369792/max-source false.0125, background0/1.204811h (one-sided95% upper2.48647/h). No acceptance or cross-arm advantage conclusion. No restart/newdev/final access; v30 retained. Issue13 checked, no new Mac reply.
