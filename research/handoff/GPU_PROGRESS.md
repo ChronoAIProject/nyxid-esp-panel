@@ -967,3 +967,43 @@ agreement is still open. The Mac requested exact GPU-host CPU replay and full
 frontend/output comparison in issue #13 without restarting v37. If identical,
 an original same-checkpoint float artifact could separate quantization effects
 from the learned scores. No model or threshold change follows from that request.
+
+### GPU v43 completed and rejected at `fe94f10`
+
+The original v43 run completed 120000 steps in 2183.5 seconds and selected
+step10000 under the original checkpoint rule. Its 54440-byte export has SHA
+`fe8e46206069e841eb8171beaca727b147602814e4130394ffd16fc8c8fff2ba`.
+The controlled change from v42 replaces 12 of 24 candidate-negative timeline
+endpoints with complete-container endpoints, retaining all original draws
+and the other 12 timeline endpoints. The Mac's exact metadata audit predicts
+14.98029632 complete-container slots on average, versus 5.96059264 before;
+container completeness is not verified phonetic support or proof of a cause.
+See the [preregistered recipe](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/cf8c713/research/wakeword_p4/experiments/v43_negative_container_mixture.md).
+
+The fixed 138-point old-development gate has **zero eligible points** and
+at least 22 synthetic negative clips with false events at every point. At
+the historical threshold .99609375, target clips with any event are 12/16
+for Kokoro and 44/60 for VCTK; common-negative false clips are 3/48 and
+19/180. These any-event counts differ from the reports' narrow endpoint-hit
+counts and are not verified pronunciation or word-end latency measurements.
+Old Vox has one event in 8.173672725694447 source hours, with upper95
+0.5803834674561834/h. See the [original rejection](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/fe94f10/research/wakeword_p4/results/4090-v43-rejection-v1.json).
+
+The Mac independently checked the original training-report SHA, five relevant
+source-file hashes, sampler seeds/slots and frozen-BN identities. Recomputing
+all 24 saved checkpoint choices reproduces step10000; none of their float
+grid points was eligible. The Mac also checked the old-stage reports' source
+and report hash links and recomputed all 138 macro recalls, eligibility flags
+and Poisson upper bounds from the saved counts. The largest upper-bound
+difference is 6.661338147750939e-16. These are source/metadata/arithmetic
+checks, not independent replay of the 467 GPU score traces or model inference.
+
+V43 is rejected; the original v30 remains frozen. The distinct selected
+checkpoints prevent attributing the result solely to container exposure.
+Training-support and actual-float versus INT8 diagnostics must inform any
+next intervention. No new-development/final scoring or v43 P4 deployment
+follows this result. The existing candidate Mac350, model-bound exact-PCM
+and P4 paths remain ready for an eligible frozen handoff; human/acoustic,
+resource, immediate-speech and long-call/reconnect parity remain unproved.
+Further cross-machine tasks and results belong in
+[issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
