@@ -1,0 +1,11 @@
+# Frozen training-only representation diagnostic
+
+After v47 rejection and actual float/INT8 old-development comparison, inspect the selected v46 and v47 window models without updating weights. Include every one of the 8064 training sources and all five authenticated factorized rendering arms. These sources have already been trained/scored: this is a fit diagnostic, never independent generalization or acceptance.
+
+For each source use two common 150-frame windows across its five arms: earliest common complete endpoint = maximum feature_crop_end, latest common endpoint = minimum of 350 and all raw lengths. Authenticate raw files, shapes and complete-container bounds for every arm. Identical endpoints control placement within a source; RIR/noise/headroom/tail remain properties of the rendering intervention. The two endpoints are descriptive fixed endpoints, not exhaustive streaming support or an optimized window.
+
+Extract the Flatten tensor immediately entering the original single sigmoid Dense head, using training=False. Verify the original head reconstructed from every embedding reproduces its model score. Save all embeddings, original probabilities, logits, source ordering and endpoint indices for both models. Reject nonfinite values; record zero norms explicitly. No head fitting, threshold search, mining or selective exclusion.
+
+Report by model/endpoint/arm/phrase embedding norms and original logits; cosine similarity of each arm to same-source quiet; and target-versus-each-confusion cosine and original-logit differences paired by training voice and speed. Also report quiet-to-noisy changes in those margins. Quantiles are min/p05/median/p95/max, with full numerical arrays retained for independent recomputation. No hypothesis test or automatic loss/weight/architecture selection follows these summaries.
+
+The final representation contains temporal dimensions flattened by the original architecture. Cosine changes are descriptive and do not prove phonetic loss, speaker disentanglement, a useful contrastive objective, or causal superiority of one training run. V46 selected10k and v47 selected5k; training trajectories and augmentation mass differ. No new development, final data, background FAR, retraining, model export or promotion. Preserve v30 and all prior rejection gates.
