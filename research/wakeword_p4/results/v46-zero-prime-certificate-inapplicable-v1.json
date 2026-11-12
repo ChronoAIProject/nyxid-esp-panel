@@ -1,0 +1,22 @@
+{
+  "scope": "Retained failed applicability check, not a model acceptance test",
+  "command": [
+    "/Users/auric/tmp/output/wakeword-macos-research/.venv/bin/python",
+    "-B",
+    "research/wakeword_p4/training/analyze_mac_score_separation.py",
+    "--artifacts",
+    "/Users/auric/tmp/output/home-wake-research-20261110/v46-original-historical-mac-v1",
+    "--plan",
+    "research/wakeword_p4/training/plans/v46-original-mac-score-separation-v1.json",
+    "--output",
+    "/Users/auric/tmp/output/home-wake-research-20261110/v46-original-mac-score-separation-v1"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/auric/tmp/nyx-panel-research-handoff/research/wakeword_p4/training/analyze_mac_score_separation.py\", line 125, in <module>\n    main()\n  File \"/Users/auric/tmp/nyx-panel-research-handoff/research/wakeword_p4/training/analyze_mac_score_separation.py\", line 68, in main\n    assert prime_max == 0, 'A nonzero prime needs separate latch analysis; do not use this certificate'\n           ^^^^^^^^^^^^^^\nAssertionError: A nonzero prime needs separate latch analysis; do not use this certificate\n",
+  "analyzer_sha256": "b977bc4b39e2c84e6a42a4d4ac370ad3f0e769f6d8d234c4f7c9a5b5e4fbe668",
+  "plan_sha256": "12944cafc3c5c23a08901693a8f2fb35237c41da1db71fb10be42676ddac638c",
+  "observed_prime_max_sum": 26,
+  "zero_prime_guard_unchanged": true,
+  "accepted": false
+}

@@ -43,7 +43,7 @@ def main():
                    for row in report['source_details'])
         assert report['threshold'] == plan['threshold']
     output_hash_field = 'output_sha256' if schema == 'candidate-mac-v1' else 'quantized_output_sha256'
-    threshold_sum = Fraction.from_float(plan['threshold'])*1280
+    threshold_sum = Fraction.from_float(float(np.float32(plan['threshold'])))*1280
     assert plan['block_samples'] == 480 and plan['score_window'] == 5
     qfile = np.load(root/'scores.npz', allow_pickle=False)
     assert set(qfile.files) == {f'output_{i}' for i in range(350)}

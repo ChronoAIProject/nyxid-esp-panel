@@ -28,7 +28,7 @@ def main():
     schema = plan.get('report_schema', 'v30-original-v1')
     assert schema in ('v30-original-v1', 'candidate-mac-v1')
     output_hash_field = 'output_sha256' if schema == 'candidate-mac-v1' else 'quantized_output_sha256'
-    threshold_sum = Fraction.from_float(plan['threshold'])*1280
+    threshold_sum = Fraction.from_float(float(np.float32(plan['threshold'])))*1280
     traces = np.load(args.study/'scores.npz', allow_pickle=False)
     assert len(parent['source_details']) == len(result['source_scores']) == 350
     checked, witnesses = [], []

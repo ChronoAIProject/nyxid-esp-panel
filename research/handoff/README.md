@@ -2110,6 +2110,33 @@ python research/wakeword_p4/training/audit_candidate_mac_regression.py \
   --reference "$ORIGINAL_V30_MAC_STUDY/result.json" --output "$FRESH_AUDIT"
 ```
 
+The follow-up [nonzero-support bound](../wakeword_p4/results/v46-original-mac-nonzero-support-v1.json)
+shows that18/50v46target streams have an entirely zero post-prime five-score
+sequence. Any positive threshold can therefore trigger at most32/50, even
+before considering false wakes; a scalar-threshold change cannot reach the
+retained48/50Hi ESP count on these saved traces. This is an optimistic bound,
+not a proposed threshold or a claim that all32could trigger. Both prefix-sum
+and direct-window arithmetic agree on every saved output. The cause of these
+zero INT8 outputs, including any float/quantization contribution, is unproved.
+
+The original v30 zero-prime certificate was also attempted with an explicit
+candidate report schema. It correctly
+[refuses v46](../wakeword_p4/results/v46-zero-prime-certificate-inapplicable-v1.json):
+v46's prime maximum is26/1280, so its zero-prime assumption fails. That guard
+remains unchanged; no general zero-confuser threshold certificate is claimed.
+The different nonzero-support bound above needs no prime/latch assumption.
+The schema extension reproduces all original v30 analysis and audit values
+except source/derived-report identity fields in the
+[compatibility check](../wakeword_p4/results/v30-score-separation-schema-compatibility-v1.json).
+Reproduce the necessary support bound without inference or threshold scanning:
+
+```sh
+python research/wakeword_p4/training/bound_mac_nonzero_scores.py \
+  --artifacts "$V46_MAC_REPLAY" \
+  --plan research/wakeword_p4/training/plans/v46-original-mac-nonzero-support-v1.json \
+  --output "$FRESH_SUPPORT_BOUND"
+```
+
 ### Original Piper PCM endpoint provenance
 
 The GPU endpoint diagnostic identified 40 original Piper files with one
