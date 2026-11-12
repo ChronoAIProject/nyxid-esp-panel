@@ -4960,3 +4960,9 @@ Original session93786 remains live. Twenty-second progress record110000 preserve
 ### Independent formal115000 checkpoint retained
 
 Original session93786 remains live. Twenty-third progress record115000 preserved byte-identically;0float-eligible points. Fallback.994 macro.56041667, maximum-source confusion.04166667, background0/1.204811h (one-sided95% upper2.48647/h). Fixed120k plan continues unchanged, final5000updates pending before export/common arm; no acceptance/restart/newdev/final access, v30 retained. Original record/audit pushed without repetitive Issue status.
+
+### Independent formal120k complete; original sequence starts common arm
+
+Independent original run completed120000 updates, selected5000,5166.7s. All120000loss rows continuous finite and120000sampling traces present, original report hashes authenticated. Original training.json609013B SHA0ade411379c272b13fa7a92aa8c6949a3396983e57eaf96fe4572fe744532a59 copied byte-identically. Streaming INT8 model54440B SHA83cc9b613062cc706c67736aa6ae500c89d69bbd50546137d211ecf281c00cca; saved weights finite, frozenBN unchanged, interface[1,3,40]int8→[1,1]uint8 verified. Final120000checkpoint itself0float-eligible points, fallback.994/macro.53828125/max-source confusion.034375; original selection retains5000. No promotion or acceptance conclusion.
+
+Same original sequence session93786 has proceeded automatically to common120k arm, live trainer PID504191 observed. No restart. Full matched input audit/historical scoring wait for both completed arms as pinned. No newdev/final access, v30 preserved. Independent completion originals and receipts pushed, Issue13 notified.
