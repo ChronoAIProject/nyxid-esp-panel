@@ -804,6 +804,35 @@ replays byte-for-byte. See
 
 ### Negative cost control and alternative model feasibility
 
+An additional fixed-default PocketSphinx5.1.1 feasibility study was frozen at
+`b84834e` before keyword scoring. It replays all350 existing Mac sources twice
+with fresh decoders, unchanged16kHz PCM, the original56160-sample silence prime,
+480-sample blocks and only final-block zero padding. The native dictionary
+entries `hey HH EY` / `nicks N IH K S` and default `kws_threshold=1e-30` stay
+fixed. No language model, new fitting, threshold sweep or audio device is used.
+All source hashes/PCM CRCs and repeated native events agree.
+
+The [complete result](../wakeword_p4/results/pocketsphinx-feasibility-v1.json)
+has40/50 target clips with events, versus retained Hi ESP48/50. On identical
+negative PCM it fires on43/100 ordinary sentences and46/90 Nyx near-word clips,
+versus Hi ESP0/100 and0/90. This default configuration is unsuitable. It does
+not rule out all PocketSphinx configurations or all HMM-based detectors.
+Its6,609,581-byte raw acoustic payload also exceeds the current2MiB filesystem;
+compressed/native integration remains unmeasured. Host decoding takes23.16s
+for1625.17s of source audio plus priming; this is not a P4 performance estimate.
+Process peak RSS includes Python and all preloaded PCM, so it is not model RAM.
+No reserved/final data, playback, recording, hardware or production change
+occurred. The original GPU experiment continues independently.
+
+Reproduce in a separate macOS Python environment with `pocketsphinx==5.1.1`:
+
+```sh
+python research/wakeword_p4/training/replay_pocketsphinx_feasibility.py \
+  --sources "$PUBLIC_MAC_PAIRED" \
+  --plan research/wakeword_p4/training/plans/pocketsphinx-feasibility-v1.json \
+  --output "$FRESH_POCKETSPHINX_STUDY"
+```
+
 `embedding/plans/negative20-continuation-v1.json` freezes a separate loss-cost
 intervention: negative BCE weight20 instead of5, with both original control
 datasets, labels, initialization, seeds, optimizers, sampling and PTQ unchanged.
