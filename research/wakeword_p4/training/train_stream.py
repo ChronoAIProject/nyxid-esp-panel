@@ -42,6 +42,7 @@ def main():
     parser.add_argument("--full-source-pack", type=Path)
     parser.add_argument("--full-source-temporal-pack", type=Path)
     parser.add_argument("--five-score-pack", type=Path)
+    parser.add_argument("--us-temporal-coverage", action="store_true")
     parser.add_argument("--us-coverage-pack", type=Path)
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
@@ -86,6 +87,8 @@ def main():
         parser.error("negative-container-mixture requires v42 positive and negative full timeline")
     if args.positive_full_timeline and not args.negative_full_timeline:
         parser.error("positive-full-timeline requires negative-full-timeline")
+    if args.us_temporal_coverage and not args.us_coverage_pack:
+        parser.error("US temporal coverage requires US pack")
     if args.us_coverage_pack and not (args.complete_coverage_pack and args.negative_container_mixture):
         parser.error("US coverage requires unchanged v43 complete/container mixture recipe")
     if args.negative_full_timeline and not args.complete_coverage_pack:
@@ -248,7 +251,7 @@ def main():
     us_coverage = None
     if args.us_coverage_pack:
         from us_coverage import USCoverage
-        us_coverage = USCoverage(args.us_coverage_pack)
+        us_coverage = USCoverage(args.us_coverage_pack, temporal=args.us_temporal_coverage)
         (root/"us_coverage.json").write_text(json.dumps(us_coverage.report,indent=2)+"\n")
 
     def batch(mine=True, augment=True):
