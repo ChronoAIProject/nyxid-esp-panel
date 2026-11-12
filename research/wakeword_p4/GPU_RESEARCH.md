@@ -4669,3 +4669,8 @@ Certified initialization and saved first actual batch replayed without updates o
 ## Fresh v2 matched smokes pass
 
 Execution8858a9a, control/treatment each2updates,41.4/42.7s. Initial inventories and full ordered main/pair sampling trace exact between arms; all pre-update first-step observed losses and encodergradient norms now exactly equal. Main/pair/D losses match new CUDA full-FP32 first-batch reference at original1e-5 tolerances. Both54312B INT8 exports pass finite/frozenBN/shape/dtype audits. This clears fresh smoke engineering checks only, does not erase v1 failure or establish acceptance. Formal120k scripts prepared, execution pins/postprocessing still required before launch; no new/final data accessed.
+
+
+## Fixed formal execution pins
+
+Fresh v2 smokes pass. Prepared one120k run per arm, original5k checkpoint/PTQ/selection and all inherited main recipe checks. Complete120k ordered main/pair sampling and initialinventory must match before scoring. Sequence fails closed, no automatic retries. Postprocessor uses only original historical corpora and unchanged138-point calibration implementation, never newdev/final or automatic promotion. Execution receipt pins trainer/helper/commands/postprocessors and explicit deterministic full-FP32 policy; originallambda1 and v1 failures unchanged.
