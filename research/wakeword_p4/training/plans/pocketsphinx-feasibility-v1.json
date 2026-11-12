@@ -1,0 +1,48 @@
+{
+  "scope": "One fixed-default PocketSphinx 5.1.1 host feasibility replay of all350 reused synthetic Mac sources. Not independent, acoustic, P4 or Hi ESP parity acceptance.",
+  "upstream_commit": "511126b492dcb267cf30d49d631946d7b61a9530",
+  "pocketsphinx_version": "5.1.1",
+  "mac_cp313_universal2_wheel_sha256": "8de78671858278dbe97bf9578ea25a70ac2162d49a3218155c874058ba4554fc",
+  "manifest_sha256": "c776e3790d4df96774e5a9b4b3d0526135621d93e69c6caa25959f9772f0b39f",
+  "baseline_sha256": "df1cf05a694c14a284b92760bb300c75fc6bc58eafbd329ed2c99b2a20f51770",
+  "acoustic_files": {
+    "README": "8b88de980568509c646d0527b8414beef136964391903b40996d32f737bf752e",
+    "feat.params": "c982c5f75e2a30c34d2c9ef1f6b129a5a00e67e3e927565076b58664cc2404c9",
+    "mdef": "2360f9a86889c1cfee8bd618a0269387911e5fb2920a594f506b18b8c79683b0",
+    "means": "832019e32cac12eb318964f96f469034acb12d0348eeddc3831831a100cb4dd4",
+    "noisedict": "7295b07df2c204c4f87c6782b6be1a3859d7006d4e3864181c955d6dab105a33",
+    "sendump": "8c9564c0d5bef69ca9d9bf1014abe162f071644cf02cf1fa8a483c3dc165a7a8",
+    "transition_matrices": "c1f7f28ea43177be734be1f88bd7f1b9a853d0e660f8599c67c6eaeca8bb539a",
+    "variances": "b00d696f85e96834fc10f8e5f06428d8c4db6bffdbe5845b6f69bf6efbc48fa5"
+  },
+  "native_dictionary_sha256": "20b5c293e1f311fb375fe067e500ec5636f4fc7af5594967263696def9b23bfe",
+  "dictionary_entries": [
+    "hey HH EY",
+    "nicks N IH K S"
+  ],
+  "keyphrase": "hey nicks",
+  "pronunciation_policy": "Exact two original CMU entries; same Nicks spelling as source intent. No score-based dictionary changes. Pronunciation intent is not phonetic truth.",
+  "decoder_defaults": {
+    "samprate": 16000,
+    "kws_threshold": 1e-30,
+    "kws_delay": 10,
+    "kws_plp": 0.1,
+    "beam": 1e-48,
+    "pbeam": 1e-48,
+    "wbeam": 7e-29,
+    "frate": 100
+  },
+  "prime_samples": 56160,
+  "block_samples": 480,
+  "pcm_speed_changed": false,
+  "protocol": "Before scoring, authenticate all350 WAV hashes/header geometry and retained Hi ESP PCM CRC. Twice replay each full source with a new Decoder, no LM, exact native keyword defaults. Original prime plus final block zero padding only. Preserve every unique native keyword segment and first observed return block, including prime/flush events.",
+  "decision": "Single default configuration; no threshold or pronunciation sweep and no fitting. Report all target/text/voice event counts. Storage/native MCU feasibility must be established separately even if host scores look promising.",
+  "limits": [
+    "All350 correlated synthetic sources are reused development; synthesis labels are not verified pronunciations or new human recall.",
+    "Retained Hi ESP is P4; PocketSphinx is macOS host with a different frontend. No hardware latency, matched FAR or acoustic comparison follows.",
+    "Prime/flush/end-frame conventions differ by decoder. Return samples are observed host call boundaries, not phonetic endpoint latency.",
+    "Process peak RSS includes Python, all preloaded source PCM and native overhead. Host compute and memory are not P4 estimates.",
+    "Raw acoustic payload is about6.6MB, exceeding current2MiB filesystem even without app, decoder code or GUI assets. No drop-in firmware feasibility assumed.",
+    "No final/reserved data, training restart, playback, microphone recording, USB/board/firmware, service, original PCM speed or I2S/AEC/AGC/FIFO changes. Dining-room board excluded."
+  ]
+}
