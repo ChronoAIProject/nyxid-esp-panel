@@ -6135,3 +6135,16 @@ Original120000-step sequence/checkpoint selection continue. Full matched
 input audit/postprocessors await both arms. No INT8/new-development/acceptance
 or cross-arm conclusion. Mike/test6/7 unconsumed; v30 frozen; objective incomplete.
 Issue13 coordination continues.
+
+### Original recovered90000 checkpoint (2026-11-13)
+
+Original PID817144 live; all284formal hashes unchanged. Original validation
+SHA `b0efac565cb7cf94f750d45e123552085399f67dd416b27428a32954cc573a52`
+preserved with collector receipt. 0training-float eligible points; fallback
+.994 recall .5726851852, macro .5973958333, hard-negative false rate
+.0397727273, max-source false rate .0442708333. Ambient2events/1.2048112674h;
+observed1.6600110359/h; zero-event upper correctly null. Not a pass.
+Original120000-step sequence/checkpoint selection continue. Full matched
+input audit/postprocessors await both arms. No INT8/new-development/acceptance
+or cross-arm conclusion. Mike/test6/7 unconsumed; v30 frozen; objective incomplete.
+Issue13 coordination continues.
