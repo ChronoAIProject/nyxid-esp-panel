@@ -5234,3 +5234,7 @@ Read-only audit of authenticated formal input metadata: main training145980 reco
 ### Fixed formal105000 float checkpoint
 
 Original newline-complete record preserved byte-identically (4029B SHAf058ee64ccf9238301296a7654955771aceff3565977617fe749daa11635a3d0). Eleven-point training grid 0 eligible; returned threshold 0.992, macro recall 0.51953125, max-source false 0.029166666666666667. Background 0/1.2048112673611107h; zero-event one-sided95 upper 2.4864743173555484/h. Fallback is not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before per_draw. v30 frozen.
+
+### Future source physical-speaker identity leads
+
+Original LibriSpeech SPEAKERS.TXT and Piper source config authenticated and cross-referenced. Kristin LeMoine14 and Kristin Hughes28 appear in the Piper source mapping; author Kristin source card lacks surname/utterance manifest, so a same-first-name match is only an overlap lead, not identity evidence. Other Jenny/Norman/Cori name matches retained with IDs/subsets. No synthesis, inference, reservation or existing final-set access. Continue explicit lineage review without treating absent names or corpus labels as independence proof.
