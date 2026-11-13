@@ -19,7 +19,7 @@ or whole-device compatibility.
 
 Use isolated copies of this project, dependencies.lock and the same six locked
 managed components used by the WakeNet9 reference build. Pin ESP-IDF 5.5.4,
-ESP-SR 2.6.1 and the original development P4 revision configuration. Build with
+ESP-SR 2.6.1, ESP-DL 3.3.14 and the original development P4 revision configuration. Build with
 separate build/sdkconfig paths:
 
     idf.py -B "$MUSE_BUILD" -D SDKCONFIG="$MUSE_SDKCONFIG" build
@@ -72,6 +72,15 @@ all four raw files without target preparation. Its 817708-byte expansion was a
 two-chip inventory container, not the prepared P4 layout. That failed build,
 protocol, UART evidence and app-only restoration remain preserved separately.
 The corrected protocol/build/native schemas are v2; use a fresh v2 build root.
+
+The correctly packed v2 still failed during creation: the precompiled WakeNet
+caller allocates 144 bytes for `dl::Model`, while ESP-DL 3.3.15 requires 152 and
+writes its added `m_built` member at byte 144. A heap assertion and MCU reboot
+followed, before any CASE. The separate v3 pins ESP-DL 3.3.14, whose target
+object size is 144, and compiles an assertion for this ABI. It preserves all
+model bytes, preparation and zero cases. Use a fresh v3 build root; v2 evidence
+and the 3.3.15 lock remain in the frozen history. This runtime pin applies only
+to this standalone probe. Native execution must still verify the fix.
 
 After the guarded run, extract only detector frames and independently compare
 their complete order, zero-sample CRCs, raw returns and getters with the report:

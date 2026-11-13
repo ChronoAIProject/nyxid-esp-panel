@@ -7,13 +7,14 @@ import shlex
 import struct
 import subprocess
 import zlib
+import yaml
 
 from pack_model import PREPARED_TO_SOURCE, SDK_HELPERS
 
 PROJECT = Path(__file__).resolve().parent
 REPO = PROJECT.parents[1]
 SOURCES = ('CMakeLists.txt', 'main/CMakeLists.txt', 'main/idf_component.yml',
-           'main/muse.c', 'sdkconfig.defaults', 'dependencies.lock', 'partitions.csv', 'pack_model.py')
+           'main/muse.c', 'main/layout.cpp', 'sdkconfig.defaults', 'dependencies.lock', 'partitions.csv', 'pack_model.py')
 
 
 def sha(path):
@@ -44,6 +45,16 @@ def main():
         assert sha(sr / 'model' / name) == digest, name
         helpers[name] = dict(sha256=digest,
             url=f"https://raw.githubusercontent.com/espressif/esp-sr/{inventory['upstream_commit']}/model/{name}")
+    lock = yaml.safe_load((copied / 'dependencies.lock').read_text())
+    components = {name: dict(version=entry['version'], component_hash=entry['component_hash'])
+                  for name, entry in lock['dependencies'].items() if name != 'idf'}
+    assert components['espressif/esp-dl']['version'] == '3.3.14'
+    dl = copied / 'managed_components/espressif__esp-dl'
+    dl_manifest = yaml.safe_load((dl / 'idf_component.yml').read_text())
+    assert dl_manifest['version'] == '3.3.14'
+    layout_entry = next(e for e in json.loads((build / 'compile_commands.json').read_text())
+                        if e['file'].endswith('/main/layout.cpp'))
+    assert Path(layout_entry['file']).read_bytes() == (PROJECT / 'main/layout.cpp').read_bytes()
 
     embedded = build / 'esp-idf/main/muse-model.bin'
     compressed = embedded.read_bytes()
@@ -83,11 +94,15 @@ def main():
     assert 'Project build complete. To flash, run:' in log and 'warning:' not in log.lower()
     app = build / 'nyx_muse_reference.bin'
     assert app.read_bytes().count(compressed) == 1
-    report = dict(schema='official-muse-zero-build-v2', sources=source_hashes,
+    report = dict(schema='official-muse-zero-build-v3', sources=source_hashes,
         inventory_sha256=sha(args.inventory), esp_sr='2.6.1',
         upstream_commit=inventory['upstream_commit'], preparation_helpers=helpers,
         preparation_target='esp32p4', preparation_api='copy_wn10_model then pack_models',
         raw_inventory_members=4, model_members=members,
+        components=components, dl_model_abi_bytes=144,
+        esp_dl_upstream_commit=dl_manifest['repository_info']['commit_sha'],
+        dl_model_header_sha256=sha(dl / 'dl/model/include/dl_model_base.hpp'),
+        dl_model_abi_compile_assertion=True,
         expanded_model_bytes=size, expanded_model_sha256=hashlib.sha256(expanded).hexdigest(),
         compressed_model_bytes=len(compressed), compressed_model_sha256=sha(embedded),
         firmware_bytes=app.stat().st_size, firmware_sha256=sha(app),
@@ -97,7 +112,7 @@ def main():
         device_operated=False, audio_io_performed=False, recognition_accepted=False)
     report_path = args.output / 'build.json'
     report_path.write_text(json.dumps(report, indent=2) + '\n')
-    plan = dict(schema='official-muse-zero-plan-v2', sources=source_hashes,
+    plan = dict(schema='official-muse-zero-plan-v3', sources=source_hashes,
         build_report_sha256=sha(report_path), firmware_sha256=report['firmware_sha256'],
         engine='wn10_himuse', mode='DET_MODE_95', setter_called=False,
         preparation_target='esp32p4', expanded_model_bytes=size,

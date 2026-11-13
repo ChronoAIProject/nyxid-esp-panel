@@ -58,7 +58,7 @@ void app_main(void) {
     if(!name || strcmp(name,MODEL))abort();
     const esp_wn_iface_t *wn=esp_wn_handle_from_name(name);
     if(!wn)abort();
-    printf("MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v2\",\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":%" PRIu32,name,size);
+    printf("MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v3\",\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":%" PRIu32,name,size);
     print_heap("heap_before_load",before_load);print_heap("heap_after_load",heap());printf("}\n");
     int expected_chunk=0;
     for(int id=0;id<5;id++) {
@@ -109,5 +109,5 @@ void app_main(void) {
         printf(",\"probe_buffer_bytes\":%u",(unsigned)(chunk*sizeof(int16_t)+calls*sizeof(int)));
         free(raw);free(zero);wn->destroy(model);print_heap("heap_after_destroy",heap());printf("}\n");
     }
-    printf("MUSE_REFERENCE_DONE {\"schema\":\"muse-zero-v2\",\"cases\":5}\n");
+    printf("MUSE_REFERENCE_DONE {\"schema\":\"muse-zero-v3\",\"cases\":5}\n");
 }

@@ -1,4 +1,4 @@
-idf_component_register(SRCS "muse.c" INCLUDE_DIRS "."
+idf_component_register(SRCS "muse.c" "layout.cpp" INCLUDE_DIRS "."
     REQUIRES esp-sr espressif__zlib esp_timer)
 idf_component_get_property(sr_dir espressif__esp-sr COMPONENT_DIR)
 set(model_dir "${sr_dir}/model/wakenet_model/wn10_himuse")

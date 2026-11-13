@@ -36,17 +36,19 @@ def audit(args):
     assert sha(args.build_report) == report['build_report_sha256'] == protocol['build_report_sha256']
     assert sha(args.protocol) == report['protocol_sha256']
     assert report['probe_sha256'] == build['firmware_sha256'] == protocol['firmware_sha256']
-    assert build['schema'] == 'official-muse-zero-build-v2'
-    assert protocol['schema'] == 'official-muse-zero-plan-v2'
+    assert build['schema'] == 'official-muse-zero-build-v3'
+    assert protocol['schema'] == 'official-muse-zero-plan-v3'
     assert build['preparation_target'] == protocol['preparation_target'] == 'esp32p4'
+    assert build['components']['espressif/esp-dl']['version'] == '3.3.14'
+    assert build['dl_model_abi_bytes'] == 144 and build['dl_model_abi_compile_assertion']
     assert set(build['model_members']) == {'wn10_data', '_MODEL_INFO_'}
-    assert report['schema'] == 'muse-zero-guarded-native-v2'
+    assert report['schema'] == 'muse-zero-guarded-native-v3'
     assert [f['kind'] for f in frames] == ['READY', *(['CASE'] * 5), 'DONE']
     assert frames[0]['value'] == report['firmware_ready']
     assert [f['value'] for f in frames[1:-1]] == report['cases']
     assert frames[-1]['value'] == report['done']
     ready, done = frames[0]['value'], frames[-1]['value']
-    assert ready['schema'] == done['schema'] == 'muse-zero-v2'
+    assert ready['schema'] == done['schema'] == 'muse-zero-v3'
     assert ready['engine'] == 'wn10_himuse' and ready['mode'] == 'DET_MODE_95'
     assert ready['expanded_model_bytes'] == build['expanded_model_bytes'] == protocol['expanded_model_bytes']
     assert done['cases'] == 5
@@ -89,7 +91,7 @@ def audit(args):
             input_positive_events=input_events, word_metadata=words).items():
         assert summary[name] == actual, name
     assert summary['zero_positive_events_absent'] is (prime_events == input_events == 0)
-    result = dict(schema='muse-zero-saved-frame-audit-v2',
+    result = dict(schema='muse-zero-saved-frame-audit-v3',
         frames_sha256=sha(args.frames), report_sha256=sha(args.report),
         protocol_sha256=sha(args.protocol), build_report_sha256=sha(args.build_report),
         frames=len(frames), cases=5, input_calls=input_calls, prime_calls=315,
