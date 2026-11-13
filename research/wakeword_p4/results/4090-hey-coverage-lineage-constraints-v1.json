@@ -1,0 +1,68 @@
+{
+  "schema": "hey-coverage-lineage-constraints-v1",
+  "source_report_sha256": "eb5779a984d5fdf0212f88ae61829b476832aee511d0971056b8ec2395239b46",
+  "scope": "Metadata only; no model download, synthesis, reservation or training admission.",
+  "known_same_reader": [
+    {
+      "families": [
+        "en_GB-cori",
+        "en_US-hifi_tts_92"
+      ],
+      "reader": "Cori Samuel, Hi-Fi TTS reader 92",
+      "card_sha256": [
+        "b1cdf93d1b0586941518677eb69c4ebd2db65573c57daeb7e45d3a658aae6cb8",
+        "62cafa98605100626d876aadcfd3dfa961cac263fa338b1fe17fe0989545e700"
+      ],
+      "constraint": "One physical-reader role; cannot count as independent voices or split between training and heldout."
+    }
+  ],
+  "requires_piper_1_5": [
+    {
+      "family": "en_GB-alba",
+      "card_sha256": "0190e1016a03c46c23f8e920f395a83fc82705ed1b49ba1ded185d7d8357dd6a"
+    },
+    {
+      "family": "en_GB-cori",
+      "card_sha256": "b1cdf93d1b0586941518677eb69c4ebd2db65573c57daeb7e45d3a658aae6cb8"
+    },
+    {
+      "family": "en_GB-jenny_dioco",
+      "card_sha256": "851f5b7ffe4b50ff3235192baef96a1943cda6b4bfa1c9badcf6cf78b6ffc292"
+    },
+    {
+      "family": "en_US-amy",
+      "card_sha256": "01937275ee0231667fdfb8eec381948acdc9ace98d4bab625dd30dc55c0f3cfe"
+    },
+    {
+      "family": "en_US-hfc_female",
+      "card_sha256": "0e2c236f7572782e38b58f6ded23d8df231a71483cab2dd9eeae4cafcd1e354a"
+    },
+    {
+      "family": "en_US-hifi_tts_92",
+      "card_sha256": "62cafa98605100626d876aadcfd3dfa961cac263fa338b1fe17fe0989545e700"
+    },
+    {
+      "family": "en_US-joe",
+      "card_sha256": "4b319248135916e8f5433ce7a9fe5271026b05cb598bab05807b22cb17fd129b"
+    },
+    {
+      "family": "en_US-kathleen",
+      "card_sha256": "d3b55579642e55fede59e8ba0c5c6463d0ce09841fbffad4f657b77db8f11320"
+    },
+    {
+      "family": "en_US-mike",
+      "card_sha256": "ea592884aef014bdb262cd40f8dc1bbdfa34872de4c444b3c3a56c4cdaa8dcb2"
+    },
+    {
+      "family": "en_US-ryan",
+      "card_sha256": "3dcd92adffd6e36fcace3f0bdd1052bdf9d2489f82e45e7fb30f479c34d33608"
+    }
+  ],
+  "compatibility": "Not certified against existing manual phoneme/token generator. hifi_tts_92 explicitly merges diphthong IDs; do not substitute models without config/token and waveform quality certification.",
+  "limits": [
+    "31 catalog families are not 31 independent physical voices.",
+    "Shared finetuning ancestor does not by itself prove same target reader; retain ancestry as a separate dependence limitation.",
+    "Current exact-name tracked metadata search does not clear aliases or all historical branches.",
+    "Existing 672 conditioning IDs belong to the authenticated old checkpoint; no ID mapping to a newly downloaded model is implied."
+  ]
+}

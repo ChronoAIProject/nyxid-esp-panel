@@ -1,0 +1,55 @@
+{
+  "schema": "hey-coverage-protected-family-policy-v1",
+  "files": {
+    "research/wakeword_p4/experiments/hey_paired_pilot_protocol_v1.md": "722633c84549282b2f116c7f7b2be891a73c52bcb5b328bc90ef38bf061f8f17",
+    "research/wakeword_p4/results/4090-hey-voice-catalog-role-audit-v1.json": "880ab77d8761f5789919b5ef6cdaaabd9cf021f9b58edb6cf258d7a14b5ff5a5",
+    "research/wakeword_p4/results/4090-vctk-development-replay-manifest-v1.json": "779077bae3a01ae80392962d572b1d6a42a5b58ecd1bb583d23599ea931ba5be",
+    "research/wakeword_p4/results/4090-piper-vctk-model-card-v1.md": "53ec6b1fd90d9125d5bebac55261efd27f7e8d6dc962f605a5b5f796df2ec7fb",
+    "research/wakeword_p4/results/4090-hey-paired-voice-role-reservation-v1.json": "f5ab9e864c02469954f037abefd7c7e850f1a242f453df76af0c832b3f06e9b1"
+  },
+  "protected_families": [
+    "en_US-joe",
+    "en_US-mike",
+    "en_GB-vctk",
+    "en_GB-semaine",
+    "en_US-hfc_male"
+  ],
+  "basis": {
+    "en_US-joe": "Explicit paired protocol exclusion",
+    "en_US-mike": "Explicit paired protocol exclusion; acceptance stays closed",
+    "en_GB-vctk": "Historical development source; conservatively exclude whole model family, not just observed speaker IDs",
+    "en_GB-semaine": "Current consumed paired development role; entire multi-speaker model protected",
+    "en_US-hfc_male": "Reserved paired acceptance role; no audio/model inference"
+  },
+  "unresolved_families": [
+    "en_GB-alan",
+    "en_GB-alba",
+    "en_GB-aru",
+    "en_GB-cori",
+    "en_GB-jenny_dioco",
+    "en_GB-northern_english_male",
+    "en_GB-southern_english_female",
+    "en_US-amy",
+    "en_US-arctic",
+    "en_US-bryce",
+    "en_US-danny",
+    "en_US-hfc_female",
+    "en_US-hifi_tts_92",
+    "en_US-john",
+    "en_US-kathleen",
+    "en_US-kristin",
+    "en_US-kusal",
+    "en_US-l2arctic",
+    "en_US-lessac",
+    "en_US-libritts",
+    "en_US-libritts_r",
+    "en_US-ljspeech",
+    "en_US-norman",
+    "en_US-reza_ibrahim",
+    "en_US-ryan",
+    "en_US-sam"
+  ],
+  "sources_reserved": false,
+  "generation_authorized": false,
+  "limits": "Conservative mandatory exclusion supplement. Other families remain unresolved, including physical speaker/shared-parent/history checks. Not a claim that only these5families have held-out overlap."
+}

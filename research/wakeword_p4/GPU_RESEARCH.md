@@ -7029,3 +7029,24 @@ c7d089fed269a6286dbaa5969f720d8651f6c4a786662cec76a9b380e722a1c2,
 40English modelentries. No models downloaded/new voices reserved/training.
 This prepares possible coverage intervention while officialreference completes;
 historicalheldout/voicefamily/parent/source audit must precede any reservation.
+
+
+### Coverage metadata review and Mac next-stage request
+
+Reviewed 31 canonical cards for 40 pinned catalog entries (17 exact-byte reuses).
+Catalog roles remain unresolved unless directly evidenced; Joe/Mike/VCTK/Semaine/
+HFC male exclusions remain. Cori and hifi_tts_92 explicitly share physical reader
+Cori Samuel and recordings: never split or count as independent voices. 10
+canonical cards require Piper >=1.5; token/runtime compatibility is not certified.
+Shared base ancestry is distinct from same target reader. No new model/audio
+download, synthesis, reservation or training occurred. Reports and source-card
+bytes are retained in the committed metadata report.
+
+Mac comment 6864674408 requests reuse-first audit of the existing 672 conditioning
+IDs and Kokoro/Qwen actual training exposure before a broad paired protocol.
+The prior exposure inventory already identifies authenticated main-feature
+metadata and factorized/British source records; it is a starting point, not proof
+of per-update exposure or source admission. No additional 216-input diagnostic
+is required. Official PID958504 was observed live, completed370/9672; no restart
+or partial recognition/FAR claim. Next: reconcile original training reports and
+material identities, then freeze a separate common broad-source recipe/data lock.
