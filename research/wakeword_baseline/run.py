@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run offline PCM through Hi ESP on a verified development board, then restore.
+"""Run offline PCM through a selected reference on a verified P4, then restore.
 
 Only the explicitly verified active app slot is written. No bootloader,
 partition table, NVS or filesystem is flashed. Keep outputs outside git.
@@ -19,6 +19,12 @@ import zlib
 import serial
 
 
+def validate_ready(ready, engine):
+    if (ready.get("engine")!=engine or ready.get("mode")!="DET_MODE_95"
+            or ready.get("rate")!=16000):
+        raise RuntimeError("Reference firmware does not match the selected engine/mode/rate")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", required=True)
@@ -30,6 +36,7 @@ def main():
     parser.add_argument("--slot", required=True)
     parser.add_argument("--slot-bytes", type=lambda s: int(s,0), required=True)
     parser.add_argument("--probe-bin", type=Path, required=True)
+    parser.add_argument("--engine", choices=("wn9_hiesp","wn9_heywillow_tts"), default="wn9_hiesp")
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int)
@@ -77,7 +84,7 @@ def main():
         raise RuntimeError("USB MAC does not match the development board")
     report = {"probe_sha256":hashlib.sha256(args.probe_bin.read_bytes()).hexdigest(),
               "manifest_sha256":hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
-              "engine":"wn9_hiesp", "mode":"DET_MODE_95", "sample_rate":16000,
+              "engine":args.engine, "mode":"DET_MODE_95", "sample_rate":16000,
               "uart_baud":args.baud,
               "scope":"Offline PCM detector benchmark, not acoustic/full-app acceptance.", "clips":[]}
     def interrupted(_signum, _frame):
@@ -104,13 +111,14 @@ def main():
                         raise RuntimeError("Benchmark firmware reported an error; see private UART log")
                 raise TimeoutError(prefix)
             ready=message("WAKE_BENCH_READY",45)
-            assert ready["rate"] == 16000
+            validate_ready(ready,args.engine)
             if args.baud!=115200:
                 uart.write(f"BAUD {args.baud}\n".encode("ascii"))
                 assert message("WAKE_BENCH_BAUD")["baud"]==args.baud
                 uart.baudrate=args.baud
                 ready=message("WAKE_BENCH_READY",5)
-                assert ready["rate"]==16000
+                validate_ready(ready,args.engine)
+            report["firmware_ready"]=ready
             for index,row in enumerate(rows):
                 with wave.open(str(args.manifest.parent/row["path"]),"rb") as wav:
                     if (wav.getframerate()!=16000 or wav.getnchannels()!=1 or wav.getsampwidth()!=2
@@ -134,7 +142,8 @@ def main():
                 report["clips"].append({**row,"result":result,"threshold":prepared["threshold"]})
                 (args.output/"progress.json").write_text(json.dumps(report,indent=2)+"\n")
                 if index%10==0 or index==len(rows)-1:
-                    print(json.dumps({"phase":"offline_hiesp","completed":index+1,"total":len(rows)}),flush=True)
+                    phase="offline_hiesp" if args.engine=="wn9_hiesp" else "offline_heywillow"
+                    print(json.dumps({"phase":phase,"completed":index+1,"total":len(rows)}),flush=True)
     finally:
         # First close UART, then restore even after a failed flash, transfer or
         # assertion. SIGTERM becomes an exception so normal cancellation also

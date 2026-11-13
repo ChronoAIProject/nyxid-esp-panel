@@ -12,6 +12,11 @@ import statistics
 import sys
 
 
+def validate_engine(report):
+    if report.get("engine") != "wn9_hiesp":
+        raise ValueError("This historical Hi ESP summarizer does not support other reference engines")
+
+
 def summarize(rows, target):
     positives = [r for r in rows if r["target"] == target]
     ordinary = [r for r in rows if r["target"] == "none"]
@@ -66,6 +71,7 @@ def main():
     if args.output.exists():
         parser.error("Do not overwrite an existing result")
     report = json.loads(args.baseline.read_text())
+    validate_engine(report)
     fixtures = list(map(json.loads, args.manifest.read_text().splitlines()))
     if not report.get("restored") or len(report["clips"]) != len(fixtures):
         raise ValueError("Benchmark incomplete or original development app not verified restored")

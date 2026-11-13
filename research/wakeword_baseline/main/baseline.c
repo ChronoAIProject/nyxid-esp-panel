@@ -11,8 +11,8 @@
 #include "model_path.h"
 #include "zlib.h"
 
-extern const uint8_t packed_start[] asm("_binary_baseline_hi_esp_bin_start");
-extern const uint8_t packed_end[] asm("_binary_baseline_hi_esp_bin_end");
+extern const uint8_t packed_start[] asm(BASELINE_PACKED_START);
+extern const uint8_t packed_end[] asm(BASELINE_PACKED_END);
 extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
 
 static bool read_exact(void *buffer, size_t bytes) {
@@ -34,15 +34,23 @@ void app_main(void) {
     uLongf expanded=size;
     if(!root || uncompress(root,&expanded,packed_start+4,packed_end-packed_start-4)!=Z_OK || expanded!=size)abort();
     srmodel_list_t *models=srmodel_load(root);
-    const char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,"hiesp");
-    if(!name)abort();
+    if(!models || models->num!=1)abort();
+    const char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,BASELINE_MODEL_NAME);
+    if(!name || strcmp(name,BASELINE_MODEL_NAME)!=0)abort();
+#if BASELINE_USE_MODEL_FACTORY
+    // Preserve the official model name; metadata labels do not select an ABI.
+    const esp_wn_iface_t *wn=esp_wn_handle_from_name(name);
+#else
+    // Keep the original Hi ESP interface and lifecycle for historical replay.
     const esp_wn_iface_t *wn=&esp_sr_wakenet9_quantized;
+#endif
+    if(!wn)abort();
     uart_config_t config={.baud_rate=115200,.data_bits=UART_DATA_8_BITS,
         .parity=UART_PARITY_DISABLE,.stop_bits=UART_STOP_BITS_1,
         .flow_ctrl=UART_HW_FLOWCTRL_DISABLE,.source_clk=UART_SCLK_DEFAULT};
     ESP_ERROR_CHECK(uart_param_config(UART_NUM_0,&config));
     ESP_ERROR_CHECK(uart_driver_install(UART_NUM_0,64*1024,0,0,NULL,0));
-    printf("WAKE_BENCH_READY {\"engine\":\"wn9_hiesp\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n");
+    printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n",name);
     char command[96];
     for(;;) {
         size_t used=0;
@@ -60,7 +68,7 @@ void app_main(void) {
             ESP_ERROR_CHECK(uart_wait_tx_done(UART_NUM_0,pdMS_TO_TICKS(1000)));
             vTaskDelay(pdMS_TO_TICKS(100));
             ESP_ERROR_CHECK(uart_set_baudrate(UART_NUM_0,baud));
-            printf("WAKE_BENCH_READY {\"engine\":\"wn9_hiesp\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n");
+            printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n",name);
             continue;
         }
         if(sscanf(command,"CLIP %u %u",&id,&samples)!=2 || !samples || samples>16000*3600) {

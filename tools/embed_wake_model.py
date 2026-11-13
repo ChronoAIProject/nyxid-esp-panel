@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
-"""Pack the pinned ESP-SR Hi ESP model into the application OTA image."""
+"""Pack a pinned ESP-SR WakeNet9 model into the application OTA image."""
 import argparse
 from pathlib import Path
 import struct
 import zlib
 
 
-def pack(source: Path, output: Path):
+MODELS = ("wn9_hiesp", "wn9_heywillow_tts")
+
+
+def pack(source: Path, output: Path, model_name="wn9_hiesp"):
+    if model_name not in MODELS or source.name != model_name:
+        raise ValueError("Source directory must match the explicitly selected supported model")
     files = sorted(p for p in source.iterdir() if p.is_file())
     if {p.name for p in files} != {"_MODEL_INFO_", "wn9_index", "wn9_data"}:
-        raise ValueError("Unexpected Hi ESP model files")
+        raise ValueError("Unexpected WakeNet9 model files")
     offset = 4 + 36 + 40 * len(files)
-    header = struct.pack("<I32sI", 1, b"wn9_hiesp", len(files))
+    header = struct.pack("<I32sI", 1, model_name.encode("ascii"), len(files))
     payload = b""
     for file in files:
         data = file.read_bytes()
@@ -26,5 +31,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--model-name", choices=MODELS, default="wn9_hiesp")
     args = parser.parse_args()
-    pack(args.source, args.output)
+    pack(args.source, args.output, args.model_name)

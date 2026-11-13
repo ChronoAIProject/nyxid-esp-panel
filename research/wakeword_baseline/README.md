@@ -1,10 +1,18 @@
-# Hi ESP offline baseline on a development P4
+# Offline wake references on a development P4
 
 This standalone app runs pinned ESP-SR 2.6.1 `wn9_hiesp` with `DET_MODE_95`,
 matching the production detector. It accepts lossless 16 kHz mono PCM16 over
 UART and reports detection sample offsets, inference time and a PCM CRC32.
 It does not read the microphone, connect to Wi-Fi or write NVS/flash.
 This is an offline detector benchmark, not acoustic or full-app acceptance.
+
+The default remains `wn9_hiesp`, including its original direct WakeNet9 interface,
+recreate/zero-prime lifecycle and packed model bytes. An explicit
+`BASELINE_WAKE_MODEL=wn9_heywillow_tts` build selects the official Hey Willow
+model and calls the public `esp_wn_handle_from_name` factory with its unchanged
+directory name. Its `wakenet9l` metadata label alone does not select an interface
+or establish runtime resource use. Both artifacts are present in pinned 2.6.1;
+no SDK upgrade is needed to obtain them.
 
 The initial project configuration targets P4 revision <3 and 32 MB PSRAM.
 Build with the pinned ESP-IDF 5.5.4. Verify another board's revision, layout and
@@ -15,6 +23,31 @@ these experiments.
 source "$IDF_PATH/export.sh"
 idf.py -C research/wakeword_baseline build
 ```
+
+Use separate build and sdkconfig paths for Hey Willow; all generated files
+below stay outside git:
+
+```sh
+idf.py -C research/wakeword_baseline -B "$PRIVATE_WILLOW_BUILD" \
+  -D SDKCONFIG="$PRIVATE_WILLOW_SDKCONFIG" \
+  -D BASELINE_WAKE_MODEL=wn9_heywillow_tts build
+```
+
+Pass `--engine wn9_heywillow_tts` with that probe to `run.py`. Both startup and
+baud-transition ready messages must report the selected model, `DET_MODE_95`
+and 16 kHz before PCM is sent; the report saves that actual message. Start a
+new reference at `--baud 115200` and verify short/long CRC transfers before
+trying higher rates. The older Hi ESP throughput measurements do not establish
+Willow throughput. A ready message proves model loading/factory selection only;
+the first clip must still initialize the detector and report its actual chunk
+size and threshold. P4 compilation is not runtime compatibility or recognition
+acceptance. Freeze the paired corpus/labels and calibration rules before scoring.
+
+The original `compare.py` is specific to Hi ESP labels and now rejects other
+engines. Do not reuse it to label Willow scores as Hi ESP or repurpose old final
+sets by replacing their text. New Hey comparisons need their own frozen protocol.
+`wn10_himuse` is inventoried separately but is not supported by this probe: it
+has two metadata/data pairs and exceeds this probe's 512 KiB expanded bound.
 
 **Do not run `idf.py flash`.** Its standalone partition layout differs from the
 provisioned panel. `run.py` writes only the explicitly verified active app slot.

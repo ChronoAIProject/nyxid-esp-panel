@@ -1,0 +1,117 @@
+{
+  "schema": "official-hey-p4-build-v1",
+  "sources": {
+    "research/wakeword_baseline/CMakeLists.txt": "1de16e5f05005a73f8518ef56f15e1725d4d1a7d863995536e05fd14f46d9802",
+    "research/wakeword_baseline/main/CMakeLists.txt": "f9755d2fa7c61b60b4a8d3beb61f95d36bc35e52f0c02d4d3d83dfbad227fc32",
+    "research/wakeword_baseline/main/baseline.c": "464aef868cb46a4da2b8a86af2ca8d56237810d48baeaa5f293d553b119ed5e1",
+    "research/wakeword_baseline/main/idf_component.yml": "320eb524dd57d3c5dbdaad7ce0efa2011e1991d107553fe0e0469759b96560fe",
+    "research/wakeword_baseline/sdkconfig.defaults": "634d5392c7e7b60a9f0546b733b7c6e6211bccb62c574e009b02f6e164578bcc",
+    "research/wakeword_baseline/dependencies.lock": "5a79d8548a38a131fcf94aa214f950055ea432ee04903d5d1dd37386a9037402",
+    "tools/embed_wake_model.py": "c7a57bb89f020a285a43c38ec520e08d83440448aa783f283fddec5c6736b50d"
+  },
+  "products": {
+    "wn9_hiesp": {
+      "build_completed": true,
+      "configuration": {
+        "IDF_TARGET": "esp32p4",
+        "IDF_INIT_VERSION": "5.5.4",
+        "ESP32P4_SELECTS_REV_LESS_V3": true,
+        "ESP32P4_REV_MIN_100": true,
+        "ESP_DEFAULT_CPU_FREQ_MHZ": 360,
+        "SPIRAM": true,
+        "SPIRAM_SPEED": 200,
+        "ESPTOOLPY_FLASHSIZE": "16MB"
+      },
+      "defines": [
+        "-DBASELINE_MODEL_NAME=\"wn9_hiesp\"",
+        "-DBASELINE_PACKED_END=\"_binary_baseline_hi_esp_bin_end\"",
+        "-DBASELINE_PACKED_START=\"_binary_baseline_hi_esp_bin_start\"",
+        "-DBASELINE_USE_MODEL_FACTORY=0",
+        "-DIDF_VER=\"v5.5.4\""
+      ],
+      "idf_version": "v5.5.4",
+      "compiler": "riscv32-esp-elf-gcc (crosstool-NG esp-14.2.0_20260121) 14.2.0",
+      "compiler_sha256": "e5c3a93651fc10025147ffce6d6b81bc043824111a1c6feee0a3adea5488d87a",
+      "files": {
+        "nyx_wake_baseline.bin": {
+          "bytes": 680336,
+          "sha256": "553456d61ba684545f8c6cbca4e6b1df53696c22fc28aa1a1571132e79dd2c52"
+        },
+        "nyx_wake_baseline.elf": {
+          "bytes": 7206384,
+          "sha256": "94e1b2ec6709ac31f7640c9f603b5c04a68070c2990c246871f37eeb16f6d1b0"
+        },
+        "baseline-hi-esp.bin": {
+          "bytes": 183729,
+          "sha256": "80f42451d73171d19a29419405d2527c332c401421ef7b11fe9267ffc6ac4214"
+        }
+      },
+      "log_sha256": "9f2cad24f0b83144cb6a9d23747735ab7f1c85d8d89fc70124c1b9426aaac8cf",
+      "warning_count": 0,
+      "warning_lines": [],
+      "compiler_warning_count": 0,
+      "exact_host_checked_model_occurrences_in_app": 1,
+      "linked_symbols_checked": [
+        "_binary_baseline_hi_esp_bin_start",
+        "_binary_baseline_hi_esp_bin_end"
+      ]
+    },
+    "wn9_heywillow_tts": {
+      "build_completed": true,
+      "configuration": {
+        "IDF_TARGET": "esp32p4",
+        "IDF_INIT_VERSION": "5.5.4",
+        "ESP32P4_SELECTS_REV_LESS_V3": true,
+        "ESP32P4_REV_MIN_100": true,
+        "ESP_DEFAULT_CPU_FREQ_MHZ": 360,
+        "SPIRAM": true,
+        "SPIRAM_SPEED": 200,
+        "ESPTOOLPY_FLASHSIZE": "16MB"
+      },
+      "defines": [
+        "-DBASELINE_MODEL_NAME=\"wn9_heywillow_tts\"",
+        "-DBASELINE_PACKED_END=\"_binary_baseline_hey_willow_bin_end\"",
+        "-DBASELINE_PACKED_START=\"_binary_baseline_hey_willow_bin_start\"",
+        "-DBASELINE_USE_MODEL_FACTORY=1",
+        "-DIDF_VER=\"v5.5.4\""
+      ],
+      "idf_version": "v5.5.4",
+      "compiler": "riscv32-esp-elf-gcc (crosstool-NG esp-14.2.0_20260121) 14.2.0",
+      "compiler_sha256": "e5c3a93651fc10025147ffce6d6b81bc043824111a1c6feee0a3adea5488d87a",
+      "files": {
+        "nyx_wake_baseline.bin": {
+          "bytes": 1001072,
+          "sha256": "2224ca675d07360e1acad53029314e8df012b67eaf6250a0a38b1e96031e2db2"
+        },
+        "nyx_wake_baseline.elf": {
+          "bytes": 16923024,
+          "sha256": "b96364558e9692baba604dbb55eea06fdbd30e9d62d6919ff11d3760d2332f34"
+        },
+        "baseline-hey-willow.bin": {
+          "bytes": 227475,
+          "sha256": "b30d3b8252bcb4e8d6aa90f58a5e8c950d6d6ddeedeb6031daa8dabbd6e84ead"
+        }
+      },
+      "log_sha256": "5bf534f8ad7ba273b2ec18fbe607ff305ad83933c33a01e13d7474a845bc876e",
+      "warning_count": 1,
+      "warning_lines": [
+        "Warning: The smallest app partition is nearly full (5% free space left)!"
+      ],
+      "compiler_warning_count": 0,
+      "exact_host_checked_model_occurrences_in_app": 1,
+      "linked_symbols_checked": [
+        "_binary_baseline_hey_willow_bin_start",
+        "_binary_baseline_hey_willow_bin_end",
+        "esp_wn_handle_from_name"
+      ]
+    }
+  },
+  "recorder_sha256": "d8d4a1abd54c3a8148795593313b41abce265a94180a482b2f22baf906c1a886",
+  "scope": "Compilation/linking and embedded byte identity only; not P4 runtime compatibility or quality.",
+  "inference_performed": false,
+  "device_operated": false,
+  "audio_io_performed": false,
+  "candidate_scored": false,
+  "reserved_acceptance_accessed": false,
+  "accepted": false
+}
