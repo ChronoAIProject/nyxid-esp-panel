@@ -1,0 +1,74 @@
+{
+  "schema": "mac-mike-admission-compatibility-v1",
+  "scope": "Independent Mac execution of the original GPU admission unit tests from immutable f3f7241, in an isolated source-only directory.",
+  "source_commit": "f3f7241",
+  "source_files": {
+    "research/wakeword_p4/training/evaluate.py": {
+      "bytes": 10049,
+      "sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256"
+    },
+    "research/wakeword_p4/training/features.py": {
+      "bytes": 7399,
+      "sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785"
+    },
+    "research/wakeword_p4/experiments/calibrate_recovered_new_development_v1.py": {
+      "bytes": 6748,
+      "sha256": "92cf6f4517a5828741a26f027120502407ba557bff1262a108c5f26b0f0083da"
+    },
+    "research/wakeword_p4/experiments/prepare_mike_acceptance_v1.py": {
+      "bytes": 12499,
+      "sha256": "982bb568352ec29a6a052b8127b0d3b1fbe532876c9c4487de0694433c8f0463"
+    },
+    "research/wakeword_p4/experiments/test_mike_acceptance_admission_v1.py": {
+      "bytes": 4884,
+      "sha256": "87aca14c94cfe5a3af26904e982817c1dda717dbe82ef6a351337c95f36ee7e8"
+    },
+    "research/wakeword_p4/experiments/synthetic_output_quality_v1.py": {
+      "bytes": 3513,
+      "sha256": "d6fa920016e70ab2bdc556e586f288c867e40d111ccbf46f146840f61ba5425c"
+    },
+    "research/wakeword_p4/experiments/synthetic_render_quality_v1.py": {
+      "bytes": 2619,
+      "sha256": "0f353024678d5948960eab827539b8375bf43cb3609b6a2ac500183176396104"
+    },
+    "research/wakeword_p4/results/4090-mike-acceptance-generation-reservation-v1.json": {
+      "bytes": 109549,
+      "sha256": "20891f7806ed28db3cb45b771b9ec14a3174addaf33ab2a2b35930e0ade55289"
+    }
+  },
+  "command": "python -m unittest discover -s research/wakeword_p4/experiments -p test_mike_acceptance_admission_v1.py -v",
+  "interpreter": "3.12.13 (main, Mar 25 2026, 03:16:06) [Clang 22.1.1 ]",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2"
+  },
+  "tests_passed": 5,
+  "test_methods": [
+    "test_actual_unfinished_development_cannot_write_lock_or_initialize_engine",
+    "test_analytic_engine_transport_and_three_renders_fail_incomplete_pack",
+    "test_forged_eligibility_rejected",
+    "test_null_failed_stale_and_noncanonical_decisions_rejected",
+    "test_original_grid_and_highest_threshold_tie"
+  ],
+  "test_log_sha256": "17bef77b8a39de77de719e1362426bd85064ce6fae8d70e58f5532d3b87f17bd",
+  "real_acceptance_lock_absent_after_tests": true,
+  "real_acceptance_output_absent_after_tests": true,
+  "acceptance_model_inference": false,
+  "acceptance_waveforms_generated": false,
+  "candidate_scored": false,
+  "microphone_recording": false,
+  "speaker_playback": false,
+  "device_operated": false,
+  "accepted": false,
+  "limits": [
+    "The native/render test injects a synthetic 0.5-second sine tensor and fake ONNX session in a temporary directory; temporary analytic WAV files are written. It does not initialize the real Mike TTS model.",
+    "The published-lock query and version check are mocked only inside that analytic test. This does not prove a real published development-passed lock or actual engine/version compatibility.",
+    "The incomplete-development test uses the real rejection paths with missing execution pins/lock and ONNX import disabled; no real acceptance output is created.",
+    "No GPU source, original report, current formal training, selector, threshold, audio pipeline or firmware is changed.",
+    "These admission/transport fixtures do not establish recognition, false-wake, latency, hardware resources or long-call/reconnect parity with Hi ESP."
+  ]
+}
