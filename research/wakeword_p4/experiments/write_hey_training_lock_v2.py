@@ -123,6 +123,15 @@ def write(args):
                 files=dict(sorted(bound.items())),arms=arms,checkpoint_policy='fixed-final-20000',
                 architecture='teacher60',context_frames=150,batchnorm='frozen',
                 numerical_policy=dict(op_determinism=True,tf32=False),
+                training_recipe=dict(optimizer='tf.keras.optimizers.Adam',initial_learning_rate=.001,
+                    global_clipnorm=5,decay_steps=[10000,16000],decay_learning_rates=[.0003,.0001],
+                    loss='binary_crossentropy',label_smoothing=0,negative_weight=20,
+                    batch_positive_negative_ambient=[32,48,48],source_exponent=0,
+                    negative_candidates=1,ambient_sampling='rows',time_mask_width=0,frequency_mask_width=0,
+                    intra_op_threads=6,inter_op_threads=2,validation_calls=0,
+                    input_scaling='clip(float32(features)/25.6,0,26)',
+                    ptq='Original zero/full26 sentinels +100 actual post-training batches, first row sequential3-frame chunks',
+                    export='Original streaming stride3, INT8 input/UINT8 output, BUILTINS_INT8 only'),
                 training_launched=False,development_accessed=False,acceptance_accessed=False)
     with args.output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(lock_sha256=sha(args.output),training_launched=False)))

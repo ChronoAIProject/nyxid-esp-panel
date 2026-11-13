@@ -6693,3 +6693,10 @@ Started both original20100batch/full643200positive draw schedule generators, sep
 Originalschedule sessions93136/7639 exited0, each20100tensorbatches and643200fullpositive draw records verified. ActualcappedcountsWillow135/Nyx0, original/effective traces and schedule receipt hashes preserved unchanged in4090-hey-v2-full-schedule-completion-v1.json. No TF/model/heldout inference.
 
 Firstpreflightlock write terminated before filecreation/modelupdates due to externalglobalfrontend module path not relative to checkout. Corrected onlylock key normalization: workspace files remain relative, authenticated externalmodule/binary paths remain absolute and SHA-bound. This is a lockwriter pathbug, not a model/training result; no schedule rerun or changed data. Pushing correction before rewriting exactpreflightlock and GPUlaunch.
+
+
+### 2026-11-13 — both real GPU integration smokes passed
+
+OriginalGPU sequence session78443 exited0, Willow thenNyx, actual2optimizerupdates each. Originallosses Willow12.5979976654→5.7395906448,Nyx12.8535642624→5.8463811874; finite modelvariables/actualupdates, frozenBN exactlyunchanged. Each102train/PTQbatch hashes and3264positive draw traces exact. Both54440BINT8exports passed realcomplete trainingPCM frontend equality and twicefresh-reset UINT8repeat; outputscale1/256zero0. Actualsame-instance all-variable initialinventories identical acrossarms. Originalreports preserved unchanged in4090-hey-v2-actual-gpu-integration-completion-v1.json. No fresh recognition/FAR/acceptance claim.
+
+Formal lock draft successfully validated all actualprerequisites, then kept unpublishedlocal while adding explicit serialization of alreadyfixed originalAdam/LR/clip/loss/weights/sampler/thread/frontend/PTQ/export settings to writer. No behavioral training change or repeatGPUrun. Push writer/report first, then regenerate/push finalexactformal lock before first20000update.
