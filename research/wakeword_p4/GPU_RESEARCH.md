@@ -6513,3 +6513,21 @@ record SHA966c29a0521dede3bac4817f68b19dde6324d6966b36cc7d9fe78f9c5f3b6138.
 Collector historical receipts deliberately remain their original checkpoint-only
 formal_run_complete=false; separate training-completion receipt now records
 actual training/export completion with postprocessing/newdev/acceptance pending.
+
+### Original historical postprocessing finished; sole new-development freeze (2026-11-13)
+
+Automatic original sequence finished both arms without restart. Preserved8original
+export/expanded-calibration/streaming/reused-dev reports byte-for-byte. Old reused
+development control selected.98828125/macro.5791666667, background0/8.1736727257h,
+nominal95upper.3665099367/h under original eligibility; recoveredselected=null.
+Not an independent candidate pass or final cross-arm efficacy conclusion.
+Original failed/null evidence retained; no alternate checkpoint or rescue.
+
+All original prerequisites validated. Created sole recovered new DEVELOPMENT
+freeze25bf18700e60656d086b124903af7caeed1b1a42ddb568543fbee37e037e0bfb,
+model0a39c5924c1e132bc2e535e0f116cf3b63c716b49b477fd99a82b1e16ef2f334.
+Binds full model/export/audit, exact360Joe synthetic +42continuous background
+manifests, prior unchanged v30/official baseline evidence, code/versions and
+uint8-sum-binary64-v1. No candidate inference before push. This is development
+trace authorization only;138point calibration/null gates remain separate.
+Mike/test6/7 untouched. New Willow/Nyx training preparation remains separate.
