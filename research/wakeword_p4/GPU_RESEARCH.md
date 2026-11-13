@@ -6829,3 +6829,10 @@ reset, no internal slicing/reset, records full original rawUINT8. Calibrator
 checks report/trace hashes+geometry, saves all points and null/no-rescue result;
 v30 original threshold is an additional fixed reference. Acceptance remains
 closed. Registration/actual inference not yet executed at this source commit.
+
+Execution freeze3dfb63e5335d9cc50eb351a998e68c3260d6a0cee5418ead00f30a0fded55aeb
+pushed9bd2fc4 before first fresh inference. Original sequential session96535:
+Willow thenNyx thenv30, score then registered calibration, check=True/no retries.
+Willow PID942791 confirmed live;360synthetic streams and first2whole background
+calls complete (each original-input fresh-reset repeats exact). No threshold
+selection/result yet. Later original arms wait; no observation timeout restart.
