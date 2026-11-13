@@ -1,0 +1,46 @@
+{
+  "schema": "jenny-development-render-plan-v1",
+  "source_sha256": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_jenny_development_v1.py": "01acc815e66961481a8eb2df5dd8259539b07f0984c4153bbc59210c14602a3c",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_hey_broad_training_v1.py": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+    "research/wakeword_p4/results/4090-jenny-development-native-generation-v1.json": "55406747912b3e894612f51a383b4805662b7cca44fea8165735da2774d66508",
+    "research/wakeword_p4/results/4090-jenny-development-independent-native-audit-v1.json": "8341ce66eef50745e3099fbcda8ede21caca9afb696630354457294d58882ac9",
+    ".local/wakeword/jenny-development-native-v1/records.jsonl": "2ddfe23c16d0ce2702c7971be3591a2a0fad3a437b078b806b3d8fc558bfc364"
+  },
+  "context_decision_sha256": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091",
+  "versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0"
+  },
+  "schedule": {
+    "path": ".local/wakeword/jenny-development-render-schedule-v1.jsonl",
+    "sha256": "48db3eb0a28dcb226bf9492a7d5aed5b6f0f51896f0303cd2b068ef9938289e1",
+    "sources": 132,
+    "rendered": 396
+  },
+  "lead_samples": 48000,
+  "tail_samples": 16000,
+  "conditions": [
+    "quiet",
+    "25dB_noise",
+    "15dB_noise_full_RIR"
+  ],
+  "rir_delays": [
+    0,
+    160,
+    480,
+    960
+  ],
+  "rir_amplitudes": [
+    1.0,
+    0.25,
+    -0.12,
+    0.06
+  ],
+  "policy": "Whole original serialized PCM, no speed change/trim. Reuse exact original complete-source render function via separate AST adapter; matched condition seeds across11phrases. Keep full RIR tail and prescribed min(1,.95/peak) gain after noisy mixing only.",
+  "role": "Development only, never training/acceptance. kind positive in renderer means retain generated prefix metadata for every phrase, not a classifier label.",
+  "scoring_authorized": false,
+  "limits": "Rendering only. Native source/history limitations retained; independent replay/history/background/scorer admission required before wake inference."
+}
