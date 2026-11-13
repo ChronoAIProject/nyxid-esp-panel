@@ -6564,3 +6564,10 @@ Original native v2 generator is terminal; summary and records SHA verified: 2400
 Training adapter now requires authenticated CPU first-batch and full 20000 training + 100 PTQ batch schedule receipts, exact package versions, and helper hashes. Guard compares actual input/label/weight bytes on every batch before returning it to the original trainer and requires complete consumption. No actual new-pack CPU audit/schedule/training lock exists yet; this is source integration, not gradient/export or runtime certification. Four guard, two adapter, three geometry tests pass. All 284 original formal file pins remain identical. Refreshed unpublished source-audit SHA after final adapter changes.
 
 Mac Issue13 latest 6862148056 reports native Willow 13x12 historical PCM witness in progress and three new development calls exceeding existing one-hour runner limit. New reference must retain each whole call without reset; no acceptance opened, v30 unchanged.
+
+
+### 2026-11-13 — rendered completion and concrete training-lock writer
+
+Session14228 terminated exit0. Verified all7200 rendered requested/recorded/passed plus records SHA; preserved exact summary in 4090-hey-paired-render-completion-v2.json. Token extraction session61776 freshly polled live, latest101 records; no restart, no new waveform. Feature plan/build still waits full2400 matching token allocations.
+
+Added write_hey_training_lock_v1.py to bind both actual training-only packs, original initializer SHA, all trainer/upstream Python, training ambient arrays, complete feature preparation chain, CPU reports, full20100 schedules/receipts and numerical dependency versions. Requires pushed feature plan/material commit and fresh outputs. Compilation passed; not executed against missing actual packs/receipts, no lock/training or gradient certification claimed. Issue6862381534 already synchronizes actual counts and Mac long-stream requirement. Goal remains active.
