@@ -42,6 +42,7 @@ def main():
                       'LibriTTS numeric speaker IDs, Kokoro and Qwen engine labels do not provide a complete physical-speaker/pretraining inventory. Cross-engine overlap remains unknown.',
                       'No source is reserved by this inventory. Future development/acceptance must state documented disjointness and unresolved ancestry separately before scoring.'
                   ], final_data_used=False, candidate_inference=False)
+    result['script_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     OUTPUT.write_text(json.dumps(result, indent=2) + '\n')
     print(OUTPUT)
 
