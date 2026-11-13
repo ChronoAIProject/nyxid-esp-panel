@@ -6760,3 +6760,15 @@ original source/phoneme/token/seed identities, no retries, full native/engine/PC
 preservation, original mechanical quality audit and whole-pack failure rule.
 Requires pushed exact plan, candidate freeze, dependencies and source hashes;
 registering/generating cannot invoke a wake detector or access acceptance.
+
+### Reserved development render/token execution entries
+
+Separate render entry requires completed120/120native summary, exact source
+records/version/source hashes and pushed render plan. All360presentations retain
+full native source and registered1232sample RIR tail, audited by independent
+direct convolution. Separate token entry calls preserved original graph-output
+extractor, requires seeded graph identity and exact allocation*256 native length;
+it does not invoke waveform output or wake detector. Both entries use new local
+paths and require exclusive new outputs; acceptance is inaccessible to their
+request loops. Source compile checks passed; actual execution still pending
+native completion and pushed per-stage locks.
