@@ -7520,3 +7520,19 @@ SHAa25aab3289b93f24a4e4448fa7e463249bd91ad2e6af4abc55a14885e64ebd0b,
 63531435B. No inference; sum*256/token identity and waveform equivalence not
 claimed. Next separately pinned source-role/history and generation execution
 admission, then actual native quality audit; no candidate scoring yet.
+
+### Jenny132 original CPU generation and independent arrays complete
+
+ebdb40f0 generation-only source/runtime/material lock pushed before original
+session49604, exit0.132/132process quality pass. CPU only; original GPU formal
+training untouched. Full native/resample/PCM/tokens/scales/actualduration saved;
+seed control remains uncertified. No retry/normalization/trim/ASR selection.
+Independent audit verifies792original files, all full resampled arrays exact,
+token counts/integer durations/sum*256/full generated prefix identities exact,
+PCM full length/format/noendpoint/RMS/duration/finite gates pass. MaxPCM error
+3.0517330742441118e-05, within1LSB+1e-7. Not acoustic phoneme truth or original
+versus observer numeric-equivalence certification. All132 retained, no wake
+inference/threshold selection. Prospective author-direct Jenny is development
+only, excluded from training/independent acceptance; declared source/history
+limits remain. Next full-condition render/history/negative-background admission
+and collector locks, not immediate scoring. Formal Willow original continues.
