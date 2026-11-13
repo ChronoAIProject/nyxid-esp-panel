@@ -17,6 +17,42 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def validate_development_paired(manifest, manifest_sha256, row):
+    """Authenticate generation references without claiming phonetic endpoints.
+
+    Joe is an exact, pre-score development-only reservation. Its branch must
+    never fall back to unrelated endpoint metadata if authentication fails.
+    Historical manifests retain their existing policy.
+    """
+    joe = manifest.get('synthesis_protocol') == 'joe-new-development-v1'
+    if joe:
+        reference = (
+            manifest_sha256 == 'edf6f7844f654d2a7e22f588873b917381aa8d0957b1e3309a60a0f1973895bc'
+            and manifest.get('synthesis_plan_sha256') == 'b09550c6804f4c5f0e23933b95501dd8ab4c218bc35a430395894ce7e4ee64db'
+            and manifest.get('generation_reference_source_sha256') == '87fe76043882146b29a1cd538b12f37378032826b97d479905ce504f78067887'
+            and len(manifest.get('records', [])) == 360
+            and row in manifest['records']
+            and row.get('voice') == 'joe'
+            and row.get('variant') in (0, 1, 2)
+            and row.get('lead_samples') == 28800 and row.get('tail_samples') == 16000
+            and row.get('rir_tail_samples') == (960 if row.get('variant') == 2 else 0)
+            and row.get('generated_output_end_sample') == 28800 + row.get('source_samples', 0)
+            and row.get('full_rir_end_sample') == row.get('generated_output_end_sample', 0) + row.get('rir_tail_samples', 0)
+            and row.get('keyword_end') == row.get('full_rir_end_sample')
+            and row.get('samples') == row.get('full_rir_end_sample', 0) + 16000)
+    else:
+        reference = (
+            (manifest_sha256 == '88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415'
+             and manifest.get('synthesis_protocol') == 'slr83-new-development-v1')
+            or (manifest.get('voice_partition_sha256')
+                and manifest.get('endpoint_annotation_source_sha256')))
+    if (row.get('role') != 'development-paired-validation'
+            or row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
+            or not reference or manifest.get('independent_final_audio_accessed')
+            or not 0 < row.get('keyword_end', 0) <= row['samples']):
+        raise ValueError('Need authenticated paired development generation or endpoint metadata')
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('qemu', 'elf', 'nm', 'flash', 'manifest', 'output'):
@@ -70,18 +106,7 @@ def main():
               or manifest['nyx_preregistration_sha256'] != freeze['nyx_preregistration_sha256']):
             raise ValueError('Changed independent negative waveform protocol')
     if row['role'] == 'development-paired-validation':
-        # This exact preregistered synthetic manifest uses full generation/RIR
-        # boundaries, not human phonetic endpoints. Never invent endpoint labels.
-        frozen_generation_reference = (
-            sha(a.manifest) == '88cfa446880e8a562927221d552a544bb72f204af071cd6867c7e1284db80415'
-            and manifest.get('synthesis_protocol') == 'slr83-new-development-v1')
-        frozen_endpoint_metadata = (manifest.get('voice_partition_sha256')
-                                    and manifest.get('endpoint_annotation_source_sha256'))
-        if (row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
-                or not (frozen_endpoint_metadata or frozen_generation_reference)
-                or manifest.get('independent_final_audio_accessed')
-                or not 0 < row.get('keyword_end', 0) <= row['samples']):
-            raise ValueError('Need paired development validation with frozen endpoint metadata')
+        validate_development_paired(manifest, sha(a.manifest), row)
     if row['role'] in ('development-negative-validation', 'development-read-speech-validation'):
         source_policy = (manifest.get('continuous_recordings') if row['role'] == 'development-negative-validation'
                          else manifest.get('utterance_concatenation'))
