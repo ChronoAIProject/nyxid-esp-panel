@@ -6916,3 +6916,20 @@ zero/consumed/long v2receipts plus complete custommaterial pins, and requires
 an actual official calibrator source before it can create an execution lock.
 Newgrid not registered or run yet; calibrator/independent newdata auditor still
 pending. No officialdevelopment/acceptance media opened by these source edits.
+
+### Official observation-v2 long transport pass; calibrated event source ready
+
+Original session15351 exited0 and independent savedUART/byte auditor passed:
+68506685samples/4281.6678125s/133803calls/63prime/1235events, sourceCRCf5c47075,
+all ordered input returns exact, postprimegetter stable, destroy-stage104.
+No source resets. Original report/stage copies and UART/trace SHA retained;
+large fullUART remains local, receipt binds its exact SHA. Repeated consumed
+transport only, not1235independent examples or FAR exposure.
+
+Official complete-return auditor/calibrator now verifies everypercall byte,
+getter/request/postprime/prime/modelidentity/runtime/sourceCRC/stage, then uses
+original officialpositiveevents directly for completephrase recall/negativeevents
+and full continuous FAR. All13requested points and duplicateactualgetters remain;
+no officialthreshold selection/promotion. Constructed360row event tests pass
+for ownWillow/HiESP labels,288/36 vs252/72negative denominators, earlyevents,
+completephrase/RIRreference and signedoffsets. No freshofficialscores inspected.
