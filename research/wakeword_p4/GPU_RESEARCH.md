@@ -6981,3 +6981,17 @@ after samewordofficial comparison, rather than repeating endpoint-only changes.
 No new training/threshold selection/acceptance; originalofficialrun continues.
 Groupedexistingraw report adds60literal/speed/condition/carrier summaries, no
 newinference or alternate eventpolicy. v30 remains frozen; candidates rejected.
+
+### Original float/INT8 comparison diagnostic source
+
+Training/dev native/render both use identical28800sample lead, so leadposition
+alone is not an observed difference and no lead perturbation is pursued now.
+New bounded hypothesis instead compares original archivedfloat SavedModel stream
+against original consumedINT8 traces on36devtarget positives+2certifiedtraining
+checks/arm. Original SavedModel signature metadata inspected (no audio), float32
+[batch,3,40] input/float32[1,1] output,37variables. Diagnostic uses completePCM,
+originalnormalization, restoresactualsavedvariables before eachclip, repeatsfull
+floatstream exactly, requiresallnonstatevariablesunchanged, noINT8rerun/model
+update/re-export/thresholdselection/acceptance. Float-state/graph vs quantized
+state/graph differences remain potential confounds, not isolated PTQcause.
+Originalofficialgrid continues,317/9672observed, no restart or boundsource edits.
