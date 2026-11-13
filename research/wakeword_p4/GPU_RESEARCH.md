@@ -6637,3 +6637,10 @@ Added independent saved-UART/CRC/complete-event/stage104 auditor; not yet execut
 ### 2026-11-13 — >hour / >64event actual transport completed
 
 Originalsession42126 exited0. Frozen68506685sample/4281.6678125s continuous repeatedconsumed stream completed133803inputcalls,63prime returns,1235positive events and1235channelverified; CRCf5c47075 exact, destroy/deinit stage104. Independent auditor reread originalPCM, recomputed1235repeatSHA/CRC, checked every emitted event and offsets/unique ordered calls against rawUART andreport, complete counters/prime/stage. All pass; originalreport/UART/stage plusaudit saved unchanged. This actual runtime now covers >onehour and >64event branches; remains repeated-consumed transport, not fresh recognition/FAR/P4 equivalence. Getter-after-prime separateobservation pending. OriginaltokenPID905640 confirmedstilllive25:05, no restart.
+
+
+### 2026-11-13 — v1 actual prefix-support failure, separate v2 hypothesis
+
+Observed real token records found two Reza slowbareWillow RIR variants with keyword/lead deltas126/124frames; original maxjitter27 causes150frame crop to exclude beginning of generatedprefix. Saved original failing rows/full timing records and immutable partial snapshot hashes in4090-hey-paired-v1-prefix-admission-failure-v1.json. v1 wholepack disqualified beforefeatures/training (0updates); no filtering, waveform repair or threshold changes. Mechanical native/render pass does not override crop-admission failure. Originaltoken/observer continue unchanged to full evidence; originalfeatureplan will fail closed.
+
+Registered separate hey_paired_prefix_preserving_v2.md: preserve all2400/7200originalwaveforms and original RNG draw, cap only effective positivejitter at geometry-derived min(27,150-prefixspan); allrows requirelegalmax>=3 else wholepack failure. Botharms same rule; negative timeline/RNG/weights/teacher150/20k/fixedfinal/gates/heldout unchanged. Newadapted sampler/builder/full schedules/smokes/locks still need implementation and actual admission. No claim that support guarantees recognition.
