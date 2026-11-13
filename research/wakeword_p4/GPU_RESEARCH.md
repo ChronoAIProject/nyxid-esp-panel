@@ -5895,3 +5895,19 @@ Recovered startup records seed726 and original initialization/frozenBN hashes;
 actual full matched input equality is not yet proved. No INT8/new-development,
 acceptance or cross-arm conclusion. Mike/test6/7 unconsumed; v30 frozen;
 objective incomplete. Coordination remains in Issue13.
+
+### Original recovered5000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. Original recovered PID817144 verified live
+through4000→4500→5000, elapsed14:51. Original5000 line SHA
+`a3a1231765cd9bf80776227cc45f52caf72744f5e0eb563aa445c4b1a8efa150`.
+5training-float eligible points under original narrow training grid criteria;
+selected.98 recall .3236111111, macro .3661458333,
+hard-negative false rate .0051136364, max-source false rate .005625.
+This is not prospective development eligibility or acceptance. Ambient0events/
+1.2048112674h gives nominal zero-event one-sided95upper2.4864743174/h,
+insufficient for required≤.5/h. All284formal hashes independently unchanged.
+Original120000-step recipe/checkpoint selection continues unchanged; no early
+stopping, alternate candidate, INT8/new-development or cross-arm conclusion.
+Full matched input audit/postprocessing await both arms. Mike/test6/7 remain
+unconsumed; v30 frozen; objective incomplete. Coordination remains in Issue13.
