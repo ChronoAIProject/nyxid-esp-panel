@@ -7348,3 +7348,15 @@ reset; finite tensor shape128x225x40 and labels/weights verified. Full feature
 pack hashes checked before use. No TensorFlow/model/optimizer or heldout access.
 No full120100batch schedule or cross-arm draw audit yet, no GPU/export claim;
 training adapter must bind this policy explicitly before formal training.
+
+### Broad225 separate trainer source adapter
+
+Added train_hey_broad_adapter_v1.py, pinned original trainer SHA unchanged.
+AST compile succeeds; old validate() calls removed, fixed-final checkpoint,
+original optimizer/BCE/export retained. Exact225 snapshot loader verifies H5
+SHA and all variable shape/dtype/value hashes; hook is positioned after inactive
+old150 initializer branch and before BN policy. No classifier reset after load.
+Prefix source rewrite matches CPU audit. Actual batch return requires guard;
+no permissive launch entry exists yet. This is source construction only, not
+actual initial-load/GPU/export evidence. Next must supply strict smoke/formal
+execution locks and hooks and compare actual sampler tensors before training.
