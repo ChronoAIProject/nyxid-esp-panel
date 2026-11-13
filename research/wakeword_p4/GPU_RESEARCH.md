@@ -7565,3 +7565,18 @@ Recording/company disjointness is not physical-speaker/pretraining independence.
 Original formal Willow1047649 verifiedlive35000/120000, finite loggedloss,
 fixed-final record, no guard mismatch or restart. Synthetic history audit also
 remains required before any new development scoring.
+
+### Fresh12 full background preparation complete; exact history running
+
+b3cca91e preparation lock pushed before original session52771/PID1066648,
+exit0. All12transcripts exact target-alias checks pass; all12LFS media hashes/
+full native decode/full mono16kPCM duration checks/one frontend per call pass.
+9.614419583333333 decodedhours, manifest SHAe494a16397a62098ddb84f6365e6f67c7ef5b78ac1709fbede62bdcaacb52a36.
+No clipping/normalization/silence removal/source replacement; all media/local
+frontend kept local. overlap_admitted=false/scoring_authorized=false remains.
+Original separate Jenny528newwaveform exact-history audit session89777/
+PID1066915 verified live (no old media decoded), scanning historical JSON/JSONL;
+not yet complete at this observation. Do not restart on observation timeout.
+Original formal Willow1047649 continues, observed42000/120000. No heldout
+acceptance or new development wake inference. Need complete history and
+background overlap admission/collector/model execution pins before scoring.
