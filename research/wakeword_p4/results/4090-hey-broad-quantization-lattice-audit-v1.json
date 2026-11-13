@@ -1,0 +1,480 @@
+{
+  "schema": "hey-broad-quantization-lattice-audit-v1",
+  "script_sha256": "bd78bfb658197e0183f88e4c24e9bc72e3bb1b43bd8145d97f53e3008c189fc6",
+  "original_execution_sha256": "6e0f29bcdb551415060575cc8984cfc3a9e58fbcbda50ebc4c82d228247a4de1",
+  "original_result_sha256": "631944a626e10e6c63f40d931dfd7842a48c89723070ebbdae50311ba168a76b",
+  "litert_version": "2.3.0",
+  "models": {
+    "hey_willow": {
+      "model_path": ".local/wakeword/hey-broad-formal-v1/hey_willow/hey_nyx.tflite",
+      "model_sha256": "fa9d4020aa06dba89fa8d5e5425626e35ac0a7aa882127d01d10163f537faf7f",
+      "model_bytes": 57592,
+      "logit": {
+        "index": 63,
+        "name": "functional_1/dense_1/MatMul;functional_1/dense_1/Add",
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "<class 'numpy.int8'>",
+        "scale": 13.648093223571777,
+        "zero_point": 99
+      },
+      "logistic_probability": {
+        "index": 64,
+        "name": "StatefulPartitionedCall_1:01",
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "<class 'numpy.int8'>",
+        "scale": 0.00390625,
+        "zero_point": -128
+      },
+      "logit_representable_range": [
+        -3098.1171617507935,
+        382.14661026000977
+      ],
+      "ideal_sigmoid_output_codes": [
+        0,
+        128,
+        255
+      ],
+      "actual_saved_output_code_counts": {
+        "0": 23042,
+        "128": 382,
+        "255": 618
+      },
+      "all_saved_codes_in_ideal_set": true,
+      "source_cases": 135,
+      "raw_outputs": 24042,
+      "nearest_ideal_raw_probability_error": {
+        "mean": 0.0013782679303907279,
+        "p99": 0.03291783120483161,
+        "maximum": 0.2316930592060089
+      },
+      "states": [
+        {
+          "handle": 33,
+          "read": {
+            "index": 44,
+            "name": "functional_1/stream_5_1/concatenate_29_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              29,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 3.1828980445861816,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 65,
+            "name": "functional_1/stream_5_1/strided_slice1",
+            "shape": [
+              1,
+              29,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 3.1828980445861816,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 34,
+          "read": {
+            "index": 43,
+            "name": "functional_1/stream_4_1/concatenate_28_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              20,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.4802063703536987,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 66,
+            "name": "functional_1/stream_4_1/strided_slice1",
+            "shape": [
+              1,
+              20,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.4802063703536987,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 35,
+          "read": {
+            "index": 42,
+            "name": "functional_1/stream_3_1/concatenate_27_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              12,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.6185587644577026,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 67,
+            "name": "functional_1/stream_3_1/strided_slice1",
+            "shape": [
+              1,
+              12,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.6185587644577026,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 36,
+          "read": {
+            "index": 41,
+            "name": "functional_1/stream_2_1/concatenate_26_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              8,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.8200860023498535,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 68,
+            "name": "functional_1/stream_2_1/strided_slice1",
+            "shape": [
+              1,
+              8,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.8200860023498535,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 37,
+          "read": {
+            "index": 39,
+            "name": "functional_1/stream_1_2/concatenate_25_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              4,
+              1,
+              30
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.3400883674621582,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 69,
+            "name": "functional_1/stream_1_2/strided_slice2",
+            "shape": [
+              1,
+              4,
+              1,
+              30
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.3400883674621582,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 38,
+          "read": {
+            "index": 40,
+            "name": "functional_1/stream_1/concatenate_24_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              2,
+              1,
+              40
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.10196078568696976,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 47,
+            "name": "functional_1/stream_1/strided_slice2",
+            "shape": [
+              1,
+              2,
+              1,
+              40
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.10196078568696976,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        }
+      ]
+    },
+    "hey_nyx": {
+      "model_path": ".local/wakeword/hey-broad-formal-v1/hey_nyx/hey_nyx.tflite",
+      "model_sha256": "2ce45979a79b843ee2339447ee46adbf1b8678b6497c37aaf1e733b7cbb7af1d",
+      "model_bytes": 57592,
+      "logit": {
+        "index": 63,
+        "name": "functional_1/dense_1/MatMul;functional_1/dense_1/Add",
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "<class 'numpy.int8'>",
+        "scale": 4.902233123779297,
+        "zero_point": 104
+      },
+      "logistic_probability": {
+        "index": 64,
+        "name": "StatefulPartitionedCall_1:01",
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "<class 'numpy.int8'>",
+        "scale": 0.00390625,
+        "zero_point": -128
+      },
+      "logit_representable_range": [
+        -1137.3180847167969,
+        112.75136184692383
+      ],
+      "ideal_sigmoid_output_codes": [
+        0,
+        2,
+        128,
+        254,
+        255
+      ],
+      "actual_saved_output_code_counts": {
+        "0": 23375,
+        "2": 94,
+        "128": 43,
+        "254": 31,
+        "255": 499
+      },
+      "all_saved_codes_in_ideal_set": true,
+      "source_cases": 135,
+      "raw_outputs": 24042,
+      "nearest_ideal_raw_probability_error": {
+        "mean": 0.00029572933702012524,
+        "p99": 0.00390625,
+        "maximum": 0.240520179271698
+      },
+      "states": [
+        {
+          "handle": 33,
+          "read": {
+            "index": 44,
+            "name": "functional_1/stream_5_1/concatenate_29_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              29,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.6825091242790222,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 65,
+            "name": "functional_1/stream_5_1/strided_slice1",
+            "shape": [
+              1,
+              29,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.6825091242790222,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 34,
+          "read": {
+            "index": 43,
+            "name": "functional_1/stream_4_1/concatenate_28_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              20,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.44083115458488464,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 66,
+            "name": "functional_1/stream_4_1/strided_slice1",
+            "shape": [
+              1,
+              20,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.44083115458488464,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 35,
+          "read": {
+            "index": 42,
+            "name": "functional_1/stream_3_1/concatenate_27_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              12,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.49869734048843384,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 67,
+            "name": "functional_1/stream_3_1/strided_slice1",
+            "shape": [
+              1,
+              12,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.49869734048843384,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 36,
+          "read": {
+            "index": 41,
+            "name": "functional_1/stream_2_1/concatenate_26_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              8,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.40435388684272766,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 68,
+            "name": "functional_1/stream_2_1/strided_slice1",
+            "shape": [
+              1,
+              8,
+              1,
+              60
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.40435388684272766,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 37,
+          "read": {
+            "index": 39,
+            "name": "functional_1/stream_1_2/concatenate_25_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              4,
+              1,
+              30
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.2122937440872192,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 69,
+            "name": "functional_1/stream_1_2/strided_slice2",
+            "shape": [
+              1,
+              4,
+              1,
+              30
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 1.2122937440872192,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        },
+        {
+          "handle": 38,
+          "read": {
+            "index": 40,
+            "name": "functional_1/stream_1/concatenate_24_1/Cast/ReadVariableOp",
+            "shape": [
+              1,
+              2,
+              1,
+              40
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.10196078568696976,
+            "zero_point": -128
+          },
+          "assigned": {
+            "index": 47,
+            "name": "functional_1/stream_1/strided_slice2",
+            "shape": [
+              1,
+              2,
+              1,
+              40
+            ],
+            "dtype": "<class 'numpy.int8'>",
+            "scale": 0.10196078568696976,
+            "zero_point": -128
+          },
+          "metadata_matches": true
+        }
+      ]
+    }
+  },
+  "model_invocations": 0,
+  "model_exports": 0,
+  "initial_exploratory_api_note": "get_tensor_details lacks is_variable in installed LiteRT; initial metadata query raised KeyError before inference. Resource relationships here come from READ/ASSIGN ops, not that unavailable key.",
+  "conclusion": "Final pre-sigmoid affine INT8 logit quantization is extremely coarse; actual saved outputs occupy only the corresponding small probability lattice. State read/write shapes and affine quantization agree. This is a concrete output-resolution bottleneck, not yet proof of why calibration produced that range or of all upstream errors.",
+  "limits": "Tensor metadata plus saved training outputs only. Ideal sigmoid diagnostic is not an independent integer kernel oracle. No internal dynamic saturation measured; no PTQ retry, model mutation, newdev/acceptance or gate relaxation."
+}

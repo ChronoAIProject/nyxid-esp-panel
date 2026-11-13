@@ -7819,3 +7819,21 @@ internal weight/activation/state/converter mechanism caused it. Original
 numerical rejection retained, no newdev/acceptance or export/PTQ optimization.
 Next diagnosis should inspect original saved TFLite tensor scales/state wiring
 and saturation without changing model/trainer or threshold gates.
+
+
+### Read-only final quantization lattice audit identifies logit resolution bottleneck
+
+No model invoke/export. Six resource read/assign states match shape/dtype/
+affine quantization permodel; this alone does not prove dynamic state correctness.
+Final LOGISTIC input tensor63 scale13.6480932/zero99Willow and4.9022331/zero104Nyx.
+Original savedWillow outputs only0/128/255 (counts23042/382/618), Nyx only
+0/2/128/254/255 (23375/94/43/31/499). Mathematical sigmoid+output affine
+rounding yields same small code sets; no claim to independently implement
+integer kernel. Concrete severe probability-resolution bottleneck, not proof
+of calibration-range origin or all upstream causes. Original representative
+source yieldszero thenfull26 before100x75actualbatch slices; source inspection
+is not dynamic proof those two sentinels caused the scale. Next controlled
+preactivation diagnosis should test that hypothesis before any PTQ intervention.
+Initial metadata query used unavailableis_variable key and raisedKeyError;
+corrected read-only auditor derives relationships from READ/ASSIGN ops, retained
+API limitation in report. No model/source changes, no newdev/acceptance.
