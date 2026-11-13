@@ -7145,3 +7145,18 @@ text/instruction IDs and codec codes are internally available, but public result
 is waveform/rate, with no certified text-prefix acoustic allocation. Codec
 length is not text alignment. Training endpoint handling remains to be locked
 without inventing wholecommand end as wake boundary; no Qwen inference done.
+
+
+### Full broad Piper GPU material stage live
+
+7458f64 pushed exact generation lock before inference, eight text phoneme/token
+prefix maps and actual model/config/Piper source/runtime hashes. Original
+session18686/PID998887/starttime19462221 live on RTX4090, observed2900/16128.
+14112 missing outputs generated,2016 existing bare Nyx sources reused without
+rewriting. Complete native floats/token durations/resampled floats/PCM persisted;
+no retry/trim/normalize. Generation-only lock does not authorize model training.
+7a41294 adds independent full-array audit; original waiter session63954
+PID999256 binds exact PID/starttime, then requires final original summary and
+audits all source hashes/arrays/quality/internal prefix clocks; never restarts
+generation. Neither generation nor audit completion is claimed yet.
+Official original PID958504 remains live737/9672, no restart/partial FAR claim.
