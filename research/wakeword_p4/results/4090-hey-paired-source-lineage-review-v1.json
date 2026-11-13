@@ -1,0 +1,35 @@
+{
+  "schema": "hey-paired-source-lineage-review-v1",
+  "revision": "2f358b6a560e3a913ebf509b2f3344f20b367f94",
+  "sources": [
+    {
+      "voice": "en_GB-semaine-medium",
+      "model_card_path": "research/wakeword_p4/results/4090-hey-paired-semaine-model-card-v1.md",
+      "model_card_sha256": "d3c370c9c73b69347f9487cc24b0cfa5f2a400c47d209f0aa4ce20123562e46d",
+      "speakers": 4,
+      "sample_rate": 22050,
+      "dataset": "marytts/dfki-semaine-data",
+      "declared_license": "CC BY-NC-SA 4.0",
+      "parent": "lessac-medium",
+      "status": "prospective only; not rendered or assigned",
+      "constraint": "Do not assign different speaker IDs of this same model to independent model roles."
+    },
+    {
+      "voice": "en_US-kusal-medium",
+      "model_card_path": "research/wakeword_p4/results/4090-prospective-piper-kusal-model-card-v1.md",
+      "parent": "lessac-medium",
+      "dataset": "MycroftAI/mimic2",
+      "status": "Previously metadata-reviewed; no new material use certified"
+    },
+    {
+      "voice": "en_US-reza_ibrahim-medium",
+      "model_card_path": "research/wakeword_p4/results/4090-prospective-piper-reza_ibrahim-model-card-v1.md",
+      "parent": "lessac-medium",
+      "dataset": "Hedayatfar Persian / Ibrahim Walk English Quran audio",
+      "status": "Previously metadata-reviewed; no new material use certified"
+    }
+  ],
+  "roles_assigned": false,
+  "tts_generated": false,
+  "limits": "Shared lessac ancestry prevents pretraining-independence claim. Different model bytes/speakers and strict role separation remain possible but require model hashes and full prior PCM inventory audit. Catalog name absence alone is insufficient. License metadata recorded without asserting broader use permissions."
+}
