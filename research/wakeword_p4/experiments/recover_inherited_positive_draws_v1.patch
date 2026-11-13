@@ -1,0 +1,38 @@
+--- a/research/wakeword_p4/training/train_stream.py
++++ b/research/wakeword_p4/training/train_stream.py
+@@ -55,6 +55,8 @@
+     parser.add_argument("--paired-draw-noise-condition", choices=("fixed", "per_draw"))
+     parser.add_argument("--recover-erased-complete-coverage", action="store_true",
+                         help="Recover already drawn8positive/12negative slots after factorized replacement")
++    parser.add_argument("--recover-inherited-positive-draws", action="store_true",
++                        help="Restore8 original positive draws after coverage replacements")
+     parser.add_argument("--complete-coverage-pack", type=Path)
+     parser.add_argument("--negative-full-timeline", action="store_true")
+     parser.add_argument("--positive-full-timeline", action="store_true")
+@@ -118,6 +120,8 @@
+         parser.error("Balanced coverage requires unchanged v45 US temporal recipe")
+     if args.us_coverage_pack and not (args.complete_coverage_pack and args.negative_container_mixture):
+         parser.error("US coverage requires unchanged v43 complete/container mixture recipe")
++    if args.recover_inherited_positive_draws and not args.factorized_coverage_pack:
++        parser.error("Inherited positive recovery requires the factorized main recipe")
+     if args.recover_erased_complete_coverage and not (args.complete_coverage_pack and args.factorized_coverage_pack):
+         parser.error("Erased coverage recovery requires complete and factorized packs")
+     if args.negative_full_timeline and not args.complete_coverage_pack:
+@@ -302,6 +306,8 @@
+             at = int(rng.integers(0, len(data)-frames+1))
+             noise.append(data[at:at+frames])
+         x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))
++        if args.recover_inherited_positive_draws:
++            inherited_positive = x[24:32].copy()
+         if full_source is not None:
+             x[:80] = full_source.first80()
+             if complete_coverage is not None:
+@@ -314,6 +320,8 @@
+             x[:80] = balanced_coverage.replace(x[:80])
+         if args.recover_erased_complete_coverage:
+             x[np.r_[16:24, 56:68]] = recovered_complete
++        if args.recover_inherited_positive_draws:
++            x[24:32] = inherited_positive
+         if args.prefix_negatives:
+             # Keep baseline RNG and all original draws unchanged. Only replace
+             # the selected confusing-negative slots before the same permutation.
