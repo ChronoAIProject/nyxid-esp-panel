@@ -6291,3 +6291,20 @@ training-only provenance admission, default split rejection, wrong target and
 reciprocal mislabel rejection. This is not TensorFlow gradient/export validation
 or new actual-pack batch admission. Previous actual historical CPU batch remains
 separate evidence. All284formal hashes rechecked unchanged; PID817144 live107000.
+
+### Exact staged training synthesis lock (2026-11-13)
+
+Added generate_hey_paired_material_v1.py with native and complete rendered outputs.
+Plan enumerates2640native requests:2400training plus120dev/120acceptance RESERVED.
+Training expands to7200quiet/25dB/15dB+fullRIR clips,720positives per target.
+Fixed texts/carriers/speeds/draws, phones/token IDs, model/config/card, phonemizer
+binary+espeak data hashes, runtime versions, explicit seeded ONNX derivation,
+noise/RIR/padding/gain and code/quality bytes. Only training generation authorized
+after pushed exact plan. Background/overlap/features/full schedule admission still
+required before training; future development/acceptance not generated/scored.
+Original models unchanged; derived random-op seed attrs only. Kusal graph audit
+confirms learned initializers/nonrandom nodes unchanged and deterministic graph
+byte derivation; not yet speech/runtime determinism evidence. Both mechanical
+quality suites6+6 passed. Any source failure disqualifies whole planned pack,
+no retry/filter/substitution. Preserves complete native output and PCM transport;
+no phonetic truth or human listening claim. Model gradient/export still pending.

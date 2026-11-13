@@ -154,3 +154,23 @@ opening acceptance, lock reference materials, operating-point selection rules
 and the paired interval method; do not infer parity merely from gate passage.
 Mac consumed Samantha/Daniel12-clip native pilot10402b9 is diagnostic history,
 excluded from fresh training/development/acceptance.
+
+## Stage-specific synthesis lock (before any new synthesis)
+
+4090-hey-paired-generation-plan-v1.json enumerates native and three-condition
+render requests, exact voice/config/card, phones/tokens, versions, phonemizer
+binary/data hashes, explicit seeded ONNX derivation and renderer/quality code.
+It authorizes only training native/render generation after the exact plan is
+pushed. Development/acceptance requests are reservations, not authorization
+to generate or score them. Continuous background inventories, new source
+encoded/PCM overlap, tensor schedules and full training lock remain required
+before training; this stage does not certify overall material admission.
+Training common confusions use the same four carriers/three speeds/ten draws
+as targets. Native training2400requests ->7200rendered clips; each target has
+720rendered positives across two voices. Dev/acceptance each reserve120native
+requests ->360rendered clips (36per phrase); neither set is generated now.
+Derived ONNX changes only the two RandomNormalLike seed attributes, leaving
+learned tensors unchanged; retain original model SHA and derived SHA per draw.
+This explicit new derivation is separate from all frozen historical models.
+Any native quality failure disqualifies the full planned training pack; no
+substitution, selective filtering or retry. No wake detector is invoked.
