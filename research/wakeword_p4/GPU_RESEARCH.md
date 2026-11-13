@@ -7201,3 +7201,22 @@ audits; waiters78932/72377 bind exact original PID/starttime. No generation
 restart or training authorization; original official958504 remains live.
 Kokoro ONNX request seeds are provenance labels, not certified control of
 stochastic graph nodes; saved original outputs/runtime hashes remain identity.
+
+
+### Common Kokoro complete and Qwen generation queued
+
+Common Kokoro540/540 generation and independent audit passed;3780 original
+files verified, full saved resampling and native duration identities exact.
+Original task was not retried. Piper shared negatives remain original live
+PID1000704, observed14000/18144; bound auditor still waits same process.
+
+e12316f pushed Qwen actual generator/source/runtime/model lock before inference.
+Original session65226/PID1002143/start19519750 waits exact original Piper PID
+1000704/start19498701 before using GPU, then runs360 fixed requests once.
+Same-instance observational generate wrapper saves actual input/instruction IDs
+and returned codec, forwards return unchanged; all native float/resampled/PCM
+retained. Bare wake reference is full generated standalone end; missing phoneme/
+aligned text durations remain null. No ASR selection, retries, normalization.
+6be81b7 independent array auditor queued as session24313, binds Qwen original
+PID/starttime; no rerun if original fails. Neither Qwen inference nor completion
+is claimed while it waits. Official958504 live742/9672, no partial FAR claim.
