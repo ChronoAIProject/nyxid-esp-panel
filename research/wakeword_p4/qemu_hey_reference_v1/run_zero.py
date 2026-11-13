@@ -1,0 +1,111 @@
+"""Fresh synthetic-zero reference ABI certification only; never opens audio splits."""
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import socket
+import struct
+import subprocess
+import time
+import zlib
+
+
+def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    for name in ('qemu','elf','nm','flash','output'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--model',choices=('willow','hiesp'),required=True)
+    p.add_argument('--threshold',default='DEFAULT')
+    p.add_argument('--timeout-seconds',type=float,default=120)
+    a=p.parse_args()
+    default=a.threshold=='DEFAULT'
+    requested=0.0 if default else float(a.threshold)
+    if not default and (not math.isfinite(requested) or not .4<=requested<=.9999):p.error('Invalid request')
+    if a.output.exists():p.error('Fresh output required')
+    samples=16001;raw=bytes(samples*2)
+    a.output.mkdir(parents=True);output=a.output.resolve()
+    monitor=output/'monitor.sock';serial=output/'serial.log'
+    if len(str(monitor).encode())>=104:p.error('Use short output path')
+    flags=int(default)+(2 if a.model=='willow' else 0)
+    (output/'input.pcm').write_bytes(struct.pack('<IIfI',0x48595231,samples,requested,flags)+raw)
+    symbols = subprocess.check_output([str(a.nm.resolve()), str(a.elf.resolve())], text=True)
+    address = re.search(r'^([0-9a-fA-F]+)\s+\w\s+nyx_wakenet_stage$', symbols, re.M)
+    if not address:
+        raise ValueError('Missing completion symbol')
+    command = [str(a.qemu.resolve()), '-machine', 'esp32', '-m', '4M', '-drive',
+               f'file={a.flash.resolve()},if=mtd,format=raw', '-snapshot', '-nographic', '-semihosting',
+               '-serial', f'file:{serial}', '-monitor', f'unix:{monitor},server,nowait', '-no-reboot']
+    started = time.monotonic()
+    with (output/'host.log').open('wb') as log:
+        process = subprocess.Popen(command, cwd=output, stdout=log, stderr=subprocess.STDOUT)
+        try:
+            while True:
+                text = serial.read_text(errors='replace') if serial.exists() else ''
+                if 'NYX_PCM_ERROR' in text or 'Guru Meditation' in text:
+                    raise RuntimeError('Firmware failed; inspect preserved UART')
+                # UART file writes can expose the marker before its counters.
+                # Wait for the whole terminated line before quitting QEMU.
+                if re.search(r'NYX_PCM_DONE samples=\d+ calls=\d+ events=\d+ verified=\d+ crc32=[0-9a-f]+\r?\n', text):
+                    break
+                if process.poll() is not None:
+                    raise RuntimeError('QEMU exited before completion')
+                if time.monotonic()-started > a.timeout_seconds:
+                    raise TimeoutError('Live QEMU exceeded developer probe deadline')
+                time.sleep(.1)
+            with socket.socket(socket.AF_UNIX) as channel:
+                channel.settimeout(3); channel.connect(str(monitor))
+                greeting = b''
+                while b'(qemu)' not in greeting:
+                    greeting += channel.recv(65536)
+                channel.sendall(f'xp /1wx 0x{address[1]}\n'.encode())
+                response = b''
+                while b'(qemu)' not in response:
+                    response += channel.recv(65536)
+                (output/'stage-monitor.txt').write_bytes(response)
+                if not re.search(rb':\s+0x00000068\b', response):
+                    raise ValueError('Missing stage104')
+                channel.sendall(b'quit\n')
+            process.wait(timeout=5)
+        finally:
+            if process.poll() is None:
+                process.terminate(); process.wait(timeout=5)
+    done = re.search(r'NYX_PCM_DONE samples=(\d+) calls=(\d+) events=(\d+) verified=(\d+) crc32=([0-9a-f]+)', text)
+    if not done:
+        raise ValueError('Missing counters')
+    events = [dict(call=int(c), sample_end=int(s), result=int(r), audio_seconds=int(s)/16000)
+              for c,s,r in re.findall(r'NYX_PCM_EVENT call=(\d+) sample_end=(\d+) result=(\d+)', text)]
+    if (int(done[1]) != samples or int(done[2]) != (samples+511)//512 or
+            int(done[3]) != len(events) or int(done[5],16) != zlib.crc32(raw)):
+        raise ValueError('Firmware consumed bytes/counters differ from source')
+
+    identity=re.search(r'HEY_REFERENCE abi=1 mode=(DEFAULT|SET) model=(\S+) request_bits=([0-9a-f]+) actual_bits=([0-9a-f]+) actual=([0-9.eE+-]+)',text)
+    expected='wn9_heywillow_tts' if a.model=='willow' else 'wn9_hiesp'
+    if not identity or identity[1]!=('DEFAULT' if default else 'SET') or identity[2]!=expected:
+        raise ValueError('Wrong runtime/model/config identity')
+    request_bits=struct.unpack('<I',struct.pack('<f',requested))[0]
+    actual=struct.unpack('<f',struct.pack('<I',int(identity[4],16)))[0]
+    if int(identity[3],16)!=request_bits or not math.isfinite(actual) or not 0<actual<1:
+        raise ValueError('Invalid actual threshold bits')
+    if struct.pack('<f',float(identity[5]))!=struct.pack('<f',actual):raise ValueError('Getter decimal/bits mismatch')
+    prime=[(int(c),int(r)) for c,r in re.findall(r'HEY_REFERENCE_PRIME call=(\d+) result=(-?\d+)',text)]
+    if [c for c,r in prime]!=list(range(1,64)) or any(r not in (-1,0,1) for c,r in prime):
+        raise ValueError('Incomplete prime returns')
+    if events or any(r==1 for c,r in prime):raise ValueError('Unexpected zero-input positive event')
+    if not re.search(r'NYX_PCM_PARAMETERS chunk=512 rate=16000 channels=1 set_result='+('0' if default else '1')+r' actual=',text):
+        raise ValueError('Missing successful native API contract')
+    report=dict(schema='hey-reference-qemu-zero-v1',model=expected,mode=identity[1],
+                request_float32_bits=f'{request_bits:08x}',actual_float32_bits=identity[4],actual_threshold=actual,
+                prime_returns=prime,input_samples=samples,input_calls=int(done[2]),input_crc32=done[5],
+                events=events,final_padding_samples=(-samples)%512,stage=104,
+                qemu_sha256=sha(a.qemu),elf_sha256=sha(a.elf),flash_sha256=sha(a.flash),
+                runner_sha256=sha(Path(__file__)),serial_sha256=sha(serial),
+                independent_data_accessed=False,limits='Classic ESP32 QEMU zero API/transport only; not P4 equivalence, speech, FAR or acceptance.')
+    (output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps(report))
+
+
+if __name__=='__main__':main()

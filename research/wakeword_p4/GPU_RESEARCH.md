@@ -6578,3 +6578,10 @@ Added write_hey_training_lock_v1.py to bind both actual training-only packs, ori
 Authenticated all12 prepared development WAV bytes and decoded little-endian PCM SHA, streaming CRC32, exact512-hop calls and final-only padding. Saved 4090-hey-official-background-inputs-v1.json with reproducible audit tool. Three sources exceed legacy one-hour limit; maximum68499840 samples. Requires separate63zero prime calls and a single uninterrupted engine per complete call. No detector invoked; scoring_authorized=false retained. This is Linux input accounting, not QEMU/P4 runtime/getter or same-Mac-PCM certification; no media redistribution.
 
 Inspected current canonical QEMU runner: model remains hardcoded HiESP, so not used as Willow reference. Historical runner untouched. Current partial timing165 records covers495 target render variants with0 unsupported prefixes; bounded diagnostic only, not full admission. Original timing PID905640 confirmed Rl after3:35, latest181 records; continue same run without restart.
+
+
+### 2026-11-13 — actual separate Willow/HiESP QEMU reference runtime
+
+Built new qemu_hey_reference_v1 without touching historical replay. New explicit ABI chooses exact Willow/HiESP model and DEFAULT-no-set/SET. Separate63prime returns; full sequential source loop, final-only padding, clamped event offsets, no event-array cap or one-hour source cap. Actual long-input certification remains pending.
+
+Actual4fresh16001zero streams pass native interface/CRC32/32inputcalls/63prime returns/stage104 afterdestroy. Willow DEFAULT getter.6439999938011169, HiESP DEFAULT.6299999952316284; both SET.644 getter.6388480067253113. Stored original reports/UART/stage evidence and model/source/library/ELF/flash hashes. These are exploratory classicQEMU zero runs, not full grid or speech/P4 equivalence. No new held-out data accessed. Full-background input gate and actual recognition certification still needed. Original timing task continues without restart.
