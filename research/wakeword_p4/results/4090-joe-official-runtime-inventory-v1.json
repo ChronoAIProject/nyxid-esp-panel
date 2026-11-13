@@ -1,0 +1,75 @@
+{
+  "schema": "joe-official-frozen-runtime-inventory-v1",
+  "files": {
+    "qemu": {
+      "path": ".local/wakeword/qemu-xtensa-release/qemu/bin/qemu-system-xtensa",
+      "size": 72215240,
+      "sha256": "c15716f0bf981f046976b556c9856270b55b4e6a77ef00e2a124c2ef65b4932d"
+    },
+    "elf": {
+      "path": ".local/wakeword/wakenet-esp32-replay-build/nyx_wakenet_esp32_replay.elf",
+      "size": 4180580,
+      "sha256": "cc511f5563697a5522a9a10cdbb22773ba6030863da8e8c5a46dca65313e16ac"
+    },
+    "flash": {
+      "path": ".local/wakeword/wakenet-esp32-replay-build/qemu-flash.bin",
+      "size": 4194304,
+      "sha256": "7e140bd5449ded2a06ec649437b5194c6500f73fc7ca5a41144496ba99b9fc70"
+    },
+    "nm": {
+      "path": ".local/wakeword/idf-tools/tools/xtensa-esp-elf/esp-14.2.0_20260121/xtensa-esp-elf/bin/xtensa-esp32-elf-nm",
+      "size": 422608,
+      "sha256": "004e294577ab054218508eaba90f92f9c2d504217ba6b78ecbd1d81f58f6ae73"
+    },
+    "v30": {
+      "path": ".local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite",
+      "size": 54440,
+      "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c"
+    },
+    "runner": {
+      "path": "research/wakeword_p4/qemu_esp32_replay/run_replay.py",
+      "size": 14118,
+      "sha256": "66204666d64c3470f88abdb0db3f723fe81354fe19672dbece96f158a211ca48"
+    },
+    "reference_tests": {
+      "path": "research/wakeword_p4/experiments/test_joe_official_reference_v1.py",
+      "size": 3132,
+      "sha256": "84ea1100caa41d598638da75d74315a7a584c339fed95dfbfafafefcecd672aa"
+    },
+    "detector": {
+      "path": "research/wakeword_p4/training/evaluate.py",
+      "size": 10049,
+      "sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256"
+    },
+    "frontend": {
+      "path": "research/wakeword_p4/training/features.py",
+      "size": 7399,
+      "sha256": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785"
+    },
+    "development_manifest": {
+      "path": ".local/wakeword/joe-development-render-v1/replay-manifest.json",
+      "size": 414269,
+      "sha256": "edf6f7844f654d2a7e22f588873b917381aa8d0957b1e3309a60a0f1973895bc"
+    },
+    "selection_policy": {
+      "path": "research/wakeword_p4/experiments/joe_mike_selection_protocol_v1.md",
+      "size": 6621,
+      "sha256": "97679e28b4e752a00d8551161c73bc1f7ab14ce0ab975050f7759e6378d69df6"
+    }
+  },
+  "official_model": "wn9_hiesp",
+  "official_requested_threshold": 0.63,
+  "official_getter_expected": 0.62496001,
+  "v30_threshold": 0.91796875,
+  "v30_smoothing": 5,
+  "policy_tests_passed": 5,
+  "legacy_actual_replay_verified": true,
+  "new_data_execution_authorized": false,
+  "candidate_export_pinned": false,
+  "remaining": [
+    "Known source/PCM cross-role audit",
+    "Frozen new-data orchestration and consumption checks",
+    "Original recovered run completion/export pins before candidate scores"
+  ],
+  "limits": "Runtime inventory and consumed-fixture regression only, not new source score or model promotion."
+}
