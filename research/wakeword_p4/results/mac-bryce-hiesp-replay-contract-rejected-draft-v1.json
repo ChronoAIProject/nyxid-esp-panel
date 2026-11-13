@@ -1,0 +1,147 @@
+{
+  "schema": "bryce-hiesp-replay-contract-audit-v1",
+  "auditor_sha256": "c87dc9310c1bc2e16b95132e1ce2bbd59fe38af357a0d5ff9604c9fea0b7e18d",
+  "base_runner_sha256": "9f4e561c4ee78c52099610084e418fe524cab902d124943898c6bb76f970c1e6",
+  "patched_runner_sha256": "bef4c59521c48821ff2d08b16d4838682fe29ce75e041108eb73fb20f18ab604",
+  "manifest_sha256": "a14837a2564e6f5bd10aee89e991568bc05827770b750498843a23eecd47b2c2",
+  "validator_sha256": "014fc9d8548e662e2ac65ccf84cd7d984e5b249bcce16f8c111d479115810ee5",
+  "original_source_wavs_authenticated": 126,
+  "unchanged_original_blocks": {
+    "original_final_gates": {
+      "bytes": 2176,
+      "sha256": "7045e9ac7d90ee1b535ccbb41995677fcfcf2f167aeacbcd6070af37f0bfba72"
+    },
+    "audio_transport_qemu_completion_crc": {
+      "bytes": 4175,
+      "sha256": "91c6c74892beb7f31d19d42bf4ff74aeda12a51ba5c8cfa7fcc4237cbd6b8093"
+    }
+  },
+  "cases": [
+    {
+      "name": "valid_explicit_development_reaches_intercepted_boundary",
+      "passed": true
+    },
+    {
+      "name": "missing_row",
+      "passed": true,
+      "rejection": "Incomplete original cohort"
+    },
+    {
+      "name": "reordered_sources",
+      "passed": true,
+      "rejection": "Changed source/order/target/endpoint metadata"
+    },
+    {
+      "name": "duplicate_source",
+      "passed": true,
+      "rejection": "Require one explicit supported replay record"
+    },
+    {
+      "name": "command_end_used_as_keyword_end",
+      "passed": true,
+      "rejection": "Changed source/order/target/endpoint metadata"
+    },
+    {
+      "name": "confuser_relabeled_as_target",
+      "passed": true,
+      "rejection": "Changed source/order/target/endpoint metadata"
+    },
+    {
+      "name": "human_endpoint_claim",
+      "passed": true,
+      "rejection": "Changed source/order/target/endpoint metadata"
+    },
+    {
+      "name": "legacy_endpoint_fields",
+      "passed": true,
+      "rejection": "Do not impersonate legacy endpoint/voice-partition metadata"
+    },
+    {
+      "name": "final_header_role",
+      "passed": true,
+      "rejection": "Synthetic source cannot become training/final data"
+    },
+    {
+      "name": "final_record_role",
+      "passed": true,
+      "rejection": "Independent final replay requires a separate explicit preregistration"
+    },
+    {
+      "name": "training_role",
+      "passed": true,
+      "rejection": "Synthetic source cannot become training/final data"
+    },
+    {
+      "name": "changed_condition",
+      "passed": true,
+      "rejection": "Changed source/order/target/endpoint metadata"
+    },
+    {
+      "name": "changed_source_audit_binding",
+      "passed": true,
+      "rejection": "Changed source provenance: source_audit"
+    },
+    {
+      "name": "changed_threshold",
+      "passed": true,
+      "rejection": "Changed historical official policy"
+    },
+    {
+      "name": "changed_getter",
+      "passed": true,
+      "rejection": "Changed historical official policy"
+    },
+    {
+      "name": "changed_engine_identity",
+      "passed": true,
+      "rejection": "Changed frozen engine: qemu"
+    },
+    {
+      "name": "changed_runner_identity",
+      "passed": true,
+      "rejection": "Changed frozen replay source"
+    },
+    {
+      "name": "changed_validator_identity",
+      "passed": true,
+      "rejection": "Changed frozen replay source"
+    },
+    {
+      "name": "profile_final_role",
+      "passed": true,
+      "rejection": "This preregistration cannot admit final/training or mixed replay roles"
+    },
+    {
+      "name": "changed_frozen_cohort_count",
+      "passed": true,
+      "rejection": "Changed frozen cohort/reference"
+    },
+    {
+      "name": "profile_omitted",
+      "passed": true,
+      "rejection": "Need paired development validation with frozen endpoint metadata"
+    },
+    {
+      "name": "profile_omitted_with_legacy_fields",
+      "passed": false,
+      "rejection": null
+    },
+    {
+      "name": "changed_wav_bytes",
+      "passed": true,
+      "rejection": "Escaped or changed audio"
+    },
+    {
+      "name": "legacy_admission_and_transferred_pcm_unchanged",
+      "passed": true
+    }
+  ],
+  "passed": false,
+  "engine_fixtures": "Non-executable unit-test files and synthetic reference metadata, not actual official engines.",
+  "subprocess_launches_intercepted": true,
+  "qemu_invoked": false,
+  "wake_models_scored": false,
+  "actual_gpu_engine_authenticated": false,
+  "final_data_accessed": false,
+  "accepted": null
+}

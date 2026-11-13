@@ -1876,6 +1876,26 @@ reserved wake-quality scoring. Full Hi ESP parity remains unproved.
 Coordinate Mac/P4 and RTX 4090 research in
 [issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
 
+### Kristin / Norman official Hi ESP replay handoff
+
+The [replay contract](../wakeword_p4/experiments/bryce_hiesp_replay_contract_v1.md)
+and [public asset manifest](assets-bryce-hiesp-replay-contract-v1.json) provide
+the exact source mapping, optional runner patch and standalone replay source
+for all 126 existing development WAVs. Source PCM is unchanged. Keyword timing
+is explicitly a generator token-duration prefix reference, with no invented
+legacy endpoint annotations. Use a separate evaluation directory so the GPU's
+current formal training sources remain pinned.
+
+The anonymous download verifies all 18 payload members; running the extracted
+audit passes all 24 cases. These are source-integrity and admission tests using
+non-executable engine fixtures and an intercepted launch boundary. Actual
+QEMU, official detector scores and GPU engine authentication remain pending.
+GPU must bind its real QEMU/ELF/flash and prior completed official report in a
+profile before inference, then retain every child report and CRC/stage104
+receipt. Join those raw results to the already frozen application-prime v30
+baseline without another Nyx inference or threshold search. The handoff README
+contains the exact preparation, profile and execution commands.
+
 ### Experimental threshold literal precision
 
 The [metadata-only precision audit](../wakeword_p4/results/threshold-literal-precision-v1.json)

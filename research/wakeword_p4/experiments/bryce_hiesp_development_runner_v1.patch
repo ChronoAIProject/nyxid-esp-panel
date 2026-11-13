@@ -1,0 +1,53 @@
+--- a/research/wakeword_p4/qemu_esp32_replay/run_replay.py
++++ b/research/wakeword_p4/qemu_esp32_replay/run_replay.py
+@@ -26,6 +26,8 @@
+     p.add_argument('--timeout-seconds', type=float, default=120.)
+     p.add_argument('--final-preregistration', type=Path,
+                    help='Required for explicitly frozen independent final PCM')
++    p.add_argument('--development-preregistration', type=Path,
++                   help='Frozen explicit synthetic-duration paired development only')
+     a = p.parse_args()
+     if (a.output.exists() or not math.isfinite(a.threshold) or not .4 <= a.threshold <= .9999
+             or not math.isfinite(a.timeout_seconds) or a.timeout_seconds <= 0):
+@@ -40,6 +42,12 @@
+     final = row['role'] == 'independent-negative-final' or paired_final or dialogue_final
+     if bool(a.final_preregistration) != final:
+         raise ValueError('Independent final replay requires a separate explicit preregistration')
++    if manifest.get('schema') == 'synthetic-token-duration-paired-development-v1' and not a.development_preregistration:
++        raise ValueError('Explicit synthetic development requires its own preregistration')
++    development_freeze = None
++    if a.development_preregistration:
++        from synthetic_development import validate_preregistration
++        development_freeze = validate_preregistration(a, manifest, Path(__file__))
+     freeze = None
+     if final:
+         freeze = json.loads(a.final_preregistration.read_text())
+@@ -78,7 +86,7 @@
+         frozen_endpoint_metadata = (manifest.get('voice_partition_sha256')
+                                     and manifest.get('endpoint_annotation_source_sha256'))
+         if (row.get('split') != 'validation' or not manifest.get('paired_wakephrases')
+-                or not (frozen_endpoint_metadata or frozen_generation_reference)
++                or not (frozen_endpoint_metadata or frozen_generation_reference or development_freeze is not None)
+                 or manifest.get('independent_final_audio_accessed')
+                 or not 0 < row.get('keyword_end', 0) <= row['samples']):
+             raise ValueError('Need paired development validation with frozen endpoint metadata')
+@@ -155,6 +163,8 @@
+         raise ValueError('Missing successful threshold setter/getter evidence')
+     if final and float(parameters[1]) != freeze['threshold_getter_expected']:
+         raise ValueError('Final engine getter differs from preregistration')
++    if development_freeze is not None and float(parameters[1]) != development_freeze['threshold_getter_expected']:
++        raise ValueError('Development engine getter differs from preregistration')
+     report = dict(role=('Hi ESP independent paired fixed-point replay' if paired_final else 'Hi ESP independent negative fixed-point replay' if final else 'Hi ESP real-waveform developer transport probe, not acceptance'),
+                   record=row, manifest_sha256=sha(a.manifest), threshold_requested=a.threshold,
+                   threshold_getter_after_set=float(parameters[1]),
+@@ -173,6 +183,10 @@
+                   independent_final_audio_accessed=final,
+                   final_preregistration_sha256=sha(a.final_preregistration) if final else None,
+                   limits=('Independent dialogue negatives; repeated participants and transcript-screen limitations remain. Nominal Poisson bounds do not account for clustering. No positive recall, matched population FAR or hardware latency claim.' if dialogue_final else 'Independent paired TTS intention diagnostic; no validated phonetic endpoints or pronunciation labels. Not true recall or phonetic latency acceptance.' if paired_final else 'Independent negative audio only; fixed operating point, raw official events. No positive recall, matched population FAR or hardware latency claim.' if final else 'Development audio only. This records raw official detector events, with internal trigger policy. No independent acceptance, matched false-wake calibration or hardware latency.'))
++    if development_freeze is not None:
++        report.update(development_preregistration_sha256=sha(a.development_preregistration),
++                      development_reference_kind=development_freeze['source_reference_kind'],
++                      development_metadata_validator_sha256=development_freeze['validator_sha256'])
+     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n'); print(json.dumps(report))
+ 
+ 
