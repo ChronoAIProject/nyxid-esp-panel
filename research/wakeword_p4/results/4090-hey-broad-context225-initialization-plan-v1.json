@@ -1,0 +1,14 @@
+{
+  "schema": "hey-broad-context225-initialization-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/initialize_hey_broad_context225_v1.py": "1812e35c5dd9cc204edf12ed7250859a8cb61938263f79ded74b9e16863ab816",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "research/wakeword_p4/results/4090-hey-broad-context-decision-v1.json": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091",
+    ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b"
+  },
+  "tensorflow": "2.21.0",
+  "seed": 726,
+  "context_frames": 225,
+  "policy": "Create original context150 and load original authenticated reconstructed weights; snapshot ordered layer arrays. Clear Keras session, seed726, create context225. Copy all non-Dense weights exactly, freeze BN; leave new classifier at its actual seeded initializer. Save same-instance H5 plus every variable value-byte inventory before any update. Both future arms must load this exact snapshot.",
+  "operations": "CPU shape/weight assignment/save only; no data, forward inference, optimizer or export."
+}
