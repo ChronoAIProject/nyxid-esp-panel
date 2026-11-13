@@ -6192,3 +6192,12 @@ contract checks pass; current patched calibrator SHA88027cb2165baad13a197b1e2c73
 matches audited proposed bytes. Resolves previous missing-import limitation.
 No actual candidate scoring/packaging, waveform inference, firmware or acceptance.
 Original failed attempt preserved; active formal sources unchanged.
+
+### Original recovered100000 checkpoint (2026-11-13)
+
+recovered 原100000步完整验证已保存。原始记录4034 bytes，SHA256 `3e56de298dc6e80414a11f1e118f182b9c853db5962571efb983adb842331e21`。
+
+training-float grid 0 eligible；fallback 0.994：recall 0.600462962962963、macro 0.6239583333333334、hard-negative false rate 0.04403409090909091、max-source false rate 0.051041666666666666。背景0 events/1.2048112674h，名义单侧95%上界2.4864743174/h，不满足≤.5/h，不是通过。
+
+原 PID817144 已继续至100500；284 formal哈希全部一致。完整逐批审计/原后处理等待两臂完成；无INT8/新开发/独立验收或跨臂收益结论。Mike/test6/7未消费，v30冻结。新Hey配对协议67293a9已提交，原实验和新协议分开推进，目标未完成。
+
