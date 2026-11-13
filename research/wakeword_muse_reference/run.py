@@ -157,18 +157,26 @@ def main():
     signal.signal(signal.SIGTERM, interrupted)
     try:
         flash(args.probe_bin, 'probe-flash-private.log')
-        with serial.Serial(args.port, 115200, timeout=.2) as uart, (args.output / 'uart-private.log').open('w') as log:
+        with serial.Serial(args.port, 115200, timeout=.2) as uart, (args.output / 'uart-private.log').open('wb') as log:
             uart.dtr = False
             uart.rts = True
             time.sleep(.1)
             uart.rts = False
             uart.reset_input_buffer()
             deadline = time.monotonic() + 60
+            pending = bytearray()
             while time.monotonic() < deadline:
-                line = uart.read_until(b'\n', 32768).decode('utf-8', errors='replace').strip()
-                if line:
-                    log.write(line + '\n')
+                fragment = uart.read_until(b'\n', 32768)
+                if fragment:
+                    log.write(fragment)
                     log.flush()
+                    pending.extend(fragment)
+                if len(pending) > 32768:
+                    raise ValueError('Muse UART line exceeds explicit bound')
+                if not pending.endswith(b'\n'):
+                    continue
+                line = pending.decode('utf-8', errors='replace').strip()
+                pending.clear()
                 if any(marker in line for marker in ('abort()', 'Guru Meditation', 'assert failed:')):
                     raise RuntimeError('Muse probe aborted; retain private UART evidence')
                 for marker in ('MUSE_REFERENCE_READY', 'MUSE_REFERENCE_CASE', 'MUSE_REFERENCE_DONE'):

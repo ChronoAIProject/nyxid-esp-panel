@@ -25,6 +25,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-root', type=Path, required=True)
     parser.add_argument('--inventory', type=Path, required=True)
+    parser.add_argument('--reuse-build-report', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
@@ -110,12 +111,22 @@ def main():
         compiler=version, compiler_sha256=sha(compiler), linked_symbols=sorted(expected_symbols),
         exact_compressed_model_occurrences_in_app=1, compiler_warnings=0,
         device_operated=False, audio_io_performed=False, recognition_accepted=False)
+    if args.reuse_build_report:
+        original = json.loads(args.reuse_build_report.read_text())
+        for name in SOURCES:
+            key = 'research/wakeword_muse_reference/' + name
+            assert report['sources'][key] == original['sources'][key], name
+        for key in ('firmware_sha256', 'elf_sha256', 'compressed_model_sha256', 'expanded_model_sha256'):
+            assert report[key] == original[key], key
+        report['firmware_rebuilt'] = False
+        report['firmware_reused_from_build_report_sha256'] = sha(args.reuse_build_report)
     report_path = args.output / 'build.json'
     report_path.write_text(json.dumps(report, indent=2) + '\n')
     plan = dict(schema='official-muse-zero-plan-v3', sources=source_hashes,
         build_report_sha256=sha(report_path), firmware_sha256=report['firmware_sha256'],
         engine='wn10_himuse', mode='DET_MODE_95', setter_called=False,
         preparation_target='esp32p4', expanded_model_bytes=size,
+        uart_reader='Accumulate .2s read_until fragments until actual newline; preserve raw bytes; 32768-byte line bound. No JSON parsing of partial lines.',
         sample_rate=16000, channels=1, chunk='actual get_samp_chunksize; require 2..4096',
         cases=['1', 'chunk-1', 'chunk+1', '16000', '16001'], prime_calls_per_case=63,
         lifecycle='Per case create, query, allocate zeros, 63 zero prime calls, whole input with final-only padding, free/destroy. Model bytes loaded once; no mid-stream reset.',

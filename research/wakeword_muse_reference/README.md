@@ -82,6 +82,14 @@ model bytes, preparation and zero cases. Use a fresh v3 build root; v2 evidence
 and the 3.3.15 lock remain in the frozen history. This runtime pin applies only
 to this standalone probe. Native execution must still verify the fix.
 
+The first v3 host stopped while receiving the first CASE: `read_until` can
+return at its .2-second timeout before a newline. The host now accumulates those
+fragments and logs original bytes, parsing only complete newline frames. The
+separate host-v2 retry reuses the exact v3 app/ELF/model and all compiled sources;
+`prepare.py --reuse-build-report ORIGINAL_BUILD_JSON` verifies those identities.
+Publish a fresh host-v2 build/protocol report before retrying. Do not erase the
+first partial-frame failure or rebuild/modify the model to repair transport.
+
 After the guarded run, extract only detector frames and independently compare
 their complete order, zero-sample CRCs, raw returns and getters with the report:
 

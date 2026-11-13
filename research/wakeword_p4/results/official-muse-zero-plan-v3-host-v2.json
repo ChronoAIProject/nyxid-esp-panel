@@ -1,0 +1,42 @@
+{
+  "schema": "official-muse-zero-plan-v3",
+  "sources": {
+    "research/wakeword_muse_reference/CMakeLists.txt": "4cd829f3bcf541a1f7ae100be25fcaf338f269a6e6cfa28eef03b36447d4ed69",
+    "research/wakeword_muse_reference/main/CMakeLists.txt": "5dbbca26b0a619b3984b98ae780d0b5b12b42719ccfd361a386d1ad716f1dd95",
+    "research/wakeword_muse_reference/main/idf_component.yml": "909caae25390505fdb223b07ee7323425ec90a44e60579ece9e22671bd965bc0",
+    "research/wakeword_muse_reference/main/muse.c": "8ee8a378f46d059ed2efbaae6c13092f1017c3af503c87f6730df3caba13fb54",
+    "research/wakeword_muse_reference/main/layout.cpp": "f9793d0376f3a1f62dc50f8421d85ba216de43fbcd3353011766a0975cb354a7",
+    "research/wakeword_muse_reference/sdkconfig.defaults": "495225b3df40a7880190cdc645002108326b3dba2b7bb36d0c13ef2c020a6665",
+    "research/wakeword_muse_reference/dependencies.lock": "1f535bc9a02fca0f8136586935ae0071139d12cd7325b74a15ddf0a3b6463494",
+    "research/wakeword_muse_reference/partitions.csv": "a3e3de58a2339f610ab3a44935cd27251f576488e576e6869db98b163bc0b53e",
+    "research/wakeword_muse_reference/pack_model.py": "f05745d8f8ea4218be2d925f24fbbda28d061ff7588e2b2d1a7693efd2935a2a",
+    "research/wakeword_muse_reference/run.py": "0527ebb44b3d5305a0890fba4b7dafe4c4a8ab6ef3e88063e2a5f8e8a46814da",
+    "research/wakeword_muse_reference/prepare.py": "4dd9becfc810ccd9d6dc3bc7fdf630dc00d2326ffb51175dc0edd46c241fb13f",
+    "research/wakeword_muse_reference/audit.py": "1ed524118225085f641a46047eadb52a5a1411ac67519a65170b05b3fa2f75de",
+    "research/wakeword_muse_reference/README.md": "a14b8adcbb39a5c56424945c80e556b6de2c16d46f0479338d8142ddffed9a49"
+  },
+  "build_report_sha256": "684ebf7c90dbc6b5ca866e6d6fe12be2ffcd01ff0f438cbfb5035b97049e5207",
+  "firmware_sha256": "04326b8d47050418498a9e41da7273e5bb6b1436a01308de51ede6ea54798d4b",
+  "engine": "wn10_himuse",
+  "mode": "DET_MODE_95",
+  "setter_called": false,
+  "preparation_target": "esp32p4",
+  "expanded_model_bytes": 430762,
+  "uart_reader": "Accumulate .2s read_until fragments until actual newline; preserve raw bytes; 32768-byte line bound. No JSON parsing of partial lines.",
+  "sample_rate": 16000,
+  "channels": 1,
+  "chunk": "actual get_samp_chunksize; require 2..4096",
+  "cases": [
+    "1",
+    "chunk-1",
+    "chunk+1",
+    "16000",
+    "16001"
+  ],
+  "prime_calls_per_case": 63,
+  "lifecycle": "Per case create, query, allocate zeros, 63 zero prime calls, whole input with final-only padding, free/destroy. Model bytes loaded once; no mid-stream reset.",
+  "observations": "All raw prime/input returns, every word name/default/postprime getter bits, CRC of original unpadded zero samples, actual calls, timings and phase heap/probe buffer bytes.",
+  "restore": "Only verified development MAC/active slot. Exact app and restore binary SHA; fresh partition-table read. Guarded finally restores app/slot/service/agent/listener, then independent HTTP/no-owner check. app-only is not voice acceptance.",
+  "decision": "Preserve initialization/failure and every return. Report positive zero events rather than reinterpret as recognition. No threshold or candidate selection.",
+  "scope": "Initialization, actual interface and zero-input resources only; no speaker, microphone, TTS, speech/FAR, parity or reserved acceptance."
+}
