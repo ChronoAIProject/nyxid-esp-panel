@@ -1,0 +1,11 @@
+{
+  "schema": "complete-official-calibration-initial-import-failure-v1",
+  "source_sha256": {
+    "calibrate_complete_official_v1.py": "c98106825e9e32a5f48e43788e5254acef365148f39c261db5a1dc7b5b83877d",
+    "review_complete_official_calibration_v1.py": "a106981a390557ef526664a561baadf4234545a32daf039fa56bceade199cdf9"
+  },
+  "error": "ModuleNotFoundError: No module named soundfile",
+  "phase": "Import pinned original official auditor; before constructed tests or audio access",
+  "actual_model_or_source_audio_accessed": false,
+  "resolution": "Keep immutable auditor unchanged; in the constructed reviewer only, explicitly stub its unused soundfile import and forbid SoundFile access. Actual PCM decoder under test uses stdlib wave. Production GPU already supplies its original pinned soundfile dependency."
+}

@@ -7762,3 +7762,14 @@ no intermediate recognition/FAR claim. Host/scheduling included; one observation
 cannot certify all configurations or justify changing original live serial run.
 Nyx1087093/start20088902 and numericalwaiter1089930 both verifiedlive; all11969
 complete observed Nyxguards match, last logged11500. No restart or newdev access.
+
+
+### New official calibration imported; Linux constructed report exact
+
+Mace065195c5files imported byte-for-byte including original missing-soundfile
+failure. Linux5constructed check groups pass against916fed0; full JSON equals
+Mac bytes. Newofficial unpublished plan generator now binds reader, original
+metrics/event policy, oldofficial auditor/grid and custom_execution_path.
+Original live grid/runner untouched; no newplan/results produced or scoring.
+This verifies constructed interfaces only; actual10608streams and fullaudits
+remain outstanding. Nyx original observed41000/120000, numericalwaiter live.

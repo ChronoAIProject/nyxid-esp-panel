@@ -37,12 +37,17 @@ def register():
     source = Path(__file__).parent
     runner = source/'run_jenny_development_v1.py'
     paths = [Path(__file__), runner, source/'run_development.py', custom_path, old_path,
-             source/'main/main.c']
+             source/'main/main.c', source/'calibrate_development.py',
+             source/'run_development_grid.py',
+             ROOT/'experiments/calibrate_complete_official_v1.py',
+             ROOT/'experiments/hey_development_metrics_v1.py',
+             ROOT/'experiments/uint8_event_policy_v1.py']
     paths += [Path(p) for p in old['runtime'].values()]
     paths += [Path(custom['materials'][phase]['path']) for phase in ('synthetic', 'background')]
     files = {str(p): sha(p) for p in paths}
     files.update({r['path']: r['sha256'] for r in rows})
     plan = dict(schema='jenny-official-development-execution-v1', files=files,
+                custom_execution_path=str(custom_path),
                 runtime=old['runtime'], runner=str(runner), models=['willow', 'hiesp'],
                 threshold_requests=REQUESTS, records=rows, streams=2*len(REQUESTS)*len(rows),
                 output='.local/wakeword/jenny-official-development-v1', retries=0,
