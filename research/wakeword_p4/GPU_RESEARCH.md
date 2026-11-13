@@ -5280,3 +5280,7 @@ Original newline-complete record4018B SHA7ff23385a5de4f21d4ebc74575629fc038df212
 ### Per_draw formal25000 float checkpoint rejected
 
 Original complete record4040B SHAa99abd39d08ee549ef0cd85f9e5fb82a04daaa51b28279edc946a5eabfaf12d8 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback0.994 macro0.3567708333333333/max-source false0.0140625; background0/1.2048112673611107h, zero-event one-sided95 upper2.4864743173555484/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only; no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal30000 float checkpoint rejected
+
+Original complete record4045B SHA1f06aae6f5a491615bdcb2e8c916a5a7e62ea1bf3be9b3e6941dd1f3791ff548 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback0.994 macro0.4888020833333333/max-source false0.013541666666666667; background0/1.2048112673611107h, zero-event one-sided95 upper2.4864743173555484/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only; no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
