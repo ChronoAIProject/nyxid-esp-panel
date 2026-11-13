@@ -6212,3 +6212,15 @@ and2matched admission tests pass. All284formal hashes unchanged; no candidate
 freeze exists and no speech scored. Consumer opt-in profile and full future
 freeze still required before scoring; prior metadata-only compatibility receipt
 does not certify this arithmetic-enabled producer with latest Mac consumer.
+
+### Explicit pilot target provenance admission (2026-11-13)
+
+Added separate validate_hey_target_pack_v1.py, outside active trainer sources.
+Requires target/pronunciation identity, ordered row hashes, feature file hashes,
+source PCM byte hashes, reciprocal target labels and voice model role separation.
+Analytic six-row fixture accepted; wrong target, cross-target positive label,
+voice-role leakage and changed PCM hash mutations rejected. This is declared
+provenance only; no real pack generated and no training launch adapter admission
+claimed. Feature dimensions/quality/source-overlap/material lock and CPU batch
+integration remain necessary before new training. Original live PID817144 observed
+at102500; no formal input edits.
