@@ -5864,3 +5864,16 @@ zero-event one-sided95upper2.4864743174/h, not a pass. No INT8/new-development,
 acceptance or cross-arm conclusion. All284formal hashes independently unchanged;
 original sequence continues/recovered waits. Mike/test6/7 remain unconsumed,
 v30 frozen, objective incomplete. Coordination remains in Issue13.
+
+### Original control115000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. Original PID719837 verified live through
+114000→114500→115000, elapsed5:23:33. Original115000 line SHA
+`aa37d729115d3d49a1c8ba547d2041adcb77c839ab22fee35305e3c93eda473c`.
+0training-float eligible points; fallback.994 recall .5361111111,
+macro .5604166667, hard-negative false rate .0323863636,
+max-source false rate .0416666667. Ambient0events/1.2048112674h gives nominal
+zero-event one-sided95upper2.4864743174/h, not a pass. No INT8/new-development,
+acceptance or cross-arm conclusion. All284formal hashes independently unchanged;
+original sequence continues/recovered waits. Mike/test6/7 remain unconsumed,
+v30 frozen, objective incomplete. Coordination remains in Issue13.
