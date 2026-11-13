@@ -109,7 +109,12 @@ def write(args):
             files.add(smoke);arms[target]['integration_smoke']=str(smoke)
     if not args.preflight:
         assert len(smoke_initial_inventories)==2 and smoke_initial_inventories[0]==smoke_initial_inventories[1], 'Actual two-arm initial values differ'
-    bound={str(p.resolve().relative_to(Path.cwd())):sha(p) for p in files}
+    # Frontend module/binary paths are intentionally outside the checkout.
+    # Keep those absolute; workspace artifacts retain portable relative keys.
+    def key(path):
+        resolved=path.resolve()
+        return str(resolved.relative_to(Path.cwd())) if resolved.is_relative_to(Path.cwd()) else str(resolved)
+    bound={key(p):sha(p) for p in files}
     result=dict(schema='hey-paired-training-lock-v2',material_commit=commit,steps=20000,
                 stage='integration-preflight' if args.preflight else 'formal',
                 seed=726,batch_size=128,initial_weights=str(args.initial_weights),upstream=str(args.upstream),

@@ -6686,3 +6686,10 @@ Original extractionPID905640/session61776 terminatedexit0,2400allocation records
 Featurebuildsession82950 exited0, all7200completewaveforms processed. Both actualCPUaudits sessions37484/4923 exited0 on their realnewtargetpacks, deterministic repeats/128x150x40/32positive96negative/1:20weights/v2policy/provenance pass. Verified both arms'7200ordered rowmetadata equal excepttargetlabel,720positive/6480negative each, no doublepositive, trainingonly; human/ambient indices byte-identical. Sharedbinary266151120bytes is the same hardlinked inode in botharms, preparationSHA binds frozenv2featureplan. Saved originalCPUreports in4090-hey-v2-feature-cpu-completion-v1.json.
 
 Started both original20100batch/full643200positive draw schedule generators, separate fixed paths, no model/TF or heldout scoring. Actualfullschedule receipts/preflightlock/GPUsmokes/formal20000 stillpending. V1failure unchanged, v30frozen. Main token task completednormally, no syntheticregen/restart.
+
+
+### 2026-11-13 — both complete schedules, preflight path correction
+
+Originalschedule sessions93136/7639 exited0, each20100tensorbatches and643200fullpositive draw records verified. ActualcappedcountsWillow135/Nyx0, original/effective traces and schedule receipt hashes preserved unchanged in4090-hey-v2-full-schedule-completion-v1.json. No TF/model/heldout inference.
+
+Firstpreflightlock write terminated before filecreation/modelupdates due to externalglobalfrontend module path not relative to checkout. Corrected onlylock key normalization: workspace files remain relative, authenticated externalmodule/binary paths remain absolute and SHA-bound. This is a lockwriter pathbug, not a model/training result; no schedule rerun or changed data. Pushing correction before rewriting exactpreflightlock and GPUlaunch.
