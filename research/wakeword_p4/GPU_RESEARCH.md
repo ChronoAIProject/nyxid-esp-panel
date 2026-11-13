@@ -5264,3 +5264,7 @@ Archived original author configs with URL/bytes/SHA256. Both say dataset=trainin
 ### Per_draw formal5000 original float validation
 
 Read-only collector preserved complete original record (4026B SHA67f0ff2b5ba3040554361e6a108e8cd3b0d785d8bc95f3d155828f65575ca5f6); independently authenticated exact source bytes and all11 grid points. Three training-eligible thresholds; returned threshold 0.99, macro recall 0.2916666666666667, max-source false 0.009895833333333333. Background 0/1.2048112673611107h, zero-event one-sided95 upper 2.4864743173555484/h. Training eligibility only, not independent FAR acceptance or INT8 quality; no cross-arm superiority/promotion claim. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal10000 float checkpoint rejected
+
+Original complete record3974B SHA5a1fbd950947b5d36f2c188b8cfc0282267b65791a36b0ac636a7348902e1610 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.409375/max-source false.0213541667; background0/1.2048112674h, one-sided95 upper2.486474317/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only; no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
