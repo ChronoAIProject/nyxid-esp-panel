@@ -1,0 +1,122 @@
+# Hey Willow / Hey Nyx matched synthetic pilot v1
+
+Status: protocol preparation; no new material generated or scored. This is a
+separate experiment, not an amendment of the running CompleteCoverage formal.
+Source request: Issue13 comments6859235962,6859742947,6860346609.
+
+## Question and comparisons
+
+First compare official `wn9_heywillow_tts` against our method trained on exactly
+Hey Willow. Then compare our Hey Willow and Hey Nyx arms under matched recipes.
+The first contrast still confounds architecture, frontend and proprietary
+training material. Willow has more syllables than Nyx; the second contrast
+estimates a phrase effect under this synthetic recipe, not intrinsic difficulty.
+Hi ESP remains a same-input chain reference, not the primary matched-word arm.
+Muse is optional and requires a separate protocol/runtime admission.
+
+Mac owns authenticated official artifacts, factory dispatch, native P4 replay
+and later complete-device validation. GPU owns explicit target configuration,
+material provenance, paired synthesis, training and waveform INT8 replay.
+No physical board, human voice or listening gate blocks GPU preparation.
+
+## Execution order and locks
+
+1. Finish the original120k sequence and original audits/PTQ/postprocessing without
+   edits to284pins or checkpoint selection. Preserve all failures.
+2. Implement a separate explicit target-config adapter for the existing training
+   entry, with fail-closed checks that target labels and feature manifests agree.
+   The current entry is not yet certified for arbitrary target words. Do not
+   point Willow at old Nyx positive packs. Verify CPU batch/label integration
+   before allocating a new GPU run.
+3. Before synthesis, push a material lock containing exact TTS engine/version,
+   model/config bytes, phonemizer/version, pronunciation inputs, voice-role
+   assignment, text lists, commands, seeds and renderer/RIR hashes. Availability
+   and encoded/PCM overlap checks must pass. No substitution after seeing scores.
+4. Before training, push both full source/tensor schedules, initial weights,
+   optimizer/frontend/export settings and code hashes. Before scoring, push
+   candidate model hashes and the scorer/calibrator/runtime arithmetic contract.
+5. Run paired pilot, then locked development calibration and complete curves.
+   Do not enlarge or replace this pilot's data after seeing failures. Any larger
+   study is a separately registered experiment.
+
+## Pilot material and training recipe
+
+Two targets: literal `Hey Willow` and project pronunciation input `Hey Nicks`
+for the Hey Nyx label. Preserve those exact strings plus any engine-native
+phoneme output; do not claim phonetic truth from the text. Use one fixed Piper
+version and two fresh training voices, a third fresh development voice and a
+fourth reserved acceptance voice. Exact identities must be locked in step3;
+Joe/Mike and all historical development/final voices are excluded. If distinct
+available voices cannot satisfy this, record failure rather than reuse them.
+Shared TTS parent/pretraining exposure remains an explicit limitation.
+
+Per training voice/target: standalone plus three fixed command carriers
+(`turn on the light`, `what time is it`, `set a timer`), three speed factors
+(.9,1,1.1), ten fixed render seeds:240 positives/target before augmentation.
+Match voice, carrier, speed, seed and environment across target arms. Use common
+background/noise and full RIR at quiet/25dB/15dB SNR, never truncate the phrase.
+All source PCM retained; render hashes, nonempty/finite/format/sample counts,
+clipping, full-tail retention, native phoneme/duration availability and rendered
+boundary mapping must be audited before feature extraction. Unavailable native
+phonemes/durations are recorded as unavailable, not inferred ground truth.
+
+Small pilot: teacher60/context150, frozenBN, same pretrained initialization,
+FP32/noTF32, seed726, batch128,20000updates/arm, eval5000. Use identical optimizer
+and frontend settings serialized from the authenticated current recipe in the
+training lock. Checkpoint is fixed final20000, not best development score.
+No old target-specific paired/CompleteCoverage pack is silently inherited.
+Both arms use paired common negatives and reciprocal whole other-target
+negatives; all schedule differences must be solely target-dependent material.
+Training remains disabled until exact negative inventory and schedules are locked.
+
+## Labels and evaluation
+
+Reciprocal targets are negatives: Hey Willow is negative for Nyx and Hey Nicks
+is negative for Willow. Shared common confusions: `Hey`, `Hello`, `Hey William`,
+`Hey pillow`, `Hey Nick`, `Hey next`, `Hi ESP`, `Hey Muse`. Preserve per-phrase
+and per-source results; no relabeling based on model responses.
+
+Development: new third voice, same4carriers/3speeds/3noise conditions, separate
+render seeds and RIR. Each matched target has36positives, each common confusion
+has36negatives; reciprocal-target positives also form cross-target negatives.
+Include complete fresh continuous negative recordings totaling at least8hours,
+source-disjoint from training and every prior development/final inventory.
+Reserve a different fixed>=8hour negative inventory and fourth voice for
+acceptance. Lock exact inventories and encoded/PCM hashes before scoring.
+Neither dataset exists/admission is claimed by this document.
+
+Compare recalls at a shared nominal one-sided95Poisson FAR upper bound<=.5/h,
+not a shared numeric threshold. Save every eligible/ineligible curve point.
+Custom UINT8 detectors: version `uint8-sum-binary64-v1`, five raw bytes summed
+as integers then binary64 /1280; threshold binary64,67step refractory and
+half-threshold rearm, no epsilon. Implement/verify this before scoring; this
+protocol does not activate it in any existing experiment. Custom grid remains
+original138points. Official Willow uses actual API getter-confirmed working
+points; its grid/range and internal event semantics must be separately locked
+with Mac before any speech scoring, never assume equivalent score scales.
+
+For custom development eligibility require macro>=.8, standalone>=.75,
+command>=.75,0common/cross-target events and FAR upper<=.5/h. Select maximum
+macro, then lower FAR upper, then higher threshold; null if none. Official
+reference curves are diagnostic even if no point meets all gates. Report full
+phrase hit and early events separately; latency is from saved generated full
+phrase boundary, including command-continuation cases, not human final-phoneme
+truth. Preserve misses, latency distributions, per-noise/speed/voice results,
+raw UINT8/official traces, reset/CRC/call-count evidence and all model identities.
+
+## Acceptance and scope
+
+Only a development pass may unlock this study's separately reserved acceptance;
+freeze the selected candidate/threshold first, score it once alongside frozen
+v30, official Willow and Hi ESP on the same locked protocol. v30/HiESP are
+context references with their own target-positive labels, not mislabeled Nyx
+or Willow detectors. Exact reference-positive material must join the material
+lock. Acceptance uses the same positive/confusion/FAR gates, no retry, rescue,
+extension or threshold reselection. Failed pilot retains v30 and all evidence.
+Original Mike/test6/7 and three consumed final sets remain untouched; this
+study cannot recycle or rename the original acceptance package.
+
+No pilot result alone promotes a model. Real-waveform streaming INT8 checks,
+independent synthetic acceptance and documented scope are required for the
+GPU goal; Mac owns subsequent P4/resource/full-device claims. No synthetic
+result establishes human generalization or human speech latency parity.
