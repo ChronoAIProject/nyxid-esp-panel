@@ -5246,3 +5246,7 @@ Added standalone unpinned collect_per_draw_noise_checkpoints_v1.py to preserve n
 ### Fixed formal110000 float checkpoint rejected
 
 Read-only collector preserved original record (3964B SHA4316fffe42498e443a68049e228184ccecd767eeafd4a8c0b9d73a458b7d632b); independently matched newline-complete source bytes and recomputed11-point eligibility. Zero eligible; fallback 0.994, macro recall 0.525, max-source false 0.030208333333333334. Background 0/1.2048112673611107h; zero-event one-sided95 upper 2.4864743173555484/h. Fallback not pass; reused float validation only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before automatic per_draw. v30 frozen.
+
+### Fixed formal115000 float checkpoint rejected
+
+Collector preserved original newline-complete record (4091B SHA5307f17e2d1d6564ef97f55195816a0da847f17ff8122a3dc1652bad68ca4ea3); independently matched source bytes and recomputed11-point eligibility. Zero eligible; fallback 0.994, macro recall 0.5604166666666667, max-source false 0.041666666666666664. Background 0/1.2048112673611107h; zero-event one-sided95 upper 2.4864743173555484/h. Fallback not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original trainer continues to120k before automatic per_draw. v30 frozen.
