@@ -6811,3 +6811,21 @@ than the pilot's undefined full-phrase timing convention, not a post-score
 metric choice. Original138grid/macro.8/bare.75/command.75/zero common+cross+
 pre-source/FARupper.5 and ranking remain. No inference authorization yet;
 scorer/calibrator/runtime/background execution pins are still required.
+
+### Custom development metrics/scorer/calibrator implemented
+
+New full-phrase metric implementation uses original rawUINT8 event arithmetic,
+registered138grid, source-support timestamps and separate generated/RIR/container
+signed offsets. Constructed complete360row corpus tests prove source-start-only
+trigger has anyrecall1 but full-phrase recall0, late fullphrase triggers pass,
+one common-negative event fails, null selection and ranking/Poisson arithmetic
+are correct. Two tests passed; actual development scores remain unopened.
+
+Scorer registration authenticates both candidate+v30 model bytes, full synthetic
+PCM, complete12call background PCM+frontend, bounded clean overlap receipts,
+source/dependency/runtime/frontend library identities and calibrator/metric code.
+Execution requires pushed exact freeze; full clip/call stream twice with fresh
+reset, no internal slicing/reset, records full original rawUINT8. Calibrator
+checks report/trace hashes+geometry, saves all points and null/no-rescue result;
+v30 original threshold is an additional fixed reference. Acceptance remains
+closed. Registration/actual inference not yet executed at this source commit.
