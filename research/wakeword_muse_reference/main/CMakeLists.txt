@@ -6,6 +6,7 @@ set(model_binary "${CMAKE_CURRENT_BINARY_DIR}/muse-model.bin")
 add_custom_command(OUTPUT "${model_binary}"
     COMMAND ${PYTHON} "${CMAKE_CURRENT_SOURCE_DIR}/../pack_model.py" "${model_dir}" "${model_binary}"
     DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../pack_model.py"
+        "${sr_dir}/model/movemodel.py" "${sr_dir}/model/pack_model.py"
         "${model_dir}/_MODEL_INFO_p1" "${model_dir}/_MODEL_INFO_p2"
         "${model_dir}/wn10_data_p1" "${model_dir}/wn10_data_p2"
     VERBATIM)

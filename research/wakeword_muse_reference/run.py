@@ -19,10 +19,11 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def audit_cases(ready, cases, done):
-    assert ready['schema'] == done['schema'] == 'muse-zero-v1'
+def audit_cases(ready, cases, done, expanded_model_bytes):
+    assert ready['schema'] == done['schema'] == 'muse-zero-v2'
     assert ready['engine'] == 'wn10_himuse' and ready['mode'] == 'DET_MODE_95'
-    assert ready['expanded_model_bytes'] == 817708
+    assert 1024 <= expanded_model_bytes <= 1024 * 1024
+    assert ready['expanded_model_bytes'] == expanded_model_bytes
     assert len(cases) == done['cases'] == 5
     chunk = cases[0]['chunk']
     assert type(chunk) is int and 1 < chunk <= 4096
@@ -48,7 +49,7 @@ def audit_cases(ready, cases, done):
         assert 0 <= case['detect_max_us'] <= case['detect_total_us']
         assert case['create_us'] >= 0 and case['prime_us'] >= 0
         assert case['probe_buffer_bytes'] == chunk * 2 + calls * 4
-    return dict(schema='muse-zero-native-summary-v1', chunk=chunk, rate=16000, channels=1,
+    return dict(schema='muse-zero-native-summary-v2', chunk=chunk, rate=16000, channels=1,
         word_metadata=first_words, cases=5, input_calls=sum(c['calls'] for c in cases),
         prime_calls=315, prime_positive_events=prime_events, input_positive_events=input_events,
         zero_positive_events_absent=prime_events == input_events == 0,
@@ -79,7 +80,10 @@ def main():
     assert args.status_url.startswith('http://')
     plan = json.loads(args.protocol.read_text())
     build = json.loads(args.build_report.read_text())
-    assert plan['schema'] == 'official-muse-zero-plan-v1'
+    assert plan['schema'] == 'official-muse-zero-plan-v2'
+    assert build['schema'] == 'official-muse-zero-build-v2'
+    assert plan['preparation_target'] == build['preparation_target'] == 'esp32p4'
+    assert plan['expanded_model_bytes'] == build['expanded_model_bytes']
     assert plan['firmware_sha256'] == build['firmware_sha256'] == args.probe_sha256
     assert plan['build_report_sha256'] == sha(args.build_report)
     assert plan['sources'] == build['sources']
@@ -141,7 +145,7 @@ def main():
         if time.monotonic() >= deadline:
             raise RuntimeError('Original app did not return after read-only chip/partition checks')
         time.sleep(1)
-    report = dict(schema='muse-zero-guarded-native-v1', probe_sha256=args.probe_sha256,
+    report = dict(schema='muse-zero-guarded-native-v2', probe_sha256=args.probe_sha256,
         protocol_sha256=sha(args.protocol), build_report_sha256=sha(args.build_report),
         restore_sha256=args.restore_sha256, restore_readiness=args.restore_readiness,
         before=dict(app_sha256=before['app_sha256'], slot=before['ota']['running'], nyx_state=before['nyx']['state']),
@@ -183,7 +187,8 @@ def main():
                     break
             if 'done' not in report:
                 raise TimeoutError('No terminal Muse frame')
-        report['summary'] = audit_cases(report['firmware_ready'], report['cases'], report['done'])
+        report['summary'] = audit_cases(report['firmware_ready'], report['cases'], report['done'],
+                                        build['expanded_model_bytes'])
     finally:
         print('Restoring original development app', flush=True)
         flash(args.restore_app, 'restore-private.log')

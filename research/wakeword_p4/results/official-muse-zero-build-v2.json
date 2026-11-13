@@ -1,0 +1,75 @@
+{
+  "schema": "official-muse-zero-build-v2",
+  "sources": {
+    "research/wakeword_muse_reference/CMakeLists.txt": "4cd829f3bcf541a1f7ae100be25fcaf338f269a6e6cfa28eef03b36447d4ed69",
+    "research/wakeword_muse_reference/main/CMakeLists.txt": "81a5bad0df1128aa1b5d6970bcfd1ea249a9000b522f8540cc9f10a5d5ab4d0f",
+    "research/wakeword_muse_reference/main/idf_component.yml": "320eb524dd57d3c5dbdaad7ce0efa2011e1991d107553fe0e0469759b96560fe",
+    "research/wakeword_muse_reference/main/muse.c": "4282fbf3face72e0ae0b05802610469a7bb54665c20aa0451bdb6083ff85aff2",
+    "research/wakeword_muse_reference/sdkconfig.defaults": "495225b3df40a7880190cdc645002108326b3dba2b7bb36d0c13ef2c020a6665",
+    "research/wakeword_muse_reference/dependencies.lock": "5a79d8548a38a131fcf94aa214f950055ea432ee04903d5d1dd37386a9037402",
+    "research/wakeword_muse_reference/partitions.csv": "a3e3de58a2339f610ab3a44935cd27251f576488e576e6869db98b163bc0b53e",
+    "research/wakeword_muse_reference/pack_model.py": "f05745d8f8ea4218be2d925f24fbbda28d061ff7588e2b2d1a7693efd2935a2a",
+    "research/wakeword_muse_reference/run.py": "db4cf30f3d7fab41d4e57811c6fea4fd13dc121fb8b81c787a62c861cbb97116",
+    "research/wakeword_muse_reference/prepare.py": "11dd2c0ed8a4c33710a9d7c1bda592225da777fe6efb2399e2d65b59ed33b867",
+    "research/wakeword_muse_reference/audit.py": "e041ce3ebf5c89935082181eee163a4841530fd38d473ac0c3ae7880bbf2d5ec",
+    "research/wakeword_muse_reference/README.md": "1cf288c38ad980505332957cd55fc0989c8bdb3d00a87aa17829c7c7c081cc34"
+  },
+  "inventory_sha256": "c8d38b1c91d411608c07fb012088a2b76f85505f8142db104cbaa5588c5d055e",
+  "esp_sr": "2.6.1",
+  "upstream_commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+  "preparation_helpers": {
+    "movemodel.py": {
+      "sha256": "bbad1ab1c026c5e0211a2c4c662d4ac6a5a043a0abd29ac47f609d785819c785",
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/model/movemodel.py"
+    },
+    "pack_model.py": {
+      "sha256": "fe753aa8e64f6442459362bb71d29ec714cb271e4aa476b5b3807864ea318346",
+      "url": "https://raw.githubusercontent.com/espressif/esp-sr/b9dc43a329a68de2f72147808fc9ea29d2ace71e/model/pack_model.py"
+    }
+  },
+  "preparation_target": "esp32p4",
+  "preparation_api": "copy_wn10_model then pack_models",
+  "raw_inventory_members": 4,
+  "model_members": {
+    "wn10_data": {
+      "bytes": 430592,
+      "sha256": "fef5525e011ef3a05ca8e00f896f4da97c717163142f4ca6e959ed199dfa58e2",
+      "source_member": "wn10_data_p2"
+    },
+    "_MODEL_INFO_": {
+      "bytes": 50,
+      "sha256": "eea2e69a4d9b013e712ca8389b024c28d54776ca1a95b4e6c974c29dfffead87",
+      "source_member": "_MODEL_INFO_p2"
+    }
+  },
+  "expanded_model_bytes": 430762,
+  "expanded_model_sha256": "e7964e0e7d91dda258e52bd7af0db51e1019dcca8ab83b077a72827d60c7eec2",
+  "compressed_model_bytes": 430881,
+  "compressed_model_sha256": "c8542e9ca547f269106bfb1c17df846bacab29e3fb7fca2aafada8bc028a3e4d",
+  "firmware_bytes": 1172528,
+  "firmware_sha256": "3bfdeb86c084e833cc7ff0b81b50056fabc71fd6e4939cc4f835598c2292e889",
+  "elf_sha256": "d3a4a0acae597b705723188446f8bf793ed72a30da6dfab330fc18990fbdd0cd",
+  "configuration": {
+    "IDF_TARGET": "esp32p4",
+    "IDF_INIT_VERSION": "5.5.4",
+    "ESP32P4_SELECTS_REV_LESS_V3": true,
+    "ESP32P4_REV_MIN_100": true,
+    "ESP_DEFAULT_CPU_FREQ_MHZ": 360,
+    "SPIRAM": true,
+    "SPIRAM_SPEED": 200,
+    "ESPTOOLPY_FLASHSIZE": "16MB",
+    "PARTITION_TABLE_CUSTOM": true
+  },
+  "compiler": "riscv32-esp-elf-gcc (crosstool-NG esp-14.2.0_20260121) 14.2.0",
+  "compiler_sha256": "e5c3a93651fc10025147ffce6d6b81bc043824111a1c6feee0a3adea5488d87a",
+  "linked_symbols": [
+    "_binary_muse_model_bin_end",
+    "_binary_muse_model_bin_start",
+    "esp_wn_handle_from_name"
+  ],
+  "exact_compressed_model_occurrences_in_app": 1,
+  "compiler_warnings": 0,
+  "device_operated": false,
+  "audio_io_performed": false,
+  "recognition_accepted": false
+}

@@ -1,7 +1,10 @@
 # Separate official Hi/Hey Muse P4 reference
 
 This standalone project evaluates the installed ESP-SR 2.6.1 wn10_himuse
-four-member layout. The existing WakeNet9 probe and production panel remain
+model. Its four raw files contain both chip variants. The pinned official
+`copy_wn10_model(..., 'esp32p4')` prepares only the p2 files as `wn10_data` and
+`_MODEL_INFO_`; the pinned official `pack_models` then packages those two files.
+The existing WakeNet9 probe and production panel remain
 unchanged. The factory is queried for actual chunk/rate/channel/word metadata.
 No microphone, speaker, Wi-Fi, NVS or filesystems are used by the probe.
 
@@ -43,7 +46,9 @@ both resulting JSON files before running:
       --output "$MUSE_LOCK"
 
 The root layout is project/, build/, build-private.log. The recorder verifies
-all original inventoried model/header/library bytes, all four unpacked members,
+all original inventoried model/header/library bytes and both SDK preparation
+helpers against upstream b9dc43a329a68de2f72147808fc9ea29d2ace71e. It verifies
+the two unpacked runtime members byte-for-byte against the original p2 files,
 the compressed payload embedded once in the application, actual compiler/
 configuration/symbols and absence of compiler warnings.
 
@@ -60,3 +65,22 @@ Use the pinned IDF Python with pyserial/esptool and independently verified value
 All recorder-bound source hashes are verified again by the runner. It also
 checks that the serial port has no owner before reading the USB chip/partition.
 Use online readiness only when the original application was already online.
+
+The first v1 native attempt (source d3354d0) reached READY, then aborted with
+`can not find wn10_data in model wn10_himuse`; no CASE completed. It had packed
+all four raw files without target preparation. Its 817708-byte expansion was a
+two-chip inventory container, not the prepared P4 layout. That failed build,
+protocol, UART evidence and app-only restoration remain preserved separately.
+The corrected protocol/build/native schemas are v2; use a fresh v2 build root.
+
+After the guarded run, extract only detector frames and independently compare
+their complete order, zero-sample CRCs, raw returns and getters with the report:
+
+    python audit.py extract --uart-private "$MUSE_NATIVE/uart-private.log" \
+      --output "$MUSE_NATIVE/frames.json"
+    python audit.py audit --frames "$MUSE_NATIVE/frames.json" \
+      --report "$MUSE_NATIVE/report.json" --protocol "$MUSE_LOCK/protocol.json" \
+      --build-report "$MUSE_LOCK/build.json" --output "$MUSE_NATIVE/audit.json"
+
+This audit performs no inference or device access. A successful saved-frame audit
+does not establish speech recognition or an independently working voice session.

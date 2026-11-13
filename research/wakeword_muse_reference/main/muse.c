@@ -58,7 +58,7 @@ void app_main(void) {
     if(!name || strcmp(name,MODEL))abort();
     const esp_wn_iface_t *wn=esp_wn_handle_from_name(name);
     if(!wn)abort();
-    printf("MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v1\",\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":%" PRIu32,name,size);
+    printf("MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v2\",\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":%" PRIu32,name,size);
     print_heap("heap_before_load",before_load);print_heap("heap_after_load",heap());printf("}\n");
     int expected_chunk=0;
     for(int id=0;id<5;id++) {
@@ -69,7 +69,7 @@ void app_main(void) {
         heap_t after_create=heap();
         int chunk=wn->get_samp_chunksize(model),rate=wn->get_samp_rate(model);
         int channels=wn->get_channel_num(model),words=wn->get_word_num(model);
-        if(chunk<1 || chunk>4096 || rate!=16000 || channels!=1 || words<1 || words>MAX_WORDS)abort();
+        if(chunk<=1 || chunk>4096 || rate!=16000 || channels!=1 || words<1 || words>MAX_WORDS)abort();
         if(id && chunk!=expected_chunk)abort();
         expected_chunk=chunk;
         int samples=id==0?1:id==1?chunk-1:id==2?chunk+1:id==3?16000:16001;
@@ -109,5 +109,5 @@ void app_main(void) {
         printf(",\"probe_buffer_bytes\":%u",(unsigned)(chunk*sizeof(int16_t)+calls*sizeof(int)));
         free(raw);free(zero);wn->destroy(model);print_heap("heap_after_destroy",heap());printf("}\n");
     }
-    printf("MUSE_REFERENCE_DONE {\"schema\":\"muse-zero-v1\",\"cases\":5}\n");
+    printf("MUSE_REFERENCE_DONE {\"schema\":\"muse-zero-v2\",\"cases\":5}\n");
 }
