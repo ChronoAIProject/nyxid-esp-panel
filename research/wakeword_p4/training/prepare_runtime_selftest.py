@@ -22,6 +22,7 @@ from features import features
 RUNTIME_OPS = frozenset({"CALL_ONCE", "VAR_HANDLE", "READ_VARIABLE", "RESHAPE", "CONCATENATION",
     "STRIDED_SLICE", "ASSIGN_VARIABLE", "CONV_2D", "DEPTHWISE_CONV_2D", "SPLIT_V",
     "FULLY_CONNECTED", "LOGISTIC", "QUANTIZE", "EXPAND_DIMS"})
+UINT8_BINARY64 = "uint8-sum-binary64-v1"
 
 
 def inspect_model(data, detector):
@@ -71,11 +72,15 @@ def prime_policy(model, digest, calibration_path):
     if (type(frames) is not int or not 149 <= frames <= 335 or type(window) is not int
             or window not in (3, 5, 7) or type(threshold) not in (int, float) or not 0 < threshold < 1):
         raise ValueError('Unsupported firmware prime or calibrated event policy')
+    arithmetic = calibration.get('event_arithmetic')
+    if 'event_arithmetic' in calibration and (arithmetic != UINT8_BINARY64 or not gpu or window != 5):
+        raise ValueError('Unsupported explicit event arithmetic')
     requested = (frames + 200) * 160
     return {'training_context_frames': frames, 'requested_prime_samples': requested,
             'rounded_prime_samples': requested + (-requested) % 480,
             'threshold': threshold, 'smoothing_steps': window, 'refractory_steps': 67,
-            'calibration_sha256': hashlib.sha256(calibration_bytes).hexdigest()}
+            'calibration_sha256': hashlib.sha256(calibration_bytes).hexdigest(),
+            **({'event_arithmetic': arithmetic} if arithmetic else {})}
 
 
 def main():
@@ -122,12 +127,17 @@ def main():
         raise ValueError("Uninformative or invalid diagnostic outputs")
     if prime:
         window = prime['smoothing_steps']
-        original = smooth(scores, window)
-        # Same dyadic UINT8 scores and summation as the runtime, including its
-        # float32 threshold constant. Do not change either policy to make them agree.
+        canonical = prime.get('event_arithmetic') == UINT8_BINARY64
+        host = (np.convolve(expected.astype(np.int32), np.ones(window, np.int32), 'valid')
+                / (256 * window)) if canonical else smooth(scores, window)
+        # Legacy profiles preserve their historical float32 threshold. Explicit
+        # canonical profiles use the same binary64 threshold as their header.
         device = np.lib.stride_tricks.sliding_window_view(scores.astype(np.float64), window).sum(axis=1) / window
-        prime.update(host_event_steps=events(original, prime['threshold'], window),
-                     expected_device_event_steps=events(device, float(np.float32(prime['threshold'])), window))
+        threshold = prime['threshold'] if canonical else float(np.float32(prime['threshold']))
+        prime.update(host_event_steps=events(host, prime['threshold'], window),
+                     expected_device_event_steps=events(device, threshold, window))
+        if canonical and prime['host_event_steps'] != prime['expected_device_event_steps']:
+            raise ValueError('Explicit event arithmetic differs between host and device fixture')
     data = (b"NYXKWS01" + digest + struct.pack("<II", samples, len(expected))
             + pcm.tobytes() + expected.astype(np.uint8).tobytes())
     args.output.parent.mkdir(parents=True, exist_ok=True)

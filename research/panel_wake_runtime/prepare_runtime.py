@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 GPU_PROFILE = Path(__file__).parent / "plans/gpu-v30-runtime-v1.json"
+UINT8_BINARY64 = "uint8-sum-binary64-v1"
 
 
 def sha(data):
@@ -20,6 +21,12 @@ def validate_gpu_reports(profile, training_bytes, calibration_bytes):
         raise ValueError("Expected the exact frozen GPU training and calibration reports")
     training, calibration = json.loads(training_bytes), json.loads(calibration_bytes)
     schema = profile.get("calibration_schema", "expanded-english-v1")
+    if "event_arithmetic" in profile or "event_arithmetic" in calibration:
+        if (schema != "joint-development-v1"
+                or profile.get("event_arithmetic") != UINT8_BINARY64
+                or calibration.get("event_arithmetic") != UINT8_BINARY64
+                or profile["smoothing_steps"] != 5):
+            raise ValueError("Candidate profile and calibration must bind the reviewed event arithmetic")
     if schema == "expanded-english-v1":
         calibration_matches = (
             calibration["selected"]["english"]["threshold"] == profile["threshold"]
@@ -90,6 +97,8 @@ def main():
             raise ValueError("GPU development build requires an exact-PCM self-test")
         threshold, smoothing_steps, frames = (profile[key] for key in ("threshold", "smoothing_steps", "input_frames"))
     else:
+        if "event_arithmetic" in calibration:
+            raise ValueError("Explicit event arithmetic requires a reviewed GPU candidate profile")
         flags = training["architecture_args"]
         stride = flags.index("--stride") if "--stride" in flags else -1
         if (architecture not in ("transfer60", "official64", "wide128")
@@ -121,10 +130,12 @@ def main():
     (args.output / "hey_nyx_model.bin").write_bytes(data)
     if selftest:
         (args.output / "wake_selftest.bin").write_bytes(selftest)
+    arithmetic = profile.get("event_arithmetic") if gpu else None
+    threshold_literal = f"{threshold:.17g}" + ("" if arithmetic == UINT8_BINARY64 else "f")
     (args.output / "wake_config.h").write_text(
         "#pragma once\n"
         f'#define PANEL_WAKE_MODEL_SHA256 "{digest}"\n'
-        f"#define PANEL_WAKE_THRESHOLD {threshold:.17g}f\n"
+        f"#define PANEL_WAKE_THRESHOLD {threshold_literal}\n"
         f"#define PANEL_WAKE_SMOOTHING_STEPS {smoothing_steps}\n"
         f"#define PANEL_WAKE_PRIME_SAMPLES {(frames + 200) * 160}\n")
     (args.output / "manifest.json").write_text(json.dumps({
@@ -141,7 +152,8 @@ def main():
         "strict_validation_operating_point": calibration.get("viable_operating_point"),
         "prepare_source_sha256": sha(Path(__file__).read_bytes()),
         **({"gpu_profile_sha256": sha(profile_bytes), "gpu_source_commit": profile["source_commit"],
-            "validation_window_phase": profile["validation_window_phase"]} if gpu else {})
+            "validation_window_phase": profile["validation_window_phase"]} if gpu else {}),
+        **({"event_arithmetic": arithmetic} if arithmetic else {})
     }, indent=2) + "\n")
 
 

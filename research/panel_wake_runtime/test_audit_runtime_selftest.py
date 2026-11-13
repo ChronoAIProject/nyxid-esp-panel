@@ -32,6 +32,16 @@ class VerdictTest(unittest.TestCase):
             with self.subTest(log=log), self.assertRaises(ValueError):
                 audit(log, self.fixture)
 
+    def test_explicit_arithmetic_requires_matching_host_and_device_events(self):
+        self.fixture['app_prime'].update(event_arithmetic='uint8-sum-binary64-v1', host_event_steps=[144])
+        self.assertEqual(audit(self.log, self.fixture)['activation_steps'], [144])
+        self.fixture['app_prime']['host_event_steps'] = []
+        with self.assertRaisesRegex(ValueError, 'agree with host'):
+            audit(self.log, self.fixture)
+        self.fixture['app_prime'].update(event_arithmetic='unknown', host_event_steps=[144])
+        with self.assertRaisesRegex(ValueError, 'agree with host'):
+            audit(self.log, self.fixture)
+
 
 if __name__ == '__main__':
     unittest.main()

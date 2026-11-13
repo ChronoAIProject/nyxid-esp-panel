@@ -176,6 +176,17 @@ and gate calculations. A missing/ineligible point or mismatched report/model
 stops packaging. Original v30 uses the unchanged `expanded-english-v1` layout
 by default. Neither profile represents recognition or acoustic acceptance.
 
+For a future `joint-development-v1` candidate, the profile and calibration can
+both explicitly declare `event_arithmetic: "uint8-sum-binary64-v1"`. This mode
+uses the integer sum of five UINT8 outputs divided by 1280 and a binary64
+threshold. The header omits the legacy `f` suffix; the existing C++ double
+accumulator is unchanged. The self-test generator uses the declared arithmetic,
+and its host/device event lists must agree before the UART auditor accepts the
+result. Missing, unknown or mismatched declarations are rejected. Both fields
+absent preserves the historical NumPy convolution and float32 device threshold.
+Agree and freeze the scorer/calibrator arithmetic before candidate evaluation;
+packaging alone does not update either external tool or select an operating point.
+
 The direct packaging equivalent is `prepare_runtime.py --gpu-profile
 "$CANDIDATE_PROFILE"` with its existing model, calibration, output and self-test
 arguments. Full model-specific PCM/INT8 self-testing remains required; metadata
@@ -183,6 +194,10 @@ fixtures used by unit tests are not deployable models. The generated manifest
 records the selected profile SHA. The same original-v30 artifacts packaged by
 the default path and the explicit-profile path produce identical model,
 self-test, configuration and manifest bytes.
+After the arithmetic-support source change, original-v30 model, self-test and
+header bytes still match the retained packaging. Its manifest changes only the
+packager source hash. See the [arithmetic-support validation](../wakeword_p4/results/runtime-event-arithmetic-support-v1.json);
+these are host checks, not a new P4 build or execution.
 
 The [configuration/build validation](../wakeword_p4/results/runtime-candidate-profile-validation-v1.json)
 retains the 16 focused test results, two CMake rejection boundaries and a

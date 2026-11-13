@@ -232,6 +232,67 @@ class PrepareRuntime(unittest.TestCase):
         self.assertEqual(manifest['threshold'], profile['threshold'])
         self.assertEqual((output/'wake_selftest.bin').read_bytes(), fixture_path.read_bytes())
 
+    def test_explicit_arithmetic_binds_both_reports_and_compiled_threshold(self):
+        # Metadata fixture only, not a deployable model or eligible candidate.
+        profile = json.loads(prepare_runtime.GPU_PROFILE.read_bytes())
+        profile.update(model_sha256=self.digest, model_bytes=self.model.stat().st_size,
+                       calibration_schema='joint-development-v1', threshold=.8,
+                       event_arithmetic=prepare_runtime.UINT8_BINARY64)
+        training = {key: profile[key] for key in ('model_sha256', 'model_bytes', 'architecture',
+            'architecture_args', 'selected_step', 'validation_window_phase')}
+        training.update(context_frames=150, steps=120000)
+        calibration = dict(model_sha256=self.digest, threshold=.8, selected=dict(threshold=.8, eligible=True),
+            sliding_window=5, validation_only=True, viable_operating_point=True, final_data_used=False,
+            event_arithmetic=prepare_runtime.UINT8_BINARY64)
+        training_bytes = json.dumps(training).encode()
+        calibration_path = self.root / 'calibration.json'
+        profile_path = self.root / 'profile.json'
+        (self.root / 'training.json').write_bytes(training_bytes)
+        samples = 56 * 480
+        fixture_path = self.root / 'fixture.bin'
+        fixture_path.write_bytes(b'NYXKWS01' + bytes.fromhex(self.digest)
+            + struct.pack('<II', samples, 55) + bytes(samples * 2) + bytes(range(55)))
+        output = self.root / 'output'
+        argv = ['prepare_runtime.py', '--model', str(self.model), '--calibration', str(calibration_path),
+                '--gpu-profile', str(profile_path), '--selftest', str(fixture_path), '--output', str(output)]
+
+        def write(candidate, calibrated):
+            blob = json.dumps(calibrated).encode()
+            calibration_path.write_bytes(blob)
+            profile_path.write_text(json.dumps({**candidate,
+                'training_report_sha256': hashlib.sha256(training_bytes).hexdigest(),
+                'calibration_sha256': hashlib.sha256(blob).hexdigest()}))
+
+        missing_profile = {key: value for key, value in profile.items() if key != 'event_arithmetic'}
+        missing_calibration = {key: value for key, value in calibration.items() if key != 'event_arithmetic'}
+        for name, candidate, calibrated in [
+                ('missing profile marker', missing_profile, calibration),
+                ('missing calibration marker', profile, missing_calibration),
+                ('unknown arithmetic', {**profile, 'event_arithmetic': 'unknown'}, calibration),
+                ('explicit null arithmetic', {**profile, 'event_arithmetic': None}, calibration),
+                ('unknown calibration arithmetic', profile, {**calibration, 'event_arithmetic': 'unknown'}),
+                ('null calibration arithmetic', profile, {**calibration, 'event_arithmetic': None}),
+                ('legacy schema', {**profile, 'calibration_schema': 'expanded-english-v1'}, calibration),
+                ('changed smoothing', {**profile, 'smoothing_steps': 7}, calibration)]:
+            with self.subTest(name=name):
+                write(candidate, calibrated)
+                with patch.object(sys, 'argv', argv), self.assertRaises(ValueError):
+                    prepare_runtime.main()
+                self.assertFalse(output.exists())
+        write(profile, calibration)
+        with patch.object(sys, 'argv', argv):
+            prepare_runtime.main()
+        manifest = json.loads((output / 'manifest.json').read_text())
+        self.assertEqual(manifest['event_arithmetic'], prepare_runtime.UINT8_BINARY64)
+        program = self.root / 'threshold.cpp'
+        program.write_text('#include "wake_config.h"\n#include <type_traits>\n'
+            'static_assert(std::is_same_v<decltype(PANEL_WAKE_THRESHOLD), double>);\n'
+            'int main() { const double score = 1024.0 / 1280.0; '
+            'return score >= PANEL_WAKE_THRESHOLD ? 0 : 1; }\n')
+        subprocess.run(['c++', '-std=c++17', '-I', str(output), str(program),
+                        '-o', str(self.root / 'threshold')], check=True, capture_output=True)
+        subprocess.run([str(self.root / 'threshold')], check=True)
+
 
 if __name__ == "__main__":
     unittest.main()

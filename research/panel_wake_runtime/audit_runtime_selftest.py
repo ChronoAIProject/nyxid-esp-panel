@@ -7,6 +7,11 @@ import re
 
 
 def audit(log, fixture):
+    prime = fixture['app_prime']
+    if 'event_arithmetic' in prime:
+        if (prime['event_arithmetic'] != 'uint8-sum-binary64-v1'
+                or prime.get('host_event_steps') != prime['expected_device_event_steps']):
+            raise ValueError('Explicit event arithmetic must agree with host activation steps')
     markers = list(re.finditer(
         r'exact-PCM selftest outputs=(\d+) mismatches=(\d+) passed=(true|false)', log))
     if len(markers) != 1:
