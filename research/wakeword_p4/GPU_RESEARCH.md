@@ -6485,3 +6485,31 @@ provenance, matching adapter; default legacy validator behavior unchanged.
 Original trainer/pins untouched. Native job observed1400/1400passes, still live;
 original training observed119000, not yet complete. Full new pack admission,
 actual batch/gradient/export checks and tensor schedule lock remain pending.
+
+### Original matched formal training/export completed (2026-11-13)
+
+Both original arms completed120000updates, each selected5000 by unchanged
+float rule and exported54440byte INT8 models. Original training.json bytes
+preserved separately for both, no rewriting. Control model SHA
+83cc9b613062cc706c67736aa6ae500c89d69bbd50546137d211ecf281c00cca;
+recovered SHA0a39c5924c1e132bc2e535e0f116cf3b63c716b49b477fd99a82b1e16ef2f334.
+Input/output tensors independently allocated/inspected [1,3,40]int8/[1,1]uint8,
+output scale1/256 zero0; no new speech invoked. All284pins match.
+
+Full120k paired source draws and paired network tensor hashes match, same
+initialization inventory, all120k main batch hashes differ as intended. Original
+audit preserved byte-for-byte; limit remains not all108rows every formal step
+(the separate two-update fixture covers row preservation). Automatic sequence
+PID719834advanced to control historical postprocessing, not restarted. Control
+export audit passed. Recovered original postprocessor waits its original turn.
+
+Selected5000float points were NOT fallbacks: control3eligible and recovered5.
+Control threshold.99/macro.4125; recovered.98/macro.3661458333. These coarse
+reused-float eligibility points are not final synthetic acceptance; zero-event
+1.2048112674h upper95is2.4864743174/h. No efficacy/parity/promotion conclusion.
+Last120000 recovered checkpoint itself0eligible/fallback.994/macro.6473958333,
+recall.6356481481, maxsource.0552083333, background0/1.2048112674h. Original raw
+record SHA966c29a0521dede3bac4817f68b19dde6324d6966b36cc7d9fe78f9c5f3b6138.
+Collector historical receipts deliberately remain their original checkpoint-only
+formal_run_complete=false; separate training-completion receipt now records
+actual training/export completion with postprocessing/newdev/acceptance pending.

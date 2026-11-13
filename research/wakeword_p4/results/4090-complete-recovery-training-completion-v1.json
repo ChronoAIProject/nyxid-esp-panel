@@ -1,0 +1,98 @@
+{
+  "schema": "complete-recovery-training-completion-v1",
+  "execution_pins_sha256": "3669632f7ccf5bada10edc9227fce754944f70766a98e97b924089157064a150",
+  "all_284_pins_unchanged": true,
+  "arms": {
+    "control": {
+      "optimizer_updates": 120000,
+      "selected_step": 5000,
+      "original_training_path": "research/wakeword_p4/results/4090-complete-recovery-control-formal-v1-original-training.json",
+      "training_sha256": "4071e10f2625805bb6376c0d0f89f4869c406b6b1754bb9d0a3f9eeda6b7a9db",
+      "model_path": ".local/wakeword/model-complete-recovery-control-formal-v1/hey_nyx.tflite",
+      "model_bytes": 54440,
+      "model_sha256": "83cc9b613062cc706c67736aa6ae500c89d69bbd50546137d211ecf281c00cca",
+      "weights_sha256": "419a3549076381597f8477b0ee56243af19dc24c0a063c7251022c0b535cd7ea",
+      "input_shape": [
+        1,
+        3,
+        40
+      ],
+      "output_shape": [
+        1,
+        1
+      ],
+      "input_dtype": "int8",
+      "output_dtype": "uint8",
+      "output_quantization": [
+        0.00390625,
+        0
+      ],
+      "selected_float_point": {
+        "threshold": 0.99,
+        "recall": 0.3574074074074074,
+        "macro_recall": 0.4125,
+        "recall_by_engine": {
+          "piper": 0.3416666666666667,
+          "kokoro": 0.48333333333333334
+        },
+        "hard_negative_false_rate": 0.007670454545454545,
+        "max_source_false_rate": 0.00875,
+        "ambient_hours": 1.2048112673611107,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "selected_float_eligible_grid_points": 3,
+      "selected_background_upper95": 2.4864743173555484
+    },
+    "recovered": {
+      "optimizer_updates": 120000,
+      "selected_step": 5000,
+      "original_training_path": "research/wakeword_p4/results/4090-complete-recovery-recovered-formal-v1-original-training.json",
+      "training_sha256": "19fe0c86c0a4978366c74e91914986360523c65b56f7e2ec246d52e70938394c",
+      "model_path": ".local/wakeword/model-complete-recovery-recovered-formal-v1/hey_nyx.tflite",
+      "model_bytes": 54440,
+      "model_sha256": "0a39c5924c1e132bc2e535e0f116cf3b63c716b49b477fd99a82b1e16ef2f334",
+      "weights_sha256": "03970b3bba6a7874f247f0cfa790d0f527ad8f83131ba3569b8fd75fbc516287",
+      "input_shape": [
+        1,
+        3,
+        40
+      ],
+      "output_shape": [
+        1,
+        1
+      ],
+      "input_dtype": "int8",
+      "output_dtype": "uint8",
+      "output_quantization": [
+        0.00390625,
+        0
+      ],
+      "selected_float_point": {
+        "threshold": 0.98,
+        "recall": 0.3236111111111111,
+        "macro_recall": 0.36614583333333334,
+        "recall_by_engine": {
+          "piper": 0.31145833333333334,
+          "kokoro": 0.42083333333333334
+        },
+        "hard_negative_false_rate": 0.005113636363636364,
+        "max_source_false_rate": 0.005625,
+        "ambient_hours": 1.2048112673611107,
+        "ambient_events": 0,
+        "ambient_faph": 0.0
+      },
+      "selected_float_eligible_grid_points": 5,
+      "selected_background_upper95": 2.4864743173555484
+    }
+  },
+  "input_audit_path": "research/wakeword_p4/results/4090-complete-recovery-formal-input-audit-v1.json",
+  "input_audit_sha256": "749a87d04f2dd157b07d6f738a48a14173a9272504641f41eabdc53b17403353",
+  "training_and_export_complete": true,
+  "historical_postprocessing_complete": false,
+  "reused_float_gate_is_not_synthetic_acceptance": true,
+  "new_development_scored": false,
+  "acceptance_scored": false,
+  "candidate_promoted": false,
+  "limits": "Both120k runs and existing checkpoint-selection/export completed. Paired source draws/tensor hashes authenticate every120k step; not all108preserved rows every step (separate two-update fixture only). TFLite allocation/shape/dtype inspection only, no new speech scoring. Original automatic historical postprocessors still running; no cross-arm efficacy or promotion conclusion."
+}
