@@ -1,0 +1,80 @@
+{
+  "schema": "mac-broad-quantization-metadata-review-v1",
+  "gpu_ref": "e988f27",
+  "artifact_sha256": {
+    "4090-hey-broad-trained-quantization-plan-v1.json": "4b3a0bf6c69911de6c54a109fcce2059905bc656d0c380e196e522ac671944fb",
+    "4090-hey-broad-trained-quantization-execution-v1.json": "6e0f29bcdb551415060575cc8984cfc3a9e58fbcbda50ebc4c82d228247a4de1",
+    "4090-hey-broad-trained-quantization-result-v1.json": "631944a626e10e6c63f40d931dfd7842a48c89723070ebbdae50311ba168a76b",
+    "4090-hey-broad-trained-quantization-independent-array-audit-v1.json": "e6b740529bc3f2c16d688c035e47d3f578b55e136f649cd1303ab42ba3e6ecb2",
+    "4090-hey-broad-input-rounding-result-v1.json": "22868cbe30bffcc5fc1174ab002ef7c327aaf6baab978e675a7fb314604051d3",
+    "4090-hey-broad-input-rounding-summary-v1.json": "c5e1e3caec63c9a1748b5a911a1a02955a5b42f30be29c9cd716b73debddbfac",
+    "4090-hey-broad-quantization-lattice-audit-v1.json": "2d9ba589eeb59cf941db6bccdf59cd3500c1c88c075f2db7254a90633b3904db",
+    "4090-hey-broad-formal-willow-training-v1.json": "4315ddfeab3f4a5113b201a06a85b0ae0c1e6ab21b1a9eefbfd6c920fc55ba52",
+    "4090-hey-broad-formal-willow-execution-receipt-v1.json": "272f409dac805a5f7d390a8bbca65c708b7ebeb695930f21279a89fc27672772",
+    "4090-hey-broad-formal-nyx-training-v1.json": "f6030bd6c344522551cd79acac8fe2de7031cd94b2b4858bac6d8f81e72869b2",
+    "4090-hey-broad-formal-nyx-execution-receipt-v1.json": "fc270a3c29782eeadf5b21345ea7abb0f7118b90f492c6be3ffcf3bc7fd631eb"
+  },
+  "case_identities_and_frozen_gate_recalculation_exact": true,
+  "rounded_original_error_and_summary_crosscheck_exact": true,
+  "scalar_logit_lattice_calculation_exact": true,
+  "targets": {
+    "hey_willow": {
+      "cases": 135,
+      "passed": 54,
+      "phase_max": 7.331371307373047e-06,
+      "all_repeat_exact": true,
+      "logit_step": 13.648093223571777,
+      "mathematical_output_codes": [
+        0,
+        128,
+        255
+      ],
+      "reported_output_code_counts": {
+        "0": 23042,
+        "128": 382,
+        "255": 618
+      },
+      "error_maxima": {
+        "input_rounding": 0.008293956518176646,
+        "remaining_quantization": 0.4741910379612818,
+        "total_original": 0.47426248751580713
+      }
+    },
+    "hey_nyx": {
+      "cases": 135,
+      "passed": 117,
+      "phase_max": 5.7220458984375e-06,
+      "all_repeat_exact": true,
+      "logit_step": 4.902233123779297,
+      "mathematical_output_codes": [
+        0,
+        2,
+        128,
+        254,
+        255
+      ],
+      "reported_output_code_counts": {
+        "0": 23375,
+        "2": 94,
+        "128": 43,
+        "254": 31,
+        "255": 499
+      },
+      "error_maxima": {
+        "input_rounding": 0.004734834935516119,
+        "remaining_quantization": 0.5987156148534268,
+        "total_original": 0.5971615374088287
+      }
+    }
+  },
+  "failed_gates": {
+    "hey_willow|smoothed_p99": 81,
+    "hey_willow|smoothed_max": 49,
+    "hey_willow|smoothed_mae": 1,
+    "hey_nyx|smoothed_p99": 18,
+    "hey_nyx|smoothed_max": 5
+  },
+  "current_exports_rejected": true,
+  "private_arrays_or_models_independently_read": false,
+  "limits": "Crosschecks published metadata and independently calculates scalar logistic lattice only. GPU saved-array/model/state claims are not independently rerun on Mac. No proof of calibration range causality, dynamic state correctness, recognition or P4 acceptance."
+}
