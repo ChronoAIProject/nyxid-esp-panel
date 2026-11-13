@@ -7013,3 +7013,19 @@ exists in originalfloatstream, excluding an exclusivelyINT8 explanation in these
 boundedcases. Does not isolate voicecoverage/architecture/trainingcause, or rule
 out all quantizationeffects. No re-export/updatedweights/gridchange/acceptance.
 Originalofficialtask continues,firstwholebackground completed; fullcurve pending.
+
+### Completed-prefix official audit and coverage source catalog
+
+Original officialgrid stilllive. Snapshot auditor independently verified first363
+completed immutable streams,314459inputcalls: full sourcePCM SHA/CRC,orderedraw
+return bytes,positiveevents,prime,getter/request/postprime,runtime andstage104.
+No partialrecognition/FAR metric computed and live task untouched. A copied
+firstwitness with one real inputRETURN removed is rejected even after updating
+the copied claimedUARThash; valid original passes and originalevidence unchanged.
+
+Read-only futurecoverage discovery fetched officialPiper voices.json at original
+pinnedrevision2f358b6a560e3a913ebf509b2f3344f20b367f94: SHA
+c7d089fed269a6286dbaa5969f720d8651f6c4a786662cec76a9b380e722a1c2,
+40English modelentries. No models downloaded/new voices reserved/training.
+This prepares possible coverage intervention while officialreference completes;
+historicalheldout/voicefamily/parent/source audit must precede any reservation.
