@@ -1,0 +1,34 @@
+{
+  "scope": "Original configuration metadata only; no ONNX download/inference/audio generation or reservation.",
+  "files": {
+    "kristin": {
+      "url": "https://sfo3.digitaloceanspaces.com/bkmdls/kristin.onnx.json",
+      "saved_path": "research/wakeword_p4/results/4090-author-kristin-original-config-v1.json",
+      "size_bytes": 7086,
+      "sha256": "d34362d5b723e2031d6b0ebb5d7c1254cd59d11691e2979147fd518cba5663b2",
+      "dataset": "training",
+      "speaker_id_map": {},
+      "num_speakers": 1,
+      "sample_rate": 22050,
+      "piper_version": "1.0.0"
+    },
+    "norman": {
+      "url": "https://sfo3.digitaloceanspaces.com/bkmdls/norman.onnx.json",
+      "saved_path": "research/wakeword_p4/results/4090-author-norman-original-config-v1.json",
+      "size_bytes": 7085,
+      "sha256": "cbb2cac181ae3a1fd09f7a8835b57c545f79df06a3db6212bd643202085afe5c",
+      "dataset": "training",
+      "speaker_id_map": {},
+      "num_speakers": 1,
+      "sample_rate": 22050,
+      "piper_version": "1.0.0"
+    }
+  },
+  "findings": [
+    "Both configurations use generic dataset=training and empty speaker_id_map. Neither identifies a surname, LibriVox reader ID, training utterance inventory or initialization lineage.",
+    "These configurations cannot resolve earlier Kristin/Norman name-collision leads. Preserve the uncertainty; do not convert absence of identifiers into proof of overlap or independence.",
+    "Further repeated reads of these cards/configs cannot settle physical identity. Future protocol must use documented source lineage or explicitly report its unresolved independence limits."
+  ],
+  "candidate_scored": false,
+  "final_data_used": false
+}
