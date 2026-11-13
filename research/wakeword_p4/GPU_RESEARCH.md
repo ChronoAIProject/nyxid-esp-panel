@@ -6592,3 +6592,10 @@ Actual4fresh16001zero streams pass native interface/CRC32/32inputcalls/63prime r
 Mac6862391557 supplies00b36d4 complete156native streams. Anonymous archive575170bytes/SHA5deb2646bb13d627a9239bf0f34c274747c82c4fd50a5da74c659445e3117504 and all32payload members verified. Fixed156-row manifest and all12PCM admitted only to separate consumed-diagnostic runner. Pushed execution plan04f008e before actual QEMU inference; started original session42722, one fresh engine per stream, no retries.
 
 Added independent saved-UART comparison tool for all getter bits/63prime returns/CRC/samples/calls/ordered positive events/channel verification counts. Partial43complete streams had0event/getter differences; not full certification. QEMU getter-after-prime not separately observed by currentABI; this gap, >64events and long-source runtime certification retained explicitly. Original token process905640 stilllive, latest521 records; no restart, no new held-out audio or model training.
+
+
+### 2026-11-13 — full156 speech witness completed, zero observed differences
+
+Original session42722 exited0 after156/156 frozen streams, no retries. Independent saved-UART auditor passed:20267inputcalls,9828prime returns,24QEMU and24native events; all156getter bits/prime returns/complete ordered call+sample_end+result event lists/channel-verified counts match nativeP4. Exact source samples/PCM CRC/calls checked per stream, per-run report/UART hashes preserved in4090-hey-qemu-consumed-grid-comparison-v1.json. Original report/UART/stage evidence remains local under hey-qemu-consumed-grid-v1. No discarded mismatch or point selection.
+
+This certifies observed agreement only on consumed12PCM/13config; not universal runtime/P4 equivalence, fresh recall/FAR or acceptance. CurrentABI getter-after-prime and >64event/long-source tests remain pending. Main new material token extraction continues original task; feature/training admission and actual candidate research remain incomplete, v30 unchanged.
