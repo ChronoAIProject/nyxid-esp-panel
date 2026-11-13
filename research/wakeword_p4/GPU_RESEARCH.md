@@ -7790,3 +7790,19 @@ reduction confirms original reported statistics and decisions. All failures
 retained. Do not relax gates, re-export/PTQ retry, choose intermediate weights
 or open newdev to rescue. v30 remains, source/final roles unchanged. Goal not
 complete: quantify mechanism from saved training witnesses before new experiment.
+
+
+### Saved-witness localization and registered input-rounding control
+
+All270input q arrays reconstructed exactly, zero feature values above26 and
+zero quantizer range clipping. Max input reconstructionerror.050827 within
+halfLSB. Willow90/135cases have pre-source five-error>.1, Nyx0/135; post-source
+4/135 and2/135. WorstWillow Qwen Hey25dB pre-source at3200samples:
+float five.0257375 vsINT8.5. WorstNyx Kokoro timer quiet at76160samples:
+float.1989322 vsINT8.79609375. Regions use complete saved PCM unchanged;
+these descriptive observations do not prove internal/input quantization cause.
+New prospective diagnostic binds all270 saved traces and original final H5/
+runtime. Compare originalfloat F(x), CPUfloat F(dequant(Q(x))) and savedINT8,
+twice-reset exact and same clocks, retain alloutputs. No PTQ/export/training,
+newdev or gate changes. Numerical failure remains, rounded-input reference
+cannot replace original fullprecision reference to obtain admission.
