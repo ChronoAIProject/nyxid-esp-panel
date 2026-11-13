@@ -55,3 +55,41 @@ Generator token-duration timing is a reference, not human phonetic truth.
 These results cannot establish acoustic recall, microphone/AEC behavior,
 full-app CPU/memory, long-call/reconnect stability or completion of the goal.
 No checkpoint, model policy or production firmware changes follow from this run.
+
+## Completed native P4 replay, 2026-11-13
+
+All 126 original WAVs completed on the freshly verified company development P4
+revision 1.3. Every full PCM CRC, sample count and 512-sample call count passed;
+the 126 saved decoded UART result objects also match the final report exactly.
+The original active app, selected voice service, Nyx connection and Hi ESP
+listener were restored and independently rechecked through fresh HTTP status.
+
+| Existing synthetic development | Native P4 Hi ESP | Retained host v30 |
+| --- | ---: | ---: |
+| Own wake phrase, any event | 29/36 | 14/36 |
+| Common confuser clips with event | 0/54 | 7/54 |
+| Opposite wake phrase clips with event | 0/36 | 0/36 |
+| Bare own wake phrase | 14/18 | 11/18 |
+| Own wake phrase plus command | 15/18 | 3/18 |
+| Norman own wake phrase plus command | 9/9 | 0/9 |
+
+The native detector used 21735 calls, mean 2129.8427 microseconds per 512-sample
+block, maximum 2944 microseconds. These are standalone inference timings, not
+full-app CPU utilization. Descriptive generator-reference latency medians are
+74.4375 ms and 177.59375 ms respectively; they use different detected subsets,
+phrases and frontends, so their difference is not a paired speedup estimate.
+
+The gap remains substantial, particularly for connected commands. This gives
+another concrete comparison for source/generalization research; it does not
+identify a unique cause or justify lowering a threshold. No new Nyx inference,
+new training, rescoring of a final set or promotion occurred.
+
+The raw report, all exact PCM, source, retained standalone probe and licenses
+are published as `bryce-native-p4-hiesp-baseline-v1.tar.gz` under release
+`research-hey-nyx-20261110`. Archive SHA256:
+`e8aab82bf0d2d858939fc4f0ea5c59333d81981e99ab1524c38913edd1c17df7`.
+The package is 14104942 bytes with 156 payloads and one contents manifest.
+Extracted source recreates the complete summary byte-for-byte without model
+inference or hardware access. Repository summary:
+`results/mac-bryce-native-p4-result-v1.json`; original pre-inference profile:
+`results/mac-bryce-native-p4-profile-v1.json`.
