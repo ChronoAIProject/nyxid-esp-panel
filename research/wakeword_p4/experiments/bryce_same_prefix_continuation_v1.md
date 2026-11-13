@@ -39,3 +39,38 @@ python research/wakeword_p4/experiments/bryce_same_prefix_continuation_v1.py \
   --model /path/to/original/hey_nyx.tflite \
   --output /path/to/new/diagnostic-output
 ```
+
+## Completed diagnostic
+
+Inference used the source/protocol frozen at commit `7d2e014`. All 126 original
+WAV containers, frontend arrays, scores and events reproduced exactly before
+the three interventions were scored. All causal PCM/frontend/output prefixes
+matched. The three cutoffs changed 126, 108 and 45 PCM clips respectively;
+cutoffs past the dry end correctly left originals intact. Maximum causal-prefix
+FFT floating difference was 4.44e-16; no quantized prefix value needed repair.
+
+| v30, unchanged historical policy | Original | Stop at reference | +100 ms | +200 ms |
+| --- | ---: | ---: | ---: | ---: |
+| All target reference-window hits | 14/36 | 16/36 | 14/36 | 14/36 |
+| Kristin bare | 9/9 | 9/9 | 9/9 | 9/9 |
+| Kristin command | 3/9 | 5/9 | 3/9 | 3/9 |
+| Norman bare | 2/9 | 2/9 | 2/9 | 2/9 |
+| Norman command | 0/9 | 0/9 | 0/9 | 0/9 |
+| Nyx confuser false clips | 7/54 | 7/54 | 7/54 | 7/54 |
+| Hi ESP false clips | 0/36 | 0/36 | 0/36 | 0/36 |
+
+Only two Kristin command renders gained events, both at the zero-offset cut.
+The 100/200 ms controls changed no event list. Every Norman command trace
+remained at UINT8 floor zero under all three interventions. Removing post-wake
+speech therefore did not explain the main Norman failure under these controls.
+The two gains demonstrate local right-context sensitivity; an artificial
+boundary at an uncertain generator endpoint could contribute. This provides
+no basis for adding silence, waiting, truncation, or threshold changes to the
+device. The erased command-positive metadata finding remains a separate
+training-coverage hypothesis, not a proven cause or restored coverage claim.
+
+The companion saved-score auditor recomputes all 504 trace event lists with
+integer five-score sums and independently rechecks causal score prefixes.
+It does not rerun the frontend. Full scores, original reference scores, model,
+protocol and pinned source are provided in the diagnostic handoff archive;
+the original input dataset is referenced by its existing byte-pinned asset.
