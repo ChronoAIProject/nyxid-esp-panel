@@ -131,3 +131,31 @@ first run; model/build/C source identities are unchanged. Adjacent retry host
 checks preserve original command/handshake and boundary behavior. No C rebuild
 is needed for this host-only correction. Real duplex completion still requires
 the new guarded run and full independent result/frame/restore checks.
+
+## Completed native identical-input retry
+
+The original retry session49535 terminated normally with exit0. Both complete
+inputs passed sample/call/CRC/getter/full-event accounting. The long stream
+consumed all115200000 samples in225000 input calls, CRC32 `643a9139`, without
+intermediate reset. Its two positive events ended at samples39936 and115184640;
+the second is after the previous one-hour limit. The16001-zero control used32
+calls and no positive events. Both streams'126 prime returns and all8 saved
+detector frames were independently audited against the unchanged full WAVs.
+A separate constructed copy omitting one real positive event was rejected by
+the independent auditor; original report/frames remain unchanged.
+
+Original app/ota_0, selected service and agent, voice idle, HiESP listening and
+absence of a serial owner were independently verified after the guarded restore.
+Nyx remains connecting as before. This is app-only restoration and complete
+continuous-stream capacity/late-event evidence, not voice connectivity, two-hour
+negative FAR exposure, new-source recognition or parity acceptance. No new
+candidate or threshold was selected; the prior host-drain failure remains.
+
+The public `official-hey-long-stream-native-v1.tar.gz` research asset is342816B,
+SHA256 `be495ac644f3e8b215a9970bf90a0f0896545ef6ac11db667a84ab21ec0006de`.
+It includes both full WAVs, marker, exact retry/failure protocols and sources,
+original reports, independent saved frames/audits/restoration and reproduction
+commands; no firmware/models/private logs/network settings/credentials. Anonymous
+redownload verified all33 payload sizes/hashes; both included auditors reproduced
+their original summaries byte-identically. Adjacent `official-hey-long-stream-`
+native/frame/restore/archive/public-download JSON files retain these results.
