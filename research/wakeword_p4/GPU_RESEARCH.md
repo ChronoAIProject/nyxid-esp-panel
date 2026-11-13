@@ -7399,3 +7399,19 @@ Original official958504 also actually live,1295/9672 observed; no partial
 configuration recognition/FAR conclusion. Do not restart either on an
 observation timeout. Full schedules/source-window pairing audit/formal
 execution lock still pending; heldout/v30 remain unchanged.
+
+### Formal execution entry prepared while original schedule runs
+
+Added run_hey_broad_formal_v1.py; compile check passes. No training started.
+Requires a byte-identical pushed formal lock, all source/dependency/actual
+ambient-array hashes, both training-only pack labels and225metadata. Loads
+actual shared H5 and saves actual initial snapshot+inventory before training.
+Original BatchGuard parameterized120000+100 compares each actual x/y/weight
+tensor hash before use. Fixed CLI disables other experiments; original adapter
+retains fixed-final checkpoint. Final receipt additionally checks finite model
+variables/logged losses,24301params,step120000,frozenBN full equality.
+The formal lock is not created until schedules/admission complete; no automatic
+launch on a merely partial schedule. Original1034876 verifiedlive18000/120100
+Willow at this observation. Zero-width augmentation returns without RNG draw,
+negative_candidates1 matches non-mining schedule behavior. Actual future
+BatchGuard must still establish every formal batch identity, not inferred now.
