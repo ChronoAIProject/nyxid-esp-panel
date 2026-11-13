@@ -7106,3 +7106,21 @@ New path must save both outputs/reject truncation/preserve true float speed.
 Duration units/token/sample mapping is not certified yet. Qwen command prefix
 timing remains unresolved: do not replace wake boundary with fullcommand end.
 Subplans are not the full execution lock; original held roles/failed data intact.
+
+
+### Actual untrimmed Kokoro duration probe completed
+
+51fc4d4 pushed original24-case plan before inference; session21804 exit0,
+2 existing training voices×2targets×bare/command×3speeds, no retries.
+All original waveforms/durations/padded tokens/style/float32 speeds saved.
+Independent runtime-free file/array audit verifies24/24: finite integer
+nonnegative token durations; count equals padded token count; sum×600 equals
+complete waveform samples; no fullscale; exact prefix tokens all24.
+Installed model wrapper native rate24000, integer-ceil 2/3 mapping recorded.
+Initial pad allocation explicitly included in generated prefix reference.
+No trim/normalize/wake inference/heldout used. This demonstrates usable native
+Kokoro timing on these cases, not universal or acoustic truth certification.
+New full generator must enforce each-case mapping and persist all raw outputs.
+Static follow-up also found create defaults trim=True; new path bypassed it
+and saved complete raw outputs. Original historical clips remain unchanged.
+Official PID958504 observed live710/9672, no restart/partial metrics.
