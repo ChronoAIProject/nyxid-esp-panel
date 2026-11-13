@@ -94,3 +94,38 @@ all original metadata/events, CRC, samples, calls and restoration fields. It
 reports the entire observed request→actual mapping, default before/after and
 prime/input event counts. A completed zero check establishes API and accounting
 observations only; the paired training/calibration/acceptance goal remains open.
+
+## Completed native zero observations
+
+Both engines completed all 14 configurations, with 13 distinct observed getters
+each. All 24 SET calls succeeded. The 28 input streams pass exact PCM/CRC/sample
+and call checks: 896 input detect calls plus 1764 separately retained prime
+returns, all with zero detected events. Full default/after-set/after-prime float
+bits and all frames are in
+[the native result](../results/official-hey-threshold-native-zero-v1.json).
+
+Both models' SET observations agree for these requests, including
+`.4 → .396800011`, `.644 → .638848007`, `.9999 → .991900802`. They remain stable
+through priming. DEFAULT without setter is `.643999994` for Willow and
+`.629999995` for Hi ESP; each matches after the final model recreation. Thus
+DEFAULT and SET-to-the-same-decimal are distinct working configurations. Do not
+replace either by its requested value or infer other engines/modes from them.
+
+Each guarded runner exited successfully after restoring the original app,
+slot, service selection, idle state and Hi ESP listener. A separate final HTTP
+check confirms those fields; Nyx remained `connecting`, so no voice connection
+was accepted. A second audit compares all saved detector UART frames and
+independently recalculates WAV CRC/samples/calls:
+[receipt](../results/official-hey-threshold-independent-audit-v1.json).
+
+Native positive-event emission beyond 64 is not exercised by zeros. The separate
+`official_hey_event_stream_v1.py` freezes an already consumed Samantha bare-Willow
+file from the previous public 12-stream diagnostic, verbatim single and 80-copy
+streams, default without setter, at 921600 baud. The full 277.545-second repeated
+PCM is preserved, including its explicit source silence; it has no intermediate
+detector reset. Greater-than-64 coverage must come from actual recorded positive
+frames, otherwise that coverage stays incomplete. No regeneration, extensions or
+threshold rescue are permitted. This is developer transport evidence, not
+recognition/FAR/true latency or new-source acceptance. Its manifest and protocol
+are frozen before replay in
+[the event-stream protocol](../results/official-hey-event-stream-protocol-v1.json).
