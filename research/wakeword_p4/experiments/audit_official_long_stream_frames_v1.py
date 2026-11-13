@@ -41,6 +41,7 @@ def audit(args):
     assert report['control_protocol'] == protocol['control_protocol'] == 'official-threshold-v1'
     assert report['stream_protocol'] == protocol['stream_protocol'] == 'official-long-stream-v1'
     assert report['max_stream_samples'] == protocol['max_stream_samples'] == MAX_SAMPLES
+    assert report['host_completion_policy'] == protocol['host_completion_policy'] == 'board-result-ack-no-tcdrain-v1'
     ready = [f['value'] for f in frames if f['kind'] == 'READY']
     assert len(ready) == 2 and ready[0] == ready[1] == report['firmware_ready']
     assert ready[0]['engine'] == report['engine'] and ready[0]['mode'] == 'DET_MODE_95'

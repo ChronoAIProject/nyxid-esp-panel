@@ -97,3 +97,37 @@ uses the separately verified, much larger active application slot.
 Native execution and app restoration have not yet been claimed by this frozen
 plan. They require the complete report, saved-frame audit and independent
 post-restoration checks.
+
+## Observed host-drain failure and separate identical-input retry
+
+The original frozen `8841d6f` run completed the short control but blocked after
+all long PCM writes in macOS WCH `termios_tcdrain_impl -> tcdrain -> ioctl`.
+A one-second native stack sample confirmed that blocking site; an independent
+queue query also blocked. No long RESULT/CRC/event was observed. After this
+concrete host diagnosis, the query and original task received SIGTERM so the
+original guarded task entered restoration and exited130. This was not a restart
+on an observation timeout. The original report, five detector frames, host
+failure receipt and independent restore check are retained in the adjacent
+`official-hey-long-stream-failed-*` / `host-drain-failure` / `failure-restore`
+results. Original app/slot/service/agent/HiESP listener and no serial owner were
+independently confirmed. Nyx remained connecting. No native capacity or late
+recognition pass is inferred from submitted bytes or the failed report.
+
+The separate retry keeps the exact same WAVs/manifest, model, DEFAULT threshold,
+firmware and UART baud. Only explicit long-mode host completion changes to
+`board-result-ack-no-tcdrain-v1`: after successful ordered writes, read the
+board's existing complete result directly instead of invoking OS tcdrain.
+The final sample/call/CRC/event checks remain mandatory and authenticate
+consumption independently of host queue drain. Legacy mode retains its original
+flush. The new runner also explicitly prints pcm_submitted, which still means
+submitted bytes, not consumed samples. This is a transport correction, not a
+new source, threshold rescue or selection. The retry plan and exact new source
+hashes must be pushed before executing a fresh guarded run.
+
+The separately frozen retry is `results/official-hey-long-stream-retry-plan-v1.json`,
+SHA `09536af0def85b666b445c1f50b3578e0f9bfb95fa36ded51d6194fba1a912b2`.
+The complete WAV files and manifest compare byte-identically with the failed
+first run; model/build/C source identities are unchanged. Adjacent retry host
+checks preserve original command/handshake and boundary behavior. No C rebuild
+is needed for this host-only correction. Real duplex completion still requires
+the new guarded run and full independent result/frame/restore checks.

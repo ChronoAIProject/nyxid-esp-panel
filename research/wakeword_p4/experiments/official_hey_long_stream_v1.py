@@ -142,6 +142,7 @@ def prepare(args):
         marker_start_samples=[0, MAX_SAMPLES-source['samples']], max_stream_samples=MAX_SAMPLES,
         build_report_sha256=sha(args.build_report), probe=build['products'][ENGINE]['files']['nyx_wake_baseline.bin'],
         uart_baud=1500000, sample_rate=16000, control_protocol='official-threshold-v1', stream_protocol='official-long-stream-v1',
+        host_completion_policy='board-result-ack-no-tcdrain-v1',
         lifecycle='One create/63-zero-prime/full input/final-only padding/destroy per stream. No intermediate reset.',
         decision='Retain failure and every event. Full two-hour transfer/accounting proves capacity; late positive-event coverage reported separately, not rescued by changing input/grid.',
         scope='Complete-stream capacity and detector state/clock witnesses on exact zeros plus two verbatim consumed synthetic containers. Not natural background/FAR/recognition/real wake latency/voice acceptance.',
@@ -177,6 +178,7 @@ def audit(args):
     assert report['engine'] == ENGINE and report['control_protocol'] == protocol['control_protocol']
     assert report['uart_baud'] == protocol['uart_baud'] and report['sample_rate'] == 16000
     assert report['stream_protocol'] == protocol['stream_protocol'] and report['max_stream_samples'] == MAX_SAMPLES
+    assert report['host_completion_policy'] == protocol['host_completion_policy'] == 'board-result-ack-no-tcdrain-v1'
     runner.validate_ready(report['firmware_ready'], ENGINE, True, True, True)
     for index, (row, actual) in enumerate(zip(rows, report['clips'], strict=True)):
         assert all(actual[k] == v for k, v in row.items())

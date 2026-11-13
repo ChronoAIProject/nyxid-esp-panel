@@ -1,0 +1,22 @@
+{
+  "schema": "official-long-stream-native-host-drain-failure-v1",
+  "frozen_protocol_commit": "8841d6f",
+  "native_session": 99231,
+  "native_pid": 23239,
+  "short_control_completed": true,
+  "last_progress_bytes_submitted": 226918400,
+  "total_input_bytes": 230400000,
+  "complete_input_submission_implied_by_tcdrain_stack": true,
+  "stack_wait": "termios_tcdrain_impl -> tcdrain -> ioctl -> __ioctl",
+  "stack_sample_sha256": "19ce6793090c9a3a11cd483379ea25b9dbdab17e4d53c052ea94e91287037728",
+  "device_complete_result_observed": false,
+  "capacity_verified": false,
+  "late_event_verified": false,
+  "model_failure_inferred": false,
+  "decision": "Cancel diagnosed blocked host drain to enter guarded restoration; retain original run and all evidence. No automatic restart based on polling timeout. A corrected host transport must use a separate frozen run, unchanged PCM/model/threshold.",
+  "original_native_exit_code": 130,
+  "guarded_restoration_finished": true,
+  "independent_restoration_verified": true,
+  "completed_clips": 1,
+  "scope": "Host final-drain failure; no native two-hour capacity or late-event pass. Original run ended under guarded restoration; no live-process restart."
+}

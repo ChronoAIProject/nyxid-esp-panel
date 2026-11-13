@@ -216,6 +216,7 @@ def main():
     if args.long_streams:
         report["stream_protocol"]=LONG_STREAM_PROTOCOL
         report["max_stream_samples"]=LONG_STREAM_MAX_SAMPLES
+        report["host_completion_policy"]="board-result-ack-no-tcdrain-v1"
     def interrupted(_signum, _frame):
         raise KeyboardInterrupt("Benchmark interrupted; restoring original app")
     signal.signal(signal.SIGTERM,interrupted)
@@ -278,7 +279,15 @@ def main():
                         print(json.dumps({"phase":"pcm_transfer","clip":index,
                             "bytes_sent":at+len(part),"total_bytes":len(data)}),flush=True)
                         next_transfer_progress=time.monotonic()+30
-                uart.flush()
+                if args.long_streams:
+                    # The macOS WCH driver can block indefinitely in tcdrain
+                    # after a large transfer. Reading the board's final result
+                    # permits duplex progress and authenticates consumption
+                    # through the existing full sample/call/CRC checks.
+                    print(json.dumps({"phase":"pcm_submitted","clip":index,
+                        "bytes_sent":len(data),"total_bytes":len(data)}),flush=True)
+                else:
+                    uart.flush()
                 result=message("WAKE_BENCH_RESULT",max(30,samples/16000))
                 if not (result["id"]==index and result["complete"] and result["crc32"]==zlib.crc32(data)):
                     raise RuntimeError("PCM transfer verification failed")
