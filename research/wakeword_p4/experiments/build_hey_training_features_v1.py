@@ -71,6 +71,27 @@ def make_plan():
     assert all(r['variant'] in (0,1,2) for r in rendered_rows)
     timing=[json.loads(l) for l in TIMING.read_text().splitlines()]
     assert len(timing)==2400 and {r['id'] for r in timing}==native_ids
+    timing_by_id={r['id']:r for r in timing}
+    native_by_id={r['id']:r for r in native_rows}
+    for item in timing:
+        source=native_by_id[item['id']]
+        assert item['role']=='training' and not item['waveform_generated']
+        assert item['source_raw_sha256']==source['raw_sha256']
+        assert item['source_waveform_sha256']==source['sha256']
+        assert item['original_derived_model_sha256']==source['derived_model_sha256']
+        allocations=item['token_allocations_frames']
+        assert len(allocations)==len(source['token_ids'])
+        assert all(type(v) is int and v>=0 for v in allocations)
+        assert item['native_samples_per_frame']==256
+        assert sum(allocations)*256==item['native_samples']==source['native_samples']
+    supported=0
+    for source in rendered_rows:
+        geom=geometry(source,timing_by_id[source['id']])
+        if source['target_id'] in TARGETS:
+            if not geom['all_positive_jitters_have_prefix_support']:
+                raise ValueError('Unsupported complete prefix before feature plan: '+source['id'])
+            supported+=1
+    assert supported==1440
     files=[generation,Path(__file__),Path(pymicro_features.__file__),Path(micro_features_cpp.__file__),TRAINING/'features.py',NATIVE/'summary.json',NATIVE/'records.jsonl',
            RENDERED/'summary.json',RENDERED/'records.jsonl',TIMING,
            AMBIENT/'human.json',AMBIENT/'ambient.json']
@@ -80,6 +101,8 @@ def make_plan():
     result=dict(schema='hey-training-feature-plan-v1',files={str(p):sha(p) for p in files},
                 versions={p:importlib.metadata.version(p) for p in ('numpy','soundfile','scipy','pymicro-features')},
                 targets=TARGETS,rows_per_target=7200,source_pcm_order='Frozen rendered records order',
+                timing_admission=dict(records=2400,rendered_geometry_checked=7200,
+                                      positive_variants_supported=supported),
                 feature_policy='Unchanged features.features on complete serialized PCM16, one reset per whole rendered clip, final-only160-hop pad; preserve every frame. Shared binary/ambient arrays between arms; target labels and target-dependent metadata only differ.',
                 positive_boundary='Internal token allocation prefix before punctuation plus full synthetic RIR tail, never command-container end. All baseline jitter3..27 crops must contain entire prefix under context150; any unsupported row stops full pack, no filtering.',
                 negative_policy='Reciprocal targets negative; hi_esp maps common_negative while original text/label retained. Existing authenticated training-only ambient/human arrays reused with hashes; no validation/testing rows copied.',

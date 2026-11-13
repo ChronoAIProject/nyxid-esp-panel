@@ -6599,3 +6599,10 @@ Added independent saved-UART comparison tool for all getter bits/63prime returns
 Original session42722 exited0 after156/156 frozen streams, no retries. Independent saved-UART auditor passed:20267inputcalls,9828prime returns,24QEMU and24native events; all156getter bits/prime returns/complete ordered call+sample_end+result event lists/channel-verified counts match nativeP4. Exact source samples/PCM CRC/calls checked per stream, per-run report/UART hashes preserved in4090-hey-qemu-consumed-grid-comparison-v1.json. Original report/UART/stage evidence remains local under hey-qemu-consumed-grid-v1. No discarded mismatch or point selection.
 
 This certifies observed agreement only on consumed12PCM/13config; not universal runtime/P4 equivalence, fresh recall/FAR or acceptance. CurrentABI getter-after-prime and >64event/long-source tests remain pending. Main new material token extraction continues original task; feature/training admission and actual candidate research remain incomplete, v30 unchanged.
+
+
+### 2026-11-13 — full timing admission before feature plan
+
+Feature plan writer now authenticates all2400 token records against native raw/WAV/derived-model hashes, token counts and integer256samples/frame allocations before plan creation. It checks all7200 rendered boundary mappings and requires all1440 target-positive variants to preserve complete prefix under all fixedjitters. No filtering or unsupported-row fallback. Threegeometry tests pass; actual full admission still waits original token task.
+
+Added exactPID/starttime observer that attaches only to live original extraction, waits without restart, requires pushed unchanged builder and then runs write-plan only. Any partial records or unsupported prefix fails closed. It does not build features, commit plans or launch training. TokenPID905640 confirmedlive13:42, latest741records when implementing; actual observer launch follows pushed source.
