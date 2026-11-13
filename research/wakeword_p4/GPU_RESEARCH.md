@@ -7078,3 +7078,17 @@ explicit multiple-factor differences and remaining executable-lock requirements.
 No new source reservation, media reads, synthesis or training. Official original
 PID958504 observed live at432/9672 and configuration1; first config completion
 is not by itself the complete official development comparison.
+
+
+### Exact broad Piper subplan
+
+Original model/config bytes reauthenticated, all672 original training IDs only.
+16128 fixed cells=2targets×672IDs×3scales×4carriers;2016 Nyx bare sources reused
+after8064 original file size/SHA checks,14112 new-generation cells. Exact
+punctuation/seeds/conditioning/scales and original reuse file hashes are in
+local reproducible schedule SHA258bf024807c5a674d2222c4e581d3f58fb2d1fc622ff11abd606d244a47a103.
+This is a subplan, not complete execution lock: no synthesis/training until
+source/runtime/token inventory and all-engine/common-negative recipe are fixed.
+Original Nyx reused sequential RNG differs from new per-cell seeds, explicitly
+not bit-matched random waveform draws. Reuse byte checks do not re-prove quality
+arrays. No heldout media read; no substitution of new model IDs.
