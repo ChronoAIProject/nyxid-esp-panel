@@ -5625,3 +5625,20 @@ quality evidence. Script compiles. Mike and test6/7 remain unconsumed. A passed,
 authenticated sole recovered development decision and pushed lock are required
 before material generation; this component grants neither scoring nor promotion.
 Goal remains incomplete; frozen v30 remains the reference.
+
+### Analytic acceptance-generator execution test (2026-11-13)
+
+Previous turn made progress (8143c44). Original trainer PID719837 verified live
+at1:45:21, latest36500steps; no newer validation snapshot yet. Issue13 latest
+comments contained no new Mac result at this observation.
+
+Extended the admission suite to execute the actual generator path in a temporary
+directory with a fake engine returning an analytic0.5s/220Hz float32[1,1,1,N]
+sine tensor. Model/config/version/published-lock fixtures are mocked only inside
+the test; no real TTS session, Mike source audio, acceptance background or model
+inference. Full tensor bytes survive saving, native full-resample/PCM audit and
+all3quiet/noise/fullRIR audits pass. One-source pack correctly exits1 with
+mechanically_qualified=false (requires120native/360renders). Temporary outputs
+are discarded and never represented as research quality evidence. All5tests
+pass. This changes tests only; reserved generator and all formal inputs stay
+unchanged. Research/acceptance remain incomplete.

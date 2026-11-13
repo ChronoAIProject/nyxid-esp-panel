@@ -1,8 +1,16 @@
 """Analytic admission tests only; never synthesize or score acceptance audio."""
 import copy
+import contextlib
+import io
+import json
+from pathlib import Path
 import sys
+import tempfile
+import types
 import unittest
 from unittest.mock import patch
+
+import numpy as np
 
 import prepare_mike_acceptance_v1 as admission
 
@@ -43,6 +51,37 @@ class Admission(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'no development-passed committed lock'):admission.generate()
         self.assertFalse(admission.LOCK.exists())
         self.assertFalse(admission.OUT.exists())
+
+    def test_analytic_engine_transport_and_three_renders_fail_incomplete_pack(self):
+        # Temporary analytic sine tensor, never Mike inference or research evidence.
+        tensor=(.1*np.sin(np.arange(8000)*2*np.pi*220/16000)).astype(np.float32)[None,None,None,:]
+        class Session:
+            def run(self,*args,**kwargs):return [tensor]
+        fake=types.SimpleNamespace(SessionOptions=types.SimpleNamespace,
+            ExecutionMode=types.SimpleNamespace(ORT_SEQUENTIAL=0),
+            InferenceSession=lambda *args,**kwargs:Session())
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);model=root/'model';model.write_bytes(b'analytic fixture only')
+            reservation=root/'reservation.json';lock=root/'lock.json';out=root/'out'
+            reservation.write_text(json.dumps(dict(source_sha256=admission.sha(admission.__file__),
+                versions={},files={},model=dict(model_path=str(model),config_path=str(model),
+                expected_sha256=admission.sha(model),config_sha256=admission.sha(model),native_rate=16000),
+                requests=[dict(id='analytic-fixture',token_ids=[1,2],length_scale=1.)])))
+            lock.write_text(json.dumps(dict(source_sha256=admission.sha(admission.__file__),
+                files={str(reservation):admission.sha(reservation)})))
+            with patch.multiple(admission,LOCK=lock,RESERVATION=reservation,OUT=out), \
+                 patch.object(admission,'versions',return_value={}), \
+                 patch.object(admission.subprocess,'check_output',return_value=lock.read_bytes()), \
+                 patch.dict(sys.modules,{'onnxruntime':fake}),contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaises(SystemExit) as result:admission.generate()
+            self.assertEqual(result.exception.code,1)
+            native=json.loads((out/'native-records.jsonl').read_text())
+            renders=[json.loads(line) for line in (out/'render-records.jsonl').read_text().splitlines()]
+            self.assertTrue(native['audit']['passed'])
+            self.assertEqual(len(renders),3)
+            self.assertTrue(all(row['audit']['passed'] for row in renders))
+            self.assertEqual(np.load(out/'analytic-fixture.engine.npy').tobytes(),tensor.tobytes())
+            self.assertFalse(json.loads((out/'summary.json').read_text())['mechanically_qualified'])
 
 
 if __name__=='__main__':unittest.main()
