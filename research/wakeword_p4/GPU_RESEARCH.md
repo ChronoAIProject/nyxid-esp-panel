@@ -5642,3 +5642,23 @@ mechanically_qualified=false (requires120native/360renders). Temporary outputs
 are discarded and never represented as research quality evidence. All5tests
 pass. This changes tests only; reserved generator and all formal inputs stay
 unchanged. Research/acceptance remain incomplete.
+
+### Require completed matched-input audit before new development (2026-11-13)
+
+Previous turn progressed via generator integration test. Original PID719837
+verified live at1:46:58/latest37000. Review found the future new-development
+freeze did not explicitly require the existing complete two-arm input-audit
+artifact, though the original sequence runs that audit before postprocessing.
+Added that artifact as a required/pinned dependency and authenticate120000
+steps/arm,120000different main batches, exact paired tensors/ordered source
+schedule/initialization inventory, original schedule digest and no acceptance
+claim. Training/postprocessor/canonical runtime sources are unchanged.
+
+Two admission tests pass: seven corrupted/incomplete analytic audit cases are
+rejected; actual unfinished run cannot create a freeze/output. Current readiness
+lists5missing original training/audit/postprocessor artifacts, candidate not
+scored. The original verify_complete_recovery_execution_pins_v1 prelaunch
+command rejects existing output directories as designed (not a hash failure);
+therefore independently rechecked all284 file_sha256 entries directly, all
+unchanged. No restart, scoring, Mike inference or acceptance access. Objective
+remains incomplete; v30 frozen.

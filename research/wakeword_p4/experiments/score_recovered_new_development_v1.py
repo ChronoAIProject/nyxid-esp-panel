@@ -30,13 +30,26 @@ def prerequisites():
     required=[MODEL/'training.json',BASE/'complete-recovery-recovered-formal-v1-export-audit.json',
               BASE/'complete-recovery-control-formal-v1-reused-development-exploratory-calibration-v1.json',
               BASE/'complete-recovery-recovered-formal-v1-reused-development-exploratory-calibration-v1.json',
-              Path('/tmp/nyx-joe-base-v1/report.json'),Path('/tmp/nyx-newbg-base-v1/report.json')]
+              Path('/tmp/nyx-joe-base-v1/report.json'),Path('/tmp/nyx-newbg-base-v1/report.json'),
+              BASE/'complete-recovery-formal-input-audit-v1.json']
     return required,[str(p) for p in required if not p.is_file()]
+
+
+def validate_matched_input_audit(audit):
+    assert audit['steps_per_arm']==120000
+    assert audit['different_main_network_batches']==120000
+    for key in ['original_ordered_paired_source_draws_exact','paired_network_inputs_exact',
+                'initialization_inventory_exact']:
+        assert audit[key] is True
+    expected=json.loads((ROOT/'results/4090-per-draw-noise-full-support-v1.json').read_text())
+    assert audit['schedule_sha256']==expected['schedule_sha256']
+    assert audit['acceptance_claim'] is False
 
 
 def write_freeze():
     required,missing=prerequisites()
     if missing:raise RuntimeError('Original training/postprocessing or baselines incomplete: '+', '.join(missing))
+    validate_matched_input_audit(json.loads(required[6].read_text()))
     training=json.loads((MODEL/'training.json').read_text())
     assert training['steps']==120000 and training['recovered_erased_complete_coverage'] is True
     assert training['model_sha256']==sha(MODEL/'hey_nyx.tflite')
