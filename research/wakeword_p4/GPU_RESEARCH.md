@@ -7674,3 +7674,20 @@ points and13invalid-input cases). Complete Linux JSON byte-identical to Mac.
 Actual model/frontend/PCM inference, development scoring and acceptance remain
 unperformed. Caller must authenticate expected rows and execution/raw bytes;
 helper does not independently authorize selection or promotion.
+
+
+### Complete metrics upper-bound conflict found before real calibration
+
+Preserved constructive witness: Mace0ad864 tail-only sample50000 events after
+drycontainer34000/fullRIRcontainer35232 counted complete macro1 for36positive
+cases, whereas prospective contract requires an upper bound and expects0.
+Original constructed integration remains byte-exact but cannot establish
+contract correctness. Issue6866908958 requests additive corrected helper and
+inclusive exact-boundary/container+1 regressions; original version/failure and
+all tail events retained. No actual calibration before correction.
+New raw execution-lock builder authenticates both completed120k/120100guards,
+all270numerical cases and original arrays, frozenv30, source quality/history,
+full background frontend and all396+12inputs/runtime. It authorizes raw collection
+only, no threshold selection/promotion. Actual preflight rejects missing formal
+receipt without writing execution lock or opening development in a detector.
+Original source reports retain their historical authorization=false fields.

@@ -1,0 +1,99 @@
+"""Bind fresh development raw collection only after completed numerical admission."""
+import importlib.metadata
+import json
+from pathlib import Path
+
+from collect_complete_development_v1 import SCHEMA, POLICY, PACKAGES, runtime_identity_files, validate_materials
+from run_hey_broad_trained_quantization_v1 import ROOT, completed, published
+from plan_hey_broad_trained_quantization_v1 import sha
+
+
+def main():
+    reports = ROOT/'results'
+    training_path = reports/'4090-hey-broad-formal-training-lock-v1.json'
+    training = json.loads(training_path.read_text())
+    folders = {t: completed(t, training) for t in ('hey_willow', 'hey_nyx')}
+    quant_path = reports/'4090-hey-broad-trained-quantization-result-v1.json'
+    published(quant_path)
+    quant = json.loads(quant_path.read_text())
+    qlock = reports/'4090-hey-broad-trained-quantization-execution-v1.json'
+    assert quant['execution_sha256'] == sha(qlock)
+    qexecution = json.loads(qlock.read_text())
+    for path, expected in qexecution['files'].items():
+        assert sha(path) == expected, path
+    assert quant['all_passed'] and len(quant['cases']) == 270
+    for target in folders:
+        cases = [c for c in quant['cases'] if c['target'] == target]
+        assert len(cases) == 135 and len({c['request_order'] for c in cases}) == 135
+        for case in cases:
+            assert case['passed'] and sha(case['arrays_path']) == case['arrays_sha256']
+    receipt_path = reports/'4090-jenny-development-replay-manifest-v1.json'
+    receipt = json.loads(receipt_path.read_text())
+    synthetic = Path(receipt['path'])
+    assert sha(synthetic) == receipt['sha256']
+    for path, expected in receipt['files'].items():
+        assert sha(path) == expected
+    preparation = reports/'4090-jenny-earnings-complete-preparation-v1.json'
+    prep = json.loads(preparation.read_text())
+    background = Path(prep['manifest_path'])
+    assert sha(background) == prep['manifest_sha256']
+    history_path = reports/'4090-jenny-earnings-history-overlap-v1.json'
+    history = json.loads(history_path.read_text())
+    assert history['manifest_sha256'] == sha(background)
+    assert history['no_exact_encoded_or_pcm_hash_matches'] and not history['matches']
+    assert sha(history['inventory_path']) == history['inventory_sha256']
+    frontend_path = reports/'4090-jenny-background-complete-frontend-audit-v1.json'
+    frontend = json.loads(frontend_path.read_text())
+    assert frontend['manifest_sha256'] == sha(background)
+    assert frontend['history_report_sha256'] == sha(history_path)
+    assert frontend['all_complete_arrays_exact'] and len(frontend['cases']) == 12
+    native_path = reports/'4090-jenny-development-independent-native-audit-v1.json'
+    native = json.loads(native_path.read_text())
+    assert native['rows'] == 132 and native['all_native_process_quality_pass']
+    render_path = reports/'4090-jenny-development-render-independent-audit-v1.json'
+    render = json.loads(render_path.read_text())
+    assert render['independently_qualified'] == 396 and not render['failures']
+    paths = [Path(__file__), training_path, quant_path, qlock, receipt_path,
+             synthetic, preparation, background, history_path, frontend_path, native_path, render_path]
+    paths += [Path(p) for p in receipt['files']]
+    paths += [Path(history['inventory_path'])]
+    here = Path(__file__).parent
+    paths += [here/n for n in ('collect_complete_development_v1.py', 'complete_feature_stream_v1.py',
+                               'uint8_stream_detector_v1.py', 'run_hey_broad_trained_quantization_v1.py',
+                               'plan_hey_broad_trained_quantization_v1.py')]
+    paths += [ROOT/'training/features.py'] + runtime_identity_files()
+    models = {}
+    for target, folder in folders.items():
+        path = folder/'hey_nyx.tflite'
+        models[target] = dict(path=str(path), sha256=sha(path), bytes=path.stat().st_size,
+                             output=str(Path('.local/wakeword/jenny-complete-raw-v1')/target))
+        paths += [path, folder/'formal-execution-receipt.json', folder/'training.json',
+                  folder/'actual-batch-schedule.jsonl', folder/'actual-initial-inventory.json']
+    frozen = Path('.local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite')
+    assert frozen.stat().st_size == 54440
+    assert sha(frozen) == '04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c'
+    models['v30'] = dict(path=str(frozen), sha256=sha(frozen), bytes=54440,
+                         output='.local/wakeword/jenny-complete-raw-v1/v30')
+    paths.append(frozen)
+    for manifest, phase in ((synthetic, 'synthetic'), (background, 'background')):
+        rows = json.loads(manifest.read_text())['records']
+        assert len(rows) == (396 if phase == 'synthetic' else 12)
+        for row in rows:
+            paths.append(Path(row['path'] if phase == 'synthetic' else row['wav_path']))
+            if 'frontend_path' in row:
+                paths.append(Path(row['frontend_path']))
+    result = dict(schema=SCHEMA, tail_policy=POLICY, authorizes='development-raw-collection-only',
+                  files={str(p): sha(p) for p in sorted(set(paths))}, models=models,
+                  versions={p: importlib.metadata.version(p) for p in PACKAGES},
+                  materials={phase: dict(path=str(p), sha256=sha(p), role='new-development')
+                             for phase, p in (('synthetic', synthetic), ('background', background))},
+                  producer_admission='Fresh development only, bounded exact-history and saved synthesis quality admitted. Original preparation reports remain unchanged. Raw collection only; no calibration authorization, independent acceptance or promotion.',
+                  limitations='Single author-direct Jenny voice; different export bytes and bounded history do not prove speaker/pretraining independence. No protected final sources opened. Official reference execution requires a separate lock for identical PCM.')
+    validate_materials(result)
+    output = reports/'4090-jenny-complete-development-execution-v1.json'
+    with output.open('x') as destination:
+        destination.write(json.dumps(result, indent=2)+'\n')
+
+
+if __name__ == '__main__':
+    main()
