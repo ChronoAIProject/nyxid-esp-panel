@@ -39,6 +39,7 @@ def write(args):
     for name in ('train_hey_target_adapter_v1.py','validate_hey_target_pack_v1.py',
                  'hey_batch_schedule_v1.py','audit_hey_training_batch_v1.py'):
         files.add(EXPERIMENTS/name)
+    files.add(EXPERIMENTS/'smoke_hey_target_adapter_v1.py')
     # Preserve the feature preparation chain, including training ambient arrays.
     files.update(map(Path,json.loads(plan.read_text())['files']))
     arms={}
@@ -67,8 +68,19 @@ def write(args):
         assert not output.exists(),'Use fresh fixed output; never restart automatically'
         arms[target]=dict(features=str(root),output=str(output),cpu_audit=str(cpu),
                           batch_schedule=str(schedule),schedule_receipt=str(receipt))
+        if not args.preflight:
+            smoke=Path('.local/wakeword')/f'hey-paired-{target}-integration-smoke-v1/training.json'
+            report=json.loads(smoke.read_text())
+            assert report['target_id']==target and report['steps']==report['selected_step']==2
+            assert report['export_contract_passed'] and not report['formal_candidate']
+            assert len(report['smoke_updates'])==2 and report['batch_schedule']['verified_batches']==102
+            assert report['features_index_sha256']==sha(root/'features.json')
+            assert report['initial_weights_sha256']==INITIAL_SHA
+            assert report['smoke_source_sha256']==sha(EXPERIMENTS/'smoke_hey_target_adapter_v1.py')
+            files.add(smoke);arms[target]['integration_smoke']=str(smoke)
     bound={str(p.resolve().relative_to(Path.cwd())):sha(p) for p in files}
     result=dict(schema='hey-paired-training-lock-v1',material_commit=commit,steps=20000,
+                stage='integration-preflight' if args.preflight else 'formal',
                 seed=726,batch_size=128,initial_weights=str(args.initial_weights),upstream=str(args.upstream),
                 versions={p:importlib.metadata.version(p) for p in
                           ('numpy','tensorflow','keras','h5py','scipy','soundfile','pymicro-features')},
@@ -86,4 +98,5 @@ if __name__=='__main__':
     parser.add_argument('--upstream',type=Path,default=Path('.local/wakeword/microWakeWord'))
     parser.add_argument('--receipts',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--preflight',action='store_true',help='Lock for two-step integration only; cannot launch formal training')
     write(parser.parse_args())

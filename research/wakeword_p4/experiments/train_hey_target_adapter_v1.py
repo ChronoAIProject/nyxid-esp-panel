@@ -109,6 +109,8 @@ def main():
     lock = json.loads(remote_bytes)
     if lock['schema'] != 'hey-paired-training-lock-v1':
         raise ValueError('Unknown training lock')
+    if lock.get('stage')!='formal':
+        raise ValueError('Formal training requires both actual integration smokes')
     for package,version in lock['versions'].items():
         if importlib.metadata.version(package)!=version:raise ValueError('Training dependency changed: '+package)
     # The exact lock commit must already exist on the remote research branch.
@@ -130,7 +132,7 @@ def main():
     root = Path(arm['features'])
     mandatory = [root/n for n in ('features.bin','features.json','human.json','ambient.json','target-provenance.json')]
     mandatory += [Path(lock['initial_weights']),Path(arm['batch_schedule']),
-                  Path(arm['cpu_audit']),Path(arm['schedule_receipt'])]
+                  Path(arm['cpu_audit']),Path(arm['schedule_receipt']),Path(arm['integration_smoke'])]
     for path in mandatory:
         key = str(path.resolve().relative_to(Path.cwd()))
         if lock['files'].get(key) != sha(path):

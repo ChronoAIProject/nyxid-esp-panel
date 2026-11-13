@@ -6606,3 +6606,10 @@ This certifies observed agreement only on consumed12PCM/13config; not universal 
 Feature plan writer now authenticates all2400 token records against native raw/WAV/derived-model hashes, token counts and integer256samples/frame allocations before plan creation. It checks all7200 rendered boundary mappings and requires all1440 target-positive variants to preserve complete prefix under all fixedjitters. No filtering or unsupported-row fallback. Threegeometry tests pass; actual full admission still waits original token task.
 
 Added exactPID/starttime observer that attaches only to live original extraction, waits without restart, requires pushed unchanged builder and then runs write-plan only. Any partial records or unsupported prefix fails closed. It does not build features, commit plans or launch training. TokenPID905640 confirmedlive13:42, latest741records when implementing; actual observer launch follows pushed source.
+
+
+### 2026-11-13 — concrete new-pack GPU integration smoke gate
+
+Added separate two-update GPU smoke using the actual adapted original trainer, actual batches and original full INT8 export; only diagnostic output paths. It precomputes2train+100PTQ batches with the unchanged seeded sampler and guards actual inputs. Saves same-instance initialH5/inventory and both actual batchNPZ; observes actual train_on_batch optimizer iterations/loss/finite weights and changed model variables. Original frozenBN checks retained. No live GPU execution or gradient/export success claimed yet: newpack remains unavailable.
+
+Smoke preserves formal first-two LR1e-3 by retaining formal decay boundaries10000/16000; naïve args.steps2 would otherwise decay atstep1. One isolated loop regression plus twoadapter tests pass; AST compiles. Training-lock writer now has integration-preflight stage to run smokes and formal stage requiring both actual source/pack-bound smoke reports; formal adapter rejects preflight. New source audit is separate from historical receipts. All284originalpins remain unchanged. Original tokenPID905640/observer921636 freshly confirmedlive, latest881records; no restart.
