@@ -6742,3 +6742,21 @@ Separate development direct-convolution auditor now implements registered
 independent direct convolution; all3 passed and all3 deliberate100-PCM-unit
 single-sample corruptions rejected. This is source/analytic verification only;
 actual development synthesis, timing/source admission and scoring still pending.
+
+### Both v2 fixed-final candidates complete and frozen
+
+Original sequential run completed both arms normally at20000, without restart
+or validation selection. Nyx54440B SHA
+`c7fe8ca08a3da5fd7b4ce175405872dcd2e3639c2eee646c685c0f5e2a2ac5a5`.
+Independent Nyx20100batch and643200positive trace audit passes; initial values
+match original same-instance smoke and paired initial inventories match exactly.
+BN hashes unchanged. Nyx final complete training positive/negative PCM frontend
+and reset-repeat UINT8 checks pass. Both original training.json reports copied
+byte-for-byte to results; candidate identity freeze records original model SHA.
+No threshold selected, no recognition/FAR pass or promotion; v30 retained.
+
+Separate development-native generator implemented with exact120reserved requests,
+original source/phoneme/token/seed identities, no retries, full native/engine/PCM
+preservation, original mechanical quality audit and whole-pack failure rule.
+Requires pushed exact plan, candidate freeze, dependencies and source hashes;
+registering/generating cannot invoke a wake detector or access acceptance.
