@@ -5364,3 +5364,7 @@ Original complete record4093B SHA2db4febbac85a8b165656a162ebcfe6b1412b30a6497a40
 ### Per_draw formal115000 float checkpoint rejected
 
 Original complete record4018B SHAa8a8da62a916cdd509f74af0a7c50f278dc1eb45e12f66f71ccf3727ac2f869a preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.992 macro.5328125/max-source false.03125. Background0/1.2048112674h, one-sided95 upper2.4864743173555484/h independently recomputed. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only, no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal120000 float checkpoint rejected
+
+Original complete record3995B SHA367245dedd6e733e5bea846b9712a527d283282f0302b2067bf280302cb28a44 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.55234375/max-source false.0359375. Background0/1.2048112674h, one-sided95 upper2.4864743173555484/h independently recomputed. Fallback not pass and does not replace earlier eligible5000 checkpoint. Original trainer exited after export; sequence555095 observed running fixed historical postprocess PID712028 after automatic cross-arm audit. Full export and cross-arm reports still require independent review. Reused float validation only, no INT8 quality/independent acceptance/cross-arm superiority conclusion; v30 frozen.
