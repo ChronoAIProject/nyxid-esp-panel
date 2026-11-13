@@ -7536,3 +7536,18 @@ inference/threshold selection. Prospective author-direct Jenny is development
 only, excluded from training/independent acceptance; declared source/history
 limits remain. Next full-condition render/history/negative-background admission
 and collector locks, not immediate scoring. Formal Willow original continues.
+
+### Jenny396 complete presentations and independent sparse replay
+
+3ff31bbb plan pushed before original render session94517, exit0. Separate
+adapter reuses exact pinned complete-source renderer without modifying it;
+only result identity/progress differs.132sources×quiet/25dB/15dB+fullRIR=396,
+all process checks pass. Lead48000/tail16000, full960RIR tail, matched seeds
+across phrases, original dry-source RMS and prescribed postmix attenuation.
+Every phrase keeps internal generated-prefix metadata; renderer kind=positive
+is metadata retention, not a classifier label. No waveform trim/respeed.
+Separate sparse-direct4tap replay audit396/396passes versus FFT originals,
+all hashes/decoded PCM/quiet source exact, maxerror3.0517344763185753e-05,
+0geometryfailures. No new model scoring/threshold selection. Next encoded/PCM
+history, fresh continuous background and newcollector/execution admission.
+Original formal Willow1047649 verifiedlive29000/120000, no restart/guard error.
