@@ -6949,3 +6949,15 @@ median.99609375. This rules out merely pre-boundary event accounting for Willow
 failure and demonstrates a marked training/development output gap in these
 bounded cases; not isolated cause or wholetrainingpack assessment. Original
 rawpeak/fivepeak/firstpeak support times retained per source/confusion. No rescue.
+
+### Full-training support diagnostic registered source
+
+Saved consumedraw audit further shows Willow maxfive<=.0109375 on all360dev
+phrases, not only target36. New bounded hypothesis checks whether this lowoutput
+also covers originalcomplete training voices/conditions, using frozen exports
+and all7200unchanged trainingfeature rows/arm (720positive/6480negative).
+Separate diagnostic source requires pushed source/runtime/data/model lock,
+freshreset per whole row, fullrawbyte preservation and source/label/condition
+summaries. No training update/newdev inference/threshold selection/acceptance.
+Original officialdevelopment gridPID958504 confirmed live,101/9672observed;
+no reset/restart or source changes to its execution pins.
