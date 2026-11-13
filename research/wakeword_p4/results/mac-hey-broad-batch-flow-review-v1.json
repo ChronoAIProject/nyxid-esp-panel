@@ -1,0 +1,60 @@
+{
+  "schema": "mac-hey-broad-batch-flow-review-v1",
+  "gpu_commit": "2d7b5669512049523ad968191968cf834299a4ef",
+  "source_sha256": {
+    "research/wakeword_p4/training/train_stream.py": "2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904",
+    "research/wakeword_p4/experiments/train_hey_broad_adapter_v1.py": "054ddb2bbaf4522380e0b2b6ed75d7e74b815b160f0138966abc216f7bf4819d",
+    "research/wakeword_p4/experiments/smoke_hey_broad_v1.py": "02f322508eb82a0f6c4a0c37710765ca9e7852070f0714b3f472f734f59aea71",
+    "research/wakeword_p4/results/4090-hey-broad-smoke-lock-v1.json": "330046035c2cd624a828b73a5ced1431a9d63c2992b0efd41ba46c42cf203fd2",
+    "research/wakeword_p4/training/negative_sampling.py": "620ada162e65b3cad389f5a12ce23a6388c7793e14cf98092ec43ad367e922c6",
+    "research/wakeword_p4/training/spec_augment.py": "f5cf659ee3fab7c32c60b4985db1788be4718479b453ff582ecadb6dc75454d9",
+    "research/wakeword_p4/results/4090-hey-broad-cpu-batch-audit-v1.json": "3dd3e990d229a7602ae9daf2c8d365ff9a1d3fc0212f0e2ee3419e852f36ca1c"
+  },
+  "transformed_sha256": "228c392400a95d1e89ffb0409a002fb71b5f4c2f4c581f0100a4f1d1ed8b7baa",
+  "transformed_compile_pass": true,
+  "validation_calls": 0,
+  "final_checkpoint_save_present": true,
+  "observed_batches_including_exact_repeats": 400,
+  "own_target_windows_checked": 12800,
+  "prefix_windows_checked": 6400,
+  "constructed_paired_schedule_matches": true,
+  "results": [
+    {
+      "target": "hey_willow",
+      "mine": false,
+      "augment": false,
+      "batches": 50,
+      "tensor_sha256": "90667bb993ff9668778e3263972b86defcc6ba112327aee2410e8aa71daa9d6d",
+      "input_arrays_unchanged": true,
+      "corrupt_positive_and_label_controls_rejected": true
+    },
+    {
+      "target": "hey_willow",
+      "mine": true,
+      "augment": true,
+      "batches": 50,
+      "tensor_sha256": "90667bb993ff9668778e3263972b86defcc6ba112327aee2410e8aa71daa9d6d",
+      "input_arrays_unchanged": true,
+      "corrupt_positive_and_label_controls_rejected": true
+    },
+    {
+      "target": "hey_nyx",
+      "mine": false,
+      "augment": false,
+      "batches": 50,
+      "tensor_sha256": "c48884ec42e90eb1be6046bd4f07d6885c96fe69b9d1ca6e730285610b321bdc",
+      "input_arrays_unchanged": true,
+      "corrupt_positive_and_label_controls_rejected": true
+    },
+    {
+      "target": "hey_nyx",
+      "mine": true,
+      "augment": true,
+      "batches": 50,
+      "tensor_sha256": "c48884ec42e90eb1be6046bd4f07d6885c96fe69b9d1ca6e730285610b321bdc",
+      "input_arrays_unchanged": true,
+      "corrupt_positive_and_label_controls_rejected": true
+    }
+  ],
+  "limits": "Constructed identifiable features exercise actual pinned adapted batch functions. No private broad feature pack, real training schedule, TensorFlow/GPU optimizer, INT8 numerical inference, recognition/FAR, audio or acceptance data accessed. Real paired schedule and trained export still require their own evidence."
+}
