@@ -7453,3 +7453,14 @@ No new source role reserved/admitted. Review report pins original metadata and
 retains all uncertainties. This runs alongside original formal schedule task;
 fixed-final training preparation does not depend on Mac replying. User fresh
 threshold-selection requirement preserved; old development never relabeled.
+
+### Original schedule-bound continuation prepared
+
+continue_hey_broad_formal_v1.py binds original schedulePID1034876/start19738022.
+It never retries/restarts generation. Only after original terminal state AND
+complete two-arm schedule report does it invoke full artifact lock validation,
+publish exact lock, then execute fixed120k Willow followed by Nyx. Any missing
+report, failed hash/admission/push, existing lock/log/output or failed first arm
+stops the chain. No heldout evaluation/promotion. Formal runner additionally
+asserts actual optimizer iterations120000. This is authorized continuation of
+the planned two-arm experiment, not observation-timeout recovery.

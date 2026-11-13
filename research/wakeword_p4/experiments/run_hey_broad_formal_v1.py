@@ -70,6 +70,7 @@ def main():
     exec(compile(adapted_tree(),str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER),
         HEY_ADMIT_ARGS=admit,HEY_LOAD_INITIAL=initial,HEY_INITIAL_SHA=lock['initial_weights_sha256'],HEY_BATCH_GUARD=guard))
     assert len(captured)==1 and all(np.isfinite(v.numpy()).all() for v in captured[0].variables)
+    assert int(captured[0].optimizer.iterations)==120000
     report=json.loads((output/'training.json').read_text())
     assert report['selected_step']==120000 and report['parameters']==24301
     assert report['batchnorm_initial']==report['batchnorm_selected']
