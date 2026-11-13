@@ -7050,3 +7050,18 @@ of per-update exposure or source admission. No additional 216-input diagnostic
 is required. Official PID958504 was observed live, completed370/9672; no restart
 or partial recognition/FAR claim. Next: reconcile original training reports and
 material identities, then freeze a separate common broad-source recipe/data lock.
+
+
+### Authenticated inherited training inventory
+
+New read-only auditor authenticates current original v30 features.json against
+its frozen training report SHA and exact per-engine/label source counts. Piper
+120000 rows (60000 each label) represent12000 canonical path+WAV-SHA identities,
+Kokoro23000 rows represent2300, Qwen2980 represent298: each ten variants.
+Do not describe feature rows as independent utterances/voices. Original Kokoro
+and Qwen keyword_end uses retained PCM RMS-tail estimate, not phonetic truth.
+All Piper rows respect original seed726/904-ID split; factorized included pack
+IDs equal all672 original training IDs exactly. Other112/120 remain held roles.
+This proves bound input metadata, not exact per-update sampled exposure, fresh
+WAV/feature binary quality or admission for the next protocol. No media/inference
+performed. Original failed quality evidence is unchanged.
