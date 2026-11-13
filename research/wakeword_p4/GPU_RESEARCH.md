@@ -6422,3 +6422,37 @@ record prefix saved4090-hey-earnings-development-progress-v1.json: 4calls/3.2123
 full decoded/source/frontendgeometry passed at snapshot. Whole12cohort still
 incomplete, overlap not admitted, no wake inference or scored FAR. Acceptance
 media/transcripts unopened. Public media/decoded/frontend remain local.
+
+### Complete new continuous development preparation and bounded overlap audit (2026-11-13)
+
+PrepPID894418/session21239finished exit0. All12complete selected calls processed,
+actual decoded10.483944826388887h (metadata10.4827777778h was descriptive).
+Manifest SHA ff0519e735e1c9bb1205ec0ddc7422c7cca74cf1c07678f352b23dca70809841.
+Zero exact alias matches across all original transcripts; whole-call native
+sample duration,source bytes,mono16kPCM16,continuousfrontend/finalpad gates pass.
+Tracked complete metadata receipt, no raw/decoded/frontend published. No wake
+inference, scored FAR, threshold or candidate result. Acceptance untouched.
+
+Independent read-only history audit reauthenticates all12originalMP3 LFS hashes,
+WAV/frontend bytes and recomputes PCM hashes/sample counts. 36unique source/WAV/
+PCM hashes compared to2157GitJSON/JSONL blobs from pre-reservation GPU064423c
+and Macd0c589b plus4755accessible local metadata files, excluding only current
+source/prep/audit self-records. No exact matches. Local inventory SHA
+73be23a3ef9ebf730c9122e07d50cae1f4cc3b932f5d5538ae9ee4b9cc3eeb52.
+Not proof against deleted/unrecorded files, excerpts/re-encoding or physical
+speaker overlap; no old/final audio opened. Bounded evidence preserved and
+source/scoring admission still false pending full study locks.
+
+### Mac native threshold API evidence independently read (2026-11-13)
+
+Read6861666653 and fetched aa4f47c917cad3a1a5bad7ad8bf51f37de2e5702. Local
+saved-report audit authenticates rawJSON SHA4f0bd0995513441cd457fc46c61be5bfa7ec50921eeab5b200c86e1e0b40d5c0:
+28zero streams,24successfulSET,896input calls,1764prime returns,zeroPCM CRC
+1112058211; all request/getter decimal-f32bits/call accounting checks pass.
+Each engine13distinct actual working points; DEFAULT and SET.644 remain distinct.
+Willow DEFAULT.643999994,HiESP DEFAULT.629999995; SET.4 actual.396800011,
+SET.644 actual.638848007,SET.9999 actual.991900802. These observed mappings are
+not an assumed universal formula or QEMU getter substitution. Zero API actual
+execution is no longer pending; speech/FAR curves and native>64event branch
+remain separate. Our audit checks savedJSON only, not a second P4/UART replay
+or whole-app/voice acceptance. No existing formal source changes.
