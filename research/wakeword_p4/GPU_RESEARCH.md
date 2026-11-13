@@ -7610,3 +7610,23 @@ receipts. Declared voice count1, explicitly not broad unseen-speaker proof.
 No scoring authorization, collector/metric execution pins still required.
 Original formal Willow1047649 verifiedlive56000/120000; background exact-history
 1068108 still live at105seconds, not a terminal failure or reason to restart.
+
+
+### Fresh continuous background: complete history and frontend audits
+
+Original history session92377 exited0:36 encoded/WAV/PCM identities versus
+2321Git+7160local metadata files,0exact matches. Inventory SHA
+f1cd5c483c2be5bfbc7da2dfcdae56b6f8cc3149425a1f4006f27328ba7f00a6.
+Bounded exact-hash evidence only; no subclip/reencoding/deleted-history or
+physical-speaker independence claim, no old/acceptance media decoded.
+Original complete frontend session50670 exited0. All12whole PCM traversed
+with alternate65536sample IO+carry versus preparation160000sample blocks;
+every cached uint16 feature frame exact, complete sample counts/PCM hashes
+and final-only padding checked. Same pinned underlying MicroFrontend and
+formula, not an independent frontend implementation or model quality test.
+Actual exposure9.614419583333333h. Reports retain scoring_authorized=false;
+no wake inference, threshold selection or promotion performed.
+OriginalWillow1047649/start19849315 verifiedlive, observed70500/120000;
+continuation1044979 and originalofficial958504 live. No restart/source edits.
+Mac latest6866650718 still preparing raw metrics helper, no new commit at
+this check; avoid duplicate implementation. v30 and protected finals remain.
