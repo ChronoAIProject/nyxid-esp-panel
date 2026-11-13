@@ -5411,3 +5411,12 @@ New hypothesis and preregistration:experiments/complete_recovery_formal_protocol
 Formal sequence launched after cce5cd4 push, session18719; control trainer PID719837, recovered waits sequentially. Verified live via process state and growing consecutive loss trace (>108updates observed). First50 full trace exactly matches authenticated prior fixed trace, first2 actual main/pair arrays exactly match fresh CUDA disabled probe, actual initialization inventory equals prior fixed; all284 pins reverified during execution. Receipt4090-complete-recovery-control-formal-first50-v1.json. No timeout/restart.
 
 CUDA complete three-probe archive gpu-complete-recovery-cuda-integration-v1.tar.gz:7827074 bytes SHA25675653fbd4266f5cbd0f543cb61ad2471a80a0dd9474a42759663ad0fb79ac0b4; anonymous download and51payload member checks passed. Release URL recorded in gpu-complete-recovery-cuda-integration-v1-download.json. These are execution proofs only; formal quality pending, goal remains active.
+
+
+### 2026-11-13 — Native output-to-PCM quality gate
+
+Implemented experiments/synthetic_output_quality_v1.py with policy document. The gate verifies raw/WAV hashes, native float32 mono finite/nonclipping output, full integer-ratio resampling length and every transported sample within PCM16 quantization tolerance, PCM format/nonzero/duration/RMS/saturation, immutable sample ledger and untrimmed synthetic output reference. No gain/cropping repair or score-based regeneration. Whole saved output integrity does not prove semantic/phonetic completeness or hidden TTS decoder behavior.
+
+Actual audit on30 consumed historicalSLR83 preserved raw outputs:30pass; model/config/source/generator hashes, original runtime versions, planned text/phones/token mapping and unavailable duration records additionally authenticated. No new synthesis/scoring/data filtering/role changes. Six adversarial unit tests passed, including crop with adjusted ledger, gain change, silence/clipping, NaN and hash replacement. Runtime versions/commands/code+result hashes preserved in4090-saved-synthetic-output-quality-execution-v1.json. This closes an implementation gap; new-source role reservation, augmentation tails/background protocol and independent acceptance remain incomplete.
+
+Original formal control PID719837 verified live at05:30, last observed step1866; original session18719 remains the sequence handle. Recovered waits. No execution pins or training files changed this turn, no restart, no checkpoint-quality claim.
