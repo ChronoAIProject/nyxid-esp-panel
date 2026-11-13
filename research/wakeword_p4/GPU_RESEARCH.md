@@ -7464,3 +7464,16 @@ report, failed hash/admission/push, existing lock/log/output or failed first arm
 stops the chain. No heldout evaluation/promotion. Formal runner additionally
 asserts actual optimizer iterations120000. This is authorized continuation of
 the planned two-arm experiment, not observation-timeout recovery.
+
+### Complete schedules admitted; original formal Willow running
+
+Original schedule session93658 exit0. Both120100records complete, ordered,
+first50CPU exact. Willow schedule SHAbe51ed190093957d8b903416226bf44e38c4808c1b38064cb820f3d62b83ff4d;
+Nyx SHAcae08413d0c0220f64671b846ff1fc303991e3e0199af7f168bbde02c1325545.
+Original continuation session66983/PID1044979 admitted3369bound files,
+published exact formal lock647e2db before launch. Original WillowPID1047649
+confirmed live500/120000,loss finite. Exact shared225H5/classifier verified,
+BN frozen, actual initial snapshot+inventory saved. BatchGuard active on every
+actual x/y/weight input; no mismatch observed. Nyx waits sequentially on this
+same continuation, not yet launched. No restart/heldout access/promotion.
+Formal completion/INT8 quality/recognition still unproven; v30 remains frozen.
