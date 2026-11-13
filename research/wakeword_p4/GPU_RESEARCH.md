@@ -5877,3 +5877,21 @@ zero-event one-sided95upper2.4864743174/h, not a pass. No INT8/new-development,
 acceptance or cross-arm conclusion. All284formal hashes independently unchanged;
 original sequence continues/recovered waits. Mike/test6/7 remain unconsumed,
 v30 frozen, objective incomplete. Coordination remains in Issue13.
+
+### Original control120000 and sequential recovered launch (2026-11-13)
+
+Previous turn was verified wait. Original PID719837 reached120000 and exited;
+original sequence PID719834 automatically started recovered shell817143 and
+trainer817144. No restart or alternate experiment. Original120000 line SHA
+`8fc3f2ef396cfd81b67b5dfb77c1e97b03652b57a4719dfff3518b341a78b13b`.
+0training-float eligible points; fallback.994 recall .5194444444,
+macro .53828125, hard-negative false rate .0284090909,
+max-source false rate .034375. Ambient0events/1.2048112674h gives nominal
+zero-event one-sided95upper2.4864743174/h, not a pass. Control training.json
+exists; export/input-audit/postprocessors await recovered120000 in original
+sequence. Collector receipt formal_run_complete=false remains deliberately
+conservative: matched experiment is unfinished. All284formal hashes unchanged.
+Recovered startup records seed726 and original initialization/frozenBN hashes;
+actual full matched input equality is not yet proved. No INT8/new-development,
+acceptance or cross-arm conclusion. Mike/test6/7 unconsumed; v30 frozen;
+objective incomplete. Coordination remains in Issue13.
