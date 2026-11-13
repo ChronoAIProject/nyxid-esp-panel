@@ -7477,3 +7477,18 @@ BN frozen, actual initial snapshot+inventory saved. BatchGuard active on every
 actual x/y/weight input; no mismatch observed. Nyx waits sequentially on this
 same continuation, not yet launched. No restart/heldout access/promotion.
 Formal completion/INT8 quality/recognition still unproven; v30 remains frozen.
+
+### Mac tail helper imported verbatim; formal Willow continues
+
+Imported4new files verbatim from Mac93e886afd8e51c169dab15d5e52f84f08b9d5254,
+without modifying historical detector/trainer or current bound formal source.
+Linux constructed integration review18cases/5invalid rejections passes; full
+output byte-identical to original Mac report. Scope remains fake interpreter/
+constructed features, not model accuracy. Mac is preparing raw collector;
+do not duplicate it. Original Willow1047649 verifiedlive5000/120000,finite
+loggedloss and fixed-final log, no guard mismatch/restart.
+Mac341ffbf bounded9122metadata files found no original Jenny use record;
+not universal nonuse or speaker/pretraining independence certification.
+Issue6866387732 target-card interpretation differs from this thread's explicit
+active objective requiring unconsumed development threshold selection. Retain
+current user text; olddev can remain labeled regression, no silent goal rewrite.
