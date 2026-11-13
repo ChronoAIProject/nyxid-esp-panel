@@ -6856,3 +6856,17 @@ Original full curve preserved byte-for-byte, SHA
 No selection rescue/checkpoint change/acceptance unlock; v30 retained. Original
 sequence automatically advanced to Nyx stream collection, no restart. Official
 reference comparison remains pending; cannot infer official parity from this.
+
+### Original Nyx development failure; observation-v2 runtime built
+
+Nyx original full360+12stream and registered calibration completed normally:
+138points0eligible,selectednull,maximum complete-phrase macro1/36. Original full
+curve preserved; no acceptance/checkpoint/threshold rescue. Original v30 arm
+started automatically, no restart. Both paired candidates fail development.
+
+Independent official observation-v2 build original session61689 exit0, IDF5.5.4/
+SR2.6.1 same originalmodel partition; separate4MiB flash assembled from exact
+flasher offset files. New consumed runner/auditor transports all ordered returns,
+getter after prime and rawbyte trace; full156consumed-only recertification plan
+binds actualruntime/firmware/source/PCM before execution. No fresh official
+scoring or equivalence claim yet; original v1 remains unchanged.
