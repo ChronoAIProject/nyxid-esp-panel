@@ -7492,3 +7492,15 @@ not universal nonuse or speaker/pretraining independence certification.
 Issue6866387732 target-card interpretation differs from this thread's explicit
 active objective requiring unconsumed development threshold selection. Retain
 current user text; olddev can remain labeled regression, no silent goal rewrite.
+
+### Author-direct Jenny static duration feasibility
+
+Existing authenticated original ONNX inspected without inference/modification.
+Unique /Ceil_output_0 follows masked Exp(log-duration)*length-scale and feeds
+ReduceSum; decoder ConvTranspose strides8,8,4 imply proposed256samples per
+allocation frame. Two Random nodes recorded; seed fields alone cannot certify
+control. Static graph facts are not token/duration/audio identity or acoustic
+truth. Future separate observer-export/generation plan must authenticate
+actual saved outputs and full resample/prefix geometry before source admission.
+No source role reservation/generation/scoring. Script/result committed;
+original formal Willow1047649 continues10000/120000, no guard mismatch.
