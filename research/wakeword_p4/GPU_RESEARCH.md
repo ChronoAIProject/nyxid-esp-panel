@@ -5799,3 +5799,16 @@ acceptance or cross-arm conclusion. All284formal hashes independently unchanged;
 original sequence continues/recovered waits, no restart or candidate substitution.
 Mike/test6/7 remain unconsumed, v30 frozen, objective incomplete.
 GPU/Mac communication stays in Issue13 per user instruction.
+
+### Original control90000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. Original PID719837 verified live through
+89000→89500→90000, elapsed4:13:51. Original90000 line SHA
+`ccf47ae22d0e3ceba59b9ce9f7bdbd400f0a020ecbbfa7a282fca831286d9aaa`.
+0training-float eligible points; fallback.994 recall .4657407407,
+macro .4734375, hard-negative false rate .0235795455,
+max-source false rate .0302083333. Ambient0events/1.2048112674h gives nominal
+zero-event one-sided95upper2.4864743174/h, not a pass. No INT8/new-development,
+acceptance or cross-arm conclusion. All284formal hashes independently unchanged;
+original sequence continues/recovered waits. Mike/test6/7 remain unconsumed,
+v30 frozen, objective incomplete. Coordination remains in Issue13.
