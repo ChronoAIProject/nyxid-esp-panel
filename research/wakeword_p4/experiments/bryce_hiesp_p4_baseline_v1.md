@@ -73,6 +73,10 @@ listener were restored and independently rechecked through fresh HTTP status.
 | Own wake phrase plus command | 15/18 | 3/18 |
 | Norman own wake phrase plus command | 9/9 | 0/9 |
 
+The 54 shared negative WAVs say Hey Nick/Next/Mix: they are Nyx-specific near
+words, not a symmetric set of Hi ESP near words. Their exact-PCM comparison
+does not establish equal confuser difficulty or a continuous-background FAR.
+
 The native detector used 21735 calls, mean 2129.8427 microseconds per 512-sample
 block, maximum 2944 microseconds. These are standalone inference timings, not
 full-app CPU utilization. Descriptive generator-reference latency medians are
