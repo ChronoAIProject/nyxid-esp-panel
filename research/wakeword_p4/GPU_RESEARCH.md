@@ -6705,3 +6705,17 @@ Formal lock draft successfully validated all actualprerequisites, then kept unpu
 ### 2026-11-13 — actual v2 paired formal training live
 
 Pushed78f518c exactformal lock SHA b7c5950e4fa95a813e33ad4103e216be16e720e3347c372103262215fb01aa9e before anyformal updates. Originalsequence session33179 starts Willow thenNyx,20000each/fixedfinal, no retries. WillowPID935181/starttime19008185 freshlylive, loggedstep6500; same-instance formalinitialinventory exactlymatches certifiedsmoke, and bothsmokeinitials alreadyequal. Independentbounded audit compared first6500actualbatchinputs and208000positive original/effective draw records with frozen schedules exactly. Preserved live-startreceipt; not a fullrun certificate. No code/lock/data change during run; lowtrainingloss is not freshrecognition/FAR pass. Nyxsequentialwait, v30unchanged, syntheticdev/acceptance ungenerated.
+
+### Paired v2 Willow fixed-final completion
+
+Original sequence completed Willow at exactly20000 updates (274.8s); Nyx then
+started automatically in the same sequence, no retry/restart. Independent saved
+trace audit verified all20100 actual batch hashes against the frozen schedule
+and all643200 positive draw records by exact full-file SHA and record count.
+Actual initial inventory equals the same-instance smoke inventory; BN initial
+and selected statistics/affine hashes are unchanged. Original54440B Willow export
+SHA256 `88bc7872f0b0f85fc307ca1968d980c03144ac7765c3f7a551f76126877f02ec`.
+Receipt: `results/4090-hey-v2-willow-formal-completion-v1.json`; reproducible
+metadata auditor: `experiments/audit_hey_willow_formal_completion_v1.py`.
+Final-model runtime/quantization checks remain pending. No development scoring,
+recognition/FAR pass, acceptance opening or promotion; v30 remains frozen.
