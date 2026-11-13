@@ -6241,3 +6241,16 @@ Preserved original recovered105000 record SHA256
 hardnegative .0465909091, maxsource .0541666667. Background0/1.2048112674h,
 zero-event one-sided95 upper2.4864743174/h: not pass. All284formal pins verified
 unchanged, PID817144 live. No INT8 candidate promotion or acceptance conclusion.
+
+### CPU actual base batch execution (2026-11-13)
+
+Added audit_hey_training_batch_v1.py. Extracts unchanged scale/sequence/sample/batch
+AST directly from current train_stream.py, without TensorFlow/model updates.
+Executed on existing features-gpu-ami-extra-v1 training rows/ambient only:
+128x150x40 finite scaled inputs,32positive/96negative labels,1/20weights and
+same-seed byte-identical repeat passed. Receipt4090-hey-base-training-batch-audit-v1.json
+binds trainer source and batch bytes. Optional --target invokes provenance gate.
+This is NOT new Willow/Nyx pack certification: target_admission=null, no new
+TTS or pack exists, no full schedule/launcher/optimizer/model-gradient audit.
+Actual target adapter and new-pack CPU execution remain required. No old
+validation/testing audio or final material scored, no historical pack relabeled.
