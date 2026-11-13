@@ -1,0 +1,120 @@
+{
+  "scope": "Original author ONNX bytes downloaded for prospective source preparation only. No inference, synthesis, role reservation or wakeword scoring.",
+  "models": [
+    {
+      "name": "kristin",
+      "url": "https://sfo3.digitaloceanspaces.com/bkmdls/kristin.onnx",
+      "path": ".local/wakeword/source-review-author-models-v1/kristin.onnx",
+      "size_bytes": 63531379,
+      "sha256": "5849957f929cbf720c258f8458692d6103fff2f0e3d3b19c8259474bb06a18d4",
+      "config_path": "research/wakeword_p4/results/4090-author-kristin-original-config-v1.json",
+      "config_sha256": "d34362d5b723e2031d6b0ebb5d7c1254cd59d11691e2979147fd518cba5663b2",
+      "onnx_checker_passed": true,
+      "inputs": [
+        {
+          "name": "input",
+          "element_type": 7,
+          "shape": [
+            "batch_size",
+            "phonemes"
+          ]
+        },
+        {
+          "name": "input_lengths",
+          "element_type": 7,
+          "shape": [
+            "batch_size"
+          ]
+        },
+        {
+          "name": "scales",
+          "element_type": 1,
+          "shape": [
+            3
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "element_type": 1,
+          "shape": [
+            "batch_size",
+            "time",
+            1,
+            "Unsqueezeoutput_dim_3"
+          ]
+        }
+      ],
+      "opset": [
+        {
+          "domain": "",
+          "version": 15
+        }
+      ],
+      "random_operator_types": [
+        "RandomNormalLike"
+      ]
+    },
+    {
+      "name": "norman",
+      "url": "https://sfo3.digitaloceanspaces.com/bkmdls/norman.onnx",
+      "path": ".local/wakeword/source-review-author-models-v1/norman.onnx",
+      "size_bytes": 63531379,
+      "sha256": "b9739443232a80a59c7d18810dd856899bf16a7964725f5ab81ea49b1351cb71",
+      "config_path": "research/wakeword_p4/results/4090-author-norman-original-config-v1.json",
+      "config_sha256": "cbb2cac181ae3a1fd09f7a8835b57c545f79df06a3db6212bd643202085afe5c",
+      "onnx_checker_passed": true,
+      "inputs": [
+        {
+          "name": "input",
+          "element_type": 7,
+          "shape": [
+            "batch_size",
+            "phonemes"
+          ]
+        },
+        {
+          "name": "input_lengths",
+          "element_type": 7,
+          "shape": [
+            "batch_size"
+          ]
+        },
+        {
+          "name": "scales",
+          "element_type": 1,
+          "shape": [
+            3
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "element_type": 1,
+          "shape": [
+            "batch_size",
+            "time",
+            1,
+            "Unsqueezeoutput_dim_3"
+          ]
+        }
+      ],
+      "opset": [
+        {
+          "domain": "",
+          "version": 15
+        }
+      ],
+      "random_operator_types": [
+        "RandomNormalLike"
+      ]
+    }
+  ],
+  "physical_speaker_independence_proven": false,
+  "limits": "Author scratch-training claims do not resolve LibriVox reader identity or unknown Kokoro/Qwen pretraining exposure. Existing config lineage review remains applicable.",
+  "candidate_scored": false,
+  "final_data_used": false,
+  "inspection": "Static ONNX schema/graph only; no inference or audio generation."
+}

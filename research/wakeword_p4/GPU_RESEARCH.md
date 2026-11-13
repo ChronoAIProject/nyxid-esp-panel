@@ -5300,3 +5300,7 @@ Read all first40000 original newline-complete loss records: exact consecutive st
 ### Per_draw formal45000 float checkpoint rejected
 
 Original complete record3956B SHA4bf385a557f9b3641fc6620d3435dcfa2a508f8cd2f91e8612a250bb094ff3f7 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.54140625/max-source false.0229166667; background0/1.2048112674h, one-sided95 upper2.486474317/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only, no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Prospective author Kristin/Norman original model preparation
+
+Downloaded original author ONNX exports (each63531379B), pinned model/config hashes and statically checked ONNX schemas; both pass checker. No inference/audio, source reservation or wakeword scoring. Inventory preserves actual model inputs/outputs and stochastic graph operators. Physical identity/unknown pretraining limits from original config review remain unresolved; downloaded bytes do not establish independence. This prepares reproducible prospective generation without changing running training or consuming new development/final data.
