@@ -7257,3 +7257,29 @@ Fixed final120000/arm, fresh development threshold selection only. New head
 initialization, CPU batch, streaming/export and recipe admission still required;
 this is not trained-model performance/promotion. Original failed150 geometry
 is retained and explained by independently recorded longer source durations.
+
+
+### All native sources qualified, exact context225 snapshot, rendering live
+
+Original Qwen360/360 complete and independent audit passed2160 original files:
+72 positives/arm,216 shared common negatives, actual prompts/codecs and full
+saved resampling verified. No ASR selection/retry/trim, missing phoneme/aligned
+durations explicitly null. Source mechanical qualification is not phonetic truth.
+
+aa2e9d2 initializer plan pushed before CPU execution. Same-instance context225
+snapshot saved SHAe47f196aae631d7c8dee0564bd9476fe16c04312a04a1b3fd5687a183899f155,
+24301params. Conv/BN exactly copied from original; BN frozen, new seed726 head
+valueSHA55e5ec937a85e8de179483566553ef5d780e5c51a38448597a4beaf564f57a63.
+Every variable inventory saved; H5 reload reproduces all values. Zero inference/
+optimizer updates. Both arms must load exact same original snapshot.
+
+cc2a43a pushed full rendering lock before original session87705/PID1019788/
+start19600806:35652 original sources→106956 conditions. All source reports/
+independent audits/metadata SHA bound. Quiet/25dB/15dB+full960sample RIR, paired
+noise seeds, complete serialized source retained; no rate changes/trim. Lead
+48000 instead of pilot28800 explicitly gives context225 history, tail16000.
+Noisy mixing's prescribed attenuation recorded separately, original native
+files unchanged. Original live observed34800/106956. a021d02 auditor queued
+as session45094/PID1020952, exact originalPID/start bound; sparse direct RIR
+independent replay versus FFT, full source/tail/gain/PCM/geometry, no restart.
+Official original958504 remains live; no model training or promotion yet.
