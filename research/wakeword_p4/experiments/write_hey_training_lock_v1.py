@@ -34,6 +34,18 @@ def write(args):
     preparation=json.loads((FEATURES/'preparation.json').read_text())
     assert preparation['plan_sha256']==sha(plan) and preparation['rows']==7200
     files={plan,FEATURES/'preparation.json',args.initial_weights,Path(__file__)}
+    history_path=BASE/'results/4090-hey-training-pcm-history-v1.json'
+    history=json.loads(history_path.read_text())
+    assert history['no_unexpected_exact_hash_matches'] and not history['matches']
+    assert history['authenticated_waveforms']==9600
+    assert len(history['known_prior16_reused_engine_tensors'])==16
+    assert history['native_records_sha256']==sha(Path('.local/wakeword/hey-paired-training-native-v2/records.jsonl'))
+    assert history['render_records_sha256']==sha(Path('.local/wakeword/hey-paired-training-rendered-v2/records.jsonl'))
+    assert history['auditor_sha256']==sha(EXPERIMENTS/'audit_hey_training_pcm_history_v1.py')
+    for prefix in ('inventory','waveform_inventory'):
+        assert sha(history[prefix+'_path'])==history[prefix+'_sha256']
+        files.add(Path(history[prefix+'_path']))
+    files.update((history_path,EXPERIMENTS/'audit_hey_training_pcm_history_v1.py'))
     files.update((BASE/'training').glob('*.py'))
     files.update((args.upstream/'microwakeword').rglob('*.py'))
     for name in ('train_hey_target_adapter_v1.py','validate_hey_target_pack_v1.py',
