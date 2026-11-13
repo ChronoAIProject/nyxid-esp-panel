@@ -7428,3 +7428,15 @@ pairing, exact crop endpoints and ambient source identity. Different utterance
 lengths mean no claim of equal absolute crop boundaries or PCM. No model
 updates/heldout access. Original schedule1034876 remains live, observed33000
 Willow; do not alter bound source or restart on observation gaps.
+
+### Formal lock builder and fail-closed checks
+
+Added lock_hey_broad_formal_v1.py: binds full original schedules, code including
+upstream/transitive helpers,225snapshot/inventory,all actual ambient arrays,
+feature labels/provenance, original smoke hashes and fullwave saved arrays,
+package versions. Checks all120100 index/phase rows per arm. Does not launch.
+Compile passes. Precheck explicitly refused missing completed schedule report
+as expected; no lock/training fabricated from partial data. Original1034876
+verifiedlive51000Willow. Existing actual BatchGuard exercised with a complete
+small2train+1PTQ sequence: accepts correct sequence; one-value x corruption
+rejected before use. This tests enforcement behavior, not formal120k execution.
