@@ -6792,3 +6792,22 @@ Separate replay builder verifies all mechanical audits again, joins per-source
 token references, and retains both prefix and full command-container endpoints
 plus full RIR support. It requires completed clean history result and complete
 120token receipt; output remains explicitly scoring_authorized=false.
+
+### Development history/replay admission complete; metric conventions registered
+
+Original history session43556 exited0:480waveforms/1200hashes reauthenticated,
+2145Git metadata objects+4999local metadata files,0unexpected exact matches.
+Evidence is bounded exact-hash history only, not physical/pretraining/subclip
+independence. Replay builder ran successfully,360records with complete source,
+PCM and timing agreement. Manifest SHA
+2294fe10ba8a7a72174083e4308a3f055b6c14f4f7dc4ba8b59807c229526bc0.
+No old/final audio decoded and no wake model invoked.
+
+Before development scores, supplemental scoring contract explicitly defines
+full-phrase recall as event at/after generated prefix boundary; any-after-source
+recall is diagnostic only. RIR-prefix and command-container offsets remain
+separate; pre-source early gate unchanged. This is deliberately more specific
+than the pilot's undefined full-phrase timing convention, not a post-score
+metric choice. Original138grid/macro.8/bare.75/command.75/zero common+cross+
+pre-source/FARupper.5 and ranking remain. No inference authorization yet;
+scorer/calibrator/runtime/background execution pins are still required.
