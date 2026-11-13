@@ -6571,3 +6571,10 @@ Mac Issue13 latest 6862148056 reports native Willow 13x12 historical PCM witness
 Session14228 terminated exit0. Verified all7200 rendered requested/recorded/passed plus records SHA; preserved exact summary in 4090-hey-paired-render-completion-v2.json. Token extraction session61776 freshly polled live, latest101 records; no restart, no new waveform. Feature plan/build still waits full2400 matching token allocations.
 
 Added write_hey_training_lock_v1.py to bind both actual training-only packs, original initializer SHA, all trainer/upstream Python, training ambient arrays, complete feature preparation chain, CPU reports, full20100 schedules/receipts and numerical dependency versions. Requires pushed feature plan/material commit and fresh outputs. Compilation passed; not executed against missing actual packs/receipts, no lock/training or gradient certification claimed. Issue6862381534 already synchronizes actual counts and Mac long-stream requirement. Goal remains active.
+
+
+### 2026-11-13 — official full-background input contract
+
+Authenticated all12 prepared development WAV bytes and decoded little-endian PCM SHA, streaming CRC32, exact512-hop calls and final-only padding. Saved 4090-hey-official-background-inputs-v1.json with reproducible audit tool. Three sources exceed legacy one-hour limit; maximum68499840 samples. Requires separate63zero prime calls and a single uninterrupted engine per complete call. No detector invoked; scoring_authorized=false retained. This is Linux input accounting, not QEMU/P4 runtime/getter or same-Mac-PCM certification; no media redistribution.
+
+Inspected current canonical QEMU runner: model remains hardcoded HiESP, so not used as Willow reference. Historical runner untouched. Current partial timing165 records covers495 target render variants with0 unsupported prefixes; bounded diagnostic only, not full admission. Original timing PID905640 confirmed Rl after3:35, latest181 records; continue same run without restart.
