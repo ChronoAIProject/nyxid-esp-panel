@@ -7360,3 +7360,17 @@ Prefix source rewrite matches CPU audit. Actual batch return requires guard;
 no permissive launch entry exists yet. This is source construction only, not
 actual initial-load/GPU/export evidence. Next must supply strict smoke/formal
 execution locks and hooks and compare actual sampler tensors before training.
+
+### Actual broad225 paired GPU smokes
+
+2d7b566 smoke lock pushed before original Willow38162/Nyx82669 sessions.
+Both exit0,2actual GPU updates each, original export completes/allocates
+int8[1,3,40] to uint8[1,1]. All loaded initialization variables verified
+against actual shared snapshot inventory; shared classifier SHA55e5ec93...
+unchanged at load. Each102total batch calls, first50 actual GPU-program
+batch tensors exactly match independent CPU audit digest. Finite logged loss,
+frozenBN initial/selected full snapshots exact. Original logs/training.json/
+H5/model/inventory retained; SHA receipts in4090-hey-broad-gpu-smokes-v1.json.
+Not a trained recognition candidate, full-waveform INT8 admission or120k
+formal schedule. Next complete matched formal schedule and actual-stream
+checks before formal run. v30 untouched, heldout data unopened by smokes.

@@ -1,0 +1,85 @@
+{
+  "schema": "hey-broad-context225-gpu-smokes-v1",
+  "original_sessions": {
+    "hey_willow": 38162,
+    "hey_nyx": 82669
+  },
+  "both_exit0": true,
+  "arms": [
+    {
+      "target": "hey_willow",
+      "steps": 2,
+      "batches": {
+        "batches": 102,
+        "first50_cpu_tensor_match": true,
+        "first50_sha256": "bc8ad5a1607d4150650ca5db75a9117e3ff3cc5a8d028618c989f6864182f81d"
+      },
+      "model_sha256": "c68e5e859ea87f73f72bdbc8fc7f29c4d2e50cbc7c3bdee548c958d7f2607629",
+      "input_shape": [
+        1,
+        3,
+        40
+      ],
+      "output_shape": [
+        1,
+        1
+      ],
+      "scope": "Two GPU updates/export only; no recognition or formal candidate.",
+      "files": {
+        "training.json": "69e20970f8c1fcbd85bc9e1a9a1109541581161d9ca5c6bf9840adc0d0e8da82",
+        "smoke-result.json": "5c835f2f8b23282e3e0786a809a9b83accb8d31963ca5bbf41c0fbf888468b77",
+        "loaded-initial-inventory.json": "b928530bb2776a12babe6495a72a4af00063e899d84022571279bdb10872ed32",
+        "hey_nyx.tflite": "c68e5e859ea87f73f72bdbc8fc7f29c4d2e50cbc7c3bdee548c958d7f2607629",
+        "best.weights.h5": "9e0ed2ef88ea758db4da1f94222356beb833418f34149529af06ef8bfb4abc44"
+      },
+      "finite_logged_loss": true,
+      "frozen_bn_exact": true,
+      "history": [
+        {
+          "step": 2,
+          "loss": 10.294112205505371,
+          "checkpoint_policy": "fixed-final",
+          "seconds": 1.9
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "steps": 2,
+      "batches": {
+        "batches": 102,
+        "first50_cpu_tensor_match": true,
+        "first50_sha256": "a9bf839daccd8659e56d3468a7b30dfbf7da2c2db2a732c0bb9965b4dc1bf891"
+      },
+      "model_sha256": "12ce7ab5a4f73a3ac450a8c1d8384b1737d2cd1e9b37c1f7b83890a87750714f",
+      "input_shape": [
+        1,
+        3,
+        40
+      ],
+      "output_shape": [
+        1,
+        1
+      ],
+      "scope": "Two GPU updates/export only; no recognition or formal candidate.",
+      "files": {
+        "training.json": "77a8a213d297720d973770ee133bc171b97a95b2ecb7bd312e127b5063c63d04",
+        "smoke-result.json": "8cf7d01c6c05aa744a2927059a887c510a28b936b4744d1497bd4a63d5bf6706",
+        "loaded-initial-inventory.json": "b928530bb2776a12babe6495a72a4af00063e899d84022571279bdb10872ed32",
+        "hey_nyx.tflite": "12ce7ab5a4f73a3ac450a8c1d8384b1737d2cd1e9b37c1f7b83890a87750714f",
+        "best.weights.h5": "8f975948b3d26a03c274c5109f43f718fc04f0b89929d02dddeaa0942ab17407"
+      },
+      "finite_logged_loss": true,
+      "frozen_bn_exact": true,
+      "history": [
+        {
+          "step": 2,
+          "loss": 10.10905647277832,
+          "checkpoint_policy": "fixed-final",
+          "seconds": 1.8
+        }
+      ]
+    }
+  ],
+  "limits": "Two updates per arm only; actual initialization and first50 CPU batches exact, original INT8 export allocated. Full waveform trained INT8, formal120k matched schedule and recognition gates remain unverified."
+}
