@@ -5238,3 +5238,7 @@ Original newline-complete record preserved byte-identically (4029B SHAf058ee64cc
 ### Future source physical-speaker identity leads
 
 Original LibriSpeech SPEAKERS.TXT and Piper source config authenticated and cross-referenced. Kristin LeMoine14 and Kristin Hughes28 appear in the Piper source mapping; author Kristin source card lacks surname/utterance manifest, so a same-first-name match is only an overlap lead, not identity evidence. Other Jenny/Norman/Cori name matches retained with IDs/subsets. No synthesis, inference, reservation or existing final-set access. Continue explicit lineage review without treating absent names or corpus labels as independence proof.
+
+### Read-only checkpoint collection sidecar
+
+Added standalone unpinned collect_per_draw_noise_checkpoints_v1.py to preserve newline-complete original fixed/per_draw validation records with SHA256/byte receipts as they arrive. Existing originals/receipts are authenticated and left untouched. Eleven-point training eligibility only; zero-event upper field null for nonzero counts; never claims complete training or promotion. Checked original5000 record eligibility3, exact bytes, partial-line exclusion, idempotence and invalid-step rejection in a temporary sandbox. One-shot verified existing records through105000. Started one read-only30s watcher (log .local/wakeword/per-draw-noise-checkpoint-collector-v1.log); no trainer restart, configuration/input/pinned-file change or automatic model selection. Formal original sequence remains authoritative.
