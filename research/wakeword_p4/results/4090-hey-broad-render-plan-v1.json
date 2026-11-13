@@ -1,0 +1,56 @@
+{
+  "schema": "hey-broad-render-plan-v1",
+  "source_sha256": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+  "files": {
+    "research/wakeword_p4/results/4090-hey-broad-piper-generation-v1.json": "18fa8f1e5ccd8dc55bf0408beb02310da21c032ab56621815b4ca550c60ff79d",
+    "research/wakeword_p4/results/4090-hey-broad-piper-independent-audit-v1.json": "e7f4b43fad3d90d68f31f2738f371d7c86c29e62f09f0a1e4759d8d293b5d65f",
+    ".local/wakeword/hey-broad-piper-native-v1/records.jsonl": "aa123bef2ce736bf6e17b80514021b7bec505e6c9fe9413d56c424335a810cd8",
+    "research/wakeword_p4/results/4090-hey-broad-kokoro-generation-v1.json": "c6affb64abed12d6b779f3ce1c8863afa6e7d8345d03617c8502367a216030a1",
+    "research/wakeword_p4/results/4090-hey-broad-kokoro-independent-audit-v1.json": "c416e6f729650c0c3af9ed2216ee8c034f363f5ad3d2fa7ab2f6b5d3396aef2c",
+    ".local/wakeword/hey-broad-kokoro-native-v1/records.jsonl": "310630575334b734659e147ef3efd29146e366a2949f0471a6a1834343e04811",
+    "research/wakeword_p4/results/4090-hey-broad-qwen-generation-v1.json": "956808f30977a39da855704f73158c571b0d32e4a8fae3bc59224a3128606151",
+    "research/wakeword_p4/results/4090-hey-broad-qwen-independent-audit-v1.json": "be22fe8c3faaaf1a2450dc09f54ed109e2ac8379253b1f0a23d92f0cc71bdf29",
+    ".local/wakeword/hey-broad-qwen-native-v1/records.jsonl": "c7586ea52d8c7b3ee8fece15092cc030396a2261fd837f9fa5bfcc06678246f5",
+    "research/wakeword_p4/results/4090-hey-broad-common-piper-generation-v1.json": "956e1b5d5336621b0e04cd0c8ce40a1d0295ca20006b88476cd2c9b9b6f1b777",
+    "research/wakeword_p4/results/4090-hey-broad-common-piper-independent-audit-v1.json": "b846651d0ee630ee3a87dadcf6fe28c21959423d7b8b6d19392ea83cd61469ed",
+    ".local/wakeword/hey-broad-common-piper-native-v1/records.jsonl": "a42bf48b19a1caa931b0c34c740bb26ce08f73be4dc310059a6a9cb8705f9fa4",
+    "research/wakeword_p4/results/4090-hey-broad-common-kokoro-generation-v1.json": "a92dc3a8e5a725ea762f4813c4fdb46db9b21fdb39609a3c0174ef2d6fd3fa76",
+    "research/wakeword_p4/results/4090-hey-broad-common-kokoro-independent-audit-v1.json": "e28d3b46d1e64d9201bf1569c51db0f4fec1c3582be1367bc3d8773115d6c000",
+    ".local/wakeword/hey-broad-common-kokoro-native-v1/records.jsonl": "03b1d54a1120b1a71a53d07a930ab48f8252d7b3cb378f6fa0028e36f90d3ebc"
+  },
+  "context_decision_sha256": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091",
+  "versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0"
+  },
+  "schedule": {
+    "path": ".local/wakeword/hey-broad-render-schedule-v1.jsonl",
+    "sha256": "046deb68c7f45452e2c3b499f35ab9ef7b88311df09f42e25ddeee973032ff08",
+    "sources": 35652,
+    "rendered": 106956
+  },
+  "lead_samples": 48000,
+  "tail_samples": 16000,
+  "conditions": [
+    "quiet",
+    "25dB_noise",
+    "15dB_noise_full_RIR"
+  ],
+  "rir_delays": [
+    0,
+    160,
+    480,
+    960
+  ],
+  "rir_amplitudes": [
+    1.0,
+    0.25,
+    -0.12,
+    0.06
+  ],
+  "policy": "Full original serialized PCM16 source, no speed change/trim; full RIR tail, Gaussian noise from fixed seeds at dry-source RMS reference, original min(1,.95/peak) attenuation after noisy mixing only; preserve all rendered failures. Paired positives share noise seed per variant, common negatives shared across arms.",
+  "lead_change": "48000 samples leaves at least context225 before source onset; explicit change versus pilot28800, not a word/voice-only isolated intervention.",
+  "boundary": "Original source sample0 through saved generated wake-prefix end + full RIR tail; Qwen full bare clip. No token-start relaxation or invented phonetic boundary.",
+  "stage_policy": "Training-only material rendering, no model scoring or training; heldout untouched."
+}
