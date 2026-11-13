@@ -1,0 +1,88 @@
+{
+  "schema": "hey-context225-stream-array-audit-v3",
+  "script_sha256": "30630a6c5f7ac94306c9cd31ae25b45cbaf004a0b3bde92e84f2e62a6a62e0c6",
+  "report_sha256": "cb654a3982f1ef4f0920b8215e1341fa7c04a2159b402d77d7d901d9951f6f4d",
+  "cases": [
+    {
+      "request": {
+        "engine": "piper",
+        "order": 0,
+        "target": "hey_willow",
+        "path": ".local/wakeword/hey-broad-piper-native-v1/00000.wav",
+        "sha256": "29de263cb8aecaa0d10e498fcf64d0927877eab0792aeae21b167b165672d1a8"
+      },
+      "stream_steps": 149,
+      "phase_comparisons": 75,
+      "max_phase_error": 2.980232238769531e-07,
+      "max_nominal_error": 0.04637330770492554
+    },
+    {
+      "request": {
+        "engine": "piper",
+        "order": 1,
+        "target": "hey_nyx",
+        "path": ".local/wakeword/piper-balanced-training-full-v1/437-0.9-hey_nyx.wav",
+        "sha256": "137040c1a55647bb945732ef678cb25a89dfd9faed23e28cd5768863069728d3"
+      },
+      "stream_steps": 152,
+      "phase_comparisons": 78,
+      "max_phase_error": 2.086162567138672e-07,
+      "max_nominal_error": 0.0366969108581543
+    },
+    {
+      "request": {
+        "engine": "kokoro",
+        "order": 0,
+        "target": "hey_willow",
+        "path": ".local/wakeword/hey-broad-kokoro-native-v1/0000.wav",
+        "sha256": "cfce51bee7d7f82d7b1dd29f4ea936f43d0172346e622899e980ff09279c0eb4"
+      },
+      "stream_steps": 200,
+      "phase_comparisons": 126,
+      "max_phase_error": 2.384185791015625e-07,
+      "max_nominal_error": 0.04360291361808777
+    },
+    {
+      "request": {
+        "engine": "kokoro",
+        "order": 1,
+        "target": "hey_nyx",
+        "path": ".local/wakeword/hey-broad-kokoro-native-v1/0001.wav",
+        "sha256": "d475e24b755fe16c74564329f468ec5de222c189f89d65434ad78b40c8e749ce"
+      },
+      "stream_steps": 195,
+      "phase_comparisons": 121,
+      "max_phase_error": 2.384185791015625e-07,
+      "max_nominal_error": 0.038900554180145264
+    },
+    {
+      "request": {
+        "engine": "qwen",
+        "order": 0,
+        "target": "hey_willow",
+        "path": ".local/wakeword/hey-broad-qwen-native-v1/0000.wav",
+        "sha256": "b71d4b1e0a862440bf64d0e19bdf1cece1324b61a386f41fa8aa43c8e889b66d"
+      },
+      "stream_steps": 168,
+      "phase_comparisons": 94,
+      "max_phase_error": 2.384185791015625e-07,
+      "max_nominal_error": 0.06093406677246094
+    },
+    {
+      "request": {
+        "engine": "qwen",
+        "order": 1,
+        "target": "hey_nyx",
+        "path": ".local/wakeword/hey-broad-qwen-native-v1/0001.wav",
+        "sha256": "656ab2cce969e8a31e177260d6985fae3c0fe5367d15a058b4ab339530a965fe"
+      },
+      "stream_steps": 178,
+      "phase_comparisons": 104,
+      "max_phase_error": 2.980232238769531e-07,
+      "max_nominal_error": 0.048255980014801025
+    }
+  ],
+  "all_saved_trace_arithmetic_pass": true,
+  "timing_limit": "Analytical validconv phase alignment only; no physical latency/phonetic clock or INT8/trained model certification. Dummy zero is an unused trailing offline input for comparison, not a source waveform edit or proposed sampler change.",
+  "prior_failures_retained": true
+}

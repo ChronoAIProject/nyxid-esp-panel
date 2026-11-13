@@ -7283,3 +7283,29 @@ files unchanged. Original live observed34800/106956. a021d02 auditor queued
 as session45094/PID1020952, exact originalPID/start bound; sparse direct RIR
 independent replay versus FFT, full source/tail/gain/PCM/geometry, no restart.
 Official original958504 remains live; no model training or promotion yet.
+
+
+### Context225 actual float waveform stream admission and failures
+
+81b1374 original v1 probe session56640 failed exit1: converter mutates input
+model mode, so reusing it as offline reference raised missing states. Preserved
+original log SHA/tail/failure. v2 plan2835a76 used independent same-H5 offline
+instance; session52877 exit1 on nominal firstclip maxdelta.0463733077. No
+tolerance widening/weights/material change; both failures retained.
+
+65c3a23 v3 plan pushed before original session4904, exit0. Analytical valid
+firstconv kernel5/stride3 leaves one unused trailing input in nominal225;
+last224 real frames plus one unused zero offline input gives comparison at
+actual stream clock. All6 fulltrainingPCM (2targets×3engines) twice-reset exact,
+all post225-frame phase-aware outputs maxdelta2.980232238769531e-7 at unchanged
+1e-4 tolerance. Original nominal225 comparisons saved alongside; not hidden.
+Independent saved-array audit6/6 verifies full trace/clock arithmetic. Zero
+source-weight updates; input[1,3,40], output[1,1], six persistent states.
+This is initial CPU float numerical evidence only, not trained/INT8 or physical
+latency certification. Unused dummy input is diagnostic, not a waveform edit
+or silently adopted new training sampler/crop clock.
+
+Original full renderer session87705 exit0,106956/106956 process passes.
+Independent sparse-RIR replay1020952 remains actually live, observed45000/106956.
+No feature/training admission until final independent render result. Official
+original958504 remains live1108/9672, no partial recognition/FAR result claimed.
