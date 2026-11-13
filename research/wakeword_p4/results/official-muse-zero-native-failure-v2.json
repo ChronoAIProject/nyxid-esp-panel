@@ -1,0 +1,38 @@
+{
+  "schema": "official-muse-zero-native-failure-v2",
+  "source_commit": "0ad8f95",
+  "original_session": 2587,
+  "terminal_exit_code": 1,
+  "firmware_sha256": "3bfdeb86c084e833cc7ff0b81b50056fabc71fd6e4939cc4f835598c2292e889",
+  "protocol_sha256": "d5449bbfa77f2e2248d562a21614ef2ba59435608f2125387d77b4aaba15b3df",
+  "build_report_sha256": "74387b4c205479299db282aefc3eaf3dd4b9beebb4bd924ef63145afc6547318",
+  "private_report_sha256": "6857936d3aace8c17ef284767dc2884f05785c80b1d45f034eef636af7d0ef71",
+  "private_uart_sha256": "cd47059afa6761522e619bbedc14dfacdaa45b5a1108be82115142220944ae3d",
+  "diagnostic_lines": [
+    "MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v2\",\"engine\":\"wn10_himuse\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":430762,\"heap_before_load\":{\"internal_free\":564895,\"psram_free\":33551716,\"internal_largest\":385024,\"psram_largest\":33030144},\"heap_after_load\":{\"internal_free\":564655,\"psram_free\":33117536,\"internal_largest\":385024,\"psram_largest\":33030144}}",
+    "assert failed: block_trim_free tlsf_control_functions.h:548 (block_is_free(block) && \"block must be free\")",
+    "MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v2\",\"engine\":\"wn10_himuse\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":430762,\"heap_before_load\":{\"internal_free\":564895,\"psram_free\":33551716,\"internal_largest\":385024,\"psram_largest\":33030144},\"heap_after_load\":{\"internal_free\":564655,\"psram_free\":33117536,\"internal_largest\":385024,\"psram_largest\":33030144}}"
+  ],
+  "cases": [],
+  "observation": "Official P4-prepared two-member model reached READY; wn->create triggered a block_trim_free heap assertion, then MCU rebooted. The runner terminated on duplicate READY after reboot. Packing-file error is resolved, creation is not. This does not establish a model recognition defect or its root cause.",
+  "independent_restore": {
+    "observed_at_utc": "2026-11-13T21:25:47.730904+00:00",
+    "checks": {
+      "original_app": true,
+      "active_slot": true,
+      "same_service": true,
+      "same_agent": true,
+      "voice_idle": true,
+      "wake_word": true,
+      "wake_listening": true,
+      "serial_no_owner": true
+    },
+    "nyx_state": "connecting",
+    "readiness": "app-only",
+    "voice_connectivity_accepted": false
+  },
+  "audio_io_performed": false,
+  "recognition_accepted": false,
+  "acceptance_accessed": false,
+  "candidate_promoted": false
+}
