@@ -5222,3 +5222,7 @@ Original record preserved byte-identically (4117B SHAe155f94988bb4e3b6491bf8d8ab
 ### Fixed formal100000 float checkpoint rejected
 
 Original record preserved byte-identically (3978B SHA269789b6b98556e2d610dd92fea9f0d2e1e008dbdcdbfe679b969efc1aa42b13). Eleven-point training grid0eligible; fallback.994 macro.4848958333/max-source false.0239583333, ambient0/1.2048112674h (one-sided95 upper2.486474317/h). Fallback not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before per_draw starts. v30 frozen.
+
+### Mac original main-input dependency handoff
+
+Published gpu-mac-main-input-handoff-v1.tar.gz to the existing research Release in response to Issue13. Original FullSourceBatch training.npz/report.json and all reachable original main-pack JSON metadata included; 1509-file relative-path/size/SHA256 inventory covers JSON/BIN/NPY/NPZ through inherited symlinks. Arrays other than FullSourceBatch are inventoried, not bundled. Anonymous redownload authenticated archive and every member. Archive SHA256 a482b6181fa1765a94506cc5d2da83474bb2956a8ccaa084c97d2bd2d45bb63e. No input regeneration, formal pinned-file mutation, trainer restart or probe-success claim. Mac can compare array hashes and request only missing originals. Existing v30 handoff unchanged.
