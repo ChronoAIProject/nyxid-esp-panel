@@ -1,0 +1,91 @@
+{
+  "schema": "mac-canonical-joe-replay-admission-audit-v1",
+  "source_sha256": "6e3c73a53cd075f8f93771022cd47cfd107c5fb9ead0c1a8d1fe24590ad893ab",
+  "canonical_commit": "11c658b",
+  "canonical_runner_sha256": "66204666d64c3470f88abdb0db3f723fe81354fe19672dbece96f158a211ca48",
+  "original_runner_sha256": "9f4e561c4ee78c52099610084e418fe524cab902d124943898c6bb76f970c1e6",
+  "manifest_sha256": "edf6f7844f654d2a7e22f588873b917381aa8d0957b1e3309a60a0f1973895bc",
+  "unchanged_original_blocks": {
+    "original_final_gates": {
+      "bytes": 2158,
+      "sha256": "cd5b03926bffb60fa6063dee786f425cc70aa55f4d2dda8cf2ee1af5c5941cf6"
+    },
+    "audio_transport_qemu_completion_crc_and_reports": {
+      "bytes": 6923,
+      "sha256": "2b2734896f762881dfcac23fde1e684f9d2010742a29102357250d435c935bda"
+    }
+  },
+  "cases": [
+    {
+      "name": "all360_original_rows_admitted_by_canonical_policy",
+      "passed": true
+    },
+    {
+      "name": "missing_row",
+      "passed": true
+    },
+    {
+      "name": "reordered_rows",
+      "passed": true
+    },
+    {
+      "name": "duplicate_row",
+      "passed": true
+    },
+    {
+      "name": "confuser_relabel",
+      "passed": true
+    },
+    {
+      "name": "wrong_whole_output_end",
+      "passed": true
+    },
+    {
+      "name": "wrong_rir_tail",
+      "passed": true
+    },
+    {
+      "name": "wrong_role",
+      "passed": true
+    },
+    {
+      "name": "wrong_voice",
+      "passed": true
+    },
+    {
+      "name": "wrong_source_hash",
+      "passed": true
+    },
+    {
+      "name": "wrong_end_reference",
+      "passed": true
+    },
+    {
+      "name": "forged_legacy_annotations",
+      "passed": true
+    },
+    {
+      "name": "final_access",
+      "passed": true
+    },
+    {
+      "name": "exact_whole_selected_pcm_reaches_intercepted_engine_launch",
+      "passed": true
+    },
+    {
+      "name": "all12_mutations_reject_in_full_runner_before_nm_output_or_qemu",
+      "passed": true
+    },
+    {
+      "name": "legacy_unit_admission_and_pcm_transfer_unchanged",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "original_rows_admitted": 360,
+  "full_runner_mutations_rejected_before_launch": 12,
+  "all_launches_intercepted": true,
+  "qemu_invoked": false,
+  "actual_engine_authenticated": false,
+  "limits": "Admission and exact selected PCM at intercepted launch only. No new or official engine inference, candidate selection, final audio, source pronunciation or quality claim. Full scoring orchestration/binary pins remain the GPU executor responsibility."
+}

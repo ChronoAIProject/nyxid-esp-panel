@@ -1,0 +1,47 @@
+{
+  "schema": "bryce-consumed-original-v30-float-protocol-v1",
+  "source_sha256": "78ae8cc6ba40d85c26d9897519c30c5f249bb9657848720e3d7777f7c94eb4c5",
+  "original_model_manifest_sha256": "d6714abde340fe7d39ea26f8ab5f6385a9cda3c95c48b5ce7113f46e71379c29",
+  "input_manifest_sha256": "31adf5d810a50662591da86d1be7a50fbee6042b8e26fc8d091b4ddfb089e909",
+  "original_baseline_report_sha256": "de27257b414ffa6eb90ce8aad5649310662e1db18bb93febfcf1f94c097184ee",
+  "original_baseline_scores_sha256": "61e2fbfb31fdec528d9f572b9302c6d75267a49be524689f20ba2038dcf87711",
+  "helper_source_sha256": {
+    "features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.5.4",
+    "soundfile": "0.13.1",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "h5py": "3.14.0"
+  },
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "original_weights_sha256": "b40bf705297a71f208e073897ff517e90f9813337e73a959e27627b2d2668fa9",
+  "selected_step": 70000,
+  "clips": 126,
+  "threshold": 0.91796875,
+  "smoothing": 5,
+  "refractory_steps": 67,
+  "prime_samples": 56160,
+  "final_padding_multiple": 480,
+  "model_cadence_samples": 480,
+  "input_scale": 0.10196078568696976,
+  "input_zero_point": -128,
+  "arms": [
+    "original_float",
+    "same_float_input_quant_dequant",
+    "retained_original_int8"
+  ],
+  "float_reset": "All loaded state variables zero before every stream; every float arm repeated exactly",
+  "float_input": "clip(raw MicroFrontend /25.6,0,26); rounded arm uses original INT8 input scale and zero",
+  "timestamp": "End of returning480sample block, original firmware policy; all prime/early/repeat events retained",
+  "raw_int8": "Original saved126 raw traces; every new frontend SHA must equal original saved SHA",
+  "selection": "No threshold, checkpoint, input subset, gain, crop or speed selection",
+  "independent_data": false,
+  "audio_playback_or_recording": false,
+  "training": false,
+  "accepted": false
+}
