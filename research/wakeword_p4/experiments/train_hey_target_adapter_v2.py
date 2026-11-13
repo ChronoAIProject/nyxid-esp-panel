@@ -23,9 +23,24 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def capture_initial(model,output,expected):
+    inventory=[]
+    for variable in model.weights:
+        value=variable.numpy()
+        inventory.append(dict(name=variable.name,shape=list(value.shape),dtype=str(value.dtype),
+                              value_sha256=hashlib.sha256(value.tobytes()).hexdigest()))
+    if inventory!=json.loads(expected.read_text()):
+        raise ValueError('Actual formal initialization differs from certified smoke values')
+    model.save_weights(output/'formal-initial.weights.h5')
+    (output/'formal-initial-inventory.json').write_text(json.dumps(inventory,indent=2)+'\n')
+
+
 def adapted_tree():
     tree = apply_crop_rule(ast.parse(TRAINER.read_text()))
     main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    compile_index=next(i for i,n in enumerate(main.body)
+                       if isinstance(n,ast.Expr) and ast.unparse(n).startswith('model.compile('))
+    main.body[compile_index+1:compile_index+1]=ast.parse('HEY_INITIAL_CAPTURE(model,root)').body
     loop = next(n for n in ast.walk(main) if isinstance(n, ast.For)
                 and ast.unparse(n.target) == 'step' and ast.unparse(n.iter) == 'range(1, args.steps + 1)')
     blocks = [n for n in loop.body if isinstance(n, ast.If) and 'args.eval_interval' in ast.unparse(n.test)]
@@ -187,11 +202,14 @@ def main():
     guard=BatchGuard(Path(arm['batch_schedule']),Path(arm['output']))
     tree = adapted_tree()
     crop=CropGuard(Path(arm['output'])/'actual-positive-crops.jsonl',scheduled['positive_crop'])
-    exec(compile(tree,str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER), HEY_TARGET_ID=a.target, HEY_BATCH_GUARD=guard, HEY_PREFIX_CROP=crop))
+    initial_hook=lambda model,output:capture_initial(model,output,Path(arm['integration_smoke']).parent/'smoke-initial-inventory.json')
+    exec(compile(tree,str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER), HEY_TARGET_ID=a.target, HEY_BATCH_GUARD=guard, HEY_PREFIX_CROP=crop, HEY_INITIAL_CAPTURE=initial_hook))
     output = Path(arm['output'])
     report = json.loads((output/'training.json').read_text())
     assert report['selected_step'] == 20000
     report.update(target_id=a.target,checkpoint_policy='fixed-final-20000',
+                  actual_initial_inventory_sha256=sha(output/'formal-initial-inventory.json'),
+                  actual_initial_values_match_certified_smoke=True,
                   adapter_sha256=sha(Path(__file__)),training_lock_sha256=sha(a.training_lock))
     (output/'training.json').write_text(json.dumps(report,indent=2)+'\n')
     if a.target == 'hey_willow':

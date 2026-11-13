@@ -56,7 +56,7 @@ def write(args):
     files.update(EXPERIMENTS/name for name in ('hey_prefix_crop_v2.py','hey_batch_schedule_v1.py','audit_hey_training_batch_v1.py'))
     # Preserve the feature preparation chain, including training ambient arrays.
     files.update(map(Path,json.loads(plan.read_text())['files']))
-    arms={}
+    arms={};smoke_initial_inventories=[]
     for target in ('hey_willow','hey_nyx'):
         root=FEATURES/target
         admission=validate(root,target,required_splits=('training',))
@@ -89,6 +89,7 @@ def write(args):
         if not args.preflight:
             smoke=Path('.local/wakeword')/f'hey-paired-{target}-integration-smoke-v2/training.json'
             report=json.loads(smoke.read_text())
+            smoke_initial_inventories.append(json.loads((smoke.parent/'smoke-initial-inventory.json').read_text()))
             assert report['target_id']==target and report['steps']==report['selected_step']==2
             assert report['export_contract_passed'] and not report['formal_candidate']
             waveform=report['training_waveform_streaming']
@@ -106,6 +107,8 @@ def write(args):
             assert report['initial_weights_sha256']==INITIAL_SHA
             assert report['smoke_source_sha256']==sha(EXPERIMENTS/'smoke_hey_target_adapter_v2.py')
             files.add(smoke);arms[target]['integration_smoke']=str(smoke)
+    if not args.preflight:
+        assert len(smoke_initial_inventories)==2 and smoke_initial_inventories[0]==smoke_initial_inventories[1], 'Actual two-arm initial values differ'
     bound={str(p.resolve().relative_to(Path.cwd())):sha(p) for p in files}
     result=dict(schema='hey-paired-training-lock-v2',material_commit=commit,steps=20000,
                 stage='integration-preflight' if args.preflight else 'formal',

@@ -138,7 +138,8 @@ def main():
               '--batchnorm-policy','frozen','--steps','2','--eval-interval','5000',
               '--source-exponent','0','--ambient-sampling','rows','--device','cuda']
     exec(compile(smoke_tree(),str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER),
-         HEY_TARGET_ID=a.target,HEY_BATCH_GUARD=guard,HEY_PREFIX_CROP=crop,HEY_SMOKE_INITIAL=observe.initialize,HEY_SMOKE_UPDATE=observe.update))
+         HEY_TARGET_ID=a.target,HEY_BATCH_GUARD=guard,HEY_PREFIX_CROP=crop,
+         HEY_INITIAL_CAPTURE=lambda *_:None,HEY_SMOKE_INITIAL=observe.initialize,HEY_SMOKE_UPDATE=observe.update))
     report=json.loads((output/'training.json').read_text())
     assert report['selected_step']==report['steps']==2 and len(observe.steps)==2
     assert report['batch_schedule']['verified_batches']==102
