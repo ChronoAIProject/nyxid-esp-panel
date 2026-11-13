@@ -5304,3 +5304,7 @@ Original complete record3956B SHA4bf385a557f9b3641fc6620d3435dcfa2a508f8cd2f91e8
 ### Prospective author Kristin/Norman original model preparation
 
 Downloaded original author ONNX exports (each63531379B), pinned model/config hashes and statically checked ONNX schemas; both pass checker. No inference/audio, source reservation or wakeword scoring. Inventory preserves actual model inputs/outputs and stochastic graph operators. Physical identity/unknown pretraining limits from original config review remain unresolved; downloaded bytes do not establish independence. This prepares reproducible prospective generation without changing running training or consuming new development/final data.
+
+### Prospective author synthesis input preflight
+
+Added standalone non-inference preflight for pinned Kristin/Norman exports/configs: Hey Nicks, Hi E S P, Hey Nick, Hey Next, Hey Mix, Hey Nexus. All12 inputs map completely through original eSpeak/config phoneme tables; saved actual phonemes and token IDs, package version and script/inventory hashes. Independent token concatenation recheck passed. No waveform generation, role reservation or scoring; this phrase list is preparation, not a frozen new development/acceptance protocol or acoustic truth. Existing VCTK/pinned runtime files unchanged.
