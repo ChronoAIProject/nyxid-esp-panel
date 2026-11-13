@@ -1,0 +1,635 @@
+{
+  "schema": "official-hey-native-speech-pilot-index-v1",
+  "frozen_protocol_commit": "29f88b5",
+  "protocol_sha256": "bb1741a5e093eeb732a8af1901b7c0b6ddfd18af1a1b623631140330124102f8",
+  "auditor_sha256": "ff19741dc765858927652d86019c5c43c2b9ee7da1375e934cc40830f8accdff",
+  "manifest_sha256": "cb536c6e9c2176c51a88d3af6a1867ad00602053b0b4d1f788294acf8cbd8b2e",
+  "native_p4_inference": true,
+  "engines_run_sequentially": [
+    "wn9_heywillow_tts",
+    "wn9_hiesp"
+  ],
+  "streams_per_arm": 12,
+  "same_complete_pcm_per_arm": true,
+  "total_input_seconds_per_arm": 49.635875,
+  "generation": {
+    "schema": "official-hey-speech-pilot-v1",
+    "protocol_sha256": "bb1741a5e093eeb732a8af1901b7c0b6ddfd18af1a1b623631140330124102f8",
+    "prepare_source_sha256": "ff19741dc765858927652d86019c5c43c2b9ee7da1375e934cc40830f8accdff",
+    "manifest_sha256": "cb536c6e9c2176c51a88d3af6a1867ad00602053b0b4d1f788294acf8cbd8b2e",
+    "environment": {
+      "say_sha256": "a0c75425dfcaaf5316fe255f9d7be0748a1a24041dccaf50cfc73dbe02e18016",
+      "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+      "numpy": "2.5.4",
+      "scipy": "1.17.0",
+      "soundfile": "0.13.1",
+      "installed_voice_inventory_sha256": "abc7b0d9ded1913c0b36615be6e4f13049aa84bb40ce1dc984f11690a4fd91ca"
+    },
+    "records": 12,
+    "model_inference_performed": false,
+    "speaker_or_microphone_used": false,
+    "reserved_acceptance_accessed": false
+  },
+  "evidence": {
+    "schema": "official-hey-native-speech-pilot-anonymous-receipt-v1",
+    "url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/official-hey-native-speech-pilot-v1.tar.gz",
+    "anonymous_download": true,
+    "archive_bytes": 1076048,
+    "archive_sha256": "7e579e7fb95fcb452bfff46917caf1cfeac8bbd2948fff2af5c055bc0909f5ea",
+    "payload_members_authenticated": 41,
+    "additional_manifest_members": 1,
+    "all_member_hashes_verified": true,
+    "native_aiff_to_complete_pcm_reconstructed": 12,
+    "all_24_transfer_counts_verified": true,
+    "auditor_reexecuted_from_archive": true,
+    "reproduced_summary_byte_identical": true,
+    "summary_sha256": "aeb872be067eb06de8aa0709bff63990e514e282e1af1fb64149084e620c178b",
+    "reserved_acceptance_accessed": false,
+    "speaker_or_microphone_used": false,
+    "limits": "Fresh anonymous artifact retrieval and saved-output/data reproduction, not a second P4 inference or independent acceptance."
+  },
+  "arms": {
+    "wn9_heywillow_tts": {
+      "original_report_sha256": "5823c84f650465c2cc298af3a42d6b8d6b695293f90d2075ada2c3196edebbfb",
+      "probe_sha256": "a850d9e068ecee674877d8009df353c37a538699eb0faff86d7ae7653ec216f3",
+      "chunk_samples": 512,
+      "mode": "DET_MODE_95",
+      "setter_called": false,
+      "threshold_getter_printed_six_decimals": [
+        0.644
+      ],
+      "intended_target_streams": 4,
+      "intended_target_streams_with_any_event": 4,
+      "cross_phrase_streams": 8,
+      "cross_phrase_streams_with_any_event": 0,
+      "pre_generation_input_events": 0,
+      "streams_with_multiple_events": 0,
+      "counts_by_target_and_form": {
+        "hey_nyx/command": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hi_esp/command": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hi_esp/bare": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hey_willow/bare": {
+          "streams": 2,
+          "streams_with_any_event": 2,
+          "streams_with_post_lead_event": 2,
+          "total_events": 2,
+          "pre_generation_events": 0,
+          "intended_target": true
+        },
+        "hey_nyx/bare": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hey_willow/command": {
+          "streams": 2,
+          "streams_with_any_event": 2,
+          "streams_with_post_lead_event": 2,
+          "total_events": 2,
+          "pre_generation_events": 0,
+          "intended_target": true
+        }
+      },
+      "input_detect_calls_excluding_prime": 1559,
+      "input_container_detect_mean_us": 2106.0699166132135,
+      "input_container_detect_max_us": 2893,
+      "clips": [
+        {
+          "path": "clip-00.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Nicks, turn on the light.",
+          "target": "hey_nyx",
+          "form": "command",
+          "samples": 74156,
+          "pcm_sha256": "d2b580b6ea6363ee4e338c18e07fb217d7e8ec75e0e644b8d28971f9f6d8a9d4",
+          "events": 0,
+          "offsets": [],
+          "calls": 145,
+          "crc32": 3143905601,
+          "total_us": 305486,
+          "max_us": 2884
+        },
+        {
+          "path": "clip-01.wav",
+          "voice": "Samantha",
+          "intended_text": "Hi E S P, turn on the light.",
+          "target": "hi_esp",
+          "form": "command",
+          "samples": 78362,
+          "pcm_sha256": "834e885da3f8efea004fc45786445c9ce40b03596f91e7b702488928cef09d5f",
+          "events": 0,
+          "offsets": [],
+          "calls": 154,
+          "crc32": 305705390,
+          "total_us": 324418,
+          "max_us": 2812
+        },
+        {
+          "path": "clip-02.wav",
+          "voice": "Samantha",
+          "intended_text": "Hi E S P.",
+          "target": "hi_esp",
+          "form": "bare",
+          "samples": 60529,
+          "pcm_sha256": "da1f4c91b85dddbbd6e821f584c3994773dea66f6864dabf976c60743cea22ef",
+          "events": 0,
+          "offsets": [],
+          "calls": 119,
+          "crc32": 2842940639,
+          "total_us": 250676,
+          "max_us": 2815
+        },
+        {
+          "path": "clip-03.wav",
+          "voice": "Daniel",
+          "intended_text": "Hi E S P, turn on the light.",
+          "target": "hi_esp",
+          "form": "command",
+          "samples": 79099,
+          "pcm_sha256": "4865f922cf7bf1af9ac8c409e6a4ad6a9344310f9b2b0c0b7c6b4e9c04bd9d51",
+          "events": 0,
+          "offsets": [],
+          "calls": 155,
+          "crc32": 2704937025,
+          "total_us": 326763,
+          "max_us": 2885
+        },
+        {
+          "path": "clip-04.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Willow.",
+          "target": "hey_willow",
+          "form": "bare",
+          "samples": 55471,
+          "pcm_sha256": "6850b99ff17ba7c17739d9c5bc057a2997d74b116959395b6e458915a695b8b8",
+          "events": 1,
+          "offsets": [
+            39936
+          ],
+          "calls": 109,
+          "crc32": 1750444323,
+          "total_us": 229801,
+          "max_us": 2879
+        },
+        {
+          "path": "clip-05.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Willow.",
+          "target": "hey_willow",
+          "form": "bare",
+          "samples": 55509,
+          "pcm_sha256": "cb41e4f62fc0867cfa2ff82a785459f9a4bbdf1159aa28a129d579fedaddf241",
+          "events": 1,
+          "offsets": [
+            39936
+          ],
+          "calls": 109,
+          "crc32": 2738329633,
+          "total_us": 229973,
+          "max_us": 2891
+        },
+        {
+          "path": "clip-06.wav",
+          "voice": "Daniel",
+          "intended_text": "Hi E S P.",
+          "target": "hi_esp",
+          "form": "bare",
+          "samples": 61086,
+          "pcm_sha256": "06a8f8a48db8df89999a93e5dc70738f140cbf41206d37ffcea9ab56a00c66ac",
+          "events": 0,
+          "offsets": [],
+          "calls": 120,
+          "crc32": 235893398,
+          "total_us": 252438,
+          "max_us": 2885
+        },
+        {
+          "path": "clip-07.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Nicks.",
+          "target": "hey_nyx",
+          "form": "bare",
+          "samples": 54580,
+          "pcm_sha256": "7e29e46c45290920bbe2a6dd4469b42a62ae5ef6f1d135e62cbea9ac1eb62440",
+          "events": 0,
+          "offsets": [],
+          "calls": 107,
+          "crc32": 4284423372,
+          "total_us": 225198,
+          "max_us": 2882
+        },
+        {
+          "path": "clip-08.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Willow, turn on the light.",
+          "target": "hey_willow",
+          "form": "command",
+          "samples": 73227,
+          "pcm_sha256": "3305f53f66e2d79e31ddafd67811d6ff4a72fe93db8c441a14771e27367a669c",
+          "events": 1,
+          "offsets": [
+            39936
+          ],
+          "calls": 144,
+          "crc32": 2409247038,
+          "total_us": 302905,
+          "max_us": 2893
+        },
+        {
+          "path": "clip-09.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Nicks.",
+          "target": "hey_nyx",
+          "form": "bare",
+          "samples": 56400,
+          "pcm_sha256": "e80434f192f26a0c0e986138fdfab27ad2f448f66c6b4449528aa869fe998f4c",
+          "events": 0,
+          "offsets": [],
+          "calls": 111,
+          "crc32": 2242070707,
+          "total_us": 233022,
+          "max_us": 2885
+        },
+        {
+          "path": "clip-10.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Nicks, turn on the light.",
+          "target": "hey_nyx",
+          "form": "command",
+          "samples": 72413,
+          "pcm_sha256": "86ff7c553b6e5a31d6aa866015ae086214aa6dc37bb7079d48396123141781e8",
+          "events": 0,
+          "offsets": [],
+          "calls": 142,
+          "crc32": 3639289040,
+          "total_us": 299326,
+          "max_us": 2887
+        },
+        {
+          "path": "clip-11.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Willow, turn on the light.",
+          "target": "hey_willow",
+          "form": "command",
+          "samples": 73342,
+          "pcm_sha256": "e98b8480f24896f761b1bae86196f1a78c964f7c65cc3fca3254e1b6024b034c",
+          "events": 1,
+          "offsets": [
+            39936
+          ],
+          "calls": 144,
+          "crc32": 3401460538,
+          "total_us": 303357,
+          "max_us": 2815
+        }
+      ],
+      "before": {
+        "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+        "slot": "ota_0",
+        "nyx_state": "connecting"
+      },
+      "restored": {
+        "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+        "nyx_state": "connecting",
+        "slot": "ota_0",
+        "voice_idle": true,
+        "service_selection_unchanged": true,
+        "wake_listening": true,
+        "connection_verified": false
+      },
+      "restore_readiness": "app-only"
+    },
+    "wn9_hiesp": {
+      "original_report_sha256": "cc1a90b5bbd8cc1358b6d9516ad313d569d340134d9aa0fb51508e46062c4088",
+      "probe_sha256": "f8b98c84be549cb5a68b33567f8dfe0c3b0748b9216096974b97fc5829762411",
+      "chunk_samples": 512,
+      "mode": "DET_MODE_95",
+      "setter_called": false,
+      "threshold_getter_printed_six_decimals": [
+        0.63
+      ],
+      "intended_target_streams": 4,
+      "intended_target_streams_with_any_event": 4,
+      "cross_phrase_streams": 8,
+      "cross_phrase_streams_with_any_event": 0,
+      "pre_generation_input_events": 0,
+      "streams_with_multiple_events": 0,
+      "counts_by_target_and_form": {
+        "hey_nyx/command": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hi_esp/command": {
+          "streams": 2,
+          "streams_with_any_event": 2,
+          "streams_with_post_lead_event": 2,
+          "total_events": 2,
+          "pre_generation_events": 0,
+          "intended_target": true
+        },
+        "hi_esp/bare": {
+          "streams": 2,
+          "streams_with_any_event": 2,
+          "streams_with_post_lead_event": 2,
+          "total_events": 2,
+          "pre_generation_events": 0,
+          "intended_target": true
+        },
+        "hey_willow/bare": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hey_nyx/bare": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        },
+        "hey_willow/command": {
+          "streams": 2,
+          "streams_with_any_event": 0,
+          "streams_with_post_lead_event": 0,
+          "total_events": 0,
+          "pre_generation_events": 0,
+          "intended_target": false
+        }
+      },
+      "input_detect_calls_excluding_prime": 1559,
+      "input_container_detect_mean_us": 2088.762668377165,
+      "input_container_detect_max_us": 2867,
+      "clips": [
+        {
+          "path": "clip-00.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Nicks, turn on the light.",
+          "target": "hey_nyx",
+          "form": "command",
+          "samples": 74156,
+          "pcm_sha256": "d2b580b6ea6363ee4e338c18e07fb217d7e8ec75e0e644b8d28971f9f6d8a9d4",
+          "events": 0,
+          "offsets": [],
+          "calls": 145,
+          "crc32": 3143905601,
+          "total_us": 302910,
+          "max_us": 2867
+        },
+        {
+          "path": "clip-01.wav",
+          "voice": "Samantha",
+          "intended_text": "Hi E S P, turn on the light.",
+          "target": "hi_esp",
+          "form": "command",
+          "samples": 78362,
+          "pcm_sha256": "834e885da3f8efea004fc45786445c9ce40b03596f91e7b702488928cef09d5f",
+          "events": 1,
+          "offsets": [
+            43008
+          ],
+          "calls": 154,
+          "crc32": 305705390,
+          "total_us": 321890,
+          "max_us": 2858
+        },
+        {
+          "path": "clip-02.wav",
+          "voice": "Samantha",
+          "intended_text": "Hi E S P.",
+          "target": "hi_esp",
+          "form": "bare",
+          "samples": 60529,
+          "pcm_sha256": "da1f4c91b85dddbbd6e821f584c3994773dea66f6864dabf976c60743cea22ef",
+          "events": 1,
+          "offsets": [
+            43008
+          ],
+          "calls": 119,
+          "crc32": 2842940639,
+          "total_us": 248738,
+          "max_us": 2845
+        },
+        {
+          "path": "clip-03.wav",
+          "voice": "Daniel",
+          "intended_text": "Hi E S P, turn on the light.",
+          "target": "hi_esp",
+          "form": "command",
+          "samples": 79099,
+          "pcm_sha256": "4865f922cf7bf1af9ac8c409e6a4ad6a9344310f9b2b0c0b7c6b4e9c04bd9d51",
+          "events": 1,
+          "offsets": [
+            43008
+          ],
+          "calls": 155,
+          "crc32": 2704937025,
+          "total_us": 323990,
+          "max_us": 2856
+        },
+        {
+          "path": "clip-04.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Willow.",
+          "target": "hey_willow",
+          "form": "bare",
+          "samples": 55471,
+          "pcm_sha256": "6850b99ff17ba7c17739d9c5bc057a2997d74b116959395b6e458915a695b8b8",
+          "events": 0,
+          "offsets": [],
+          "calls": 109,
+          "crc32": 1750444323,
+          "total_us": 227745,
+          "max_us": 2859
+        },
+        {
+          "path": "clip-05.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Willow.",
+          "target": "hey_willow",
+          "form": "bare",
+          "samples": 55509,
+          "pcm_sha256": "cb41e4f62fc0867cfa2ff82a785459f9a4bbdf1159aa28a129d579fedaddf241",
+          "events": 0,
+          "offsets": [],
+          "calls": 109,
+          "crc32": 2738329633,
+          "total_us": 227981,
+          "max_us": 2865
+        },
+        {
+          "path": "clip-06.wav",
+          "voice": "Daniel",
+          "intended_text": "Hi E S P.",
+          "target": "hi_esp",
+          "form": "bare",
+          "samples": 61086,
+          "pcm_sha256": "06a8f8a48db8df89999a93e5dc70738f140cbf41206d37ffcea9ab56a00c66ac",
+          "events": 1,
+          "offsets": [
+            43008
+          ],
+          "calls": 120,
+          "crc32": 235893398,
+          "total_us": 250373,
+          "max_us": 2858
+        },
+        {
+          "path": "clip-07.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Nicks.",
+          "target": "hey_nyx",
+          "form": "bare",
+          "samples": 54580,
+          "pcm_sha256": "7e29e46c45290920bbe2a6dd4469b42a62ae5ef6f1d135e62cbea9ac1eb62440",
+          "events": 0,
+          "offsets": [],
+          "calls": 107,
+          "crc32": 4284423372,
+          "total_us": 223554,
+          "max_us": 2812
+        },
+        {
+          "path": "clip-08.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Willow, turn on the light.",
+          "target": "hey_willow",
+          "form": "command",
+          "samples": 73227,
+          "pcm_sha256": "3305f53f66e2d79e31ddafd67811d6ff4a72fe93db8c441a14771e27367a669c",
+          "events": 0,
+          "offsets": [],
+          "calls": 144,
+          "crc32": 2409247038,
+          "total_us": 300380,
+          "max_us": 2851
+        },
+        {
+          "path": "clip-09.wav",
+          "voice": "Daniel",
+          "intended_text": "Hey Nicks.",
+          "target": "hey_nyx",
+          "form": "bare",
+          "samples": 56400,
+          "pcm_sha256": "e80434f192f26a0c0e986138fdfab27ad2f448f66c6b4449528aa869fe998f4c",
+          "events": 0,
+          "offsets": [],
+          "calls": 111,
+          "crc32": 2242070707,
+          "total_us": 231377,
+          "max_us": 2836
+        },
+        {
+          "path": "clip-10.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Nicks, turn on the light.",
+          "target": "hey_nyx",
+          "form": "command",
+          "samples": 72413,
+          "pcm_sha256": "86ff7c553b6e5a31d6aa866015ae086214aa6dc37bb7079d48396123141781e8",
+          "events": 0,
+          "offsets": [],
+          "calls": 142,
+          "crc32": 3639289040,
+          "total_us": 296888,
+          "max_us": 2825
+        },
+        {
+          "path": "clip-11.wav",
+          "voice": "Samantha",
+          "intended_text": "Hey Willow, turn on the light.",
+          "target": "hey_willow",
+          "form": "command",
+          "samples": 73342,
+          "pcm_sha256": "e98b8480f24896f761b1bae86196f1a78c964f7c65cc3fca3254e1b6024b034c",
+          "events": 0,
+          "offsets": [],
+          "calls": 144,
+          "crc32": 3401460538,
+          "total_us": 300555,
+          "max_us": 2855
+        }
+      ],
+      "before": {
+        "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+        "slot": "ota_0",
+        "nyx_state": "connecting"
+      },
+      "restored": {
+        "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+        "nyx_state": "connecting",
+        "slot": "ota_0",
+        "voice_idle": true,
+        "service_selection_unchanged": true,
+        "wake_listening": true,
+        "connection_verified": false
+      },
+      "restore_readiness": "app-only"
+    }
+  },
+  "independent_uart_audit": {
+    "willow": {
+      "frames_sha256": "cd13665f4c6f7535151ef78466e46efb9a6d795057cc1d0270d81fbe1225df21",
+      "complete_streams": 12,
+      "samples_crc_calls_independently_recomputed": true
+    },
+    "hiesp": {
+      "frames_sha256": "8592f8222e5f90b3a3a6466e42979b04490fa37022b7b0ef21f6c547678c98ac",
+      "complete_streams": 12,
+      "samples_crc_calls_independently_recomputed": true
+    },
+    "separate_final_http": {
+      "original_app_slot_service_idle_listener_verified": true,
+      "nyx_state": "connecting",
+      "voice_connectivity_accepted": false
+    }
+  },
+  "all_24_transfers_and_call_counts_verified": true,
+  "source_sample_rate": 22050,
+  "source_speed_preserved": true,
+  "transport_baud": 115200,
+  "default_prime_calls_per_stream": 63,
+  "default_prime_samples_per_stream": 32256,
+  "prime_events_not_observed_by_original_probe": true,
+  "synthetic_development_only": true,
+  "recognition_accepted": false,
+  "equal_far_comparison": false,
+  "real_keyword_end_latency_measured": false,
+  "trained_candidate_scored": false,
+  "reserved_acceptance_accessed": false,
+  "speaker_playback_or_microphone_capture": false,
+  "production_panel_operated": false,
+  "voice_connection_accepted": false,
+  "scope": "Small consumed synthetic-source diagnostic only. It can establish actual speech detect calls and sample/CRC integrity on P4. It cannot establish trained-method quality, equal-FAR superiority, natural-user recognition, keyword-end latency, acoustic behavior or whole-app voice acceptance. The official Willow / custom Willow / matched custom Nyx experiment remains separate."
+}
