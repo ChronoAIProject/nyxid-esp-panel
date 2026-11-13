@@ -1,0 +1,31 @@
+{
+  "schema": "mac-willow-completion-metadata-crosscheck-v1",
+  "gpu_commit": "625d82d9a1627437e007fb0c26a1af2a5dd1ecf4",
+  "training_report_sha256": "4315ddfeab3f4a5113b201a06a85b0ae0c1e6ab21b1a9eefbfd6c920fc55ba52",
+  "training_lock_sha256": "65dfe0fb3c1c0d0c061bf78b454fa35d3eecc100b8eb4b2267b4b63017c9b643",
+  "model_sha256": "fa9d4020aa06dba89fa8d5e5425626e35ac0a7aa882127d01d10163f537faf7f",
+  "model_bytes": 57592,
+  "declared_final_step": 120000,
+  "declared_batch_counts": {
+    "train": 120000,
+    "ptq": 100
+  },
+  "report_receipt_lock_model_identity_consistent": true,
+  "shared_initialization_and_no_classifier_reset_consistent": true,
+  "reported_batchnorm_snapshots_exact": true,
+  "training_source_hashes_compared": 172,
+  "custom_calibration_four_files_exact": true,
+  "linux_calibration_integration": {
+    "schema": "linux-complete-development-calibration-integration-v1",
+    "source_commit": "af8fac88",
+    "all_four_imported_files_exact": true,
+    "constructed_checks": 13,
+    "all_checks_pass": true,
+    "full_report_byte_identical_to_mac": true,
+    "report_sha256": "dc275d2dcd0a0c8188fb0cca2b28de36418dff822486c360337b74d3359a3b33",
+    "limits": "Constructed raw/manifest/clock/calibration tests only, no actual model or audio inference, no real FAR or recognition conclusion."
+  },
+  "actual_gpu_model_batch_tensors_or_private_checkpoint_independently_read": false,
+  "numerical_or_recognition_pass": false,
+  "limits": "Mac crosschecks immutable metadata/source bytes only. Finite weights, full actual batches and actual exported model identity are GPU reported/authenticated; model/trace files are not available on Mac, and no quantization/development/acceptance/P4 conclusion follows."
+}
