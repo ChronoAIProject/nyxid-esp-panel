@@ -7124,3 +7124,24 @@ New full generator must enforce each-case mapping and persist all raw outputs.
 Static follow-up also found create defaults trim=True; new path bypassed it
 and saved complete raw outputs. Original historical clips remain unchanged.
 Official PID958504 observed live710/9672, no restart/partial metrics.
+
+
+### Full paired Kokoro material generated and independently audited
+
+70712b8 pushed exact480 requests/phones/padded tokens/styles/runtime stage lock
+before original session49774 inference (PID997494), exit0, no retries.
+240 native positives per arm:20 original training voices×3speeds×4carriers.
+All full native/resampled floats, durations, tokens, styles, actual float speeds
+and PCM persisted. Independent saved-array audit verifies3360 files, exact
+resample arrays, integer token-duration×600 sample identities, generated prefix
+ceil16k clocks and quality pass480/480. No fullscale, trimming or normalization.
+This admits these synthetic process materials only, not acoustic phonetic truth,
+training/recognition or promotion. Generation stage explicitly superseded the
+aux subplan wait-for-full-training-lock solely for this fixed synthesis stage;
+common negative/recipe lock still required before training.
+
+Qwen installed public API static review records original source/method bytes:
+text/instruction IDs and codec codes are internally available, but public result
+is waveform/rate, with no certified text-prefix acoustic allocation. Codec
+length is not text alignment. Training endpoint handling remains to be locked
+without inventing wholecommand end as wake boundary; no Qwen inference done.
