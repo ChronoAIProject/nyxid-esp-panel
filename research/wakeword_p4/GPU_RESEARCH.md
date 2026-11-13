@@ -6886,3 +6886,18 @@ Observation-v2 zero runner+26config API plan adds getter-after-prime/allrawretur
 checks for bothofficialmodels. Plan mustpush before execution; no new speech
 or acceptance audio used for API certification. Consumed156stream original
 session32502 stillrunning; no restart.
+
+### Observation-v2 recertification completed
+
+Original26zero-grid session69151 and156consumed-grid session32502 exited0,
+no retries. Independent zero auditor verifies26getter-after-prime stability,
+1638prime and832ordered input raw returns. Independent consumed auditor verifies
+20267inputcalls/9828prime/24positiveevents and full rawreturn transport; all156
+postprime getter bits agree originalMac evidence,0cross-runtime differences.
+These are bounded API/consumed witnesses, not fresh recognition/FAR/universal
+P4 equivalence. Official freshdevelopment runner source ready, execution lock
+and longstream v2 fullreturn certification still pending.
+
+Committed comparative custom-development summary: maximum fullphrase macro
+Willow0,Nyx1/36,v30.75; FAReligible maxima0,1/36,26/36 respectively. All0eligible,
+no acceptance unlock/promotion. Originalfullcurves retained; v30 remains frozen.
