@@ -6995,3 +6995,21 @@ floatstream exactly, requiresallnonstatevariablesunchanged, noINT8rerun/model
 update/re-export/thresholdselection/acceptance. Float-state/graph vs quantized
 state/graph differences remain potential confounds, not isolated PTQcause.
 Originalofficialgrid continues,317/9672observed, no restart or boundsource edits.
+
+### Original float/INT8 consumed diagnostic completed
+
+9e3b834 pushed planSHAc69a87e575667aaa608444fe477a8a1892de1a750e12bf8ef7697dfd27a3788a
+before originalGPU session75017, which exited0. Eacharm36consumeddevpositive+
+2certifiedtrainingcases, original SavedModel completeFP32stream, restoredsaved
+variables perclip, twice-reset exact and allnonstatevariables unchanged. Original
+INT8 traces reused with hash checks, not regenerated. Savedfloatvariableinventory
+and completefloatstreams retained. Independent cumsum auditor verifies all76
+savedfirststreams/peaks/canonicalUINT8comparisons.
+
+Willow devfloat fivepeakmax.007415521266375436/median.007064145558979362;
+itscertified trainingpositivefloat fivepeak1.0. Nyx devfloatmedian.0030849104026856367
+(max.9991604447364807), trainingpositive1.0. Weakdevresponse therefore already
+exists in originalfloatstream, excluding an exclusivelyINT8 explanation in these
+boundedcases. Does not isolate voicecoverage/architecture/trainingcause, or rule
+out all quantizationeffects. No re-export/updatedweights/gridchange/acceptance.
+Originalofficialtask continues,firstwholebackground completed; fullcurve pending.
