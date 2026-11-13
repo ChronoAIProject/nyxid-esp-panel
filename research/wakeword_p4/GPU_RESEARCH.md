@@ -5504,3 +5504,11 @@ Published gpu-inherited-positive-cpu-probe-v1.tar.gz to existing research releas
 Pinned rdh upstream primary card declares trained-from-scratch Flemish CC0 parent, improving declared Joe/Mike lineage beyond known English bases. Saved exact card/hash and limitations: declaration is not audited weights/logs/physical identity proof; Joe/Mike share parent. No synthesis, roles or scoring performed.
 
 Original formal control PID719837 remains live at44:54; preserved step15000 original line SHA685d85cf56c261084de23f8c1654005c6991caa5c372e67f5683e13d75fa75d2,0 eligible training-grid points. Recovered still waits; no restart, candidate promotion or training-pin change.
+
+### 2026-11-13 — Prospective Joe/Mike generation reservation
+
+Read Mac Issue13 comment6847804337: authenticated v30 original recipe retained all32 original positives and had command support; later overwrite cannot be asserted as sole v30 failure cause. Actual12-update CPU integration has already been handed off in comment6847803714.
+
+Before new inference, reserve Joe development / Mike acceptance, neither training. Distinct voice/model bytes but sharedrdh parent: explicitly voice/model holdout, not family/physical/pretraining independence. Mac reports no known prior Joe/Mike use, not universal proof. Frozen240-request plan (120pervoice):20texts (4HeyNicks,4HiESP,12commonconfusions),3lengthscales,2draws. Plan SHA d69dbc7486cb974641ae9849e33c965e98998a79ce55c95b8a334d4d4f71c03a pins original inputs/phones/tokens, models/configs, runtime and generator/validator/protocol hashes. Input token mapping and Python compilation pass; no audio yet.
+
+Only Joe native development synthesis/mechanical auditing authorized by this reservation. Save full actual engine tensor and nativefloat32, full rationalresample PCM16; no gain/crop/regeneration, all failures retained. ONNXCPU2threads avoids GPU contention and environment changes. Mike inference, detector scores and acceptance remain prohibited until complete rendering/model/threshold/gate protocol is frozen. This advances actual native generation rather than requiring unknowable phonetic/physical-person certification or human hearing. Original formal trainer and284pins unchanged.
