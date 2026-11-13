@@ -6456,3 +6456,32 @@ not an assumed universal formula or QEMU getter substitution. Zero API actual
 execution is no longer pending; speech/FAR curves and native>64event branch
 remain separate. Our audit checks savedJSON only, not a second P4/UART replay
 or whole-app/voice acceptance. No existing formal source changes.
+
+### Matched training feature builder implemented, not yet run (2026-11-13)
+
+build_hey_training_features_v1.py now prepares both explicit target arms using
+complete serialized rendered PCM/frontend, shared binary and identical old
+training-only ambient arrays. Fresh dev/acceptance arrays are never imported.
+Exact plan can only be written after2400native/7200rendered and2400matching
+timing records qualify; native/render generation/records hashes, unique IDs and
+three variants are authenticated. Future plan binds every ambient NPY, code,
+frontend binary and numerical versions before extraction. No feature plan or
+actual new pack currently exists, and no training launch occurred.
+
+Positive keyword_frame maps internal prefix-before-punctuation allocation plus
+full synthetic RIRtail, not full command-container end. Complete prefix support
+is checked for every original3..27positive jitter undercontext150; unsupported
+rows invalidate entire pack without filtering. All waveform/feature frames
+remain preserved; context crops are explicit training operations. Boundaries
+remain generated allocations, not acoustic phonetic truth. HiESP remains a
+common negative for both custom arms while text label is preserved. Reciprocal
+target rows receive correct labels. Features-sidecar stores source byte/PCM/model
+hashes and target identity for actual CPU admission.
+
+3geometry tests passed: command end differs from prefix, all jitters include
+supported prefix, long-prefix unsupported flag, source/role mismatch rejection.
+2adapter tests still pass. Future actual CPU auditor now requests training-only
+provenance, matching adapter; default legacy validator behavior unchanged.
+Original trainer/pins untouched. Native job observed1400/1400passes, still live;
+original training observed119000, not yet complete. Full new pack admission,
+actual batch/gradient/export checks and tensor schedule lock remain pending.

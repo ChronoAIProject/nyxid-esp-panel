@@ -23,7 +23,7 @@ def audit(root, target=None):
     admission = None
     if target:
         from validate_hey_target_pack_v1 import validate
-        admission = validate(root, target)
+        admission = validate(root, target, required_splits=('training',))
     trainer = TRAINING / 'train_stream.py'
     tree = ast.parse(trainer.read_text())
     main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
