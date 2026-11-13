@@ -7663,3 +7663,14 @@ originalWillow formal-execution-receipt.json, as required; no execution lock,
 output directory or model inference created. Preflight receipt explicitly does
 not validate full learned-model runtime correctness. Willow original1047649
 verifiedlive83500/120000; continuation1044979 and originalofficial958504 live.
+
+
+### Mac complete metrics imported and Linux constructed regression exact
+
+Mac6866818773 delivered e0ad864a. All4new files imported byte-for-byte,
+no legacy metrics or history overwritten. Original review against3eff762
+completedexit0,5constructed check groups pass (including both targets/all138
+points and13invalid-input cases). Complete Linux JSON byte-identical to Mac.
+Actual model/frontend/PCM inference, development scoring and acceptance remain
+unperformed. Caller must authenticate expected rows and execution/raw bytes;
+helper does not independently authorize selection or promotion.

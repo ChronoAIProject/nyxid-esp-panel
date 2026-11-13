@@ -1,0 +1,36 @@
+{
+  "schema": "complete-development-metrics-constructed-review-v1",
+  "gpu_source_commit": "3eff762ab54113f76b4c1ebad230e727a9f229f7",
+  "metrics_sha256": "de009fe4ade7054ad6c805be70959412f88c760e878e319078e78a0cd35e6c0e",
+  "upstream_sha256": {
+    "uint8_event_policy_v1.py": "6a35d8e591545881a42c5d3e4a8b0bac62a4940bbf042a1b01fa44049409653f",
+    "hey_development_metrics_v1.py": "c88d82aae21b3fe6096ce34b78be9359ce1dbafa25a67229bf20171ed5eaa140"
+  },
+  "audit_sha256": "e17bafb7cfe9ec6bf865ed82d155fe54a9590f43ec36f213711e4271b0db0295",
+  "checks": [
+    "both 396-cell targets:36/9/27/324/36, bare carriers, added Muse rejection, final-only step104, early-positive rejection",
+    "dry-prefix and full-RIR-prefix recall and signed offsets remain distinct",
+    "13 malformed/incomplete/changed manifest, carrier or output cases rejected",
+    "all138 grid points x both targets match unchanged360 legacy fields/eligibility; detailed records and independent event oracle match",
+    "whole original-sample background exposure including final event, exact Poisson upper bound, unchanged ranking and null selector"
+  ],
+  "invalid_rejections": [
+    "dropped row",
+    "reordered rows",
+    "changed original row",
+    "duplicate source/variant",
+    "wrong raw dtype",
+    "missing complete-tail step",
+    "extra step",
+    "unknown standalone",
+    "no standalone",
+    "lead_samples invalid",
+    "generated_prefix_end_sample invalid",
+    "full_rir_prefix_end_sample invalid",
+    "generated_container_end_sample invalid"
+  ],
+  "all_checks_pass": true,
+  "development_or_acceptance_audio_accessed": false,
+  "learned_model_executed": false,
+  "limits": "Constructed396/360-cell rows and UINT8 traces. Pinned unchanged policy/metrics sources, no model/audio/frontend/P4 inference or recognition/FAR acceptance. Expected manifest authentication belongs to caller."
+}
