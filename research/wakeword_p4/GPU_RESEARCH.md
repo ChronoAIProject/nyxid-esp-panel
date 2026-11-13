@@ -5467,3 +5467,10 @@ Pre-score policy/preparer frozen and pushed atb339df1 before execution:full embe
 Preparer session52688 completed normally.42original WAVs preserved byte-for-byte,455204864PCM samples=7.902862222222223h,8invalid-annotation records retained. Independent standard-library wave reader (contrasts soundfile/libsnfile) verified every encoded SHA/PCM SHA, frames, monoPCM16/16k and total samples. Original output manifest SHA b6ab85ea987955dd3ab7fb781ddd962114132578c3f10e89c1305b36a35ad6a3 copied to results with verification receipt. Manifest explicitlybackground_qualified=false/scoring_authorized=false; no detector inference/new FAR/acceptance access. Remaining cross-training/final/person and positive-source protocol gaps remain explicit.
 
 Original control PID719837 live at25:25, observed8888steps, recovered waits in sequence18719; no restart or trainingpin changes.
+
+
+### 2026-11-13 — New background vs actual training-source hashes
+
+Authenticated current main human/ambient index hashes against original completed fixed training metadata. Decoded all1107actual training ambient originals (including45base environment and1062added noise/music), authenticated encoded source hashes and monoPCM16/16k format. No encoded/PCM whole-container matches to new42background recordings. Also compared273available human-stream PCM hashes and28539nested original human source encoded/PCM hashes:0matches. Full1107source details preserved in4090-new-background-training-overlap-v1.json.24legacy human rows lack stream PCM hashes; synthetic phrase packs and transformed/partial/physical-person overlap are outside this audit. Thus all_training_pcm_isolation_proven=false/background_qualified=false remain explicit. No training data/pins changed, no new detector scores/final audio accessed.
+
+Original control10000float checkpoint now preserved unchanged:SHAed22fcdba40e3013736616441a1a3818cb6e602b4205b064c742cd01e061e782; original11point grid0eligible, fallback not a pass and does not replace selected5000. These are reused training-float metrics only. Original PID719837/sequence18719 continues, observed10373steps, recovered waits; no restart or promotion.
