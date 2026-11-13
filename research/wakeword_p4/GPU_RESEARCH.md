@@ -6374,3 +6374,43 @@ paired protocol getter range: setter requests .4.. .9999; actual getter finite
 range/equality. Prime return coverage/controlDEFAULT remains required. New native
 training synthesis observed280/280passes, still live and incomplete. No dev or
 acceptance generated. Full negative inventories/new feature admission pending.
+
+### New paired continuous background sources reserved (2026-11-13)
+
+Fetched Mac d0c589b and authenticated its original12Earnings22 reservation
+SHA b10b875cbbcfb09bd9b5c2aa41ccb31450b48bc9f7f7c3ce62c4547595135d53.
+Downloaded pinned upstream metadata/README/license only; identical original
+hashes. Deterministically exclude all12prior tickers, order remaining tickers
+by frozen SHA namespace, select first12development/next12acceptance and fixed
+one-file minimum per ticker. 24LFS pointer hashes/media SHA/size/URLs locked.
+Metadata hours10.4827777778development and13.7075acceptance; descriptive only,
+not decoded/scored exposure. No media yet downloaded. Ticker/source disjointness
+is not physical-speaker independence; analysts may recur. No new human capture.
+Original Mike/test6/7 and three consumed finals remain separate/unmodified.
+
+prepare_hey_earnings_development_v1.py has ONLY development download/decode path.
+Separate pushed prep lock authenticates all12sources, decoder/microfrontend
+binary and package versions; exact transcript alias match fails whole readiness,
+no easier substitution. Complete native float hash/duration, fullmono16kPCM16,
+continuous frontend per call, final-onlypadding; no crops/gain/VAD/internalgaps.
+All12complete and decoded>=8h required. History encoded/PCM overlap remains
+separate before scoring. Original media/decoded/frontend stay local; license
+explicitly covers transcript/text, not an identical media grant. No acceptance
+media/transcripts opened. No model scores in this preparation.
+
+System FFmpeg absent. Global pip install blocked by PEP668; used isolated
+.local/wakeword/ffmpeg-tool-v1 imageio-ffmpeg0.6.0 instead, without changing
+existing numerical/training packages. Binary7.0.2-static SHA locked; differs
+from Mac9.0.2 so no cross-host PCM equality claim. Random320037sample fixture:
+10s IO continuous frontend equals full-array frontend exactly,123finalpad,
+1999x40features, original PCM hash preserved. Real-source decode pending.
+
+### Original recovered115000 and native synthesis status (2026-11-13)
+
+Preserved original115000 complete record SHA
+0a40c0ea932b835bcad37868bc4a6f121d6db78c404b3e7ac5fd26ba3e19b681.
+0eligible float points; fallback.994 recall.6333333333 macro.6588541667,
+hardnegative.0511363636 maxsource.059375, background1/1.2048112674h.
+Zero-event upper null; not pass, no candidate promotion. All284formal hashes
+unchanged. Native generator live800/800mechanicalpasses, incomplete2400pack;
+no synthetic development/acceptance generated or scored.
