@@ -5312,3 +5312,7 @@ Added standalone non-inference preflight for pinned Kristin/Norman exports/confi
 ### Per_draw formal50000 float checkpoint rejected
 
 Original complete record3979B SHA9a0538b51a6d9a7ab9a119a156665ec550f18875b1a97805387adbdb64b7d221 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.5729166667/max-source false.0442708333; background0/1.2048112674h, one-sided95 upper2.486474317/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only, no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal55000 float checkpoint rejected
+
+Original complete record4210B SHA2b9217e88eb57876b7525de9869b0fed48dbcd219ac0ca6a4706a604443c0617 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.50390625/max-source false.0192708333. Background1/1.2048112674h, point FAR.830005518/h; exact Poisson one-sided95 upper 3.937433726679058/h. Receipt zero-event-only upper is correctly null. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only, no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
