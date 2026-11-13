@@ -1,0 +1,10 @@
+{
+  "schema": "complete-development-collector-constructed-initial-failure-v1",
+  "collector_sha256": "011fd56d90d1629da010326ea87617435da13864cdd0553277de6fcaa4864772",
+  "exit_code": 1,
+  "phase": "constructed execution admission before detector/media collection",
+  "cause": "macOS temporary directory has /var and canonical /private/var aliases; lock used original absolute spelling, resolved helper path used canonical spelling, require_bound rejected same existing file.",
+  "learned_model_or_real_source_accessed": false,
+  "result_created": false,
+  "planned_fix": "Accept only canonical-equivalent lock keys, retaining exact content digest checks. Add explicit wrong-hash alias rejection."
+}

@@ -1,0 +1,18 @@
+diff --git a/research/wakeword_p4/experiments/hey_broad_scoring_contract_v1.md b/research/wakeword_p4/experiments/hey_broad_scoring_contract_v1.md
+--- a/research/wakeword_p4/experiments/hey_broad_scoring_contract_v1.md
++++ b/research/wakeword_p4/experiments/hey_broad_scoring_contract_v1.md
+@@ -69,7 +69,9 @@
+-Current user goal requires unconsumed development for threshold selection.
+-Explicitly reused old development may be a labeled regression but cannot
+-satisfy that requirement. Authenticate declared voice/source roles, ancestry
+-limits, exact encoded/PCM history and background source manifest before opening
+-new development in any detector. Metadata absence alone is not admission.
++Development may be explicitly reused for threshold selection under rules fixed
++before the new inference; report that reuse without claiming independence.
++Reasonable new development sources remain optional and keep their declared
++roles. Final success still requires separately locked independent acceptance.
++Authenticate declared voice/source roles, ancestry limits, exact encoded/PCM
++history and background source manifests before new detector inference.
++Metadata absence alone is not source admission.
+ Mike/HFCmale/test6/7 and all three consumed historical finals keep their roles;
+ no acceptance source rescues training or threshold selection.
