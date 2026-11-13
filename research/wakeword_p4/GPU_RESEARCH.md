@@ -6735,3 +6735,10 @@ unchanged; their noise seeds are disjoint from training. This closes the missing
 explicit development-RIR choice in the pilot protocol. Contract alone authorizes
 neither generation nor scoring: separate generator/code/quality/history/timing
 locks remain necessary. Acceptance remains unopened; no threshold/gate change.
+
+Separate development direct-convolution auditor now implements registered
+1232sample full RIR tail without touching original training auditor. Analytic
+16000sample sine PCM checked all3 FFT-generated rendering conditions against
+independent direct convolution; all3 passed and all3 deliberate100-PCM-unit
+single-sample corruptions rejected. This is source/analytic verification only;
+actual development synthesis, timing/source admission and scoring still pending.
