@@ -1,0 +1,57 @@
+{
+  "schema": "mac-future-development-gate-audit-v1",
+  "upstream_commit": "f3f7241",
+  "calibrator_sha256": "92cf6f4517a5828741a26f027120502407ba557bff1262a108c5f26b0f0083da",
+  "evaluator_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+  "auditor_sha256": "5abf60ca4b664b491f69d426a4786d3914e95e3e4463515269274d8e4c5525da",
+  "numpy": "2.5.4",
+  "authenticated_existing_files": 361,
+  "fixed_v30_threshold": 0.91796875,
+  "existing_360_clip_metrics_and_event_details_match": true,
+  "existing_v30": {
+    "positive_activated": 0,
+    "common": {
+      "clips": 216,
+      "activated_clips": 0,
+      "events": 0
+    },
+    "cross_target": {
+      "clips": 72,
+      "activated_clips": 0,
+      "events": 0
+    }
+  },
+  "analytic_checks": [
+    "source-boundary events count as hits",
+    "all three conditions, three speeds and four texts retained",
+    "clean analytic presentations eligible",
+    "pre-source events do not count as hits",
+    "later hit cannot hide an early event",
+    "all repeated events and signed latencies retained",
+    "common one activated clip with two events rejects",
+    "cross_target one activated clip with two events rejects",
+    "all equality boundaries included",
+    "macro one binary64 step below minimum rejects",
+    "standalone one binary64 step below minimum rejects",
+    "command one binary64 step below minimum rejects",
+    "FAR one binary64 step above maximum rejects",
+    "higher frozen-baseline macro remains binding",
+    "selection ranks macro then FAR then higher threshold",
+    "ineligible higher-recall point cannot win",
+    "no eligible point returns null",
+    "empty grid returns null"
+  ],
+  "analytic_checks_passed": 18,
+  "candidate_scored": false,
+  "threshold_search": false,
+  "final_data_accessed": false,
+  "device_operated": false,
+  "audio_io_performed": false,
+  "accepted": false,
+  "limits": [
+    "Only the frozen pure metric/eligibility/selection functions are executed, not full calibration orchestration, inference or source gates.",
+    "The existing 360-clip replay uses only frozen v30 threshold .91796875. Other arrays/metrics are explicit analytic fixtures.",
+    "No GPU scorer/calibrator, live training source or original report is changed; metadata/numeric proposals still require GPU agreement.",
+    "This prevents gate regressions; it is not evidence of a better model or Hi ESP parity."
+  ]
+}
