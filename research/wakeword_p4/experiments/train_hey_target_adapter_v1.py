@@ -6,12 +6,14 @@ and checks the transformed program; it never imports TF or launches training.
 import argparse
 import ast
 import hashlib
+import importlib.metadata
 import json
 from pathlib import Path
 import subprocess
 import sys
 
 from validate_hey_target_pack_v1 import validate
+from hey_batch_schedule_v1 import BatchGuard
 
 TRAINER = Path(__file__).resolve().parents[1] / 'training/train_stream.py'
 
@@ -40,6 +42,11 @@ if step == args.steps:
     selected_step = step
     model.save_weights(root / 'best.weights.h5')
 ''').body
+    batch_fn = next(n for n in main.body if isinstance(n,ast.FunctionDef) and n.name=='batch')
+    returns = [n for n in ast.walk(batch_fn) if isinstance(n,ast.Return)]
+    assert len(returns)==1 and isinstance(returns[0].value,ast.Tuple)
+    returns[0].value = ast.Call(func=ast.Name(id='HEY_BATCH_GUARD',ctx=ast.Load()),
+                               args=returns[0].value.elts,keywords=[])
     # This check is inserted after parse_args, before any data/model operations.
     parse_index = next(i for i,n in enumerate(main.body)
                        if isinstance(n, ast.Assign) and ast.unparse(n) == 'args = parser.parse_args()')
@@ -53,6 +60,7 @@ tf.config.experimental.enable_tensor_float_32_execution(False)
                         and '.write_text(' in ast.unparse(n))
     main.body[report_index:report_index] = ast.parse('''
 report.update(target_id=HEY_TARGET_ID, checkpoint_policy='fixed-final-20000',
+              batch_schedule=HEY_BATCH_GUARD.finish(),
               validation_detection='not run; development external',
               selection='Fixed final20000; no development scoring or selection',
               scope='Synthetic research candidate; independent acceptance required')
@@ -101,6 +109,8 @@ def main():
     lock = json.loads(remote_bytes)
     if lock['schema'] != 'hey-paired-training-lock-v1':
         raise ValueError('Unknown training lock')
+    for package,version in lock['versions'].items():
+        if importlib.metadata.version(package)!=version:raise ValueError('Training dependency changed: '+package)
     # The exact lock commit must already exist on the remote research branch.
     commit = lock['material_commit']
     subprocess.run(['git','merge-base','--is-ancestor',commit,
@@ -108,18 +118,41 @@ def main():
     for name, digest in lock['files'].items():
         if sha(Path(name)) != digest:
             raise ValueError(f'Locked file changed: {name}')
-    for path in (TRAINER, Path(__file__), Path(__file__).with_name('validate_hey_target_pack_v1.py')):
+    for path in (TRAINER, Path(__file__), Path(__file__).with_name('validate_hey_target_pack_v1.py'),
+                 Path(__file__).with_name('hey_batch_schedule_v1.py'),
+                 Path(__file__).with_name('audit_hey_training_batch_v1.py')):
         if lock['files'].get(str(path.relative_to(Path.cwd()))) != sha(path):
             raise ValueError('Training code not bound by lock')
+    for path in TRAINER.parent.glob('*.py'):
+        if lock['files'].get(str(path.relative_to(Path.cwd()))) != sha(path):
+            raise ValueError('Training helper not bound by lock')
     arm = lock['arms'][a.target]
     root = Path(arm['features'])
     mandatory = [root/n for n in ('features.bin','features.json','human.json','ambient.json','target-provenance.json')]
-    mandatory += [Path(lock['initial_weights'])]
+    mandatory += [Path(lock['initial_weights']),Path(arm['batch_schedule']),
+                  Path(arm['cpu_audit']),Path(arm['schedule_receipt'])]
     for path in mandatory:
         key = str(path.resolve().relative_to(Path.cwd()))
         if lock['files'].get(key) != sha(path):
             raise ValueError('Input not explicitly bound by training lock: '+key)
-    validate(root, a.target, required_splits=('training',))
+    admission=validate(root, a.target, required_splits=('training',))
+    cpu=json.loads(Path(arm['cpu_audit']).read_text())
+    scheduled=json.loads(Path(arm['schedule_receipt']).read_text())
+    if (cpu['target_admission']['target_id']!=a.target or not cpu['target_admission']['admitted']
+            or cpu['target_admission']['sidecar_sha256']!=admission['sidecar_sha256']
+            or cpu['trainer_sha256']!=sha(TRAINER) or cpu['batch_shape']!=[128,150,40]
+            or not cpu['deterministic_repeat']):
+        raise ValueError('Actual target CPU batch admission missing/mismatched')
+    if (scheduled['target']!=a.target or scheduled['batches']!=20100
+            or scheduled['schedule_sha256']!=sha(Path(arm['batch_schedule']))
+            or scheduled['trainer_sha256']!=sha(TRAINER)
+            or scheduled['target_provenance_sha256']!=admission['sidecar_sha256']
+            or scheduled['schedule_generator_sha256']!=sha(Path(__file__).with_name('hey_batch_schedule_v1.py'))
+            or scheduled['auditor_sha256']!=sha(Path(__file__).with_name('audit_hey_training_batch_v1.py'))):
+        raise ValueError('Complete precomputed batch schedule admission missing/mismatched')
+    first=json.loads(Path(arm['batch_schedule']).read_text().splitlines()[0])
+    if first['tensor_sha256']!=cpu['batch_sha256']:
+        raise ValueError('CPU audit and schedule first batch differ')
     rows = json.loads((root/'features.json').read_text())
     other = sum((json.loads((root/n).read_text()) for n in ('human.json','ambient.json')),[])
     if any(r['split'] != 'training' for r in rows+other):
@@ -132,8 +165,9 @@ def main():
                 '--architecture','teacher60','--context-frames','150',
                 '--batchnorm-policy','frozen','--steps','20000','--eval-interval','5000',
                 '--source-exponent','0','--ambient-sampling','rows','--device',a.device]
+    guard=BatchGuard(Path(arm['batch_schedule']),Path(arm['output']))
     tree = adapted_tree()
-    exec(compile(tree,str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER), HEY_TARGET_ID=a.target))
+    exec(compile(tree,str(TRAINER),'exec'),dict(__name__='__main__',__file__=str(TRAINER), HEY_TARGET_ID=a.target, HEY_BATCH_GUARD=guard))
     output = Path(arm['output'])
     report = json.loads((output/'training.json').read_text())
     assert report['selected_step'] == 20000

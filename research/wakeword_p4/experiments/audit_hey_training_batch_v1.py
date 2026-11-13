@@ -19,7 +19,7 @@ from negative_sampling import candidate_ends
 from spec_augment import mask_spectrograms
 
 
-def audit(root, target=None):
+def audit(root, target=None, return_sampler=False):
     admission = None
     if target:
         from validate_hey_target_pack_v1 import validate
@@ -66,6 +66,10 @@ def audit(root, target=None):
                full_source=None, complete_coverage=None, us_coverage=None,
                balanced_coverage=None, hard_ambient=None)
     exec(compile(ast.Module(body=funcs, type_ignores=[]), str(trainer), 'exec'), env)
+    if return_sampler:
+        env.update(rng=np.random.default_rng(726), mining_rng=np.random.default_rng(4726),
+                   augmentation_rng=np.random.default_rng(10726))
+        return env
     def run():
         env.update(rng=np.random.default_rng(726), mining_rng=np.random.default_rng(4726),
                    augmentation_rng=np.random.default_rng(10726))

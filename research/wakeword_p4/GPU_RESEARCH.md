@@ -6555,3 +6555,12 @@ New paired Willow/Nyx study was preregistered before observing these results;
 its existing2400training synthesis/schedule/voice locks continue unchanged.
 Its dev/acceptance synthetic remain ungenerated, new continuousdev10.48394h
 prepared but unscored. Goal remains active; no human listening/recording gate.
+
+
+### 2026-11-13 — paired native completion and batch schedule guard
+
+Original native v2 generator is terminal; summary and records SHA verified: 2400 requested/recorded/passed, whole native mechanical pack qualified. Original summary preserved in `4090-hey-paired-native-completion-v2.json`; no synthetic development/acceptance generated. Started the previously frozen full 7200 rendering and 2400 token-allocation extraction, sessions 14228/61776; neither is yet certified complete.
+
+Training adapter now requires authenticated CPU first-batch and full 20000 training + 100 PTQ batch schedule receipts, exact package versions, and helper hashes. Guard compares actual input/label/weight bytes on every batch before returning it to the original trainer and requires complete consumption. No actual new-pack CPU audit/schedule/training lock exists yet; this is source integration, not gradient/export or runtime certification. Four guard, two adapter, three geometry tests pass. All 284 original formal file pins remain identical. Refreshed unpublished source-audit SHA after final adapter changes.
+
+Mac Issue13 latest 6862148056 reports native Willow 13x12 historical PCM witness in progress and three new development calls exceeding existing one-hour runner limit. New reference must retain each whole call without reset; no acceptance opened, v30 unchanged.
