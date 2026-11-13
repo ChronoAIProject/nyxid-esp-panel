@@ -1,0 +1,308 @@
+{
+  "schema": "mac-hey-training-recipe-comparison-v1",
+  "gpu_commit": "e487c2a1943509791074c239307ef71c4645dc50",
+  "input_sha256": {
+    "4090-v30-training.json": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+    "4090-hey-v2-hey_nyx-original-training.json": "d90dafe13e30d543e91c97114c5ce6bfc0725add236cbbcf12765046f26c864d",
+    "4090-hey-training-stream-diagnostic-completion-v1.json": "53fed99b5b5f4cc2b07d8c75c5d90553d9e354bbd11f58769fdb19a22eae1c33",
+    "4090-hey-float-int8-diagnostic-audit-v1.json": "65e7bd008817919a1d7297737c1555ca716e69ed206518a434a5813c4c06a7b9"
+  },
+  "identical_reported_configuration": {
+    "context_frames": 150,
+    "architecture": "teacher60",
+    "architecture_args": [
+      "--residual_connection",
+      "0,0,0,0",
+      "--stride",
+      "3",
+      "--pointwise_filters",
+      "60,60,60,60",
+      "--repeat_in_block",
+      "1,1,1,1",
+      "--mixconv_kernel_sizes",
+      "[5], [9], [13], [21]",
+      "--first_conv_filters",
+      "30",
+      "--first_conv_kernel_size",
+      "5"
+    ],
+    "parameters": 22801,
+    "recipe": "stream-v2",
+    "initial_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+    "classifier_reset": true,
+    "frozen_batchnorm": [
+      "batch_normalization",
+      "batch_normalization_1",
+      "batch_normalization_2",
+      "batch_normalization_3"
+    ],
+    "batchnorm_policy": "frozen",
+    "negative_weight": 20,
+    "source_exponent": 0.0,
+    "validation_window_phase": 1
+  },
+  "differences": {
+    "steps": {
+      "v30": 120000,
+      "paired_v2_nyx": 20000
+    },
+    "selected_step": {
+      "v30": 70000,
+      "paired_v2_nyx": 20000
+    },
+    "sources": {
+      "v30": {
+        "0": {
+          "piper": 60000,
+          "kokoro": 20000,
+          "qwen-cuda": 2680
+        },
+        "1": {
+          "piper": 60000,
+          "kokoro": 3000,
+          "qwen-cuda": 300
+        }
+      },
+      "paired_v2_nyx": {
+        "0": {
+          "en_US-kusal-medium": 3240,
+          "en_US-reza_ibrahim-medium": 3240
+        },
+        "1": {
+          "en_US-kusal-medium": 360,
+          "en_US-reza_ibrahim-medium": 360
+        }
+      }
+    },
+    "ambient_sampling": {
+      "v30": "stratified",
+      "paired_v2_nyx": "rows"
+    },
+    "prefix_negatives": {
+      "v30": {
+        "count_per_batch": 16,
+        "seed": 20726,
+        "gap_frames_inclusive": [
+          15,
+          35
+        ],
+        "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."
+      },
+      "paired_v2_nyx": {
+        "count_per_batch": 0,
+        "seed": 20726,
+        "gap_frames_inclusive": [
+          15,
+          35
+        ],
+        "policy": "Training-positive crops ending 150..350ms before unchanged keyword_frame; replace confusing-negative slots; baseline RNG unchanged; label0 weight20. Endpoint is an energy proxy, not phone timing."
+      }
+    }
+  },
+  "published_training_stream_summary": {
+    "hey_willow": {
+      "rows": 7200,
+      "summary": [
+        {
+          "label": 0,
+          "group": "all",
+          "rows": 6480,
+          "maximum_five_peak": 0.0171875,
+          "median_five_peak": 0.01015625
+        },
+        {
+          "label": 0,
+          "group": "variant:0",
+          "rows": 2160,
+          "maximum_five_peak": 0.0046875,
+          "median_five_peak": 0.0046875
+        },
+        {
+          "label": 0,
+          "group": "variant:1",
+          "rows": 2160,
+          "maximum_five_peak": 0.0109375,
+          "median_five_peak": 0.0109375
+        },
+        {
+          "label": 0,
+          "group": "variant:2",
+          "rows": 2160,
+          "maximum_five_peak": 0.0171875,
+          "median_five_peak": 0.01015625
+        },
+        {
+          "label": 0,
+          "group": "engine:en_US-kusal-medium",
+          "rows": 3240,
+          "maximum_five_peak": 0.0109375,
+          "median_five_peak": 0.01015625
+        },
+        {
+          "label": 0,
+          "group": "engine:en_US-reza_ibrahim-medium",
+          "rows": 3240,
+          "maximum_five_peak": 0.0171875,
+          "median_five_peak": 0.01015625
+        },
+        {
+          "label": 1,
+          "group": "all",
+          "rows": 720,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:0",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:1",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:2",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "engine:en_US-kusal-medium",
+          "rows": 360,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "engine:en_US-reza_ibrahim-medium",
+          "rows": 360,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        }
+      ]
+    },
+    "hey_nyx": {
+      "rows": 7200,
+      "summary": [
+        {
+          "label": 0,
+          "group": "all",
+          "rows": 6480,
+          "maximum_five_peak": 0.0078125,
+          "median_five_peak": 0.00390625
+        },
+        {
+          "label": 0,
+          "group": "variant:0",
+          "rows": 2160,
+          "maximum_five_peak": 0.00078125,
+          "median_five_peak": 0.00078125
+        },
+        {
+          "label": 0,
+          "group": "variant:1",
+          "rows": 2160,
+          "maximum_five_peak": 0.0078125,
+          "median_five_peak": 0.00390625
+        },
+        {
+          "label": 0,
+          "group": "variant:2",
+          "rows": 2160,
+          "maximum_five_peak": 0.0078125,
+          "median_five_peak": 0.00390625
+        },
+        {
+          "label": 0,
+          "group": "engine:en_US-kusal-medium",
+          "rows": 3240,
+          "maximum_five_peak": 0.0078125,
+          "median_five_peak": 0.00390625
+        },
+        {
+          "label": 0,
+          "group": "engine:en_US-reza_ibrahim-medium",
+          "rows": 3240,
+          "maximum_five_peak": 0.0078125,
+          "median_five_peak": 0.00390625
+        },
+        {
+          "label": 1,
+          "group": "all",
+          "rows": 720,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:0",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:1",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "variant:2",
+          "rows": 240,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "engine:en_US-kusal-medium",
+          "rows": 360,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        },
+        {
+          "label": 1,
+          "group": "engine:en_US-reza_ibrahim-medium",
+          "rows": 360,
+          "maximum_five_peak": 0.99609375,
+          "median_five_peak": 0.99609375
+        }
+      ]
+    }
+  },
+  "published_original_float_summary": {
+    "hey_willow": {
+      "development_float_five_max": 0.007415521266375436,
+      "development_float_five_median": 0.007064145558979362,
+      "development_int8_five_max": 0.0109375,
+      "all_38_saved_traces_verified": true
+    },
+    "hey_nyx": {
+      "development_float_five_max": 0.9991604447364807,
+      "development_float_five_median": 0.0030849104026856367,
+      "development_int8_five_max": 0.99609375,
+      "all_38_saved_traces_verified": true
+    }
+  },
+  "findings": [
+    "The same teacher60 architecture and original initialization are used; v30 and paired Nyx are not an architecture comparison.",
+    "The v30 recipe uses substantially broader Piper/Kokoro/Qwen source coverage, stratified ambient sampling, prefix negatives and different training duration/selection.",
+    "Published complete training-feature streams have strong positive support; bounded original float development failure excludes a solely INT8 explanation.",
+    "No isolated diversity-only, optimization-only, voice-only or accent-only cause is identified by these comparisons."
+  ],
+  "independent_raw_archive_audit_on_mac": false,
+  "media_accessed": false,
+  "inference_run": false,
+  "threshold_selected": false,
+  "acceptance_accessed": false,
+  "next_action": "Prepare a separately frozen representative broad-source paired Willow/Nyx study using already assigned training-only identities. Preserve held IDs/voices, failed pilot and v30; do not claim existing 672-ID LibriTTS research is novel or regenerate it blindly. Keep original official grid running."
+}

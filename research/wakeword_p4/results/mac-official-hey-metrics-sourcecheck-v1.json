@@ -1,0 +1,60 @@
+{
+  "schema": "mac-official-hey-metrics-sourcecheck-v1",
+  "gpu_commit": "56c0d97561c996488eb39394c9ba204ca956cef6",
+  "exact_source_files": [
+    {
+      "path": "research/wakeword_p4/qemu_hey_reference_v2/calibrate_development.py",
+      "sha256": "53c44f96292a8f281a10a3558720ba9a11cf1444b95e973b030ad8c37194cb8d"
+    },
+    {
+      "path": "research/wakeword_p4/qemu_hey_reference_v2/test_development_metrics.py",
+      "sha256": "c1a9f44e52e43fb5b8611a4b728df6fc424481292e58909221a12c9ea59daef5"
+    },
+    {
+      "path": "research/wakeword_p4/qemu_hey_reference_v2/run_development_grid.py",
+      "sha256": "f3cf47600776a0b002413ffa3fc2ece17bdc454db1269dc7a852e593482e0f73"
+    },
+    {
+      "path": "research/wakeword_p4/experiments/hey_development_metrics_v1.py",
+      "sha256": "c88d82aae21b3fe6096ce34b78be9359ce1dbafa25a67229bf20171ed5eaa140"
+    },
+    {
+      "path": "research/wakeword_p4/experiments/uint8_event_policy_v1.py",
+      "sha256": "6a35d8e591545881a42c5d3e4a8b0bac62a4940bbf042a1b01fa44049409653f"
+    }
+  ],
+  "versions": {
+    "numpy": "2.4.3",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0"
+  },
+  "command": "python -m unittest -v test_development_metrics.py",
+  "source_directory": "research/wakeword_p4/qemu_hey_reference_v2",
+  "exit_code": 0,
+  "tests": 2,
+  "passed": [
+    "test_early_event_cannot_be_full_phrase_hit",
+    "test_same_word_and_hiesp_labels"
+  ],
+  "source_review": {
+    "target_positives": 36,
+    "willow_common_cross_negatives": [
+      288,
+      36
+    ],
+    "hiesp_common_cross_negatives": [
+      252,
+      72
+    ],
+    "fullphrase_reference": "generated_prefix_end_sample",
+    "custom_and_official_reference_consistent": true,
+    "original_official_return_events_preserved": true,
+    "custom_smoothing_not_applied_to_official": true,
+    "background_policy": "whole sources; one create/prime/fullinput/destroy per source",
+    "far_upper": "one-sided Poisson 95 percent using full source hours"
+  },
+  "actual_development_inference": false,
+  "device_operated": false,
+  "acceptance_accessed": false,
+  "limits": "Exact published source imported and its two constructed-ledger tests executed on Mac; no real media, curves, native recognition, FAR or equivalence acceptance is established."
+}
