@@ -11,6 +11,8 @@ from scipy.stats import chi2
 ROOT=Path('research/wakeword_p4')
 sys.path.insert(0,str(ROOT/'training'))
 from evaluate import THRESHOLDS,event_indices
+from uint8_event_policy_v1 import EVENT_ARITHMETIC
+from score_recovered_new_development_v1 import canonical_means
 
 BASE=Path('.local/wakeword/recovered-new-development-v1')
 FREEZE=ROOT/'results/4090-recovered-new-development-execution-pins-v1.json'
@@ -68,6 +70,7 @@ def calibrate():
     assert all(importlib.metadata.version(p)==v for p,v in freeze['versions'].items())
     assert report['execution_pins_sha256']==sha(FREEZE) and report['model_sha256']==freeze['model_sha256']
     assert not report['threshold_selected'] and not report['acceptance_scored']
+    assert freeze['event_arithmetic']==report['event_arithmetic']==EVENT_ARITHMETIC
     for p,e in freeze['files'].items():assert sha(p)==e['sha256']
     # Calibration source is pinned in the candidate execution receipt before inference.
     assert freeze['calibrator_sha256']==sha(__file__)
@@ -83,6 +86,9 @@ def calibrate():
             assert result['reset_repeatable']
             p=BASE/phase/f'{i}-scores.npy';assert sha(p)==result['score_sha256']
             scores=np.load(p,allow_pickle=False);row=result['record']
+            raw_path=BASE/phase/f'{i}-raw-uint8.npy'
+            assert sha(raw_path)==result['raw_uint8_sha256']
+            np.testing.assert_array_equal(scores,canonical_means(np.load(raw_path,allow_pickle=False)))
             assert scores.shape==(((row['samples']+159)//160-2)//3-4,) and np.isfinite(scores).all()
             assert np.all((scores>=0)&(scores<=1))
             values.append((row,scores))
@@ -104,7 +110,7 @@ def calibrate():
                 candidate_report_sha256=sha(BASE/'report.json'),grid=points,
                 minimum_macro=minimum,threshold=selected['threshold'] if selected else None,
                 viable_operating_point=selected is not None,selected=selected,
-                validation_only=True,final_data_used=False,sliding_window=5,
+                validation_only=True,final_data_used=False,sliding_window=5,event_arithmetic=EVENT_ARITHMETIC,
                 selected_synthetic_details=synthetic_metrics(groups['synthetic'],selected['threshold'],True) if selected else None,
                 acceptance_authorized=False,candidate_promoted=False,
                 limits='Development threshold selection only. Null is failure, no fallback, no acceptance rescue. Full generated/RIR reference is not phonetic truth; nominal Poisson FAR ignores clustering; shared-parent/unknown exposure limitations persist.')

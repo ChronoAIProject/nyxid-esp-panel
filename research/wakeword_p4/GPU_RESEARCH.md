@@ -6201,3 +6201,14 @@ training-float grid 0 eligible；fallback 0.994：recall 0.600462962962963、mac
 
 原 PID817144 已继续至100500；284 formal哈希全部一致。完整逐批审计/原后处理等待两臂完成；无INT8/新开发/独立验收或跨臂收益结论。Mike/test6/7未消费，v30冻结。新Hey配对协议67293a9已提交，原实验和新协议分开推进，目标未完成。
 
+
+### Future development arithmetic wiring (2026-11-13)
+
+Future scorer now saves original UINT8 traces and derives integer-sum/1280
+binary64 means; future calibrator authenticates raw hashes and exact means.
+Both declare uint8-sum-binary64-v1; freeze includes detector/policy module bytes.
+356compiled boundary streams match integrated means/event indices;6decision
+and2matched admission tests pass. All284formal hashes unchanged; no candidate
+freeze exists and no speech scored. Consumer opt-in profile and full future
+freeze still required before scoring; prior metadata-only compatibility receipt
+does not certify this arithmetic-enabled producer with latest Mac consumer.

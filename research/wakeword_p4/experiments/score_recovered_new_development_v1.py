@@ -10,7 +10,13 @@ import soundfile as sf
 
 ROOT=Path('research/wakeword_p4')
 sys.path.insert(0,str(ROOT/'training'))
-from evaluate import Detector,smooth
+from uint8_stream_detector_v1 import Uint8StreamDetector
+from uint8_event_policy_v1 import EVENT_ARITHMETIC
+
+def canonical_means(raw):
+    if raw.dtype != np.uint8 or raw.ndim != 1:
+        raise ValueError("Expected original raw UINT8 trace")
+    return np.convolve(raw.astype(np.int32),np.ones(5,np.int32),'valid') / 1280.0 if len(raw)>=5 else np.array([],dtype=np.float64)
 from features import features
 
 BASE=Path('.local/wakeword')
@@ -83,12 +89,12 @@ def write_freeze():
         gates.append(p)
     assert [r['record'] for r in synthetic_baseline['records']]==json.loads(sources['synthetic'].read_text())['records']
     assert [r['record'] for r in background_baseline['records']]==json.loads(sources['background'].read_text())['records']
-    files={str(p):dict(size=p.stat().st_size,sha256=sha(p)) for p in required+gates+list(sources.values())+[MODEL/'hey_nyx.tflite',MODEL/'best.weights.h5']}
+    files={str(p):dict(size=p.stat().st_size,sha256=sha(p)) for p in required+gates+list(sources.values())+[MODEL/'hey_nyx.tflite',MODEL/'best.weights.h5',ROOT/'experiments/uint8_stream_detector_v1.py',ROOT/'experiments/uint8_event_policy_v1.py']}
     for key in ['detector','frontend']:
         p=Path(inv['files'][key]['path']);files[str(p)]=dict(size=p.stat().st_size,sha256=sha(p))
     freeze=dict(schema='sole-recovered-new-development-execution-pins-v1',files=files,
                 manifests={k:str(v) for k,v in sources.items()},model_sha256=training['model_sha256'],
-                executor_sha256=sha(__file__),
+                executor_sha256=sha(__file__),event_arithmetic=EVENT_ARITHMETIC,
                 calibrator_sha256=sha(ROOT/'experiments/calibrate_recovered_new_development_v1.py'),
                 versions=versions(),expected_records={'synthetic':360,'background':42},
                 authorizes='Sole original completed recovered export DEVELOPMENT traces only; no threshold/acceptance/promotion',
@@ -101,7 +107,8 @@ def score():
     freeze=json.loads(FREEZE.read_text())
     assert sha(__file__)==freeze['executor_sha256'] and versions()==freeze['versions']
     for p,e in freeze['files'].items():assert sha(p)==e['sha256'] and Path(p).stat().st_size==e['size']
-    detector=Detector(MODEL/'hey_nyx.tflite')
+    assert freeze['event_arithmetic']==EVENT_ARITHMETIC
+    detector=Uint8StreamDetector(MODEL/'hey_nyx.tflite')
     assert detector.input['dtype']==np.int8 and detector.output['dtype']==np.uint8
     assert tuple(detector.input['shape'])==(1,3,40) and tuple(detector.output['shape'])==(1,1)
     OUT.mkdir(exist_ok=False);(OUT/'freeze.json').write_bytes(FREEZE.read_bytes())
@@ -116,16 +123,17 @@ def score():
                 path=manifest.parent/row['path'];assert sha(path)==row['sha256']
                 pcm,rate=sf.read(path,dtype='int16');assert rate==16000 and pcm.ndim==1 and len(pcm)==row['samples']
                 assert hashlib.sha256(pcm.astype('<i2').tobytes()).hexdigest()==row['pcm_sha256']
-                raw=features(pcm);detector.reset();scores=smooth(detector.predict(raw),5)
-                detector.reset();np.testing.assert_array_equal(scores,smooth(detector.predict(raw),5))
+                raw=features(pcm);detector.reset();output_bytes=detector.predict(raw);scores=canonical_means(output_bytes)
+                detector.reset();np.testing.assert_array_equal(output_bytes,detector.predict(raw))
+                raw_trace=group/f'{i}-raw-uint8.npy';np.save(raw_trace,output_bytes)
                 assert len(scores)==((len(pcm)+159)//160-2)//3-4 and np.isfinite(scores).all() and np.all((0<=scores)&(scores<=1))
                 trace=group/f'{i}-scores.npy';np.save(trace,scores)
-                record=dict(record=row,score_sha256=sha(trace),scores=len(scores),reset_repeatable=True)
+                record=dict(record=row,score_sha256=sha(trace),raw_uint8_sha256=sha(raw_trace),scores=len(scores),reset_repeatable=True)
                 completed.append(record);log.write(json.dumps(record)+'\n');log.flush()
                 print(json.dumps(dict(phase=phase,completed=i+1,planned=len(rows))),flush=True)
         phases[phase]=dict(manifest_sha256=sha(manifest),records=completed)
     report=dict(model_sha256=freeze['model_sha256'],execution_pins_sha256=sha(FREEZE),phases=phases,
-                smoothing=5,threshold_selected=False,acceptance_scored=False,candidate_promoted=False,
+                event_arithmetic=EVENT_ARITHMETIC,smoothing=5,threshold_selected=False,acceptance_scored=False,candidate_promoted=False,
                 limits='Complete new DEVELOPMENT traces only; separate preregistered calibration required. Synthetic generation/RIR boundaries are not phonetic truth; shared parent/unknown partial/person/pretraining overlap limits persist.')
     (OUT/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 
