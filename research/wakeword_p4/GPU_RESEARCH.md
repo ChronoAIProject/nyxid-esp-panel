@@ -7580,3 +7580,20 @@ not yet complete at this observation. Do not restart on observation timeout.
 Original formal Willow1047649 continues, observed42000/120000. No heldout
 acceptance or new development wake inference. Need complete history and
 background overlap admission/collector/model execution pins before scoring.
+
+### Jenny exact history finished; Mac collector imported verbatim
+
+Original history session89777 exit0.528newnative/rendered WAV authenticated,
+1056encoded/PCM hashes versus1760Git+7114local metadata files:0exact matches.
+Private inventory and waveform receipts pinned; no old media decoded. Limits
+remain exact only, no subclip/reencoding/unrecorded/pretraining proof.
+Imported5Mac collector files verbatim from48a524e21ebed9272e214d68e1c0c9df8bffa2e4,
+including preserved original alias failure. Linux9constructed checks pass;
+entire report byte-identical to Mac. Does not execute real frontend/model or
+consume newdevelopment. Mac prepares independent metrics; do not duplicate.
+Current fresh12background history adapter started session92377, original
+pipeline/source checks retained, currentJenny metadata excluded explicitly,
+pre-generation87ac9469+Macd0c589b histories. No retry/filtering/scoring.
+Willow original1047649 verifiedlive47500/120000, no guard mismatch/restart.
+Mac6866560713 withdrew goal-text correction; direct user fresh-dev requirement
+remains and olddev is clearly labeled regression. No historical contract edit.
