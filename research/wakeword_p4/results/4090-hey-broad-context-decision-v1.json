@@ -1,0 +1,35 @@
+{
+  "schema": "hey-broad-context-decision-v1",
+  "source_sha256": "9180cc387dcd287786cb23d3481aec55f155df9d04a6610833541777825c3812",
+  "training_only_geometry": {
+    "piper": {
+      "positive_cases": 16128,
+      "completed_record_prefix_sha256": "aa123bef2ce736bf6e17b80514021b7bec505e6c9fe9413d56c424335a810cd8",
+      "whole_source_prefix_plus_rir_max": 13964,
+      "frames_with_max_jitter": 115
+    },
+    "kokoro": {
+      "positive_cases": 480,
+      "completed_record_prefix_sha256": "310630575334b734659e147ef3efd29146e366a2949f0471a6a1834343e04811",
+      "whole_source_prefix_plus_rir_max": 28560,
+      "frames_with_max_jitter": 206
+    },
+    "qwen": {
+      "positive_cases": 144,
+      "completed_record_prefix_sha256": "c7be30eef4ce58c8c53fe2b44a6d7a3d81f0dbecf40874afcce0ac7d9c92a375",
+      "whole_source_prefix_plus_rir_max": 31680,
+      "frames_with_max_jitter": 225
+    }
+  },
+  "context_frames": 225,
+  "rule": "ceil to multiple3 of max(150, ceil((full original source-to-generated-prefix-end+960 RIR)/160)+27) across every training positive; no model response/heldout used.",
+  "protection": "Original source sample0 through entire internal wake-prefix (Qwen entire bare waveform) plus complete RIR tail. Initial sentinel allocation remains protected for Kokoro; no alternative token-start rule adopted.",
+  "architecture": "teacher60 convolution/BN transferred exactly, new wider classifier initialized once before both arms, exact initialization/schedule/export locks required.",
+  "optimization": "Single120000 updates/arm, fixed final120000 checkpoint. Fresh independent development selects thresholds only; no old consumed-development checkpoint selection.",
+  "shape_probe_sha256": "3d314bc86fa21227d8d1c4182fbb1e1c1a7af36e193fdb61006927d7cd4914c9",
+  "required_before_training": [
+    "Final full Qwen mechanical and independent artifact audits, all other source audits.",
+    "Exact context225 initialization/target/sampler/optimizer/frontend/export lock, CPU actual batches, paired smoke and real waveform streaming export admission."
+  ],
+  "limits": "Geometry and CPU weight-shape feasibility only. Not same original context150 model/initializer; no training, export, recognition or promotion claim."
+}

@@ -7237,3 +7237,23 @@ Original common Piper session63281 exited0:18144/18144 process passes,6048
 reused; independent auditor PID1001290 is actually live reading original files,
 not yet complete. Original queued Qwen65226/PID1002143 has begun and was
 observed23/360; no restart. Official958504 remains live743/9672.
+
+
+### Full original-source context225 decision, no prefix-start relaxation
+
+Original common Piper independent audit now completed:18144/18144 qualify,
+72576 original files and full saved resample/token duration identity verified.
+Qwen original still live; first144 positive records complete with max30720
+16k samples, exact completed-prefix SHA recorded, no candidate inference.
+
+CPU shape feasibility probe (no audio/model inference) confirms context225/300
+can copy every original convolution and BN variable exactly. Classifier shape
+changes; params24301/25801 vs22801, so old initializer identity cannot be claimed.
+Training-only geometry lock chooses225: ceil_multiple3(max(150,ceil((full source
+through generated prefix+960RIR)/160)+27)). Includes all Piper16128,Kokoro480,
+Qwen144 positive records. Kokoro initial sentinel remains protected; alternative
+token-start rule NOT adopted. No samples/phones discarded or source trimmed.
+Fixed final120000/arm, fresh development threshold selection only. New head
+initialization, CPU batch, streaming/export and recipe admission still required;
+this is not trained-model performance/promotion. Original failed150 geometry
+is retained and explained by independently recorded longer source durations.

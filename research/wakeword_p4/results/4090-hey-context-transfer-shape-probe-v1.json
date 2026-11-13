@@ -1,0 +1,456 @@
+{
+  "schema": "hey-context-transfer-shape-probe-v1",
+  "script_sha256": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+  "source_weights_sha256": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b",
+  "mixednet_sha256": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+  "tensorflow": "2.21.0",
+  "original_parameters": 22801,
+  "results": [
+    {
+      "context_frames": 225,
+      "parameters": 24301,
+      "encoder_and_bn_exact_copy": true,
+      "copied_layers": [
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              5,
+              1,
+              40,
+              30
+            ]
+          ],
+          "value_sha256": "81cc23a4a9b2fca201737d98275640850ea2f17849f9954a39cc94c7838ac0c9"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              5,
+              1,
+              30,
+              1
+            ],
+            [
+              30
+            ]
+          ],
+          "value_sha256": "d565a246286d1c61692947db0194955f18d0475a1e8d2b0ebc138a27bc2c3746"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              30,
+              60
+            ]
+          ],
+          "value_sha256": "a864fdfc6382a15e2c4010f157198e3bf2416bb3fac01efe84b21e1a92662e1b"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "0040dc4621f26244123d8939da8997272cd49a9fa33e30b10079253661a94f39"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              9,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "0de66c8dc4e4a3283b8014f2a798f1e45dbe36631208185f974bf9b45b60918d"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "4f0967bf992ba5400848da9b0d61641da8753143a92167c68af0c9ddfb3a7c19"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "d298c0bf830ce5abf814511a367c287c1f1f876ef1b55ab7bfb8922a32dff3f1"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              13,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "cc49a00bea8df14ef3a80d6ac85bd1195537b1d9ea7f8bccdc9c06836efe790b"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "8778a361641d96241162962c495365ebbec79ee59ea3222698beee68c321bc39"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "8badda25d23a419f558e54ab81bb207f4f4ea4b41ba38de4676004a226bdde86"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              21,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "89ecce8218a67ac559ac1b91e9c648f9a36885a749cd5dd46a33c5e2dad8b762"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "ccda27e566843b359b8c792b8ba63b2decd114e40800186badb674733fdc2b75"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "65671d89f6999c3a3354c6b9ef22937d259c6816bd798f944ce8a1c50362fdd6"
+        }
+      ],
+      "classifier_shape_change": [
+        {
+          "kind": "classifier",
+          "old_shapes": [
+            [
+              300,
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "new_shapes": [
+            [
+              1800,
+              1
+            ],
+            [
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "context_frames": 300,
+      "parameters": 25801,
+      "encoder_and_bn_exact_copy": true,
+      "copied_layers": [
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              5,
+              1,
+              40,
+              30
+            ]
+          ],
+          "value_sha256": "81cc23a4a9b2fca201737d98275640850ea2f17849f9954a39cc94c7838ac0c9"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              5,
+              1,
+              30,
+              1
+            ],
+            [
+              30
+            ]
+          ],
+          "value_sha256": "d565a246286d1c61692947db0194955f18d0475a1e8d2b0ebc138a27bc2c3746"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              30,
+              60
+            ]
+          ],
+          "value_sha256": "a864fdfc6382a15e2c4010f157198e3bf2416bb3fac01efe84b21e1a92662e1b"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "0040dc4621f26244123d8939da8997272cd49a9fa33e30b10079253661a94f39"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              9,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "0de66c8dc4e4a3283b8014f2a798f1e45dbe36631208185f974bf9b45b60918d"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "4f0967bf992ba5400848da9b0d61641da8753143a92167c68af0c9ddfb3a7c19"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "d298c0bf830ce5abf814511a367c287c1f1f876ef1b55ab7bfb8922a32dff3f1"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              13,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "cc49a00bea8df14ef3a80d6ac85bd1195537b1d9ea7f8bccdc9c06836efe790b"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "8778a361641d96241162962c495365ebbec79ee59ea3222698beee68c321bc39"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "8badda25d23a419f558e54ab81bb207f4f4ea4b41ba38de4676004a226bdde86"
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "shapes": [
+            [
+              21,
+              1,
+              60,
+              1
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "89ecce8218a67ac559ac1b91e9c648f9a36885a749cd5dd46a33c5e2dad8b762"
+        },
+        {
+          "kind": "Conv2D",
+          "shapes": [
+            [
+              1,
+              1,
+              60,
+              60
+            ]
+          ],
+          "value_sha256": "ccda27e566843b359b8c792b8ba63b2decd114e40800186badb674733fdc2b75"
+        },
+        {
+          "kind": "BatchNormalization",
+          "shapes": [
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ],
+            [
+              60
+            ]
+          ],
+          "value_sha256": "65671d89f6999c3a3354c6b9ef22937d259c6816bd798f944ce8a1c50362fdd6"
+        }
+      ],
+      "classifier_shape_change": [
+        {
+          "kind": "classifier",
+          "old_shapes": [
+            [
+              300,
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "new_shapes": [
+            [
+              3300,
+              1
+            ],
+            [
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "decision": "Feasibility only; no context selected. A longer context requires a new exact classifier initialization and training/export/streaming contract; original context150 initializer contract cannot be claimed unchanged.",
+  "limits": "No audio/features loaded, no optimizer updates, no inference, no export or trained candidate. Original weights/files unchanged."
+}
