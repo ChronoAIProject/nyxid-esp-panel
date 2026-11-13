@@ -7374,3 +7374,16 @@ H5/model/inventory retained; SHA receipts in4090-hey-broad-gpu-smokes-v1.json.
 Not a trained recognition candidate, full-waveform INT8 admission or120k
 formal schedule. Next complete matched formal schedule and actual-stream
 checks before formal run. v30 untouched, heldout data unopened by smokes.
+
+### Broad smoke fullwave INT8 structural replay
+
+e987a26 fixed plan pushed before original session52477, exit0. Six original
+training-only fullPCM ×both smoke models=12cases/2084ordered calls per pass.
+Whole frontend once/input, final-only hop/3frame padding, builtin-reference
+INT8 interpreter. Twice fresh interpreter per case yields exact full uint8
+traces. Input/output quantization, complete raw/q/output arrays and one-based
+clock (3*s+2)*160 capped at PCM end saved. Independent saved-array receipt
+check confirms all12 NPZ hashes/shapes/clocks. No utterance/model selection,
+thresholds/FAR/heldout or new updates. This is reset/stream structural evidence
+only, not float-vs-INT8 accuracy certification or trained recognition success.
+Formal matched120k schedule and quantitative trained-model gates remain.
