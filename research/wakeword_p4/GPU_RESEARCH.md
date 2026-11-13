@@ -7551,3 +7551,17 @@ all hashes/decoded PCM/quiet source exact, maxerror3.0517344763185753e-05,
 0geometryfailures. No new model scoring/threshold selection. Next encoded/PCM
 history, fresh continuous background and newcollector/execution admission.
 Original formal Willow1047649 verifiedlive29000/120000, no restart/guard error.
+
+### Fresh continuous-background metadata reservation
+
+Reserved12new Earnings22 complete calls using pinned125-row metadata and LFS
+pointers only. Excludes all prior Mac12 and paired24 tickers (including protected
+acceptance), deterministic new salted ticker/file ranking, no scores/audio/
+transcripts used. Metadata9.607777777777779h, not decoded/scored exposure.
+No acceptance media/transcripts opened; no new audio downloaded or wake model
+invoked. All12mandatory, no replacement/trim; next pushed prep lock must bind
+full decoding/frontend and require decoded>=8h/transcript alias/history checks.
+Recording/company disjointness is not physical-speaker/pretraining independence.
+Original formal Willow1047649 verifiedlive35000/120000, finite loggedloss,
+fixed-final record, no guard mismatch or restart. Synthetic history audit also
+remains required before any new development scoring.
