@@ -45,3 +45,11 @@ This ABI records getter after setting, but does not yet take a second getter
 after prime. Thus matching speech events/getter does not independently certify
 post-prime getter stability on QEMU. Long-source and >64-event runs also remain
 separate certification work. No fresh development audio is authorized here.
+
+Long/full-event witness subsequently completed under frozen plan c19b582:
+68,506,685 samples (4281.6678125s),133803 calls,63prime returns,1235positive
+and1235channel-verified input returns, source CRC f5c47075 and stage104 all
+independently verified. Whole stream without reset, full events beyond64;
+original reports/UART are published as `4090-hey-qemu-repeated-consumed-*`.
+This is repeated consumed PCM only, not FAR/recognition or physical-speaker
+exposure. Separate getter-after-prime observation remains pending.

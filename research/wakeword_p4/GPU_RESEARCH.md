@@ -6632,3 +6632,8 @@ Original auditPID923156/session11521 terminated exit0. Original9600waveforms aut
 Pushedc19b582 frozen plan before inference, then started originalsession42126. One original consumedWillowclip04 repeated1235 times,68506685samples/4281.6678125seconds; DEFAULT,63prime, complete source without resets, explicit3600s host deadline, one run/no retries. Input PCM SHA and source/runtime bytes frozen. This is deliberately repeated consumed diagnostic transport, not new source material or FAR exposure. Runtime observed progressing beyond19011072samples; all events retained, no64eventarray cap.
 
 Added independent saved-UART/CRC/complete-event/stage104 auditor; not yet executed because original stream remainslive. Main tokenPID905640/observer921636 also live, latest1281records. No source regeneration, no new held-out data accessed, no newmodeltraining launched.
+
+
+### 2026-11-13 — >hour / >64event actual transport completed
+
+Originalsession42126 exited0. Frozen68506685sample/4281.6678125s continuous repeatedconsumed stream completed133803inputcalls,63prime returns,1235positive events and1235channelverified; CRCf5c47075 exact, destroy/deinit stage104. Independent auditor reread originalPCM, recomputed1235repeatSHA/CRC, checked every emitted event and offsets/unique ordered calls against rawUART andreport, complete counters/prime/stage. All pass; originalreport/UART/stage plusaudit saved unchanged. This actual runtime now covers >onehour and >64event branches; remains repeated-consumed transport, not fresh recognition/FAR/P4 equivalence. Getter-after-prime separateobservation pending. OriginaltokenPID905640 confirmedstilllive25:05, no restart.
