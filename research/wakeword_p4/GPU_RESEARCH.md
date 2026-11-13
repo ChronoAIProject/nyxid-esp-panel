@@ -5494,3 +5494,13 @@ Downloaded Joe/Mike original model/config at fixed revision, saved original LFS 
 Implemented check_known_source_consumption_v1.py authenticating copied Mac evidence:Joe/Mike no known consumed-byte conflicts; Kristin/Norman negative control correctly rejected2/2 with exit1. Both reports keep source_qualified=false/synthesis_or_scores_authorized=false. Guard covers current known registry only, not all training/pretraining/person or undisclosed external consumption. Before generation still need complete role/synthetic quality/threshold/acceptance protocol and further source-role checks.
 
 Original control PID719837/sequence18719 verified live at36:31, step12770, latest checkpoint10000. Recovered waits; no restart or trainingpins changed.
+
+### 2026-11-13 — Mac inherited-positive CPU integration handoff
+
+Ran Mac driver unchanged from280c37728cc1823caecb19c4569e745077a0f372 against GPU base43254c0, outside repository to preserve git-apply root semantics. Complete recovery off/on each compared original/default-off/enabled with2 actual CPU optimizer updates per arm (12 total); both comparisons pass. Default-off input/loss/final-variable bytes exactly match original with common initialization. Enabled restores original already-drawn/scaled main slots24..31 into actual optimizer; other120 main rows, all40 pair rows, labels/weights/permutation/RNG remain exact. FrozenBN and original120000/5000 schedule retained; finite enabled updates produce different weights. Captured original source IDs/texts/crops: both steps draw one command-bearing phrase, not a forced command-only intervention. No validation/export/new trained candidate or quality conclusion; current formal trainer unchanged.
+
+Published gpu-inherited-positive-cpu-probe-v1.tar.gz to existing research release:17689908 bytes, SHA256 7d6eb2adc84fad0ebfc2889fa25874a859d835cad0101acc2e07691d2cd9bbd3. Anonymous urllib download independently verifies archive and all458 manifest payload members. Original tools, configs, source snapshots, captures and logs included; manifest/download receipts committed under results. Issue13 is the cross-machine handoff channel.
+
+Pinned rdh upstream primary card declares trained-from-scratch Flemish CC0 parent, improving declared Joe/Mike lineage beyond known English bases. Saved exact card/hash and limitations: declaration is not audited weights/logs/physical identity proof; Joe/Mike share parent. No synthesis, roles or scoring performed.
+
+Original formal control PID719837 remains live at44:54; preserved step15000 original line SHA685d85cf56c261084de23f8c1654005c6991caa5c372e67f5683e13d75fa75d2,0 eligible training-grid points. Recovered still waits; no restart, candidate promotion or training-pin change.

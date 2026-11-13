@@ -1,0 +1,76 @@
+{
+  "schema": "inherited-positive-real-trainer-integration-comparison-v1",
+  "source_sha256": "bc21709d076434267c2757ab65749e9ec66d4f57377c7e60b0e50685002404f3",
+  "input_report_sha256": {
+    "0": "49f595c22e0d9557535cd79714736187a972e47feb187ae8e3dd13fa4dc6dd7a",
+    "1": "c3ef00cbdd90f14570fcdcd058578c8d07d08775ebc7c64cf646b0be9a1eef91",
+    "2": "125e5a0a501436b9c6ae40a15f2886f889e8db199a476340318abe9adfb48a95"
+  },
+  "complete_recovery_enabled": true,
+  "optimizer_updates_per_arm": 2,
+  "default_off_matches_original_exactly": true,
+  "common_initialization": true,
+  "restored_original_draws_reach_optimizer": true,
+  "other120_main_and_all_pair40_exact": true,
+  "labels_weights_permutation_rng_exact": true,
+  "enabled_final_weights_differ": true,
+  "steps": [
+    {
+      "step": 1,
+      "changed_pre_permutation_slots": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "other120_main_and_all_pair40_exact": true,
+      "original8_draws_reach_actual_optimizer": true,
+      "restored_intended_text_counts": {
+        "Hey Nix!": 3,
+        "Hey Nicks?": 1,
+        "Hey Nicks.": 2,
+        "Hey Nyx.": 1,
+        "Hey Nyx, what time is it?": 1
+      },
+      "restored_source_engine_counts": {
+        "kokoro": 4,
+        "qwen-cuda": 3,
+        "piper": 1
+      },
+      "source_ids_texts_crops_all_three_arms_exact": true
+    },
+    {
+      "step": 2,
+      "changed_pre_permutation_slots": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "other120_main_and_all_pair40_exact": true,
+      "original8_draws_reach_actual_optimizer": true,
+      "restored_intended_text_counts": {
+        "Hey Nicks.": 4,
+        "Hey Nyx.": 2,
+        "Hey Nix!": 1,
+        "Hey Nyx, can you hear me?": 1
+      },
+      "restored_source_engine_counts": {
+        "qwen-cuda": 5,
+        "piper": 2,
+        "kokoro": 1
+      },
+      "source_ids_texts_crops_all_three_arms_exact": true
+    }
+  ],
+  "acceptance_claim": false,
+  "limits": "Actual two-update input integration only. Original8 are a mixed inherited source/text distribution; no command-only causal or quality claim, new trained candidate, threshold selection or promotion."
+}
