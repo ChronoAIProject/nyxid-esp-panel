@@ -6355,3 +6355,22 @@ comma for commands or period for bare, includes preceding blank allocation.
 phonetic truth; no human speech latency claim. First fixed training request is
 smoke only; full extraction waits for all2400native mechanical passes. A mismatch
 fails timing admission rather than adjusting tokens. No original formal edits.
+
+### Token allocation smoke passed and Mac getter clarification (2026-11-13)
+
+Executed preregistered fixed first-training token-allocation smoke after62fdd30
+push. Saved4090-hey-token-duration-smoke-v1.json:27token allocations sum69frames,
+69*256=17664native samples exactly matches preserved original waveform. Prefix
+before period ends14080native/10217transport samples; not full17664container end.
+No waveform generated, wake scoring or model training. One bare Willow example
+only: command mappings/all voices/full2400timing admission remain unverified.
+Separate metadata sidecar does not rewrite original waveform-only duration=null
+records. This is engine allocation, not acoustic phoneme truth.
+
+Read Mac6861413399/d0c589b:13configuration implementation and two builds done;
+zeroPCM API run still pending, not native speech-curve certification. Corrected
+paired protocol getter range: setter requests .4.. .9999; actual getter finite
+0<getter<1 with exact f32 bits and >=9significant digits, not forced into request
+range/equality. Prime return coverage/controlDEFAULT remains required. New native
+training synthesis observed280/280passes, still live and incomplete. No dev or
+acceptance generated. Full negative inventories/new feature admission pending.

@@ -104,8 +104,10 @@ points under the official contract below, never assume equivalent score scales.
 Adopt Mac proposal6860757149:13 official configurations, default-no-set plus
 requested {.4,.5,.6,.644,.7,.8,.9,.95,.98,.99,.999,.9999}. Requests enter the API
 as binary32, word_index=1; record exact binary32 request and actual getter with
-at least9 significant digits. Require setter return1, finite getter in public
-.4.. .9999 range. Retain failures and duplicate/quantized actual working points;
+at least9 significant digits plus exact binary32 bits. Require setter return1;
+request input uses public .4.. .9999 range, but actual getter is separately
+validated finite with0<getter<1 and bits/text consistency. Do not force getter
+into setter input range or equality with the request (Mac clarificationd0c589b). Retain failures and duplicate/quantized actual working points;
 do not turn API failures into recognition misses or count duplicates as distinct
 actual points. This is a locked contract, not evidence setter support has run.
 Official events preserve detect() values:1=word,0=no detect,-1=channel verified;
