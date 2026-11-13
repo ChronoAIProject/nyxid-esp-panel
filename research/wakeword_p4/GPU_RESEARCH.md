@@ -5268,3 +5268,7 @@ Read-only collector preserved complete original record (4026B SHA67f0ff2b5ba3040
 ### Per_draw formal10000 float checkpoint rejected
 
 Original complete record3974B SHA5a1fbd950947b5d36f2c188b8cfc0282267b65791a36b0ac636a7348902e1610 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback.994 macro.409375/max-source false.0213541667; background0/1.2048112674h, one-sided95 upper2.486474317/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only; no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal15000 float checkpoint rejected
+
+Original complete record4048B SHA5c57401c141cb8372fef2d12919bb5233302ad8e0e2479045ce42b79a60c8eb8 preserved; independently authenticated exact source bytes and11-point eligibility. Zero eligible; fallback.994 macro.49296875/max-source false.0364583333; background0/1.2048112674h, one-sided95 upper2.486474317/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only, no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
