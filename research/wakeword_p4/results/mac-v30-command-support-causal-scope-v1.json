@@ -1,0 +1,32 @@
+{
+  "schema": "v30-command-support-causal-scope-v1",
+  "source_sha256": "c327ff4410606957da3e0738d80aeb570386b3d25e984e3c35664633be0d1e03",
+  "symbolic_helper_sha256": "52614a299c24a80cf3e1e8740bc208394fe90a6464eddfd7350b83913a3e08e3",
+  "v30_training_report_sha256": "41d3a232920143d6bfa39b74fc1068f2675615f2df23ed599155b58a085312f9",
+  "trainer_source_commit": "29be79c7e0af59dfc5cddcdc3733a284c4c777ff",
+  "trainer_source_sha256": "a9c76aee07f2a61557ed77095609671f546bfbbf418d979732da356b98898c20",
+  "original_metadata_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "v30_selected_step": 70000,
+  "v30_positive_main_slots_retained": 32,
+  "actual_v30_prefix_negative_slots": [
+    32,
+    48
+  ],
+  "actual_batch_ast_symbolic_positive_retention_batches": 50,
+  "source_command_feature_variants": 34150,
+  "original_sampler_command_support": true,
+  "expected_command_main_draws_per_batch_at_equal_engines": 6.071111111111112,
+  "baseline_report_sha256": "de27257b414ffa6eb90ce8aad5649310662e1db18bb93febfcf1f94c097184ee",
+  "existing_norman_command_hits": "0/9",
+  "actual_batch_source": "def batch(mine=True, augment=True):\n        noise = []\n        for _ in range(48):\n            index = (int(rng.choice(len(ambient[\"training\"]), p=ambient_weights))\n                     if args.ambient_sampling != \"rows\" else int(rng.integers(len(ambient[\"training\"]))))\n            _, data = ambient[\"training\"][index]\n            at = int(rng.integers(0, len(data)-frames+1))\n            noise.append(data[at:at+frames])\n        x = scale(np.concatenate((sample(1, 32), sample(0, 48, mine=mine), np.asarray(noise))))\n        if args.prefix_negatives:\n            # Keep baseline RNG and all original draws unchanged. Only replace\n            # the selected confusing-negative slots before the same permutation.\n            x[32:32+args.prefix_negatives] = scale(prefix_sample(args.prefix_negatives))\n        if hard_ambient is not None and mine:\n            # Keep all original draws; independently replace only the ambient slots.\n            x[80:80+args.hard_ambient_count] = scale(hard_ambient.sample(args.hard_ambient_count, hard_ambient_rng))\n        y = np.array([1]*32+[0]*96, dtype=np.float32)[:, None]\n        # A stronger negative penalty follows the upstream always-listening\n        # recipe; its operating threshold is calibrated, not assumed to be .97.\n        weights = np.array([1.]*32+[20.]*96, dtype=np.float32)\n        order = rng.permutation(len(x))\n        x = x[order]\n        if augment:\n            x = mask_spectrograms(x, augmentation_rng, args.time_mask_width,\n                                  args.frequency_mask_width)\n        return x, y[order], weights[order]",
+  "conclusion": "The current later bare-only recipe has lost inherited command support, but original v30 already exposed that command distribution in all32 positive main slots. The later overwrite cannot explain the pre-existing v30 Norman command failure by itself. Restore8 remains a mixed-source/temporal intervention to test, not an established root-cause fix.",
+  "training": false,
+  "model_inference": false,
+  "acceptance_claim": false,
+  "limits": [
+    "Source/dataflow support and theoretical expectation, not replay of original v30 ordered draws or proof of per-step command counts.",
+    "Symbolic feature fixture reuses the preparation harness; proves positive rows survive batch mutation, not actual TensorFlow optimization.",
+    "The v30 prefix-negative setting and later paired/source recipes differ; this is not a matched causal quality comparison.",
+    "Existing consumed baseline only, no new scoring, source generation, final, audio/device or formal process operation."
+  ]
+}

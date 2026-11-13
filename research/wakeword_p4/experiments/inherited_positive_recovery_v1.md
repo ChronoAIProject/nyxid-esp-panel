@@ -21,6 +21,17 @@ captured, not assumed or forced. It replaces eight British positive rows;
 with Complete recovery on, none of its British positives remain, while its
 British negative rows remain. No causal inference solely about commands.
 
+The original frozen v30 already retained all32 original positive rows,
+including command-source support, yet its consumed Norman command baseline
+was0/9. Its authenticated trainer replaces negative rows32..47 for prefix
+negatives; it does not erase those original positives. Thus the later
+coverage loss cannot alone explain v30's pre-existing failure. Restore8 is
+a mixed-source/temporal distribution experiment, not an established repair
+of that failure. See `audit_v30_command_support_scope_v1.py` and
+`results/mac-v30-command-support-causal-scope-v1.json` for authenticated source
+and50 symbolic-batch checks. These are source-support evidence, not a replay
+of original v30 training draws or a new acoustic comparison.
+
 Pins:
 
 - Base trainer: `2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904`
