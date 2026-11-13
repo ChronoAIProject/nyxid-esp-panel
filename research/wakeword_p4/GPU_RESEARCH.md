@@ -7719,3 +7719,21 @@ new output directories and full report/UART/raw/stage104 retention.
 Reversible AST check passes; actual register refuses absent custom execution,
 no plan/output/QEMU/audio inference created. This does not certify new runtime
 or recognition/FAR, and official calibration still needs its own code lock.
+
+
+### Original Willow formal completed; Nyx original continuation started
+
+Willow original process terminated successfully, full120000 fixed-final export.
+Independent completed() audit re-compared all120100 actual training/PTQ digests
+against original schedule and authenticated receipt/training/model/inventory.
+Original training.json and formal receipt copied byte-for-byte to research
+results, authentication report added. Final TFLite57592bytes SHA
+fa9d4020aa06dba89fa8d5e5425626e35ac0a7aa882127d01d10163f537faf7f.
+Finite weights/loss and exact frozen BN confirmed by bound original producer.
+This is training/export only, not numerical or development success.
+Originalcontinuation1044979 started Nyx1087093, observed500/120000 at first
+inspection. No restart/source edits/intermediate selection or duplicate run.
+Macaf8fac88 raw-calibrator4files imported exact. Linux13constructed checks pass,
+complete JSON byte-identical to Mac. Raw lock builder now binds calibrator/new
+and inherited metrics/event policy and explicit target_id; v30 fixed reference
+.91796875. No existing execution/report mutated, no real calibration yet.

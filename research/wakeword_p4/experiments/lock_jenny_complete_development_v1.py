@@ -60,19 +60,23 @@ def main():
     here = Path(__file__).parent
     paths += [here/n for n in ('collect_complete_development_v1.py', 'complete_feature_stream_v1.py',
                                'uint8_stream_detector_v1.py', 'run_hey_broad_trained_quantization_v1.py',
-                               'plan_hey_broad_trained_quantization_v1.py')]
+                               'plan_hey_broad_trained_quantization_v1.py',
+                               'calibrate_complete_development_v1.py',
+                               'complete_development_metrics_v1.py',
+                               'hey_development_metrics_v1.py', 'uint8_event_policy_v1.py')]
     paths += [ROOT/'training/features.py'] + runtime_identity_files()
     models = {}
     for target, folder in folders.items():
         path = folder/'hey_nyx.tflite'
-        models[target] = dict(path=str(path), sha256=sha(path), bytes=path.stat().st_size,
+        models[target] = dict(path=str(path), sha256=sha(path), bytes=path.stat().st_size, target_id=target,
                              output=str(Path('.local/wakeword/jenny-complete-raw-v1')/target))
         paths += [path, folder/'formal-execution-receipt.json', folder/'training.json',
                   folder/'actual-batch-schedule.jsonl', folder/'actual-initial-inventory.json']
     frozen = Path('.local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite')
     assert frozen.stat().st_size == 54440
     assert sha(frozen) == '04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c'
-    models['v30'] = dict(path=str(frozen), sha256=sha(frozen), bytes=54440,
+    models['v30'] = dict(path=str(frozen), sha256=sha(frozen), bytes=54440, target_id='hey_nyx',
+                         fixed_reference_thresholds=[0.91796875],
                          output='.local/wakeword/jenny-complete-raw-v1/v30')
     paths.append(frozen)
     for manifest, phase in ((synthetic, 'synthetic'), (background, 'background')):
