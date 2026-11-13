@@ -5677,3 +5677,16 @@ No INT8/new-development/acceptance conclusion follows. All284formal hashes
 reverified unchanged; original sequence continues and recovered waits.
 Issue13 had no new Mac response at turn start. No Mike/test6/7 access,
 checkpoint substitution, alternate arm selection or promotion. Goal incomplete.
+
+### Original control45000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. OriginalPID719837 confirmed live through
+44000→44500→45000, elapsed2:08:21. Preserved full original45000 line SHA
+`1346124f77053ca4d3b1bc57f2914ddfd779a0dd50f29262f7e27bcf73a236ff`.
+0training-float eligible points; fallback.994 recall .4416666667,
+macro .4526041667, hard-negative false rate .0139204545,
+max-source false rate .0208333333. Ambient0events/1.2048112674h still
+nominal zero-event one-sided95upper2.4864743174/h; not a pass. No cross-arm,
+INT8 or new-development/acceptance conclusion. All284formal hashes unchanged.
+Original sequence continues/recovered waits; no restart/model/threshold change,
+Mike/test6/7 remain unconsumed, v30 frozen and objective incomplete.
