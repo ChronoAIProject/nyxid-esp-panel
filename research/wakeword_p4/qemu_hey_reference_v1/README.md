@@ -30,3 +30,18 @@ threshold sweep, speech/FAR certification, P4 equivalence or acceptance.
 
 A real-data entrance remains to be implemented with exact authenticated input
 manifests and authorization; do not repurpose zero mode to open held-out data.
+
+## Consumed native speech witness
+
+`run_consumed.py` admits only the exact Mac156-row manifest SHA and its original
+12 PCM hashes. It requires Willow, row-specific DEFAULT/SET and request bits.
+`run_consumed_grid.py` requires the byte-identical pushed plan and binds runner,
+firmware, QEMU and source bytes before one fresh run per row, with no retries.
+`audit_consumed_grid.py` independently checks saved UART accounting, full ordered
+events, prime returns, getter bits and channel-verified counts against original
+native P4 evidence. Every cross-runtime mismatch is retained as a result.
+
+This ABI records getter after setting, but does not yet take a second getter
+after prime. Thus matching speech events/getter does not independently certify
+post-prime getter stability on QEMU. Long-source and >64-event runs also remain
+separate certification work. No fresh development audio is authorized here.

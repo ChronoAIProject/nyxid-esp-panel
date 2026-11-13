@@ -6585,3 +6585,10 @@ Inspected current canonical QEMU runner: model remains hardcoded HiESP, so not u
 Built new qemu_hey_reference_v1 without touching historical replay. New explicit ABI chooses exact Willow/HiESP model and DEFAULT-no-set/SET. Separate63prime returns; full sequential source loop, final-only padding, clamped event offsets, no event-array cap or one-hour source cap. Actual long-input certification remains pending.
 
 Actual4fresh16001zero streams pass native interface/CRC32/32inputcalls/63prime returns/stage104 afterdestroy. Willow DEFAULT getter.6439999938011169, HiESP DEFAULT.6299999952316284; both SET.644 getter.6388480067253113. Stored original reports/UART/stage evidence and model/source/library/ELF/flash hashes. These are exploratory classicQEMU zero runs, not full grid or speech/P4 equivalence. No new held-out data accessed. Full-background input gate and actual recognition certification still needed. Original timing task continues without restart.
+
+
+### 2026-11-13 — frozen actual consumed speech witness in progress
+
+Mac6862391557 supplies00b36d4 complete156native streams. Anonymous archive575170bytes/SHA5deb2646bb13d627a9239bf0f34c274747c82c4fd50a5da74c659445e3117504 and all32payload members verified. Fixed156-row manifest and all12PCM admitted only to separate consumed-diagnostic runner. Pushed execution plan04f008e before actual QEMU inference; started original session42722, one fresh engine per stream, no retries.
+
+Added independent saved-UART comparison tool for all getter bits/63prime returns/CRC/samples/calls/ordered positive events/channel verification counts. Partial43complete streams had0event/getter differences; not full certification. QEMU getter-after-prime not separately observed by currentABI; this gap, >64events and long-source runtime certification retained explicitly. Original token process905640 stilllive, latest521 records; no restart, no new held-out audio or model training.
