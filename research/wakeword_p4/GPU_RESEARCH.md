@@ -7440,3 +7440,16 @@ as expected; no lock/training fabricated from partial data. Original1034876
 verifiedlive51000Willow. Existing actual BatchGuard exercised with a complete
 small2train+1PTQ sequence: accepts correct sequence; one-value x corruption
 rejected before use. This tests enforcement behavior, not formal120k execution.
+
+### Fresh development metadata availability recheck
+
+Reviewed existing historical source receipts, without waveform/heldout access.
+Alba/Cori training exposure and Kristin/Norman Mac consumption prevent treating
+these as fresh. Existing author-direct Jenny63531379B/config7084B rehashed,
+original d33f72ff.../39bae6c3... exact; no redownload/generation. Different bytes
+from Piper Jenny and author scratch claim do not certify independent ancestry.
+Issue6866140776 asks Mac exact-byte consumption history only, no inference.
+No new source role reserved/admitted. Review report pins original metadata and
+retains all uncertainties. This runs alongside original formal schedule task;
+fixed-final training preparation does not depend on Mac replying. User fresh
+threshold-selection requirement preserved; old development never relabeled.
