@@ -5230,3 +5230,7 @@ Published gpu-mac-main-input-handoff-v1.tar.gz to the existing research Release 
 ### Actual training-source exposure inventory for future reservations
 
 Read-only audit of authenticated formal input metadata: main training145980 records (Piper120000, Kokoro23000, Qwen2980); British included1002 records including Cori36/Alba36/Kokoro930; factorized40320 included records; US pinned Lessac/Ryan/LJSpeech. Cori/ Lessac ancestry excludes reviewed Piper Jenny/HFC checkpoints from claims of independent pretraining. Direct-author Jenny remains a potential source with documented scratch claim, not certified independence: Kokoro/Qwen physical-speaker and pretraining inventories are incomplete. No new audio/scoring/reservation; this audit separates known overlap from unknown ancestry rather than treating absent names as proof. Original formal trainer continues unchanged.
+
+### Fixed formal105000 float checkpoint
+
+Original newline-complete record preserved byte-identically (4029B SHAf058ee64ccf9238301296a7654955771aceff3565977617fe749daa11635a3d0). Eleven-point training grid 0 eligible; returned threshold 0.992, macro recall 0.51953125, max-source false 0.029166666666666667. Background 0/1.2048112673611107h; zero-event one-sided95 upper 2.4864743173555484/h. Fallback is not pass; reused float checkpoint only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before per_draw. v30 frozen.
