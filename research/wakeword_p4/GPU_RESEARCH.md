@@ -6308,3 +6308,20 @@ byte derivation; not yet speech/runtime determinism evidence. Both mechanical
 quality suites6+6 passed. Any source failure disqualifies whole planned pack,
 no retry/filter/substitution. Preserves complete native output and PCM transport;
 no phonetic truth or human listening claim. Model gradient/export still pending.
+
+### Native v1 shape failure retained; v2 recovery preregistration (2026-11-13)
+
+First real inference revealed Kusal returns float32[1,1,1,T], not assumed
+[1,1,T]. Stopped only new generator PID888489 after16records,0passed; original
+trainer817144 untouched. All16complete engine tensors retained. v1 failure
+receipt records exact plan/records hashes and unqualified status; never relabel
+v1 as pass. No detector scores or development/acceptance generation occurred.
+
+v2 plan supersedes transport shape handling only: accepts declared singleton
+batch/channel axes before T; never crops samples. Reuses16saved original engine
+tensors after derived-model/tensor hash authentication, without inference rerun.
+Remaining requests run once. Original v1 plan/generator/output preserved. v2 binds
+failed-plan/failure-receipt/prior-record hashes and its exact generator bytes;
+no source/text/seed selection based on wake scores, which do not exist. Full
+native mechanical gate still applies and any actual quality failure disqualifies
+v2pack. Complete background/overlap/training admissions remain pending.
