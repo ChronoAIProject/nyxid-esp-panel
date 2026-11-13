@@ -6836,3 +6836,13 @@ Willow thenNyx thenv30, score then registered calibration, check=True/no retries
 Willow PID942791 confirmed live;360synthetic streams and first2whole background
 calls complete (each original-input fresh-reset repeats exact). No threshold
 selection/result yet. Later original arms wait; no observation timeout restart.
+
+### Separate official runtime observation source v2
+
+Willow original stream collection completed all360+12inputs; original registered
+calibrator PID943199 confirmed live (no restart). New official v2 source adds
+post63prime getter bits/value stability check and complete per-input-call raw
+return transport(-1/0/1), addressing the existing v1 observation gaps. Separate
+project/model-identical call sequence; original v1 source/binaries untouched.
+Build/runner/parser and actual consumed/zero recertification still pending;
+no fresh official scoring admitted by source alone.
