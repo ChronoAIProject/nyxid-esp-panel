@@ -1,0 +1,48 @@
+{
+  "schema": "hey-development-render-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_hey_development_v1.py": "d3549938c280b7049bd5fbbbe2eb2bd7fc2ca290533042b4c59e6b8d3c38a6a3",
+    "research/wakeword_p4/results/4090-hey-development-render-contract-v1.json": "a5e16af7870453bd58950204bfb1d273175bacfe1325b75116db214d206613cd",
+    ".local/wakeword/hey-paired-development-native-v1/summary.json": "983fc3090c640305af7d11d2521532a0d53a18f39d33297401372e06486d6996",
+    ".local/wakeword/hey-paired-development-native-v1/records.jsonl": "d3adfc0ee7055941117053ed9cd2191d17a334ace053456a231d9e0a1c642779",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/generate_hey_development_native_v1.py": "3f71bf8fc6ad551e13a4b6e4da68887b9da09f1cee30e03008dce20db0248965",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/generate_hey_paired_material_v2.py": "cb284a828e8bfbbeda974ec19ab94921422d75b44faf8cb32e819bac5ee41b00",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/synthetic_output_quality_v1.py": "d6fa920016e70ab2bdc556e586f288c867e40d111ccbf46f146840f61ba5425c",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/synthetic_development_render_quality_v1.py": "a740a73125f805ec05762a34ddd1c3af8ed3f58b25c9016e9e56f237e00e1f43"
+  },
+  "versions": {
+    "onnx": "1.23.2",
+    "onnxruntime": "1.31.1",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0",
+    "piper-phonemize": "1.1.0"
+  },
+  "rendering": {
+    "conditions": [
+      "quiet",
+      "25dB_noise",
+      "15dB_noise_full_RIR"
+    ],
+    "rir_delays": [
+      0,
+      208,
+      624,
+      1232
+    ],
+    "rir_amplitudes": [
+      1.0,
+      -0.18,
+      0.1,
+      0.04
+    ],
+    "leading_samples": 28800,
+    "trailing_samples": 16000,
+    "noise": "numpy.default_rng(render_seed).normal; dry-source RMS reference",
+    "gain": "quiet=1; noisy=min(1,.95/peak)",
+    "full_convolution": true
+  },
+  "requests": 360,
+  "authorization": "Development rendering only, full source and full RIR tail; no detector inference or acceptance access.",
+  "failure_policy": "Whole pack rejected on any audit failure; no filtering/retries/replacements."
+}
