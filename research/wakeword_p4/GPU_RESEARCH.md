@@ -7309,3 +7309,24 @@ Original full renderer session87705 exit0,106956/106956 process passes.
 Independent sparse-RIR replay1020952 remains actually live, observed45000/106956.
 No feature/training admission until final independent render result. Official
 original958504 remains live1108/9672, no partial recognition/FAR result claimed.
+
+### Broad context225 full features and independent admission
+
+Original feature session55579 completed exit0; independent audit session76435
+completed exit0. All106956 rendered training presentations produced52427982
+frames,4194238560 bytes; shared binary SHA
+fbf252f64144a048121985fe7dbb63f67a5dc38023b53895fa7c1c9500860786.
+Each arm has25128positive/81828negative rows. Independent audit verifies whole
+binary identity, all paired labels/offsets/nonlabel metadata, exact original
+training-only ambient arrays and context225 lengths.54 deterministic first/last
+(engine,target,variant) witnesses independently traverse the frontend and match
+raw arrays exactly. This does not independently recompute all106956 frontend
+transforms and uses the same pinned underlying C++ frontend library.
+No new model training/export or recognition claim. Original official958504
+confirmed live,1113/9672; no partial configuration FAR or restart.
+Next: separate context225 sampler/trainer admission, actual batches and export.
+Qwen full standalone end must not be treated as aligned internal incomplete-word
+boundary for prefix negatives; explicit eligible-engine rule needed before use.
+Mac6865091069 permits explicitly reused development with pre-fixed rules, but
+that does not restore independence; protected acceptance stays closed and goal's
+independent threshold-selection requirement remains to be resolved explicitly.
