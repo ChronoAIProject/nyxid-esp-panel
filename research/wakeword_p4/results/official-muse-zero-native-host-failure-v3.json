@@ -1,0 +1,41 @@
+{
+  "schema": "official-muse-zero-native-host-failure-v3",
+  "source_commit": "d5ba2e1",
+  "original_session": 11658,
+  "terminal_exit_code": 1,
+  "firmware_sha256": "04326b8d47050418498a9e41da7273e5bb6b1436a01308de51ede6ea54798d4b",
+  "protocol_sha256": "8f1137692804b23626beb51b414c19e4fd6039c54b7ab70b961039defe1e0ccd",
+  "build_report_sha256": "02c89c02888c0c4642e2f2b3a4ec873ee3982a482166bf104afcedae87fa25f9",
+  "private_report_sha256": "46ea3e845a5d466c68de82d3c3151a731d2f331ec8f7ae05bac513b97ebe277f",
+  "private_uart_sha256": "b872fbf2f7cfdde262a1fbc738be928d097288b757594fd05c412c49419ee82a",
+  "diagnostic_lines": [
+    "MUSE_REFERENCE_READY {\"schema\":\"muse-zero-v3\",\"engine\":\"wn10_himuse\",\"mode\":\"DET_MODE_95\",\"expanded_model_bytes\":430762,\"heap_before_load\":{\"internal_free\":564815,\"psram_free\":33551716,\"internal_largest\":385024,\"psram_largest\":33030144},\"heap_after_load\":{\"internal_free\":564575,\"psram_free\":33117536,\"internal_largest\":385024,\"psram_largest\":33030144}}",
+    "MUSE_REFERENCE_CASE {\"id\":0,\"samples\":1,\"chunk\":512,\"channels\":1,\"rate\":16000,\"calls\":1,\"crc32\":1104745215,\"create_us\":69576,\"prime_us\":132784,\"detect_total_us\":2075,\"detect_max_us\":2075,\"words\":[{\"index\":1,\"name\":\"Hi/Hey Muse\",\"default_bits\":\"3f1b367a\",\"after_prime_bits\":\"3f1b367a\"}],\"prime_returns\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"input_returns\":[0],\"heap_before_create\":{\"internal_free\":564575,\"psram_free\":33117536,\"internal_largest\":385024,\"psram_largest\":33030144},\"heap_after_create\":{\"internal_free\":552367,\"psram_free\":32712268,\"internal_largest\":385024,\"psram_largest\":32505856},\"heap_after_prime\":{\"internal_free\":552147,\"psram_free\":32693444,\"internal_largest\":385024,\"psram_largest\":32505856},\"probe_buffer_bytes\":1028,\"he"
+  ],
+  "probe_error": {
+    "type": "JSONDecodeError",
+    "message": "Unterminated string starting at: line 1 column 811 (char 810)"
+  },
+  "cases": [],
+  "observation": "Pinned 3.3.14 reached successful WAKENET10 creation and a first CASE prefix. Host read_until(.2s timeout) returned a partial line and the runner tried to parse incomplete JSON. No complete CASE admitted; retain original firmware/model and fix host line buffering only for a separately frozen retry.",
+  "independent_restore": {
+    "observed_at_utc": "2026-11-13T21:35:28.283470+00:00",
+    "checks": {
+      "original_app": true,
+      "active_slot": true,
+      "same_service": true,
+      "same_agent": true,
+      "voice_idle": true,
+      "wake_word": true,
+      "wake_listening": true,
+      "serial_no_owner": true
+    },
+    "nyx_state": "connecting",
+    "readiness": "app-only",
+    "voice_connectivity_accepted": false
+  },
+  "audio_io_performed": false,
+  "recognition_accepted": false,
+  "acceptance_accessed": false,
+  "candidate_promoted": false
+}
