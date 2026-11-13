@@ -1,0 +1,66 @@
+{
+  "schema": "hey-broad-int8-probe-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_int8_v1.py": "8f1702c4185622939e9ccc613df6e3545b821e51910ed378b0b2225924d22299",
+    "research/wakeword_p4/results/4090-hey-context225-stream-probe-plan-v3.json": "be728f5d5e156a0d602c4a1bdb0ae8f86e827405abb6ebcd3393134a356ec0c7",
+    "research/wakeword_p4/training/features.py": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+    ".local/wakeword/hey-broad-smoke-v1/hey_willow/hey_nyx.tflite": "c68e5e859ea87f73f72bdbc8fc7f29c4d2e50cbc7c3bdee548c958d7f2607629",
+    ".local/wakeword/hey-broad-smoke-v1/hey_nyx/hey_nyx.tflite": "12ce7ab5a4f73a3ac450a8c1d8384b1737d2cd1e9b37c1f7b83890a87750714f",
+    ".local/wakeword/hey-broad-piper-native-v1/00000.wav": "29de263cb8aecaa0d10e498fcf64d0927877eab0792aeae21b167b165672d1a8",
+    ".local/wakeword/piper-balanced-training-full-v1/437-0.9-hey_nyx.wav": "137040c1a55647bb945732ef678cb25a89dfd9faed23e28cd5768863069728d3",
+    ".local/wakeword/hey-broad-kokoro-native-v1/0000.wav": "cfce51bee7d7f82d7b1dd29f4ea936f43d0172346e622899e980ff09279c0eb4",
+    ".local/wakeword/hey-broad-kokoro-native-v1/0001.wav": "d475e24b755fe16c74564329f468ec5de222c189f89d65434ad78b40c8e749ce",
+    ".local/wakeword/hey-broad-qwen-native-v1/0000.wav": "b71d4b1e0a862440bf64d0e19bdf1cece1324b61a386f41fa8aa43c8e889b66d",
+    ".local/wakeword/hey-broad-qwen-native-v1/0001.wav": "656ab2cce969e8a31e177260d6985fae3c0fe5367d15a058b4ab339530a965fe"
+  },
+  "requests": [
+    {
+      "engine": "piper",
+      "order": 0,
+      "target": "hey_willow",
+      "path": ".local/wakeword/hey-broad-piper-native-v1/00000.wav",
+      "sha256": "29de263cb8aecaa0d10e498fcf64d0927877eab0792aeae21b167b165672d1a8"
+    },
+    {
+      "engine": "piper",
+      "order": 1,
+      "target": "hey_nyx",
+      "path": ".local/wakeword/piper-balanced-training-full-v1/437-0.9-hey_nyx.wav",
+      "sha256": "137040c1a55647bb945732ef678cb25a89dfd9faed23e28cd5768863069728d3"
+    },
+    {
+      "engine": "kokoro",
+      "order": 0,
+      "target": "hey_willow",
+      "path": ".local/wakeword/hey-broad-kokoro-native-v1/0000.wav",
+      "sha256": "cfce51bee7d7f82d7b1dd29f4ea936f43d0172346e622899e980ff09279c0eb4"
+    },
+    {
+      "engine": "kokoro",
+      "order": 1,
+      "target": "hey_nyx",
+      "path": ".local/wakeword/hey-broad-kokoro-native-v1/0001.wav",
+      "sha256": "d475e24b755fe16c74564329f468ec5de222c189f89d65434ad78b40c8e749ce"
+    },
+    {
+      "engine": "qwen",
+      "order": 0,
+      "target": "hey_willow",
+      "path": ".local/wakeword/hey-broad-qwen-native-v1/0000.wav",
+      "sha256": "b71d4b1e0a862440bf64d0e19bdf1cece1324b61a386f41fa8aa43c8e889b66d"
+    },
+    {
+      "engine": "qwen",
+      "order": 1,
+      "target": "hey_nyx",
+      "path": ".local/wakeword/hey-broad-qwen-native-v1/0001.wav",
+      "sha256": "656ab2cce969e8a31e177260d6985fae3c0fe5367d15a058b4ab339530a965fe"
+    }
+  ],
+  "models": {
+    "hey_willow": ".local/wakeword/hey-broad-smoke-v1/hey_willow/hey_nyx.tflite",
+    "hey_nyx": ".local/wakeword/hey-broad-smoke-v1/hey_nyx/hey_nyx.tflite"
+  },
+  "policy": "All six previously bound full training PCM through each smoke model. Lead48000/tail16000. One full frontend traversal per input, final-only160sample padding then final-only3feature zero padding. Fresh interpreter twice; exact full ordered uint8 traces. No thresholds, selection, recognition/FAR or heldout input.",
+  "limits": "Structural reset/stream smoke only; not float-INT8 accuracy or formal trained candidate admission."
+}
