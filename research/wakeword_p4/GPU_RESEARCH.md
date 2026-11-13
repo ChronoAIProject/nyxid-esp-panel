@@ -6772,3 +6772,11 @@ it does not invoke waveform output or wake detector. Both entries use new local
 paths and require exclusive new outputs; acceptance is inaccessible to their
 request loops. Source compile checks passed; actual execution still pending
 native completion and pushed per-stage locks.
+
+Development native original session15306 exited0,120/120 mechanical quality pass;
+records SHA d3adfc0ee7055941117053ed9cd2191d17a334ace053456a231d9e0a1c642779.
+After ec12768 pushed both next-stage locks, original render session56925 exited0:
+360/360 full-source presentations independently pass; records SHA
+268508ed43b22f35bbf2dbbb75da06288d46ca4ccafd049be13ee96739b5cd88.
+Original metadata-only token extraction session6180 remains live; no restart.
+Native/render pass is mechanical only; full timing/history/score admission pending.
