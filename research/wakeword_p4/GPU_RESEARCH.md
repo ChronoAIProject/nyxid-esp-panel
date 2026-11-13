@@ -7504,3 +7504,19 @@ truth. Future separate observer-export/generation plan must authenticate
 actual saved outputs and full resample/prefix geometry before source admission.
 No source role reservation/generation/scoring. Script/result committed;
 original formal Willow1047649 continues10000/120000, no guard mismatch.
+
+### Prospective Jenny material matrix and static observer export
+
+e7bcdd49 froze44exact text/phoneme/token/prefix maps ×3native scales=132
+requests before export.11phrases cover Willow/Nyx/HiESP plus common confusions,
+four carriers. Single declared voice, not132voices. Prospective development
+only, never training/acceptance; source history/ancestry limits retained.
+Material plan explicitly does not authorize generation/wake scoring. No model
+response used for texts/speeds/quality decisions. Quality requires full native/
+resample/PCM/duration preservation, no retries/trim/ASR or endpoint normalization.
+After push, additive duration observer ONNX exported, checker passes; every
+original node/initializer byte unchanged. Original model untouched. Derived
+SHAa25aab3289b93f24a4e4448fa7e463249bd91ad2e6af4abc55a14885e64ebd0b,
+63531435B. No inference; sum*256/token identity and waveform equivalence not
+claimed. Next separately pinned source-role/history and generation execution
+admission, then actual native quality audit; no candidate scoring yet.
