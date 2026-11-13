@@ -1,0 +1,39 @@
+{
+  "schema": "official-hey-speech-pilot-v1",
+  "role": "consumed-source development transport diagnostic",
+  "voices": ["Samantha", "Daniel"],
+  "voice_policy": "Both sources were already consumed in development. Never use these files or voices as fresh acceptance or return them to training.",
+  "phrases": [
+    {"target": "hey_willow", "bare": "Hey Willow.", "command": "Hey Willow, turn on the light."},
+    {"target": "hey_nyx", "bare": "Hey Nicks.", "command": "Hey Nicks, turn on the light."},
+    {"target": "hi_esp", "bare": "Hi E S P.", "command": "Hi E S P, turn on the light."}
+  ],
+  "literal_text_policy": "Nyx uses the documented Nicks TTS alias; ESP is explicitly spelled. Text intention is not a validated pronunciation label.",
+  "forms": ["bare", "command"],
+  "records": 12,
+  "order_seed": 20261114,
+  "source_generation": "macOS say, installed voice, native default rate, complete AIFF; no playback, trimming, gain, speed or pitch adjustment",
+  "render": {
+    "rate": 16000,
+    "channels": 1,
+    "bits": 16,
+    "lead_samples": 28800,
+    "tail_samples": 16000,
+    "resampling": "scipy.signal.resample_poly on native int16/32768 as float64; rint and saturate to PCM16",
+    "augmentation": "none"
+  },
+  "arm_order": ["wn9_heywillow_tts", "wn9_hiesp"],
+  "targets": {"wn9_heywillow_tts": "hey_willow", "wn9_hiesp": "hi_esp"},
+  "mode": "DET_MODE_95",
+  "threshold_getter_expected": {"wn9_heywillow_tts": 0.644, "wn9_hiesp": 0.63},
+  "threshold_selection": "none; unchanged mode defaults, not matched confidence scales or equal population FAR",
+  "lifecycle": "Existing guarded native P4 runner: create, fixed zero prime, full PCM including native silence, final partial chunk padded by firmware, destroy, per clip.",
+  "transfer_baud": 115200,
+  "analysis": "Retain every clip/event and separately count any event and post-lead event by intended target, voice and form. Cross phrases are diagnostic negatives for each official arm. No common confusers or continuous background, so no FAR estimate. No keyword-end annotations or true latency estimate. Report compute time separately from UART transfer.",
+  "failure_policy": "Keep all outputs, missing detections and transport errors. Never retry, regenerate, replace a voice, tune a threshold or drop a clip to improve scores. Incomplete transfer/restoration cannot become a valid combined result.",
+  "hardware": "Only the verified USB development P4; guarded active-slot write and restoration. Dining-room production panel excluded. No microphone or speaker use.",
+  "not_acceptance": true,
+  "candidate_scored": false,
+  "reserved_acceptance_accessed": false,
+  "limitations": "Small consumed synthetic-source diagnostic only. It can establish actual speech detect calls and sample/CRC integrity on P4. It cannot establish trained-method quality, equal-FAR superiority, natural-user recognition, keyword-end latency, acoustic behavior or whole-app voice acceptance. The official Willow / custom Willow / matched custom Nyx experiment remains separate."
+}
