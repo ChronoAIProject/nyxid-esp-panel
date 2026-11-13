@@ -6719,3 +6719,19 @@ Receipt: `results/4090-hey-v2-willow-formal-completion-v1.json`; reproducible
 metadata auditor: `experiments/audit_hey_willow_formal_completion_v1.py`.
 Final-model runtime/quantization checks remain pending. No development scoring,
 recognition/FAR pass, acceptance opening or promotion; v30 remains frozen.
+
+### Final Willow training-PCM check and development rendering registration
+
+Final Willow export passed actual reference INT8 I/O checks and complete
+training-only positive/negative PCM frontend equality plus twice-reset identical
+UINT8 streams (119/117steps). Saved original streams locally; report binds model,
+training report, helper and checker hashes. Two cases establish bounded runtime
+repeatability, not recognition/FAR or whole-pack accuracy.
+
+Registered separate development RIR before any development synthesis/inference:
+delays[0,208,624,1232], amplitudes[1,-.18,.1,.04], full convolution/tail.
+Original120reserved requests, phonemes/token IDs, voice and render seeds remain
+unchanged; their noise seeds are disjoint from training. This closes the missing
+explicit development-RIR choice in the pilot protocol. Contract alone authorizes
+neither generation nor scoring: separate generator/code/quality/history/timing
+locks remain necessary. Acceptance remains unopened; no threshold/gate change.
