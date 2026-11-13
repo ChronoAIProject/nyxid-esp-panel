@@ -1,0 +1,102 @@
+{
+  "schema": "official-hey-native-zero-summary-v1",
+  "models": {
+    "wn9_hiesp": {
+      "evidence_file": "official-hiesp-zero-smoke-v1.json",
+      "evidence_sha256": "a415287c49aef3af8b5eb5ba05480aa4c29038ddf7f4a276f95a4f1c38c0eb9f",
+      "chunk_samples": [
+        512
+      ],
+      "threshold_getter_decimal": [
+        0.63
+      ],
+      "getter_print_decimal_places": 6,
+      "create_us_median": 15187,
+      "zero_detect_mean_us": 2092.8415492957747,
+      "zero_detect_max_us": 2863,
+      "zero_detect_calls": 284,
+      "before_create_to_after_prime_bytes_after_first_cycle": {
+        "internal_free": [
+          21976,
+          21976
+        ],
+        "psram_free": [
+          319892,
+          319892
+        ]
+      },
+      "post_first_cleanup_free_bytes_stable": {
+        "internal_free": true,
+        "psram_free": true
+      },
+      "post_first_cleanup_observed_repeats": 4
+    },
+    "wn9_heywillow_tts": {
+      "evidence_file": "official-heywillow-zero-smoke-v1.json",
+      "evidence_sha256": "5ababb6a7b3475906bc48a073c51c64b8212230f3417ed228c76d3b64a19602e",
+      "chunk_samples": [
+        512
+      ],
+      "threshold_getter_decimal": [
+        0.644
+      ],
+      "getter_print_decimal_places": 6,
+      "create_us_median": 15163,
+      "zero_detect_mean_us": 2108.81338028169,
+      "zero_detect_max_us": 2892,
+      "zero_detect_calls": 284,
+      "before_create_to_after_prime_bytes_after_first_cycle": {
+        "internal_free": [
+          22148,
+          22148
+        ],
+        "psram_free": [
+          321300,
+          321300
+        ]
+      },
+      "post_first_cleanup_free_bytes_stable": {
+        "internal_free": true,
+        "psram_free": true
+      },
+      "post_first_cleanup_observed_repeats": 4
+    }
+  },
+  "hardware": {
+    "chip": "ESP32-P4",
+    "revision": "v1.3",
+    "cpu_mhz": 360,
+    "psram_mhz": 200,
+    "usb_matches_prior_verified_development_chip": true,
+    "private_chip_log_sha256": "e6675d2a533db7b65160c81baecd3db2fa84da76cd1ac53d98ebbb18995a21af",
+    "partition_table_read_sha256": "43116af1b0023dcc1ca8bd3e8ef477b36bf6d97f30f92717a19d8b80f94df5d9",
+    "active_slot": "ota_0",
+    "app_offset": 917504,
+    "slot_bytes": 6881280
+  },
+  "final_independent_status": {
+    "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+    "slot": "ota_0",
+    "selected_service_unchanged": true,
+    "voice_idle": true,
+    "wake_listening": true,
+    "wake_word": "Hi ESP",
+    "nyx_state": "connecting"
+  },
+  "run_notes": [
+    "The first restoration included a separate automated UART readiness observation; it did not write flash or configuration.",
+    "A prematurely started Willow attempt failed HTTP preflight before USB access/flash. Its empty output directory was retained; the completed Willow run used a fresh directory.",
+    "Original Nyx state was connecting before testing and remained connecting afterwards; explicit app-only restoration was used and no voice connectivity acceptance is claimed."
+  ],
+  "microphone_recorded": false,
+  "speaker_playback": false,
+  "production_board_operated": false,
+  "candidate_scored": false,
+  "reserved_acceptance_accessed": false,
+  "recognition_accepted": false,
+  "limits": [
+    "Only five exact-zero streams per model. Recognition, FAR, speech compute, whole-app scheduling, first-utterance delivery and long-call/reconnect remain unverified.",
+    "After-prime heap deltas include the PCM buffer and lazy model allocations. Four stable repeated snapshots do not prove absence of long-term leaks.",
+    "Factory selection and successful runtime calls do not identify proprietary topology or establish equality to the Hi ESP model."
+  ]
+}

@@ -49,6 +49,28 @@ sets by replacing their text. New Hey comparisons need their own frozen protocol
 `wn10_himuse` is inventoried separately but is not supported by this probe: it
 has two metadata/data pairs and exceeds this probe's 512 KiB expanded bound.
 
+For an initialization/resource-only build, add `-D BASELINE_REPORT_RESOURCES=ON`
+(default OFF) and pass `--require-resources` to the guarded runner. Startup reports
+heap snapshots before/after expanded model loading; each clip records create and
+zero-prime times, then free/largest-block heap snapshots before create, after
+create and after priming. The last snapshot includes that clip's PCM buffer.
+Resource snapshots are outside the timed `detect()` calls. Repeated clips still
+destroy/recreate and use the original zero-prime/full-PCM lifecycle.
+
+`--restore-readiness online` is the runner default: restoration requires Nyx up.
+An explicit `--restore-readiness app-only` supports offline initialization when
+the original Nyx connection was already unavailable. Both modes require the
+original app/slot, idle voice/OTA state, unchanged selected voice service and wake
+listening. The report records pre-test and restored Nyx states, and separately
+states whether connectivity was verified. App-only restoration cannot establish
+voice connectivity or full-app acceptance. No connection setting is changed.
+
+The [zero-PCM experiment](../wakeword_p4/experiments/official_hey_zero_smoke_v1.py)
+prepares five exact-zero streams with partial-chunk boundaries and audits the
+existing runner's raw report against the concrete build/model identities. It
+operates no hardware itself. These are initialization, resource and transfer
+checks; zero-input timings do not establish speech compute or recognition quality.
+
 **Do not run `idf.py flash`.** Its standalone partition layout differs from the
 provisioned panel. `run.py` writes only the explicitly verified active app slot.
 It checks the USB MAC, original app ELF identity, idle state, slot size and

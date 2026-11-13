@@ -105,5 +105,7 @@ a Willow build.
 
 Reports live in `research/wakeword_p4/results/official-hey-*-v1.json`.
 No model binaries, SDK implementation/disassembly, speech, board addresses,
-credentials or private logs are included. No board, speaker or microphone is
-operated, no final/acceptance set is opened, and no candidate is promoted.
+credentials or private logs are included. The original inventory/build stage
+operated no board, speaker or microphone, opened no final/acceptance set and
+promoted no candidate. The subsequent [native zero-PCM check](official_hey_zero_smoke_v1.md)
+records actual P4 initialization/resources and its separate limits/restoration.

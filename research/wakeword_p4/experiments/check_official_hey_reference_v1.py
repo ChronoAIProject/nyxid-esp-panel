@@ -4,6 +4,7 @@ Pass the output of inventory_official_hey_models_v1.py and a fresh --output.
 Requires pyserial only to import the guarded runner; no port is opened.
 """
 import argparse
+import copy
 import hashlib
 import importlib.util
 import json
@@ -101,13 +102,38 @@ def main():
     (incomplete / 'wn9_index').unlink()
     rejected('Missing model member', lambda: packer.pack(incomplete, args.output / 'bad.bin', incomplete.name), ValueError)
     base = dict(engine='wn9_heywillow_tts', mode='DET_MODE_95', rate=16000)
+    runner.validate_ready({**base, 'resource_probe': True}, base['engine'], require_resources=True)
+    rejected('Resource run cannot silently use an uninstrumented probe',
+        lambda: runner.validate_ready(base, base['engine'], require_resources=True), RuntimeError)
     for label, change in [('Wrong engine', dict(engine='wn9_hiesp')),
                           ('Wrong mode', dict(mode='DET_MODE_90')),
                           ('Wrong rate', dict(rate=8000)),
                           ('Missing engine', dict(engine=None))]:
         rejected(label, lambda change=change: runner.validate_ready({**base, **change}, base['engine']), RuntimeError)
+    restored = dict(app_sha256='original-identity', ota=dict(running='ota_0', busy=False),
+        voice=dict(active=False, busy=False, service_id='original-service', wake=dict(listening=True)),
+        nyx=dict(state='up'))
+    check_restore = lambda value, online=True: runner.restoration_ready(
+        value, 'original-identity', 'ota_0', 'original-service', online)
+    assert check_restore(restored)
+    connecting = copy.deepcopy(restored)
+    connecting['nyx']['state'] = 'connecting'
+    assert not check_restore(connecting) and check_restore(connecting, online=False)
+    restore_mutations = [('app_sha256', 'other'), ('ota.running', 'ota_1'), ('ota.busy', True),
+        ('voice.active', True), ('voice.busy', True), ('voice.service_id', 'other'),
+        ('voice.wake.listening', False)]
+    for key, value in restore_mutations:
+        mutated = copy.deepcopy(restored)
+        parent = mutated
+        *parents, leaf = key.split('.')
+        for part in parents:
+            parent = parent[part]
+        parent[leaf] = value
+        assert not check_restore(mutated) and not check_restore(mutated, online=False), key
     report = dict(schema='official-hey-reference-host-check-v1',
         legacy_commit=LEGACY_COMMIT, default_hiesp_compressed_bytes_unchanged=True,
+        restoration_checks=dict(default_requires_online=True, app_only_explicitly_allows_connecting=True,
+            both_modes_reject_mutated_fields=[key for key, _ in restore_mutations]),
         products=results, explicit_rejections=rejections,
         sources={str(path.relative_to(REPO)): hashlib.sha256(path.read_bytes()).hexdigest()
                  for path in [Path(__file__), REPO / 'tools/embed_wake_model.py',

@@ -15,6 +15,26 @@ extern const uint8_t packed_start[] asm(BASELINE_PACKED_START);
 extern const uint8_t packed_end[] asm(BASELINE_PACKED_END);
 extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
 
+#if BASELINE_REPORT_RESOURCES
+typedef struct {
+    size_t internal_free, psram_free, internal_largest, psram_largest;
+} heap_snapshot_t;
+
+static heap_snapshot_t heap_snapshot(void) {
+    return (heap_snapshot_t){
+        .internal_free=heap_caps_get_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),
+        .psram_free=heap_caps_get_free_size(MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT),
+        .internal_largest=heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),
+        .psram_largest=heap_caps_get_largest_free_block(MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT)};
+}
+
+static void print_heap(const char *key, heap_snapshot_t value) {
+    printf(",\"%s\":{\"internal_free\":%u,\"psram_free\":%u,\"internal_largest\":%u,\"psram_largest\":%u}",
+        key,(unsigned)value.internal_free,(unsigned)value.psram_free,
+        (unsigned)value.internal_largest,(unsigned)value.psram_largest);
+}
+#endif
+
 static bool read_exact(void *buffer, size_t bytes) {
     uint8_t *out=buffer;
     while(bytes) {
@@ -30,6 +50,9 @@ void app_main(void) {
     uint32_t size=(uint32_t)packed_start[0] | (uint32_t)packed_start[1]<<8 |
         (uint32_t)packed_start[2]<<16 | (uint32_t)packed_start[3]<<24;
     if(size<1024 || size>512*1024)abort();
+#if BASELINE_REPORT_RESOURCES
+    heap_snapshot_t heap_before_model=heap_snapshot();
+#endif
     void *root=heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
     uLongf expanded=size;
     if(!root || uncompress(root,&expanded,packed_start+4,packed_end-packed_start-4)!=Z_OK || expanded!=size)abort();
@@ -45,12 +68,21 @@ void app_main(void) {
     const esp_wn_iface_t *wn=&esp_sr_wakenet9_quantized;
 #endif
     if(!wn)abort();
+#if BASELINE_REPORT_RESOURCES
+    heap_snapshot_t heap_after_model=heap_snapshot();
+#endif
     uart_config_t config={.baud_rate=115200,.data_bits=UART_DATA_8_BITS,
         .parity=UART_PARITY_DISABLE,.stop_bits=UART_STOP_BITS_1,
         .flow_ctrl=UART_HW_FLOWCTRL_DISABLE,.source_clk=UART_SCLK_DEFAULT};
     ESP_ERROR_CHECK(uart_param_config(UART_NUM_0,&config));
     ESP_ERROR_CHECK(uart_driver_install(UART_NUM_0,64*1024,0,0,NULL,0));
-    printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n",name);
+    printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000",name);
+#if BASELINE_REPORT_RESOURCES
+    printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
+    print_heap("heap_before_model",heap_before_model);
+    print_heap("heap_after_model",heap_after_model);
+#endif
+    printf("}\n");
     char command[96];
     for(;;) {
         size_t used=0;
@@ -68,7 +100,13 @@ void app_main(void) {
             ESP_ERROR_CHECK(uart_wait_tx_done(UART_NUM_0,pdMS_TO_TICKS(1000)));
             vTaskDelay(pdMS_TO_TICKS(100));
             ESP_ERROR_CHECK(uart_set_baudrate(UART_NUM_0,baud));
-            printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000}\n",name);
+            printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000",name);
+#if BASELINE_REPORT_RESOURCES
+            printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
+            print_heap("heap_before_model",heap_before_model);
+            print_heap("heap_after_model",heap_after_model);
+#endif
+            printf("}\n");
             continue;
         }
         if(sscanf(command,"CLIP %u %u",&id,&samples)!=2 || !samples || samples>16000*3600) {
@@ -78,14 +116,36 @@ void app_main(void) {
         }
         // WakeNet9 clean() is unsafe before lazy queues initialize. Match the
         // production recreate/prime lifecycle, without resetting PCM mid-clip.
+#if BASELINE_REPORT_RESOURCES
+        heap_snapshot_t heap_before_create=heap_snapshot();
+        int64_t create_start=esp_timer_get_time();
+#endif
         model_iface_data_t *model=wn->create(name,DET_MODE_95);
+#if BASELINE_REPORT_RESOURCES
+        int64_t create_us=esp_timer_get_time()-create_start;
+        heap_snapshot_t heap_after_create=heap_snapshot();
+#endif
         if(!model || wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1)abort();
         int chunk=wn->get_samp_chunksize(model);
         if(chunk<1 || chunk>2048)abort();
         int16_t *pcm=heap_caps_aligned_calloc(16,chunk,sizeof(int16_t),MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
         if(!pcm)abort();
+#if BASELINE_REPORT_RESOURCES
+        int64_t prime_start=esp_timer_get_time();
+#endif
         for(int at=0;at<32000;at+=chunk)(void)wn->detect(model,pcm);
-        printf("WAKE_BENCH_CLIP_READY {\"id\":%u,\"chunk\":%d,\"threshold\":%.6f}\n",id,chunk,wn->get_det_threshold(model,1));
+#if BASELINE_REPORT_RESOURCES
+        int64_t prime_us=esp_timer_get_time()-prime_start;
+        heap_snapshot_t heap_after_prime=heap_snapshot();
+#endif
+        printf("WAKE_BENCH_CLIP_READY {\"id\":%u,\"chunk\":%d,\"threshold\":%.6f",id,chunk,wn->get_det_threshold(model,1));
+#if BASELINE_REPORT_RESOURCES
+        printf(",\"create_us\":%lld,\"prime_us\":%lld",(long long)create_us,(long long)prime_us);
+        print_heap("heap_before_create",heap_before_create);
+        print_heap("heap_after_create",heap_after_create);
+        print_heap("heap_after_prime",heap_after_prime);
+#endif
+        printf("}\n");
         unsigned count=0,offsets[64]={0},calls=0;
         int64_t total_us=0,max_us=0;
         uint32_t crc=crc32(0L,Z_NULL,0);

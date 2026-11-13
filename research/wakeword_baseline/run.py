@@ -19,10 +19,21 @@ import zlib
 import serial
 
 
-def validate_ready(ready, engine):
+def validate_ready(ready, engine, require_resources=False):
     if (ready.get("engine")!=engine or ready.get("mode")!="DET_MODE_95"
             or ready.get("rate")!=16000):
         raise RuntimeError("Reference firmware does not match the selected engine/mode/rate")
+    if require_resources and ready.get("resource_probe") is not True:
+        raise RuntimeError("Reference firmware is missing requested resource instrumentation")
+
+
+def restoration_ready(value, expected_app, slot, service_id, require_online=True):
+    return (value["app_sha256"]==expected_app and value["ota"]["running"]==slot
+            and not value["ota"]["busy"] and not value["voice"]["active"]
+            and not value["voice"].get("busy",False)
+            and value["voice"]["wake"]["listening"]
+            and value["voice"]["service_id"]==service_id
+            and (not require_online or value["nyx"]["state"]=="up"))
 
 
 def main():
@@ -37,6 +48,9 @@ def main():
     parser.add_argument("--slot-bytes", type=lambda s: int(s,0), required=True)
     parser.add_argument("--probe-bin", type=Path, required=True)
     parser.add_argument("--engine", choices=("wn9_hiesp","wn9_heywillow_tts"), default="wn9_hiesp")
+    parser.add_argument("--require-resources", action="store_true")
+    parser.add_argument("--restore-readiness", choices=("online","app-only"), default="online",
+                        help="app-only explicitly excludes Nyx connectivity from an offline probe's restoration check")
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int)
@@ -66,7 +80,7 @@ def main():
     before = status()
     if before["app_sha256"] != args.expected_app_sha256 or before["ota"]["running"] != args.slot:
         raise RuntimeError("Original app or active slot does not match the explicit development-board expectation")
-    if before["voice"]["active"] or before["ota"]["busy"]:
+    if before["voice"]["active"] or before["voice"].get("busy",False) or before["ota"]["busy"]:
         raise RuntimeError("Development board is busy")
     if bytes.fromhex(args.expected_app_sha256) not in args.restore_app.read_bytes():
         raise RuntimeError("Restore binary does not contain the expected ELF identity")
@@ -86,6 +100,9 @@ def main():
               "manifest_sha256":hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
               "engine":args.engine, "mode":"DET_MODE_95", "sample_rate":16000,
               "uart_baud":args.baud,
+              "restore_readiness":args.restore_readiness,
+              "before":{"app_sha256":before["app_sha256"],"slot":before["ota"]["running"],
+                        "nyx_state":before["nyx"]["state"]},
               "scope":"Offline PCM detector benchmark, not acoustic/full-app acceptance.", "clips":[]}
     def interrupted(_signum, _frame):
         raise KeyboardInterrupt("Benchmark interrupted; restoring original app")
@@ -111,13 +128,13 @@ def main():
                         raise RuntimeError("Benchmark firmware reported an error; see private UART log")
                 raise TimeoutError(prefix)
             ready=message("WAKE_BENCH_READY",45)
-            validate_ready(ready,args.engine)
+            validate_ready(ready,args.engine,args.require_resources)
             if args.baud!=115200:
                 uart.write(f"BAUD {args.baud}\n".encode("ascii"))
                 assert message("WAKE_BENCH_BAUD")["baud"]==args.baud
                 uart.baudrate=args.baud
                 ready=message("WAKE_BENCH_READY",5)
-                validate_ready(ready,args.engine)
+                validate_ready(ready,args.engine,args.require_resources)
             report["firmware_ready"]=ready
             for index,row in enumerate(rows):
                 with wave.open(str(args.manifest.parent/row["path"]),"rb") as wav:
@@ -139,7 +156,10 @@ def main():
                 result=message("WAKE_BENCH_RESULT",max(30,samples/16000))
                 if not (result["id"]==index and result["complete"] and result["crc32"]==zlib.crc32(data)):
                     raise RuntimeError("PCM transfer verification failed")
-                report["clips"].append({**row,"result":result,"threshold":prepared["threshold"]})
+                clip={**row,"result":result,"threshold":prepared["threshold"]}
+                if args.require_resources:
+                    clip["initialization"]=prepared
+                report["clips"].append(clip)
                 (args.output/"progress.json").write_text(json.dumps(report,indent=2)+"\n")
                 if index%10==0 or index==len(rows)-1:
                     phase="offline_hiesp" if args.engine=="wn9_hiesp" else "offline_heywillow"
@@ -155,21 +175,23 @@ def main():
         while time.monotonic()<deadline:
             try:
                 after=status()
-                if (after["app_sha256"]==args.expected_app_sha256 and after["nyx"]["state"]=="up"
-                        and after["voice"]["wake"]["listening"]):
+                if restoration_ready(after,args.expected_app_sha256,args.slot,
+                                     before["voice"]["service_id"],args.restore_readiness=="online"):
                     break
             except (OSError,ValueError):
                 pass
             time.sleep(1)
         if not after or after["app_sha256"]!=args.expected_app_sha256 or after["ota"]["running"]!=args.slot:
             raise RuntimeError("RESTORE VERIFICATION FAILED")
-        if after["nyx"]["state"]!="up" or not after["voice"]["wake"]["listening"]:
-            raise RuntimeError("Original app restored, but local service/wake not ready")
-        if after["voice"]["service_id"]!=before["voice"]["service_id"]:
-            raise RuntimeError("Original voice service selection changed")
-        report["restored"]={"app_sha256":after["app_sha256"],"nyx_state":after["nyx"]["state"],"wake_listening":True}
+        if not restoration_ready(after,args.expected_app_sha256,args.slot,
+                                 before["voice"]["service_id"],args.restore_readiness=="online"):
+            raise RuntimeError("Original app restored, but requested connection/service/idle wake state not ready")
+        report["restored"]={"app_sha256":after["app_sha256"],"nyx_state":after["nyx"]["state"],
+                            "slot":after["ota"]["running"],"voice_idle":True,
+                            "service_selection_unchanged":True,"wake_listening":True,
+                            "connection_verified":after["nyx"]["state"]=="up"}
         (args.output/"report.json").write_text(json.dumps(report,indent=2)+"\n")
-        print("Original app, local connection and Hi ESP listening verified",flush=True)
+        print("Original app, service selection and Hi ESP listening verified; Nyx="+after["nyx"]["state"],flush=True)
 
 
 if __name__ == "__main__":
