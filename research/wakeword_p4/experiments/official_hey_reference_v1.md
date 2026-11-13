@@ -109,3 +109,19 @@ credentials or private logs are included. The original inventory/build stage
 operated no board, speaker or microphone, opened no final/acceptance set and
 promoted no candidate. The subsequent [native zero-PCM check](official_hey_zero_smoke_v1.md)
 records actual P4 initialization/resources and its separate limits/restoration.
+
+## Separate paired-v2 crop review
+
+GPU commit `ece33790ac48b42a285b8cccb0cab4f0afdda5c2` retains the v1
+pre-training prefix failure and implements the separately registered v2
+geometry cap without modifying original audio. Mac independently extracted
+that exact commit's two CPU analytic tests and seven source files, and ran
+`python3 research/wakeword_p4/experiments/test_hey_prefix_crop_v2.py -v`.
+Both tests passed on NumPy 2.4.3. Ten actual sampler batches on analytic
+features preserve labels, weights, every negative tensor and all three RNG
+states; 320 original/effective positive draws are recorded, with changes
+restricted to the registered cap. The receipt
+`results/mac-hey-prefix-v2-analytic-check-v1.json` binds all seven source hashes.
+This is not actual new-pack CPU/full-schedule/GPU/recognition admission or
+cross-platform numerical equivalence. Reproduce from that GPU commit in an
+isolated checkout; no TensorFlow, waveform, board or reserved data is needed.
