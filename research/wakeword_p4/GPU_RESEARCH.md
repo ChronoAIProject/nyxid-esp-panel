@@ -7092,3 +7092,17 @@ source/runtime/token inventory and all-engine/common-negative recipe are fixed.
 Original Nyx reused sequential RNG differs from new per-cell seeds, explicitly
 not bit-matched random waveform draws. Reuse byte checks do not re-prove quality
 arrays. No heldout media read; no substitution of new model IDs.
+
+
+### Broad auxiliary exact requests and native timing inspection
+
+Old Kokoro model/voicebank and every Qwen original provenance model file SHA
+rechecked.672 exact requests fixed:480 Kokoro (20training voices×3speeds×4
+carriers×2targets),192 Qwen(24conditions×4carriers×2targets), no inference.
+Old WAV-only sources not promoted to native-float-qualified paired sources.
+Kokoro static graph actually exposes waveform+duration; old wrapper drops
+duration, truncates phones, and casts float speed to int32 without adapter.
+New path must save both outputs/reject truncation/preserve true float speed.
+Duration units/token/sample mapping is not certified yet. Qwen command prefix
+timing remains unresolved: do not replace wake boundary with fullcommand end.
+Subplans are not the full execution lock; original held roles/failed data intact.

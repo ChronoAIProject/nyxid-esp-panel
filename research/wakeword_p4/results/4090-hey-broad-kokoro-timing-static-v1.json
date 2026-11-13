@@ -1,0 +1,19 @@
+{
+  "schema": "hey-broad-kokoro-timing-static-review-v1",
+  "scope": "Static model graph and installed wrapper inspection only; no inference",
+  "model_sha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+  "outputs": [
+    "waveform",
+    "duration"
+  ],
+  "wrapper_file": "/usr/local/lib/python3.11/dist-packages/kokoro_onnx/__init__.py",
+  "wrapper_method_sha256": "bf320f824cf7a1f2dd931eb0622a38a305acf029be413b49cbf7a573f607d0fd",
+  "wrapper_method": "    def _create_audio(\n        self, phonemes: str, voice: NDArray[np.float32], speed: float\n    ) -> tuple[NDArray[np.float32], int]:\n        log.debug(f\"Phonemes: {phonemes}\")\n        if len(phonemes) > MAX_PHONEME_LENGTH:\n            log.warning(\n                f\"Phonemes are too long, truncating to {MAX_PHONEME_LENGTH} phonemes\"\n            )\n        phonemes = phonemes[:MAX_PHONEME_LENGTH]\n        start_t = time.time()\n        tokens = np.array(self.tokenizer.tokenize(phonemes), dtype=np.int64)\n        assert len(tokens) <= MAX_PHONEME_LENGTH, (\n            f\"Context length is {MAX_PHONEME_LENGTH}, but leave room for the pad token 0 at the start & end\"\n        )\n\n        voice = voice[len(tokens)]\n        tokens = [[0, *tokens, 0]]\n        if \"input_ids\" in [i.name for i in self.sess.get_inputs()]:\n            # Newer export versions\n            inputs = {\n                \"input_ids\": tokens,\n                \"style\": np.array(voice, dtype=np.float32),\n                \"speed\": np.array([speed], dtype=np.int32),\n            }\n        else:\n            inputs = {\n                \"tokens\": tokens,\n                \"style\": voice,\n                \"speed\": np.ones(1, dtype=np.float32) * speed,\n            }\n\n        audio = self.sess.run(None, inputs)[0]\n        audio_duration = len(audio) / SAMPLE_RATE\n        create_duration = time.time() - start_t\n        rtf = create_duration / audio_duration\n        log.debug(\n            f\"Created audio in length of {audio_duration:.2f}s for {len(phonemes)} phonemes in {create_duration:.2f}s (RTF: {rtf:.2f}\"\n        )\n        return audio, SAMPLE_RATE\n",
+  "findings": [
+    "Original ONNX exports waveform and duration; installed _create_audio selects output0 only.",
+    "Wrapper truncates phonemes to MAX_PHONEME_LENGTH: new generator must reject overlength before invoking wrapper.",
+    "Wrapper input_ids path casts requested speed to int32: original typed-float adapter remains necessary.",
+    "Duration shape, units, token correspondence and sum-to-waveform samples remain unverified; do not claim certified prefix timing."
+  ],
+  "next_action": "Pin a standalone timing probe plan before inference; retain both original outputs and exact phones/tokens/style/speed, validate units and padding mapping with fresh training-only bounded cells."
+}
