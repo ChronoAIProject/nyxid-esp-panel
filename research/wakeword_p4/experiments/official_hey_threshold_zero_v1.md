@@ -129,3 +129,35 @@ threshold rescue are permitted. This is developer transport evidence, not
 recognition/FAR/true latency or new-source acceptance. Its manifest and protocol
 are frozen before replay in
 [the event-stream protocol](../results/official-hey-event-stream-protocol-v1.json).
+
+The frozen positive-event replay has now completed: the single stream yields
+one raw event and 109 calls; the 277.545-second stream yields 80 raw events and
+8674 calls. Its legacy prefix has 64 entries and explicitly reports incomplete,
+while all 80 event frames are authenticated. Both CRC/sample/call checks pass at
+921600 baud. The single source's event offset equals its original native pilot
+offset. A separate UART audit authenticates all 81 positive frames and recomputes
+counts/CRC; original app/slot/service/idle/listener restoration and independent
+final HTTP checks pass. Nyx still connects to its unavailable original endpoint;
+there is no voice-connectivity acceptance.
+
+[Native event results](../results/official-hey-event-stream-native-v1.json) and
+[independent audit](../results/official-hey-event-stream-independent-audit-v1.json)
+preserve all data. This exercises the real greater-than-64-positive emission
+branch and same-connection short/long transfer. Eighty repeated consumed TTS
+containers are not 80 independent speakers or a fresh recognition test. No
+threshold, PCM rate, model or production-board configuration was changed.
+
+The [combined evidence archive](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/official-hey-threshold-and-event-native-v1.tar.gz)
+is 1674244 bytes, SHA256
+`3ec6b4bee2c928a15924691debaf28d1da1121e9a0216ffc7c93cdb0c8d3dfb6`.
+It contains 28 hashed payload files plus its manifest: complete zero/speech PCM,
+frozen protocols and source, original saved reports, sanitized detector frames,
+concrete build identity and reproduction commands. No credential, board address,
+private boot/flash log, firmware or proprietary model binary is included.
+
+Fresh anonymous download authenticates every member. Reexecuting both included
+auditors reconstructs/checks all 30 transfers and reproduces both full summaries
+byte for byte. The [receipt](../results/official-hey-threshold-and-event-receipt-v1.json)
+records those hashes and scope. This replays saved evidence, not a second native
+inference or independent recognition acceptance. The original speech/v30 evidence
+archives remain unchanged.
