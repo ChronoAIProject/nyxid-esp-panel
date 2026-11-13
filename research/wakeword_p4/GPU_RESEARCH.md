@@ -6901,3 +6901,18 @@ and longstream v2 fullreturn certification still pending.
 Committed comparative custom-development summary: maximum fullphrase macro
 Willow0,Nyx1/36,v30.75; FAReligible maxima0,1/36,26/36 respectively. All0eligible,
 no acceptance unlock/promotion. Originalfullcurves retained; v30 remains frozen.
+
+### Original observation-v2 long witness started; official grid executor ready
+
+42ea061 pushed exact long-witness source/runtime/consumedPCM plan before actual
+original session15351. Same68506685samples/1235repeats, no live timeout or retry,
+complete rawreturn transport and postprimegetter check. Observed current UART
+call39793/source20374016samples; completion/CRC/audit still pending, no restart.
+
+Official development grid registration/executor now enumerates9672streams:
+372complete inputs x13configs x2officialmodels, originalPCM, freshwholecall
+engine and63prime, no custom smoothing/refractory. Registration requires clean
+zero/consumed/long v2receipts plus complete custommaterial pins, and requires
+an actual official calibrator source before it can create an execution lock.
+Newgrid not registered or run yet; calibrator/independent newdata auditor still
+pending. No officialdevelopment/acceptance media opened by these source edits.
