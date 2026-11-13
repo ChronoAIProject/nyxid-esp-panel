@@ -1,0 +1,134 @@
+{
+  "schema": "mac-independent-joe-background-saved-score-audit-v1",
+  "source_sha256": "23f45730a9183c65c17a76e63501a3f5886615e98281a769eff525c534f3e45d",
+  "archives": {
+    "joe": {
+      "archive": "gpu-joe-fixed-baseline-evidence-v1.tar.gz",
+      "sha256": "e2361d3835a192ccbd25567fad33ede42a63126771306b3b5c7566f732fc4160",
+      "bytes": 29839545,
+      "payloads_authenticated": 2526,
+      "manifest_commit": "90bca76"
+    },
+    "background": {
+      "archive": "gpu-new-background-fixed-baseline-evidence-v1.tar.gz",
+      "sha256": "cf298670f15c77f4b005e9dd3391d5050e08b2c4937eafd2d87574be6ec794f8",
+      "bytes": 229537,
+      "payloads_authenticated": 256,
+      "manifest_commit": "0b8286b"
+    },
+    "joe-float": {
+      "archive": "gpu-joe-v30-float-diagnostic-evidence-v1.tar.gz",
+      "sha256": "9605f66fc5b3a535123e05b82bb12e6513aa4e705e9cf4496cac1ac1da75ee9d",
+      "bytes": 1255888,
+      "payloads_authenticated": 7,
+      "manifest_commit": "73f4562"
+    }
+  },
+  "joe_full_input_pcm_bytes_independently_match_all360_frozen_render_wavs": true,
+  "all402_uart_events_done_crc_report_fields_stage_getter_and_trace_events_match": true,
+  "joe_counts": {
+    "v30": {
+      "positive_clips": 72,
+      "positive_activated": 0,
+      "standalone_clips": 36,
+      "standalone_activated": 0,
+      "command_clips": 36,
+      "command_activated": 0,
+      "common_clips": 216,
+      "common_activated": 0,
+      "common_events": 0,
+      "cross_clips": 72,
+      "cross_activated": 0,
+      "pre_source_positive_events": 0
+    },
+    "hiesp": {
+      "positive_clips": 72,
+      "positive_activated": 64,
+      "standalone_clips": 36,
+      "standalone_activated": 29,
+      "command_clips": 36,
+      "command_activated": 35,
+      "common_clips": 216,
+      "common_activated": 18,
+      "common_events": 18,
+      "cross_clips": 72,
+      "cross_activated": 0,
+      "pre_source_positive_events": 0
+    }
+  },
+  "official_common_activation_texts": {
+    "Hi E S B.": 18
+  },
+  "background": {
+    "v30": {
+      "events": 0,
+      "samples": 455204864,
+      "hours": 7.902862222222223,
+      "upper95_per_hour": 0.37906927760049125
+    },
+    "hiesp": {
+      "events": 0,
+      "samples": 455204864,
+      "hours": 7.902862222222223,
+      "upper95_per_hour": 0.37906927760049125
+    }
+  },
+  "joe_float": {
+    "float_original": {
+      "hey_nyx": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.8511093139648439
+      },
+      "hi_esp": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.010815805289894342
+      },
+      "confusion": {
+        "clips": 216,
+        "activated": 0,
+        "maximum_five_mean": 0.10022537410259247
+      }
+    },
+    "float_input_rounded": {
+      "hey_nyx": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.8495105981826783
+      },
+      "hi_esp": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.010949373897165063
+      },
+      "confusion": {
+        "clips": 216,
+        "activated": 0,
+        "maximum_five_mean": 0.09844884350895883
+      }
+    },
+    "int8": {
+      "hey_nyx": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.8054687500000001
+      },
+      "hi_esp": {
+        "clips": 72,
+        "activated": 0,
+        "maximum_five_mean": 0.008593750000000002
+      },
+      "confusion": {
+        "clips": 216,
+        "activated": 0,
+        "maximum_five_mean": 0.07968750000000001
+      }
+    }
+  },
+  "independent_model_inference": false,
+  "qemu_invoked": false,
+  "training": false,
+  "accepted": false,
+  "limits": "Authenticated saved evidence and independent accounting only. No Mac QEMU/float/INT8 inference or engine binary authentication. Background omitted input.pcm/original WAV bytes were not downloaded, decoded or independently authenticated; their exposure and CRC compare saved manifest/UART/report fields only. Joe full input bytes/CRC were independently recomputed. Reset-repeat claims were not rerun. All audio is consumed development; no independent acceptance, human phonetic/hardware latency or model promotion."
+}
