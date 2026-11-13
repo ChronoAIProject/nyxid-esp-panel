@@ -1,0 +1,44 @@
+{
+  "schema": "hey-broad-common-negative-plan-v1",
+  "source_sha256": "205cfcdf6dd9045758aea6a89becb9aa6b1fc63ca84ad3bb13b68215b89c6cc2",
+  "bound_subplans": {
+    "research/wakeword_p4/results/4090-hey-broad-piper-material-plan-v1.json": "446ef395ca0c4159544146d0d0b6ec69bbb445b602a6eebc59746e262a95afc0",
+    "research/wakeword_p4/results/4090-hey-broad-aux-material-plan-v1.json": "002be3b855ff0fe4e4505e268ec573d1da2b633c2ede61a7aaf7224de7b26203"
+  },
+  "original_piper_manifest_sha256": "e3a69b86294bf91db29777428e785252411710834d22ba92a037d595c963cdc0",
+  "texts": [
+    "Hey.",
+    "Hello.",
+    "Hey William.",
+    "Hey pillow.",
+    "Hey Nick.",
+    "Hey Next.",
+    "Hey Mix.",
+    "Hi E S P.",
+    "Hey Muse."
+  ],
+  "reciprocal_target_policy": "Whole paired other-target positives are additional negatives, separate from this common matrix.",
+  "schedule": {
+    "path": ".local/wakeword/hey-broad-common-negative-plan-v1/schedule.jsonl",
+    "sha256": "9e5faba34d77f8d01852ca2d3822342fb8b4f6cdf7aa7700c800815dffb84b6a",
+    "bytes": 7358011,
+    "cells": 18900,
+    "engines": {
+      "piper": 18144,
+      "kokoro": 540,
+      "qwen-cuda": 216
+    },
+    "actions": {
+      "generate": 12852,
+      "reuse": 6048
+    }
+  },
+  "verified_reuse_files": 24192,
+  "verified_reuse_sources": 6048,
+  "ambient_policy": "Original authenticated training-only ambient and prefix-negative material still need exact recipe/data attachment; this speech matrix does not replace continuous ambient.",
+  "limits": [
+    "Native/reuse file bytes authenticated; no array quality re-audit here.",
+    "Numeric IDs and conditions not independent human identities.",
+    "No synthesis, scoring, heldout media or training by this planner."
+  ]
+}

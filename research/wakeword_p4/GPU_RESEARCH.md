@@ -7160,3 +7160,23 @@ PID999256 binds exact PID/starttime, then requires final original summary and
 audits all source hashes/arrays/quality/internal prefix clocks; never restarts
 generation. Neither generation nor audit completion is claimed yet.
 Official original PID958504 remains live737/9672, no restart/partial FAR claim.
+
+
+### Common speech-negative lock and Qwen supervision amendment
+
+Exact common matrix18900 cells: Piper18144/Kokoro540/Qwen216, nine shared
+confusions.6048 Piper originals reused after24192 size/SHA checks;12852 missing
+cells await generation. Reciprocal whole target negatives remain additional.
+Continuous ambient/prefix inventory still needs exact training attachment.
+
+Before any Qwen inference, new standalone plan explicitly supersedes original
+unexecuted Qwen192-command submatrix only:24 original training conditions×3
+standalone draws×2targets=144 positives plus216 common negatives,360 requests.
+Original subplan preserved. This handles unavailable command-prefix alignment
+without invented endpoints: full standalone synthesis end is generated reference,
+not acoustic phone truth. Piper/Kokoro keep fourcarrier coverage. Available
+text/instruction IDs and codec codes must be saved, missing aligned durations
+explicitly unavailable; no ASR filtering inherited. This remains mixed-factor
+recipe, not isolated source-count causal test. No Qwen synthesis/training yet.
+Original Piper PID998887 and auditwaiter999256 observed live8700/16128;
+official958504 live738/9672. No restart or premature completion claim.
