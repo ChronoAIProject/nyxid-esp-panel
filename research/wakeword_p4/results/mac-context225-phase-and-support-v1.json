@@ -1,0 +1,131 @@
+{
+  "schema": "mac-independent-context225-phase-and-support-v1",
+  "gpu_commit": "65c3a23cfab85e511de09b23d4c00bf4484076ed",
+  "source_sha256": "e829717714b487758d493f69e0d463fb2dc1fe77857cf466634831742c20c542",
+  "input_sha256": {
+    "research/wakeword_p4/results/4090-hey-context225-stream-probe-plan-v3.json": "be728f5d5e156a0d602c4a1bdb0ae8f86e827405abb6ebcd3393134a356ec0c7",
+    "upstream/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "upstream/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "upstream/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717",
+    "upstream/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "research/wakeword_p4/results/4090-hey-broad-context-decision-v1.json": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091"
+  },
+  "architecture": {
+    "--residual_connection": "0,0,0,0",
+    "--stride": "3",
+    "--pointwise_filters": "60,60,60,60",
+    "--repeat_in_block": "1,1,1,1",
+    "--mixconv_kernel_sizes": "[5], [9], [13], [21]",
+    "--first_conv_filters": "30",
+    "--first_conv_kernel_size": "5"
+  },
+  "symbolic": [
+    {
+      "context_frames": 150,
+      "head_temporal_slots": 5,
+      "streaming_ring_lengths": [
+        2,
+        4,
+        8,
+        12,
+        20,
+        4
+      ],
+      "effective_receptive_frames": 149,
+      "nominal_unused_trailing_frames": 1,
+      "compared_end_clocks": 281,
+      "phase_aware_ordered_dependencies_exact": true,
+      "changing_only_unused_input_has_no_effect": true,
+      "nominal_dependency_mismatches": 281,
+      "scope": "Ordered symbolic temporal dependencies, not learned numeric outputs."
+    },
+    {
+      "context_frames": 225,
+      "head_temporal_slots": 30,
+      "streaming_ring_lengths": [
+        2,
+        4,
+        8,
+        12,
+        20,
+        29
+      ],
+      "effective_receptive_frames": 224,
+      "nominal_unused_trailing_frames": 1,
+      "compared_end_clocks": 256,
+      "phase_aware_ordered_dependencies_exact": true,
+      "changing_only_unused_input_has_no_effect": true,
+      "nominal_dependency_mismatches": 256,
+      "scope": "Ordered symbolic temporal dependencies, not learned numeric outputs."
+    },
+    {
+      "context_frames": 300,
+      "head_temporal_slots": 55,
+      "streaming_ring_lengths": [
+        2,
+        4,
+        8,
+        12,
+        20,
+        54
+      ],
+      "effective_receptive_frames": 299,
+      "nominal_unused_trailing_frames": 1,
+      "compared_end_clocks": 231,
+      "phase_aware_ordered_dependencies_exact": true,
+      "changing_only_unused_input_has_no_effect": true,
+      "nominal_dependency_mismatches": 231,
+      "scope": "Ordered symbolic temporal dependencies, not learned numeric outputs."
+    }
+  ],
+  "geometry": {
+    "context_frames": 225,
+    "nominal_unused_trailing_frames": 1,
+    "prefix_plus_rir_bound_samples": 31680,
+    "lead_samples": 48000,
+    "tail_samples": 16000,
+    "rir_tails": [
+      0,
+      960
+    ],
+    "jitters": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "constructed_crops_checked": 3120000,
+    "complete_source_start_prefix_and_rir_in_actual_model_aperture": true,
+    "scope": "Constructed integer boundaries only; not actual batch/feature-pack admission."
+  },
+  "interpretation": "The valid first conv and subsequent valid kernels leave one nominal trailing input unused. At stream end E, the context225 graph matches the latest224 real frames plus one unused dummy, rather than the nominal225-frame window ending at E. Keep original stream sample clocks; this reference alignment is not an offset search or a latency correction.",
+  "learned_output_equivalence_proven": false,
+  "media_accessed": false,
+  "inference_run": false,
+  "threshold_selected": false,
+  "acceptance_accessed": false,
+  "candidate_promoted": false,
+  "limits": "Authenticates declared source bytes and verifies architecture dependencies/integer support only. Actual float comparisons, unchanged source weights, trained INT8/P4 export and actual batches remain separate evidence."
+}
