@@ -6933,3 +6933,19 @@ and full continuous FAR. All13requested points and duplicateactualgetters remain
 no officialthreshold selection/promotion. Constructed360row event tests pass
 for ownWillow/HiESP labels,288/36 vs252/72negative denominators, earlyevents,
 completephrase/RIRreference and signedoffsets. No freshofficialscores inspected.
+
+### Official development live; consumed raw diagnostic
+
+838b650 pushed official execution SHA889e6333cc86aaf6e559c71cd423701ab458ab0b69841c008b4f1a168a6d9060
+before first fresh inference; original session14533/gridPID958504 live,9672runs
+no retry. New official fullcurves still pending; live-start receipt is bounded.
+
+Mac latest6864280196 reports originalnative2h complete capacity witness and asks
+bounded consumedraw diagnosis. Local saved1080synthetic rawtraces authenticated,
+plus4saved trainingcases, no inference/no thresholdchange/acceptance. Willow
+trainingpositive fivepeak.99609375 vs36devpositive max.0109375,median.01015625;
+Nyx trainingpositive.99609375 vsdev median.00390625(max.99609375). v30sameNyxdev
+median.99609375. This rules out merely pre-boundary event accounting for Willow
+failure and demonstrates a marked training/development output gap in these
+bounded cases; not isolated cause or wholetrainingpack assessment. Original
+rawpeak/fivepeak/firstpeak support times retained per source/confusion. No rescue.
