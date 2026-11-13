@@ -7646,3 +7646,20 @@ All135cases and failures retained, no pooled averaging hiding source failures,
 no post-result tolerance changes or PTQ retry. These bounded training witnesses
 cannot prove threshold-event equivalence or replace fresh development and
 independent acceptance. Model inference has not been performed by plan creation.
+
+
+### Final quantization runner implemented; incomplete training rejected
+
+New independent runner has lock/run phases. Lock authenticates both final120k
+receipts and all120100actual tensor digests against original schedules before
+reading final H5 or importing TensorFlow; binds final artifacts, input ledger/
+PCM, original training Python, upstream, frontend/LiteRT and TensorFlow native/
+Python runtime files. Separate execution lock must be pushed before run.
+Whole-input float offline/stream and twice-reset referenceINT8 traces retained
+for every registered case, including numerical failures; valid5mean errors
+compared per case to unchanged prospective budgets. No training source edits.
+Two analytic statistics cases pass. Actual lock attempt rejected missing
+originalWillow formal-execution-receipt.json, as required; no execution lock,
+output directory or model inference created. Preflight receipt explicitly does
+not validate full learned-model runtime correctness. Willow original1047649
+verifiedlive83500/120000; continuation1044979 and originalofficial958504 live.
