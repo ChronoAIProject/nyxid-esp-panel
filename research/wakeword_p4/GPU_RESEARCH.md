@@ -5911,3 +5911,18 @@ Original120000-step recipe/checkpoint selection continues unchanged; no early
 stopping, alternate candidate, INT8/new-development or cross-arm conclusion.
 Full matched input audit/postprocessing await both arms. Mike/test6/7 remain
 unconsumed; v30 frozen; objective incomplete. Coordination remains in Issue13.
+
+### Original recovered10000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. Original PID817144 verified live through
+9000→9500→10000, elapsed28:54. Original10000 line SHA
+`d603d6ac84d25b308f8f23d9561a1947fcc83a987598f344d36d1c67f30bc82f`.
+0training-float eligible points; fallback.994 recall .3560185185,
+macro .40625, hard-negative false rate .0133522727,
+max-source false rate .016875. Ambient0events/1.2048112674h gives nominal
+zero-event one-sided95upper2.4864743174/h, not a pass. All284formal hashes
+independently unchanged. Original120000-step recipe/checkpoint selection
+continues unchanged; no early stopping, alternate candidate, INT8/new-development
+or cross-arm conclusion. Full matched input audit/postprocessing await both arms.
+Mike/test6/7 remain unconsumed; v30 frozen; objective incomplete.
+Coordination remains in Issue13.
