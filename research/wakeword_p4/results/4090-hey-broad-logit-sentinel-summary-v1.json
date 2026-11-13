@@ -1,0 +1,48 @@
+{
+  "schema": "hey-broad-logit-sentinel-summary-v1",
+  "result_sha256": "4f4e025ad82311cd70777392e2c40c55dab730eae68965acc3370504655fa0ab",
+  "all810_trace_hashes_and_repeats_verified": true,
+  "summary": {
+    "hey_willow": {
+      "extrema": {
+        "natural": {
+          "minimum": -2802.48193359375,
+          "maximum": 341.6551513671875
+        },
+        "zero_zero": {
+          "minimum": -2802.48193359375,
+          "maximum": 341.6551513671875
+        },
+        "zero_full26": {
+          "minimum": -2802.48193359375,
+          "maximum": 341.6551513671875
+        }
+      },
+      "natural_logit_abs_gt8_fraction": 0.9756675817319691,
+      "natural_logit_abs_gt100_fraction": 0.21895017053489726,
+      "max_after_prefix_logit_difference_between_controls": 423.25898361206055
+    },
+    "hey_nyx": {
+      "extrema": {
+        "natural": {
+          "minimum": -966.1581420898438,
+          "maximum": 66.63343048095703
+        },
+        "zero_zero": {
+          "minimum": -966.1581420898438,
+          "maximum": 66.63343048095703
+        },
+        "zero_full26": {
+          "minimum": -966.1581420898438,
+          "maximum": 66.63343048095703
+        }
+      },
+      "natural_logit_abs_gt8_fraction": 0.9876466184177689,
+      "natural_logit_abs_gt100_fraction": 0.19370268696447882,
+      "max_after_prefix_logit_difference_between_controls": 201.02901458740234
+    }
+  },
+  "conclusion": "Natural complete training witnesses already reproduce huge logit magnitudes without the calibration sentinel. A full26 prefix is not necessary for extreme logits in this controlled set. Equal global extrema do not prove no transient prefix influence; per-source traces retained.",
+  "decision": "Do not assume removing sentinel fixes quantization. Register a structural/training numerical intervention addressing genuine logit range before any new candidate export.",
+  "limits": "Float H5 observations on training witnesses, not full original PTQ replay or independent recognition/FAR. Existing numerical rejection and v30 remain."
+}

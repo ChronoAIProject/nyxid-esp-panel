@@ -7837,3 +7837,17 @@ preactivation diagnosis should test that hypothesis before any PTQ intervention.
 Initial metadata query used unavailableis_variable key and raisedKeyError;
 corrected read-only auditor derives relationships from READ/ASSIGN ops, retained
 API limitation in report. No model/source changes, no newdev/acceptance.
+
+
+### Full preactivation control rejects sentinel-only explanation
+
+Originalsession86096/process1118793 exited0,270cases x3arms x2resets complete,
+810savedtrace hashes/repeats verified. Observation sigmoid reconstruction and
+natural baseline checks passed original fixed tolerances. Natural whole training
+inputs already span Willow[-2802.48193,341.65515], Nyx[-966.15814,66.63343].
+Global extrema identical for natural/zerozero/zerofull26; this does not mean no
+transient prefix effect. Sentinel not necessary for extreme ranges in these
+witnesses; deleting it alone has no established basis as a fix. No originalPTQ
+replay/export/optimization/newdev/acceptance. Next prospective intervention
+must address genuine model logit range or quantization, retaining failed models
+and all numerical gates. Goal active, v30 unchanged.
