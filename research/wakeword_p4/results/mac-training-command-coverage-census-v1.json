@@ -1,0 +1,41 @@
+{
+  "schema": "inherited-training-command-coverage-census-v1",
+  "source_sha256": "4d3887fc4d04dd17098b82c135768d5373089ad3117bde294452149a1fe58401",
+  "metadata_sha256": "9db652f0769e49be6e924aadbfc3cd3725870b2eb558ea5b25b25481970d1d4b",
+  "complete_sources_sha256": "0f2b008c2525ee9c093580008af1029618823f92d2718622acd513e682cbc981",
+  "metadata_rows": 157340,
+  "inherited_positive_training_rows": 63300,
+  "positive_text_counts": {
+    "Hey Nyx.": 26850,
+    "Hey Nyx, check the volume.": 8150,
+    "Hey Nyx, what time is it?": 8810,
+    "Hey Nyx, can you hear me?": 8690,
+    "Hey Nyx, turn on the light.": 8500,
+    "Hey Nicks.": 1100,
+    "Hey Nix!": 1140,
+    "Hey Nicks?": 60
+  },
+  "inherited_command_rows": 34150,
+  "command_engine_counts": {
+    "piper": 34150
+  },
+  "unique_command_wav_paths": 3415,
+  "complete_canonical_positive_sources": 1534,
+  "complete_canonical_positive_phrase_counts": {
+    "hey nix": 68,
+    "hey nicks": 147,
+    "hey nyx": 1319
+  },
+  "effective_original_main_positive_slots": 0,
+  "dataflow_evidence": "GPU dd3ce80 / results/4090-active-positive-slot-audit-v1.json: original sample(1,32) wholly overwritten before network input. This script counts authenticated metadata, not a new dataflow trace.",
+  "normalization_evidence": "training/inventory_complete_signal.py retains every [a-z]+ word when creating phrase; command words are not stripped by normalization.",
+  "limits": [
+    "Rows are rendered feature variants, not 34150 independent utterances or voices.",
+    "Original positive rows are still drawn for RNG but do not reach current main inputs.",
+    "CompleteCoverage recovery restores its own bare-phrase sources, not these original command rows.",
+    "Other surviving packs and pair40 are not comprehensively censused here. Do not infer all effective inputs lack commands.",
+    "Metadata intentions are not a pronunciation audit or unique causal explanation of command misses.",
+    "No feature arrays, development/final data, inference, training or hardware operations."
+  ],
+  "acceptance_claim": false
+}
