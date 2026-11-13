@@ -6254,3 +6254,40 @@ This is NOT new Willow/Nyx pack certification: target_admission=null, no new
 TTS or pack exists, no full schedule/launcher/optimizer/model-gradient audit.
 Actual target adapter and new-pack CPU execution remain required. No old
 validation/testing audio or final material scored, no historical pack relabeled.
+
+### Local source inventory, role reservation and separate target adapter (2026-11-13)
+
+Current local inventory checked174ONNX bytes and4745JSON/JSONL files, including
+candidate model hashes. No candidate bytes at prior model paths; only source-name
+match is Semaine text in qwen vocabulary, not synthesis evidence. Saved local
+inventory SHA54b08cc19c4dc73320f06a3a0bc00dca8739c1f754b33566f381b5169a368b2e
+and tracked receipt4090-hey-local-source-history-audit-v1.json. Bounded current
+accessible metadata/model evidence, not deleted/external history or PCM overlap.
+No audio opened. Shared lessac parent remains an explicit limitation.
+
+Exact voice-role reservation: Kusal/Reza training; Semaine speaker0/prudence
+only development; HFCmale acceptance. Model/config/card bytes bound in
+4090-hey-paired-voice-role-reservation-v1.json. No other Semaine speaker used in
+another role. This is not full material lock or TTS authorization execution;
+text/seed/renderer/RIR/negative inventories and new PCM overlap checks remain.
+
+Separate train_hey_target_adapter_v1.py now constructs an AST derivative without
+editing original train_stream.py. Removes validation calls and best-score
+selection, saves fixed final20000 only; deterministic ops/noTF32, fixed base
+teacher60/context150/frozenBN recipe. Launch requires pushed identical training
+lock, material commit, bound code/core features/weights, target provenance and
+training-only rows. No new launch has occurred and full lock is absent.
+
+Found and fixed preparation conflict: old provenance validator required all
+three splits, which would unnecessarily force reserved material into training
+packs. Added optional required_splits; existing default remains unchanged;
+adapter requires training only and rejects other feature/ambient roles. External
+fresh development/acceptance are not needed to train or export.
+
+AST source construction/compile passes; actual transformed loop executed with
+stub model20000updates, exactly one final save, learning-rate assignments at
+10000/16000,4diagnostic records. Two executable tests cover final controlflow,
+training-only provenance admission, default split rejection, wrong target and
+reciprocal mislabel rejection. This is not TensorFlow gradient/export validation
+or new actual-pack batch admission. Previous actual historical CPU batch remains
+separate evidence. All284formal hashes rechecked unchanged; PID817144 live107000.

@@ -14,7 +14,7 @@ TARGETS = {'hey_willow': 'Hey Willow', 'hey_nyx': 'Hey Nicks'}
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def validate(root, target):
+def validate(root, target, required_splits=('training', 'validation', 'testing')):
     if target not in TARGETS:raise ValueError('Unknown target')
     side=json.loads((root/'target-provenance.json').read_text())
     if (side['schema']!='hey-paired-feature-target-v1' or side['target_id']!=target
@@ -39,7 +39,7 @@ def validate(root, target):
         path=Path(source['source_pcm_path'])
         if digest(path)!=source['source_pcm_sha256']:raise ValueError('Source PCM changed')
         counts[(row['split'],row['label'])]=counts.get((row['split'],row['label']),0)+1
-    if any(not counts.get((split,label)) for split in ('training','validation','testing') for label in (0,1)):
+    if any(not counts.get((split,label)) for split in required_splits for label in (0,1)):
         raise ValueError('Every split requires positive and negative rows')
     roles={}
     for source in sources:
