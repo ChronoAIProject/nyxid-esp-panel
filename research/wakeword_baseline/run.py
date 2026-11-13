@@ -24,6 +24,8 @@ import serial
 
 CONTROL_PROTOCOL = "official-threshold-v1"
 CONTROL_FIELD = "reference_threshold_f32_hex"
+LONG_STREAM_PROTOCOL = "official-long-stream-v1"
+LONG_STREAM_MAX_SAMPLES = 16000 * 7200
 
 
 def binary32_value(bits):
@@ -46,13 +48,16 @@ def request_value(bits):
     return value
 
 
-def threshold_command(row,index,enabled):
+def threshold_command(row,index,enabled,long_streams=False):
+    if long_streams and not enabled:
+        raise ValueError("Long streams require explicit threshold control")
     if (CONTROL_FIELD in row)!=enabled:
         raise ValueError("Threshold request fields and explicit --threshold-control must agree")
     if not enabled:
         return f"CLIP {index} {row['samples']}\n"
     value=request_value(row[CONTROL_FIELD])
-    if type(row['samples']) is not int or not 0<row['samples']<=16000*3600:
+    maximum=LONG_STREAM_MAX_SAMPLES if long_streams else 16000*3600
+    if type(row['samples']) is not int or not 0<row['samples']<=maximum:
         raise ValueError("Invalid complete-stream sample count")
     suffix="DEFAULT" if value is None else "SET "+row[CONTROL_FIELD]
     return f"CLIP {index} {row['samples']} {suffix}\n"
@@ -107,7 +112,9 @@ def validate_control_result(result,events,row,index,chunk):
         raise ValueError("Legacy prefix and full event stream differ")
 
 
-def validate_ready(ready, engine, require_resources=False, require_threshold_control=False):
+def validate_ready(ready, engine, require_resources=False, require_threshold_control=False, require_long_streams=False):
+    if require_long_streams and not require_threshold_control:
+        raise RuntimeError("Long streams require explicit threshold control")
     if (ready.get("engine")!=engine or ready.get("mode")!="DET_MODE_95"
             or ready.get("rate")!=16000):
         raise RuntimeError("Reference firmware does not match the selected engine/mode/rate")
@@ -115,6 +122,9 @@ def validate_ready(ready, engine, require_resources=False, require_threshold_con
         raise RuntimeError("Reference firmware is missing requested resource instrumentation")
     if ready.get("control_protocol")!=(CONTROL_PROTOCOL if require_threshold_control else None):
         raise RuntimeError("Reference threshold protocol and explicit runner mode differ")
+    if (ready.get("stream_protocol")!=(LONG_STREAM_PROTOCOL if require_long_streams else None)
+            or ready.get("max_stream_samples")!=(LONG_STREAM_MAX_SAMPLES if require_long_streams else None)):
+        raise RuntimeError("Reference complete-stream limit and explicit runner mode differ")
 
 
 def restoration_ready(value, expected_app, slot, service_id, require_online=True):
@@ -141,6 +151,8 @@ def main():
     parser.add_argument("--require-resources", action="store_true")
     parser.add_argument("--threshold-control", action="store_true",
                         help="Require official-threshold-v1 and explicit binary32 request on every manifest row")
+    parser.add_argument("--long-streams", action="store_true",
+                        help="Require official-long-stream-v1; allow complete streams up to two hours")
     parser.add_argument("--restore-readiness", choices=("online","app-only"), default="online",
                         help="app-only explicitly excludes Nyx connectivity from an offline probe's restoration check")
     parser.add_argument("--manifest", type=Path, required=True)
@@ -148,6 +160,8 @@ def main():
     parser.add_argument("--limit", type=int)
     parser.add_argument("--baud", type=int, choices=(115200,921600,1500000,3000000), default=1500000)
     args = parser.parse_args()
+    if args.long_streams and not args.threshold_control:
+        parser.error("--long-streams requires --threshold-control")
     args.output.mkdir(parents=True, exist_ok=True)
     if (args.output/"report.json").exists():
         parser.error("Use a fresh output directory")
@@ -182,7 +196,7 @@ def main():
     if args.limit:
         rows = rows[:args.limit]
     for row in rows:
-        threshold_command(row,0,args.threshold_control)
+        threshold_command(row,0,args.threshold_control,args.long_streams)
         path = args.manifest.parent/row["path"]
         if hashlib.sha256(path.read_bytes()).hexdigest() != row["sha256"]:
             raise RuntimeError("Fixture WAV hash mismatch")
@@ -199,6 +213,9 @@ def main():
               "scope":"Offline PCM detector benchmark, not acoustic/full-app acceptance.", "clips":[]}
     if args.threshold_control:
         report["control_protocol"]=CONTROL_PROTOCOL
+    if args.long_streams:
+        report["stream_protocol"]=LONG_STREAM_PROTOCOL
+        report["max_stream_samples"]=LONG_STREAM_MAX_SAMPLES
     def interrupted(_signum, _frame):
         raise KeyboardInterrupt("Benchmark interrupted; restoring original app")
     signal.signal(signal.SIGTERM,interrupted)
@@ -229,13 +246,13 @@ def main():
                         raise RuntimeError("Benchmark firmware reported an error; see private UART log")
                 raise TimeoutError(prefix)
             ready=message("WAKE_BENCH_READY",45)
-            validate_ready(ready,args.engine,args.require_resources,args.threshold_control)
+            validate_ready(ready,args.engine,args.require_resources,args.threshold_control,args.long_streams)
             if args.baud!=115200:
                 uart.write(f"BAUD {args.baud}\n".encode("ascii"))
                 assert message("WAKE_BENCH_BAUD")["baud"]==args.baud
                 uart.baudrate=args.baud
                 ready=message("WAKE_BENCH_READY",5)
-                validate_ready(ready,args.engine,args.require_resources,args.threshold_control)
+                validate_ready(ready,args.engine,args.require_resources,args.threshold_control,args.long_streams)
             report["firmware_ready"]=ready
             for index,row in enumerate(rows):
                 with wave.open(str(args.manifest.parent/row["path"]),"rb") as wav:
@@ -247,15 +264,20 @@ def main():
                     if len(data)!=samples*2:
                         raise ValueError("Truncated WAV fixture")
                 pending_events.clear()
-                uart.write(threshold_command(row,index,args.threshold_control).encode("ascii"))
+                uart.write(threshold_command(row,index,args.threshold_control,args.long_streams).encode("ascii"))
                 prepared=message("WAKE_BENCH_CLIP_READY")
                 assert prepared["id"] == index
                 if args.threshold_control:
                     validate_control_initialization(prepared,row,index)
+                next_transfer_progress=time.monotonic()+30
                 for at in range(0,len(data),16384):
                     part=data[at:at+16384]
                     if uart.write(part)!=len(part):
                         raise RuntimeError("Short UART write")
+                    if args.long_streams and time.monotonic()>=next_transfer_progress:
+                        print(json.dumps({"phase":"pcm_transfer","clip":index,
+                            "bytes_sent":at+len(part),"total_bytes":len(data)}),flush=True)
+                        next_transfer_progress=time.monotonic()+30
                 uart.flush()
                 result=message("WAKE_BENCH_RESULT",max(30,samples/16000))
                 if not (result["id"]==index and result["complete"] and result["crc32"]==zlib.crc32(data)):

@@ -4,6 +4,10 @@ idf_component_get_property(sr_dir espressif__esp-sr COMPONENT_DIR)
 set(BASELINE_WAKE_MODEL "wn9_hiesp" CACHE STRING "Pinned offline reference model")
 option(BASELINE_REPORT_RESOURCES "Report offline model initialization heap snapshots" OFF)
 option(BASELINE_THRESHOLD_CONTROL "Enable explicit threshold and complete-event protocol" OFF)
+option(BASELINE_LONG_STREAMS "Allow explicitly negotiated complete streams up to two hours" OFF)
+if(BASELINE_LONG_STREAMS AND NOT BASELINE_THRESHOLD_CONTROL)
+    message(FATAL_ERROR "BASELINE_LONG_STREAMS requires BASELINE_THRESHOLD_CONTROL")
+endif()
 set_property(CACHE BASELINE_WAKE_MODEL PROPERTY STRINGS wn9_hiesp wn9_heywillow_tts)
 if(BASELINE_WAKE_MODEL STREQUAL "wn9_hiesp")
     set(wake_basename "baseline-hi-esp")
@@ -21,6 +25,7 @@ target_compile_definitions(${COMPONENT_LIB} PRIVATE
     BASELINE_MODEL_NAME="${BASELINE_WAKE_MODEL}"
     BASELINE_REPORT_RESOURCES=$<BOOL:${BASELINE_REPORT_RESOURCES}>
     BASELINE_THRESHOLD_CONTROL=$<BOOL:${BASELINE_THRESHOLD_CONTROL}>
+    BASELINE_LONG_STREAMS=$<BOOL:${BASELINE_LONG_STREAMS}>
     BASELINE_USE_MODEL_FACTORY=${wake_factory}
     BASELINE_PACKED_START="_binary_${wake_symbol}_bin_start"
     BASELINE_PACKED_END="_binary_${wake_symbol}_bin_end")

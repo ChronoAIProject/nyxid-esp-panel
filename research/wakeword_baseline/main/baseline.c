@@ -11,6 +11,13 @@
 #include "model_path.h"
 #include "zlib.h"
 
+#if BASELINE_LONG_STREAMS && !BASELINE_THRESHOLD_CONTROL
+#error "Long streams require the explicit threshold and complete-event protocol"
+#endif
+#if BASELINE_LONG_STREAMS
+#define BASELINE_LONG_STREAM_MAX_SAMPLES (16000u*7200u)
+#endif
+
 #if BASELINE_THRESHOLD_CONTROL
 #include <float.h>
 #include <math.h>
@@ -100,6 +107,9 @@ void app_main(void) {
 #if BASELINE_THRESHOLD_CONTROL
     printf(",\"control_protocol\":\"official-threshold-v1\"");
 #endif
+#if BASELINE_LONG_STREAMS
+    printf(",\"stream_protocol\":\"official-long-stream-v1\",\"max_stream_samples\":%u",BASELINE_LONG_STREAM_MAX_SAMPLES);
+#endif
 #if BASELINE_REPORT_RESOURCES
     printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
     print_heap("heap_before_model",heap_before_model);
@@ -127,6 +137,9 @@ void app_main(void) {
 #if BASELINE_THRESHOLD_CONTROL
             printf(",\"control_protocol\":\"official-threshold-v1\"");
 #endif
+#if BASELINE_LONG_STREAMS
+            printf(",\"stream_protocol\":\"official-long-stream-v1\",\"max_stream_samples\":%u",BASELINE_LONG_STREAM_MAX_SAMPLES);
+#endif
 #if BASELINE_REPORT_RESOURCES
             printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
             print_heap("heap_before_model",heap_before_model);
@@ -150,7 +163,11 @@ void app_main(void) {
             valid=valid && isfinite(requested_threshold) && requested_threshold>=.4f && requested_threshold<=.9999f;
             setter_called=true;
         }
+#if BASELINE_LONG_STREAMS
+        if(!valid || !samples || samples>BASELINE_LONG_STREAM_MAX_SAMPLES) {
+#else
         if(!valid || !samples || samples>16000*3600) {
+#endif
 #else
         if(sscanf(command,"CLIP %u %u",&id,&samples)!=2 || !samples || samples>16000*3600) {
 #endif

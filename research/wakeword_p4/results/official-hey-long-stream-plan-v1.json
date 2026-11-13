@@ -1,0 +1,53 @@
+{
+  "schema": "official-long-stream-native-plan-v1",
+  "engine": "wn9_heywillow_tts",
+  "mode": "DET_MODE_95",
+  "sources": {
+    "research/wakeword_baseline/main/CMakeLists.txt": "daa017b02bd392cea0f39376f16b32f70e68508804b78149f3c014048c5c530f",
+    "research/wakeword_baseline/main/baseline.c": "ad285bd7f196455f8ef6ffc2d8455e73b7e0d4e8f3eb6bc232eb2d9ec4cd123c",
+    "research/wakeword_baseline/run.py": "6b3af2ada7a0c763c7f7d194c75f43db142ef61c184d4ca8088cbb56a7ea198a",
+    "research/wakeword_p4/experiments/official_hey_long_stream_v1.py": "8211dcca9e86c01fce33f81c392091c4fcc8e5b041d4d2d56c4c442f9e5b97aa"
+  },
+  "manifest_sha256": "d7f1ec9a0271ad34b8fb5ad61470b6c2e3535cca0b27cff8881046903307ac6a",
+  "source_manifest_sha256": "cb536c6e9c2176c51a88d3af6a1867ad00602053b0b4d1f788294acf8cbd8b2e",
+  "marker_source": {
+    "voice": "Samantha",
+    "target": "hey_willow",
+    "form": "bare",
+    "text": "Hey Willow.",
+    "path": "clip-05.wav",
+    "source_path": "clip-05.aiff",
+    "source_sha256": "c068af58f7a213599907a554ed0c419c263a794b34cf396c42753574f4ece2e8",
+    "sha256": "61967f390d1ed5f5e69107959615e99f1184c43ca6ec81c6b237d2b744bf28c8",
+    "pcm_sha256": "cb41e4f62fc0867cfa2ff82a785459f9a4bbdf1159aa28a129d579fedaddf241",
+    "samples": 55509,
+    "native": {
+      "native_rate": 22050,
+      "native_samples": 14758,
+      "resampled_samples": 10709,
+      "native_pcm_sha256": "78e17db38eff20ea9c8ae37f9f7cddc33b56d3a9429369a2176a470ee24d3f74"
+    },
+    "role": "consumed-source development transport diagnostic",
+    "synthesis_default_rate_preserved": true
+  },
+  "marker_start_samples": [
+    0,
+    115144491
+  ],
+  "max_stream_samples": 115200000,
+  "build_report_sha256": "b6d39ab28689b4b6cb9bc0f5adb57156dfdd296ced60402f052ab9d1daee4ab2",
+  "probe": {
+    "bytes": 1004000,
+    "sha256": "61e19258ebdb5b75ab2be644b81af0ca34704aa20c58d3c0c96f5bee447e8a8e"
+  },
+  "uart_baud": 1500000,
+  "sample_rate": 16000,
+  "control_protocol": "official-threshold-v1",
+  "stream_protocol": "official-long-stream-v1",
+  "lifecycle": "One create/63-zero-prime/full input/final-only padding/destroy per stream. No intermediate reset.",
+  "decision": "Retain failure and every event. Full two-hour transfer/accounting proves capacity; late positive-event coverage reported separately, not rescued by changing input/grid.",
+  "scope": "Complete-stream capacity and detector state/clock witnesses on exact zeros plus two verbatim consumed synthetic containers. Not natural background/FAR/recognition/real wake latency/voice acceptance.",
+  "reserved_acceptance_accessed": false,
+  "new_synthesis": false,
+  "speaker_or_microphone_used": false
+}
