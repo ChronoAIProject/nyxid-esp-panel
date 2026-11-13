@@ -7180,3 +7180,24 @@ explicitly unavailable; no ASR filtering inherited. This remains mixed-factor
 recipe, not isolated source-count causal test. No Qwen synthesis/training yet.
 Original Piper PID998887 and auditwaiter999256 observed live8700/16128;
 official958504 live738/9672. No restart or premature completion claim.
+
+
+### Broad Piper positives complete; shared speech negative stages live
+
+Original generation session18686 exited0 with16128/16128 process passes.
+Original bound independent auditor session63954 exited0:64512 original files
+verified, all saved full resampling arrays reproduced, original reused phoneme/
+token identities and integer duration/prefix clocks exact;16128/16128 qualify.
+2016 reused+14112 new, no retry/trim/normalize. Raw ledgers stay local with
+committed SHA receipts, not claimed acoustic truth or model performance.
+
+9c1c61d pushed common-negative generation lock before either engine inference.
+Piper/Kokoro all nine texts' exact tokens/phonemes and source/runtime frozen.
+Original sessions25950(Kokoro PID1000703/start19498700) and63281(Piper
+PID1000704/start19498701) live, observed100/540 and2200/18144. Piper started
+only after original positive PID finished; no duplicate. Negative whole outputs
+have no invented wake-prefix endpoint. a47fd16 adds independent complete-array
+audits; waiters78932/72377 bind exact original PID/starttime. No generation
+restart or training authorization; original official958504 remains live.
+Kokoro ONNX request seeds are provenance labels, not certified control of
+stochastic graph nodes; saved original outputs/runtime hashes remain identity.
