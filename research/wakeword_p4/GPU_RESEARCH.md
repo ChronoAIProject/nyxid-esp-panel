@@ -5242,3 +5242,7 @@ Original LibriSpeech SPEAKERS.TXT and Piper source config authenticated and cros
 ### Read-only checkpoint collection sidecar
 
 Added standalone unpinned collect_per_draw_noise_checkpoints_v1.py to preserve newline-complete original fixed/per_draw validation records with SHA256/byte receipts as they arrive. Existing originals/receipts are authenticated and left untouched. Eleven-point training eligibility only; zero-event upper field null for nonzero counts; never claims complete training or promotion. Checked original5000 record eligibility3, exact bytes, partial-line exclusion, idempotence and invalid-step rejection in a temporary sandbox. One-shot verified existing records through105000. Started one read-only30s watcher (log .local/wakeword/per-draw-noise-checkpoint-collector-v1.log); no trainer restart, configuration/input/pinned-file change or automatic model selection. Formal original sequence remains authoritative.
+
+### Fixed formal110000 float checkpoint rejected
+
+Read-only collector preserved original record (3964B SHA4316fffe42498e443a68049e228184ccecd767eeafd4a8c0b9d73a458b7d632b); independently matched newline-complete source bytes and recomputed11-point eligibility. Zero eligible; fallback 0.994, macro recall 0.525, max-source false 0.030208333333333334. Background 0/1.2048112673611107h; zero-event one-sided95 upper 2.4864743173555484/h. Fallback not pass; reused float validation only, no INT8/independent acceptance/cross-arm claim. Original fixed trainer continues unchanged to120k before automatic per_draw. v30 frozen.
