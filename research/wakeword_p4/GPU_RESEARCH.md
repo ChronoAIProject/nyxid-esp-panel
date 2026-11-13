@@ -7220,3 +7220,20 @@ aligned text durations remain null. No ASR selection, retries, normalization.
 6be81b7 independent array auditor queued as session24313, binds Qwen original
 PID/starttime; no rerun if original fails. Neither Qwen inference nor completion
 is claimed while it waits. Official958504 live742/9672, no partial FAR claim.
+
+
+### Broad crop geometry preflight and remaining live source stages
+
+Saved positive metadata/allocations only: all16128 Piper prefix+960 RIR cases
+fit conservative context150/minjitter3. Kokoro480 has29 failures if protection
+starts at original source sample0 (max prefix+RIR28560). Original native output
+includes initial sentinel allocation up to8000 samples. Alternative generated
+token-span start after that allocation yields0 failures, maxspan22960.
+Both clocks retained; this is not an acoustic-silence finding or training
+admission. No source discarded/trimmed/normalized; need explicit crop-start
+protocol and actual batch checks or separately validated context change.
+
+Original common Piper session63281 exited0:18144/18144 process passes,6048
+reused; independent auditor PID1001290 is actually live reading original files,
+not yet complete. Original queued Qwen65226/PID1002143 has begun and was
+observed23/360; no restart. Official958504 remains live743/9672.
