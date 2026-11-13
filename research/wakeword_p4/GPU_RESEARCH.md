@@ -6325,3 +6325,15 @@ failed-plan/failure-receipt/prior-record hashes and its exact generator bytes;
 no source/text/seed selection based on wake scores, which do not exist. Full
 native mechanical gate still applies and any actual quality failure disqualifies
 v2pack. Complete background/overlap/training admissions remain pending.
+
+### Native synthesis live and original110000 preserved (2026-11-13)
+
+v2 native generator PID889095/session63046 confirmed live; first27records27passed,
+including16recovered original engine tensors without inference rerun. Partial
+observation only, not whole-pack qualification. No dev/acceptance generated.
+Original recovered110000 full record preserved in135fd0b, SHA256
+2c947789717dcb92281e31b88f087cb6f8443506851820f55d3bfa8e6d964863.
+0eligible; fallback.994 recall.6328703704 macro.6385416667,
+hardnegative.059375 maxsource.0666666667, background1/1.2048112674h.
+Zero-event upper correctly null, not a pass. Original120k sequence continues;
+no INT8/development/acceptance or cross-arm conclusion.
