@@ -5600,3 +5600,28 @@ At the unchanged 0.91796875 threshold and mean5, original float, input-rounded f
 Across all 48,420 smoothed scores, original-float vs input-rounded maximum absolute difference is 0.0199132621 (MAE 0.0000120489231); input-rounded vs INT8 maximum 0.117543364 (MAE 0.000229482462); original-float vs INT8 maximum 0.137423724 (MAE 0.000232659452). Input rounding affects the float graph, but these errors are not an additive causal decomposition. The residual includes weight/activation/state quantization and runtime numerics. Mostly small background scores do not rescue failed positive activation. No threshold search, new audio, retraining, re-export, candidate or acceptance inference occurred. Mac's consumed126 diagnostic remains separate.
 
 Published gpu-joe-v30-float-diagnostic-evidence-v1.tar.gz, 1,255,888 bytes, SHA256 9605f66fc5b3a535123e05b82bb12e6513aa4e705e9cf4496cac1ac1da75ee9d. Anonymous download verifies archive and all 7 payload members, including full raw/smoothed arrays, records, summary, pins and exact tools/protocol. Manifest/download receipts and complete records are committed. Original formal PID 719837 verified live at 1:36:04, last step 33500, latest preserved checkpoint 30000. All 284 execution pins remain unchanged; recovered waits sequentially. Goal remains incomplete, v30 frozen, Mike/acceptance unopened.
+
+### Mike acceptance material admission preparation (2026-11-13)
+
+Previous goal turn was no progress toward research (Issue channel confirmation
+only). This turn verified original control PID719837 live at 1:43:58/36000
+steps; preserved original35000 validation line SHA
+`8b6bcd4c9932831957bd0333200e7c912015626f0b8165baf9f2c3db1574fdaa`,
+0 training-float eligible points, fallback is not a pass. All284 formal execution
+pins remain unchanged. Original sequence continues; recovered waits, no restart.
+
+Added `prepare_mike_acceptance_v1.py` and material protocol. Metadata-only
+reservation authenticates original120 requests/model/config/runtime/native and
+render gates; SHA `20891f7806ed28db3cb45b771b9ec14a3174addaf33ab2a2b35930e0ade55289`.
+No TTS inference/audio/background generation or access. The future generator
+preserves complete float32[1,1,1,N] tensors, exact singleton transport, all120
+native/360 full quiet/noise/RIR presentations and failed draws. Whole generated
+boundaries are not phonetic truth; Joe/Mike share rdh parent.
+
+Four admission tests pass, including actual absent-development write-lock and
+generate rejection before any output/lock/session; analytic null/failure/stale
+selection, forged eligibility, original138 grid and tie tests are not model
+quality evidence. Script compiles. Mike and test6/7 remain unconsumed. A passed,
+authenticated sole recovered development decision and pushed lock are required
+before material generation; this component grants neither scoring nor promotion.
+Goal remains incomplete; frozen v30 remains the reference.
