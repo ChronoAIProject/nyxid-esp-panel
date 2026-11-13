@@ -6337,3 +6337,21 @@ Original recovered110000 full record preserved in135fd0b, SHA256
 hardnegative.059375 maxsource.0666666667, background1/1.2048112674h.
 Zero-event upper correctly null, not a pass. Original120k sequence continues;
 no INT8/development/acceptance or cross-arm conclusion.
+
+### Training timing metadata extraction preregistered (2026-11-13)
+
+Found a new-pack integration hazard before any model training: existing base
+sampler centers positives on keyword_frame; using whole command-container end
+would supervise command tails instead of wake prefixes. No such pack/training
+has been launched. Current full-output container references remain diagnostics.
+
+All4prospective VITS graphs contain /Ceil_output_0 token allocations and decoder
+strides8/8/4. Separate extraction plan/script pins exact seeded generation and
+metadata code before execution. Changes graph outputs only, never regenerates
+or selects waveform: authenticates saved waveform, requires nonnegative integer
+one-per-token allocations and sum*256==saved native length. Prefix is before
+comma for commands or period for bare, includes preceding blank allocation.
+16k mapping uses exact integer ceil. This is model-internal allocation, not
+phonetic truth; no human speech latency claim. First fixed training request is
+smoke only; full extraction waits for all2400native mechanical passes. A mismatch
+fails timing admission rather than adjusting tokens. No original formal edits.
