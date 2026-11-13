@@ -6961,3 +6961,23 @@ freshreset per whole row, fullrawbyte preservation and source/label/condition
 summaries. No training update/newdev inference/threshold selection/acceptance.
 Original officialdevelopment gridPID958504 confirmed live,101/9672observed;
 no reset/restart or source changes to its execution pins.
+
+### Complete frozen training stream diagnosis completed
+
+Originaldiagnostic session8704 exited0; eachfrozenmodel all7200trainingrows
+(720positive/6480negative), originaltwo voices/all3conditions. Independent saved
+archive auditor verifies all14400rowledgers/hash slices, cumsum-derived fivepeaks
+and firstpeak support times. Eacharm rawarchive1106598bytes. Both models'720/720
+trainingpositive fivepeak exactly.99609375 (min=median=max). Willow negatives
+max.0171875; Nyx negatives max.0078125. Inputquantizationboth.10196078568696976/-128,
+output1/256/0; existingdev streams used the same frozen reference detector.
+
+Together with devWillow all360phrases max.0109375 and devNyx targetmedian.00390625,
+this supports a severe training/development response gap, not global export
+inability to respond on trainingPCM or only completephrase boundary accounting.
+No single cause isolated; sourcevoice/material differences remain confounded.
+Broader training-voice coverage/generalization is the next hypothesis to assess
+after samewordofficial comparison, rather than repeating endpoint-only changes.
+No new training/threshold selection/acceptance; originalofficialrun continues.
+Groupedexistingraw report adds60literal/speed/condition/carrier summaries, no
+newinference or alternate eventpolicy. v30 remains frozen; candidates rejected.
