@@ -1,0 +1,44 @@
+{
+  "schema": "hey-broad-input-rounding-summary-v1",
+  "original_report_sha256": "22868cbe30bffcc5fc1174ab002ef7c327aaf6baab978e675a7fb314604051d3",
+  "all270_saved_array_hashes_and_repeats_verified": true,
+  "summary": {
+    "hey_willow": {
+      "input_rounding": {
+        "worst": 0.008293956518176646,
+        "p99_max": 0.008293956518176646,
+        "mean_max": 0.00025798890008460484
+      },
+      "remaining_quantization": {
+        "worst": 0.4741910379612818,
+        "p99_max": 0.41981300453349835,
+        "mean_max": 0.021952340571864015
+      },
+      "total_original": {
+        "worst": 0.47426248751580713,
+        "p99_max": 0.41986277762344987,
+        "mean_max": 0.02191030500411911
+      }
+    },
+    "hey_nyx": {
+      "input_rounding": {
+        "worst": 0.004734834935516119,
+        "p99_max": 0.004685171484830339,
+        "mean_max": 0.00014598012491834114
+      },
+      "remaining_quantization": {
+        "worst": 0.5987156148534268,
+        "p99_max": 0.5215797364597302,
+        "mean_max": 0.017386057557399998
+      },
+      "total_original": {
+        "worst": 0.5971615374088287,
+        "p99_max": 0.5217036529506457,
+        "mean_max": 0.017397135209294638
+      }
+    }
+  },
+  "conclusion": "On these frozen trajectories, float output changes from actual input rounding are small compared with remaining INT8-vs-rounded-input-float errors. Input rounding alone does not reproduce the large observed discrepancies. Internal weight/activation/state quantization or converter/runtime differences remain unresolved.",
+  "decision": "Original numerical rejection retained; no newdevelopment, export/PTQ retry or gate relaxation.",
+  "limits": "Training witnesses and one controlled input rounding intervention only; does not isolate individual internal tensor causes or prove a universal bound."
+}

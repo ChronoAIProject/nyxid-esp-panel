@@ -7806,3 +7806,16 @@ runtime. Compare originalfloat F(x), CPUfloat F(dequant(Q(x))) and savedINT8,
 twice-reset exact and same clocks, retain alloutputs. No PTQ/export/training,
 newdev or gate changes. Numerical failure remains, rounded-input reference
 cannot replace original fullprecision reference to obtain admission.
+
+
+### Input-rounding control finished270/270; large discrepancy remains
+
+Originalsession77490/process1114641 exited0, no retries. All270twice-reset
+float controls exact; savedarray SHA verified. F(dequant(Q(x)))-F(x) worst
+five-mean absolute.00829396Willow/.00473483Nyx, versus remainingINT8-vs-rounded
+float.47419104/.59871561. Thus observed input rounding alone does not reproduce
+the large discrepancy on these traces. Do not interpret as isolating which
+internal weight/activation/state/converter mechanism caused it. Original
+numerical rejection retained, no newdev/acceptance or export/PTQ optimization.
+Next diagnosis should inspect original saved TFLite tensor scales/state wiring
+and saturation without changing model/trainer or threshold gates.
