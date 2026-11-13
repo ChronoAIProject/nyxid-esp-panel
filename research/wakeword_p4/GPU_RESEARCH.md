@@ -7387,3 +7387,15 @@ check confirms all12 NPZ hashes/shapes/clocks. No utterance/model selection,
 thresholds/FAR/heldout or new updates. This is reset/stream structural evidence
 only, not float-vs-INT8 accuracy certification or trained recognition success.
 Formal matched120k schedule and quantitative trained-model gates remain.
+
+### Formal120k full batch schedule task launched
+
+7167d9c plan/source pushed before original session93658, PID1034876.
+Actual process confirmed live; Willow1000/120100 batches observed and
+first50 exact CPU digest gate passed. Sequential second Nyx arm follows
+without manual restart.120000train+100PTQ tensor SHA records/arm, exact
+admitted225 sampler and four original RNG seeds. No TF/model updates here.
+Original official958504 also actually live,1295/9672 observed; no partial
+configuration recognition/FAR conclusion. Do not restart either on an
+observation timeout. Full schedules/source-window pairing audit/formal
+execution lock still pending; heldout/v30 remain unchanged.
