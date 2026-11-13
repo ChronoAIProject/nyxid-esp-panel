@@ -6679,3 +6679,10 @@ One explicit-array valuegate test plus2adapter/1smokeloop tests pass; sourceAST 
 ### 2026-11-13 — original token complete and exact v2 feature plan frozen
 
 Original extractionPID905640/session61776 terminatedexit0,2400allocation records complete, no waveform regeneration; completionreceipt binds finaltokenSHA. V1observer terminated with originalunsupported-prefix exception as expected; v1plan absent/failure retained. Separatev2observer completed source-gated write-plan only. Actualv2plan SHA8c84facfbe640777d831e159b61e611f702172021bdcc58684694acfef466a68 verified everyboundfile, full2400timing/7200renderedgeometry/1440positive support passed. Push exact plan before actualfeaturebuild, no training yet. Allreserved syntheticdev/acceptance remains ungenerated.
+
+
+### 2026-11-13 — actual full v2 featurepack and both CPU batches complete
+
+Featurebuildsession82950 exited0, all7200completewaveforms processed. Both actualCPUaudits sessions37484/4923 exited0 on their realnewtargetpacks, deterministic repeats/128x150x40/32positive96negative/1:20weights/v2policy/provenance pass. Verified both arms'7200ordered rowmetadata equal excepttargetlabel,720positive/6480negative each, no doublepositive, trainingonly; human/ambient indices byte-identical. Sharedbinary266151120bytes is the same hardlinked inode in botharms, preparationSHA binds frozenv2featureplan. Saved originalCPUreports in4090-hey-v2-feature-cpu-completion-v1.json.
+
+Started both original20100batch/full643200positive draw schedule generators, separate fixed paths, no model/TF or heldout scoring. Actualfullschedule receipts/preflightlock/GPUsmokes/formal20000 stillpending. V1failure unchanged, v30frozen. Main token task completednormally, no syntheticregen/restart.
