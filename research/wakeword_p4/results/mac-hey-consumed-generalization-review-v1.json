@@ -1,0 +1,878 @@
+{
+  "schema": "mac-hey-consumed-generalization-review-v1",
+  "gpu_commit": "56c0d97561c996488eb39394c9ba204ca956cef6",
+  "source_sha256": "ccd874097be34da6eaa23123d3aa8462851de665a4655e341740c3be62230b55",
+  "input_sha256": {
+    "4090-hey-paired-generation-plan-v2.json": "17fb657c7ef82172db5bfb826541653af7584790144dda1924a8cc8c9b12012a",
+    "4090-hey-development-render-contract-v1.json": "a5e16af7870453bd58950204bfb1d273175bacfe1325b75116db214d206613cd",
+    "4090-hey-consumed-raw-diagnostic-v1.json": "f337baafcf47bead375d1f8c43f96d8707663ea7dfce860c0e00844380813334",
+    "4090-hey-v2-fixed-final-candidates-v1.json": "1ea6450831079db4c1e7f04bfdf02912304cbad47d1036115a337b4b39920c13",
+    "4090-hey-v2-hey_willow-original-training.json": "a2dc2a4a52dbb6fc16a0e380fa6b8733e04088fcb8ecb9a6b0f1ef33fa1e3d80",
+    "4090-hey-v2-hey_nyx-original-training.json": "d90dafe13e30d543e91c97114c5ce6bfc0725add236cbbcf12765046f26c864d"
+  },
+  "candidate_freeze_schema": "hey-v2-fixed-final-candidates-v1",
+  "corpus": {
+    "training": {
+      "native_requests": 2400,
+      "rendered_clips": 7200,
+      "voice_models": {
+        "en_US-kusal-medium": 1200,
+        "en_US-reza_ibrahim-medium": 1200
+      },
+      "native_requests_by_target": {
+        "common_negative": 1680,
+        "hey_nyx": 240,
+        "hey_willow": 240,
+        "hi_esp": 240
+      },
+      "carriers": [
+        "",
+        "set a timer",
+        "turn on the light",
+        "what time is it"
+      ],
+      "length_scales": [
+        0.9,
+        1.0,
+        1.1
+      ],
+      "limits": "TTS model identities and request counts, not independent human speaker counts."
+    },
+    "development": {
+      "native_requests": 120,
+      "rendered_clips": 360,
+      "voice_models": {
+        "en_GB-semaine-medium": 120
+      },
+      "native_requests_by_target": {
+        "common_negative": 84,
+        "hey_nyx": 12,
+        "hey_willow": 12,
+        "hi_esp": 12
+      },
+      "carriers": [
+        "",
+        "set a timer",
+        "turn on the light",
+        "what time is it"
+      ],
+      "length_scales": [
+        0.9,
+        1.0,
+        1.1
+      ],
+      "limits": "TTS model identities and request counts, not independent human speaker counts."
+    }
+  },
+  "bare_scale_one_phoneme_metadata": [
+    {
+      "voice": "en_GB-semaine-medium",
+      "target": "hey_willow",
+      "literal": "Hey Willow",
+      "phonemes": "h\u02c8e\u026a w\u02c8\u026al\u0259\u028a.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        35,
+        0,
+        120,
+        0,
+        74,
+        0,
+        24,
+        0,
+        59,
+        0,
+        100,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_GB-semaine-medium",
+      "target": "hey_nyx",
+      "literal": "Hey Nicks",
+      "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        26,
+        0,
+        120,
+        0,
+        74,
+        0,
+        23,
+        0,
+        31,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_GB-semaine-medium",
+      "target": "hi_esp",
+      "literal": "Hi E S P",
+      "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        14,
+        0,
+        74,
+        0,
+        3,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        3,
+        0,
+        120,
+        0,
+        61,
+        0,
+        31,
+        0,
+        3,
+        0,
+        28,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-kusal-medium",
+      "target": "hey_willow",
+      "literal": "Hey Willow",
+      "phonemes": "h\u02c8e\u026a w\u02c8\u026alo\u028a.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        35,
+        0,
+        120,
+        0,
+        74,
+        0,
+        24,
+        0,
+        27,
+        0,
+        100,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-kusal-medium",
+      "target": "hey_nyx",
+      "literal": "Hey Nicks",
+      "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        26,
+        0,
+        120,
+        0,
+        74,
+        0,
+        23,
+        0,
+        31,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-kusal-medium",
+      "target": "hi_esp",
+      "literal": "Hi E S P",
+      "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        14,
+        0,
+        74,
+        0,
+        3,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        3,
+        0,
+        120,
+        0,
+        61,
+        0,
+        31,
+        0,
+        3,
+        0,
+        28,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-reza_ibrahim-medium",
+      "target": "hey_willow",
+      "literal": "Hey Willow",
+      "phonemes": "h\u02c8e\u026a w\u02c8\u026alo\u028a.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        35,
+        0,
+        120,
+        0,
+        74,
+        0,
+        24,
+        0,
+        27,
+        0,
+        100,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-reza_ibrahim-medium",
+      "target": "hey_nyx",
+      "literal": "Hey Nicks",
+      "phonemes": "h\u02c8e\u026a n\u02c8\u026aks.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        18,
+        0,
+        74,
+        0,
+        3,
+        0,
+        26,
+        0,
+        120,
+        0,
+        74,
+        0,
+        23,
+        0,
+        31,
+        0,
+        10,
+        0,
+        2
+      ]
+    },
+    {
+      "voice": "en_US-reza_ibrahim-medium",
+      "target": "hi_esp",
+      "literal": "Hi E S P",
+      "phonemes": "h\u02c8a\u026a \u02c8i\u02d0 \u02c8\u025bs p\u02c8i\u02d0.",
+      "token_ids": [
+        1,
+        0,
+        20,
+        0,
+        120,
+        0,
+        14,
+        0,
+        74,
+        0,
+        3,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        3,
+        0,
+        120,
+        0,
+        61,
+        0,
+        31,
+        0,
+        3,
+        0,
+        28,
+        0,
+        120,
+        0,
+        21,
+        0,
+        122,
+        0,
+        10,
+        0,
+        2
+      ]
+    }
+  ],
+  "consumed_peak_groups": [
+    {
+      "model": "hey_willow",
+      "target": "hey_willow",
+      "groups": {
+        "variant": [
+          {
+            "value": 0,
+            "clips": 12,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.0046875,
+            "five_mean_peak_max": 0.0046875,
+            "first_global_peak_before_source": 12
+          },
+          {
+            "value": 1,
+            "clips": 12,
+            "five_mean_peak_min": 0.009375,
+            "five_mean_peak_median": 0.0109375,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 12
+          },
+          {
+            "value": 2,
+            "clips": 12,
+            "five_mean_peak_min": 0.009375,
+            "five_mean_peak_median": 0.0109375,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 12
+          }
+        ],
+        "carrier": [
+          {
+            "value": "",
+            "clips": 9,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.01015625,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 9
+          },
+          {
+            "value": "set a timer",
+            "clips": 9,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.01015625,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 9
+          },
+          {
+            "value": "turn on the light",
+            "clips": 9,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.0109375,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 9
+          },
+          {
+            "value": "what time is it",
+            "clips": 9,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.0109375,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 9
+          }
+        ],
+        "length_scale": [
+          {
+            "value": 0.9,
+            "clips": 12,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.009765625,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 12
+          },
+          {
+            "value": 1.0,
+            "clips": 12,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.01015625,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 12
+          },
+          {
+            "value": 1.1,
+            "clips": 12,
+            "five_mean_peak_min": 0.0046875,
+            "five_mean_peak_median": 0.0109375,
+            "five_mean_peak_max": 0.0109375,
+            "first_global_peak_before_source": 12
+          }
+        ]
+      },
+      "observed_training_cases": [
+        {
+          "model": "hey_willow",
+          "model_sha256": "88bc7872f0b0f85fc307ca1968d980c03144ac7765c3f7a551f76126877f02ec",
+          "case": {
+            "source_id": "v0-t00-c0-s0-r00",
+            "variant": 0,
+            "label": 1,
+            "wav_sha256": "ddc53e258a3879c1b06f90b97085015b25bb9bfb7a30f835d1af11c659ccc686",
+            "samples": 57618,
+            "frames": 359,
+            "steps": 119,
+            "raw_uint8_sha256": "f5269767c44ced6e7a2ee785944ddc2f17b633458fa6ce98076a66385774e4b4",
+            "fresh_reset_exact": true
+          },
+          "raw_peak": 255,
+          "raw_peak_first_step": 79,
+          "raw_peak_first_support_sample": 38240,
+          "five_sum_peak": 1275,
+          "five_mean_peak": 0.99609375,
+          "five_peak_first_step": 83,
+          "five_peak_first_support_sample": 40160
+        },
+        {
+          "model": "hey_willow",
+          "model_sha256": "88bc7872f0b0f85fc307ca1968d980c03144ac7765c3f7a551f76126877f02ec",
+          "case": {
+            "source_id": "v0-t01-c0-s0-r00",
+            "variant": 0,
+            "label": 0,
+            "wav_sha256": "95c2189ac0b3a8adb3447102b1af66d2f3fc665cc32187ae7069f8a956a62e2f",
+            "samples": 56689,
+            "frames": 353,
+            "steps": 117,
+            "raw_uint8_sha256": "221bc225b80f31825b1e92ff1cafe2e06c1bf56b783802391a062e24fd56bf42",
+            "fresh_reset_exact": true
+          },
+          "raw_peak": 5,
+          "raw_peak_first_step": 1,
+          "raw_peak_first_support_sample": 800,
+          "five_sum_peak": 6,
+          "five_mean_peak": 0.0046875,
+          "five_peak_first_step": 5,
+          "five_peak_first_support_sample": 2720
+        }
+      ],
+      "limits": "Global saved-output peaks and first-maximum clocks only. No threshold/event selection; a pre-source first maximum does not prove all later values are lower or identify a cause."
+    },
+    {
+      "model": "hey_nyx",
+      "target": "hey_nyx",
+      "groups": {
+        "variant": [
+          {
+            "value": 0,
+            "clips": 12,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.00078125,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 9
+          },
+          {
+            "value": 1,
+            "clips": 12,
+            "five_mean_peak_min": 0.00390625,
+            "five_mean_peak_median": 0.0046875,
+            "five_mean_peak_max": 0.0046875,
+            "first_global_peak_before_source": 12
+          },
+          {
+            "value": 2,
+            "clips": 12,
+            "five_mean_peak_min": 0.00390625,
+            "five_mean_peak_median": 0.00390625,
+            "five_mean_peak_max": 0.0078125,
+            "first_global_peak_before_source": 12
+          }
+        ],
+        "carrier": [
+          {
+            "value": "",
+            "clips": 9,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.0046875,
+            "five_mean_peak_max": 0.1765625,
+            "first_global_peak_before_source": 8
+          },
+          {
+            "value": "set a timer",
+            "clips": 9,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.0046875,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 8
+          },
+          {
+            "value": "turn on the light",
+            "clips": 9,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.00390625,
+            "five_mean_peak_max": 0.0046875,
+            "first_global_peak_before_source": 9
+          },
+          {
+            "value": "what time is it",
+            "clips": 9,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.0046875,
+            "five_mean_peak_max": 0.11328125,
+            "first_global_peak_before_source": 8
+          }
+        ],
+        "length_scale": [
+          {
+            "value": 0.9,
+            "clips": 12,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.00390625,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 10
+          },
+          {
+            "value": 1.0,
+            "clips": 12,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.004296875,
+            "five_mean_peak_max": 0.11328125,
+            "first_global_peak_before_source": 11
+          },
+          {
+            "value": 1.1,
+            "clips": 12,
+            "five_mean_peak_min": 0.00078125,
+            "five_mean_peak_median": 0.00390625,
+            "five_mean_peak_max": 0.0078125,
+            "first_global_peak_before_source": 12
+          }
+        ]
+      },
+      "observed_training_cases": [
+        {
+          "model": "hey_nyx",
+          "model_sha256": "c7fe8ca08a3da5fd7b4ce175405872dcd2e3639c2eee646c685c0f5e2a2ac5a5",
+          "case": {
+            "source_id": "v0-t01-c0-s0-r00",
+            "variant": 0,
+            "label": 1,
+            "wav_sha256": "95c2189ac0b3a8adb3447102b1af66d2f3fc665cc32187ae7069f8a956a62e2f",
+            "samples": 56689,
+            "frames": 353,
+            "steps": 117,
+            "raw_uint8_sha256": "1cfacfb3907d21775242f66c8ef58879d39c7a723ae781ff467892f462427f73",
+            "fresh_reset_exact": true
+          },
+          "raw_peak": 255,
+          "raw_peak_first_step": 77,
+          "raw_peak_first_support_sample": 37280,
+          "five_sum_peak": 1275,
+          "five_mean_peak": 0.99609375,
+          "five_peak_first_step": 81,
+          "five_peak_first_support_sample": 39200
+        },
+        {
+          "model": "hey_nyx",
+          "model_sha256": "c7fe8ca08a3da5fd7b4ce175405872dcd2e3639c2eee646c685c0f5e2a2ac5a5",
+          "case": {
+            "source_id": "v0-t00-c0-s0-r00",
+            "variant": 0,
+            "label": 0,
+            "wav_sha256": "ddc53e258a3879c1b06f90b97085015b25bb9bfb7a30f835d1af11c659ccc686",
+            "samples": 57618,
+            "frames": 359,
+            "steps": 119,
+            "raw_uint8_sha256": "0bcc8a5c0fef32f6c1ae4f69099bb7eb3d16280594b8137a95a681824e465929",
+            "fresh_reset_exact": true
+          },
+          "raw_peak": 1,
+          "raw_peak_first_step": 1,
+          "raw_peak_first_support_sample": 800,
+          "five_sum_peak": 1,
+          "five_mean_peak": 0.00078125,
+          "five_peak_first_step": 5,
+          "five_peak_first_support_sample": 2720
+        }
+      ],
+      "limits": "Global saved-output peaks and first-maximum clocks only. No threshold/event selection; a pre-source first maximum does not prove all later values are lower or identify a cause."
+    },
+    {
+      "model": "v30",
+      "target": "hey_nyx",
+      "groups": {
+        "variant": [
+          {
+            "value": 0,
+            "clips": 12,
+            "five_mean_peak_min": 0.271875,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": 1,
+            "clips": 12,
+            "five_mean_peak_min": 0.1375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": 2,
+            "clips": 12,
+            "five_mean_peak_min": 0.0484375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          }
+        ],
+        "carrier": [
+          {
+            "value": "",
+            "clips": 9,
+            "five_mean_peak_min": 0.07578125,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": "set a timer",
+            "clips": 9,
+            "five_mean_peak_min": 0.9109375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": "turn on the light",
+            "clips": 9,
+            "five_mean_peak_min": 0.0484375,
+            "five_mean_peak_median": 0.271875,
+            "five_mean_peak_max": 0.734375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": "what time is it",
+            "clips": 9,
+            "five_mean_peak_min": 0.99609375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          }
+        ],
+        "length_scale": [
+          {
+            "value": 0.9,
+            "clips": 12,
+            "five_mean_peak_min": 0.0484375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": 1.0,
+            "clips": 12,
+            "five_mean_peak_min": 0.0609375,
+            "five_mean_peak_median": 0.99296875,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          },
+          {
+            "value": 1.1,
+            "clips": 12,
+            "five_mean_peak_min": 0.1375,
+            "five_mean_peak_median": 0.99609375,
+            "five_mean_peak_max": 0.99609375,
+            "first_global_peak_before_source": 0
+          }
+        ]
+      },
+      "observed_training_cases": [],
+      "limits": "Global saved-output peaks and first-maximum clocks only. No threshold/event selection; a pre-source first maximum does not prove all later values are lower or identify a cause."
+    }
+  ],
+  "original_training_histories": {
+    "hey_willow": {
+      "history": [
+        {
+          "step": 5000,
+          "loss": 6.941257879589102e-08,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 64.9
+        },
+        {
+          "step": 10000,
+          "loss": 2.1691157314762677e-08,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 133.9
+        },
+        {
+          "step": 15000,
+          "loss": 2.6663256047498862e-09,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 201.0
+        },
+        {
+          "step": 20000,
+          "loss": 2.265756471331315e-09,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 272.9
+        }
+      ],
+      "negative_weight": 20,
+      "checkpoint_policy": "fixed-final-20000",
+      "context_frames": 150,
+      "frozen_batchnorm": [
+        "batch_normalization",
+        "batch_normalization_1",
+        "batch_normalization_2",
+        "batch_normalization_3"
+      ]
+    },
+    "hey_nyx": {
+      "history": [
+        {
+          "step": 5000,
+          "loss": 6.685368134640157e-07,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 67.3
+        },
+        {
+          "step": 10000,
+          "loss": 1.7509277938643208e-07,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 133.3
+        },
+        {
+          "step": 15000,
+          "loss": 8.003317120142128e-09,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 202.1
+        },
+        {
+          "step": 20000,
+          "loss": 9.833621916754964e-09,
+          "checkpoint_policy": "fixed-final-20000",
+          "seconds": 268.0
+        }
+      ],
+      "negative_weight": 20,
+      "checkpoint_policy": "fixed-final-20000",
+      "context_frames": 150,
+      "frozen_batchnorm": [
+        "batch_normalization",
+        "batch_normalization_1",
+        "batch_normalization_2",
+        "batch_normalization_3"
+      ]
+    }
+  },
+  "findings": [
+    "2400 training native requests use only two TTS voice models; 120 development requests use one different model.",
+    "Training US Willow phoneme metadata uses o while development GB Willow uses schwa; Nyx bare token IDs match. This is metadata, not acoustic truth.",
+    "All 12 quiet Willow development positives have the same five-score global peak .0046875; their first maximum precedes source audio.",
+    "The only saved Nyx development positive with five-score peak .99609375 is quiet scale .9 set-a-timer; other variants/carriers remain in the report.",
+    "Very small final training loss and two saved positive training examples do not establish complete training-pack streaming accuracy or isolate overfitting."
+  ],
+  "next_diagnostic": "Compare authenticated original final float streaming export, float with rounded INT8 input, and original INT8 on a predeclared balanced consumed training/development matrix; retain complete streams, reset boundaries and all outputs. No new checkpoint, threshold selection or acceptance access.",
+  "media_accessed": false,
+  "inference_run": false,
+  "candidate_promoted": false,
+  "threshold_selected": false,
+  "acceptance_accessed": false,
+  "limits": "Independent metadata and published saved-output analysis only. Voice/accent, rendering, training coverage and quantization remain confounded; no single root cause is established."
+}
