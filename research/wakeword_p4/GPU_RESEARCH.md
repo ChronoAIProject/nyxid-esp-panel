@@ -5941,3 +5941,18 @@ All284formal hashes independently unchanged. Original120000-step sequence
 and checkpoint selection continue; full matched input audit/postprocessors
 await both arms. No cross-arm benefit claim. Mike/test6/7 unconsumed,
 v30 frozen, objective incomplete. Coordination remains in Issue13.
+
+### Original recovered20000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. Original PID817144 continues through19500
+to20000, elapsed56:29. Original20000 line SHA
+`96a0ba5a959c17060bbc80d039aa6496c396e41cb833cc6055a4dbb746f5fcf5`
+preserved with collector receipt. 0training-float eligible points; fallback.994
+recall .4546296296, macro .5255208333, hard-negative false rate .0252840909,
+max-source false rate .029375. Ambient2events/1.2048112674h, observed
+1.6600110359/h; zero-event upper correctly null. Not a pass.
+All284formal hashes independently unchanged. Original120000-step sequence
+and checkpoint selection continue unchanged. Full matched input audit and
+postprocessors await both arms; no INT8/new-development/acceptance or
+cross-arm benefit conclusion. Mike/test6/7 unconsumed; v30 frozen;
+objective incomplete. Coordination remains in Issue13.
