@@ -57,6 +57,45 @@ create and after priming. The last snapshot includes that clip's PCM buffer.
 Resource snapshots are outside the timed `detect()` calls. Repeated clips still
 destroy/recreate and use the original zero-prime/full-PCM lifecycle.
 
+For official threshold curves, explicitly build with
+`-D BASELINE_THRESHOLD_CONTROL=ON` (default OFF) and pass `--threshold-control`.
+Every manifest row must contain `reference_threshold_f32_hex`: JSON null means
+create the model and do not call the setter; eight lowercase hex digits specify
+the exact IEEE binary32 request for word index 1. The runner rejects a request
+without the flag and rejects a probe whose control handshake differs from its
+explicit mode. Historical manifests use the original command and default build.
+
+The opt-in protocol records the setter return, default getter, getter immediately
+after setting, and getter after priming, including exact float bits and decimal
+values sufficient to round-trip binary32. Requests obey the documented
+`.4.. .9999` API range. Getter observations must be finite and strictly between
+zero and one; do not assume the setter's input range also bounds its getter or
+that requested and actual values are equal. Preserve transformed/merged points
+and failures rather than relabeling them as recognition misses.
+
+All 63 priming returns are retained separately. Input detection events retain
+raw word index, call index, capped input sample end and padded chunk end; channel
+verification (`-1`) is counted separately from a wake (`1`). The probe buffers
+every positive input event in PSRAM and emits those frames after consuming the
+complete PCM, so the host reads them without competing with its input writes.
+The old 64-offset result prefix remains, accompanied by an explicit completeness
+flag; the guarded runner verifies the full event stream and all return/call
+counts. Host checks include a constructed 70-event partial-chunk example; that
+analytic check alone does not prove native long-positive-stream coverage.
+
+The extension's heap snapshots also include raw-prime/event-accounting buffers;
+they are not directly comparable to the original resource-only probe or a
+model-only RAM measurement. Complete streams are limited to one hour, as before;
+the control runner rejects longer files before device access. Do not split a
+continuous source into reset segments to fit it. An eight-hour negative inventory
+can comprise multiple complete shorter recordings with their identities retained.
+
+`official_hey_threshold_zero_v1.py` freezes the agreed default-plus-12-request
+grid and a repeated final DEFAULT control (14 zero streams per engine), checks
+the host protocol, and audits actual guarded runs. It does not operate a board,
+generate speech or choose a recognition threshold. Run `check-host`, `prepare`
+and later `audit`; retain all actual getters, priming returns and input events.
+
 `--restore-readiness online` is the runner default: restoration requires Nyx up.
 An explicit `--restore-readiness app-only` supports offline initialization when
 the original Nyx connection was already unavailable. Both modes require the

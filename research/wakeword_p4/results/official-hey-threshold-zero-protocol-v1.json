@@ -1,0 +1,41 @@
+{
+  "schema": "official-hey-threshold-zero-v1",
+  "requests": [
+    null,
+    0.4,
+    0.5,
+    0.6,
+    0.644,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    0.98,
+    0.99,
+    0.999,
+    0.9999,
+    null
+  ],
+  "sources": {
+    "research/wakeword_baseline/main/baseline.c": "8da311aa96b910fa4ebbc0a7822c6324b65110a2bf7c6c3cf84f301fc0f4ff88",
+    "research/wakeword_baseline/main/CMakeLists.txt": "1b26297c9db1d42e13d9309a3d07bbcd8826b1750a44e79e33f2a4a6fef3cb50",
+    "research/wakeword_baseline/run.py": "8a2d533ef9e1215a5e3c65f4d9d9c5a801790f59992b373f08ad8db0a2404e53",
+    "research/wakeword_p4/experiments/official_hey_threshold_zero_v1.py": "867153325782db163ec2e0d4d6080c248382958bfb2c7dc1cb931a994c17a2d5"
+  },
+  "control_protocol": "official-threshold-v1",
+  "sample_rate": 16000,
+  "samples_per_stream": 16001,
+  "manifest_sha256": "2825921dbcc0ac20ee8af25e08d57692268e3ae694b830b2d5f1842b4554035b",
+  "transfer_baud": 115200,
+  "engines_in_order": [
+    "wn9_heywillow_tts",
+    "wn9_hiesp"
+  ],
+  "mode": "DET_MODE_95",
+  "model_bytes": "Pinned unmodified ESP-SR 2.6.1",
+  "purpose": "Default before/after, full agreed 13-configuration grid, raw prime and complete input accounting.",
+  "failure_policy": "Preserve failures and every actual getter, including merged points; no retries or recognition threshold selection.",
+  "no_recognition_scoring": true,
+  "no_speech_or_acoustic_io": true,
+  "reserved_acceptance_accessed": false
+}

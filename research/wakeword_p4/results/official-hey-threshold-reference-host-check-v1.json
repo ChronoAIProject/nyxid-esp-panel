@@ -1,0 +1,60 @@
+{
+  "schema": "official-hey-reference-host-check-v1",
+  "legacy_commit": "67e4896",
+  "default_hiesp_compressed_bytes_unchanged": true,
+  "restoration_checks": {
+    "default_requires_online": true,
+    "app_only_explicitly_allows_connecting": true,
+    "both_modes_reject_mutated_fields": [
+      "app_sha256",
+      "ota.running",
+      "ota.busy",
+      "voice.active",
+      "voice.busy",
+      "voice.service_id",
+      "voice.wake.listening"
+    ]
+  },
+  "products": {
+    "wn9_hiesp": {
+      "compressed_bytes": 183729,
+      "compressed_sha256": "80f42451d73171d19a29419405d2527c332c401421ef7b11fe9267ffc6ac4214",
+      "expanded_bytes": 291142,
+      "expanded_sha256": "3ddff8a9d28385a879379e81935dfb3ce528ae961034014d143e6e241748e934",
+      "upstream_model_name_and_all_members_identical": true,
+      "full_packed_bytes_identical_to_upstream": false
+    },
+    "wn9_heywillow_tts": {
+      "compressed_bytes": 227475,
+      "compressed_sha256": "b30d3b8252bcb4e8d6aa90f58a5e8c950d6d6ddeedeb6031daa8dabbd6e84ead",
+      "expanded_bytes": 291040,
+      "expanded_sha256": "afab5c6339197b41e7c218140e1152afb45b843c8a20a64d58dae7fb9701aa66",
+      "upstream_model_name_and_all_members_identical": true,
+      "full_packed_bytes_identical_to_upstream": false
+    }
+  },
+  "explicit_rejections": [
+    "Historical Hi ESP summary cannot mislabel Willow results",
+    "Historical summary requires engine identity",
+    "Willow cannot be silently aliased as default Hi ESP",
+    "Unsupported Muse layout cannot enter this WakeNet9 probe",
+    "Missing model member",
+    "Resource run cannot silently use an uninstrumented probe",
+    "Wrong engine",
+    "Wrong mode",
+    "Wrong rate",
+    "Missing engine"
+  ],
+  "sources": {
+    "research/wakeword_p4/experiments/check_official_hey_reference_v1.py": "e71c21ff33506000467d73ebdd7b442df0708f8b951d3ad6999c05434c980679",
+    "tools/embed_wake_model.py": "c7a57bb89f020a285a43c38ec520e08d83440448aa783f283fddec5c6736b50d",
+    "research/wakeword_baseline/run.py": "8a2d533ef9e1215a5e3c65f4d9d9c5a801790f59992b373f08ad8db0a2404e53",
+    "research/wakeword_baseline/compare.py": "2a03916a091e28cf8b1af866c53d1af484eed0e865d8ccde98a726aae21c4811"
+  },
+  "inference_performed": false,
+  "device_operated": false,
+  "audio_io_performed": false,
+  "candidate_scored": false,
+  "reserved_acceptance_accessed": false,
+  "accepted": false
+}

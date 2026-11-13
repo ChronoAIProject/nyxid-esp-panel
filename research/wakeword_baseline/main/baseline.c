@@ -11,6 +11,26 @@
 #include "model_path.h"
 #include "zlib.h"
 
+#if BASELINE_THRESHOLD_CONTROL
+#include <float.h>
+#include <math.h>
+#if FLT_RADIX != 2 || FLT_MANT_DIG != 24 || FLT_MAX_EXP != 128
+#error "Threshold control requires IEEE binary32 float"
+#endif
+_Static_assert(sizeof(float)==sizeof(uint32_t), "Threshold control needs 32-bit float");
+
+static uint32_t float_bits(float value) {
+    uint32_t bits;
+    memcpy(&bits,&value,sizeof(bits));
+    return bits;
+}
+
+typedef struct {
+    uint32_t sample_end;
+    int32_t result;
+} baseline_event_t;
+#endif
+
 extern const uint8_t packed_start[] asm(BASELINE_PACKED_START);
 extern const uint8_t packed_end[] asm(BASELINE_PACKED_END);
 extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
@@ -77,6 +97,9 @@ void app_main(void) {
     ESP_ERROR_CHECK(uart_param_config(UART_NUM_0,&config));
     ESP_ERROR_CHECK(uart_driver_install(UART_NUM_0,64*1024,0,0,NULL,0));
     printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000",name);
+#if BASELINE_THRESHOLD_CONTROL
+    printf(",\"control_protocol\":\"official-threshold-v1\"");
+#endif
 #if BASELINE_REPORT_RESOURCES
     printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
     print_heap("heap_before_model",heap_before_model);
@@ -101,6 +124,9 @@ void app_main(void) {
             vTaskDelay(pdMS_TO_TICKS(100));
             ESP_ERROR_CHECK(uart_set_baudrate(UART_NUM_0,baud));
             printf("WAKE_BENCH_READY {\"engine\":\"%s\",\"mode\":\"DET_MODE_95\",\"rate\":16000",name);
+#if BASELINE_THRESHOLD_CONTROL
+            printf(",\"control_protocol\":\"official-threshold-v1\"");
+#endif
 #if BASELINE_REPORT_RESOURCES
             printf(",\"resource_probe\":true,\"expanded_model_bytes\":%" PRIu32,size);
             print_heap("heap_before_model",heap_before_model);
@@ -109,7 +135,25 @@ void app_main(void) {
             printf("}\n");
             continue;
         }
+#if BASELINE_THRESHOLD_CONTROL
+        int consumed=0;
+        bool setter_called=false;
+        uint32_t requested_bits=0;
+        float requested_threshold=0;
+        bool valid=sscanf(command,"CLIP %u %u DEFAULT %n",&id,&samples,&consumed)==2
+            && consumed>0 && command[consumed]==0;
+        if(!valid) {
+            consumed=0;
+            valid=sscanf(command,"CLIP %u %u SET %8" SCNx32 " %n",&id,&samples,&requested_bits,&consumed)==3
+                && consumed>0 && command[consumed]==0;
+            memcpy(&requested_threshold,&requested_bits,sizeof(requested_threshold));
+            valid=valid && isfinite(requested_threshold) && requested_threshold>=.4f && requested_threshold<=.9999f;
+            setter_called=true;
+        }
+        if(!valid || !samples || samples>16000*3600) {
+#else
         if(sscanf(command,"CLIP %u %u",&id,&samples)!=2 || !samples || samples>16000*3600) {
+#endif
             printf("WAKE_BENCH_ERROR {\"reason\":\"invalid_command\",\"bytes\":[");
             for(size_t i=0;i<used && i<32;++i)printf("%s%u",i?",":"",(unsigned)(uint8_t)command[i]);
             printf("]}\n");continue;
@@ -128,17 +172,56 @@ void app_main(void) {
         if(!model || wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1)abort();
         int chunk=wn->get_samp_chunksize(model);
         if(chunk<1 || chunk>2048)abort();
+#if BASELINE_THRESHOLD_CONTROL
+        float default_getter=wn->get_det_threshold(model,1);
+        int setter_result=setter_called ? wn->set_det_threshold(model,requested_threshold,1) : 0;
+        float getter_after_set=wn->get_det_threshold(model,1);
+        if((setter_called && setter_result!=1) || !isfinite(default_getter)
+                || !isfinite(getter_after_set) || default_getter<=0 || default_getter>=1
+                || getter_after_set<=0 || getter_after_set>=1) {
+            printf("WAKE_BENCH_ERROR {\"reason\":\"threshold_api_failed\",\"setter_result\":%d}\n",setter_result);
+            abort();
+        }
+        unsigned prime_calls=(32000u+(unsigned)chunk-1)/(unsigned)chunk;
+        int8_t *prime_returns=calloc(prime_calls,sizeof(*prime_returns));
+        size_t event_capacity=((size_t)samples+(unsigned)chunk-1)/(unsigned)chunk;
+        baseline_event_t *full_events=heap_caps_malloc(event_capacity*sizeof(*full_events),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+        if(!prime_returns || !full_events)abort();
+#endif
         int16_t *pcm=heap_caps_aligned_calloc(16,chunk,sizeof(int16_t),MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
         if(!pcm)abort();
 #if BASELINE_REPORT_RESOURCES
         int64_t prime_start=esp_timer_get_time();
 #endif
+#if BASELINE_THRESHOLD_CONTROL
+        for(unsigned call=0;call<prime_calls;++call) {
+            int result=wn->detect(model,pcm);
+            if(result < WAKENET_CHANNEL_VERIFIED || result > WAKENET_DETECTED)abort();
+            prime_returns[call]=(int8_t)result;
+        }
+#else
         for(int at=0;at<32000;at+=chunk)(void)wn->detect(model,pcm);
+#endif
 #if BASELINE_REPORT_RESOURCES
         int64_t prime_us=esp_timer_get_time()-prime_start;
         heap_snapshot_t heap_after_prime=heap_snapshot();
 #endif
+#if BASELINE_THRESHOLD_CONTROL
+        float getter_after_prime=wn->get_det_threshold(model,1);
+        if(!isfinite(getter_after_prime) || getter_after_prime<=0 || getter_after_prime>=1)abort();
+        printf("WAKE_BENCH_CLIP_READY {\"id\":%u,\"chunk\":%d,\"threshold\":%.9g",id,chunk,(double)getter_after_prime);
+        printf(",\"control\":{\"schema\":\"official-threshold-v1\",\"setter_called\":%s,\"setter_result\":",setter_called?"true":"false");
+        if(setter_called)printf("%d",setter_result);else printf("null");
+        printf(",\"requested_f32_hex\":");
+        if(setter_called)printf("\"%08" PRIx32 "\"",requested_bits);else printf("null");
+        printf(",\"default_getter\":%.9g,\"default_getter_f32_hex\":\"%08" PRIx32 "\",\"getter_after_set\":%.9g,\"getter_after_set_f32_hex\":\"%08" PRIx32 "\",\"getter_after_prime_f32_hex\":\"%08" PRIx32 "\",\"prime_returns\":[",
+            (double)default_getter,float_bits(default_getter),(double)getter_after_set,float_bits(getter_after_set),float_bits(getter_after_prime));
+        for(unsigned i=0;i<prime_calls;++i)printf("%s%d",i?",":"",(int)prime_returns[i]);
+        printf("]}");
+        free(prime_returns);
+#else
         printf("WAKE_BENCH_CLIP_READY {\"id\":%u,\"chunk\":%d,\"threshold\":%.6f",id,chunk,wn->get_det_threshold(model,1));
+#endif
 #if BASELINE_REPORT_RESOURCES
         printf(",\"create_us\":%lld,\"prime_us\":%lld",(long long)create_us,(long long)prime_us);
         print_heap("heap_before_create",heap_before_create);
@@ -146,7 +229,11 @@ void app_main(void) {
         print_heap("heap_after_prime",heap_after_prime);
 #endif
         printf("}\n");
+#if BASELINE_THRESHOLD_CONTROL
+        unsigned count=0,calls=0,no_detect_calls=0,channel_verified_calls=0;
+#else
         unsigned count=0,offsets[64]={0},calls=0;
+#endif
         int64_t total_us=0,max_us=0;
         uint32_t crc=crc32(0L,Z_NULL,0);
         bool complete=true;
@@ -159,15 +246,43 @@ void app_main(void) {
             int result=wn->detect(model,pcm);
             int64_t elapsed=esp_timer_get_time()-start;
             total_us+=elapsed;if(elapsed>max_us)max_us=elapsed;++calls;
+#if BASELINE_THRESHOLD_CONTROL
+            if(result==WAKENET_NO_DETECT)++no_detect_calls;
+            else if(result==WAKENET_CHANNEL_VERIFIED)++channel_verified_calls;
+            else if(result==WAKENET_DETECTED) {
+                if(count>=event_capacity)abort();
+                full_events[count++]=(baseline_event_t){.sample_end=at+take,.result=result};
+            } else {
+                printf("WAKE_BENCH_ERROR {\"reason\":\"unexpected_detect_result\",\"result\":%d}\n",result);
+                abort();
+            }
+#else
             if(result>0) {
                 if(count<64)offsets[count]=at+take;
                 ++count;
             }
+#endif
         }
+#if BASELINE_THRESHOLD_CONTROL
+        // Emit after consuming all PCM: the host can read every event without
+        // overflowing UART while it is still writing a long input stream.
+        for(unsigned i=0;i<count;++i) {
+            uint32_t call=(full_events[i].sample_end+(uint32_t)chunk-1)/(uint32_t)chunk;
+            printf("WAKE_BENCH_EVENT {\"id\":%u,\"call\":%" PRIu32 ",\"sample_end\":%" PRIu32 ",\"chunk_end\":%" PRIu32 ",\"result\":%" PRId32 "}\n",
+                id,call,full_events[i].sample_end,call*(uint32_t)chunk,full_events[i].result);
+        }
+#endif
         printf("WAKE_BENCH_RESULT {\"id\":%u,\"complete\":%s,\"samples\":%u,\"crc32\":%" PRIu32 ",\"events\":%u,\"calls\":%u,\"total_us\":%lld,\"max_us\":%lld,\"offsets\":[",
             id,complete?"true":"false",samples,crc,count,calls,(long long)total_us,(long long)max_us);
+#if BASELINE_THRESHOLD_CONTROL
+        for(unsigned i=0;i<count && i<64;++i)printf("%s%" PRIu32,i?",":"",full_events[i].sample_end);
+        printf("],\"events_emitted\":%u,\"offsets_complete\":%s,\"no_detect_calls\":%u,\"channel_verified_calls\":%u}\n",
+            count,count<=64?"true":"false",no_detect_calls,channel_verified_calls);
+        free(full_events);
+#else
         for(unsigned i=0;i<count && i<64;++i)printf("%s%u",i?",":"",offsets[i]);
         printf("]}\n");
+#endif
         free(pcm);wn->destroy(model);
         if(!complete)abort(); // Do not reinterpret a truncated payload as a new command.
     }
