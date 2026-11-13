@@ -1,0 +1,103 @@
+{
+  "plan_sha256": "c8b104364dcb6e5e1a688651226670c582badae681af7c5483e6e2a16cdf1894",
+  "script_sha256": "71184f9c27db3f8f3cba93e3e1974027b7a2cbd2577620f1c2f6a3de498000af",
+  "models": [
+    {
+      "voice": "joe",
+      "path": ".local/wakeword/prospective-joe-mike-models-v1/en_US-joe-medium.onnx",
+      "size": 63221984,
+      "sha256": "abf4b998e34045cbd00eaf050de2de620f81ded6eb8b85a24b022a1c2b3f08d2",
+      "onnx_checker_passed": true,
+      "inputs": [
+        {
+          "name": "input",
+          "element_type": 7,
+          "shape": [
+            "batch_size",
+            "phonemes"
+          ]
+        },
+        {
+          "name": "input_lengths",
+          "element_type": 7,
+          "shape": [
+            "batch_size"
+          ]
+        },
+        {
+          "name": "scales",
+          "element_type": 1,
+          "shape": [
+            3
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "element_type": 1,
+          "shape": [
+            "batch_size",
+            1,
+            1,
+            "Unsqueezeoutput_dim_3"
+          ]
+        }
+      ],
+      "random_operators": [
+        "RandomNormalLike"
+      ]
+    },
+    {
+      "voice": "mike",
+      "path": ".local/wakeword/prospective-joe-mike-models-v1/en_US-mike-medium.onnx",
+      "size": 63221984,
+      "sha256": "6876866e3dfadc7f044bc5e4fbac16c47b5a1e79eaec04e3bb0c2c6e9da8a857",
+      "onnx_checker_passed": true,
+      "inputs": [
+        {
+          "name": "input",
+          "element_type": 7,
+          "shape": [
+            "batch_size",
+            "phonemes"
+          ]
+        },
+        {
+          "name": "input_lengths",
+          "element_type": 7,
+          "shape": [
+            "batch_size"
+          ]
+        },
+        {
+          "name": "scales",
+          "element_type": 1,
+          "shape": [
+            3
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "element_type": 1,
+          "shape": [
+            "batch_size",
+            1,
+            1,
+            "Unsqueezeoutput_dim_3"
+          ]
+        }
+      ],
+      "random_operators": [
+        "RandomNormalLike"
+      ]
+    }
+  ],
+  "audio_generated": false,
+  "inference_performed": false,
+  "roles_reserved": false,
+  "physical_speaker_independence_proven": false,
+  "limits": "Static downloaded model identity/interface only, not synthesis quality or independent source qualification."
+}

@@ -5483,3 +5483,14 @@ Located original LibriSpeech dev-clean files for the24training speakers lacking 
 Newly reconstructed full-stream and originalFLAC encoded/PCM hashes all have0whole-container matches to new42background recordings. This closes the missing-source replay investigation; hashes are newly derived, not falsely described as historical same-instance PCM hashes. Frontend is noninvertible, so exact feature identity plus source ledgers is strong provenance evidence, not a unique inverse proof of past raw bytes. Re-encoded/cropped/person overlap and unopenedfinal/synthetic-pack scopes remain separate. No data/pin/training changes or detector scoring. Original audit session9770 completed exit0.
 
 Original control PID719837 verified live at32:15, same sequence18719, latest completed checkpoint10000; recovered still waits, no restart/promotion.
+
+
+### 2026-11-13 — New rdh-lineage prospective models and consumed-source guard
+
+Pinned Piper revision2f358b6a560e3a913ebf509b2f3344f20b367f94 primary cards for9previously unreviewed candidates. Arctic/l2arctic/kusal/sam/reza explicitly derive Lessac; Kathleen/Danny derive Ryan, so do not relabel known training-base exposure as new pretraining independence. Joe/Mike cards instead declare Flemishrdh base (CC0, MRD/SDP, Piper>=1.5); these are prospective candidates, not proven physical/pretraining independent. No role reserved or audio generated.
+
+Downloaded Joe/Mike original model/config at fixed revision, saved original LFS pointers/configs/cards and inventory. Each63221984B:Joe SHAabf4b998e34045cbd00eaf050de2de620f81ded6eb8b85a24b022a1c2b3f08d2;Mike SHA6876866e3dfadc7f044bc5e4fbac16c47b5a1e79eaec04e3bb0c2c6e9da8a857. Both staticONNX checker pass, same integer-phone/length/scales3 input, stochastic RandomNormalLike retained; no model inference/synthesis.12planned phrase phone/token mappings passed against pinned configs using recorded phonemizer version, not acoustic truth. Training runtime not installed/changed. Original model-preparation session72396 exited0.
+
+Implemented check_known_source_consumption_v1.py authenticating copied Mac evidence:Joe/Mike no known consumed-byte conflicts; Kristin/Norman negative control correctly rejected2/2 with exit1. Both reports keep source_qualified=false/synthesis_or_scores_authorized=false. Guard covers current known registry only, not all training/pretraining/person or undisclosed external consumption. Before generation still need complete role/synthetic quality/threshold/acceptance protocol and further source-role checks.
+
+Original control PID719837/sequence18719 verified live at36:31, step12770, latest checkpoint10000. Recovered waits; no restart or trainingpins changed.
