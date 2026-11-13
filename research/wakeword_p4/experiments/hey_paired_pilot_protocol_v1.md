@@ -52,7 +52,9 @@ Shared TTS parent/pretraining exposure remains an explicit limitation.
 
 Per training voice/target: standalone plus three fixed command carriers
 (`turn on the light`, `what time is it`, `set a timer`), three speed factors
-(.9,1,1.1), ten fixed render seeds:240 positives/target before augmentation.
+(.9,1,1.1), ten fixed render seeds:120 base positives/voice/target,
+240 base positives/target across both voices. Each base render receives all
+three noise conditions, giving720 training positives/target after augmentation.
 Match voice, carrier, speed, seed and environment across target arms. Use common
 background/noise and full RIR at quiet/25dB/15dB SNR, never truncate the phrase.
 All source PCM retained; render hashes, nonempty/finite/format/sample counts,
@@ -73,11 +75,16 @@ Training remains disabled until exact negative inventory and schedules are locke
 
 Reciprocal targets are negatives: Hey Willow is negative for Nyx and Hey Nicks
 is negative for Willow. Shared common confusions: `Hey`, `Hello`, `Hey William`,
-`Hey pillow`, `Hey Nick`, `Hey next`, `Hi ESP`, `Hey Muse`. Preserve per-phrase
+`Hey pillow`, `Hey Nick`, `Hey next`, label `Hi ESP` rendered literally as
+`Hi E S P`, and `Hey Muse`. Store labels separately from exact renderer inputs,
+including the Hey Nyx -> `Hey Nicks` alias. Preserve per-phrase
 and per-source results; no relabeling based on model responses.
 
 Development: new third voice, same4carriers/3speeds/3noise conditions, separate
-render seeds and RIR. Each matched target has36positives, each common confusion
+render seeds and RIR: exactly one render seed per carrier/speed/noise cell,
+explicitly enumerated in the material schedule before synthesis. Runtime replay
+uses the saved PCM at its original sample rate without another speed change.
+Each matched target has36positives, each common confusion
 has36negatives; reciprocal-target positives also form cross-target negatives.
 Include complete fresh continuous negative recordings totaling at least8hours,
 source-disjoint from training and every prior development/final inventory.
@@ -92,8 +99,25 @@ as integers then binary64 /1280; threshold binary64,67step refractory and
 half-threshold rearm, no epsilon. Implement/verify this before scoring; this
 protocol does not activate it in any existing experiment. Custom grid remains
 original138points. Official Willow uses actual API getter-confirmed working
-points; its grid/range and internal event semantics must be separately locked
-with Mac before any speech scoring, never assume equivalent score scales.
+points under the official contract below, never assume equivalent score scales.
+
+Adopt Mac proposal6860757149:13 official configurations, default-no-set plus
+requested {.4,.5,.6,.644,.7,.8,.9,.95,.98,.99,.999,.9999}. Requests enter the API
+as binary32, word_index=1; record exact binary32 request and actual getter with
+at least9 significant digits. Require setter return1, finite getter in public
+.4.. .9999 range. Retain failures and duplicate/quantized actual working points;
+do not turn API failures into recognition misses or count duplicates as distinct
+actual points. This is a locked contract, not evidence setter support has run.
+Official events preserve detect() values:1=word,0=no detect,-1=channel verified;
+no custom smoothing/refractory/rearm. Native per-clip initialization currently
+uses63 zero-prime calls of512samples, complete input and zero-padded final
+partial call. Future scored runs must retain prime results as well as input
+events. Input offsets are min(call*512,N), with prime indexed separately.
+Continuous backgrounds run whole without slice resets. Authenticate factory
+model name/engine/mode/chunk, samples/CRC/calls and events. Native P4 and classic
+QEMU are separately identified runtimes; neither timestamps nor getters are
+interchangeable without same-PCM certification. Speech scoring remains gated
+on actual runtime/setter certification.
 
 For custom development eligibility require macro>=.8, standalone>=.75,
 command>=.75,0common/cross-target events and FAR upper<=.5/h. Select maximum
@@ -101,7 +125,9 @@ macro, then lower FAR upper, then higher threshold; null if none. Official
 reference curves are diagnostic even if no point meets all gates. Report full
 phrase hit and early events separately; latency is from saved generated full
 phrase boundary, including command-continuation cases, not human final-phoneme
-truth. Preserve misses, latency distributions, per-noise/speed/voice results,
+truth. Command-container signed offsets are separate diagnostics, not wake-word
+latency: without an authenticated wake boundary that latency remains unverified.
+Preserve misses, latency distributions, per-noise/speed/voice results,
 raw UINT8/official traces, reset/CRC/call-count evidence and all model identities.
 
 ## Acceptance and scope
@@ -120,3 +146,11 @@ No pilot result alone promotes a model. Real-waveform streaming INT8 checks,
 independent synthetic acceptance and documented scope are required for the
 GPU goal; Mac owns subsequent P4/resource/full-device claims. No synthetic
 result establishes human generalization or human speech latency parity.
+
+The .8/.75 gates are pilot engineering admission only, not official parity.
+Report official-versus-custom Willow paired recall differences and uncertainty
+at the common FAR target, including per-source and command results. Before
+opening acceptance, lock reference materials, operating-point selection rules
+and the paired interval method; do not infer parity merely from gate passage.
+Mac consumed Samantha/Daniel12-clip native pilot10402b9 is diagnostic history,
+excluded from fresh training/development/acceptance.

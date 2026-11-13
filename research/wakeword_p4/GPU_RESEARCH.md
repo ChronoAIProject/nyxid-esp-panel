@@ -6224,3 +6224,20 @@ provenance only; no real pack generated and no training launch adapter admission
 claimed. Feature dimensions/quality/source-overlap/material lock and CPU batch
 integration remain necessary before new training. Original live PID817144 observed
 at102500; no formal input edits.
+
+### Mac contract acknowledgement and recovered105000 (2026-11-13)
+
+Read Mac6860757149/6860895742: native actual-speech diagnostic complete, not
+independent acceptance/parity. Adopted13configuration official grid and explicit
+binary32/getter/event/runtime certification contract in paired protocol. Clarified
+120base/voice,240base/target,720noise-augmented/target, dev one seed/cell,
+Hi E S P literal, original-rate replay, command-container latency limitations,
+and paired official comparison beyond engineering gates. Material/schedule lock,
+real target adapter/CPU batch and runtime certification remain incomplete.
+
+Preserved original recovered105000 record SHA256
+72ead1644764cbddb0a474872bde3451808d9547fa352f1b923e9430ce2099c9.
+0eligible float points; fallback .994, recall .5921296296, macro .6283854167,
+hardnegative .0465909091, maxsource .0541666667. Background0/1.2048112674h,
+zero-event one-sided95 upper2.4864743174/h: not pass. All284formal pins verified
+unchanged, PID817144 live. No INT8 candidate promotion or acceptance conclusion.
