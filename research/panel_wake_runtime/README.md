@@ -147,6 +147,10 @@ single observation is not an ongoing resource, acoustic or call measurement.
 
 ## Build
 
+For the separate context225 and complete-tail research contract, see
+[Context225 preparation and complete finite self-test](complete_runtime_v1.md).
+Its opt-in selector does not change the original150-frame/V1 build below.
+
 Use the release's ESP-IDF 5.5.4 environment and dependency versions. Set the
 following paths to a private model directory and its quantized validation
 calibration. The directory must also contain the matching `training.json`.

@@ -23,6 +23,9 @@ extern "C" {
 extern const uint8_t model_bytes[] asm("_binary_hey_nyx_model_bin_start");
 #ifdef PANEL_WAKE_SELFTEST
 extern const uint8_t selftest_bytes[] asm("_binary_wake_selftest_bin_start");
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+extern const uint8_t selftest_end[] asm("_binary_wake_selftest_bin_end");
+#endif
 #endif
 namespace {
 constexpr size_t arena_size=64*1024, variable_size=16*1024;
@@ -44,6 +47,12 @@ struct Detector {
     unsigned pcm_peak=0;
     double maximum_average=0;
     uint8_t last_output=0;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+    uint64_t pcm_samples=0;
+    bool completed=false;
+    const uint8_t *expected_trace=nullptr;
+    uint32_t expected_outputs=0, trace_mismatches=0;
+#endif
 
     ~Detector() {
         delete interpreter;
@@ -75,6 +84,13 @@ struct Detector {
            !std::isfinite(input->params.scale) || input->params.scale<=0 ||
            output->type!=kTfLiteUInt8 || output->bytes!=1 ||
            !std::isfinite(output->params.scale) || output->params.scale<=0)return false;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        if(!input->dims || input->dims->size!=3 || input->dims->data[0]!=1 ||
+           input->dims->data[1]!=3 || input->dims->data[2]!=40 ||
+           !output->dims || output->dims->size!=2 || output->dims->data[0]!=1 || output->dims->data[1]!=1 ||
+           input->params.zero_point<-128 || input->params.zero_point>127 ||
+           output->params.zero_point!=0 || output->params.scale!=1.f/256)return false;
+#endif
         FrontendConfig config{};
         FrontendFillConfigWithDefaults(&config);
         config.window.size_ms=30;config.window.step_size_ms=10;
@@ -96,16 +112,60 @@ struct Detector {
         return true;
     }
 
-    int detect(const int16_t *pcm) {
+    bool invoke(bool &triggered) {
+        int64_t started=esp_timer_get_time();
+        if(interpreter->Invoke()!=kTfLiteOk){failed=true;ESP_LOGE(tag,"Inference failed");return false;}
+        last_output=output->data.uint8[0];
+        unsigned elapsed=unsigned(esp_timer_get_time()-started);
+        inference_us+=elapsed;inference_max_us=std::max(inference_max_us,elapsed);
+        float score=(int(output->data.uint8[0])-int(output->params.zero_point))*output->params.scale;
+        if(!std::isfinite(score)){failed=true;return false;}
+        ++steps;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        if(expected_trace && (uint64_t(steps)>expected_outputs || last_output!=expected_trace[steps-1])) {
+            if(trace_mismatches<5)ESP_LOGE(tag,"complete selftest step=%lld actual=%u",(long long)steps,unsigned(last_output));
+            ++trace_mismatches;
+        }
+#endif
+        // Keep the original chronological binary64 sum; for the complete
+        // profile the output guard above requires exact UINT8 scale1/256.
+        history[smooth_at]=score;smooth_at=(smooth_at+1)%smooth_steps;
+        if(smooth_count<smooth_steps)++smooth_count;
+        if(smooth_count!=smooth_steps)return true;
+        double total=0;
+        for(unsigned k=0;k<smooth_steps;++k)total+=history[(smooth_at+k)%smooth_steps];
+        double average=total/smooth_steps;
+        maximum_average=std::max(maximum_average,average);
+        if(steps%167==0) {
+            ESP_LOGI(tag,"progress step=%lld peak=%u max_average=%.6f mean_us=%u max_us=%u stack_free=%u",
+                (long long)steps,pcm_peak,maximum_average,
+                unsigned(inference_us/uint64_t(steps)),inference_max_us,
+                unsigned(uxTaskGetStackHighWaterMark(nullptr)));
+            pcm_peak=0;maximum_average=0;
+        }
+        if(average<PANEL_WAKE_THRESHOLD*.5 && steps-last>=refractory_steps)armed=true;
+        if(armed && average>=PANEL_WAKE_THRESHOLD && steps-last>=refractory_steps) {
+            triggered=true;armed=false;last=steps;
+            ESP_LOGI(tag,"activation average=%.6f step=%lld mean_us=%u max_us=%u",
+                average,(long long)steps,unsigned(inference_us/uint64_t(steps)),inference_max_us);
+        }
+        return true;
+    }
+
+    int detect(const int16_t *pcm,size_t samples=chunk_samples) {
         if(failed)return -1;
-        for(int i=0;i<chunk_samples;++i)
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        if(completed)return -1;
+        pcm_samples+=samples;
+#endif
+        for(size_t i=0;i<samples;++i)
             pcm_peak=std::max(pcm_peak,unsigned(std::abs(int(pcm[i]))));
         bool triggered=false;
         size_t at=0;
-        while(at<chunk_samples) {
+        while(at<samples) {
             size_t consumed=0;
-            auto features=FrontendProcessSamples(&frontend,pcm+at,std::min(size_t(160),size_t(chunk_samples)-at),&consumed);
-            if(!consumed || consumed>size_t(chunk_samples)-at){failed=true;return -1;}
+            auto features=FrontendProcessSamples(&frontend,pcm+at,std::min(size_t(160),samples-at),&consumed);
+            if(!consumed || consumed>samples-at){failed=true;return -1;}
             at+=consumed;
             if(!features.size)continue;
             if(features.size!=40 || feature_count>=3){failed=true;return -1;}
@@ -116,39 +176,31 @@ struct Detector {
             }
             if(++feature_count!=3)continue;
             feature_count=0;
-            int64_t started=esp_timer_get_time();
-            if(interpreter->Invoke()!=kTfLiteOk){failed=true;ESP_LOGE(tag,"Inference failed");return -1;}
-            last_output=output->data.uint8[0];
-            unsigned elapsed=unsigned(esp_timer_get_time()-started);
-            inference_us+=elapsed;inference_max_us=std::max(inference_max_us,elapsed);
-            float score=(int(output->data.uint8[0])-int(output->params.zero_point))*output->params.scale;
-            if(!std::isfinite(score)){failed=true;return -1;}
-            ++steps;
-            // Recompute the calibration-bound sum in time order, like the host's
-            // convolution. A rolling subtract/add would accumulate drift.
-            history[smooth_at]=score;smooth_at=(smooth_at+1)%smooth_steps;
-            if(smooth_count<smooth_steps)++smooth_count;
-            if(smooth_count!=smooth_steps)continue;
-            double total=0;
-            for(unsigned k=0;k<smooth_steps;++k)total+=history[(smooth_at+k)%smooth_steps];
-            double average=total/smooth_steps;
-            maximum_average=std::max(maximum_average,average);
-            if(steps%167==0) {
-                ESP_LOGI(tag,"progress step=%lld peak=%u max_average=%.6f mean_us=%u max_us=%u stack_free=%u",
-                    (long long)steps,pcm_peak,maximum_average,
-                    unsigned(inference_us/uint64_t(steps)),inference_max_us,
-                    unsigned(uxTaskGetStackHighWaterMark(nullptr)));
-                pcm_peak=0;maximum_average=0;
-            }
-            if(average<PANEL_WAKE_THRESHOLD*.5 && steps-last>=refractory_steps)armed=true;
-            if(armed && average>=PANEL_WAKE_THRESHOLD && steps-last>=refractory_steps) {
-                triggered=true;armed=false;last=steps;
-                ESP_LOGI(tag,"activation average=%.6f step=%lld mean_us=%u max_us=%u",
-                    average,(long long)steps,unsigned(inference_us/uint64_t(steps)),inference_max_us);
-            }
+            if(!invoke(triggered))return -1;
         }
         return triggered?1:0;
     }
+
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+    bool finish(uint64_t original_samples) {
+        if(failed || completed || !original_samples || pcm_samples!=original_samples)return false;
+        int16_t zeros[160]{};
+        size_t final_hop=(160-original_samples%160)%160;
+        if(final_hop && detect(zeros,final_hop)<0)return false;
+        bool triggered=false;
+        if(feature_count) {
+            int8_t zero=int8_t(input->params.zero_point);
+            while(feature_count<3) {
+                std::fill_n(input->data.int8+feature_count*40,40,zero);
+                ++feature_count;
+            }
+            feature_count=0;
+            if(!invoke(triggered))return false;
+        }
+        completed=true;
+        return true;
+    }
+#endif
 };
 
 model_iface_data_t *create(const void *,det_mode_t) {
@@ -159,10 +211,36 @@ model_iface_data_t *create(const void *,det_mode_t) {
         if(!probe)return nullptr;
         bool ok=probe->initialize();
         uint32_t samples=0,outputs=0;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        size_t fixture_size=size_t(selftest_end-selftest_bytes);
+        ok=ok && fixture_size>=48;
+        if(ok) {
+            memcpy(&samples,selftest_bytes+40,4);memcpy(&outputs,selftest_bytes+44,4);
+            // Bound sample arithmetic and pointers before using the header.
+            ok=!memcmp(selftest_bytes,"NYXKWS02",8) && samples>=960 && samples<=16000*16;
+        }
+        if(ok) {
+            uint32_t frames=(samples+159)/160-2;
+            ok=outputs==(frames+2)/3 && fixture_size==48+size_t(samples)*2+outputs;
+        }
+#else
         memcpy(&samples,selftest_bytes+40,4);memcpy(&outputs,selftest_bytes+44,4);
+#endif
+        unsigned mismatches=0;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        if(ok) {
+            const auto *pcm=reinterpret_cast<const int16_t *>(selftest_bytes+48);
+            const auto *expected=selftest_bytes+48+size_t(samples)*2;
+            probe->expected_trace=expected;probe->expected_outputs=outputs;
+            for(size_t at=0;at<samples;at+=chunk_samples) {
+                if(probe->detect(pcm+at,std::min(size_t(chunk_samples),size_t(samples)-at))<0){ok=false;break;}
+            }
+            ok=ok && probe->finish(samples) && probe->steps==outputs && !probe->trace_mismatches;
+            mismatches=probe->trace_mismatches;
+        }
+#else
         const auto *pcm=reinterpret_cast<const int16_t *>(selftest_bytes+48);
         const auto *expected=selftest_bytes+48+samples*2;
-        unsigned mismatches=0;
         if(ok) {
             for(uint32_t chunk=0;chunk<samples/chunk_samples;++chunk) {
                 if(probe->detect(pcm+chunk*chunk_samples)<0){ok=false;break;}
@@ -174,6 +252,7 @@ model_iface_data_t *create(const void *,det_mode_t) {
             }
             ok=ok && probe->steps==outputs && !mismatches;
         }
+#endif
         ESP_LOGI(tag,"exact-PCM selftest outputs=%u mismatches=%u passed=%s",
             unsigned(outputs),mismatches,ok?"true":"false");
         delete probe; // Never mix diagnostic history with the microphone.
