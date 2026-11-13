@@ -6846,3 +6846,13 @@ return transport(-1/0/1), addressing the existing v1 observation gaps. Separate
 project/model-identical call sequence; original v1 source/binaries untouched.
 Build/runner/parser and actual consumed/zero recertification still pending;
 no fresh official scoring admitted by source alone.
+
+### Original Willow development result: failure
+
+Original registered calibration completed normally:138points,0eligible,
+selected=null. Maximum complete-phrase macro0, including FAR-eligible points.
+Original full curve preserved byte-for-byte, SHA
+2609c4ea4129fdb8a366566c783c2ec91148a5e62ec124c9567cd40603e6c1a9.
+No selection rescue/checkpoint change/acceptance unlock; v30 retained. Original
+sequence automatically advanced to Nyx stream collection, no restart. Official
+reference comparison remains pending; cannot infer official parity from this.
