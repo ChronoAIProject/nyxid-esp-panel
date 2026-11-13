@@ -7065,3 +7065,16 @@ IDs equal all672 original training IDs exactly. Other112/120 remain held roles.
 This proves bound input metadata, not exact per-update sampled exposure, fresh
 WAV/feature binary quality or admission for the next protocol. No media/inference
 performed. Original failed quality evidence is unchanged.
+
+
+### Broad paired material gaps and design
+
+Training-only exact-text manifests audited: old balanced Piper8064, Kokoro2300,
+Qwen298+44. None has Hey Willow training text. Original Piper report binds all
+8064 process passes to its manifest;2016 Nyx bare +6048 common sources are reuse
+candidates. Kokoro has20 training presets, Qwen24 conditions, not independent
+physical voices. New design records broad matrix and original-recipe baseline,
+explicit multiple-factor differences and remaining executable-lock requirements.
+No new source reservation, media reads, synthesis or training. Official original
+PID958504 observed live at432/9672 and configuration1; first config completion
+is not by itself the complete official development comparison.
