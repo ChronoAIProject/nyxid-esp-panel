@@ -1,0 +1,181 @@
+{
+  "schema": "gpu-independent-analytic-event-policy-audit-v1",
+  "platform": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "numpy_build_configuration": "Build Dependencies:\n  blas:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/_internal/cpython-3.11.14/lib/python3.11/site-packages/scipy_openblas64/include\n    lib directory: /opt/_internal/cpython-3.11.14/lib/python3.11/site-packages/scipy_openblas64/lib\n    name: scipy-openblas\n    openblas configuration: OpenBLAS 0.3.31.188.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY\n      Haswell MAX_THREADS=64\n    pc file directory: /project/.openblas\n    version: 0.3.31.188.0\n  lapack:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/_internal/cpython-3.11.14/lib/python3.11/site-packages/scipy_openblas64/include\n    lib directory: /opt/_internal/cpython-3.11.14/lib/python3.11/site-packages/scipy_openblas64/lib\n    name: scipy-openblas\n    openblas configuration: OpenBLAS 0.3.31.188.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY\n      Haswell MAX_THREADS=64\n    pc file directory: /project/.openblas\n    version: 0.3.31.188.0\nCompilers:\n  c:\n    commands: cc\n    linker: ld.bfd\n    name: gcc\n    version: 14.2.1\n  c++:\n    commands: c++\n    linker: ld.bfd\n    name: gcc\n    version: 14.2.1\n  cython:\n    commands: cython\n    linker: cython\n    name: cython\n    version: 3.2.4\nMachine Information:\n  build:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\n  host:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\nPython Information:\n  path: /tmp/build-env-gjolnpt6/bin/python\n  version: '3.11'\nSIMD Extensions:\n  baseline:\n  - X86_V2\n  found:\n  - X86_V3\n  not found:\n  - X86_V4\n  - AVX512_ICL\n  - AVX512_SPR\n\n",
+  "archive_sha256": "3371f8e7848be123f46c3df0a1678301ad5361ce51af5b81e4f9f1d860a8066e",
+  "original_audit_report": {
+    "schema": "mac-analytic-uint8-event-policy-boundary-audit-v1",
+    "source_sha256": "bdd6ddeb741b937c35b007d881bb8085be8ab1d8d532bd73ea6160a4df132e07",
+    "numpy": "2.4.6",
+    "original_evaluator_commit": "21fa349",
+    "evaluator_sha256": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+    "runtime_source_sha256": "191321564faa65e30776f8869462c689794f2d1fe9f80c3d279c1d032dba18c1",
+    "extracted_event_core_sha256": "8fc082a410fc29431440f2157e65257b5fd02ab03853422aa98c9c8a3c4d2a7d",
+    "compiler": "c++ (Debian 12.2.0-14+deb12u1) 12.2.0",
+    "compiler_flags": [
+      "-std=c++17",
+      "-O2",
+      "-ffp-contract=off"
+    ],
+    "grid_points": 138,
+    "analytic_windows": 28874,
+    "predicate_differences": 356,
+    "constructed_streams": 356,
+    "compiled_original_event_disagreements": 356,
+    "disagreement_kinds": {
+      "rearm-after-refractory": 192,
+      "single-trigger": 164
+    },
+    "original_v30_boundary_examples": [],
+    "other_examples": [
+      {
+        "threshold": 0.5703125,
+        "kind": "rearm-after-refractory",
+        "window": [
+          129,
+          65,
+          69,
+          84,
+          18
+        ],
+        "host_event_steps": [
+          5,
+          88
+        ],
+        "compiled_current_event_steps": [
+          5
+        ],
+        "compiled_double_threshold_event_steps": [
+          5
+        ],
+        "canonical_host_event_steps": [
+          5
+        ]
+      },
+      {
+        "threshold": 0.59375,
+        "kind": "rearm-after-refractory",
+        "window": [
+          125,
+          54,
+          17,
+          140,
+          44
+        ],
+        "host_event_steps": [
+          5,
+          88
+        ],
+        "compiled_current_event_steps": [
+          5
+        ],
+        "compiled_double_threshold_event_steps": [
+          5
+        ],
+        "canonical_host_event_steps": [
+          5
+        ]
+      },
+      {
+        "threshold": 0.6015625,
+        "kind": "rearm-after-refractory",
+        "window": [
+          2,
+          225,
+          14,
+          130,
+          14
+        ],
+        "host_event_steps": [
+          5,
+          88
+        ],
+        "compiled_current_event_steps": [
+          5
+        ],
+        "compiled_double_threshold_event_steps": [
+          5
+        ],
+        "canonical_host_event_steps": [
+          5
+        ]
+      },
+      {
+        "threshold": 0.625,
+        "kind": "rearm-after-refractory",
+        "window": [
+          167,
+          10,
+          166,
+          14,
+          43
+        ],
+        "host_event_steps": [
+          5,
+          88
+        ],
+        "compiled_current_event_steps": [
+          5
+        ],
+        "compiled_double_threshold_event_steps": [
+          5
+        ],
+        "canonical_host_event_steps": [
+          5
+        ]
+      },
+      {
+        "threshold": 0.640625,
+        "kind": "rearm-after-refractory",
+        "window": [
+          99,
+          230,
+          28,
+          8,
+          45
+        ],
+        "host_event_steps": [
+          5,
+          89
+        ],
+        "compiled_current_event_steps": [
+          5
+        ],
+        "compiled_double_threshold_event_steps": [
+          5
+        ],
+        "canonical_host_event_steps": [
+          5
+        ]
+      }
+    ],
+    "canonical_integer_mean_and_double_threshold_compiled_disagreements": 0,
+    "consumed_frozen_v30_regression_clips": 0,
+    "changed_frozen_v30_event_streams": [],
+    "cases_sha256": "04048831a42c5c6f21a901751bb752856525a9fcfdbecb0d559b9ae777af5f94",
+    "regression_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "model_inference": false,
+    "new_speech": false,
+    "training": false,
+    "firmware_changed": false,
+    "accepted": false,
+    "limits": "Analytic score-byte counterexamples, not model-produced failure frequency or recognition quality. Compiled extracted existing C++ event core on Mac, not P4 execution. Canonical arithmetic is a proposed future policy clarification, not an applied calibration change; existing frozen reports/pins remain untouched. Saved-v30 replay uses only its frozen threshold, no threshold selection. Does not explain the dominant near-zero float misses."
+  },
+  "file_sha256": {
+    "/tmp/nyx-numeric-independent-v1/README.md": "38c6d342de19d1a89a9b4fd2051bc883c1a7f19a5eadfaac66af1797b998d630",
+    "/tmp/nyx-numeric-independent-v1/audit.py": "bdd6ddeb741b937c35b007d881bb8085be8ab1d8d532bd73ea6160a4df132e07",
+    "/tmp/nyx-numeric-independent-v1/cases.json": "fca85715117701d34636768ef58503fed8c3ec91aff48e340f2981d96cc3f66b",
+    "/tmp/nyx-numeric-independent-v1/event-core.cpp": "5d4ae2d0954add1bc25ebce8e31aeaaa6a67ff08109dd4f851128fb0a37d992b",
+    "/tmp/nyx-numeric-independent-v1/manifest.json": "e7100aa43f6278222e6dc76245d4e0dacda650b37b982a5bce65251047c75eae",
+    "/tmp/nyx-numeric-independent-v1/original-gpu-evaluate.py": "a7591fcadf00c1393887f9df99f201dced6d42a2111032f3803d842dd0086256",
+    "/tmp/nyx-numeric-independent-v1/original-runtime.cpp": "191321564faa65e30776f8869462c689794f2d1fe9f80c3d279c1d032dba18c1",
+    "/tmp/nyx-numeric-independent-v1/regression.json": "9b4f3f72f9aaab5cbecb15804a6d73caca8eb93fd432a144c3b19f5285f9b93d",
+    "/tmp/nyx-numeric-independent-v1/report.json": "22816bbc1c44faceedcda15ecb8f7490d63c6834ea78f1a8264dc26066c510b8",
+    "/tmp/nyx-numeric-gpu-audit-v1/cases.json": "04048831a42c5c6f21a901751bb752856525a9fcfdbecb0d559b9ae777af5f94",
+    "/tmp/nyx-numeric-gpu-audit-v1/event-core": "5a5f7c0091b2248b1a642508c9a565f9f97e5b0bb4a71c1333da4c0b438d10f6",
+    "/tmp/nyx-numeric-gpu-audit-v1/event-core.cpp": "5d4ae2d0954add1bc25ebce8e31aeaaa6a67ff08109dd4f851128fb0a37d992b",
+    "/tmp/nyx-numeric-gpu-audit-v1/regression.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "/tmp/nyx-numeric-gpu-audit-v1/report.json": "9715a32bc270f9c95be0b88222d6da8a235627bcfcc78352f01038d73bf25b19"
+  },
+  "limits": "Executed independently on Linux GPU host CPU, not Mac or P4. Archived script retains Mac wording/schema. Analytic only; 0 saved waveform traces replayed, no 528-trace regression claim. No model inference, training changes, scoring or acceptance. Canonical agreement covers this platform constructed 356 streams."
+}

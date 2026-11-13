@@ -6161,3 +6161,16 @@ Original120000-step sequence/checkpoint selection continue. Full matched
 input audit/postprocessors await both arms. No INT8/new-development/acceptance
 or cross-arm conclusion. Mike/test6/7 unconsumed; v30 frozen; objective incomplete.
 Issue13 coordination continues.
+
+### Independent event arithmetic audit (2026-11-13)
+
+Authenticated public Mac analytic archive SHA3371f8e7848be123f46c3df0a1678301ad5361ce51af5b81e4f9f1d860a8066e.
+Executed archived script with authenticated original runtime/evaluator on Linux,
+NumPy2.4.6 and Debian C++12.2.0. 28874windows/138points yielded356legacy
+predicate and356compiled event disagreements (164single-trigger,192rearm).
+Canonical UINT8 integer sum /1280 with binary64 threshold had0compiled
+disagreements on these356streams. Platform-dependent count differs from Mac385.
+No saved waveform regression, model inference, candidate scoring or acceptance.
+Original formal inputs unchanged. Full platform/build/source receipt saved in
+results/4090-numeric-event-policy-independent-v1.json. Future metadata/arithmetic
+changes and new Hey Willow/Nyx paired protocol remain to implement before scoring.
