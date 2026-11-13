@@ -7705,3 +7705,17 @@ receipt; original witness retained. Mac6866883588 correctly identified original
 semantics. No stricter gate or metric patch required, calibration block for
 this interpretation withdrawn. Clarified broad contract without changing
 original scoring rule. No actual inference or historical result changes.
+
+
+### Additive official same-new-PCM entry prepared
+
+New Jenny grid reuses original official13requests/two models and unchanged
+original runtime through a one-literal AST plan-path adapter. Original live
+runner/grid/sources remain untouched. New plan derives exactly396synthetic+
+12wholebackground rows from admitted custom execution, preserving input hashes.
+Requires complete custom quality/numerical admission before registration;
+separate published plan before execution. Intended10608streams, no retries,
+new output directories and full report/UART/raw/stage104 retention.
+Reversible AST check passes; actual register refuses absent custom execution,
+no plan/output/QEMU/audio inference created. This does not certify new runtime
+or recognition/FAR, and official calibration still needs its own code lock.
