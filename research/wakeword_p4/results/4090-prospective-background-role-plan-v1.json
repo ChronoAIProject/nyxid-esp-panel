@@ -1,0 +1,64 @@
+{
+  "schema": "prospective-background-source-role-plan-v1",
+  "repository": "diarizers-community/voxconverse",
+  "revision": "3acfa1b45ca4b7419aee999d67d94c617f9c9d47",
+  "tree_url": "https://huggingface.co/api/datasets/diarizers-community/voxconverse/tree/3acfa1b45ca4b7419aee999d67d94c617f9c9d47/data",
+  "original_tree_path": "research/wakeword_p4/results/4090-prospective-background-tree-original-v1.json",
+  "original_tree_sha256": "6f165bc038cce7d0541916ff2fe1a3bd411fb3b904c948ea1a7d027c8c066ed2",
+  "shards": [
+    {
+      "role": "development",
+      "path": "data/test-00004-of-00011.parquet",
+      "size": 408983075,
+      "sha256": "5dfcbf66a99623d315d622df03a88ae5274037dae496979ab90ca640c60223eb"
+    },
+    {
+      "role": "development",
+      "path": "data/test-00005-of-00011.parquet",
+      "size": 479637850,
+      "sha256": "5433444bd20f2e7983b64089273f5da85990a21e296b22b02ed917e88a5cc311"
+    },
+    {
+      "role": "independent-acceptance",
+      "path": "data/test-00006-of-00011.parquet",
+      "size": 367177122,
+      "sha256": "f05e2e8bf948340784a6a36a1cba3e9cdd91cc35d2d3c21252175bad57e9c5ca"
+    },
+    {
+      "role": "independent-acceptance",
+      "path": "data/test-00007-of-00011.parquet",
+      "size": 494739829,
+      "sha256": "458667045da27fcfef8dfd624fda905ee4d06463abc77e47743401643264736e"
+    }
+  ],
+  "selection": "First4 test shards by index after existing reserved final test0..3, assigned first2 development and next2 independent acceptance before audio/score access. Dataset test split name is not our evaluation role.",
+  "excluded_prior_development": [
+    "data/dev-00000-of-00005.parquet",
+    "data/dev-00001-of-00005.parquet",
+    "data/dev-00002-of-00005.parquet",
+    "data/dev-00003-of-00005.parquet"
+  ],
+  "excluded_existing_final_shards": [
+    "data/test-00000-of-00011.parquet",
+    "data/test-00001-of-00011.parquet",
+    "data/test-00002-of-00011.parquet",
+    "data/test-00003-of-00011.parquet"
+  ],
+  "prior_source_plan_sha256": "23af6814dcc9af4e7e016a9b587f8a8e6a00c9171424392a827fbd3058c675d7",
+  "role_status": "Reserved, unqualified; exact recording/PCM overlap, continuity and exposure audit required before any evaluation",
+  "minimum_background_hours_per_role": 6.0,
+  "insufficient_exposure_policy": "Report insufficient; no post-score duration extension or borrowed exposure",
+  "download_policy": "Development files may be downloaded and audited without scores. Acceptance raw audio remains unopened until the complete candidate/quality/source/threshold/acceptance protocol is frozen and development passes.",
+  "duplicate_policy": "Before any scores, reject role qualification for recording-ID/PCM duplicates across any known training/development/final data or new roles. Preserve failures and require a separately recorded pre-score plan for any replacement.",
+  "scoring_authorized": false,
+  "required_before_scores": [
+    "Qualified source-role/duplicate/continuous-exposure audit",
+    "Full synthetic positive/confusion source reservation, mechanical quality and threshold/tie protocol",
+    "Frozen official HiESP and v30 same-PCM streaming reference",
+    "Frozen independent acceptance gates FARone-sided95<=0.5/h"
+  ],
+  "audio_downloaded": false,
+  "wake_models_scored": false,
+  "license": "CC BY4.0 as declared by primary/mirror cards; same mirror caveats as prior source plans",
+  "limits": "Partial background role reservation only, not complete experiment protocol or qualified independence. Source tree/file checks do not prove recording-ID/PCM/person disjointness. Mirror declares preprocessing; original archive-byte equivalence and transcript target absence are unverified. All existing final sets remain excluded."
+}

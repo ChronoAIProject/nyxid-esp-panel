@@ -1,0 +1,59 @@
+{
+  "scope": "Cross-machine exact-model source-consumption reconciliation; no new synthesis/scoring",
+  "external_evidence": {
+    "generation-plan": {
+      "source_commit": "318f5fb322308cbe861035f0ea5c496066cdfd3c",
+      "source_path": "research/wakeword_p4/experiments/bryce_heldout_development_generation_plan_v1.json",
+      "saved_path": "research/wakeword_p4/results/4090-observed-mac-bryce-generation-plan-original-v1.json",
+      "sha256": "9bcb29aceb08cb3d1fd3c9061b77a1d1c68c51b0b5a4a6477620f3501655f528"
+    },
+    "v30-baseline": {
+      "source_commit": "318f5fb322308cbe861035f0ea5c496066cdfd3c",
+      "source_path": "research/wakeword_p4/results/mac-bryce-v30-historical-baseline-v1.json",
+      "saved_path": "research/wakeword_p4/results/4090-observed-mac-bryce-v30-baseline-original-v1.json",
+      "sha256": "de27257b414ffa6eb90ce8aad5649310662e1db18bb93febfcf1f94c097184ee"
+    },
+    "continuation-diagnostic": {
+      "source_commit": "318f5fb322308cbe861035f0ea5c496066cdfd3c",
+      "source_path": "research/wakeword_p4/results/mac-bryce-same-prefix-continuation-v1.json",
+      "saved_path": "research/wakeword_p4/results/4090-observed-mac-bryce-continuation-diagnostic-original-v1.json",
+      "sha256": "b0fcdc1d02daa72dfbaab2b075fce15cc7b30326fc914be87592129bb2d28703"
+    }
+  },
+  "matched_models": [
+    {
+      "voice": "kristin",
+      "model_sha256": "5849957f929cbf720c258f8458692d6103fff2f0e3d3b19c8259474bb06a18d4",
+      "config_sha256": "d34362d5b723e2031d6b0ebb5d7c1254cd59d11691e2979147fd518cba5663b2",
+      "status": "consumed diagnostic/development source; not untouched",
+      "permitted_roles": [
+        "preserved diagnostic/development only"
+      ],
+      "excluded_roles": [
+        "training",
+        "fresh unconsumed development",
+        "independent acceptance"
+      ]
+    },
+    {
+      "voice": "norman",
+      "model_sha256": "b9739443232a80a59c7d18810dd856899bf16a7964725f5ab81ea49b1351cb71",
+      "config_sha256": "cbb2cac181ae3a1fd09f7a8835b57c545f79df06a3db6212bd643202085afe5c",
+      "status": "consumed diagnostic/development source; not untouched",
+      "permitted_roles": [
+        "preserved diagnostic/development only"
+      ],
+      "excluded_roles": [
+        "training",
+        "fresh unconsumed development",
+        "independent acceptance"
+      ]
+    }
+  ],
+  "external_data_manifest_sha256": "31adf5d810a50662591da86d1be7a50fbee6042b8e26fc8d091b4ddfb089e909",
+  "external_baseline_threshold": 0.91796875,
+  "external_baseline_selected_threshold": false,
+  "external_background_hours": 0,
+  "decision": "Local not-yet-generated status cannot override prior Mac exposure of the same source models. Retain original preflight as historically accurate, but exclude these voices from any claim of new unconsumed development or independent acceptance. No current training data/recipe change.",
+  "limits": "Copied original metadata/reports only; reports are Mac evidence, not a new local inference or independent reproduction. Unknown physical/pretraining identity limits remain. Other unobserved source models are not automatically classified consumed."
+}
