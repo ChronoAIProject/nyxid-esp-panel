@@ -7737,3 +7737,16 @@ Macaf8fac88 raw-calibrator4files imported exact. Linux13constructed checks pass,
 complete JSON byte-identical to Mac. Raw lock builder now binds calibrator/new
 and inherited metrics/event policy and explicit target_id; v30 fixed reference
 .91796875. No existing execution/report mutated, no real calibration yet.
+
+
+### Original Nyx-bound post-training numerical continuation
+
+New observer binds originalNyx1087093/start20088902, verifies pushed self/plan
+and snapshots runner/launcher hashes before waiting. Process disappearance is
+not success: both final120k receipts/all120100guards must authenticate before
+any next action. Copies original Nyx training/receipt unchanged, publishes them,
+then creates/pushes actual numerical execution lock and runs registered135x2
+whole-input CPU numerical checks once. Publishes complete results even when
+numerical gates reject; unexpected runtime failure preserves log/output and
+stops. No retry/retraining/threshold changes or automatic development access.
+Original training source/continuation and official9672task remain untouched.
