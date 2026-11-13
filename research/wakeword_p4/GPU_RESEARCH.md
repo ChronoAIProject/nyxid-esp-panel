@@ -7330,3 +7330,21 @@ boundary for prefix negatives; explicit eligible-engine rule needed before use.
 Mac6865091069 permits explicitly reused development with pre-fixed rules, but
 that does not restore independence; protected acceptance stays closed and goal's
 independent threshold-selection requirement remains to be resolved explicitly.
+
+### Broad context225 actual CPU batch admission
+
+New separate audit_hey_broad_batches_v1.py extracts original scale/sequence/
+sample/prefix_sample/batch AST, leaving historical trainer unchanged. Only the
+prefix sampler sources assignment is replaced, exact original AST checked:
+Piper/Kokoro only, renormalized equal eligible-engine probabilities (exponent0).
+Qwen remains in ordinary positive/common/cross-negative draws; its bare end is
+not used to invent an internal incomplete-phrase boundary.16prefix slots,
+stratified original ambient,128batch/32positive/96negative,weights1/20 retained.
+This is a synthetic duration-proxy training rule, not certified phone truth.
+Original audit session70774 exit0. Each arm enumerates all628200positive jitter
+ends and523152eligible prefix ends; all fit225 and positives preserve full
+source lead.50actual CPU batches per arm repeat byte-exact with all four RNGs
+reset; finite tensor shape128x225x40 and labels/weights verified. Full feature
+pack hashes checked before use. No TensorFlow/model/optimizer or heldout access.
+No full120100batch schedule or cross-arm draw audit yet, no GPU/export claim;
+training adapter must bind this policy explicitly before formal training.
