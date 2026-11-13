@@ -6625,3 +6625,10 @@ Training-lock writer now requires the complete audit receipt, unchanged9600-sour
 ### 2026-11-13 — complete training PCM history result
 
 Original auditPID923156/session11521 terminated exit0. Original9600waveforms authenticated; candidate exacthash comparison covered2145Git metadata objects across2specified commits plus4938local metadata files, with0unexpected matches. Original16failed-v1 engine tensor reuse remains explicitly listed. Reauthenticated saved inventory SHA328462cd6e3143b9ead72f9cbf2a06ed54fda4cfa8e3861aa8eca482dacb6caa and waveform inventory SHA cc64610d060742b05ead4363462ffaa8ae4d3997ef5305436a6d2014395ed4f5. Original receipt saved unchanged. Bounded hashes only, not speaker/pretraining/substring/reencoding independence; no old/final audio decoded. training_admitted=false remains until realpack/fullschedule/smokes/locks complete. Original token/observer remain live.
+
+
+### 2026-11-13 — actual >hour / >64event reference transport witness live
+
+Pushedc19b582 frozen plan before inference, then started originalsession42126. One original consumedWillowclip04 repeated1235 times,68506685samples/4281.6678125seconds; DEFAULT,63prime, complete source without resets, explicit3600s host deadline, one run/no retries. Input PCM SHA and source/runtime bytes frozen. This is deliberately repeated consumed diagnostic transport, not new source material or FAR exposure. Runtime observed progressing beyond19011072samples; all events retained, no64eventarray cap.
+
+Added independent saved-UART/CRC/complete-event/stage104 auditor; not yet executed because original stream remainslive. Main tokenPID905640/observer921636 also live, latest1281records. No source regeneration, no new held-out data accessed, no newmodeltraining launched.
