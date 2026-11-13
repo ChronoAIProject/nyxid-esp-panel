@@ -1,0 +1,57 @@
+{
+  "schema": "official-muse-zero-native-failure-v1",
+  "source_commit": "d3354d0",
+  "original_session": 6874,
+  "terminal_exit_code": 1,
+  "firmware_sha256": "2d95344167c91b93fcdd5918ed422da9622f965b883abebbb43a4c56e30c06f6",
+  "protocol_sha256": "e427349f961e4a7bcc74c863f3db960d92c6da16a2e9b0b4d0be5614d862ce0a",
+  "build_report_sha256": "3415162c1ebba77fba112d9bb0845a302918d8887e63cf7b25421bbc6529c821",
+  "private_report_sha256": "26f694ac79d11a79a4d4eeacef99f61d80334b34b5db4661965df4a5ad71a9c3",
+  "private_uart_sha256": "9670702ffdcee24f34338c8631f4b9425253c323dc75263bbeeac0d5e0d8a7c9",
+  "firmware_ready": {
+    "schema": "muse-zero-v1",
+    "engine": "wn10_himuse",
+    "mode": "DET_MODE_95",
+    "expanded_model_bytes": 817708,
+    "heap_before_load": {
+      "internal_free": 564895,
+      "psram_free": 33551716,
+      "internal_largest": 385024,
+      "psram_largest": 33030144
+    },
+    "heap_after_load": {
+      "internal_free": 564699,
+      "psram_free": 32732512,
+      "internal_largest": 385024,
+      "psram_largest": 32505856
+    }
+  },
+  "diagnostic_lines": [
+    "E (1713) WAKENET10: can not find wn10_data in model wn10_himuse",
+    "abort() was called at PC 0x4000c2d9 on core 0"
+  ],
+  "cases": [],
+  "diagnosis": "Raw p1/p2 inventory was packed without official target preparation. The esp32p4 preparation selects wn10_data_p2 and _MODEL_INFO_p2 and renames them to wn10_data and _MODEL_INFO_. This was a loading/preparation failure, not recognition evidence.",
+  "sdk_preparation_upstream_commit": "b9dc43a329a68de2f72147808fc9ea29d2ace71e",
+  "sdk_preparation_sha256": "bbad1ab1c026c5e0211a2c4c662d4ac6a5a043a0abd29ac47f609d785819c785",
+  "independent_restore": {
+    "observed_at_utc": "2026-11-13T21:15:43.004290+00:00",
+    "checks": {
+      "original_app": true,
+      "active_slot": true,
+      "same_service": true,
+      "same_agent": true,
+      "voice_idle": true,
+      "wake_word": true,
+      "wake_listening": true,
+      "serial_no_owner": true
+    },
+    "nyx_state": "connecting",
+    "readiness": "app-only",
+    "voice_connectivity_accepted": false
+  },
+  "audio_io_performed": false,
+  "recognition_accepted": false,
+  "acceptance_accessed": false,
+  "candidate_promoted": false
+}
