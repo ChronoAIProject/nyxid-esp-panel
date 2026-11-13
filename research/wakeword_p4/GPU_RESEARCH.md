@@ -5260,3 +5260,7 @@ Original sequence launched per_draw automatically (PID631432); no restart/config
 ### Direct author Kristin/Norman config evidence
 
 Archived original author configs with URL/bytes/SHA256. Both say dataset=training, one speaker and empty speaker_id_map; neither supplies reader surname/ID, utterance manifest or initial checkpoint lineage. They do not resolve name-collision leads. Re-reading the same metadata cannot establish physical independence; retain limits for any future reservation instead of treating missing IDs as proof. No model/audio/inference or newdev/final scoring. Per_draw original trainer continues.
+
+### Per_draw formal5000 original float validation
+
+Read-only collector preserved complete original record (4026B SHA67f0ff2b5ba3040554361e6a108e8cd3b0d785d8bc95f3d155828f65575ca5f6); independently authenticated exact source bytes and all11 grid points. Three training-eligible thresholds; returned threshold 0.99, macro recall 0.2916666666666667, max-source false 0.009895833333333333. Background 0/1.2048112673611107h, zero-event one-sided95 upper 2.4864743173555484/h. Training eligibility only, not independent FAR acceptance or INT8 quality; no cross-arm superiority/promotion claim. Original per_draw continues unchanged to120k; v30 frozen.
