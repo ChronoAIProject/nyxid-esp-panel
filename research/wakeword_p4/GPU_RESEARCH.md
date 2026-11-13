@@ -5292,3 +5292,7 @@ Original complete record3965B SHAc89a2ba0a586f535356810e32ff119bcc098e5fafc76f9d
 ### Per_draw formal40000 float checkpoint rejected
 
 Original complete record4058B SHA1cc19b6a42a16787ffe3e563f12c3c3a8819ab81a17239a92d55cbbbd825f819 preserved and independently matched source bytes/11-point eligibility. Zero eligible; fallback0.994 macro0.48906249999999996/max-source false0.0234375; background0/1.2048112673611107h, zero-event one-sided95 upper2.4864743173555484/h. Fallback not pass and does not replace earlier eligible5000 checkpoint. Reused float validation only; no INT8/independent acceptance/cross-arm conclusion. Original per_draw continues unchanged to120k; v30 frozen.
+
+### Per_draw formal40000 loss-prefix integrity
+
+Read all first40000 original newline-complete loss records: exact consecutive steps1..40000, every numeric field finite and all losses/norms nonnegative. Prefix9368396B SHA80ff0fae1c69030e9562e15c7c2b5785d8b96db8607677c20bc32c18b7302dba; receipt archived. Original PID631432 independently observed alive beyond41000; collector622620 and sequence555095 alive. No restart or recipe change. This is prefix numerical integrity, not full-run/quality acceptance; v30 frozen.
