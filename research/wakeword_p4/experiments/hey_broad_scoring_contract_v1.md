@@ -51,7 +51,11 @@ contract. No epsilon or implicit threshold rounding. Before inference bind
 exact grid bytes/code and model/event/metric implementations in execution pins.
 
 Preserve complete-phrase recall at/after generated prefix end and no later than
-saved container end; report full-RIR-boundary recall and any-after-source-start
+saved whole-input container end, including saved trailing silence, as defined
+by hey_development_scoring_contract_v1.md. This is row.samples (also recorded
+as whole_input_end_sample), not generated_container_end_sample, which is the
+dry command endpoint. Event support is already clamped to row.samples.
+Report full-RIR-boundary recall and any-after-source-start
 recall separately. Report all pre-source/during-prefix events and signed offsets
 to dry-prefix, full-RIR-prefix and command-container ends. These are generated
 references, not human final-phone truth or certified listening quality.

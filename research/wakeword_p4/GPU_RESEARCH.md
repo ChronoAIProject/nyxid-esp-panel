@@ -7691,3 +7691,17 @@ full background frontend and all396+12inputs/runtime. It authorizes raw collecti
 only, no threshold selection/promotion. Actual preflight rejects missing formal
 receipt without writing execution lock or opening development in a detector.
 Original source reports retain their historical authorization=false fields.
+
+
+### Correction: inherited container includes saved trailing silence
+
+Re-read original hey_development_scoring_contract_v1.md lines20..22: hit at/after
+generated prefix through original container including saved trailing silence.
+Therefore whole_input_end_sample/samples is the inherited upper bound; dry
+command end is a separate signed-delay reference. Previous upper-bound witness
+observation is real but its expected0 and claimed implementation defect were
+incorrect interpretations, now explicitly withdrawn in a separate correction
+receipt; original witness retained. Mac6866883588 correctly identified original
+semantics. No stricter gate or metric patch required, calibration block for
+this interpretation withdrawn. Clarified broad contract without changing
+original scoring rule. No actual inference or historical result changes.
