@@ -5662,3 +5662,18 @@ command rejects existing output directories as designed (not a hash failure);
 therefore independently rechecked all284 file_sha256 entries directly, all
 unchanged. No restart, scoring, Mike inference or acceptance access. Objective
 remains incomplete; v30 frozen.
+
+### Original control40000 checkpoint (2026-11-13)
+
+Previous turn was a verified wait. This turn repeatedly polled original
+PID719837 live while progressing38000→40000, with no restart. At1:54:32 the
+original40000 validation completed. Preserved full original line SHA
+`1df54e3d8dfc78ed5142276856de0f78568dd76f04b201c96a5b214b89177146`.
+Original11-point training-float grid has0eligible points; selected fallback
+.994 has recall .5074074074, macro .5497395833, hard-negative false rate
+.0247159091, max-source false rate .028125. Ambient0events/1.2048112674h
+has zero-event nominal one-sided95upper2.4864743174/h, not a <=.5/h pass.
+No INT8/new-development/acceptance conclusion follows. All284formal hashes
+reverified unchanged; original sequence continues and recovered waits.
+Issue13 had no new Mac response at turn start. No Mike/test6/7 access,
+checkpoint substitution, alternate arm selection or promotion. Goal incomplete.
