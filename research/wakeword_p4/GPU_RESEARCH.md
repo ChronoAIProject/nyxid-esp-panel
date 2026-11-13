@@ -7773,3 +7773,20 @@ metrics/event policy, oldofficial auditor/grid and custom_execution_path.
 Original live grid/runner untouched; no newplan/results produced or scoring.
 This verifies constructed interfaces only; actual10608streams and fullaudits
 remain outstanding. Nyx original observed41000/120000, numericalwaiter live.
+
+
+### Both final models complete; registered numerical screen rejects promotion
+
+OriginalNyx120k succeeded; b9c1631a preserves original reports, f9b7a43c binds
+actual final H5/TFLite/runtime, originalwaiter ran full270cases once and pushed
+df5d9c0a fullresult. Nyx57592bytes SHA
+2ce45979a79b843ee2339447ee46adbf1b8678b6497c37aaf1e733b7cbb7af1d.
+All120100actual train/PTQ batches authenticated perarm. Numerical270complete:
+Willow54/135pass, Nyx117/135pass; all twice-reset traces exact, floatphase max
+7.3314e-6/5.7221e-6 below1e-4. Quantized five-mean errors exceed prospective
+budgets; worst absolute.47426249/.59716154, p99max.41986278/.52170365.
+Full independent saved-array SHA/explicit5slice mean/percentile/clock/repeat
+reduction confirms original reported statistics and decisions. All failures
+retained. Do not relax gates, re-export/PTQ retry, choose intermediate weights
+or open newdev to rescue. v30 remains, source/final roles unchanged. Goal not
+complete: quantify mechanism from saved training witnesses before new experiment.
