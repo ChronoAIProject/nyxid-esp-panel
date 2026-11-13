@@ -1,0 +1,157 @@
+{
+  "schema": "bounded-head-converter-probe-v1",
+  "tensorflow": "2.21.0",
+  "script_sha256": "66cc6ae2068b632bc0af32050af11fb2c628b7b994953a3b054b805fe064b715",
+  "synthetic_flatbuffer_sha256": "72b14748b5d94f2bf5f0408c1551fdc0ddf047404fd33b042c2a8a90908c4cfd",
+  "float_algebra_max_error": 1.1920928955078125e-07,
+  "clipping_probability_bound": 0.0003353501304664781,
+  "fc_relu6_fused": true,
+  "ops": [
+    {
+      "op": "FULLY_CONNECTED",
+      "inputs": [
+        0,
+        4,
+        3
+      ],
+      "outputs": [
+        5
+      ],
+      "fused_activation": 3
+    },
+    {
+      "op": "MUL",
+      "inputs": [
+        5,
+        2
+      ],
+      "outputs": [
+        6
+      ]
+    },
+    {
+      "op": "ADD",
+      "inputs": [
+        6,
+        1
+      ],
+      "outputs": [
+        7
+      ]
+    },
+    {
+      "op": "LOGISTIC",
+      "inputs": [
+        7
+      ],
+      "outputs": [
+        8
+      ]
+    },
+    {
+      "op": "QUANTIZE",
+      "inputs": [
+        8
+      ],
+      "outputs": [
+        9
+      ]
+    }
+  ],
+  "tensors": [
+    {
+      "index": 0,
+      "name": "serving_default_keras_tensor:0",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 13.333333015441895,
+      "zero": 97
+    },
+    {
+      "index": 1,
+      "name": "functional_1/rescaling_1/Cast_1",
+      "shape": [],
+      "scale": 0.0313725508749485,
+      "zero": 127
+    },
+    {
+      "index": 2,
+      "name": "functional_1/rescaling_1/Cast/x",
+      "shape": [],
+      "scale": 0.010457516647875309,
+      "zero": -128
+    },
+    {
+      "index": 3,
+      "name": "functional_1/dense_1/Relu6;functional_1/dense_1/Add",
+      "shape": [
+        1
+      ],
+      "scale": 0.03937007859349251,
+      "zero": 0
+    },
+    {
+      "index": 4,
+      "name": "functional_1/dense_1/MatMul",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.002952755894511938,
+      "zero": 0
+    },
+    {
+      "index": 5,
+      "name": "functional_1/dense_1/MatMul;functional_1/dense_1/Relu6;functional_1/dense_1/Add",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.0235294122248888,
+      "zero": -128
+    },
+    {
+      "index": 6,
+      "name": "functional_1/rescaling_1/mul",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.062745101749897,
+      "zero": -128
+    },
+    {
+      "index": 7,
+      "name": "functional_1/rescaling_1/add",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.062745101749897,
+      "zero": -1
+    },
+    {
+      "index": 8,
+      "name": "StatefulPartitionedCall_1:01",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.00390625,
+      "zero": -128
+    },
+    {
+      "index": 9,
+      "name": "StatefulPartitionedCall_1:0",
+      "shape": [
+        1,
+        1
+      ],
+      "scale": 0.00390625,
+      "zero": 0
+    }
+  ],
+  "limits": "Toy topology only, not a trained candidate or numerical admission. No trained weights/audio/features/development accessed. Input quantization is deliberately unrealistic for a full encoder. Fused bounded FC does not prove upstream encoder/state accuracy; full original 270 gates remain required before any development."
+}

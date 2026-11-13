@@ -7851,3 +7851,18 @@ witnesses; deleting it alone has no established basis as a fix. No originalPTQ
 replay/export/optimization/newdev/acceptance. Next prospective intervention
 must address genuine model logit range or quantization, retaining failed models
 and all numerical gates. Goal active, v30 unchanged.
+
+### Bounded affine head: converter feasibility only
+
+Registered and pushed c4fdc40c before a single synthetic scalar conversion.
+Original session81671 exited0. Identity sigmoid((8/3)*RELU6((3/8)*z+3)-8)
+versus sigmoid(clip(z,-8,8)) max float error1.1920929e-7; analytical clipping
+probability bound0.00033535013. FlatBuffer confirms FC fused RELU6 enum3,
+bounded FC output scale0.0235294122 and reconstructed LOGISTIC input
+scale0.06274510175. Original full converter log retained. No original trained
+model export/inference or calibration material accessed; deliberately coarse
+toy input quantization means this is not an accuracy result. Original official
+PID958504 verified live before probe; unchanged. Next register exact original
+head weight/bias transformation and streaming state/calibration controls before
+any real model export. Must still pass all original270 numerical gates; no
+newdev/acceptance authorized, v30 retained and goal active.
