@@ -6780,3 +6780,15 @@ After ec12768 pushed both next-stage locks, original render session56925 exited0
 268508ed43b22f35bbf2dbbb75da06288d46ca4ccafd049be13ee96739b5cd88.
 Original metadata-only token extraction session6180 remains live; no restart.
 Native/render pass is mechanical only; full timing/history/score admission pending.
+
+### Development token timing complete and history admission in progress
+
+Original token extraction session6180 exited0 with120/120 exact allocation/sample
+length checks; records SHA d920380065b496a9f44ebcb6e979c67d2b25f8b38d67f53298127ef13bcf3d1d.
+No new waveform output or wake scoring. Original history auditor session43556
+has independently authenticated120native+360rendered WAV/PCM and raw/engine
+hashes; specified Git/local metadata scan still running, no restart.
+Separate replay builder verifies all mechanical audits again, joins per-source
+token references, and retains both prefix and full command-container endpoints
+plus full RIR support. It requires completed clean history result and complete
+120token receipt; output remains explicitly scoring_authorized=false.
