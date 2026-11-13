@@ -1,0 +1,19 @@
+{
+  "schema": "hey-broad-schedule-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/schedule_hey_broad_v1.py": "e6df66f95ed41943cc7a6a5aee7c98cec352dbbf9e354dbce9d2362ec0c22f10",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "research/wakeword_p4/training/train_stream.py": "2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904",
+    "research/wakeword_p4/training/negative_sampling.py": "620ada162e65b3cad389f5a12ce23a6388c7793e14cf98092ec43ad367e922c6",
+    "research/wakeword_p4/training/spec_augment.py": "f5cf659ee3fab7c32c60b4985db1788be4718479b453ff582ecadb6dc75454d9",
+    "research/wakeword_p4/training/ambient_sampling.py": "22fee8cf1b1876dbc87a5310758151ccccba2ee957b4c8365a1ef2170f35fb1c",
+    "research/wakeword_p4/results/4090-hey-broad-cpu-batch-audit-v1.json": "3dd3e990d229a7602ae9daf2c8d365ff9a1d3fc0212f0e2ee3419e852f36ca1c"
+  },
+  "training_batches": 120000,
+  "ptq_batches": 100,
+  "targets": [
+    "hey_willow",
+    "hey_nyx"
+  ],
+  "policy": "Exact admitted CPU sampler; preserve all RNGs and original draws, no augmentation/mining,16 eligible Piper/Kokoro prefix negatives, stratified ambient. SHA256 each full x/y/weights batch, first50 chain must equal original CPU admission. No model, training or heldout scoring."
+}
