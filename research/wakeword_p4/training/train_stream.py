@@ -53,6 +53,8 @@ def main():
     parser.add_argument("--paired-objective", choices=("consistency", "phrase-ranking", "temporal-tail-risk"), default="consistency")
     parser.add_argument("--paired-noise-condition", choices=("independent", "common"))
     parser.add_argument("--paired-draw-noise-condition", choices=("fixed", "per_draw"))
+    parser.add_argument("--recover-erased-complete-coverage", action="store_true",
+                        help="Recover already drawn8positive/12negative slots after factorized replacement")
     parser.add_argument("--complete-coverage-pack", type=Path)
     parser.add_argument("--negative-full-timeline", action="store_true")
     parser.add_argument("--positive-full-timeline", action="store_true")
@@ -116,6 +118,8 @@ def main():
         parser.error("Balanced coverage requires unchanged v45 US temporal recipe")
     if args.us_coverage_pack and not (args.complete_coverage_pack and args.negative_container_mixture):
         parser.error("US coverage requires unchanged v43 complete/container mixture recipe")
+    if args.recover_erased_complete_coverage and not (args.complete_coverage_pack and args.factorized_coverage_pack):
+        parser.error("Erased coverage recovery requires complete and factorized packs")
     if args.negative_full_timeline and not args.complete_coverage_pack:
         parser.error("negative-full-timeline requires complete-coverage-pack")
     if args.complete_coverage_pack and (not args.full_source_pack or args.full_source_temporal_pack or args.five_score_pack or args.time_mask_width or args.frequency_mask_width):
@@ -302,10 +306,14 @@ def main():
             x[:80] = full_source.first80()
             if complete_coverage is not None:
                 x[:80] = complete_coverage.replace(x[:80])
+                if args.recover_erased_complete_coverage:
+                    recovered_complete = x[np.r_[0:8, 32:44]].copy()
         if us_coverage is not None:
             x[:80] = us_coverage.replace(x[:80])
         if balanced_coverage is not None:
             x[:80] = balanced_coverage.replace(x[:80])
+        if args.recover_erased_complete_coverage:
+            x[np.r_[16:24, 56:68]] = recovered_complete
         if args.prefix_negatives:
             # Keep baseline RNG and all original draws unchanged. Only replace
             # the selected confusing-negative slots before the same permutation.
@@ -589,6 +597,7 @@ def main():
               "us_coverage": us_coverage.report if us_coverage is not None else None,
               "balanced_coverage": balanced_coverage.report if balanced_coverage is not None else None,
               "complete_coverage": complete_coverage.report if complete_coverage is not None else None,
+              "recovered_erased_complete_coverage": args.recover_erased_complete_coverage,
               "five_score": five_score.report if five_score is not None else None,
               "paired_rendering": paired_rendering.report if paired_rendering is not None else None,
               "validation_window_phase": window_phase,
