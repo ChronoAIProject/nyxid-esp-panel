@@ -5718,3 +5718,16 @@ Not a pass, INT8/new-development/acceptance result or cross-arm conclusion.
 All284formal hashes unchanged; original sequence continues/recovered waits,
 no restart/checkpoint/threshold substitution. Mike/test6/7 remain unconsumed,
 v30 frozen, objective incomplete.
+
+### Original control60000 checkpoint (2026-11-13)
+
+Previous turn was verified wait. OriginalPID719837 repeatedly verified live
+through59000→59500→60000, elapsed2:50:45. Preserved original60000 line SHA
+`3799fc1391f10594edc12fa67814890dbfdf646abd5c8808a3a93ad327d56616`.
+0training-float eligible points; fallback.99 recall .4375,
+macro .4630208333, hard-negative false rate .0082386364,
+max-source false rate .0109375. Ambient0events/1.2048112674h gives nominal
+zero-event one-sided95upper2.4864743174/h, not a pass. No INT8/new-development,
+acceptance or cross-arm conclusion. All284formal hashes unchanged; original
+sequence continues/recovered waits, no restart/model/threshold substitution.
+Mike/test6/7 remain unconsumed, v30 frozen, objective incomplete.
