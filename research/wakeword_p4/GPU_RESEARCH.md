@@ -7597,3 +7597,16 @@ pre-generation87ac9469+Macd0c589b histories. No retry/filtering/scoring.
 Willow original1047649 verifiedlive47500/120000, no guard mismatch/restart.
 Mac6866560713 withdrew goal-text correction; direct user fresh-dev requirement
 remains and olddev is clearly labeled regression. No historical contract edit.
+
+### New complete development manifest normalized without waveform edits
+
+396rows normalized to explicit target IDs, declaredJenny voice, string bare/
+light/time/timer carrier, native lengthscale and condition. Dry generated
+prefix/container boundaries retained separately from full-RIR boundaries;
+whole input end includes saved trailing silence. Source PCM remains untouched.
+For each custom target:36positive (9standalone/27command),324common+36cross.
+Manifest authenticates independent render replay and completed exact-history
+receipts. Declared voice count1, explicitly not broad unseen-speaker proof.
+No scoring authorization, collector/metric execution pins still required.
+Original formal Willow1047649 verifiedlive56000/120000; background exact-history
+1068108 still live at105seconds, not a terminal failure or reason to restart.
