@@ -52,6 +52,7 @@ def write(args):
                  'hey_batch_schedule_v2.py','audit_hey_training_batch_v2.py'):
         files.add(EXPERIMENTS/name)
     files.add(EXPERIMENTS/'smoke_hey_target_adapter_v2.py')
+    files.add(EXPERIMENTS/'uint8_stream_detector_v1.py')
     files.update(EXPERIMENTS/name for name in ('hey_prefix_crop_v2.py','hey_batch_schedule_v1.py','audit_hey_training_batch_v1.py'))
     # Preserve the feature preparation chain, including training ambient arrays.
     files.update(map(Path,json.loads(plan.read_text())['files']))
@@ -90,6 +91,16 @@ def write(args):
             report=json.loads(smoke.read_text())
             assert report['target_id']==target and report['steps']==report['selected_step']==2
             assert report['export_contract_passed'] and not report['formal_candidate']
+            waveform=report['training_waveform_streaming']
+            assert len(waveform['cases'])==2 and waveform['saved_frontend_exact']
+            assert waveform['all_fresh_reset_repeats_exact'] and not waveform['event_scoring']
+            assert sha(smoke.parent/'smoke-training-waveform-streams.npz')==waveform['raw_archive_sha256']
+            assert sha(smoke.parent/'hey_nyx.tflite')==report['smoke_model_sha256']
+            for name in ('hey_nyx.tflite','smoke-training-waveform-streams.npz',
+                         'smoke-initial.weights.h5','smoke-initial-inventory.json',
+                         'smoke-actual-batch-1.npz','smoke-actual-batch-2.npz',
+                         'actual-positive-crops.jsonl','actual-batch-schedule.jsonl'):
+                files.add(smoke.parent/name)
             assert len(report['smoke_updates'])==2 and report['batch_schedule']['verified_batches']==102
             assert report['features_index_sha256']==sha(root/'features.json')
             assert report['initial_weights_sha256']==INITIAL_SHA
@@ -100,7 +111,7 @@ def write(args):
                 stage='integration-preflight' if args.preflight else 'formal',
                 seed=726,batch_size=128,initial_weights=str(args.initial_weights),upstream=str(args.upstream),
                 versions={p:importlib.metadata.version(p) for p in
-                          ('numpy','tensorflow','keras','h5py','scipy','soundfile','pymicro-features')},
+                          ('numpy','tensorflow','keras','h5py','scipy','soundfile','pymicro-features','ai-edge-litert')},
                 files=dict(sorted(bound.items())),arms=arms,checkpoint_policy='fixed-final-20000',
                 architecture='teacher60',context_frames=150,batchnorm='frozen',
                 numerical_policy=dict(op_determinism=True,tf32=False),

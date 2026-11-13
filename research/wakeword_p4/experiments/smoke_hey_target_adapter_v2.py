@@ -77,6 +77,34 @@ def smoke_tree():
     return ast.fix_missing_locations(tree)
 
 
+def training_stream_checks(model,root,output):
+    """Check full training PCM against saved features and fresh raw-byte streams."""
+    import soundfile as sf
+    from features import features
+    from uint8_stream_detector_v1 import Uint8StreamDetector
+    rows=json.loads((root/'features.json').read_text())
+    stored=np.memmap(root/'features.bin',mode='r',dtype='<u2').reshape(-1,40)
+    selected=[next(r for r in rows if r['label']==label) for label in (1,0)]
+    traces={};cases=[]
+    for i,row in enumerate(selected):
+        wav=Path(row['path']);assert sha(wav)==row['sha256']
+        pcm,rate=sf.read(wav,dtype='int16');assert rate==16000 and len(pcm)==row['samples']
+        raw=features(pcm).astype('<u2')
+        assert np.array_equal(raw,stored[row['offset']:row['offset']+row['frames']])
+        detector=Uint8StreamDetector(model)
+        first=detector.predict(raw);detector.reset();second=detector.predict(raw)
+        assert first.dtype==np.uint8 and len(first)==len(raw)//3 and len(first)>0
+        assert np.array_equal(first,second),'Fresh reset streaming bytes changed'
+        traces[f'case{i}_first']=first;traces[f'case{i}_repeat']=second
+        cases.append(dict(source_id=row['source_id'],variant=row['variant'],label=row['label'],
+                          wav_sha256=row['sha256'],samples=len(pcm),frames=len(raw),steps=len(first),
+                          raw_uint8_sha256=hashlib.sha256(first.tobytes()).hexdigest(),fresh_reset_exact=True))
+    path=output/'smoke-training-waveform-streams.npz';np.savez_compressed(path,**traces)
+    return dict(cases=cases,source='Complete training-only rendered PCM, no new dev/acceptance',
+                saved_frontend_exact=True,all_fresh_reset_repeats_exact=True,
+                raw_archive_sha256=sha(path),event_scoring=False)
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--training-lock',type=Path,required=True)
@@ -119,7 +147,11 @@ def main():
     inp=interpreter.get_input_details()[0];out=interpreter.get_output_details()[0]
     assert list(inp['shape'])==[1,3,40] and inp['dtype']==np.int8
     assert list(out['shape'])==[1,1] and out['dtype']==np.uint8
+    assert tuple(out['quantization'])==(1/256,0)
+    waveform=training_stream_checks(output/'hey_nyx.tflite',root,output)
     report.update(smoke_updates=observe.steps,training_lock_sha256=sha(a.training_lock),
+                  training_waveform_streaming=waveform,
+                  smoke_model_sha256=sha(output/'hey_nyx.tflite'),
                   formal_candidate=False,export_contract_passed=True,smoke_source_sha256=sha(__file__))
     (output/'training.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(dict(target=a.target,actual_optimizer_updates=2,export_contract_passed=True,formal_candidate=False)))
