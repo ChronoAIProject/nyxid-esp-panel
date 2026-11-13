@@ -7415,3 +7415,16 @@ launch on a merely partial schedule. Original1034876 verifiedlive18000/120100
 Willow at this observation. Zero-width augmentation returns without RNG draw,
 negative_candidates1 matches non-mining schedule behavior. Actual future
 BatchGuard must still establish every formal batch identity, not inferred now.
+
+### Actual paired source draws checked without training
+
+Original source-pair audit session81189 exit0. First1000 actual batches/arm,
+96000 sequence draws/arm: engine/conditioning/carrier/scale/draw/variant and
+positive/common/cross roles all match. Common-negative texts exact; all16
+prefix slots exclusively Piper/Kokoro. Labels/weights permutations exact.
+Source-draw trace hash and independent full tensor-chain hashes saved in
+4090-hey-broad-source-pairing-audit-v1.json. Scope explicitly excludes full120100
+pairing, exact crop endpoints and ambient source identity. Different utterance
+lengths mean no claim of equal absolute crop boundaries or PCM. No model
+updates/heldout access. Original schedule1034876 remains live, observed33000
+Willow; do not alter bound source or restart on observation gaps.
