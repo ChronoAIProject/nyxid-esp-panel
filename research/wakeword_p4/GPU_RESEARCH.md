@@ -6531,3 +6531,27 @@ manifests, prior unchanged v30/official baseline evidence, code/versions and
 uint8-sum-binary64-v1. No candidate inference before push. This is development
 trace authorization only;138point calibration/null gates remain separate.
 Mike/test6/7 untouched. New Willow/Nyx training preparation remains separate.
+
+### Sole recovered new DEVELOPMENT failed; no acceptance unlock (2026-11-13)
+
+Pushed be1dbbf freeze before first candidate inference; scorerPID901848/session52880
+completed exit0, all360Joe synthetic+42whole background rawUINT8 traces saved.
+402fresh-reset complete-stream repeats exact. Original calibrator then completed
+all138locked thresholds:0eligible, selected=null, minimum_macro.8. Original
+reports/calibration copied byte-for-byte and failure receipt binds their hashes.
+No new threshold fallback, different checkpoint, retry or acceptance/model promotion.
+
+Maximum recall anywhere in locked grid is9/72=.125 at.5 (standalone.1388888889,
+command.1111111111); common0/216,cross-target0/72,pre-source0. At that samepoint
+background2/7.9028622222h, nominal one-sided95upper.7966472709/h, also fails FAR.
+These are failure diagnostics, never a chosen operating point. No138point
+can meet recall.8 regardless of FAR. Original Mike/test6/7 remain unopened;
+v30 retained without declaring it qualified or official parity. Raw traces and
+all failures remain local/hashed, complete metadata pushed. Same-PCM frozen
+v30/official baseline evidence unchanged. Shared parent/exposure/Poisson and
+synthetic end-reference limitations remain.
+
+New paired Willow/Nyx study was preregistered before observing these results;
+its existing2400training synthesis/schedule/voice locks continue unchanged.
+Its dev/acceptance synthetic remain ungenerated, new continuousdev10.48394h
+prepared but unscored. Goal remains active; no human listening/recording gate.
