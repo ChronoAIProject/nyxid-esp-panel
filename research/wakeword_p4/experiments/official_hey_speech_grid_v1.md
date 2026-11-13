@@ -43,3 +43,50 @@ remain untested. These already consumed sources cannot enter training or fresh
 development/acceptance. A future QEMU replay must authenticate its actual model,
 threshold API, lifecycle and complete outputs; this native result alone does not
 certify that runtime.
+
+## Completed native witnesses
+
+All 156 streams completed with 20267 input calls, 9828 retained prime returns
+and 24 complete positive-event frames. Every PCM/CRC/sample/call/getter check
+passes. A separate saved-UART auditor authenticates all 338 detector frames in
+order. The 13 actual getter identities match the earlier native zero certificate
+and remain unchanged through priming. DEFAULT's complete offsets equal the
+retained native speech pilot.
+
+| Requested configuration | Willow target streams with an event / 4 | Cross-target streams with an event / 8 |
+|---|---:|---:|
+| DEFAULT, no setter | 4 | 0 |
+| .4 | 4 | 2 |
+| .5 | 4 | 2 |
+| .6 | 4 | 0 |
+| .644 | 4 | 0 |
+| .7 | 0 | 0 |
+| .8 | 0 | 0 |
+| .9 | 0 | 0 |
+| .95 | 0 | 0 |
+| .98 | 0 | 0 |
+| .99 | 0 | 0 |
+| .999 | 0 | 0 |
+| .9999 | 0 | 0 |
+
+At requested .4 and .5 the two cross-target streams are Daniel's bare and
+command `Hey Nicks` containers. They are preserved, along with every miss at
+the higher requested points. There are zero prime positives. These are event
+counts on reused synthetic files, with no background exposure or source holdout;
+they neither select a threshold nor establish recognition/FAR/parity.
+
+The guarded runner exits 0 after restoring the original app/slot/service/idle/
+Hi ESP listener. Separate final HTTP and serial-owner checks pass. Nyx remains
+`connecting`, as before the test, so voice connectivity is not accepted.
+
+[All native points and clips](../results/official-hey-consumed-speech-grid-native-v1.json),
+[independent frame audit](../results/official-hey-consumed-speech-grid-frame-audit-v1.json)
+and [restoration check](../results/official-hey-consumed-speech-grid-restore-v1.json)
+record the actual completed scope. The
+[public evidence archive](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/official-hey-consumed-speech-grid-native-v1.tar.gz)
+contains complete original WAVs, manifest/protocol, original saved report,
+sanitized detector frames, build identity and both auditors. Its README gives
+commands to regenerate both summaries from saved evidence without device I/O.
+The [anonymous receipt](../results/official-hey-consumed-speech-grid-receipt-v1.json)
+records size, SHA256, payload checks and reproduction results. This reproduces
+saved evidence; another runtime must still execute its own authenticated model.
