@@ -6653,3 +6653,10 @@ Implemented separate hey_prefix_crop_v2.py and build_hey_training_features_v2.py
 Two tests pass: exhaustive147prefixspans×25draws/rejectunsupported or inconsistent sidecar, and ten actual original-vs-v2 sampler batches on analytic features. Labels/weights/allnegative tensors and all3RNGstates exact, positive tensor differences observed only through capped endpoint rule;320positive draw records complete. Not realnewpack/GPU certification.
 
 Authenticated immutable1500-record failure snapshot already includes all480native target positives; all1440rendered positive variants/36000possible effectivejitter cases pass v2 geometry. Exactly2rows requiremax24/26; receipt4090-hey-v2-positive-prefix-support-v1.json binds snapshot/renderrecords/code. Full2400 timing still running, common-negative timing/material admission pending. Added separatev2 observer to write only v2featureplan after originaltoken terminal; v1observer/failure remain unchanged. Actual feature/schedule/smoke/training still pending.
+
+
+### 2026-11-13 — v2 complete schedule / adapter / smoke / lock source integration
+
+Separate hey_batch_schedule_v2.py precomputes20100actual v2 tensor hashes plus full643200positive original/effective crop trace. Separate v2formaladapter applies exactlyone positiveendpoint rewrite and enforces both actualbatch hashes and fullpositive-draw trace hash/count/cappedcount. CropGuard rejects changed original draw even ifcap yields identical effective endpoint/tensors. This strengthens positive-draw identity, not a claim of full negative-row provenance.
+
+Separate v2 GPU smoke and two-stage lock writer reuse original source/initializer/frozenBN/export constraints, preserve first-two formalLR, bind v2 samplerpolicy/trace/CPU/smoke/source bytes, and use new v2output paths. V1 remainsfailed; originaltrainer/v1files unchanged. Six tests pass (3crop/RNG/trace,2adapter,1smokeloop); sourceaudit builds/compilesactualAST. All284originalpins identical. No actual newpack/fullschedule/GPUsmoke/export or training yet. OriginaltokenPID905640 live34:36/latest1841;v2observer927739 waiting sameoriginaltask, no restart. Fullmaterial/traininglock stillpending.

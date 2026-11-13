@@ -9,7 +9,7 @@ import numpy as np
 
 from audit_hey_training_batch_v1 import audit
 from audit_hey_training_batch_v2 import audit as audit_v2
-from hey_prefix_crop_v2 import CropRule,apply_crop_rule,effective_jitter
+from hey_prefix_crop_v2 import CropRule,CropGuard,apply_crop_rule,effective_jitter
 
 
 class CropChecks(unittest.TestCase):
@@ -22,6 +22,17 @@ class CropChecks(unittest.TestCase):
                 self.assertLessEqual(row['keyword_frame']+actual-150,row['lead_frame'])
         with self.assertRaises(ValueError):effective_jitter(dict(keyword_frame=326,lead_frame=178),3)
         with self.assertRaises(ValueError):effective_jitter(dict(keyword_frame=304,lead_frame=178,positive_jitter_max=27),3)
+
+    def test_same_effective_endpoint_different_original_draw_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            row=dict(source_id='fixture',variant=2,keyword_frame=304,lead_frame=178)
+            expected=CropRule(root/'expected.jsonl');self.assertEqual(expected(row,27),24)
+            receipt=expected.finish()
+            actual=CropGuard(root/'same.jsonl',receipt);self.assertEqual(actual(row,27),24)
+            self.assertTrue(actual.finish()['all_positive_draws_match_precomputed'])
+            changed=CropGuard(root/'changed.jsonl',receipt);self.assertEqual(changed(row,26),24)
+            with self.assertRaises(ValueError):changed.finish()
 
     def test_actual_batches_keep_rng_labels_weights_negatives(self):
         with tempfile.TemporaryDirectory() as temp:

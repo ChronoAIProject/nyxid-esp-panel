@@ -58,3 +58,16 @@ def apply_crop_rule(tree):
     tree=Rewrite().visit(tree)
     if matches!=1:raise ValueError('Original positive sampler changed')
     return ast.fix_missing_locations(tree)
+
+
+class CropGuard(CropRule):
+    """Require the actual entire positive-draw trace to match frozen schedule."""
+    def __init__(self,trace_path,expected):
+        super().__init__(trace_path);self.expected=expected
+
+    def finish(self):
+        result=super().finish()
+        for key in ('positive_draws','capped_draws','trace_sha256'):
+            if result[key]!=self.expected[key]:raise ValueError('Actual positive crop trace differs: '+key)
+        result['all_positive_draws_match_precomputed']=True
+        return result
