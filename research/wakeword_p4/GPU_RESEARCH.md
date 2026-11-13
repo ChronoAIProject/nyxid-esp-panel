@@ -6674,3 +6674,8 @@ Executed this helper on original frozenv30 plus originaltraining Nyx/Willow PCM 
 V2formaladapter now snapshots all actual pre-update variable shapes/dtypes/valuebytes and compares against its actualsame-instance GPUSmoke inventory before saving formalinitialH5/inventory or updating. Formal-lock writer requires both actual GPUSmoke initial inventories equal, so same seed/initializer no longer stands alone as proof of matched values. Smoke keeps its own same-instance initialsnapshot and bypasses only the formal-comparison hook. Originaltrained/checkpoint histories untouched.
 
 One explicit-array valuegate test plus2adapter/1smokeloop tests pass; sourceAST compiles and newsourceaudit preserved separately. These are source/fixture checks, not actualGPUinitialization certification; both actualsmokes/formalruns still pending fullpack. Originaltoken905640/v2observer927739 freshlylive42:06/latest2221, no restart. Mac6862992004 independently confirms originalspans126/124 and legalmax24/26 and agrees with separatev2 registration, not actualtraining admission.
+
+
+### 2026-11-13 — original token complete and exact v2 feature plan frozen
+
+Original extractionPID905640/session61776 terminatedexit0,2400allocation records complete, no waveform regeneration; completionreceipt binds finaltokenSHA. V1observer terminated with originalunsupported-prefix exception as expected; v1plan absent/failure retained. Separatev2observer completed source-gated write-plan only. Actualv2plan SHA8c84facfbe640777d831e159b61e611f702172021bdcc58684694acfef466a68 verified everyboundfile, full2400timing/7200renderedgeometry/1440positive support passed. Push exact plan before actualfeaturebuild, no training yet. Allreserved syntheticdev/acceptance remains ungenerated.
