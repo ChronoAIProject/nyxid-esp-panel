@@ -1,0 +1,49 @@
+{
+  "schema": "bryce-same-prefix-continuation-protocol-v1",
+  "source_sha256": "3095865be4604079a37cae1086c93c5c21a3fd137fbe37b8d5595373fbc4684f",
+  "helper_source_sha256": {
+    "research/wakeword_p4/training/features.py": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+    "research/wakeword_p4/training/evaluate.py": "825549065fe35f2ab597e056cc94951b7f1832b2aa77dd51cc8fec4ceabebabd",
+    "research/wakeword_p4/training/detector_policy.py": "dde9b346b4adaeafe34b85bd8d1084bbe86e1a6d9805a46836908fc78e5d96fc",
+    "research/wakeword_p4/training/prepare_runtime_selftest.py": "4673687f4e37b7a0f80b48789508728784f44773edbdbe61140b0be44228a4ef",
+    "research/wakeword_p4/training/replay_gpu_mac_regression.py": "0e107db87bc236f78e603fdfeef3c3783ab1554db655e2f8eaeae2edc78e2d49",
+    "research/wakeword_baseline/compare.py": "ffd21a0d5b24a248c55d7438c4e37de33befc5354b5f4d34ba3a6f9ae146cb7f",
+    "research/wakeword_p4/experiments/score_bryce_v30_baseline_v1.py": "fda0ae59df6e06f7049ce01897e843cf1ed1518517470a14e2e4fccb15a0052e"
+  },
+  "host_versions": {
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "numpy": "2.5.4",
+    "scipy": "1.17.0",
+    "soundfile": "0.13.1"
+  },
+  "manifest_sha256": "31adf5d810a50662591da86d1be7a50fbee6042b8e26fc8d091b4ddfb089e909",
+  "generation_plan_sha256": "9bcb29aceb08cb3d1fd3c9061b77a1d1c68c51b0b5a4a6477620f3501655f528",
+  "baseline_report_sha256": "de27257b414ffa6eb90ce8aad5649310662e1db18bb93febfcf1f94c097184ee",
+  "baseline_scores_sha256": "61e2fbfb31fdec528d9f572b9302c6d75267a49be524689f20ba2038dcf87711",
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "target_counts": {
+    "hey_nyx": 36,
+    "hi_esp": 36,
+    "hey_nick": 18,
+    "hey_next": 18,
+    "hey_mix": 18
+  },
+  "cutoffs_after_generator_prefix_ms": [
+    0,
+    100,
+    200
+  ],
+  "reference_window_samples": [
+    -1600,
+    12800
+  ],
+  "limits": [
+    "Post-hoc intervention on consumed two-voice synthetic development; correlated renders, no independent acceptance.",
+    "Generator durations are not human phonetic endpoints. Hard cutoffs may remove keyword tail or introduce an artificial boundary.",
+    "Matched prefix PCM, noise, RIR, original full-source gains, native speed and total duration isolate this intervention, not a unique training cause.",
+    "No threshold/cutoff search or deployed truncation policy; all126 rows and threecutoffs reported.",
+    "v30 historical model only. No failed-model promotion, new TTS, final data, training, hardware, speaker playback or microphone recording.",
+    "No continuous background exposure, FAR, full-app resource, acoustic recall or long-call/reconnect result."
+  ]
+}
