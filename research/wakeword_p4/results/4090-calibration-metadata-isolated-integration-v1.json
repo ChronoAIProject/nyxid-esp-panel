@@ -1,0 +1,56 @@
+{
+  "schema": "mac-candidate-calibration-runtime-contract-audit-v1",
+  "source_sha256": "35612efe734c6cc9bbf8b7ff93580922b9659c711e52579ee95c38d52aec73b7",
+  "upstream_commit": "21fa349",
+  "upstream_calibrator_sha256": "92cf6f4517a5828741a26f027120502407ba557bff1262a108c5f26b0f0083da",
+  "proposed_calibrator_sha256": "88027cb2165baad13a197b1e2c733fd1a852f4c95b881ebe9599540198918bdc",
+  "patch_sha256": "3d4e90d98c6c09ed9e87234d916452406d96ee53cdeab52990c23410e22c741c",
+  "existing_packager_sha256": "5e3fa4de1a17ab372bc808ac072028787b61405b10363d1e2e21b06bcc4030e2",
+  "missing_metadata_fields": [
+    "final_data_used",
+    "sliding_window",
+    "validation_only"
+  ],
+  "entire_producer_ast_identical_after_removing_three_added_metadata_keywords": true,
+  "checks": [
+    {
+      "case": "current producer output metadata rejected by existing packager",
+      "result": "KeyError: 'sliding_window'"
+    },
+    {
+      "case": "three explicit existing metadata fields restore compatibility",
+      "result": "accepted"
+    },
+    {
+      "case": "reject validation_only",
+      "result": "ValueError: Frozen GPU topology, calibration or event policy differs"
+    },
+    {
+      "case": "reject final_data_used",
+      "result": "ValueError: Frozen GPU topology, calibration or event policy differs"
+    },
+    {
+      "case": "reject sliding_window",
+      "result": "ValueError: Frozen GPU topology, calibration or event policy differs"
+    },
+    {
+      "case": "reject selected",
+      "result": "ValueError: Frozen GPU topology, calibration or event policy differs"
+    },
+    {
+      "case": "reject viable_operating_point",
+      "result": "ValueError: Frozen GPU topology, calibration or event policy differs"
+    }
+  ],
+  "actual_candidate_scored": false,
+  "actual_candidate_packaged": false,
+  "training": false,
+  "firmware_modified": false,
+  "limits": "Analytic metadata contract check using original authenticated v30 training metadata and synthetic selected-report metadata. No real recovered calibration exists yet. Does not prove candidate eligibility, report truth, inference or board acceptance. Proposed patch must be applied by GPU before future candidate freeze; current formal pins and live source untouched.",
+  "gpu_independent_execution": {
+    "consumer_commit": "7a1f82c26bcce4d3d62fdcf9ae089c8ef687b31b",
+    "isolation": "git archive into /tmp/nyx-mac-contract-isolated-v1; original audit executed with GPU git history",
+    "current_calibrator_matches_proposed_sha256": true,
+    "scope": "Seven analytic fixture contract checks only, not actual candidate packaging or inference; resolves prior missing consumer import."
+  }
+}

@@ -6183,3 +6183,12 @@ calibrator only, outside284formal pins. AST after removal equals prior source;
 absent on GPU branch; integration remains unverified, not candidate success.
 No scoring/freeze or historical report changes. Explicit arithmetic integration
 and new Hey paired protocol remain outstanding.
+
+### Isolated Mac metadata consumer integration (2026-11-13)
+
+Fetched full immutable7a1f82c26bcce4d3d62fdcf9ae089c8ef687b31b, archived consumer
+into isolated /tmp directory and ran original Mac audit unchanged. All7analytic
+contract checks pass; current patched calibrator SHA88027cb2165baad13a197b1e2c733fd1a852f4c95b881ebe9599540198918bdc
+matches audited proposed bytes. Resolves previous missing-import limitation.
+No actual candidate scoring/packaging, waveform inference, firmware or acceptance.
+Original failed attempt preserved; active formal sources unchanged.
