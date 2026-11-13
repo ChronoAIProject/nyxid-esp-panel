@@ -6174,3 +6174,12 @@ No saved waveform regression, model inference, candidate scoring or acceptance.
 Original formal inputs unchanged. Full platform/build/source receipt saved in
 results/4090-numeric-event-policy-independent-v1.json. Future metadata/arithmetic
 changes and new Hey Willow/Nyx paired protocol remain to implement before scoring.
+
+### Future calibration metadata compatibility (2026-11-13)
+
+Added validation_only=True, final_data_used=False, sliding_window=5 to future
+calibrator only, outside284formal pins. AST after removal equals prior source;
+6decision tests pass. Mac packager audit failed because prepare_runtime.py is
+absent on GPU branch; integration remains unverified, not candidate success.
+No scoring/freeze or historical report changes. Explicit arithmetic integration
+and new Hey paired protocol remain outstanding.

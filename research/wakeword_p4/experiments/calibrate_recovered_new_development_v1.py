@@ -104,6 +104,7 @@ def calibrate():
                 candidate_report_sha256=sha(BASE/'report.json'),grid=points,
                 minimum_macro=minimum,threshold=selected['threshold'] if selected else None,
                 viable_operating_point=selected is not None,selected=selected,
+                validation_only=True,final_data_used=False,sliding_window=5,
                 selected_synthetic_details=synthetic_metrics(groups['synthetic'],selected['threshold'],True) if selected else None,
                 acceptance_authorized=False,candidate_promoted=False,
                 limits='Development threshold selection only. Null is failure, no fallback, no acceptance rescue. Full generated/RIR reference is not phonetic truth; nominal Poisson FAR ignores clustering; shared-parent/unknown exposure limitations persist.')
