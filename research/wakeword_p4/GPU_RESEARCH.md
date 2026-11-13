@@ -6870,3 +6870,19 @@ flasher offset files. New consumed runner/auditor transports all ordered returns
 getter after prime and rawbyte trace; full156consumed-only recertification plan
 binds actualruntime/firmware/source/PCM before execution. No fresh official
 scoring or equivalence claim yet; original v1 remains unchanged.
+
+### Frozen v30 development comparison complete
+
+Original custom sequence finished all3models and138point calibrations normally.
+v30 also0eligible/selectednull; maximum completephrase macro.75. Original frozen
+threshold.91796875 macro.6944444444444443 and nominalFARupper.2857447576425148/h.
+Its FAR passes but full synthetic gates do not. Both newlytrained paired arms
+are substantially worse on this registered completephrase development, so they
+are rejected; no candidate replaces v30. Complete original v30curve preserved.
+
+Official development-only runner implemented with exact pushed plan/runtime/
+source/PCM admission; it cannot run until separate execution plan is created.
+Observation-v2 zero runner+26config API plan adds getter-after-prime/allrawreturn
+checks for bothofficialmodels. Plan mustpush before execution; no new speech
+or acceptance audio used for API certification. Consumed156stream original
+session32502 stillrunning; no restart.
