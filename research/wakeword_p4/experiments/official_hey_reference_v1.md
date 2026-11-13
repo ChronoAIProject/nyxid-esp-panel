@@ -125,3 +125,15 @@ restricted to the registered cap. The receipt
 This is not actual new-pack CPU/full-schedule/GPU/recognition admission or
 cross-platform numerical equivalence. Reproduce from that GPU commit in an
 isolated checkout; no TensorFlow, waveform, board or reserved data is needed.
+
+## Reserved-development contract review
+
+Mac independently compared GPU commit `ec127683f508e0352267b16dd876992ecef7c3ba`
+render contract against the original generation-plan-v2 reservations. All120
+original development request objects and the complete voice metadata match,
+including texts/phones/token IDs/scales/seeds. The contract retains360rendered
+cells/36positives per target, and its noise-seed set is disjoint from training.
+The result `results/mac-hey-development-contract-review-v1.json` binds both
+source JSON hashes. This is a metadata-only check, without new waveforms,
+detector scoring, runtime or acceptance admission. Fresh RIR registration and
+mechanical quality alone do not establish recognition or source independence.
