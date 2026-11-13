@@ -1,0 +1,186 @@
+{
+  "schema": "hey-kokoro-duration-probe-plan-v1",
+  "source_sha256": "3d19e219b70ff3fbb49e65829abd7804d0a92badb14ab815e6f4220f84816502",
+  "model_sha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+  "bank_sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "versions": {
+    "kokoro-onnx": "0.4.9",
+    "onnxruntime": "1.31.1",
+    "numpy": "2.4.6",
+    "soundfile": "0.14.0"
+  },
+  "installed_wrapper_sha256": "e2aa7127daf5f57e3493b64ab20b800acbfaae8aa6974546317535aa9392baba",
+  "requests": [
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 0.9,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 1.0,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 1.1,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 0.9,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 1.0,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 1.1,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 0.9,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 1.0,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 1.1,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 0.9,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 1.0,
+      "lang": "en-us"
+    },
+    {
+      "voice": "af_bella",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 1.1,
+      "lang": "en-us"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 0.9,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 1.0,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow.",
+      "prefix": "Hey Willow",
+      "speed": 1.1,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 0.9,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 1.0,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Willow, turn on the light.",
+      "prefix": "Hey Willow",
+      "speed": 1.1,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 0.9,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 1.0,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks.",
+      "prefix": "Hey Nicks",
+      "speed": 1.1,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 0.9,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 1.0,
+      "lang": "en-gb"
+    },
+    {
+      "voice": "bm_lewis",
+      "text": "Hey Nicks, turn on the light.",
+      "prefix": "Hey Nicks",
+      "speed": 1.1,
+      "lang": "en-gb"
+    }
+  ],
+  "policy": "Exactly24 training-only full untrimmed single-pass raw outputs; no retries/normalization/filtering. Direct actual float32 speed feed, preserve padded token IDs/style/waveform/duration. No wake scoring.",
+  "timing": "Record duration shape/sum and waveform size; infer no phonetic truth. Prefix mapping only if tokenization prefix is exact, otherwise unavailable.",
+  "heldout_used": false
+}
