@@ -7630,3 +7630,19 @@ OriginalWillow1047649/start19849315 verifiedlive, observed70500/120000;
 continuation1044979 and originalofficial958504 live. No restart/source edits.
 Mac latest6866650718 still preparing raw metrics helper, no new commit at
 this check; avoid duplicate implementation. v30 and protected finals remain.
+
+
+### Prospective trained whole-wave quantization numerical screen
+
+Before reading any trained checkpoint, freeze45deterministically first ledger
+sources/135complete original renders across three engines, positive/common
+literal texts and carriers. No PCM alteration or score-based selection.
+Plan4b3a0bf6c69911de6c54a109fcce2059905bc656d0c380e196e522ac671944fb
+requires final120000 receipts/120100guards and separate published actual model/
+runner/runtime execution pins before inference. CPU phase-aware offline/stream
+float max1e-4 inherited; fresh-reset exact and per-input valid5mean INT8-vs-float
+MAE<=.02,p99<=.1,max<=.25 added prospectively as engineering error budgets.
+All135cases and failures retained, no pooled averaging hiding source failures,
+no post-result tolerance changes or PTQ retry. These bounded training witnesses
+cannot prove threshold-event equivalence or replace fresh development and
+independent acceptance. Model inference has not been performed by plan creation.
