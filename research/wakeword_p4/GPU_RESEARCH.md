@@ -7750,3 +7750,15 @@ whole-input CPU numerical checks once. Publishes complete results even when
 numerical gates reject; unexpected runtime failure preserves log/output and
 stops. No retry/retraining/threshold changes or automatic development access.
 Original training source/continuation and official9672task remain untouched.
+
+
+### Official runtime observation for Mac prospective throughput planning
+
+Mac6867122432 owns newofficial dynamic calibration, no duplicate implementation.
+Originalgrid958504 verifiedlive2222/9672, Willowconfig5/source361 complete,
+362running. Single adjacent preserved report completion delta and live QEMU
+CPU/age recorded in4090-hey-official-runtime-observation-v1.json. Metadata only,
+no intermediate recognition/FAR claim. Host/scheduling included; one observation
+cannot certify all configurations or justify changing original live serial run.
+Nyx1087093/start20088902 and numericalwaiter1089930 both verifiedlive; all11969
+complete observed Nyxguards match, last logged11500. No restart or newdev access.
