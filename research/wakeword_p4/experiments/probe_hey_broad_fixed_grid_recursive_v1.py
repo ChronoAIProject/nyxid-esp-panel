@@ -23,7 +23,9 @@ def run():
  from ai_edge_litert.interpreter import Interpreter,OpResolverType
  from ai_edge_litert import schema_py_generated as schema
  exports=json.loads(Path(lock['export']).read_text())['arms'];rows=json.loads(Path(lock['actual']).read_text())['cases'];OUT.mkdir(exist_ok=False);cases=[]
+ templates=json.loads((R/'4090-hey-broad-fixed-grid-compile-plan-v1.json').read_text())['arms']
  for arm in exports:
+  arm=dict(arm);arm['ops']=next(t['template']['ops'] for t in templates if (t['target'],t['condition'])==(arm['target'],arm['condition']))
   target=arm['target'];condition=arm['condition'];meta=Interpreter(model_path=arm['path'],experimental_op_resolver_type=OpResolverType.BUILTIN_REF,num_threads=1);meta.allocate_tensors();details={d['index']:d for d in meta.get_tensor_details()}
   ops=[o for o in arm['ops'] if o['op'] in ['CONV_2D','DEPTHWISE_CONV_2D','FULLY_CONNECTED']];assert len(ops)==10
   model=schema.Model.GetRootAsModel(Path(arm['path']).read_bytes(),0);init=model.Subgraphs(1);initial={}
