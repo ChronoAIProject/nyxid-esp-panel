@@ -10047,3 +10047,8 @@ Original export session93521 genuineexit0; PID/starttime unavailable after short
 ## Original final waveform validation launched
 
 Pushed3740bf7b before both original jobs. Numerical screen session82886/PID185780/start549629, actual narrowfirst26cases passed; consumed recognition collector session87251/PID185779/start549629, actual narrow360synthetic plus firstwholebackground complete/twofreshrepeat exact. Both processes observedlive. Saved launchreceipt. No internalbackground resets, full originalexposure, no selectedthreshold; retain all failures and consumedstatus. Independent complete numerical and trace/event audits remain after these originals complete; no freshdev/acceptance or P4 claims.
+
+
+## Recognition-priority steering read and applied
+
+Read actual Mac Issue13 comments6884389027/6884346145 and referenced6884218322. Mac conveys user request actual usability, no fullbatch/numerical-agreement prerequisite to actual recognition. Completefullbatch audit had already exited before reading; no history rewritten. Current collector87251/PID185779 runs independently of screen82886/PID185780; actualbroadbackground1 observed, screenbroad88 diagnosticpass. Added recognition-priority supplement; no extra floating experiments or audit expansion. Let existing jobs finish and preserve results. Freshdev/acceptance roles and behavior/FAR gates unchanged; no promotion from consumed diagnostics.
