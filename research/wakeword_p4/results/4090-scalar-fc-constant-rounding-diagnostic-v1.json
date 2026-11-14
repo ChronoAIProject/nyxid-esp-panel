@@ -1,0 +1,140 @@
+{
+  "files": {
+    "research/wakeword_p4/experiments/diagnose_scalar_fc_constant_rounding_v1.py": "21af94dd101594f104a4cf93e91b8f2fd2339aae522a5541c64ac61a7a25d37b",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-fixed-grid-compile-result-v1.json": "f3927c2976ffd3d0044d7f1b9e4347d2caf440d480776dc17e5d3ad8670bcb22",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-formal-result-v1.json": "b6701d4a4fbe0c36c32bcc1354be9b6d66aa6d3d462c3474aa88ee28fc8b0d27"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "h5_sha256": "6433163fa1b5709a667fd2154e00844a5688ec0ed2160b9a0c63c9ec0bb7e226",
+      "model_sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "tensor": 20,
+      "numpy_compiler_exact": true,
+      "modes": {
+        "cpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "cpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/scalar-fc-constant-rounding-v1/hey_willow-dual_supervised_control.npz",
+      "arrays_sha256": "f88a105af75b888c60a5f80d14bfc1f8cfef9ff54d8a476a30078d2d11e9f23d"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "h5_sha256": "7fc6ff1e82baeb13b8081e9d1f76ed753b960ffd7455be9316ce3f7e338127ad",
+      "model_sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "tensor": 20,
+      "numpy_compiler_exact": true,
+      "modes": {
+        "cpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "cpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/scalar-fc-constant-rounding-v1/hey_willow-logit_consistency.npz",
+      "arrays_sha256": "2b40df0bd07ad2f6856cf19ab0e2cffef0eaf5b0f695536fce7d8d24abbf9c44"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "h5_sha256": "0b7f6ce1ea3b9bf004b8a050071c3d164e97045575b00a80c95de787e21215ae",
+      "model_sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "tensor": 20,
+      "numpy_compiler_exact": true,
+      "modes": {
+        "cpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "cpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/scalar-fc-constant-rounding-v1/hey_nyx-dual_supervised_control.npz",
+      "arrays_sha256": "956b0719feb4fce5cd949587137809619ccf4efcc7b6231bd288c8860805e1f9"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "h5_sha256": "0ad10bcc150b16b9be5442109d3197caa91feb3390a0cca1f0fd418efe9ea5c3",
+      "model_sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "tensor": 20,
+      "numpy_compiler_exact": true,
+      "modes": {
+        "cpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "cpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_eager": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        },
+        "gpu_function": {
+          "unequal": 0,
+          "maximum_code_difference": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/scalar-fc-constant-rounding-v1/hey_nyx-logit_consistency.npz",
+      "arrays_sha256": "6a228852733278f7a099bd4d6f69b3cd3e0c3bde8946236f86d86db79affffe4"
+    }
+  ],
+  "model_invocations": 0,
+  "optimizer_updates": 0,
+  "limits": "Allfour actual learned tensor20 arrays and unchanged model constants. CPU/GPU eager/function scalar-operation reproduction only, not fullnetwork replay, other19constant identities or causal effect on wholewave/recognition. No altered export/recompile/training or tolerance. Firstfailure preserved."
+}

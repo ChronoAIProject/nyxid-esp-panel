@@ -1,0 +1,77 @@
+{
+  "files": {
+    "research/wakeword_p4/experiments/diagnose_constant_scale_folding_off_v1.py": "026c381e6aa9e75f5d8380dde0a25b117aaf5b472cb15079590f3ffbb4e6e84b",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_fake_quant_primitives_v1.py": "574eca1eca903ad495f0bad292d1641bb4e54d13d71c13f5075fb5f93b170505",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-fixed-grid-compile-result-v1.json": "f3927c2976ffd3d0044d7f1b9e4347d2caf440d480776dc17e5d3ad8670bcb22",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-formal-result-v1.json": "b6701d4a4fbe0c36c32bcc1354be9b6d66aa6d3d462c3474aa88ee28fc8b0d27"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "modes": {
+        "cpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        },
+        "gpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/constant-scale-capture-folding-off-v1/hey_willow-dual_supervised_control.npz",
+      "arrays_sha256": "e66ab5f08575b0437a4ad7999eb59a6ac5f44b45bf58d0f7a8b8700304b052e1"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "modes": {
+        "cpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        },
+        "gpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/constant-scale-capture-folding-off-v1/hey_willow-logit_consistency.npz",
+      "arrays_sha256": "141b4a349215a091a2b8bbaf66f6f2aa40c5885d33cb0012c663d7c6f48eecff"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "modes": {
+        "cpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        },
+        "gpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/constant-scale-capture-folding-off-v1/hey_nyx-dual_supervised_control.npz",
+      "arrays_sha256": "688a17c1a33f2601e30a5e1bcf0932397d10eff591aa3b81827990b1a4f7eab1"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "modes": {
+        "cpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        },
+        "gpu_constant_folding_and_arithmetic_off": {
+          "unequal": 0,
+          "differences": []
+        }
+      },
+      "arrays_path": ".local/wakeword/constant-scale-capture-folding-off-v1/hey_nyx-logit_consistency.npz",
+      "arrays_sha256": "057eded109381c930ce427b7fdf80dd631bc9227183ceebc8609ddb4c5414abc"
+    }
+  ],
+  "model_invocations": 0,
+  "optimizer_updates": 0,
+  "limits": "Controlled isolated actualweight variable+capturedscale fakequant and arithmetic optimizer process-local ablation. Not fullnetwork rerun, no modification to original execution policy/exports, no causal wholewave/recognition claim."
+}
