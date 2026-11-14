@@ -1,0 +1,103 @@
+{
+  "plan_sha256": "b734887b5c3bee97f247b87550578ec183dcffd8960a22b4db052d480c139d87",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "batch": 1,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_willow-batch1.npz",
+      "arrays_sha256": "e06d4893c0eda7c0269a5bcdfd3939c091f250cabd53a81c7ab20477f0ccfc61",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.001466688847519801,
+      "consistency_gradient_l2": 0.0,
+      "supervised_loss": 3.9580655197823944e-07,
+      "consistency_loss": 0.0
+    },
+    {
+      "target": "hey_willow",
+      "batch": 2,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_willow-batch2.npz",
+      "arrays_sha256": "f92113605d5afa54f1e1ad15d8146bd10e21a60a4f2546f424a908d0b613dc91",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.007016284380919581,
+      "consistency_gradient_l2": 0.0,
+      "supervised_loss": 1.0421629212942207e-06,
+      "consistency_loss": 0.0
+    },
+    {
+      "target": "hey_willow",
+      "batch": 3,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_willow-batch3.npz",
+      "arrays_sha256": "1599bdd420f29bb7e778a65222893ffc16e7c5339b35f14385612167a437da29",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 1.0422346668090405,
+      "consistency_gradient_l2": 0.7518811971476376,
+      "supervised_loss": 0.00011551695934031159,
+      "consistency_loss": 0.0006455995026044548
+    },
+    {
+      "target": "hey_willow",
+      "batch": 4,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_willow-batch4.npz",
+      "arrays_sha256": "2770f3fb748dea69551c28b9e32e2cd9caf53e0e2b48e4c846847491c9127f87",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.0008689786371798434,
+      "consistency_gradient_l2": 0.0,
+      "supervised_loss": 3.7858040968785645e-07,
+      "consistency_loss": 0.0
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 1,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_nyx-batch1.npz",
+      "arrays_sha256": "2878d4002aef3940c4f1a95e51619cbef68f56f2da02b1bebb2e3d6006c181e3",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.03166967708150752,
+      "consistency_gradient_l2": 0.0,
+      "supervised_loss": 1.7116581148002297e-05,
+      "consistency_loss": 0.0
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 2,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_nyx-batch2.npz",
+      "arrays_sha256": "de031d1a4d9a336daab8b494b3a403e74a09d295c9c9a1d91b87b859376b3be1",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.5384680412518762,
+      "consistency_gradient_l2": 0.030144028895256855,
+      "supervised_loss": 0.00012952480756212026,
+      "consistency_loss": 1.998682364501292e-06
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 3,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_nyx-batch3.npz",
+      "arrays_sha256": "c747af8cd7909419e15b8e4656ec556ab8d2848035f965330a2b798ea51adc57",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.0314152773046865,
+      "consistency_gradient_l2": 0.3428275898911619,
+      "supervised_loss": 1.765725937730167e-05,
+      "consistency_loss": 3.844674665742787e-06
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 4,
+      "arrays_path": ".local/wakeword/bounded-consistency-gradients-v1/hey_nyx-batch4.npz",
+      "arrays_sha256": "e461c34adb038cefa7a11912561f3e42b186a3f447b73a369023724108f45fd8",
+      "repeat_exact": true,
+      "model_unchanged": true,
+      "supervised_gradient_l2": 0.041515695824050736,
+      "consistency_gradient_l2": 0.019965045069469934,
+      "supervised_loss": 1.523751507193083e-05,
+      "consistency_loss": 5.520404329217854e-07
+    }
+  ],
+  "optimizer_updates": 0,
+  "limits": "Newpolicy constant_folding=False and arithmetic_optimization=False before allgraphs. Separate S/C backwards and canonical merge0/1, nominalquantbounded=clip((float32(exactFC)-3)*(float32(8/3)),-8,8). Same-side saturation/zero gradients retained. Original8 actualsaved x/y/w and actualsavedinitialH5, New graph policy; twice evaluate raw/bounded logits and S/C component gradients, no optimizer/newdata or finalmodel selection. Save logits/repeats/modelunchanged before descriptive decomposition. Same-side nominal saturation means both>=8 or both<=-8; opposed saturation separate, all other records retained. Nominal clipped sigmoid is not actual full quantized head. Actual historical logits never saved; this is new observation on authenticated originalinputs/state, not historical byte replay."
+}
