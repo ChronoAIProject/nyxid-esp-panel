@@ -8906,3 +8906,6 @@ Reduced existing1242custom boundary supplements plus26official points;1268rows r
 
 ### Official signed first-event generated-reference latency
 All26original points reduced by all/standalone/command/three variants. First native after-source event retains negative signed generated-prefix offsets, with missing clips explicit; conditional min/median/p95/max are not latency guarantees. No phonetic truth, selection or event-policy changes. This complements original complete-only hit timing so early events are not erased by the summary.
+
+### Actual capture intake requirement before fullstream lock
+Replaced fullstream lock's flag-only numerical prerequisite with a capture intake contract: authenticated original Mac report path/hash, fixed input SHA, all4exact model identities, complete4×2×256 FP32 probability arrays/model, finite/exact repeats and independent differences against both original TF/LiteRT<=1e-4. Bind report/capture/reference/source hashes into execution lock. Flag-only constructed receipt rejected, syntax passes. This is a local importer contract to populate from actual Mac originals; it is not Mac's required output format, an actual captured result, or proof of provenance merely from JSON flags. Source authentication remains a separate importer responsibility. No actual fullstream lock/run created; Mac result still pending.

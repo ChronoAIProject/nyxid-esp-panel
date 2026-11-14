@@ -10,11 +10,13 @@ def lock(mac_report):
  assert mac['actual_trained_microinterpreter_run'] is True and mac['all_passed'] is True
  scope=R/'4090-fp32-internal-fullstream-prospective-v1.json';published(scope);s=json.loads(scope.read_text());software=R/'4090-fp32-internal-software-execution-v1.json';p=json.loads(software.read_text());result=R/'4090-fp32-internal-software-original-result-v1.json';r=json.loads(result.read_text());assert r['all_passed']
  from collect_complete_development_v1 import runtime_identity_files
+ from verify_mac_fp32_capture_intake_v1 import verify
+ capture_files=verify(mac,r,Path('.local/wakeword/fp32-internal-software-v1'))
  for f,h in s['files'].items():assert sha(f)==h,f
  for f,h in p['files'].items():assert sha(f)==h,f
  for row in s['ordered_requests']:assert sha(row['path'])==row['sha256'],row['path']
- files=dict(p['files'])
- paths=[mp,scope,software,result,Path(__file__),Path('research/wakeword_p4/training/features.py'),Path('research/wakeword_p4/experiments/collect_complete_development_v1.py'),Path('research/wakeword_p4/experiments/audit_fp32_fullstream_arrays_v1.py')]+runtime_identity_files()+[Path(x['path']) for x in s['ordered_requests']]
+ files=dict(p['files']);files.update(capture_files)
+ paths=[mp,scope,software,result,Path(__file__),Path('research/wakeword_p4/training/features.py'),Path('research/wakeword_p4/experiments/collect_complete_development_v1.py'),Path('research/wakeword_p4/experiments/audit_fp32_fullstream_arrays_v1.py'),Path('research/wakeword_p4/experiments/verify_mac_fp32_capture_intake_v1.py')]+runtime_identity_files()+[Path(x['path']) for x in s['ordered_requests']]
  exports=[]
  for m,x in zip(p['models'],r['cases'],strict=True):
   path=Path('.local/wakeword/fp32-internal-software-v1')/(m['target']+'-'+m['condition'])/'model.tflite';assert sha(path)==x['model_sha256'];paths.append(path);exports.append(dict(target=m['target'],condition=m['condition'],path=str(path),sha256=sha(path)))
