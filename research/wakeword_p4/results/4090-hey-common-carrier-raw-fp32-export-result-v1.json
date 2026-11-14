@@ -1,0 +1,75 @@
+{
+  "execution_sha256": "61f543efb495d613a937fb9effda615e15830556b7e97789b4dda828fa0c2c35",
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "control",
+      "path": ".local/wakeword/hey-common-carrier-raw-formal-v1/hey_willow-control-0/final.weights.h5",
+      "sha256": "7e26f66535c6f0f2863d255befc867b8ef1cccb2c7dfc8d7f23d1d2579cd3648",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/hey-common-carrier-raw-fp32-export-v1/hey_willow-control/fp32.tflite",
+          "bytes": 126496,
+          "sha256": "563b77ce927490b6371bb7874a90b7018f50d3657fa680c2d67cd2787d78461e"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_willow",
+      "condition": "command_context",
+      "path": ".local/wakeword/hey-common-carrier-raw-formal-v1/hey_willow-command_context-0/final.weights.h5",
+      "sha256": "8c3e8bbeee98db65ce6c1f676083c5dfaeef19feaa6a9f6e6a2b9d7d551a908c",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/hey-common-carrier-raw-fp32-export-v1/hey_willow-command_context/fp32.tflite",
+          "bytes": 126808,
+          "sha256": "d3aee4e11beffcf05a3d3a0d3acaea30335661350236a7835db00aee7df24ea5"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "control",
+      "path": ".local/wakeword/hey-common-carrier-raw-formal-v1/hey_nyx-control-0/final.weights.h5",
+      "sha256": "d4d91bd099806ab39be664ce02c0c25f4675b50382f6727f9895e62ce6424dfe",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/hey-common-carrier-raw-fp32-export-v1/hey_nyx-control/fp32.tflite",
+          "bytes": 126908,
+          "sha256": "c9854a39de611b289a0f7b10b9eb1717b12ed081ac95a061f9212e4aaa701c0a"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "command_context",
+      "path": ".local/wakeword/hey-common-carrier-raw-formal-v1/hey_nyx-command_context-0/final.weights.h5",
+      "sha256": "0fd7de8ac7947557c8e85a3f8bbfea1aa6db2ff23a29ac22d8864f081e96c097",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/hey-common-carrier-raw-fp32-export-v1/hey_nyx-command_context/fp32.tflite",
+          "bytes": 126964,
+          "sha256": "f2e0e462c263c6bbf94512c803b2af62444cb8adb18f9f459b275ea9fa7f8f7a"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    }
+  ],
+  "all_static_passed": true,
+  "limits": "All4 independently audited rawfinal10000 only, one builtin FP32 conversion each. Original raw sigmoid/frozenBN unchanged, no calibration/INT8/PTQ/retry/head rewrite/selection. Six streaming histories serialized realzero; original H5 authenticated. Static ABI is not newweight waveform phase/numeric qualification or recognition admission."
+}
