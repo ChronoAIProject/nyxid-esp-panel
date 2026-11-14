@@ -9790,3 +9790,9 @@ Original export15042 genuinely exit0: four once-only builtinFP32 conversions, al
 Originalscreen6468 genuinely exit0, fourmodels each135/135completewave cases passed. Independent savedcaseauditor actualexit0/all540hash/shape/domain/twofresh/reset/clocks/phase/gaps checked. Worst ownH5-LiteRT/phase max: Nyxfull9.53674e-7/1.01328e-6, Nyxfrozen5.36442e-7/4.47035e-7, Willowfull6.25849e-7/5.96046e-7, Willowfrozen2.53320e-7/2.68221e-7, original1e-4 unchanged. Fullstartup/tail preserved; no INT8/recognition claim.
 
 Generated actualnew4models×372consumedinput collection lock (1488twofreshtraces), bound own540export/screen/audit/models and original360synthetic/12wholebackground SHA. Publish before collection. No threshold or freshdev/acceptance access; original138grid/eventpolicy and independent trace/eventoracle/groups/comparison retained. v30 unchanged.
+
+### Actual fourmodel collection terminal / independent1488trace audit passed (2026-11-14)
+
+Originalcollection27804/PID2063202 genuinely exit0, all4×372consumedcomplete inputs/twofresh saved. Independent completecollection audit actualexit0/all1488hashes/shapes/domain/fullstartup/tail/clocks/repeatbytes/exactoriginalmanifestrows verified, shared372frontend/input identities exact,10.483944826388889h wholebackground/model. No threshold chosen or freshdata accessed.
+
+Generated scoringexecution lock only after actual collection+audit: binds allstoredtraces/result/source and NumPy/SciPyFARruntime, original138points/model (552total)/binary64fsum/halfthresholdrearm/67steprefractory unchanged. Publish before scoring; then independentall-event oracle/groups/fullfrozenperwordmatchedreference. No recognition/FAR/INT8pass claimed yet; v30/freshdev/acceptance unchanged.
