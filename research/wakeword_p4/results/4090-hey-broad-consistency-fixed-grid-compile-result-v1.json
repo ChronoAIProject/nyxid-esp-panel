@@ -1,0 +1,6470 @@
+{
+  "plan_sha256": "4f01bd0ed3537196b98d0cdcafb2859f2b5125a52062f22a229960c48629c526",
+  "arms": [
+    {
+      "target": "hey_willow",
+      "path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-dual_supervised_control/hey_nyx.tflite",
+      "bytes": 58616,
+      "sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "ops": [
+        {
+          "op": "CALL_ONCE",
+          "inputs": [],
+          "outputs": []
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            35
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            36
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            37
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            38
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            39
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            40
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            39
+          ],
+          "outputs": [
+            41
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            40
+          ],
+          "outputs": [
+            42
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            38
+          ],
+          "outputs": [
+            43
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            37
+          ],
+          "outputs": [
+            44
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            36
+          ],
+          "outputs": [
+            45
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            35
+          ],
+          "outputs": [
+            46
+          ]
+        },
+        {
+          "op": "EXPAND_DIMS",
+          "inputs": [
+            0,
+            1
+          ],
+          "outputs": [
+            47
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            42,
+            47
+          ],
+          "outputs": [
+            48
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            48,
+            2,
+            3,
+            4
+          ],
+          "outputs": [
+            49
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            40,
+            49
+          ],
+          "outputs": []
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            48,
+            34,
+            33
+          ],
+          "outputs": [
+            50
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            41,
+            50
+          ],
+          "outputs": [
+            51
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            51,
+            32,
+            31
+          ],
+          "outputs": [
+            52
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            52,
+            30,
+            29
+          ],
+          "outputs": [
+            53
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            43,
+            53
+          ],
+          "outputs": [
+            54
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            54,
+            28,
+            27
+          ],
+          "outputs": [
+            55
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            55,
+            26,
+            25
+          ],
+          "outputs": [
+            56
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            44,
+            56
+          ],
+          "outputs": [
+            57
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            57,
+            24,
+            23
+          ],
+          "outputs": [
+            58
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            58,
+            22,
+            21
+          ],
+          "outputs": [
+            59
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            45,
+            59
+          ],
+          "outputs": [
+            60
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            60,
+            20,
+            19
+          ],
+          "outputs": [
+            61
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            61,
+            18,
+            17
+          ],
+          "outputs": [
+            62
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            46,
+            62
+          ],
+          "outputs": [
+            63
+          ]
+        },
+        {
+          "op": "RESHAPE",
+          "inputs": [
+            63,
+            5
+          ],
+          "outputs": [
+            64
+          ]
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "inputs": [
+            64,
+            16,
+            15
+          ],
+          "outputs": [
+            65
+          ],
+          "fused_activation": 3
+        },
+        {
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            63,
+            6,
+            7,
+            4
+          ],
+          "outputs": [
+            69
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            35,
+            69
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            60,
+            8,
+            7,
+            4
+          ],
+          "outputs": [
+            70
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            36,
+            70
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            57,
+            9,
+            7,
+            4
+          ],
+          "outputs": [
+            71
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            37,
+            71
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            54,
+            10,
+            7,
+            4
+          ],
+          "outputs": [
+            72
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            38,
+            72
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            51,
+            11,
+            12,
+            4
+          ],
+          "outputs": [
+            73
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            39,
+            73
+          ],
+          "outputs": []
+        },
+        {
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ],
+      "tensors": [
+        {
+          "index": 0,
+          "name": "serving_default_input_audio:0",
+          "shape": [
+            1,
+            3,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 1,
+          "name": "functional_1_1/ExpandDims/dim",
+          "shape": [],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 2,
+          "name": "functional_1_1/stream_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 3,
+          "name": "functional_1_1/stream_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 4,
+          "name": "arith.constant2",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 5,
+          "name": "arith.constant3",
+          "shape": [
+            2
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 6,
+          "name": "functional_1_1/stream_5_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 7,
+          "name": "arith.constant",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 8,
+          "name": "functional_1_1/stream_4_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 9,
+          "name": "functional_1_1/stream_3_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 10,
+          "name": "functional_1_1/stream_2_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 11,
+          "name": "functional_1_1/stream_1_2/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 12,
+          "name": "functional_1_1/stream_1_2/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 13,
+          "name": "functional_1_1/bounded_head_logit_1/Cast_1",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0313725508749485,
+          "zero": 127
+        },
+        {
+          "index": 14,
+          "name": "functional_1_1/bounded_head_logit_1/Cast/x",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.010457516647875309,
+          "zero": -128
+        },
+        {
+          "index": 15,
+          "name": "functional_1_1/bounded_head_relu6_1/Relu6;functional_1_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.007478573825210333,
+          "zero": 0
+        },
+        {
+          "index": 16,
+          "name": "functional_1_1/bounded_head_relu6_1/MatMul",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 1.9372916221618652,
+          "zero": 0
+        },
+        {
+          "index": 17,
+          "name": "functional_1_1/activation_4_1/Relu;functional_1_1/batch_normalization_3_1/batchnorm/add_1;functional_1_1/conv2d_4_1/convolution;functional_1_1/batch_normalization_3_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 18,
+          "name": "functional_1_1/conv2d_4_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 19,
+          "name": "functional_1_1/depthwise_conv2d_3_1/BiasAdd;functional_1_1/depthwise_conv2d_3_1/depthwise;functional_1_1/depthwise_conv2d_3_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 20,
+          "name": "functional_1_1/depthwise_conv2d_3_1/depthwise",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 21,
+          "name": "functional_1_1/activation_3_1/Relu;functional_1_1/batch_normalization_2_1/batchnorm/add_1;functional_1_1/conv2d_3_1/convolution;functional_1_1/batch_normalization_2_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 22,
+          "name": "functional_1_1/conv2d_3_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 23,
+          "name": "functional_1_1/depthwise_conv2d_2_1/BiasAdd;functional_1_1/depthwise_conv2d_2_1/depthwise;functional_1_1/depthwise_conv2d_2_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 24,
+          "name": "functional_1_1/depthwise_conv2d_2_1/depthwise",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 25,
+          "name": "functional_1_1/activation_2_1/Relu;functional_1_1/batch_normalization_1_2/batchnorm/add_1;functional_1_1/conv2d_2_1/convolution;functional_1_1/batch_normalization_1_2/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 26,
+          "name": "functional_1_1/conv2d_2_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 27,
+          "name": "functional_1_1/depthwise_conv2d_1_2/BiasAdd;functional_1_1/depthwise_conv2d_1_2/depthwise;functional_1_1/depthwise_conv2d_1_2/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 28,
+          "name": "functional_1_1/depthwise_conv2d_1_2/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 29,
+          "name": "functional_1_1/activation_1_2/Relu;functional_1_1/batch_normalization_1/batchnorm/add_1;functional_1_1/conv2d_1_1/convolution;functional_1_1/batch_normalization_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 30,
+          "name": "functional_1_1/conv2d_1_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 31,
+          "name": "functional_1_1/depthwise_conv2d_1/BiasAdd;functional_1_1/depthwise_conv2d_1/depthwise;functional_1_1/depthwise_conv2d_1/Squeeze",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 32,
+          "name": "functional_1_1/depthwise_conv2d_1/depthwise",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 33,
+          "name": "arith.constant1",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 34,
+          "name": "functional_1_1/stream_1/conv2d_1/convolution",
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 35,
+          "name": "streaming/stream_5/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 36,
+          "name": "streaming/stream_4/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 37,
+          "name": "streaming/stream_3/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 38,
+          "name": "streaming/stream_2/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 39,
+          "name": "streaming/stream_1/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 40,
+          "name": "streaming/stream/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 41,
+          "name": "functional_1_1/stream_1_2/concatenate_25_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 42,
+          "name": "functional_1_1/stream_1/concatenate_24_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 43,
+          "name": "functional_1_1/stream_2_1/concatenate_26_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 44,
+          "name": "functional_1_1/stream_3_1/concatenate_27_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 45,
+          "name": "functional_1_1/stream_4_1/concatenate_28_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 46,
+          "name": "functional_1_1/stream_5_1/concatenate_29_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 47,
+          "name": "functional_1_1/ExpandDims",
+          "shape": [
+            1,
+            3,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 48,
+          "name": "functional_1_1/stream_1/concatenate_24_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 49,
+          "name": "functional_1_1/stream_1/strided_slice2",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 50,
+          "name": "functional_1_1/activation_1/Relu;functional_1_1/stream_1/conv2d_1/convolution",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 51,
+          "name": "functional_1_1/stream_1_2/concatenate_25_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 52,
+          "name": "functional_1_1/depthwise_conv2d_1/BiasAdd;functional_1_1/depthwise_conv2d_1/depthwise;functional_1_1/depthwise_conv2d_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007567312102764845,
+          "zero": 3
+        },
+        {
+          "index": 53,
+          "name": "functional_1_1/activation_1_2/Relu;functional_1_1/batch_normalization_1/batchnorm/add_1;functional_1_1/conv2d_1_1/convolution;functional_1_1/batch_normalization_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 54,
+          "name": "functional_1_1/stream_2_1/concatenate_26_1/concat",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 55,
+          "name": "functional_1_1/depthwise_conv2d_1_2/BiasAdd;functional_1_1/depthwise_conv2d_1_2/depthwise;functional_1_1/depthwise_conv2d_1_2/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007619292940944433,
+          "zero": -3
+        },
+        {
+          "index": 56,
+          "name": "functional_1_1/activation_2_1/Relu;functional_1_1/batch_normalization_1_2/batchnorm/add_1;functional_1_1/conv2d_2_1/convolution;functional_1_1/batch_normalization_1_2/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 57,
+          "name": "functional_1_1/stream_3_1/concatenate_27_1/concat",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 58,
+          "name": "functional_1_1/depthwise_conv2d_2_1/BiasAdd;functional_1_1/depthwise_conv2d_2_1/depthwise;functional_1_1/depthwise_conv2d_2_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007401685230433941,
+          "zero": 2
+        },
+        {
+          "index": 59,
+          "name": "functional_1_1/activation_3_1/Relu;functional_1_1/batch_normalization_2_1/batchnorm/add_1;functional_1_1/conv2d_3_1/convolution;functional_1_1/batch_normalization_2_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 60,
+          "name": "functional_1_1/stream_4_1/concatenate_28_1/concat",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 61,
+          "name": "functional_1_1/depthwise_conv2d_3_1/BiasAdd;functional_1_1/depthwise_conv2d_3_1/depthwise;functional_1_1/depthwise_conv2d_3_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007582121063023806,
+          "zero": 3
+        },
+        {
+          "index": 62,
+          "name": "functional_1_1/activation_4_1/Relu;functional_1_1/batch_normalization_3_1/batchnorm/add_1;functional_1_1/conv2d_4_1/convolution;functional_1_1/batch_normalization_3_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 63,
+          "name": "functional_1_1/stream_5_1/concatenate_29_1/concat",
+          "shape": [
+            1,
+            30,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 64,
+          "name": "functional_1_1/flatten_1/Reshape",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 65,
+          "name": "functional_1_1/bounded_head_relu6_1/MatMul;functional_1_1/bounded_head_relu6_1/Relu6;functional_1_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0235294122248888,
+          "zero": -128
+        },
+        {
+          "index": 66,
+          "name": "functional_1_1/bounded_head_logit_1/mul",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -128
+        },
+        {
+          "index": 67,
+          "name": "functional_1_1/bounded_head_logit_1/add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -1
+        },
+        {
+          "index": 68,
+          "name": "StatefulPartitionedCall_1:01",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.00390625,
+          "zero": -128
+        },
+        {
+          "index": 69,
+          "name": "functional_1_1/stream_5_1/strided_slice1",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 70,
+          "name": "functional_1_1/stream_4_1/strided_slice1",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 71,
+          "name": "functional_1_1/stream_3_1/strided_slice1",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 72,
+          "name": "functional_1_1/stream_2_1/strided_slice1",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 73,
+          "name": "functional_1_1/stream_1_2/strided_slice2",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 74,
+          "name": "StatefulPartitionedCall_1:0",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.uint8'>",
+          "scale": 0.00390625,
+          "zero": 0
+        }
+      ],
+      "fc_relu6_fused": true,
+      "logistic_input_scale": 0.062745101749897,
+      "static_gate_passed": true,
+      "condition": "dual_supervised_control",
+      "template_sha256": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+      "final_h5_sha256": "6433163fa1b5709a667fd2154e00844a5688ec0ed2160b9a0c63c9ec0bb7e226",
+      "structure_sha256": "733713ff0d8102b4869e407ffc605598d630394f136ace7f32c134257b31d7b7",
+      "only_allowed_buffers_changed": true,
+      "original_grids_exact": true,
+      "constants": [
+        {
+          "index": 34,
+          "buffer": 35,
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "code_sha256": "5751176ad1c921081271777e3de0a4d7400fa91319806082a727e43879acbc69",
+          "clipped": 166,
+          "values": 6000
+        },
+        {
+          "index": 33,
+          "buffer": 34,
+          "shape": [
+            30
+          ],
+          "code_sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 32,
+          "buffer": 33,
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "code_sha256": "b992129b88403c880317d72f423b91f3d84678bee460084fd80b02e9283310fa",
+          "clipped": 1,
+          "values": 150
+        },
+        {
+          "index": 31,
+          "buffer": 32,
+          "shape": [
+            30
+          ],
+          "code_sha256": "de72e41ca8f71da6bb0a945e4f33d714058530ea3fc0a4b118299c668cc3716a",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 30,
+          "buffer": 31,
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "code_sha256": "a90990add7eb81fccd6d514379f27b172fc7a415e94b4e13507b414c5b0c8a7c",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 29,
+          "buffer": 30,
+          "shape": [
+            60
+          ],
+          "code_sha256": "979cbead93a74b67ce9653173dc2ee5bd716a00c467c3f04c7bacee0972d02ea",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 28,
+          "buffer": 29,
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "code_sha256": "54f82a59e899d5886fd56281926852e5b8bd895756917126a02b340b743b74c4",
+          "clipped": 3,
+          "values": 540
+        },
+        {
+          "index": 27,
+          "buffer": 28,
+          "shape": [
+            60
+          ],
+          "code_sha256": "669214553f2dc8d3625f22ec4722b172008a84c8b3697b351f403403a2b33b60",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 26,
+          "buffer": 27,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "cf84c834aa12c6753edb5e3f88e9d216310c6e6efb2aef7c36a15559c1e9972c",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 25,
+          "buffer": 26,
+          "shape": [
+            60
+          ],
+          "code_sha256": "560abb28d7c1aa4cd6951f437103c77a3129cb3e5099985cdc15b267818ecde7",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 24,
+          "buffer": 25,
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "code_sha256": "abdb8159cbd8fc83147181da44fcba8a566386186bcf742cea55bcb6342dee56",
+          "clipped": 1,
+          "values": 780
+        },
+        {
+          "index": 23,
+          "buffer": 24,
+          "shape": [
+            60
+          ],
+          "code_sha256": "5b5ff7316023b71ec1a7a2009ca51d26c5a498645f8d005ff7ee0fddedab6f29",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 22,
+          "buffer": 23,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "e700b653572dc2555a70c2c737c27ecfa465d7e7fd951da746303d8673950c2d",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 21,
+          "buffer": 22,
+          "shape": [
+            60
+          ],
+          "code_sha256": "d7a03646da15c1dbb61de2c3f4a366daa4c18747228a222ba5379b1fdefc7542",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 20,
+          "buffer": 21,
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "code_sha256": "882e9cca06861784a0b4b92e3eb33fe8b54a6bab357ab7f33598f5bbe7890925",
+          "clipped": 3,
+          "values": 1260
+        },
+        {
+          "index": 19,
+          "buffer": 20,
+          "shape": [
+            60
+          ],
+          "code_sha256": "1349f37fd4d9f448458464c65548de8462a2558f333478e76994d4321608a050",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 18,
+          "buffer": 19,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "e7b980bde2655cad560b9dab5b527ec4967e123d7d7911c3e030f303f2735ff4",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 17,
+          "buffer": 18,
+          "shape": [
+            60
+          ],
+          "code_sha256": "fe2bfd7ecee42ec341ba10c42150f0fe4632c569c17923a4718c7718a97e1e6f",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 16,
+          "buffer": 17,
+          "shape": [
+            1,
+            1800
+          ],
+          "code_sha256": "071698144a464669ca7ecf1bbd5268030d145feb883f685f4facc8e70a17daba",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 15,
+          "buffer": 16,
+          "shape": [
+            1
+          ],
+          "code_sha256": "27d6c190670106d16b6a3cb27fad9f0db3c0a62fb2667b053198a6700bc642d4",
+          "clipped": 0,
+          "values": 1
+        }
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        }
+      ],
+      "compiler_invocations": 1,
+      "converter_invocations": 0,
+      "model_invocations": 0
+    },
+    {
+      "target": "hey_willow",
+      "path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-logit_consistency/hey_nyx.tflite",
+      "bytes": 58616,
+      "sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "ops": [
+        {
+          "op": "CALL_ONCE",
+          "inputs": [],
+          "outputs": []
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            35
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            36
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            37
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            38
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            39
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            40
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            39
+          ],
+          "outputs": [
+            41
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            40
+          ],
+          "outputs": [
+            42
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            38
+          ],
+          "outputs": [
+            43
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            37
+          ],
+          "outputs": [
+            44
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            36
+          ],
+          "outputs": [
+            45
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            35
+          ],
+          "outputs": [
+            46
+          ]
+        },
+        {
+          "op": "EXPAND_DIMS",
+          "inputs": [
+            0,
+            1
+          ],
+          "outputs": [
+            47
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            42,
+            47
+          ],
+          "outputs": [
+            48
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            48,
+            2,
+            3,
+            4
+          ],
+          "outputs": [
+            49
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            40,
+            49
+          ],
+          "outputs": []
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            48,
+            34,
+            33
+          ],
+          "outputs": [
+            50
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            41,
+            50
+          ],
+          "outputs": [
+            51
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            51,
+            32,
+            31
+          ],
+          "outputs": [
+            52
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            52,
+            30,
+            29
+          ],
+          "outputs": [
+            53
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            43,
+            53
+          ],
+          "outputs": [
+            54
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            54,
+            28,
+            27
+          ],
+          "outputs": [
+            55
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            55,
+            26,
+            25
+          ],
+          "outputs": [
+            56
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            44,
+            56
+          ],
+          "outputs": [
+            57
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            57,
+            24,
+            23
+          ],
+          "outputs": [
+            58
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            58,
+            22,
+            21
+          ],
+          "outputs": [
+            59
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            45,
+            59
+          ],
+          "outputs": [
+            60
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            60,
+            20,
+            19
+          ],
+          "outputs": [
+            61
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            61,
+            18,
+            17
+          ],
+          "outputs": [
+            62
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            46,
+            62
+          ],
+          "outputs": [
+            63
+          ]
+        },
+        {
+          "op": "RESHAPE",
+          "inputs": [
+            63,
+            5
+          ],
+          "outputs": [
+            64
+          ]
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "inputs": [
+            64,
+            16,
+            15
+          ],
+          "outputs": [
+            65
+          ],
+          "fused_activation": 3
+        },
+        {
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            63,
+            6,
+            7,
+            4
+          ],
+          "outputs": [
+            69
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            35,
+            69
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            60,
+            8,
+            7,
+            4
+          ],
+          "outputs": [
+            70
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            36,
+            70
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            57,
+            9,
+            7,
+            4
+          ],
+          "outputs": [
+            71
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            37,
+            71
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            54,
+            10,
+            7,
+            4
+          ],
+          "outputs": [
+            72
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            38,
+            72
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            51,
+            11,
+            12,
+            4
+          ],
+          "outputs": [
+            73
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            39,
+            73
+          ],
+          "outputs": []
+        },
+        {
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ],
+      "tensors": [
+        {
+          "index": 0,
+          "name": "serving_default_input_audio:0",
+          "shape": [
+            1,
+            3,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 1,
+          "name": "functional_1_1/ExpandDims/dim",
+          "shape": [],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 2,
+          "name": "functional_1_1/stream_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 3,
+          "name": "functional_1_1/stream_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 4,
+          "name": "arith.constant2",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 5,
+          "name": "arith.constant3",
+          "shape": [
+            2
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 6,
+          "name": "functional_1_1/stream_5_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 7,
+          "name": "arith.constant",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 8,
+          "name": "functional_1_1/stream_4_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 9,
+          "name": "functional_1_1/stream_3_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 10,
+          "name": "functional_1_1/stream_2_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 11,
+          "name": "functional_1_1/stream_1_2/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 12,
+          "name": "functional_1_1/stream_1_2/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 13,
+          "name": "functional_1_1/bounded_head_logit_1/Cast_1",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0313725508749485,
+          "zero": 127
+        },
+        {
+          "index": 14,
+          "name": "functional_1_1/bounded_head_logit_1/Cast/x",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.010457516647875309,
+          "zero": -128
+        },
+        {
+          "index": 15,
+          "name": "functional_1_1/bounded_head_relu6_1/Relu6;functional_1_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.007478573825210333,
+          "zero": 0
+        },
+        {
+          "index": 16,
+          "name": "functional_1_1/bounded_head_relu6_1/MatMul",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 1.9372916221618652,
+          "zero": 0
+        },
+        {
+          "index": 17,
+          "name": "functional_1_1/activation_4_1/Relu;functional_1_1/batch_normalization_3_1/batchnorm/add_1;functional_1_1/conv2d_4_1/convolution;functional_1_1/batch_normalization_3_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 18,
+          "name": "functional_1_1/conv2d_4_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 19,
+          "name": "functional_1_1/depthwise_conv2d_3_1/BiasAdd;functional_1_1/depthwise_conv2d_3_1/depthwise;functional_1_1/depthwise_conv2d_3_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 20,
+          "name": "functional_1_1/depthwise_conv2d_3_1/depthwise",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 21,
+          "name": "functional_1_1/activation_3_1/Relu;functional_1_1/batch_normalization_2_1/batchnorm/add_1;functional_1_1/conv2d_3_1/convolution;functional_1_1/batch_normalization_2_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 22,
+          "name": "functional_1_1/conv2d_3_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 23,
+          "name": "functional_1_1/depthwise_conv2d_2_1/BiasAdd;functional_1_1/depthwise_conv2d_2_1/depthwise;functional_1_1/depthwise_conv2d_2_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 24,
+          "name": "functional_1_1/depthwise_conv2d_2_1/depthwise",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 25,
+          "name": "functional_1_1/activation_2_1/Relu;functional_1_1/batch_normalization_1_2/batchnorm/add_1;functional_1_1/conv2d_2_1/convolution;functional_1_1/batch_normalization_1_2/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 26,
+          "name": "functional_1_1/conv2d_2_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 27,
+          "name": "functional_1_1/depthwise_conv2d_1_2/BiasAdd;functional_1_1/depthwise_conv2d_1_2/depthwise;functional_1_1/depthwise_conv2d_1_2/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 28,
+          "name": "functional_1_1/depthwise_conv2d_1_2/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 29,
+          "name": "functional_1_1/activation_1_2/Relu;functional_1_1/batch_normalization_1/batchnorm/add_1;functional_1_1/conv2d_1_1/convolution;functional_1_1/batch_normalization_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 30,
+          "name": "functional_1_1/conv2d_1_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 31,
+          "name": "functional_1_1/depthwise_conv2d_1/BiasAdd;functional_1_1/depthwise_conv2d_1/depthwise;functional_1_1/depthwise_conv2d_1/Squeeze",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 32,
+          "name": "functional_1_1/depthwise_conv2d_1/depthwise",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 33,
+          "name": "arith.constant1",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 34,
+          "name": "functional_1_1/stream_1/conv2d_1/convolution",
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 35,
+          "name": "streaming/stream_5/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 36,
+          "name": "streaming/stream_4/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 37,
+          "name": "streaming/stream_3/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 38,
+          "name": "streaming/stream_2/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 39,
+          "name": "streaming/stream_1/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 40,
+          "name": "streaming/stream/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 41,
+          "name": "functional_1_1/stream_1_2/concatenate_25_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 42,
+          "name": "functional_1_1/stream_1/concatenate_24_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 43,
+          "name": "functional_1_1/stream_2_1/concatenate_26_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 44,
+          "name": "functional_1_1/stream_3_1/concatenate_27_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 45,
+          "name": "functional_1_1/stream_4_1/concatenate_28_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 46,
+          "name": "functional_1_1/stream_5_1/concatenate_29_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 47,
+          "name": "functional_1_1/ExpandDims",
+          "shape": [
+            1,
+            3,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 48,
+          "name": "functional_1_1/stream_1/concatenate_24_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 49,
+          "name": "functional_1_1/stream_1/strided_slice2",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 50,
+          "name": "functional_1_1/activation_1/Relu;functional_1_1/stream_1/conv2d_1/convolution",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 51,
+          "name": "functional_1_1/stream_1_2/concatenate_25_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 52,
+          "name": "functional_1_1/depthwise_conv2d_1/BiasAdd;functional_1_1/depthwise_conv2d_1/depthwise;functional_1_1/depthwise_conv2d_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007567312102764845,
+          "zero": 3
+        },
+        {
+          "index": 53,
+          "name": "functional_1_1/activation_1_2/Relu;functional_1_1/batch_normalization_1/batchnorm/add_1;functional_1_1/conv2d_1_1/convolution;functional_1_1/batch_normalization_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 54,
+          "name": "functional_1_1/stream_2_1/concatenate_26_1/concat",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 55,
+          "name": "functional_1_1/depthwise_conv2d_1_2/BiasAdd;functional_1_1/depthwise_conv2d_1_2/depthwise;functional_1_1/depthwise_conv2d_1_2/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007619292940944433,
+          "zero": -3
+        },
+        {
+          "index": 56,
+          "name": "functional_1_1/activation_2_1/Relu;functional_1_1/batch_normalization_1_2/batchnorm/add_1;functional_1_1/conv2d_2_1/convolution;functional_1_1/batch_normalization_1_2/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 57,
+          "name": "functional_1_1/stream_3_1/concatenate_27_1/concat",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 58,
+          "name": "functional_1_1/depthwise_conv2d_2_1/BiasAdd;functional_1_1/depthwise_conv2d_2_1/depthwise;functional_1_1/depthwise_conv2d_2_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007401685230433941,
+          "zero": 2
+        },
+        {
+          "index": 59,
+          "name": "functional_1_1/activation_3_1/Relu;functional_1_1/batch_normalization_2_1/batchnorm/add_1;functional_1_1/conv2d_3_1/convolution;functional_1_1/batch_normalization_2_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 60,
+          "name": "functional_1_1/stream_4_1/concatenate_28_1/concat",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 61,
+          "name": "functional_1_1/depthwise_conv2d_3_1/BiasAdd;functional_1_1/depthwise_conv2d_3_1/depthwise;functional_1_1/depthwise_conv2d_3_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007582121063023806,
+          "zero": 3
+        },
+        {
+          "index": 62,
+          "name": "functional_1_1/activation_4_1/Relu;functional_1_1/batch_normalization_3_1/batchnorm/add_1;functional_1_1/conv2d_4_1/convolution;functional_1_1/batch_normalization_3_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 63,
+          "name": "functional_1_1/stream_5_1/concatenate_29_1/concat",
+          "shape": [
+            1,
+            30,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 64,
+          "name": "functional_1_1/flatten_1/Reshape",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 65,
+          "name": "functional_1_1/bounded_head_relu6_1/MatMul;functional_1_1/bounded_head_relu6_1/Relu6;functional_1_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0235294122248888,
+          "zero": -128
+        },
+        {
+          "index": 66,
+          "name": "functional_1_1/bounded_head_logit_1/mul",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -128
+        },
+        {
+          "index": 67,
+          "name": "functional_1_1/bounded_head_logit_1/add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -1
+        },
+        {
+          "index": 68,
+          "name": "StatefulPartitionedCall_1:01",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.00390625,
+          "zero": -128
+        },
+        {
+          "index": 69,
+          "name": "functional_1_1/stream_5_1/strided_slice1",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003860324155539274,
+          "zero": -128
+        },
+        {
+          "index": 70,
+          "name": "functional_1_1/stream_4_1/strided_slice1",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003905477700755,
+          "zero": -128
+        },
+        {
+          "index": 71,
+          "name": "functional_1_1/stream_3_1/strided_slice1",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038870100397616625,
+          "zero": -128
+        },
+        {
+          "index": 72,
+          "name": "functional_1_1/stream_2_1/strided_slice1",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003718209220096469,
+          "zero": -128
+        },
+        {
+          "index": 73,
+          "name": "functional_1_1/stream_1_2/strided_slice2",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003818277269601822,
+          "zero": -128
+        },
+        {
+          "index": 74,
+          "name": "StatefulPartitionedCall_1:0",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.uint8'>",
+          "scale": 0.00390625,
+          "zero": 0
+        }
+      ],
+      "fc_relu6_fused": true,
+      "logistic_input_scale": 0.062745101749897,
+      "static_gate_passed": true,
+      "condition": "logit_consistency",
+      "template_sha256": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+      "final_h5_sha256": "7fc6ff1e82baeb13b8081e9d1f76ed753b960ffd7455be9316ce3f7e338127ad",
+      "structure_sha256": "733713ff0d8102b4869e407ffc605598d630394f136ace7f32c134257b31d7b7",
+      "only_allowed_buffers_changed": true,
+      "original_grids_exact": true,
+      "constants": [
+        {
+          "index": 34,
+          "buffer": 35,
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "code_sha256": "948d6faecb0dc9f3fd92617a1761570f841691e46425614f0c258f0af306ea60",
+          "clipped": 38,
+          "values": 6000
+        },
+        {
+          "index": 33,
+          "buffer": 34,
+          "shape": [
+            30
+          ],
+          "code_sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 32,
+          "buffer": 33,
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "code_sha256": "7da3c6d073e2f77d99fb34739428fda1a609f68a2fef23c6e6c384dda3f926ca",
+          "clipped": 5,
+          "values": 150
+        },
+        {
+          "index": 31,
+          "buffer": 32,
+          "shape": [
+            30
+          ],
+          "code_sha256": "1bda60c797f928300cb5cf71812b708fa254fe271d4cfb50b396113f324c7174",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 30,
+          "buffer": 31,
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "code_sha256": "eeece705fe702afd49aa4f853407f24949eeab7e6e3964ceaf8b0f3086b662db",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 29,
+          "buffer": 30,
+          "shape": [
+            60
+          ],
+          "code_sha256": "979cbead93a74b67ce9653173dc2ee5bd716a00c467c3f04c7bacee0972d02ea",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 28,
+          "buffer": 29,
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "code_sha256": "0a41b0ec5f0dadad49a43ba308f2524112fbacc68c2a76b7240f5d7a95090072",
+          "clipped": 9,
+          "values": 540
+        },
+        {
+          "index": 27,
+          "buffer": 28,
+          "shape": [
+            60
+          ],
+          "code_sha256": "14847adedd5ca537d2a7433c72d9891c47c1e2a933bd2f5ec3cc711b4694ee06",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 26,
+          "buffer": 27,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "3e053aac11e256d9c2c3982ea914125e19101a09da7d4d31d5a4962872afae31",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 25,
+          "buffer": 26,
+          "shape": [
+            60
+          ],
+          "code_sha256": "560abb28d7c1aa4cd6951f437103c77a3129cb3e5099985cdc15b267818ecde7",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 24,
+          "buffer": 25,
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "code_sha256": "d4402308c2081c38d96cf872bcd3ccc4848f8a9c951f0d863df86c79dc930ad8",
+          "clipped": 22,
+          "values": 780
+        },
+        {
+          "index": 23,
+          "buffer": 24,
+          "shape": [
+            60
+          ],
+          "code_sha256": "88db3d8d4205b6464e17c0d092e7ae4faa1d9c54c26b5465adc8b23c43f43255",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 22,
+          "buffer": 23,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "cad2e2edcf3155c98b46438a44c8d67270a275ceac9eaac37d50b5aed695fea9",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 21,
+          "buffer": 22,
+          "shape": [
+            60
+          ],
+          "code_sha256": "d7a03646da15c1dbb61de2c3f4a366daa4c18747228a222ba5379b1fdefc7542",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 20,
+          "buffer": 21,
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "code_sha256": "cd00e464d702cf4e3103e4078ca01815fdad275ad18f898a928798e55ccfb65c",
+          "clipped": 16,
+          "values": 1260
+        },
+        {
+          "index": 19,
+          "buffer": 20,
+          "shape": [
+            60
+          ],
+          "code_sha256": "a96a149b5ab3bb70b7dfe327e3ec3445fa2386c08158b80b7707e03c6b9a735a",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 18,
+          "buffer": 19,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "6f23aae64e49580e475979ad2a234e94718e59f2f792a815732471997a7641ca",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 17,
+          "buffer": 18,
+          "shape": [
+            60
+          ],
+          "code_sha256": "fe2bfd7ecee42ec341ba10c42150f0fe4632c569c17923a4718c7718a97e1e6f",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 16,
+          "buffer": 17,
+          "shape": [
+            1,
+            1800
+          ],
+          "code_sha256": "aaaf2aaa010d54beeb3b1c5ebe8c6353932c386be4fb34f417099bb2deb07925",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 15,
+          "buffer": 16,
+          "shape": [
+            1
+          ],
+          "code_sha256": "6824cda96ae92a1c06f6c51e7a46e8910594e9888bb7a5c4fb2fb7efa3dabeb2",
+          "clipped": 0,
+          "values": 1
+        }
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        }
+      ],
+      "compiler_invocations": 1,
+      "converter_invocations": 0,
+      "model_invocations": 0
+    },
+    {
+      "target": "hey_nyx",
+      "path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-dual_supervised_control/hey_nyx.tflite",
+      "bytes": 58688,
+      "sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "ops": [
+        {
+          "op": "CALL_ONCE",
+          "inputs": [],
+          "outputs": []
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            35
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            36
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            37
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            38
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            39
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            40
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            40
+          ],
+          "outputs": [
+            41
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            39
+          ],
+          "outputs": [
+            42
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            38
+          ],
+          "outputs": [
+            43
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            37
+          ],
+          "outputs": [
+            44
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            36
+          ],
+          "outputs": [
+            45
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            35
+          ],
+          "outputs": [
+            46
+          ]
+        },
+        {
+          "op": "EXPAND_DIMS",
+          "inputs": [
+            0,
+            1
+          ],
+          "outputs": [
+            47
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            43,
+            47
+          ],
+          "outputs": [
+            48
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            48,
+            2,
+            3,
+            4
+          ],
+          "outputs": [
+            49
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            38,
+            49
+          ],
+          "outputs": []
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            48,
+            34,
+            33
+          ],
+          "outputs": [
+            50
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            44,
+            50
+          ],
+          "outputs": [
+            51
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            51,
+            32,
+            31
+          ],
+          "outputs": [
+            52
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            52,
+            30,
+            29
+          ],
+          "outputs": [
+            53
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            45,
+            53
+          ],
+          "outputs": [
+            54
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            54,
+            28,
+            27
+          ],
+          "outputs": [
+            55
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            55,
+            26,
+            25
+          ],
+          "outputs": [
+            56
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            46,
+            56
+          ],
+          "outputs": [
+            57
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            57,
+            24,
+            23
+          ],
+          "outputs": [
+            58
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            58,
+            22,
+            21
+          ],
+          "outputs": [
+            59
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            41,
+            59
+          ],
+          "outputs": [
+            60
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            60,
+            20,
+            19
+          ],
+          "outputs": [
+            61
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            61,
+            18,
+            17
+          ],
+          "outputs": [
+            62
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            42,
+            62
+          ],
+          "outputs": [
+            63
+          ]
+        },
+        {
+          "op": "RESHAPE",
+          "inputs": [
+            63,
+            5
+          ],
+          "outputs": [
+            64
+          ]
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "inputs": [
+            64,
+            16,
+            15
+          ],
+          "outputs": [
+            65
+          ],
+          "fused_activation": 3
+        },
+        {
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            63,
+            6,
+            7,
+            4
+          ],
+          "outputs": [
+            69
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            39,
+            69
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            60,
+            8,
+            7,
+            4
+          ],
+          "outputs": [
+            70
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            40,
+            70
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            57,
+            9,
+            7,
+            4
+          ],
+          "outputs": [
+            71
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            35,
+            71
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            54,
+            10,
+            7,
+            4
+          ],
+          "outputs": [
+            72
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            36,
+            72
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            51,
+            11,
+            12,
+            4
+          ],
+          "outputs": [
+            73
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            37,
+            73
+          ],
+          "outputs": []
+        },
+        {
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ],
+      "tensors": [
+        {
+          "index": 0,
+          "name": "serving_default_input_audio:0",
+          "shape": [
+            1,
+            3,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 1,
+          "name": "functional_3_1/ExpandDims/dim",
+          "shape": [],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 2,
+          "name": "functional_3_1/stream_6_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 3,
+          "name": "functional_3_1/stream_6_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 4,
+          "name": "arith.constant2",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 5,
+          "name": "arith.constant3",
+          "shape": [
+            2
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 6,
+          "name": "functional_3_1/stream_11_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 7,
+          "name": "arith.constant",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 8,
+          "name": "functional_3_1/stream_10_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 9,
+          "name": "functional_3_1/stream_9_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 10,
+          "name": "functional_3_1/stream_8_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 11,
+          "name": "functional_3_1/stream_7_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 12,
+          "name": "functional_3_1/stream_7_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 13,
+          "name": "functional_3_1/bounded_head_logit_1/Cast_1",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0313725508749485,
+          "zero": 127
+        },
+        {
+          "index": 14,
+          "name": "functional_3_1/bounded_head_logit_1/Cast/x",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.010457516647875309,
+          "zero": -128
+        },
+        {
+          "index": 15,
+          "name": "functional_3_1/bounded_head_relu6_1/Relu6;functional_3_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0010592784965410829,
+          "zero": 0
+        },
+        {
+          "index": 16,
+          "name": "functional_3_1/bounded_head_relu6_1/MatMul",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.27528974413871765,
+          "zero": 0
+        },
+        {
+          "index": 17,
+          "name": "functional_3_1/activation_9_1/Relu;functional_3_1/batch_normalization_7_1/batchnorm/add_1;functional_3_1/conv2d_9_1/convolution;functional_3_1/batch_normalization_7_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 18,
+          "name": "functional_3_1/conv2d_9_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 19,
+          "name": "functional_3_1/depthwise_conv2d_7_1/BiasAdd;functional_3_1/depthwise_conv2d_7_1/depthwise;functional_3_1/depthwise_conv2d_7_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 20,
+          "name": "functional_3_1/depthwise_conv2d_7_1/depthwise",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 21,
+          "name": "functional_3_1/activation_8_1/Relu;functional_3_1/batch_normalization_6_1/batchnorm/add_1;functional_3_1/conv2d_8_1/convolution;functional_3_1/batch_normalization_6_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 22,
+          "name": "functional_3_1/conv2d_8_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 23,
+          "name": "functional_3_1/depthwise_conv2d_6_1/BiasAdd;functional_3_1/depthwise_conv2d_6_1/depthwise;functional_3_1/depthwise_conv2d_6_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 24,
+          "name": "functional_3_1/depthwise_conv2d_6_1/depthwise",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 25,
+          "name": "functional_3_1/activation_7_1/Relu;functional_3_1/batch_normalization_5_1/batchnorm/add_1;functional_3_1/conv2d_7_1/convolution;functional_3_1/batch_normalization_5_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 26,
+          "name": "functional_3_1/conv2d_7_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 27,
+          "name": "functional_3_1/depthwise_conv2d_5_1/BiasAdd;functional_3_1/depthwise_conv2d_5_1/depthwise;functional_3_1/depthwise_conv2d_5_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 28,
+          "name": "functional_3_1/depthwise_conv2d_5_1/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 29,
+          "name": "functional_3_1/activation_6_1/Relu;functional_3_1/batch_normalization_4_1/batchnorm/add_1;functional_3_1/conv2d_6_1/convolution;functional_3_1/batch_normalization_4_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 30,
+          "name": "functional_3_1/conv2d_6_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 31,
+          "name": "functional_3_1/depthwise_conv2d_4_1/BiasAdd;functional_3_1/depthwise_conv2d_4_1/depthwise;functional_3_1/depthwise_conv2d_4_1/Squeeze",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 32,
+          "name": "functional_3_1/depthwise_conv2d_4_1/depthwise",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 33,
+          "name": "arith.constant1",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 34,
+          "name": "functional_3_1/stream_6_1/conv2d_5_1/convolution",
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 35,
+          "name": "streaming/stream_9/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 36,
+          "name": "streaming/stream_8/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 37,
+          "name": "streaming/stream_7/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 38,
+          "name": "streaming/stream_6/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 39,
+          "name": "streaming/stream_11/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 40,
+          "name": "streaming/stream_10/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 41,
+          "name": "functional_3_1/stream_10_1/concatenate_58_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 42,
+          "name": "functional_3_1/stream_11_1/concatenate_59_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 43,
+          "name": "functional_3_1/stream_6_1/concatenate_54_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 44,
+          "name": "functional_3_1/stream_7_1/concatenate_55_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 45,
+          "name": "functional_3_1/stream_8_1/concatenate_56_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 46,
+          "name": "functional_3_1/stream_9_1/concatenate_57_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 47,
+          "name": "functional_3_1/ExpandDims",
+          "shape": [
+            1,
+            3,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 48,
+          "name": "functional_3_1/stream_6_1/concatenate_54_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 49,
+          "name": "functional_3_1/stream_6_1/strided_slice2",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 50,
+          "name": "functional_3_1/activation_5_1/Relu;functional_3_1/stream_6_1/conv2d_5_1/convolution",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 51,
+          "name": "functional_3_1/stream_7_1/concatenate_55_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 52,
+          "name": "functional_3_1/depthwise_conv2d_4_1/BiasAdd;functional_3_1/depthwise_conv2d_4_1/depthwise;functional_3_1/depthwise_conv2d_4_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007038412149995565,
+          "zero": 5
+        },
+        {
+          "index": 53,
+          "name": "functional_3_1/activation_6_1/Relu;functional_3_1/batch_normalization_4_1/batchnorm/add_1;functional_3_1/conv2d_6_1/convolution;functional_3_1/batch_normalization_4_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 54,
+          "name": "functional_3_1/stream_8_1/concatenate_56_1/concat",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 55,
+          "name": "functional_3_1/depthwise_conv2d_5_1/BiasAdd;functional_3_1/depthwise_conv2d_5_1/depthwise;functional_3_1/depthwise_conv2d_5_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0078305434435606,
+          "zero": 0
+        },
+        {
+          "index": 56,
+          "name": "functional_3_1/activation_7_1/Relu;functional_3_1/batch_normalization_5_1/batchnorm/add_1;functional_3_1/conv2d_7_1/convolution;functional_3_1/batch_normalization_5_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 57,
+          "name": "functional_3_1/stream_9_1/concatenate_57_1/concat",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 58,
+          "name": "functional_3_1/depthwise_conv2d_6_1/BiasAdd;functional_3_1/depthwise_conv2d_6_1/depthwise;functional_3_1/depthwise_conv2d_6_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0076307435519993305,
+          "zero": -2
+        },
+        {
+          "index": 59,
+          "name": "functional_3_1/activation_8_1/Relu;functional_3_1/batch_normalization_6_1/batchnorm/add_1;functional_3_1/conv2d_8_1/convolution;functional_3_1/batch_normalization_6_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 60,
+          "name": "functional_3_1/stream_10_1/concatenate_58_1/concat",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 61,
+          "name": "functional_3_1/depthwise_conv2d_7_1/BiasAdd;functional_3_1/depthwise_conv2d_7_1/depthwise;functional_3_1/depthwise_conv2d_7_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007547273300588131,
+          "zero": -1
+        },
+        {
+          "index": 62,
+          "name": "functional_3_1/activation_9_1/Relu;functional_3_1/batch_normalization_7_1/batchnorm/add_1;functional_3_1/conv2d_9_1/convolution;functional_3_1/batch_normalization_7_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 63,
+          "name": "functional_3_1/stream_11_1/concatenate_59_1/concat",
+          "shape": [
+            1,
+            30,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 64,
+          "name": "functional_3_1/flatten_1_1/Reshape",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 65,
+          "name": "functional_3_1/bounded_head_relu6_1/MatMul;functional_3_1/bounded_head_relu6_1/Relu6;functional_3_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0235294122248888,
+          "zero": -128
+        },
+        {
+          "index": 66,
+          "name": "functional_3_1/bounded_head_logit_1/mul",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -128
+        },
+        {
+          "index": 67,
+          "name": "functional_3_1/bounded_head_logit_1/add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -1
+        },
+        {
+          "index": 68,
+          "name": "StatefulPartitionedCall_1:01",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.00390625,
+          "zero": -128
+        },
+        {
+          "index": 69,
+          "name": "functional_3_1/stream_11_1/strided_slice1",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 70,
+          "name": "functional_3_1/stream_10_1/strided_slice1",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 71,
+          "name": "functional_3_1/stream_9_1/strided_slice1",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 72,
+          "name": "functional_3_1/stream_8_1/strided_slice1",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 73,
+          "name": "functional_3_1/stream_7_1/strided_slice2",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 74,
+          "name": "StatefulPartitionedCall_1:0",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.uint8'>",
+          "scale": 0.00390625,
+          "zero": 0
+        }
+      ],
+      "fc_relu6_fused": true,
+      "logistic_input_scale": 0.062745101749897,
+      "static_gate_passed": true,
+      "condition": "dual_supervised_control",
+      "template_sha256": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+      "final_h5_sha256": "0b7f6ce1ea3b9bf004b8a050071c3d164e97045575b00a80c95de787e21215ae",
+      "structure_sha256": "58d0d0eb0edc1161e9dd4f2e7b4b56a85712d0fa3c26a5c7a4db341ca2382098",
+      "only_allowed_buffers_changed": true,
+      "original_grids_exact": true,
+      "constants": [
+        {
+          "index": 34,
+          "buffer": 35,
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "code_sha256": "1f594ba58531f16a7d42294e252e6d4c4d2db9787d90e21de6c1827c9527670b",
+          "clipped": 142,
+          "values": 6000
+        },
+        {
+          "index": 33,
+          "buffer": 34,
+          "shape": [
+            30
+          ],
+          "code_sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 32,
+          "buffer": 33,
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "code_sha256": "8c8d9a28c8a29398269dcc91ae7ca6b51311b01b174878989fa97076a4ca8c5b",
+          "clipped": 0,
+          "values": 150
+        },
+        {
+          "index": 31,
+          "buffer": 32,
+          "shape": [
+            30
+          ],
+          "code_sha256": "dff87bb45db172e4528b3089657687857778082a1685299d8ff087af45af2813",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 30,
+          "buffer": 31,
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "code_sha256": "74e5f37260651fd4dd425e8da732aed6b7980ba107d43ee85cd8229c2b5a5132",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 29,
+          "buffer": 30,
+          "shape": [
+            60
+          ],
+          "code_sha256": "0deff436f10f82483a583617df6d21765a41b6b34b5b033395611877472643c3",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 28,
+          "buffer": 29,
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "code_sha256": "5de5b814a21e74240437d8905592df22212bfa73fa165966106651ce27a08be0",
+          "clipped": 0,
+          "values": 540
+        },
+        {
+          "index": 27,
+          "buffer": 28,
+          "shape": [
+            60
+          ],
+          "code_sha256": "8c2f3a59153f915cae4f4f50fc036407d76bc4f4c6b8a4ea9f80bd17f1c1663d",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 26,
+          "buffer": 27,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "cd95ea12582d2ba5551bfb52f087afec6e521ef0adc4f4cdc170e2f1a1071787",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 25,
+          "buffer": 26,
+          "shape": [
+            60
+          ],
+          "code_sha256": "bdbdda387e026b6ce666b8367720290b41f228e1734d663cfac87bfcf9b899e7",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 24,
+          "buffer": 25,
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "code_sha256": "91fca2ad3f7997377dde60d756f7268e8e849b2cf60829a2af59d7faccaff43d",
+          "clipped": 1,
+          "values": 780
+        },
+        {
+          "index": 23,
+          "buffer": 24,
+          "shape": [
+            60
+          ],
+          "code_sha256": "61c1d2432c5270ea5f665f8ed6b19efc2559b7204ce2b3e46a77b7d6f66c4d02",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 22,
+          "buffer": 23,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "a147d8ce0e9cc20b98d8f8950bc04c460cdb67cdf6e76448dbb563324c74777f",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 21,
+          "buffer": 22,
+          "shape": [
+            60
+          ],
+          "code_sha256": "40e320464b781709251a906c531f1ebe9e3b1bc746f902b7ea251adb4bc82007",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 20,
+          "buffer": 21,
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "code_sha256": "100c385c65b9a4f6ddad32b8592c2a006d4b963eb3b8f970876c981350337581",
+          "clipped": 4,
+          "values": 1260
+        },
+        {
+          "index": 19,
+          "buffer": 20,
+          "shape": [
+            60
+          ],
+          "code_sha256": "a78bb47e946f66e0bbe253d3bc38dc38e276dd9fccb87277dede57816cd936ed",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 18,
+          "buffer": 19,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "939407a28ce84c42feedfadb3fcd8cd3398ad78589673f641307aca3e24feb8a",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 17,
+          "buffer": 18,
+          "shape": [
+            60
+          ],
+          "code_sha256": "2342f05b1f592d7df38c0733a0a7be3324d3992597712062f8563e82ffc4bbb5",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 16,
+          "buffer": 17,
+          "shape": [
+            1,
+            1800
+          ],
+          "code_sha256": "fc0ce35c3be0f2b616d003867baf50013211ab8e1056e603f8da2f837364ac95",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 15,
+          "buffer": 16,
+          "shape": [
+            1
+          ],
+          "code_sha256": "c08b1e4a35592cef7053cb30f75ace1aae67cb44085c0f397a39c7e4cf017e96",
+          "clipped": 0,
+          "values": 1
+        }
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        }
+      ],
+      "compiler_invocations": 1,
+      "converter_invocations": 0,
+      "model_invocations": 0
+    },
+    {
+      "target": "hey_nyx",
+      "path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-logit_consistency/hey_nyx.tflite",
+      "bytes": 58688,
+      "sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "ops": [
+        {
+          "op": "CALL_ONCE",
+          "inputs": [],
+          "outputs": []
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            35
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            36
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            37
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            38
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            39
+          ]
+        },
+        {
+          "op": "VAR_HANDLE",
+          "inputs": [],
+          "outputs": [
+            40
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            40
+          ],
+          "outputs": [
+            41
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            39
+          ],
+          "outputs": [
+            42
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            38
+          ],
+          "outputs": [
+            43
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            37
+          ],
+          "outputs": [
+            44
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            36
+          ],
+          "outputs": [
+            45
+          ]
+        },
+        {
+          "op": "READ_VARIABLE",
+          "inputs": [
+            35
+          ],
+          "outputs": [
+            46
+          ]
+        },
+        {
+          "op": "EXPAND_DIMS",
+          "inputs": [
+            0,
+            1
+          ],
+          "outputs": [
+            47
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            43,
+            47
+          ],
+          "outputs": [
+            48
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            48,
+            2,
+            3,
+            4
+          ],
+          "outputs": [
+            49
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            38,
+            49
+          ],
+          "outputs": []
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            48,
+            34,
+            33
+          ],
+          "outputs": [
+            50
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            44,
+            50
+          ],
+          "outputs": [
+            51
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            51,
+            32,
+            31
+          ],
+          "outputs": [
+            52
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            52,
+            30,
+            29
+          ],
+          "outputs": [
+            53
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            45,
+            53
+          ],
+          "outputs": [
+            54
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            54,
+            28,
+            27
+          ],
+          "outputs": [
+            55
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            55,
+            26,
+            25
+          ],
+          "outputs": [
+            56
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            46,
+            56
+          ],
+          "outputs": [
+            57
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            57,
+            24,
+            23
+          ],
+          "outputs": [
+            58
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            58,
+            22,
+            21
+          ],
+          "outputs": [
+            59
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            41,
+            59
+          ],
+          "outputs": [
+            60
+          ]
+        },
+        {
+          "op": "DEPTHWISE_CONV_2D",
+          "inputs": [
+            60,
+            20,
+            19
+          ],
+          "outputs": [
+            61
+          ]
+        },
+        {
+          "op": "CONV_2D",
+          "inputs": [
+            61,
+            18,
+            17
+          ],
+          "outputs": [
+            62
+          ]
+        },
+        {
+          "op": "CONCATENATION",
+          "inputs": [
+            42,
+            62
+          ],
+          "outputs": [
+            63
+          ]
+        },
+        {
+          "op": "RESHAPE",
+          "inputs": [
+            63,
+            5
+          ],
+          "outputs": [
+            64
+          ]
+        },
+        {
+          "op": "FULLY_CONNECTED",
+          "inputs": [
+            64,
+            16,
+            15
+          ],
+          "outputs": [
+            65
+          ],
+          "fused_activation": 3
+        },
+        {
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            63,
+            6,
+            7,
+            4
+          ],
+          "outputs": [
+            69
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            39,
+            69
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            60,
+            8,
+            7,
+            4
+          ],
+          "outputs": [
+            70
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            40,
+            70
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            57,
+            9,
+            7,
+            4
+          ],
+          "outputs": [
+            71
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            35,
+            71
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            54,
+            10,
+            7,
+            4
+          ],
+          "outputs": [
+            72
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            36,
+            72
+          ],
+          "outputs": []
+        },
+        {
+          "op": "STRIDED_SLICE",
+          "inputs": [
+            51,
+            11,
+            12,
+            4
+          ],
+          "outputs": [
+            73
+          ]
+        },
+        {
+          "op": "ASSIGN_VARIABLE",
+          "inputs": [
+            37,
+            73
+          ],
+          "outputs": []
+        },
+        {
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ],
+      "tensors": [
+        {
+          "index": 0,
+          "name": "serving_default_input_audio:0",
+          "shape": [
+            1,
+            3,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 1,
+          "name": "functional_3_1/ExpandDims/dim",
+          "shape": [],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 2,
+          "name": "functional_3_1/stream_6_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 3,
+          "name": "functional_3_1/stream_6_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 4,
+          "name": "arith.constant2",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 5,
+          "name": "arith.constant3",
+          "shape": [
+            2
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 6,
+          "name": "functional_3_1/stream_11_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 7,
+          "name": "arith.constant",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 8,
+          "name": "functional_3_1/stream_10_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 9,
+          "name": "functional_3_1/stream_9_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 10,
+          "name": "functional_3_1/stream_8_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 11,
+          "name": "functional_3_1/stream_7_1/strided_slice1",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 12,
+          "name": "functional_3_1/stream_7_1/strided_slice",
+          "shape": [
+            4
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 13,
+          "name": "functional_3_1/bounded_head_logit_1/Cast_1",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0313725508749485,
+          "zero": 127
+        },
+        {
+          "index": 14,
+          "name": "functional_3_1/bounded_head_logit_1/Cast/x",
+          "shape": [],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.010457516647875309,
+          "zero": -128
+        },
+        {
+          "index": 15,
+          "name": "functional_3_1/bounded_head_relu6_1/Relu6;functional_3_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0010592784965410829,
+          "zero": 0
+        },
+        {
+          "index": 16,
+          "name": "functional_3_1/bounded_head_relu6_1/MatMul",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.27528974413871765,
+          "zero": 0
+        },
+        {
+          "index": 17,
+          "name": "functional_3_1/activation_9_1/Relu;functional_3_1/batch_normalization_7_1/batchnorm/add_1;functional_3_1/conv2d_9_1/convolution;functional_3_1/batch_normalization_7_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 18,
+          "name": "functional_3_1/conv2d_9_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 19,
+          "name": "functional_3_1/depthwise_conv2d_7_1/BiasAdd;functional_3_1/depthwise_conv2d_7_1/depthwise;functional_3_1/depthwise_conv2d_7_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 20,
+          "name": "functional_3_1/depthwise_conv2d_7_1/depthwise",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 21,
+          "name": "functional_3_1/activation_8_1/Relu;functional_3_1/batch_normalization_6_1/batchnorm/add_1;functional_3_1/conv2d_8_1/convolution;functional_3_1/batch_normalization_6_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 22,
+          "name": "functional_3_1/conv2d_8_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 23,
+          "name": "functional_3_1/depthwise_conv2d_6_1/BiasAdd;functional_3_1/depthwise_conv2d_6_1/depthwise;functional_3_1/depthwise_conv2d_6_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 24,
+          "name": "functional_3_1/depthwise_conv2d_6_1/depthwise",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 25,
+          "name": "functional_3_1/activation_7_1/Relu;functional_3_1/batch_normalization_5_1/batchnorm/add_1;functional_3_1/conv2d_7_1/convolution;functional_3_1/batch_normalization_5_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 26,
+          "name": "functional_3_1/conv2d_7_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 27,
+          "name": "functional_3_1/depthwise_conv2d_5_1/BiasAdd;functional_3_1/depthwise_conv2d_5_1/depthwise;functional_3_1/depthwise_conv2d_5_1/Squeeze",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 28,
+          "name": "functional_3_1/depthwise_conv2d_5_1/depthwise",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 29,
+          "name": "functional_3_1/activation_6_1/Relu;functional_3_1/batch_normalization_4_1/batchnorm/add_1;functional_3_1/conv2d_6_1/convolution;functional_3_1/batch_normalization_4_1/Cast_3/ReadVariableOp",
+          "shape": [
+            60
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 30,
+          "name": "functional_3_1/conv2d_6_1/convolution",
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 31,
+          "name": "functional_3_1/depthwise_conv2d_4_1/BiasAdd;functional_3_1/depthwise_conv2d_4_1/depthwise;functional_3_1/depthwise_conv2d_4_1/Squeeze",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 32,
+          "name": "functional_3_1/depthwise_conv2d_4_1/depthwise",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 33,
+          "name": "arith.constant1",
+          "shape": [
+            30
+          ],
+          "dtype": "<class 'numpy.int32'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 34,
+          "name": "functional_3_1/stream_6_1/conv2d_5_1/convolution",
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 35,
+          "name": "streaming/stream_9/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 36,
+          "name": "streaming/stream_8/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 37,
+          "name": "streaming/stream_7/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 38,
+          "name": "streaming/stream_6/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 39,
+          "name": "streaming/stream_11/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 40,
+          "name": "streaming/stream_10/states_1",
+          "shape": [],
+          "dtype": "<class 'numpy.object_'>",
+          "scale": 0.0,
+          "zero": 0
+        },
+        {
+          "index": 41,
+          "name": "functional_3_1/stream_10_1/concatenate_58_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 42,
+          "name": "functional_3_1/stream_11_1/concatenate_59_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 43,
+          "name": "functional_3_1/stream_6_1/concatenate_54_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 44,
+          "name": "functional_3_1/stream_7_1/concatenate_55_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 45,
+          "name": "functional_3_1/stream_8_1/concatenate_56_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 46,
+          "name": "functional_3_1/stream_9_1/concatenate_57_1/Cast/ReadVariableOp",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 47,
+          "name": "functional_3_1/ExpandDims",
+          "shape": [
+            1,
+            3,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 48,
+          "name": "functional_3_1/stream_6_1/concatenate_54_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 49,
+          "name": "functional_3_1/stream_6_1/strided_slice2",
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "index": 50,
+          "name": "functional_3_1/activation_5_1/Relu;functional_3_1/stream_6_1/conv2d_5_1/convolution",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 51,
+          "name": "functional_3_1/stream_7_1/concatenate_55_1/concat",
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 52,
+          "name": "functional_3_1/depthwise_conv2d_4_1/BiasAdd;functional_3_1/depthwise_conv2d_4_1/depthwise;functional_3_1/depthwise_conv2d_4_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007038412149995565,
+          "zero": 5
+        },
+        {
+          "index": 53,
+          "name": "functional_3_1/activation_6_1/Relu;functional_3_1/batch_normalization_4_1/batchnorm/add_1;functional_3_1/conv2d_6_1/convolution;functional_3_1/batch_normalization_4_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 54,
+          "name": "functional_3_1/stream_8_1/concatenate_56_1/concat",
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 55,
+          "name": "functional_3_1/depthwise_conv2d_5_1/BiasAdd;functional_3_1/depthwise_conv2d_5_1/depthwise;functional_3_1/depthwise_conv2d_5_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0078305434435606,
+          "zero": 0
+        },
+        {
+          "index": 56,
+          "name": "functional_3_1/activation_7_1/Relu;functional_3_1/batch_normalization_5_1/batchnorm/add_1;functional_3_1/conv2d_7_1/convolution;functional_3_1/batch_normalization_5_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 57,
+          "name": "functional_3_1/stream_9_1/concatenate_57_1/concat",
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 58,
+          "name": "functional_3_1/depthwise_conv2d_6_1/BiasAdd;functional_3_1/depthwise_conv2d_6_1/depthwise;functional_3_1/depthwise_conv2d_6_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0076307435519993305,
+          "zero": -2
+        },
+        {
+          "index": 59,
+          "name": "functional_3_1/activation_8_1/Relu;functional_3_1/batch_normalization_6_1/batchnorm/add_1;functional_3_1/conv2d_8_1/convolution;functional_3_1/batch_normalization_6_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 60,
+          "name": "functional_3_1/stream_10_1/concatenate_58_1/concat",
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 61,
+          "name": "functional_3_1/depthwise_conv2d_7_1/BiasAdd;functional_3_1/depthwise_conv2d_7_1/depthwise;functional_3_1/depthwise_conv2d_7_1/Squeeze1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.007547273300588131,
+          "zero": -1
+        },
+        {
+          "index": 62,
+          "name": "functional_3_1/activation_9_1/Relu;functional_3_1/batch_normalization_7_1/batchnorm/add_1;functional_3_1/conv2d_9_1/convolution;functional_3_1/batch_normalization_7_1/Cast_3/ReadVariableOp1",
+          "shape": [
+            1,
+            1,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 63,
+          "name": "functional_3_1/stream_11_1/concatenate_59_1/concat",
+          "shape": [
+            1,
+            30,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 64,
+          "name": "functional_3_1/flatten_1_1/Reshape",
+          "shape": [
+            1,
+            1800
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 65,
+          "name": "functional_3_1/bounded_head_relu6_1/MatMul;functional_3_1/bounded_head_relu6_1/Relu6;functional_3_1/bounded_head_relu6_1/Add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0235294122248888,
+          "zero": -128
+        },
+        {
+          "index": 66,
+          "name": "functional_3_1/bounded_head_logit_1/mul",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -128
+        },
+        {
+          "index": 67,
+          "name": "functional_3_1/bounded_head_logit_1/add",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.062745101749897,
+          "zero": -1
+        },
+        {
+          "index": 68,
+          "name": "StatefulPartitionedCall_1:01",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.00390625,
+          "zero": -128
+        },
+        {
+          "index": 69,
+          "name": "functional_3_1/stream_11_1/strided_slice1",
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038478674832731485,
+          "zero": -128
+        },
+        {
+          "index": 70,
+          "name": "functional_3_1/stream_10_1/strided_slice1",
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038579038809984922,
+          "zero": -128
+        },
+        {
+          "index": 71,
+          "name": "functional_3_1/stream_9_1/strided_slice1",
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0038960729725658894,
+          "zero": -128
+        },
+        {
+          "index": 72,
+          "name": "functional_3_1/stream_8_1/strided_slice1",
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.003870912129059434,
+          "zero": -128
+        },
+        {
+          "index": 73,
+          "name": "functional_3_1/stream_7_1/strided_slice2",
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "dtype": "<class 'numpy.int8'>",
+          "scale": 0.0036906946916133165,
+          "zero": -128
+        },
+        {
+          "index": 74,
+          "name": "StatefulPartitionedCall_1:0",
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "<class 'numpy.uint8'>",
+          "scale": 0.00390625,
+          "zero": 0
+        }
+      ],
+      "fc_relu6_fused": true,
+      "logistic_input_scale": 0.062745101749897,
+      "static_gate_passed": true,
+      "condition": "logit_consistency",
+      "template_sha256": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+      "final_h5_sha256": "0ad10bcc150b16b9be5442109d3197caa91feb3390a0cca1f0fd418efe9ea5c3",
+      "structure_sha256": "58d0d0eb0edc1161e9dd4f2e7b4b56a85712d0fa3c26a5c7a4db341ca2382098",
+      "only_allowed_buffers_changed": true,
+      "original_grids_exact": true,
+      "constants": [
+        {
+          "index": 34,
+          "buffer": 35,
+          "shape": [
+            30,
+            5,
+            1,
+            40
+          ],
+          "code_sha256": "e7c416b24d391afa7b2de0b6310f2e9fe3efcf9af69cfccf4c4b74bb1c06a24b",
+          "clipped": 44,
+          "values": 6000
+        },
+        {
+          "index": 33,
+          "buffer": 34,
+          "shape": [
+            30
+          ],
+          "code_sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 32,
+          "buffer": 33,
+          "shape": [
+            1,
+            5,
+            1,
+            30
+          ],
+          "code_sha256": "2d1507727c8dda11719d732f45bc225b85e547d8215d48a1ad0ff69902ae736d",
+          "clipped": 4,
+          "values": 150
+        },
+        {
+          "index": 31,
+          "buffer": 32,
+          "shape": [
+            30
+          ],
+          "code_sha256": "47223445f2cebaf58ab7f137aab13e1b289515bd890800ded5cc11e346a67e38",
+          "clipped": 0,
+          "values": 30
+        },
+        {
+          "index": 30,
+          "buffer": 31,
+          "shape": [
+            60,
+            1,
+            1,
+            30
+          ],
+          "code_sha256": "4698a74d363c3e455cd2a5961247b407262ed5068856f4b950ac438b5073dd21",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 29,
+          "buffer": 30,
+          "shape": [
+            60
+          ],
+          "code_sha256": "0deff436f10f82483a583617df6d21765a41b6b34b5b033395611877472643c3",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 28,
+          "buffer": 29,
+          "shape": [
+            1,
+            9,
+            1,
+            60
+          ],
+          "code_sha256": "584de1c06416d146f181cfe2793a96aaae7de9f0fcc58ccbe285ad56aba6a1ad",
+          "clipped": 6,
+          "values": 540
+        },
+        {
+          "index": 27,
+          "buffer": 28,
+          "shape": [
+            60
+          ],
+          "code_sha256": "05ccf67e28aeddc5043e6632030ab170756c20a9a12d1c047233d5d2e96446ce",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 26,
+          "buffer": 27,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "d92a27d52932042d72322b042e22d062fb49a8565f96d1492d71be8e2d82661d",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 25,
+          "buffer": 26,
+          "shape": [
+            60
+          ],
+          "code_sha256": "bdbdda387e026b6ce666b8367720290b41f228e1734d663cfac87bfcf9b899e7",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 24,
+          "buffer": 25,
+          "shape": [
+            1,
+            13,
+            1,
+            60
+          ],
+          "code_sha256": "bbd5ee7ebacb40110dea1aea7e5de1eb8cf278161ecc221f419b582f20c6d401",
+          "clipped": 9,
+          "values": 780
+        },
+        {
+          "index": 23,
+          "buffer": 24,
+          "shape": [
+            60
+          ],
+          "code_sha256": "becb21e63998766ed8ad5cc3f7525cf5a36ecdd72d0357aa8f73032661194a49",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 22,
+          "buffer": 23,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "ed49695a9e5bc97726c9309ec13b65d0cc25b58f19fc959401c48f1758d6ffdb",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 21,
+          "buffer": 22,
+          "shape": [
+            60
+          ],
+          "code_sha256": "40e320464b781709251a906c531f1ebe9e3b1bc746f902b7ea251adb4bc82007",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 20,
+          "buffer": 21,
+          "shape": [
+            1,
+            21,
+            1,
+            60
+          ],
+          "code_sha256": "03b95d4841f6ef063d28a1f6b96cffc54c47a5794221559a2182fddd5912336f",
+          "clipped": 11,
+          "values": 1260
+        },
+        {
+          "index": 19,
+          "buffer": 20,
+          "shape": [
+            60
+          ],
+          "code_sha256": "8506c61ed9ed94f5949edf7b4d9d53d17131c288e3ba6d3bd1164627567bc16c",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 18,
+          "buffer": 19,
+          "shape": [
+            60,
+            1,
+            1,
+            60
+          ],
+          "code_sha256": "566b32bf0cb5a38d9a16e533ee4cd94ddd8b274328285861917463b01354787c",
+          "clipped": 0,
+          "values": 3600
+        },
+        {
+          "index": 17,
+          "buffer": 18,
+          "shape": [
+            60
+          ],
+          "code_sha256": "2342f05b1f592d7df38c0733a0a7be3324d3992597712062f8563e82ffc4bbb5",
+          "clipped": 0,
+          "values": 60
+        },
+        {
+          "index": 16,
+          "buffer": 17,
+          "shape": [
+            1,
+            1800
+          ],
+          "code_sha256": "4010054848b05bffa88fa3130967e40f11191ac8830d8c2795d2e72e832f9ef4",
+          "clipped": 0,
+          "values": 1800
+        },
+        {
+          "index": 15,
+          "buffer": 16,
+          "shape": [
+            1
+          ],
+          "code_sha256": "c08b1e4a35592cef7053cb30f75ace1aae67cb44085c0f397a39c7e4cf017e96",
+          "clipped": 0,
+          "values": 1
+        }
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "zero": -128,
+          "all_real_zero": true
+        }
+      ],
+      "compiler_invocations": 1,
+      "converter_invocations": 0,
+      "model_invocations": 0
+    }
+  ],
+  "limits": "Prospective consistency final10000 fixedgrid compilation; preserve prior failed540. Allfour same frozenfinal10000weights. Original equalized actual TFLite graph/opversions/allquantizationgrids unchanged. Encode shared finalvariables with training-declared nearest-even weight[-127,127]/int32biaswide/frozenBNfold/boundedhead mapping. Replace only20operatorweightbias buffers and sixoriginalinitializer buffers, zeroencodedusing originalactualquantizer. No converter/PTQ/rangeupdate/source selection/optimizer/modelinvoke. Assert unique bufferrefs, exact shapetype/bytes, unchanged structural fingerprint and all unallowed bytes, allocate actualinterpreter metadata. Preserve original failed PTQ models/reports. Separate compiler/runtime/reference/fullwaveadmission required, no newdev/acceptance/promotion."
+}
