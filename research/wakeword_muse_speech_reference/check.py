@@ -66,6 +66,8 @@ def main():
     refs, payloads, records = construct()
     raw = encode(records)
     result = reduce_capture(raw, refs)
+    prefixed_result = dict(result, capture_sha256=sha(b'I \xff\xfe' + raw))
+    assert reduce_capture(b'I \xff\xfe' + raw, refs) == prefixed_result
     assert result['input_invocations'] == 648 and result['all_repeats_exact']
     assert result['prime_invocations'] == 13608 and len(result['cases']) == 216
     controls = []
@@ -80,6 +82,7 @@ def main():
     rejected('firmware_failure', raw + b'WAKE_BENCH_ERROR {}\n')
     rejected('missing_final_destroy_barrier', encode(records[:-2]))
     rejected('duplicate_initial_ready', encode(records[:1] + records))
+    rejected('displaced_post_sync_marker', encode(records[:1]) + b'I \xff\xfe' + encode(records[1:]))
     rejected('missing_result', encode([r for r in records if not (r[0] == 'WAKE_BENCH_RESULT' and r[1]['id'] == 0)]))
     for key, changed in [('crc32', 0), ('samples', 1024), ('complete', False), ('calls', 2), ('events_emitted', 0)]:
         altered = copy.deepcopy(records)
@@ -104,7 +107,7 @@ def main():
     class Serial:
         closed = False
         def __init__(self, *args, **kwargs):
-            self.incoming = bytearray(encode(records[:1]))
+            self.incoming = bytearray(b'I \xff\xfe' + encode(records[:1]))
             self.command = bytearray()
             self.received = bytearray()
             self.clip_id = None
@@ -149,7 +152,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='muse-constructed-') as temporary:
         try:
             captured = runner.Backend(SimpleNamespace(port='CONSTRUCTED', output=Path(temporary)), refs, payloads).capture(30)
-            assert captured == raw and Serial.closed
+            assert captured == b'I \xff\xfe' + raw and Serial.closed
         finally:
             if saved is None:
                 del sys.modules['serial']
@@ -170,6 +173,7 @@ def main():
     report = dict(schema='muse-consumed108-constructed-checks-v1', corrupted_captures_rejected=controls,
         complete216_constructed_capture_exact=True, partial_writes_and_split_reads_checked=True,
         capture_port_closed=True, final_destroy_barrier_checked=True, repeat_difference_retained=True,
+        actual_cut_boot_prefix_regression_checked=True,
         wav_container_and_pcm_identity_checked=True, source_sha256=sha(Path(__file__).read_bytes()),
         physical_hardware_accessed=False, recognition_measured=False,
         limits='Invented input/events/timings only; UART/restore mechanics and corruption controls, not model or recognition evidence.')

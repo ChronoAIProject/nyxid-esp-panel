@@ -20,6 +20,7 @@ SCOPE = 'Standalone Muse DEFAULT complete consumed108 PCM reference only. Not li
 class Reader:
     def __init__(self, uart, log):
         self.uart, self.log = uart, log
+        self.started = False
 
     def next(self, timeout):
         deadline, pending = time.monotonic() + timeout, bytearray()
@@ -39,6 +40,18 @@ class Reader:
             pending.clear()
             if any(marker in line for marker in (b'WAKE_BENCH_ERROR', b'Guru Meditation', b'abort()')):
                 raise RuntimeError('Muse firmware error; preserve raw capture')
+            if not self.started:
+                start = line.find(b'WAKE_BENCH_READY ')
+                if start >= 0:
+                    # uart_param_config/driver_install can cut an IDF boot log
+                    # before our first printf. Keep the raw prefix in the log;
+                    # synchronize only this first complete READY message.
+                    line = line[start:]
+                    self.started = True
+                else:
+                    assert b'WAKE_BENCH_' not in line, 'Unexpected protocol before initial READY'
+                    continue
+            assert b'WAKE_BENCH_' not in line or line.startswith(b'WAKE_BENCH_'), 'Displaced protocol after initial sync'
             if line.startswith(b'WAKE_BENCH_'):
                 prefix, payload = line.decode('ascii').split(' ', 1)
                 return prefix, json.loads(payload)
@@ -127,6 +140,7 @@ def freeze(build_path, fixtures_path):
         prime_calls=63, chunk=512, sample_rate=16000, channels=1, sample_format='original PCM16 little endian',
         lifecycle='Unchanged baseline.c: per clip create,63zero prime,whole PCM with final-only padding,destroy; two adjacent fresh lifecycles per original row.',
         final_destroy_ack='Existing same-baud BAUD/READY command after final RESULT; no extra inference.',
+        startup_sync='Keep raw boot bytes; first complete READY may follow a cut boot-log prefix on its line. All later protocol markers start at column zero.',
         scope=SCOPE, candidate_qualified=False, threshold_selected=False, source_labels_changed=False,
         microphone_speaker_used=False, fresh_development_accessed=False, acceptance_accessed=False)
 

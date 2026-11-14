@@ -55,3 +55,11 @@ references; it retains repeat disagreements and all events. Full-clip event
 presence is only a descriptive statistic, not phonetic wake latency or an
 end-to-end first-utterance success measure. `check.py` exercises these paths
 with explicitly constructed data and does not measure recognition.
+
+The first native attempt stopped before any CLIP: UART reconfiguration left a
+cut boot-log prefix on the initial READY line. Its original log and complete
+restoration are retained. The revised reader and reducer synchronize the first
+complete READY after that boot prefix, retaining all raw bytes. Later markers
+still require column zero; a displaced later marker is rejected. Freeze the
+revised source/protocol before the next explicit run; model, PCM, order,
+DEFAULT and all outcome checks remain identical.

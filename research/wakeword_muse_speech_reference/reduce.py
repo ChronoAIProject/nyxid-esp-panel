@@ -19,9 +19,18 @@ PREFIXES = ('WAKE_BENCH_READY', 'WAKE_BENCH_BAUD', 'WAKE_BENCH_CLIP_READY', 'WAK
 
 def messages(raw):
     assert raw.endswith(b'\n'), 'Incomplete final UART line'
-    result = []
+    result, started = [], False
     for line in raw.splitlines():
         assert not any(marker in line for marker in (b'WAKE_BENCH_ERROR', b'Guru Meditation', b'abort()')), 'Firmware failure'
+        if not started:
+            start = line.find(b'WAKE_BENCH_READY ')
+            if start >= 0:
+                line = line[start:]
+                started = True
+            else:
+                assert b'WAKE_BENCH_' not in line, 'Unexpected protocol before initial READY'
+                continue
+        assert b'WAKE_BENCH_' not in line or line.startswith(b'WAKE_BENCH_'), 'Displaced protocol after initial sync'
         if line.startswith(b'WAKE_BENCH_'):
             key, text = line.decode('ascii').split(' ', 1)
             assert key in PREFIXES
