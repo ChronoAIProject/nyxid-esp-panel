@@ -10002,3 +10002,8 @@ Pushed execution lock2f24ac0a before launch. Original session8257/PID84435/procs
 ## Formal audit and downstream implementation prepared while original job runs
 
 Original session8257/PID84435 remains live; narrow10400 progress observed. Added no-model independent auditor to reconstruct all40000 batches/5120000raw windows from original shared features, verify each emitted digest/roles/positivegeometry/pairedcells, initial31/final31/frozen16 and Adam0→20000 state. Added final-export/independentABI auditors and original135-consumed-waveform numerical screen adapted explicitly context225→309, offlinephase224→308, startupindex74→102. Gates remain FP32vsTF1e-4, phase1e-4, five-step INT8 MAE.02/p99.1/max.25, all270cases. Scripts only compiled, not executed; export/screen locks cannot be written until upstream actual results/audits exist. No new dev/acceptance use. No inference or accuracy claim from these implementations.
+
+
+## Formal H5-to-array audit strengthened before results
+
+Added explicit architecture/name routing for all31 H5 datasets to variable-inventory keys (first conv is stream-wrapped; unwrapped conv numbering offset is explicit). Actual preserved initialization H5 all31 tensors verified against inventory under31 unique dataset paths, no model calls. Final auditor will additionally require exact shape/dtype/bytes equivalence of finalH5 and all finalNPZ variables for eacharm. Full formal audit has not yet run; original session8257/PID84435 still live, narrow18600 observed. No original execution files or recipe changed.
