@@ -1,0 +1,111 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794628365.992263 1324678 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794628366.026903 1324678 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794628366.808050 1324678 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794628367.129300 1324678 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21452 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:01:00.0, compute capability: 8.9
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_scalar_fc_shared_network_v1.py", line 64, in <module>
+    p=argparse.ArgumentParser();p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
+                                                                                                                                 ^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_scalar_fc_shared_network_v1.py", line 40, in run
+    oldz,oldp,_=old(tf.constant(x));runs=[];arrays={'x':x,'original_logits':oldz.numpy(),'original_probability':oldp.numpy()}
+                ^^^^^^^^^^^^^^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_integer_training_observer_v1.py", line 75, in infer
+    kernel=q(first.kernel,cfg[0]['weight'],weight=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_integer_training_observer_v1.py", line 51, in q
+    result=affine_ste(value,scales,zeros,low,high,tf,wide=bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_fake_quant_primitives_v1.py", line 18, in affine_ste
+    return quantize(value)
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/tensorflow/python/ops/custom_gradient.py", line 339, in __call__
+    return self._d(self._f, a, k)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/tensorflow/python/ops/custom_gradient.py", line 293, in decorated
+    return _eager_mode_decorator(wrapped, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/tensorflow/python/ops/custom_gradient.py", line 556, in _eager_mode_decorator
+    raise TypeError(
+TypeError: @tf.custom_gradient grad_fn must accept keyword argument 'variables', since function uses variables: [<tf.Variable 'stream/conv2d/kernel:0' shape=(5, 1, 40, 30) dtype=float32, numpy=
+array([[[[-1.33412867e-03,  1.30125217e-03,  1.68309419e-03, ...,
+          -1.90284557e-03, -3.89954192e-04, -2.46866676e-03],
+         [-1.49918406e-03,  2.62317783e-03,  4.64423210e-04, ...,
+          -4.86895628e-03,  6.54455100e-04, -1.32888334e-03],
+         [-3.22372245e-04,  2.04935903e-03,  2.20159534e-04, ...,
+          -1.70344254e-04,  1.23147795e-03, -8.93825374e-04],
+         ...,
+         [ 2.19365989e-04, -2.40514311e-03,  1.22633274e-03, ...,
+           1.80500967e-03, -9.78383352e-04,  1.31338584e-05],
+         [-2.25099153e-04, -9.65672603e-04,  1.59499075e-04, ...,
+           1.33699703e-03,  1.28226704e-03, -1.24395499e-03],
+         [-8.67853523e-04,  4.46648744e-04,  8.94630153e-04, ...,
+           2.15067784e-03,  5.56018087e-04,  7.77889916e-04]]],
+
+
+       [[[-1.50975049e-03,  2.52387457e-04,  2.65340641e-04, ...,
+          -2.19504419e-03,  5.56296727e-04, -1.83446670e-03],
+         [-1.28267682e-03,  2.47929897e-03, -8.95433186e-04, ...,
+          -6.19952800e-03,  6.91084075e-04, -6.91058085e-05],
+         [-5.70034026e-04,  2.36137141e-03, -5.77321043e-04, ...,
+          -3.51951434e-03,  5.41322923e-04, -1.16271945e-03],
+         ...,
+         [ 8.50966666e-04, -2.05683848e-03,  1.41497038e-03, ...,
+           3.41052003e-03, -7.56965659e-04,  3.73843533e-04],
+         [ 1.20481855e-04,  2.05786855e-04,  1.56004990e-05, ...,
+           4.55150643e-04,  7.74666900e-04, -1.18549471e-03],
+         [-2.96731683e-04,  1.94421213e-03,  2.52446765e-03, ...,
+           2.56641628e-03,  1.89048442e-05,  1.15768891e-03]]],
+
+
+       [[[-1.13694940e-03,  3.92089190e-04, -1.66663202e-04, ...,
+          -1.86328590e-03,  1.82944306e-04, -2.13293033e-03],
+         [ 5.82760200e-04,  1.84202008e-03, -1.61847170e-03, ...,
+          -6.32984331e-03, -3.32696305e-04, -2.93962396e-04],
+         [-1.52472034e-03,  8.66805844e-04, -3.04621382e-04, ...,
+          -4.39608144e-03,  1.59648224e-03, -8.45324132e-04],
+         ...,
+         [ 8.47533520e-04, -6.59475219e-04,  2.82275793e-03, ...,
+           9.40565253e-04, -1.73793582e-03, -3.09816038e-04],
+         [-2.60361034e-04,  6.75143907e-04,  7.55472225e-04, ...,
+           2.90344446e-03, -9.10888411e-05, -1.33182877e-03],
+         [-1.51893753e-03,  3.98205360e-04,  2.94793351e-03, ...,
+           5.00364555e-03,  2.93445832e-04,  9.17640427e-05]]],
+
+
+       [[[-2.59736698e-04,  1.50797854e-03,  1.33579990e-04, ...,
+           7.53532979e-04,  1.52496924e-03, -3.79276858e-03],
+         [ 7.71034742e-04,  1.25239848e-03, -2.27836287e-03, ...,
+          -2.47495365e-03, -4.17122137e-05, -3.82175058e-04],
+         [-8.31096841e-04,  5.79469895e-04, -1.04279502e-03, ...,
+          -2.95455218e-03,  9.57886441e-05, -4.83936630e-04],
+         ...,
+         [-7.59430230e-04, -1.25385972e-03,  2.86477408e-03, ...,
+           3.11710639e-03, -1.66846637e-03,  8.05154326e-04],
+         [-1.18305068e-03,  1.38518726e-03,  4.53612825e-04, ...,
+          -1.21108652e-03, -1.57828908e-03, -7.17347197e-04],
+         [-5.95364312e-04,  6.55951502e-04,  1.99196255e-03, ...,
+           4.18203883e-03,  7.78877351e-04,  7.46243109e-04]]],
+
+
+       [[[-2.28569540e-03,  7.14095484e-04,  3.17646918e-04, ...,
+           1.84905634e-03,  1.66638847e-03, -3.88369686e-03],
+         [-1.86200414e-04,  1.67655782e-03, -2.35089054e-03, ...,
+           2.19606189e-03,  8.24179951e-05, -1.72752969e-03],
+         [-4.51126281e-04, -2.08054436e-04, -7.03735859e-05, ...,
+          -1.68947538e-03, -5.10239450e-04,  2.70188088e-04],
+         ...,
+         [-4.85327706e-04, -4.48730803e-04,  1.70818972e-03, ...,
+           1.44021717e-04, -9.06268659e-04, -3.13839817e-04],
+         [-3.66776396e-04,  1.36396076e-04,  7.87785160e-04, ...,
+          -1.67295380e-04,  8.95774501e-05, -1.77507359e-03],
+         [-9.92748770e-04,  1.25810748e-03,  1.69195340e-03, ...,
+           3.02292476e-03, -7.07675761e-04, -5.36675914e-04]]]],
+      shape=(5, 1, 40, 30), dtype=float32)>]
