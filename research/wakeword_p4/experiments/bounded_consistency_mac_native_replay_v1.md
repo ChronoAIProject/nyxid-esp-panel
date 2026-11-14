@@ -93,3 +93,19 @@ python research/wakeword_p4/experiments/check_bounded_consistency_mac_native_pre
   --registered-fc-root "$PRIVATE/complete-fc-registration-replay-v2" \
   --report NEW_CONSTRUCTED_CHECK_REPORT.json
 ```
+
+While the original GPU run continues, one bounded publication observer may
+fetch its existing branch and inspect only the published formal/compile JSON:
+
+```sh
+python -u research/wakeword_p4/experiments/observe_bounded_publication_mac_v1.py \
+  --output-dir "$PRIVATE/bounded-publication-observer-v1" \
+  --interval 45 --max-observations 80
+```
+
+Retain its tool session handle and JSONL journal; poll that same handle.
+It never starts GPU work, invokes a model, creates a model plan or authorizes
+scoring. Its running handle verifies only this local observation, not GPU
+process liveness. A transient fetch timeout is not GPU termination. When its
+observation window ends, inspect the original GPU state; do not infer failure
+or restart training. Published results still require their normal review.
