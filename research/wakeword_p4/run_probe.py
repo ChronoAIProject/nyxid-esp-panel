@@ -7,6 +7,7 @@ This does not measure acoustic recognition or full-application resource use.
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 import signal
@@ -18,13 +19,36 @@ import urllib.request
 import serial
 
 
+def validate_fp32_result(result):
+    cases = result["fp32_models"]
+    if (len(cases) != 8 or any(type(r[k]) is not int for r in cases for k in
+                             ("condition", "repeat", "arena_used", "variable_arena_allocated"))
+            or {(r["condition"], r["repeat"]) for r in cases} != {
+            (i, j) for i in range(4) for j in range(2)}):
+        raise ValueError("Incomplete or duplicate FP32 case capture")
+    if result["FP32_SYNTHETIC_DONE"]["passed"] is not True:
+        raise ValueError("FP32 firmware reported failure")
+    for case in cases:
+        numeric = [case[k] for k in ("max_abs_error", "p50_us", "p95_us", "max_us")]
+        if not all(type(v) in (float, int) and math.isfinite(v) for v in numeric):
+            raise ValueError("Nonfinite or malformed FP32 result")
+        if (case["passed"] is not True or not 0 <= case["max_abs_error"] <= 1e-4
+                or not 0 < case["arena_used"] <= 256 * 1024
+                or case["variable_arena_allocated"] != 64 * 1024
+                or not 0 < case["p50_us"] <= case["p95_us"] <= case["max_us"] <= 30000):
+            raise ValueError("FP32 numeric/resource or 30ms hop-deadline check failed")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", required=True)
     parser.add_argument("--baud", type=int, default=1500000,
                         choices=(115200, 230400, 460800, 921600, 1500000))
-    parser.add_argument("--frontend-witness", action="store_true",
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--frontend-witness", action="store_true",
                         help="Collect numeric frontend table/stream hashes instead of model probe output")
+    mode.add_argument("--fp32-witness", action="store_true",
+                      help="Collect the fixed candidate-free FP32 numeric/resource probe")
     parser.add_argument("--expected-mac", required=True)
     parser.add_argument("--status-url", required=True)
     parser.add_argument("--restore-app", type=Path, required=True)
@@ -74,7 +98,7 @@ def main():
         raise ValueError("USB chip does not match the development panel")
     result = {"probe_bin_sha256": probe_hash, "probe_bin_bytes": args.probe_bin.stat().st_size,
               "vectors_manifest_sha256": hashlib.sha256(args.vectors_manifest.read_bytes()).hexdigest(),
-              "vectors": manifest, "models": [], "frontend_witnesses": [], "frontend_deltas": [],
+              "vectors": manifest, "models": [], "fp32_models": [], "frontend_witnesses": [], "frontend_deltas": [],
               "scope": "Standalone numeric compatibility/resources only; no recognition acceptance"}
 
     def interrupted(_signum, _frame):
@@ -94,7 +118,8 @@ def main():
                 if line:
                     log.write(line+"\n")
                     log.flush()
-                markers = ("P4_FRONTEND_TABLE|P4_FRONTEND_WITNESS|P4_FRONTEND_DELTA|P4_FRONTEND_DONE"
+                markers = ("FP32_CASE|FP32_ALLOCATION_FAILED|FP32_SYNTHETIC_DONE" if args.fp32_witness else
+                           "P4_FRONTEND_TABLE|P4_FRONTEND_WITNESS|P4_FRONTEND_DELTA|P4_FRONTEND_DONE"
                            if args.frontend_witness else "PROBE_FRONTEND|PROBE_MODEL|P4_WAKE_PROBE_DONE")
                 match = re.search(r"("+markers+r") (\{.*\})", line)
                 if match:
@@ -102,6 +127,10 @@ def main():
                     value = json.loads(data)
                     if marker == "PROBE_MODEL":
                         result["models"].append(value)
+                    elif marker == "FP32_CASE":
+                        result["fp32_models"].append(value)
+                    elif marker == "FP32_ALLOCATION_FAILED":
+                        raise RuntimeError("FP32 arena allocation failed; restoring original app")
                     elif marker == "P4_FRONTEND_WITNESS":
                         result["frontend_witnesses"].append(value)
                     elif marker == "P4_FRONTEND_DELTA":
@@ -109,11 +138,12 @@ def main():
                     else:
                         result[marker] = value
                     print(match.group(0), flush=True)
-                    if marker in ("P4_WAKE_PROBE_DONE", "P4_FRONTEND_DONE"):
+                    if marker in ("P4_WAKE_PROBE_DONE", "P4_FRONTEND_DONE", "FP32_SYNTHETIC_DONE"):
                         break
                 if "abort()" in line or "Guru Meditation" in line:
                     raise RuntimeError("Probe firmware failed; see private UART log")
-            if ("P4_FRONTEND_DONE" if args.frontend_witness else "P4_WAKE_PROBE_DONE") not in result:
+            done = "FP32_SYNTHETIC_DONE" if args.fp32_witness else "P4_FRONTEND_DONE" if args.frontend_witness else "P4_WAKE_PROBE_DONE"
+            if done not in result:
                 raise TimeoutError("Numeric probe did not complete")
     finally:
         # A normal cancellation still restores. Do not SIGKILL or remove power.
@@ -139,6 +169,10 @@ def main():
         result["restored"] = {"app_sha256": after["app_sha256"], "nyx_state": "up", "wake_listening": True}
         (args.output/"report.json").write_text(json.dumps(result, indent=2)+"\n")
         print("Original app, service selection and Hi ESP listening verified", flush=True)
+
+    if args.fp32_witness:
+        validate_fp32_result(result)
+        return
 
     if args.frontend_witness:
         expected = manifest['witnesses']

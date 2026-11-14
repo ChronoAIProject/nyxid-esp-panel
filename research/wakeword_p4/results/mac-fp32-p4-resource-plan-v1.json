@@ -1,0 +1,27 @@
+{
+  "schema": "mac-fp32-p4-resource-plan-v1",
+  "base_plan_sha256": "a712c3fd96809c58cc37228398d91279f1b7baca13b5faa97c192f7fb1b535df",
+  "original_link_report_sha256": "8826cb7981fd3a17b68353e85384f0da4dd82846e6692fb089875a635119f291",
+  "probe_bin_sha256": "0c0a67e7031cacbb92a2614e05d7db82a13c8abfbfbcced6165ecd6673c5d7f0",
+  "probe_bin_bytes": 478112,
+  "probe_cpp_sha256": "c2252164474fedcde3b7419ccfd23780d2c41783e21c600140c0c3c5aab18f2c",
+  "runner_sha256": "d997a4269a297dec6390f8ff02e46c1c99171626a9a8039c185839a57d37a913",
+  "constructed_report_sha256": "e6c2acf31ec600d60ab964b5b11342ec2cb5afa84fc2152de51fcfe847e41da4",
+  "planner_sha256": "b190cccc2e07b15447685bfba4ac570c196a963d69a41dcd9ac81e38cc7cbc8a",
+  "input": "The original four synthetic streams, 256steps each, two fresh/reset interpreters per stream; no audio/sensor/network in probe",
+  "preflight": "Use only explicitly identified development USB board. Fresh LAN app/status identity, idle voice/OTA and connected service, current active slot/offset/size verified from partition information, current matching original-app backup. Expected MAC and status URL are required execution inputs, never defaults. No production board or full-project flashing.",
+  "execution": "Existing run_probe.py --fp32-witness; app-only write at verified active slot. Always restore in finally, including numeric failure, allocation failure, timeout or cancellation; independently recheck original app/slot/service and wake state. Keep raw UART and original receipts private, publish only filtered numeric report.",
+  "fixed_requirements": {
+    "cases": 8,
+    "steps_per_case": 256,
+    "input_hop_us": 30000,
+    "max_abs_error_ceiling": 0.0001,
+    "all_max_invoke_us_ceiling": 30000,
+    "main_arena_capacity": 262144,
+    "variable_arena_capacity": 65536,
+    "all_finite": true,
+    "all_cases_and_terminal_passed": true
+  },
+  "report": "Actual P4 AllocateTensors/Invoke outcome, every cold/warm case p50/p95/max/error/main arena usage and variable allocation ceiling; raw log/hash and restoration receipt. Independent panel restoration check is required.",
+  "limitations": "Standalone random-weight resource feasibility only. P4 first-call/init cost is retained; no startup exclusion. The 30ms ceiling checks ability to keep up with the original hop, not full-panel CPU headroom. Does not measure microphone/AEC/AGC/FIFO, recognition/FAR, real trained models, panel load or independent acceptance, select FP32 deployment, or alter old integer gates. No board has been accessed by this planning command."
+}
