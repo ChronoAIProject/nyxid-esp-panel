@@ -9197,3 +9197,20 @@ This is not whole trainable network parity. Remaining: integer-code gradients fo
 shared steps, scale-dependent folded bias encoding, state graph, complete temporal
 forward/FC parity and nonuniform learned-step export. Do not infer efficacy, select
 scales, run fresh data or launch formal training from primitive checks. v30 retained.
+
+### 2026-11-14 — Original complete differentiable scale integration rejected
+
+Prospective19ca5ba1 pushed before original session99875. Run exit1 with all4case
+reports and originalfailure traceback saved; no optimizer. New offline temporal
+TF encoder uses immutable original quantized kernels/bias real values, nine zero
+logsteps and dynamic requant. All4 fail original integer-code/repeat gate.
+
+Saved-only localization: every layer in every model first differs at step99
+(zero-based). Forward arrays repeat byte-exact; only gradient repeats differ,
+max1.12e-12/1.67e-12/2.82e-11/8.64e-12. No tolerance relaxed; gradients remain
+finite/connected but that does not meet exact repeat requirement. Do not blame
+step-scale math or declare GPU kernel root cause from this coincidence. Next
+check first-layer framing/accumulator/input at step99, preserving original artifacts;
+separately establish deterministic reduction policy before a new prospective run.
+No formal training, changed-grid efficacy or complete integration claimed. Original
+candidate rejection, v30 and fresh-data isolation remain unchanged.
