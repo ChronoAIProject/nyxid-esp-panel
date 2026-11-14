@@ -1,0 +1,16 @@
+{
+  "pid": 1225814,
+  "process_starttime": "21099373",
+  "files": {
+    "research/wakeword_p4/experiments/continue_hey_broad_paired_qat_v1.py": "bfec38f965d4b9bd9fed21cf5879be8e312e601931771e2ce9ea6484ee739a30",
+    "research/wakeword_p4/experiments/audit_hey_broad_paired_qat_formal_v1.py": "5c456a45078d605fd945a2c820a776c341e0e78e3802407565033708c72f0af2",
+    "research/wakeword_p4/experiments/export_hey_broad_paired_qat_v1.py": "3e80afdb1d9ef02d04982f1fb3055034f26bfb50af1286434827c5f63e048f00",
+    "research/wakeword_p4/experiments/screen_hey_broad_paired_qat_v1.py": "1af32074eebd20971894809bd62b782e183060d16a7eedbe95b92fba2de67bc6",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-formal-execution-v1.json": "8ff3105eff6e42145739769cef73e44b1af0e048f733917608a5f7cbf60ccc53",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-export-plan-v1.json": "7c6efa4bb8f496f1370a88819be350e568fa6ca8f23ab7869853b1c50381bfab",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-screen-plan-v1.json": "e849f350095702be62cdab2338852c5f5f0f38fef8b18212aaf4928be5c566b0",
+    "research/wakeword_p4/experiments/continue_hey_broad_paired_qat_v2.py": "fe2cda1da47995cb04946f2a8ab9d3e5e7d5f4a8ac974a44a914ea49d3e94897"
+  },
+  "policy": "Wait only original PID/starttime; never restart training. Require complete finalresult, audit, publish actuallocks/results before each stage. Exactly one fourmodel export and complete540screen, stop on error/missing/staticfail, noretry/newdev/acceptance/promotion.",
+  "correction": "V1 wait bound a TensorFlow worker TID from log prefix instead of process PID. Original waiter deliberately terminated before any postprocessing. Training untouched. V2 binds /proc process commandline PID1225814."
+}
