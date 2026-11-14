@@ -73,3 +73,47 @@ the private `fp32-trained-fullstream-p4-v1` run directory. Reproduce collection:
 python3 research/wakeword_p4/experiments/collect_fp32_trained_fullstream_p4_build_mac_v1.py \
   --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN --report NEW_REPORT.json
 ```
+
+## Saved-capture reducer
+
+The trained protocol now has its own reducer. It authenticates the original
+fixture plan, all generated files, original TF/LiteRT references and the exact
+linked image. It requires one complete BEGIN, every ordered step and case,
+and one DONE across all 48 executions and 8,336 calls. Every output must be
+finite and within probability bounds, match both references to absolute1e-4,
+and match the other fresh repeat byte-for-byte. Every Invoke, including cold
+calls, must be positive and at most30,000us. Raw outputs/timings must reproduce
+the printed summaries; duplicate JSON keys, malformed, extra or missing protocol
+records are rejected. Reported allocator use must fit the prepared capacities.
+
+The error gate promotes the original float32 values before subtraction. The
+device's rounded float32 error or printed `passed` cannot mask an over-bound
+error. The reducer separately checks consistency of the device's rounded
+summary. It records raw-output hashes, cold Invoke/setup times and allocator
+use per execution; it does not infer full-panel headroom from these numbers.
+
+```sh
+python3 research/wakeword_p4/experiments/reduce_fp32_trained_p4_capture_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN \
+  --capture SAVED_UART.log --report NEW_REDUCTION.json
+```
+
+The constructed checker uses the original authenticated reference values with
+invented timings/resources. All 26 invalid-input cases were rejected, including
+a one-ULP fresh-repeat difference inside numeric tolerance, a LiteRT-only
+discrepancy, cold-call overrun and a float32-subtraction rounding counterexample.
+Its valid full-protocol case and CLI completed; these are **zero actual P4
+Invokes** and provide no hardware performance evidence. See
+`../results/mac-trained-p4-capture-reducer-constructed-checks-v1.json`.
+
+```sh
+python3 research/wakeword_p4/experiments/check_trained_p4_capture_reducer_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN --output-dir NEW_CHECK_DIR
+```
+
+Capture origin is deliberately a separate unresolved requirement: the future
+app-only execution/restore receipts must bind the actual development board,
+confirmed slot and flashed image to the UART capture. A passing parser does not
+authenticate those facts or qualify a candidate. That runner integration and
+actual P4 execution remain pending; the old random-weight validator is still
+unsuitable for this protocol.
