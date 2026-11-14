@@ -9036,3 +9036,24 @@ supported as a sufficient solution. Next diagnostic should trace propagation
 through preceding pointwise/depthwise pairs with explicit temporal input identity,
 then choose a controlled representation/quantization intervention rather than
 another head patch. No model export/injection/training/new-media or gate changes.
+
+### 2026-11-14 — All post-depthwise pointwise local boundaries
+
+`diagnose_matched_pointwise_v1.py` extends saved-only reconstruction to original
+layers2/4/6/8, authenticating actual tensor connectivity and immutable export SHA.
+All16 local float64 ReLU reconstructions satisfy unchanged1e-3 maximum criterion;
+signed decompositions close1e-10. No interpreter invoke. The final pointwise has
+largest propagated MAE on each fixed witness. Willowflat/pool layer6 maximum
+absolute row-sum gain is15548.95/15548.87, final2286.44/2286.60; Nyx corresponding
+112.56/112.57 and882.30/882.65. These are worst-case matrix bounds, not observed
+causal amplification or evidence of a new bug. ReLU gates and cancellation matter.
+
+Do not relabel channel equalization as a new untried solution: repository already
+contains hey_broad_exact_channel_equalization_v1 and original equalized-source
+paired QAT/consistency failures. Current local diagnosis instead motivates tracing
+actual temporal depthwise input histories to distinguish quantization introduced
+there from inherited propagation. That reconstruction must bind actual filter
+shape/dilation/padding/state initializer and validate local FP32 before interpreting
+integer residual; guessed temporal offsets or silently discarded startup cannot
+support attribution. Original540 rejection, old recognition limitations, v30 and
+all fresh-data boundaries remain unchanged.
