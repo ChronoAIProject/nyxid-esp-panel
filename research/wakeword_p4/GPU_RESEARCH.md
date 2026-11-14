@@ -7866,3 +7866,20 @@ PID958504 verified live before probe; unchanged. Next register exact original
 head weight/bias transformation and streaming state/calibration controls before
 any real model export. Must still pass all original270 numerical gates; no
 newdev/acceptance authorized, v30 retained and goal active.
+
+### Exact bounded final-head full-wave float control passes
+
+Prospective753bdbd0, originalsession19791 exited0. Both original final H5s,
+270whole training witnesses, unchanged encoder/BN, sixfresh-zero stream states,
+actualhead W*3/8,b*3/8+3 RELU6 then8/3,-8 sigmoid. All270 pass fixed1e-4
+comparison to original saved natural logit clipped[-8,8]. Worst discrepancy
+2.850679716615012e-6; maximum originalprobability difference
+0.00033535013790242374. All270NPZ hashes, exact repeats and saved expectation
+reductions independently rechecked. This is not INT8 admission or recognition.
+
+Next originalcalibration material replay registered/pushed9932b829 before
+launch. Originalsession66756/PID1134099 observedlive; noTensorFlow/model,
+replays120100 original fullbatch hashes perarm and saves100originalPTQ firstrows.
+No substituted witness calibration or changed source resets/prefixes. Future
+actualexport still needs separate prospective execution binding and must pass
+unchanged270INT8 gates. No newdev/acceptance, v30 unchanged, goalactive.
