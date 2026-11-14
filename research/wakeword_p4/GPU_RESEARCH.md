@@ -8659,3 +8659,17 @@ and QAT probability is surrogate. Evidence shows rare discrepancies also exist
 on sampled original training support, so a solely unseen-context explanation is
 unsupported; does not identify optimizer/gradient or unique cause, authorize
 training on these scored records, select threshold, or promote. V30 unchanged.
+
+### Saved output clipping activity (2026-11-14)
+
+Complete fixed1280training examples/case/mode reduced without inference. All
+nonzero bounded gaps have at least one active outer output-coordinate clip;
+Willowbounded nominal3/phase1 nonzero examples all have active float clip.
+Nyxbounded nominal2/22 and phase6/27 have inactive float clip; none have both
+outer coordinate clips inactive. Both raw logits same-side saturated yet bounded
+gap nonzero is0 throughout. This rules out universal double-outer-clip deadness
+on these samples, not encoder/FC STE deadness or useful parameter gradients.
+Added prospective gradient diagnostic protocol requiring all original10batches,
+all4models/bothmodes, S/C/float-path/FC-path gradients, exact prior forward matches,
+twice-repeat/modelunchanged and independent saved-array reductions; no execution
+lock or gradient run yet. No update/optimizer/newdata or promotion.
