@@ -9,13 +9,17 @@ def plan():
  parent=R/'4090-hey-broad-fixed-grid-screen-execution-v1.json';base=json.loads(parent.read_text());files=dict(base['files'])
  export=R/'4090-hey-broad-fixed-grid-recovered-metadata-v1.json';actual=R/'4090-hey-broad-fixed-grid-screen-result-v1.json'
  for p in [parent,export,actual,Path(__file__),Path(__file__).with_name('probe_hey_broad_integer_requant_v2.py'),R/'4090-hey-broad-fixed-grid-screen-independent-audit-v1.json']:files[str(p)]=sha(p)
- record=dict(files=files,export=str(export),actual=str(actual),policy='All540 fixedgrid wholewaves, all fourconditions, twice fresh recursive NumPy encoder/FC vs actual preserveall builtinref. Actual zero initializer bytes, no injected intermediate activations. Same original scalarFC round-away/double scale and encoder double rounding. Save every trace/failure. No freshdev/recognition/admission; postFC integer kernels not independently implemented.')
+ rows=json.loads(actual.read_text())['cases'];assert len(rows)==540
+ assert len({(r['target'],r['condition'],r['request_order']) for r in rows})==540
+ for row in rows:assert sha(row['arrays_path'])==row['arrays_sha256'];files[row['arrays_path']]=row['arrays_sha256']
+ record=dict(files=files,versions=base['versions'],export=str(export),actual=str(actual),policy='All540 fixedgrid wholewaves, all fourconditions, twice fresh recursive NumPy encoder/FC vs actual preserveall builtinref. Actual zero initializer bytes, no injected intermediate activations. Same original scalarFC round-away/double scale and encoder double rounding. Save every trace/failure. No freshdev/recognition/admission; postFC integer kernels not independently implemented.')
  with P.open('x') as f:f.write(json.dumps(record,indent=2)+'\n')
 def run():
- import subprocess
- subprocess.run(['git','diff','--exit-code','HEAD','--',str(P)],check=True);assert subprocess.check_output(['git','ls-files','--',str(P)],text=True).strip()
+ import subprocess,importlib.metadata
+ assert subprocess.check_output(['git','show','origin/research-hye-nyx-voice-gpu:'+str(P)])==P.read_bytes()
  lock=json.loads(P.read_text())
  for p,h in lock['files'].items():assert sha(p)==h,p
+ for n,v in lock['versions'].items():assert importlib.metadata.version(n)==v,n
  from ai_edge_litert.interpreter import Interpreter,OpResolverType
  from ai_edge_litert import schema_py_generated as schema
  exports=json.loads(Path(lock['export']).read_text())['arms'];rows=json.loads(Path(lock['actual']).read_text())['cases'];OUT.mkdir(exist_ok=False);cases=[]
@@ -31,6 +35,7 @@ def run():
   for o in ops:
    ix,wi,bi=map(int,o['inputs']);oy=int(o['outputs'][0]);w=meta.get_tensor(wi).astype(np.int64);bias=meta.get_tensor(bi).astype(np.int64);ins,inz=details[ix]['quantization'];outs,outz=details[oy]['quantization'];ws=details[wi]['quantization_parameters']['scales'].astype(np.float64)
    constants[oy]=(w,bias,inz,outz,ins*ws/outs)
+  assert set(initial)=={2,4,8,12,20,29}
   def calc(x,o):
    oy=int(o['outputs'][0]);w,b,iz,oz,m=constants[oy];v=x-iz
    if o['op']=='DEPTHWISE_CONV_2D':acc=np.sum(v*w[0,:,0,:],axis=0)+b
@@ -45,7 +50,8 @@ def run():
    hi=min(127,int(np.rint(6/details[oy]['quantization'][0]))+oz) if o['op']=='FULLY_CONNECTED' else 127
    return np.clip(value,lo,hi).astype(np.int64)[None,:]
   for order,row in enumerate(r for r in rows if r['target']==target and r['condition']==condition):
-   with np.load(row['arrays_path']) as a:q=a['quantized_input'];baseline=a['uint8']
+   assert sha(row['arrays_path'])==row['arrays_sha256']
+   with np.load(row['arrays_path'],allow_pickle=False) as a:q=a['quantized_input'];baseline=a['uint8']
    runs=[];digests=[];metrics={}
    for repeat in range(2):
     states={k:v.copy() for k,v in initial.items()};digest=hashlib.sha256();i=Interpreter(model_path=arm['path'],experimental_op_resolver_type=OpResolverType.BUILTIN_REF,num_threads=1,experimental_preserve_all_tensors=True);i.allocate_tensors();out=i.get_output_details()[0]['index'];traces={};scores=[]
@@ -66,6 +72,6 @@ def run():
    with (OUT/'cases.jsonl').open('a') as f:f.write(json.dumps(case)+'\n')
    print(json.dumps(dict(target=target,completed=order+1,exact=case['all_encoder_fc_exact'])),flush=True)
  result=dict(plan_sha256=sha(P),cases=cases,all_encoder_fc_exact=all(c['all_encoder_fc_exact'] for c in cases),limits=lock['policy']);assert len(cases)==540
- (R/'4090-hey-broad-fixed-grid-recursive-result-v1.json').write_text(json.dumps(result,indent=2)+'\n')
+ with (R/'4090-hey-broad-fixed-grid-recursive-result-v1.json').open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
