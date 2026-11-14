@@ -40,9 +40,49 @@ Mac source/receipt review matches every original NPZ identity. The original
 metadata census is complete on both machines, with byte-identical output.
 Common-negative command carriers are absent from the actual training metadata;
 11 of 13 persistent Nyx float false clips use command carriers, while two bare
-false clips remain. The observed surviving-window trace remains outstanding,
-and no new recognition training intervention has been selected from expected
-mass alone.
+false clips remain. GPU has now supplied its first-10,000-batch surviving-window
+census and independent coordinate-to-tensor reconstruction. Mac authenticated
+the archive and every payload, but has not yet independently reduced the trace.
+The reported 227,714 surviving common-negative slots per word are all bare.
+This is a coverage observation, not proof of the cause of the recognition gap.
+
+GPU subsequently locked 1,620 Kokoro common-negative command-context requests
+and reported starting native CPU synthesis (46d7e75d / d335edac). These are
+reported partial results, not a complete admitted pack or new trained candidate.
+The derived Kokoro graph has explicit random seeds; its new waveforms do not
+share the original bare anchors' random realization. The proposed intervention
+therefore changes command context, duration/crop and waveform realization; it
+must not be described as a text-only causal experiment.
+
+## Current stage objective
+
+Deliver one interpretable paired recognition result: original raw-FP32
+continuation versus the predeclared Kokoro common-negative command-context
+substitution, for both Hey Willow and Hey Nyx. Use the same original final
+initialization, optimizer, fixed-final training budget and unchanged positive,
+reciprocal, own-prefix and ambient inputs. Freeze the complete actual tensor
+schedules before training. Preserve the already-running learned-grid job and
+its original handles; do not restart or interrupt it for this stage.
+
+Mac first independently checks saved window coordinates and grouped metadata
+counts. GPU completes the native pack audit and renderer/features/schedule lock,
+then executes the paired recognition continuation according to the existing
+sequencing plan. A synthesis timeout is not permission to restart or silently
+replace requests. Preserve failures and do not filter by wake scores.
+
+The next result must report all fixed, already-consumed diagnostic points and
+separate target recall, bare versus command-carrier near-word errors,
+per-source behavior, background FAR and generated-boundary timing. This phase
+does not open fresh development or independent acceptance. It tests whether the
+specific intervention helps; it does not establish mature-model parity. After
+a promising result, separately freeze the next evaluation protocol and work
+points before opening the corresponding development or acceptance material.
+
+The overall completion criterion remains matched-source/environment/FAR
+comparison against official Hey Willow, then independent acceptance and P4
+resource, first-utterance and long-call/reconnect validation. Hi/Hey Muse is a
+supplementary word-length reference; Hi ESP is an engineering reference. No
+candidate is qualified or promoted at this stage.
 
 Original trained-model P4 numeric/resource fixtures have separately been
 prepared and cross-linked: four unchanged models, six complete training streams,
