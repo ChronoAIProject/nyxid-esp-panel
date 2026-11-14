@@ -1,0 +1,180 @@
+{
+  "schema": "mac-wake-fatal-cleanup-regression-v1",
+  "base_ref": "56292c82",
+  "original_failed_cases": [
+    "model recreate fails",
+    "recreated model priming fails",
+    "AEC recreate fails"
+  ],
+  "before_retained_allocations": [
+    0,
+    2,
+    2,
+    10
+  ],
+  "after_retained_allocations": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "source_change": "Keep model backing owners reachable and release model/AEC/AGC/owners/buffers on every fatal initialization/rearm exit. Keep borrowed weights alive until model destruction.",
+  "reports": {
+    "original": {
+      "schema": "wake-failure-cleanup-host-v1",
+      "source_ref": "56292c82",
+      "source_sha256": "741aeae018833a3c27cd2c9fec7cbbe7c1b8ea03c30fe10b252e902bdb90abb9",
+      "extracted_branch_sha256": [
+        "984a40b8ddd323236f8771068f4c3f8976a73fed9b7f594f17c4104c2fe44be8",
+        "776bbc56be9faa4d368f867dc209016760f0793009b26bae48cd934199a27060",
+        "370f36d2b12aea8118dcc29cf20c89de0d8e1c5ed9ab36c92a65847bd30fbae6"
+      ],
+      "probe_sha256": "9d5d3b15f3da82e731d1b95e51a15b70a113745e65c3a742da8c705a152d6b18",
+      "expect": "retained",
+      "cases": [
+        {
+          "exit_code": 0,
+          "scenario": 0,
+          "retained_allocations": 0,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": true
+        },
+        {
+          "exit_code": 1,
+          "scenario": 1,
+          "retained_allocations": 2,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": false
+        },
+        {
+          "exit_code": 1,
+          "scenario": 2,
+          "retained_allocations": 2,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": false
+        },
+        {
+          "exit_code": 1,
+          "scenario": 3,
+          "retained_allocations": 10,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": false
+        }
+      ],
+      "expectation_met": true,
+      "no_hardware_operation": true,
+      "no_audio_io": true,
+      "limits": "Actual extracted failure branches with tracked host allocations and resource API shims. Not a full task, ESP allocator/AEC implementation, hardware leak reproduction or cause of observed restarts."
+    },
+    "fixed": {
+      "schema": "wake-failure-cleanup-host-v1",
+      "source_ref": "WORKTREE",
+      "source_sha256": "46e3218f6013322f87d61305520ea294ace48c3eedb676f99ec61909844637e0",
+      "extracted_branch_sha256": [
+        "f601bec8a53834c80d346111d2e43cd39f87af19475855edae26ec74e4520d14",
+        "2673c5bc2e3c2f614c4936494a72cb554cb760bcc71457670384ae5f7a18dd3a",
+        "6ca217f91cb86490c7d621876fe481929c88fcff27bc8b59189f105de0c33dd6"
+      ],
+      "probe_sha256": "9d5d3b15f3da82e731d1b95e51a15b70a113745e65c3a742da8c705a152d6b18",
+      "expect": "released",
+      "cases": [
+        {
+          "exit_code": 0,
+          "scenario": 0,
+          "retained_allocations": 0,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": true
+        },
+        {
+          "exit_code": 0,
+          "scenario": 1,
+          "retained_allocations": 0,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": true
+        },
+        {
+          "exit_code": 0,
+          "scenario": 2,
+          "retained_allocations": 0,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": true
+        },
+        {
+          "exit_code": 0,
+          "scenario": 3,
+          "retained_allocations": 0,
+          "audio_releases": 1,
+          "task_exits": 1,
+          "passed": true
+        }
+      ],
+      "expectation_met": true,
+      "no_hardware_operation": true,
+      "no_audio_io": true,
+      "limits": "Actual extracted failure branches with tracked host allocations and resource API shims. Not a full task, ESP allocator/AEC implementation, hardware leak reproduction or cause of observed restarts."
+    },
+    "ownership": {
+      "schema": "wake-audio-release-tail-probe-v1",
+      "source_ref": "WORKTREE",
+      "source_sha256": "46e3218f6013322f87d61305520ea294ace48c3eedb676f99ec61909844637e0",
+      "tail_sha256": "9a1b31da40b1e8fe480e04607c5377572febdb1080ca1fbf03139205a62342ba",
+      "probe_source_sha256": "69b4bceeb98fc26d29c5374f62086bddf4b6d383655e9371145687103dc40788",
+      "expected": "safe-release",
+      "sanitizers": "undefined",
+      "cases": [
+        {
+          "case": "empty",
+          "exit_code": 0,
+          "pending_call": false,
+          "held_until_detach": false,
+          "premature_release": false,
+          "contract_passed": true
+        },
+        {
+          "case": "pending",
+          "exit_code": 0,
+          "pending_call": true,
+          "held_until_detach": true,
+          "premature_release": false,
+          "contract_passed": true
+        }
+      ],
+      "expectation_met": true,
+      "microphone_or_speaker_used": false,
+      "hardware_operated": false,
+      "limits": "Only the unchanged extracted wake-task release tail runs with deterministic pthread lifecycle shims. No I2S/codec/model/network/full FreeRTOS or long-call hardware acceptance."
+    },
+    "p4-normal": {
+      "exit_code": 0,
+      "source_sha256": "46e3218f6013322f87d61305520ea294ace48c3eedb676f99ec61909844637e0",
+      "compiler": "/Users/auric/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20260121/riscv32-esp-elf/bin/riscv32-esp-elf-gcc",
+      "profile": "Existing ordinary IDF5.5.4 P4 rev1_3 compile database, no experimental detector",
+      "hardware_flashed": false,
+      "object_bytes": 674332,
+      "object_sha256": "61b020d2ec5d731de576f5687a6b6d0ebed30563fc3c072610e17f56e37a8a01"
+    },
+    "p4-experimental": {
+      "exit_code": 0,
+      "source_sha256": "46e3218f6013322f87d61305520ea294ace48c3eedb676f99ec61909844637e0",
+      "compiler": "/Users/auric/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20260121/riscv32-esp-elf/bin/riscv32-esp-elf-gcc",
+      "profile": "P4 rev1_3 panel_voice TU with existing experimental runtime interface enabled; not experimental full link",
+      "hardware_flashed": false,
+      "object_bytes": 670280,
+      "object_sha256": "42bd3e9fec54d7cdeba1924ba99880b2c8ae9252e2592c548d9b2d05d97866a1"
+    }
+  },
+  "archive": "research/wakeword_p4/results/mac-wake-fatal-cleanup-regression-v1.tar.gz",
+  "archive_bytes": 5166,
+  "archive_sha256": "9cdf993a36a6c2507cd9ab611015d7746faf930584d8d793f69b6bf253b6ca03",
+  "hardware_flashed": false,
+  "release_published": false,
+  "limits": "Confirmed host-instrumented failure-path retained allocations, not a demonstrated steady-state hardware leak or cause of previous resets. P4 compilations cover modified normal and experimental translation units, not a new complete link or long-call acceptance.",
+  "probe_scaffolding_correction": "First fixed probe failed before C generation because it expected an obsolete branch prefix. Selector corrected; firmware patch unchanged. Original failed command/evidence remains in local history; original/fixed v2 use the same corrected probe."
+}

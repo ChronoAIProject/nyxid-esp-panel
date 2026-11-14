@@ -94,9 +94,10 @@ def main():
     start = text.index('static void wake_task(')
     end = text.index('\nstatic void speaker_task(', start)
     body = text[start:end]
-    first = body.rindex('        atomic_store(&wake_listening,false);')
     final = '        vTaskDelay(pdMS_TO_TICKS(100));'
-    tail = body[first:body.rindex(final) + len(final)]
+    end = body.rindex(final) + len(final)
+    first = body.rindex('        atomic_store(&wake_listening,false);', 0, end)
+    tail = body[first:end]
     assert tail.count('product_audio_release();') == 1
     args.output_dir.mkdir(exist_ok=False)
     unit = args.output_dir / 'release_tail.c'

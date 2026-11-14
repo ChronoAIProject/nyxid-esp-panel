@@ -966,6 +966,7 @@ static void wake_task(void *arg)
 #endif
     const esp_wn_iface_t *wn=NULL;model_iface_data_t *model=NULL;
     const char *model_name=NULL;bool model_dirty=false;
+    void *root=NULL;srmodel_list_t *models=NULL;
     aec_handle_t *aec=NULL;void *agc=NULL;
     int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL,*adjusted=NULL,*detect=NULL;
     size_t wn_used=0,agc_used=0;int chunk=0,wn_chunk=0;
@@ -987,8 +988,6 @@ static void wake_task(void *arg)
         }
         if (!model) {
 #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
-            void *root=NULL;
-            srmodel_list_t *models=NULL;
             model_name="hey_nyx";
             wn=&panel_wake_runtime_iface;
             model=wn->create(model_name,DET_MODE_95);
@@ -997,10 +996,10 @@ static void wake_task(void *arg)
             // expanded once into PSRAM. Both existing OTA slots keep their size.
             uint32_t size=(uint32_t)wake_model_start[0] | (uint32_t)wake_model_start[1]<<8 |
                 (uint32_t)wake_model_start[2]<<16 | (uint32_t)wake_model_start[3]<<24;
-            void *root=size>=1024 && size<=512*1024 ? heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT) : NULL;
+            root=size>=1024 && size<=512*1024 ? heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT) : NULL;
             uLongf expanded=size;
             bool unpacked=root && uncompress(root,&expanded,wake_model_start+4,wake_model_end-wake_model_start-4)==Z_OK && expanded==size;
-            srmodel_list_t *models=unpacked?srmodel_load(root):NULL;
+            models=unpacked?srmodel_load(root):NULL;
             char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,"hiesp");
             model_name=name;
             wn=name?&esp_sr_wakenet9_quantized:NULL;
@@ -1022,14 +1021,7 @@ static void wake_task(void *arg)
             if(!model || !aec || !agc || !capture || !mic || !ref || !clean || !adjusted || !detect ||
                 wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1 ||
                 !prime_wake_model(wn,model,detect,wn_chunk)) {
-                wake_status("unavailable");product_audio_release();
-                if(model)wn->destroy(model);
-                if(aec)aec_destroy(aec);
-                if(agc)esp_agc_close(agc);
-                if(models)srmodel_host_deinit(models);
-                free(root);
-                free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
-                ESP_LOGE("panel.wake","%s listener initialization failed",panel_voice_wake_word());vTaskDelete(NULL);return;
+                goto unavailable;
             }
             ESP_LOGI("panel.wake","%s ready: detector chunk=%d AEC chunk=%d",panel_voice_wake_word(),wn_chunk,chunk);
 #ifdef NYX_PANEL_RESEARCH_RAW_HIESP
@@ -1050,18 +1042,14 @@ static void wake_task(void *arg)
         if(model_dirty) {
             wn->destroy(model);model=wn->create(model_name,DET_MODE_95);model_dirty=false;
             if(!model || !prime_wake_model(wn,model,detect,wn_chunk)) {
-                if(model)wn->destroy(model);
-                if(aec)aec_destroy(aec);
-                if(agc)esp_agc_close(agc);
-                free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
-                wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;
+                goto unavailable;
             }
         }
         wn_used=agc_used=0;
         // Idle listening and each call have separate adaptive filter state,
         // just as the original microphone task constructs a fresh AEC per call.
         aec_destroy(aec);aec=create_voice_aec();
-        if(!aec){wake_status("unavailable");product_audio_release();vTaskDelete(NULL);return;}
+        if(!aec){goto unavailable;}
         xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
         wake_status("listening");
 #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
@@ -1210,6 +1198,19 @@ static void wake_task(void *arg)
         atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
+unavailable:
+    // The model borrows names/weights from models/root across rearm cycles.
+    // Keep those owners reachable until every fatal exit has destroyed it.
+    atomic_store(&wake_listening,false);
+    if(model)wn->destroy(model);
+    if(aec)aec_destroy(aec);
+    if(agc)esp_agc_close(agc);
+    if(models)srmodel_host_deinit(models);
+    free(root);
+    free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
+    wake_status("unavailable");product_audio_release();
+    ESP_LOGE("panel.wake","%s listener initialization or rearm failed",panel_voice_wake_word());
+    vTaskDelete(NULL);
 }
 static void speaker_task(void *arg)
 {
