@@ -64,9 +64,34 @@ python research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_
   --upstream "$UPSTREAM" --output-dir "$PRIVATE/all-final-constant-capture-no-fold-v2"
 ```
 
-This plan is prospective here. It compares eager/captured/runtime-scale methods
+The diagnostic compares eager/captured/runtime-scale methods
 with all allocated compiled constants, saves every difference and repeats, and
 performs no activation inference, optimizer update, export, or audio operation.
 Isolated graphs do not establish full-training-graph parity, propagation of a
 code difference, or recognition/FAR effects. Development and acceptance remain
 closed; P4 resource, first-utterance and long-call verification remain pending.
+
+Actual version 2 completed both settings: all 80 constants across three methods
+and two settings (480 comparisons) match the original compiled codes on Mac.
+The two runs report exact repeats and unchanged variables. An independent
+TensorFlow-free saved-array auditor reads raw FlatBuffer buffers, verifies all
+480 comparisons and reported differences, and records cross-setting quotient
+changes. Only captured-graph quotient arrays change between the two settings;
+the saved values, dequantized outputs and integer codes do not change. The
+previous GPU tensor20 mismatch does not reproduce in this isolated native Mac
+control. Tensor materialization, graph scope and platform differ from the GPU
+original; this cannot invalidate its failure or prove the original graph fixed.
+
+```sh
+python research/wakeword_p4/experiments/audit_all_final_constant_capture_mac_v2.py \
+  --default "$PRIVATE/all-final-constant-capture-default-v2" \
+  --no-fold "$PRIVATE/all-final-constant-capture-no-fold-v2" \
+  --payload-root "$PRIVATE/gpu-consistency-fixed-grid-mac-witnesses-v1-authenticated/replay-payload" \
+  --report "$PRIVATE/mac-all-final-constant-capture-saved-array-audit-v2.json"
+```
+
+This auditor does not independently verify repeats or variable snapshots, since
+those were asserted by the original runner but not separately saved. The public
+`mac-all-final-constant-capture-v2.tar.gz` artifact retains all eight actual NPZs,
+both reports/logs, audit, and the source/plan snapshot; its committed receipt
+records the archive and anonymous redownload hashes.
