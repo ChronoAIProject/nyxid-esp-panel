@@ -1,0 +1,29 @@
+{
+  "schema": "multispeaker-batch-probe-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_multispeaker_batches_v1.py": "762c256f63b2a704b8bf4401d55a549b7871ae45d3a5990c18acc4268356c29a",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/multispeaker_batch_v1.py": "ee2e3717064f783804869f11137158c5470859821cfa2d3dede544fa29334f37",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/training/ambient_sampling.py": "22fee8cf1b1876dbc87a5310758151ccccba2ee957b4c8365a1ef2170f35fb1c",
+    "research/wakeword_p4/results/4090-multispeaker-features-independent-audit-v1.json": "69ad2cf8570dc536655b3d175825d49e88f7ab58cf8ed1e834cfab30b71ca79a",
+    "research/wakeword_p4/results/4090-multispeaker-coverage-features-v1.json": "3eb2bf34360ec9faad97f162bfae4be601c2a9668add62853934022bacdb5bfb",
+    "research/wakeword_p4/results/4090-multispeaker-context309-initialization-v1.json": "d9a298f66bee2883383812e719adf12b40ba7e86b87abfc60205086ba78a1ef0",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/multispeaker_feature_training_contract_v1.md": "baac2879368d63f349b0bb097f530cddf6b054995f1af24ee32a902643bdbf74",
+    ".local/wakeword/multispeaker-coverage-features-v1/narrow/features.json": "8d051371af70df47fbf7d93eccb1a5674ad65c4c14f3468ebcaf6d0a11c8c697",
+    ".local/wakeword/multispeaker-coverage-features-v1/narrow/features.bin": "e1fdf72a0b64625de977909ec582174cf955093c76364293e1c353f61201ddbc",
+    ".local/wakeword/multispeaker-coverage-features-v1/narrow/human.json": "c4c6be4e6d6b81962ca52e4205828596f544ba22c9d9f466a51c90e8d307530c",
+    ".local/wakeword/multispeaker-coverage-features-v1/narrow/ambient.json": "0477b16c97b6ab364d78bc950e9c91b30e96cab7a971277769e1ef10cfb7dd52",
+    ".local/wakeword/multispeaker-coverage-features-v1/narrow/target-provenance.json": "fddad66e62036b6729d53bc31415225bf0eeaa18ee2b02d6082c8b60a27eb16e",
+    ".local/wakeword/multispeaker-coverage-features-v1/broad/features.json": "1f1ba9e2a028e12888b7294ec4ac3f8db0eb0b3c5612c2a919b7c9dbe13f837d",
+    ".local/wakeword/multispeaker-coverage-features-v1/broad/features.bin": "e1fdf72a0b64625de977909ec582174cf955093c76364293e1c353f61201ddbc",
+    ".local/wakeword/multispeaker-coverage-features-v1/broad/human.json": "c4c6be4e6d6b81962ca52e4205828596f544ba22c9d9f466a51c90e8d307530c",
+    ".local/wakeword/multispeaker-coverage-features-v1/broad/ambient.json": "0477b16c97b6ab364d78bc950e9c91b30e96cab7a971277769e1ef10cfb7dd52",
+    ".local/wakeword/multispeaker-coverage-features-v1/broad/target-provenance.json": "c928a3c9c39b48ac20fdf1516f1e0a459214a8ad70617af9042c2f85a9e8e7aa"
+  },
+  "seed": 726,
+  "batches": 50,
+  "save_actual_first_batches": 2,
+  "context_frames": 309,
+  "expected_new_gib": 0.1,
+  "recipe": "Canonical(engine,label,text,speed,variant) ordered pools, source_id tie break; uniform two-model probability and equal-size pools.32positive/48synthetic-negative/48stratified-original-training-ambient, weight1/20, no prefix negative or mining/masking. Positive whole-container jitter3..27; negative complete timeline from max309/lead-25 through end. One common uniform variate per variable-length endpoint; same permutation/ambient windows across arms.",
+  "limits": "Actual CPU materialization only; source durations and native stochastic outcomes differ, matched lexical/environment cells are not identical waveforms. Zero model/gradient/optimizer calls."
+}
