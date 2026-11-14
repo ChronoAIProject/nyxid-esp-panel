@@ -52,7 +52,52 @@ the 16 discarded ordinary negatives, zero-labeled own-prefix windows and
 invariance to scaling one engine's corpus. They pass on Mac. They are not an
 execution of the original corpus census.
 
-## GPU-side original metadata census, not yet executed on Mac
+## Completed original metadata census on GPU and Mac
+
+GPU `7da71cda` ran the unchanged `28eb5a87` reducer on the original metadata,
+exit 0. Publication `460bcecc` supplied the four original metadata/provenance
+files. Mac anonymously downloaded the 22,211,837-byte archive, checked SHA-256
+`fe15ab839bb6df3f17b264f6b84bd48f5d6199f7665bbac4aec75ddef24d0e9b`,
+the exact member set and all four original payload hashes. The intake receipt
+is `../results/mac-original-broad-training-metadata-intake-v1.json`.
+
+Mac then ran the same pinned reducer on these authenticated original bytes,
+exit 0. The 56,213-byte output is byte-identical to GPU's original result:
+SHA-256 `c2cd420a6dc501f9b60aa4172e8976b05438dfb562914e0e6be5e9454bcb66fe`.
+Result: `../results/mac-hey-broad-original-metadata-sampling-mass-v1.json`.
+Both targets have own 25,128, reciprocal 25,128 and common 56,700 rows. All
+common-negative carriers are bare. Reciprocal command negatives are present.
+Expected main positives are 16 bare and 16/3 for each of light/time/timer;
+prefix negatives have four slots per carrier. These remain sampling
+expectations, not an observed draw or crop-content census.
+
+The join in `join_original_training_carriers_and_errors_mac_v1.py` authenticates
+the already-consumed development manifest and matches the original persistent
+false-event records. Of 13 Nyx float errors at every registered point, two are
+bare, four carry "turn on the light", one "what time is it", and six "set a
+timer". Each development carrier has 72 common clips. All three erroneous
+literal phrases already have 6,300 bare training rows each; their command
+combinations have none. See
+`../results/mac-original-training-carrier-and-persistent-error-join-v1.json`.
+This makes the coverage gap concrete, but does not prove causality: two bare
+errors remain, all development clips use one Semaine voice, and the variants
+are correlated. No data, label, boundary, threshold or model was changed.
+
+```sh
+python3 research/wakeword_p4/experiments/join_original_training_carriers_and_errors_mac_v1.py \
+  --repository-root REPO --development-packet ORIGINAL_REUSED_DIAGNOSTIC_PACKET \
+  --census MAC_ORIGINAL_METADATA_CENSUS.json --report NEW_JOIN.json
+```
+
+GPU `460bcecc` also independently recomputed the saved 135-stream events with
+its own streaming FSM. The Mac source/receipt review matches its auditor hash,
+original full540 result and all 540 original NPZ identities to the already
+authenticated Mac packet. See
+`../results/mac-gpu-training-event-audit-source-review-v1.json`. This is source
+and identity review of the remote execution, not a new local execution of the
+GPU auditor. The independent counts agree with Mac's completed event run.
+
+## Original metadata census interface
 
 The default operation requires the original two target metadata files and
 provenance receipts. It checks their hashes against the original published
@@ -71,7 +116,7 @@ python3 research/wakeword_p4/experiments/audit_hey_broad_metadata_sampling_mass_
   --report NEW_PRIVATE_CENSUS.json
 ```
 
-Publish the unmodified result and exact command/session/exit. An observed draw
+Retain the unmodified result and exact command/session/exit. An observed draw
 census still needs the original source/window trace, excluding overwritten
 slots and matching the retained tensor schedule. This tool does not supply
 that evidence, measure pronunciation or window content, change the sampler,

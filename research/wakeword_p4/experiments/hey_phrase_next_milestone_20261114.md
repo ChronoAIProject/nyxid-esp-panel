@@ -32,3 +32,19 @@ phase. Preserve source PCM speed and the single I2S → AEC → AGC → ordered 
 path. Do not use Mac speaker playback, recording or new Mac TTS, and do not
 operate the dining-room production board. GPU/Mac coordination remains in
 [Issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13).
+
+## Current evidence
+
+The saved-event independent check is now reported complete by GPU `460bcecc`;
+Mac source/receipt review matches every original NPZ identity. The original
+metadata census is complete on both machines, with byte-identical output.
+Common-negative command carriers are absent from the actual training metadata;
+11 of 13 persistent Nyx float false clips use command carriers, while two bare
+false clips remain. The observed surviving-window trace remains outstanding,
+and no new recognition training intervention has been selected from expected
+mass alone.
+
+Original trained-model P4 numeric/resource fixtures have separately been
+prepared and cross-linked: four unchanged models, six complete training streams,
+two fresh repeats and 8,336 prepared calls. No P4 execution has occurred; this
+does not establish timing, resource headroom, recognition or acceptance.

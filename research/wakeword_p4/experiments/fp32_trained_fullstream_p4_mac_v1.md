@@ -53,3 +53,23 @@ Expected build environment is the previously linked ESP-IDF v5.5.4,
 existing P4 revision defaults. Build-only success does not measure real P4
 arena/latency, panel headroom, audio integration, recognition/FAR or acceptance.
 Actual target/ABI/toolchain and all embedded bytes must be checked after link.
+
+## Completed cross-build
+
+Preparation was published as `a828342` before build. Original build session
+`7488` exited 0 under ESP-IDF v5.5.4 / esp-14.2.0_20260121. The independent
+build collector authenticates every prepared generated file, copied runtime
+component, all four model/six stream/reference assets inside the actual image,
+the RISC-V ELF target and `ilp32f` ABI. The 1,331,120-byte image has 14,780 bytes
+of static DRAM data/bss, excluding all runtime arena allocations and stacks.
+See `../results/mac-fp32-trained-fullstream-p4-link-v1.json`.
+
+No hardware was accessed. The prepared 8,336 calls have not run on P4, so this
+does not establish target timing, arena use, repeat equality or numeric parity.
+The original build log, ELF, image, section sizes and fixture assets remain in
+the private `fp32-trained-fullstream-p4-v1` run directory. Reproduce collection:
+
+```sh
+python3 research/wakeword_p4/experiments/collect_fp32_trained_fullstream_p4_build_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN --report NEW_REPORT.json
+```
