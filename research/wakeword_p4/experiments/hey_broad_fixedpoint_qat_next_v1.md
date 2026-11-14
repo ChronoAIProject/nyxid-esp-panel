@@ -1,0 +1,11 @@
+# Exact forward and declared training gradient preflight
+
+Current independent recursive reference validates deployed encoder/FC inference only. It has no optimizer or trainable gradient. Full270 v2 must finish; do not promote from partial results.
+
+Next additive preflight uses original compensated H5 variables and fixed actual exported grids. Quantized weights/bias codes must match deployed constants at initialization. Exact int32 accumulator is computed via integer-valued float64 convolution and checked within int32 bounds; each forward requant uses source-derived conv double rounding. Scalar reference FC uses actual double-scale round-away overload. Shared trainable variables remain ordinary export graph variables; no wrapper identity replacement.
+
+`hey_broad_fixedpoint_ste_v1.py` introduces one primitive: double-rounding forward and explicit clipped continuous STE for accumulator. Its analytic surrogate slope is actual real multiplier times output scale in the closed output representable interval, zero outside. No gradient claim for integer discontinuities, no finite-difference fiction. Input must be exact integer-valued and int32-bounded. It is not yet tested or integrated and must not be used for training.
+
+Before integration test all saved actual accumulators plus signed boundary/tie/saturation vectors against independent NumPy reference, and analytic weighted gradient against the declared formula. Then test first two actual full128 training batches per arm: input/label/weight SHA matched, no update, finite non-None gradients, repeat exact, model/BN variables unchanged. Preserve raw unbounded training-head logit BCE gradients, separate deployment bounded diagnostics.
+
+Streaming preflight uses original artifact initializer bytes; separately label explicitzero-reset controls. Training offline225 batch history and deployment persistent state contracts must not be conflated. No rewrite of historical exports or state claims. After exact-forward/gradient controls, prospectively freeze paired control/treatment optimizer, sampler, fixed steps/final checkpoint, recalibration/export and full270 candidate gates. No new development or acceptance access before candidate admission; v30 retained.
