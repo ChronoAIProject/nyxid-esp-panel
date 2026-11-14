@@ -1,0 +1,216 @@
+{
+  "plan_sha256": "007c817da1bbd4c374b4442a7c83567a0a44ed7de15b72cfff5c300bde157f90",
+  "operators": [
+    {
+      "index": 50,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 1,
+          "total": 5010
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 5010
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 1,
+          "total": 5010
+        }
+      },
+      "accumulator_min": -538248,
+      "accumulator_max": 445620
+    },
+    {
+      "index": 52,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 4,
+          "total": 5010
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 5010
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 4,
+          "total": 5010
+        }
+      },
+      "accumulator_min": -42335,
+      "accumulator_max": 34350
+    },
+    {
+      "index": 53,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 53,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 53,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -24837,
+      "accumulator_max": 12800
+    },
+    {
+      "index": 55,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 32,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 1,
+          "unequal": 23,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 32,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -39120,
+      "accumulator_max": 49704
+    },
+    {
+      "index": 56,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 27,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 27,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -20129,
+      "accumulator_max": 15922
+    },
+    {
+      "index": 58,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 3,
+          "unequal": 58,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 3,
+          "unequal": 48,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 3,
+          "unequal": 58,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -35722,
+      "accumulator_max": 46584
+    },
+    {
+      "index": 59,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 22,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 22,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -15345,
+      "accumulator_max": 9245
+    },
+    {
+      "index": 61,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 17,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 1,
+          "unequal": 13,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 17,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -190768,
+      "accumulator_max": 50317
+    },
+    {
+      "index": 62,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 35,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 35,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -18482,
+      "accumulator_max": 15601
+    }
+  ],
+  "arrays_path": ".local/wakeword/hey-broad-integer-requant-v1.npz",
+  "arrays_sha256": "8fdaf87297a24241294df6e8db3874cfd06c11816c6ce187c93329d214b9eef0",
+  "limits": "All167 steps Willow14 nine encoder operators, actual saved inputs/history and actual exported integer weights/bias. Exact int64 accumulator with int32 bounds assertion. Compare mathematical nearest-even versus source-based double/single fixedpoint rounding, both reported without selecting by candidate gate. Reference sources public LiteRT v2.3.0 tag, not proof of installed binary build flags. No invoke, training, export, new data or admission changes.",
+  "model_invocations": 0
+}
