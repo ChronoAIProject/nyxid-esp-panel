@@ -10056,4 +10056,14 @@ Read actual Mac Issue13 comments6884389027/6884346145 and referenced6884218322. 
 
 ## Actual complete INT8 consumed recognition traces available
 
-Original collector87251/PID185779 and screen82886/PID185780 both genuinelyexit0. Independent savedtrace and numerical auditors synchronousactualexit0. All744completeinputs/twofreshrepeat/codes/probability/quantization/clocks checked, both372inputs including original10.483944826388889hcontinuousbackground (permodel), nointernalreset. All270wholewave numerical diagnostic cases pass. Numerical result is supplementary, not recognitionprerequisite. New scoringlock binds saved744traces/runtime and original138point policy, no selectedthreshold or freshdata. Pushbeforeactualeventscoring; v30 unchanged.
+Original collector87251/PID185779 and screen82886/PID185780 both genuinelyexit0. Independent savedtrace and numerical auditors synchronousactualexit0. All744completeinputs/twofreshrepeat/codes/probability/quantization/clocks checked, both372inputs including original10.483944826388889hcontinuousbackground (permodel), nointernalreset. Wholewave numerical diagnostic: narrow135/135 pass, broad133/135 pass; broad requests48393/106323 fail the originalfive-step p99<=.1 limit (worst.10760704588890069). Numerical result is supplementary, not recognitionprerequisite. New scoringlock binds saved744traces/runtime and original138point policy, no selectedthreshold or freshdata. Pushbeforeactualeventscoring; v30 unchanged.
+
+
+## Correction to waveform diagnostic interpretation
+
+Initial commentary incorrectly equated successful process exit and finalcase pass with all270pass. Actual independent JSON shows narrow135pass/broad133pass, two broad numerical failures48393/106323. Corrected journal text; original numeric result/audit preserved unchanged. No threshold, calibration or weights altered. Existing recognition-priority instruction means these diagnostic score differences do not block actual INT8 behavioral evaluation. Original scoring session59270 (wrapperPID188139/child188172) launched only after pushed scoringlock; partial output is not a final behavior conclusion.
+
+
+## Actual INT8 recognition intervention rejected
+
+Original scoring59270 wrapper188139/start571805 child188172/start571937 genuineexit0; independent39124 genuineexit0, all276points independently verified. Actual broad only5FARqualifiedpoints with4–5/36complete,0/9standalone; narrow0FARpoints. Both0negative-onlyjointpoints, allthresholds havepositivepresourceevents (narrow24–36,broad9–24). Supplemental savedallevents reduction at fixedgridmax.99609375: narrow240clips/events atsample7040; broad80clips/events samples11840–13760, beforeactualsourcestart, no causalclaim. Allcurves/deltas/historicalreferences and findings published. Speakercoverage failed practicalrecognition; no selectedthreshold/newcheckpoint/rescue/freshdev/acceptance, v30 retained. Next distincthypothesis must consider originalstartup/statecoverage and historicalfailures; overallgoalactive.
