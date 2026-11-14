@@ -8918,3 +8918,6 @@ Authenticated immutable d53d9d62a09fec26babfbaee5553b2136dc1720f original report
 
 ### Original 540 fullstream run started after Mac authentication
 Execution lock eed9ee29 was pushed before starting original session74646/PID1555627. Authenticated Mac intake fa56d941 is bound. Complete original135requests shared by4models, no new export. Original log and PID/starttime retained locally; Issue6874827282 records start. Prepared saved-array-only package script for all540captures and original4models; syntax checked, packaging waits for terminal original result and independent audit. No freshdev/recognition access.
+
+### Original raw FP32 fullstream terminal results
+Original session74646 exit0, all540/540 probability/phase/finite/exact-repeat gates passed. Max TF-LiteRT absolute error1.3768672943115234e-5; max phase1.1235475540161133e-5, both below original1e-4. All startup retained, four original raw models unchanged. Independent saved-array auditor verifies540cases and shared135input/clocks identities; separate same-implementation frontend audit redecodes all135original PCM and reproduces raw features exactly across all540captures. Both audits exit0, no model invocation. Original result preserved byte-for-byte. Actual fullstream MicroInterpreter remains pending; no recognition/FAR/INT8 admission or freshdev access.
