@@ -1,0 +1,1281 @@
+{
+  "plan_sha256": "326d9acf70426ed0fa602df8ab7ef770045383fde38536f7501e7a06053ebeab",
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "original_h5_sha256": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829",
+      "original_parameters": 24301,
+      "pooled_parameters": 22561,
+      "pool_size": [
+        30,
+        1
+      ],
+      "new_head_shapes": [
+        [
+          60,
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "new_head_value_sha256": "3837a4f100accb06b2459725f03e1bf86cdfb2721ef7ad06b75f98ba3dc65494",
+      "copied_encoder_and_bn": [
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                40,
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "5d2fda39d25b2979f6fee92ddd3e9f259ce63dabbe58da7ae9c5cbec2435c770"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                30,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "8f57bbd570c22952df4ac2e1dbe706675e5cf19d6767fda680e5b386de873192"
+            },
+            {
+              "shape": [
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "1ecccddf7385299ca0b3dae90f8e58bd53ff803cfb3e5c4d766b5b36e9b2d363"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                30,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "928652ba84d815a296a44e63f80ce0d43baf95645a054f1f8af900cd004d9d7b"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "674310f364fb2e25b417e6c2b0098c862121941d47d730045817e4686f6c00ef"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e99eceec8f1fbc548b9244aa2dbc6322545ad2d6cd3313094d6debd16bc74cbf"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                9,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "670979609450dad05c135e6e8394096a8166dc48fcda706b672818965e8ed341"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "c5604322b1d2790ca06625965b3687dca940e75138340f1ae9b5009d775a2709"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "c303806f6c1f80f63602f3921084f2a973defba8c43980f43289e27db9d23604"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "11a67da3afa6012af01db52b4135eb588aea8fee059036ee58dc429e196c50ac"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "427f3109aea3c2eab78617b535e1cde0ddb52b4ab17cbcb808ae36bc861106aa"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                13,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "14af9fd2fd2dd7a3f9cec86f753c89825fb7b88837b27d1a458881c093620353"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "d2bf71596232fcfcfd3321a4ed3d24d8d4e7542599d525959d71f333c3356ddf"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "88d252ce7d986f4288405921eeb1100bf4f5f0a3c33e781d3e99f5e10b6b0992"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e17543febfab6158dcac2836c1daa5d3d6c893ce2250aff333374daec844f72f"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "b7ab9e724785138b8cffc8bbc0cc99aa3a8a9823f03fe73f45c6b679f777b8c8"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                21,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "2467601ebe2d23243172fd6ed0bd873b89928a6e1743b7388d42c4874077e37e"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "44a2ccc117b8445e0947d26dc144a02f63a73db5375326592c60eca5cfba1e82"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "1bfae347d23fdae785579f7770763c83d341420fe4ed9e3b73124e0049043ade"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "1f14c275147b7e98adde654064284a51e6406c31835efb03b57c264b433d5fbe"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e4cabbf27852458506040f96c68b0b9c185602f1c5b3794287becac268553388"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "original_h5_sha256": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54",
+      "original_parameters": 24301,
+      "pooled_parameters": 22561,
+      "pool_size": [
+        30,
+        1
+      ],
+      "new_head_shapes": [
+        [
+          60,
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "new_head_value_sha256": "f32f0062ced8cbf2e25addfbf40ef67f498e1380c6bccebdfe45430fbe744957",
+      "copied_encoder_and_bn": [
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                40,
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "ab32ff41c333e35cf1b7da5e3e9c4f0f71eb290970dcaf3518acfeafe2e234a9"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                30,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "de6c43baa2354aa163db90467ec5f3f5dd9bfe8bbf9e3577840ebe2ea2c44a16"
+            },
+            {
+              "shape": [
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "69e08ccac7a9d4987befd06983d176534fd6ffeac8c4fcf710ca9b4c649f8022"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                30,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "8e2579bf31518c03673b5e538b2e96de2deac9b4dd51c66ff8f9e1ac83812337"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "674310f364fb2e25b417e6c2b0098c862121941d47d730045817e4686f6c00ef"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e99eceec8f1fbc548b9244aa2dbc6322545ad2d6cd3313094d6debd16bc74cbf"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                9,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "f2d4f245ac6fc31c2b36796f13f911a327971f1f069414a54b6c9bf081943a75"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "1c602562bdf12ae452cc0fc189f400f4177907e69ddfaea18ea317b9954e8ad9"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "90669b18a73697822a291e7a42ca72120d5fe5654a31d657f24111a3c8459ff2"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "11a67da3afa6012af01db52b4135eb588aea8fee059036ee58dc429e196c50ac"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "427f3109aea3c2eab78617b535e1cde0ddb52b4ab17cbcb808ae36bc861106aa"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                13,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "d2f812f7080095f51e0d4080fb3586527379c285ee931930e4b992fce0af4f8a"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "40590c245f5646cc0b1ce3f034b2e526c51f5696e7adc474cd0ea06db23e4364"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbca57daf680528f8c691f063300bdc1c6cf571ca434ef6ec03dbb26c5510cce"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e17543febfab6158dcac2836c1daa5d3d6c893ce2250aff333374daec844f72f"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "b7ab9e724785138b8cffc8bbc0cc99aa3a8a9823f03fe73f45c6b679f777b8c8"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                21,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "a4bb555d0d54c7998b9a552934f2512fc817ddcdd7eea208e94ad0f801aa53e3"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "8ccef90905062e92786dfdf3cc88ac6a76e364edde5e95bb1675352f1320096c"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "58ec12f1ac56af867b076dfdb63d42e460ee201010160e11a67e396a482d8522"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "1f14c275147b7e98adde654064284a51e6406c31835efb03b57c264b433d5fbe"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e4cabbf27852458506040f96c68b0b9c185602f1c5b3794287becac268553388"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "original_h5_sha256": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77",
+      "original_parameters": 24301,
+      "pooled_parameters": 22561,
+      "pool_size": [
+        30,
+        1
+      ],
+      "new_head_shapes": [
+        [
+          60,
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "new_head_value_sha256": "f75a7a4df72e6e48c968fbe0c62c07383c7d94c35a9801942a5b46a11a032661",
+      "copied_encoder_and_bn": [
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                40,
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "3faab8c5e443ec5adaabf97cea93964970a42300d1941c561e6816384976c5ce"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                30,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "8c22ebf00b32f96e17e8138e6b653b1a33488f0fcf10a44bc4a4336289839cda"
+            },
+            {
+              "shape": [
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "0e2f218cb9993aa6278f892797bddedd85a1e67f0a0ee2f92d0f0cd94bf1e96e"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                30,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "6ceeed4f36815f79473da05b51fdc1686031ae4e9fd3656aaab098f47b8d522a"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "06f692acde24181080d322576ff235ff0c9faaa9144ada0b725d0839823a4052"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "a197748f14eb5d4a5013da5c030c25122067129f43f8c95bd78b3e845eb802b5"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                9,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "d4d2e48260ce61a04980352089d3f96cababa48991c63b58563db505d5719786"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "c8e6fae1f7e5d28dc77cd3b56be35f946f20589249b912c2d54dc974b8637cb2"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "129e89eaec4e0dd2147f571cd54551ae55fb96dfe57b31446aa2069996a44caf"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "7d67285085285c584f2344b453f4b4e6d93ce2181a13339716df338cbd496d9d"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2467f763d078f7a3685f9ece61a55f3aa1ccd21f1ac77f2f33d3cc5b10dfdf02"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                13,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "69830844a0c24430e3f4c719675866fa299c6ebc104dabadc1555c65e5f3a2b2"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "abe3798dbdb560ba8cf1b93dfa7162c5463c66d869c779ac575887ad7810a349"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "5cebb349a17277c895a63f88a0d3dbdf75272e391e12b88e307f45f7a8c52209"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2c4a9dc2f9b7544bb6cfd6e1f273b723aaa22869c98e20defab4decce607e9e0"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e691c996f291d7cd57a7357501f0d03cb2d2a97b7d53817532cc3a4660900d2a"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                21,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "bedef9ddb7f2f79864bbb506e27bfbb00a2ecd430c1d8b8b1181ee81ff8e30ee"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e56c5c06adfe9d5fff361e1e16dd535ccb452b0818a1c2aa07b0203a0410f01d"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "8406b8f6fb9cc19da2afb88cbc9034255bd0d18b7213676617d72ed291667035"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "86a9a35a913b0d085338af6504bc4d9c42c1c8fca7fca0555bb008b583a8ec61"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "0e488c87a1f658cb7535343bc34e45dcb92e822feb4cec8376752cd37ecdc370"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "original_h5_sha256": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9",
+      "original_parameters": 24301,
+      "pooled_parameters": 22561,
+      "pool_size": [
+        30,
+        1
+      ],
+      "new_head_shapes": [
+        [
+          60,
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "new_head_value_sha256": "c486710f68ed3f12d7a55bc5034894c5e17a7fffbd1efdbe820ac9c857ddac9a",
+      "copied_encoder_and_bn": [
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                40,
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "f7429fe7430a49eb778a09cd9d8f31eed1fcaf85020a1abec1c1b03e142f4144"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                5,
+                1,
+                30,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "4bf0afc1f211b3e254b4d562db9b2013c3bf3d57a144ea75d117fc6ab2e5022b"
+            },
+            {
+              "shape": [
+                30
+              ],
+              "dtype": "float32",
+              "sha256": "4c154d6d34c4e595137c8091468fabc1da60f8956a570fe325b905e4f621b2fb"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                30,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "1233eb5845c240aa908f66331efc08e6084a8886a4df1dcdb18a06186b2e18e8"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "06f692acde24181080d322576ff235ff0c9faaa9144ada0b725d0839823a4052"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "a197748f14eb5d4a5013da5c030c25122067129f43f8c95bd78b3e845eb802b5"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                9,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "86467400ddf074190518017ffc50270d56b579255302936f96557af0f6ae538f"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "df82c643d109b7def364adef14d9dfc7c51ebac7b0e7e030825d2e6ecbf2de6a"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "7189b198a78c4d4632157c9c1bac779e2ca6d54064b5c43494e8b8cd7fa4d422"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "7d67285085285c584f2344b453f4b4e6d93ce2181a13339716df338cbd496d9d"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2467f763d078f7a3685f9ece61a55f3aa1ccd21f1ac77f2f33d3cc5b10dfdf02"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                13,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "c8ba6bd06436bf26c72d2559a3d3b8871d7aa79ca16a1e69ba4b1175a8107ab3"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "831ffb14050ef5a9ec9ddd6a7cdcde89c6622bb5b8c3a36d0cb0234f3b897fab"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "b0cc74303a6d384fcce9c5e5467c2da2ad332342c91898d9bf5ee89661131a87"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2c4a9dc2f9b7544bb6cfd6e1f273b723aaa22869c98e20defab4decce607e9e0"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "e691c996f291d7cd57a7357501f0d03cb2d2a97b7d53817532cc3a4660900d2a"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        },
+        {
+          "kind": "DepthwiseConv2D",
+          "arrays": [
+            {
+              "shape": [
+                21,
+                1,
+                60,
+                1
+              ],
+              "dtype": "float32",
+              "sha256": "401019de70a48bdf54436111ba9093758c26d08026825ff0cbc84e69a83dfda1"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "86a0df2bc51b11576bbccae373a26b1fd2cc46bc867db2ce46cc24f30e8bc42e"
+            }
+          ]
+        },
+        {
+          "kind": "Conv2D",
+          "arrays": [
+            {
+              "shape": [
+                1,
+                1,
+                60,
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "602087955d23347437aeeb97f64dbf09065fc143e6145c2b21d5f7e8fffcfeb7"
+            }
+          ]
+        },
+        {
+          "kind": "BatchNormalization",
+          "arrays": [
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "86a9a35a913b0d085338af6504bc4d9c42c1c8fca7fca0555bb008b583a8ec61"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "0e488c87a1f658cb7535343bc34e45dcb92e822feb4cec8376752cd37ecdc370"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+            },
+            {
+              "shape": [
+                60
+              ],
+              "dtype": "float32",
+              "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "model_forward_calls": 0,
+  "optimizer_updates": 0,
+  "exports": 0,
+  "limits": "Existing MixedNet average-pool architecture feasibility only. Original encoder/BN exact transfer; new random head is not trained or a preserved old classifier. No probability, quantization, streaming, quality, recognition, FAR or P4 claim. Pooling still retains the original temporal history and does not establish smaller arena usage."
+}
