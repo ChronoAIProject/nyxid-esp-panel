@@ -1,0 +1,683 @@
+{
+  "execution_sha256": "9fdc0fab7a1bc22faa680bb09022dd56f58123f0a93aea520355cf291296144c",
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "h5_sha256": "0484fd133f05312e2e2c7f91131a1ca9362747f30b8da0af960a965d8a9a2f31",
+      "model_sha256": "3882d3f3840fab51b944f853968244d2fca01b235443ac8bd6813798bfefa8a4",
+      "model_bytes": 55696,
+      "references_sha256": "29b3cd64a86c87fafa213220946e2b578d84906a2c5cef5ca0201baedc5f84ff",
+      "ops": [
+        "CALL_ONCE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "EXPAND_DIMS",
+        "CONCATENATION",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "AVERAGE_POOL_2D",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "QUANTIZE"
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.012976497411727905,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.004491282161325216,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.0027385400608181953,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.0029430475551635027,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.001010647974908352,
+          "zero": -128
+        }
+      ],
+      "quantization": {
+        "input": [
+          0.10196078568696976,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ]
+      },
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "cases": [
+        {
+          "stream": 0,
+          "five_step_abs_error": {
+            "mean": 0.0016399289880480083,
+            "p99": 0.0019359339475631717,
+            "maximum": 0.0019943714141845703
+          },
+          "passed": true
+        },
+        {
+          "stream": 1,
+          "five_step_abs_error": {
+            "mean": 0.0011058791052727475,
+            "p99": 0.002444762706756593,
+            "maximum": 0.0027382016181945806
+          },
+          "passed": true
+        },
+        {
+          "stream": 2,
+          "five_step_abs_error": {
+            "mean": 0.0014031136792803567,
+            "p99": 0.0024116512537002573,
+            "maximum": 0.0025574207305908204
+          },
+          "passed": true
+        },
+        {
+          "stream": 3,
+          "five_step_abs_error": {
+            "mean": 0.0012327425536655244,
+            "p99": 0.0019242957830429078,
+            "maximum": 0.0020557522773742678
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "h5_sha256": "0c2f2d7f655b8955bc906a49df0c2c129a8553247534fffc2db252cda03b7572",
+      "model_sha256": "f73fcab5c03f20dd23e91bd0ed972b3a3579c7315343b14299f9facfe8bea559",
+      "model_bytes": 55944,
+      "references_sha256": "28042c20f43cc5cccfc4e05ef24634d5db4ebbdc48f35caa5290870a13cfe368",
+      "ops": [
+        "CALL_ONCE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "EXPAND_DIMS",
+        "CONCATENATION",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "AVERAGE_POOL_2D",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "QUANTIZE"
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.002295980928465724,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.0006993545684963465,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.0068063680082559586,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.004546841606497765,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.0028999033384025097,
+          "zero": -128
+        }
+      ],
+      "quantization": {
+        "input": [
+          0.10196078568696976,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ]
+      },
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "cases": [
+        {
+          "stream": 0,
+          "five_step_abs_error": {
+            "mean": 0.0014611660015015375,
+            "p99": 0.0015508323311805728,
+            "maximum": 0.0015509366989135743
+          },
+          "passed": true
+        },
+        {
+          "stream": 1,
+          "five_step_abs_error": {
+            "mean": 0.0012494397305306934,
+            "p99": 0.0019646714329719546,
+            "maximum": 0.0020866990089416504
+          },
+          "passed": true
+        },
+        {
+          "stream": 2,
+          "five_step_abs_error": {
+            "mean": 0.0011418679640406656,
+            "p99": 0.0021183421015739446,
+            "maximum": 0.0021879017353057862
+          },
+          "passed": true
+        },
+        {
+          "stream": 3,
+          "five_step_abs_error": {
+            "mean": 0.00165950052794956,
+            "p99": 0.002113408923149109,
+            "maximum": 0.0021183550357818603
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "h5_sha256": "f6d62e292ac4ba645714ad8595c8b80b3b2e6bd203d719a7e312a0e5eda8fc5c",
+      "model_sha256": "450bc54cb8245cb203476e078237a9cbe0256864b3576160cdc7f03a5b7cb4aa",
+      "model_bytes": 56016,
+      "references_sha256": "ce0657423ee2c4cb9f9f483ac84c4228386e56ac600f2b6ac2eedbe578f261fb",
+      "ops": [
+        "CALL_ONCE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "EXPAND_DIMS",
+        "CONCATENATION",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "AVERAGE_POOL_2D",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "QUANTIZE"
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.005229402799159288,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.004744357895106077,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.002933849347755313,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.0028348134364932775,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.0007825260399840772,
+          "zero": -128
+        }
+      ],
+      "quantization": {
+        "input": [
+          0.10196078568696976,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ]
+      },
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "cases": [
+        {
+          "stream": 0,
+          "five_step_abs_error": {
+            "mean": 0.00011743231425209652,
+            "p99": 0.001288114190101624,
+            "maximum": 0.0014833211898803713
+          },
+          "passed": true
+        },
+        {
+          "stream": 1,
+          "five_step_abs_error": {
+            "mean": 0.0014762512275150845,
+            "p99": 0.0017293165922164918,
+            "maximum": 0.0017478108406066895
+          },
+          "passed": true
+        },
+        {
+          "stream": 2,
+          "five_step_abs_error": {
+            "mean": 0.0008867091602749295,
+            "p99": 0.0018648542165756279,
+            "maximum": 0.0021990656852722166
+          },
+          "passed": true
+        },
+        {
+          "stream": 3,
+          "five_step_abs_error": {
+            "mean": 0.0013104508793543256,
+            "p99": 0.002411752581596375,
+            "maximum": 0.002427923679351807
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "h5_sha256": "4c1554274976280b792882090134ea57a7cb8c0a45d77830f01dbaa50cd2a6b0",
+      "model_sha256": "62d81ca2df1f8b3579a073c601b8211664ee14f21ce76a8d351aadc47335cee9",
+      "model_bytes": 56032,
+      "references_sha256": "34332ecc402501a61d0a165c2a04341795db5b987b709efd5067876175c47f26",
+      "ops": [
+        "CALL_ONCE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "VAR_HANDLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "READ_VARIABLE",
+        "EXPAND_DIMS",
+        "CONCATENATION",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "DEPTHWISE_CONV_2D",
+        "CONV_2D",
+        "CONCATENATION",
+        "AVERAGE_POOL_2D",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "STRIDED_SLICE",
+        "ASSIGN_VARIABLE",
+        "QUANTIZE"
+      ],
+      "initializers": [
+        {
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.005011606030166149,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.0042386893182992935,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.0025272381026297808,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.0020837460178881884,
+          "zero": -128
+        },
+        {
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.0007168430020101368,
+          "zero": -128
+        }
+      ],
+      "quantization": {
+        "input": [
+          0.10196078568696976,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ]
+      },
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "cases": [
+        {
+          "stream": 0,
+          "five_step_abs_error": {
+            "mean": 0.0018749969582709056,
+            "p99": 0.0020212923288345334,
+            "maximum": 0.0020228981971740726
+          },
+          "passed": true
+        },
+        {
+          "stream": 1,
+          "five_step_abs_error": {
+            "mean": 0.0004409304923481412,
+            "p99": 0.0020964484214782727,
+            "maximum": 0.0024456441402435306
+          },
+          "passed": true
+        },
+        {
+          "stream": 2,
+          "five_step_abs_error": {
+            "mean": 0.0010246191705976214,
+            "p99": 0.0026736521124839786,
+            "maximum": 0.0026900708675384522
+          },
+          "passed": true
+        },
+        {
+          "stream": 3,
+          "five_step_abs_error": {
+            "mean": 0.000483712979725429,
+            "p99": 0.0015355562567710877,
+            "maximum": 0.0015721499919891357
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "limits": "Original four saved pooled initialized H5, raw sigmoid unchanged. One INT8 variable-quantized builtin-only export/model, int8 input/uint8 output, six realzero initializers. Representative: all4 fixed synthetic256step streams in original order, no boundary resets. No retries/calibration selection. Two fresh interpreters per stream, all startup. Finite/repeat exact; per-stream five-step MAE<=.02,p99<=.1,max<=.25 against saved original raw TF. No optimizer/audio/features/dev/recognition. Passing untrained-head preflight is not trained-model admission."
+}
