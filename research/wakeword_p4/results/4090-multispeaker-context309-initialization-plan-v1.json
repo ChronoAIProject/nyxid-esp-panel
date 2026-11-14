@@ -1,0 +1,17 @@
+{
+  "schema": "multispeaker-context309-initialization-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/initialize_multispeaker_context309_v1.py": "9ec44d4aef88ebbc9438ec1103b14590d9156e2e13915bfd3b7054f6365ffa7b",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/microWakeWord/microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "research/wakeword_p4/results/4090-multispeaker-coverage-context-decision-v1.json": "1cddf422f7d92b808d4679bf91b821b128bf22af06fe8ab845df102278474678",
+    "research/wakeword_p4/results/4090-multispeaker-features-independent-audit-v1.json": "69ad2cf8570dc536655b3d175825d49e88f7ab58cf8ed1e834cfab30b71ca79a",
+    "research/wakeword_p4/results/4090-multispeaker-coverage-features-v1.json": "3eb2bf34360ec9faad97f162bfae4be601c2a9668add62853934022bacdb5bfb",
+    ".local/wakeword/mww-pretrained-reconstruction-v1/reconstructed.weights.h5": "8e7de8447bb95660844d687c5e44cd7d5c93f3106d08681e2ceda7cd6a28643b"
+  },
+  "tensorflow": "2.21.0",
+  "seed": 726,
+  "context_frames": 309,
+  "policy": "Load original context150 authenticated weights, transfer all non-Dense tensors exactly into context309, freeze BN. Preserve new classifier actual initialization once and bind both arms to the same saved H5/NPZ/variable inventory. No seed-based reconstruction in later runs.",
+  "operations": "CPU architecture/assignment/save/reload only; zero forward calls, optimizer updates or feature/audio reads."
+}
