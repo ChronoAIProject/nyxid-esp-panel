@@ -37,6 +37,14 @@ reader contract: array positions and original request orders are checked
 separately, without renumbering or changing inputs. The original plan/source and
 `mac-original-training-witness-events-initial-setup-failure-v1.json` remain.
 
+The v2 reader later stopped on an emitted common-negative event: all 81 original
+negative requests have a container end but no generated-prefix annotation. Its
+828 complete point records are preserved in the original partial ledger, with
+identity in `mac-original-training-witness-events-missing-boundary-reader-failure-v2.json`.
+The additive v3 plan preserves missing prefix offsets as null and validates the
+54 annotated positive / 81 unannotated negative contract before scoring. It
+does not invent a prefix boundary, modify original clocks or remove events.
+
 Each model has 27 own-target derived examples (Piper 12, Kokoro 12, Qwen 3),
 27 reciprocal-word examples and 81 common negatives. These counts include
 correlated variants. They are training witnesses, not independent voices or a

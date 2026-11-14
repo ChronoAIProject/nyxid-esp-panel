@@ -1,0 +1,15 @@
+{
+  "schema": "mac-original-training-witness-events-missing-boundary-reader-failure-v2",
+  "source_commit": "5d622cc",
+  "plan_sha256": "46baffed82436dfe8053b270a575a1c2d693642c10e97e4feaf772c76ff43b06",
+  "original_session": 89663,
+  "original_exit_code": 1,
+  "exception": "TypeError: unsupported operand type(s) for -: int and NoneType while formatting an emitted negative event offset",
+  "cause": "Some original negative training witnesses have no generated-prefix annotation; reader wrongly assumed every negative boundary was present.",
+  "complete_partial_points_preserved": 828,
+  "partial_ledger_sha256": "50f632ce5f38905d022ca967c54c19f0483033b8ccd01aa8c9004395b08c0a87",
+  "partial_ledger_bytes": 1674978,
+  "model_invocations": 0,
+  "original_capture_arrays_or_boundary_annotations_modified": false,
+  "correction": "Retain absent annotations as null; preserve all actual event steps/clocks and negative labels. Require annotations only for own positive complete-prefix metric; lock corrected reader before run."
+}

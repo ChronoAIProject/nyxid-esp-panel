@@ -21,6 +21,10 @@ def file_sha(path):
     return sha(path.read_bytes())
 
 
+def signed_ms(sample, boundary):
+    return (sample - boundary) / 16 if boundary is not None else None
+
+
 def create_plan(repo, training_packet, development_packet, plan_path):
     intake = repo / BASE / "results/mac-fp32-internal-fullstream-intake-v1.json"
     report = json.loads(intake.read_bytes())
@@ -40,7 +44,8 @@ def create_plan(repo, training_packet, development_packet, plan_path):
     source = Path(__file__).resolve()
     dependencies = [source, source.with_name("audit_fp32_reused_saved_arrays_mac_v1.py")]
     failure = repo / BASE / "results/mac-original-training-witness-events-initial-setup-failure-v1.json"
-    locked = {str(p.relative_to(repo)): file_sha(p) for p in dependencies + [intake, old_audit, failure]}
+    boundary_failure = repo / BASE / "results/mac-original-training-witness-events-missing-boundary-reader-failure-v2.json"
+    locked = {str(p.relative_to(repo)): file_sha(p) for p in dependencies + [intake, old_audit, failure, boundary_failure]}
     packet_files = {"training_requests": dict(member=str(requests_path.relative_to(training_packet)), sha256=file_sha(requests_path)),
                     "development_grid": dict(member=str(grid_path.relative_to(development_packet)), sha256=file_sha(grid_path))}
     plan = dict(schema="mac-original-training-witness-events-plan-v1", files=locked, packet_files=packet_files,
@@ -48,6 +53,9 @@ def create_plan(repo, training_packet, development_packet, plan_path):
                 fixed_grid=grid_lock["grid"], complete_requests=135,
                 request_orders=[r["order"] for r in request_lock["requests"]],
                 index_contract="Packet position indexes arrays; retain distinct original request.order without renumbering",
+                prefix_annotation_policy="Preserve absent negative prefix annotations as null; never infer from container end",
+                prefix_annotation_counts=dict(present=sum(r["generated_prefix_end_sample"] is not None for r in request_lock["requests"]),
+                                              absent=sum(r["generated_prefix_end_sample"] is None for r in request_lock["requests"])),
                 source_role="already-consumed-training-witness",
                 own_positive_derived_clips=27, reciprocal_positive_clips=27, common_negative_clips=81,
                 backends=["tf", "litert"], state_policy="Original complete cold-start streams, no crop/reset/removal",
@@ -77,6 +85,10 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
     requests = request_lock["requests"]
     assert len(requests) == len(set(r["order"] for r in requests)) == 135
     assert [r["order"] for r in requests] == plan["request_orders"]
+    for request in requests:
+        assert all(type(request[k]) is int for k in ["samples", "lead_samples", "generated_container_end_sample"])
+        assert type(request["generated_prefix_end_sample"]) is int if request["source"]["kind"] == "positive" else request["generated_prefix_end_sample"] is None
+    assert plan["prefix_annotation_counts"] == dict(present=54, absent=81)
     output.mkdir(exist_ok=False)
     ledger = output / "original-training-witness-events.jsonl.gz"
     summaries, differences, events_total = [], 0, 0
@@ -118,13 +130,15 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
                         after = [t for t in times if t >= request["lead_samples"]]
                         records[backend].append(dict(index=index, request_order=request["order"], source_id=source["id"], engine=source["engine"],
                                                      source_text=source["text"], role=role, variant=request["variant"],
-                                                     events=[dict(step=s, sample=t, prefix_signed_ms=(t-request["generated_prefix_end_sample"])/16,
-                                                                  container_signed_ms=(t-request["generated_container_end_sample"])/16)
+                                                     prefix_annotation_available=request["generated_prefix_end_sample"] is not None,
+                                                     events=[dict(step=s, sample=t, prefix_signed_ms=signed_ms(t, request["generated_prefix_end_sample"]),
+                                                                  container_signed_ms=signed_ms(t, request["generated_container_end_sample"]))
                                                              for s, t in zip(steps, times, strict=True)],
                                                      any_after_source=bool(after),
-                                                     complete_generated_prefix=any(t >= request["generated_prefix_end_sample"] for t in after),
+                                                     complete_generated_prefix=any(t >= request["generated_prefix_end_sample"] for t in after) if request["generated_prefix_end_sample"] is not None else None,
                                                      pre_source_events=sum(t < request["lead_samples"] for t in times),
-                                                     first_after_source_prefix_signed_ms=(after[0]-request["generated_prefix_end_sample"])/16 if after else None))
+                                                     first_after_source_prefix_signed_ms=signed_ms(after[0], request["generated_prefix_end_sample"]) if after else None,
+                                                     first_after_source_container_signed_ms=signed_ms(after[0], request["generated_container_end_sample"]) if after else None))
                         events_total += len(steps)
                         per_backend_steps.append(steps)
                     differences += per_backend_steps[0] != per_backend_steps[1]
