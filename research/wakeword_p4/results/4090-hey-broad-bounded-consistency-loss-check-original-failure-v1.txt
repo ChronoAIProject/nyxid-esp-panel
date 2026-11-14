@@ -1,0 +1,21 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794629138.654924 1340731 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794629138.686610 1340731 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794629139.448046 1340731 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794629139.795492 1340731 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21452 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:01:00.0, compute capability: 8.9
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_hey_broad_bounded_consistency_loss_v1.py", line 34, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_hey_broad_bounded_consistency_loss_v1.py", line 30, in main
+    assert float(c)==0 and all(float(g)==0 for g in tape.gradient(c,(x,q)));assert all(float(g)<0 for g in tape.gradient(s,(x,q)))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_hey_broad_bounded_consistency_loss_v1.py", line 30, in <genexpr>
+    assert float(c)==0 and all(float(g)==0 for g in tape.gradient(c,(x,q)));assert all(float(g)<0 for g in tape.gradient(s,(x,q)))
+                               ^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/tensorflow/python/framework/ops.py", line 315, in __float__
+    return float(self._numpy())
+           ^^^^^^^^^^^^^^^^^^^^
+TypeError: only 0-dimensional arrays can be converted to Python scalars
