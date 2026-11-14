@@ -1,10 +1,12 @@
 """Fixed-grid cold-start causal candidate consumed diagnosis; no selected workpoint."""
-import json,subprocess
+import json,subprocess,sys
 from pathlib import Path
 import numpy as np
 from collect_causal_sequence_formal_v1 import R,LOCK,OUT,sha
 from uint8_event_policy_v1 import event_steps,EVENT_ARITHMETIC
 from hey_development_metrics_v1 import far_upper
+sys.path.insert(0,str(Path('research/wakeword_p4/training').resolve()))
+from evaluate import smooth as frozen_smooth,event_indices as frozen_event_indices
 BOUNDARIES=('generated_prefix_end_sample','full_rir_prefix_end_sample','generated_container_end_sample','full_rir_container_end_sample')
 def main():
  assert subprocess.check_output(['git','show','origin/research-hye-nyx-voice-gpu:'+str(LOCK)])==LOCK.read_bytes();p=json.loads(LOCK.read_text())
@@ -21,10 +23,10 @@ def main():
     support=(3*np.arange(1,len(raw)+1,dtype=np.int64)+2)*160;assert np.array_equal(a['support_unclamped'],support) and np.array_equal(a['sample_end'],np.minimum(support,rec['record']['samples']))
    traces.append((rec,raw))
   with (dest/(name+'.jsonl')).open('x') as log:
-   for threshold in p['grid']:
+   for threshold,frozen_policy in [(t,False) for t in p['grid']]+([(.91796875,True)] if model['condition']=='v30-frozen' else []):
     details=[];positive=[];neg={'common':dict(clips=0,activated_clips=0,events=0),'cross_target':dict(clips=0,activated_clips=0,events=0)};bg=0;hours=0.;pre_source=0
     for rec,raw in traces:
-     row=rec['record'];steps=event_steps(raw,threshold);times=[min((3*s+2)*160,row['samples']) for s in steps]
+     row=rec['record'];steps=([int(i)+5 for i in frozen_event_indices(frozen_smooth(raw.astype(np.float32)/256),threshold)] if frozen_policy else event_steps(raw,threshold));times=[min((3*s+2)*160,row['samples']) for s in steps]
      item=dict(phase=rec['phase'],index=rec['index'],source_id=row['source_id'],events=[dict(step=s,sample=t) for s,t in zip(steps,times,strict=True)])
      if rec['phase']=='background':bg+=len(times);hours+=row['samples']/16000/3600
      else:
@@ -41,7 +43,7 @@ def main():
     for key,group in [('all',positive),('standalone',[x for x in positive if x['carrier']=='']),('command',[x for x in positive if x['carrier']!=''])]+[(f'variant{v}',[x for x in positive if x['variant']==v]) for v in sorted({x['variant'] for x in positive})]:
      lat=[x['latency_ms'] for x in group if x['latency_ms']is not None]
      groups[key]=dict(clips=len(group),**{k:sum(x[k] for x in group) for k in ['any_after_source','complete','before_only','missing']},signed_latency_ms=dict(median=float(np.median(lat)) if lat else None,p95=float(np.percentile(lat,95)) if lat else None,observed=len(lat)))
-    summary=dict(model=name,threshold=threshold,event_arithmetic=EVENT_ARITHMETIC,positive=groups,negative=neg,pre_source_events=pre_source,background=dict(events=bg,hours=hours,far_upper95=far_upper(bg,hours)),threshold_selected=False)
+    summary=dict(model=name,threshold=threshold,event_arithmetic=('original-float64-convolution-five-v30' if frozen_policy else EVENT_ARITHMETIC),frozen_parameters_reference=frozen_policy,positive=groups,negative=neg,pre_source_events=pre_source,background=dict(events=bg,hours=hours,far_upper95=far_upper(bg,hours)),threshold_selected=False)
     log.write(json.dumps(dict(summary=summary,records=details))+'\n');log.flush();summaries.append(summary);print(json.dumps(summary),flush=True)
- (dest/'summary.json').write_text(json.dumps(dict(execution_sha256=sha(LOCK),points=summaries,threshold_selected=False,acceptance_scored=False,candidate_promoted=False,limits='Reused old development diagnosis, all points retained; no new working point or independent acceptance. Generated boundaries are not human phonetic references.'),indent=2)+'\n')
+ (dest/'summary.json').write_text(json.dumps(dict(execution_sha256=sha(LOCK),points=summaries,threshold_selected=False,acceptance_scored=False,candidate_promoted=False,limits='SamecompletePCM causal candidate and originalv30 consumed diagnosis. Each138grid is secondaryUINT8 policy; separatev30 frozen .91796875/smoothing5 float64convolution/67cooldown reference included without replacing original bytes/parameters. No new working point or independent acceptance; fullfinalpartialcall retained for both, oldcachedbaseline cutoff not silently compared. Generated boundaries are synthetic only.'),indent=2)+'\n')
 if __name__=='__main__':main()
