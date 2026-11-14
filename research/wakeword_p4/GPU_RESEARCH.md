@@ -8791,3 +8791,13 @@ is per-arm provenance only, not full4arm independent audit, qualification or
 full10000freshrepeat evidence. No oldtrainedcontrol used; within-new-experiment
 control remains authoritative, not assumed byte-identical to old-family controls.
 No compiledmodel/recognition/promotion, freshdev/acceptanceclosed, v30unchanged.
+
+### Original one-way formal Willow treatment completion (2026-11-14)
+
+Willowoneway completed original10000updates,806.290626s. Original training.json
+copied byte-exact to results; actual finalH5 SHA
+89c459ad97b880f4820c379aab0d7c04856fd4c75ed04bae6be50f1318e10ddf
+verified. Producer finite/frozenBN true. Same original1450872 now Nyxtwoway235
+updates at observation;1455248 waits same process. BothWillow arms complete,
+Nyxarms pending; no fullformal audit, numerical or recognition conclusion yet.
+No retry/checkpointselection/parameterchange/export/newdev/acceptance; v30unchanged.
