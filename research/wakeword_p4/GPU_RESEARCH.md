@@ -8544,3 +8544,7 @@ Read Mac130bbaa/Issue6871808924: Mac independently scalar-recomputed original8ac
 ### First bounded-formal arm completed, original process continues
 
 Original1364189 completed Willow raw_logit_control exactly10000; producer receipt finite/frozenBN true, finalH5 SHA8f6345b66806f1c0af5e09ea489ac9912e93c9c33ec6119bc61efe4590a925f0. Original training.json copied byte-for-byte into results for timely publication. Same original process advanced to Willow bounded_logit_consistency (64updates at observation). No checkpoint selection/early stop/restart/configuration change. Not independent full4arm audit, numerical/recognition/FAR qualification or candidate admission. Original numerical waiter1366397 still waiting aggregate; originalregression/official continued live throughout observations.
+
+### First-arm saved-file provenance check
+
+Independently inspected completed Willowrawfinal H5/Adam/schedule using existing auditor H5 helpers, no model construction/invoke. All10000ordered actual batch SHA exact originalschedule, actualinitialvalues exact source, all16BNdatasets unchanged, finitefinal/32Adamarrays iteration10000, finalH5/Adam SHA match originalreceipt. Actual first bounded/raw step batch/S/rawC/boundedC and allthree componentgradientnorms exact. Separate first-arm provenance receipt explicitly not full4arm audit, numerical/recognition admission or tuning; originalrun continues unchanged. Main full4arm independent auditor still owned by originalwaiter.
