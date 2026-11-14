@@ -6,7 +6,8 @@ R=Path('research/wakeword_p4/results');E=Path('research/wakeword_p4/experiments'
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def plan():
  names=['formal-execution','formal-result','formal-independent-audit','fixed-grid-compile-plan','fixed-grid-compile-result','fixed-grid-constant-audit','fixed-grid-screen-result','fixed-grid-screen-independent-audit','fixed-grid-recursive-result','fixed-grid-recursive-independent-audit'];paths={n:R/('4090-hey-broad-bounded-consistency-'+n+'-v1.json') for n in names}
- for p in paths.values():assert p.exists(),str(p)
+ from run_hey_broad_trained_quantization_v1 import published
+ for p in paths.values():published(p)
  files={str(p):sha(p) for p in paths.values()};formal=json.loads(paths['formal-result'].read_text());compile=json.loads(paths['fixed-grid-compile-result'].read_text());screen=json.loads(paths['fixed-grid-screen-result'].read_text());recursive=json.loads(paths['fixed-grid-recursive-result'].read_text());assert len(screen['cases'])==len(recursive['cases'])==540
  assert json.loads(paths['fixed-grid-recursive-independent-audit'].read_text())['result_sha256']==sha(paths['fixed-grid-recursive-result'])
  assert json.loads(paths['fixed-grid-screen-independent-audit'].read_text())['result_sha256']==sha(paths['fixed-grid-screen-result'])
@@ -16,7 +17,7 @@ def plan():
    order=14 if target=='hey_willow' else 48394;key=(target,condition,order);s,=[c for c in screen['cases'] if (c['target'],c['condition'],c['request_order'])==key];r,=[c for c in recursive['cases'] if (c['target'],c['condition'],c['request_order'])==key];a,=[a for a in compile['arms'] if (a['target'],a['condition'])==key[:2]];f,=[f['final_repeat'] for f in formal['cases'] if (f['target'],f['condition'])==key[:2]]
    for p,h in [(s['arrays_path'],s['arrays_sha256']),(r['arrays_path'],r['arrays_sha256']),(a['path'],a['sha256']),(f['weights_path'],f['weights_sha256'])]:assert sha(p)==h;files[p]=h
    cases.append(dict(target=target,condition=condition,request_order=order,screen=s,reference=r,arm=a,weights=f['weights_path']))
- for n in ['bounded_training_forward_witness_v1.md','probe_bounded_training_forward_witnesses_v1.py','hey_broad_scalar_fc_training_observer_v1.py','hey_broad_scalar_fc_ste_v1.py','hey_broad_fixedpoint_ste_v2.py','hey_broad_fake_quant_primitives_v1.py','hey_broad_gpu_training_factory_v1.py','probe_hey_context_transfer_shapes_v1.py']:files[str(E/n)]=sha(E/n)
+ for n in ['audit_bounded_training_forward_witnesses_v1.py','bounded_training_forward_witness_v1.md','probe_bounded_training_forward_witnesses_v1.py','hey_broad_scalar_fc_training_observer_v1.py','hey_broad_scalar_fc_ste_v1.py','hey_broad_fixedpoint_ste_v2.py','hey_broad_fake_quant_primitives_v1.py','hey_broad_gpu_training_factory_v1.py','probe_hey_context_transfer_shapes_v1.py']:files[str(E/n)]=sha(E/n)
  record=dict(files=files,versions=json.loads(paths['formal-execution'].read_text())['versions'],cases=cases,compile_plan=str(paths['fixed-grid-compile-plan']),policy='Fixed existing Willow14/Nyx48394 x raw/bounded; all fullsupport streamsteps>=74, no outcome selection. Original finalH5 and nofold/noarithmetic QAT observer; both nominal225 and original phase224+zero static contexts. Twice observe allconstants/intermediateencoder/embedding/scalarFC/rawlogits/probability, no gradient/optimizer/export or runtime model invoke. Compare saved actual wholewave recursive embedding/FC, preserve every discrepancy; comparison descriptive, not gate replacement. Require exact inputs/constants/repeats/modelunchanged, stop structural/hash/nonfinite faults no retry. No newdev/acceptance/promotion.')
  with P.open('x') as f:f.write(json.dumps(record,indent=2)+'\n')
 def run():
