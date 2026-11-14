@@ -8102,3 +8102,21 @@ READ/ASSIGN metadata, bindsoriginalH5/training pluscompensatedweights/factors,
 fullrepresentative statecontrol/newmodels. Receiptgeneratedsuccessfully, original
 trainingnotrewritten. No qualification/newdev/acceptance/P4profile allowed. v30
 retained, goalactive; nextdiagnosisusespreservedfailures, nofactor/tolerance rescue.
+
+### Equalized saved-failure morphology retained; no single-step exemption
+
+All270savedoutputs inspected withoutinference: Willow17failures,10single-raw-step
+abs-error>.1 and7multiple-step; Nyx1failure request48394 single step156/end75680.
+Kokoro25dB lightcommand, originalfloat.9604637623 vsINT8.01171875 atfallingedge;
+adjacentprevioussteps remainhigh and nextsteplow. Fivep99.19115620 stillrejects.
+Acrossall135Nyxinputs16rawsteps>.1, so singlefailedcase doesnotmeanonlyone
+rawerror inwholearm. Complete runs/context/source metadata saved, noframeshift,
+trim, relabel or exemption; diagnostic .1raw threshold is notrecognitiongate.
+
+Prospective folded-operatorQAT feasibility specification records next route:
+first actual-sampler floatoperator/gradient parity, then explicitly validated
+weight/activation/bias fakequant andstate contracts, nooptimizer yet. FrozenBN
+folding, pre-sigmoid weightedBCE anddeploymentboundedhead mustnot accidentally
+zero confident-wrong traininggradients. No newhyperparameter rescue/equalization
+sweep. FormalQATrequireslaterfixedpairedprotocol afterfeasibility; no newtraining/
+export/dev/acceptance, v30retained andgoalactive.
