@@ -1,0 +1,474 @@
+{
+  "schema": "mac-equalized-zero-initializer-plan-v1",
+  "gpu_ref": "99e146a1e74aec5714c19799111cfc2b2c0662eb",
+  "source_reports": [
+    {
+      "path": "research/wakeword_p4/results/4090-hey-broad-equalized-export-result-v1.json",
+      "sha256": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-hey-broad-equalized-screen-result-v1.json",
+      "sha256": "d45a065f595e04b69dd8fbc0884ff420296465ddbb446b1a9b94098d075fa1f3"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-hey-broad-trained-quantization-plan-v1.json",
+      "sha256": "4b3a0bf6c69911de6c54a109fcce2059905bc656d0c380e196e522ac671944fb"
+    }
+  ],
+  "script_sha256": "dedbe79b8c6f40e04020a60f35c3f4de5f3c5da48abafeec885cbc8231a30598",
+  "numerical_gates": {
+    "float_offline_stream_max_abs": 0.0001,
+    "per_input_five_step_mean_abs_error_max": 0.02,
+    "per_input_five_step_p99_abs_error_max": 0.1,
+    "per_input_five_step_max_abs_error_max": 0.25
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "request_order": 14,
+      "original_model_path": ".local/wakeword/hey-broad-equalized-export-v1/hey_willow/hey_nyx.tflite",
+      "original_model_sha256": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+      "source_arrays_path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_willow-014.npz",
+      "source_arrays_sha256": "85fd28409838e28176323f2cd22677d47905306b95f4f3f8e38829a9756906af",
+      "prior_integer": {
+        "target": "hey_willow",
+        "request_order": 14,
+        "steps": 167,
+        "original_uint8_byte_exact": true,
+        "all_tensor_repeats_exact": true,
+        "observed_tensors": 34,
+        "boundaries": {
+          "encoder_embedding": {
+            "raw_max_abs": 0.9993292997316311,
+            "five_mean_abs": 0.016289221865928134,
+            "five_p99_abs": 0.484536503487722,
+            "five_max_abs": 0.4936506921832967
+          },
+          "head_weight_bias": {
+            "raw_max_abs": 0.18889957072706895,
+            "five_mean_abs": 0.0012967941351788087,
+            "five_p99_abs": 0.037795188739005885,
+            "five_max_abs": 0.037795188739005885
+          },
+          "integer_fc": {
+            "raw_max_abs": 0.0026063534092839874,
+            "five_mean_abs": 2.6243114887531667e-05,
+            "five_p99_abs": 0.000505636061663132,
+            "five_max_abs": 0.0005212705979335292
+          },
+          "post_fc_probability": {
+            "raw_max_abs": 0.006811971418681562,
+            "five_mean_abs": 0.0007357899922714247,
+            "five_p99_abs": 0.0035708999744376024,
+            "five_max_abs": 0.004205228513494308
+          }
+        },
+        "hybrid_original_float_head": {
+          "raw_max_abs": 0.9993292997316311,
+          "five_mean_abs": 0.016289221865928134,
+          "five_p99_abs": 0.484536503487722,
+          "five_max_abs": 0.4936506921832967
+        },
+        "hybrid_passed_on_this_witness": false,
+        "actual_total": {
+          "raw_max_abs": 0.9957583998620976,
+          "five_mean_abs": 0.015276400191692258,
+          "five_p99_abs": 0.4430138743780553,
+          "five_max_abs": 0.4519727566861548
+        },
+        "original_gate_passed": false,
+        "state_checks": [
+          {
+            "handle": 40,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          },
+          {
+            "handle": 39,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          },
+          {
+            "handle": 38,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          },
+          {
+            "handle": 37,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          },
+          {
+            "handle": 36,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          },
+          {
+            "handle": 35,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 166
+          }
+        ],
+        "arrays": "hey_willow.npz",
+        "arrays_sha256": "9ad14ac55c2e72bc89dd15b5b002252434ec9b352e54e1d3d69d4597933c13cc"
+      },
+      "prior_float": {
+        "target": "hey_willow",
+        "request_order": 14,
+        "steps": 167,
+        "twice_reset_exact": true,
+        "mac_vs_saved_gpu_float_max_abs": 2.0265579223632812e-06,
+        "actual_offline_phase_max_abs": 8.344650268554688e-07,
+        "mac_vs_saved_gpu_offline_phase_max_abs": 1.8477439880371094e-06,
+        "original_variables_unchanged": true,
+        "arrays": "hey_willow.npz",
+        "arrays_sha256": "1b00332b0700c517eee6e734ee577aa9c4ea8a669a44f346365d2f1b6e1f2453"
+      },
+      "zero_model": "hey_willow-zero-initializer.tflite",
+      "zero_model_sha256": "5c81dd62de4a0e3a630f1c3cb460207bf75d80ba59d484f7a1c22e7ea34fe430",
+      "changed_bytes": 35,
+      "only_initializer_bytes_changed": true,
+      "initializers": [
+        {
+          "shared_name": "streaming/stream/states_1",
+          "read": 42,
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero_point": -128,
+          "buffer": 77,
+          "offset": 5112,
+          "bytes": 80,
+          "nonzero_real_codes": 0,
+          "original_sha256": "5715577b9eba0534be717aaf1cb9ea884163b8021d5b60104a366765be7fc9e4",
+          "zero_sha256": "5715577b9eba0534be717aaf1cb9ea884163b8021d5b60104a366765be7fc9e4"
+        },
+        {
+          "shared_name": "streaming/stream_1/states_1",
+          "read": 41,
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.003818277269601822,
+          "zero_point": -128,
+          "buffer": 79,
+          "offset": 4976,
+          "bytes": 120,
+          "nonzero_real_codes": 0,
+          "original_sha256": "22c7816fa4bc008e1d4ed1935b93e51bb9c2dd6e9dbd06189fb96689cb9ffd5f",
+          "zero_sha256": "22c7816fa4bc008e1d4ed1935b93e51bb9c2dd6e9dbd06189fb96689cb9ffd5f"
+        },
+        {
+          "shared_name": "streaming/stream_2/states_1",
+          "read": 43,
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.003718209220096469,
+          "zero_point": -128,
+          "buffer": 81,
+          "offset": 4480,
+          "bytes": 480,
+          "nonzero_real_codes": 16,
+          "original_sha256": "594588e3f40a66eaf0b7895847702e4db583d6e93f5209519488283a921b2bc4",
+          "zero_sha256": "12b9c54692425b144df377703da7584b6dd3c7a2f93dd63188552cecb0cc2186"
+        },
+        {
+          "shared_name": "streaming/stream_3/states_1",
+          "read": 44,
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.0038870100397616625,
+          "zero_point": -128,
+          "buffer": 83,
+          "offset": 3744,
+          "bytes": 720,
+          "nonzero_real_codes": 11,
+          "original_sha256": "16e112667eb399526ce382d90689668193b34811402368ba48c210755f372cde",
+          "zero_sha256": "8df47ee6c3004fa111193467d7de542c72b7f2ad6eed7ca18f60c38626beea13"
+        },
+        {
+          "shared_name": "streaming/stream_4/states_1",
+          "read": 45,
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.003905477700755,
+          "zero_point": -128,
+          "buffer": 85,
+          "offset": 2528,
+          "bytes": 1200,
+          "nonzero_real_codes": 4,
+          "original_sha256": "45628cebc609c5b27c4f241326a8f364435e975dbd787e5bee0e4257a05bfff5",
+          "zero_sha256": "7a79fb2433ddc3295776027d2534543dfb0bc2653bd56b63b74dfe4921337c67"
+        },
+        {
+          "shared_name": "streaming/stream_5/states_1",
+          "read": 46,
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.003860324155539274,
+          "zero_point": -128,
+          "buffer": 87,
+          "offset": 772,
+          "bytes": 1740,
+          "nonzero_real_codes": 4,
+          "original_sha256": "00ac65381e1963d925f4aa63f7cafbfc00f55dcd86c51c06a293c302c5098d0c",
+          "zero_sha256": "1c252b740e3df805d6cac9fb0193970d9c8ab3dc92d50ab2c2dd560962323728"
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48394,
+      "original_model_path": ".local/wakeword/hey-broad-equalized-export-v1/hey_nyx/hey_nyx.tflite",
+      "original_model_sha256": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+      "source_arrays_path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_nyx-034.npz",
+      "source_arrays_sha256": "414860425d99194428e2aaad8a23f01ab999dc439a1f8730e77d616dc298e6da",
+      "prior_integer": {
+        "target": "hey_nyx",
+        "request_order": 48394,
+        "steps": 229,
+        "original_uint8_byte_exact": true,
+        "all_tensor_repeats_exact": true,
+        "observed_tensors": 34,
+        "boundaries": {
+          "encoder_embedding": {
+            "raw_max_abs": 0.9334207012256601,
+            "five_mean_abs": 0.004186178693845519,
+            "five_p99_abs": 0.18668414531689728,
+            "five_max_abs": 0.18668415176430014
+          },
+          "head_weight_bias": {
+            "raw_max_abs": 0.016884585560945204,
+            "five_mean_abs": 7.580917809839526e-05,
+            "five_p99_abs": 0.0033769171121890407,
+            "five_max_abs": 0.0033769171121890407
+          },
+          "integer_fc": {
+            "raw_max_abs": 0.0003083807786024729,
+            "five_mean_abs": 1.4497982018528508e-06,
+            "five_p99_abs": 6.167619264673264e-05,
+            "five_max_abs": 6.16762396437629e-05
+          },
+          "post_fc_probability": {
+            "raw_max_abs": 0.0035708999744376024,
+            "five_mean_abs": 0.0007040590928837691,
+            "five_p99_abs": 0.0035708999744376024,
+            "five_max_abs": 0.0035708999744376024
+          }
+        },
+        "hybrid_original_float_head": {
+          "raw_max_abs": 0.9334207012256601,
+          "five_mean_abs": 0.004186178693845519,
+          "five_p99_abs": 0.18668414531689728,
+          "five_max_abs": 0.18668415176430014
+        },
+        "hybrid_passed_on_this_witness": false,
+        "actual_total": {
+          "raw_max_abs": 0.9487450122833252,
+          "five_mean_abs": 0.004964755578173531,
+          "five_p99_abs": 0.19115620114095508,
+          "five_max_abs": 0.19260573387145996
+        },
+        "original_gate_passed": false,
+        "state_checks": [
+          {
+            "handle": 38,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          },
+          {
+            "handle": 37,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          },
+          {
+            "handle": 36,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          },
+          {
+            "handle": 35,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          },
+          {
+            "handle": 40,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          },
+          {
+            "handle": 39,
+            "next_read_equals_previous_assignment": true,
+            "concat_equals_history_then_current": true,
+            "state_transition_pairs": 228
+          }
+        ],
+        "arrays": "hey_nyx.npz",
+        "arrays_sha256": "bc437452c8cdfc517931ad3ddfea191c43a4abdf5af21530691d7eea5b66f29f"
+      },
+      "prior_float": {
+        "target": "hey_nyx",
+        "request_order": 48394,
+        "steps": 229,
+        "twice_reset_exact": true,
+        "mac_vs_saved_gpu_float_max_abs": 4.76837158203125e-07,
+        "actual_offline_phase_max_abs": 4.172325134277344e-07,
+        "mac_vs_saved_gpu_offline_phase_max_abs": 8.344650268554688e-07,
+        "original_variables_unchanged": true,
+        "arrays": "hey_nyx.npz",
+        "arrays_sha256": "9816893b09f50ddf53650d361b4ddcb87a22717ceb431853c22848a971ed95b3"
+      },
+      "zero_model": "hey_nyx-zero-initializer.tflite",
+      "zero_model_sha256": "5431d64e00b8134fd166b94ddc203f365fa72b9d58eda6037b243168c5ba3731",
+      "changed_bytes": 55,
+      "only_initializer_bytes_changed": true,
+      "initializers": [
+        {
+          "shared_name": "streaming/stream_10/states_1",
+          "read": 41,
+          "shape": [
+            1,
+            20,
+            1,
+            60
+          ],
+          "scale": 0.0038579038809984922,
+          "zero_point": -128,
+          "buffer": 77,
+          "offset": 3992,
+          "bytes": 1200,
+          "nonzero_real_codes": 8,
+          "original_sha256": "e3c2f1bb065d7c7ae2e49621a72fdf5ef99dd91c56367628b11ebc2468ccd2a4",
+          "zero_sha256": "7a79fb2433ddc3295776027d2534543dfb0bc2653bd56b63b74dfe4921337c67"
+        },
+        {
+          "shared_name": "streaming/stream_11/states_1",
+          "read": 42,
+          "shape": [
+            1,
+            29,
+            1,
+            60
+          ],
+          "scale": 0.0038478674832731485,
+          "zero_point": -128,
+          "buffer": 79,
+          "offset": 2236,
+          "bytes": 1740,
+          "nonzero_real_codes": 11,
+          "original_sha256": "7970cfeab795bc76c90f03f26b18eb784819c3dd6f5f5b1ee91facc959e7d5ba",
+          "zero_sha256": "1c252b740e3df805d6cac9fb0193970d9c8ab3dc92d50ab2c2dd560962323728"
+        },
+        {
+          "shared_name": "streaming/stream_6/states_1",
+          "read": 43,
+          "shape": [
+            1,
+            2,
+            1,
+            40
+          ],
+          "scale": 0.10196078568696976,
+          "zero_point": -128,
+          "buffer": 81,
+          "offset": 2140,
+          "bytes": 80,
+          "nonzero_real_codes": 0,
+          "original_sha256": "5715577b9eba0534be717aaf1cb9ea884163b8021d5b60104a366765be7fc9e4",
+          "zero_sha256": "5715577b9eba0534be717aaf1cb9ea884163b8021d5b60104a366765be7fc9e4"
+        },
+        {
+          "shared_name": "streaming/stream_7/states_1",
+          "read": 44,
+          "shape": [
+            1,
+            4,
+            1,
+            30
+          ],
+          "scale": 0.0036906946916133165,
+          "zero_point": -128,
+          "buffer": 83,
+          "offset": 2004,
+          "bytes": 120,
+          "nonzero_real_codes": 0,
+          "original_sha256": "22c7816fa4bc008e1d4ed1935b93e51bb9c2dd6e9dbd06189fb96689cb9ffd5f",
+          "zero_sha256": "22c7816fa4bc008e1d4ed1935b93e51bb9c2dd6e9dbd06189fb96689cb9ffd5f"
+        },
+        {
+          "shared_name": "streaming/stream_8/states_1",
+          "read": 45,
+          "shape": [
+            1,
+            8,
+            1,
+            60
+          ],
+          "scale": 0.003870912129059434,
+          "zero_point": -128,
+          "buffer": 85,
+          "offset": 1508,
+          "bytes": 480,
+          "nonzero_real_codes": 23,
+          "original_sha256": "92e94658331b61b56b893f96fd5b86c140c7f351f763332a6dfa54f420a3f423",
+          "zero_sha256": "12b9c54692425b144df377703da7584b6dd3c7a2f93dd63188552cecb0cc2186"
+        },
+        {
+          "shared_name": "streaming/stream_9/states_1",
+          "read": 46,
+          "shape": [
+            1,
+            12,
+            1,
+            60
+          ],
+          "scale": 0.0038960729725658894,
+          "zero_point": -128,
+          "buffer": 87,
+          "offset": 772,
+          "bytes": 720,
+          "nonzero_real_codes": 13,
+          "original_sha256": "a1c06b52c172bfd074f208f7fa8ee4c18378d94771b5de4886894e3f479ef1ce",
+          "zero_sha256": "8df47ee6c3004fa111193467d7de542c72b7f2ad6eed7ca18f60c38626beea13"
+        }
+      ]
+    }
+  ],
+  "prior_integer_report_sha256": "0a1d07595a5a91e1c5ef6891571c434b1f5ff5b3e019e3c8fdd750eb2d6df374",
+  "prior_float_report_sha256": "0603f392bf4f327e1cec74e7f554feab17ec7cf5fb4d21effb5e7b841bf86f0f",
+  "policy": "Two fixed consumed training witnesses only. Private copies change only six initializer constant buffers to their existing read-grid zero-points; no weight/grid/op/shape/clock/gate change, export, optimizer, waveform IO, new development/acceptance or board write. Original fresh-artifact results retained. Repeated fresh zero-initializer interpreters compare full streams and all observed integer tensors with original replay; actual Mac explicit-zero float remains unchanged. No candidate admission from these diagnostics."
+}
