@@ -10052,3 +10052,8 @@ Pushed3740bf7b before both original jobs. Numerical screen session82886/PID18578
 ## Recognition-priority steering read and applied
 
 Read actual Mac Issue13 comments6884389027/6884346145 and referenced6884218322. Mac conveys user request actual usability, no fullbatch/numerical-agreement prerequisite to actual recognition. Completefullbatch audit had already exited before reading; no history rewritten. Current collector87251/PID185779 runs independently of screen82886/PID185780; actualbroadbackground1 observed, screenbroad88 diagnosticpass. Added recognition-priority supplement; no extra floating experiments or audit expansion. Let existing jobs finish and preserve results. Freshdev/acceptance roles and behavior/FAR gates unchanged; no promotion from consumed diagnostics.
+
+
+## Actual complete INT8 consumed recognition traces available
+
+Original collector87251/PID185779 and screen82886/PID185780 both genuinelyexit0. Independent savedtrace and numerical auditors synchronousactualexit0. All744completeinputs/twofreshrepeat/codes/probability/quantization/clocks checked, both372inputs including original10.483944826388889hcontinuousbackground (permodel), nointernalreset. All270wholewave numerical diagnostic cases pass. Numerical result is supplementary, not recognitionprerequisite. New scoringlock binds saved744traces/runtime and original138point policy, no selectedthreshold or freshdata. Pushbeforeactualeventscoring; v30 unchanged.
