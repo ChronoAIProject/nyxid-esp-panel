@@ -8815,3 +8815,7 @@ retry or configchange, no newdev/acceptance or qualificationclaim; v30unchanged.
 ### 2026-11-14 Mac old event ledger handoff
 
 Delivered original synthetic manifest + all 1242 event NPZ, preserving original paths/bytes, plus five original receipts. Anonymous archive/member verification passed (1249 entries). See gpu-old-regression-event-ledgers-mac-v1-download.json and manifest. Historical consumed data only; no inference or selection. Official original PID958504 live at 07:00 UTC, 8555/9672; lifetime average 822.72 streams/h, not a recent-interval measurement. Mac native completion corrected in Issue; v30 unchanged.
+
+### 2026-11-14 Independent Linux audit of Mac bounded witnesses
+
+Authenticated anonymous Mac archive aaf5c052… (114887 bytes, exact20 entries/19 payload hashes). Independent saved-array audit verifies all792 raw/input/UINT8/embedding/actualFC codes against original GPU screen/recursive, all saved fresh/reset repeats, and registeredFC saved codes. Recomputed original numerical gates agree 3pass/1fail, Willow bounded remains failed (fivep99 .17625624054379294). No model invocation or new scoring. Four consumed witnesses do not qualify the complete540 screen, recognition or P4; v30 unchanged.
