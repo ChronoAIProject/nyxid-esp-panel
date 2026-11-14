@@ -1,0 +1,38 @@
+{
+  "original_report_sha256": {
+    "research/wakeword_p4/results/4090-engine-adversarial-hey-nyx-control-training-original-v1.json": "ae9d3c13ff29ed355f91badaa4c6414656f7f5d0a8b37d2e3c2143b1809a271b",
+    "research/wakeword_p4/results/4090-engine-adversarial-hey-nyx-adversarial-training-original-v1.json": "fb89e2bfd3205bd8be14e50f515c4b258b939ad3eab0b11614295c674ee6abf1"
+  },
+  "interruption_sha256": "77550596080fa7e88c797876a3e558bcfef4d1c6a869337c68df3a1899b888ce",
+  "execution_sha256": "73ecd187df43fc7fbac5319b827f441cb823d3891a2c87c82f296efb17d2f07c",
+  "auditor_sha256": "5fbfc50dde3686028beee61ac7edae9931b3ca2e375de9e00627f941c5341e24",
+  "all_passed": true,
+  "checks": [
+    {
+      "target": "hey_nyx",
+      "condition": "control",
+      "all10000_main_and_auxiliary_receipts_exact": true,
+      "initial_state_original_and_fresh": true,
+      "all10snapshots_audited": true,
+      "all36adam_arrays_finite": true,
+      "iterations": 10000,
+      "final_equals_snapshot10000": true,
+      "old_control_numeric_exact": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "adversarial",
+      "all10000_main_and_auxiliary_receipts_exact": true,
+      "initial_state_original_and_fresh": true,
+      "all10snapshots_audited": true,
+      "all36adam_arrays_finite": true,
+      "iterations": 10000,
+      "final_equals_snapshot10000": true,
+      "old_control_numeric_exact": false
+    }
+  ],
+  "actual_main_batches": 20000,
+  "actual_auxiliary_batches": 20000,
+  "four_arm_complete": false,
+  "limits": "Nyx completed pair only; no Willow/four-arm completion claim. Independent stored H5/state/Adam/snapshot/receipt/paired-input audit. Autodiff, gradient connections and runtime order signatures remain producer evidence; NPZ inventory order is not an independently reconstructed H5 path order. No export/INT8/recognition/newdata/promotion claim."
+}
