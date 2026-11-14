@@ -1196,6 +1196,16 @@ static void wake_task(void *arg)
             }
         }
         atomic_store(&wake_listening,false);
+        // Read/processing/FIFO errors can leave the loop before call_task has
+        // joined its audio workers. Keep exclusive ownership until that task
+        // detaches the call; let it acquire wake_lock while we wait.
+        for (;;) {
+            xSemaphoreTake(wake_lock,portMAX_DELAY);
+            bool attached=wake_call!=NULL;
+            xSemaphoreGive(wake_lock);
+            if(!attached)break;
+            vTaskDelay(pdMS_TO_TICKS(10));
+        }
         product_audio_release();
         atomic_store(&wake_yield_until,esp_timer_get_time()+2000000);
         vTaskDelay(pdMS_TO_TICKS(100));
