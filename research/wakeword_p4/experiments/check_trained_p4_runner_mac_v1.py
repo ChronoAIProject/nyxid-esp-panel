@@ -199,6 +199,33 @@ def main():
         cases.append(dict(case=name, error_type=error_type, probe_attempts=fake.probe_attempts,
                           restore_attempts=fake.restore_attempts, restored_verified=report["restored"], passed=True))
 
+    # Other standalone probes reuse this exact backup/restore transaction.
+    # A reducer error must still restore, with its original failure retained.
+    for reject in (False, True):
+        out = a.output_dir / ("custom_reducer_error" if reject else "custom_reducer")
+        out.mkdir()
+        cfg.output = out
+        fake = FakeBackend(cfg, image, b"OTHER_PROBE_DONE\n")
+        calls = []
+        def other_reducer(captured, references):
+            calls.append((captured, references))
+            if reject:
+                raise ValueError("constructed alternate protocol rejection")
+            return dict(alternate_protocol=True)
+        try:
+            report = runner.run_transaction(cfg, fake, image, refs, binding,
+                capture_reducer=other_reducer, scope="Constructed alternate probe")
+        except ValueError:
+            assert reject
+            report = json.loads((out / "report-private.json").read_text())
+        else:
+            assert not reject and report["reduction"] == dict(alternate_protocol=True)
+        assert calls == [(b"OTHER_PROBE_DONE\n", refs)]
+        assert report["restored"] and fake.flash == fake.original
+        assert report["limits"] == "Constructed alternate probe"
+        assert report["capture_reducer_sha256"] == reducer.sha(Path(__file__).read_bytes())
+        cases.append(dict(case=out.name, passed=True, restored_verified=True))
+
     # Exercise actual hardware-writer dispatch without invoking esptool: one
     # app address only, and zero write commands when USB identity differs.
     hardware = runner.HardwareBackend(cfg)

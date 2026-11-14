@@ -7,6 +7,7 @@ import argparse
 from contextlib import contextmanager
 from dataclasses import dataclass
 import hashlib
+import inspect
 import json
 from pathlib import Path
 import re
@@ -116,7 +117,7 @@ def finish_restoration():
             signal.signal(sig, handler)
 
 
-def run_transaction(cfg, backend, image, references, binding):
+def run_transaction(cfg, backend, image, references, binding, *, capture_reducer=None, scope=None):
     report = dict(schema="mac-trained-p4-app-only-execution-v1", binding=binding,
                   runner_sha256=reducer.sha(Path(__file__).read_bytes()),
                   reducer_sha256=reducer.sha(Path(reducer.__file__).read_bytes()),
@@ -127,6 +128,11 @@ def run_transaction(cfg, backend, image, references, binding):
                   backend=backend.kind, capture_origin_bound=False, candidate_qualified=False,
                   write_attempted=False, restored=False, phases=[],
                   limits="Standalone original trained numerical subset only. Not full540, panel headroom, recognition/FAR, audio, first-utterance or long-call acceptance.")
+    if scope is not None:
+        report["limits"] = scope
+    if capture_reducer is not None:
+        report["capture_reducer_sha256"] = reducer.sha(Path(inspect.getsourcefile(capture_reducer)).read_bytes())
+        report["capture_reducer_name"] = capture_reducer.__module__ + "." + capture_reducer.__name__
     service = None
 
     def phase(name):
@@ -192,7 +198,7 @@ def run_transaction(cfg, backend, image, references, binding):
         raw = backend.capture(cfg.capture_timeout)
         report["capture_sha256"] = reducer.sha(raw)
         phase("capture_complete")
-        report["reduction"] = reducer.reduce_capture(raw, references)
+        report["reduction"] = (capture_reducer or reducer.reduce_capture)(raw, references)
         report["capture_origin_bound"] = backend.kind == "hardware"
         phase("protocol_validated")
     except BaseException as error:
