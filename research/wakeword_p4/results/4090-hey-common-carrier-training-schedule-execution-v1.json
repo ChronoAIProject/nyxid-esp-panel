@@ -1,0 +1,31 @@
+{
+  "files": {
+    "research/wakeword_p4/results/4090-hey-common-carrier-feature-result-v1.json": "f87ac96062eb2a061b95b612b36e17da870837ced7977ec8877d92b99ea64ef2",
+    "research/wakeword_p4/results/4090-hey-common-carrier-feature-independent-audit-v1.json": "c5c4029548fb4103a86c37f6a109a3dbfcc953e0d9c4e362ae2d7a9bbf88670f",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/schedule_common_carrier_training_v1.py": "333e52aa582789cfc1862e1accf67d1c4765cca22b3bf5dc2b82f6708410f71a",
+    ".local/wakeword/hey-common-carrier-features-v1/features.bin": "42296291d7912f8c755f41ac3011bdc8586a14cdcdb93d95f92e2cda27f2c81b",
+    ".local/wakeword/hey-common-carrier-features-v1/features.json": "c05a7e5c4dcb00cdd543273ccf7bb5b1d7eea2572b6c21bdbe32aca9fd5c859c",
+    "research/wakeword_p4/results/4090-hey-common-carrier-replacement-decisions-v1.json": "5e840c53b029ed3c5a47537baae3c05d07d840e4fbadd3016facd2e3abfa448b",
+    "research/wakeword_p4/results/4090-hey-common-carrier-raw-recognition-protocol-v1.json": "c40333373d74bcb7c502cf051e43d377e42ffe9b25355a5bc20fe6e722403d84",
+    ".local/wakeword/hey-common-carrier-replacement-decisions-v1/hey_willow.jsonl.gz": "ccf2b9bf2b54e861528b8202a7e59c4a8dc8751e56143d6c3f6168c244c799b0",
+    ".local/wakeword/hey-common-carrier-replacement-decisions-v1/hey_nyx.jsonl.gz": "5abae516f0c877958cfd43deb20d14e7793d84cac3f5cf11942898d48aab9b2e",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/common_carrier_training_batches_v1.py": "7f0389f8f755fba0e3b11c01419347ee0d9951ba7612cab0a48f7baf9667f7b7",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/common_carrier_slot_policy_v1.py": "f172b302e4178b315baba835ed0ab203f97b71f89d1d64ba074bb79327250b81",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/schedule_hey_broad_v1.py": "e6df66f95ed41943cc7a6a5aee7c98cec352dbbf9e354dbce9d2362ec0c22f10",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_batch_schedule_v1.py": "52d0c41b29b060acf522bd2906a5bf90b2a9b1e0b72279153208e1c2137bdd30",
+    ".local/wakeword/hey-broad-schedules-v1/hey_willow.jsonl": "be51ed190093957d8b903416226bf44e38c4808c1b38064cb820f3d62b83ff4d",
+    ".local/wakeword/hey-broad-schedules-v1/hey_nyx.jsonl": "cae08413d0c0220f64671b846ff1fc303991e3e0199af7f168bbde02c1325545"
+  },
+  "numpy_version": "2.4.6",
+  "targets": [
+    "hey_willow",
+    "hey_nyx"
+  ],
+  "conditions": [
+    "control",
+    "command_context"
+  ],
+  "batches": 10000,
+  "policy": "All4 full10000 x/y/weight tensor schedules. Every baseline batch SHA matches original schedule. Original nonselected rows/all labels+weights exact, every oldeligible row matches original slice, replacement map uses frozen decisions, no new RNG/mining/augmentation. Compare first2 complete batches with twofresh CPU readers per condition. Save every endpoint/slot decision and both SHA. No model/optimizer/audio/new data selection."
+}

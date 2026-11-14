@@ -9540,3 +9540,5 @@ Original renderer completed all 4860 streams with zero failures. Original indepe
 Mac Issue6876448683 adds endpoint-domain/reachable-support reporting to the upcoming actual schedule analysis. Preserve the frozen midpoint formula and RNG; this is input-distribution description, not a new recognition gate. Fresh development and independent acceptance remain closed; no candidate promotion.
 
 Original feature extraction session33007 exited0:4860 rows,3112431 frames,248994480 bytes; binary SHA42296291d7912f8c755f41ac3011bdc8586a14cdcdb93d95f92e2cda27f2c81b. Complete independent frontend traversal launched as original session25592; not yet qualified at this entry. Actual schedules/training remain gated on its final result. Mac notified in Issue6876618239.
+
+Original independent feature audit session25592 subsequently exited0:all4860 rows fully recomputed, offsets/labels/cells exact. Shared pinned C++ frontend implementation limitation retained. Actual four-condition10000-batch schedule execution plan now frozen before execution; independent full tensor reconstruction remains required before raw training.
