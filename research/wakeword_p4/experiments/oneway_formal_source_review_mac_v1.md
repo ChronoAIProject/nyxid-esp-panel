@@ -31,3 +31,18 @@ numerical, recognition, FAR or independent-acceptance quality.
 The old event-ledger request remains separate. The frozen `9162bdb` reader still
 requires the original source manifest and all 1242 event NPZs. The metadata-only
 Willow finding at `38c36fa` does not replace that intake or qualify any model.
+
+## First completed control receipt
+
+GPU `334eeba` publishes the original Willow two-way control's 10000-update
+receipt. Its producer-reported final model and Adam numerical identities both
+equal those of the previous bounded treatment at `6b1aac4`. All common fields
+of the 12 published history rows (steps 1, 2, then 1000 through 10000) are also
+exact, including batch digests, losses and gradient norms. The complete trace
+file hashes differ: the new source records additional diagnostic columns.
+Mac has not independently read the new private H5, Adam or 10000-row trace.
+
+The additive identity comparison is metadata evidence only. It does not turn
+either experiment into a prospectively repeated formal run, establish live
+process status, replace this round's full control validation or qualify any
+treatment. Both conditions still require their original complete results.
