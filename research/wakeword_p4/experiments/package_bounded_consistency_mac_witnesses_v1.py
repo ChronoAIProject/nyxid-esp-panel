@@ -4,6 +4,7 @@ from pathlib import Path
 R=Path('research/wakeword_p4/results');PREFIX='4090-hey-broad-bounded-consistency-';OUT=Path('.local/wakeword/bounded-consistency-mac-handoff-v1')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def published(p):
+ p=Path(p).resolve().relative_to(Path.cwd())
  assert subprocess.check_output(['git','show','origin/research-hye-nyx-voice-gpu:'+str(p)],stderr=subprocess.PIPE)==p.read_bytes(),str(p)
 def main():
  names=['formal-execution','formal-result','formal-independent-audit','fixed-grid-compile-plan','fixed-grid-compile-result','fixed-grid-constant-audit','fixed-grid-screen-execution','fixed-grid-screen-result','fixed-grid-screen-independent-audit','formal-evidence-scope']
@@ -19,7 +20,7 @@ def main():
  assert len({(c['target'],c['condition'],c['request_order']) for c in screen['cases']})==540
  files=[]
  def add(path,name,receipt,expected_sha=None):
-  p=Path(path);h=sha(p)
+  p=Path(path).resolve().relative_to(Path.cwd());receipt=Path(receipt).resolve().relative_to(Path.cwd());h=sha(p)
   if expected_sha is not None:assert h==expected_sha,str(p)
   commit=subprocess.check_output(['git','log','-1','--format=%H','--',str(receipt)],text=True).strip();assert commit
   files.append((p,dict(name=name,source_path=str(p),bytes=p.stat().st_size,sha256=h,source_receipt=str(receipt),source_receipt_sha256=sha(receipt),source_receipt_commit=commit)))
