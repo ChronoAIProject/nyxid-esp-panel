@@ -8732,3 +8732,20 @@ not smoke initialization, no training launched/newdev/acceptance/v30replacement.
 Next step is a separately locked fresh matched smoke with original equalizedinit,
 2replicas/condition, original batch sequence/optimizer and only C float-target
 stop difference. Do not continue oldfinal weights or mine rare diagnostic rows.
+
+### One-way fresh matched smoke completed (2026-11-14)
+
+Original session81500/PID1444327 exit0. All2targets x2conditions x2freshreplicas,
+4updates each, originalequalizedinit/frozenBN/first4batchSHA/Adam. Independent saved
+H5/optimizer/schedule audit confirms all8initialnumerical inventories match original
+initializer,16BN variables unchanged,finalfinite/Adamiteration4,complete32updates,
+within-condition2freshmodel+optimizer numerical identities exact. Cross-condition
+first-step S/twowayC/onewayC and all observed gradient diagnostics exact. No export,
+newdata/dev/acceptance or candidate claim. Smoke weights never formal initialization.
+
+Prospective formal protocol/source+fullstepASTderivation a7e484f7:4fresharms10000
+updates each, finalonly, originalbatchsequence/Adam/BN and lambda1, onlyfloatCtarget
+stop difference. Fullformalrepeat1 explicitly unverified; smoke2 only4updates.
+Original complete540screen/recursive/constants/numerical gates retained; one-way
+both135must pass independently before freshdev. Actualformal lock not generated
+at this journal entry. V30 frozen, all original failures intact.

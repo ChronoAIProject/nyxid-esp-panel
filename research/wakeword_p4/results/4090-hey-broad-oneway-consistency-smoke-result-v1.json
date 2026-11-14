@@ -1,0 +1,290 @@
+{
+  "execution_sha256": "edbab422ed282efcfb100479791bad228076b04a08ea089aeb6e32f232ee3cb1",
+  "gpu": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "twoway_consistency",
+      "steps": 4,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "twoway_consistency",
+        "repeat": 1,
+        "steps": 4,
+        "elapsed_seconds": 2.878244408988394,
+        "parameter_delta_l2": 0.0013135646242229521,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "5dd3e748e7be98c78d464ee921872ca6448648702b8e443aed34357130836a72",
+          "optimizer": "39156ee2616c411e8234616da02d4970c0c228bd01ecd37c389bb070474f314c"
+        },
+        "weights_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_willow-twoway_consistency-1/final.weights.h5",
+        "weights_sha256": "24e46b284e4f43132de2a37c7b3c4506c0be26e1cec01b56c7b7206f49a86697",
+        "optimizer_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_willow-twoway_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "4af33a155d074fea153e5dcf3f54846d54f4a160d2be30bef05009298bdae7f0",
+        "batch_trace_sha256": "2eb0593bbafe0f3d85fe7b4d8b39b37d3a0919bf889ccecbb1f72b98ede03385",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 3.9580655197823944e-07,
+            "gradient_l2": 0.001466688816435635,
+            "supervised_loss": 3.9580655197823944e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.001466688816435635,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 9.533421803098463e-07,
+            "gradient_l2": 0.01014927588403225,
+            "supervised_loss": 9.533421803098463e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.01014927588403225,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 4,
+            "batch_sha256": "d9b7729f5b38ba31059b6caa68f4f3607f23b83cbbd13896c0db7735a577e62d",
+            "loss": 1.2654673753331735e-07,
+            "gradient_l2": 0.000291290256427601,
+            "supervised_loss": 1.2654673753331735e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.000291290256427601,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_willow",
+      "condition": "oneway_consistency",
+      "steps": 4,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "oneway_consistency",
+        "repeat": 1,
+        "steps": 4,
+        "elapsed_seconds": 2.9806031900225207,
+        "parameter_delta_l2": 0.0013957875693080336,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "da939ef6e07e9ed745cbea238e740050fbdb4ff828ef81f9c83be4118fcbfc9d",
+          "optimizer": "f16b7b65eb713c0fa7bcfb0ffd59b4344fb68ea813deff3fb932d40037d9b6ab"
+        },
+        "weights_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_willow-oneway_consistency-1/final.weights.h5",
+        "weights_sha256": "6ddc38edd6202454e9ea998a495a3c863ee4e11cf91dccd8589fb44a86c5228b",
+        "optimizer_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_willow-oneway_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "1fabc5e29ae3c209245167ceb85f4a797836049f4d2287d7ae3403aaf6bc7fcb",
+        "batch_trace_sha256": "dc3a993afba1fc5042e4ba97830bbf7915a728ff213930b442e45ddcde21adcd",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 3.9580655197823944e-07,
+            "gradient_l2": 0.001466688816435635,
+            "supervised_loss": 3.9580655197823944e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.001466688816435635,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 9.533421803098463e-07,
+            "gradient_l2": 0.01014927588403225,
+            "supervised_loss": 9.533421803098463e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.01014927588403225,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 4,
+            "batch_sha256": "d9b7729f5b38ba31059b6caa68f4f3607f23b83cbbd13896c0db7735a577e62d",
+            "loss": 2.487688846031233e-07,
+            "gradient_l2": 0.0004907888942398131,
+            "supervised_loss": 2.487688846031233e-07,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.0004907888942398131,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "twoway_consistency",
+      "steps": 4,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "twoway_consistency",
+        "repeat": 1,
+        "steps": 4,
+        "elapsed_seconds": 2.753668335994007,
+        "parameter_delta_l2": 0.0018703990035464013,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "3524762dd575338e0776c73d4581a7b075a267d6007f25bb80ceed4ec4ec73c4",
+          "optimizer": "b923d566205de5dab9e6c158abe8c2d83ddb289a3eeb68bd0539049839e7d095"
+        },
+        "weights_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_nyx-twoway_consistency-1/final.weights.h5",
+        "weights_sha256": "5e50678776457937cbe7b776843ebe373dc2371204ba3a925f1fb9b1c83141c4",
+        "optimizer_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_nyx-twoway_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "5c29f7a88377a9bf186c48fa95f87c1f3ccbe4fbc650fa99c8bdf0af6147268c",
+        "batch_trace_sha256": "25c5dcf6d80b7bab94d7b0222ac93760462e5cfca4e6472a00b5d6ab2cbdf3c5",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 1.7116581148002297e-05,
+            "gradient_l2": 0.031669676303863525,
+            "supervised_loss": 1.7116581148002297e-05,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.031669676303863525,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 0.00010394117998657748,
+            "gradient_l2": 0.4041610062122345,
+            "supervised_loss": 9.830421913648024e-05,
+            "consistency_loss": 5.6369590311078355e-06,
+            "supervised_gradient_l2": 0.4116617441177368,
+            "consistency_gradient_l2": 0.04930011183023453,
+            "twoway_consistency_loss": 5.6369590311078355e-06,
+            "oneway_consistency_loss": 5.6369590311078355e-06,
+            "twoway_consistency_gradient_l2": 0.04930011183023453,
+            "oneway_consistency_gradient_l2": 0.17597846686840057
+          },
+          {
+            "step": 4,
+            "batch_sha256": "7d7e4f9f1036b9447cba246756b475fef263279e4c2d20fc0f17228f9870eae7",
+            "loss": 1.1351576176821254e-05,
+            "gradient_l2": 0.031181033700704575,
+            "supervised_loss": 1.1351576176821254e-05,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.031181033700704575,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "oneway_consistency",
+      "steps": 4,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "oneway_consistency",
+        "repeat": 1,
+        "steps": 4,
+        "elapsed_seconds": 2.8768501909798943,
+        "parameter_delta_l2": 0.0018845251993327636,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "2fd979a8419c0032f29145578aef58df0595709847c8b061f64c66ba05da31dd",
+          "optimizer": "fcc248d95e8f1de8feb8ad9c8806eaada9ceb8e78e474605848fb41c66626074"
+        },
+        "weights_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_nyx-oneway_consistency-1/final.weights.h5",
+        "weights_sha256": "4e0c68732b22bdde36fce3d74730e220dfc667441b8e70af6d7834a1ed0a7672",
+        "optimizer_path": ".local/wakeword/hey-broad-oneway-consistency-smoke-v1/hey_nyx-oneway_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "0550929db2e4bb0fc4cf9b823a12f69460c69ba7498bb5f23f546cf25779580f",
+        "batch_trace_sha256": "22a34b67ef5b770ea7a740d84bf1536b23fe1778478e649e2654067e7927c9c5",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 1.7116581148002297e-05,
+            "gradient_l2": 0.031669676303863525,
+            "supervised_loss": 1.7116581148002297e-05,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.031669676303863525,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 0.00010394117998657748,
+            "gradient_l2": 0.2394927591085434,
+            "supervised_loss": 9.830421913648024e-05,
+            "consistency_loss": 5.6369590311078355e-06,
+            "supervised_gradient_l2": 0.4116617441177368,
+            "consistency_gradient_l2": 0.17597846686840057,
+            "twoway_consistency_loss": 5.6369590311078355e-06,
+            "oneway_consistency_loss": 5.6369590311078355e-06,
+            "twoway_consistency_gradient_l2": 0.04930011183023453,
+            "oneway_consistency_gradient_l2": 0.17597846686840057
+          },
+          {
+            "step": 4,
+            "batch_sha256": "7d7e4f9f1036b9447cba246756b475fef263279e4c2d20fc0f17228f9870eae7",
+            "loss": 1.0596479114610702e-05,
+            "gradient_l2": 0.028669916093349457,
+            "supervised_loss": 1.0596479114610702e-05,
+            "consistency_loss": 0.0,
+            "supervised_gradient_l2": 0.028669916093349457,
+            "consistency_gradient_l2": 0.0,
+            "twoway_consistency_loss": 0.0,
+            "oneway_consistency_loss": 0.0,
+            "twoway_consistency_gradient_l2": 0.0,
+            "oneway_consistency_gradient_l2": 0.0
+          }
+        ]
+      }
+    }
+  ],
+  "all_passed": true,
+  "limits": "Fresh originalequalizedinit, four updates/two fresh replicas per condition, both targets. Only C float target stop differs; original dualrawBCE, lambda1, exactFC, frozenBN/nofold/noarithmetic, original batches/Adam retained. Both C gradients explicitly observed and only named condition gradient merged with S, one update. Training-only entire original sampler, no diagnostic tail mining/heldout/newdev/acceptance/export/promotion. Smoke never formal. No retry; preserve failures."
+}
