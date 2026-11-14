@@ -10275,3 +10275,7 @@ Aligned-prefix originalsession23692/PID301084/start1355633 actuallylive after14a
 ## Aligned-prefix final export/behavior pipeline prepared while original training runs
 
 Prepared dedicated finalbuiltinINT8 exporter, one-new-model actualprimed collector/scorer and losslesscompactpublisher. Samefixedrepresentatives/no calibrationretry, same372completeconsumedwaveforms/81600continuousprime/10.483944826h, fixedreference.91796875/138diagnosticpoints. New saved-event-only comparison includes allfour aligned-prefix/bare-only/originalcommand-end/originalv30 conditions without duplicatebaseline inference; carrier-specificmisses/signedtiming retained. Syntaxchecks pass. No exportlock/model/report created before actualtrainingcompletion. Original23692 confirmedlive viahandle, actualGPU updates; no restart. Fullgoalindependentdevelopment/acceptance/officialHiESP requirements remain open;v30retained.
+
+## Aligned-prefix original RTX4090 fixed20000 completed
+
+Original23692/PID301084/start1355633 naturallytrueexit0,20000updates/850.916382473seconds. FinalH5 SHA f2e5ee2a75b30d9cbfe6b1a3cce90fd9060f757aa3678d413cf42f30430a41a2. Sameoriginalinitialization/seed726/freshAdam1e-5, no restart/selection/LRrescue. Automaticcommandprefix masks were the declared change; no recognition conclusion fromloss. Final oneINT8 plan6c6f3f3a0d7cd84f58e6f5687fdbdfac4bbef09af079430c325d122f287378a4 pins completedweights/presetrepresentatives, no newTTS/calibrationretry/FP32comparison. Pushbefore originalexport. V30retained/independentgoalstillopen.
