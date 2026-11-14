@@ -1,0 +1,100 @@
+{
+  "schema": "mac-fp32-trained-real-tflm-host-saved-byte-audit-v1",
+  "all_passed": true,
+  "plan_sha256": "9094c9c0f4510b9c992999e4354dd268770ac14af905641675193fd37f8bad02",
+  "original_result_sha256": "20bd112bf89b97f1cf97725d9c7189c3231fdc4a84d9a89a31ac4649e37082f6",
+  "models": [
+    {
+      "model": "hey_willow-float_control",
+      "actual_saved_probabilities": 2048,
+      "reference_errors": {
+        "tf": {
+          "max_abs": 1.6391277313232422e-07,
+          "worst_flat_step": 512
+        },
+        "litert": {
+          "max_abs": 7.105427357601002e-15,
+          "worst_flat_step": 1551
+        }
+      },
+      "repeats_byte_exact": true,
+      "arena_used": [
+        55120
+      ],
+      "variable_allocator_used": [
+        1040
+      ],
+      "outputs_sha256": "45a2d8da580a50722305fc04ccd1d5bd7a230219bbd9d2a276b363f02022cc94"
+    },
+    {
+      "model": "hey_willow-integer_qat",
+      "actual_saved_probabilities": 2048,
+      "reference_errors": {
+        "tf": {
+          "max_abs": 2.9802322387695312e-08,
+          "worst_flat_step": 513
+        },
+        "litert": {
+          "max_abs": 7.105427357601002e-15,
+          "worst_flat_step": 21
+        }
+      },
+      "repeats_byte_exact": true,
+      "arena_used": [
+        55120
+      ],
+      "variable_allocator_used": [
+        1040
+      ],
+      "outputs_sha256": "82ba540847de87359db448bcff73446dd45c41cc6812bb40ac67dd39bf0b9413"
+    },
+    {
+      "model": "hey_nyx-float_control",
+      "actual_saved_probabilities": 2048,
+      "reference_errors": {
+        "tf": {
+          "max_abs": 2.086162567138672e-07,
+          "worst_flat_step": 1646
+        },
+        "litert": {
+          "max_abs": 2.9103830456733704e-11,
+          "worst_flat_step": 1096
+        }
+      },
+      "repeats_byte_exact": true,
+      "arena_used": [
+        55120
+      ],
+      "variable_allocator_used": [
+        1040
+      ],
+      "outputs_sha256": "85a9c365bcde60ecd437f6c0b89bae8d084558d2bef9b94a8439b8b09c09001a"
+    },
+    {
+      "model": "hey_nyx-integer_qat",
+      "actual_saved_probabilities": 2048,
+      "reference_errors": {
+        "tf": {
+          "max_abs": 1.541775418445468e-08,
+          "worst_flat_step": 1783
+        },
+        "litert": {
+          "max_abs": 3.552713678800501e-15,
+          "worst_flat_step": 1718
+        }
+      },
+      "repeats_byte_exact": true,
+      "arena_used": [
+        55120
+      ],
+      "variable_allocator_used": [
+        1040
+      ],
+      "outputs_sha256": "01d4411ca9a52b5888510683dd1cbdf183ca605d8a5212f925d57212c67bf2b1"
+    }
+  ],
+  "original_saved_probabilities_audited": 8192,
+  "audit_model_invocations": 0,
+  "auditor_sha256": "b82999b1a5688332076d707a2ae5fc1454a78b0e93b12745693350d5a7618f61",
+  "limits": "Independent struct/binary64 reductions of saved original native bytes, both repeats and all startup, against untouched GPU references. Original executable/compile/execution/packet identities checked. No re-inference; does not reproduce GPU TF/H5 or establish recognition, fullstream/phase qualification, P4 resource/timing or acceptance."
+}

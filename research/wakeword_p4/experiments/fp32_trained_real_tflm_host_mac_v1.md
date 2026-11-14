@@ -48,3 +48,27 @@ Original ESP_NN=0 float kernels/compiler flags and chrono-only timer adapter are
 retained. Arenas are fresh and value-initialized, not poisoned-memory tests.
 Host64-bit allocation is not P4 allocation/timing evidence. Original INT8
 rejections and fullstream/phase/recognition/FAR/P4 gates remain in place.
+
+## Actual original execution and saved-byte audit
+
+Execution lock `acc2bbf` / plan SHA
+`9094c9c0f4510b9c992999e4354dd268770ac14af905641675193fd37f8bad02`
+was pushed before native execution. Original session 31227 exited zero. All 8192
+steps passed, with both fresh repeats byte-exact. Independent struct/binary64
+reduction read all original output bytes and unchanged reference arrays without
+re-inference and agreed with all numerical claims.
+
+| Model | TFLM vs original TF max abs | TFLM vs original LiteRT max abs |
+|---|---:|---:|
+| Willow float control | 1.6391277313232422e-7 | 7.105427357601002e-15 |
+| Willow integer-trained raw FP32 | 2.9802322387695312e-8 | 7.105427357601002e-15 |
+| Nyx float control | 2.086162567138672e-7 | 2.9103830456733704e-11 |
+| Nyx integer-trained raw FP32 | 1.541775418445468e-8 | 3.552713678800501e-15 |
+
+All 32 interpreter cases reported 55120 main-arena bytes and 1040 variable
+allocator bytes on this host64-bit runtime. These are not P4 measurements.
+The original static signature rejection and read-only copied-fixture setup
+failure remain recorded; neither involved native model invocation or a changed
+probability gate. The old random model/execution and GPU delivered bytes remain
+unchanged. GPU may advance the separately locked internal fullstream stage;
+fresh development/acceptance and candidate promotion remain unauthorized.
