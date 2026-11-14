@@ -34,3 +34,35 @@ PYTHON experiments/run_fp32_real_tflm_host_mac_v1.py run \
 This does not authorize another training/scoring run or reopen any integer
 admission gate. The existing full integer rejections, frozen v30 and all
 source/data reservations are preserved.
+
+## Actual result
+
+The plan/source were published at `d8ca154` before original session80355. That
+session exited0: all56 real runtime translation units compiled and the actual
+interpreter executed2048 steps. The original1024 inputs were each replayed in
+two fresh interpreters; saved repeat bytes are exact. Maximum absolute error is
+`5.960464477539063e-8` against the original LiteRT output and
+`1.1920928955078125e-7` against TensorFlow, within the predeclared1e-4 ceiling.
+
+Each of the eight actual host cases reported44256 main-arena bytes used and
+1040 variable-allocator bytes used. These are native64-bit host measurements;
+the P4 build enables ESP-NN and has a different ABI. They are not MCU or panel
+memory measurements. Fresh host arena allocations are value-initialized by
+the C++ harness; this run does not test poisoned/uninitialized memory.
+
+The independent saved-byte audit uses struct-unpacked raw C++ output rather
+than the producer's array reduction. It verifies all2048 captured float bytes,
+the original input bytes/references, all56 actual translation-unit hashes, the
+eight captured allocator records and the exact repeat/numerical results. It
+does not perform another inference or broaden the evidence to real models.
+
+```sh
+PYTHON experiments/audit_fp32_real_tflm_host_mac_v1.py \
+  --run-root ORIGINAL_HOST_RUN --prior-root ORIGINAL_FP32_RUN \
+  --plan ORIGINAL_PLAN.json --report NEW_AUDIT.json
+```
+
+The next hardware stage is separately frozen in
+`fp32_p4_resource_plan_mac_v1.md`. It uses the original P4 image and the existing
+app-only restore runner. No development USB serial device was present during
+this host run; no board operation occurred.
