@@ -1,0 +1,62 @@
+{
+  "status": "completed_no_admission",
+  "plan_sha256": "35f641c70111b82293240a0e401b1581bd49dfd9c001676273d78cd730bf04d3",
+  "phases": [
+    {
+      "phase": "audit_hey_broad_consistency_formal_v1",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/audit_hey_broad_consistency_formal_v1.log",
+      "log_sha256": "b714856d66b0ff59d560b57853149c3edb801c4948a28e802c800c5694ea7ae0"
+    },
+    {
+      "phase": "compile_hey_broad_consistency_fixed_grid_v1-plan",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/compile_hey_broad_consistency_fixed_grid_v1-plan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "compile_hey_broad_consistency_fixed_grid_v1-run",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/compile_hey_broad_consistency_fixed_grid_v1-run.log",
+      "log_sha256": "c6a0932f1d82f2da0957970979520eb029da3480672aeb837e17454958c13f6c"
+    },
+    {
+      "phase": "audit_hey_broad_consistency_fixed_grid_constants_v1",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/audit_hey_broad_consistency_fixed_grid_constants_v1.log",
+      "log_sha256": "db26df0bedcccfe18a079cb9a6d873505164110bd1ca136d66a55886ea216c7f"
+    },
+    {
+      "phase": "screen_hey_broad_consistency_fixed_grid_v1-plan",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/screen_hey_broad_consistency_fixed_grid_v1-plan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "screen_hey_broad_consistency_fixed_grid_v1-lock",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/screen_hey_broad_consistency_fixed_grid_v1-lock.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "screen_hey_broad_consistency_fixed_grid_v1-run",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/screen_hey_broad_consistency_fixed_grid_v1-run.log",
+      "log_sha256": "d20580d9346b467531f93927c925dcf3392329f26b4cc6e477fc58cb15253d19"
+    },
+    {
+      "phase": "audit_hey_broad_consistency_fixed_grid_screen_v1",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/audit_hey_broad_consistency_fixed_grid_screen_v1.log",
+      "log_sha256": "bbaf797eb96e545dffacb4dfd6176853a90b410c2880d236ff3bf34bc8d00427"
+    },
+    {
+      "phase": "probe_hey_broad_consistency_fixed_grid_recursive_v1-plan",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/probe_hey_broad_consistency_fixed_grid_recursive_v1-plan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "probe_hey_broad_consistency_fixed_grid_recursive_v1-run",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/probe_hey_broad_consistency_fixed_grid_recursive_v1-run.log",
+      "log_sha256": "db7d7c63123d685edadaa0c513767a81e4157634766072c2db377c8691f980a4"
+    },
+    {
+      "phase": "audit_hey_broad_consistency_fixed_grid_recursive_v1",
+      "log": ".local/wakeword/hey-broad-consistency-continuation-v1/audit_hey_broad_consistency_fixed_grid_recursive_v1.log",
+      "log_sha256": "839cae39e22b9ab33a14585f7b2d939adc128f50f7bb7bb7f0ce30dd83cb2d9b"
+    }
+  ],
+  "limits": "Observe only original PID/starttime; never train/restart. After terminal and complete final aggregate: audit/publish -> publish compileplan -> once compile -> independentconstantsaudit/publish -> publishscreenplan -> publishactualscreenlock -> once full540screen/audit/publish -> publishrecursiveplan -> once recursivefull540/audit/publish. Any missing/failed/hash/git step stops, never retry. Preserve all failures. No freshdev/acceptance/threshold/model selection/promotion."
+}
