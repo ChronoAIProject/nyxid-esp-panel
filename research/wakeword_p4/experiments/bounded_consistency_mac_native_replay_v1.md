@@ -140,3 +140,25 @@ executed consistency-family plan exactly. Its four final H5/model hashes are
 fixed before transport intake and native execution. Publish this actual plan
 before running the replay. Native execution and actual artifact intake remain
 pending; full540/recursive, recognition/FAR and P4 qualification are not proven.
+
+The actual handoff was published at GPU `ee0883f` after complete540 rejected
+both conditions: raw control Willow123/Nyx130 and bounded treatment
+Willow125/Nyx126, each out of135. No condition qualifies on all270.
+The original-byte archive is `gpu-bounded-consistency-fixed-grid-mac-witnesses-v1.tar.gz`
+on release `research-hey-nyx-20261110`, 1102004 bytes, SHA256
+`f4a3933ae0d736386eaa74c9db29273bf7a91cc779cc5f1f02670267e0ec0343`.
+
+```sh
+python research/wakeword_p4/experiments/receive_bounded_consistency_witnesses_mac_v1.py \
+  --archive "$PRIVATE/gpu-bounded-consistency-fixed-grid-mac-witnesses-v1.tar.gz" \
+  --old-feature-payload "$PRIVATE/gpu-equalized-mac-witnesses-v1/payload" \
+  --output-dir "$PRIVATE/gpu-bounded-consistency-fixed-grid-mac-witnesses-v1-authenticated" \
+  --report NEW_BOUNDED_INTAKE_REPORT.json
+```
+
+Actual intake authenticated the archive, exact32 members/all31 payload hashes,
+15 original committed receipts and the already published `db77c3e` Mac plan.
+All four model/H5/training and fixed screen NPZ identities match; the existing
+old feature files also match. Sixteen private payload files are copied under
+their original relative paths. Archive reports retain their original
+`receipts/` names. This is rejected-model diagnostic transport, not admission.
