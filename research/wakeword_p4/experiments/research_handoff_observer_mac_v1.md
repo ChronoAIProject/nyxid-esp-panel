@@ -24,8 +24,11 @@ bounded observer `49446` is terminal and is not reused or restarted.
 No messages, payload downloads, inference, scoring, private-array reads or model
 qualification occur here. When an event asset appears, authenticate its immutable
 manifest and original report hash chain before feeding its original 1243 payloads
-to the frozen `9162bdb` reader. When models appear, inspect their actual identities
-and complete numerical gates before opening any new development or acceptance.
+to the frozen `9162bdb` reader. This observer describes that historical handoff;
+it does not define prerequisites for current model recognition tests. For
+current candidates, follow the [recognition-first workflow](../README.md#current-priority-usable-wake-detection):
+check model identity and basic streaming operation, then evaluate actual INT8
+behavior while preserving development and independent acceptance roles.
 
 ## Read the latest issue comments explicitly
 

@@ -13,6 +13,13 @@ Keep the completed numerical discrepancies as diagnostic evidence; do not add
 more cross-platform gradient or TF32 experiments without a concrete behavioral
 failure that they can help explain. Evaluate actual recognition before spending
 more effort on numerical alignment.
+After the fixed-final model is complete, check its identity, data roles and
+basic streaming input/output and initialization, then measure the exported
+INT8 detector's actual recognition, false activations and latency. Full batch
+reconstruction and offline/streaming or FP32/INT8 score comparisons are
+diagnostics, not prerequisites for recognition testing or qualification.
+Preserve their existing results and investigate them when they can explain an
+observed behavioral failure.
 Keep dataset separation and the original PCM/audio path unchanged. Check the
 chosen model on the actual P4 runtime before deployment, and continue the
 [long-term stability monitor](../../docs/STABILITY.md).
