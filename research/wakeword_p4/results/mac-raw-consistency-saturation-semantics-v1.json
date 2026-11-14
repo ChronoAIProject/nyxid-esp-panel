@@ -1,0 +1,197 @@
+{
+  "schema": "mac-raw-consistency-saturation-semantics-v1",
+  "gpu_ref": "f2578cf099ae92aa9503f6477a5c1426a64dad0b",
+  "script_sha256": "745338e1773d0e813adc8a9d7f979fba7fc4a3baf58786ca0066ea26a5349b6c",
+  "source_sha256": {
+    "research/wakeword_p4/experiments/hey_broad_consistency_loss_v1.py": "3907462cc0dd9b390d04bc161a3e2c92fd26af9cfeed3e2e102b93243ccdd6ba",
+    "research/wakeword_p4/experiments/probe_hey_broad_bounded_float_v1.py": "b4171e46a30d87f23897bc40b26e1839cee7efa8f090359bb1e2a1dc5b669f9b",
+    "research/wakeword_p4/experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "research/wakeword_p4/experiments/run_hey_broad_consistency_v1.py": "189a9a0824e1b8d3d1c3082e97ccc869c8cf5412f215573ce2e8bbbacdd72b7c",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-formal-execution-v1.json": "90c5f1c671f77aba7c953bd2761cabdc57d0ea5e2c14426294a204760ac7de72",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-hey_willow-dual_supervised_control-training-original-v1.json": "822d5dff207d1f6e1f77ab29fde0d9a963683efd3f6e934b5b0c17935f1ddfa5"
+  },
+  "constructed_cases": [
+    {
+      "float_logit": -64.0,
+      "quant_surrogate_logit": -128.0,
+      "supervised_loss": 1.6038109389511792e-27,
+      "consistency_loss": 7.5,
+      "consistency_logit_gradients": [
+        0.125,
+        -0.125
+      ],
+      "constructed_bounded_probabilities": [
+        0.00033535013790242374,
+        0.00033535013790242374
+      ],
+      "constructed_bounded_probability_abs_difference": 0.0
+    },
+    {
+      "float_logit": 64.0,
+      "quant_surrogate_logit": 128.0,
+      "supervised_loss": 8.019054694755896e-29,
+      "consistency_loss": 7.5,
+      "consistency_logit_gradients": [
+        -0.125,
+        0.125
+      ],
+      "constructed_bounded_probabilities": [
+        0.9996646642684937,
+        0.9996646642684937
+      ],
+      "constructed_bounded_probability_abs_difference": 0.0
+    },
+    {
+      "float_logit": -8.0,
+      "quant_surrogate_logit": -9.0,
+      "supervised_loss": 0.004588085692375898,
+      "consistency_loss": 0.0078125,
+      "consistency_logit_gradients": [
+        0.015625,
+        -0.015625
+      ],
+      "constructed_bounded_probabilities": [
+        0.00033535013790242374,
+        0.00033535013790242374
+      ],
+      "constructed_bounded_probability_abs_difference": 0.0
+    },
+    {
+      "float_logit": 8.0,
+      "quant_surrogate_logit": 9.0,
+      "supervised_loss": 0.00022940427879802883,
+      "consistency_loss": 0.0078125,
+      "consistency_logit_gradients": [
+        -0.015625,
+        0.015625
+      ],
+      "constructed_bounded_probabilities": [
+        0.9996646642684937,
+        0.9996646642684937
+      ],
+      "constructed_bounded_probability_abs_difference": 0.0
+    },
+    {
+      "float_logit": 1.0,
+      "quant_surrogate_logit": -1.0,
+      "supervised_loss": 0.8132617473602295,
+      "consistency_loss": 0.03125,
+      "consistency_logit_gradients": [
+        0.03125,
+        -0.03125
+      ],
+      "constructed_bounded_probabilities": [
+        0.7310585975646973,
+        0.2689414322376251
+      ],
+      "constructed_bounded_probability_abs_difference": 0.46211716532707214
+    },
+    {
+      "float_logit": 0.5,
+      "quant_surrogate_logit": -0.5,
+      "supervised_loss": 0.7240769863128662,
+      "consistency_loss": 0.0078125,
+      "consistency_logit_gradients": [
+        0.015625,
+        -0.015625
+      ],
+      "constructed_bounded_probabilities": [
+        0.622459352016449,
+        0.3775406777858734
+      ],
+      "constructed_bounded_probability_abs_difference": 0.24491867423057556
+    }
+  ],
+  "saturated_vs_boundary_consistency_penalty_ratio": 240.0,
+  "unchanged_bounded_toy_variables": true,
+  "optimizer_updates": 0,
+  "conditional_logged_batch_observations": [
+    {
+      "step": 1,
+      "reported_supervised_loss": 3.9580646671311115e-07,
+      "reported_consistency_loss": 0.4464350938796997,
+      "conservative_individual_bce_upper_under_declared_policy": 0.0002026529109571129,
+      "upper_below_bce_at_abs8": true
+    },
+    {
+      "step": 2,
+      "reported_supervised_loss": 9.533421803098463e-07,
+      "reported_consistency_loss": 0.7777618169784546,
+      "conservative_individual_bce_upper_under_declared_policy": 0.0004881111963186413,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 1000,
+      "reported_supervised_loss": 1.8276803075423231e-06,
+      "reported_consistency_loss": 0.4708596467971802,
+      "conservative_individual_bce_upper_under_declared_policy": 0.0009357723174616694,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 2000,
+      "reported_supervised_loss": 9.338488780485932e-06,
+      "reported_consistency_loss": 0.7049063444137573,
+      "conservative_individual_bce_upper_under_declared_policy": 0.004781306255608797,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 3000,
+      "reported_supervised_loss": 7.935938697301026e-07,
+      "reported_consistency_loss": 0.5096789002418518,
+      "conservative_individual_bce_upper_under_declared_policy": 0.00040632006130181253,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 4000,
+      "reported_supervised_loss": 0.0001111943056457676,
+      "reported_consistency_loss": 0.5288238525390625,
+      "conservative_individual_bce_upper_under_declared_policy": 0.05693148449063301,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 5000,
+      "reported_supervised_loss": 3.2644260272718384e-07,
+      "reported_consistency_loss": 2.2478203773498535,
+      "conservative_individual_bce_upper_under_declared_policy": 0.00016713861259631813,
+      "upper_below_bce_at_abs8": true
+    },
+    {
+      "step": 6000,
+      "reported_supervised_loss": 1.5097934635832644e-07,
+      "reported_consistency_loss": 1.0092389583587646,
+      "conservative_individual_bce_upper_under_declared_policy": 7.730142533546314e-05,
+      "upper_below_bce_at_abs8": true
+    },
+    {
+      "step": 7000,
+      "reported_supervised_loss": 4.01706614638897e-07,
+      "reported_consistency_loss": 1.1011662483215332,
+      "conservative_individual_bce_upper_under_declared_policy": 0.00020567378669511527,
+      "upper_below_bce_at_abs8": true
+    },
+    {
+      "step": 8000,
+      "reported_supervised_loss": 0.009572481736540794,
+      "reported_consistency_loss": 0.7818055152893066,
+      "conservative_individual_bce_upper_under_declared_policy": 4.901110649108887,
+      "upper_below_bce_at_abs8": false
+    },
+    {
+      "step": 9000,
+      "reported_supervised_loss": 1.9483945834508631e-07,
+      "reported_consistency_loss": 0.7731107473373413,
+      "conservative_individual_bce_upper_under_declared_policy": 9.975780267268419e-05,
+      "upper_below_bce_at_abs8": true
+    },
+    {
+      "step": 10000,
+      "reported_supervised_loss": 2.6585868795336864e-07,
+      "reported_consistency_loss": 1.6139086484909058,
+      "conservative_individual_bce_upper_under_declared_policy": 0.00013611964823212475,
+      "upper_below_bce_at_abs8": true
+    }
+  ],
+  "bce_at_abs8": 0.00033540637289576885,
+  "all_constructed_checks_passed": true,
+  "limits": "Actual unchanged GPU components() and bounded() run on a constructed identity Dense head. Both logits use the nominal float bounded map only; this is not exact deployed quantized FC/MUL/ADD. Shows raw-logit consistency can rank saturated equal-probability pairs above large probability disagreements. Conditional log bound assumes declared128, binary labels and weights1/20; private actual logits/weights were not opened. Does not prove why current540 failed, loss contribution fractions in actual data, recognition change, or efficacy of another loss. No coefficient/checkpoint/gate changes, learned inference, training, fresh-development/acceptance, audio or P4 operations."
+}
