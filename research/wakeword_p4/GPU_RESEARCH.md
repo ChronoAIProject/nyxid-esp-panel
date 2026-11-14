@@ -9987,3 +9987,8 @@ Actual newexport lock exit0 authenticates original completed2stepGPUreports/stat
 ## Disk cleanup v2 and ongoing budget
 
 User requested cleanup and future space control. Size-group inspection suggested duplicate temporary PCM, but actual SHA256 comparison found none; all PCM paths and bytes retained. Removed only redownloadable mathlib and Espressif ComponentManager caches, recording allocated bytes in results/4090-disk-cleanup-v2.json. Frozen v30 size/hash reverified exact. New-work disk guard now defaults to 100 GiB reserve plus 1.5x projected allocation, rejects nonfinite budgets. DISK_BUDGET.md covers /tmp, immutable input reuse and compact schedules. No training launch or original evidence alteration.
+
+
+## Actual smoke streaming exports and independent replay audit
+
+Original session33511/PID81315 genuinely exit0; starttime unavailable after process exited, explicit null. Both two-update smoke models each exported once to FP32/builtinINT8 without retry. Narrow139936/60824 bytes; broad140248/61064 bytes. Original824 calls across two fresh interpreters/artifact exact; independent audit52843 actualexit0 inspects all FlatBuffers, six real-zero initializer buffers, ABI3x40→1, noCustom/noFloatINT8, actual representative/source and quantization arrays, and another412 uninterrupted fresh-interpreter calls exact against saved traces. Original static/runtime report bytes published unchanged. This does not establish FP32/INT8 numerical fidelity, whole-wave artifact qualification, recognition, freshdev/acceptance or P4 resources. Formal20k has not launched; next full execution lock must use original shared initialization, not smoke weights. Frozen v30 unchanged.

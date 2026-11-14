@@ -1,0 +1,486 @@
+{
+  "execution_sha256": "d930751ef37877aa454706846f37155acdeccd4959bd59e362ffaa280b1b801b",
+  "models": [
+    {
+      "target": "hey_nyx",
+      "condition": "narrow",
+      "path": ".local/wakeword/multispeaker-gpu-smoke-v1/narrow/final.weights.h5",
+      "sha256": "2142268c4b67bc7e08e197f1907125936aac6515ff397f749d6042db6c71665b",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-narrow/fp32.tflite",
+          "bytes": 139936,
+          "sha256": "0b96b02ea768225845182a7e1e06e8e426743516f74e1216174a581bdfdff0a2",
+          "ops": [
+            "CALL_ONCE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "EXPAND_DIMS",
+            "CONCATENATION",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "RESHAPE",
+            "FULLY_CONNECTED",
+            "LOGISTIC",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE"
+          ],
+          "initializers": [
+            {
+              "shape": [
+                1,
+                57,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                20,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                12,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                8,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                4,
+                1,
+                30
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                2,
+                1,
+                40
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            }
+          ],
+          "logistic_input_scale": null
+        },
+        "int8": {
+          "path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-narrow/int8.tflite",
+          "bytes": 60824,
+          "sha256": "bfbaa8761f87712d3602d905820f9668f7e8b71c47777cca3fba9a135ac55b82",
+          "ops": [
+            "CALL_ONCE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "EXPAND_DIMS",
+            "CONCATENATION",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "RESHAPE",
+            "FULLY_CONNECTED",
+            "LOGISTIC",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "QUANTIZE"
+          ],
+          "initializers": [
+            {
+              "shape": [
+                1,
+                2,
+                1,
+                40
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                4,
+                1,
+                30
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                8,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                12,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                20,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                57,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            }
+          ],
+          "logistic_input_scale": 0.02405056357383728
+        }
+      },
+      "parameters_unchanged": true,
+      "static_abi_passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "broad",
+      "path": ".local/wakeword/multispeaker-gpu-smoke-v1/broad/final.weights.h5",
+      "sha256": "8672157a0e0dd54855d0977298d3ccba945d712242ecda5db9e7c67abed2ebe0",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-broad/fp32.tflite",
+          "bytes": 140248,
+          "sha256": "46926d13adad3c3f7c910b690c960494b9db9f68e07b4c052e16fcf6a5b03395",
+          "ops": [
+            "CALL_ONCE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "EXPAND_DIMS",
+            "CONCATENATION",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "RESHAPE",
+            "FULLY_CONNECTED",
+            "LOGISTIC",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE"
+          ],
+          "initializers": [
+            {
+              "shape": [
+                1,
+                12,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                8,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                4,
+                1,
+                30
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                2,
+                1,
+                40
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                57,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                20,
+                1,
+                60
+              ],
+              "zero": 0,
+              "all_real_zero": true
+            }
+          ],
+          "logistic_input_scale": null
+        },
+        "int8": {
+          "path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-broad/int8.tflite",
+          "bytes": 61064,
+          "sha256": "c7e8f88d1c9271271d8def1b309f4e7446b511f1f392932335267ddaf1c8c464",
+          "ops": [
+            "CALL_ONCE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "VAR_HANDLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "READ_VARIABLE",
+            "EXPAND_DIMS",
+            "CONCATENATION",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "DEPTHWISE_CONV_2D",
+            "CONV_2D",
+            "CONCATENATION",
+            "RESHAPE",
+            "FULLY_CONNECTED",
+            "LOGISTIC",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "STRIDED_SLICE",
+            "ASSIGN_VARIABLE",
+            "QUANTIZE"
+          ],
+          "initializers": [
+            {
+              "shape": [
+                1,
+                20,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                57,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                2,
+                1,
+                40
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                4,
+                1,
+                30
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                8,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            },
+            {
+              "shape": [
+                1,
+                12,
+                1,
+                60
+              ],
+              "zero": -128,
+              "all_real_zero": true
+            }
+          ],
+          "logistic_input_scale": 0.021670600399374962
+        }
+      },
+      "parameters_unchanged": true,
+      "static_abi_passed": true
+    }
+  ],
+  "all_static_passed": true,
+  "formal_training_completed": false,
+  "limits": "Disposable fixed-final2 smoke models only. One raw-sigmoid FP32 and builtin INT8 export each, unchanged frozen BN, six zero-real states. Original exporter arithmetic reused with explicit context225\u2192309, per-arm material selector, and metadata keyword substitutions. Representative fixed first16 actual training batch windows/arm plus original zero/26 sentinels; no intermediate resets. Fresh interpreter103calls\u00d72repeats/artifact on first actual training window; save all raw outputs. ABI/reset repeatability only, no FP32/INT8 accuracy bound, true whole-wave artifact qualification, recognition, new threshold, holdout, formal training or P4 resource admission."
+}

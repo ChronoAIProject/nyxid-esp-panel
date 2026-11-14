@@ -1,0 +1,73 @@
+{
+  "schema": "multispeaker-smoke-export-runtime-v1",
+  "execution_sha256": "d930751ef37877aa454706846f37155acdeccd4959bd59e362ffaa280b1b801b",
+  "static_result_sha256": "0b240534bb4c44bb9920321355dc296ba1a168ce627bb781dd2aa122842519b3",
+  "artifacts": [
+    {
+      "arm": "narrow",
+      "kind": "fp32",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-narrow/fp32-abi-replay.npz",
+      "trace_sha256": "2caf8f576d448abe548370f21eb906cd66aa5eca9ae394a8b602b6e8bec40c05",
+      "input_quantization": [
+        0.0,
+        0
+      ],
+      "output_quantization": [
+        0.0,
+        0
+      ]
+    },
+    {
+      "arm": "narrow",
+      "kind": "int8",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-narrow/int8-abi-replay.npz",
+      "trace_sha256": "e8ecfcc86afbcc06b76b520fb66b659e1af5d75fedb0de6589da26d687200f61",
+      "input_quantization": [
+        0.10196078568696976,
+        -128
+      ],
+      "output_quantization": [
+        0.00390625,
+        0
+      ]
+    },
+    {
+      "arm": "broad",
+      "kind": "fp32",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-broad/fp32-abi-replay.npz",
+      "trace_sha256": "3d9c5af94bf6bb0a8555d61646f1e14b21304f091d3950212c1b3dea550729e6",
+      "input_quantization": [
+        0.0,
+        0
+      ],
+      "output_quantization": [
+        0.0,
+        0
+      ]
+    },
+    {
+      "arm": "broad",
+      "kind": "int8",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-smoke-export-v1/hey_nyx-broad/int8-abi-replay.npz",
+      "trace_sha256": "5d97a1a7906dbb8ad6d6d01ef8fdcac234225d1a59d67292a4cdce637a86fd1d",
+      "input_quantization": [
+        0.10196078568696976,
+        -128
+      ],
+      "output_quantization": [
+        0.00390625,
+        0
+      ]
+    }
+  ],
+  "all_static_and_runtime_abi_checks_passed": true,
+  "limits": "Disposable fixed-final2 smoke models only. One raw-sigmoid FP32 and builtin INT8 export each, unchanged frozen BN, six zero-real states. Original exporter arithmetic reused with explicit context225\u2192309, per-arm material selector, and metadata keyword substitutions. Representative fixed first16 actual training batch windows/arm plus original zero/26 sentinels; no intermediate resets. Fresh interpreter103calls\u00d72repeats/artifact on first actual training window; save all raw outputs. ABI/reset repeatability only, no FP32/INT8 accuracy bound, true whole-wave artifact qualification, recognition, new threshold, holdout, formal training or P4 resource admission."
+}
