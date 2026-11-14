@@ -8811,3 +8811,7 @@ verified. Producer finite/frozenBN true. Same original1450872 now lastNyxoneway
 (471updates observed),1455248 waits. Threeof4armscomplete; completeindependent
 formal audit/compile/full540screen/recursive still pending. No checkpointselection,
 retry or configchange, no newdev/acceptance or qualificationclaim; v30unchanged.
+
+### 2026-11-14 Mac old event ledger handoff
+
+Delivered original synthetic manifest + all 1242 event NPZ, preserving original paths/bytes, plus five original receipts. Anonymous archive/member verification passed (1249 entries). See gpu-old-regression-event-ledgers-mac-v1-download.json and manifest. Historical consumed data only; no inference or selection. Official original PID958504 live at 07:00 UTC, 8555/9672; lifetime average 822.72 streams/h, not a recent-interval measurement. Mac native completion corrected in Issue; v30 unchanged.
