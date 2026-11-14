@@ -76,3 +76,26 @@ Use the archived `plan.json` and its `thresholds` list for the grid file.
 `WAKE_MODELS` contains the two original TFLites and their handoff manifest.
 The original session50845 completed with exit0. This run changes no firmware,
 does not access fresh data and does not replace the GPU's full-background run.
+
+## Original v30 model as a practical reference
+
+While waiting for the new final model, the original v30 bytes were run through
+the same108 complete consumed inputs, using their original threshold0.91796875
+and current panel event policy. Its actual context150 preparation feeds56,160
+zero samples. No threshold was scanned or selected. Original session6787
+completed with exit0; the plan and every output are archived in the
+[reference result](../results/mac-v30-existing-priming-reference-v1.json).
+
+At that fixed point, the primed path detects25/36 target clips:8/9 standalone
+and17/27 followed by commands, with0/72 cross-word triggers and no pre-source
+events. All25 target hits are after the generated prefix support. By carrier,
+it detects0/9 `turn on the light`,9/9 `what time is it`, and8/9 `set a timer`.
+This identifies a concrete connected-command weakness in these existing
+synthetic inputs; it does not establish its acoustic or training cause.
+
+The cold path is retained as an initialization comparison. No agreement between
+the two paths is required. This is a model/threshold behavior reference under
+the current panel event policy, not a claim that every historical frozen
+evaluator is reproduced. There is no new audio, background FAR, independent
+acceptance, acoustic playback or hardware change, and this reference does not
+meet the full goal merely because no cross-word clip fired.
