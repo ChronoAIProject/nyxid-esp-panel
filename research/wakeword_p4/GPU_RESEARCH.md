@@ -8915,3 +8915,6 @@ Original main.c SHA matches original9672execution lock. After native detected re
 
 ### Mac actual trained MicroInterpreter capture intake
 Authenticated immutable d53d9d62a09fec26babfbaee5553b2136dc1720f original report and anonymously downloaded 700414-byte archive SHA075a3c989a6b358be42731de086d0d241029909b7f905f95937195d866aa08e5; all56members/55payload hashes checked. Imported original8192float outputs without inference, verified finite/exact repeats and original TF/LiteRT error maxima for all4models. Original report bytes preserved; canonical local capture receipt and importer committed. Mac Issue6874781415 confirms original session31227 exit0 and permission to advance separately locked540fullstream. Host arena55120B is not P4 qualification. No model changes, recognition scoring or freshdev access.
+
+### Original 540 fullstream run started after Mac authentication
+Execution lock eed9ee29 was pushed before starting original session74646/PID1555627. Authenticated Mac intake fa56d941 is bound. Complete original135requests shared by4models, no new export. Original log and PID/starttime retained locally; Issue6874827282 records start. Prepared saved-array-only package script for all540captures and original4models; syntax checked, packaging waits for terminal original result and independent audit. No freshdev/recognition access.
