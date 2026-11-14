@@ -5,6 +5,22 @@ panel wake task. It is an opt-in research build, not a replacement for the
 production Hi ESP detector. Model files and private acoustic recordings stay
 outside git.
 
+## Current priority: practical use
+
+Judge candidates by reliable wakes, commands spoken immediately after the wake
+phrase, false wakes, response delay and sustained device operation. CPU/GPU,
+FP32/INT8 or intermediate-score agreement is not an admission requirement.
+Investigate numerical differences only when an observed functional failure
+points to an implementation problem. Keep basic model integrity, tensor ABI
+and inference-health checks; do not add a separate numerical qualification
+process before trying a promising candidate on the development board.
+
+The aligned-prefix candidate improves observed connected-command timing but
+also increases near-word false wakes. Test that practical tradeoff rather than
+rejecting it for small offsets against generated timing references. Preserve
+the existing recognition results and use the small streaming profile below.
+The dining-room production board remains outside these experiments.
+
 The application retains its single 16 kHz I2S producer, communication AEC/AGC,
 ordered wake lookback/FIFO, 24 kbps Opus, 20 ms packets and normal speech speed.
 While idle, the experimental detector reads raw mic samples from that producer:

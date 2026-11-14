@@ -92,3 +92,26 @@ model's scores. Keep the complete command in the continuous training stream.
 No new synthesis, audio crop or numerical agreement audit is required.
 GPU's paired training-source behavior probe at04e1f9b1 should finish naturally
 before selecting the precise intervention. Issue13 carries the current handoff.
+
+## Aligned-prefix experiment completed; judge its practical tradeoff
+
+GPU commitf9ad72b7 completes that intervention. All432 existing command sources
+received automatic prefix references from the existing forced aligner; full
+PCM remained in the training stream. The resulting60952-byte INT8 model
+detects33/36 targets after source start, including9/9 bare and24/27 commands
+(light6/9, time9/9, timer9/9) at the existing reference threshold. Light hits
+are about103–193ms after the generated prefix reference, with a133ms median,
+compared with the previous1273ms median. Three light commands still miss.
+
+Near-word false clips increase to17/288;15 are Muse commands and2 are Hello
+timer commands. Background events remain0 over the existing10.48hours.
+These observations justify testing usability and improving discrimination;
+they do not establish readiness or require a perfect-zero-error target.
+Five bare detections precede the generated endpoint by3–33ms. Such offsets
+are not themselves functional failures: the endpoint is a synthesis reference.
+
+The user's priority is practical use, not numerical agreement. Do not repeat
+CPU/GPU, FP32/INT8, gradient or saved-score agreement work as a gate. Use basic
+artifact/ABI/inference-health checks and the existing simple streaming profile
+to advance a promising candidate to development-board verification. Preserve
+the independent final test, audio ownership and production-board boundaries.
