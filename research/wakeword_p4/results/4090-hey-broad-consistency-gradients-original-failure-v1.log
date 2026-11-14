@@ -1,0 +1,23 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794624447.559202 1271464 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794624447.585756 1271464 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794624448.275353 1271464 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794624448.569785 1271464 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21452 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:01:00.0, compute capability: 8.9
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+E0000 00:00:1794624454.032767 1271464 meta_optimizer.cc:967] layout failed: INVALID_ARGUMENT: Size of values 0 does not match size of permutation 4 @ fanin shape inSelectV2-1-TransposeNHWCToNCHW-LayoutOptimizer
+W0000 00:00:1794624454.099117 1271464 loop_optimizer.cc:934] Skipping loop optimization for Merge node with control input: assert_positive/assert_less/Assert/AssertGuard/branch_executed/_8
+I0000 00:00:1794624454.465608 1271517 cuda_dnn.cc:461] Loaded cuDNN version 92801
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_consistency_gradients_v1.py", line 57, in <module>
+    p=argparse.ArgumentParser();p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
+                                                                                                                                 ^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_consistency_gradients_v1.py", line 49, in run
+    s,c,total=repeats[0][1];assert all(np.allclose(a+b,t,rtol=1e-5,atol=1e-5) for a,b,t in zip(s,c,total))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
