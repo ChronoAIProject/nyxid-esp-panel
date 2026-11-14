@@ -10102,3 +10102,10 @@ Original CPUprobe11356 genuineexit0: twoactualNPZs128x750x40,32positive/48synthe
 ## Actual causal fullsequence RTX4090 two-step integration exit0
 
 Original session87937/PID254780/start770407 (selfrecordedwhilelive) genuineexit0, actual4090/cuDNN92801. Twoactual128x750x40 batches produce128x250x1 logits onGPU0; rawregionloss23.42918586730957/23.837289810180664 mechanicalonly, all15gradientfinite,16frozen unchanged/Adam0→2. SavedNPZ check initial31exact,all15trainables actuallychanged,16frozenbyteidentical,initial30zeroslots/finalfinite. Preservedinitial/finalmodel+AdamNPZ/finalH5; no gradient/crossdevice/floating-score equality experiments. No formalrun/recognition/freshroleuse. Next minimalbuiltinINT8 export/ABI with these disposableweights, then originalfixed20000 traininglock using preservedinit (never smokeweights). Datareuse/storageguard100GiB continues; v30unchanged.
+
+
+## Mac final INT8 handoff and corrected next-step ordering
+
+Read Mac revisions6884555587/6884681206/6884774527 after fetching all Issue13 comment pages. Existing panel zero-PCM priming is distinct from readiness suppression: context309 requests81440, full480 blocks feed81600 samples, continuous frontend/model/threeframe/event state through original PCM. This consumed-only existing-runtime diagnosis must precede new formal causal training. Material/CPU batches/two4090 updates already completed are preserved; no formal causal run started and no efficacy claim. Prior next-step ordering was based on stale readiness advice and is superseded.
+
+Uploaded original narrow60952B/broad61192B INT8 bytes from source3740bf7bc56dd70b61f7df6574ebf9f4ad1c6112, no re-export, plus manifest only, to existing research release as gpu-multispeaker-final-int8-mac-v1.tar.gz. Archive68912B SHA b292749e6c644dc6b1aa60ed32d0fc6231df58f0296bd2716e089f75f65a7dae. Anonymous curl download verified archive, exact three-member set, manifest and both original model sizes/SHA. Receipt/manifest results/4090-multispeaker-final-int8-mac-handoff-v1.json. Research-only/unqualified; v30 retained. Disk free618GiB,100GiB reserve remains enforced.
