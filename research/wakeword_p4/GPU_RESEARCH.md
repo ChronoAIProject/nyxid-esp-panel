@@ -9111,3 +9111,22 @@ this primitive to claim complete integer-network parity. Remaining engineering:
 shared temporal-grid constraints, input-step-dependent bias quantization, actual
 integer requantization/export, independent initial/changed-grid forward parity.
 No formal training protocol/execution or new development access yet. v30 frozen.
+
+### 2026-11-14 — Static activation-step sharing map
+
+Added schema-only union constraints for CONCATENATION, shape/slice/expand/squeeze/
+transpose and pooling-preserving quantizers, plus READ/ASSIGN_VARIABLE linked by
+actual VAR_HANDLE container/sharedName across subgraphs. Original four matched
+INT8 exports each have13 activation groups, six cross-subgraph state identities
+and10 conv/FC bias dependencies. Every original group has exact same step/zero;
+each bias scale equals input activation scale × channel weight scale within2e-7.
+Weights excluded from activation groups; six initializer tensors are included in
+their actual producer/state groups. Zero model/interpreter/optimizer calls.
+
+Initial implementation review caught missing EXPAND_DIMS sharing (input/state
+incorrectly split into two groups); corrected before publication, now input and
+its history form one group. Static group count alone is not export parity.
+Remaining assignments: original input/logistic/output groups frozen, nine encoder
+output groups eligible for shared learned steps; bias code/metadata must change
+with consuming input step. A uint8 conversion with changed zero does not imply
+same affine grid. No scale changes, compiler or training yet; v30/fresh unchanged.
