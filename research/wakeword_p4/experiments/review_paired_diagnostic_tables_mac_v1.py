@@ -58,6 +58,7 @@ def review(ref):
     for row in rename(baseline['recomputed_summary']):
         row = dict(row)
         target, condition = row.pop('model').rsplit('-', 1)
+        row['complete_at_all_joint_points'] = row.pop('complete_at_joint_points')
         table['summary'].append(dict(target=target, condition=condition, **row))
         if row['joint_qualified_points'] == 0:
             table['rejected_for_no_joint_point'].append(target + '-' + condition)
@@ -98,6 +99,10 @@ def review(ref):
         'wrong_poisson_bound': wrong_far,
         'wrong_audit_binding': lambda d: d['inputs'].__setitem__(checker.BASE + new_prefix + 'scoring-independent-audit-v1.json', '0' * 64),
         'wrong_declared_summary': lambda d: d['table']['summary'][0].__setitem__('far_qualified_points', 1),
+        'wrong_declared_joint_range': lambda d: d['table']['summary'][0].__setitem__('complete_at_all_joint_points', [0, 36]),
+        'wrong_declared_bare_range': lambda d: d['table']['summary'][0].__setitem__('bare_at_all_far_points', [0, 999]),
+        'wrong_declared_command_range': lambda d: d['table']['summary'][0].__setitem__('command_at_all_far_points', [0, 999]),
+        'wrong_declared_minimum_far': lambda d: d['table']['summary'][0].__setitem__('minimum_far_upper95', 0.),
         'wrong_declared_delta': lambda d: d['table']['all_matched_deltas'][0].__setitem__('frozen_minus_full_common_events', 999),
         'wrong_rejection_list': lambda d: d['table']['rejected_for_no_joint_point'].pop(),
         'wrong_original_grid': lambda d: d['original']['grid'].__setitem__(0, .123),

@@ -67,3 +67,11 @@ actually contains all required comparison/grouped/audit/execution files. Missing
 files return `not_ready`; a parser review or old-profile pass cannot replace them.
 No hardware, microphone, speaker, network configuration or original GPU job is
 operated by these tools.
+
+## Subsequent actual frozen-table execution
+
+The new results later arrived and were checked in full.
+[frozen_encoder_tables_mac_v1.md](frozen_encoder_tables_mac_v1.md) records the
+actual 552-point execution, explicit real-schema adaptation after the first
+parser failure, and the expanded 18 corruption checks. Historical fixture and
+old-table evidence above retains its original scope.

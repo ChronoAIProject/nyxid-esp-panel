@@ -1,0 +1,145 @@
+{
+  "schema": "mac-paired-diagnostic-tables-audit-v1",
+  "profile": "frozen-encoder",
+  "gpu_commit": "0a94e7f1d78472a79e9513d1e4fb73da2cddcb1e",
+  "source_sha256": "4f0725e493822789844fa6c716f3285772b39e06ed8cf617b5787a66ac6040d7",
+  "input_sha256": {
+    "research/wakeword_p4/results/4090-frozen-encoder-comparison-v1.json": "a37d4f4f7b935d11ace0e5fc6b4ccc247741faf3d6b9229623a04687b39afe06",
+    "research/wakeword_p4/results/4090-frozen-encoder-grouped-diagnostic-v1.json": "1b9d4566549de2ac92b8f3d4659809bfde295e8507e693e874c1e2a7081ccb1c",
+    "research/wakeword_p4/results/4090-frozen-encoder-scoring-independent-audit-v1.json": "e8f3911825c26f141b650b3937208fd1bb257312250288f062c887a2c00d9b29",
+    "research/wakeword_p4/results/4090-frozen-encoder-development-execution-v1.json": "6dc8d7056a2d93bb9706789687b040d7b264b35455d28fe3bad963da3c9ef9d4",
+    "research/wakeword_p4/results/4090-fp32-reused-development-execution-v1.json": "817c7a3246f1f9c670897e95ee1a1e78f4e42e49c9997278884f57884591019a"
+  },
+  "conditions": [
+    "full",
+    "frozen"
+  ],
+  "checked_points": 552,
+  "group_dimensions_per_point": 6,
+  "maximum_independent_poisson_upper95_error": 2.220446049250313e-16,
+  "recomputed_summary": [
+    {
+      "model": "hey_nyx-full",
+      "far_qualified_points": 138,
+      "joint_qualified_points": 30,
+      "complete_at_all_far_points": [
+        0,
+        35
+      ],
+      "bare_at_all_far_points": [
+        0,
+        9
+      ],
+      "command_at_all_far_points": [
+        0,
+        26
+      ],
+      "minimum_far_upper95": 0.2857447576425148,
+      "complete_at_joint_points": [
+        0,
+        14
+      ]
+    },
+    {
+      "model": "hey_nyx-frozen",
+      "far_qualified_points": 138,
+      "joint_qualified_points": 138,
+      "complete_at_all_far_points": [
+        0,
+        1
+      ],
+      "bare_at_all_far_points": [
+        0,
+        1
+      ],
+      "command_at_all_far_points": [
+        0,
+        0
+      ],
+      "minimum_far_upper95": 0.2857447576425148,
+      "complete_at_joint_points": [
+        0,
+        1
+      ]
+    },
+    {
+      "model": "hey_willow-full",
+      "far_qualified_points": 121,
+      "joint_qualified_points": 121,
+      "complete_at_all_far_points": [
+        0,
+        0
+      ],
+      "bare_at_all_far_points": [
+        0,
+        0
+      ],
+      "command_at_all_far_points": [
+        0,
+        0
+      ],
+      "minimum_far_upper95": 0.2857447576425148,
+      "complete_at_joint_points": [
+        0,
+        0
+      ]
+    },
+    {
+      "model": "hey_willow-frozen",
+      "far_qualified_points": 138,
+      "joint_qualified_points": 138,
+      "complete_at_all_far_points": [
+        0,
+        0
+      ],
+      "bare_at_all_far_points": [
+        0,
+        0
+      ],
+      "command_at_all_far_points": [
+        0,
+        0
+      ],
+      "minimum_far_upper95": 0.2857447576425148,
+      "complete_at_joint_points": [
+        0,
+        0
+      ]
+    }
+  ],
+  "background_hours": 10.483944826388889,
+  "threshold_selected": false,
+  "candidate_qualified": false,
+  "model_calls": 0,
+  "audio_accessed": false,
+  "private_trace_oracle_repeated": false,
+  "limits": [
+    "Committed-table/hash/group/arithmetic audit only; no private trace or saved-model replay.",
+    "All138 points per model retained; correlated reused sources are not independent speakers or acceptance.",
+    "Joint diagnostic points, including silent detectors, do not qualify a candidate.",
+    "No new data, training, selection, fresh development/acceptance or P4/audio lifecycle qualification."
+  ],
+  "all_matched_points": 276,
+  "all_group_regions": 8,
+  "full_report": {
+    "file": "mac-frozen-encoder-diagnostic-table-audit-v1.json.gz",
+    "bytes": 664513,
+    "sha256": "a38b7b7c9f6bb88f59e61a7fea4e692fa0edb33af635cc3570e2579c1948a879",
+    "gzip_bytes": 11928,
+    "gzip_sha256": "dcedaf633c7b949ad5229a565f4632f39634aefa51365f67de91508efa1b8c7d"
+  },
+  "repeated_execution_byte_exact": true,
+  "first_attempt": {
+    "exit_code": 1,
+    "error": "KeyError: complete_at_joint_points",
+    "checker_ref": "274246f",
+    "resolution": "First future-profile fixture assumed shorter summary key. Explicitly mapped real complete_at_all_joint_points and additionally checked bare/command/minimum FAR fields; no GPU results or point criteria changed."
+  },
+  "findings": {
+    "nyx_full_max_complete_at_negative_only_joint_points": 14,
+    "nyx_frozen_max_complete_at_negative_only_joint_points": 1,
+    "willow_full_and_frozen_max_complete": 0,
+    "denominator": 36,
+    "useful_detector_demonstrated": false
+  }
+}

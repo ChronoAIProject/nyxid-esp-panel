@@ -1,7 +1,7 @@
 """Audit all committed four-arm tables without selecting thresholds or invoking models.
 
-The historical raw-context profile provides real saved-table coverage before
-the frozen-encoder results exist. Neither profile repeats a private trace oracle.
+The historical raw-context and frozen-encoder profiles cover committed tables.
+Neither profile repeats a private trace oracle.
 """
 import argparse
 from collections import defaultdict
@@ -127,6 +127,9 @@ def audit_tables(points, grouped, audit, execution, conditions):
         summaries.append(dict(model=name, far_qualified_points=len(far),
             joint_qualified_points=len(joint),
             complete_at_all_far_points=span([p['positive']['all']['complete'] for p in far]),
+            bare_at_all_far_points=span([p['positive']['standalone']['complete'] for p in far]),
+            command_at_all_far_points=span([p['positive']['command']['complete'] for p in far]),
+            minimum_far_upper95=min(p['background']['far_upper95'] for p in models[name]),
             complete_at_joint_points=span([p['positive']['all']['complete'] for p in joint])))
         for region, selected in (('all138', rows), ('all_far_qualified', [r for r in rows if r['far_requirement_satisfied']])):
             buckets = defaultdict(list)
@@ -176,7 +179,13 @@ def audit_loaded(profile, table, grouped, audit, execution, original, inputs):
         declared = {(r['target'] + '-' + r['condition']): r for r in table['summary']}
         assert len(table['summary']) == len(declared) == 4
         for row in result['recomputed_summary']:
-            assert all(row[k] == declared[row['model']][k] for k in row if k != 'model')
+            # The actual frozen reporter names this region "all_joint"; the
+            # earlier labelled old-data fixture used the checker's shorter key.
+            # Match the real schema explicitly, including all additional ranges.
+            expected = {k: v for k, v in row.items() if k != 'model'}
+            expected['complete_at_all_joint_points'] = expected.pop('complete_at_joint_points')
+            target, condition = row['model'].rsplit('-', 1)
+            assert dict(target=target, condition=condition, **expected) == declared[row['model']]
         deltas = []
         for pair in result['all_matched_points']:
             d = pair['second_minus_first']
