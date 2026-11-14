@@ -44,7 +44,7 @@ def inspect(data):
     require(audio.Type() == probability.Type() == s.TensorType.FLOAT32 and
             shape(audio) == [1, 3, 40] and shape(probability) == [1, 1], "Exact FP32 input/output ABI")
     # Prospectively support the trained export's shape-only input expansion.
-    expanded, dense, logistic = [], [], []
+    expanded, expanded_outputs, dense, logistic = [], [], [], []
     for i in range(main.OperatorsLength()):
         op = main.Operators(i)
         if kind(op) == "EXPAND_DIMS":
@@ -57,6 +57,7 @@ def inspect(data):
                     raw == b"\x02\x00\x00\x00" and target.Type() == s.TensorType.FLOAT32 and
                     shape(target) == [1, 3, 1, 40], "Fixed scalar axis2 and shape-only audio expansion")
             expanded.append(i)
+            expanded_outputs.append(int(op.Outputs(0)))
         elif kind(op) == "FULLY_CONNECTED":
             dense.append(op)
         elif kind(op) == "LOGISTIC":
@@ -66,7 +67,7 @@ def inspect(data):
     require(dense[0].OutputsLength() == logistic[0].InputsLength() == logistic[0].OutputsLength() == 1 and
             dense[0].Outputs(0) == logistic[0].Inputs(0) and logistic[0].Outputs(0) == main.Outputs(0),
             "Raw Dense directly feeds sole sigmoid probability output")
-    tensor_inventory = []
+    tensor_inventory, batch_metadata = [], []
     for gi in range(model.SubgraphsLength()):
         graph = model.Subgraphs(gi)
         for ti in range(graph.TensorsLength()):
@@ -76,13 +77,22 @@ def inspect(data):
             q = tensor.Quantization()
             require(q is None or q.ScaleLength() == q.ZeroPointLength() == 0, "No quantization grids")
             signature = tensor.ShapeSignatureAsNumpy()
-            require(isinstance(signature, int) or np.all(signature >= 0), "No dynamic tensor dimensions")
+            concrete = shape(tensor)
+            require(all(n > 0 for n in concrete), "All concrete allocation dimensions are positive")
+            if not isinstance(signature, int) and np.any(signature < 0):
+                require(gi == 0 and ti in [int(main.Inputs(0)), *expanded_outputs] and
+                        concrete[0] == 1 and signature.tolist() == [-1, *concrete[1:]],
+                        "Only original audio/ExpandDims batch metadata may be symbolic; concrete batch stays one")
+                batch_metadata.append(dict(graph=gi, tensor=ti, shape=concrete, signature=signature.tolist()))
+            elif not isinstance(signature, int):
+                require(signature.tolist() == concrete, "Static signature matches concrete allocation")
             buffer = model.Buffers(tensor.Buffer())
             if tensor.Type() == s.TensorType.FLOAT32 and buffer.DataLength():
                 raw = bytes(buffer.DataAsNumpy())
                 require(len(raw) == int(np.prod(shape(tensor))) * 4 and
                         np.isfinite(np.frombuffer(raw, dtype="<f4")).all(), "Finite complete FP32 constants")
-            tensor_inventory.append(dict(graph=gi, tensor=ti, type=tensor.Type(), shape=shape(tensor)))
+            tensor_inventory.append(dict(graph=gi, tensor=ti, type=tensor.Type(), shape=concrete,
+                                         signature=None if isinstance(signature, int) else signature.tolist()))
 
     def handles(graph):
         result = {}
@@ -153,6 +163,7 @@ def inspect(data):
     return dict(schema="fp32-internal-model-contract-v2", model_sha256=hashlib.sha256(data).hexdigest(),
                 model_bytes=len(data), operators=codes, inputs=1, outputs=1, audio_shape=shape(audio),
                 probability_shape=shape(probability), states=states, state_bytes=sum(row["bytes"] for row in states),
+                symbolic_batch_metadata=batch_metadata,
                 tensor_inventory_sha256=hashlib.sha256(json.dumps(tensor_inventory, sort_keys=True).encode()).hexdigest(),
                 model_invocations=0,
                 limits="FlatBuffer contract/finite constants/initial-state inspection only. Does not prove source-H5 parameter equivalence, probability numerics, recognition, allocation, timing or P4 compatibility.")

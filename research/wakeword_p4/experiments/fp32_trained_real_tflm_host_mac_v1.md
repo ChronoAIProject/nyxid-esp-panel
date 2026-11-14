@@ -13,6 +13,18 @@ new native runner adds installed `kernels/expand_dims.cc` and its registration,
 checks all registrations, input/output counts and exact shapes. No received
 model or reference is changed or reconverted to fit the older runner.
 
+The first static intake at source `6218230` rejected the original trained input's
+`shape_signature=[-1,3,40]`, before extraction or inference. The original failure
+is retained. All four actual models have this symbolic batch metadata only on
+the audio input and ExpandDims output; their concrete shapes are fixed batch 1.
+Installed `micro_allocator.cc` lines 260–270, 357–362 and 464–486 allocate concrete
+`shape()` dimensions, not `shape_signature()`. The revised inspector explicitly
+allows only those two symbolic batch metadata tensors with concrete batch 1,
+rejecting dynamic concrete dimensions, symbolic time/frequency/state/output
+dimensions and inconsistent static signatures. The runner never resizes inputs.
+This is a metadata-compatibility correction before inference; no probability
+gate, model, reference or scoring rule changes.
+
 Before inference:
 
 1. Publish this scope and all source files. Authenticate the 527033-byte original
