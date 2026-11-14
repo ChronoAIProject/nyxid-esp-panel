@@ -8801,3 +8801,13 @@ verified. Producer finite/frozenBN true. Same original1450872 now Nyxtwoway235
 updates at observation;1455248 waits same process. BothWillow arms complete,
 Nyxarms pending; no fullformal audit, numerical or recognition conclusion yet.
 No retry/checkpointselection/parameterchange/export/newdev/acceptance; v30unchanged.
+
+### Original one-way formal Nyx control completion (2026-11-14)
+
+Nyxtwoway original10000updates completed793.410868s; byte-exacttraining.json
+published and actualfinalH5 SHA
+638804f87cfb7b5670c960e45055902fe717fe86da356d65f4acd6674a3f1029
+verified. Producer finite/frozenBN true. Same original1450872 now lastNyxoneway
+(471updates observed),1455248 waits. Threeof4armscomplete; completeindependent
+formal audit/compile/full540screen/recursive still pending. No checkpointselection,
+retry or configchange, no newdev/acceptance or qualificationclaim; v30unchanged.
