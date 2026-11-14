@@ -9153,3 +9153,25 @@ whole packed model equal original packed model, guarding unrelated mutation.
 All original weights and initializer bytes remain unchanged. Runtime arithmetic
 parity against an independent changed-grid forward remains unproven; no new
 recognition/data/threshold or candidate admission allowed from allocation alone.
+
+### 2026-11-14 — Changed-grid recursive encoder parity, original run complete
+
+Prospective code/execution lock20fb8c9d pushed before run. Original session35951
+exit0, all12 fourmodels×fixed1/.5/2 constructs, originalrequest0 complete input,
+allstartup, twofresh reference interpreters/independent int64 histories. All9encoder
+outputs match recursive original verified fixedpoint oracle exactly for every step.
+Actual UINT8 outputs repeat exactly; all4factor1 outputs match original screen.
+No training, coefficient selection, converter/recalibration or new media.
+
+Separate saved-only audit verifies all12 model/array hashes, complete repeat identity,
+1716480 encoder values across both repeats actual/oracle byte exact, plus all4
+factor1 entire9encoder/final probability arrays byte-exact original captures. It
+checks saved arithmetic claims, not an additional independent arithmetic algorithm.
+
+Scope remains mechanical changed-grid encoder execution. FC/sigmoid reference,
+trainable TF forward/scale-gradient wiring, non-power-of-two/individually differing
+steps, actual trained folded biases and full540/admission remain unproven. Fixed
+half/double constructs are not chosen candidate scales or an efficacy experiment.
+Original candidate failures/v30/fresh-data isolation unchanged. Next implementation
+must connect differentiable step variables to forward requantization without
+turning them into Python float/constants, then prove exporter parity before updates.
