@@ -47,3 +47,20 @@ state, final zero padding and malformed model/input/tensor/probability
 rejection. They are separate from the real saved-reference numeric witness.
 No new weights, fresh development/acceptance, source audio, hardware or
 recognition/FAR evaluation is part of this helper verification.
+
+## Actual helper verification — 2026-11-14
+
+Plan/source were pushed in `32b9e3b` before the original run, which exited 0.
+All six complete streams passed two fresh interpreter traversals: 2,084 actual
+Invoke calls. Every normalized input digest and complete clamped sample-clock
+array matches the original packet; fresh-repeat output bytes are exact.
+Maximum error against original saved TF is 1.0132789611816406e-6 and against
+original saved LiteRT is 1.3113021850585938e-6, both within the unchanged 1e-4.
+Final feature padding lengths 0, 1 and 2 all occur among these real witnesses.
+
+Twelve constructed length cases and seven invalid-input/runtime rejections
+also passed. Actual result:
+`../results/mac-complete-fp32-helper-numeric-result-v1.json`.
+This verifies only the new helper on the specified old-model witnesses, not a
+new fixed-final candidate, recognition/FAR, complete collector/selector,
+frontend-from-PCM, P4 resources or full-panel acceptance.
