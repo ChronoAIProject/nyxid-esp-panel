@@ -14,7 +14,7 @@ def lock(mac_report):
  for f,h in p['files'].items():assert sha(f)==h,f
  for row in s['ordered_requests']:assert sha(row['path'])==row['sha256'],row['path']
  files=dict(p['files'])
- paths=[mp,scope,software,result,Path(__file__),Path('research/wakeword_p4/training/features.py'),Path('research/wakeword_p4/experiments/collect_complete_development_v1.py')]+runtime_identity_files()+[Path(x['path']) for x in s['ordered_requests']]
+ paths=[mp,scope,software,result,Path(__file__),Path('research/wakeword_p4/training/features.py'),Path('research/wakeword_p4/experiments/collect_complete_development_v1.py'),Path('research/wakeword_p4/experiments/audit_fp32_fullstream_arrays_v1.py')]+runtime_identity_files()+[Path(x['path']) for x in s['ordered_requests']]
  exports=[]
  for m,x in zip(p['models'],r['cases'],strict=True):
   path=Path('.local/wakeword/fp32-internal-software-v1')/(m['target']+'-'+m['condition'])/'model.tflite';assert sha(path)==x['model_sha256'];paths.append(path);exports.append(dict(target=m['target'],condition=m['condition'],path=str(path),sha256=sha(path)))

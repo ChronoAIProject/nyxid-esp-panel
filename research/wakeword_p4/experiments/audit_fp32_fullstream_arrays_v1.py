@@ -21,12 +21,16 @@ def check(a,samples):
  return dict(max_abs=gap,phase_max_abs=phase,passed=max(gap,phase)<=1e-4)
 def run():
  lp=R/'4090-fp32-internal-fullstream-execution-v1.json';p=json.loads(lp.read_text());result=json.loads((ROOT/'result.json').read_text());assert result['execution_sha256']==hashlib.sha256(lp.read_bytes()).hexdigest();assert len(result['cases'])==540
- seen=set();rows=[]
+ seen=set();rows=[];shared={}
  for c in result['cases']:
   key=(c['target'],c['condition'],c['index']);assert key not in seen;seen.add(key);request=p['requests'][c['index']];assert request['order']==c['request_order'];path=Path(c['path']);assert hashlib.sha256(path.read_bytes()).hexdigest()==c['sha256']
-  with np.load(path,allow_pickle=False) as arrays:d=check({k:arrays[k] for k in arrays.files},request['samples'])
+  with np.load(path,allow_pickle=False) as arrays:
+   d=check({k:arrays[k] for k in arrays.files},request['samples'])
+   identity=tuple((k,str(arrays[k].dtype),arrays[k].shape,hashlib.sha256(arrays[k].tobytes()).hexdigest()) for k in ['raw','input','support_unclamped','sample_end'])
+   if c['index'] in shared:assert identity==shared[c['index']]
+   else:shared[c['index']]=identity
   assert all(d[k]==c[k] for k in d) and c['finite'] and c['repeat_exact'];rows.append(dict(key=key,**d))
- expected={(m['target'],m['condition'],i) for m in p['models'] for i in range(135)};assert seen==expected
+ expected={(m['target'],m['condition'],i) for m in p['models'] for i in range(135)};assert seen==expected and len(shared)==135
  (R/'4090-fp32-fullstream-independent-arrays-v1.json').write_text(json.dumps(dict(cases=rows,all_passed=all(r['passed'] for r in rows),limits='Saved arrays only. Original PCM/frontend computation and actual MicroInterpreter still need separate evidence; no model invocation.'),indent=2)+'\n')
 def constructed():
  raw=np.zeros((226,40),np.uint16);steps=76;clock=(3*np.arange(1,steps+1)+2)*160;values=np.pad(raw,((0,2),(0,0))).astype(np.float32)/25.6
