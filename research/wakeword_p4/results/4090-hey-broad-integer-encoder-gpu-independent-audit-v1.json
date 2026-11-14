@@ -1,0 +1,40 @@
+{
+  "result_sha256": "c36fd6fc025ae0d152277277b7bfb753d8e2413052c98aab7ac1e4e945eb096e",
+  "gpu": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "all_gpu_variable_devices": [
+    "/job:localhost/replica:0/task:0/device:GPU:0"
+  ],
+  "cases": [
+    {
+      "target": "hey_willow",
+      "batch": 1,
+      "cpu_gpu_gradient_relative_l2": 1.6173326057582304e-06,
+      "cpu_gpu_rawlogit_max_error": 0.00048828125
+    },
+    {
+      "target": "hey_willow",
+      "batch": 2,
+      "cpu_gpu_gradient_relative_l2": 1.8653320578063405e-06,
+      "cpu_gpu_rawlogit_max_error": 0.000244140625
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 1,
+      "cpu_gpu_gradient_relative_l2": 4.746234142437401e-06,
+      "cpu_gpu_rawlogit_max_error": 0.0001220703125
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 2,
+      "cpu_gpu_gradient_relative_l2": 3.021208652276394e-06,
+      "cpu_gpu_rawlogit_max_error": 0.0001220703125
+    }
+  ],
+  "limits": "GPU repeat/finite/unchanged requirements checked by runner. Independent saved arrays SHA/BCE/15gradientnorm verified; CPU GPU differences descriptive, not retroactively selected gates. FullGPU batch layercode parity and postupdate behavior not verified."
+}
