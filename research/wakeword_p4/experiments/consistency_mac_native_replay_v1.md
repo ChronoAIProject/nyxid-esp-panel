@@ -43,20 +43,25 @@ on release `research-hey-nyx-20261110`, 100849 bytes, SHA256
 Anonymous redownload authenticated every one of its 15 payloads. Committed
 intake/native/audit reports and artifact receipt carry the detailed identities.
 
-The separately frozen `mac-all-final-constant-capture-plan-v1.json` examines
-all 80 constants in isolated expression graphs. Execute each setting in a
-fresh process, using a separate new output directory:
+The separately frozen `mac-all-final-constant-capture-plan-v1.json` originally
+stopped in both settings on the first eager call: passing a Keras variable to
+the unchanged primitive triggers TensorFlow's custom-gradient `variables`
+requirement. Both original logs, sources and empty outputs are preserved;
+there were no saved constant observations. Version 2 explicitly reads each
+parameter expression into a Tensor before every method calls that primitive.
+The new `mac-all-final-constant-capture-plan-v2.json` retains all 80 constants
+and both settings. Execute each setting in a fresh process and output directory:
 
 ```sh
-python research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v1.py worker \
+python research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v2.py worker \
   --setting default \
   --payload-root "$PRIVATE/gpu-consistency-fixed-grid-mac-witnesses-v1-authenticated/replay-payload" \
-  --upstream "$UPSTREAM" --output-dir "$PRIVATE/all-final-constant-capture-default-v1"
+  --upstream "$UPSTREAM" --output-dir "$PRIVATE/all-final-constant-capture-default-v2"
 
-python research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v1.py worker \
+python research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v2.py worker \
   --setting no_constant_folding_or_arithmetic \
   --payload-root "$PRIVATE/gpu-consistency-fixed-grid-mac-witnesses-v1-authenticated/replay-payload" \
-  --upstream "$UPSTREAM" --output-dir "$PRIVATE/all-final-constant-capture-no-fold-v1"
+  --upstream "$UPSTREAM" --output-dir "$PRIVATE/all-final-constant-capture-no-fold-v2"
 ```
 
 This plan is prospective here. It compares eager/captured/runtime-scale methods

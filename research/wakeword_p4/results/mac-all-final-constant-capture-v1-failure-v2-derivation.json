@@ -1,0 +1,58 @@
+{
+  "schema": "mac-all-final-constant-capture-original-v1-failure-and-v2-derivation",
+  "original_source_commit": "2bd51b6",
+  "original_source": "research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v1.py",
+  "original_source_sha256": "b2c681ea5351af1ba90e8e7ae0081886a93347d7a6300dd27671078ca502481c",
+  "original_plan_sha256": "4a48e6c230bb2132c991ac5f66e1a73819650b3d18da8e6c894de1a2750d7825",
+  "failure_phase": "First model, first eager primitive call, before any completed repeats or saved arrays. Keras variable captures trigger custom_gradient variables keyword requirement. Zero optimizer updates. No constant mismatch observations obtained.",
+  "failures": [
+    {
+      "setting": "default",
+      "original_session": 79617,
+      "exit_code": 1,
+      "log_path": "research/wakeword_p4/results/mac-all-final-constant-capture-default-v1-original-failure-log.txt",
+      "log_sha256": "4b645376b070840ddc69e817bb33e4b7afda9680a02f87579a871c63057fe514",
+      "saved_arrays": 0,
+      "complete_reports": 0
+    },
+    {
+      "setting": "no_constant_folding_or_arithmetic",
+      "original_session": 82608,
+      "exit_code": 1,
+      "log_path": "research/wakeword_p4/results/mac-all-final-constant-capture-no-fold-v1-original-failure-log.txt",
+      "log_sha256": "4b645376b070840ddc69e817bb33e4b7afda9680a02f87579a871c63057fe514",
+      "saved_arrays": 0,
+      "complete_reports": 0
+    }
+  ],
+  "derivative_source": "research/wakeword_p4/experiments/diagnose_all_final_constant_capture_mac_v2.py",
+  "derivative_source_sha256": "bcb9bb4373060823a4b4fb8b5ca0e8dfeb44f18db94f270fc1ab743ed1e7e4e0",
+  "literal_replacements": [
+    {
+      "old": "mac-all-final-constant-capture-plan-v1.json",
+      "new": "mac-all-final-constant-capture-plan-v2.json",
+      "occurrences": 1
+    },
+    {
+      "old": "mac-all-final-constant-capture-plan-v1",
+      "new": "mac-all-final-constant-capture-plan-v2",
+      "occurrences": 1
+    },
+    {
+      "old": "mac-all-final-constant-capture-result-v1",
+      "new": "mac-all-final-constant-capture-result-v2",
+      "occurrences": 1
+    },
+    {
+      "old": "            return values\n",
+      "new": "            return [tf.convert_to_tensor(value) for value in values]\n",
+      "occurrences": 1
+    },
+    {
+      "old": "Each uses unchanged original affine_ste",
+      "new": "Each explicitly reads every Keras parameter expression into a Tensor at the boundary before unchanged original affine_ste",
+      "occurrences": 1
+    }
+  ],
+  "correction": "Read Keras parameter expressions into Tensor before all methods call unchanged affine_ste. Both graph and eager share the explicit read boundary. This is a new isolated-expression diagnostic version, not an edit/retry of failed v1 or the original training graph. Models, grids, constants, settings, gates and primitive unchanged."
+}
