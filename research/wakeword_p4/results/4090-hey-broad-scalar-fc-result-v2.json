@@ -1,0 +1,96 @@
+{
+  "plan_sha256": "9447e0090da4f0fc128b973e3051007d6f541232c2b5fab52d5af98539b1aa85",
+  "case": {
+    "target": "hey_willow",
+    "request_order": 0,
+    "actual_output_exact": true,
+    "twice_output_state_exact": true,
+    "all_encoder_fc_exact": false,
+    "metrics_both_repeats": {
+      "50": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "52": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "53": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "55": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "56": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "58": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "59": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "61": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "62": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "64": {
+        "unequal": 0,
+        "maximum": 0
+      },
+      "65": {
+        "unequal": 2,
+        "maximum": 1
+      }
+    },
+    "arrays_path": ".local/wakeword/hey-broad-recursive-integer-v1/hey_willow-000.npz",
+    "arrays_sha256": "da1f152c2062e3bf09d0499be5be112c153ae14ddb4f693051e7987b7d916669",
+    "state_trace_sha256": "7f0c2d68cfb46568541020b9ac2a776f940735ac961b14a0d5f5f894ff8f398c"
+  },
+  "variants": {
+    "double_product": {
+      "real_multiplier": 0.31783937371137017,
+      "quantized_multiplier_shift": [
+        1365109715,
+        -1
+      ],
+      "unequal": 1,
+      "maximum": 1,
+      "failed_steps": [
+        2
+      ]
+    },
+    "float32_product": {
+      "real_multiplier": 0.31783938135520834,
+      "quantized_multiplier_shift": [
+        1365109748,
+        -1
+      ],
+      "unequal": 1,
+      "maximum": 1,
+      "failed_steps": [
+        2
+      ]
+    },
+    "source_reference_double_round_away": {
+      "unequal": 0,
+      "maximum": 0,
+      "failed_steps": []
+    }
+  },
+  "actual_twice_reset_exact": true,
+  "saved_recursive_embedding_exact": true,
+  "original_reference_reproduced": true,
+  "arrays_path": ".local/wakeword/hey-broad-scalar-fc-v2.npz",
+  "arrays_sha256": "ac4f91a4fb794092d04e0d328293225e4e68a67b5640a5f3be1c4e14e6389505",
+  "limits": "Fixed first recursive failedcase, original wholeinput twicefresh builtinref. Saved recursive embedding mustexact runtime embedding. Compare scalarFCsource float32 scaleproduct vs original doubleproduct, same original constants/accumulators/double-rounding. Preserve both variants/results. V2 adds actual reference FC overload: exact integer accumulator times double effective scale then C++ round away from zero (not fixedpoint multiplier). V1 scale precision hypothesis retained. Original270 run not modified/restarted. No optimizer/export/newdata/gate change."
+}
