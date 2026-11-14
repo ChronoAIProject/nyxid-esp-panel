@@ -9310,3 +9310,22 @@ sigmoid oracle/recognition efficacy claim. Next is actual supervised-loss dispos
 update and direct trained-folded-parameter export parity before prospective formal
 training. Folded controls/treatment must share initialization/parameterization;
 no freshdata/threshold selection/v30 change.
+
+### 2026-11-14 — Direct trainable folded-parameter compiler baseline roundtrip
+
+`compile_learned_grid_parameters_v1.py` exports10ordered conv/depthwise/FC W/b pairs
+with linked activation-group factors, fixed channelweight grids, float32 weight/
+float64 widebias nearest-even coding; rejects nonfinite/biasoverflow and reports
+weight clipping. No converter/calibration. Any modified shared parameter buffer is
+cloned; reverse only declared writes/references then whole packed-object exact
+check guards unrelated mutation. Group-scale compiler remains separately audited.
+
+Static originalFP32 folded W/b roundtrip on all4 original models encodes80constants
+and returns originalINT8 files byte-exact, no writes needed. Allocate only, zero
+invoke/updates. Source/report SHA recorded. This baseline does not prove changed
+parameters or trained activation factors; post-update actual/TF parity and actual
+supervised-loss disposable smoke still required before formal training. Original
+request reports lack per-frame supervision; do not invent a dense positive label
+from target filename or confuse source boundaries with phoneme labels. Next smoke
+must bind actual original sampler labels/weights or explicitly constructed
+non-training mathematical targets, with scope stated. v30/fresh unchanged.
