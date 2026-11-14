@@ -9772,3 +9772,7 @@ Same original PID1762282/start26060483 remains live. Nyx full10000/10000 genuine
 ### Both Nyx fixed-final arms complete / original process starts Willow (2026-11-14)
 
 Same original PID1762282/start26060483 live. Nyx frozen10000 genuinely complete; original training.json copied byte-exact, all finalH5/Adam/history hashes rechecked. BothNyx arms now complete, not scored/exported. Original process entered Willow full, actualstep88 observed, first2smoke identities enforced/passed. TwoWillow arms still required; no jobterminal or independent four-arm audit/qualification yet. No restarts/checkpointselection/changedpins; v30/freshdev/acceptance unchanged.
+
+### Third fixed-final arm complete / final Willow-frozen running (2026-11-14)
+
+Same original PID1762282/start26060483 remains live. Willow full10000 genuinely complete; original training.json copied byte-identically, finalH5/Adam/historySHA rechecked. Initial observation caught new Willow-frozen directory before history creation; sameprocess subsequentread confirms actualsteps1/2 smokeidentities passed andstep69, not a training failure/restart. Three arms complete, finalWillow-frozen continues original10000budget. No jobterminal/completeaudit/recognition/INT8qualification yet; v30/freshdev/acceptance unchanged.
