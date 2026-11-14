@@ -8997,3 +8997,22 @@ new inference/intervention. Do not launch another training or head-only patch.
 Reports: 4090-matched-internal-boundaries-original-result-v1.json,
 4090-matched-internal-decomposition-v1.json and independent-audit-v1.json.
 No threshold/export/recalibration/new development/acceptance changes; v30 frozen.
+
+### 2026-11-14 — Saved activation ranges reject upper-clipping explanation on four witnesses
+
+`diagnose_matched_saved_ranges_v1.py` reads original authenticated capture arrays,
+without inference, retaining every startup step and all nine layers plus embedding.
+All four witnesses have zero float-above-upper-range and zero actual upper endpoint
+codes across every captured encoder layer/embedding. ReLU lower endpoint occupancy
+is not evidence of clipping; report also retains float-below-range counts. This
+cannot exclude saturation in other original540 cases or uncaptured intermediates.
+
+Final encoder actual MAE vs nearest scalar code geometric MAE:
+Willow flat 1.74158/.17404, pool 2.43982/.18708;
+Nyx flat .67395/.04218, pool .65668/.04363.
+Nearest-code arrays are hypothetical geometry, not a realizable state trajectory.
+The four witnesses do not support upper-range clipping as the immediate explanation.
+Next precise mechanism check should separate propagated upstream perturbations from
+last-convolution weight/accumulation effects using original saved layer7 and immutable
+export constants, before another calibration or training attempt. All models remain
+rejected under original540 gates; no new development/acceptance access or v30 change.
