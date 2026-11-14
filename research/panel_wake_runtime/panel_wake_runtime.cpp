@@ -34,7 +34,12 @@ constexpr char tag[]="panel.wake.research";
 
 struct Detector {
     uint8_t *arena=nullptr, *variable_arena=nullptr;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+    // The bounded head uses MUL and ADD after its fused RELU6 FC.
+    tflite::MicroMutableOpResolver<16> ops;
+#else
     tflite::MicroMutableOpResolver<14> ops;
+#endif
     tflite::MicroInterpreter *interpreter=nullptr;
     TfLiteTensor *input=nullptr, *output=nullptr;
     FrontendState frontend{};
@@ -75,6 +80,9 @@ struct Detector {
            ops.AddDepthwiseConv2D()!=kTfLiteOk || ops.AddSplitV()!=kTfLiteOk ||
            ops.AddFullyConnected()!=kTfLiteOk || ops.AddLogistic()!=kTfLiteOk ||
            ops.AddQuantize()!=kTfLiteOk || ops.AddExpandDims()!=kTfLiteOk)return false;
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        if(ops.AddMul()!=kTfLiteOk || ops.AddAdd()!=kTfLiteOk)return false;
+#endif
         auto *model=tflite::GetModel(model_bytes);
         if(model->version()!=TFLITE_SCHEMA_VERSION)return false;
         interpreter=new(std::nothrow)tflite::MicroInterpreter(model,ops,arena,arena_size,variables);

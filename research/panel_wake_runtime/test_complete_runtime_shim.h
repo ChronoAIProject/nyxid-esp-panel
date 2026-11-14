@@ -65,10 +65,12 @@ struct MicroResourceVariables {
     static MicroResourceVariables *Create(MicroAllocator *,int){static MicroResourceVariables value;return &value;}
 };
 template<unsigned N>struct MicroMutableOpResolver {
-#define OP(name) int Add##name(){return kTfLiteOk;}
+    unsigned registered=0;
+#define OP(name) int Add##name(){return ++registered<=N?kTfLiteOk:kTfLiteError;}
     OP(CallOnce) OP(VarHandle) OP(ReadVariable) OP(Reshape) OP(Concatenation)
     OP(StridedSlice) OP(AssignVariable) OP(Conv2D) OP(DepthwiseConv2D) OP(SplitV)
     OP(FullyConnected) OP(Logistic) OP(Quantize) OP(ExpandDims)
+    OP(Mul) OP(Add)
 #undef OP
 };
 struct MicroInterpreter {

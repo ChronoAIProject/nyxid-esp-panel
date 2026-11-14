@@ -1,0 +1,56 @@
+{
+  "schema": "mac-p4-ansi-fc-kernel-replay-v1",
+  "gpu_ref": "dbcdf6ed8fd540b239a7edb33810f169dbcf4dbd",
+  "script_sha256": "366b1eb5a8067d221c39e3e099b9350d877f15a4f30eb6caf427855db4d64c83",
+  "source_sha256": {
+    "managed_components/espressif__esp-nn/src/fully_connected/esp_nn_fully_connected_ansi.c": "ed4be526ab29f035d7f9e0a25af61ecc86fcf0059143589914ebea2bd67ed51c",
+    "managed_components/espressif__esp-nn/src/common/common_functions.h": "5898d95a58ded8b62d9494463ec64627f8601c27304500e61c3cee9c12a03a88",
+    "managed_components/espressif__esp-nn/include/esp_nn_esp32p4.h": "0f865e2d931d7382f9d7544caffb1fa6d9ce76b5fea116532787a438252f76b6",
+    "managed_components/espressif__esp-tflite-micro/tensorflow/lite/micro/kernels/esp_nn/fully_connected.cc": "c23b68b0dceb783a37fa9eda5c3a4c4b53ae8977abde0f8f32c67f7ae2acce98",
+    "managed_components/espressif__esp-tflite-micro/tensorflow/lite/micro/kernels/fully_connected_common.cc": "388bf81053aac4ce6d031e4995631deebeda020b3e02a9a80351074ebcfa960d",
+    "managed_components/espressif__esp-tflite-micro/tensorflow/lite/kernels/kernel_util.cc": "fe1393cf81120c0e634de5bf1a2ee92ff35c69af979b28bce1a7c8dcd63506ac",
+    "research/panel_wake_runtime/panel_wake_runtime.cpp": "09f81bff2db8d4074031e8f971419bd00cd50a864b10593c59c7c087974d4062"
+  },
+  "export_report_sha256": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1",
+  "original_mac_replay_report_sha256": "0a1d07595a5a91e1c5ef6891571c434b1f5ff5b3e019e3c8fdd750eb2d6df374",
+  "library_sha256": "8213f6df32f687d1eefc6504db576cc49a29b3c83db5dd54c514f2ef2b300934",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "steps": 167,
+      "actual_c_kernel_repeat_exact": true,
+      "host_downstream_fragment_reproduces_original_uint8": true,
+      "effective_multiplier": 0.31783938135520834,
+      "quantized_multiplier": 1365109748,
+      "shift": -1,
+      "fc_unequal_steps": 2,
+      "fc_max_abs_code": 1,
+      "final_uint8_unequal_steps": 1,
+      "final_uint8_max_abs_code": 1,
+      "arrays": "hey_willow-fc-replay.npz",
+      "arrays_sha256": "263cec5af3263fcba2b41b048f35ba1323fc55480cca8de26532dbf28e838758",
+      "fragment_sha256": "19e049c2d0922ed5624a88b95897bc6d31d38f97b2df3a4513cc76b70e58850e"
+    },
+    {
+      "target": "hey_nyx",
+      "steps": 229,
+      "actual_c_kernel_repeat_exact": true,
+      "host_downstream_fragment_reproduces_original_uint8": true,
+      "effective_multiplier": 0.04501933522251803,
+      "quantized_multiplier": 1546852580,
+      "shift": -4,
+      "fc_unequal_steps": 0,
+      "fc_max_abs_code": 0,
+      "final_uint8_unequal_steps": 0,
+      "final_uint8_max_abs_code": 0,
+      "arrays": "hey_nyx-fc-replay.npz",
+      "arrays_sha256": "bee9b0d1bb5358297401804a72d9803d9c590bda36c395ce90a2a3a2f89dc164",
+      "fragment_sha256": "7070d1c0b1f1a899a968c2109e9f14c5e00d0cdcfe7cbd34830daa0f93b28fbd"
+    }
+  ],
+  "versions": {
+    "numpy": "2.4.6",
+    "ai-edge-litert": "2.3.0"
+  },
+  "limits": "Actual installed P4 portable ANSI FC C source executed on Mac using saved real original embeddings. Scalar preparation is source-derived Python, not actual TFLM Prepare. Downstream-only LiteRT fragment reproduces original controls. This isolates FC with host encoder and host postops: not full P4/model execution, a deployed firmware observation, numerical candidate admission, recognition/FAR, or permission to relax exact selftest. Original models unchanged; no PCM IO, optimizer, acceptance or board write."
+}
