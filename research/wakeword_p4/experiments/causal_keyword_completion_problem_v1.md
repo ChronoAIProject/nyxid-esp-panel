@@ -69,3 +69,26 @@ more cross errors and substantially weaker light-command behavior here;
 this does not make it qualified or erase its full-GPU common/background errors.
 The intended comparison remains practical recognition, false wakes, timely
 commands and eventual independent/P4 verification, not identical internals.
+
+## Bare-positive experiment completed; connected speech still needs work
+
+GPU commit89ce7259 reports the proposed minimal experiment's real completed
+training, final INT8 export and actual-primed behavior. Do not repeat it as an
+untried next step. At the existing0.91796875 reference the new model detects
+28/36 targets, bare9/9 and commands19/27; light1/9, time9/9, timer9/9. Common
+false clips fall from9 to1 and background events from1 to0 over the same
+10.48hours. The one light hit is about223ms after generated-prefix support,
+but8/9 light commands miss. Previous causal detected5/9 light commands late.
+Faster surviving hits do not compensate for the extra misses; neither model
+is ready to replace the mature detector.
+
+The next useful direction is to retain full connected-command positives and
+give them a separately estimated wake-prefix boundary. An existing phoneme
+teacher or forced aligner can supply explicitly weak timing labels on original
+training PCM, beginning with a small bare/light/time pilot on the two existing
+probe speakers. Preserve unresolved examples as unresolved. Do not derive
+boundaries from word-count proportions, whole-sentence ends or the wake
+model's scores. Keep the complete command in the continuous training stream.
+No new synthesis, audio crop or numerical agreement audit is required.
+GPU's paired training-source behavior probe at04e1f9b1 should finish naturally
+before selecting the precise intervention. Issue13 carries the current handoff.
