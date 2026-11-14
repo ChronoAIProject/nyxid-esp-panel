@@ -1,0 +1,48 @@
+{
+  "schema": "fp32-original-paired-route-prospective-v1",
+  "source_commit": "a3f0714b2f505756fb51b5e7ba82dd048654c611",
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-float_control-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829",
+      "role": "primary same-recipe float control"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-integer_qat-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54",
+      "role": "diagnostic integer-trained float reconstruction"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-float_control-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77",
+      "role": "primary same-recipe float control"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-integer_qat-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9",
+      "role": "diagnostic integer-trained float reconstruction"
+    }
+  ],
+  "files": {
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-formal-result-v1.json": "a12b394e71917aa939a6ff7c628818ab2faea5bc222c4a0c396f237cc956512b",
+    "research/wakeword_p4/experiments/fp32_original_paired_route_prospective_v1.md": "3fdbfbfb8e99d4e8f86c81a5367b23720afcec5fb63a6994f663b54c86da56f9",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    ".local/wakeword/microWakeWord/microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d"
+  },
+  "export_run": false,
+  "model_invocations": 0,
+  "media_reads": 0,
+  "limits": "Identity/protocol preparation only; actual exporter/runtime/media execution must be separately locked. All historical rejection and current INT8 gates preserved."
+}
