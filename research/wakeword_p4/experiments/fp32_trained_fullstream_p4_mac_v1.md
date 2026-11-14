@@ -126,6 +126,13 @@ development USB board, excluding the dining-room production board. Keep its
 output outside the checkout: it contains raw console, device identity, flash
 readbacks and a full original app-slot backup.
 
+Enumerate with `IDF_PYTHON -m serial.tools.list_ports -v`, including USB VID/PID,
+serial number and location. Do not use `/dev/cu.usb*` as an inventory: WCH
+devices appear as `/dev/cu.wchusbserial*`, and CP210x drivers may use
+`/dev/cu.SLAB_USBtoUART*`. The runner validates the explicitly supplied port
+against current USB enumeration metadata; it does not select one automatically.
+An empty filename glob does not mean the development board is disconnected.
+
 Before writing, the runner checks USB ownership/MAC, idle app identity and wake
 state, fresh on-device partition-table MD5/layout, exact active slot geometry,
 known-good app hash/structured ELF descriptor and a matching fresh full-slot

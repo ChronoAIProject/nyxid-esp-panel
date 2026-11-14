@@ -130,6 +130,25 @@ def main():
         ap.add_argument("--" + name, type=Path, required=True)
     a = ap.parse_args()
     a.output_dir.mkdir(exist_ok=False)
+    # WCH, CP210x and CDC drivers use different device names. Only a freshly
+    # enumerated USB callout port is eligible; the name alone proves nothing.
+    usb_port_cases = []
+    for name in ("wchusbserial-CONSTRUCTED", "SLAB_USBtoUART-CONSTRUCTED", "usbmodem-CONSTRUCTED"):
+        port = "/dev/cu." + name
+        entry = SimpleNamespace(device=port, vid=0x1a86, pid=0x55d3,
+                                serial_number="CONSTRUCTED", location="0-1")
+        assert runner.usb_serial_port(port, [entry])["device"] == port
+        usb_port_cases.append(dict(case=name, accepted=True))
+    for name, entries in (
+            ("unlisted", []),
+            ("usb-in-name-only", [SimpleNamespace(device="/dev/cu.usb-in-name-only", vid=None, pid=None)]),
+            ("Bluetooth-Incoming-Port", [SimpleNamespace(device="/dev/cu.Bluetooth-Incoming-Port", vid=None, pid=None)])):
+        try:
+            runner.usb_serial_port("/dev/cu." + name, entries)
+        except AssertionError:
+            usb_port_cases.append(dict(case=name, accepted=False))
+        else:
+            raise AssertionError("Non-USB or absent port accepted")
     refs, binding = reducer.load_fixtures(a.repository_root, a.run_root)
     image = (a.run_root / "build/nyx_trained_fp32_probe.bin").read_bytes()
     assert runner.app_elf_sha256(image) == reducer.sha((a.run_root / "build/nyx_trained_fp32_probe.elf").read_bytes())
@@ -237,6 +256,7 @@ def main():
                   runner_sha256=reducer.sha(Path(runner.__file__).read_bytes()),
                   reducer_sha256=reducer.sha(Path(reducer.__file__).read_bytes()),
                   binding=binding, cases=cases, all_passed=True,
+                  usb_port_cases=usb_port_cases,
                   original_linked_app_descriptor_matches_actual_elf=True,
                   actual_writer_only_targets_verified_app_offset=True,
                   actual_writer_rejects_foreign_usb_before_command=True,

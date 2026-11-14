@@ -40,6 +40,20 @@ class Settings:
     baud: int = 1500000
 
 
+def usb_serial_port(port, ports=None):
+    """Validate the explicit callout port by USB metadata, not driver naming."""
+    assert port.startswith("/dev/cu."), "An explicit macOS callout port is required"
+    if ports is None:
+        from serial.tools import list_ports
+        ports = list_ports.comports()
+    matches = [entry for entry in ports if entry.device == port]
+    assert len(matches) == 1, "The explicit serial port must be currently enumerated"
+    entry, = matches
+    assert entry.vid is not None and entry.pid is not None, "The explicit port must be a USB device"
+    return dict(device=entry.device, vid=entry.vid, pid=entry.pid,
+                serial_number=entry.serial_number, location=entry.location)
+
+
 def app_elf_sha256(image):
     # ESP image header24 + first segment header8 + esp_app_desc_t.
     assert len(image) >= 288 and image[0] == 0xe9
@@ -348,7 +362,7 @@ def main():
     a = ap.parse_args()
     url = urllib.parse.urlsplit(a.status_url)
     assert url.scheme == "http" and url.hostname and not url.username and not url.password
-    assert a.port.startswith("/dev/cu.usb"), "An explicit development USB serial port is required"
+    usb_serial_port(a.port)
     references, binding = reducer.load_fixtures(a.repository_root, a.run_root)
     image = (a.run_root / "build/nyx_trained_fp32_probe.bin").read_bytes()
     a.output.mkdir(parents=True, exist_ok=False)
