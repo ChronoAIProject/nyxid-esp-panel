@@ -1,0 +1,11 @@
+{
+  "schema": "multispeaker-coverage-context-decision-v1",
+  "native_records_sha256": "9fae28f9995ceff3c1d8b45fe8b40e7228200264457f391c0287c1d3f8443bb7",
+  "maximum_whole_positive_samples": 44026,
+  "context_frames": 309,
+  "lead_samples": 49920,
+  "maximum_jitter_frames": 27,
+  "rule": "Smallest multiple3 >= max(225,ceil((max whole positive output+960 RIR)/160)+27); lead >= context+3frames. Same across both arms, no score/holdout used.",
+  "boundary": "Whole generated container including command; no native token durations, wake-prefix or phonetic endpoint claim.",
+  "limits": "Geometry only; exact initialization, stream export, training and resource feasibility still required. No automatic widening of any historical run."
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "multispeaker-coverage-render-plan-v1",
+  "source_sha256": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_multispeaker_coverage_v1.py": "9cfde20f0b80e093be1057a3277a7069d62f90543e46f135343527e141608f27",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_hey_broad_training_v1.py": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+    "research/wakeword_p4/results/4090-hey-broad-render-plan-v1.json": "addc799b74593234c0b5920e4e240304a81169cd76f41e938b64e2d6cf769665",
+    ".local/wakeword/multispeaker-coverage-native-v1/summary.json": "5d8488efea7ed2e7edbf34a47359171243e4333e7ed6e2df2d9ee21c84ee689f",
+    "research/wakeword_p4/results/4090-multispeaker-saved-native-independent-audit-v1.json": "d1f5cfcfc09ea9c57bdde41884b1320cdbbf873b9b574f202a83762d22b61bdc",
+    ".local/wakeword/multispeaker-coverage-native-v1/records.jsonl": "9fae28f9995ceff3c1d8b45fe8b40e7228200264457f391c0287c1d3f8443bb7",
+    "research/wakeword_p4/results/4090-multispeaker-coverage-context-decision-v1.json": "1cddf422f7d92b808d4679bf91b821b128bf22af06fe8ab845df102278474678"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0"
+  },
+  "context_frames": 309,
+  "lead_samples": 49920,
+  "tail_samples": 16000,
+  "context_decision_sha256": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091",
+  "new_context_decision_path": "research/wakeword_p4/results/4090-multispeaker-coverage-context-decision-v1.json",
+  "new_context_decision_sha256": "1cddf422f7d92b808d4679bf91b821b128bf22af06fe8ab845df102278474678",
+  "schedule": {
+    "path": ".local/wakeword/multispeaker-coverage-render-schedule-v1.jsonl",
+    "sha256": "396fb28d73acea112e655d9ca304573286b44b3ffc01c53aec469d86397b89b2",
+    "sources": 7740,
+    "rendered": 23220
+  },
+  "conditions": [
+    "quiet",
+    "25dB_noise",
+    "15dB_noise_full_RIR"
+  ],
+  "rir_delays": [
+    0,
+    160,
+    480,
+    960
+  ],
+  "rir_amplitudes": [
+    1.0,
+    0.25,
+    -0.12,
+    0.06
+  ],
+  "failure_policy": "retain-all-stop-pack-no-substitution",
+  "expected_new_gib": 10.0,
+  "arm_presentations": {
+    "narrow": 12960,
+    "broad": 12960
+  },
+  "policy": "Reuse complete original FFT renderer via explicit AST substitutions of pack identity, total and lead constants only. No trim/respeed; retain complete RIR tail, fixed Gaussian/noise RMS and original noisy peak attenuation. Shared native request rendered once and referenced by both arms.",
+  "limits": "Training only. Equal environment recipes, not identical noise arrays or generated duration across distinct voices; unexposed TTS RNG remains uncontrolled. Whole container boundary only. No development/acceptance/detector/training or promotion authorization."
+}
