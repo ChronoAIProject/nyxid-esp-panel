@@ -1,0 +1,37 @@
+{
+  "scope": "additive-evidence-scope-clarification-no-rerun",
+  "issue": "https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6871938895",
+  "formal": {
+    "execution_path": "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-formal-execution-v1.json",
+    "execution_sha256": "a11cdf5069dd44ea9f6ed028c5bc553a2c19cafaa87b6e60ec8dba5d5bc2bbee",
+    "steps_per_arm": 10000,
+    "actual_fresh_runs_per_arm": 1,
+    "inherited_field": "fresh_update_repeats_exact",
+    "inherited_true_is_vacuous_single_element_comparison": true,
+    "full10000_fresh_model_optimizer_repeat_verified": false
+  },
+  "smoke": {
+    "execution_path": "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-smoke-execution-v1.json",
+    "execution_sha256": "c466803ce588171033149ba3f6e04351ba22df464f310caca30c67aeed75b7d4",
+    "steps_per_arm": 4,
+    "actual_fresh_runs_per_arm": 2,
+    "repeat_scope": "Only disposable four-update smoke independently verifies two fresh model/Adam update repeats; not formal10000."
+  },
+  "ast": {
+    "original_derivation_sha256": "8e4dc17bf783d6e2ddb586747d21b3e622ef85137971d7ae56726426e54a42e5",
+    "python_version": "3.11.2",
+    "parse": "ast.parse(source.read_text())",
+    "selection": "The unique ast.FunctionDef named step from ast.walk(tree), including its decorator_list.",
+    "serialization": "ast.dump(node, annotate_fields=True, include_attributes=False), no indentation; exact returned string encoded UTF-8 without appended newline.",
+    "sha256": "9b5e7d1eaf54941720ae65c6192de3cbe643e2f3f97eab177c06419028440f65",
+    "entire_serialized_ast_exact": true,
+    "sources": {
+      "research/wakeword_p4/experiments/run_hey_broad_bounded_consistency_v1.py": "a3ed1b0d8c3ab3af96f76a805bf5770a7851693f6981628a371871204af56578",
+      "research/wakeword_p4/experiments/run_hey_broad_bounded_consistency_formal_v1.py": "ca3e4b83982adb96155074228c4d8cc3b071060573af43d6ea1862fa80e1efc7"
+    }
+  },
+  "original_sources_reports_preserved": true,
+  "model_invocations": 0,
+  "optimizer_updates": 0,
+  "limits": "Clarifies existing fields and derivation only. Does not alter bound sources, original receipts or gates, rerun training, establish complete numerical/recognition qualification, open fresh development or replace v30."
+}
