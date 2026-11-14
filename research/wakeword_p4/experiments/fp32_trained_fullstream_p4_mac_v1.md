@@ -111,9 +111,80 @@ python3 research/wakeword_p4/experiments/check_trained_p4_capture_reducer_mac_v1
   --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN --output-dir NEW_CHECK_DIR
 ```
 
-Capture origin is deliberately a separate unresolved requirement: the future
-app-only execution/restore receipts must bind the actual development board,
-confirmed slot and flashed image to the UART capture. A passing parser does not
-authenticate those facts or qualify a candidate. That runner integration and
-actual P4 execution remain pending; the old random-weight validator is still
-unsuitable for this protocol.
+Capture origin is a separate requirement: app-only execution/restore receipts
+must bind the actual development board, confirmed slot and flashed image to
+the UART capture. A passing parser does not authenticate those facts or qualify
+a candidate. The runner below supplies that integration; actual P4 execution
+remains pending. The old random-weight validator is still unsuitable.
+
+## Trained app-only runner
+
+`run_trained_p4_capture_mac_v1.py` uses the authenticated prepared image and the
+new reducer. All device inputs must be current observations; there are no
+default MAC, IP, app address, slot size or partition-table address. Use only the
+development USB board, excluding the dining-room production board. Keep its
+output outside the checkout: it contains raw console, device identity, flash
+readbacks and a full original app-slot backup.
+
+Before writing, the runner checks USB ownership/MAC, idle app identity and wake
+state, fresh on-device partition-table MD5/layout, exact active slot geometry,
+known-good app hash/structured ELF descriptor and a matching fresh full-slot
+readback. A read-only `nyx-status` on the USB console must match the HTTP host
+IP, service slug and firmware version. This prevents treating another panel
+with the same firmware image as the USB-connected board.
+
+Only the verified app address can reach `write_flash`; the diagnostic partition
+table, bootloader, NVS and filesystem are not write inputs. After writing, the
+entire probe image is read back and compared before capture. UART capture opens
+before reset and retains partial lines across timeout reads. It has a bounded
+600-second default for all8,336 calls plus115200-baud output, with progress
+messages; no microphone, speaker or audio fixture is used.
+
+Any probe write attempt, including partial failure, capture timeout, parser
+failure or normal cancellation, enters restoration after the UART context has
+closed. The fresh full-slot backup restores app bytes and original padding.
+The whole slot, original partition table and OTA metadata are then read back
+and must match exactly. Finally the app ELF/slot, idle voice, unchanged service
+selection and listening wake state must recover. `online` additionally requires
+Nyx connected; explicit `app-only` preserves the separate offline-engineering
+case and records the actual connection state without claiming it is online.
+Failed restoration remains a failed execution; it cannot yield a passing run.
+
+Run after publishing the sources and obtaining fresh development-board details:
+
+```sh
+IDF_PYTHON research/wakeword_p4/experiments/run_trained_p4_capture_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN \
+  --port CURRENT_DEV_USB --expected-mac CURRENT_DEV_MAC --status-url CURRENT_STATUS_URL \
+  --restore-app CURRENT_GOOD_APP --expected-restore-sha256 CURRENT_GOOD_APP_BIN_SHA \
+  --expected-app-sha256 CURRENT_APP_ELF_SHA \
+  --app-offset CURRENT_APP_OFFSET --slot CURRENT_OTA_LABEL --slot-bytes CURRENT_SLOT_BYTES \
+  --partition-table-offset CURRENT_TABLE_OFFSET --restore-readiness online \
+  --output NEW_PRIVATE_EXECUTION_DIR
+```
+
+The runner records source/image/capture/backup/table/OTA-data hashes and current
+execution parameters in `report-private.json`. Independent evidence collection
+must inspect these raw receipts after an actual run; a constructed backend
+always records `capture_origin_bound=false`. Never use a saved earlier IP,
+backup or slot as a fresh observation. SIGKILL/power removal cannot be recovered
+by a Python `finally` block.
+
+The constructed checker passed25 complete transaction scenarios: preflight
+identity/busy/geometry/backup rejection, online versus app-only readiness,
+partial probe write, corrupt readback, timeout/cancellation, invalid protocol
+and restoration write/readback/table/OTA-data/readiness failures. It also
+exercises actual writer dispatch with zero commands for a foreign USB identity,
+and actual UART FIFO code with split records and closure on success/error.
+The original linked image's structured ELF descriptor matches its actual ELF.
+No physical board was accessed. Reproduce in a new private output directory:
+
+```sh
+python3 research/wakeword_p4/experiments/check_trained_p4_runner_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN --output-dir NEW_CHECK_DIR
+```
+
+See `../results/mac-trained-p4-app-only-runner-constructed-checks-v1.json`.
+Real P4 numeric/latency/allocator observations, independent restoration proof,
+full-panel headroom, acoustic recognition and voice lifecycle checks are still
+outstanding.
