@@ -10022,3 +10022,8 @@ Independent full auditor now requires shared-binary SHA to equal both formal arm
 ## Bind numerical screen runtime before execution
 
 Prospective context309 screen now hashes actual LiteRT/frontend wrappers/native libraries and imported scoring/front-end helpers, adds soundfile/pymicro-features/scipy versions, and performs0.25GiB diskguard before allocation. Original numerical gates/135consumedrequests/270cases unchanged. Compile only; no screen lock/execution yet. Original broad10100 observed, session8257 remains live.
+
+
+## Original paired formal training genuinely exit0
+
+Original session8257/PID84435/procstart438879 returned actualexit0 after both arms20000 fixedupdates; PID absent afterward. No restart/resume or checkpoint selection. Exact per-arm elapsed seconds are retained in original reports; original reports preserve exact values. Published original paired/broad reports and exit/logSHA receipt. Independent full40000batch/raw5120000window reconstruction audit launched session17673; no audit completion claimed yet. Formal completion is training evidence only, no stream/numerical/recognition/freshdev/acceptance or replacement claim; v30 retained.
