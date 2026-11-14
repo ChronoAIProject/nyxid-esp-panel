@@ -1,0 +1,112 @@
+{
+  "schema": "mac-fixed-grid-compilation-effect-metadata-review-v1",
+  "gpu_ref": "aef1aa46191247f52fb6c28f48ce4f2c040f4d04",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-screen-result-v1.json": "86559ff44f1d1c92df11711cc45d978f9e5cad78e231d276cafa96b53f62819e",
+    "research/wakeword_p4/results/4090-hey-broad-fixed-grid-screen-result-v1.json": "458d47eb8c876b1dbf8284ae1a4819fd548353f7bb365a5546494ebfae315e3f",
+    "research/wakeword_p4/results/4090-hey-broad-fixed-grid-screen-independent-audit-v1.json": "1b827c0bcfb5d20a3f558aa07c6a7fd7a093ff96714bc833888b9e0d9d3e2825",
+    "research/wakeword_p4/results/4090-hey-broad-fixed-grid-input-rounding-result-v1.json": "bf5208676a40b2f950a5ab2d0f922af1f6931d4d3d2597653c4f211dfcbb112a"
+  },
+  "script_sha256": "94a2f19129f8cbd8714877859d5a53ea7fa2327c10a84081e90e4929d0c84724",
+  "recomputed_summary": {
+    "float_control/hey_nyx": {
+      "cases": 135,
+      "ordinary_passed": 129,
+      "fixed_passed": 125,
+      "both_passed": 123,
+      "ordinary_failed_fixed_passed": 2,
+      "ordinary_passed_fixed_failed": 6,
+      "both_failed": 4,
+      "failed_requests": [
+        21,
+        48388,
+        48389,
+        48394,
+        48399,
+        48400,
+        48401,
+        49827,
+        49828,
+        50280
+      ],
+      "input_rounding_above_point1": 0,
+      "remaining_p99_above_point1": 10,
+      "max_input_rounding_p99": 0.0032565534114837647
+    },
+    "integer_qat/hey_nyx": {
+      "cases": 135,
+      "ordinary_passed": 128,
+      "fixed_passed": 130,
+      "both_passed": 126,
+      "ordinary_failed_fixed_passed": 4,
+      "ordinary_passed_fixed_failed": 2,
+      "both_failed": 3,
+      "failed_requests": [
+        17,
+        21,
+        49827,
+        50272,
+        50273
+      ],
+      "input_rounding_above_point1": 0,
+      "remaining_p99_above_point1": 5,
+      "max_input_rounding_p99": 0.014422112237662077
+    },
+    "float_control/hey_willow": {
+      "cases": 135,
+      "ordinary_passed": 119,
+      "fixed_passed": 125,
+      "both_passed": 115,
+      "ordinary_failed_fixed_passed": 10,
+      "ordinary_passed_fixed_failed": 4,
+      "both_failed": 6,
+      "failed_requests": [
+        2,
+        6,
+        8,
+        13,
+        48384,
+        48386,
+        48392,
+        48398,
+        49824,
+        49825
+      ],
+      "input_rounding_above_point1": 0,
+      "remaining_p99_above_point1": 10,
+      "max_input_rounding_p99": 0.0058470390737056736
+    },
+    "integer_qat/hey_willow": {
+      "cases": 135,
+      "ordinary_passed": 91,
+      "fixed_passed": 122,
+      "both_passed": 88,
+      "ordinary_failed_fixed_passed": 34,
+      "ordinary_passed_fixed_failed": 3,
+      "both_failed": 10,
+      "failed_requests": [
+        7,
+        8,
+        12,
+        13,
+        14,
+        19,
+        48384,
+        48385,
+        48386,
+        48397,
+        48398,
+        48404,
+        49825
+      ],
+      "input_rounding_above_point1": 0,
+      "remaining_p99_above_point1": 13,
+      "max_input_rounding_p99": 0.0034733891487121584
+    }
+  },
+  "ordinary_failures": 73,
+  "fixed_failures": 38,
+  "all_four_still_rejected": true,
+  "published_statistics_consistent": true,
+  "limits": "Published whole540 per-case metadata only: recomputed unchanged gates, paired pass/fail transitions and rounded-input diagnostic statistics. No new actual inference, access to saved540 arrays/model bytes, unique-cause conclusion, recognition/FAR estimate, development selection or candidate/P4 admission. A different compiled graph/grid intervention changes the error pattern; numerical failures remain failures."
+}
