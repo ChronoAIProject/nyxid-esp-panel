@@ -1,0 +1,29 @@
+{
+  "schema": "hey-broad-surviving-window-census-execution-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/census_hey_broad_surviving_windows_v1.py": "c5aef8cf59bbffa2729ce31f14c1435b9afe0787acd67f7065af96f3adc4d40d",
+    "research/wakeword_p4/training/train_stream.py": "2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/schedule_hey_broad_v1.py": "e6df66f95ed41943cc7a6a5aee7c98cec352dbbf9e354dbce9d2362ec0c22f10",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "research/wakeword_p4/training/negative_sampling.py": "620ada162e65b3cad389f5a12ce23a6388c7793e14cf98092ec43ad367e922c6",
+    "research/wakeword_p4/training/spec_augment.py": "f5cf659ee3fab7c32c60b4985db1788be4718479b453ff582ecadb6dc75454d9",
+    "research/wakeword_p4/training/ambient_sampling.py": "22fee8cf1b1876dbc87a5310758151ccccba2ee957b4c8365a1ef2170f35fb1c",
+    ".local/wakeword/hey-broad-schedules-v1/hey_willow.jsonl": "be51ed190093957d8b903416226bf44e38c4808c1b38064cb820f3d62b83ff4d",
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/features.json": "8d8e7ab165d9b068073b32b6b1fd4cb658aa21a3a279c69cf75aa153e8431cdf",
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/target-provenance.json": "bf5578fcc95abb1fee2d12f167dd60b4318550f6e8206106d8c3b4793e4df93b",
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/human.json": "93ca6d51ea70300e97aa1450ece3c8336f6969560bfb8708b7aad42c60c18b78",
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/ambient.json": "e1956c07d6cece792d29a76b35617c19ef199321f8348aecfce32f4cfe2fc6a7",
+    ".local/wakeword/hey-broad-schedules-v1/hey_nyx.jsonl": "cae08413d0c0220f64671b846ff1fc303991e3e0199af7f168bbde02c1325545",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/target-provenance.json": "e794e33e872731c18504378e4ffe8f1ff5a99349c69662f72e4055d42b36a228",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/human.json": "93ca6d51ea70300e97aa1450ece3c8336f6969560bfb8708b7aad42c60c18b78",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/ambient.json": "e1956c07d6cece792d29a76b35617c19ef199321f8348aecfce32f4cfe2fc6a7",
+    "research/wakeword_p4/experiments/census_hey_broad_surviving_windows_v1.py": "7eb3d148c749d35273b352c2308a0e6394f7e410819d5465ab5704103135d2a0"
+  },
+  "batches_per_target": 10000,
+  "targets": [
+    "hey_willow",
+    "hey_nyx"
+  ],
+  "policy": "Observe original extracted sample/prefix/batch line events without RNG calls or source mutation; first2 traced-vs-original exact; every complete128 batch must match original schedule. Log original48 ordinary draws and16 overwritten plus actual128 shuffled survivors; every coordinate scaled slice must equal corresponding actual network row. Aggregate actual surviving word/source/carrier/label plus generated-boundary coverage. CPU only, no models/audio/newtraining/freshdata. First10000 only; not all120000 or historical live provenance, not phonetic truth."
+}
