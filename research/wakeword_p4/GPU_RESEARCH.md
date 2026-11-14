@@ -7995,3 +7995,25 @@ twowitnesses. Headweight rounding also visibleespeciallyWillow; cannot claim
 headcontributesnothing. Supports next per-layer floatvsINT8 encodercomparison,
 not specificlayer/statecause or all270coverage. No freshdata, thresholdchoice,
 newexport/retraining orpromotion; v30 retained, goalactive.
+
+### Aligned encoder boundaries show drift from first activation onward
+
+1a43e83a fixed same2witnesses, CPU2threads originalH5, sharedobserver original
+probability plus15encoder sites, natural and dequant(actualQ)inputs, twofreshsix-
+state resets each. Originalsession72142 exited0; allarray repeats exact, natural
+probability EXACToriginalsaved forboth. All15shapes/producer-types match;
+compareCONV fusedBN/ReLU atpostActivation, notpreBN Conv. Fullarrays/perstep
+metrics saved. Independent30boundaryNPZ SHA/max/RMS reductions checked.
+
+INT8-vs-roundedfloat firstActivation max1.58888388/1.28600693 (Willow/Nyx),
+~1.18566/1.06080outputLSB. Finalflatten max12.55194616/6.12673312,
+~3.94356/8.97678LSB; RMS.75698255/.47488241. Inputrounding-onlyfinalmax
+.24589539/.08464813. Erroralreadyexists atfirstactivation and propagates through
+laterboundaries; no claimmonotonicgrowth atallsteps orlocaloperatorcausality.
+Intermediatequant scales themselvescoarse: firstActivation1.34008837/1.21229374,
+lastActivation3.18289804/.68250912. These2samples are not whole270 nor original
+calibration rangeorigin evidence. Nextpre-register exactoriginal7502representative
+sequence encoder-range observation (prefixseparate from100x75actualcrop slices)
+before considering any calibrationchange; natural-logit sentinel-negativecontrol
+does not ruleout sentinel effect on earlierencoder ranges. No newexport/retrain/
+newdev/acceptance, v30frozen and goalactive.
