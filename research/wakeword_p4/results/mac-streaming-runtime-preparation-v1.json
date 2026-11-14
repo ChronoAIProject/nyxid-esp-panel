@@ -1,0 +1,42 @@
+{
+  "schema": "mac-streaming-runtime-preparation-v1",
+  "utc": "2026-11-14T23:22:21.954391+00:00",
+  "source_base_commit": "6c4accc8",
+  "changes": "Small development streaming profile packages original model plus runtime settings without legacy training/calibration/numerical-admission/self-test dependencies.",
+  "tests": {
+    "command": "python3 -m unittest discover -s research/panel_wake_runtime -p 'test_prepare*runtime.py'",
+    "passed": 31
+  },
+  "actual_p4_translation_unit_compile": {
+    "exit_code": 0,
+    "compiler": "riscv32-esp-elf-g++",
+    "flags": "Real existing IDF5.5.4 ESP32-P4 target configuration and dependencies; PANEL_WAKE_STREAMING_PROFILE=1; no self-test/custom FC flags.",
+    "compiler_diagnostics": "",
+    "object_bytes": 1662352
+  },
+  "prepared": {
+    "schema": "panel-streaming-wake-profile-v1",
+    "model_sha256": "4a44dbe370b20c78970cb6b0478c6c982ba7330a28484f34890668ce1440e7c0",
+    "model_bytes": 60952,
+    "profile_sha256": "c4a83209b5c78425fdd4d4fe6381405de4248369662ee8a64137eef7f7e66478",
+    "context_frames": 309,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "refractory_steps": 67,
+    "sample_rate": 16000,
+    "frontend_hop_samples": 160,
+    "model_stride_frames": 3,
+    "requested_prime_samples": 81440,
+    "actual_prime_samples": 81600,
+    "event_arithmetic": "uint8-sum-binary64-v1",
+    "scope": "Development packaging only; recognition and device behavior require testing"
+  },
+  "fixture_purpose": "Prior causal model bytes used only to exercise packaging/compiler integration. Its failed recognition result remains unchanged. No model invocation, hardware flash, audio recording/playback or new recognition claim.",
+  "limits": "CMake selection and target translation-unit compile only. No full experimental firmware link, device allocation/inference, recognition, long-call or independent acceptance established.",
+  "source_sha256": {
+    "research/panel_wake_runtime/panel_wake_runtime.cpp": "617890a1eda6dc1d756884dce5ccfabdef5037e20fb8e6f5515856c33f9fbc0e",
+    "research/panel_wake_runtime/prepare_streaming_runtime.py": "e02306fcc6221936c85e2c94f437c8ba82151c623d83493aae73f9c89ec28307",
+    "research/panel_wake_runtime/CMakeLists.txt": "1da8b0b90105d48994890d01f3f01e27825463f82f74ebe234c538c908ee4133",
+    "CMakeLists.txt": "66560dbacc8e0192c1c2b41fb303951f0597796e1a2fdcb1c7725bfd7f930ecf"
+  }
+}

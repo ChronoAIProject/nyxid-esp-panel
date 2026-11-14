@@ -10,7 +10,8 @@ file(MAKE_DIRECTORY "${_generated}")
 set(NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE "" CACHE FILEPATH "Frozen225-frame development profile with complete NYXKWS02 self-test")
 set(NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE "" CACHE PATH "Private frozen embedding/equal-mean bundle for resource diagnostics")
 if(NYX_PANEL_EXPERIMENTAL_EMBEDDING_BUNDLE)
-    if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE)
+    if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE OR
+            NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE)
         message(FATAL_ERROR "A teacher60 candidate profile cannot configure an embedding bundle")
     endif()
     option(NYX_PANEL_EXPERIMENTAL_WAKE_IRAM "Measure hot detector code in internal RAM" OFF)
@@ -90,7 +91,24 @@ idf_component_register(SRCS "panel_wake_runtime.cpp" INCLUDE_DIRS "."
 set(_selftest_args)
 set(_candidate_profile_args)
 set(_prepare_script "${CMAKE_CURRENT_LIST_DIR}/prepare_runtime.py")
-if(NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE)
+if(NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE)
+    if(NOT NYX_PANEL_NODE_DEV_MODE OR NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR
+            NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE OR NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST OR
+            NYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION)
+        message(FATAL_ERROR "Streaming profile requires isolated node development mode and cannot mix legacy calibration/profile/self-test inputs")
+    endif()
+    execute_process(COMMAND ${PYTHON} "${CMAKE_CURRENT_LIST_DIR}/prepare_streaming_runtime.py"
+        --profile "${NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE}"
+        --model "${NYX_PANEL_EXPERIMENTAL_WAKE_MODEL}" --output "${_generated}"
+        COMMAND_ERROR_IS_FATAL ANY)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE PANEL_WAKE_STREAMING_PROFILE=1)
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+        "${NYX_PANEL_EXPERIMENTAL_WAKE_MODEL}"
+        "${NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE}"
+        "${CMAKE_CURRENT_LIST_DIR}/prepare_streaming_runtime.py")
+    target_add_binary_data(${COMPONENT_LIB} "${_generated}/hey_nyx_model.bin" BINARY)
+    return()
+elseif(NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE)
     if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR NOT NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST)
         message(FATAL_ERROR "Complete profile requires its NYXKWS02 self-test and cannot use the legacy GPU profile")
     endif()

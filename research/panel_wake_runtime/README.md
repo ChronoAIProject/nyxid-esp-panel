@@ -147,6 +147,44 @@ single observation is not an ongoing resource, acoustic or call measurement.
 
 ## Build
 
+### Current streaming candidates
+
+For new streaming INT8 candidates, use a small private profile instead of the
+historical training/calibration/score-trace admission path. This supports the
+current 309-frame causal model and retains the existing frontend, smoothing,
+cooldown and zero-PCM priming. For context309 the owner requests81440 samples
+and supplies81600 in complete480-sample calls, then continues live input with
+the same frontend, partial feature triplet and model state.
+
+```json
+{
+  "schema": "panel-streaming-wake-profile-v1",
+  "model_sha256": "SHA256_OF_THE_ORIGINAL_TFLITE",
+  "context_frames": 309,
+  "threshold": 0.91796875,
+  "smoothing_steps": 5
+}
+```
+
+In a fresh build directory with the usual isolated node development settings:
+
+```sh
+idf.py -B "$PRIVATE_BUILD" \
+  -DNYX_PANEL_NODE_DEV_MODE=ON \
+  -DNYX_PANEL_EXPERIMENTAL_WAKE_MODEL="$PRIVATE_MODEL" \
+  -DNYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE="$PRIVATE_PROFILE" build
+```
+
+Do not combine this selector with legacy calibration, candidate/complete
+profiles, self-tests or an embedding bundle. Packaging checks the original
+model hash, TFLite header and bounded runtime settings. On the board the
+existing adapter validates INT8[1,3,40] input, UINT8[1,1] output, score encoding
+and tensor allocation; unsupported operators or failed inference remain errors.
+No CPU/GPU, FP32/INT8 or exact-score matching is required. Recognition,
+connected-command timing, false wakes and device stability decide usefulness.
+Packaging/build success alone does not establish those results. The default
+Hi ESP firmware is unchanged; use only the development board for research.
+
 For the separate context225 and complete-tail research contract, see
 [Context225 preparation and complete finite self-test](complete_runtime_v1.md).
 Its opt-in selector does not change the original150-frame/V1 build below.

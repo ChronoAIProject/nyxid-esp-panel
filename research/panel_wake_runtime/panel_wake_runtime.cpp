@@ -95,12 +95,15 @@ struct Detector {
         if(model->version()!=TFLITE_SCHEMA_VERSION)return false;
         interpreter=new(std::nothrow)tflite::MicroInterpreter(model,ops,arena,arena_size,variables);
         if(!interpreter || interpreter->AllocateTensors()!=kTfLiteOk)return false;
+#ifdef PANEL_WAKE_STREAMING_PROFILE
+        if(interpreter->inputs_size()!=1 || interpreter->outputs_size()!=1)return false;
+#endif
         input=interpreter->input(0);output=interpreter->output(0);
         if(!input || !output || input->type!=kTfLiteInt8 || input->bytes!=120 ||
            !std::isfinite(input->params.scale) || input->params.scale<=0 ||
            output->type!=kTfLiteUInt8 || output->bytes!=1 ||
            !std::isfinite(output->params.scale) || output->params.scale<=0)return false;
-#ifdef PANEL_WAKE_COMPLETE_INPUT
+#if defined(PANEL_WAKE_COMPLETE_INPUT) || defined(PANEL_WAKE_STREAMING_PROFILE)
         if(!input->dims || input->dims->size!=3 || input->dims->data[0]!=1 ||
            input->dims->data[1]!=3 || input->dims->data[2]!=40 ||
            !output->dims || output->dims->size!=2 || output->dims->data[0]!=1 || output->dims->data[1]!=1 ||
