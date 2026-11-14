@@ -1,0 +1,105 @@
+{
+  "schema": "fp32-internal-trained-mac-handoff-v1",
+  "source_commit": "af6f3e46f6c93dbd17973ca9958ecc0c82c6797a",
+  "files": {
+    "hey_willow-float_control/model.tflite": {
+      "bytes": 126496,
+      "sha256": "c549ee3a744d28e32afa0dff0ad1566e4519a951ab3ede838f858b5c36cc9089"
+    },
+    "hey_willow-float_control/receipt.json": {
+      "bytes": 8986,
+      "sha256": "b095b195a6066e59aee8abd2ae3e18ec0f7423ae9001e9e6f67c8cccc8134a4c"
+    },
+    "hey_willow-float_control/references.npz": {
+      "bytes": 16886,
+      "sha256": "ef1b975befc3cbb6c258edacda74f4b12d07b0a73ddd845cf60f65043fd954e7"
+    },
+    "hey_willow-integer_qat/model.tflite": {
+      "bytes": 126808,
+      "sha256": "24c2963f70ab32f844f3a70f00c419b336695339515a9b0992bc632e56e26b4a"
+    },
+    "hey_willow-integer_qat/receipt.json": {
+      "bytes": 8984,
+      "sha256": "70cfcffcbc6e67d89e01e575113d2ab993bf47ec2ea0dadd3636a0746049eeec"
+    },
+    "hey_willow-integer_qat/references.npz": {
+      "bytes": 16886,
+      "sha256": "071f38ecd7743db804190913eb6fe0e1724315dd1d9f45b2aa9f96dc80428976"
+    },
+    "hey_nyx-float_control/model.tflite": {
+      "bytes": 126916,
+      "sha256": "8ee4d8fa6a0e561ebd894b305877f0dc9d20fe0889d87469b6cf3f55122fef40"
+    },
+    "hey_nyx-float_control/receipt.json": {
+      "bytes": 8982,
+      "sha256": "38d9528030709f5dbd976e0a6f3bd489829e1a93ed854126bdf2f2022f030b0b"
+    },
+    "hey_nyx-float_control/references.npz": {
+      "bytes": 16886,
+      "sha256": "a6f8a6b161a810d17d0610a6a3e4d2e7f4fb7bad568af9791c5f4904c5aa994c"
+    },
+    "hey_nyx-integer_qat/model.tflite": {
+      "bytes": 126964,
+      "sha256": "61806e5de946ece72af47a14bc3367ba40c34367a4a617efad42341f4b1f5563"
+    },
+    "hey_nyx-integer_qat/receipt.json": {
+      "bytes": 8980,
+      "sha256": "e5ab496b14f9ed2d1ca41c61cfda359fb5a4780d63ae9f0a63a5b735673849c4"
+    },
+    "hey_nyx-integer_qat/references.npz": {
+      "bytes": 16886,
+      "sha256": "dc7c2c550d90b49476d45963a23ce7719356634b26779368f3a6a33a2c8889e1"
+    },
+    "receipts/result.json": {
+      "bytes": 43893,
+      "sha256": "999b66c5e4abcfec8c291205772ec5c7b1663f204b7492d78dce89e262c5543c"
+    },
+    "receipts/4090-fp32-internal-software-execution-v1.json": {
+      "bytes": 6165,
+      "sha256": "7c3b7614a15e205b31f80b96365d1ee6d06f1e8eb7132354909779e72052ced8"
+    },
+    "receipts/4090-fp32-internal-stage-input-intake-v1.json": {
+      "bytes": 592,
+      "sha256": "ab6936563467df1fa67b0a0e0699b7477c1b68bf41b55c125fa9b1b8650a3b21"
+    },
+    "receipts/package_fp32_internal_mac_v1.py": {
+      "bytes": 2964,
+      "sha256": "f91345c39fd0e9750138d2e9fba175c669ce08fcaa6539854af6710ee1ff39a3"
+    },
+    "receipts/run_fp32_internal_software_v1.py": {
+      "bytes": 6518,
+      "sha256": "287474bd94ddf1187cb500fb7d86228471ef518e7f36c11d5c71b3692256863e"
+    },
+    "inputs.bin": {
+      "bytes": 491520,
+      "sha256": "0f7eff41940be4149be682f9a24755d42646bbe08e211c5fbdd1638059d3c9ac"
+    }
+  },
+  "saved_array_audit": [
+    {
+      "model": "hey_willow-float_control",
+      "outputs_per_backend": 2048,
+      "max_abs": 1.6391277313232422e-07,
+      "repeat_exact": true
+    },
+    {
+      "model": "hey_willow-integer_qat",
+      "outputs_per_backend": 2048,
+      "max_abs": 2.9802322387695312e-08,
+      "repeat_exact": true
+    },
+    {
+      "model": "hey_nyx-float_control",
+      "outputs_per_backend": 2048,
+      "max_abs": 2.086162567138672e-07,
+      "repeat_exact": true
+    },
+    {
+      "model": "hey_nyx-integer_qat",
+      "outputs_per_backend": 2048,
+      "max_abs": 1.541775418445468e-08,
+      "repeat_exact": true
+    }
+  ],
+  "limits": "Original raw FP324 models and all synthetic references; not recognition/full540/state-output/P4 qualification. Array audit performs no model inference. H5 numerical inventories in original result; no H5 or audio in archive."
+}
