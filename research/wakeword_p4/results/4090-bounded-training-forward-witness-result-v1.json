@@ -1,0 +1,112 @@
+{
+  "plan_sha256": "5bc4deacfe9148ccf3e98aa2476a09f330587c671cf5fe0425d5aea0b656f2a0",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "raw_logit_control",
+      "request_order": 14,
+      "arrays_path": ".local/wakeword/bounded-training-forward-witness-v1/hey_willow-raw_logit_control.npz",
+      "arrays_sha256": "05a50a2c3fc8aae8f8d1ad0cb964fa096deed5e42bbe702aabea70f21e7f957e",
+      "model_unchanged": true,
+      "metrics": {
+        "nominal": {
+          "contexts": 93,
+          "embedding_unequal": 3639,
+          "embedding_maximum": 19,
+          "fc_unequal": 14,
+          "fc_maximum": 93,
+          "saved_repeats_exact": true
+        },
+        "phase": {
+          "contexts": 93,
+          "embedding_unequal": 0,
+          "embedding_maximum": 0,
+          "fc_unequal": 0,
+          "fc_maximum": 0,
+          "saved_repeats_exact": true
+        }
+      }
+    },
+    {
+      "target": "hey_willow",
+      "condition": "bounded_logit_consistency",
+      "request_order": 14,
+      "arrays_path": ".local/wakeword/bounded-training-forward-witness-v1/hey_willow-bounded_logit_consistency.npz",
+      "arrays_sha256": "ef57d446aaec09e0ff0e19dabe8ee3be1460f5daddfe325f75beba5680684f4e",
+      "model_unchanged": true,
+      "metrics": {
+        "nominal": {
+          "contexts": 93,
+          "embedding_unequal": 12546,
+          "embedding_maximum": 249,
+          "fc_unequal": 3,
+          "fc_maximum": 187,
+          "saved_repeats_exact": true
+        },
+        "phase": {
+          "contexts": 93,
+          "embedding_unequal": 0,
+          "embedding_maximum": 0,
+          "fc_unequal": 0,
+          "fc_maximum": 0,
+          "saved_repeats_exact": true
+        }
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "raw_logit_control",
+      "request_order": 48394,
+      "arrays_path": ".local/wakeword/bounded-training-forward-witness-v1/hey_nyx-raw_logit_control.npz",
+      "arrays_sha256": "29af3fa68a20de931e3b490f855ad5115ce0bb18916276c95fee13dc6eaf4c61",
+      "model_unchanged": true,
+      "metrics": {
+        "nominal": {
+          "contexts": 155,
+          "embedding_unequal": 11961,
+          "embedding_maximum": 44,
+          "fc_unequal": 9,
+          "fc_maximum": 255,
+          "saved_repeats_exact": true
+        },
+        "phase": {
+          "contexts": 155,
+          "embedding_unequal": 0,
+          "embedding_maximum": 0,
+          "fc_unequal": 0,
+          "fc_maximum": 0,
+          "saved_repeats_exact": true
+        }
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "bounded_logit_consistency",
+      "request_order": 48394,
+      "arrays_path": ".local/wakeword/bounded-training-forward-witness-v1/hey_nyx-bounded_logit_consistency.npz",
+      "arrays_sha256": "ae61908b747453d8b05e7b78be3ced0aaa9ae14d507c92e645f6b1ebbd0ab61f",
+      "model_unchanged": true,
+      "metrics": {
+        "nominal": {
+          "contexts": 155,
+          "embedding_unequal": 48171,
+          "embedding_maximum": 108,
+          "fc_unequal": 4,
+          "fc_maximum": 255,
+          "saved_repeats_exact": true
+        },
+        "phase": {
+          "contexts": 155,
+          "embedding_unequal": 0,
+          "embedding_maximum": 0,
+          "fc_unequal": 0,
+          "fc_maximum": 0,
+          "saved_repeats_exact": true
+        }
+      }
+    }
+  ],
+  "optimizer_updates": 0,
+  "runtime_model_invocations": 0,
+  "limits": "Fixed existing Willow14/Nyx48394 x raw/bounded; all fullsupport streamsteps>=74, no outcome selection. Original finalH5 and nofold/noarithmetic QAT observer; both nominal225 and original phase224+zero static contexts. Twice observe allconstants/intermediateencoder/embedding/scalarFC/rawlogits/probability, no gradient/optimizer/export or runtime model invoke. Compare saved actual wholewave recursive embedding/FC, preserve every discrepancy; comparison descriptive, not gate replacement. Require exact inputs/constants/repeats/modelunchanged, stop structural/hash/nonfinite faults no retry. No newdev/acceptance/promotion."
+}
