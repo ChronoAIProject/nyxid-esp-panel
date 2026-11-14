@@ -9214,3 +9214,25 @@ check first-layer framing/accumulator/input at step99, preserving original artif
 separately establish deterministic reduction policy before a new prospective run.
 No formal training, changed-grid efficacy or complete integration claimed. Original
 candidate rejection, v30 and fresh-data isolation remain unchanged.
+
+### 2026-11-14 — Corrected stride3 integration control passes, original failure retained
+
+Code inspection identified first temporal pad bug: initial kernel5 consumes3fresh
+frames with2history, whereas v1 padded4(kernel-1), appropriate only for later
+stride1 stages. Separate v2 source keeps initial pad=kernel-3 and later kernel-1;
+also explicitly enables TF deterministic ops for gradient-repeat requirement.
+These are two declared implementation/execution corrections, not isolated proof of
+a GPU root cause. Original v1 source/lock/output/failure remain immutable.
+
+Prospective f4737af0 pushed before v2 session98045, exit0. Same original four
+complete request0 streams, original grids/quantized constants, no updates:
+all9encoder code mismatches0 for each model; both forward and nine diagnostic
+step-gradient repeats byte exact, all gradients finite/nonzero. Independent saved
+array audit checks572160encoder values across repeats, exact original actualcodes,
+zero fractional code residue and nine gradient identity. No gate relaxed.
+
+This establishes original-step offline differentiable encoder scale integration
+with immutable quantized weights/realbias, not trained-weight QAT or recognition.
+Next required checks are nonuniform non-power2 per-layer steps vs actual exporter,
+actual folded trainable bias/weight and head connections, then prospective paired
+training. No fresh data/threshold choice or candidate admission; v30 unchanged.
