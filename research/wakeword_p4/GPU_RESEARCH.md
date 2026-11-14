@@ -8141,3 +8141,21 @@ alltraining/domainparity. Nextimplement independentquantizer boundaryrounding,
 zero/alignment/idempotence, perchannelweight/foldedbias and STE checks before
 any formalQAT protocol; no candidateexport/retraining/dev/acceptance. v30frozen,
 goalactive, originalofficial958504 observedlive thisturn.
+
+### Explicit affine quantizer forward and declared STE primitive checks pass
+
+51df295d pre-registers standalone nearest-even affinefakequant with closed-
+representable-interval clippedSTE and stoppedrangegradient. Original92311 exit0:
+24groups/22546points pass exactindependentNumPyforward, idempotence, weighted
+analyticSTE andrangegradientNone. Uses actualequalized input/activation/output
+grids; tests latticelevels/halfsteps/adjacentfloat32/saturation, lastaxisperchannel
+symmetric[-127,127], signedint32widebias, zero/tinychannel finiteguard. No model
+invoke/export/optimizer/newdata. This customquantizer explicitly usesnearest-even,
+not an unverifiedclaimnativeTFfakequant/tflite fixedpoint all sharetiebehavior.
+STE verified against declaredanalyticcontract, not finite-differentiatingrounding.
+
+Currentprovenanceonlymathematicalprimitives, notcompleteQAT or integerkernel
+accuracy. Next integrateactualfolded graph with input/activation/state/weight/
+biasquantizer mapping and actualbatch loss/gradient/variablechecks before formal
+trainingprotocol. No hyperparameterchosen to rescueNyxonefailure, no newexport/
+training/dev/acceptance; v30frozen, goalactive.
