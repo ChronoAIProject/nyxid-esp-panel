@@ -1,0 +1,64 @@
+{
+  "schema": "consumed-practical-muse-causal-reference-v1",
+  "new_model_inference": false,
+  "new_audio": false,
+  "source_files": [
+    "research/wakeword_p4/results/official-muse-consumed-speech-hardware-summary-v1.json",
+    "research/wakeword_p4/results/mac-causal-final-int8-existing-priming-v1.json",
+    "research/wakeword_p4/results/mac-causal-training-label-scope-v1.json"
+  ],
+  "shared_scope": "Existing same108 complete Semaine WAVs,36 per requested literal,three speeds/conditions and bare/light/time/timer. Each model treats its own phrase as target; the reciprocal phrase is negative. Both use their already specified point, without a threshold sweep or refit here.",
+  "official_muse": {
+    "engine": "wn10_himuse",
+    "runtime": "Actual standalone ESP32-P4, official default DET_MODE_95",
+    "target_literal": "Hey Muse",
+    "target_hits": 36,
+    "target_clips": 36,
+    "bare_hits": 9,
+    "command_hits": 27,
+    "positive_by_carrier": {
+      "bare": 9,
+      "turn on the light": 9,
+      "what time is it": 9,
+      "set a timer": 9
+    },
+    "cross_clips": 4,
+    "cross_total": 72,
+    "light_generated_prefix_signed_ms": {
+      "observed": 9,
+      "minimum": 103.875,
+      "median": 115.5,
+      "maximum": 127.0625
+    }
+  },
+  "causal_nyx": {
+    "runtime": "Mac original INT8 reference interpreter, deployed81600zeroPCM priming",
+    "target_literal": "Hey Nicks",
+    "threshold": 0.91796875,
+    "target_hits": 32,
+    "target_clips": 36,
+    "bare_hits": 9,
+    "command_hits": 23,
+    "positive_by_carrier": {
+      "bare": 9,
+      "turn on the light": 5,
+      "what time is it": 9,
+      "set a timer": 9
+    },
+    "cross_clips": 6,
+    "cross_total": 72,
+    "light_generated_prefix_signed_ms": [
+      1334.3125,
+      1292.6875,
+      1262.6875,
+      1262.6875,
+      1232.6875
+    ]
+  },
+  "conclusions": [
+    "On this consumed synthetic set the mature reference recognizes36/36 including27/27 commands; the causal candidate recognizes32/36 including23/27 commands. Bare performance alone does not establish mature-model usability.",
+    "Light-command detections in the candidate are near full-request completion, much later in these source coordinates than official Muse. Fix the keyword training target before claiming timely connected-command behavior.",
+    "Official Muse itself has4 reciprocal near-word false clips here. Zero confusion on every consumed clip is not an empirical description of mature reference performance. Keep the candidate6 cross errors and complete-GPU9 common errors visible; neither is erased or turned into an acceptance pass."
+  ],
+  "limits": "One consumed synthetic voice, differing target phrases/models/default thresholds, runtimes and detector block clocks. Generated supports are not human phonetic times. No background-FAR reference, acoustic, independent acceptance, statistical equivalence or hardware causal-Nyx qualification. No requirement of exact scores, clocks or events between models."
+}

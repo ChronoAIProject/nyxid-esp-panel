@@ -39,3 +39,33 @@ the wake-prefix boundary separately from the whole-container end. An actual
 alignment or stored synthesis timing can supply it; word-count proportions or
 the complete-request end cannot. Do not require exact CPU/GPU, gradient or
 FP32/INT8 equality before testing the resulting usable model.
+
+## Practical reference from the existing mature detector
+
+The already completed actual P4 `wn10_himuse` test provides a more useful
+connected-command reference than a requirement to match internal numbers.
+On the same108 existing Semaine WAVs, at each model's already specified point:
+
+| Behavior | Official Muse on P4 | Causal Nyx, actual-primed Mac replay |
+| --- | ---: | ---: |
+| Own target detected after source starts |36/36|32/36|
+| Bare target |9/9|9/9|
+| Target followed by a command |27/27|23/27|
+| Light command |9/9|5/9|
+| Reciprocal-word/Willow cross clips |4/72|6/72|
+
+Muse's light detections occur about104–127ms after generated prefix support;
+the five Nyx light detections occur about1233–1334ms after their support.
+The source coordinates and different detector block clocks do not establish
+human acoustic timing, but the practical delayed-command weakness is visible.
+The comparison does not pool P4 and Mac execution into a hardware-equivalence
+claim. Source results and limitations are retained in
+`../results/mac-practical-muse-causal-reference-v1.json`.
+
+The mature reference itself has four near-word false clips on this synthetic
+set. Therefore “zero errors on every consumed near-word clip” must not be
+presented as what the measured reference achieves. The candidate still has
+more cross errors and substantially weaker light-command behavior here;
+this does not make it qualified or erase its full-GPU common/background errors.
+The intended comparison remains practical recognition, false wakes, timely
+commands and eventual independent/P4 verification, not identical internals.
