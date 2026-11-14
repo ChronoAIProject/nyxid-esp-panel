@@ -1,0 +1,72 @@
+{
+  "schema": "willow-consumed108-independent-restoration-v1",
+  "observed_at_utc": "2026-11-14T16:04:33.537950+00:00",
+  "checks": {
+    "transaction_restored": true,
+    "full_slot_original_restored_and_previous_binding_exact": true,
+    "full_slot_exact_size": true,
+    "partition_bytes_exact": true,
+    "otadata_bytes_exact": true,
+    "probe_readback_exact_original_firmware": true,
+    "saved_uart_independent_reduction_exact_transaction": true,
+    "http_app_original": true,
+    "http_firmware_original": true,
+    "ota_original_valid_idle": true,
+    "voice_inactive_notbusy": true,
+    "hiesp_enabled_listening": true,
+    "service_agent_identity_and_description_original": true,
+    "voice_modes_and_audio_config_original": true,
+    "voice_all_status_fields_original": true,
+    "nyx_status_original": true,
+    "display_settings_original": true,
+    "media_settings_original": true,
+    "update_settings_original": true,
+    "serial_unowned": true
+  },
+  "all_checks_passed": true,
+  "full_slot_bytes": 6881280,
+  "full_slot_sha256": "b0dde8723aed2d5a07ba4b856ebd4235ab64770e27703bba6502a97d27c8e751",
+  "partition_bytes": 4096,
+  "partition_sha256": "43116af1b0023dcc1ca8bd3e8ef477b36bf6d97f30f92717a19d8b80f94df5d9",
+  "otadata_bytes": 8192,
+  "otadata_sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3",
+  "probe_firmware_sha256": "7b688777785d53c9c3e739a56014f2c79db84c6fe3f0347aee93b4a7bf31357b",
+  "restored_app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+  "restored_firmware": "0.6.27",
+  "restored_ota_slot": "ota_0",
+  "voice_config": {
+    "input_mode": "automatic",
+    "preferred_input_mode": "automatic",
+    "microphone_muted": false,
+    "playback_gain": 4,
+    "volume": 95,
+    "greeting_enabled": false
+  },
+  "wake": {
+    "word": "Hi ESP",
+    "enabled": true,
+    "listening": true
+  },
+  "payloads": {
+    "official-willow-consumed108-hardware-uart-v1.log.gz": {
+      "bytes": 9998,
+      "sha256": "6624b490d90519f313528c29730d2307bf8342c0bab5cb2096cee53dc1a37e3e",
+      "raw_bytes": 269911,
+      "raw_sha256": "505c2b59ebf059266b22edd94fe956e202d314be580285d2d4bebc4b7126f71f"
+    },
+    "official-willow-consumed108-hardware-reduction-v1.json.gz": {
+      "bytes": 24951,
+      "sha256": "c2b31cbdbe73980c1f3a46f4f270a6eeb6f7cbdfd065bf8bd79b990857031cbc",
+      "raw_bytes": 778004,
+      "raw_sha256": "2f8dfcea6446dbd1d7fe7881464ffc304c7e03ce51023b34bf98aba15a33cefe"
+    }
+  },
+  "readiness": "app-only",
+  "voice_acceptance": false,
+  "limits": [
+    "The original local voice endpoint remains unavailable; the unchanged pre-existing voice connection error is not a USB failure or new voice acceptance.",
+    "No network configuration, credentials or endpoint was changed, and no backend was started.",
+    "Byte comparisons use retained private full-slot and metadata backups/readbacks; only hashes and configuration-equality booleans are public.",
+    "No microphone recording, speaker playback or dining-room production-board operation."
+  ]
+}

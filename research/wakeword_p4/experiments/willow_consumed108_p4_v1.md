@@ -66,5 +66,64 @@ positive/zero events and exact repeats; seven corruptions are rejected (wrong
 engine, getter, CRC, event sample clock, final acknowledgement, extra protocol,
 and fixture length). This is parser evidence, not 24 new model executions.
 Its result is `results/official-willow-consumed108-reducer-review-v1.json`.
-Native completion, saved-UART reduction and independent restoration are still
-required; a preparation or parser pass is not a recognition result.
+That review was preparation, not a recognition result. The native execution
+below subsequently completed using the protocol/source published in `ec31178`.
+
+## Completed native result
+
+The original hardware transaction completed with exit 0; it was not restarted
+when observation timed out. All 216 executions completed: 29,990 input detect
+calls and 13,608 zero-prime calls, with exact repeated event records. Worst
+standalone detect time was 2,947 us. Each repeat detected Hey Willow in 4/36
+clips, Hey Muse in 0/36 and Hey Nicks in 0/36. No threshold setter was called.
+
+The separate saved-UART reduction exactly equals the transaction's reduction.
+`compare_willow_p4_qemu_consumed108_v1.py` authenticates every original WAV/PCM
+hash, sample count and source/variant/carrier/synthesis metadata against the
+original QEMU execution at GPU commit `c43bdcb`. All 216 positive-event coordinate
+lists, including empty lists, match QEMU DEFAULT exactly. This subset therefore
+does not exhibit a P4/QEMU positive-event difference that explains Willow's weak
+recognition. It does not establish arbitrary-stream equivalence, identical
+cross-architecture model weights, human quality, or performance at other
+thresholds. The two repeats are not independent speakers. Weak Willow recall
+does not lower the goal, and Muse's earlier 36/36 target result still lacks
+background FAR and independent acceptance.
+
+The original full 6,881,280-byte app slot was restored and read back exactly,
+as were the original partition table and OTA metadata. A separate post-transaction
+check passed all 20 checks, including fresh HTTP firmware/app identity, valid
+idle ota_0, unchanged service/agent/audio/display/update settings, enabled and
+listening Hi ESP, and no serial owner. The original local voice endpoint remains
+unavailable; this is app-only restoration, not voice lifecycle acceptance.
+
+Public evidence in `results/`:
+
+- `official-willow-consumed108-hardware-uart-v1.log.gz`: complete original UART,
+  raw SHA256 `505c2b59ebf059266b22edd94fe956e202d314be580285d2d4bebc4b7126f71f`.
+- `official-willow-consumed108-hardware-reduction-v1.json.gz`: complete independent
+  reduction, raw SHA256 `2f8dfcea6446dbd1d7fe7881464ffc304c7e03ce51023b34bf98aba15a33cefe`.
+- `official-willow-consumed108-p4-qemu-comparison-v1.json`: all 216 per-case
+  comparisons and six literal/repeat aggregates.
+- `official-willow-consumed108-independent-restoration-v1.json`: sanitized
+  independent restoration checks and exact backup/readback hashes.
+- `official-willow-consumed108-publication-v1.json`: complete file/hash bindings.
+
+Reproduce from the retained UART without touching hardware or generating audio:
+
+```sh
+WAKE_REPLAY_DIR=$(mktemp -d)
+gzip -dc research/wakeword_p4/results/official-willow-consumed108-hardware-uart-v1.log.gz \
+  > "$WAKE_REPLAY_DIR/uart.log"
+python3 research/wakeword_p4/experiments/run_willow_consumed108_mac_v1.py reduce \
+  --protocol research/wakeword_p4/results/official-willow-consumed108-protocol-v1.json \
+  --capture "$WAKE_REPLAY_DIR/uart.log" --output "$WAKE_REPLAY_DIR/reduction.json"
+python3 research/wakeword_p4/experiments/compare_willow_p4_qemu_consumed108_v1.py \
+  --gpu-ref c43bdcb \
+  --protocol research/wakeword_p4/results/official-willow-consumed108-protocol-v1.json \
+  --capture "$WAKE_REPLAY_DIR/uart.log" --output "$WAKE_REPLAY_DIR/comparison.json"
+```
+
+Both reproduced outputs were checked byte-for-byte against the published files.
+No microphone/speaker operation, new source, background exposure, fresh
+development or acceptance access, network change or production-board operation
+was part of this experiment. No candidate is qualified or promoted.
