@@ -1,0 +1,1924 @@
+{
+  "files": {
+    "research/wakeword_p4/experiments/summarize_bounded_training_signal_v1.py": "a234e53378438af40962df3cc908d3df311cac4941e892ea6c49594a585ff9b4",
+    "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-formal-result-v1.json": "228b866647eb0a0267faa8c438a6c7b525f4546efa60b6050dca170999ed55a5",
+    "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-formal-independent-audit-v1.json": "a348a3b31f78208e33333be3e811a0656c12ce4ef7ae072705edebf79f2c87e6",
+    ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_willow-raw_logit_control-0/actual-batch-schedule.jsonl": "d33bf4badd71baab6cb6fe2ffd59554818be7bb012335368a38ca6304dbc7bd7",
+    ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_willow-bounded_logit_consistency-0/actual-batch-schedule.jsonl": "60c6b9d8d50a0715a4c11b15817e9c3cebab63657800f3935dcfd1b21aff8f01",
+    ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_nyx-raw_logit_control-0/actual-batch-schedule.jsonl": "21ea99994a6023342d4201062703386271460e8e80946525ed061397fd774c9a",
+    ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_nyx-bounded_logit_consistency-0/actual-batch-schedule.jsonl": "3e4c809c37d2644fed19c4bc27f31393658f1d16cca326de25c76bfece5cbe84"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "raw_logit_control",
+      "all10000": {
+        "steps": 10000,
+        "supervised_loss": {
+          "zero_steps": 0,
+          "mean": 0.016075210084138137,
+          "median": 0.0020739941392093897,
+          "maximum": 6.730260848999023
+        },
+        "raw_consistency_loss": {
+          "zero_steps": 0,
+          "mean": 0.05535993804186583,
+          "median": 0.03344554267823696,
+          "maximum": 0.7962543964385986
+        },
+        "bounded_consistency_loss": {
+          "zero_steps": 415,
+          "mean": 0.000631725492219419,
+          "median": 0.0003728079318534583,
+          "maximum": 0.01156636606901884
+        },
+        "supervised_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 57.78883685744008,
+          "median": 8.968806743621826,
+          "maximum": 8854.00390625
+        },
+        "raw_consistency_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 32.53297027692795,
+          "median": 24.93617820739746,
+          "maximum": 503.7101135253906
+        },
+        "bounded_consistency_gradient_l2": {
+          "zero_steps": 415,
+          "mean": 2.7549152478680536,
+          "median": 1.6763426065444946,
+          "maximum": 124.11553192138672
+        },
+        "bounded_positive_loss_zero_gradient_steps": 0,
+        "bounded_zero_loss_nonzero_gradient_steps": 0
+      },
+      "fixed1000step_intervals": [
+        {
+          "first_step": 1,
+          "last_step": 1000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.028601495036606975,
+            "median": 0.00015708104183431715,
+            "maximum": 2.3159897327423096
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.16331744113564492,
+            "median": 0.1452139988541603,
+            "maximum": 0.7962543964385986
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 315,
+            "mean": 0.000502362334073224,
+            "median": 8.686464934726246e-05,
+            "maximum": 0.009384073317050934
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 127.31744451592057,
+            "median": 2.9079699516296387,
+            "maximum": 7422.83251953125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 78.3534540977478,
+            "median": 72.40984725952148,
+            "maximum": 503.7101135253906
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 315,
+            "mean": 3.867820062849671,
+            "median": 1.0133517384529114,
+            "maximum": 124.11553192138672
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 1001,
+          "last_step": 2000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.013346078439777557,
+            "median": 0.0018557461444288492,
+            "maximum": 1.5678445100784302
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.13210602378472686,
+            "median": 0.13276982307434082,
+            "maximum": 0.2812057137489319
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 14,
+            "mean": 0.0012172318751703984,
+            "median": 0.0007443877984769642,
+            "maximum": 0.01156636606901884
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 70.87587798464857,
+            "median": 10.224264144897461,
+            "maximum": 5037.849609375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 52.24814543914795,
+            "median": 51.208858489990234,
+            "maximum": 108.01546478271484
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 14,
+            "mean": 4.4311023918595165,
+            "median": 2.6508407592773438,
+            "maximum": 73.70038604736328
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 2001,
+          "last_step": 3000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.013017513340693768,
+            "median": 0.001099162851460278,
+            "maximum": 1.2953041791915894
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.05231072982959449,
+            "median": 0.05040402337908745,
+            "maximum": 0.10429790616035461
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 70,
+            "mean": 0.00038233833373305657,
+            "median": 0.00018543288024375215,
+            "maximum": 0.007462085224688053
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 60.56909258914739,
+            "median": 9.245544910430908,
+            "maximum": 5223.931640625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 35.51812574195862,
+            "median": 34.86517333984375,
+            "maximum": 69.18363189697266
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 70,
+            "mean": 2.590816207117983,
+            "median": 1.2813056111335754,
+            "maximum": 41.4035530090332
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 3001,
+          "last_step": 4000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.024235215826978674,
+            "median": 0.0018456574762240052,
+            "maximum": 6.730260848999023
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.03605790560413152,
+            "median": 0.033866092562675476,
+            "maximum": 0.08349131047725677
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 4,
+            "mean": 0.000432104992821139,
+            "median": 0.00023656562552787364,
+            "maximum": 0.004547896794974804
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 65.06331483975053,
+            "median": 9.800689697265625,
+            "maximum": 7196.0234375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 29.470561076164245,
+            "median": 27.932250022888184,
+            "maximum": 77.61237335205078
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 4,
+            "mean": 2.6747349362043895,
+            "median": 1.5206268429756165,
+            "maximum": 50.64827346801758
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 4001,
+          "last_step": 5000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.024384189917705953,
+            "median": 0.0032404635567218065,
+            "maximum": 4.495138645172119
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.03292708416376263,
+            "median": 0.02960935514420271,
+            "maximum": 0.13977684080600739
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 4,
+            "mean": 0.0008478552038081025,
+            "median": 0.00043834660027641803,
+            "maximum": 0.006619440857321024
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 70.46483553117514,
+            "median": 13.044346809387207,
+            "maximum": 8854.00390625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 26.442176894187927,
+            "median": 24.028054237365723,
+            "maximum": 185.21485900878906
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 4,
+            "mean": 2.82249561685964,
+            "median": 2.228009581565857,
+            "maximum": 28.55096435546875
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 5001,
+          "last_step": 6000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.01692479793727398,
+            "median": 0.003286072053015232,
+            "maximum": 2.3115010261535645
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.03746452058199793,
+            "median": 0.03485040180385113,
+            "maximum": 0.11337225139141083
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0008064012763375104,
+            "median": 0.0006057010323274881,
+            "maximum": 0.007954362779855728
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 54.41352780368924,
+            "median": 13.58109998703003,
+            "maximum": 6290.583984375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 26.860253596305846,
+            "median": 23.82188892364502,
+            "maximum": 205.60711669921875
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 2.5042446363717317,
+            "median": 1.8952215909957886,
+            "maximum": 25.414459228515625
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 6001,
+          "last_step": 7000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.00805246190073376,
+            "median": 0.0014202751917764544,
+            "maximum": 0.41889461874961853
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.021678441618569196,
+            "median": 0.021062842570245266,
+            "maximum": 0.0503205843269825
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 6,
+            "mean": 0.00031754384865578653,
+            "median": 0.00020173411758150905,
+            "maximum": 0.004172461573034525
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 32.29232648226619,
+            "median": 5.8980889320373535,
+            "maximum": 2572.805908203125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 19.4212313041687,
+            "median": 18.939733505249023,
+            "maximum": 49.826656341552734
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 6,
+            "mean": 1.768810772470606,
+            "median": 1.137572467327118,
+            "maximum": 11.3306245803833
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 7001,
+          "last_step": 8000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.007734821272082627,
+            "median": 0.001397698826622218,
+            "maximum": 1.4511383771896362
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.023028388801962136,
+            "median": 0.021992892026901245,
+            "maximum": 0.05923415720462799
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 1,
+            "mean": 0.00040793420704731174,
+            "median": 0.0002813316823448986,
+            "maximum": 0.006928915623575449
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 24.684437324374915,
+            "median": 4.81804633140564,
+            "maximum": 3076.927490234375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 17.21735358285904,
+            "median": 16.423124313354492,
+            "maximum": 44.4222297668457
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 1,
+            "mean": 1.839434865855612,
+            "median": 1.1592397093772888,
+            "maximum": 28.937707901000977
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 8001,
+          "last_step": 9000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0055934272568119925,
+            "median": 0.002198627218604088,
+            "maximum": 0.10375549644231796
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0290398812238127,
+            "median": 0.029382930137217045,
+            "maximum": 0.061281658709049225
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 1,
+            "mean": 0.0006647388145660064,
+            "median": 0.0005495075602084398,
+            "maximum": 0.003308630781248212
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 19.006215104311703,
+            "median": 7.915706634521484,
+            "maximum": 507.7790222167969
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 19.24670137500763,
+            "median": 18.699966430664062,
+            "maximum": 43.14237976074219
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 1,
+            "mean": 2.528457239116542,
+            "median": 1.947709083557129,
+            "maximum": 24.423484802246094
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 9001,
+          "last_step": 10000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.018862099912716077,
+            "median": 0.004413251299411058,
+            "maximum": 1.2923647165298462
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.02566896367445588,
+            "median": 0.024271241389214993,
+            "maximum": 0.09649351984262466
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0007387440359816537,
+            "median": 0.0006240709917619824,
+            "maximum": 0.0039025789592415094
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 53.201296399116515,
+            "median": 16.575267791748047,
+            "maximum": 3411.683837890625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 20.55169966173172,
+            "median": 18.497394561767578,
+            "maximum": 137.51983642578125
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 2.521235749974847,
+            "median": 2.0163835287094116,
+            "maximum": 18.883878707885742
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        }
+      ]
+    },
+    {
+      "target": "hey_willow",
+      "condition": "bounded_logit_consistency",
+      "all10000": {
+        "steps": 10000,
+        "supervised_loss": {
+          "zero_steps": 0,
+          "mean": 0.006345881066330668,
+          "median": 5.914181144817121e-07,
+          "maximum": 4.378990173339844
+        },
+        "raw_consistency_loss": {
+          "zero_steps": 0,
+          "mean": 0.9453294369131326,
+          "median": 0.7777298092842102,
+          "maximum": 4.681078910827637
+        },
+        "bounded_consistency_loss": {
+          "zero_steps": 8556,
+          "mean": 0.00013597930521208975,
+          "median": 0.0,
+          "maximum": 0.019945288076996803
+        },
+        "supervised_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 24.460687377974445,
+          "median": 0.002020910265855491,
+          "maximum": 11058.5576171875
+        },
+        "raw_consistency_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 487.21538942565917,
+          "median": 427.4377899169922,
+          "maximum": 1931.375244140625
+        },
+        "bounded_consistency_gradient_l2": {
+          "zero_steps": 8557,
+          "mean": 0.9164059927110225,
+          "median": 0.0,
+          "maximum": 108.2765884399414
+        },
+        "bounded_positive_loss_zero_gradient_steps": 1,
+        "bounded_zero_loss_nonzero_gradient_steps": 0
+      },
+      "fixed1000step_intervals": [
+        {
+          "first_step": 1,
+          "last_step": 1000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.008097637439920358,
+            "median": 5.678186880686553e-07,
+            "maximum": 2.821991205215454
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.6498788733482361,
+            "median": 0.5649514198303223,
+            "maximum": 2.509765625
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 875,
+            "mean": 0.00012266301658738144,
+            "median": 0.0,
+            "maximum": 0.013226855546236038
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 49.81236019980069,
+            "median": 0.0025082711363211274,
+            "maximum": 10862.138671875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 285.0290794830322,
+            "median": 234.14012145996094,
+            "maximum": 1177.2357177734375
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 875,
+            "mean": 1.0628731050938367,
+            "median": 0.0,
+            "maximum": 108.2765884399414
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 1001,
+          "last_step": 2000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0017229621742427135,
+            "median": 6.477382044067781e-07,
+            "maximum": 0.39808738231658936
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.5096402594447136,
+            "median": 0.4795848876237869,
+            "maximum": 1.330338478088379
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 879,
+            "mean": 0.00010453037598762727,
+            "median": 0.0,
+            "maximum": 0.012677018530666828
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 11.245925705809437,
+            "median": 0.0025228775339201093,
+            "maximum": 3402.27001953125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 221.4025810470581,
+            "median": 202.1772003173828,
+            "maximum": 630.6859741210938
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 879,
+            "mean": 0.6964594890540465,
+            "median": 0.0,
+            "maximum": 68.55549621582031
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 2001,
+          "last_step": 3000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.010172537249870568,
+            "median": 8.660298362883623e-07,
+            "maximum": 4.164274215698242
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.5785488809943199,
+            "median": 0.5287612676620483,
+            "maximum": 1.7643322944641113
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 804,
+            "mean": 0.00020602170241973284,
+            "median": 0.0,
+            "maximum": 0.008931136690080166
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 32.07957826261309,
+            "median": 0.0033159550512209535,
+            "maximum": 7975.94873046875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 255.08747562408448,
+            "median": 219.9157257080078,
+            "maximum": 1098.51513671875
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 804,
+            "mean": 1.4291185929793864,
+            "median": 0.0,
+            "maximum": 71.32516479492188
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 3001,
+          "last_step": 4000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.014359608546990171,
+            "median": 4.7406010139638965e-07,
+            "maximum": 4.378990173339844
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.6967293671071529,
+            "median": 0.606977641582489,
+            "maximum": 3.1987767219543457
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 820,
+            "mean": 0.00022040892208775276,
+            "median": 0.0,
+            "maximum": 0.013762684538960457
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 54.50914509349305,
+            "median": 0.001703644054941833,
+            "maximum": 11058.5576171875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 327.0457068481445,
+            "median": 282.1200866699219,
+            "maximum": 1358.76123046875
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 820,
+            "mean": 1.4760662399716675,
+            "median": 0.0,
+            "maximum": 95.26627349853516
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 4001,
+          "last_step": 5000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0013784085770902554,
+            "median": 1.4039514439900813e-07,
+            "maximum": 0.22999697923660278
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.8659251574575901,
+            "median": 0.75776806473732,
+            "maximum": 3.1131346225738525
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 872,
+            "mean": 7.000653334315743e-05,
+            "median": 0.0,
+            "maximum": 0.008058689534664154
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 7.623906947713664,
+            "median": 0.0004657841782318428,
+            "maximum": 2169.5224609375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 471.8719938201904,
+            "median": 428.27239990234375,
+            "maximum": 1466.21484375
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 872,
+            "mean": 0.49226874570548534,
+            "median": 0.0,
+            "maximum": 41.6658935546875
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 5001,
+          "last_step": 6000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.012359531760878733,
+            "median": 1.392321777871075e-07,
+            "maximum": 2.8088796138763428
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.8453336062133312,
+            "median": 0.7286832332611084,
+            "maximum": 3.3503365516662598
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 829,
+            "mean": 0.0001404312616502561,
+            "median": 0.0,
+            "maximum": 0.019945288076996803
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 30.69690891448434,
+            "median": 0.0005060856929048896,
+            "maximum": 10184.0498046875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 486.61691911315916,
+            "median": 448.4082794189453,
+            "maximum": 1505.803955078125
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 829,
+            "mean": 0.8647967482580716,
+            "median": 0.0,
+            "maximum": 57.27703857421875
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 6001,
+          "last_step": 7000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.008552610147446479,
+            "median": 6.05752973115159e-07,
+            "maximum": 1.9497601985931396
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 1.0435747601389884,
+            "median": 0.9202869236469269,
+            "maximum": 2.8382678031921387
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 791,
+            "mean": 0.00024182572333433507,
+            "median": 0.0,
+            "maximum": 0.01171875
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 28.655312909813116,
+            "median": 0.0020565480226650834,
+            "maximum": 6527.771484375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 576.1163035888671,
+            "median": 555.4942626953125,
+            "maximum": 1278.947998046875
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 792,
+            "mean": 1.3676999712008984,
+            "median": 0.0,
+            "maximum": 49.445682525634766
+          },
+          "bounded_positive_loss_zero_gradient_steps": 1,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 7001,
+          "last_step": 8000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.004063898876811895,
+            "median": 1.0428025802866614e-06,
+            "maximum": 0.485362708568573
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 1.2430151530504228,
+            "median": 1.0847560167312622,
+            "maximum": 3.5291121006011963
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 842,
+            "mean": 0.00014563070658986298,
+            "median": 0.0,
+            "maximum": 0.009971322491765022
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 16.105004612389944,
+            "median": 0.003684773575514555,
+            "maximum": 4840.8857421875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 593.2492261810303,
+            "median": 559.091552734375,
+            "maximum": 1476.70068359375
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 842,
+            "mean": 0.9401119139639195,
+            "median": 0.0,
+            "maximum": 60.63734436035156
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 8001,
+          "last_step": 9000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0005147118636240435,
+            "median": 1.1462693123576173e-06,
+            "maximum": 0.08540422469377518
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 1.3264661275148393,
+            "median": 1.2098639011383057,
+            "maximum": 4.129150867462158
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 921,
+            "mean": 3.4621819338326535e-05,
+            "median": 0.0,
+            "maximum": 0.0045029232278466225
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 2.935223474001541,
+            "median": 0.0033279380295425653,
+            "maximum": 773.7320556640625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 671.744999786377,
+            "median": 639.6544189453125,
+            "maximum": 1931.375244140625
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 921,
+            "mean": 0.2710463819205761,
+            "median": 0.0,
+            "maximum": 50.19728088378906
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 9001,
+          "last_step": 10000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0022369040264314643,
+            "median": 5.36415086571651e-07,
+            "maximum": 0.7797955870628357
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 1.6941821838617326,
+            "median": 1.5660805106163025,
+            "maximum": 4.681078910827637
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 923,
+            "mean": 7.365299078246502e-05,
+            "median": 0.0,
+            "maximum": 0.008593750186264515
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 10.943507659625567,
+            "median": 0.0016071625868789852,
+            "maximum": 4578.83740234375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 983.9896087646484,
+            "median": 965.5842895507812,
+            "maximum": 1898.011474609375
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 923,
+            "mean": 0.5636187389623374,
+            "median": 0.0,
+            "maximum": 72.61681365966797
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "raw_logit_control",
+      "all10000": {
+        "steps": 10000,
+        "supervised_loss": {
+          "zero_steps": 0,
+          "mean": 0.028276115921191013,
+          "median": 0.0076143378391861916,
+          "maximum": 4.171463966369629
+        },
+        "raw_consistency_loss": {
+          "zero_steps": 0,
+          "mean": 0.0314750289757736,
+          "median": 0.027161727659404278,
+          "maximum": 0.5371187329292297
+        },
+        "bounded_consistency_loss": {
+          "zero_steps": 9,
+          "mean": 0.00038858508258877365,
+          "median": 0.000295463454676792,
+          "maximum": 0.0052297948859632015
+        },
+        "supervised_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 100.9245744807899,
+          "median": 26.61885929107666,
+          "maximum": 7977.375
+        },
+        "raw_consistency_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 31.23805658302307,
+          "median": 28.39592456817627,
+          "maximum": 334.6946716308594
+        },
+        "bounded_consistency_gradient_l2": {
+          "zero_steps": 9,
+          "mean": 1.892138520670496,
+          "median": 1.3419615030288696,
+          "maximum": 70.07191467285156
+        },
+        "bounded_positive_loss_zero_gradient_steps": 0,
+        "bounded_zero_loss_nonzero_gradient_steps": 0
+      },
+      "fixed1000step_intervals": [
+        {
+          "first_step": 1,
+          "last_step": 1000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.03175578840347953,
+            "median": 0.008166781160980463,
+            "maximum": 2.272233247756958
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.06609514023549855,
+            "median": 0.05607968382537365,
+            "maximum": 0.5371187329292297
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 3,
+            "mean": 0.00036982029956963205,
+            "median": 0.0002437467555864714,
+            "maximum": 0.0039872825145721436
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 143.84268905047327,
+            "median": 33.464155197143555,
+            "maximum": 7977.375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 56.73322445106506,
+            "median": 52.645355224609375,
+            "maximum": 334.6946716308594
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 3,
+            "mean": 2.2185824666284026,
+            "median": 1.336367130279541,
+            "maximum": 32.53804016113281
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 1001,
+          "last_step": 2000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.03407553581992397,
+            "median": 0.00843501091003418,
+            "maximum": 1.565444827079773
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.03938582355901599,
+            "median": 0.03764735534787178,
+            "maximum": 0.09016597270965576
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 1,
+            "mean": 0.0004755018319542614,
+            "median": 0.00037640018854290247,
+            "maximum": 0.004933392163366079
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 136.05704670448603,
+            "median": 33.2010440826416,
+            "maximum": 7213.8369140625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 38.41832151889801,
+            "median": 37.82138442993164,
+            "maximum": 76.48201751708984
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 1,
+            "mean": 2.3304701091609896,
+            "median": 1.6343079805374146,
+            "maximum": 30.417098999023438
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 2001,
+          "last_step": 3000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.02581585248407646,
+            "median": 0.006726010236889124,
+            "maximum": 1.8437395095825195
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.03130429737083614,
+            "median": 0.03058095369488001,
+            "maximum": 0.06606315821409225
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 2,
+            "mean": 0.0003155564278223437,
+            "median": 0.00023057292128214613,
+            "maximum": 0.004711947403848171
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 100.53631373098493,
+            "median": 26.99156379699707,
+            "maximum": 3529.95556640625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 32.50364937210083,
+            "median": 31.92039394378662,
+            "maximum": 61.0728759765625
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 2,
+            "mean": 1.7891058176606893,
+            "median": 1.1966033577919006,
+            "maximum": 50.47039794921875
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 3001,
+          "last_step": 4000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.02724919250322273,
+            "median": 0.006698415381833911,
+            "maximum": 1.4863665103912354
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.030356967740692197,
+            "median": 0.029173503629863262,
+            "maximum": 0.08104356378316879
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 2,
+            "mean": 0.00030515597444775723,
+            "median": 0.0002305928064743057,
+            "maximum": 0.001980989472940564
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 111.5002141790539,
+            "median": 28.81913471221924,
+            "maximum": 3577.079833984375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 32.62460905647278,
+            "median": 31.535608291625977,
+            "maximum": 110.6594009399414
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 2,
+            "mean": 1.7116528100669384,
+            "median": 1.2515789270401,
+            "maximum": 14.643046379089355
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 4001,
+          "last_step": 5000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.016929230015295615,
+            "median": 0.005228076595813036,
+            "maximum": 0.8906147480010986
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.02489505228213966,
+            "median": 0.023934773169457912,
+            "maximum": 0.057351864874362946
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.00029034341528966933,
+            "median": 0.00022871473629493266,
+            "maximum": 0.0024900375865399837
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 58.04950652107596,
+            "median": 18.489774703979492,
+            "maximum": 1737.3843994140625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 26.039288952827455,
+            "median": 25.29524803161621,
+            "maximum": 53.254417419433594
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 1.518007290095091,
+            "median": 1.1193981170654297,
+            "maximum": 26.982297897338867
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 5001,
+          "last_step": 6000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.035485628628055564,
+            "median": 0.009147497825324535,
+            "maximum": 3.352175235748291
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.029177105109207332,
+            "median": 0.028008191846311092,
+            "maximum": 0.07337815314531326
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 1,
+            "mean": 0.0003878669933239394,
+            "median": 0.0002802143862936646,
+            "maximum": 0.004996908362954855
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 121.24094197691977,
+            "median": 34.45095634460449,
+            "maximum": 4011.198486328125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 30.906342544555663,
+            "median": 29.908531188964844,
+            "maximum": 68.68092346191406
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 1,
+            "mean": 2.028405439877883,
+            "median": 1.3988969326019287,
+            "maximum": 70.07191467285156
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 6001,
+          "last_step": 7000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.04120593875058694,
+            "median": 0.013236500322818756,
+            "maximum": 2.549957275390625
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0301008344842121,
+            "median": 0.028976990841329098,
+            "maximum": 0.08740871399641037
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0004539877285587863,
+            "median": 0.0003769227769225836,
+            "maximum": 0.0039260173216462135
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 130.2952788130641,
+            "median": 37.4073371887207,
+            "maximum": 7029.34716796875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 32.48175423717499,
+            "median": 30.854909896850586,
+            "maximum": 109.55469512939453
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 1.991780834570527,
+            "median": 1.5033198595046997,
+            "maximum": 32.010902404785156
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 7001,
+          "last_step": 8000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0251315795557457,
+            "median": 0.008162154350429773,
+            "maximum": 2.523967742919922
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.023782377999275923,
+            "median": 0.022587409242987633,
+            "maximum": 0.04739082604646683
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0005013232677529232,
+            "median": 0.0004381752951303497,
+            "maximum": 0.002067724009975791
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 68.14409451436997,
+            "median": 23.273621559143066,
+            "maximum": 2814.490234375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 22.21244250011444,
+            "median": 21.042407035827637,
+            "maximum": 57.900413513183594
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 1.7649655657708645,
+            "median": 1.4381950497627258,
+            "maximum": 12.935286521911621
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 8001,
+          "last_step": 9000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.02807455225667218,
+            "median": 0.007985936012119055,
+            "maximum": 4.171463966369629
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.0220055873952806,
+            "median": 0.021139252930879593,
+            "maximum": 0.06144482642412186
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.00043408971804137763,
+            "median": 0.00032064507831819355,
+            "maximum": 0.0028082262724637985
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 79.8711021823585,
+            "median": 22.239299774169922,
+            "maximum": 4426.193359375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 20.962937030792236,
+            "median": 20.2067813873291,
+            "maximum": 51.35245895385742
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 1.8796878407746553,
+            "median": 1.3471293449401855,
+            "maximum": 23.9699649810791
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 9001,
+          "last_step": 10000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.01703786079485144,
+            "median": 0.005237774690613151,
+            "maximum": 1.054507851600647
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.01764710358157754,
+            "median": 0.01707704458385706,
+            "maximum": 0.038797296583652496
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.00035220516912704626,
+            "median": 0.0002594280522316694,
+            "maximum": 0.0052297948859632015
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 59.708557135112585,
+            "median": 18.00711727142334,
+            "maximum": 3339.494140625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 19.49799616622925,
+            "median": 18.781015396118164,
+            "maximum": 47.74238204956055
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 1.6887270320989192,
+            "median": 1.1513645648956299,
+            "maximum": 26.183074951171875
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "bounded_logit_consistency",
+      "all10000": {
+        "steps": 10000,
+        "supervised_loss": {
+          "zero_steps": 0,
+          "mean": 0.01983115048129216,
+          "median": 0.0008316173043567687,
+          "maximum": 3.4976446628570557
+        },
+        "raw_consistency_loss": {
+          "zero_steps": 0,
+          "mean": 0.42596745659559965,
+          "median": 0.3857179880142212,
+          "maximum": 2.313769817352295
+        },
+        "bounded_consistency_loss": {
+          "zero_steps": 823,
+          "mean": 0.00024690352135398996,
+          "median": 7.076658948790282e-05,
+          "maximum": 0.014799713157117367
+        },
+        "supervised_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 67.14812768762782,
+          "median": 4.304920434951782,
+          "maximum": 19249.98046875
+        },
+        "raw_consistency_gradient_l2": {
+          "zero_steps": 0,
+          "mean": 280.3244798927307,
+          "median": 265.4796600341797,
+          "maximum": 950.7637939453125
+        },
+        "bounded_consistency_gradient_l2": {
+          "zero_steps": 823,
+          "mean": 1.6408373008927999,
+          "median": 0.5387731492519379,
+          "maximum": 79.85803985595703
+        },
+        "bounded_positive_loss_zero_gradient_steps": 0,
+        "bounded_zero_loss_nonzero_gradient_steps": 0
+      },
+      "fixed1000step_intervals": [
+        {
+          "first_step": 1,
+          "last_step": 1000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.014775747655694432,
+            "median": 0.00022973865270614624,
+            "maximum": 2.010657787322998
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.34101578275859357,
+            "median": 0.2812502384185791,
+            "maximum": 2.313769817352295
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 134,
+            "mean": 8.979594285859039e-05,
+            "median": 2.098358436342096e-05,
+            "maximum": 0.0035631803330034018
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 59.11561084922962,
+            "median": 1.4668952822685242,
+            "maximum": 8261.27734375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 242.97549991607667,
+            "median": 222.55369567871094,
+            "maximum": 705.5856323242188
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 134,
+            "mean": 0.8566551683448488,
+            "median": 0.21184304356575012,
+            "maximum": 69.27911376953125
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 1001,
+          "last_step": 2000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.01728112436442757,
+            "median": 0.0002978303673444316,
+            "maximum": 1.9732242822647095
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.30873668840527535,
+            "median": 0.2581358850002289,
+            "maximum": 1.645124912261963
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 168,
+            "mean": 0.00012005212428930745,
+            "median": 1.99348487512907e-05,
+            "maximum": 0.005528667476028204
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 59.1333409143039,
+            "median": 1.8163068890571594,
+            "maximum": 7363.89892578125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 241.19093496704102,
+            "median": 224.1266326904297,
+            "maximum": 669.4736938476562
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 168,
+            "mean": 0.8907416668697843,
+            "median": 0.2081577107310295,
+            "maximum": 27.82242774963379
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 2001,
+          "last_step": 3000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.01876736052481556,
+            "median": 0.0010772039531730115,
+            "maximum": 2.2502553462982178
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.3426483867764473,
+            "median": 0.33102114498615265,
+            "maximum": 1.2746137380599976
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 57,
+            "mean": 0.0002938350925855131,
+            "median": 9.695926928543486e-05,
+            "maximum": 0.0059743886813521385
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 69.49396276260214,
+            "median": 6.652734994888306,
+            "maximum": 7045.197265625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 250.44891452026368,
+            "median": 240.92057037353516,
+            "maximum": 609.1024169921875
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 57,
+            "mean": 1.9122029124855762,
+            "median": 0.7563207149505615,
+            "maximum": 53.82294464111328
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 3001,
+          "last_step": 4000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.014136517614772401,
+            "median": 0.0002498021494830027,
+            "maximum": 1.6436364650726318
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.44228351283073425,
+            "median": 0.4145813137292862,
+            "maximum": 1.3264045715332031
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 131,
+            "mean": 0.0001983164933079274,
+            "median": 4.262905349605717e-05,
+            "maximum": 0.014799713157117367
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 56.86313638650346,
+            "median": 1.5573627352714539,
+            "maximum": 10463.970703125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 262.86763960266114,
+            "median": 251.78298950195312,
+            "maximum": 704.767822265625
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 131,
+            "mean": 1.5113148281158064,
+            "median": 0.4237402081489563,
+            "maximum": 64.36650085449219
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 4001,
+          "last_step": 5000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.019591413699341954,
+            "median": 0.0005545168824028224,
+            "maximum": 2.3563592433929443
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.43796554671227933,
+            "median": 0.4112442433834076,
+            "maximum": 1.4652354717254639
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 109,
+            "mean": 0.00020920828812263914,
+            "median": 5.411422716861125e-05,
+            "maximum": 0.008935848250985146
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 64.56052366595064,
+            "median": 3.455665707588196,
+            "maximum": 4837.4521484375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 261.3731673736572,
+            "median": 251.65164947509766,
+            "maximum": 571.1994018554688
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 109,
+            "mean": 1.4984445645242812,
+            "median": 0.42978233098983765,
+            "maximum": 69.94386291503906
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 5001,
+          "last_step": 6000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.017819668506374228,
+            "median": 0.0008674535783939064,
+            "maximum": 2.215768814086914
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.36259017696976664,
+            "median": 0.34888236224651337,
+            "maximum": 1.129134178161621
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 77,
+            "mean": 0.0001846199644756565,
+            "median": 6.824727461207658e-05,
+            "maximum": 0.009902708232402802
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 54.47898222876992,
+            "median": 4.422080039978027,
+            "maximum": 5177.25146484375
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 251.96749992370604,
+            "median": 245.9192352294922,
+            "maximum": 488.1993713378906
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 77,
+            "mean": 1.2354807275036583,
+            "median": 0.4945259541273117,
+            "maximum": 27.480403900146484
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 6001,
+          "last_step": 7000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.017090193969357643,
+            "median": 0.001179645478259772,
+            "maximum": 2.2892823219299316
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.36223353622853754,
+            "median": 0.34322743117809296,
+            "maximum": 1.3256618976593018
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 41,
+            "mean": 0.00022164538193534484,
+            "median": 7.46304212952964e-05,
+            "maximum": 0.0067521738819777966
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 47.24221305297501,
+            "median": 4.904413938522339,
+            "maximum": 7776.4326171875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 275.38620123291014,
+            "median": 269.8068389892578,
+            "maximum": 662.8368530273438
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 41,
+            "mean": 1.3717728921087982,
+            "median": 0.49398426711559296,
+            "maximum": 53.21580505371094
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 7001,
+          "last_step": 8000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.03814178812925274,
+            "median": 0.0039848878514021635,
+            "maximum": 3.4976446628570557
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.4252649880349636,
+            "median": 0.4080111235380173,
+            "maximum": 1.1676363945007324
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 12,
+            "mean": 0.0004346611628546455,
+            "median": 0.00017445313278585672,
+            "maximum": 0.01412799023091793
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 119.24625492352061,
+            "median": 14.820464134216309,
+            "maximum": 15166.1572265625
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 289.2670199432373,
+            "median": 284.4886779785156,
+            "maximum": 557.0220336914062
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 12,
+            "mean": 2.7161300081098454,
+            "median": 0.982199490070343,
+            "maximum": 79.85803985595703
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 8001,
+          "last_step": 9000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.02620642540690278,
+            "median": 0.0019213655032217503,
+            "maximum": 2.00571608543396
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.6068200916945934,
+            "median": 0.5518768727779388,
+            "maximum": 2.093954086303711
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 27,
+            "mean": 0.0004287085879614665,
+            "median": 0.00016416607104474679,
+            "maximum": 0.013739150017499924
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 93.26301906478591,
+            "median": 7.756059408187866,
+            "maximum": 19249.98046875
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 358.495108795166,
+            "median": 351.1304626464844,
+            "maximum": 950.7637939453125
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 27,
+            "mean": 2.5783105973957574,
+            "median": 1.0288743376731873,
+            "maximum": 64.29132843017578
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        },
+        {
+          "first_step": 9001,
+          "last_step": 10000,
+          "steps": 1000,
+          "supervised_loss": {
+            "zero_steps": 0,
+            "mean": 0.0145012649419823,
+            "median": 0.0008285796502605081,
+            "maximum": 1.8994996547698975
+          },
+          "raw_consistency_loss": {
+            "zero_steps": 0,
+            "mean": 0.6301158555448055,
+            "median": 0.5885144472122192,
+            "maximum": 1.7835078239440918
+          },
+          "bounded_consistency_loss": {
+            "zero_steps": 67,
+            "mean": 0.00028819217514880913,
+            "median": 0.00012538403098005801,
+            "maximum": 0.01122712716460228
+          },
+          "supervised_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 48.084233027637005,
+            "median": 4.321059942245483,
+            "maximum": 5622.6455078125
+          },
+          "raw_consistency_gradient_l2": {
+            "zero_steps": 0,
+            "mean": 369.2728126525879,
+            "median": 360.15882873535156,
+            "maximum": 737.3617553710938
+          },
+          "bounded_consistency_gradient_l2": {
+            "zero_steps": 67,
+            "mean": 1.8373196434696437,
+            "median": 0.8729721307754517,
+            "maximum": 69.65442657470703
+          },
+          "bounded_positive_loss_zero_gradient_steps": 0,
+          "bounded_zero_loss_nonzero_gradient_steps": 0
+        }
+      ]
+    }
+  ],
+  "model_invocations": 0,
+  "optimizer_updates": 0,
+  "limits": "All40000 original logged pre-update batches, both C losses/backward norms were explicitly observed. Ten fixed1000step intervals and whole-run statistics are descriptive only; not fixed-probe final-state measurements, model repeat proof, parameter selection, recognition/FAR or causal gradient efficacy. Preserve all zero/sparse signals and original numerical rejection; do not adapt lambda/sampler/checkpoint or reuse fresh data to rescue this run."
+}
