@@ -8839,3 +8839,7 @@ Mac6873632247 confirms independent old ledger reader complete/exact and candidat
 ### 2026-11-14 Transfer exhaustive posthead bound by serialized identity
 
 No model invoke. Strict v1 fingerprint failed only on Nyx debug tensor names; failure/source retained. Separate v2 strips tensor.name only, verifies all selected ops/opcodes/numerical tensor metadata/constant buffers exact against original Mac exhaustive256code reference. Under same-runtime-kernel assumption, bound=.008804371898468277 transfers to four arms. Triangle inequality yields nominal FC-vs-float fivep99 lowerbound>.1 on twoway Willow10/Nyx8, oneway Willow8/Nyx8 of135. Therefore correcting only downstream posthead cannot fix those16 oneway witnesses; not exact error attribution or causal proof. All540 retained, no gate relaxation/promotion/fresh scoring. Official958504 observed live8920/9672.
+
+### 2026-11-14 Actual rejected one-way admission regression
+
+Four negative checks apply original assess to actual complete540: both conditions remain rejected with actual or forged pass flags, even against explicitly constructed optimistic recursive fixtures. Rejection occurs on actual numerical values; fixture never claimed as collected recursive evidence. No fresh material reads/model invoke/admission receipt. Original official958404/958504 and publication1501279 verified live;8923/9672 last observed.
