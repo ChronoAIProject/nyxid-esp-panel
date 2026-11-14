@@ -9175,3 +9175,25 @@ half/double constructs are not chosen candidate scales or an efficacy experiment
 Original candidate failures/v30/fresh-data isolation unchanged. Next implementation
 must connect differentiable step variables to forward requantization without
 turning them into Python float/constants, then prove exporter parity before updates.
+
+### 2026-11-14 — Dynamic tensor-step requantization primitive
+
+Implemented `learned_grid_requant_v1.py`: actual multiplier/shift derived from tensor
+input and bounded log-output steps at each call; output step serialized float32
+before integer double-rounding. No Python float conversion freezes learned inputs.
+Custom gradient explicitly defines accumulator/input-step/output-log-step surrogate
+paths; multiplier callback is offline feasibility CPU bridge, not deployment or
+GPU performance claim. Original integer accumulator and shifted-int32 bounds guard.
+
+Independent NumPy formula checks + original verified fixedpoint oracle cover40
+constructed cases: five ratios1/.5/2/.73/1.31, four zero/lower-bound configurations
+including ReLU0, two original-like input steps,17x3 random accumulator/gradient values.
+Forward equals integer oracle exactly; all three gradients finite/connected and
+match declared analytical surrogate. Session52146 originally passed; review found
+duplicate zero/bounds fixture, replaced with missing ReLU0 case; updated coverage
+session26256 exit0/all40 pass. No optimizer/model/media/export calls.
+
+This is not whole trainable network parity. Remaining: integer-code gradients for
+shared steps, scale-dependent folded bias encoding, state graph, complete temporal
+forward/FC parity and nonuniform learned-step export. Do not infer efficacy, select
+scales, run fresh data or launch formal training from primitive checks. v30 retained.
