@@ -10042,3 +10042,8 @@ Original independent session17673/PID91551 actualexit0 (starttime not captured);
 ## Actual fixedfinal streaming exports and independent ABI replay exit0
 
 Original export session93521 genuineexit0; PID/starttime unavailable after short process completed, explicitnull. Fouractualexports, unchangedoriginalweights; narrowFP32/INT8 139936/60952bytes, broad140248/61192bytes. Staticbuiltin/noCustom/nofloatI8/sixrealzero states passed; original824actualcalls/twofreshrepeat exact. Independent session75264 genuineexit0 verifies FlatBuffers/material/inputquantization/savedtraces plus412freshcalls exact. Originalstatic/runtimebytes published unchanged, formal_training_completed metadata true. Broad INT8SHA0ec2c6901b1f88088f711a537aedc59fa70b4e015a25eb2826e3e5493b1d7ec0. Locked consumed135waveform numerical screen and372input recognition diagnostic separately; pushbeforeexecution. No numerical/recognition/FAR/freshdev/acceptance/P4 qualification yet; v30 unchanged.
+
+
+## Original final waveform validation launched
+
+Pushed3740bf7b before both original jobs. Numerical screen session82886/PID185780/start549629, actual narrowfirst26cases passed; consumed recognition collector session87251/PID185779/start549629, actual narrow360synthetic plus firstwholebackground complete/twofreshrepeat exact. Both processes observedlive. Saved launchreceipt. No internalbackground resets, full originalexposure, no selectedthreshold; retain all failures and consumedstatus. Independent complete numerical and trace/event audits remain after these originals complete; no freshdev/acceptance or P4 claims.
