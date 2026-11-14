@@ -9088,3 +9088,26 @@ Only feasibility scope; no numerical bounds/loss/training execution authorized y
 Requires historical equivalence review, shared temporal-state quantization identity,
 direct export parity at original and constructed changed grids, independent math
 checks, and all540 qualification before recognition. No int16/float fallback.
+
+### 2026-11-14 — Learned activation-step primitive math preflight
+
+Inspected `hey_broad_integer_encoder_training_v1.py`: actual grids are NumPy arrays,
+centered scales tf.constant, output step converted with float(); this implementation
+has no trainable activation step. This establishes a distinction from that previous
+fixed-grid forward, not an exhaustive claim about every historical file/library.
+
+Added bounded log-step LSQ-style primitive and independent NumPy surrogate oracle.
+Base step times exp(clipped log-ratio), fixed zero point, ratio bounds1/16..16;
+INT8 ties-to-even forward; explicit clipped identity activation gradient and
+normalized surrogate step gradient1/sqrt(N*max centered code magnitude).
+All24 dtype(float32/64) × zero(-128/0/38/127) × logratio(-4/0/4) cases pass,
+including saturation, half ties, finite outputs/gradients, and bound-clamped scale
+updates. Original session17280 exit0 on installed TF/4090 environment; no model,
+media, optimizer or export calls. Report binds helper/auditor SHA.
+
+Explicit counterexample preserved: actual forward finite-difference derivative0,
+step surrogate -.0026516504294495534. Do not call STE the true derivative or use
+this primitive to claim complete integer-network parity. Remaining engineering:
+shared temporal-grid constraints, input-step-dependent bias quantization, actual
+integer requantization/export, independent initial/changed-grid forward parity.
+No formal training protocol/execution or new development access yet. v30 frozen.
