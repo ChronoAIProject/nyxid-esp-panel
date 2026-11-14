@@ -9441,3 +9441,10 @@ cloning sharedmodifiedbuffers and verifying onlydeclaredmutation. All4originalFP
 20Wb constant roundtrip returns originalbytesexact, allocateonly/zero invokes.
 This prepares actualfloat comparison for finalweights, not evidence of trained
 FP32/INT8 parity. No freshmedia/dev/FAR admission or v30 change.
+
+
+## Mac priority receipt and original metadata census — 2026-11-14
+
+Received Issue #13 comments 6875789076, 6875925927 and 6875956845. Prioritize saved-event independent audit, original metadata and observed surviving-window census, then a prospective minimal recognition comparison. Keep the original learned-grid formal unchanged; numerical work does not establish recognition improvement.
+
+Fetched Mac commit 28eb5a87ac0c8762def8bb3d672c7071055812c7 and extracted its audit_hey_broad_metadata_sampling_mass_mac_v1.py unchanged to /tmp. Executed python3 /tmp/audit_hey_broad_metadata_sampling_mass_mac_v1.py --repository-root "$PWD" --training-feature-root "$PWD/.local/wakeword/hey-broad-training-features-v1" --report "$PWD/research/wakeword_p4/results/4090-hey-broad-metadata-sampling-mass-v1.json". Original command exit 0 (no persistent session); raw JSON retained unchanged. Each target has 106956 rows: own25128/reciprocal25128/common56700. Expected surviving ordinary common-bare mass296/13; reciprocal bare56/13 and each light/time/timer64/39. This is exact metadata/expected mass, not observed crops, pronunciation evidence or root-cause proof. Saved-event audit, observed-window census and metadata release remain pending. No new formal or fresh split use.
