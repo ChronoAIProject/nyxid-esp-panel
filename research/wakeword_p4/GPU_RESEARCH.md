@@ -9602,3 +9602,7 @@ Original CPU session6192 exited0 after all540 completewaveforms; independent sav
 ### 2026-11-14 — paired raw fixed-final training completed
 
 Original rawformal session27155/PID1634282/start25352406 returned exit0, process absent; all4Willow/Nyx control/command_context completed10000 exactly once, fixedfinal only. Independent stored training audit exited0, all4passed; original schedule/tensors, frozenBN, finaltrainables/optimizer and snapshots preserved. This is not recognition/FP32waveform or INT8 qualification. Generated next four ownrawFP32 export execution lock, to push before actual conversion. Full540learned-grid rejection remains unchanged; freshdev/acceptance closed and v30 unchanged.
+
+### 2026-11-14 — new paired raw ownweight numerical qualification passed
+
+Original newrawFP32 fullwave session1525 exited0, all540completecases passed; independent reducer exit0/all540audited/all_passed. Eacharm135/135; worst ownH5-vs-ownLiteRT maxabs Willowcontrol4.917383e-6, Willowcontext4.500151e-6, Nyxcontrol3.874302e-6, Nyxcontext1.335144e-5; phase worst <=9.655953e-6, unchanged1e-4gate. Fullstartup/tail/reset/twofresh/clocks preserved. No INT8/recognition/FAR/acceptance claim. Generated next372reusedcollection execution lock binding these ownexports/numericalexecution/audit and originalmaterials/grid; push before collection. Freshdev/acceptance remain closed, learned-gridINT8 rejection and frozenv30 unchanged.
