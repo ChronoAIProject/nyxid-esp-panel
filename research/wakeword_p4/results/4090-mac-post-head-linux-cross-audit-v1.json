@@ -1,0 +1,113 @@
+{
+  "archive_sha256": "8c0d1f47179b3278f05601e639a9629925c9e07c09ce5347ce5d16b35fc9276d",
+  "verified_payloads": 15,
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "steps": 167,
+      "posthead_uniform_bound": 0.008804371898468277,
+      "residual_p99_lower_bound": 0.18043695518531772,
+      "metrics": {
+        "original_total": {
+          "mean": 0.007403471731999318,
+          "p99": 0.189241327083786,
+          "maximum": 0.19028964986209754
+        },
+        "post_head_component": {
+          "mean": 0.0006904798515073152,
+          "p99": 0.0035708998695336285,
+          "maximum": 0.0035708998695336285
+        },
+        "nominal_fc_vs_float_component": {
+          "mean": 0.0069304721266610116,
+          "p99": 0.19026900960191148,
+          "maximum": 0.19026901426476528
+        }
+      },
+      "fragment_and_saved_repeats_exact": true,
+      "gpu_actual_fc_and_uint8_exact": true
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "steps": 167,
+      "posthead_uniform_bound": 0.008804371898468277,
+      "residual_p99_lower_bound": 0.1337964620820147,
+      "metrics": {
+        "original_total": {
+          "mean": 0.008067465293866817,
+          "p99": 0.14260083398048298,
+          "maximum": 0.15763916671276096
+        },
+        "post_head_component": {
+          "mean": 0.0007059868519362556,
+          "p99": 0.0035708998695336285,
+          "maximum": 0.0042914101491013015
+        },
+        "nominal_fc_vs_float_component": {
+          "mean": 0.007538468648614808,
+          "p99": 0.13937517551383402,
+          "maximum": 0.1555263502767148
+        }
+      },
+      "fragment_and_saved_repeats_exact": true,
+      "gpu_actual_fc_and_uint8_exact": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "steps": 229,
+      "posthead_uniform_bound": 0.008804371898468277,
+      "residual_p99_lower_bound": 0,
+      "metrics": {
+        "original_total": {
+          "mean": 0.0007638734788633883,
+          "p99": 0.0035709142684936523,
+          "maximum": 0.0035709142684936523
+        },
+        "post_head_component": {
+          "mean": 0.0007595081738463986,
+          "p99": 0.0035708998695336285,
+          "maximum": 0.0035708998695336285
+        },
+        "nominal_fc_vs_float_component": {
+          "mean": 6.442707788469524e-06,
+          "p99": 0.00024310155740523638,
+          "maximum": 0.0002431080048080236
+        }
+      },
+      "fragment_and_saved_repeats_exact": true,
+      "gpu_actual_fc_and_uint8_exact": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "steps": 229,
+      "posthead_uniform_bound": 0.008804371898468277,
+      "residual_p99_lower_bound": 0.09062793754559414,
+      "metrics": {
+        "original_total": {
+          "mean": 0.002964842235126222,
+          "p99": 0.09943230944406242,
+          "maximum": 0.1008818421745673
+        },
+        "post_head_component": {
+          "mean": 0.0007325781317273064,
+          "p99": 0.0035708998695336285,
+          "maximum": 0.0035708998695336285
+        },
+        "nominal_fc_vs_float_component": {
+          "mean": 0.002282493375944908,
+          "p99": 0.09980310411879677,
+          "maximum": 0.09980311056619956
+        }
+      },
+      "fragment_and_saved_repeats_exact": true,
+      "gpu_actual_fc_and_uint8_exact": true
+    }
+  ],
+  "all_four_tables_identical": true,
+  "model_invocations": 0,
+  "limits": "Saved arrays and serialized fragments only, no Mac execution rerun. GPU exactFC/UINT8 crosscheck uses original consumed witnesses; float witnesses are Mac runtime values. Local evidence for two Willow cases, not full540 causality, candidate qualification or P4 parity."
+}

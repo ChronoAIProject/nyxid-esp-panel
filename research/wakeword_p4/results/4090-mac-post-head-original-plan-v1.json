@@ -1,0 +1,234 @@
+{
+  "schema": "mac-consistency-post-head-gap-plan-v1",
+  "script_sha256": "258a6a83819ff92a7093b4ab5a58afa4ac74c7c10cf607288f8d1c33752daa4b",
+  "parent_plan_sha256": "c9843db3c403923da4c5b08d22590ddf645c3101a1f22e785e93af284090d594",
+  "native_report_sha256": "614b33c89e77ba6af3af1e1a84a37d5fb18df9ea0c632ad78f430f5a3a4d742a",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-dual_supervised_control/hey_nyx.tflite",
+      "model_sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "arrays": "hey_willow-dual_supervised_control.npz",
+      "arrays_sha256": "31aa38fa6f2ce3d859a8bdc2aae150300f6f97856eb22fa366531056352c1c7c",
+      "steps": 167,
+      "fc_output": 65,
+      "original_ops_count": 47,
+      "selected": [
+        {
+          "ordinal": 33,
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "ordinal": 34,
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "ordinal": 35,
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "ordinal": 46,
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-logit_consistency/hey_nyx.tflite",
+      "model_sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "arrays": "hey_willow-logit_consistency.npz",
+      "arrays_sha256": "37af8b1c21ae800c0872085c27f922d87764ecd93f19a5582af9a37b430d5e8b",
+      "steps": 167,
+      "fc_output": 65,
+      "original_ops_count": 47,
+      "selected": [
+        {
+          "ordinal": 33,
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "ordinal": 34,
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "ordinal": 35,
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "ordinal": 46,
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-dual_supervised_control/hey_nyx.tflite",
+      "model_sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "arrays": "hey_nyx-dual_supervised_control.npz",
+      "arrays_sha256": "4b8652ff2599a17561f0e93dfbd404c67c45ca4a69d7228ff57979d487bf6e18",
+      "steps": 229,
+      "fc_output": 65,
+      "original_ops_count": 47,
+      "selected": [
+        {
+          "ordinal": 33,
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "ordinal": 34,
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "ordinal": 35,
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "ordinal": 46,
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-logit_consistency/hey_nyx.tflite",
+      "model_sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "arrays": "hey_nyx-logit_consistency.npz",
+      "arrays_sha256": "1142b9d8569b31c620410e68e5ec94bf8f2dcad75697769519f0450b8ad5b489",
+      "steps": 229,
+      "fc_output": 65,
+      "original_ops_count": 47,
+      "selected": [
+        {
+          "ordinal": 33,
+          "op": "MUL",
+          "inputs": [
+            65,
+            14
+          ],
+          "outputs": [
+            66
+          ]
+        },
+        {
+          "ordinal": 34,
+          "op": "ADD",
+          "inputs": [
+            66,
+            13
+          ],
+          "outputs": [
+            67
+          ]
+        },
+        {
+          "ordinal": 35,
+          "op": "LOGISTIC",
+          "inputs": [
+            67
+          ],
+          "outputs": [
+            68
+          ]
+        },
+        {
+          "ordinal": 46,
+          "op": "QUANTIZE",
+          "inputs": [
+            68
+          ],
+          "outputs": [
+            74
+          ]
+        }
+      ]
+    }
+  ],
+  "versions": {
+    "numpy": "2.4.6",
+    "ai-edge-litert": "2.3.0",
+    "flatbuffers": "25.12.19"
+  },
+  "policy": "All4 original final10000 compiled models and all4 predetermined native witnesses fixed by050bf88/2bd51b6, no selection. Derive only original4-op MUL/ADD/LOGISTIC/QUANTIZE stateless fragment with original buffers/types/grids/op versions unchanged. Enumerate every256 int8 FC input codes, then every original saved actualFC step; two fresh builtinref fragment interpreters, save all4 stage outputs and full repeats. Require witness UINT8 exactly reproduces original wholemodel outputs before reporting. Nominal coordinate uses original boundedC float32 (dequantized exactFC-3)*(8/3), clipped[-8,8], then float64 sigmoid for descriptive probabilities. Report whole-enumeration nominal-versus-fragment bound and signed five-step decomposition on every original witness. No error ceiling chosen, no original gate altered. Fragment fidelity on792steps is not full legal-domain comparison to another implementation or real P4. No fullmodel/encoder invocation, optimizer, recompile/requantize original model, candidate export/promotion, fresh data/development/acceptance, waveform or board operations."
+}
