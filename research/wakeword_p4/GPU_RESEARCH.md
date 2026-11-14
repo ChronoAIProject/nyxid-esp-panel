@@ -10092,3 +10092,8 @@ Implemented parameter-sharing vectorized causal graph with perlayer realzero his
 ## Causal onset whole-wave material actualexit0; firstbatch lock
 
 Original session55672/PID250857/start735275 genuineexit0,51840completepresentations with12960originalfullwave/frontend rows reused and38880newwholewave extraction, allproducerformat/nonempty/peak/serializedlength/RIR/quietPCM/maskgeometry checks passed. Newfeatures12156048frames/972483840bytes(SHA136afbfcec8669c34064c1de0e34b0c26e2f6c12891067d6bd6c52f60f927070), recordsSHA278bd1bd744012136e6c961521c577a08f811d2d52fa58f549b3178094e1ad37. No detectorcalls/training. Added source-pinned firsttwo CPU128x750x40 batch plan/sampler:32positive/48syntheticnegative/48trainingambient, source/regionnormalized losses, futurepadding unsupervised, actualdata descriptors/hashes. Next run CPU batches then minimalGPUtwo-step smoke, not extra floatingcomparison/fullbatch audit gate. V30/freshrolesunchanged.
+
+
+## Actual first causal CPU batches and minimalGPU lock
+
+Original CPUprobe11356 genuineexit0: twoactualNPZs128x750x40,32positive/48syntheticnegative/48ambient, regionmasspositive32/negative128, rightfuturepaddingweight0, allrole/geometry/finite checks pass. No modelcalls. New minimalGPUtwo-update lock SHAd94764c23189a9074db60e9ccea45c17d63420c70c8d4d78176e5b535f638f51 pins actualbatchbytes/newcausalgraph/originalinit/factory/runtime,15trainables/16frozen/freshAdam32vars/30zeroslots. No cross-device or floating-score comparison, no formalrun/recognition. Pushbeforeoriginalsmoke.
