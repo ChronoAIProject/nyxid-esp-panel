@@ -63,3 +63,59 @@ complete READY after that boot prefix, retaining all raw bytes. Later markers
 still require column zero; a displaced later marker is rejected. Freeze the
 revised source/protocol before the next explicit run; model, PCM, order,
 DEFAULT and all outcome checks remain identical.
+
+## Completed native consumed-PCM diagnostic — 2026-11-14
+
+The explicitly revised run, original session `17243`, genuinely exited 0.
+Its protocol was published in `3f51c3a` before execution; the same image,
+model bytes, original PCM/order and DEFAULT getter bits `3f1b367a` were used.
+All 108 clips completed twice with fresh detector lifecycles: 216 executions,
+29,990 input detect calls and 13,608 zero-prime calls. Independent reduction of
+the saved UART exactly matches the transaction result. Every repeat has the
+same event coordinates/results. Worst standalone input detect call: 2,384 us.
+
+| Original literal | Full clips with events, each repeat | At/after generated-prefix support | Before source |
+| --- | --- | --- | --- |
+| Hey Muse | 36/36 | 32/36 | 0 |
+| Hey Willow | 0/36 | 0/36 | 0 |
+| Hey Nicks | 4/36 | 4/36 | 0 |
+
+Muse fires on all nine bare targets and all nine targets in each of the three
+command carriers. Four bare target detections precede the generated-prefix
+support end by at most 20.75 ms. That support is a synthesis allocation, not a
+measured phonetic boundary; these must not be described as proved premature
+wakes. The four Hey Nicks cross detections comprise two bare and two timer
+clips. All variants and speeds, including failures, remain in the saved result.
+The second execution of each clip is a repeat, not another independent source.
+
+Full original 6,881,280-byte app slot, partition table and OTA metadata were
+restored byte-for-byte. A separate saved-file and fresh HTTP check confirms
+firmware 0.6.27, valid/idle ota_0, unchanged voice service/agent/mode/volume/gain/
+greeting settings, idle voice, enabled/listening Hi ESP and no serial owner.
+Nyx remains connecting to the absent local backend: this is app-only recovery,
+not voice connectivity acceptance. The first independent postprocessor used
+the nonexistent status field `model`; its error and original status were kept,
+then field access was corrected to `word` without rerunning board inference.
+
+Public evidence is under `../wakeword_p4/results/`:
+
+- `official-muse-consumed-speech-hardware-files-v1.json`: payload hashes.
+- `official-muse-consumed-speech-hardware-uart-v1.log.gz`: lossless original
+  317,380-byte UART capture, including CRLF/boot prefix.
+- `official-muse-consumed-speech-hardware-reduction-v1.json`: all 216 cases,
+  original rows, getters, prime returns, events, timings and heap observations.
+- `official-muse-consumed-speech-hardware-summary-v1.json`: every literal,
+  carrier, variant and speed; generated-support-relative event offsets.
+- `official-muse-consumed-speech-hardware-restoration-v1.json`: independent
+  restoration checks, without account/service identifiers or credentials.
+
+Decompress the UART without newline translation and pass it to `reduce.py`
+with `official-muse-consumed-speech-protocol-v2.json` as `--references`; the full
+reduction must match the published reduction exactly. The summary source is
+`../wakeword_p4/experiments/summarize_muse_consumed_speech_mac_v1.py`.
+
+This provides a working closer-word-length speech reference on the reused
+Semaine source. It does not establish background FAR, other-source accuracy,
+native512/raw480 policy equivalence, full-panel headroom, acoustic wake delay,
+first-utterance delivery or a qualified candidate. No threshold was selected;
+fresh development/acceptance and production hardware remain untouched.
