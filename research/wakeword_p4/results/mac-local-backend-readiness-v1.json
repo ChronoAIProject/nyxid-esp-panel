@@ -1,0 +1,49 @@
+{
+  "schema": "mac-local-backend-readiness-v1",
+  "utc": "2026-11-14T23:48:35.704687+00:00",
+  "source": {
+    "repository": "ChronoAIProject/NyxID",
+    "commit": "f26b73b232da20abc8d5775f872020d88af88a09",
+    "clean_isolated_worktree": true,
+    "main_worktree_modified": false
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 447.75862870800484,
+    "jobs": 2,
+    "profile": "dev, debug symbols disabled, private target directory",
+    "binary_exists": true
+  },
+  "mongo": {
+    "version": "8.0.15",
+    "existing_local_data_preserved": true,
+    "loopback_only": true,
+    "wired_tiger_cache_gib": 0.25
+  },
+  "health": {
+    "loopback_http_status": 200,
+    "lan_http_status": 200,
+    "version": "0.78.0"
+  },
+  "local_account_checks": {
+    "login_succeeded": true,
+    "agents_read_http_status": 200,
+    "voice_options_read_http_status": 200,
+    "configured_test_agent_exists": true,
+    "voice_options": [
+      {
+        "model": "gpt-live-1",
+        "protocol": "openai_live",
+        "available": true,
+        "unavailable_reason": null
+      }
+    ],
+    "test_agent_voice_service_read_http_status": 200,
+    "test_agent_voice_service_is_active": true
+  },
+  "board_changed": false,
+  "provider_call_made": false,
+  "audio_recorded": false,
+  "audio_played": false,
+  "limits": "Local backend/API/account metadata readiness only. Board still has previous LAN origin; no device login, device-key grant, active provider session, wake-to-conversation, long-call or reconnect verification in this check. Secure browser sessions are not tested over HTTP. No credentials/account tokens/provider secrets/node identity included."
+}

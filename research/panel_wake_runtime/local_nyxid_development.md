@@ -36,6 +36,12 @@ These process overrides do not require rewriting the private environment file.
 Keep the environment and authentication responses out of shared logs.
 
 Check `GET /health` on the backend before changing the development board.
+For scripted local account checks, use NyxID's token-client login and keep its
+response private. Browser login uses Secure session cookies; a successful
+HTTP health check does not make browser cookie authentication work over HTTP.
+Use TLS for that browser workflow. These account checks do not install an
+account token or key on the board.
+
 For a new development firmware profile, set both
 `NYX_PANEL_AGENT_DEV_API_URL` and `NYX_PANEL_AGENT_DEV_LOGIN_URL`; the latter
 ends in `/login/agent-key` on the same LAN host. Set
