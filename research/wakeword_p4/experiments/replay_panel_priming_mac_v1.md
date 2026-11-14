@@ -99,3 +99,32 @@ the current panel event policy, not a claim that every historical frozen
 evaluator is reproduced. There is no new audio, background FAR, independent
 acceptance, acoustic playback or hardware change, and this reference does not
 meet the full goal merely because no cross-word clip fired.
+
+## Final causal candidate: practical replay
+
+The original 60,952-byte final causal INT8 model was replayed over the same
+108 existing WAVs, retaining every input and the deployed 81,600-sample
+zero-PCM priming. Original local session6092 exited0. No speakers, microphone,
+new synthesis, flash or numerical-matching test was involved.
+
+At the existing reference threshold0.91796875, the deployed primed path detects
+32/36 targets:9/9 bare and23/27 with commands. By command it detects5/9 light,
+9/9 time and9/9 timer. It also falsely wakes on6/72 cross-word clips, all
+“Hey Muse, what time is it.” The original v30 reference detects25/36, including
+8/9 bare and17/27 commands, with0/72 cross-word clips. Thus recall improves,
+but practical discrimination still needs work. This result does not warrant
+replacing the board model.
+
+All138 original thresholds are retained in
+`../results/mac-causal-final-int8-existing-priming-v1.json`; none has both zero
+cross-word triggers and zero pre-source triggers. The companion archive has
+the plan, per-input results and raw score traces, without audio or model files.
+Cold is an initialization comparison, not an extra requirement; it is not
+necessary for its scores or events to match the deployed path. There is no
+background FAR, fresh acceptance or hardware-quality claim from this subset.
+
+The user's usability criterion takes precedence over older research notes
+that required FP32/INT8, CPU/GPU or gradient numerical agreement. Those
+historical conditions must not be revived as candidate admission gates.
+Further work should target missed intended wake words, false wakes, connected
+commands, response latency and board stability.
