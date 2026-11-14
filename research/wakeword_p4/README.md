@@ -4,6 +4,19 @@ Validated on 2026-11-10 using an Apple Silicon Mac and a development ESP32-P4 re
 
 The selected phrase is **Hey Nyx**, pronounced **Hey Nicks**. `Hey Nix` and `Hey Nicks` are acoustic equivalents, not hard negatives. Candidate near-word negatives include `Hey Nick`, `Hey Next`, and `Hey Mix`, alongside ordinary conversation, Chinese speech, television, music, and room noise.
 
+## Current priority: usable wake detection
+
+Following the user's 2026-11-15 clarification, prioritize actual recognition,
+false activations, wake latency, the buffered first request and board stability.
+CPU/GPU training logits or gradients need not match to qualify a usable detector.
+Keep the completed numerical discrepancies as diagnostic evidence; do not add
+more cross-platform gradient or TF32 experiments without a concrete behavioral
+failure that they can help explain. Continue the existing fixed training run,
+then evaluate recognition before spending more effort on numerical alignment.
+Keep dataset separation and the original PCM/audio path unchanged. Check the
+chosen model on the actual P4 runtime before deployment, and continue the
+[long-term stability monitor](../../docs/STABILITY.md).
+
 Actual Hey Nyx training, multi-engine sample generation, failed candidates and
 reproduction steps are now recorded in [training/README.md](training/README.md).
 The completed four-engine experiment and why its model is unsuitable for
