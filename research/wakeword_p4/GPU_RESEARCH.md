@@ -8835,3 +8835,7 @@ Reconstructed original bounded uniform C from authenticated old saved training-s
 ### 2026-11-14 Full rejected one-way arrays delivered to Mac
 
 Mac6873632247 confirms independent old ledger reader complete/exact and candidate-independent FP32 random architecture export+P4 link feasibility (not dynamic runtime/recognition admission). Delivered all540 original consumed screen NPZ plus13 original provenance/audit/failure receipts, no model/audio. Archive8546115B SHA99228ac3…; anonymous redownload exact554entries/all553 payload size/SHA verified. Preserve original continuation stop, no rerun or fresh scoring. Current INT8 goal and v30 unchanged; Mac FP32 feasibility does not relax gates.
+
+### 2026-11-14 Transfer exhaustive posthead bound by serialized identity
+
+No model invoke. Strict v1 fingerprint failed only on Nyx debug tensor names; failure/source retained. Separate v2 strips tensor.name only, verifies all selected ops/opcodes/numerical tensor metadata/constant buffers exact against original Mac exhaustive256code reference. Under same-runtime-kernel assumption, bound=.008804371898468277 transfers to four arms. Triangle inequality yields nominal FC-vs-float fivep99 lowerbound>.1 on twoway Willow10/Nyx8, oneway Willow8/Nyx8 of135. Therefore correcting only downstream posthead cannot fix those16 oneway witnesses; not exact error attribution or causal proof. All540 retained, no gate relaxation/promotion/fresh scoring. Official958504 observed live8920/9672.
