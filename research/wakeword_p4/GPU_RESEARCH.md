@@ -8875,3 +8875,7 @@ All4 original model SHA matched. Independent schema/buffer walk records every su
 ### Original H5 numerical inventory independent check
 
 Read-only h5py audit checks all4 original H5 container SHA and every31datasets/model (including16BN arrays) against original software-run saved parameter inventory. Full shape/dtype/value-SHA multisets and multiplicities exact. This authenticates numerical inventory but is not a positional name mapping or independent forward re-execution; unchanged-after-run remains original producer assertion. No TF import, models invoked/exported or media read. Mac had no newer reply at this check.
+
+### Internal FP32 fullstream runner implementation, not executed
+
+Implemented run_fp32_internal_fullstream_v1.py using original raw H5 and original TFLites, same shared135 requests/model, original native features/pad/scaling/clocks, all startup,2resets, raw nominal/phase references and1e-4 per-case probability/phase gates. Lock generator checks original request encoded SHA and all parent identities before binding files/runtime. It requires a published authenticated Mac actual-trained MicroInterpreter receipt, not a plan; no such lock/run has been created. Syntax compile passed. New code has not been model-tested; fullscreen MicroInterpreter and independent arrays still required. No fresh data or training.
