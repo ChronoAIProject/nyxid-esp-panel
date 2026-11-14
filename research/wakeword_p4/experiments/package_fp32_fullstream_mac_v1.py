@@ -13,6 +13,8 @@ def main():
  audit=R/'4090-fp32-fullstream-independent-arrays-v1.json';a=json.loads(audit.read_text())
  assert r['execution_sha256']==sha(lock.read_bytes()) and len(r['cases'])==len(a['cases'])==540
  assert r['all_passed']==a['all_passed']
+ frontend=R/'4090-fp32-fullstream-original-frontend-audit-v1.json'
+ fa=json.loads(frontend.read_text());assert fa['all_passed'] and len(fa['rows'])==135 and fa['execution_sha256']==sha(lock.read_bytes())
  payload={}
  for c in r['cases']:
   f=Path(c['path']);assert sha(f.read_bytes())==c['sha256']
@@ -21,11 +23,12 @@ def main():
  for e in p['exports']:
   f=Path(e['path']);assert sha(f.read_bytes())==e['sha256']
   payload['models/'+e['target']+'-'+e['condition']+'.tflite']=f
- for f in [lock,result,ROOT/'cases.jsonl',audit,
+ for f in [lock,result,ROOT/'cases.jsonl',audit,frontend,
            R/'4090-fp32-internal-fullstream-original-result-v1.json',
            R/'4090-mac-fp32-trained-capture-intake-v1.json',
            R/'4090-mac-fp32-trained-original-result-v1.json',
            Path(__file__),Path('research/wakeword_p4/experiments/run_fp32_internal_fullstream_v1.py'),
+           Path('research/wakeword_p4/experiments/audit_fp32_fullstream_frontend_v1.py'),
            Path('research/wakeword_p4/experiments/audit_fp32_fullstream_arrays_v1.py')]:
   payload['receipts/'+f.name]=f
  assert payload['receipts/4090-fp32-internal-fullstream-original-result-v1.json'].read_bytes()==result.read_bytes()
