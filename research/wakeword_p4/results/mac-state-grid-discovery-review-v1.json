@@ -1,0 +1,223 @@
+{
+  "schema": "mac-state-grid-discovery-review-v1",
+  "gpu_ref": "dce15045f5c96b7c2fd57b339e7e5d8e6167d60b",
+  "export_result_sha256": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1",
+  "helper_sha256": "10c621a22e04b60b84782f7b951b3b06da808ed3c056139396ef2705919c36a2",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "model_sha256": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+      "state_grid_pairs": [
+        [
+          0,
+          42,
+          48
+        ],
+        [
+          50,
+          41,
+          51
+        ],
+        [
+          53,
+          43,
+          54
+        ],
+        [
+          56,
+          44,
+          57
+        ],
+        [
+          59,
+          45,
+          60
+        ],
+        [
+          62,
+          46,
+          63
+        ]
+      ],
+      "state_bindings": [
+        {
+          "handle": 40,
+          "producer": 0,
+          "current": 47,
+          "read": 42,
+          "concatenation": 48,
+          "assigned": 49
+        },
+        {
+          "handle": 39,
+          "producer": 50,
+          "current": 50,
+          "read": 41,
+          "concatenation": 51,
+          "assigned": 73
+        },
+        {
+          "handle": 38,
+          "producer": 53,
+          "current": 53,
+          "read": 43,
+          "concatenation": 54,
+          "assigned": 72
+        },
+        {
+          "handle": 37,
+          "producer": 56,
+          "current": 56,
+          "read": 44,
+          "concatenation": 57,
+          "assigned": 71
+        },
+        {
+          "handle": 36,
+          "producer": 59,
+          "current": 59,
+          "read": 45,
+          "concatenation": 60,
+          "assigned": 70
+        },
+        {
+          "handle": 35,
+          "producer": 62,
+          "current": 62,
+          "read": 46,
+          "concatenation": 63,
+          "assigned": 69
+        }
+      ],
+      "reshape_grid_pairs": [
+        [
+          63,
+          64
+        ]
+      ],
+      "reordered_reads_same": true,
+      "renumbered_tensors_same_relationships": true
+    },
+    {
+      "target": "hey_nyx",
+      "model_sha256": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+      "state_grid_pairs": [
+        [
+          0,
+          43,
+          48
+        ],
+        [
+          50,
+          44,
+          51
+        ],
+        [
+          53,
+          45,
+          54
+        ],
+        [
+          56,
+          46,
+          57
+        ],
+        [
+          59,
+          41,
+          60
+        ],
+        [
+          62,
+          42,
+          63
+        ]
+      ],
+      "state_bindings": [
+        {
+          "handle": 38,
+          "producer": 0,
+          "current": 47,
+          "read": 43,
+          "concatenation": 48,
+          "assigned": 49
+        },
+        {
+          "handle": 37,
+          "producer": 50,
+          "current": 50,
+          "read": 44,
+          "concatenation": 51,
+          "assigned": 73
+        },
+        {
+          "handle": 36,
+          "producer": 53,
+          "current": 53,
+          "read": 45,
+          "concatenation": 54,
+          "assigned": 72
+        },
+        {
+          "handle": 35,
+          "producer": 56,
+          "current": 56,
+          "read": 46,
+          "concatenation": 57,
+          "assigned": 71
+        },
+        {
+          "handle": 40,
+          "producer": 59,
+          "current": 59,
+          "read": 41,
+          "concatenation": 60,
+          "assigned": 70
+        },
+        {
+          "handle": 39,
+          "producer": 62,
+          "current": 62,
+          "read": 42,
+          "concatenation": 63,
+          "assigned": 69
+        }
+      ],
+      "reshape_grid_pairs": [
+        [
+          63,
+          64
+        ]
+      ],
+      "reordered_reads_same": true,
+      "renumbered_tensors_same_relationships": true
+    }
+  ],
+  "rejected_mutations": [
+    {
+      "target": "hey_willow",
+      "fault": "read_grid"
+    },
+    {
+      "target": "hey_willow",
+      "fault": "assignment_handle"
+    },
+    {
+      "target": "hey_willow",
+      "fault": "concat_time_order"
+    },
+    {
+      "target": "hey_nyx",
+      "fault": "read_grid"
+    },
+    {
+      "target": "hey_nyx",
+      "fault": "assignment_handle"
+    },
+    {
+      "target": "hey_nyx",
+      "fault": "concat_time_order"
+    }
+  ],
+  "limits": "Actual published topology/quantization metadata only, plus explicitly constructed mutations. No NPZ read, model invocation, QAT run, optimizer, new data or admission. This fixes export-local state identity discovery, not the original numerical error."
+}
