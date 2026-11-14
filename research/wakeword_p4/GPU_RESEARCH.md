@@ -9257,3 +9257,25 @@ array and pinned executable actually initialize nonzero ratios and compare again
 new actual exported model; saved arrays/audit prove this. Do not edit original lock
 or reinterpret this as baseline comparison. Next execution must clean that prose.
 No optimizer/newdata/threshold choice; original rejected candidates and v30 retained.
+
+### 2026-11-14 — Folded trainable encoder parameter paths
+
+Static initialization audit: all80 originalFP32 folded conv/FC W/b arrays across
+four exports encode exactly to originalINT8 constants with declared weightfloat32/
+biasfloat64 nearest-even grids (zero mismatches). No model invoke. This is exported
+folded-constant identity, not rawH5/BN-variable reconstruction.
+
+76829f09 prospectively locks v3:18 trainable folded encoder W/b tensors from actual
+FP32 exports plus9logsteps; fixed channel weight scales. Original session17897exit0.
+All4complete originalrequest0/startup compare all9encoder outputs exactly with
+saved originalactual.18parameter and9step gradients finite/connected with nonzero
+aggregate norms, allforward/gradient repeats byteexact, no parameter/optimizer
+updates. Independent saved auditor verifies572160codes plus gradients/norms.
+
+Weight encoding explicitly uses float32 nearest-even codes with identity surrogate
+through centered weight codes; no assertion it is true rounding derivative. Bias
+has scale-dependent wide int32 coding. Folded parameterization differs from historical
+rawkernel/frozenBN optimization and must be shared by future pairedcontrol/treatment.
+Large diagnostic linear-objective norms are not BCE tuning evidence. Still missing
+FC/head integration, actual post-update parameter export and original full540 gates;
+no formal training, recognition qualification or new data access. v30 remains.
