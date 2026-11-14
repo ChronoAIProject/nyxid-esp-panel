@@ -9057,3 +9057,26 @@ shape/dilation/padding/state initializer and validate local FP32 before interpre
 integer residual; guessed temporal offsets or silently discarded startup cannot
 support attribution. Original540 rejection, old recognition limitations, v30 and
 all fresh-data boundaries remain unchanged.
+
+### 2026-11-14 — Temporal depthwise local reconstruction, startup retained
+
+`diagnose_matched_depthwise_v1.py` reads original exports and saved captures only,
+zero invoke. All8 models authenticate SHA; actual concat source/history dimensions,
+depthwise filter shape, VALID/stride1/dilation1/multiplier1/no fused activation and
+six real-zero initializer constants checked. Causal histories reconstructed from
+all saved preceding layer outputs, including startup. All16 FP32 local outputs
+meet original1e-3 maximum reconstruction check; signed telescope closes1e-10.
+No temporal offset search or startup exclusion.
+
+First depthwise integer-output/accumulation residual MAE .00848/.00750/.01056/.01430
+(Willowflat/pool, Nyxflat/pool), versus upstream contributions
+.00158/.00173/.00226/.00360 and local weight contributions <=.000864.
+Thus an appreciable new boundary error already exists at the first depthwise,
+not solely a final-layer issue. Later stages mix propagation and newly introduced
+residuals; this is four-witness local arithmetic, not full540 attribution or a
+claim that changing one layer will pass recognition. Next controlled hypothesis:
+reduce activation discretization sensitivity across temporal blocks; first check
+historical schemes to distinguish a new deployment-compatible intervention from
+already rejected fixed-grid/STE/equalization. No automatic retraining or threshold
+change justified by these local decompositions. Original candidate rejection,
+v30 and unconsumed development/acceptance isolation remain.
