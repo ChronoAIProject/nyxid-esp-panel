@@ -1,0 +1,47 @@
+{
+  "schema": "mms-eng-prospective-metadata-review-v1",
+  "model_id": "facebook/mms-tts-eng",
+  "revision": "c71de0fe7204c83f1c10820a7d696d0b450048ba",
+  "files": [
+    {
+      "name": "README.md",
+      "url": "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/README.md",
+      "path": ".local/wakeword/source-review-mms-eng-v1/README.md",
+      "bytes": 4002,
+      "sha256": "8fee1e3884f8b7493d5c7ec8138d5af5c0b78fd11f0f142a2f08dc58de5e3d5f",
+      "published_path": "research/wakeword_p4/results/4090-prospective-mms-eng-source-v1/model-card.md"
+    },
+    {
+      "name": "config.json",
+      "url": "https://huggingface.co/facebook/mms-tts-eng/resolve/c71de0fe7204c83f1c10820a7d696d0b450048ba/config.json",
+      "path": ".local/wakeword/source-review-mms-eng-v1/config.json",
+      "bytes": 1641,
+      "sha256": "c2a93c1dfbf33b640163f2ade16345b9a5194fa54de9a04a04272b76a97fe171",
+      "published_path": "research/wakeword_p4/results/4090-prospective-mms-eng-source-v1/config.json"
+    }
+  ],
+  "model_weights_downloaded": false,
+  "audio_generated": false,
+  "detector_invocations": 0,
+  "source_reserved": false,
+  "independence_admitted": false,
+  "config_findings": {
+    "architecture": [
+      "VitsModel"
+    ],
+    "num_speakers": 1,
+    "sampling_rate": 16000,
+    "noise_scale": 0.667,
+    "noise_scale_duration": 0.8
+  },
+  "findings": [
+    "Separate VITS checkpoint per language per upstream card; English config exposes only one speaker, so this is not a multi-voice holdout pack.",
+    "Upstream card says stochastic duration predictor needs fixed seed for repeatable waveform; future request must pin seed/runtime and immediately preserve full native tensor before transforms.",
+    "The downloaded card/config do not establish English physical speaker identity, corpus/parent overlap with existing sources, or complete historical GPU/Mac consumption. These remain unresolved, not assumed independent."
+  ],
+  "history_search": {
+    "scope": "Tracked research/wakeword_p4 JSON/Markdown/Python textual references using mms.tts,facebook/mms,mass.*bible,speecht5,parler.tts,melo.tts; no hits before this review",
+    "coverage_limits": "Not a complete upstream/pretraining/physical-speaker or cross-machine consumption census; cannot prove fresh identity without weight hashes/role reconciliation."
+  },
+  "role_decision": "Metadata option only, no reservation, model download, TTS run, detector scoring, development/acceptance admission or qualification."
+}
