@@ -1,0 +1,102 @@
+{
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_scalar_fc_ste_v1.py": "3220f4870554ab484f7a41cd34058aec33b84284e933dcd96371e637b2e94d65",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_hey_broad_scalar_fc_ste_v1.py": "22794e27df410d532a6feaa01958b0189507d6aca3f70d564a325d9dd86349f7",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-fixed-grid-compile-result-v1.json": "f3927c2976ffd3d0044d7f1b9e4347d2caf440d480776dc17e5d3ad8670bcb22"
+  },
+  "checks": [
+    {
+      "name": "signed-half-ties",
+      "multiplier": 0.5,
+      "zero": -128,
+      "low": -128,
+      "high": 127,
+      "output_scale": 0.125,
+      "values": 2051,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "ecd5c9d831c27f08b67a2252619ee79a29a10b3e1bd27f3211b0c8abf10a86ec"
+    },
+    {
+      "name": "inclusive-saturation",
+      "multiplier": 0.25,
+      "zero": -2,
+      "low": -4,
+      "high": 4,
+      "output_scale": 0.5,
+      "values": 2051,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "79fc54e763ffe4df3bcb68ce4335219577c0ad8532b9fb734e3fd96a03582bb0"
+    },
+    {
+      "name": "hey_willow/dual_supervised_control",
+      "multiplier": 0.31783937371137017,
+      "zero": -128,
+      "low": -128,
+      "high": 127,
+      "output_scale": 0.0235294122248888,
+      "model_sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "values": 2051,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "94a227e3399f26a655b6b2ef1b90d81319c9f0d2180884923cf550fb793429eb"
+    },
+    {
+      "name": "hey_willow/logit_consistency",
+      "multiplier": 0.31783937371137017,
+      "zero": -128,
+      "low": -128,
+      "high": 127,
+      "output_scale": 0.0235294122248888,
+      "model_sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "values": 2051,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "94a227e3399f26a655b6b2ef1b90d81319c9f0d2180884923cf550fb793429eb"
+    },
+    {
+      "name": "hey_nyx/dual_supervised_control",
+      "multiplier": 0.0450193334548952,
+      "zero": -128,
+      "low": -128,
+      "high": 127,
+      "output_scale": 0.0235294122248888,
+      "model_sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "values": 2058,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "5fc80dcfdfa20f572315c74f4a3b0b81ba6c14ed85cac40e9ecbec040ccd0381"
+    },
+    {
+      "name": "hey_nyx/logit_consistency",
+      "multiplier": 0.0450193334548952,
+      "zero": -128,
+      "low": -128,
+      "high": 127,
+      "output_scale": 0.0235294122248888,
+      "model_sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "values": 2058,
+      "forward_exact": true,
+      "declared_gradient_exact": true,
+      "repeat_exact": true,
+      "signature": "5fc80dcfdfa20f572315c74f4a3b0b81ba6c14ed85cac40e9ecbec040ccd0381"
+    }
+  ],
+  "invalid_accumulators_rejected": [
+    "0.5",
+    "nan",
+    "inf",
+    "2147483648.0",
+    "-2147483649.0"
+  ],
+  "optimizer_updates": 0,
+  "model_invocations": 0,
+  "all_passed": true,
+  "limits": "Standalone primitive and model metadata only, no shared-network integration, autodiff equivalence to integer discontinuities, complete deployment head/probability parity, recognition or candidate qualification. Does not diagnose current failure or change training."
+}
