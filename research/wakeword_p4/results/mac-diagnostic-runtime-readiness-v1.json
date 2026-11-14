@@ -1,0 +1,28 @@
+{
+  "schema": "mac-diagnostic-runtime-readiness-v1",
+  "python": "3.12.13",
+  "machine": "arm64",
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.4.6",
+    "soundfile": "0.14.0",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "h5py": "3.14.0",
+    "keras": "3.15.1"
+  },
+  "imports_succeeded": true,
+  "frontend_zero_hops": 100,
+  "frontend_shape": [
+    98,
+    40
+  ],
+  "frontend_raw_sha256": "f96b50dcb4b7422c277ab5778baa742a00fb6df6d0c775330635230bbd125421",
+  "learned_model_invoked": false,
+  "setup": "Create an isolated uv venv with CPython3.12; install numpy==2.4.6 tensorflow==2.21.0 ai-edge-litert==2.3.0 pymicro-features==2.0.2 soundfile==0.14.0 h5py==3.14.0 scipy==1.17.0. Disable TensorFlow GPU and use CPU2threads. Native MicroFrontend100 zero hops and repository features(np.zeros(16000,int16)) both produced the recorded98x40 UINT16 bytes. This smoke does not run learned inference.",
+  "limits": "Real native frontend and runtime imports only. No waveform/corpus read, audio I/O, board write or model admission.",
+  "repository_features_zero_replay_exact": true,
+  "repository_features_sha256": "63fb8e1691781817fd31027fdedfefbe15e0f8e1c104d3d1817c63725f9fa9e1",
+  "scipy": "1.17.0",
+  "gpu_version_reference": "dc1f021:research/wakeword_p4/results/4090-hey-broad-calibration-ranges-plan-v1.json"
+}
