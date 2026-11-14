@@ -9776,3 +9776,9 @@ Same original PID1762282/start26060483 live. Nyx frozen10000 genuinely complete;
 ### Third fixed-final arm complete / final Willow-frozen running (2026-11-14)
 
 Same original PID1762282/start26060483 remains live. Willow full10000 genuinely complete; original training.json copied byte-identically, finalH5/Adam/historySHA rechecked. Initial observation caught new Willow-frozen directory before history creation; sameprocess subsequentread confirms actualsteps1/2 smokeidentities passed andstep69, not a training failure/restart. Three arms complete, finalWillow-frozen continues original10000budget. No jobterminal/completeaudit/recognition/INT8qualification yet; v30/freshdev/acceptance unchanged.
+
+### Original four-arm training terminal / independent audit allpass (2026-11-14)
+
+Original17921 genuinely exit0, PID1762282/start26060483 absent, all4×10000fixedfinal completed. Independent auditor actualexit0: all40000actualbatchSHA, matchedtarget inputs, originalinitallH5arrays, frozenencoder/allBNbytes,40snapshots/final=step10000, finiteAdamarrays/exactsignature/iteration10000/lr passed. Runtime-variableorder signature and gradientconnection remain explicitly runtime evidence, not independent H5-order reconstruction. Original lastarmtraining.json copied byte-identically, terminalreceipt binds actualresultSHA.
+
+Generated fourmodel ownFP32exportexecution lock after actualaudit, source/runtime/newH5 pins verified. Publish before once-only exports; own540completewave numeric/phase/fullstartup/twofresh remains required before reusedrecognition. No numeric/recognition/INT8qualification yet, v30/freshdev/acceptance unchanged.
