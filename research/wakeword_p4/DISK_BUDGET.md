@@ -1,0 +1,7 @@
+# Research disk budget
+
+Before every new download, render, feature extraction, training or export job, run `python3 research/wakeword_p4/tools/check_disk_budget.py --expected-gib N`, with N covering all new outputs, temporary files, repeats, checkpoints and both compressed/uncompressed copies. The check requires 1.5 times the estimate plus a 50 GiB free reserve. A failed check stops new work until its budget is reduced or expendable files are cleaned. Check free space during long jobs as well; stop new allocations before the reserve is exhausted.
+
+Reuse authenticated existing sources/features. Do not retain download chunks after the assembled archive is hash-verified and each chunk is verified against its byte range; keep the original archive, provenance and cleanup receipt. Estimate complete trace size before inference and use lossless compression where readers support it. Do not create redundant copies of large NPZ/WAV packs for handoff; package once and remove only verified transport duplicates.
+
+Never automatically delete frozen v30, original native synthesis/PCM provenance, unique training inputs, original failures/interrupted jobs, final weights, or original research results. Historical execution locks remain unchanged. Cleanup receipts record exactly what was removed and why it was redundant. This policy applies to new work, including any separately declared recovery from the interrupted training run.
