@@ -8779,3 +8779,15 @@ Actual negative lock preflight rejects at first missing publishedoneway numerica
 receipt before reading material/model, creates neither admission nor executionlock.
 Freshdev remainsclosed. Original formal1450872 and waiter1455248 live at3m59/2m18;
 Willowtwoway latest2000, no restart/config change. V30 frozen.
+
+### Original one-way formal first-arm completion (2026-11-14)
+
+Original1450872 completed Willow twoway10000updates in798.595148s; original
+training.json copied byte-exact to results, finalH5 SHA
+21209619df92db6541dd8b228735858b1b2a3c81c6579b8a84ae5e7e92b1c4eb
+verified against actualfile. Producer finite/frozenBN true. Same original process
+now in Willowoneway (214updates at observation); waiter1455248 still live. This
+is per-arm provenance only, not full4arm independent audit, qualification or
+full10000freshrepeat evidence. No oldtrainedcontrol used; within-new-experiment
+control remains authoritative, not assumed byte-identical to old-family controls.
+No compiledmodel/recognition/promotion, freshdev/acceptanceclosed, v30unchanged.
