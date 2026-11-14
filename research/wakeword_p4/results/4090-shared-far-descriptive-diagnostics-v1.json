@@ -1,0 +1,129 @@
+{
+  "schema": "shared-far-descriptive-diagnostics-v1",
+  "files": {
+    "research/wakeword_p4/results/4090-original-official-development-calibration-v1.json": "04d7eeb55cac54fc3324c4c9ce1e73e4efb8d44d8852ae90fb0380483fcdafe6",
+    "research/wakeword_p4/results/4090-old-fixed-grid-regression-metrics-v2.json": "e21dd80c39ec80e51bd411991d677d60acdf67a2d87fafa45f686bfe225d6a13",
+    "research/wakeword_p4/results/4090-official-custom-input-identity-v1.json": "494427063aa45a076ffc29e534b4fddcd66ff873f10b600c8f90adc040bb0e51",
+    "research/wakeword_p4/results/4090-old-float-head-semantics-correction-v1.json": "7ec8310355f07cbd0777699d995d7b2f8ac1b3f90a3bc656846f16865f70b21f"
+  },
+  "summaries": [
+    {
+      "path": "hey_nyx-float_control/bounded-float",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 138,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        30,
+        34
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_nyx-float_control/uint8",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 138,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        31,
+        35
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_nyx-integer_qat/bounded-float",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 0,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": null,
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_nyx-integer_qat/uint8",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 0,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": null,
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_willow-float_control/bounded-float",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 0,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": null,
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_willow-float_control/uint8",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 0,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": null,
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_willow-integer_qat/bounded-float",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 138,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        0,
+        0
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "hey_willow-integer_qat/uint8",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 138,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        0,
+        0
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "official/hiesp",
+      "registered_points": 13,
+      "far_upper95_le_half_points": 10,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        0,
+        17
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "official/willow",
+      "registered_points": 13,
+      "far_upper95_le_half_points": 10,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        0,
+        5
+      ],
+      "frozen_v30": []
+    },
+    {
+      "path": "v30/uint8",
+      "registered_points": 138,
+      "far_upper95_le_half_points": 61,
+      "full_diagnostic_points": 0,
+      "far_only_complete_hit_range": [
+        22,
+        26
+      ],
+      "frozen_v30": [
+        {
+          "complete_hits": 25,
+          "far_upper95": 0.2857447576425148,
+          "full_diagnostic": false
+        }
+      ]
+    }
+  ],
+  "threshold_selected": false,
+  "acceptance_authorized": false,
+  "limits": "Consumed diagnostic data only. Counts/ranges describe ALL registered points, not independent points, chosen endpoints or candidates. Full diagnostic applies the official descriptive criteria to saved custom metrics; not numerical qualification/admission. Different target positives/native versus five-step event policies remain. Float means bounded-float here; no raw sigmoid FP32 result. No inference or fresh data."
+}
