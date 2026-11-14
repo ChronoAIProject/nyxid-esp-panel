@@ -8749,3 +8749,20 @@ stop difference. Fullformalrepeat1 explicitly unverified; smoke2 only4updates.
 Original complete540screen/recursive/constants/numerical gates retained; one-way
 both135must pass independently before freshdev. Actualformal lock not generated
 at this journal entry. V30 frozen, all original failures intact.
+
+### Original one-way formal continuation locked (2026-11-14)
+
+77d384ff binds original formalPID1450872/starttime/cmdline and original immutable
+source/inputs; original waiter session75277/PID1455248 live. Once terminal with
+complete4arm aggregate, audit+publish then actualcompileplan/publish, fixedgrid
+compile/constantsaudit/publish,screenplan+executionpublish,full540screen/audit,
+recursiveplan/full540recursive/audit then terminalreceipt. No training restart,
+retry, freshdev/acceptance/admission/threshold/model selection or promotion.
+Seven new stage sources exactly derived by namespace-only literal replacements
+from original bounded-family sources; derivation lists all original/derivedSHA.
+Original frontend/runner/arithmetic/gates/requests/initialtemplates untouched.
+Negative readiness invocation confirmed missing completeformalresult rejects before
+compileplan/model access and writes no plan. This is not actual compilation.
+Original1450872 observedlive2m02s, current saved1000/10000Willowtwoway; otherarms
+pending in same original process. Original TF layoutoptimizer message preserved
+before successful updates, no policychange/retry. V30 remains frozen.
