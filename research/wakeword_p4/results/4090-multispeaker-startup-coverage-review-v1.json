@@ -1,0 +1,111 @@
+{
+  "schema": "multispeaker-startup-coverage-review-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/review_multispeaker_startup_coverage_v1.py": "a0cf5ac1829a71568a47c20cbc723f105e633066be059e57908619b17ef4cb56",
+    "research/wakeword_p4/results/4090-multispeaker-formal-execution-v1.json": "05c64ad640adc3438dc7addcbd3d5c0c53699bb358dc00be3f84e8e894cd7273",
+    "research/wakeword_p4/results/4090-multispeaker-formal-original-v1.json": "e5c880e9785c620833e781c3f7d1c22023ba6ccd8b3718bdd5017e88208ec032",
+    "research/wakeword_p4/results/4090-multispeaker-formal-saved-pre-source-event-summary-v1.json": "c0dc0799f0fb80e587f76e945adb4d95759ffaee96f56bc727eca4270a8947f3",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/phase_aligned_raw_findings_v1.md": "0310a56a9b25c69c04648640a29a50cc2964cb23f74d181d5ab1be3602d633f9",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_consistency_protocol_v1.md": "2377fba0dad4a5c878863d47644baca615f73d5d8158a3dc94cc316817caa3c8",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_paired_qat_protocol_v1.md": "ff92f21a9b386cb7eda0a8032af2dfc7ac21d56d5ff6f788ec1bea5aeaadfe15"
+  },
+  "arms": [
+    {
+      "arm": "narrow",
+      "steps": 20000,
+      "schedule_sha256": "0d841491814c30b3ff6816208b0d97da56b1257044a10777875ac15d5fd4bf7b",
+      "counts": {
+        "synthetic/1": {
+          "windows": 640000,
+          "min_end": 358,
+          "max_end": 618,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 0
+        },
+        "ambient/0": {
+          "windows": 960000,
+          "min_end": 309,
+          "max_end": 275516,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 0
+        },
+        "synthetic/0": {
+          "windows": 960000,
+          "min_end": 309,
+          "max_end": 720,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 9401
+        }
+      },
+      "synthetic_lead_frames": [
+        310
+      ]
+    },
+    {
+      "arm": "broad",
+      "steps": 20000,
+      "schedule_sha256": "4b38c252d000786103e80291d2af5e55b019ce50bf84ee4e37628ce2e491e9b3",
+      "counts": {
+        "synthetic/1": {
+          "windows": 640000,
+          "min_end": 358,
+          "max_end": 618,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 0
+        },
+        "ambient/0": {
+          "windows": 960000,
+          "min_end": 309,
+          "max_end": 275516,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 0
+        },
+        "synthetic/0": {
+          "windows": 960000,
+          "min_end": 309,
+          "max_end": 747,
+          "end_before_309": 0,
+          "synthetic_source_not_started": 9480
+        }
+      },
+      "synthetic_lead_frames": [
+        310
+      ]
+    }
+  ],
+  "fixed_max_threshold_saved_events": [
+    {
+      "arm": "narrow",
+      "threshold": 0.99609375,
+      "synthetic_clips_with_pre_source_events": 240,
+      "all_synthetic_pre_source_events": 240,
+      "positive_pre_source_events": 24,
+      "negative_pre_source_events": 216,
+      "pre_source_sample_range": [
+        7040,
+        7040
+      ]
+    },
+    {
+      "arm": "broad",
+      "threshold": 0.99609375,
+      "synthetic_clips_with_pre_source_events": 80,
+      "all_synthetic_pre_source_events": 80,
+      "positive_pre_source_events": 9,
+      "negative_pre_source_events": 71,
+      "pre_source_sample_range": [
+        11840,
+        13760
+      ]
+    }
+  ],
+  "model_invocations": 0,
+  "optimizer_updates": 0,
+  "observations": [
+    "All actual training inputs were complete309-frame windows, with no endpoint before frame309. This is not exposure to partial-startup streaming states.",
+    "Synthetic source lead was fixed310frontend frames; some negative windows can precede source placement, but these remain full309-frame contexts.",
+    "Saved maximum-grid-threshold events precede source placement at .44s narrow and .74\u2013.86s broad, substantially before309frame context is available.",
+    "Reviewed phase-alignment changes only nominal versus shifted full-window supervision; consistency/QAT protocols target quantization agreement/export initialization. They do not describe fullsequence startup-negative supervision."
+  ],
+  "limits": "Bounded review of listed historical documents/current actual schedules/saved events only, not exhaustive proof of absence in all history or causal attribution. No new float comparisons, audio/model inference, threshold selection or freshdata. Startup-aligned sequence training remains a hypothesis, not an implemented or successful candidate."
+}
