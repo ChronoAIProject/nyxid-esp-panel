@@ -34,7 +34,7 @@ def run(a):
     for item in manifest['files']:
         path = a.received / item['name']
         assert path.stat().st_size == item['bytes'] and sha(path) == item['sha256']
-    gpu_path = a.received / 'metadata/4090-hey-broad-bounded-consistency-fixed-grid-screen-result-v1.json'
+    gpu_path = a.received / 'receipts/4090-hey-broad-bounded-consistency-fixed-grid-screen-result-v1.json'
     gpu = json.loads(gpu_path.read_text())
     results = []
     for arm in plan['arms']:

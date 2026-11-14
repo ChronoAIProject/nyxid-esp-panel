@@ -1,0 +1,68 @@
+{
+  "schema": "mac-bounded-consistency-native-preparation-checks-v1",
+  "gpu_ref": "3e030d00f7f71a0723e5baece1d971ba6a2916b1",
+  "script_sha256": "5b44b660a86bbd88a115ce41d04f0243fabe75398bd496e478c7d6aae36b971a",
+  "derivation_sha256": "f5649814bdc9bc12c093d6577ca40c2024d7944401186caaa3ce93bfc4019ee3",
+  "exact_declared_native_derivative": true,
+  "exact_literal_auditor_derivative": true,
+  "constructed_metadata_checks": [
+    {
+      "case": "complete_unique_constructed_four",
+      "expected_success": true,
+      "actual_success": true,
+      "rejection": null,
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "duplicate_model_arm",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "AssertionError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "missing_model_arm",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "AssertionError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "unexpected_condition",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "ValueError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "incomplete_formal",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "AssertionError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "not_final10000",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "AssertionError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "wrong_final_h5",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "AssertionError",
+      "no_failed_plan_written": true
+    },
+    {
+      "case": "duplicate_formal_case",
+      "expected_success": false,
+      "actual_success": false,
+      "rejection": "ValueError",
+      "no_failed_plan_written": true
+    }
+  ],
+  "all_passed": true,
+  "limits": "Constructed model/formal metadata only; existing consumed old feature bytes read for plan checks. No actual new H5/TFLite, interpreter, TensorFlow, audio, training, export, recognition or candidate admission. Temporary constructed plans are not actual model locks."
+}

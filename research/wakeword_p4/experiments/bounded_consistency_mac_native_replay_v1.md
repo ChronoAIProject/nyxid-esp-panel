@@ -40,6 +40,13 @@ published original receipts before materializing its original relative paths.
 The intake entry point and actual receipt are finalized after those hashes
 exist; this protocol alone does not authorize unverified bytes.
 
+GPU packager `3e030d0` names the original published reports `receipts/`, with
+four model/H5/training/NPZ groups and five source snapshots. The new Mac saved
+array auditor uses that exact `receipts/` screen-result path. This replaces its
+unexecuted inherited `metadata/` path; the derivation records this one literal
+transport-layout substitution. Preserve original archive member names and
+hashes during intake, without an unchecked metadata alias.
+
 Only after the actual plan is published and transport authenticated, run in
 the existing native Python 3.12 / TF2.21.0 / NumPy2.4.6 / LiteRT2.3.0 environment.
 `PAYLOAD` is the authenticated original-relative model/H5 root; `RECEIVED` is
