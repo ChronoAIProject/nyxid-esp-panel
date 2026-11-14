@@ -8631,3 +8631,31 @@ prove audio identity. This is a derived replay tied by actual tensor SHA, not a
 historical source ledger. Supports broad row visitation but does not prove context
 coverage sufficient or explain numerical failures; no sampler/label change or new
 training inferred. Fresh development/acceptance stays closed and v30 unchanged.
+
+### Frozen-final training-support forward diagnostic (2026-11-14)
+
+Prospective ed45b4d6, original session92000/PID1431401 exit0. Authenticate all
+1..9001 batch tensor digests per target against both original formal arms, save
+fixed batches1,1001,...9001 (1280examples/target,320positive/960negative). All4
+original finalH5, frozenBN/nofold/noarithmetic; nominal225 and shift-left224+zero,
+twice each. No gradients, optimizer, runtime activation invoke or heldout access.
+Original saved inputs and16output arrays/case, repeats exact/model unchanged.
+
+Independent noTF auditor36987351 initially rejected literal fc<=6; original
+traceback preserved. Corrected saved-array audit uses original tensor65 scale/zero
+and exact integer-code/dequantization equality plus original fused ReLU6 code
+bounds: maximum dequantized value6.000000117346644 is legal on the original grid.
+No tolerance relaxation, model rerun or source change to original inference.
+All selected full batch SHA/labels/weights/repeats/finite and producer metrics exact.
+Skipped-batch recomputation/model unchanged remain live producer evidence.
+
+Bounded Willow nominal:960/960negatives and317/320positives have zero bounded
+logit difference. Remaining positive nominal-sigmoid maximum gap .9098681072;
+phase max .0156217706. Bounded Nyx nominal positive zero301/320, maximum gap
+.5798803103; phase zero296/320,max .3847975911. Nyx negative nominal max .3588792751,
+phase .3985336012. These static descriptive values do not replace original540
+wholewave/five-step gates. ExactFC nominal sigmoid is not deployedUINT8 posthead,
+and QAT probability is surrogate. Evidence shows rare discrepancies also exist
+on sampled original training support, so a solely unseen-context explanation is
+unsupported; does not identify optimizer/gradient or unique cause, authorize
+training on these scored records, select threshold, or promote. V30 unchanged.

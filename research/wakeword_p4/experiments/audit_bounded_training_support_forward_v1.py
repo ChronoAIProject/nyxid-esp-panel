@@ -45,7 +45,11 @@ def run():
                     a=z[f'{mode}_r0_{name}'];b=z[f'{mode}_r1_{name}']
                     assert a.shape==(1280,1) and np.isfinite(a).all() and np.array_equal(a,b)
                     arrays.append(a)
-                zf,zq,prob,fc=arrays;assert 0<=prob.min()<=prob.max()<=1 and 0<=fc.min()<=fc.max()<=6
+                zf,zq,prob,fc=arrays;assert 0<=prob.min()<=prob.max()<=1
+                grid,=[t for t in pc['arm']['tensors'] if t['index']==65]
+                scale,zero=grid['scale'],grid['zero'];codes=np.rint(fc/scale+zero)
+                assert np.array_equal(fc,(codes-zero)*scale)
+                assert max(-128,zero)<=codes.min()<=codes.max()<=min(127,int(np.rint(6/scale))+zero)
                 bf=np.clip(zf,-8,8);bq=np.clip((fc.astype(np.float32)-3)*np.float32(8/3),-8,8)
                 gap=np.abs(bf.astype(float)-bq.astype(float))
                 expected=dict(examples=1280,bounded_logit_abs_mean=float(gap.mean()),bounded_logit_abs_max=float(gap.max()),same_side_saturated=int(np.sum(((zf>=8)&(zq>=8))|((zf<=-8)&(zq<=-8)))),saved_repeats_exact=True)
