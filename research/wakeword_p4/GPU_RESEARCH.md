@@ -8286,3 +8286,7 @@ Added saved-array independent540 numerical auditor, compilechecked only until co
 ### 2026-11-14 — Original WillowQAT10000 complete
 
 Original92728 verified live throughout5000→7000→9000→10000, now enteredNyxfloat from originalinit/newAdam as locked. No restart/source change. Published WillowQAT originaltraining.json rawbytes plus independentcompletedarmreceipt. Full10000 x/y/weight traceSHA matches originalschedule; finalH5/AdamNPZ SHA verified,32Adamarrays finite anditeration10000/signature exact; all16frozenBN H5datasets match initialfinal exactly. Willowfloat/QAT both complete; losses/gradients include all finite spikes, no earlystop/checkpointselection. Fourrun aggregate independentaudit/export still awaitsNyxfloat/QAT complete; no inference/dev/acceptance orqualityclaim. v30 retained.
+
+### 2026-11-14 — Original Nyxfloat10000 complete, last NyxQAT running
+
+Original92728 verified live through Nyxfloat2000→5000→7000→9000→10000. Now original runner enteredfinalNyxQAT and observed first2updates, originalinit/newAdam as locked. Three originalconditions complete. Published Nyxfloat originaltraining.json rawbytes and independentcompletedreceipt; full10000 actualbatchSHA, finite losses/gradients, finalH5/AdamNPZ SHA,32Adamarrays/iteration10000/signature and16frozenBN H5datasets verified. No earlystop/restart/checkpointselection/source changes. Originalwaiter58219 still awaits fullfourrun aggregate before audit/export/540screen. No newdev/acceptance or qualityclaim; v30 retained.
