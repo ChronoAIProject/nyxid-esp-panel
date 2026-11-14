@@ -8912,3 +8912,6 @@ Replaced fullstream lock's flag-only numerical prerequisite with a capture intak
 
 ### Official event-loop source state semantics
 Original main.c SHA matches original9672execution lock. After native detected return, wrapper only increments/logs event, advances input count and continues same model data object. No event-dependent reset/recreate/threshold mutation/skip/refractory; fixed delay every32calls is unrelated to events. Therefore a wrapper-imposed suppression is not supported by this source. Internal closed WakeNet dynamics remain unknown, and lack of second event does not prove their cause. No compile/inference repeated.
+
+### Mac actual trained MicroInterpreter capture intake
+Authenticated immutable d53d9d62a09fec26babfbaee5553b2136dc1720f original report and anonymously downloaded 700414-byte archive SHA075a3c989a6b358be42731de086d0d241029909b7f905f95937195d866aa08e5; all56members/55payload hashes checked. Imported original8192float outputs without inference, verified finite/exact repeats and original TF/LiteRT error maxima for all4models. Original report bytes preserved; canonical local capture receipt and importer committed. Mac Issue6874781415 confirms original session31227 exit0 and permission to advance separately locked540fullstream. Host arena55120B is not P4 qualification. No model changes, recognition scoring or freshdev access.

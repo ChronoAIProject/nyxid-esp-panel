@@ -1,0 +1,47 @@
+{
+  "schema": "authenticated-mac-fp32-capture-intake-v1",
+  "source_commit": "d53d9d62a0",
+  "archive_sha256": "075a3c989a6b358be42731de086d0d241029909b7f905f95937195d866aa08e5",
+  "exact_members": 56,
+  "all_payloads_verified": true,
+  "actual_trained_microinterpreter_run": true,
+  "all_passed": true,
+  "original_report_path": "research/wakeword_p4/results/4090-mac-fp32-trained-original-result-v1.json",
+  "original_report_sha256": "20bd112bf89b97f1cf97725d9c7189c3231fdc4a84d9a89a31ac4649e37082f6",
+  "inputs_sha256": "0f7eff41940be4149be682f9a24755d42646bbe08e211c5fbdd1638059d3c9ac",
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "model_sha256": "c549ee3a744d28e32afa0dff0ad1566e4519a951ab3ede838f858b5c36cc9089",
+      "probability_npz": ".local/wakeword/mac-fp32-trained-capture-intake-v1/hey_willow-float_control.npz",
+      "probability_npz_sha256": "91f7d049272b83dcca27cf66a3c920460637e983524121bb8a971ef2267633b5",
+      "original_outputs_sha256": "45a2d8da580a50722305fc04ccd1d5bd7a230219bbd9d2a276b363f02022cc94"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "model_sha256": "24c2963f70ab32f844f3a70f00c419b336695339515a9b0992bc632e56e26b4a",
+      "probability_npz": ".local/wakeword/mac-fp32-trained-capture-intake-v1/hey_willow-integer_qat.npz",
+      "probability_npz_sha256": "ee9b42a670fd3109501baec734a68b26fb04b6400d60711f09032bf4f4a3debb",
+      "original_outputs_sha256": "82ba540847de87359db448bcff73446dd45c41cc6812bb40ac67dd39bf0b9413"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "model_sha256": "8ee4d8fa6a0e561ebd894b305877f0dc9d20fe0889d87469b6cf3f55122fef40",
+      "probability_npz": ".local/wakeword/mac-fp32-trained-capture-intake-v1/hey_nyx-float_control.npz",
+      "probability_npz_sha256": "3611140aa1071e9219f91e0804b7c770604d489a095b660d330ee4b9cddd53a3",
+      "original_outputs_sha256": "85a9c365bcde60ecd437f6c0b89bae8d084558d2bef9b94a8439b8b09c09001a"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "model_sha256": "61806e5de946ece72af47a14bc3367ba40c34367a4a617efad42341f4b1f5563",
+      "probability_npz": ".local/wakeword/mac-fp32-trained-capture-intake-v1/hey_nyx-integer_qat.npz",
+      "probability_npz_sha256": "f95762aee8e193a598162e7905e53751df0cd3665b6fb20d4834ef744b1a1c77",
+      "original_outputs_sha256": "01d4411ca9a52b5888510683dd1cbdf183ca605d8a5212f925d57212c67bf2b1"
+    }
+  ],
+  "limits": "Original Mac report authenticated via immutable Git ref; independently recomputed all8192 saved native probabilities against original GPU refs. Local NPZ are derived containers preserving original raw output bytes, not new inference. Host only, no P4/fullstream/recognition."
+}
