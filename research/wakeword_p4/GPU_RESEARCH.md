@@ -7924,3 +7924,30 @@ result; exact oldpass counts Willow54/Nyx117. Invertedpass flag and alteredmean
 both rejected. Review/report saved; no model/frontend invoke, conversion or fresh
 data. This verifies only reducer, not whole receipt/staticstate path or bounded
 candidate admission. Existing execution-bound sources untouched.
+
+### Bounded actual exports complete; unchanged full270 numerical gate rejects
+
+Originalmaterial replay completed both120100 exactbatch sequences, savedoriginal
+100PTQ firstrows/arm. Continuation18842/1135635 completed normally, no retry.
+Publishedoriginalmaterial5221b046, actualexportlockf2c12d62,
+exporteba612a0, actualscreenlock0a00ba04, fullresultc8f00ab7. BoundedWillow58616B
+SHA13d3fa4fd570e0149606617acab4cc589ab7cbfb99eae8d64bc05498b6013535;
+Nyx58688B SHAa3b23d6d3d0596070853872ec830a2d8555185c1de3b44a4c23f05e59acd0cae.
+BothFC+RELU6 fused, LOGISTIC inputscale0.062745101749897. Same originalPTQ
+material/order/zero/full26/no-source-reset; originalH5/training unchanged.
+
+Unchanged270gate rejects: Willow119/135 (original54), Nyx115/135(original117).
+WillowMAE1/p9916/max2fail; NyxMAE0/p9920/max4fail. Worstfive-mean abs
+.5054151464486496/.6901303528575227. Everytwice-reset exact; boundedactual
+float offline/stream max3.03983688e-6/3.39746475e-6 passes1e-4. Solvingcoarse
+final-logit lattice alone did not solve fullnetworknumerical error; do not claim
+specific remainingupstreamcause or tune onnewdevelopment.
+
+Immutableexportreceipt generated with cc83d97b using exactreviewed reducer:
+all270NPZ SHA/explicit5slice/statistics/phase/clocks/repeats/gate decisions
+independently recomputed; original/new eachsixresource READ/ASSIGN metadata
+internallymatches. Report binds originalH5/training/model, transformednewmodel,
+calibration and actual270results without rewritingoldtraining. No invoke/export
+in receipt. No numericaladmission, freshdev/acceptance orP4candidate; v30retained.
+Nextmechanism test must use savedtrainingarrays and explicitnewhypothesis;
+no automaticretraining/recalibration/sweep. Goalactive, originalofficialcontinues.
