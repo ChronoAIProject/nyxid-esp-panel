@@ -248,3 +248,37 @@ This closes the standalone original-model P4 numerical/resource subset and its
 restoration check. Full 540-case P4 coverage, new continuation weights,
 full-panel headroom, recognition/FAR, first-utterance, voice connectivity and
 long-call/reconnect acceptance remain outstanding.
+
+## Full-panel adapter compatibility after paired raw FP32 export
+
+The standalone result cannot be installed by pointing the current full-panel
+experimental build at a raw FP32 file. Source inspection at `38eed19` shows
+three specific integration constraints:
+
+- `research/panel_wake_runtime/panel_wake_runtime.cpp` requires INT8 input
+  (`120` bytes) and UINT8 output (`1` byte); its frontend writes INT8 values,
+  reads UINT8 scores, and its complete self-test stores one byte per output.
+  The raw FP32 export requires float32 `[1,3,40]` input and `[1,1]` output.
+- The complete profile registers `nyx_complete_fc::registration()` from
+  `complete_fc.h`; its Prepare accepts scalar INT8 FC only. The standalone
+  FP32 probe instead uses the pinned standard float FC registration. Changing
+  just the tensor type guards would still fail or interpret memory incorrectly.
+- `prepare_complete_runtime.py` authenticates a different fixed-final INT8
+  training/calibration/self-test family (120,000 steps and NYXKWS02), while the
+  paired raw experiment has four new 10,000-step finals. Those guards correctly
+  reject an unrelated profile and must not be bypassed to load these weights.
+
+After a raw candidate has its own numerical qualification and a prospective
+operating point, its opt-in full-panel adapter must preserve that model's exact
+float inputs/outputs, standard FP32 operators, chronological binary64 event
+arithmetic and model-bound complete PCM self-test. Keep the old INT8 profile
+validation intact. Compare the actual frontend/initialization/complete stream
+against the same candidate's references before interpreting live activation.
+The current full-panel adapter reserves 64 KiB + 16 KiB; the standalone probe
+reserved 256 KiB + 64 KiB. Neither the standalone allocator-used count nor those
+other capacities establish actual full-panel allocation/headroom.
+
+This is an observed source compatibility gap, not an executed new-weight
+failure or an additional recognition gate. It does not change the GPU's already
+locked raw training/collection/scoring sequence or authorize a selected model,
+threshold, microphone test, firmware rollout or production-board change.
