@@ -1,0 +1,53 @@
+{
+  "schema": "mac-paired-reference-reuse-contract-v1",
+  "gpu_ref": "935f8c5fd51fe9e2a771928e61ef9bb499035a1a",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-common-carrier-raw-recognition-protocol-v1.json": "c40333373d74bcb7c502cf051e43d377e42ffe9b25355a5bc20fe6e722403d84",
+    "research/wakeword_p4/results/4090-fp32-reused-development-execution-v1.json": "817c7a3246f1f9c670897e95ee1a1e78f4e42e49c9997278884f57884591019a",
+    "research/wakeword_p4/results/4090-hey-official-development-execution-v1.json": "889e6333cc86aaf6e559c71cd423701ab458ab0b69841c008b4f1a168a6d9060",
+    "research/wakeword_p4/results/4090-official-custom-input-identity-v1.json": "494427063aa45a076ffc29e534b4fddcd66ff873f10b600c8f90adc040bb0e51",
+    "research/wakeword_p4/results/4090-hey-official-background-inputs-v1.json": "998142eab916c1de195a4bd6295e9c752ce3831c1fbf032d6dedf7a541b02a99",
+    "research/wakeword_p4/results/4090-original-official-development-calibration-v1.json": "04d7eeb55cac54fc3324c4c9ce1e73e4efb8d44d8852ae90fb0380483fcdafe6",
+    "research/wakeword_p4/results/4090-raw-fp32-official-shared-far-descriptive-v1.json": "80783e311389c3594a5967ed3fb0fa416e8baa16d56696ef07fded84440c8f4f",
+    "research/wakeword_p4/results/4090-fp32-reused-scoring-original-summary-v1.json": "ca445007230c4826c542c8667f33efeb9e26cafed91ebb12c6964fd4192211d1"
+  },
+  "reproducer_sha256": "7f2b40f2dd8bf4f9f463ceb24702f68570076255380ea72f5c0387aa2b49fced",
+  "checks": {
+    "planned_materials_equal_original_raw_execution": true,
+    "planned_grid_equal_original_138_points": true,
+    "all372_official_input_container_hashes_equal_raw_execution_lock": true,
+    "all12_official_background_pcm_metadata_equal_contract": true,
+    "full512_call_and_padding_counts_equal_contract": true,
+    "official_curves_bound_to_original_execution": true,
+    "shared_far_description_bound_to_original_curve_sources": true
+  },
+  "synthetic_records": 360,
+  "background_records": 12,
+  "background_samples": 603875222,
+  "background_hours": 10.483944826388889,
+  "synthetic_voices": [
+    "en_GB-semaine-medium"
+  ],
+  "official_willow_original_descriptive_far_region": {
+    "registered_points": 13,
+    "points_with_upper95_le_half_per_hour": 10,
+    "complete_target_count_range": [
+      0,
+      5
+    ],
+    "target_denominator": 36,
+    "source": "Inherited existing descriptive counts, not new event or waveform reduction"
+  },
+  "threshold_selected": false,
+  "model_invocations": 0,
+  "waveforms_decoded": 0,
+  "fresh_development_opened": false,
+  "acceptance_opened": false,
+  "candidate_qualified": false,
+  "limits": [
+    "Serialized file locks and published metadata only; actual private PCM bytes were not decoded or rehashed on Mac.",
+    "Official native and custom five-score event policies differ; same inputs and FAR requirement do not mean identical thresholds or detector clocks.",
+    "The only reused synthetic voice is Semaine; official Willow complete recall is only 0..5/36 in this FAR region. Matching it here cannot establish mature-model parity.",
+    "No new model numerical, recognition, P4, first-utterance, long-call or reconnect result."
+  ]
+}

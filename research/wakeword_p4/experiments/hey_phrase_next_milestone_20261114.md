@@ -98,6 +98,37 @@ resource, first-utterance and long-call/reconnect validation. Hi/Hey Muse is a
 supplementary word-length reference; Hi ESP is an engineering reference. No
 candidate is qualified or promoted at this stage.
 
+## Reusing the official reference
+
+Mac independently checked the planned recognition protocol against the original
+raw execution lock and official execution records at GPU `935f8c5`. All 372
+input container hashes match both execution locks. The 12 background records
+also match the published PCM hashes and sample counts, including full 512-sample
+transport accounting: 603,875,222 samples, or 10.483944826388889 hours. The new
+protocol preserves the original material identities and all 138 diagnostic
+points. This closes the input-contract question; reuse the existing official
+curves without another inference run.
+
+The existing official Willow description has 10 of 13 points within the common
+FAR upper-95% requirement of 0.5/hour, with complete target recall ranging from
+0 to 5 of 36 clips. These are inherited descriptive counts, not a new event
+reduction. All synthetic clips use the same Semaine voice. Matching this weak
+single-source reference cannot establish mature-model parity; fresh evaluation
+and independent acceptance remain necessary. Official native and custom
+five-score event policies differ, and the official curve uses the previously
+qualified QEMU route rather than a new P4 speech measurement.
+
+The metadata-only check is reproducible without opening audio or models:
+
+```sh
+python3 research/wakeword_p4/experiments/verify_common_carrier_reference_reuse_mac_v1.py \
+  --output /tmp/paired-reference-reuse-fresh.json
+```
+
+Use a nonexisting output path. The committed receipt is
+`results/mac-common-carrier-reference-reuse-contract-v1.json`. It does not claim
+private PCM decoding, frontend equivalence, new recognition or P4 acceptance.
+
 Original trained-model P4 numeric/resource fixtures have separately been
 prepared and cross-linked: four unchanged models, six complete training streams,
 two fresh repeats and 8,336 prepared calls. No P4 execution has occurred; this
