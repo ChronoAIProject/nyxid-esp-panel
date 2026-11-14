@@ -7883,3 +7883,19 @@ replays120100 original fullbatch hashes perarm and saves100originalPTQ firstrows
 No substituted witness calibration or changed source resets/prefixes. Future
 actualexport still needs separate prospective execution binding and must pass
 unchanged270INT8 gates. No newdev/acceptance, v30 unchanged, goalactive.
+
+### Controlled actual bounded-head export registered, material replay remains live
+
+b19ac86a fixes realexport implementation and prospective plan before execution.
+Requires published successful270float control, both original120100batch material
+receipts and each saved100x1x225x40 calibration array; execution lock binds their
+actual hashes before export. Preserves original zero/full26,100x75 sequence,
+no source resets, frozenBN, sixstates, SavedModel conversion options and INT8 IO.
+Only finalhead transformation differs. Saves fulloperator/tensor quantization
+metadata and checks fusedRELU6 plus boundedLOGISTIC inputscale. Static checks
+are not numerical admission; original270wholeinput gates remain mandatory.
+Python compile check passed; actual export not launched while prerequisite is
+incomplete. OriginalPTQ replay PID1134099 observed Rl elapsed2m10s, Willow26000
+hash-verified batches; originalofficial958504 remainslive. Do not duplicate or
+restart either task merely because observation window expires. v30/newdev/
+acceptance unchanged, goalactive.
