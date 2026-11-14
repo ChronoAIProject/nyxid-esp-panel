@@ -1,0 +1,127 @@
+{
+  "schema": "hey-broad-context-support-enumeration-v1",
+  "files": {
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/features.json": "8d8e7ab165d9b068073b32b6b1fd4cb658aa21a3a279c69cf75aa153e8431cdf",
+    ".local/wakeword/hey-broad-training-features-v1/hey_willow/target-provenance.json": "bf5578fcc95abb1fee2d12f167dd60b4318550f6e8206106d8c3b4793e4df93b",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f",
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/target-provenance.json": "e794e33e872731c18504378e4ffe8f1ff5a99349c69662f72e4055d42b36a228",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/summarize_hey_broad_context_support_v1.py": "14ac7825e3128a0852885ab9037aa914f13f424cb500b37b575841c05129ab36",
+    "research/wakeword_p4/training/train_stream.py": "2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904",
+    "research/wakeword_p4/experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "research/wakeword_p4/experiments/schedule_hey_broad_v1.py": "e6df66f95ed41943cc7a6a5aee7c98cec352dbbf9e354dbce9d2362ec0c22f10"
+  },
+  "targets": [
+    {
+      "target": "hey_willow",
+      "groups": [
+        {
+          "engine": "kokoro",
+          "label": 0,
+          "rows": 2340,
+          "ordinary_negative_legal_ends_before_replacement": 691470
+        },
+        {
+          "engine": "kokoro",
+          "label": 1,
+          "rows": 720,
+          "legal_full_phrase_context_ends": 84814,
+          "positive_supervised_ends": 18000,
+          "full_phrase_ends_outside_positive_support": 66814,
+          "post_phrase_container_ends": 155175,
+          "post_phrase_ends_beyond_positive_support": 135735,
+          "prefix_negative_ends": 15120
+        },
+        {
+          "engine": "piper",
+          "label": 0,
+          "rows": 78624,
+          "ordinary_negative_legal_ends_before_replacement": 16257069
+        },
+        {
+          "engine": "piper",
+          "label": 1,
+          "rows": 24192,
+          "legal_full_phrase_context_ends": 3857869,
+          "positive_supervised_ends": 604800,
+          "full_phrase_ends_outside_positive_support": 3253069,
+          "post_phrase_container_ends": 4078020,
+          "post_phrase_ends_beyond_positive_support": 3424836,
+          "prefix_negative_ends": 508032
+        },
+        {
+          "engine": "qwen",
+          "label": 0,
+          "rows": 864,
+          "ordinary_negative_legal_ends_before_replacement": 197640
+        },
+        {
+          "engine": "qwen",
+          "label": 1,
+          "rows": 216,
+          "legal_full_phrase_context_ends": 21536,
+          "positive_supervised_ends": 5400,
+          "full_phrase_ends_outside_positive_support": 16136,
+          "post_phrase_container_ends": 21600,
+          "post_phrase_ends_beyond_positive_support": 15768
+        }
+      ]
+    },
+    {
+      "target": "hey_nyx",
+      "groups": [
+        {
+          "engine": "kokoro",
+          "label": 0,
+          "rows": 2340,
+          "ordinary_negative_legal_ends_before_replacement": 697710
+        },
+        {
+          "engine": "kokoro",
+          "label": 1,
+          "rows": 720,
+          "legal_full_phrase_context_ends": 89825,
+          "positive_supervised_ends": 18000,
+          "full_phrase_ends_outside_positive_support": 71825,
+          "post_phrase_container_ends": 154149,
+          "post_phrase_ends_beyond_positive_support": 134709,
+          "prefix_negative_ends": 15120
+        },
+        {
+          "engine": "piper",
+          "label": 0,
+          "rows": 78624,
+          "ordinary_negative_legal_ends_before_replacement": 16284957
+        },
+        {
+          "engine": "piper",
+          "label": 1,
+          "rows": 24192,
+          "legal_full_phrase_context_ends": 3831810,
+          "positive_supervised_ends": 604800,
+          "full_phrase_ends_outside_positive_support": 3227010,
+          "post_phrase_container_ends": 4020081,
+          "post_phrase_ends_beyond_positive_support": 3366897,
+          "prefix_negative_ends": 508032
+        },
+        {
+          "engine": "qwen",
+          "label": 0,
+          "rows": 864,
+          "ordinary_negative_legal_ends_before_replacement": 196464
+        },
+        {
+          "engine": "qwen",
+          "label": 1,
+          "rows": 216,
+          "legal_full_phrase_context_ends": 20719,
+          "positive_supervised_ends": 5400,
+          "full_phrase_ends_outside_positive_support": 15319,
+          "post_phrase_container_ends": 21600,
+          "post_phrase_ends_beyond_positive_support": 15768
+        }
+      ]
+    }
+  ],
+  "model_invocations": 0,
+  "limits": "Training metadata legal-end enumeration only; counts sum per row, not unique source or sampling probabilities or actual 10000-step visits. Ordinary negatives are drawn48 then prefix replaces16; discarded draws are not supervision. Ambient windows not enumerated here. Positive support is keyword+3..27; prefix negatives keyword-35..-15 only Piper/Kokoro. Metadata intervals are generated proxies, not phonetic truth. No heldout access, scoring, threshold selection, causal diagnosis or new training authorization. Missing full-phrase contexts do not imply they should all carry positive labels; late contexts may require negative supervision. Prior v43 full-container intervention failed and is not repeated."
+}

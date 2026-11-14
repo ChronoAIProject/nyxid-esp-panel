@@ -8588,3 +8588,25 @@ No inference: authenticated allfour original10000step trace SHA against formalre
 Originalcontinuation completed normally c66de3aa after e92a6a20 all540recursive/audit: all540encoder/FCreferencecodes exact, finalUINT8 and originaltwiceoutput/state repeat exact. SavedFC/statistics/SHA independently audited; internalencoder/repeatstate assertions remain producerlive scope. Does not overturn numerical rejection.
 
 22536053 bound independent noTF auditor/published prerequisites, f046eac9 actualplan before once-onlysession80189 exit0. FourfixedWillow14/Nyx48394 xraw/bounded, originalfinalH5/newpolicy, nominal225/phase224+zero all496fullsupport contexts observed twice. Originalphase QAT embedding892800codes/FC496codes exact savedactualrecursive, all20constants percontextmode/model exact; repeats/modelunchanged/finite passed. Independent noTF savedarrayaudit validates originalraw/contextends, bothcontext constructions, allsavedrepeats/constants/codeconversion/actualreferences/countmetrics. Nominalcontext mismatches preserved (FC14/3/9/4, max93/187/255/255), expectedcontextphase difference not permission to change actualrunner. No runtimeactivationinvoke/export/optimizer/newmaterial.16QATbatchforwardcalls only. Scope is four consumed witnesses, not all540forwardorgradientproof. This evidence does not support QATforwardarithmetic mismatch at aligned contexts as explanation; futuretraining support/loss efficacy needs separate training-only causal diagnosis. V30/originalgates/freshdevclosed retained.
+
+### Training-context support enumeration (2026-11-14)
+
+Added `summarize_hey_broad_context_support_v1.py` and original result
+`4090-hey-broad-context-support-enumeration-v1.json`. Both training feature
+metadata packs authenticate against original target provenance. No raw feature,
+model, scores, heldout data or RNG draws accessed. Enumerates all legal ends per
+training row and engine: positive windows remain keyword+3..27 (25 ends/row),
+whereas many other full generated-interval contexts exist. Prefix supervision
+remains keyword-35..-15 for Piper/Kokoro; Qwen has no such prefix replacement.
+Counts are legal support, not realized visits, unique sources or probabilities;
+48 ordinary negative draws lose16 slots to prefix replacement. Ambient support
+is not enumerated. Generated intervals are not phonetic truth. This does not
+establish causality or authorize wider positive labeling, sampler changes or
+retraining; preserve the failed v43 full-container intervention.
+
+Original old regression completed and was auto-published through ca79386e:
+1860 traces,1242 fixed points, independent exact saved-ledger/reduction audit and
+four-boundary supplement. Mac notified via Issue13 comment6872600442. Old Willow
+integer-QAT macro=0 across all fixed points; old Nyx integer-QAT FAR upper95
+minimum .600518/h. These old models are distinct from rejected bounded-family.
+No new threshold selected, no fresh development/acceptance or v30 replacement.
