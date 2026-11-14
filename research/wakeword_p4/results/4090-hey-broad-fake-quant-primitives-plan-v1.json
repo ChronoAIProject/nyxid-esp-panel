@@ -1,0 +1,11 @@
+{
+  "schema": "hey-broad-fake-quant-primitives-plan-v1",
+  "files": {
+    "research/wakeword_p4/results/4090-hey-broad-equalized-export-result-v1.json": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_fake_quant_primitives_v1.py": "460c1960c07a984baf347e433c228314af30e01fb9cdb2041a75515120cb75a4",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_fake_quant_primitives_v1.py": "574eca1eca903ad495f0bad292d1641bb4e54d13d71c13f5075fb5f93b170505"
+  },
+  "source": "research/wakeword_p4/results/4090-hey-broad-equalized-export-result-v1.json",
+  "policy": "CPU2threads explicit nearest-even affine quantizer and closed-interval clipped STE, range gradients stopped. All actualequalized activation/input int8 affine scales plus output uint8; zero, every lattice level, representable halfsteps and adjacent float32 values, saturation. Independent NumPy reference forwardexact and idempotenceexact; analytic weighted STE exact; rangegradientNone. Additional last-axisperchannel symmetric[-127,127], zero/tinychannelguard and signedint32bias wideforward. Do not finite-difference the discontinuous quantizer to validateSTE. No optimizer or candidateinvocation/export; no nativefakequant tie-rule equivalence assumed.",
+  "limits": "Primitive mathematical contract only, not TFLite integer-kernel oracle or completeQAT/state/deployment equivalence. Dynamicweight clipping conventions and actualgraph integration stillneed validation beforeformaltraining."
+}
