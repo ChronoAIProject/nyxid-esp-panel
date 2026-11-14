@@ -1,0 +1,85 @@
+{
+  "result_sha256": "58c116de444a8a2a02429312dc5df68b2f910c428aa9252a2b8a4bcc200ef511",
+  "numerical_gates": {
+    "float_offline_stream_max_abs": 0.0001,
+    "per_input_five_step_mean_abs_error_max": 0.02,
+    "per_input_five_step_p99_abs_error_max": 0.1,
+    "per_input_five_step_max_abs_error_max": 0.25
+  },
+  "summary": {
+    "raw_logit_control/hey_willow": {
+      "cases": 135,
+      "passed": 123,
+      "failed_requests": [
+        0,
+        1,
+        2,
+        6,
+        12,
+        48385,
+        48390,
+        48391,
+        48396,
+        48397,
+        48398,
+        49826
+      ],
+      "worst_mean": 0.008824323185166776,
+      "worst_p99": 0.2086503472218755,
+      "worst_maximum": 0.21075866834726184
+    },
+    "bounded_logit_consistency/hey_willow": {
+      "cases": 135,
+      "passed": 125,
+      "failed_requests": [
+        1,
+        2,
+        6,
+        14,
+        48384,
+        48385,
+        48391,
+        48392,
+        49824,
+        49825
+      ],
+      "worst_mean": 0.013107239593079729,
+      "worst_p99": 0.3986822958138073,
+      "worst_maximum": 0.3997565031051636
+    },
+    "raw_logit_control/hey_nyx": {
+      "cases": 135,
+      "passed": 130,
+      "failed_requests": [
+        5,
+        48401,
+        48407,
+        49828,
+        106325
+      ],
+      "worst_mean": 0.01076615005510795,
+      "worst_p99": 0.18078825557004924,
+      "worst_maximum": 0.22069086581468583
+    },
+    "bounded_logit_consistency/hey_nyx": {
+      "cases": 135,
+      "passed": 126,
+      "failed_requests": [
+        5,
+        15,
+        48393,
+        48405,
+        48407,
+        49827,
+        49829,
+        50271,
+        50273
+      ],
+      "worst_mean": 0.008377026277461978,
+      "worst_p99": 0.2135081884315005,
+      "worst_maximum": 0.2179323568940163
+    }
+  },
+  "qualified_complete270_conditions": [],
+  "limits": "Independent all540 savedSHA/repeats/inputquantization/completeclocks/phase/fivestats/gates. Numerical qualification only; no selection using freshdev/acceptance/recognition, no promotion or P4 claim."
+}
