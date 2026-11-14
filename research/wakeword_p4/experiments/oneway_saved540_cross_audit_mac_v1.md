@@ -48,3 +48,30 @@ Use NumPy 2.4.6, matching the original arithmetic. The output refuses overwrite.
 No playback, microphone, USB or production-board operation is involved. This
 audit cannot establish quality, FAR, fresh-development admission, P4 resources,
 or a candidate replacement. All original numerical rejections remain valid.
+
+## Actual completed read
+
+Reader revision `32cbd21` completed with exit0 on Mac, NumPy2.4.6/Python3.12.13.
+It authenticated all553 payloads and41 original public source/receipt locks,
+then checked all540 cases /96,168 saved output steps /135 unique raw inputs.
+The report is `results/mac-oneway-saved540-cross-audit-v2.json`; original run
+stdout is retained next to it. No model inference was performed.
+
+| Original condition | Willow passed /135 | Nyx passed /135 |
+| --- | ---: | ---: |
+| two-way consistency | 125 | 126 |
+| one-way consistency | 126 | 127 |
+
+All540 decisions, failed-request lists, matched transitions and post-startup
+failure-window descriptions agree with GPU's original results. Willow has
+7 fail→pass and6 pass→fail; Nyx has4 and3. Neither condition qualifies all270.
+All36 failed cases have five-window errors above.1 after startup; dropping
+startup would not resolve these failures. These are numerical-conversion
+statistics, not wake-word recognition counts or statistical efficacy evidence.
+
+Maximum cross-machine scalar difference is `5.551115123125783e-17`, below the
+derived bound (largest case bound `5.373479439185902e-14`). Minimum distance
+from a mean/p99/max gate is `0.0044651171315927`, so no gate decision depends on
+this rounding. Full phase errors, clocks, quantized inputs and output repeats
+retain the exact checks described above. Scalar maxima are reported with
+their portable arithmetic limit; no cross-machine scalar byte equality claim.
