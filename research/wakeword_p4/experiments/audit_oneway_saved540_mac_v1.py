@@ -45,6 +45,21 @@ def stats(array):
                 maximum=float(np.max(array)))
 
 
+def roundoff_bound(steps):
+    # gamma_k = k*u/(1-k*u), u = binary64 unit roundoff. Inputs are bounded
+    # by one. Two dot/sum/interpolation implementations can differ by at most
+    # twice the forward-error bound. This concerns reduction arithmetic only;
+    # the original model/phase/mean/p99/max numerical gates remain unchanged.
+    k = steps + 9  # five-term dot, full sum and interpolation/division
+    u = np.finfo(np.float64).eps / 2
+    return float(2 * k * u / (1 - k * u))
+
+
+def metrics_agree(actual, original, bound):
+    return set(actual) == set(original) and all(
+        np.isfinite(original[k]) and abs(actual[k] - original[k]) <= bound for k in actual)
+
+
 def array_identity(array):
     return dict(dtype=array.dtype.str, shape=list(array.shape),
                 sha256=sha(array.tobytes()))
@@ -68,6 +83,8 @@ def audit(repo, archive):
     manifest_bytes = blob(repo, R + "gpu-oneway-full540-saved-arrays-mac-v1-manifest.json")
     check(payloads.pop("manifest.json") == manifest_bytes, "Published manifest byte identity")
     manifest = json.loads(manifest_bytes)
+    check(manifest["source_commit"] == "99928b391caf6f1a98d39534333b7e95b4c377a4",
+          "Original packet source revision")
     check(manifest["arrays"] == 540 and manifest["receipts"] == 13, "Original payload scope")
     inventory = {item["path"]: item for item in manifest["files"]}
     check(len(inventory) == 553 and set(inventory) == set(payloads), "Exact member names")
@@ -127,6 +144,7 @@ def audit(repo, archive):
           "Complete original Cartesian product, no duplicates or filtering")
     identities, recomputed, tails = {}, {}, {}
     schema, total_steps, alternative_max = None, 0, 0.0
+    largest_bound, largest_metric_delta, smallest_gate_margin = 0.0, 0.0, 1.0
     summary = {}
     for key, case in cases.items():
         target, condition, order = key
@@ -191,14 +209,26 @@ def audit(repo, archive):
         alternative_max = max(alternative_max, delta)
         five, raw_stats = stats(smooth), stats(np.abs(signed))
         phase = float(np.max(np.abs(a["offline_phase"] - floating[74:])))
-        check(five == case["smoothed_abs_error"] and raw_stats == case["raw_abs_error"] and
-              phase == case["phase_max_error"], "All stored scalar statistics exactly reproduced")
+        bound = roundoff_bound(n)
+        check(metrics_agree(five, case["smoothed_abs_error"], bound) and
+              metrics_agree(raw_stats, case["raw_abs_error"], bound) and
+              phase == case["phase_max_error"], "Original scalar statistics within binary64 reduction bound")
+        largest_bound = max(largest_bound, bound)
+        largest_metric_delta = max(largest_metric_delta, *(
+            abs(values[k] - stored[k]) for values, stored in (
+                (five, case["smoothed_abs_error"]), (raw_stats, case["raw_abs_error"])) for k in values))
+        for metric, gate in (("mean", "per_input_five_step_mean_abs_error_max"),
+                             ("p99", "per_input_five_step_p99_abs_error_max"),
+                             ("maximum", "per_input_five_step_max_abs_error_max")):
+            margin = abs(five[metric] - gates[gate])
+            check(margin > bound, "Gate decision must not depend on reduction roundoff")
+            smallest_gate_margin = min(smallest_gate_margin, margin)
         passed = bool(repeats and phase <= gates["float_offline_stream_max_abs"] and
                       five["mean"] <= gates["per_input_five_step_mean_abs_error_max"] and
                       five["p99"] <= gates["per_input_five_step_p99_abs_error_max"] and
                       five["maximum"] <= gates["per_input_five_step_max_abs_error_max"])
         check(passed == case["passed"], "Original gate decision")
-        recomputed[key] = dict(passed=passed, stats=five)
+        recomputed[key] = dict(passed=passed, stats=five, verified_source_stats=case["smoothed_abs_error"])
         name = condition + "/" + target
         group = summary.setdefault(name, dict(cases=0, passed=0, failed_requests=[],
                                              worst_mean=0, worst_p99=0, worst_maximum=0))
@@ -208,7 +238,7 @@ def audit(repo, archive):
             group["failed_requests"].append(order)
             indices = np.flatnonzero(smooth > .1)
             tails[key] = dict(condition=condition, request_order=order, phase_max=phase,
-                              five_stats=five, windows_above_point1=int(len(indices)),
+                              five_stats=case["smoothed_abs_error"], windows_above_point1=int(len(indices)),
                               windows_above_point1_after_startup=int(np.sum(indices >= 74)),
                               largest_window_start=int(np.argmax(smooth)))
         for metric, value in five.items():
@@ -216,7 +246,13 @@ def audit(repo, archive):
         total_steps += n
 
     original_audit = json.loads(payloads[B + "fixed-grid-screen-independent-audit-v2.json"])
-    check(summary == original_audit["summary"], "GPU audit v2: all 540 summaries exactly reproduced")
+    check(set(summary) == set(original_audit["summary"]), "Exact original summary groups")
+    for name, group in summary.items():
+        stored = original_audit["summary"][name]
+        check(all(group[k] == stored[k] for k in ("cases", "passed", "failed_requests")),
+              "GPU audit v2: complete case decisions exactly reproduced")
+        check(all(abs(group["worst_" + k] - stored["worst_" + k]) <= largest_bound
+                  for k in ("mean", "p99", "maximum")), "Worst statistics within binary64 reduction bound")
     check(not result["all_passed"] and original_audit["qualified_complete270_conditions"] == [],
           "Neither complete condition qualified")
     matched = json.loads(blob(repo, R + "4090-oneway-matched-failure-reduction-v1.json", MATCHED_REF))
@@ -232,7 +268,10 @@ def audit(repo, archive):
             transition = ("pass" if control["passed"] else "fail") + "->" + ("pass" if treatment["passed"] else "fail")
             transitions.setdefault(transition, []).append(order)
             for metric in differences:
-                differences[metric].append(treatment["stats"][metric] - control["stats"][metric])
+                # Reproduce the published reducer's scalar arithmetic from the
+                # original metrics, already checked against every saved array.
+                differences[metric].append(treatment["verified_source_stats"][metric] -
+                                           control["verified_source_stats"][metric])
             failures += [tails[(target, c, order)] for c in CONDITIONS if (target, c, order) in tails]
         signed_stats = {}
         for metric, values in differences.items():
@@ -246,7 +285,7 @@ def audit(repo, archive):
         transition_counts[target] = {name: len(orders) for name, orders in transitions.items()}
     check(b"KeyError" in payloads[B + "screen-original-audit-failure-v1.log"],
           "Original failed audit retained")
-    return dict(schema="mac-oneway-saved540-cross-audit-v1", archive_sha256=ARCHIVE_SHA,
+    return dict(schema="mac-oneway-saved540-cross-audit-v2", archive_sha256=ARCHIVE_SHA,
                 archive_bytes=len(data), exact_archive_members=554, authenticated_payloads=553,
                 source_ref=PACKET_REF, matched_ref=MATCHED_REF,
                 reader_sha256=sha(Path(__file__).read_bytes()), python=sys.version.split()[0],
@@ -255,7 +294,10 @@ def audit(repo, archive):
                 unique_raw_inputs=len(identities), full_steps_across_540=total_steps,
                 array_dtype_schema=schema, numerical_gates=gates,
                 max_secondary_window_arithmetic_delta=alternative_max,
-                gpu_v2_summary_exact=True, gpu_matched_reduction_exact=True,
+                gpu_v2_summary_decisions_exact=True, gpu_v2_summary_statistics_within_roundoff=True,
+                original_scalar_max_delta=largest_metric_delta, scalar_roundoff_bound_max=largest_bound,
+                minimum_numerical_gate_margin=smallest_gate_margin,
+                gpu_matched_reduction_exact=True,
                 summary=summary, matched_transitions=transition_counts,
                 failed_cases=len(tails), failed_cases_with_errors_after_startup=sum(
                     row["windows_above_point1_after_startup"] > 0 for row in tails.values()),
@@ -276,7 +318,8 @@ def main():
         output.write(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({key: result[key] for key in (
         "full_cases", "full_steps_across_540", "summary", "matched_transitions",
-        "gpu_v2_summary_exact", "gpu_matched_reduction_exact", "qualified_complete270_conditions")}, indent=2))
+        "gpu_v2_summary_decisions_exact", "gpu_matched_reduction_exact",
+        "original_scalar_max_delta", "qualified_complete270_conditions")}, indent=2))
 
 
 if __name__ == "__main__":

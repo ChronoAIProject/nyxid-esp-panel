@@ -25,6 +25,18 @@ every failed case's post-startup error windows. A second five-window arithmetic
 form checks convolution to a fixed 1e-15 roundoff bound. The original v1 KeyError
 and stopped continuation receipts remain authenticated, never replaced.
 
+The initial Mac reader at `a95dea4` stopped on case11: the five-window maximum
+was `0.04736376297660172` versus original `0.04736376297660171`. It incorrectly
+required cross-machine reduction scalars to be bit-identical. Its original
+exit1/log/source revision are retained. This is not an inference mismatch.
+The revised read uses the binary64 forward-error bound `2*gamma(n+9)` for
+bounded reductions (`u=eps/2`), independently of observed errors. Every original
+model gate is unchanged and must be farther from its decision boundary than
+this bound. Case decisions, array identities, phase errors, clocks and repeat
+bytes remain exact. Reported scalar statistics are **not** claimed byte-exact
+across CPU reduction implementations. The matched scalar arithmetic is replayed
+from original statistics after checking those against the saved arrays.
+
 ```sh
 PYTHON experiments/audit_oneway_saved540_mac_v1.py \
   --repository-root REPO \
