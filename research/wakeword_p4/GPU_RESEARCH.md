@@ -7913,3 +7913,14 @@ publishstaticresult, ifpassing publishactualscreenlock then once270screen and
 publishfullresult. Any missing report/error stops without retry; numericfailure
 is retained, never authorizes development. Bothnew scripts compiled; no actual
 export/screen yet. Do not mutate boundcode while waiting/running. v30 unchanged.
+
+### Independent receipt reducer verified against complete original failure
+
+cc83d97b immutableexport receipt supports Mac6868058124 request without rewriting
+originaltraining modelidentity. Before actual bounded artifacts exist, exercised
+its exact AST-extracted reduction loop on all270original saved arrays. Allhashes,
+explicit5slice error stats, phase, clocks/counts and repeats agree with original
+result; exact oldpass counts Willow54/Nyx117. Invertedpass flag and alteredmean
+both rejected. Review/report saved; no model/frontend invoke, conversion or fresh
+data. This verifies only reducer, not whole receipt/staticstate path or bounded
+candidate admission. Existing execution-bound sources untouched.
