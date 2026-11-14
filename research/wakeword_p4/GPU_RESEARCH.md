@@ -9391,3 +9391,25 @@ This validates one fullbatch mechanical update only. Next requires repeatable
 multi-update fixedgridcontrol vs learnedstep treatment integration, actual batch
 schedule guards and explicit fixedfinal training recipe before formal runs.
 No recognition/FAR claim, freshdata/threshold selection or v30 replacement.
+
+### 2026-11-14 — Two-update fixedgrid/learnedstep paired smoke audited
+
+1a3d1b9eprelock→originalsession15789exit0. Willow/Nyxflat ×fixed_grid/learned_step,
+each2fresh repetitions/2updates, identical originalFP32folded initialization,
+20Wb/causal225terminal224/inputweightgrids/Adam; only treatment updates9logsteps.
+Originalfirst2full128batch digests enforced each repeat and identical across arms.
+Controls logsteps0; treatments changed; allupdatedencoder/embedding/logit actual
+export mismatch0, complete variables/Adam/export/output repeats byteexact.
+Independent saved audit2718952codes and42(control)/44(treatment)Adam arrays passed.
+
+Measured two-update times include initialization effects: Willowcontrol4.472s first,
+.825s repeat; other runs .595–.824s. These are disposable2step timings, not a formal
+throughput guarantee. Bothwords and control retained; no choosing easier architecture
+or arm from these results (flat preselected for paired scale intervention).
+
+Next formal protocol: bothwords ×fixedgrid/learnedstep, same originalflat starting
+FP32folded final10000 export, originalfirst10000batch schedule, freshAdam and exact
+same causal/parameterization as smoke.10000updates once each/fixedfinalonly, no
+sweep/earlystop/checkpointselection; full540 actual waveform numerical gates and
+independent audit before any recognition admission. New formal is not a replica of
+historicalrawBN optimization. v30/freshdev/acceptance boundaries unchanged.

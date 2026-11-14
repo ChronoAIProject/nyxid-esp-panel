@@ -1,0 +1,46 @@
+{
+  "result_sha256": "16eb822a2f4ea8037dd0851b572cd9e6f819539ca6a63950413db538f31a95bb",
+  "auditor_sha256": "529b3cdc0ba53b8e8696a54d393fe7d418ca15408b77c7528c4d8fd8d4054102",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "flat",
+      "training_arm": "fixed_grid",
+      "parameter_tensors": 20,
+      "activation_step_values": 9,
+      "optimizer_arrays": 42,
+      "passed": true
+    },
+    {
+      "target": "hey_willow",
+      "condition": "flat",
+      "training_arm": "learned_step",
+      "parameter_tensors": 20,
+      "activation_step_values": 9,
+      "optimizer_arrays": 44,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "flat",
+      "training_arm": "fixed_grid",
+      "parameter_tensors": 20,
+      "activation_step_values": 9,
+      "optimizer_arrays": 42,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "flat",
+      "training_arm": "learned_step",
+      "parameter_tensors": 20,
+      "activation_step_values": 9,
+      "optimizer_arrays": 44,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "code_values_both_repeats": 2718952,
+  "model_invocations": 0,
+  "limits": "Saved postupdate TF/actual codes plus parameter/Adam/export-repeat identity. Two updates on first2 full128 originalbatches only, paired fixedgrid/learnedstep; no full540 numerical qualification, fresh recognition, FAR or training efficacy evidence."
+}
