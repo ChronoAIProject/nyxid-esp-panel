@@ -13,7 +13,7 @@ def prepare(raw,samples):
 def predict(values,model_path,interpreter):
  it=interpreter(model_path=model_path);it.allocate_tensors();a=it.get_input_details()[0];b=it.get_output_details()[0]
  assert a['dtype']==np.int8 and b['dtype']==np.uint8 and list(a['shape'])==[1,3,40] and list(b['shape'])==[1,1]
- scale,zero=a['quantization'];oscale,ozero=b['quantization'];assert scale>0 and oscale>0
+ scale,zero=a['quantization'];oscale,ozero=b['quantization'];assert scale>0 and oscale==1/256 and ozero==0
  q=np.clip(np.rint(values/scale)+zero,-128,127).astype(np.int8);codes=np.empty(len(values)//3,np.uint8)
  for i,j in enumerate(range(0,len(values),3)):
   it.set_tensor(a['index'],q[None,j:j+3]);it.invoke();codes[i]=it.get_tensor(b['index'])[0,0]
