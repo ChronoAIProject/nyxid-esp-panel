@@ -1,0 +1,63 @@
+{
+  "execution_sha256": "f25e697060e3cbba8f290652bd87219030aa0b15b4f51cc95c19ba8850117026",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "seed": 202611140,
+      "h5_path": ".local/wakeword/pooled-stream-phase-v1/hey_willow-float_control/initial.weights.h5",
+      "h5_sha256": "0484fd133f05312e2e2c7f91131a1ca9362747f30b8da0af960a965d8a9a2f31",
+      "references_path": ".local/wakeword/pooled-stream-phase-v1/hey_willow-float_control/references.npz",
+      "references_sha256": "70eb9f7860a54f64400c814eabcd5826a0fd2d52d58a20e40232d78402c3b1dc",
+      "phase_max_abs": 5.960464477539063e-08,
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "passed": true
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "seed": 202611141,
+      "h5_path": ".local/wakeword/pooled-stream-phase-v1/hey_willow-integer_qat/initial.weights.h5",
+      "h5_sha256": "0c2f2d7f655b8955bc906a49df0c2c129a8553247534fffc2db252cda03b7572",
+      "references_path": ".local/wakeword/pooled-stream-phase-v1/hey_willow-integer_qat/references.npz",
+      "references_sha256": "cb6ac0f30081e3c9acce3077a19adafc1aad8a0ed3672e87637699ec3e52319d",
+      "phase_max_abs": 2.9802322387695312e-08,
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "seed": 202611142,
+      "h5_path": ".local/wakeword/pooled-stream-phase-v1/hey_nyx-float_control/initial.weights.h5",
+      "h5_sha256": "f6d62e292ac4ba645714ad8595c8b80b3b2e6bd203d719a7e312a0e5eda8fc5c",
+      "references_path": ".local/wakeword/pooled-stream-phase-v1/hey_nyx-float_control/references.npz",
+      "references_sha256": "e4fe18c2733114fd0f5d6acb36a49ab8d6d96847ce4eafc07e3768327068b1cc",
+      "phase_max_abs": 5.960464477539063e-08,
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "seed": 202611143,
+      "h5_path": ".local/wakeword/pooled-stream-phase-v1/hey_nyx-integer_qat/initial.weights.h5",
+      "h5_sha256": "4c1554274976280b792882090134ea57a7cb8c0a45d77830f01dbaa50cd2a6b0",
+      "references_path": ".local/wakeword/pooled-stream-phase-v1/hey_nyx-integer_qat/references.npz",
+      "references_sha256": "ad9c594921b01139f0e4a5968b9482a5a92ecc7cdb6fdc6cbf2f0f8f8c9b35bc",
+      "phase_max_abs": 2.9802322387695312e-08,
+      "repeat_exact": true,
+      "finite": true,
+      "parameters_unchanged": true,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "limits": "New average-pool head initialization saved before first forward, original encoder/BN copied exactly. All4 original H5, same4synthetic inputs x256steps, all startup, two TF state resets. Independent offline model loaded from saved initialization; phase224+zero against stream74:, nominal225 retained. No export/optimizer/audio/recognition or fresh data. Failure preserved, no seed/head selection/retry."
+}
