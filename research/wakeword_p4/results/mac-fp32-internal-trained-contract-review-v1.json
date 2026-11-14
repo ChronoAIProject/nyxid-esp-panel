@@ -1,0 +1,69 @@
+{
+  "schema": "mac-fp32-internal-trained-contract-review-v1",
+  "original_sha256": "c549ee3a744d28e32afa0dff0ad1566e4519a951ab3ede838f858b5c36cc9089",
+  "accepted_original": true,
+  "permitted_metadata": [
+    {
+      "graph": 0,
+      "tensor": 0,
+      "shape": [
+        1,
+        3,
+        40
+      ],
+      "signature": [
+        -1,
+        3,
+        40
+      ]
+    },
+    {
+      "graph": 0,
+      "tensor": 45,
+      "shape": [
+        1,
+        3,
+        1,
+        40
+      ],
+      "signature": [
+        -1,
+        3,
+        1,
+        40
+      ]
+    }
+  ],
+  "rejected_cases": [
+    {
+      "case": "dynamic concrete batch",
+      "rejected": true,
+      "message": "Exact FP32 input/output ABI"
+    },
+    {
+      "case": "symbolic time",
+      "rejected": true,
+      "message": "Only original audio/ExpandDims batch metadata may be symbolic; concrete batch stays one"
+    },
+    {
+      "case": "symbolic probability output",
+      "rejected": true,
+      "message": "Only original audio/ExpandDims batch metadata may be symbolic; concrete batch stays one"
+    },
+    {
+      "case": "ExpandDims wrong axis",
+      "rejected": true,
+      "message": "Fixed scalar axis2 and shape-only audio expansion"
+    },
+    {
+      "case": "bounded Dense head",
+      "rejected": true,
+      "message": "Original unbounded Dense head"
+    }
+  ],
+  "all_passed": true,
+  "original_bytes_unchanged": true,
+  "model_invocations": 0,
+  "inspector_sha256": "9e32d32f70de14b920fe92fdc0e4bd616ab17e35e7b4f7e73a39930264c80a10",
+  "review_sha256": "3520f82f6a8a8d3d77c0fd2d5f098c7d733c8e26272486d525441ce9da98992f"
+}

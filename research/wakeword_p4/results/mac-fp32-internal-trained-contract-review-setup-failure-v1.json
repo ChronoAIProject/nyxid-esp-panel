@@ -1,0 +1,13 @@
+{
+  "schema": "mac-fp32-internal-trained-contract-review-setup-failure-v1",
+  "source_commit": "98aadd5",
+  "exit_code": 1,
+  "exception": "ValueError: assignment destination is read-only",
+  "location": "review_fp32_internal_trained_contract_mac_v1.py:36",
+  "reason": "FlatBuffer object shape is a NumPy view over immutable model bytes; fixture setup attempted in-place mutation.",
+  "invalid_fixtures_exercised": 0,
+  "model_invocations": 0,
+  "original_model_unchanged": true,
+  "raw_failure_output_source": "Original exec tool result, chunk 26d30c",
+  "correction": "Replace copied fixture shape/signature vectors with separate lists before repacking; inspector/model/probability gates unchanged."
+}

@@ -33,11 +33,13 @@ def main():
 
     def concrete_batch(model):
         g = model.subgraphs[0]
-        g.tensors[g.inputs[0]].shape[0] = -1
+        t = g.tensors[g.inputs[0]]
+        t.shape = [-1, *t.shape[1:]]
 
     def symbolic_time(model):
         g = model.subgraphs[0]
-        g.tensors[g.inputs[0]].shapeSignature[1] = -1
+        t = g.tensors[g.inputs[0]]
+        t.shapeSignature = [t.shapeSignature[0], -1, *t.shapeSignature[2:]]
 
     def symbolic_output(model):
         g = model.subgraphs[0]
