@@ -1,0 +1,158 @@
+{
+  "schema": "mac-paired-qat-published-metadata-review-v1",
+  "gpu_ref": "a11ffd23ab76fbe2b0d56c7a3a250637341bb887",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-screen-result-v1.json": "86559ff44f1d1c92df11711cc45d978f9e5cad78e231d276cafa96b53f62819e",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-screen-independent-audit-v1.json": "1ee03df2ad61c8cd5bf1926983877f6956712d927e36e0363b48b6ff3113b28d",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-screen-execution-v1.json": "3a6062cf5d29ea5d0032d5869d4c84d38691ca9411ff3793aa770bacff893a8e",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-export-result-v1.json": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-export-result-v1.json": "20f396c1797c12137de88a6f1c1a69d2933878d639b7f9d18d6697d50221ae3f",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-grid-drift-v1.json": "f525815974bd4aa30873446712c338ac1022dc50be7be59c3410442838ff6ab0"
+  },
+  "script_sha256": "260d363e012a2bd2e5438606b7e061be670768b5c32dc7d21348148ee2d52cd1",
+  "recomputed_summary": {
+    "float_control/hey_willow": {
+      "cases": 135,
+      "passed": 119,
+      "failed_requests": [
+        6,
+        7,
+        8,
+        12,
+        14,
+        18,
+        20,
+        48385,
+        48391,
+        48392,
+        48398,
+        48403,
+        48404,
+        49824,
+        49825,
+        50279
+      ],
+      "worst_mean": 0.05898719294946913,
+      "worst_p99": 0.9854529085122049,
+      "worst_maximum": 0.9950652630592232
+    },
+    "integer_qat/hey_willow": {
+      "cases": 135,
+      "passed": 91,
+      "failed_requests": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        8,
+        12,
+        14,
+        18,
+        19,
+        21,
+        48385,
+        48390,
+        48391,
+        48392,
+        48395,
+        48397,
+        48398,
+        48402,
+        48403,
+        48404,
+        48406,
+        49824,
+        49825,
+        49826,
+        50262,
+        50263,
+        50264,
+        50273,
+        50276,
+        50278,
+        50280,
+        104692,
+        104695,
+        104700,
+        104701,
+        104704,
+        104705,
+        106319,
+        106320,
+        106327,
+        106329,
+        106330,
+        106334
+      ],
+      "worst_mean": 0.07095011534022017,
+      "worst_p99": 0.9957500734211646,
+      "worst_maximum": 0.9957583998620977
+    },
+    "float_control/hey_nyx": {
+      "cases": 135,
+      "passed": 129,
+      "failed_requests": [
+        5,
+        48389,
+        48401,
+        49827,
+        49829,
+        50280
+      ],
+      "worst_mean": 0.010021553642052988,
+      "worst_p99": 0.23562639663141455,
+      "worst_maximum": 0.24027446907712147
+    },
+    "integer_qat/hey_nyx": {
+      "cases": 135,
+      "passed": 128,
+      "failed_requests": [
+        9,
+        21,
+        49827,
+        49828,
+        49829,
+        50272,
+        106324
+      ],
+      "worst_mean": 0.006478816339138618,
+      "worst_p99": 0.16769698497199007,
+      "worst_maximum": 0.18519378612400036
+    }
+  },
+  "all540_phase_and_repeat_passed": true,
+  "activation_grids": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "model_sha256": "57b1a04654330875ccf7bfed7f097538732730d2f9e17e825229c73283a9f51c",
+      "compared_operators": 10,
+      "max_activation_scale_ratio": 4.615514711723738
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "model_sha256": "d37a7469e44b98daead845ae9afd51370f30a1653bf266d125a1d2aae6260aad",
+      "compared_operators": 10,
+      "max_activation_scale_ratio": 40.530371143882526
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "model_sha256": "3f0ec9d09ea9a8b0256c467299f4f3d584a2b0da0a467ff5a54e7ea69f096065",
+      "compared_operators": 10,
+      "max_activation_scale_ratio": 1.8416931872605544
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "model_sha256": "c83c483befcdb2f8d589547443ee053876d69000126c9829aa3ed17f31729312",
+      "compared_operators": 10,
+      "max_activation_scale_ratio": 6.225123642593863
+    }
+  ],
+  "all_four_candidates_rejected": true,
+  "metadata_consistent": true,
+  "limits": "Independent recomputation from published case statistics/export tensor metadata and immutable report hashes only. No access to all540 saved arrays/new final H5/TFLite bytes, no actual new inference or unique-cause claim. Not a replacement for GPU saved-array audit, numerical admission, recognition, freshdev, independent acceptance or P4 validation."
+}
