@@ -8871,3 +8871,7 @@ Original four TFLites, all four TF/LiteRT reference NPZ and per-model receipts, 
 ### Additional read-only FP32 FlatBuffer audit
 
 All4 original model SHA matched. Independent schema/buffer walk records every subgraph/operator/tensor shape/type/buffer hash and variable flag; confirms single FLOAT32[1,3,40] input/[1,1] output,6READ/6ASSIGN and6real-zero FP32 initializer buffers, no quantized tensors/scales or custom/quantize/dequantize operators, one logistic and unfused raw FC head. Integer shape/index tensors are legitimate. No interpreter/model invoke/export/media IO. Does not substitute for Mac runtime or original parameter reconstruction proof. Original handoff unchanged.
+
+### Original H5 numerical inventory independent check
+
+Read-only h5py audit checks all4 original H5 container SHA and every31datasets/model (including16BN arrays) against original software-run saved parameter inventory. Full shape/dtype/value-SHA multisets and multiplicities exact. This authenticates numerical inventory but is not a positional name mapping or independent forward re-execution; unchanged-after-run remains original producer assertion. No TF import, models invoked/exported or media read. Mac had no newer reply at this check.
