@@ -1,0 +1,125 @@
+{
+  "schema": "mac-dual-branch-consistency-loss-analytic-review-v1",
+  "gpu_ref": "26a12e1ab4341bec41116a6e8a3409862835befc",
+  "script_sha256": "9e73517f5b581d72aac1cad1387027f20e9bbe85d9b45165c8340ec90c5b6af6",
+  "actual_gpu_loss_source_sha256": "3907462cc0dd9b390d04bc161a3e2c92fd26af9cfeed3e2e102b93243ccdd6ba",
+  "source_path": "research/wakeword_p4/experiments/hey_broad_consistency_loss_v1.py",
+  "fixture_pairs": 1261,
+  "cases": [
+    {
+      "dtype": "float32",
+      "coefficient": 0,
+      "batch": 1,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float32",
+      "coefficient": 0,
+      "batch": 7,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float32",
+      "coefficient": 0,
+      "batch": 1261,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float32",
+      "coefficient": 1,
+      "batch": 1,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float32",
+      "coefficient": 1,
+      "batch": 7,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float32",
+      "coefficient": 1,
+      "batch": 1261,
+      "oracle_allowance": 7.62939453125e-06,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 0,
+      "batch": 1,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 0,
+      "batch": 7,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 0,
+      "batch": 1261,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 1,
+      "batch": 1,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 1,
+      "batch": 7,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    },
+    {
+      "dtype": "float64",
+      "coefficient": 1,
+      "batch": 1261,
+      "oracle_allowance": 1.4210854715202004e-14,
+      "loss_exact_within_precision": true,
+      "analytic_gradient_within_precision": true,
+      "finite": true
+    }
+  ],
+  "all_passed": true,
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.4.6"
+  },
+  "optimizer_updates": 0,
+  "limits": "Actual unchanged GPU components() executes on native Mac CPU against independent Python stable BCE/Huber values and closed-form derivatives. Covers primitive only, not the CNN/shared-variable chain, actual original128x225 batches, 4090/TF32 accumulation, the reported gradient-additivity failure, optimizer updates, model admission, recognition or a remedy for the failed preflight. No changed loss coefficients/protocol/gates and no audio IO."
+}

@@ -1,0 +1,94 @@
+"""Independent analytic audit of the actual GPU dual-branch loss primitive."""
+import argparse
+import ast
+import hashlib
+import importlib.metadata
+import json
+import math
+from pathlib import Path
+import subprocess
+
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x)) if x >= 0 else math.exp(x) / (1 + math.exp(x))
+
+
+def review(ref):
+    import numpy as np
+    import tensorflow as tf
+    tf.config.set_visible_devices([], 'GPU')
+    tf.config.threading.set_intra_op_parallelism_threads(2)
+    ref = subprocess.check_output(['git', 'rev-parse', ref], text=True).strip()
+    path = 'research/wakeword_p4/experiments/hey_broad_consistency_loss_v1.py'
+    raw = subprocess.check_output(['git', 'show', ref + ':' + path])
+    tree = ast.parse(raw)
+    functions = [n for n in tree.body if isinstance(n, ast.FunctionDef)]
+    assert len(functions) == 1 and functions[0].name == 'components'
+    namespace = {}
+    exec(compile(ast.fix_missing_locations(ast.Module(body=functions, type_ignores=[])),
+                 '<bound-original-GPU-consistency-loss>', 'exec'), namespace)
+    fixture = np.asarray([-1e20, -1000, -80, -16, -8, -4, -.5, 0, .5, 4, 8, 16, 80, 1000, 1e20])
+    pairs = [(f, q) for f in fixture for q in fixture]
+    # Exact Huber-join and neighboring points, including both signs.
+    for join in [-8., 8.]:
+        for dtype in [np.float32, np.float64]:
+            j = dtype(join)
+            pairs += [(float(np.nextafter(j, dtype(-np.inf))), 0.), (float(j), 0.),
+                      (float(np.nextafter(j, dtype(np.inf))), 0.)]
+    seed = np.random.default_rng(20261114)
+    pairs += list(zip(seed.uniform(-40, 40, 1024), seed.uniform(-40, 40, 1024)))
+    reports = []
+    for dtype in [np.float32, np.float64]:
+        values = np.asarray(pairs, dtype=dtype)
+        for coefficient in [0, 1]:
+            for n in [1, 7, len(values)]:
+                f = tf.Variable(values[:n, 0, None])
+                q = tf.Variable(values[:n, 1, None])
+                labels = (np.arange(n) % 2).astype(dtype)[:, None]
+                weights = np.where(labels[:, 0] == 1, 1, 20).astype(dtype)
+                with tf.GradientTape() as tape:
+                    total, supervised, consistency = namespace['components'](
+                        f, q, tf.constant(labels), tf.constant(weights), coefficient, tf)
+                actual = [total.numpy(), supervised.numpy(), consistency.numpy()]
+                gradients = [v.numpy().reshape(-1).astype(np.float64) for v in tape.gradient(total, [f, q])]
+                expected_s, expected_c, gf, gq = [], [], [], []
+                for (zf, zq), y, w in zip(values[:n].astype(np.float64), labels[:, 0], weights, strict=True):
+                    gap = (zf - zq) / 8
+                    bc = lambda z: max(z, 0) - float(y) * z + math.log1p(math.exp(-abs(z)))
+                    expected_s.append(float(w) * (bc(zf) + bc(zq)) / 2)
+                    expected_c.append(gap * gap / 2 if abs(gap) <= 1 else abs(gap) - .5)
+                    derivative = max(-1., min(1., gap)) / (8 * n)
+                    gf.append(float(w) * (sigmoid(zf) - y) / (2 * n) + coefficient * derivative)
+                    gq.append(float(w) * (sigmoid(zq) - y) / (2 * n) - coefficient * derivative)
+                s, c = math.fsum(expected_s) / n, math.fsum(expected_c) / n
+                expected = [s + coefficient * c, s, c]
+                # Fixed precision allowance for this small arithmetic primitive;
+                # not a new tolerance for CNN gradient accumulation or admission.
+                tolerance = 64 * np.finfo(dtype).eps
+                loss_ok = np.allclose(actual, expected, rtol=tolerance, atol=tolerance)
+                gradient_ok = all(np.allclose(a, e, rtol=tolerance, atol=tolerance)
+                                  for a, e in zip(gradients, [gf, gq], strict=True))
+                reports.append(dict(dtype=str(np.dtype(dtype)), coefficient=coefficient, batch=n,
+                    oracle_allowance=tolerance, loss_exact_within_precision=bool(loss_ok),
+                    analytic_gradient_within_precision=bool(gradient_ok),
+                    finite=bool(np.isfinite(actual).all() and all(np.isfinite(g).all() for g in gradients))))
+    result = dict(schema='mac-dual-branch-consistency-loss-analytic-review-v1', gpu_ref=ref,
+        script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        actual_gpu_loss_source_sha256=hashlib.sha256(raw).hexdigest(), source_path=path,
+        fixture_pairs=len(values), cases=reports, all_passed=all(
+            c['loss_exact_within_precision'] and c['analytic_gradient_within_precision'] and c['finite'] for c in reports),
+        versions={n: importlib.metadata.version(n) for n in ['tensorflow', 'numpy']}, optimizer_updates=0,
+        limits='Actual unchanged GPU components() executes on native Mac CPU against independent Python stable BCE/Huber values and closed-form derivatives. Covers primitive only, not the CNN/shared-variable chain, actual original128x225 batches, 4090/TF32 accumulation, the reported gradient-additivity failure, optimizer updates, model admission, recognition or a remedy for the failed preflight. No changed loss coefficients/protocol/gates and no audio IO.')
+    assert result['all_passed'], result
+    return result
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--gpu-ref', required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    result = review(args.gpu_ref)
+    with args.output.open('x') as f:
+        f.write(json.dumps(result, indent=2) + '\n')
+    print(json.dumps(dict(all_passed=result['all_passed'], cases=len(result['cases']), fixture_pairs=result['fixture_pairs'])))

@@ -1,0 +1,11 @@
+{
+  "schema": "mac-consistency-loss-analytic-review-original-failure-v1",
+  "original_script_sha256": "ca41224bd52b13d5072fdc7515919105b6f967cf5a2e61f7e18ea850730604ce",
+  "preserved_script": "research/wakeword_p4/experiments/history/review_consistency_loss_mac_failed_serialization_v1.py.txt",
+  "preserved_empty_report": "research/wakeword_p4/experiments/history/mac-dual-branch-consistency-loss-analytic-review-v1.json.empty",
+  "empty_report_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observed_exit_code": 1,
+  "observed_exception": "TypeError: Object of type float32 is not JSON serializable",
+  "failure_location": "json.dumps(result), after review() returned; no optimizer/model training/exports occurred",
+  "remedy": "Convert the report precision allowance to Python float; rerun the unchanged primitive/oracle in a separately named v2 report. Original evidence preserved."
+}
