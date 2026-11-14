@@ -64,8 +64,8 @@ the RISC-V ELF target and `ilp32f` ABI. The 1,331,120-byte image has 14,780 byte
 of static DRAM data/bss, excluding all runtime arena allocations and stacks.
 See `../results/mac-fp32-trained-fullstream-p4-link-v1.json`.
 
-No hardware was accessed. The prepared 8,336 calls have not run on P4, so this
-does not establish target timing, arena use, repeat equality or numeric parity.
+No hardware was accessed during preparation/build. At that stage the prepared
+8,336 calls had not run on P4; the actual execution below was completed later.
 The original build log, ELF, image, section sizes and fixture assets remain in
 the private `fp32-trained-fullstream-p4-v1` run directory. Reproduce collection:
 
@@ -114,8 +114,8 @@ python3 research/wakeword_p4/experiments/check_trained_p4_capture_reducer_mac_v1
 Capture origin is a separate requirement: app-only execution/restore receipts
 must bind the actual development board, confirmed slot and flashed image to
 the UART capture. A passing parser does not authenticate those facts or qualify
-a candidate. The runner below supplies that integration; actual P4 execution
-remains pending. The old random-weight validator is still unsuitable.
+a candidate. The runner below supplies that integration; its actual execution
+is recorded below. The old random-weight validator is still unsuitable.
 
 ## Trained app-only runner
 
@@ -192,6 +192,59 @@ python3 research/wakeword_p4/experiments/check_trained_p4_runner_mac_v1.py \
 ```
 
 See `../results/mac-trained-p4-app-only-runner-constructed-checks-v1.json`.
-Real P4 numeric/latency/allocator observations, independent restoration proof,
-full-panel headroom, acoustic recognition and voice lifecycle checks are still
-outstanding.
+## Actual P4 execution and restoration
+
+The development ESP32-P4 revision v1.3 was connected through a WCH USB serial
+bridge. The earlier `/dev/cu.usb*` inventory missed its
+`/dev/cu.wchusbserial*` device. This was an inventory/runner validation bug, not
+evidence that the user had disconnected the board. Commit `d9d0ac7` validates
+current USB enumeration metadata; six port cases and the existing 25
+transaction/restoration cases pass. Actual USB metadata, chip identity, console
+IP/slug/firmware, HTTP status, slot geometry and full backup were then checked
+fresh before the run.
+
+All **48 executions / 8,336 real P4 Invokes** completed and passed. The maximum
+absolute error against original TF was `1.3709068298339844e-6`, and against
+original LiteRT `1.5944242477416992e-6`, both below the original `1e-4` gate.
+Fresh-repeat output bytes matched exactly. Every Invoke, including cold calls,
+met the unchanged 30,000-us deadline; the worst was **5,206 us**.
+
+| Original raw FP32 model | Invokes | Worst Invoke (us) | Main arena used (bytes) | Variable arena used (bytes) |
+| --- | ---: | ---: | ---: | ---: |
+| Hey Willow float control | 2,084 | 5,206 | 51,800 | 528 |
+| Hey Willow integer-trained raw reconstruction | 2,084 | 5,117 | 51,800 | 528 |
+| Hey Nyx float control | 2,084 | 5,129 | 51,800 | 528 |
+| Hey Nyx integer-trained raw reconstruction | 2,084 | 5,116 | 51,800 | 528 |
+
+These are allocator usage figures inside the probe's **256-KiB main + 64-KiB
+variable reservations**, not its whole internal-RAM footprint or full-panel
+headroom. The integer-trained rows still execute raw FP32 reconstructions and
+do not measure quantized inference. Only the six preselected complete training
+feature streams were used; there was no waveform frontend or audio I/O.
+
+The probe image was read back exactly before capture. The original full app
+slot, partition table and OTA metadata were restored and read back byte-for-byte.
+After the runner exited, a separate HTTP check confirmed the original app ELF,
+firmware, valid idle OTA slot, service/agent selection and idle Hi ESP listener;
+the serial port was unowned. Nyx remained `connecting`, matching the explicitly
+selected `app-only` readiness. This does not claim a working voice connection.
+No dining-room board, fresh development or independent acceptance was accessed.
+
+The public result and unchanged raw UART are
+`../results/mac-trained-p4-fullstream-hardware-result-v1.json` and
+`../results/mac-trained-p4-fullstream-uart-v1.log.gz`. A separate reducer invocation
+reproduced the runner's entire reduction exactly. The gzip artifact retains the
+original UART bytes, including CRLF, without line-ending normalization:
+
+```sh
+gzip -dc research/wakeword_p4/results/mac-trained-p4-fullstream-uart-v1.log.gz > /tmp/trained-p4-uart-original.log
+python3 research/wakeword_p4/experiments/reduce_fp32_trained_p4_capture_mac_v1.py \
+  --repository-root REPO --run-root ORIGINAL_PRIVATE_RUN \
+  --capture /tmp/trained-p4-uart-original.log \
+  --report NEW_REDUCTION.json
+```
+
+This closes the standalone original-model P4 numerical/resource subset and its
+restoration check. Full 540-case P4 coverage, new continuation weights,
+full-panel headroom, recognition/FAR, first-utterance, voice connectivity and
+long-call/reconnect acceptance remain outstanding.
