@@ -1,0 +1,185 @@
+{
+  "lock_sha256": "315fc8ed0767e35107184737d17512b737d213fefee6d5156df02fdf7cd21061",
+  "capture_report_sha256": "25897a806c82041b1dd8f896f818b62d8777dd026b72b04066005c9615a8daf6",
+  "script_sha256": "4259bac194ef28f6758f96fa020bf3f1ad33e87eb29f917f9244ac4d91a82932",
+  "model_invocations": 0,
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "flat",
+      "models": [
+        {
+          "backend": "fp32",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_willow-flat/fp32.tflite",
+          "sha256": "d9ce184d155c82a869912479d75ee890b9392b21c7bdb98dac3f336dda5623a5"
+        },
+        {
+          "backend": "int8",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_willow-flat/int8.tflite",
+          "sha256": "923194e78cef20f928aeea76980c8f2d33d02655b5b5d9b0ae56e82bdbb14c49"
+        }
+      ],
+      "float_reconstruction": {
+        "mean_abs": 1.7549344417776746e-07,
+        "max_abs": 2.583014457968602e-05
+      },
+      "boundaries": {
+        "upstream_with_float_weights": {
+          "mean_abs": 1.732959101879223,
+          "max_abs": 41.27714581373128
+        },
+        "weight_bias_quantization": {
+          "mean_abs": 0.024836878361697724,
+          "max_abs": 4.4130849324454715
+        },
+        "integer_output_and_accumulation": {
+          "mean_abs": 0.0770317715061526,
+          "max_abs": 0.7910400182008743
+        },
+        "float_reconstruction": {
+          "mean_abs": 1.7549344417776746e-07,
+          "max_abs": 2.583014457968602e-05
+        }
+      },
+      "total": {
+        "mean_abs": 1.741577937812659,
+        "max_abs": 41.27713394165039
+      },
+      "float_weight_abs_row_sum_max": 2286.4404325217474,
+      "float_weight_abs_row_sum_median": 49.32470799168732
+    },
+    {
+      "target": "hey_willow",
+      "condition": "pool",
+      "models": [
+        {
+          "backend": "fp32",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_willow-pool/fp32.tflite",
+          "sha256": "133016ef0ef6cf796a2687c04429cc29b56d5e725b5984c1b03558ed194397fc"
+        },
+        {
+          "backend": "int8",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_willow-pool/int8.tflite",
+          "sha256": "a58b56030a9554d703d42a3e9c3126adb32f5c73cba8367f86f718866a38c0e8"
+        }
+      ],
+      "float_reconstruction": {
+        "mean_abs": 3.4081818370458125e-07,
+        "max_abs": 6.262747012897307e-05
+      },
+      "boundaries": {
+        "upstream_with_float_weights": {
+          "mean_abs": 2.4037817430245787,
+          "max_abs": 57.35110789574528
+        },
+        "weight_bias_quantization": {
+          "mean_abs": 0.0672636448127521,
+          "max_abs": 12.520790341369064
+        },
+        "integer_output_and_accumulation": {
+          "mean_abs": 0.08401814736250174,
+          "max_abs": 0.8913822174072266
+        },
+        "float_reconstruction": {
+          "mean_abs": 3.4081818370458125e-07,
+          "max_abs": 6.262747012897307e-05
+        }
+      },
+      "total": {
+        "mean_abs": 2.439822211935923,
+        "max_abs": 54.27983546257019
+      },
+      "float_weight_abs_row_sum_max": 2286.604546047747,
+      "float_weight_abs_row_sum_median": 49.323327865466126
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "flat",
+      "models": [
+        {
+          "backend": "fp32",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_nyx-flat/fp32.tflite",
+          "sha256": "0822450f8a8f934c7cdddd63384b8451aec16395081d819d76941b308eabe9f0"
+        },
+        {
+          "backend": "int8",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_nyx-flat/int8.tflite",
+          "sha256": "972ce71814aa301356408c792ef32b9e625910fa4ffc6b34dce1d1e588b28b8a"
+        }
+      ],
+      "float_reconstruction": {
+        "mean_abs": 2.4905545507941443e-07,
+        "max_abs": 1.2715731834589405e-05
+      },
+      "boundaries": {
+        "upstream_with_float_weights": {
+          "mean_abs": 0.6673353854116694,
+          "max_abs": 13.56790102522819
+        },
+        "weight_bias_quantization": {
+          "mean_abs": 0.013699210655774422,
+          "max_abs": 2.8984922959172152
+        },
+        "integer_output_and_accumulation": {
+          "mean_abs": 0.021282377914264815,
+          "max_abs": 0.1344895288348198
+        },
+        "float_reconstruction": {
+          "mean_abs": 2.4905545507941443e-07,
+          "max_abs": 1.2715731834589405e-05
+        }
+      },
+      "total": {
+        "mean_abs": 0.6739536042952591,
+        "max_abs": 13.632713809609413
+      },
+      "float_weight_abs_row_sum_max": 882.299121633172,
+      "float_weight_abs_row_sum_median": 12.03689828197821
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "pool",
+      "models": [
+        {
+          "backend": "fp32",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_nyx-pool/fp32.tflite",
+          "sha256": "ec5a420a583825c2753266bceb0f920a7956770a73320106454629d002d3b1f0"
+        },
+        {
+          "backend": "int8",
+          "path": ".local/wakeword/pooled-matched-export-v1/hey_nyx-pool/int8.tflite",
+          "sha256": "6ac41bc9be95e350e38f07d88cba2a8783859d791af842229848da8396c7d129"
+        }
+      ],
+      "float_reconstruction": {
+        "mean_abs": 2.653018429911405e-07,
+        "max_abs": 2.785292404983153e-05
+      },
+      "boundaries": {
+        "upstream_with_float_weights": {
+          "mean_abs": 0.6470584438123705,
+          "max_abs": 17.237651904295163
+        },
+        "weight_bias_quantization": {
+          "mean_abs": 0.014098372452916435,
+          "max_abs": 0.7355448166815535
+        },
+        "integer_output_and_accumulation": {
+          "mean_abs": 0.026764896551337687,
+          "max_abs": 0.21647513441523714
+        },
+        "float_reconstruction": {
+          "mean_abs": 2.653018429911405e-07,
+          "max_abs": 2.785292404983153e-05
+        }
+      },
+      "total": {
+        "mean_abs": 0.6566839472650953,
+        "max_abs": 17.343869894742966
+      },
+      "float_weight_abs_row_sum_max": 882.6529728621244,
+      "float_weight_abs_row_sum_median": 12.035722047385207
+    }
+  ],
+  "limits": "Four original first requests, full startup. Local float64 ReLU pointwise decomposition; signed telescope not causal percentages. Integer residual includes requantization and accumulation. No changed model/injection/training/calibration/new data or qualification."
+}

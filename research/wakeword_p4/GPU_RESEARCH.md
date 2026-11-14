@@ -9016,3 +9016,23 @@ Next precise mechanism check should separate propagated upstream perturbations f
 last-convolution weight/accumulation effects using original saved layer7 and immutable
 export constants, before another calibration or training attempt. All models remain
 rejected under original540 gates; no new development/acceptance access or v30 change.
+
+### 2026-11-14 — Local final-convolution decomposition
+
+`diagnose_matched_last_conv_v1.py` authenticates original eight export SHA identities,
+reads immutable final1x1 convolution constants (allocate only, zero invoke), and
+uses original saved layer7/8 arrays over all startup/steps. Float64 local ReLU
+reconstruction agrees with actual FP32 within6.263e-5 maximum across four cases.
+Signed four-term telescope closes within1e-10.
+
+For Willowflat/pool, Nyxflat/pool respectively, upstream perturbation passed through
+unchanged float weights has MAE1.73296/2.40378/.667335/.647058. Final-layer weight/bias
+quantization boundary MAE .02484/.06726/.01370/.01410; remaining integer-output and
+accumulation MAE .07703/.08402/.02128/.02676. Total actual final-layer MAE
+1.74158/2.43982/.67395/.65668. This identifies a large propagated-error term on
+these witnesses; it does not make them causal percentages or prove one upstream
+layer is responsible. Replacing/recalibrating only the last convolution is not
+supported as a sufficient solution. Next diagnostic should trace propagation
+through preceding pointwise/depthwise pairs with explicit temporal input identity,
+then choose a controlled representation/quantization intervention rather than
+another head patch. No model export/injection/training/new-media or gate changes.
