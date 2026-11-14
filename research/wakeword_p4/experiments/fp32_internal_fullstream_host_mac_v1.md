@@ -34,3 +34,25 @@ qualification. Host64-bit arena use does not prove P4 resource/timing. P4,
 recognition/FAR, fresh development and independent acceptance remain separate.
 Original INT8 failures, bounded-float results and v30 remain unchanged. No Mac
 speaker playback, recording, new Mac TTS or dining-room production-board work.
+
+## Actual result
+
+Execution lock `100c017` / plan SHA
+`c66b97ecd0a4689ab5504a775eed1715285c452ba428753139969972e0f2cd49`
+was pushed before the run. Original session30739 exited zero, all540 cases/
+192336 actual TFLM invocations passed, including all startup and both fresh
+repeats. Independent struct/binary64 audit read every original output byte and
+untouched reference, recomputed all per-case claims and agreed exactly.
+
+| Model | Native calls | TFLM vs TF max abs | TFLM vs LiteRT max abs | TFLM vs phase max abs |
+|---|---:|---:|---:|---:|
+| Willow float | 48084 | 1.3768672943115234e-5 | 1.862645149230957e-9 | 1.583993434906006e-5 |
+| Willow integer-trained raw FP32 | 48084 | 3.427267074584961e-6 | 7.450580596923828e-9 | 9.5367431640625e-6 |
+| Nyx float | 48084 | 3.993511199951172e-6 | 7.275957614183426e-12 | 3.6954879760742188e-6 |
+| Nyx integer-trained raw FP32 | 48084 | 7.331371307373047e-6 | 1.4901161193847656e-8 | 5.245208740234375e-6 |
+
+Every repeat was byte-exact. All cases used host main arena55120B/variable
+allocator1040B. All three numerical maxima remain below the fixed1e-4 ceiling;
+nominal225 differences were descriptive only. No model, input, clock, boundary,
+reference, threshold or gate changed. This clears this original raw-FP32
+fullstream software numerical stage, not recognition/FAR or P4 qualification.
