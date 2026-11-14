@@ -1,0 +1,78 @@
+{
+  "schema": "mac-existing-priming-control-publication-v1",
+  "scope": "Software control using already-consumed first complete Semaine Hey Nicks and frozen v30; not the new multispeaker309 candidate or any acceptance result.",
+  "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+  "model_context_frames": 150,
+  "original_threshold": 0.91796875,
+  "wav_sha256": "6ce6ae19a8659f6895391521cf5f60725f1d64e44d384a55750f499e7d3e174d",
+  "original_samples": 58175,
+  "phases": [
+    {
+      "phase": "cold",
+      "calls": 121,
+      "prime_samples": 0,
+      "last_source_sample": 58175,
+      "points": [
+        {
+          "threshold": 0.91796875,
+          "ignored_priming_events": [],
+          "real_input_events": [
+            {
+              "step": 89,
+              "global_sample": 43040,
+              "source_sample": 43040
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "primed",
+      "calls": 238,
+      "prime_samples": 56160,
+      "last_source_sample": 58175,
+      "points": [
+        {
+          "threshold": 0.91796875,
+          "ignored_priming_events": [],
+          "real_input_events": [
+            {
+              "step": 206,
+              "global_sample": 99200,
+              "source_sample": 43040
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "truncated_input_rejected_before_model": true,
+  "shared_event_policy_unchanged": true,
+  "runner_sha256": "75e3918a634a271ea433827035b50617e08c4b0a555b56f0392901212426e7b4",
+  "archive": "research/wakeword_p4/results/mac-existing-priming-control-v1.tar.gz",
+  "archive_sha256": "49014008bdc8dc1e5bbbca8a95d47dcb91dbf999ea438ccb4cb8be8a447a3f03",
+  "archive_bytes": 4954,
+  "archive_members": {
+    "result.json": {
+      "bytes": 2552,
+      "sha256": "8adaef6222606e9e49936513850311576038f354c67cc226b1fd001a1c207efc"
+    },
+    "cold.npz": {
+      "bytes": 1738,
+      "sha256": "58457176c48ba27f6b73232afc2bd97dae8f23c78446c60cacfb36d8ac4b1e86"
+    },
+    "primed.npz": {
+      "bytes": 2525,
+      "sha256": "536dc74084c791c080ff4e99afcb8b79681770f00a6becfa93c17b108b9eedbe"
+    },
+    "source-record.json": {
+      "bytes": 847,
+      "sha256": "b38fae89cd1bcdcb94329ae3c283182421fb871928bd6ee85cee1b5659296bce"
+    },
+    "negative-check.json": {
+      "bytes": 242,
+      "sha256": "27e4af2ba4fc42d0a739ab0473e2c8ac0e65fb2bc51c2ac3bda68a1176c957f1"
+    }
+  },
+  "limits": "Offline initialization control only; one consumed input, no background FAR, new-model result, fresh development, acceptance, acoustic playback or hardware execution. Inference outputs are recorded, not required to agree for any future model. No new threshold selected. No audio, models, credentials, environment variables or device state included in archive."
+}
