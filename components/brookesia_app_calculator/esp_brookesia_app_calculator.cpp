@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include <math.h>
+#include <string>
 #include <vector>
 #include <unistd.h>
 #ifdef ESP_UTILS_LOG_TAG
@@ -396,7 +397,6 @@ void Calculator::keyboard_event_cb(lv_event_t *e)
         bool equal_flag = false;
         double res_num;
         char res_str[32];
-        char history_str[32];
 
         if (lv_obj_get_style_text_font(app->formula_label, LV_PART_MAIN) == LABEL_FONT_SMALL) {
             lv_obj_set_style_text_font(app->formula_label, LABEL_FONT_BIG, 0);
@@ -528,9 +528,10 @@ void Calculator::keyboard_event_cb(lv_event_t *e)
         if (equal_flag) {
             lv_obj_set_style_text_font(app->result_label, LABEL_FONT_BIG, 0);
 
-            snprintf(history_str, sizeof(history_str) - 1, "\n%s = %s ", lv_label_get_text(app->formula_label), res_str);
+            const std::string history_str = std::string("\n") + lv_label_get_text(app->formula_label) +
+                                            " = " + res_str + " ";
             lv_textarea_set_cursor_pos(app->history_label, strlen(lv_textarea_get_text(app->history_label)));
-            lv_textarea_add_text(app->history_label, history_str);
+            lv_textarea_add_text(app->history_label, history_str.c_str());
 
             lv_label_set_text_fmt(app->formula_label, "%s", res_str);
             lv_obj_set_style_text_font(app->formula_label, LABEL_FONT_SMALL, 0);

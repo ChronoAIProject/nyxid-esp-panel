@@ -42,6 +42,33 @@ research-model build or hardware qualification.
 Hashes, actual case results, host summary, object identity, build failure and
 dependency-resolution scope are recorded in
 [`mac-audio-ownership-teardown-regression-v1.json`](../results/mac-audio-ownership-teardown-regression-v1.json).
+
+## Follow-up: full ordinary firmware build completed
+
+On 2026-11-15, the calculator history entry was changed from a fixed 32-byte
+buffer to an owning `std::string` containing the complete formula and result.
+The old buffer could not hold a 31-character result plus delimiters and formula.
+No compiler warning was disabled. The change removes that build failure and
+avoids truncating longer history entries.
+
+Original session 90269 genuinely exited 0 after a fresh complete IDF 5.5.4
+build. Both the calculator and unchanged ownership-fixed `panel_voice.c` compiled
+to P4 objects and linked into the full image. The existing source version is
+0.6.28; no version bump or release was made. The 6,191,792-byte app fits the
+6,881,280-byte OTA slot with 689,488 bytes spare; 16 MiB flash, minimum chip
+revision 100 and rollback are confirmed in the actual generated config.
+
+This is ordinary factory-mode compilation with production URL configuration,
+not an experimental Hey Nyx model build. The resolver selected the same ordinary
+dependency set as the earlier failed build, differing from the research lock;
+the complete differences are reported. The committed lock was restored exactly
+to SHA256 `cfcb3e10a756c909dccc57b18f833828724254f282c0745f0cec1cfe541faf4c`.
+Original failed build logs remain separate from this new build. No board was
+flashed, and neither recognition nor hardware acceptance follows from a link
+success. The USB board's existing monitoring baseline remains installed.
+
+Actual object, ELF, binary, source and dependency identities are in
+[`mac-audio-ownership-full-image-build-v2.json`](../results/mac-audio-ownership-full-image-build-v2.json).
 No board was flashed for this fix. Full FreeRTOS/I2S/codec/network behavior,
 long-call/reconnect/AEC and physical error recovery remain separate checks.
 
