@@ -1,0 +1,26 @@
+{
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/frozen_encoder_smoke_v1.py": "23a1624b05e1551fc778b053a8760d636021543077aee6e9a96de6c4624065bc",
+    "research/wakeword_p4/results/4090-hey-broad-context225-initialization-v1.json": "559750fbeb59050b393d359597cb8958a3d26d250aceee3d7ac25d1832822420",
+    ".local/wakeword/hey-broad-context225-initialization-v1/initial.weights.h5": "e47f196aae631d7c8dee0564bd9476fe16c04312a04a1b3fd5687a183899f155",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_gpu_training_factory_v1.py": "6a480a88af1332366f86d4fb6b471f544a7897f70bb60a6c12198a3666c87527",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/common_carrier_training_batches_v1.py": "7f0389f8f755fba0e3b11c01419347ee0d9951ba7612cab0a48f7baf9667f7b7",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/phase_aligned_batches_v1.py": "5c716f9ac2c579b5a5e89e4f6c34bea1e2bb710f89c5fefe727b4f673c595c47"
+  },
+  "initial": {
+    "path": ".local/wakeword/hey-broad-context225-initialization-v1/initial.weights.h5",
+    "bytes": 178736,
+    "sha256": "e47f196aae631d7c8dee0564bd9476fe16c04312a04a1b3fd5687a183899f155"
+  },
+  "targets": [
+    "hey_nyx",
+    "hey_willow"
+  ],
+  "conditions": [
+    "full",
+    "frozen"
+  ],
+  "repeats": 2,
+  "steps": 2,
+  "policy": "Two updates per fresh arm only, shared original context225 pretrained encoder/seed726 head snapshot. Original command_context sampler, phase224+zero all slots, raw BCE positive1/negative20, Adam1e-5/.9/.999/eps1e-7. Full15 trainables/frozenBN versus only2 Dense variables/all encoder frozen. No formal fit, export, thresholds, new data or efficacy claim."
+}
