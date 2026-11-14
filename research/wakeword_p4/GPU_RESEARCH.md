@@ -8038,3 +8038,18 @@ wholeencoderresolutionfix; no blindPTQretry. Nextinterventionmusttarget real
 activationdynamicrange/quantizationrobustness, e.g.prospectivelyvalidatedtraining
 or exactrangeequalization, after checking priorfailurehistory. No newtraining/
 export/newdev/acceptance, v30retained, goalactive.
+
+### Authenticated channel imbalance supports exact reparameterization preflight
+
+30924ef5 originalchannel observation session33855 exited0: full7502steps/15sites,
+twicefreshreset, allfulltensorSHA EXACTpriororiginalzero_full26, channeltraces
+exactrepeat/globalextrema match. Lastactivationmax/nonzerochannelmedianpeak
+ratio25.7279213Willow/5.09471638Nyx;4/3zeropeakchannels retained, notpruned.
+Power2factors saved fromoriginalPTQ, not selectedfailure/development.
+
+Prospective exactchannel specification fixes simultaneous firstconv/depthwise/
+pointwise/BNaffine/Dense compensation, unchangedmovingstats and freshzerostate
+equivalence; nonzerostate representation changes. No weights changed yet.
+Must pinactualfactor/weightreceipt and all270float/state/phase original1e-4
+before anyexport; unchangedINT8gates remain. No optimizer/newdata/dev/acceptance,
+v30 retained, goalactive.
