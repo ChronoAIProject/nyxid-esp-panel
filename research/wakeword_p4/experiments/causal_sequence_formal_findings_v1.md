@@ -1,4 +1,13 @@
-# Causal fullsequence/onset candidate rejected; frozen v30 retained
+# Causal cold diagnosis failed; actual primed deployment still pending
+
+Correction after reading Mac6885081704/6885130975/6885267787: ff035b7c used
+cold failure too broadly as whole-candidate rejection. Existing deployment still
+primes81600zeroPCM; training did not remove that behavior. All cold evidence
+below stays unchanged as an initialization comparison, not an additional veto.
+Actual continuous primed recognition/FAR is now separately locked; candidate
+remains unqualified pending that primary path and independent requirements.
+The canonical requested Mac asset has `-mac-v1` in its name and pending status;
+the earlier differently named archive is preserved as a superseded cold label.
 
 The one prescribed RTX4090 run completed20000updates in919.8988267s, original
 session28528/PID268850/start877203 trueexit0. All15trainable arrays changed,
@@ -16,7 +25,8 @@ Original collection78506/PID277913/start983432 exited0: both original frozenv30
 and candidate ran all372unchanged consumed inputs,1488fresh interpreter streams,
 all repeat codes exact. Each retains10.483944826388889h of12whole backgrounds,
 360synthetic inputs/fullstartup/tail/firstphrase and originalcomplete finalfinish.
-No priming/readiness suppression is bundled with this trained candidate. Old
+This collection tests cold initialization only. Existing deployment priming
+remains present and must be evaluated separately, without adding a new guard. Old
 cachedv30 traces omitted the finalpartial call in246synthetic/9background inputs;
 therefore v30 was actually rerun, not silently compared to those old aggregates.
 Its original54440B/04aa4564… model bytes were authenticated and never re-exported.
@@ -81,7 +91,8 @@ hypothesis before another formal run; do not rescue this failed candidate.
 Compared with the previous narrow/broad context309 models, this combined new
 startup/onset/temporal-objective method improves consumed recognition and avoids
 pre-source positive events, but does not isolate which change caused that and
-does not qualify or dominate frozenv30. Fresh multi-voice development/acceptance
+does not establish qualification or dominance over frozenv30. Cold failure
+alone cannot reject the actual primed deployment. Fresh multi-voice development/acceptance
 and officialHiESP same-protocol comparison remain incomplete. No protected
 role was scored and no human listening requirement was added.
 
