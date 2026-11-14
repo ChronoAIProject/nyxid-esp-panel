@@ -1,0 +1,55 @@
+{
+  "schema": "mac-equalized-zero-initializer-independent-audit-v1",
+  "plan_sha256": "23e53a9c4c896f31317c812fb0c3cfd028886423bc35e77981fc7c2a407fe2f7",
+  "report_sha256": "ffb25f1eca8cba6d6abff621e9b67b0a3dcb6e2b0d0e7b0daa8407e3ae4d6b3b",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "changed_initializer_bytes": 35,
+      "all34tensors_identical_from_step_zero_based": 62,
+      "original_five": {
+        "mean": 0.015276412323811463,
+        "p99": 0.443014028082136,
+        "maximum": 0.45197316168341783
+      },
+      "zero_initializer_five": {
+        "mean": 0.015135554075626759,
+        "p99": 0.443014028082136,
+        "maximum": 0.45197316168341783
+      },
+      "zero_initializer_float_head_hybrid_five": {
+        "mean": 0.01613917084337926,
+        "p99": 0.4845366571918027,
+        "maximum": 0.4936510971805598
+      },
+      "first34tensors_difference_last_step": 61
+    },
+    {
+      "target": "hey_nyx",
+      "changed_initializer_bytes": 55,
+      "all34tensors_identical_from_step_zero_based": 69,
+      "original_five": {
+        "mean": 0.0049647580203082825,
+        "p99": 0.19115629650838672,
+        "maximum": 0.1926058292388916
+      },
+      "zero_initializer_five": {
+        "mean": 0.004961774439240495,
+        "p99": 0.19115629650838672,
+        "maximum": 0.1926058292388916
+      },
+      "zero_initializer_float_head_hybrid_five": {
+        "mean": 0.004185250171266105,
+        "p99": 0.18668424068432893,
+        "maximum": 0.18668424713173176
+      },
+      "first34tensors_difference_last_step": 68
+    }
+  ],
+  "original_artifacts_unchanged": true,
+  "only_initializer_bytes_changed": true,
+  "saved_array_stats_and_all34tensors_independently_recomputed": true,
+  "model_invocations": 0,
+  "candidate_admitted": false,
+  "limits": "Read-only independent saved-evidence audit. Local original and zero-initializer actual Mac outputs from the registered run remain rejected. Initialization affects startup but does not remove either fixed residual. This does not establish all270, recognition/FAR, QAT success or P4 readiness."
+}
