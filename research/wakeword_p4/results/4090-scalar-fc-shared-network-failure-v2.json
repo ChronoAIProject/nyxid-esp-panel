@@ -1,0 +1,25 @@
+{
+  "exit_code": 1,
+  "phase": "first saved batch quantized-constant identity",
+  "tensor_index": 20,
+  "tensor_name": "functional_1_1/depthwise_conv2d_3_1/depthwise",
+  "unequal": 1,
+  "maximum_code_difference": 1,
+  "differences": [
+    {
+      "index": [
+        0,
+        15,
+        0,
+        30
+      ],
+      "training_code": 44,
+      "compiled_code": 45
+    }
+  ],
+  "saved_arrays_path": ".local/wakeword/scalar-fc-shared-network-v2/hey_willow-dual_supervised_control-batch1.npz",
+  "saved_arrays_sha256": "a52936bb355040bc51c9386770fc1747a7b5b84389ccdf834c34fa1070e0b969",
+  "original_log_sha256": "122dd9c3c6dcccba87aeb0492da606f44ba7ebd93ea647436341310d83f619fc",
+  "optimizer_updates": 0,
+  "limits": "Original v2 failure retained. Computation used proper depthwise layout/per-channel scale. No source correction/retry or relaxed checks; only first batch arrays exist. Cause and other final models not yet established."
+}

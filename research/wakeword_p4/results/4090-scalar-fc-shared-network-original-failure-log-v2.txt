@@ -1,0 +1,23 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794628414.887100 1326682 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794628414.920265 1326682 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794628415.716748 1326682 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794628416.056264 1326682 gpu_device.cc:2043] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21452 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:01:00.0, compute capability: 8.9
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+E0000 00:00:1794628417.762587 1326682 meta_optimizer.cc:967] layout failed: INVALID_ARGUMENT: Size of values 0 does not match size of permutation 4 @ fanin shape inSelectV2-1-TransposeNHWCToNCHW-LayoutOptimizer
+W0000 00:00:1794628417.804412 1326682 loop_optimizer.cc:934] Skipping loop optimization for Merge node with control input: assert_positive_1/assert_less/Assert/AssertGuard/branch_executed/_17
+I0000 00:00:1794628419.063923 1326790 cuda_dnn.cc:461] Loaded cuDNN version 92801
+W0000 00:00:1794628421.869623 1326682 loop_optimizer.cc:934] Skipping loop optimization for Merge node with control input: assert_positive_19/assert_less/Assert/AssertGuard/branch_executed/_629
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_scalar_fc_shared_network_v2.py", line 64, in <module>
+    p=argparse.ArgumentParser();p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
+                                                                                                                                 ^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_scalar_fc_shared_network_v2.py", line 56, in run
+    assert np.array_equal(np.rint(v.astype(np.float64)/scales),i.get_tensor(n)),(arm['target'],n)
+AssertionError: ('hey_willow', 20)
