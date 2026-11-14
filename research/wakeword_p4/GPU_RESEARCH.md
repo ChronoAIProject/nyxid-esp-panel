@@ -8673,3 +8673,29 @@ Added prospective gradient diagnostic protocol requiring all original10batches,
 all4models/bothmodes, S/C/float-path/FC-path gradients, exact prior forward matches,
 twice-repeat/modelunchanged and independent saved-array reductions; no execution
 lock or gradient run yet. No update/optimizer/newdata or promotion.
+
+### Frozen-final split gradient diagnostic (2026-11-14)
+
+Actual prospective lock0c02f998, original session41366/PID1433854 exit0. Four
+finalmodels x2modes x10fixed original128example batches, each diagnostic twice:
+160 saved NPZ. Every original nominal/phase forward output exact vs prior arrays;
+all complete gradient/seed repeats exact and model/BN inventory unchanged. No
+optimizer creation/update, heldout, reexport or runtime activation invoke.
+S,C and float-only/FC-only C VJPs observed for all15variables; None flags explicit.
+
+Independent noTF audit checks all original file SHA,160saved arrays/repeats,
+prior-forwards, shapes/None, computes full norms/cosines and scalarFC activity.
+CPUfloat64 formula differences descriptive: maximum seed discrepancies
+float1.4552e-11/FC6.6576e-11/acc1.6941e-21. Largest C-(F+Q) element residual
+8.9407e-8, descriptive only, not reinterpretation of old additivity failures.
+
+Per10fixed batches, bounded Willow Cgradientzero nominal8/phase9; bounded Nyx
+nominal1/phase0. No positiveC/zeroCgradient batch in these bounded final cases.
+S/C conflict counts Willow1/0, Nyx5/3. Nonzero FCseeds blocked at scalarFC:
+Willow1/0 and Nyx0/1; so universal scalarFC deadness unsupported. Nyx C/S norm
+ratio varies nominal0..7.655 and phase .0036..9.261; coefficient tuning not justified
+by a single average. Final snapshots are not actual historical per-step gradients
+or causal proof. Differences on original training support have available but
+variable/conflicting correction signals; no single mechanism explains all cases.
+No training on scored diagnostic records, new threshold or candidate promotion;
+freshdev/acceptanceclosed and v30 frozen. Mac native experiment remains separate.
