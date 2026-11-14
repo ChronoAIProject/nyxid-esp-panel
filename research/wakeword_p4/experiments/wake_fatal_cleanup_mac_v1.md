@@ -52,3 +52,20 @@ was flashed or released; the development-board monitor keeps its original
 The [result and lossless evidence archive](../results/mac-wake-fatal-cleanup-regression-v1.json)
 retain the exact extracted C, compiler logs, subprocess outputs and both P4
 compile receipts. There is no audio, model binary or device configuration.
+
+## Full normal firmware integration
+
+The existing normal IDF5.5.4 rev1_3/16MB build subsequently rebuilt the modified
+`panel_voice.c`, linked the complete ELF and generated the firmware image.
+Original session15556 exited0. The0.6.28 app is6,192,256bytes in a6,881,280-byte
+OTA slot, leaving689,024bytes; the actual partition-capacity check passed.
+All experimental model and research timing settings were off. This was an
+incremental full link, not a new dependency build or an experimental-model link.
+One Kconfig warning reported an unset `ESP_IDF_VERSION` environment variable;
+the changed C translation unit compiled without diagnostics.
+
+The [full-link receipt](../results/mac-wake-cleanup-full-link-v1.json) records
+the source/configuration/artifact identities and scope. The binary stays private
+and has not been flashed or released. The passive monitor continues observing
+the existing0.6.27 development-board baseline. Integration success does not
+prove long-call stability or identify the cause of historical restarts.

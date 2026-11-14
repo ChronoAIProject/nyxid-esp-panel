@@ -1,0 +1,47 @@
+{
+  "schema": "mac-wake-cleanup-full-link-v1",
+  "utc": "2026-11-14T22:57:58.466589+00:00",
+  "source_commit": "5b0fd3db4e35f111f2e3f6f55b08791d46c6fda6",
+  "source_sha256": "46e3218f6013322f87d61305520ea294ace48c3eedb676f99ec61909844637e0",
+  "command": [
+    "cmake",
+    "--build",
+    "/Users/auric/tmp/output/hey-phrase-reference-20261114/audio-ownership-full-image-build-v2/build",
+    "-j4"
+  ],
+  "original_session": 15556,
+  "exit_code": 0,
+  "profile": "Existing normal ESP32-P4 rev1_3 16MB build, IDF5.5.4; all experimental wake and research timing flags off",
+  "project_version": "0.6.28",
+  "build_scope": "Incremental rebuild of actual changed panel_voice.c, complete firmware link and image generation; not a clean dependency rebuild or experimental link.",
+  "artifacts": {
+    "nyxid-esp-panel.bin": {
+      "bytes": 6192256,
+      "sha256": "cdc9e7d8b98464572f98ef0fe0442a492f1913b55868b533062eb5deb29fb818"
+    },
+    "nyxid-esp-panel.elf": {
+      "bytes": 42403896,
+      "sha256": "27e207d383b5c04b6ae2f9c9c9de5e8d95d4141184e5e24bf9985c3a73502f6b"
+    },
+    "config/sdkconfig.h": {
+      "bytes": 76765,
+      "sha256": "55a88027c648d534c5f9dd92449fc5b39280a5e5906a784972ba1e5f4ade4be2"
+    },
+    "partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a"
+    }
+  },
+  "smallest_app_partition_bytes": 6881280,
+  "app_bytes": 6192256,
+  "app_free_bytes": 689024,
+  "partition_capacity_check_passed": true,
+  "build_log_sha256": "9fea8bcae0a31e5b612c52e481b16d71aa1b176dacb49ad365f7fb90a92290db",
+  "warnings": [
+    "Kconfig warning: ESP_IDF_VERSION environment variable unset. Build completed; no C compiler diagnostic for panel_voice.c."
+  ],
+  "hardware_flashed": false,
+  "release_published": false,
+  "candidate_model_deployed": false,
+  "limits": "Full normal firmware integration only. Prior extracted-C resource regressions cover fatal cleanup; no hardware failure injection, long-call/AEC/reconnect qualification or explanation of historical resets. Passive development-board baseline remains0.6.27."
+}
