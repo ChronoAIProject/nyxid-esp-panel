@@ -1,0 +1,40 @@
+{
+  "schema": "mac-float32-event-policy-constructed-review-v1",
+  "all_passed": true,
+  "reference_arithmetic": "float32-fsum-binary64-v1",
+  "legacy_commit": "f7239057cabe25be1d7ee1269564e87d9baa6f60",
+  "legacy_source_sha256": "6a35d8e591545881a42c5d3e4a8b0bac62a4940bbf042a1b01fa44049409653f",
+  "registered_grid_points": 138,
+  "legacy_equivalent_trace_comparisons": 1380,
+  "attainable_uint8_five_byte_sums_checked": 1276,
+  "explicit_state_machine_cases": [
+    "full window required",
+    "first complete window",
+    "high plateau does not retrigger",
+    "cooldown then low rearm",
+    "low only during cooldown cannot rearm"
+  ],
+  "non_byte_float_precision_preserved": true,
+  "exact_probability_one_supported": true,
+  "terminal_clock_clamping_verified": true,
+  "rejected_cases": [
+    "float64 vector",
+    "UINT8 vector",
+    "implicit conversion list",
+    "two-dimensional vector",
+    "NaN probability",
+    "infinite probability",
+    "negative probability",
+    "probability above one",
+    "zero threshold",
+    "nonfinite threshold",
+    "boolean threshold"
+  ],
+  "source_sha256": "dd1b08fb161fc50e97c6671b6f96c1dc13c4d98d96d0c9a12feaef7bb6bbeeaf",
+  "review_sha256": "c181c91786bd2d62bfa624eac4f197300b0b59916fdebf54a9198d5ec281bb1a",
+  "model_invocations": 0,
+  "media_reads": 0,
+  "thresholds_selected": false,
+  "original_evaluators_changed": false,
+  "limits": "Constructed arithmetic/FSM checks only; opt-in independent Mac reference is not an activated collector or recognition protocol. Quantized witness equivalence does not prove raw float quality or model equivalence. No model/development/acceptance/audio data consumed, no scoring or threshold selection."
+}
