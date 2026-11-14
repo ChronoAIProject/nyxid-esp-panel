@@ -1,0 +1,75 @@
+{
+  "execution_sha256": "2e251ab239ff5a9cf66a5bbf01f434956854b1e77aab1451002b66be9c796022",
+  "models": [
+    {
+      "target": "hey_nyx",
+      "condition": "full",
+      "path": ".local/wakeword/frozen-encoder-formal-v1/hey_nyx-full/final.weights.h5",
+      "sha256": "643cd16fc96a995453908201a7a9fdfedf1196e43a99a322e11f8b7039edcc64",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/frozen-encoder-fp32-export-v1/hey_nyx-full/fp32.tflite",
+          "bytes": 126496,
+          "sha256": "8d0ecbff7f7a97ef63f7d129e87fcc783045301d79a737d2fc84597401dc8f7b"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "frozen",
+      "path": ".local/wakeword/frozen-encoder-formal-v1/hey_nyx-frozen/final.weights.h5",
+      "sha256": "3e7d3af0b4934357fc9cee2c4c3e08cc089b0c79b014cdf4de1446c42f8694db",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/frozen-encoder-fp32-export-v1/hey_nyx-frozen/fp32.tflite",
+          "bytes": 126404,
+          "sha256": "010e78e98fe49b1e8ffc5d41964612b5fa390ab54f09a9fc1a71c994429e9aa0"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_willow",
+      "condition": "full",
+      "path": ".local/wakeword/frozen-encoder-formal-v1/hey_willow-full/final.weights.h5",
+      "sha256": "0e0ccfe7e31ff0c00c2e3e036a158e022fca297fbe0054b3ecec5107dfbfd9cc",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/frozen-encoder-fp32-export-v1/hey_willow-full/fp32.tflite",
+          "bytes": 126908,
+          "sha256": "6f8210e4b02a37614325648b8799f410d25e0477733e9a649ce15b1d253701f1"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_willow",
+      "condition": "frozen",
+      "path": ".local/wakeword/frozen-encoder-formal-v1/hey_willow-frozen/final.weights.h5",
+      "sha256": "591533600f17792929d04a5458858ac9fb453b02f1326ab425990a345fb22f8a",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/frozen-encoder-fp32-export-v1/hey_willow-frozen/fp32.tflite",
+          "bytes": 126552,
+          "sha256": "9d3db668f0312c1bf522639ec9373ef60b6b6a977d99c871a6c4e2319979e21e"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    }
+  ],
+  "all_static_passed": true,
+  "limits": "Four independently audited rawfinal10000 only, one builtin FP32 conversion each. Original raw sigmoid/frozenBN unchanged, no calibration/INT8/PTQ/retry/head rewrite/selection. Six streaming histories serialized realzero; original H5 authenticated. Static ABI is not newweight waveform phase/numeric qualification or recognition admission."
+}
