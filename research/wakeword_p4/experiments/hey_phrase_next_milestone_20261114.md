@@ -42,8 +42,9 @@ Common-negative command carriers are absent from the actual training metadata;
 11 of 13 persistent Nyx float false clips use command carriers, while two bare
 false clips remain. GPU has now supplied its first-10,000-batch surviving-window
 census and independent coordinate-to-tensor reconstruction. Mac authenticated
-the archive and every payload, but has not yet independently reduced the trace.
-The reported 227,714 surviving common-negative slots per word are all bare.
+the archive and every payload and independently reduced both complete saved
+traces against original metadata. All grouped counts and generated-boundary
+counts match; the 227,714 surviving common-negative slots per word are all bare.
 This is a coverage observation, not proof of the cause of the recognition gap.
 
 GPU subsequently locked 1,620 Kokoro common-negative command-context requests
@@ -64,8 +65,11 @@ reciprocal, own-prefix and ambient inputs. Freeze the complete actual tensor
 schedules before training. Preserve the already-running learned-grid job and
 its original handles; do not restart or interrupt it for this stage.
 
-Mac first independently checks saved window coordinates and grouped metadata
-counts. GPU completes the native pack audit and renderer/features/schedule lock,
+Mac has independently checked saved window coordinates and grouped metadata
+counts, plus all prospective slot/cell choices. All 74,219 eligible original
+Kokoro coordinates pair exactly between words, and the ordered decision hash
+matches GPU; 37,114 slots per word are selected. These checks are closed, not a
+new recognition result. GPU completes the native pack audit and renderer/features/schedule lock,
 then executes the paired recognition continuation according to the existing
 sequencing plan. A synthesis timeout is not permission to restart or silently
 replace requests. Preserve failures and do not filter by wake scores.
