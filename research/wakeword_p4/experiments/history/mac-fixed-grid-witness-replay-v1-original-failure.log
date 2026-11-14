@@ -1,0 +1,28 @@
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 2
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+/Users/auric/tmp/output/hey-phrase-reference-20261114/diagnostic-runtime-v1/venv/lib/python3.12/site-packages/keras/src/models/functional.py:259: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: ['input_audio']
+Received: inputs=Tensor(shape=(1, 3, 40))
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "/Users/auric/tmp/nyx-panel-research-handoff/research/wakeword_p4/experiments/replay_fixed_grid_witnesses_mac_v1.py", line 253, in <module>
+    make_plan(args) if args.action == 'plan' else replay(args)
+                                                  ^^^^^^^^^^^^
+  File "/Users/auric/tmp/nyx-panel-research-handoff/research/wakeword_p4/experiments/replay_fixed_grid_witnesses_mac_v1.py", line 173, in replay
+    fc_op, = [o for o in metadata['ops'] if o['op'] == 'FULLY_CONNECTED']
+                         ~~~~~~~~^^^^^^^
+KeyError: 'ops'

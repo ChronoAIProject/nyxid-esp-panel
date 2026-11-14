@@ -1,0 +1,84 @@
+{
+  "schema": "mac-fixed-grid-witness-replay-plan-v2",
+  "gpu_ref": "73935d19e5bc71fba6c5f55fdce0c01ffa375b92",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-broad-fixed-grid-recovered-metadata-v1.json": "d8f23f9e0614694bce229b7fbafabad7ae416d5820bdb5fc1dec0714d95430f8",
+    "research/wakeword_p4/results/4090-hey-broad-fixed-grid-compile-plan-v1.json": "88e546640f187adfaea501ae8a56357b7d5705773b1932f08e5bc547543ff05b",
+    "research/wakeword_p4/results/4090-hey-broad-paired-qat-formal-result-v1.json": "a12b394e71917aa939a6ff7c628818ab2faea5bc222c4a0c396f237cc956512b",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-execution-v1.json": "54b0416675fadf6f8931dbcb373dc188fa9eb05b0a7841ab846ee848250218e2",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-result-v1.json": "d45a065f595e04b69dd8fbc0884ff420296465ddbb446b1a9b94098d075fa1f3",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "research/wakeword_p4/experiments/probe_hey_broad_bounded_float_v1.py": "b4171e46a30d87f23897bc40b26e1839cee7efa8f090359bb1e2a1dc5b669f9b"
+  },
+  "script_sha256": "f43fc1164639d30fa10154a1e0ff67c14584138733469ff79940b27b74a0991d",
+  "inputs": [
+    {
+      "target": "hey_willow",
+      "request_order": 14,
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_willow-014.npz",
+      "arrays_sha256": "85fd28409838e28176323f2cd22677d47905306b95f4f3f8e38829a9756906af",
+      "raw_dtype": "uint16",
+      "raw_shape": [
+        501,
+        40
+      ],
+      "raw_sha256": "8348829b9b8bbdfe5839a54fbc733711a63e1d763d5359190193122929fe9db3"
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48394,
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_nyx-034.npz",
+      "arrays_sha256": "414860425d99194428e2aaad8a23f01ab999dc439a1f8730e77d616dc298e6da",
+      "raw_dtype": "uint16",
+      "raw_shape": [
+        686,
+        40
+      ],
+      "raw_sha256": "a9dcecd700b560c676558e50e3eacbf0f4b07d3f879b945a8be8b684f9b5a28a"
+    }
+  ],
+  "arms": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "model_path": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_willow-float_control/hey_nyx.tflite",
+      "model_sha256": "e07064d83013588d397ba984ca203313454fea3d535fdb7d423babde30578a4a",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-float_control-0/final.weights.h5",
+      "weights_sha256": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "model_path": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_willow-integer_qat/hey_nyx.tflite",
+      "model_sha256": "ac090dbf22be1d3b6499b0a0e59373f44e3d888f8eee2fcc8b9bf06c9860dc9d",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-integer_qat-0/final.weights.h5",
+      "weights_sha256": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "model_path": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_nyx-float_control/hey_nyx.tflite",
+      "model_sha256": "d0d3ee52e2b605f0264513c47865b1ad7f9c5abc7caedbc8b8a2ba17e3878f93",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-float_control-0/final.weights.h5",
+      "weights_sha256": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "model_path": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_nyx-integer_qat/hey_nyx.tflite",
+      "model_sha256": "38fa71098e04a9718335dc3ba3a39ac85d8f8a6dd701fed50cd10e0e1eb1b6b8",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-integer_qat-0/final.weights.h5",
+      "weights_sha256": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9"
+    }
+  ],
+  "registered_fc_report_sha256": "90cb43f317c1128b2ca09201c5fbf81a99c2d8b196b4d4936dfb322ff6a5b904",
+  "registered_fc_library_sha256": "ec7f02e6fd5844f2d7ecc831cd6f68f8223eb2c357a32696dc5d249d6b3b3bf4",
+  "policy": "Exactly four existing fixed-final10000/fixed-grid models, each on its target old predetermined witness (Willow14 or Nyx48394). Both conditions use identical target input; no scoring-based case choice. Two fresh actual LiteRT whole-input runs and two explicit-reset float streams; fixed phase224+zero. Compare actual native registered FC on saved actual embedding to original actual FC. Preserve all outputs, failures and unchanged .02/.1/.25 numerical bounds. At most comparison to published same-case metadata, not all540 array verification or candidate admission. No freshdev, independent acceptance, waveform IO, resampling, optimizer, export or board operations.",
+  "parent_plan_sha256": "1ff4b874ce8400f832fbdd6272674fc69cb5ff02331bbf6b4ebea0f89ce7dd8b",
+  "parent_script_sha256": "5fd7a3ad7ae4dba9cc89d2703ef6f3b4d9d7fb43ce41913a1a26ef9dd9000a3b",
+  "amendment": "Only metadata lookup changed: recover model receipt fields from recovered metadata and ops from the already-frozen matching compile-plan template, asserting its SHA. Model/H5/input identities, native operations, repetitions, arithmetic, phase and numerical bounds unchanged. Original v1 failed run preserved; new empty output directory required. No inference-derived candidate choice."
+}
