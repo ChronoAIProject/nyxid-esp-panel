@@ -1,0 +1,171 @@
+{
+  "schema": "mac-consistency-fixed-grid-witness-replay-v1",
+  "plan_sha256": "c9843db3c403923da4c5b08d22590ddf645c3101a1f22e785e93af284090d594",
+  "gpu_ref": "f2578cf099ae92aa9503f6477a5c1426a64dad0b",
+  "script_sha256": "bac22ed5a70dee763e03055b0373c4bee0e281a782b41aa0bcdd49dca9e926a0",
+  "upstream_python_sha256": {
+    "microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+    "microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+    "microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+    "microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+    "microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+    "microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+    "microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+    "microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    "microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+    "microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    "microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    "microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    "microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+    "microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    "microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+    "microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+    "microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+    "microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717",
+    "setup.py": "839054a772178201e7c3b210136f98d6b3f33da39d5d40cbbff1ce5a8f151251"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.4.6",
+    "keras": "3.15.1",
+    "h5py": "3.14.0",
+    "ai-edge-litert": "2.3.0"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "request_order": 14,
+      "steps": 167,
+      "model_sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "final_h5_sha256": "6433163fa1b5709a667fd2154e00844a5688ec0ed2160b9a0c63c9ec0bb7e226",
+      "actual_repeat_exact": true,
+      "float_offline_phase_max_abs": 4.76837158203125e-07,
+      "original_variables_unchanged": true,
+      "smoothed_abs_error": {
+        "mean": 0.007403471731999318,
+        "p99": 0.189241327083786,
+        "maximum": 0.19028964986209754
+      },
+      "witness_meets_numerical_bounds": false,
+      "registered_fc_exact": true,
+      "registered_fc_unequal_steps": 0,
+      "actual_registration_receipt": {
+        "prepare_status": 0,
+        "invoke_status": 0,
+        "temporary_count": 0,
+        "activation_min": -128,
+        "activation_max": 127,
+        "input_zero": -128,
+        "output_zero": -128,
+        "effective_scale": 0.31783937371137017,
+        "persistent_bytes": 72
+      },
+      "operations_passed": true,
+      "arrays": "hey_willow-dual_supervised_control.npz",
+      "arrays_sha256": "31aa38fa6f2ce3d859a8bdc2aae150300f6f97856eb22fa366531056352c1c7c"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "request_order": 14,
+      "steps": 167,
+      "model_sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "final_h5_sha256": "7fc6ff1e82baeb13b8081e9d1f76ed753b960ffd7455be9316ce3f7e338127ad",
+      "actual_repeat_exact": true,
+      "float_offline_phase_max_abs": 1.1026859283447266e-06,
+      "original_variables_unchanged": true,
+      "smoothed_abs_error": {
+        "mean": 0.008067465293866817,
+        "p99": 0.14260083398048298,
+        "maximum": 0.15763916671276093
+      },
+      "witness_meets_numerical_bounds": false,
+      "registered_fc_exact": true,
+      "registered_fc_unequal_steps": 0,
+      "actual_registration_receipt": {
+        "prepare_status": 0,
+        "invoke_status": 0,
+        "temporary_count": 0,
+        "activation_min": -128,
+        "activation_max": 127,
+        "input_zero": -128,
+        "output_zero": -128,
+        "effective_scale": 0.31783937371137017,
+        "persistent_bytes": 72
+      },
+      "operations_passed": true,
+      "arrays": "hey_willow-logit_consistency.npz",
+      "arrays_sha256": "37af8b1c21ae800c0872085c27f922d87764ecd93f19a5582af9a37b430d5e8b"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "request_order": 48394,
+      "steps": 229,
+      "model_sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "final_h5_sha256": "0b7f6ce1ea3b9bf004b8a050071c3d164e97045575b00a80c95de787e21215ae",
+      "actual_repeat_exact": true,
+      "float_offline_phase_max_abs": 0.0,
+      "original_variables_unchanged": true,
+      "smoothed_abs_error": {
+        "mean": 0.0007638734788633883,
+        "p99": 0.0035709142684936523,
+        "maximum": 0.0035709142684936523
+      },
+      "witness_meets_numerical_bounds": true,
+      "registered_fc_exact": true,
+      "registered_fc_unequal_steps": 0,
+      "actual_registration_receipt": {
+        "prepare_status": 0,
+        "invoke_status": 0,
+        "temporary_count": 0,
+        "activation_min": -128,
+        "activation_max": 127,
+        "input_zero": -128,
+        "output_zero": -128,
+        "effective_scale": 0.0450193334548952,
+        "persistent_bytes": 72
+      },
+      "operations_passed": true,
+      "arrays": "hey_nyx-dual_supervised_control.npz",
+      "arrays_sha256": "4b8652ff2599a17561f0e93dfbd404c67c45ca4a69d7228ff57979d487bf6e18"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "request_order": 48394,
+      "steps": 229,
+      "model_sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "final_h5_sha256": "0ad10bcc150b16b9be5442109d3197caa91feb3390a0cca1f0fd418efe9ea5c3",
+      "actual_repeat_exact": true,
+      "float_offline_phase_max_abs": 1.087784767150879e-06,
+      "original_variables_unchanged": true,
+      "smoothed_abs_error": {
+        "mean": 0.002964842235126222,
+        "p99": 0.09943230944406242,
+        "maximum": 0.1008818421745673
+      },
+      "witness_meets_numerical_bounds": true,
+      "registered_fc_exact": true,
+      "registered_fc_unequal_steps": 0,
+      "actual_registration_receipt": {
+        "prepare_status": 0,
+        "invoke_status": 0,
+        "temporary_count": 0,
+        "activation_min": -128,
+        "activation_max": 127,
+        "input_zero": -128,
+        "output_zero": -128,
+        "effective_scale": 0.0450193334548952,
+        "persistent_bytes": 72
+      },
+      "operations_passed": true,
+      "arrays": "hey_nyx-logit_consistency.npz",
+      "arrays_sha256": "1142b9d8569b31c620410e68e5ec94bf8f2dcad75697769519f0450b8ad5b489"
+    }
+  ],
+  "all_operations_passed": true,
+  "limits": "Exactly four existing fixed-final10000/fixed-grid models, each on its target old predetermined witness (Willow14 or Nyx48394). Both conditions use identical target input; no scoring-based case choice. Two fresh actual LiteRT whole-input runs and two explicit-reset float streams; fixed phase224+zero. Compare actual native registered FC on saved actual embedding to original actual FC. Preserve all outputs, failures and unchanged .02/.1/.25 numerical bounds. At most comparison to published same-case metadata, not all540 array verification or candidate admission. No freshdev, independent acceptance, waveform IO, resampling, optimizer, export or board operations. Native Mac CPU2threads/actual finalH5/bounded float and actual LiteRT fixedgrid interpreter; real installed TFLM FC registration with host tensor/allocator context only. Whole model inference here uses LiteRT, not TFLM/P4. Four predetermined old witnesses only; no all540 qualification or recognition/resource/first-utterance acceptance claim."
+}

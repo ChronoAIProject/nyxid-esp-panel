@@ -1,0 +1,66 @@
+{
+  "schema": "mac-all-final-constant-capture-plan-v1",
+  "script_sha256": "b2c681ea5351af1ba90e8e7ae0081886a93347d7a6300dd27671078ca502481c",
+  "parent_plan_sha256": "c9843db3c403923da4c5b08d22590ddf645c3101a1f22e785e93af284090d594",
+  "primitive_gpu_ref": "b39cc8d9e44f9264cf39d9b6bcc56b3a3e7fcd9c",
+  "primitive_sha256": "574eca1eca903ad495f0bad292d1641bb4e54d13d71c13f5075fb5f93b170505",
+  "arms": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-dual_supervised_control/hey_nyx.tflite",
+      "model_sha256": "97733b3660b82e0044938f6ea1508a1c41440287b5a0076ab5c2b0df985237a7",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-consistency-formal-v1/hey_willow-dual_supervised_control-0/final.weights.h5",
+      "weights_sha256": "6433163fa1b5709a667fd2154e00844a5688ec0ed2160b9a0c63c9ec0bb7e226"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_willow-logit_consistency/hey_nyx.tflite",
+      "model_sha256": "ea945fe6167c6969aca431c55d653649bcc250dbc986d39e203c14a27a4b6a00",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-consistency-formal-v1/hey_willow-logit_consistency-0/final.weights.h5",
+      "weights_sha256": "7fc6ff1e82baeb13b8081e9d1f76ed753b960ffd7455be9316ce3f7e338127ad"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-dual_supervised_control/hey_nyx.tflite",
+      "model_sha256": "b9bfa676fd62b840dddd59a79ffbb1010bf6aee9d98921cc4a5946ec132dbb6b",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-consistency-formal-v1/hey_nyx-dual_supervised_control-0/final.weights.h5",
+      "weights_sha256": "0b7f6ce1ea3b9bf004b8a050071c3d164e97045575b00a80c95de787e21215ae"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-consistency-fixed-grid-compile-v1/hey_nyx-logit_consistency/hey_nyx.tflite",
+      "model_sha256": "2b12daec920bf70153f935ae0b2f5375ec2ba77c85005ff71068ef6e7b23869d",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-consistency-formal-v1/hey_nyx-logit_consistency-0/final.weights.h5",
+      "weights_sha256": "0ad10bcc150b16b9be5442109d3197caa91feb3390a0cca1f0fd418efe9ea5c3"
+    }
+  ],
+  "source_gpu_ref": "f2578cf099ae92aa9503f6477a5c1426a64dad0b",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-broad-consistency-fixed-grid-compile-result-v1.json": "f3927c2976ffd3d0044d7f1b9e4347d2caf440d480776dc17e5d3ad8670bcb22",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-fixed-grid-compile-plan-v1.json": "4f01bd0ed3537196b98d0cdcafb2859f2b5125a52062f22a229960c48629c526",
+    "research/wakeword_p4/results/4090-hey-broad-consistency-formal-result-v1.json": "b6701d4a4fbe0c36c32bcc1354be9b6d66aa6d3d462c3474aa88ee28fc8b0d27",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-execution-v1.json": "54b0416675fadf6f8931dbcb373dc188fa9eb05b0a7841ab846ee848250218e2",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-result-v1.json": "d45a065f595e04b69dd8fbc0884ff420296465ddbb446b1a9b94098d075fa1f3",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "research/wakeword_p4/experiments/probe_hey_broad_bounded_float_v1.py": "b4171e46a30d87f23897bc40b26e1839cee7efa8f090359bb1e2a1dc5b669f9b"
+  },
+  "settings": [
+    "default",
+    "no_constant_folding_or_arithmetic"
+  ],
+  "methods": [
+    "eager_captured_scale",
+    "graph_captured_scale",
+    "graph_runtime_scale"
+  ],
+  "constants_per_model": 20,
+  "policy": "All four original final10000 H5/compiled models locked by050bf88, all20 weight/bias constants each, no case selection. Independent CPU-only processes for default and both constant_folding/arithmetic disabled. Each uses unchanged original affine_ste with captured scales eagerly/in tf.function and runtime tensor scale arguments. Two repeats, actual H5 variables unchanged. Direct original weight, frozenBN folding and boundedhead parameter expressions, correct per-channel layout, allocated builtinref constant reads only. Save every value/dequant/quotient/reconstructed code/actual compiled code and all differences. Full sweep continues through differences; those are diagnostic observations, not revised numerical gates. No actual activation inference, gradients, optimizer, export, fresh data, development/acceptance, or board/audio IO. These isolated expression graphs need not have the same optimization as the original full training graph; causal propagation/recognition effects remain unproven."
+}
