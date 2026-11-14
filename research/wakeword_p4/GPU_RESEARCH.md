@@ -9425,3 +9425,19 @@ substituted for formal repeat proof. Source/protocol remains unchanged during ru
 Observe same PID/starttime; no restart from observation timeout. Startup receipt
 is historical observation, not ongoing live proof. Final audit/full540 qualification
 and later recognition remain outstanding; v30/freshdev/acceptance unchanged.
+
+### 2026-11-14 — Concurrent read-only audit/export preparation
+
+Originalformal PID1589700/start24217011 revalidated live, Willowfixedgrid history
+progressed184→461 during this work; no restart/source/config changes. Prepared
+independent final auditor for all40000batchSHA/pairedsourceorder, actualFP32 init,
+fixed/treatment step state, all21finalvariables/Adam10000,10snapshots, actualexport
+parameter codes, every sharedgroup including initializer metadata, and savedfirst
+requestparity. --check-only returns2/not_ready at missing finalaggregate without
+model calls or writing a passing report; py_compile passes. Actualaudit not run yet.
+
+Prepared directFP32 folded-parameter compiler preserving originalrawsigmoid graph,
+cloning sharedmodifiedbuffers and verifying onlydeclaredmutation. All4originalFP32
+20Wb constant roundtrip returns originalbytesexact, allocateonly/zero invokes.
+This prepares actualfloat comparison for finalweights, not evidence of trained
+FP32/INT8 parity. No freshmedia/dev/FAR admission or v30 change.
