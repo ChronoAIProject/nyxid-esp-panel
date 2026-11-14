@@ -9329,3 +9329,20 @@ request reports lack per-frame supervision; do not invent a dense positive label
 from target filename or confuse source boundaries with phoneme labels. Next smoke
 must bind actual original sampler labels/weights or explicitly constructed
 non-training mathematical targets, with scope stated. v30/fresh unchanged.
+
+### 2026-11-14 — Authentic original supervised smoke inputs materialized
+
+Replayed original admitted sampler's first batch per word, after validating original
+pooledformal file/data identities. Original full128x225x40/y/weight tensorSHA match
+both historical schedule batch1 exactly. Each contains32positive/96negative,
+originalpositive1/negative20 weights. Complete batches saved unchanged; deterministic
+firstpositive index0/firstnegative index1 fixed for future disposable integration
+smoke, not mined by outputs. Original session9496exit0, no model/optimizer.
+
+x normalized range0..25.5859375 Willow /0..25.5078125 Nyx, consistent with original
+stream input quantizer. Subsequent smoke must explicitly define fresh225frame
+causal window and terminal-step objective, original label/weight provenance, and
+report its phase difference from prior valid-convolution training rather than
+claim originalbatch schedule/architecture functional equivalence. It will establish
+update/export mechanics only, not data quality admission, training efficacy or
+candidate promotion. No freshmedia/dev/acceptance; v30 retained.
