@@ -8843,3 +8843,7 @@ No model invoke. Strict v1 fingerprint failed only on Nyx debug tensor names; fa
 ### 2026-11-14 Actual rejected one-way admission regression
 
 Four negative checks apply original assess to actual complete540: both conditions remain rejected with actual or forged pass flags, even against explicitly constructed optimistic recursive fixtures. Rejection occurs on actual numerical values; fixture never claimed as collected recursive evidence. No fresh material reads/model invoke/admission receipt. Original official958404/958504 and publication1501279 verified live;8923/9672 last observed.
+
+### 2026-11-14 Mac full540 independent saved-array audit received
+
+Mac8243e04 report received from immutable Git ref, original SHA3269897605e6abfd0cbbf2dbdbfa8f341e47cd1f5d0d8f9d00031ee85125b7f5 verified, copied byte-exact. Actual540NPZ/96168steps, all36 failed cases retain poststartup tails, all decisions/paired transitions agree. Original CPU scalar bit-identity failure retained on Mac; corrected reader uses analytical reduction roundoff bound (not changed model gates). No model/media IO. This is independently produced Mac audit, local action authenticates report identity/completeness, not a second execution of its reader. No candidates qualified, v30 unchanged.
