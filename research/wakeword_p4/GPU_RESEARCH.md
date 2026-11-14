@@ -10007,3 +10007,8 @@ Original session8257/PID84435 remains live; narrow10400 progress observed. Added
 ## Formal H5-to-array audit strengthened before results
 
 Added explicit architecture/name routing for all31 H5 datasets to variable-inventory keys (first conv is stream-wrapped; unwrapped conv numbering offset is explicit). Actual preserved initialization H5 all31 tensors verified against inventory under31 unique dataset paths, no model calls. Final auditor will additionally require exact shape/dtype/bytes equivalence of finalH5 and all finalNPZ variables for eacharm. Full formal audit has not yet run; original session8257/PID84435 still live, narrow18600 observed. No original execution files or recipe changed.
+
+
+## Narrow fixed-final20000 completed; broad running same original process
+
+Original session8257/PID84435 transitioned naturally to broad (actual broadstep1 observed). Narrow original per-arm report published byte-identical; original process has not exited, no per-arm process exit claim. Executed saved-state/H5 portion of published auditor on narrow: all31initial exact, all15trainables changed,16frozen byte-identical, Adam30slots initiallyzero/finalfinite nonzero/iteration20000, finalH5 all31datasets exactly match finalNPZ. Interim report explicitly excludes batch reconstruction/fullpaired completion, modelcalls0. Full40000batch audit remains after broad completes. v30 unchanged.
