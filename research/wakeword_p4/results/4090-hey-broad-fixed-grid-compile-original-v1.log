@@ -1,0 +1,63 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794623060.313989 1249596 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794623060.339206 1249596 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794623060.999053 1249596 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+{"target": "hey_willow", "condition": "float_control", "bytes": 58616, "sha256": "e07064d83013588d397ba984ca203313454fea3d535fdb7d423babde30578a4a"}
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+{"target": "hey_willow", "condition": "integer_qat", "bytes": 58616, "sha256": "ac090dbf22be1d3b6499b0a0e59373f44e3d888f8eee2fcc8b9bf06c9860dc9d"}
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+{"target": "hey_nyx", "condition": "float_control", "bytes": 58688, "sha256": "d0d3ee52e2b605f0264513c47865b1ad7f9c5abc7caedbc8b8a2ba17e3878f93"}
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+{"target": "hey_nyx", "condition": "integer_qat", "bytes": 58688, "sha256": "38fa71098e04a9718335dc3ba3a39ac85d8f8a6dd701fed50cd10e0e1eb1b6b8"}
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/compile_hey_broad_fixed_grid_v1.py", line 66, in <module>
+    p=argparse.ArgumentParser();p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
+                                                                                                                                 ^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/compile_hey_broad_fixed_grid_v1.py", line 64, in run
+    with (R/'4090-hey-broad-fixed-grid-compile-result-v1.json').open('x') as f:f.write(json.dumps(dict(plan_sha256=sha(P),arms=arms,limits=lock['policy']),indent=2)+'\n')
+                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/usr/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int32 is not JSON serializable
