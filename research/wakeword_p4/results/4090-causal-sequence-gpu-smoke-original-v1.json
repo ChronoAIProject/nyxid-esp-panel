@@ -1,0 +1,57 @@
+{
+  "schema": "causal-sequence-gpu-smoke-original-v1",
+  "plan_sha256": "d94764c23189a9074db60e9ccea45c17d63420c70c8d4d78176e5b535f638f51",
+  "launch": {
+    "pid": 254780,
+    "proc_starttime": "770407",
+    "plan_sha256": "d94764c23189a9074db60e9ccea45c17d63420c70c8d4d78176e5b535f638f51"
+  },
+  "device": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "loss": 23.42918586730957,
+      "logits_shape": [
+        128,
+        250,
+        1
+      ],
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iteration": 1,
+      "all15_gradients_finite": true,
+      "frozen16_unchanged": true,
+      "x_sha256": "83de30295cab8defc63e5582e0ef8df36b19057cc075b0345898839498c9ce42"
+    },
+    {
+      "step": 2,
+      "loss": 23.837289810180664,
+      "logits_shape": [
+        128,
+        250,
+        1
+      ],
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iteration": 2,
+      "all15_gradients_finite": true,
+      "frozen16_unchanged": true,
+      "x_sha256": "00664a1c97a8255d9c00baf21082e91ff1149855830a9740f9641bbe5a77000b"
+    }
+  ],
+  "files": {
+    "initial-model-variables.npz": "934b192afded73924c24ceac646fcaa9f169a1b12544ef4a239ca848bcf6f628",
+    "final-optimizer-variables.npz": "0f54fffe68e8705363fa65bd989434dc522029bd438c5c4a2948572eb64c03cf",
+    "launch.json": "230bf28fb55cfd3b86a4358a051deceb5a6e58960608b871a1c0fe3da3b0c407",
+    "initial-optimizer-variables.npz": "6bc892a31731e5da6ca1689ca13d6ac6e66a9cdb176833c587686ecf89e580f1",
+    "final.weights.h5": "bece4a4c2a1b550a9b851633cf079d3497e58199e04ee791dc9dc8fbc33e0561",
+    "final-model-variables.npz": "d7f215caabad01e2f8e4e822bb1333ecfcf0d978a49d81c10df77fcf02dd209e"
+  },
+  "all_update_checks_passed": true,
+  "formal_training_started": false,
+  "recognition_scored": false
+}

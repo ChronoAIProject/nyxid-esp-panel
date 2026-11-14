@@ -10097,3 +10097,8 @@ Original session55672/PID250857/start735275 genuineexit0,51840completepresentati
 ## Actual first causal CPU batches and minimalGPU lock
 
 Original CPUprobe11356 genuineexit0: twoactualNPZs128x750x40,32positive/48syntheticnegative/48ambient, regionmasspositive32/negative128, rightfuturepaddingweight0, allrole/geometry/finite checks pass. No modelcalls. New minimalGPUtwo-update lock SHAd94764c23189a9074db60e9ccea45c17d63420c70c8d4d78176e5b535f638f51 pins actualbatchbytes/newcausalgraph/originalinit/factory/runtime,15trainables/16frozen/freshAdam32vars/30zeroslots. No cross-device or floating-score comparison, no formalrun/recognition. Pushbeforeoriginalsmoke.
+
+
+## Actual causal fullsequence RTX4090 two-step integration exit0
+
+Original session87937/PID254780/start770407 (selfrecordedwhilelive) genuineexit0, actual4090/cuDNN92801. Twoactual128x750x40 batches produce128x250x1 logits onGPU0; rawregionloss23.42918586730957/23.837289810180664 mechanicalonly, all15gradientfinite,16frozen unchanged/Adam0→2. SavedNPZ check initial31exact,all15trainables actuallychanged,16frozenbyteidentical,initial30zeroslots/finalfinite. Preservedinitial/finalmodel+AdamNPZ/finalH5; no gradient/crossdevice/floating-score equality experiments. No formalrun/recognition/freshroleuse. Next minimalbuiltinINT8 export/ABI with these disposableweights, then originalfixed20000 traininglock using preservedinit (never smokeweights). Datareuse/storageguard100GiB continues; v30unchanged.
