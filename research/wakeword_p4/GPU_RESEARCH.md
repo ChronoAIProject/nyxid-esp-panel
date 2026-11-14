@@ -10027,3 +10027,8 @@ Prospective context309 screen now hashes actual LiteRT/frontend wrappers/native 
 ## Original paired formal training genuinely exit0
 
 Original session8257/PID84435/procstart438879 returned actualexit0 after both arms20000 fixedupdates; PID absent afterward. No restart/resume or checkpoint selection. Exact per-arm elapsed seconds are retained in original reports; original reports preserve exact values. Published original paired/broad reports and exit/logSHA receipt. Independent full40000batch/raw5120000window reconstruction audit launched session17673; no audit completion claimed yet. Formal completion is training evidence only, no stream/numerical/recognition/freshdev/acceptance or replacement claim; v30 retained.
+
+
+## Prospective consumed recognition adapters prepared
+
+While independent full formal audit runs (13000pairedsteps observed), prepared original consumed372input collector/twofreshrepeat, collection auditor,138point scorer/independent event oracle and pairedreport adapters for narrow/broad. No newwaveforms/thresholdselection: same complete continuous originalbackground, codes/probabilities/quantization/fullstartup/tail, syntheticgenerated boundary signedlatency retained; numerical qualification separately required before anypromotion. Collector requires actualfinal exportABI audit and diskguard, but consumed usability diagnosis does not hide model behavior behind numerical pass. Scripts compilechecked only, no collection/scoring locks created or inference performed. Broad remains solecandidate.
