@@ -1,0 +1,42 @@
+{
+  "schema": "mac-hey-broad-published-count-engine-mass-derivation-v1",
+  "source_commit": "e1f341a9e2dc8dd073efd1f50e79d4912edbfed5",
+  "source_sha256": "d77676548daafdd5bec06b557f540adb4fbd7e5bdffd2dbd69cc30545578ba71",
+  "input_source_sha256": {
+    "experiments/audit_hey_broad_batches_v1.py": "a2c85e558f786961d6a3b5889390269394a91d2bfc9dd84522eecf409765442e",
+    "experiments/schedule_hey_broad_v1.py": "e6df66f95ed41943cc7a6a5aee7c98cec352dbbf9e354dbce9d2362ec0c22f10",
+    "experiments/run_hey_broad_paired_qat_v1.py": "ceab0f8828d2934c887e0e222bca1d955abec39cf93df18c7532c036bb8c7147",
+    "training/train_stream.py": "2228dff55d11111c3e68a4a27433ef8b472a91c3d185f124a9018425b5f03904",
+    "results/4090-hey-broad-piper-generation-v1.json": "18fa8f1e5ccd8dc55bf0408beb02310da21c032ab56621815b4ca550c60ff79d",
+    "results/4090-hey-broad-kokoro-generation-v1.json": "c6affb64abed12d6b779f3ce1c8863afa6e7d8345d03617c8502367a216030a1",
+    "results/4090-hey-broad-qwen-generation-v1.json": "956808f30977a39da855704f73158c571b0d32e4a8fae3bc59224a3128606151",
+    "results/4090-hey-broad-qwen-standalone-material-plan-v1.json": "9110f189b0e05007406125712b6b2e4b830f82453a2b582f80d46bef275bb075",
+    "results/4090-hey-broad-kokoro-generation-plan-v1.json": "c7fc62616d8cee169f70661199c0f0ad5c614901015f2bcb5fcb037666057cca",
+    "results/4090-hey-broad-features-v1.json": "5ab4fc86a3e682b1c42578bbc84295aec0ada61563aca1e1b642812bb5707ca8",
+    "results/4090-hey-broad-render-plan-v1.json": "addc799b74593234c0b5920e4e240304a81169cd76f41e938b64e2d6cf769665",
+    "results/4090-hey-broad-common-piper-generation-v1.json": "956e1b5d5336621b0e04cd0c8ce40a1d0295ca20006b88476cd2c9b9b6f1b777",
+    "results/4090-hey-broad-common-kokoro-generation-v1.json": "a92dc3a8e5a725ea762f4813c4fdb46db9b21fdb39609a3c0174ef2d6fd3fa76"
+  },
+  "own_source_containers_per_word": {
+    "piper": 8064,
+    "kokoro": 240,
+    "qwen": 72
+  },
+  "common_negative_source_containers": {
+    "qwen": 216,
+    "piper": 18144,
+    "kokoro": 540
+  },
+  "rendering_variants_per_source": 3,
+  "main_positive_slots_per_engine": "32/3",
+  "per_container_qwen_to_piper_sampling_ratio": "112",
+  "per_container_kokoro_to_piper_sampling_ratio": "168/5",
+  "expected_ordinary_negative_common_slots": "296/13",
+  "expected_ordinary_negative_reciprocal_slots": "120/13",
+  "scope": "Published completed-count/source-policy derivation; not an independently read active feature-pack census or observed training draw trace.",
+  "limits": [
+    "Source containers, rendered variants and conditioning IDs are not independent human voices.",
+    "Equal engine weighting is an explicit policy, not itself a bug or causal proof of recognition failures.",
+    "No arrays, models, audio, independent development or acceptance data read; no sampling/training policy changed."
+  ]
+}
