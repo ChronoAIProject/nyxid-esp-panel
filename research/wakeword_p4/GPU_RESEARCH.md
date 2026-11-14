@@ -7972,3 +7972,26 @@ Next controlled diagnostic can apply originalfloathead to saveddequantized
 integerheadinput and compare originalfloatlogits versus integerheadoutput,
 separating embedding drift from headarithmetic without a new export or dataset.
 No newdev/acceptance/training/PTQ, v30remains, goalactive.
+
+### Saved boundary decomposition identifies large pre-head drift on two witnesses
+
+064e2918 prospectively fixedA/B/D/E/F decomposition of sameWillow6/Nyx48405.
+Originalscript exited0, no invoke/export oroptimization. ReadoriginalH5 Dense
+(1800,1) andactualquantizedheadconstants. A=actualboundedfloat; B=originalfloat
+head on dequantizedsavedintegerembedding; D=dequantizedquantizedheadconstants
+on sameembedding withboundedactivation; E=savedFCoutput reconstructedprobability;
+F=actualUINT8 probability. Signedtelescoping<=1e-12; originalclipped-logit
+reference<=1e-4. Independent savedNPZ SHA/telescoping/allboundary5max checks pass.
+
+Five-mean maxabs perboundary Willow/Nyx:
+embedding .5922339646/.6838060465;
+headweightbias .08445758376/.005530764602;
+integerFC .001143840504/.001124465449;
+postFCprobability .003570899974/.003570899974.
+Total .5054151464/.6901303529. Maxima occur at differentsteps and signedterms
+can cancel; these are not additive causalpercentages. Originalfloathead on actual
+integerembedding already stronglydiffers from originalfloatencoder/head on these
+twowitnesses. Headweight rounding also visibleespeciallyWillow; cannot claim
+headcontributesnothing. Supports next per-layer floatvsINT8 encodercomparison,
+not specificlayer/statecause or all270coverage. No freshdata, thresholdchoice,
+newexport/retraining orpromotion; v30 retained, goalactive.

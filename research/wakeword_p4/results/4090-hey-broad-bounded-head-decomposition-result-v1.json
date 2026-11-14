@@ -1,0 +1,93 @@
+{
+  "schema": "hey-broad-bounded-head-decomposition-result-v1",
+  "plan_sha256": "bb6236439e88a1984c1b539472d30e5744bd134042950a1270b45c916467fce5",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "request_order": 6,
+      "boundaries": {
+        "encoder_embedding": {
+          "raw_max_abs": 0.9835046661050988,
+          "five_max_abs": 0.5922339646373186,
+          "five_mean_abs": 0.017817737351545536,
+          "five_p99_abs": 0.5323992909654457
+        },
+        "head_weight_bias": {
+          "raw_max_abs": 0.2549030700653373,
+          "five_max_abs": 0.084457583756321,
+          "five_mean_abs": 0.002528781060344308,
+          "five_p99_abs": 0.0841004625634385
+        },
+        "integer_fc": {
+          "raw_max_abs": 0.0055446782506756165,
+          "five_max_abs": 0.0011438405039872813,
+          "five_mean_abs": 2.596514119511063e-05,
+          "five_p99_abs": 0.0010374366184261342
+        },
+        "post_fc_probability": {
+          "raw_max_abs": 0.007585181660264451,
+          "five_max_abs": 0.0035708999744376024,
+          "five_mean_abs": 0.0008603652326001095,
+          "five_p99_abs": 0.0035708999744376024
+        }
+      },
+      "total": {
+        "raw_max_abs": 0.9645083998620976,
+        "five_max_abs": 0.5054151464486495,
+        "five_mean_abs": 0.015919077583284726,
+        "five_p99_abs": 0.4636065641572934
+      },
+      "arrays_path": ".local/wakeword/hey-broad-bounded-head-decomposition-v1/hey_willow.npz",
+      "arrays_sha256": "35c397a69a6c2db5fa94ee6319815915153070f45dacb608365958e36a755425",
+      "embedding_shape": [
+        171,
+        1800
+      ],
+      "model_invocations": 0
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48405,
+      "boundaries": {
+        "encoder_embedding": {
+          "raw_max_abs": 0.9442562732671682,
+          "five_max_abs": 0.6838060464765039,
+          "five_mean_abs": 0.016504291779286903,
+          "five_p99_abs": 0.5390318265936702
+        },
+        "head_weight_bias": {
+          "raw_max_abs": 0.01957207836052699,
+          "five_max_abs": 0.005530764601756851,
+          "five_mean_abs": 0.00014809437199549697,
+          "five_p99_abs": 0.0052791843263831125
+        },
+        "integer_fc": {
+          "raw_max_abs": 0.004769422683380098,
+          "five_max_abs": 0.0011244654488234973,
+          "five_mean_abs": 2.208056706399988e-05,
+          "five_p99_abs": 0.00032503022947493555
+        },
+        "post_fc_probability": {
+          "raw_max_abs": 0.004797138000174339,
+          "five_max_abs": 0.0035708999744376024,
+          "five_mean_abs": 0.000706102594750328,
+          "five_p99_abs": 0.0035708999744376024
+        }
+      },
+      "total": {
+        "raw_max_abs": 0.9481403846293688,
+        "five_max_abs": 0.6901303528575227,
+        "five_mean_abs": 0.016947085567170093,
+        "five_p99_abs": 0.5427778804841209
+      },
+      "arrays_path": ".local/wakeword/hey-broad-bounded-head-decomposition-v1/hey_nyx.npz",
+      "arrays_sha256": "53b6036895d81af7987c8294f937ad559857c8d521b539bcdc6520c4e95d0455",
+      "embedding_shape": [
+        222,
+        1800
+      ],
+      "model_invocations": 0
+    }
+  ],
+  "limits": "Two selected training witnesses only. Hybrid boundary decomposition does not attribute individual encoder layers or claim statistical causal share, complete270 accuracy, new candidate admission, recognition/FAR or freshdev/acceptance. No optimizer/PTQ/newexport."
+}
