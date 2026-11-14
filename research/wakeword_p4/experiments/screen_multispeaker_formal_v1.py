@@ -1,9 +1,10 @@
 """Original wholewave numerical gates on four matched final exports."""
-import argparse,importlib.metadata,json
+import argparse,importlib.metadata,json,subprocess
 from pathlib import Path
 import numpy as np
 from plan_hey_broad_trained_quantization_v1 import sha
 from run_hey_broad_trained_quantization_v1 import ROOT,published,errors
+from collect_complete_development_v1 import runtime_identity_files
 PLAN=ROOT/'results/4090-multispeaker-formal-screen-plan-v1.json'
 LOCK=ROOT/'results/4090-multispeaker-formal-screen-execution-v1.json'
 RESULT=ROOT/'results/4090-multispeaker-formal-screen-result-v1.json'
@@ -14,6 +15,9 @@ def lock():
  if not EXPORT.exists():print(json.dumps(dict(status='not_ready',missing=str(EXPORT),model_invocations=0)));return 2
  audit=ROOT/'results/4090-multispeaker-formal-export-independent-audit-v1.json';a=json.loads(audit.read_text());assert a['all_checks_passed'] and a['static_report_sha256']==sha(EXPORT);e=json.loads(EXPORT.read_text());parent=ROOT/'results/4090-multispeaker-formal-export-plan-v1.json';published(parent);p=json.loads(parent.read_text());assert e['all_static_passed'] and e['execution_sha256']==sha(parent) and len(e['models'])==2;files=dict(p['files'])
  paths=[EXPORT,parent,audit,Path(__file__),ORIGINAL_PLAN,Path(__file__).with_name('audit_multispeaker_formal_screen_v1.py')]
+ paths += runtime_identity_files()
+ paths += [Path(__file__).with_name(n) for n in ['run_hey_broad_trained_quantization_v1.py','plan_hey_broad_trained_quantization_v1.py','collect_complete_development_v1.py']]
+ paths += [ROOT/'training/features.py',ROOT/'tools/check_disk_budget.py']
  original=json.loads(ORIGINAL_PLAN.read_text());exports=[]
  for m in e['models']:
   assert m['static_abi_passed'] and m['parameters_unchanged']
@@ -21,11 +25,13 @@ def lock():
   for artifact in m['artifacts'].values():assert sha(artifact['path'])==artifact['sha256'];paths.append(Path(artifact['path']))
  for row in original['requests']:assert sha(row['path'])==row['sha256'];paths.append(Path(row['path']))
  for f in paths:files[str(f)]=sha(f)
- with LOCK.open('x') as f:f.write(json.dumps(dict(files=files,versions=p['versions'],weights=p['weights'],exports=exports,policy='BothoriginalNyxcontext309fixedfinal20000 rawsigmoid x originalshared135requests. Full startup, finalpad, two fresh/reset repeats, phase308+zero1e-4, FP32LiteRT-vsTFmax1e-4, originalINT8fiveMAE.02/p99.1/max.25. Consumed diagnostic135 only, not freshdev or acceptance. No new data, checkpoint/head/threshold selection or retries; all failures retained.'),indent=2)+'\n')
+ versions=dict(p['versions']);versions.update({n:importlib.metadata.version(n) for n in ['soundfile','pymicro-features','scipy']})
+ with LOCK.open('x') as f:f.write(json.dumps(dict(files=files,versions=versions,weights=p['weights'],exports=exports,policy='BothoriginalNyxcontext309fixedfinal20000 rawsigmoid x originalshared135requests. Full startup, finalpad, two fresh/reset repeats, phase308+zero1e-4, FP32LiteRT-vsTFmax1e-4, originalINT8fiveMAE.02/p99.1/max.25. Consumed diagnostic135 only, not freshdev or acceptance. No new data, checkpoint/head/threshold selection or retries; all failures retained.'),indent=2)+'\n')
 def run():
     published(LOCK);locked=json.loads(LOCK.read_text())
     for p,h in locked['files'].items():assert sha(p)==h,p
     for n,v in locked['versions'].items():assert importlib.metadata.version(n)==v
+    subprocess.run(['/usr/bin/python3',str(ROOT/'tools/check_disk_budget.py'),'--expected-gib','0.25'],check=True)
     OUT.mkdir(exist_ok=False)
     import probe_hey_context_transfer_shapes_v1 as helper
     tf=helper.tf

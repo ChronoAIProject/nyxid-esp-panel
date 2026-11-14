@@ -10017,3 +10017,8 @@ Original session8257/PID84435 transitioned naturally to broad (actual broadstep1
 ## Bind independent reconstruction to actual locked formal inputs
 
 Independent full auditor now requires shared-binary SHA to equal both formal arm binary pins, all23220 shared rows to correspond exactly to each12960row formal arm metadata view, and both human/ambient manifest hashes to match formal pins. Executed this binding against actual inputs successfully, zero model calls. Original broad6000 observed under session8257/PID84435, disk622.69GiBfree; complete formal audit still pending actual final result.
+
+
+## Bind numerical screen runtime before execution
+
+Prospective context309 screen now hashes actual LiteRT/frontend wrappers/native libraries and imported scoring/front-end helpers, adds soundfile/pymicro-features/scipy versions, and performs0.25GiB diskguard before allocation. Original numerical gates/135consumedrequests/270cases unchanged. Compile only; no screen lock/execution yet. Original broad10100 observed, session8257 remains live.
