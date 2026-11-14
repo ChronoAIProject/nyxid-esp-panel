@@ -9413,3 +9413,15 @@ same causal/parameterization as smoke.10000updates once each/fixedfinalonly, no
 sweep/earlystop/checkpointselection; full540 actual waveform numerical gates and
 independent audit before any recognition admission. New formal is not a replica of
 historicalrawBN optimization. v30/freshdev/acceptance boundaries unchanged.
+
+### 2026-11-14 — Learned-grid formal started under original process
+
+7bbb9c13 prospective code/actualexecution lock pushed before original launch.
+Session77025/PID1589700/starttime24217011 live verified in /proc, actualRTX4090
+initialized. Willowfixed_grid step1 completed with originalbatchSHA match. Four
+arms each10000fixedupdates once, final10000 only,1000snapshots evidence; no early
+stop/selection/sweep. Fullrun repeat1 scope explicit, previous2step repeats not
+substituted for formal repeat proof. Source/protocol remains unchanged during run.
+Observe same PID/starttime; no restart from observation timeout. Startup receipt
+is historical observation, not ongoing live proof. Final audit/full540 qualification
+and later recognition remain outstanding; v30/freshdev/acceptance unchanged.
