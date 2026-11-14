@@ -124,6 +124,40 @@ reconnect, camera and image operations, then reproduce the responsible cycle.
 Record firmware and the full trend interval. Long-call/AEC acceptance still
 needs real call evidence; idle heap observation cannot substitute for it.
 
+## Bounded idle wake/AEC rearm check
+
+`tools/check_wake_rearm.py` temporarily mutes and unmutes an already idle,
+unmuted development board. It checks the USB VID/PID/serial, then matches the
+UART node identity against the private HTTP monitor config before mutating it.
+Each cycle must reach `muted`, return to `listening`, and retain the same app,
+boot and settings. Unexpected call, wake, camera or OTA activity aborts the test.
+It restores the unmuted listener while the identified board remains idle.
+The background read-only monitor continues running independently.
+
+```sh
+python3 tools/check_wake_rearm.py \
+  --config "$HOME/Library/Application Support/NyxPanelMonitor/config.json" \
+  --port "$DEV_PORT" --usb-serial "$DEV_USB_SERIAL" \
+  --vid "$DEV_USB_VID" --pid "$DEV_USB_PID" \
+  --cycles 50 --output "$PRIVATE_REARM_RUN"
+```
+
+The output directory must not exist. It contains sanitized heap/status samples
+and **private raw UART**, which may contain device/network details and must not
+be committed or uploaded. No audio is played or retained, calls are not opened,
+and no NVS settings are written. Three settled heap samples per cycle describe
+retained memory; transient allocations and leaks in other paths remain outside
+this check. Mute/unmute recreates idle AEC and rearms the audio lease; it does
+not recreate an unchanged WakeNet model or exercise a call/reconnect lifecycle.
+
+Some adapters reset the board when the serial port opens even with DTR/RTS set
+false before opening. The default test rejects this. For a deliberately chosen
+development-board run, `--allow-adapter-reset` captures startup for 30 seconds,
+verifies UART/HTTP identity and unchanged settings, and establishes the new
+baseline before any cycles. Any later reboot still aborts. Keep the port open
+through the entire run; classify the initial adapter-induced boot separately
+from unexplained restarts in the passive monitor.
+
 Run the monitor's privacy, lifecycle, trend and retention regressions with:
 
 ```sh
