@@ -7951,3 +7951,24 @@ calibration and actual270results without rewritingoldtraining. No invoke/export
 in receipt. No numericaladmission, freshdev/acceptance orP4candidate; v30retained.
 Nextmechanism test must use savedtrainingarrays and explicitnewhypothesis;
 no automaticretraining/recalibration/sweep. Goalactive, originalofficialcontinues.
+
+### Bounded failure localization and fixed internal witnesses complete
+
+Saved-only all270bounded localization: zero quantizerout-of-range/rawfeature>26,
+input reconstruction max.050827004. Pre-sourcefiveerror>.1 now0/135 perarm
+(originalWillow90/135); postcontainer cases4Willow/5Nyx. These partitions are
+mechanismdiagnostics, not modified recognition windows or gates.
+
+d0b06122 prospectively registers exactly worstsavedfiveerror/arm (tieascending
+requestorder), Willow6/Nyx48405. Originaltensor probe exited0 withoutretry:
+34quantizedop-output tensors percase, allsteps, twofresh reference interpreters,
+allintermediaterepeats exact, preserved-tensor output exactlyoriginalUINT8.
+Fulltensors saved locally and hashed, full perstep extrema/endpointoccupancy
+metadata saved inresult. Clippedhead/logistic endpointoccupancy is expected and
+not evidence of unwanted saturation; no encoder tensorupperendpointoccupancy
+exceeded.01 in these two traces, which does not exclude rounding/weight/state
+accumulation or other saturation patterns. Not270coverage orfloatlayeralignment.
+Next controlled diagnostic can apply originalfloathead to saveddequantized
+integerheadinput and compare originalfloatlogits versus integerheadoutput,
+separating embedding drift from headarithmetic without a new export or dataset.
+No newdev/acceptance/training/PTQ, v30remains, goalactive.
