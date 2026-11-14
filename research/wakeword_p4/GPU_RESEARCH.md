@@ -9768,3 +9768,7 @@ New retained finding: old Nyx control/context Hey next+timer remains6/9 across e
 ### Frozen-encoder first arm genuinely complete (2026-11-14)
 
 Same original PID1762282/start26060483 remains live. Nyx full10000/10000 genuinely completed, original training.json copied byte-identically into results and H5/Adam/history SHA rechecked. Same process entered Nyx frozen, actual step106 observed; first2 input/loss/model+Adam signatures passed originalsmoke enforcement. No restart/checkpointselection. This is one completed arm of four, not terminal/full audit/qualification; remaining runs continue under original pins. v30/freshdev/acceptance unchanged.
+
+### Both Nyx fixed-final arms complete / original process starts Willow (2026-11-14)
+
+Same original PID1762282/start26060483 live. Nyx frozen10000 genuinely complete; original training.json copied byte-exact, all finalH5/Adam/history hashes rechecked. BothNyx arms now complete, not scored/exported. Original process entered Willow full, actualstep88 observed, first2smoke identities enforced/passed. TwoWillow arms still required; no jobterminal or independent four-arm audit/qualification yet. No restarts/checkpointselection/changedpins; v30/freshdev/acceptance unchanged.
