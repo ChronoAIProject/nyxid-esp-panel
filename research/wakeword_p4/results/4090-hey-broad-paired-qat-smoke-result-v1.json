@@ -1,0 +1,170 @@
+{
+  "execution_sha256": "06a665b4b406455bc59ba482a47fdb9ebab2c136561ee7c3f70e9180016b3c33",
+  "gpu": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "float_control",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 0.3766664699942339,
+        "parameter_delta_l2": 0.0004283743169536176,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "b1abeee2cb54199a8d83a72206ee5c496fc210f880a61c93ced7a687c4afe96e",
+          "optimizer": "eef6075502f1671441c15bda85a52ef2c6444d5e0b190d02261971befcdc13b7"
+        },
+        "weights_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_willow-float_control-1/final.weights.h5",
+        "weights_sha256": "a5ae15e5c0fa9b96d6bc8443c8a35e8b442469f2780458346dc9b1ab8c0e5f98",
+        "optimizer_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_willow-float_control-1/final-optimizer.npz",
+        "optimizer_sha256": "62e77967cdb81cb08a29b0215fe09dbed96beb33f3d774cea50ebd85b823d84c",
+        "batch_trace_sha256": "744e009e82202802ebe3bb0161ac07328e9ec85c83655f5dd29a7db52eb75557",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 3.396740311245594e-08,
+            "gradient_l2": 0.0001219186233356595
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 1.7534577523292683e-07,
+            "gradient_l2": 0.0007608680753037333
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "integer_qat",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 1.6122111080039758,
+        "parameter_delta_l2": 0.0009201254215393278,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "4cfc506857b80411efbf8c0976a0ad9044de8b611f2702b66c8b5b31f2b83c15",
+          "optimizer": "ad48620aa9ba7519c2437dca145ce2f086add581eff29f27dc10c9added7aae0"
+        },
+        "weights_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_willow-integer_qat-1/final.weights.h5",
+        "weights_sha256": "9bdb0ff317334dcacd260bf4fa6041e8240fb8064460698019a6d4d4dbe453f4",
+        "optimizer_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_willow-integer_qat-1/final-optimizer.npz",
+        "optimizer_sha256": "29402ab93c0d7f9bcd3d180dcf4bf1c6af6184d17ca19740a5209fc097bad77e",
+        "batch_trace_sha256": "f41572dc07c398d18ea911312a2d4056263f1bdb815063e87b28d4b15e109a85",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 7.576421126032074e-07,
+            "gradient_l2": 0.002882368629798293
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 1.595970502421551e-06,
+            "gradient_l2": 0.015263820998370647
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "float_control",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 0.4005348449863959,
+        "parameter_delta_l2": 0.001073397849230686,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "153ddb9a7c4eda885c4fdbd266c8bf701114a7f50f506ee063872fc6bf71054d",
+          "optimizer": "271fdcc81b8cb0ec457f780f16122f17e46270507340995232b195f74b527891"
+        },
+        "weights_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_nyx-float_control-1/final.weights.h5",
+        "weights_sha256": "f33a9267b89a037e89a56bf52ae875684639ae691b18cb7b2aae33a1eb6d1a48",
+        "optimizer_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_nyx-float_control-1/final-optimizer.npz",
+        "optimizer_sha256": "68151d83c0caed6d452fa1716add2eac6b64d8e3ec4504cfc51e89958946ab10",
+        "batch_trace_sha256": "8c48bb07563eb7d509e3c153db876caf39a9bce107ad62e8fbda5f3c3f2674d9",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 1.1769669072236866e-05,
+            "gradient_l2": 0.032170604914426804
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 0.00011220907617826015,
+            "gradient_l2": 0.475801944732666
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "integer_qat",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 1.6068775730091147,
+        "parameter_delta_l2": 0.001095708873677609,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "7b74df43e8fb25320872ed564619ebf0f219d045d46be3e8af6a7b7f06ad6ee7",
+          "optimizer": "52e6b4bdbc2e0e342bce23c6024255892d3842674997128d216ffe0aea2ec206"
+        },
+        "weights_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_nyx-integer_qat-1/final.weights.h5",
+        "weights_sha256": "9871a851414e00d0503f71f2d9ddbb08bcca8ee4440e1b9b835d2eebc1bf5cfc",
+        "optimizer_path": ".local/wakeword/hey-broad-paired-qat-smoke-v1/hey_nyx-integer_qat-1/final-optimizer.npz",
+        "optimizer_sha256": "df098868c5c7ceddbb7927260a9061b4587b6b6accf14f96b812b555c014b757",
+        "batch_trace_sha256": "6659948ff0d87106b6d1aacae7201494a91bf823eddab5c0e8132474dc5db925",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 2.2451364202424884e-05,
+            "gradient_l2": 0.03737642243504524
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 9.507839422440156e-05,
+            "gradient_l2": 0.443285197019577
+          }
+        ]
+      }
+    }
+  ],
+  "all_passed": true,
+  "limits": "Exactly prospective paired protocol, final-only eligible, full original sampler hash enforcement, Adam fresh per run, allBN frozen, no export/dev/acceptance. No silent retry/resume."
+}
