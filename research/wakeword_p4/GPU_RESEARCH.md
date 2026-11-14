@@ -8073,3 +8073,32 @@ Beforeanyexport stillmustverify matched15site full7502representative perchannel
 scale relation, at previouslyfixed atol1e-4/rtol1e-5, plusprobability/statecontrol.
 Then separateactualexportlock and unchanged270INT8gates. No export/newtraining/
 newdev/acceptance, v30retained, goalactive.
+
+### Full exact state compensation passes; equalized INT8 still rejected
+
+61a5899c registered fullrepresentative actualelement controls. Originalsession86771
+exit0: both7502steps,15fullsites andsixactualstatebuffers everycall, twicefresh
+resets. OriginalfullobservationSHA exactprior; allpositivefactor scale relations,
+statebuffers andprobabilities EXACT, maxerrors0. Arrays/hash/reductions checked.
+Fullcontrolpublished764f9b56. Initial source-generation assertion failed before
+creating exporter; corrected registration text without executing anymodel or
+changingprotocol. e0861f89 registeredexport; actualweight/material lock3eaee5be.
+Originalsingleexport94244 exit0, resultb86b9ee1; bothstaticgatespass. No retry,
+factorchange, representativechange oroptimizer.
+
+35bfaff6 registersunchanged270numeric runner; actualmodel lockbd817f5c before
+originalscreen69359 exit0, completedresultdc0e6036. Sameboundedfloat original
+function and originalreferenceINT8 kernels/gates.
+Willow118/135, MAE0/p9917/max1fail, worstfive.4519727566861548.
+Nyx134/135, MAE0/p991/max0fail, worstfive.19260573387145996.
+Versus previousbounded119/115, Nyximproves substantially butneitherfullarm passes.
+OnlyremainingNyx request48394 p99.1911562011409551 exceedsfixed.1; MAE
+.00496475557817, max.19260573387146, preservedwithouttrimming/relabeling.
+Everytwice-resetexact, actualfloatphase3.03984e-6/3.39746e-6 passes1e-4.
+
+c28571b1 immutableequalizedreceipt runner independently verifiedall270savedNPZ
+SHA/explicitfive/statistics/phase/clocks/repeats/gatedecisions andsixresource
+READ/ASSIGN metadata, bindsoriginalH5/training pluscompensatedweights/factors,
+fullrepresentative statecontrol/newmodels. Receiptgeneratedsuccessfully, original
+trainingnotrewritten. No qualification/newdev/acceptance/P4profile allowed. v30
+retained, goalactive; nextdiagnosisusespreservedfailures, nofactor/tolerance rescue.
