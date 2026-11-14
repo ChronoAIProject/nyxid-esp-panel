@@ -8712,3 +8712,23 @@ requires all fixed-batch actual no-update wiring validation, then separately
 locked fresh matched smoke, before any formal training proposal. Helper not yet
 executed. Original losses/gates/failures/data roles retained, no tail mining or
 newdev/acceptance/v30 replacement.
+
+### Actual one-way consistency wiring verification (2026-11-14)
+
+Actualsource/lock70556792; original session6992 exit0. All4 final models x10
+original batches x2modes x2repeats retained,160NPZ. Original S/C/F/Q graphs retained,
+new W differentiates unchanged scalarC with only float-bounded target stopped.
+Every original forward exact, scalar S/C/total unchanged, full S gradients exact
+against original saved gradients, W None flags/values EXACT same-run originalQ
+VJP. New one-wayC has no zfloat output seed. Full repeats/modelBN inventory exact.
+No tolerance needed/adapted, no optimizer or updates/heldout/export.
+
+Independent saved-array auditor35189232 exit0 checks all new file SHA,repeats,
+priorforwards, S vs hash-authenticated oldsaved gradients, W=Q exact, loss equality,
+None/shapes and descriptive loss/seed/norm reductions. Sharedencoder forward and
+actual autodiff remain producer evidence, not independently executed by audit.
+This validates semantics only. Finalmodels remain rejected; fixed snapshots are
+not smoke initialization, no training launched/newdev/acceptance/v30replacement.
+Next step is a separately locked fresh matched smoke with original equalizedinit,
+2replicas/condition, original batch sequence/optimizer and only C float-target
+stop difference. Do not continue oldfinal weights or mine rare diagnostic rows.
