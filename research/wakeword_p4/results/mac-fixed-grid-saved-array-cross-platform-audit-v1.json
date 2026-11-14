@@ -1,0 +1,152 @@
+{
+  "schema": "mac-fixed-grid-saved-array-cross-platform-audit-v1",
+  "script_sha256": "d5102a5df7c2d1f16279df69bdb9cb10fde304c985eac63e146f4ee725a2f661",
+  "plan_sha256": "9eeb03d66c723ec9b7a8e9d1d423cb071d71902eda76b4e3a1db8692c87677fa",
+  "native_report_sha256": "425b4670815cea35f8b7bf8e54f157d905ca26646dcb1c827d6f8a9799b5ca72",
+  "gpu_report_sha256": "458d47eb8c876b1dbf8284ae1a4819fd548353f7bb365a5546494ebfae315e3f",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "request_order": 14,
+      "steps": 167,
+      "cross_platform_exact": {
+        "raw": true,
+        "quantized_input": true,
+        "uint8": true
+      },
+      "native_repeats_exact": {
+        "float": true,
+        "uint8": true,
+        "embedding": true,
+        "actual_fc": true
+      },
+      "registered_fc_exact": true,
+      "cross_platform_float_max_abs": 3.2782554626464844e-07,
+      "cross_platform_phase_max_abs": 1.0669231414794922e-05,
+      "original_numerical_gate": true,
+      "original_gate_outcome_matches_gpu": true,
+      "local_metrics": {
+        "mean": 0.003181880776787554,
+        "p99": 0.0670888826138107,
+        "maximum": 0.06813720539212227
+      },
+      "gpu_metrics": {
+        "mean": 0.0031818813221540553,
+        "p99": 0.06708892657223622,
+        "maximum": 0.0681372493505478
+      },
+      "local_arrays_sha256": "7905e252257bf362359994501c9ac08db670947bef482595881f0934fecd5d97",
+      "gpu_arrays_sha256": "34ac93492e421e06cee78e575628dd879b6511463b741f4402f3fea7789955f4",
+      "audit_passed": true
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "request_order": 14,
+      "steps": 167,
+      "cross_platform_exact": {
+        "raw": true,
+        "quantized_input": true,
+        "uint8": true
+      },
+      "native_repeats_exact": {
+        "float": true,
+        "uint8": true,
+        "embedding": true,
+        "actual_fc": true
+      },
+      "registered_fc_exact": true,
+      "cross_platform_float_max_abs": 1.1175870895385742e-07,
+      "cross_platform_phase_max_abs": 4.76837158203125e-07,
+      "original_numerical_gate": false,
+      "original_gate_outcome_matches_gpu": true,
+      "local_metrics": {
+        "mean": 0.005278154233137739,
+        "p99": 0.14613856488175223,
+        "maximum": 0.14718688766006377
+      },
+      "gpu_metrics": {
+        "mean": 0.005278154044016407,
+        "p99": 0.14613856488175223,
+        "maximum": 0.14718688766006377
+      },
+      "local_arrays_sha256": "1c0af3e9e399286e0f1076c2c31eb571c7bada6be77651f09cc566b75401ea20",
+      "gpu_arrays_sha256": "d84f46f318e99f4fe43f01f72493833de4da188aa8772cce5d68f113c4faf051",
+      "audit_passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "request_order": 48394,
+      "steps": 229,
+      "cross_platform_exact": {
+        "raw": true,
+        "quantized_input": true,
+        "uint8": true
+      },
+      "native_repeats_exact": {
+        "float": true,
+        "uint8": true,
+        "embedding": true,
+        "actual_fc": true
+      },
+      "registered_fc_exact": true,
+      "cross_platform_float_max_abs": 2.384185791015625e-06,
+      "cross_platform_phase_max_abs": 3.427267074584961e-06,
+      "original_numerical_gate": false,
+      "original_gate_outcome_matches_gpu": true,
+      "local_metrics": {
+        "mean": 0.006275428167880616,
+        "p99": 0.19490882612951102,
+        "maximum": 0.19635835886001587
+      },
+      "gpu_metrics": {
+        "mean": 0.006275432673412271,
+        "p99": 0.19490855194814505,
+        "maximum": 0.1963580846786499
+      },
+      "local_arrays_sha256": "9d07a6fcdef03dc058cb10c14699ed96f5262d8a42ca59fe7c8c5208a0f658cd",
+      "gpu_arrays_sha256": "22ea803879673e6d541119ab4494638e69a69b472fef2a95b1a336a9f5d5cadd",
+      "audit_passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "request_order": 48394,
+      "steps": 229,
+      "cross_platform_exact": {
+        "raw": true,
+        "quantized_input": true,
+        "uint8": true
+      },
+      "native_repeats_exact": {
+        "float": true,
+        "uint8": true,
+        "embedding": true,
+        "actual_fc": true
+      },
+      "registered_fc_exact": true,
+      "cross_platform_float_max_abs": 0.0,
+      "cross_platform_phase_max_abs": 0.0,
+      "original_numerical_gate": true,
+      "original_gate_outcome_matches_gpu": true,
+      "local_metrics": {
+        "mean": 0.0007658296196928455,
+        "p99": 0.0035709142684936523,
+        "maximum": 0.0035709142684936523
+      },
+      "gpu_metrics": {
+        "mean": 0.0007658296196928455,
+        "p99": 0.0035709142684936523,
+        "maximum": 0.0035709142684936523
+      },
+      "local_arrays_sha256": "f1303887eeee79e6036af163fedf4c969ec787fbe82682367365b8d2362e6037",
+      "gpu_arrays_sha256": "6d94796d755c1aa739b75e00ebfdbcefe3842abcb81e3a1659aa8a8c06f76471",
+      "audit_passed": true
+    }
+  ],
+  "total_steps": 792,
+  "all_passed": true,
+  "limits": "Four predetermined old witnesses only. Actual integer outputs and raw/quantized inputs compared against authenticated GPU NPZ, native repeats and FC registration checked. Float cross-platform maxima are descriptive; original numerical gate outcomes remain unchanged. Not all540/P4 inference, recognition, FAR, fresh-development or independent acceptance."
+}
