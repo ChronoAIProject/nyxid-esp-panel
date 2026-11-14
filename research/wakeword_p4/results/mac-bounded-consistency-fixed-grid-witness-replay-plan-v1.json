@@ -1,0 +1,81 @@
+{
+  "schema": "mac-bounded-consistency-fixed-grid-witness-replay-plan-v1",
+  "gpu_ref": "6b1aac4b724e5e7b3fa797f6e1ee0ffbe8681a97",
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-fixed-grid-compile-result-v1.json": "68ee3dc0a8b580a77ca234878ff59f3eafb7fe5ebc8bcf9f6b4e33067b1c45f6",
+    "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-fixed-grid-compile-plan-v1.json": "8922966810c82a9e09d7d533fbb628459b13fbc517cc0bc731bc678ad87b3d55",
+    "research/wakeword_p4/results/4090-hey-broad-bounded-consistency-formal-result-v1.json": "228b866647eb0a0267faa8c438a6c7b525f4546efa60b6050dca170999ed55a5",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-execution-v1.json": "54b0416675fadf6f8931dbcb373dc188fa9eb05b0a7841ab846ee848250218e2",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-result-v1.json": "d45a065f595e04b69dd8fbc0884ff420296465ddbb446b1a9b94098d075fa1f3",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "research/wakeword_p4/experiments/probe_hey_broad_bounded_float_v1.py": "b4171e46a30d87f23897bc40b26e1839cee7efa8f090359bb1e2a1dc5b669f9b"
+  },
+  "script_sha256": "41b18ad746e5a6051fc0139ce5a51ce8c5ae1d61a03fff391c75d1676d97249e",
+  "inputs": [
+    {
+      "target": "hey_willow",
+      "request_order": 14,
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_willow-014.npz",
+      "arrays_sha256": "85fd28409838e28176323f2cd22677d47905306b95f4f3f8e38829a9756906af",
+      "raw_dtype": "uint16",
+      "raw_shape": [
+        501,
+        40
+      ],
+      "raw_sha256": "8348829b9b8bbdfe5839a54fbc733711a63e1d763d5359190193122929fe9db3"
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48394,
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_nyx-034.npz",
+      "arrays_sha256": "414860425d99194428e2aaad8a23f01ab999dc439a1f8730e77d616dc298e6da",
+      "raw_dtype": "uint16",
+      "raw_shape": [
+        686,
+        40
+      ],
+      "raw_sha256": "a9dcecd700b560c676558e50e3eacbf0f4b07d3f879b945a8be8b684f9b5a28a"
+    }
+  ],
+  "arms": [
+    {
+      "target": "hey_willow",
+      "condition": "raw_logit_control",
+      "model_path": ".local/wakeword/hey-broad-bounded-consistency-fixed-grid-compile-v1/hey_willow-raw_logit_control/hey_nyx.tflite",
+      "model_sha256": "798f49fb32a68aee53dc035807b88e3d0d8fe32ddc4eb98ed188c93604f40e1b",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_willow-raw_logit_control-0/final.weights.h5",
+      "weights_sha256": "8f6345b66806f1c0af5e09ea489ac9912e93c9c33ec6119bc61efe4590a925f0"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "bounded_logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-bounded-consistency-fixed-grid-compile-v1/hey_willow-bounded_logit_consistency/hey_nyx.tflite",
+      "model_sha256": "fe518f21c5f3987c333651640ccff7012bcc9c97404c6ae8e927f5546a3cc349",
+      "model_bytes": 58616,
+      "weights_path": ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_willow-bounded_logit_consistency-0/final.weights.h5",
+      "weights_sha256": "85674c4886e655bf4a59569ae0f5ff6818e5a342d6a962ba2674187cd72bdb9b"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "raw_logit_control",
+      "model_path": ".local/wakeword/hey-broad-bounded-consistency-fixed-grid-compile-v1/hey_nyx-raw_logit_control/hey_nyx.tflite",
+      "model_sha256": "27dfe9753ec685a8a09cf412f4a13d2289b3390479c9c25cbe0f8f56886a5810",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_nyx-raw_logit_control-0/final.weights.h5",
+      "weights_sha256": "cb5dc5ce245adb39935838229366884c784bda4a7dc4a2e9d4da8574385df0f6"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "bounded_logit_consistency",
+      "model_path": ".local/wakeword/hey-broad-bounded-consistency-fixed-grid-compile-v1/hey_nyx-bounded_logit_consistency/hey_nyx.tflite",
+      "model_sha256": "c009e2c3a540f803e43b844266bf05b3e1f0a4249c22fc49730d57ac15209bba",
+      "model_bytes": 58688,
+      "weights_path": ".local/wakeword/hey-broad-bounded-consistency-formal-v1/hey_nyx-bounded_logit_consistency-0/final.weights.h5",
+      "weights_sha256": "09d143da8dedde763020891f100b4589476fad858ca8bb717df48dbb8947d08d"
+    }
+  ],
+  "registered_fc_report_sha256": "90cb43f317c1128b2ca09201c5fbf81a99c2d8b196b4d4936dfb322ff6a5b904",
+  "registered_fc_library_sha256": "ec7f02e6fd5844f2d7ecc831cd6f68f8223eb2c357a32696dc5d249d6b3b3bf4",
+  "policy": "Exactly four matched bounded-family fixed-final10000/fixed-grid models (raw_logit_control and bounded_logit_consistency), each on its target old predetermined witness (Willow14 or Nyx48394). Both conditions use identical target input; no scoring-based case choice. Two fresh actual LiteRT whole-input runs and two explicit-reset float streams; fixed phase224+zero. Compare actual native registered FC on saved actual embedding to original actual FC. Preserve all outputs, failures and unchanged .02/.1/.25 numerical bounds. At most comparison to published same-case metadata, not all540 array verification or candidate admission. No freshdev, independent acceptance, waveform IO, resampling, optimizer, export or board operations."
+}

@@ -17,8 +17,8 @@ fresh interpreters, real installed TFLM FC registration and the original
 described as a full-training repeat; the two native inference repeats are a
 separate check.
 
-This protocol is published before execution. There is deliberately no actual
-new-model plan yet. Once all four formal runs and fixed-grid compilation are
+This protocol was published before execution, initially without an actual
+new-model plan. Once all four formal runs and fixed-grid compilation are
 published, create and publish a separate actual plan with their final10000 H5
 and TFLite hashes, the original input identities, source/runtime bindings and
 the existing installed FC library identity:
@@ -116,3 +116,27 @@ scoring. Its running handle verifies only this local observation, not GPU
 process liveness. A transient fetch timeout is not GPU termination. When its
 observation window ends, inspect the original GPU state; do not infer failure
 or restart training. Published results still require their normal review.
+
+Actual formal/compile publication was observed at immutable GPU `6b1aac4`.
+The original local observation session ended successfully upon finding both
+reports. It must not be treated as still running or as GPU process evidence.
+The independent Mac published-metadata review verifies four unique final10000
+arms, original report hash chains, 36 public source/metadata bindings, original
+initialization/BN/schedule/Adam audit fields, template/final-H5 mappings and
+80 declared compiled-constant checks. This reads published metadata, without
+re-executing the GPU auditor or reading private H5/model/trace bytes.
+
+```sh
+python research/wakeword_p4/experiments/review_completed_bounded_consistency_mac_v1.py \
+  --gpu-ref 6b1aac4b724e5e7b3fa797f6e1ee0ffbe8681a97 \
+  --report NEW_FORMAL_COMPILE_METADATA_REVIEW.json
+```
+
+The actual `mac-bounded-consistency-fixed-grid-witness-replay-plan-v1.json`
+was created from that publication, SHA256
+`65b47c4324f02c3068f519a539446de4cc5f4eadd9b5478290b2dff474c4a1dd`.
+Both input entries and the installed FC report/library locks equal the earlier
+executed consistency-family plan exactly. Its four final H5/model hashes are
+fixed before transport intake and native execution. Publish this actual plan
+before running the replay. Native execution and actual artifact intake remain
+pending; full540/recursive, recognition/FAR and P4 qualification are not proven.
