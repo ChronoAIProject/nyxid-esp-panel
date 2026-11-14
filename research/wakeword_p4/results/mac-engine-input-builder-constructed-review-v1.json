@@ -1,0 +1,83 @@
+{
+  "schema": "mac-engine-input-builder-constructed-review-v1",
+  "gpu_commit": "c72423023e2d4d6be1b2b1868fab4aef876725e3",
+  "original_source_sha256": {
+    "research/wakeword_p4/experiments/prepare_engine_adversarial_inputs_v1.py": "a931f1da9c327c184f907740769dfc8a22b4f3a0cbc43d8b18da1bb1277b9373",
+    "research/wakeword_p4/experiments/audit_engine_adversarial_inputs_v1.py": "17f24f71485a95e6d736f30b17bfe83dbba670298264b7652585316cc358cdc3",
+    "research/wakeword_p4/experiments/engine_adversarial_hypothesis_v1.md": "fa5ea00136af77aac636e6f5a5035ce8abc7d34b4ab1e9ff271a275740e0592c",
+    "research/wakeword_p4/results/4090-engine-adversarial-upstream-evidence-v1.json": "6fb3ce516142265ac5500be13b9c70aed220bca182fd1254835874f47519045d"
+  },
+  "reviewer_sha256": "468f90be85ea020628a46ba525caa88cff44c32ca84b0f2100f7850530daa53b",
+  "numpy": "2.4.3",
+  "actual_producer_and_auditor_executed": true,
+  "fixture_rows": 297,
+  "fixture_windows_checked": {
+    "windows": 1650,
+    "singleton": 562,
+    "lower_bound_225": 531,
+    "clipped_value": 1650
+  },
+  "controls": [
+    {
+      "control": "duplicate-step-same-variant",
+      "actual_exit_code": 0,
+      "chronology_corruption_rejected": false
+    },
+    {
+      "control": "out-of-range-step-same-variant",
+      "actual_exit_code": 0,
+      "chronology_corruption_rejected": false
+    },
+    {
+      "control": "wrong-source-identity",
+      "actual_exit_code": 1,
+      "source_corruption_rejected": true
+    }
+  ],
+  "actual_training_sources_used": false,
+  "model_calls": 0,
+  "updates": 0,
+  "audio_accessed": false,
+  "candidate_qualified": false,
+  "limits": [
+    "Constructed input workflow and unchanged producer/auditor coverage only.",
+    "Local NumPy runtime is declared; not a replay of private GPU tensors or its runtime.",
+    "Chronology controls test validator coverage, not actual GPU output integrity.",
+    "No gradient, domain-invariance, recognition, P4 or fresh-data qualification."
+  ],
+  "actual_public_receipt_intake": {
+    "gpu_commit": "518c72ee001bbd558c5ff4c46361608df0ff111a",
+    "input_sha256": {
+      "research/wakeword_p4/results/4090-engine-adversarial-input-execution-v1.json": "f344cbc49eeaba9f4587adbec0463cbed38a5cd9c03a95487be8b4fb628f5801",
+      "research/wakeword_p4/results/4090-engine-adversarial-input-result-v1.json": "99c3f1a5c3aff692c68de6a833598bfc1e5ba139cd83af4df3895ecbf6902fef",
+      "research/wakeword_p4/results/4090-engine-adversarial-input-independent-audit-v1.json": "694adadf717254085f8ef8572e88b7ab695a6869fd5a602efb65d14bcd6eebc1"
+    },
+    "public_pins": {
+      "research/wakeword_p4/results/4090-hey-broad-surviving-window-census-execution-v2.json": "23cae2b2adce6559e924f97b631390a4acdaa23e1e9f6fe1fe6d8b708232ce98",
+      "research/wakeword_p4/experiments/prepare_engine_adversarial_inputs_v1.py": "a931f1da9c327c184f907740769dfc8a22b4f3a0cbc43d8b18da1bb1277b9373",
+      "research/wakeword_p4/experiments/engine_adversarial_hypothesis_v1.md": "fa5ea00136af77aac636e6f5a5035ce8abc7d34b4ab1e9ff271a275740e0592c",
+      "research/wakeword_p4/results/4090-hey-broad-features-v1.json": "5ab4fc86a3e682b1c42578bbc84295aec0ada61563aca1e1b642812bb5707ca8",
+      "research/wakeword_p4/results/4090-hey-broad-feature-independent-audit-v1.json": "f94694e6023df8f4895a586607eaa9423cccc7a38e8eab5feb3b0f08ba9436ed",
+      "research/wakeword_p4/experiments/audit_engine_adversarial_inputs_v1.py": "17f24f71485a95e6d736f30b17bfe83dbba670298264b7652585316cc358cdc3",
+      "research/wakeword_p4/results/4090-engine-adversarial-upstream-evidence-v1.json": "6fb3ce516142265ac5500be13b9c70aed220bca182fd1254835874f47519045d"
+    },
+    "private_pins_not_replayed": [
+      ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json",
+      ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.bin"
+    ],
+    "batches": 50,
+    "rows": 1650,
+    "actual_public_step_sequence_correct": true,
+    "all_declared_cells_balanced": true,
+    "actual_private_rng_raw_npz_replayed": false,
+    "limits": "Public source/hash/receipt/declared-coordinate metadata check only. The private tensor/RNG audit remains attributed to GPU execution."
+  },
+  "repeat_execution_report_byte_exact": true,
+  "initial_local_failure": {
+    "stage": "final_report_serialization",
+    "error": "NumPy int64 clipped_value was not JSON serializable",
+    "actual_producer_auditor_and_controls_already_executed": true,
+    "pass_report_written": false,
+    "resolution": "Convert only boolean observation accumulator to Python int; reexecute unchanged original sources in new directory."
+  }
+}
