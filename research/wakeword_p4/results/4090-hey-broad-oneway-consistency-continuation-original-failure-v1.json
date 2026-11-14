@@ -1,0 +1,43 @@
+{
+  "status": "failed_stop_no_retry",
+  "plan_sha256": "eb2fc8b064c1f9df3a7a79037706f612702c239fca7b31029e5adc24b97665ae",
+  "error": "CalledProcessError(1, ['/usr/bin/python3', 'research/wakeword_p4/training/gpu_python.py', 'research/wakeword_p4/experiments/audit_hey_broad_oneway_consistency_fixed_grid_screen_v1.py'])",
+  "completed_phases": [
+    {
+      "phase": "audit_hey_broad_oneway_consistency_formal_v1",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/audit_hey_broad_oneway_consistency_formal_v1.log",
+      "log_sha256": "b714856d66b0ff59d560b57853149c3edb801c4948a28e802c800c5694ea7ae0"
+    },
+    {
+      "phase": "compile_hey_broad_oneway_consistency_fixed_grid_v1-plan",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/compile_hey_broad_oneway_consistency_fixed_grid_v1-plan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "compile_hey_broad_oneway_consistency_fixed_grid_v1-run",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/compile_hey_broad_oneway_consistency_fixed_grid_v1-run.log",
+      "log_sha256": "d213f8db5599fceec211b8394e10c4d5565eb4a1aaeecf0c5e09e7052b648902"
+    },
+    {
+      "phase": "audit_hey_broad_oneway_consistency_fixed_grid_constants_v1",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/audit_hey_broad_oneway_consistency_fixed_grid_constants_v1.log",
+      "log_sha256": "f3b7fc5599eda36368908cac1c6d46bda51fae2891c40c68c1fd5a07acf2da43"
+    },
+    {
+      "phase": "screen_hey_broad_oneway_consistency_fixed_grid_v1-plan",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/screen_hey_broad_oneway_consistency_fixed_grid_v1-plan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "screen_hey_broad_oneway_consistency_fixed_grid_v1-lock",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/screen_hey_broad_oneway_consistency_fixed_grid_v1-lock.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "screen_hey_broad_oneway_consistency_fixed_grid_v1-run",
+      "log": ".local/wakeword/hey-broad-oneway-consistency-continuation-v1/screen_hey_broad_oneway_consistency_fixed_grid_v1-run.log",
+      "log_sha256": "b7d52109b99c127831831206b8a87f75be0003c805369d56ee9a3c7dae90aa77"
+    }
+  ],
+  "limits": "Observe only original PID/starttime; never train/restart. After terminal and complete final aggregate: audit/publish -> publish compileplan -> once compile -> independentconstantsaudit/publish -> publishscreenplan -> publishactualscreenlock -> once full540screen/audit/publish -> publishrecursiveplan -> once recursivefull540/audit/publish. Any missing/failed/hash/git step stops, never retry. Preserve all failures. No freshdev/acceptance/threshold/model selection/promotion."
+}
