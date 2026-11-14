@@ -15,6 +15,9 @@
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/micro/micro_resource_variable.h"
 #include "tensorflow/lite/schema/schema_generated.h"
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+#include "complete_fc.h"
+#endif
 extern "C" {
 #include "frontend.h"
 #include "frontend_util.h"
@@ -78,7 +81,12 @@ struct Detector {
            ops.AddConcatenation()!=kTfLiteOk || ops.AddStridedSlice()!=kTfLiteOk ||
            ops.AddAssignVariable()!=kTfLiteOk || ops.AddConv2D()!=kTfLiteOk ||
            ops.AddDepthwiseConv2D()!=kTfLiteOk || ops.AddSplitV()!=kTfLiteOk ||
-           ops.AddFullyConnected()!=kTfLiteOk || ops.AddLogistic()!=kTfLiteOk ||
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+           ops.AddFullyConnected(nyx_complete_fc::registration())!=kTfLiteOk ||
+#else
+           ops.AddFullyConnected()!=kTfLiteOk ||
+#endif
+           ops.AddLogistic()!=kTfLiteOk ||
            ops.AddQuantize()!=kTfLiteOk || ops.AddExpandDims()!=kTfLiteOk)return false;
 #ifdef PANEL_WAKE_COMPLETE_INPUT
         if(ops.AddMul()!=kTfLiteOk || ops.AddAdd()!=kTfLiteOk)return false;

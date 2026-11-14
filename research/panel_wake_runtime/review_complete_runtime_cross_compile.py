@@ -40,6 +40,8 @@ def run(database, output):
             raise RuntimeError('Cross compile failed; inspect '+str(build/'compile.json'))
     report = dict(schema='complete-runtime-p4-cross-compile-v1', toolchain=version,
         runtime_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        compatibility_header_sha256={name:hashlib.sha256((source.parent/name).read_bytes()).hexdigest()
+            for name in ('complete_fc.h','complete_fc_math.h') if (source.parent/name).exists()},
         real_compile_database_sha256=hashlib.sha256(database.read_bytes()).hexdigest(),
         variants=variants, all_passed=True,
         limits='Real ESP32-P4 translation-unit compilation with installed ESP-SR, TFLM and MicroFrontend headers. Not a CMake/full-app link, model allocation, P4 execution or recognition test.')

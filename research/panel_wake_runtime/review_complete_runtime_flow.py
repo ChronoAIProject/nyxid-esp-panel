@@ -17,7 +17,8 @@ HERE = Path(__file__).resolve().parent
 EMPTY_HEADERS = ['esp_wn_iface.h', 'esp_heap_caps.h', 'esp_log.h', 'esp_timer.h',
     'freertos/FreeRTOS.h', 'freertos/task.h', 'frontend.h', 'frontend_util.h',
     'tensorflow/lite/micro/micro_interpreter.h', 'tensorflow/lite/micro/micro_mutable_op_resolver.h',
-    'tensorflow/lite/micro/micro_resource_variable.h', 'tensorflow/lite/schema/schema_generated.h']
+    'tensorflow/lite/micro/micro_resource_variable.h', 'tensorflow/lite/schema/schema_generated.h',
+    'complete_fc.h']
 
 
 def sha(data):

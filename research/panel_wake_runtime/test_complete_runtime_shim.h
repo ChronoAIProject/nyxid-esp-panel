@@ -72,6 +72,7 @@ template<unsigned N>struct MicroMutableOpResolver {
     OP(FullyConnected) OP(Logistic) OP(Quantize) OP(ExpandDims)
     OP(Mul) OP(Add)
 #undef OP
+    int AddFullyConnected(int){return AddFullyConnected();}
 };
 struct MicroInterpreter {
     int8_t buffer[120]{};uint8_t result=0;
@@ -94,6 +95,7 @@ struct MicroInterpreter {
     }
 };
 }
+namespace nyx_complete_fc {inline int registration(){return 1;}}
 
 struct FrontendConfig {
     struct {int size_ms,step_size_ms;} window;
