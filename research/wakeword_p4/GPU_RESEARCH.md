@@ -8120,3 +8120,24 @@ folding, pre-sigmoid weightedBCE anddeploymentboundedhead mustnot accidentally
 zero confident-wrong traininggradients. No newhyperparameter rescue/equalization
 sweep. FormalQATrequireslaterfixedpairedprotocol afterfeasibility; no newtraining/
 export/dev/acceptance, v30retained andgoalactive.
+
+### Actual training-batch folded-operator float/gradient parity passes
+
+c7f203dd registeredfunctional graph andpreflight beforeexecution. Original98166
+exit0, first2fullactualsamplerbatches perarm matchoriginal fullx/y/weight schedule
+hashes. Shared compensatedmodel variables, frozenBN statistics; pointwiseBNfold
+algebra explicit. Compare originalKeras encoder/Dense rawlogits versus direct
+Conv/Depthwise/foldedpointwise/ReLU/flatten/Dense; weightedBCE rawlogits unchanged.
+
+All4casespass fixedprob1e-4/BCErelative1e-4/gradientrelativeL2 1e-3:
+maxprobabilityerror2.0296330616e-8, maxgradientrelativeL2 1.7817146608e-6.
+Actualrawlogit differences recorded, notsilentlyclipped away. Allparameters
+exactunchanged, noNone/nonfinite gradient, nooptimizerupdates. Savedfullactual
+x/y/weights/rawlogits/all15trainablevariable gradients; NPZ SHA/actualtensorchain/
+concatenatedgradient norm independentlyreduced andmatches.
+
+This verifies onlyfloatfunctionalgraph onfouractualbatches, notfakequant/STE or
+alltraining/domainparity. Nextimplement independentquantizer boundaryrounding,
+zero/alignment/idempotence, perchannelweight/foldedbias and STE checks before
+any formalQAT protocol; no candidateexport/retraining/dev/acceptance. v30frozen,
+goalactive, originalofficial958504 observedlive thisturn.
