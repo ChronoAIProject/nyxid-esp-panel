@@ -40,3 +40,39 @@ are now available in the [GPU handoff](https://github.com/ChronoAIProject/nyxid-
 
 The shared `uint8_event_policy_v1.py` is copied unchanged from GPU commit
 `02bd43de`; this adds no new event arithmetic or historical evaluator changes.
+
+## Actual final-model subset result
+
+The Mac subsequently ran both original final context309 models against all108
+already-consumed WAVs present in the packet, in both cold and primed modes.
+The original138 thresholds remain unchanged. These inputs contain36
+Hey Nicks target clips,36 Hey Willow clips and36 Hey Muse clips; the target
+includes9 bare phrases and27 phrases followed by commands. They are synthetic
+diagnostic inputs, with no continuous background or independent acceptance.
+
+Priming removed every observed pre-source trigger at all original thresholds.
+It did not solve discrimination: broad still activated on2–21/72 cross-word
+clips, narrow on11–25/72, depending on threshold. Target detections ranged
+4–32/36 and11–36/36 respectively. At thresholds with at least32/36 target
+detections, cross-word triggers were at least20/72 and24/72. That count is a
+descriptive tradeoff, not a newly selected working point or qualification rule.
+No practically useful candidate is established by these results.
+
+The [result](../results/mac-multispeaker-existing-priming-subset-v1.json)
+links a lossless archive containing the original plan, every inference output
+and the full curves. It contains no audio, models, credentials or device state.
+Reproduce using the unchanged original model handoff and consumed packet:
+
+```sh
+"$WAKE_PYTHON" research/wakeword_p4/experiments/replay_panel_priming_subset_mac_v1.py \
+  --plan "$WAKE_PLAN" --packet "$WAKE_PACKET" --models "$WAKE_MODELS" \
+  --grid "$WAKE_GRID" --output "$WAKE_OUTPUT"
+"$WAKE_PYTHON" research/wakeword_p4/experiments/summarize_panel_priming_subset_mac_v1.py \
+  --source "$WAKE_OUTPUT/result.json" --output "$WAKE_OUTPUT/summary.json"
+```
+
+Use the archived `plan.json` and its `thresholds` list for the grid file.
+`WAKE_PACKET` is the consumed packet root, with an `audio` directory;
+`WAKE_MODELS` contains the two original TFLites and their handoff manifest.
+The original session50845 completed with exit0. This run changes no firmware,
+does not access fresh data and does not replace the GPU's full-background run.

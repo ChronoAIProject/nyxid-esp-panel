@@ -1,0 +1,152 @@
+{
+  "schema": "mac-existing-priming-subset-publication-v1",
+  "original_session": 50845,
+  "exit_code": 0,
+  "models": 2,
+  "source_clips": 108,
+  "model_records": 216,
+  "paths_per_record": [
+    "cold",
+    "primed"
+  ],
+  "original_grid_points": 138,
+  "positive_literal": "Hey Nicks",
+  "positive_clips": 36,
+  "positive_bare": 9,
+  "positive_command": 27,
+  "other_literals": {
+    "Hey Willow": 36,
+    "Hey Muse": 36
+  },
+  "prime_samples": 81600,
+  "context_frames": 309,
+  "behavior": [
+    {
+      "model": "broad",
+      "phase": "cold",
+      "grid_points": 138,
+      "pre_source_clips_range": [
+        23,
+        72
+      ],
+      "positive_clips_range": [
+        4,
+        32
+      ],
+      "cross_clips_range": [
+        16,
+        56
+      ],
+      "zero_subset_negative_points": 0,
+      "minimum_cross_clips_when_positive_at_least_32_of_36": 55,
+      "grid_max_example": {
+        "threshold": 0.99609375,
+        "pre_source_clips": 23,
+        "ignored_priming_events": 0,
+        "cross_clips": 16,
+        "cross_events": 16,
+        "positive_clips": 4,
+        "positive_bare": 0,
+        "positive_command": 4
+      }
+    },
+    {
+      "model": "broad",
+      "phase": "primed",
+      "grid_points": 138,
+      "pre_source_clips_range": [
+        0,
+        0
+      ],
+      "positive_clips_range": [
+        4,
+        32
+      ],
+      "cross_clips_range": [
+        2,
+        21
+      ],
+      "zero_subset_negative_points": 0,
+      "minimum_cross_clips_when_positive_at_least_32_of_36": 20,
+      "grid_max_example": {
+        "threshold": 0.99609375,
+        "pre_source_clips": 0,
+        "ignored_priming_events": 0,
+        "cross_clips": 2,
+        "cross_events": 2,
+        "positive_clips": 4,
+        "positive_bare": 0,
+        "positive_command": 4
+      }
+    },
+    {
+      "model": "narrow",
+      "phase": "cold",
+      "grid_points": 138,
+      "pre_source_clips_range": [
+        72,
+        108
+      ],
+      "positive_clips_range": [
+        11,
+        35
+      ],
+      "cross_clips_range": [
+        51,
+        72
+      ],
+      "zero_subset_negative_points": 0,
+      "minimum_cross_clips_when_positive_at_least_32_of_36": 72,
+      "grid_max_example": {
+        "threshold": 0.99609375,
+        "pre_source_clips": 72,
+        "ignored_priming_events": 0,
+        "cross_clips": 51,
+        "cross_events": 59,
+        "positive_clips": 11,
+        "positive_bare": 1,
+        "positive_command": 10
+      }
+    },
+    {
+      "model": "narrow",
+      "phase": "primed",
+      "grid_points": 138,
+      "pre_source_clips_range": [
+        0,
+        0
+      ],
+      "positive_clips_range": [
+        11,
+        36
+      ],
+      "cross_clips_range": [
+        11,
+        25
+      ],
+      "zero_subset_negative_points": 0,
+      "minimum_cross_clips_when_positive_at_least_32_of_36": 24,
+      "grid_max_example": {
+        "threshold": 0.99609375,
+        "pre_source_clips": 0,
+        "ignored_priming_events": 0,
+        "cross_clips": 11,
+        "cross_events": 11,
+        "positive_clips": 11,
+        "positive_bare": 1,
+        "positive_command": 10
+      }
+    }
+  ],
+  "conclusion": "Existing zero-PCM priming removes all observed pre-source triggers in this consumed subset. Actual positive recall/cross-word false wakes remain poor; no usable candidate established. No numerical matching gate.",
+  "archive": "research/wakeword_p4/results/mac-multispeaker-existing-priming-subset-v1.tar.gz",
+  "archive_bytes": 2033850,
+  "archive_sha256": "c21a3458413d691331d52c2068b8c1dad86fbd4863d2cb2ddd1cd55aa11edd29",
+  "candidate_promoted": false,
+  "background_hours": 0,
+  "limits": "Consumed synthetic subset only. Hits are events after source starts, not validated word-end latency. No background FAR, independent acceptance, acoustic or P4 qualification.",
+  "no_audio_output": true,
+  "no_microphone_capture": true,
+  "no_new_training": true,
+  "no_hardware_changes": true
+}
