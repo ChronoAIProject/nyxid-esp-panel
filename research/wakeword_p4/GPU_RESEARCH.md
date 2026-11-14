@@ -9784,3 +9784,9 @@ Original17921 genuinely exit0, PID1762282/start26060483 absent, all4×10000fixed
 Generated fourmodel ownFP32exportexecution lock after actualaudit, source/runtime/newH5 pins verified. Publish before once-only exports; own540completewave numeric/phase/fullstartup/twofresh remains required before reusedrecognition. No numeric/recognition/INT8qualification yet, v30/freshdev/acceptance unchanged.
 
 Original export15042 genuinely exit0: four once-only builtinFP32 conversions, allstaticABI/sixrealzerohistories/originalmodelarrays unchanged checks passed. ExactnewH5/exportbytes preserved in result. Generated own540waveformexecution lock, all135originalrequests PERMODEL, CPUH5-vs-ownLiteRT1e-4/valid224+zero1e-4/fullstartup/tail/twofresh/reset/clocks; publish before actualscreen. Static export is not numeric or recognition/INT8qualification.
+
+### Own540 numerical qualification actually allpassed / recognition collection prelock (2026-11-14)
+
+Originalscreen6468 genuinely exit0, fourmodels each135/135completewave cases passed. Independent savedcaseauditor actualexit0/all540hash/shape/domain/twofresh/reset/clocks/phase/gaps checked. Worst ownH5-LiteRT/phase max: Nyxfull9.53674e-7/1.01328e-6, Nyxfrozen5.36442e-7/4.47035e-7, Willowfull6.25849e-7/5.96046e-7, Willowfrozen2.53320e-7/2.68221e-7, original1e-4 unchanged. Fullstartup/tail preserved; no INT8/recognition claim.
+
+Generated actualnew4models×372consumedinput collection lock (1488twofreshtraces), bound own540export/screen/audit/models and original360synthetic/12wholebackground SHA. Publish before collection. No threshold or freshdev/acceptance access; original138grid/eventpolicy and independent trace/eventoracle/groups/comparison retained. v30 unchanged.
