@@ -8903,3 +8903,6 @@ Implemented callable conflicts(proposed,aliases,history) over authenticated actu
 
 ### Unified all-point detection/boundary description
 Reduced existing1242custom boundary supplements plus26official points;1268rows retained with any-after-source, complete, before-only and no-event counts. Cross-checked custom original event hashes/36positive rows/zero pre-source events and original complete counts. Old self-trained Willow bounded-float any7–8/36 versus complete5–7, UINT8any7 versus complete5–7; integer-QATany0. Thus its historical misses are mostly actual missing events in the measured bounded representation, unlike the large official HiESP before-boundary fraction. All ranges describe whole registered grids, not chosen endpoints/common-FAR rankings. Raw FP32 recognition remains unknown. No inference or altered scoring.
+
+### Official signed first-event generated-reference latency
+All26original points reduced by all/standalone/command/three variants. First native after-source event retains negative signed generated-prefix offsets, with missing clips explicit; conditional min/median/p95/max are not latency guarantees. No phonetic truth, selection or event-policy changes. This complements original complete-only hit timing so early events are not erased by the summary.
