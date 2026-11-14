@@ -9992,3 +9992,8 @@ User requested cleanup and future space control. Size-group inspection suggested
 ## Actual smoke streaming exports and independent replay audit
 
 Original session33511/PID81315 genuinely exit0; starttime unavailable after process exited, explicit null. Both two-update smoke models each exported once to FP32/builtinINT8 without retry. Narrow139936/60824 bytes; broad140248/61064 bytes. Original824 calls across two fresh interpreters/artifact exact; independent audit52843 actualexit0 inspects all FlatBuffers, six real-zero initializer buffers, ABI3x40→1, noCustom/noFloatINT8, actual representative/source and quantization arrays, and another412 uninterrupted fresh-interpreter calls exact against saved traces. Original static/runtime report bytes published unchanged. This does not establish FP32/INT8 numerical fidelity, whole-wave artifact qualification, recognition, freshdev/acceptance or P4 resources. Formal20k has not launched; next full execution lock must use original shared initialization, not smoke weights. Frozen v30 unchanged.
+
+
+## Original paired formal run launched
+
+Pushed execution lock2f24ac0a before launch. Original session8257/PID84435/procstart438879 observed live; actual4090 admitted and narrow first700updates observed, finite loss/all15gradients and periodic16frozen checks. Two20000 fixedfinal arms, shared original initialization; broad sole candidate, narrow control. gzip ordered descriptors/actualx-y-weight digests everyupdate; 1GiB newallocation estimate guarded with100GiB reserve and periodic disk checks. Original process remains live, no restart. No recognition/freshdev/acceptance result yet; losses mechanical only.
