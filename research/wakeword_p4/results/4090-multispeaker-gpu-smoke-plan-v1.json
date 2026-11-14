@@ -1,0 +1,5892 @@
+{
+  "schema": "multispeaker-gpu-smoke-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/smoke_multispeaker_gpu_v1.py": "d3c52ccd0b580f433188b8e1f4ac3a9162bcd32abf55fe18a309f47a6b92d483",
+    "research/wakeword_p4/results/4090-multispeaker-batch-probe-v1.json": "4c8e24d302e6fcedd3c0cc246b3e0c9a9f9c7ab7d7d85773a3126001b34481eb",
+    "research/wakeword_p4/results/4090-multispeaker-batch-independent-audit-v1.json": "3b6ff156d086a512977c1733849d0f7dc5a1d8577a1fb4e07797c948df9338bc",
+    "research/wakeword_p4/results/4090-multispeaker-context309-initialization-v1.json": "d9a298f66bee2883383812e719adf12b40ba7e86b87abfc60205086ba78a1ef0",
+    ".local/wakeword/multispeaker-batch-probe-v1/records.jsonl": "86dad4cbf64d6922b6e0d2672e098d53f695cd9cd98793da43a361320623f812",
+    ".local/wakeword/multispeaker-context309-initialization-v1/initial.weights.h5": "ab5b23829cc888c885b40a81600ec57a4e20bf902f44512856920e3b9dee07f7",
+    ".local/wakeword/multispeaker-context309-initialization-v1/variables.npz": "934b192afded73924c24ceac646fcaa9f169a1b12544ef4a239ca848bcf6f628",
+    ".local/wakeword/multispeaker-context309-initialization-v1/variables.json": "cbd7b559a04496c9e1a88bcb5292f4d11579972b5746b20bb7a0221364b532bb",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_gpu_training_factory_v1.py": "6a480a88af1332366f86d4fb6b471f544a7897f70bb60a6c12198a3666c87527",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/training/gpu_python.py": "ba91f202efe4895f09ea71fae5bdec9456a7ed7d30d2cda60af8c07492c8f0b2",
+    ".local/wakeword/microWakeWord/microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+    ".local/wakeword/microWakeWord/microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".local/wakeword/microWakeWord/microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+    ".local/wakeword/microWakeWord/microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717",
+    ".local/wakeword/microWakeWord/microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+    ".local/wakeword/microWakeWord/microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+    ".local/wakeword/microWakeWord/microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+    ".local/wakeword/microWakeWord/microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+    ".local/wakeword/microWakeWord/microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    ".local/wakeword/microWakeWord/microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+    ".local/wakeword/microWakeWord/microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+    ".local/wakeword/microWakeWord/microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+    ".local/wakeword/microWakeWord/microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+    ".local/wakeword/microWakeWord/microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+    ".local/wakeword/microWakeWord/microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+    ".local/wakeword/microWakeWord/microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+    ".local/wakeword/microWakeWord/microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+    ".local/wakeword/microWakeWord/microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+    ".local/wakeword/microWakeWord/microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+    ".local/wakeword/multispeaker-batch-probe-v1/narrow-step01.npz": "0440fa6ae1f721eca1b0b3fe432c12f2365bc6428d64ffda35fba97b7216ac50",
+    ".local/wakeword/multispeaker-batch-probe-v1/broad-step01.npz": "d66d481cadf410fc3f99dbd72a708798d26498eb19ca2998339db4381d4fda7d",
+    ".local/wakeword/multispeaker-batch-probe-v1/narrow-step02.npz": "e2967d199faf71e351fe061d34da1a5b54a828e58fe819c8a630832e0204aeff",
+    ".local/wakeword/multispeaker-batch-probe-v1/broad-step02.npz": "f7950c46d59548722ab2d90f0b653dbe34e6639d92041999dd23b8e0278fd4e1"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "numpy": "2.4.6"
+  },
+  "initial": {
+    "schema": "multispeaker-context309-initialization-v1",
+    "plan_sha256": "9ec6337f57f1be7b96ddb52ca04e9ccc82f63cbc8a6c06c859a0eedb453e180b",
+    "context_frames": 309,
+    "seed": 726,
+    "parameters": 25981,
+    "variables": 31,
+    "optimizer_variable_count_before_creation": 0,
+    "trainable_variables": 15,
+    "copied_encoder_bn": [
+      {
+        "layer_index": 1,
+        "kind": "Conv2D",
+        "sha256": "81cc23a4a9b2fca201737d98275640850ea2f17849f9954a39cc94c7838ac0c9"
+      },
+      {
+        "layer_index": 4,
+        "kind": "DepthwiseConv2D",
+        "sha256": "d565a246286d1c61692947db0194955f18d0475a1e8d2b0ebc138a27bc2c3746"
+      },
+      {
+        "layer_index": 5,
+        "kind": "Conv2D",
+        "sha256": "a864fdfc6382a15e2c4010f157198e3bf2416bb3fac01efe84b21e1a92662e1b"
+      },
+      {
+        "layer_index": 6,
+        "kind": "BatchNormalization",
+        "sha256": "0040dc4621f26244123d8939da8997272cd49a9fa33e30b10079253661a94f39"
+      },
+      {
+        "layer_index": 9,
+        "kind": "DepthwiseConv2D",
+        "sha256": "0de66c8dc4e4a3283b8014f2a798f1e45dbe36631208185f974bf9b45b60918d"
+      },
+      {
+        "layer_index": 10,
+        "kind": "Conv2D",
+        "sha256": "4f0967bf992ba5400848da9b0d61641da8753143a92167c68af0c9ddfb3a7c19"
+      },
+      {
+        "layer_index": 11,
+        "kind": "BatchNormalization",
+        "sha256": "d298c0bf830ce5abf814511a367c287c1f1f876ef1b55ab7bfb8922a32dff3f1"
+      },
+      {
+        "layer_index": 14,
+        "kind": "DepthwiseConv2D",
+        "sha256": "cc49a00bea8df14ef3a80d6ac85bd1195537b1d9ea7f8bccdc9c06836efe790b"
+      },
+      {
+        "layer_index": 15,
+        "kind": "Conv2D",
+        "sha256": "8778a361641d96241162962c495365ebbec79ee59ea3222698beee68c321bc39"
+      },
+      {
+        "layer_index": 16,
+        "kind": "BatchNormalization",
+        "sha256": "8badda25d23a419f558e54ab81bb207f4f4ea4b41ba38de4676004a226bdde86"
+      },
+      {
+        "layer_index": 19,
+        "kind": "DepthwiseConv2D",
+        "sha256": "89ecce8218a67ac559ac1b91e9c648f9a36885a749cd5dd46a33c5e2dad8b762"
+      },
+      {
+        "layer_index": 20,
+        "kind": "Conv2D",
+        "sha256": "ccda27e566843b359b8c792b8ba63b2decd114e40800186badb674733fdc2b75"
+      },
+      {
+        "layer_index": 21,
+        "kind": "BatchNormalization",
+        "sha256": "65671d89f6999c3a3354c6b9ef22937d259c6816bd798f944ce8a1c50362fdd6"
+      }
+    ],
+    "snapshot": {
+      "path": ".local/wakeword/multispeaker-context309-initialization-v1/initial.weights.h5",
+      "bytes": 185456,
+      "sha256": "ab5b23829cc888c885b40a81600ec57a4e20bf902f44512856920e3b9dee07f7"
+    },
+    "variable_arrays": {
+      "path": ".local/wakeword/multispeaker-context309-initialization-v1/variables.npz",
+      "sha256": "934b192afded73924c24ceac646fcaa9f169a1b12544ef4a239ca848bcf6f628"
+    },
+    "variable_inventory": {
+      "path": ".local/wakeword/multispeaker-context309-initialization-v1/variables.json",
+      "sha256": "cbd7b559a04496c9e1a88bcb5292f4d11579972b5746b20bb7a0221364b532bb",
+      "variables": [
+        {
+          "index": 0,
+          "key": "v000",
+          "name": "stream/conv2d/kernel",
+          "shape": [
+            5,
+            1,
+            40,
+            30
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "81cc23a4a9b2fca201737d98275640850ea2f17849f9954a39cc94c7838ac0c9"
+        },
+        {
+          "index": 1,
+          "key": "v001",
+          "name": "depthwise_conv2d/kernel",
+          "shape": [
+            5,
+            1,
+            30,
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "ce16dc7e70a08614b703c7886a704dfa08bae8920fb8cbe6c691d48a6f0fa350"
+        },
+        {
+          "index": 2,
+          "key": "v002",
+          "name": "depthwise_conv2d/bias",
+          "shape": [
+            30
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f"
+        },
+        {
+          "index": 3,
+          "key": "v003",
+          "name": "conv2d_1/kernel",
+          "shape": [
+            1,
+            1,
+            30,
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "a864fdfc6382a15e2c4010f157198e3bf2416bb3fac01efe84b21e1a92662e1b"
+        },
+        {
+          "index": 4,
+          "key": "v004",
+          "name": "batch_normalization/gamma",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "c0a93aea1386d037d89f1f0dae13df8880710cedbafb7fff397d7bd6a4234ccc"
+        },
+        {
+          "index": 5,
+          "key": "v005",
+          "name": "batch_normalization/beta",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "0c5f90506952bd26b499f57d535fd98c5384d03e64d8f1907e5c8894c7dc0c6f"
+        },
+        {
+          "index": 6,
+          "key": "v006",
+          "name": "batch_normalization/moving_mean",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+        },
+        {
+          "index": 7,
+          "key": "v007",
+          "name": "batch_normalization/moving_variance",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+        },
+        {
+          "index": 8,
+          "key": "v008",
+          "name": "depthwise_conv2d_1/kernel",
+          "shape": [
+            9,
+            1,
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "ca1b02d63794f8ad42b34050bf35a5155e1f64dbf8ae2847024e8b08690dc5e2"
+        },
+        {
+          "index": 9,
+          "key": "v009",
+          "name": "depthwise_conv2d_1/bias",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "3f828125c19298682e375a9fcc5aee91ecad8ff555139fe140f34e588398427e"
+        },
+        {
+          "index": 10,
+          "key": "v010",
+          "name": "conv2d_2/kernel",
+          "shape": [
+            1,
+            1,
+            60,
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "4f0967bf992ba5400848da9b0d61641da8753143a92167c68af0c9ddfb3a7c19"
+        },
+        {
+          "index": 11,
+          "key": "v011",
+          "name": "batch_normalization_1/gamma",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "c0a93aea1386d037d89f1f0dae13df8880710cedbafb7fff397d7bd6a4234ccc"
+        },
+        {
+          "index": 12,
+          "key": "v012",
+          "name": "batch_normalization_1/beta",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "0e25ee9b6c53b5f880e597ee33e67e47f3c6898df4d1ce17a7e3c532116c2959"
+        },
+        {
+          "index": 13,
+          "key": "v013",
+          "name": "batch_normalization_1/moving_mean",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+        },
+        {
+          "index": 14,
+          "key": "v014",
+          "name": "batch_normalization_1/moving_variance",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+        },
+        {
+          "index": 15,
+          "key": "v015",
+          "name": "depthwise_conv2d_2/kernel",
+          "shape": [
+            13,
+            1,
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "ce0a7c35b0933c002d119a62f76970b744ca65fe495b21a9e3cf0a9c6ec1a4ff"
+        },
+        {
+          "index": 16,
+          "key": "v016",
+          "name": "depthwise_conv2d_2/bias",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "2cac738ba7a7a1570bc220ada740083d3b90346f025d87bbdb2b6302d42e9c60"
+        },
+        {
+          "index": 17,
+          "key": "v017",
+          "name": "conv2d_3/kernel",
+          "shape": [
+            1,
+            1,
+            60,
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "8778a361641d96241162962c495365ebbec79ee59ea3222698beee68c321bc39"
+        },
+        {
+          "index": 18,
+          "key": "v018",
+          "name": "batch_normalization_2/gamma",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "c0a93aea1386d037d89f1f0dae13df8880710cedbafb7fff397d7bd6a4234ccc"
+        },
+        {
+          "index": 19,
+          "key": "v019",
+          "name": "batch_normalization_2/beta",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "66c87dfd62132971cf3f4db6488f482af6d8e98d3e1ec6bb3ab05caaf31b387e"
+        },
+        {
+          "index": 20,
+          "key": "v020",
+          "name": "batch_normalization_2/moving_mean",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+        },
+        {
+          "index": 21,
+          "key": "v021",
+          "name": "batch_normalization_2/moving_variance",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+        },
+        {
+          "index": 22,
+          "key": "v022",
+          "name": "depthwise_conv2d_3/kernel",
+          "shape": [
+            21,
+            1,
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "d587a60e4063e1a9c376e2af47bd110fbee16798638002d5dfbca8a244b34425"
+        },
+        {
+          "index": 23,
+          "key": "v023",
+          "name": "depthwise_conv2d_3/bias",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "f1f3122d4780e7bc5be5bee5210ab070f35221ffdf0644f06abe563a728d346f"
+        },
+        {
+          "index": 24,
+          "key": "v024",
+          "name": "conv2d_4/kernel",
+          "shape": [
+            1,
+            1,
+            60,
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "ccda27e566843b359b8c792b8ba63b2decd114e40800186badb674733fdc2b75"
+        },
+        {
+          "index": 25,
+          "key": "v025",
+          "name": "batch_normalization_3/gamma",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "c0a93aea1386d037d89f1f0dae13df8880710cedbafb7fff397d7bd6a4234ccc"
+        },
+        {
+          "index": 26,
+          "key": "v026",
+          "name": "batch_normalization_3/beta",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "ace5fd9f170459516c800f2b946b7b12ba3c50622a0f9fb425b8b859db32cb11"
+        },
+        {
+          "index": 27,
+          "key": "v027",
+          "name": "batch_normalization_3/moving_mean",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537"
+        },
+        {
+          "index": 28,
+          "key": "v028",
+          "name": "batch_normalization_3/moving_variance",
+          "shape": [
+            60
+          ],
+          "dtype": "float32",
+          "effective_trainable": false,
+          "sha256": "bbed51f708d626993f6d4fb055e0af05327c653d7953eb0b81d6968eb6304aea"
+        },
+        {
+          "index": 29,
+          "key": "v029",
+          "name": "dense/kernel",
+          "shape": [
+            3480,
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "94e966c8af62e56bb1d9b7e49fa7ac43917fdd85fa899e6f19b609e561a40506"
+        },
+        {
+          "index": 30,
+          "key": "v030",
+          "name": "dense/bias",
+          "shape": [
+            1
+          ],
+          "dtype": "float32",
+          "effective_trainable": true,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        }
+      ]
+    },
+    "classifier_shapes": [
+      [
+        3480,
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "classifier_value_sha256": "c1d473e5477c29e1bdb93c17717d886a246ca997638c3905f63d98fe88de2a66",
+    "same_instance_saved": true,
+    "actual_saved_arrays_reloaded_exact": true,
+    "updates": 0,
+    "inference_calls": 0,
+    "limits": "Actual CPU initialization and saved/reload identity only. New context309 classifier differs from original150; no GPU integration, stream export or recognition qualification."
+  },
+  "batches": {
+    "narrow": [
+      {
+        "step": 1,
+        "arm": "narrow",
+        "descriptors": [
+          {
+            "kind": "synthetic",
+            "index": 6278,
+            "end": 492,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 293,
+            "end": 2990,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1392,
+            "end": 17756,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20254,
+            "end": 509,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9789,
+            "end": 388,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Mix.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 288,
+            "end": 75257,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1328,
+            "end": 22250,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1381,
+            "end": 9797,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6203,
+            "end": 498,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2625,
+            "end": 440,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 138291,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11427,
+            "end": 386,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20322,
+            "end": 547,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2638,
+            "end": 491,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11480,
+            "end": 386,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3952,
+            "end": 454,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21129,
+            "end": 453,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9494,
+            "end": 649,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 585,
+            "end": 6340,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1167,
+            "end": 392,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8982,
+            "end": 505,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20046,
+            "end": 487,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5958,
+            "end": 400,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16851,
+            "end": 354,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20798,
+            "end": 462,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1287,
+            "end": 23003,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 450,
+            "end": 398,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19905,
+            "end": 495,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1085,
+            "end": 2671,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17129,
+            "end": 361,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13019,
+            "end": 313,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 298,
+            "end": 926,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 9275,
+            "end": 369,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20344,
+            "end": 431,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 255,
+            "end": 76638,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17711,
+            "end": 407,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16615,
+            "end": 531,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 315,
+            "end": 1055,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10700,
+            "end": 516,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 146,
+            "end": 127315,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16636,
+            "end": 537,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17993,
+            "end": 354,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17117,
+            "end": 657,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1386,
+            "end": 11009,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13167,
+            "end": 373,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13421,
+            "end": 363,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20008,
+            "end": 481,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8709,
+            "end": 472,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3027,
+            "end": 344,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6576,
+            "end": 495,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6187,
+            "end": 490,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 329,
+            "end": 1590,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1353,
+            "end": 18209,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 193,
+            "end": 12204,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6961,
+            "end": 470,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 21,
+            "end": 38386,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1374,
+            "end": 1342,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 339,
+            "end": 18768,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11716,
+            "end": 513,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19839,
+            "end": 492,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 1881,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20005,
+            "end": 460,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 89,
+            "end": 9988,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 33,
+            "end": 270184,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 697,
+            "end": 1355,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 97,
+            "end": 8827,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2850,
+            "end": 585,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 306,
+            "end": 1109,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6689,
+            "end": 322,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16993,
+            "end": 471,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1373,
+            "end": 12637,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10592,
+            "end": 563,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 10501,
+            "end": 414,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "E S P.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 27,
+            "end": 47293,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2328,
+            "end": 451,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3946,
+            "end": 437,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1350,
+            "end": 7102,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 293,
+            "end": 115452,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16537,
+            "end": 384,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 24,
+            "end": 9728,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19714,
+            "end": 401,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8063,
+            "end": 483,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 327,
+            "end": 1474,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4283,
+            "end": 389,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1314,
+            "end": 17663,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16703,
+            "end": 561,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2329,
+            "end": 429,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11554,
+            "end": 388,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16559,
+            "end": 390,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3033,
+            "end": 455,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19995,
+            "end": 498,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2539,
+            "end": 479,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 12851,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6898,
+            "end": 354,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20928,
+            "end": 475,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8832,
+            "end": 468,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 12508,
+            "end": 386,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1230,
+            "end": 1976,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 9060,
+            "end": 596,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 289,
+            "end": 18197,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 22214,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1394,
+            "end": 31431,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 7434,
+            "end": 488,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17179,
+            "end": 554,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 291,
+            "end": 32263,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 12500,
+            "end": 392,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16490,
+            "end": 387,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 97980,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17296,
+            "end": 373,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 300,
+            "end": 891,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10652,
+            "end": 332,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6300,
+            "end": 478,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 21862,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 12415,
+            "end": 408,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1348,
+            "end": 11893,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 902,
+            "end": 5804,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 3373,
+            "end": 489,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2421,
+            "end": 508,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11698,
+            "end": 489,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 31,
+            "end": 51832,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 21749,
+            "end": 357,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S B.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9507,
+            "end": 342,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 12253,
+            "end": 388,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1296,
+            "end": 4970,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20378,
+            "end": 363,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11646,
+            "end": 483,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3041,
+            "end": 442,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9190,
+            "end": 369,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              1
+            ]
+          }
+        ],
+        "x_sha256": "651046d5d4adf8d7570a30de45ed841b1db10cd185cbcbf44fc1f9bf29cb45f9",
+        "y_sha256": "27dd64ba11cafd06925964ffb41e930fdbd8f2af18fa5263b67365bcf291d76a",
+        "weights_sha256": "73d3f90b1465c3515aff4e59ad421b14ee077fa330a572dc7d970b53924df231",
+        "actual_tensor_path": ".local/wakeword/multispeaker-batch-probe-v1/narrow-step01.npz",
+        "actual_tensor_sha256": "0440fa6ae1f721eca1b0b3fe432c12f2365bc6428d64ffda35fba97b7216ac50"
+      },
+      {
+        "step": 2,
+        "arm": "narrow",
+        "descriptors": [
+          {
+            "kind": "ambient",
+            "index": 33,
+            "end": 66292,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1065,
+            "end": 4906,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8804,
+            "end": 466,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1160,
+            "end": 1387,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 112792,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 122253,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 965,
+            "end": 2804,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2715,
+            "end": 344,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20807,
+            "end": 335,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8735,
+            "end": 487,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8928,
+            "end": 585,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 334,
+            "end": 1246,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16485,
+            "end": 402,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1068,
+            "end": 7879,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8025,
+            "end": 496,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20670,
+            "end": 359,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20261,
+            "end": 503,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11653,
+            "end": 508,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17967,
+            "end": 330,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1385,
+            "end": 2283,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20126,
+            "end": 426,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19844,
+            "end": 483,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17144,
+            "end": 446,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 12827,
+            "end": 407,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1288,
+            "end": 24041,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1340,
+            "end": 7788,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 31,
+            "end": 11872,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6618,
+            "end": 508,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1311,
+            "end": 12892,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 261,
+            "end": 109064,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 12103,
+            "end": 312,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17959,
+            "end": 447,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19880,
+            "end": 486,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 306,
+            "end": 2900,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20984,
+            "end": 383,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9696,
+            "end": 399,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 30,
+            "end": 67498,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 7884,
+            "end": 474,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11444,
+            "end": 381,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9250,
+            "end": 372,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17380,
+            "end": 409,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17296,
+            "end": 337,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3437,
+            "end": 479,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 335,
+            "end": 5099,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 7196,
+            "end": 335,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 26,
+            "end": 16337,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11888,
+            "end": 483,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21280,
+            "end": 457,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11831,
+            "end": 350,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11705,
+            "end": 503,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 323,
+            "end": 3697,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 765,
+            "end": 732,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16842,
+            "end": 415,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1294,
+            "end": 17666,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2495,
+            "end": 499,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1329,
+            "end": 2376,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16891,
+            "end": 449,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16516,
+            "end": 379,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11477,
+            "end": 393,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21079,
+            "end": 374,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8820,
+            "end": 427,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11965,
+            "end": 465,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8688,
+            "end": 449,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 13709,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2528,
+            "end": 485,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9039,
+            "end": 523,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2177,
+            "end": 392,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 27,
+            "end": 2962,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11536,
+            "end": 395,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 86357,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20980,
+            "end": 472,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9896,
+            "end": 358,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 24,
+            "end": 18022,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 303,
+            "end": 10391,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 384,
+            "end": 3575,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 340,
+            "end": 9271,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6308,
+            "end": 484,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1380,
+            "end": 7440,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 310,
+            "end": 1910,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 45504,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19705,
+            "end": 409,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6263,
+            "end": 477,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 2113,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1288,
+            "end": 21974,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8007,
+            "end": 373,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17067,
+            "end": 570,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 452,
+            "end": 2423,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16469,
+            "end": 382,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 10333,
+            "end": 332,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20242,
+            "end": 432,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 309,
+            "end": 2638,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 18098,
+            "end": 343,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21067,
+            "end": 420,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21402,
+            "end": 336,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6016,
+            "end": 414,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3097,
+            "end": 311,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1301,
+            "end": 23223,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 7046,
+            "end": 426,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Mix.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 10073,
+            "end": 502,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nice.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 803,
+            "end": 4719,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11816,
+            "end": 395,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 914,
+            "end": 5276,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10774,
+            "end": 541,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6140,
+            "end": 423,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18152,
+            "end": 413,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 64350,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11594,
+            "end": 517,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 285,
+            "end": 24917,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 3202,
+            "end": 393,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1384,
+            "end": 22026,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6115,
+            "end": 414,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 21428,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19803,
+            "end": 404,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 207,
+            "end": 54981,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8917,
+            "end": 579,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6334,
+            "end": 500,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 10383,
+            "end": 310,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1052,
+            "end": 1482,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 249,
+            "end": 27007,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16568,
+            "end": 418,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6459,
+            "end": 324,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2829,
+            "end": 320,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18191,
+            "end": 388,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 301,
+            "end": 2333,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 6136,
+            "end": 422,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19751,
+            "end": 391,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 287,
+            "end": 57315,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17925,
+            "end": 344,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              0.9,
+              0
+            ]
+          }
+        ],
+        "x_sha256": "f013cef8a5dd997393c238c83f54365916453c554327232cfb75d75a5da929fc",
+        "y_sha256": "df382e0a4607bc22f76c4d64d08ee17187476790c63970b6b871990db609eba2",
+        "weights_sha256": "ea898486941821707dcc836cc10612bffe6b9089497a02b0b2b9d6bd94772f8b",
+        "actual_tensor_path": ".local/wakeword/multispeaker-batch-probe-v1/narrow-step02.npz",
+        "actual_tensor_sha256": "e2967d199faf71e351fe061d34da1a5b54a828e58fe819c8a630832e0204aeff"
+      }
+    ],
+    "broad": [
+      {
+        "step": 1,
+        "arm": "broad",
+        "descriptors": [
+          {
+            "kind": "synthetic",
+            "index": 4406,
+            "end": 485,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 293,
+            "end": 2990,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1392,
+            "end": 17756,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19006,
+            "end": 495,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3282,
+            "end": 368,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Mix.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 288,
+            "end": 75257,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1328,
+            "end": 22250,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1381,
+            "end": 9797,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4385,
+            "end": 499,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 1734,
+            "end": 421,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 138291,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 18555,
+            "end": 397,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19014,
+            "end": 533,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 658,
+            "end": 545,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19280,
+            "end": 398,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2062,
+            "end": 446,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21099,
+            "end": 455,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 9476,
+            "end": 644,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 585,
+            "end": 6340,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1167,
+            "end": 392,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8964,
+            "end": 564,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20016,
+            "end": 500,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8100,
+            "end": 386,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22581,
+            "end": 351,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15494,
+            "end": 507,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1287,
+            "end": 23003,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 450,
+            "end": 398,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19875,
+            "end": 490,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1085,
+            "end": 2671,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15785,
+            "end": 356,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22421,
+            "end": 313,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 298,
+            "end": 926,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 9257,
+            "end": 365,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14344,
+            "end": 414,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 255,
+            "end": 76638,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17681,
+            "end": 415,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14617,
+            "end": 514,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 315,
+            "end": 1055,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8000,
+            "end": 497,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 146,
+            "end": 127315,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 22546,
+            "end": 493,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15929,
+            "end": 353,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13625,
+            "end": 670,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1386,
+            "end": 11009,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16323,
+            "end": 376,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16367,
+            "end": 363,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15364,
+            "end": 493,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2202,
+            "end": 442,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11019,
+            "end": 346,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8259,
+            "end": 501,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 58,
+            "end": 547,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 329,
+            "end": 1590,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1353,
+            "end": 18209,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 193,
+            "end": 12204,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4576,
+            "end": 474,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 21,
+            "end": 38386,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1374,
+            "end": 1342,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 339,
+            "end": 18768,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 18604,
+            "end": 520,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14259,
+            "end": 503,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 1881,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15361,
+            "end": 481,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 89,
+            "end": 9988,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 33,
+            "end": 270184,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 697,
+            "end": 1355,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 97,
+            "end": 8827,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10977,
+            "end": 570,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 306,
+            "end": 1109,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 182,
+            "end": 326,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22603,
+            "end": 486,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1373,
+            "end": 12637,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 7892,
+            "end": 520,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 10483,
+            "end": 421,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "E S P.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 27,
+            "end": 47293,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4902,
+            "end": 413,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5305,
+            "end": 425,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1350,
+            "end": 7102,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 293,
+            "end": 115452,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13525,
+            "end": 384,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 24,
+            "end": 9728,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 18916,
+            "end": 412,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 530,
+            "end": 554,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 327,
+            "end": 1474,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 2150,
+            "end": 388,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1314,
+            "end": 17663,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16673,
+            "end": 559,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 4903,
+            "end": 391,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19294,
+            "end": 380,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16529,
+            "end": 407,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 756,
+            "end": 481,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22923,
+            "end": 464,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 4951,
+            "end": 470,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 12851,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8338,
+            "end": 354,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 23076,
+            "end": 454,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5448,
+            "end": 396,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18736,
+            "end": 392,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1230,
+            "end": 1976,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 9042,
+            "end": 606,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 289,
+            "end": 18197,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 22214,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1394,
+            "end": 31431,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8469,
+            "end": 477,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13993,
+            "end": 538,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 291,
+            "end": 32263,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15134,
+            "end": 401,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22520,
+            "end": 406,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 97980,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13654,
+            "end": 368,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 300,
+            "end": 891,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4145,
+            "end": 325,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 1170,
+            "end": 521,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 21862,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 19435,
+            "end": 408,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1348,
+            "end": 11893,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 902,
+            "end": 5804,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 5164,
+            "end": 476,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 603,
+            "end": 559,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19318,
+            "end": 481,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 31,
+            "end": 51832,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 14579,
+            "end": 353,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S B.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6807,
+            "end": 332,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18691,
+            "end": 389,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1296,
+            "end": 4970,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 14348,
+            "end": 359,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22188,
+            "end": 508,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 764,
+            "end": 459,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5536,
+            "end": 368,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              1
+            ]
+          }
+        ],
+        "x_sha256": "37d6b0034c808f989ce2cdfe016982699f43dfc17ddf7a6c2b2a7912a8e199a0",
+        "y_sha256": "27dd64ba11cafd06925964ffb41e930fdbd8f2af18fa5263b67365bcf291d76a",
+        "weights_sha256": "73d3f90b1465c3515aff4e59ad421b14ee077fa330a572dc7d970b53924df231",
+        "actual_tensor_path": ".local/wakeword/multispeaker-batch-probe-v1/broad-step01.npz",
+        "actual_tensor_sha256": "d66d481cadf410fc3f99dbd72a708798d26498eb19ca2998339db4381d4fda7d"
+      },
+      {
+        "step": 2,
+        "arm": "broad",
+        "descriptors": [
+          {
+            "kind": "ambient",
+            "index": 33,
+            "end": 66292,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1065,
+            "end": 4906,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8786,
+            "end": 472,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1160,
+            "end": 1387,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 112792,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 29,
+            "end": 122253,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 965,
+            "end": 2804,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 681,
+            "end": 349,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 20777,
+            "end": 336,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Mix.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8717,
+            "end": 482,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6228,
+            "end": 485,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 334,
+            "end": 1246,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16455,
+            "end": 398,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1068,
+            "end": 7879,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 519,
+            "end": 583,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21954,
+            "end": 369,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15407,
+            "end": 517,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16069,
+            "end": 527,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22767,
+            "end": 330,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1385,
+            "end": 2283,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 14306,
+            "end": 436,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21818,
+            "end": 531,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13988,
+            "end": 437,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15191,
+            "end": 408,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1288,
+            "end": 24041,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1340,
+            "end": 7788,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 31,
+            "end": 11872,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 165,
+            "end": 560,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1311,
+            "end": 12892,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 261,
+            "end": 109064,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15067,
+            "end": 311,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, turn on the light.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 17929,
+            "end": 447,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21824,
+            "end": 542,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 306,
+            "end": 2900,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 20954,
+            "end": 377,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5664,
+            "end": 372,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 30,
+            "end": 67498,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 1566,
+            "end": 484,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "High speed.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19274,
+            "end": 388,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 2743,
+            "end": 372,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15826,
+            "end": 405,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Next.",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 13654,
+            "end": 335,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nick.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 863,
+            "end": 544,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 335,
+            "end": 5099,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 311,
+            "end": 342,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 26,
+            "end": 16337,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15032,
+            "end": 468,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14500,
+            "end": 476,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22223,
+            "end": 347,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11705,
+            "end": 503,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 323,
+            "end": 3697,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 765,
+            "end": 732,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 16812,
+            "end": 420,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1294,
+            "end": 17666,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 623,
+            "end": 536,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1329,
+            "end": 2376,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13945,
+            "end": 443,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 15682,
+            "end": 379,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 16043,
+            "end": 393,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19141,
+            "end": 376,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6120,
+            "end": 420,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18643,
+            "end": 445,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5412,
+            "end": 409,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 13709,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 10898,
+            "end": 483,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 6339,
+            "end": 468,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 548,
+            "end": 447,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 27,
+            "end": 2962,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 18574,
+            "end": 392,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 86357,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15526,
+            "end": 512,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Fix.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3389,
+            "end": 354,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nexus.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 24,
+            "end": 18022,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 303,
+            "end": 10391,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 384,
+            "end": 3575,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 340,
+            "end": 9271,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 1178,
+            "end": 512,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1380,
+            "end": 7440,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 310,
+            "end": 1910,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 25,
+            "end": 45504,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 22873,
+            "end": 385,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 80,
+            "end": 560,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 337,
+            "end": 2113,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 1288,
+            "end": 21974,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4839,
+            "end": 376,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22617,
+            "end": 522,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P, what time is it?",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 452,
+            "end": 2423,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13517,
+            "end": 383,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 7633,
+            "end": 326,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 21886,
+            "end": 462,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 309,
+            "end": 2638,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15944,
+            "end": 343,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Nicks.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 22021,
+            "end": 420,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey Nice.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 19194,
+            "end": 336,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.0,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 1102,
+            "end": 491,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 11035,
+            "end": 311,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nick.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1301,
+            "end": 23223,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8378,
+            "end": 423,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Mix.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 3566,
+            "end": 488,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Nice.",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 803,
+            "end": 4719,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 15020,
+            "end": 387,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi E S P.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 914,
+            "end": 5276,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 5932,
+            "end": 522,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S B.",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 8147,
+            "end": 403,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14156,
+            "end": 416,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 64350,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 11594,
+            "end": 517,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 285,
+            "end": 24917,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 1879,
+            "end": 386,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hey Next.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1384,
+            "end": 22026,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 40,
+            "end": 461,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 290,
+            "end": 21428,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 14253,
+            "end": 418,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 207,
+            "end": 54981,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 8899,
+            "end": 571,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, what time is it?",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 97,
+            "end": 535,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks, turn on the light.",
+              1.0,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5838,
+            "end": 310,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi.",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 1052,
+            "end": 1482,
+            "label": 0
+          },
+          {
+            "kind": "ambient",
+            "index": 249,
+            "end": 27007,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 13892,
+            "end": 398,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 4452,
+            "end": 325,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P.",
+              1.1,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 5025,
+            "end": 319,
+            "label": 0,
+            "cell": [
+              "en_GB-aru-medium",
+              0,
+              "Hi E S P, what time is it?",
+              0.9,
+              0
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 14165,
+            "end": 383,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hi.",
+              1.1,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 301,
+            "end": 2333,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 4372,
+            "end": 422,
+            "label": 1,
+            "cell": [
+              "en_GB-aru-medium",
+              1,
+              "Hey Nicks!",
+              1.1,
+              1
+            ]
+          },
+          {
+            "kind": "synthetic",
+            "index": 18923,
+            "end": 393,
+            "label": 1,
+            "cell": [
+              "en_US-arctic-medium",
+              1,
+              "Hey Nicks!",
+              0.9,
+              2
+            ]
+          },
+          {
+            "kind": "ambient",
+            "index": 287,
+            "end": 57315,
+            "label": 0
+          },
+          {
+            "kind": "synthetic",
+            "index": 17895,
+            "end": 341,
+            "label": 0,
+            "cell": [
+              "en_US-arctic-medium",
+              0,
+              "Hey.",
+              0.9,
+              0
+            ]
+          }
+        ],
+        "x_sha256": "cb47eb8f1b5f52daa05b6f0ed069a9f9961ecca7ace1cb2528c65bcfc5513c5a",
+        "y_sha256": "df382e0a4607bc22f76c4d64d08ee17187476790c63970b6b871990db609eba2",
+        "weights_sha256": "ea898486941821707dcc836cc10612bffe6b9089497a02b0b2b9d6bd94772f8b",
+        "actual_tensor_path": ".local/wakeword/multispeaker-batch-probe-v1/broad-step02.npz",
+        "actual_tensor_sha256": "f7950c46d59548722ab2d90f0b653dbe34e6639d92041999dd23b8e0278fd4e1"
+      }
+    ]
+  },
+  "steps": 2,
+  "seed": 726,
+  "expected_new_gib": 0.02,
+  "optimizer": {
+    "learning_rate": 1e-05,
+    "beta_1": 0.9,
+    "beta_2": 0.999,
+    "epsilon": 1e-07
+  },
+  "policy": "Exact actual saved CPU first2 tensors per arm, same preserved context309 initialization; frozen BN/all15 trainables, raw sigmoid BCE weighted mean1/20, fresh Adam32variables/zero slots. RTX4090 required, FP32 TF32disabled, deterministic ops. No gradient/logit cross-device equality experiment. Save actual preupdate variables/optimizer and fixedfinal2; no export, formal training, selection or holdout scoring authorized."
+}
