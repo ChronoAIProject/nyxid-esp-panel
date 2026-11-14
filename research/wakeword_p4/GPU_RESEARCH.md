@@ -8972,3 +8972,28 @@ Original4models/1488traces/two probabilities/clocks/manifestorder/inputSHA/all55
 
 ### Matched observed-output alphabet geometry
 Read all540originalsavedTF/UINT8 outputs, authenticatedeveryNPZ and originalfiveerrorstatistics. Observedalphabet sizes Nyxflat66/pool52, Willowflat34/pool67, commonoutputscale1/256. Hypothetically choosing nearest individually observedcode perTFstep leaves0/135errorfailures in everygroup, worstfiveerror .019324852 vs actualfail51/51/135/135. This establishes approximation space in the observedoutputalphabet, NOT a realizable state sequence or actual model result; do not call it successful quantization/admission or uniqueinternalcause. Fouractualexports have logisticinputscales .307045013/.133138165 Willowflat/pool and .129665345/.109749533 Nyxflat/pool; neither change nor retry them. No invoke/export/training/newdata. Original540rejection remains unchanged.
+
+### 2026-11-14 — Matched internal boundaries: original capture + independent saved audit
+
+Prospective lock cf005b34 ran once, exit0: four original request_order=0 witnesses,
+complete startup/input, two fresh BUILTIN_REF interpreters/backend, preserved tensors.
+All FP32/UINT8 outputs byte-exact the original screen; every internal repeat exact.
+Saved-only reducer and separate auditor verify captures/metadata/source hashes,
+original output identity, float64 diagnostic heads, all rolling-five statistics and
+nine layer errors. No new model invocation during reduction/audit.
+
+Five-step p99 for quantized-embedding→unchanged-float-head minus actual FP32:
+Willow flat .4105648356, pool .5307280053; Nyx flat .3703311217,
+pool .5068750100. Head weight/bias boundary p99 <=.003027; integer FC/float
+accumulation <=.029361; logistic/output <=.001921. These are signed telescoping
+numerical boundaries, not causal percentages. Four witnesses cannot establish
+all540 attribution or qualification. Original all540 rejection remains.
+
+Layer8 absolute mean error is .674–2.440 versus layer7 .023–.075, but layer
+scales/gains differ: this alone does not identify a faulty layer. Next hypothesis
+to test is whether final encoder amplification/clipping explains the discrepancy,
+using saved tensor ranges, scales and saturation with startup retained before any
+new inference/intervention. Do not launch another training or head-only patch.
+Reports: 4090-matched-internal-boundaries-original-result-v1.json,
+4090-matched-internal-decomposition-v1.json and independent-audit-v1.json.
+No threshold/export/recalibration/new development/acceptance changes; v30 frozen.
