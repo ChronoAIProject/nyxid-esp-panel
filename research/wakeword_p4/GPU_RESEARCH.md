@@ -9080,3 +9080,11 @@ historical schemes to distinguish a new deployment-compatible intervention from
 already rejected fixed-grid/STE/equalization. No automatic retraining or threshold
 change justified by these local decompositions. Original candidate rejection,
 v30 and unconsumed development/acceptance isolation remain.
+
+Prospective next intervention recorded in
+`learned_activation_grid_feasibility_v1.md`: learned positive activation steps with
+no post-training recalibration, compared with historical fixed-grid methods.
+Only feasibility scope; no numerical bounds/loss/training execution authorized yet.
+Requires historical equivalence review, shared temporal-state quantization identity,
+direct export parity at original and constructed changed grids, independent math
+checks, and all540 qualification before recognition. No int16/float fallback.
