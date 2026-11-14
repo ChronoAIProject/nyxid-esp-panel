@@ -1,0 +1,66 @@
+{
+  "observed_utc": "2026-11-14T12:51:01.321250+00:00",
+  "original_session": 77025,
+  "pid": 1589700,
+  "starttime": "24217011",
+  "process_state": "R",
+  "completed_arm_log": [
+    {
+      "target": "hey_nyx",
+      "condition": "flat",
+      "training_arm": "fixed_grid",
+      "repeat_exact": null,
+      "mismatch": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "passed": true
+    }
+  ],
+  "files": [
+    {
+      "path": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.npz",
+      "bytes": 616839,
+      "sha256": "c1335084873af53a8fbd21ebb6c77c0c4a2516cd2ff29a7fae472ca5607d3c60"
+    },
+    {
+      "path": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.tflite",
+      "bytes": 57904,
+      "sha256": "fc05af56def76bb2bec9dccb4c76cd3a13681c654d4000f5501e6ec0dd470619"
+    },
+    {
+      "path": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-fixed_grid-history.jsonl",
+      "bytes": 1275014,
+      "sha256": "3da02de1507d0088ee8b836ca0c58730d2476f94a4243f07ae598dc161d6e9e8"
+    },
+    {
+      "path": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-fixed_grid-step10000.npz",
+      "bytes": 557727,
+      "sha256": "c5225927fa9953e423fb3227854ce2a398e40bffeb71b5ada906e6b2681e79df"
+    }
+  ],
+  "history_steps": 10000,
+  "all_original_batch_hashes_exact": true,
+  "optimizer_iteration": 10000,
+  "optimizer_arrays": 42,
+  "final_matches_step10000_snapshot": true,
+  "fixed_grid_logsteps_zero": true,
+  "completed_arms": 3,
+  "total_arms": 4,
+  "receipt_preflight_failure": {
+    "error": "KeyError: batch_sha256; AssertionError on assumed ratio index20",
+    "cause": "Receipt reader used history field for schedule; corrected to original tensor_sha256/index. Verified original source variables=[ratios]+flat and corrected ratio index0. Read-only; no artifact/model changes."
+  },
+  "limits": "Read-only original final/history/snapshot receipt; no extra model invocation or parameter rewrite. Original request mechanical11group parity only, not all4 independent training audit/full540/recognition/FAR/promotion. Same original process continues Nyx learned_step."
+}
