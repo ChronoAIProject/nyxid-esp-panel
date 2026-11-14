@@ -1,5 +1,11 @@
 # Original snapshot replay: mechanics pass, cross-platform numerics fail
 
+Historical diagnostic, retained with its original failed comparisons. The user's
+2026-11-15 clarification supersedes the proposed numerical follow-up below:
+CPU/GPU training-gradient or logit agreement is not a qualification requirement.
+Continue with actual wake recognition, false activations, latency and board
+stability as described in the [current priority](../README.md#current-priority-usable-wake-detection).
+
 The original GPU probe terminated successfully and delivered its actual
 same-instance weights, variables, inputs and gradients. Mac anonymously
 downloaded the 89,870,865-byte archive and verified all 170 payload files plus
@@ -50,8 +56,8 @@ weight, case, coefficient or training budget was changed to obtain a pass.
 
 The original mechanism claims and this failed cross-platform comparison have
 different scopes: actual reversal wiring is consistent on both runtimes, while
-independent numerical equivalence has not passed. Neither result qualifies a
-new detector or relaxes the original deployment numerical gate.
+independent numerical equivalence has not passed. Neither result establishes
+usable wake recognition or actual P4 behavior.
 
 - [Graph summary and full-report hashes](../results/mac-engine-gradient-original-graph-replay-v1.json)
 - [Graph complete per-case report](../results/mac-engine-gradient-original-graph-replay-v1.json.gz)
@@ -60,9 +66,9 @@ new detector or relaxes the original deployment numerical gate.
 - [Original plan](engine_gradient_replay_mac_plan_v1.md)
 - [One-factor eager control plan](engine_gradient_eager_control_mac_plan_v1.md)
 
-An appropriate next numerical diagnosis is an explicitly fixed original-case
+The historical proposed numerical diagnosis was an explicitly fixed original-case
 CPU/GPU precision control at unchanged variables, without updates or new inputs.
-It must record actual backend precision settings before attributing differences
-to TF32. This diagnosis is not evidence that numerical drift caused the earlier
+It would record actual backend precision settings before attributing differences
+to TF32. That proposal is not evidence that numerical drift caused the earlier
 recognition failures. No new formal training, audio, reserved development/
 acceptance, P4 write or production-board operation was performed on this Mac.

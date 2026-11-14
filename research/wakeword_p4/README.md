@@ -11,11 +11,19 @@ false activations, wake latency, the buffered first request and board stability.
 CPU/GPU training logits or gradients need not match to qualify a usable detector.
 Keep the completed numerical discrepancies as diagnostic evidence; do not add
 more cross-platform gradient or TF32 experiments without a concrete behavioral
-failure that they can help explain. Continue the existing fixed training run,
-then evaluate recognition before spending more effort on numerical alignment.
+failure that they can help explain. Evaluate actual recognition before spending
+more effort on numerical alignment.
 Keep dataset separation and the original PCM/audio path unchanged. Check the
 chosen model on the actual P4 runtime before deployment, and continue the
 [long-term stability monitor](../../docs/STABILITY.md).
+
+The original four-arm engine-adversarial run was interrupted. Its completed
+Hey Nyx pair showed worse recognition/false-activation tradeoffs after the
+intervention; it did not produce a qualified candidate. The GPU study now
+compares narrow and broad speaker coverage. Follow the actual reports in
+[Issue #13](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13) for
+current process state and results; historical launch receipts do not show that
+a job is still running.
 
 Actual Hey Nyx training, multi-engine sample generation, failed candidates and
 reproduction steps are now recorded in [training/README.md](training/README.md).
