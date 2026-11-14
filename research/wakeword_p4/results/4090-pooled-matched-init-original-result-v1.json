@@ -1,0 +1,55 @@
+{
+  "execution_sha256": "bddf68dfd3d671d2eb93856ef13fbd48ba69d11c50be9e555719078d20f36288",
+  "gpu": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "batch": 0,
+      "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+      "path": ".local/wakeword/pooled-matched-init-v1/hey_willow/batch00.npz",
+      "sha256": "71aee6a3beced31fc1e4b5cea5d0beae2cf4d7a9e71ca33b68355df7e9754747",
+      "finite": true,
+      "logit_max_abs": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "target": "hey_willow",
+      "batch": 1,
+      "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+      "path": ".local/wakeword/pooled-matched-init-v1/hey_willow/batch01.npz",
+      "sha256": "f03b183c283a92bdf213d1e8a37a7fb2c837112cfda5a5a740eaeb434a04b57f",
+      "finite": true,
+      "logit_max_abs": 4.470348358154297e-08,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 0,
+      "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+      "path": ".local/wakeword/pooled-matched-init-v1/hey_nyx/batch00.npz",
+      "sha256": "e40947af16ee1f5d006db3bd43f3875237576417f87b4e68680bb3b18465ac72",
+      "finite": true,
+      "logit_max_abs": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "target": "hey_nyx",
+      "batch": 1,
+      "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+      "path": ".local/wakeword/pooled-matched-init-v1/hey_nyx/batch01.npz",
+      "sha256": "b745f60f056cb131e1d131d4fc2184e7a5790f1c893593a253bd6a2326ab73d4",
+      "finite": true,
+      "logit_max_abs": 8.940696716308594e-08,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "optimizer_updates": 0,
+  "limits": "Primary original float-control encoders for Willow/Nyx, previously saved new pooled heads. Flatten head=tile(pooled W/30,30), bias identical. Initial encoder/BN exact, frozen BN. Same original first2 batches per target; save both initialized H5 before first forward, all batches/logits/losses/15gradients before assertions. Finite and max logit difference<=1e-4, model unchanged; optimizer0. No export/new media/dev. This is equivalence/wiring preflight, not training or INT8 admission. Future matched experiment fixed10000 final-only/Adam1e-5 same sampler must be separately locked; altered parameterization changes Adam dynamics, no sole-cause claim."
+}
