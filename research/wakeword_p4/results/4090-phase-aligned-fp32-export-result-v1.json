@@ -1,0 +1,41 @@
+{
+  "execution_sha256": "99fe8ef3f9b74e7450cc713668bb37354aed14029d51065efa2494bea8a3a1e9",
+  "models": [
+    {
+      "target": "hey_nyx",
+      "condition": "nominal",
+      "path": ".local/wakeword/phase-aligned-formal-v1/nominal/final.weights.h5",
+      "sha256": "e3efca4acf6cc654d40cf6267c2d051c4a06353212c2259c615e43f138e9b602",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/phase-aligned-fp32-export-v1/hey_nyx-nominal/fp32.tflite",
+          "bytes": 126496,
+          "sha256": "66acef24811aa56b73c2a0cbc3d8f9f3eac93f2fe8016f969032fe5af2725ec7"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "phase",
+      "path": ".local/wakeword/phase-aligned-formal-v1/phase/final.weights.h5",
+      "sha256": "a9fd382dfcfa0cfee53cd167dfb4a17cf07a707a045ced47bf3516472467f101",
+      "artifacts": {
+        "fp32": {
+          "path": ".local/wakeword/phase-aligned-fp32-export-v1/hey_nyx-phase/fp32.tflite",
+          "bytes": 126808,
+          "sha256": "ca1326639e31c06d75048e2ecb1d3afa89b777643fa0bedcdbfc69a71b6ec820"
+        }
+      },
+      "static_abi_passed": true,
+      "parameters_unchanged": true,
+      "zero_initializers": 6,
+      "converter_invocations": 1
+    }
+  ],
+  "all_static_passed": true,
+  "limits": "Both independently audited rawfinal10000 only, one builtin FP32 conversion each. Original raw sigmoid/frozenBN unchanged, no calibration/INT8/PTQ/retry/head rewrite/selection. Six streaming histories serialized realzero; original H5 authenticated. Static ABI is not newweight waveform phase/numeric qualification or recognition admission."
+}
