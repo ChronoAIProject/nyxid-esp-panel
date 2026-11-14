@@ -1,0 +1,73 @@
+{
+  "schema": "synthetic-source-role-reconciliation-v1",
+  "source_commit": "932ecfc7b7214aa54dee5ecb831304f7acbc631b",
+  "evidence": {
+    "4090-joe-fixed-baseline-summary-v1.json": {
+      "bytes": 2776,
+      "sha256": "418e9a6ebe808d4b70f80498055467d18d8352f036fe0e07bb78416469da1d11"
+    },
+    "4090-joe-known-source-overlap-supplement-v1.json": {
+      "bytes": 2162,
+      "sha256": "bfc6f566e95916f30203f0110d310c36ddaa3d585e28a6efb04daadd0073dcdf"
+    },
+    "4090-jenny-development-native-generation-v1.json": {
+      "bytes": 619,
+      "sha256": "55406747912b3e894612f51a383b4805662b7cca44fea8165735da2774d66508"
+    },
+    "4090-jenny-development-render-independent-audit-v1.json": {
+      "bytes": 822,
+      "sha256": "3771b8bf7bafe061b7bca83f75b2863aff91213bb9fa84d9c3f433d0bd77bf53"
+    },
+    "4090-jenny-consistency-development-lock-preflight-v1.json": {
+      "bytes": 583,
+      "sha256": "6bd9fe76f248a06135ca2af4ad3decab109581dcc7b9453c6ed86aaddc80133d"
+    },
+    "4090-mike-acceptance-generation-reservation-v1.json": {
+      "bytes": 109549,
+      "sha256": "20891f7806ed28db3cb45b771b9ec14a3174addaf33ab2a2b35930e0ade55289"
+    },
+    "4090-joe-mike-generation-plan-v1.json": {
+      "bytes": 209979,
+      "sha256": "d69dbc7486cb974641ae9849e33c965e98998a79ce55c95b8a334d4d4f71c03a"
+    }
+  },
+  "sources": [
+    {
+      "source": "Piper Joe",
+      "role": "consumed development diagnostic",
+      "evidence": [
+        "4090-joe-fixed-baseline-summary-v1.json",
+        "4090-joe-known-source-overlap-supplement-v1.json"
+      ],
+      "fresh_holdout_allowed": false,
+      "reason": "360 actual fixed-baseline records; not training or fresh acceptance."
+    },
+    {
+      "source": "author-direct Jenny",
+      "role": "reserved development; generated and process audited",
+      "evidence": [
+        "4090-jenny-development-native-generation-v1.json",
+        "4090-jenny-development-render-independent-audit-v1.json",
+        "4090-jenny-consistency-development-lock-preflight-v1.json"
+      ],
+      "fresh_holdout_allowed": false,
+      "reason": "132 native requests, 396 renders; retain development reservation. Historical failed preflight does not prove current scoring absence."
+    },
+    {
+      "source": "Piper Mike",
+      "role": "reserved acceptance; generation/scoring not established by these receipts",
+      "evidence": [
+        "4090-joe-known-source-overlap-supplement-v1.json",
+        "4090-mike-acceptance-generation-reservation-v1.json",
+        "4090-joe-mike-generation-plan-v1.json"
+      ],
+      "fresh_holdout_allowed": false,
+      "reason": "Keep protected. Shared Joe/Mike parent and unknown physical/pretraining overlap prevent independent-acceptance admission from reservation alone."
+    }
+  ],
+  "next_action": "Find and authenticate additional source families and actual historical usage before reserving a new multi-voice training/development/acceptance plan; do not recycle Joe or use Mike as independent by default.",
+  "limits": "Curated evidence-linked role reconciliation, not an exhaustive usage census or proof of no later scoring. No audio, sealed acceptance material, detector outputs, or model bytes read. Does not relax conservative exclusion guard or qualify any new source.",
+  "generation_run": false,
+  "detector_invocations": 0,
+  "acceptance_opened": false
+}
