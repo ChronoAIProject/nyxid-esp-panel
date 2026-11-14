@@ -1,0 +1,61 @@
+{
+  "schema": "mac-old-regression-boundary-reader-plan-v1",
+  "parent_ref": "f0449e3d45cb8b68f26bf9e7a3a54857ae978e87",
+  "parent_path": "research/wakeword_p4/results/4090-old-fixed-grid-regression-plan-v2.json",
+  "parent_sha256": "78231c8c32b89144717753c0ab8ed97aeda6e7febd41032b0e04769defc2a5b6",
+  "file_sha256": {
+    "research/wakeword_p4/experiments/describe_old_regression_boundaries_mac_v1.py": "ab8d2408bec396119539b3fa85bcc163c443cb78c859e3d646b3e64bfbc1abf9",
+    "research/wakeword_p4/experiments/old_regression_boundary_supplement_mac_v1.md": "8b97abed890493c495b5f0960ed0c063091186d9c898448ebd6ca636e6d6a3b7",
+    "research/wakeword_p4/results/mac-old-regression-boundary-reader-constructed-v1.json": "75cbf1522a7b1327470330ff0cbae4b06f5e33a70c9672342e8263ef8bc5a083"
+  },
+  "boundaries": [
+    "generated_prefix_end_sample",
+    "full_rir_prefix_end_sample",
+    "generated_container_end_sample",
+    "full_rir_container_end_sample"
+  ],
+  "models": [
+    {
+      "id": "hey_willow-float_control",
+      "target": "hey_willow",
+      "model": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_willow-float_control/hey_nyx.tflite",
+      "model_sha256": "e07064d83013588d397ba984ca203313454fea3d535fdb7d423babde30578a4a",
+      "weights": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-float_control-0/final.weights.h5",
+      "weights_sha256": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829"
+    },
+    {
+      "id": "hey_willow-integer_qat",
+      "target": "hey_willow",
+      "model": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_willow-integer_qat/hey_nyx.tflite",
+      "model_sha256": "ac090dbf22be1d3b6499b0a0e59373f44e3d888f8eee2fcc8b9bf06c9860dc9d",
+      "weights": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-integer_qat-0/final.weights.h5",
+      "weights_sha256": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54"
+    },
+    {
+      "id": "hey_nyx-float_control",
+      "target": "hey_nyx",
+      "model": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_nyx-float_control/hey_nyx.tflite",
+      "model_sha256": "d0d3ee52e2b605f0264513c47865b1ad7f9c5abc7caedbc8b8a2ba17e3878f93",
+      "weights": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-float_control-0/final.weights.h5",
+      "weights_sha256": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77"
+    },
+    {
+      "id": "hey_nyx-integer_qat",
+      "target": "hey_nyx",
+      "model": ".local/wakeword/hey-broad-fixed-grid-compile-v1/hey_nyx-integer_qat/hey_nyx.tflite",
+      "model_sha256": "38fa71098e04a9718335dc3ba3a39ac85d8f8a6dd701fed50cd10e0e1eb1b6b8",
+      "weights": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-integer_qat-0/final.weights.h5",
+      "weights_sha256": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9"
+    },
+    {
+      "id": "v30",
+      "target": "hey_nyx",
+      "model": ".local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite",
+      "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "weights": null
+    }
+  ],
+  "expected_points": 1242,
+  "role": "reused-development-regression-descriptive-only",
+  "policy": "After original collection/reduction/independent audit are published, describe their original full event ledgers at all existing138 points. Preserve original outcomes, thresholds, clocks and reports. Four generated-reference boundaries and source/early-only counts, no new score/event computation, inference, coefficient/threshold selection, promotion, fresh-development or acceptance access. Negative offsets do not prove an incorrect reference or a successful human wakeup."
+}
