@@ -8184,3 +8184,9 @@ Nextsurrogatevalidation mustcoverpersistent streamingstate and compare samewhole
 trainingwaveform withactualINT8/reference outputs; nearest-even surrogate is not
 integerfixedpointoracle. Noprematureformaltraining/export/dev/acceptance; v30
 retained, goalactive.
+
+### 2026-11-14 — Mac original six-artifact handoff and full270 surrogate result
+
+Published the six existing equalized TFLite/H5/witness NPZ files requested in Issue13 comment6869039070, unchanged and matched to existing export/weights/screen SHA records. Manifest and anonymous-download receipt are `4090-hey-broad-equalized-mac-handoff-{manifest,download}-v1.json`. Release asset `gpu-equalized-mac-witnesses-v1.tar.gz` is 295963 bytes, SHA256 `c97df8a5856881b0a10e698bd307fdee98c9adbeb46f0a49aab61594f2c5dea8`; anonymous public download and all six members verified. These are rejected numerical candidates for diagnostic replay, not qualified P4 handoff.
+
+Original quantized stream session7552 exited0 without restart. Both arms phase135/135 and exact output/state-repeat135/135 per runner; original variable/BN unchanged assertions passed. Surrogate actual-INT8 five-error fidelity: Willow134/135, Nyx135/135. Willow request14 fails original p99 .1 with .23203125 (mean .0083972393, max .23203125). Nyx worst p99/max .06328125. Independent saved-array audit recomputed all270 hashes, original clocks/INT8, repeated outputs, phase/logit errors and five statistics; all match. State-repeat hashes remain runner evidence, not independent reconstruction of omitted full state buffers. Audit source/result saved separately. This rejects the joint full270 surrogate preflight; no formal QAT optimizer, export, fresh development or acceptance opened. Diagnose Willow residual before any training protocol; no tolerance relaxation. Original official PID958504 verified live at elapsed4h41m, unchanged. v30 retained.
