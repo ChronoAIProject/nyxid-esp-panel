@@ -9346,3 +9346,26 @@ report its phase difference from prior valid-convolution training rather than
 claim originalbatch schedule/architecture functional equivalence. It will establish
 update/export mechanics only, not data quality admission, training efficacy or
 candidate promotion. No freshmedia/dev/acceptance; v30 retained.
+
+### 2026-11-14 — Authentic-label disposable update/export smoke passes
+
+Prospective de53cbbc locks four models ×twofresh repeats ×oneAdamupdate. Actual
+original batch1 rows0/1 labels1/0, weights1/20; terminal prediction of each reset
+225frame causal stream (endframe224). No dense fabricated labels. Adam1e-5,
+beta.9/.999 eps1e-7, twenty folded W/b tensors plus one9step vector (21optimizer
+variable tensors/29parameter values or arrays if each step counted separately).
+This causal phase/parameterization differs from historical validconv recipe.
+
+Original session54899exit0. All4×2 updated models show zero mismatches across nine
+encoder layers/30history embedding/actualINT8FC logit on original complete request0
+input/allstartup. Updated factors and W/b directly exported, no converter/PTQ.
+All finalINT8 outputs,updatedparameters,44Adam arrays,loss and exportbytes repeat
+exact. All parameters finite, stepvector changes, folded parameters change,
+optimizeriteration1. No formal training efficacy/recognition claim.
+
+Independent saved audit checks1681912TF/actual code values across repeats, all
+hashes,21variable tensors/44Adam arrays, exact paired repeat and nonzero scale
+update. Original losses are diagnostic only, not checkpoint/scale selection.
+Next step is vectorized complete-batch integration/performance with exact same
+per-window reset/terminalphase and exporter parity before a fixedgrid-vs-learned
+paired recipe. No freshdev/acceptance/FAR qualification; v30 remains frozen.
