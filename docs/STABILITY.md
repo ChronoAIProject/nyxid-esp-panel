@@ -93,6 +93,15 @@ records uptime, firmware/app SHA, voice/wake/media/display/OTA state, image
 allocation sizes, packet/FIFO/wake/camera counters, and network-connected status.
 The HTTP response is limited to 64 KiB with a four-second network timeout.
 
+New firmware also reports the numeric ESP-IDF `reset_reason`; the monitor retains
+it in samples and observed boot-boundary events. Older firmware is recorded as
+`null`, preserving compatibility. IDF 5.5.4 codes include 1=power-on, 2=external
+pin, 3=software restart, 4=panic, 5=interrupt watchdog, 6=task watchdog, 7=other
+watchdog, 8=deep-sleep wake, 9=brownout, 11=USB, 12=JTAG, 14=power glitch and
+15=CPU lockup. This is the chip's reported cause, not proof of a particular
+software defect or leak. It cannot recover the cause of an earlier boot on
+firmware that did not expose the field.
+
 The sanitized allowlist excludes Wi-Fi names/passwords, addresses, account/Bot/
 session identifiers, captions/messages, image contents, and raw HTTP responses.
 A device identity fingerprint keeps histories distinct without logging the slug.

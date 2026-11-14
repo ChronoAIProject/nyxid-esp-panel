@@ -55,6 +55,7 @@ def sample(status, expected_slug, epoch):
     # session IDs, messages, captions, images or complete HTTP responses.
     return dict(kind='sample', t=epoch, utc=utc(epoch),
         uptime_s=integer(status['uptime_s']), fw=code(status['fw']),
+        reset_reason=integer(status['reset_reason']) if 'reset_reason' in status else None,
         app_sha256=status['app_sha256'] if re.fullmatch(r'[0-9a-f]{64}', status['app_sha256']) else 'unknown',
         heap={k: integer(status['heap'][k]) for k in HEAP},
         phase=dict(voice_active=voice.get('active') is True, voice_busy=voice.get('busy') is True,
@@ -209,7 +210,8 @@ class Monitor:
                 reboot = row['uptime_s'] < last['uptime_s'] - 2
                 boot += 1
                 self.rows.clear()
-                self.log(dict(kind='boot_boundary', t=now, utc=utc(now), reboot_observed=reboot))
+                self.log(dict(kind='boot_boundary', t=now, utc=utc(now), reboot_observed=reboot,
+                              reset_reason=row['reset_reason']))
                 self.state['observed_restarts'] = self.state.get('observed_restarts', 0) + int(reboot)
             if last and now - last['t'] > max(120, self.config['interval_s'] * 3):
                 self.rows.clear()

@@ -41,6 +41,15 @@ class StabilityMonitorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             monitor.sample(invalid, 'test-board', 1000000)
 
+    def test_reset_reason_is_optional_for_older_firmware(self):
+        self.assertIsNone(monitor.sample(status(), 'test-board', 1000000)['reset_reason'])
+        current = status()
+        current['reset_reason'] = 4
+        self.assertEqual(monitor.sample(current, 'test-board', 1000000)['reset_reason'], 4)
+        current['reset_reason'] = 'private-message'
+        with self.assertRaises(ValueError):
+            monitor.sample(current, 'test-board', 1000000)
+
     def rows(self, decline=False, separate_phases=False):
         rows = []
         for i in range(60):
@@ -101,11 +110,17 @@ class StabilityMonitorTests(unittest.TestCase):
                     monitor.urllib.request, 'urlopen', return_value=io.BytesIO(json.dumps(s).encode())):
                 self.assertEqual(m.poll()['health'], 'online')
             s['uptime_s'] = 2
+            s['reset_reason'] = 4  # ESP_RST_PANIC, not inferred from heap loss.
             with patch.object(monitor.time, 'time', return_value=1000030), patch.object(
                     monitor.urllib.request, 'urlopen', return_value=io.BytesIO(json.dumps(s).encode())):
                 state = m.poll()
                 self.assertEqual(state['observed_restarts'], 1)
                 self.assertEqual(state['recent_samples'], 1)
+                self.assertEqual(state['last_sample']['reset_reason'], 4)
+            events = [json.loads(line) for p in Path(root).glob('metrics-*.jsonl')
+                      for line in p.read_text().splitlines()]
+            reboot = next(e for e in events if e['kind'] == 'boot_boundary')
+            self.assertEqual(reboot['reset_reason'], 4)
             with patch.object(monitor.urllib.request, 'urlopen', side_effect=OSError('private-url')):
                 state = m.poll()
                 self.assertEqual(state['recent_samples'], 0)

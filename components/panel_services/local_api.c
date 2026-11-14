@@ -201,6 +201,7 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     cJSON_AddStringToObject(root, "app_sha256", app_sha);
     cJSON_AddStringToObject(root, "board", "Waveshare ESP32-P4 JD9365 / OV5647 / ES8311");
     cJSON_AddNumberToObject(root, "uptime_s", esp_timer_get_time() / 1000000ULL);
+    cJSON_AddNumberToObject(root, "reset_reason", esp_reset_reason());
     cJSON_AddBoolToObject(root, "time_valid", time(NULL) >= 1700000000);
     cJSON *network = cJSON_AddObjectToObject(root, "net");
     cJSON_AddBoolToObject(network, "connected", net.wifi_ip || net.eth_ip);
