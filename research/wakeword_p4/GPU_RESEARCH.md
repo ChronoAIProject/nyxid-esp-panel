@@ -7899,3 +7899,17 @@ incomplete. OriginalPTQ replay PID1134099 observed Rl elapsed2m10s, Willow26000
 hash-verified batches; originalofficial958504 remainslive. Do not duplicate or
 restart either task merely because observation window expires. v30/newdev/
 acceptance unchanged, goalactive.
+
+### Bounded numerical runner and original-PID continuation active
+
+036f25b5 registers full270 wholePCM numeric runner: originalfrontend, finalonly
+padding, fresh boundedfloat/offline models, actual phase224+zero, twofresh resets,
+referenceINT8 kernel, original1e-4/.02/.1/.25 gates and all savedinputs/traces/clocks.
+No newdev/acceptance permission. ebd8a2e8 binds continuation code/plans to original
+material PID1134099/start20449576 before launch. Originalsession18842/PID1135635
+observedlive waiting same identity, originalreplay nowWillow61000. On successful
+fullmaterial terminal result: publishmetadata, publishactualexportlock, onceexport,
+publishstaticresult, ifpassing publishactualscreenlock then once270screen and
+publishfullresult. Any missing report/error stops without retry; numericfailure
+is retained, never authorizes development. Bothnew scripts compiled; no actual
+export/screen yet. Do not mutate boundcode while waiting/running. v30 unchanged.
