@@ -1,0 +1,161 @@
+{
+  "schema": "mac-fp32-runtime-feasibility-export-v1",
+  "plan_sha256": "a712c3fd96809c58cc37228398d91279f1b7baca13b5faa97c192f7fb1b535df",
+  "identity": {
+    "script_sha256": "612f4083bf653edd6bfce3e6b7dfce84247bd0286a07598d78e79d1c2fec5bd9",
+    "gpu_ref": "f9e773a3b6073beaca42a915045cc6d0007b49dc",
+    "published_sources": {
+      "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+      "research/wakeword_p4/results/4090-hey-broad-equalized-screen-execution-v1.json": "54b0416675fadf6f8931dbcb373dc188fa9eb05b0a7841ab846ee848250218e2"
+    },
+    "upstream_python_sha256": {
+      "microwakeword/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "microwakeword/audio/audio_utils.py": "c784876c92b1cc4a9eba9178a5c6fa5c3c09a1924cd1d91a8ba60223526d5dbc",
+      "microwakeword/audio/augmentation.py": "4eb44c7df289bfaad5f13a78e48198e3eae9d0e7363737e20ef289c19fb71779",
+      "microwakeword/audio/clips.py": "2efd788f3d0d02dbacb9b602b2fbe6c1906d8d9f2959136b73db03f9d47bbb5d",
+      "microwakeword/audio/spectrograms.py": "6b3838029922551bd4766cfe9b0027b0fb76bdc64aba42c5b682fc9ba3db020d",
+      "microwakeword/data.py": "92de1891562a3ffbcc36eb15968fdf0e91eeba22cb8739402c095fd85d1dca30",
+      "microwakeword/inception.py": "2aa912643bf682f9132925fc38f2486fa82e1a3c10758c15253c9690a828be6c",
+      "microwakeword/inference.py": "83f5f2ec15351e2bfbf7ccebb1678d7e42ba4080c5de0ff26c28545041135cdc",
+      "microwakeword/layers/average_pooling2d.py": "eca2f31dce4e98bbe75f4662ba1b643bc29c32970d4c519b0bd8f227b4b16089",
+      "microwakeword/layers/delay.py": "cbb8bf0bac7f7bfe95398677c49940c7f8600c98c2bdd48ab21a439dfeaad2c8",
+      "microwakeword/layers/modes.py": "3d1788097cb16a4d9f6abb6c026e4183bd78d4f843e8b3b768cd70644c9b8bb0",
+      "microwakeword/layers/stream.py": "6a1923da1297c3c23aaa48482f13d151eceb814a94274b2d01a50b9f9f62f7c7",
+      "microwakeword/layers/strided_drop.py": "43a53ffafc7201dc2b3fda5b7fa117029996d717c71c58a4f9c0aed2d957111a",
+      "microwakeword/layers/sub_spectral_normalization.py": "711b512a320cdb9d39a39bae12cea0aabb733a9799f3e6a7371d757e5a6178fd",
+      "microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+      "microwakeword/model_train_eval.py": "aba63164ec6b5fa878c9486d3a4117f9e89b1bfd6995d0c3156488617fb207d0",
+      "microwakeword/test.py": "678db9f0092f1b6c05461925c36fd05ead4425597a00af26a834a5ef87087cac",
+      "microwakeword/train.py": "4498164beddf132b7c4339db8ecf1287aee082c13d887cbfab5ae0283cf0a604",
+      "microwakeword/utils.py": "7d0c9200079772302a5320944c7d3b93ec4e7a83ee560e1734a3e8d8d2bb8717",
+      "setup.py": "839054a772178201e7c3b210136f98d6b3f33da39d5d40cbbff1ce5a8f151251"
+    },
+    "versions": {
+      "tensorflow": "2.21.0",
+      "numpy": "2.4.6",
+      "soundfile": "0.14.0",
+      "ai-edge-litert": "2.3.0",
+      "pymicro-features": "2.0.2"
+    },
+    "components": {
+      "esp-tflite-micro": {
+        "files": 568,
+        "sha256": "b211d405f577bab298b1757f9e4033b321f0abc763ef6ec7d44e10051b012aba"
+      },
+      "esp-nn": {
+        "files": 73,
+        "sha256": "875f6479701772dab38c08f7b85a5a337c410ec8afa0f18cdc8802340bbe9607"
+      }
+    },
+    "p4_probe_sha256": "c2252164474fedcde3b7419ccfd23780d2c41783e21c600140c0c3c5aab18f2c",
+    "sdkconfig_defaults_sha256": "bd8151284f35d348c0629800f33bf605e67bcb84b92fa4e679ec4954cd237b5d"
+  },
+  "random_weights_sha256": "35c9da3f03158286b82ffd6be52799de8a5b4d50a56fe70d66dba7a1219c302f",
+  "parameters": 24301,
+  "states": [
+    {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "bytes": 320
+    },
+    {
+      "shape": [
+        1,
+        4,
+        1,
+        30
+      ],
+      "bytes": 480
+    },
+    {
+      "shape": [
+        1,
+        8,
+        1,
+        60
+      ],
+      "bytes": 1920
+    },
+    {
+      "shape": [
+        1,
+        12,
+        1,
+        60
+      ],
+      "bytes": 2880
+    },
+    {
+      "shape": [
+        1,
+        20,
+        1,
+        60
+      ],
+      "bytes": 4800
+    },
+    {
+      "shape": [
+        1,
+        29,
+        1,
+        60
+      ],
+      "bytes": 6960
+    }
+  ],
+  "model_bytes": 121596,
+  "model_sha256": "7d0a9a8d9b8d1db765df0bad5071f270157db4d48a6bf9e368184189444a2c61",
+  "operators": [
+    "ASSIGN_VARIABLE",
+    "CALL_ONCE",
+    "CONCATENATION",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "READ_VARIABLE",
+    "RESHAPE",
+    "STRIDED_SLICE",
+    "VAR_HANDLE"
+  ],
+  "cases": [
+    {
+      "stream": "zeros",
+      "steps": 256,
+      "input_sha256": "6d7bd1fa33ee71b2d2c4fc8062f6c4b09804b84449ff73a687fe7cfd568d0625",
+      "tf_vs_lite_max_abs": 0.0,
+      "two_fresh_repeats_exact": true
+    },
+    {
+      "stream": "constant26",
+      "steps": 256,
+      "input_sha256": "a1a3012d296e14bc05d057c05a559dfe77cd4d7f2a932c46775f5a5f2b67aa16",
+      "tf_vs_lite_max_abs": 5.960464477539063e-08,
+      "two_fresh_repeats_exact": true
+    },
+    {
+      "stream": "ramp257",
+      "steps": 256,
+      "input_sha256": "e65ca0db23ba7c06a4dc8a908e11c2ac10c1ed6cc902feea26f7c9b117424509",
+      "tf_vs_lite_max_abs": 1.1920928955078125e-07,
+      "two_fresh_repeats_exact": true
+    },
+    {
+      "stream": "xorshift32",
+      "steps": 256,
+      "input_sha256": "21230cf21d1e6654e3b4218f04d99f8fc8fc0b10daf07178e9587060c5cf74a0",
+      "tf_vs_lite_max_abs": 8.940696716308594e-08,
+      "two_fresh_repeats_exact": true
+    }
+  ],
+  "arrays_sha256": "4fa8c94c8d0ffbc665b1204b08f34438138591cb27f8eaf44547248fc76f3561",
+  "original_variables_unchanged": true,
+  "p4_executed": false,
+  "candidate_qualified": false,
+  "limits": "No original/candidate weights, audio, training/development/acceptance data, recognition/FAR, optimizer, thresholds, board reads/writes or production changes. Does not change existing integer gates or qualify a rejected model. No actual P4 arena usage, inference latency or panel headroom claim."
+}
