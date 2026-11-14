@@ -8894,3 +8894,6 @@ Previous user-facing statement “different phoneme types” was inaccurate: all
 
 ### Config-reader alias isolation constraint
 Pinned libritts-high speaker keys pNNNN and libritts_r-medium NNNN normalize to exactly the same904reader IDs. Full original/normalized key and per-config conditioning-ID pairs retained. Treat matching reader labels conservatively as one group across both families; never count as1808independent voices or assign aliases across train/heldout. This is config-source overlap, not acoustic identity/weight equivalence or certification of historical672sampler mapping. No generation or role admission. Existing broad generation already strictly checks all phonemes before calling the upstream skipping helper; no frozen-code fix required.
+
+### Historical training-source reader aliases authenticated
+Authenticated original checkpoint config SHA against material plan, actual16128record manifest SHA against original generation result and original independent audit. All672actual material speaker IDs map unambiguously to original reader names and both catalog configurations.538keep high-model numeric ID;134change ID. These alias readers are consumed training-material identities, not independent heldout voices. Other232not thereby eligible: other history/whole-family policy still applies. Metadata only, no media/model reads.
