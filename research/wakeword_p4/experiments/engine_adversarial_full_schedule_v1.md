@@ -1,0 +1,7 @@
+# Complete balanced auxiliary schedule: no new training
+
+Extend the already fixed50-batch auxiliary sampler to10000batches with identical original training population, seed streams, lexical×engine cells, common variant cycle, legal endpoint rule and phase. Share this same schedule across both words and both conditions; it has no dependence on binary target labels, gradients, scores or main-sampler RNG. This prepares a possible fixed10000-step experiment but does not authorize or launch it.
+
+Persist all10000ordered receipts with all330000source rows/endpoints/permutation positions and actual phase input/engine/lexical hashes. Reusable sampler's first50actual tensors and ordered metadata must exactly equal the original preflight saved arrays/entries. Do not regenerate or replace those original arrays. New independent auditor uses only original raw/meta, its own RNG replay, coordinate reconstruction and saved receipts to verify every330000window and10000hashes. Check all rows/variants/engine/lexical balance, preserve full-schedule source counts, no model or main sampler access.
+
+Fixed original seeds20261115/20261116/20261117 and original original-input execution lock remain unchanged. Any failure stops this new preparation and remains in evidence. No adaptive selection, additional source, audio generation, optimizer, threshold, fresh development/final or v30 changes. A formal launch still requires completed paired smoke/audit, this complete schedule/audit and separately published full training/export/evaluation protocol/execution pins.
