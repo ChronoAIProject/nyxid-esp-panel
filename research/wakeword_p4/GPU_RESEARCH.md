@@ -9293,3 +9293,20 @@ signed raw-code sum. Half ties with negative raw sum differ under away-from-zero
 rounding despite integer zero-point offset. Must correct raw-code pooling then
 subtract zero, preserve original failure, prospective new lock before execution.
 No training/threshold/data changes, v30 retained.
+
+### 2026-11-14 — Corrected head parity including pool half ties
+
+Separate v2 source corrects only signed raw-code pooling half ties before centering;
+original failedv1 unchanged.97596d87prelock→session5874exit0, all4 original complete
+streams/startup. All9encoder/30history embedding/rawFC INT8logit codes now0mismatch;
+all20parameter/9step gradients finite connected and byte-repeat exact, no updates.
+Separate saved auditor independently checks572160encoder codes plus full original
+embedding/logit captures and gradient arrays/norms. Headbias zero diagnostic gradient
+retained (symmetric linear objective), not relabeled disconnected or forced nonzero.
+
+Head separately returns unbounded quantized-parameter preclip rawlogit and actual
+requantized/clipped deployed logit with explicit identity surrogate; no integer
+sigmoid oracle/recognition efficacy claim. Next is actual supervised-loss disposable
+update and direct trained-folded-parameter export parity before prospective formal
+training. Folded controls/treatment must share initialization/parameterization;
+no freshdata/threshold selection/v30 change.
