@@ -8053,3 +8053,23 @@ equivalence; nonzerostate representation changes. No weights changed yet.
 Must pinactualfactor/weightreceipt and all270float/state/phase original1e-4
 before anyexport; unchangedINT8gates remain. No optimizer/newdata/dev/acceptance,
 v30 retained, goalactive.
+
+### Exact power-two channel compensation passes full270 float controls
+
+37e18ae9 pins implementation/fullwave plan beforeprepare; originalprepare42337
+exited0. Savedcopies only, originalH5 unchanged. Actualfactor/inventory/newweight
+receipt dc3ba9bf published beforeinference. Nooptimizer, finiteweights, frozenBN
+movingmean/variance exact. Initialconv/depthwise/pointwise/BNaffine/Dense scales
+compensated simultaneously as fixed; nofactorchanges.
+
+Originalfloat session66543 exited0: all270pass, probability versusprevious
+boundedmodel EXACT (maxdifference0), everytwicefreshsix-state reset exact,
+sixstate shapes asregistered. Actualofflinephase224+zero max3.39746475e-6 passes
+original1e-4. Independentlyverified all270NPZ SHA, probabilityrepeat, baseline/
+phase reductions, allpassed. This establishes these floatwholeinput/statecontrols,
+notINT8numericalaccuracy or fullrepresentative state-scale relation yet.
+
+Beforeanyexport stillmustverify matched15site full7502representative perchannel
+scale relation, at previouslyfixed atol1e-4/rtol1e-5, plusprobability/statecontrol.
+Then separateactualexportlock and unchanged270INT8gates. No export/newtraining/
+newdev/acceptance, v30retained, goalactive.
