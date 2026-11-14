@@ -117,6 +117,9 @@ restoring the original app.
 
 ## Development identity and boot readiness
 
+For restoring the local server after a network change, see
+[Local NyxID for development-board voice checks](local_nyxid_development.md).
+
 Use the known development USB port and verify its complete chip MAC before
 making requests to a cached LAN address or flashing. The existing full-app
 runner enforces the MAC before its experimental flash. A separate read-only
