@@ -1,0 +1,791 @@
+{
+  "schema": "completed-nyx-common-phrase-saved-event-summary-v1",
+  "script_sha256": "8d536ff2283ce144dfb982eb4c9e8550b73d0338639c63ea4400460b4ecd779c",
+  "evidence": {
+    "research/wakeword_p4/results/4090-engine-adversarial-completed-nyx-scoring-independent-audit-v1.json": "c74336f301588c0b3ae5e3d3473c190fcb54e9a8f7c480c39e7eb290d04a4781",
+    ".local/wakeword/engine-adversarial-completed-nyx-development-v1/result.json": "9ef0e7d536b70e0d2e0df233cc9f11d92a9ee1e34d7ceb4219e64bea19d97105",
+    ".local/wakeword/engine-adversarial-completed-nyx-development-v1/diagnostic/hey_nyx-control.jsonl": "6cdedb09199085de5cfa81bbf8e9c70175fa7909bdfa54a9c06a57ce10734379",
+    ".local/wakeword/engine-adversarial-completed-nyx-development-v1/hey_nyx-control/report.json": "e3a595455a5d3706ae4acaa5e51b9e534d9e583c1e9b3e6575b34f14cd630a96",
+    ".local/wakeword/engine-adversarial-completed-nyx-development-v1/diagnostic/hey_nyx-adversarial.jsonl": "52703f57ca6de08544ce36e58415f8a5a99ec3e4c5b21cdc8f9d500529d7418f",
+    ".local/wakeword/engine-adversarial-completed-nyx-development-v1/hey_nyx-adversarial/report.json": "11290f542dca5b4cf18b522745228446f3732a5a219bf2c04fa4229787a5aff0"
+  },
+  "diagnostic_threshold": 0.5,
+  "models": {
+    "hey_nyx-control": {
+      "original_summary": {
+        "model": "hey_nyx-control",
+        "threshold": 0.5,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 35,
+            "complete": 35,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 166.25,
+              "p95": 239.39374999999993,
+              "observed": 35
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 107.25,
+              "p95": 167.25,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 26,
+            "complete": 26,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 169.625,
+              "p95": 248.984375,
+              "observed": 26
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 135.28125,
+              "p95": 223.959375,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 162.875,
+              "p95": 214.91874999999993,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 186.5625,
+              "p95": 279.46875,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 37,
+            "events": 37
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "grouped_common": {
+        "literal": [
+          {
+            "phrase": "Hello",
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey",
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Muse",
+            "clips": 36,
+            "activated_clips": 13,
+            "events": 13,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Nick",
+            "clips": 36,
+            "activated_clips": 1,
+            "events": 1,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey William",
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey next",
+            "clips": 36,
+            "activated_clips": 9,
+            "events": 9,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey pillow",
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hi E S P",
+            "clips": 36,
+            "activated_clips": 14,
+            "events": 14,
+            "events_before_source": 0
+          }
+        ],
+        "text": [
+          {
+            "phrase": "Hello, set a timer.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hello, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hello, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hello.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Muse, set a timer.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Muse, turn on the light.",
+            "clips": 9,
+            "activated_clips": 2,
+            "events": 2,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Muse, what time is it.",
+            "clips": 9,
+            "activated_clips": 2,
+            "events": 2,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Muse.",
+            "clips": 9,
+            "activated_clips": 3,
+            "events": 3,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Nick, set a timer.",
+            "clips": 9,
+            "activated_clips": 1,
+            "events": 1,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Nick, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Nick, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey Nick.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey William, set a timer.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey William, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey William, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey William.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey next, set a timer.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey next, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey next, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey next.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 9,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey pillow, set a timer.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey pillow, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey pillow, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey pillow.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey, set a timer.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey, turn on the light.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey, what time is it.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hey.",
+            "clips": 9,
+            "activated_clips": 0,
+            "events": 0,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hi E S P, set a timer.",
+            "clips": 9,
+            "activated_clips": 2,
+            "events": 2,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hi E S P, turn on the light.",
+            "clips": 9,
+            "activated_clips": 2,
+            "events": 2,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hi E S P, what time is it.",
+            "clips": 9,
+            "activated_clips": 1,
+            "events": 1,
+            "events_before_source": 0
+          },
+          {
+            "phrase": "Hi E S P.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 9,
+            "events_before_source": 0
+          }
+        ]
+      }
+    },
+    "hey_nyx-adversarial": {
+      "original_summary": {
+        "model": "hey_nyx-adversarial",
+        "threshold": 0.5,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 34,
+            "complete": 34,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 154.625,
+              "p95": 221.184375,
+              "observed": 34
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 77.25,
+              "p95": 122.54999999999998,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 25,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 173.0,
+              "p95": 223.35,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 169.625,
+              "p95": 210.42499999999998,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 143.0,
+              "p95": 195.28125,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 173.0,
+              "p95": 243.65625,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 214,
+            "events": 265
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 24,
+            "events": 24
+          }
+        },
+        "pre_source_events": 24,
+        "background": {
+          "events": 6,
+          "hours": 10.483944826388889,
+          "far_upper95": 1.1295743967110619
+        },
+        "threshold_selected": false
+      },
+      "grouped_common": {
+        "literal": [
+          {
+            "phrase": "Hello",
+            "clips": 36,
+            "activated_clips": 24,
+            "events": 24,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey",
+            "clips": 36,
+            "activated_clips": 24,
+            "events": 24,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey Muse",
+            "clips": 36,
+            "activated_clips": 30,
+            "events": 47,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey Nick",
+            "clips": 36,
+            "activated_clips": 27,
+            "events": 32,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey William",
+            "clips": 36,
+            "activated_clips": 24,
+            "events": 24,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey next",
+            "clips": 36,
+            "activated_clips": 29,
+            "events": 43,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hey pillow",
+            "clips": 36,
+            "activated_clips": 24,
+            "events": 24,
+            "events_before_source": 24
+          },
+          {
+            "phrase": "Hi E S P",
+            "clips": 36,
+            "activated_clips": 32,
+            "events": 47,
+            "events_before_source": 24
+          }
+        ],
+        "text": [
+          {
+            "phrase": "Hello, set a timer.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hello, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hello, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hello.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Muse, set a timer.",
+            "clips": 9,
+            "activated_clips": 7,
+            "events": 13,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Muse, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 9,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Muse, what time is it.",
+            "clips": 9,
+            "activated_clips": 8,
+            "events": 12,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Muse.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 13,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Nick, set a timer.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 14,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Nick, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Nick, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey Nick.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey William, set a timer.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey William, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey William, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey William.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey next, set a timer.",
+            "clips": 9,
+            "activated_clips": 7,
+            "events": 12,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey next, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 7,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey next, what time is it.",
+            "clips": 9,
+            "activated_clips": 7,
+            "events": 9,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey next.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 15,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey pillow, set a timer.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey pillow, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey pillow, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey pillow.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey, set a timer.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey, turn on the light.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hey.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 6,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hi E S P, set a timer.",
+            "clips": 9,
+            "activated_clips": 8,
+            "events": 11,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hi E S P, turn on the light.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 14,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hi E S P, what time is it.",
+            "clips": 9,
+            "activated_clips": 6,
+            "events": 8,
+            "events_before_source": 6
+          },
+          {
+            "phrase": "Hi E S P.",
+            "clips": 9,
+            "activated_clips": 9,
+            "events": 14,
+            "events_before_source": 6
+          }
+        ]
+      }
+    }
+  },
+  "threshold_selected": false,
+  "detector_invocations": 0,
+  "new_audio_opened": false,
+  "limits": "Descriptive grouping of original consumed diagnostic events at the .5 point already cited by Mac. No event recalculation, threshold selection, new inference or holdout use. Text association, including reported pre-source events, cannot isolate acoustic prefix versus suffix causes or certify phonetic truth. Failed intervention remains failed; no new candidate qualification."
+}
