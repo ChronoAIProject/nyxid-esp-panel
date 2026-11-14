@@ -1,0 +1,202 @@
+{
+  "execution_sha256": "cc24e715bb55605b3d6f7d1457d848c3268689af199e1ff85ac57f5b1de676c8",
+  "gpu": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "dual_supervised_control",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "dual_supervised_control",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 2.1196670070057735,
+        "parameter_delta_l2": 0.0008147778074739333,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "080ec8ac970dda4c6cf469b6d112af0be05da1eb1baba122fcaa6eb04d9b356d",
+          "optimizer": "9a2b7eed127647412d5efa227765f4cff740a9efa34af717bfb85e0643a1363e"
+        },
+        "weights_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_willow-dual_supervised_control-1/final.weights.h5",
+        "weights_sha256": "dc51787789c84ba9b500fb50aee238f39249471f6209fa7dda86156705ea8617",
+        "optimizer_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_willow-dual_supervised_control-1/final-optimizer.npz",
+        "optimizer_sha256": "45453b11190f6e7b60f072ece092808b79a66ff8f9d922df10902402d9e64196",
+        "batch_trace_sha256": "de318b1e8a141a858115c897f7005674d8afba8bfb2c87394d764e850e1822f4",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 3.9580646671311115e-07,
+            "gradient_l2": 0.0014666887000203133,
+            "supervised_loss": 3.9580646671311115e-07,
+            "consistency_loss": 0.4464350938796997,
+            "supervised_gradient_l2": 0.0014666887000203133,
+            "consistency_gradient_l2": 155.21336364746094
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 9.533421803098463e-07,
+            "gradient_l2": 0.01014927588403225,
+            "supervised_loss": 9.533421803098463e-07,
+            "consistency_loss": 0.7777618169784546,
+            "supervised_gradient_l2": 0.01014927588403225,
+            "consistency_gradient_l2": 238.18447875976562
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_willow",
+      "condition": "logit_consistency",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_willow",
+        "condition": "logit_consistency",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 2.39241700200364,
+        "parameter_delta_l2": 0.0021700865791402166,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "d98ca6b2003d55aa12094959178ad270a0f60cd1596f5e9219309c062ac92ee3",
+          "optimizer": "6453f9ef415ccca51c543527c2d4c162e1c320afb6ec1d22f8101b942b559b29"
+        },
+        "weights_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_willow-logit_consistency-1/final.weights.h5",
+        "weights_sha256": "80d9f058eb3ae134275f9163166c092ed27ad528cb20f054d9347918f632c762",
+        "optimizer_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_willow-logit_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "0c02cfbed0f0ca4afe59c10a18e76be002eeec3c24e5c8845ce0f90f5c538697",
+        "batch_trace_sha256": "c3c574f719cde7ad207dd0d8c6bc61084eda299f587c1c44384215a90987c20a",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039",
+            "loss": 0.44643548130989075,
+            "gradient_l2": 155.21334838867188,
+            "supervised_loss": 3.9580646671311115e-07,
+            "consistency_loss": 0.4464350938796997,
+            "supervised_gradient_l2": 0.0014666887000203133,
+            "consistency_gradient_l2": 155.21336364746094
+          },
+          {
+            "step": 2,
+            "batch_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c",
+            "loss": 0.6728801131248474,
+            "gradient_l2": 241.1376190185547,
+            "supervised_loss": 4.6733643443985784e-07,
+            "consistency_loss": 0.6728796362876892,
+            "supervised_gradient_l2": 0.0016931405989453197,
+            "consistency_gradient_l2": 241.13775634765625
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "dual_supervised_control",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "dual_supervised_control",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 2.1931461970089003,
+        "parameter_delta_l2": 0.0010893817615605418,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "bf1dd45d2c3135ea87674cb3635b60d8c9e64036b269f36b12017bdf1d8e268b",
+          "optimizer": "2b24363853af794eb73d514b47f838361c6bb562184c04e8532d2c371d8728d5"
+        },
+        "weights_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_nyx-dual_supervised_control-1/final.weights.h5",
+        "weights_sha256": "b54b8119fd47372f0839e473e77527671e9ece529bc2eaf9ec81755dc536cc23",
+        "optimizer_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_nyx-dual_supervised_control-1/final-optimizer.npz",
+        "optimizer_sha256": "99b3854c88f7b9fd3dc243b516227e113623b3ad6243054b0e4723568548fa83",
+        "batch_trace_sha256": "c193022021a5404967ae638f11456164c94ac6ebc235fbb58498216be7b55ca3",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 1.7116581148002297e-05,
+            "gradient_l2": 0.03166976943612099,
+            "supervised_loss": 1.7116581148002297e-05,
+            "consistency_loss": 0.29500097036361694,
+            "supervised_gradient_l2": 0.03166976943612099,
+            "consistency_gradient_l2": 121.37023162841797
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 9.837951802182943e-05,
+            "gradient_l2": 0.4119621515274048,
+            "supervised_loss": 9.837951802182943e-05,
+            "consistency_loss": 0.5543229579925537,
+            "supervised_gradient_l2": 0.4119621515274048,
+            "consistency_gradient_l2": 257.6293029785156
+          }
+        ]
+      }
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "logit_consistency",
+      "steps": 2,
+      "fresh_update_repeats_exact": true,
+      "final_repeat": {
+        "target": "hey_nyx",
+        "condition": "logit_consistency",
+        "repeat": 1,
+        "steps": 2,
+        "elapsed_seconds": 2.63259851798648,
+        "parameter_delta_l2": 0.0022047603095659623,
+        "frozen_bn_exact": true,
+        "finite": true,
+        "identity": {
+          "model": "cee92a99f8c99d4194601831d80a5b669f0adb8998d2ef728534720ae4251646",
+          "optimizer": "5210ddac3f5493ff070647c887598a9b28d4b6b21be4717d3653aa9b0edc590d"
+        },
+        "weights_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_nyx-logit_consistency-1/final.weights.h5",
+        "weights_sha256": "4ef3a17e7cf5f532c64bbf5d49e3e3a04e4a2b74d95e0c7a935b792ab844952c",
+        "optimizer_path": ".local/wakeword/hey-broad-consistency-smoke-v1/hey_nyx-logit_consistency-1/final-optimizer.npz",
+        "optimizer_sha256": "aa1733bc9e5a636f85853d87418817c59ff6d79c8b298cf062d875193a0cf462",
+        "batch_trace_sha256": "015dd7d8d493fd1cf78824809967722bf03a2fa29538883feea297f46c2c9cba",
+        "history": [
+          {
+            "step": 1,
+            "batch_sha256": "d53f956dc75495eb70778bfb322dcc8331897c59b8907bbbbaf742c6d39ba642",
+            "loss": 0.2950180768966675,
+            "gradient_l2": 121.37252044677734,
+            "supervised_loss": 1.7116581148002297e-05,
+            "consistency_loss": 0.29500097036361694,
+            "supervised_gradient_l2": 0.03166976943612099,
+            "consistency_gradient_l2": 121.37023162841797
+          },
+          {
+            "step": 2,
+            "batch_sha256": "90c88e9ead2354af0bcc4e29d76d5c0ff8b613ddfe8a2d6ec2f5ac43389f938b",
+            "loss": 0.5326977968215942,
+            "gradient_l2": 242.16253662109375,
+            "supervised_loss": 0.0001483069354435429,
+            "consistency_loss": 0.5325495004653931,
+            "supervised_gradient_l2": 0.6253593564033508,
+            "consistency_gradient_l2": 242.22259521484375
+          }
+        ]
+      }
+    }
+  ],
+  "all_passed": true,
+  "limits": "Fixed dualbranch S+lambdaC, explicit separately differentiated gradients merged, lambda0/1. Same originalequalizedinit/frozenBN/first10000batchSHA, finalonly. Smoke weights never formal. No newdata/dev/acceptance/export/promotion. Original direct-gradient failure retained, no silent retries."
+}
