@@ -8963,3 +8963,9 @@ Original scoring session1233 exit0. Independent event-index oracle uses precompu
 
 ### Matched formal complete; original export and full540 launched
 Originaltraining session78314 exit0, all4fixed10000 complete, independentinitial/finalH5/16BN/32Adam iteration10000/all40000batchSHA auditpasses, f8082669. Exportlockf443fe77 pushed before originalsession51796 exit0; all8rawFP32/INT8 exports unchangedweights, staticABI/zero6states pass, originalreport9195c1fc. Not numericalqualification. Screenlockef779151 pushed before originalsession4105/PID1569807/starttime23893122: all4×same135completeinputs, actualFP32/INT8/tworesets/phase/originalfivegates. Runongoing; no partialresultqualification or freshdev.
+
+### Original matched full540 numerical rejection
+Originalsession4105 exit0, independentall540arrayauditor agrees. Willowflat0/135,pool0/135; Nyxflat84/135,pool84/135. All540FP32LiteRTvsTF/phase/repeats pass; failures are originalINT8fiveerror gates, not startup deletion or floatphase. Neither full270architecturecondition qualifies. Pooledreadout intervention did not solve numericaladmission; no freshdev/threshold/checkpoint/exportretry rescue. Alloriginaltrainedweights/8exports/540captures retained.
+
+### All old-development recognition originals delivered
+Original4models/1488traces/two probabilities/clocks/manifestorder/inputSHA/all552events and source/official26summary packaged. Archive25682302B SHA56de0b88f543a6667fab49c34115e92e022109993882c6d7155f41b6c516e5bb, anonymous exact1525regularentries/1524payloads verified; manifest/downloadce84ca7b. Same-FAR requirement all578originalpoints descriptiveab847110: Nyxfloat30–34/36complete but13–25/288commonfalse, zeroambientevents10.48394h; originalWillowfloat noFARqualifiedpoint. OfficialWillowFARqualifiedregion0–5/36complete on sameonevoice, limiting maturemodelqualityclaims. No workpointselected or independentacceptance, v30/freshdata preserved.
