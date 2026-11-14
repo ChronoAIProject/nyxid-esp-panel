@@ -8610,3 +8610,24 @@ four-boundary supplement. Mac notified via Issue13 comment6872600442. Old Willow
 integer-QAT macro=0 across all fixed points; old Nyx integer-QAT FAR upper95
 minimum .600518/h. These old models are distinct from rejected bounded-family.
 No new threshold selected, no fresh development/acceptance or v30 replacement.
+
+### Complete bounded training-context replay (2026-11-14)
+
+V1 accounting stopped in batch1 on ordinary negatives with null keyword_frame;
+original traceback retained in results. Explicit-null accounting v2 was locked
+and pushed b5166048 before its single run (session97110), now exit0. Both targets
+completed10000 batches: every full tensor digest equals both original formal
+arm traces. No optimizer, model or heldout input. Per target960000 recorded draws:
+320000 positives,320000 retained ordinary negatives,160000 replaced ordinary
+negative draws (not supervision),160000 prefix negatives. Ambient48/batch remain
+inside authenticated batch tensors but are not individually ledgered.
+
+Independent saved-ledger audit a57b78f5 exit0: all1.92million records match original
+training metadata/role/legal window rules, all aggregate counters recompute exact.
+Per target rendered-row visits: positive24829/25128, retained ordinary negative
+61621/81828, prefix23977/24912. These are rendered rows, not unique voices/sources;
+matching counts across targets reflect paired sampler/source inventory and do not
+prove audio identity. This is a derived replay tied by actual tensor SHA, not a
+historical source ledger. Supports broad row visitation but does not prove context
+coverage sufficient or explain numerical failures; no sampler/label change or new
+training inferred. Fresh development/acceptance stays closed and v30 unchanged.
