@@ -105,6 +105,7 @@ def prepare(profile_path, model_path, calibration_path, selftest_path, output):
         final_wave_padding=(-samples)%160,final_feature_padding=(-frames)%3,
         prepare_source_sha256=digest(Path(__file__).read_bytes()),accepted=False)
     config = ('#pragma once\n'+f'#define PANEL_WAKE_MODEL_SHA256 "{model_sha}"\n'
+        +f'#define PANEL_WAKE_SELFTEST_SHA256 "{digest(fixture)}"\n'
         +f'#define PANEL_WAKE_THRESHOLD {threshold:.17g}\n'
         +'#define PANEL_WAKE_SMOOTHING_STEPS 5\n#define PANEL_WAKE_PRIME_SAMPLES 68000\n'
         +'#define PANEL_WAKE_COMPLETE_INPUT 1\n#define PANEL_WAKE_SELFTEST_VERSION 2\n').encode()

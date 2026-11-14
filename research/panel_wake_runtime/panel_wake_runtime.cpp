@@ -253,6 +253,10 @@ model_iface_data_t *create(const void *,det_mode_t) {
             ok=ok && probe->steps==outputs && !mismatches;
         }
 #endif
+#ifdef PANEL_WAKE_COMPLETE_INPUT
+        ESP_LOGI(tag,"complete selftest fixture=%s samples=%u outputs=%u",
+            PANEL_WAKE_SELFTEST_SHA256,unsigned(samples),unsigned(outputs));
+#endif
         ESP_LOGI(tag,"exact-PCM selftest outputs=%u mismatches=%u passed=%s",
             unsigned(outputs),mismatches,ok?"true":"false");
         delete probe; // Never mix diagnostic history with the microphone.

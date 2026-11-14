@@ -36,7 +36,7 @@ def run(output, legacy_ref, sanitizers):
         path.touch()
     (includes/'wake_config.h').write_text('#pragma once\n#define PANEL_WAKE_MODEL_SHA256 "constructed"\n'
         '#define PANEL_WAKE_THRESHOLD .55\n#define PANEL_WAKE_SMOOTHING_STEPS 5\n'
-        '#define PANEL_WAKE_PRIME_SAMPLES 68000\n')
+        '#define PANEL_WAKE_PRIME_SAMPLES 68000\n#define PANEL_WAKE_SELFTEST_SHA256 "constructed"\n')
     current = (HERE/'panel_wake_runtime.cpp').read_bytes()
     original = subprocess.check_output(['git', 'show', legacy_ref+':research/panel_wake_runtime/panel_wake_runtime.cpp'], cwd=HERE)
     results = {}

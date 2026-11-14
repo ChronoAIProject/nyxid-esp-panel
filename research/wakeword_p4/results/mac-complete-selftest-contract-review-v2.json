@@ -1,0 +1,70 @@
+{
+  "schema": "mac-complete-selftest-contract-review-v2",
+  "source_sha256": {
+    "prepare_complete_selftest.py": "4ddb74912dcd61253db780aa9a47b0f0ffdad898f5cc7bb0251701d29b2012bc",
+    "audit_complete_selftest.py": "ec7e2fb16a89cf83656a4f66a010569d59c93459533e8e3348ea617502867631",
+    "test_complete_selftest.py": "1b9ebf55924fa0daf030fb70c3850d1c1f4232dd241368982be46461b09755ca",
+    "prepare_complete_runtime.py": "263a3103d8f77e2438a9e710873e95baa62c09f7a34be1300b9713d6cf4fbb94",
+    "panel_wake_runtime.cpp": "63793bcc124f763ce75992de3b1cbd6df94640b8ba4a5fd3cc4232c6a4123f06",
+    "review_complete_runtime_flow.py": "5ebb478d32e88a44a5e0565c1ea441cb90c35f2bc177ebac88e06424be16cc56",
+    "review_complete_runtime_cross_compile.py": "458f291ff412932bc14afafafc108344492c02ba7a5f280d319f8bca8d72319b",
+    "test_prepare_complete_runtime.py": "81e18a1792c4550513d92962c9e06f2e886b9d4ea92a4dc876f182bfe4112d7b"
+  },
+  "tests": {
+    "tests": 40,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "numpy_version": "2.4.3",
+  "whole_original_pcm_and_68160_prime_constructed_check": true,
+  "constructed_backend_uses_real_numpy": true,
+  "learned_frontend_or_interpreter_run": false,
+  "fixture_sha_marker_and_raw_events_auditor_constructed_checks": true,
+  "real_cpp_constructed_flow": {
+    "schema": "complete-runtime-host-flow-review-v1",
+    "current_runtime_sha256": "63793bcc124f763ce75992de3b1cbd6df94640b8ba4a5fd3cc4232c6a4123f06",
+    "original_ref": "68d27387e9916f350bf733aa1b04e271885d5f80",
+    "original_runtime_sha256": "191321564faa65e30776f8869462c689794f2d1fe9f80c3d279c1d032dba18c1",
+    "harness_sha256": "d97564bedeaedb0d94001046b0c67080b29a5020b318a4f3eb8abe47eb16f053",
+    "shim_sha256": "287669c8c44cca65e77bec35e45187495585eab4bd471dbb42e1c0c27b550a9e",
+    "complete_stream_cases": 27,
+    "legacy_stream_cases": 27,
+    "continuous_prefix_outputs": 208,
+    "original_legacy_complete_prefix_exact": true,
+    "finite_selftest_cases": 8,
+    "legacy_v1_selftest_pass": true,
+    "sanitizers": "undefined,bounds",
+    "all_passed": true,
+    "limits": "Actual runtime control flow with constructed frontend/interpreter doubles. No FFT, learned model, ESP hardware, audio IO, recognition, numerical model parity or resource acceptance."
+  },
+  "real_p4_translation_unit_compile": {
+    "schema": "complete-runtime-p4-cross-compile-v1",
+    "toolchain": "riscv32-esp-elf-g++ (crosstool-NG esp-14.2.0_20260121) 14.2.0",
+    "runtime_sha256": "63793bcc124f763ce75992de3b1cbd6df94640b8ba4a5fd3cc4232c6a4123f06",
+    "real_compile_database_sha256": "652371a863996faafd9ccc8c86ea227e23179b60e6ea896be8638a52a5dd57de",
+    "variants": [
+      {
+        "name": "complete-selftest",
+        "exit_code": 0,
+        "warning_count": 0,
+        "object_bytes": 1692944
+      },
+      {
+        "name": "legacy-selftest",
+        "exit_code": 0,
+        "warning_count": 0,
+        "object_bytes": 1659048
+      },
+      {
+        "name": "legacy-continuous",
+        "exit_code": 0,
+        "warning_count": 0,
+        "object_bytes": 1645532
+      }
+    ],
+    "all_passed": true,
+    "limits": "Real ESP32-P4 translation-unit compilation with installed ESP-SR, TFLM and MicroFrontend headers. Not a CMake/full-app link, model allocation, P4 execution or recognition test."
+  },
+  "limits": "Forty metadata/constructed PCM/raw/UART tests, real NumPy with frontend/interpreter doubles, actual C++ control-flow doubles, real P4 TU compilation only. No learned-model generation, actual frontend/FFT, full-app link, board write, audio IO, recognition, FAR, latency or voice acceptance. Actual fixture/profile requires qualified model and frozen eligible new-development point."
+}

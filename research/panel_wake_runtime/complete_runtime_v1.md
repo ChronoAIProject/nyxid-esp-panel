@@ -78,11 +78,59 @@ The public microphone wrapper still consumes480 samples per call, and never
 calls finite-input `finish()`. No continuous microphone flush, extra reader,
 playback, recording, I2S/AEC/AGC/FIFO or PCM-speed change is introduced.
 
+## Complete fixture generation and UART audit
+
+After numerical admission and a frozen eligible development point, generate
+the private fixture from one explicitly selected, permitted source WAV. The
+old `training/prepare_runtime_selftest.py` remains the V1 generator; it must not
+be used to generate this complete contract.
+
+```sh
+python research/panel_wake_runtime/prepare_complete_selftest.py \
+  --model "$WAKE_MODEL" --audio "$SOURCE_WAV" \
+  --calibration "$WAKE_CALIBRATION" --output "$PRIVATE_FIXTURE.bin"
+```
+
+The new generator preserves the entire original 16kHz mono PCM16 source and
+prepends the application's actual 68,160 samples of silence. The requested
+prime is 68,000, rounded by the existing 480-sample application loop. No source
+tail is truncated, and no PCM is padded at the prime/source boundary or to a
+480-sample chunk. The whole stream is replayed with a fresh MicroFrontend and
+reference LiteRT interpreter twice. Only the final 160-sample waveform hop and
+the final three-frame model group are padded; raw UINT8 outputs are saved
+without float reconstruction. Model operators and INT8/UINT8 tensor interfaces
+must pass the original model inspector. The binary and JSON report use fresh
+paths; different/partial files cannot be overwritten.
+
+The complete packager embeds `PANEL_WAKE_SELFTEST_SHA256` in the configuration.
+The actual C++ V2 self-test logs that fixture SHA, original sample count and
+output count before its existing verdict. This identifies the exact fixture
+instead of relying on model identity and output count alone. Audit the saved
+UART with the actual binary, generated JSON and unchanged calibration:
+
+```sh
+python research/panel_wake_runtime/audit_complete_selftest.py \
+  --uart "$PRIVATE_UART" --fixture "$PRIVATE_FIXTURE.bin" \
+  --fixture-report "$PRIVATE_FIXTURE.json" \
+  --calibration "$WAKE_CALIBRATION" --output "$PRIVATE_NEW_AUDIT"
+```
+
+The audit checks complete binary lengths and hashes, actual prime/source bytes,
+tail policy, selected threshold and every declared activation step recomputed
+from raw UINT8 bytes. It requires exactly one matching fixture identity before
+the verdict, then reuses the original UART model/output/activation audit. A
+successful audit only authenticates the reported diagnostic for this input;
+it does not independently observe a model invocation or prove general P4
+equivalence. Constructed backend tests use real NumPy with explicit frontend/
+interpreter doubles; actual learned-model generation and hardware audit remain
+pending a qualified candidate.
+
 ## Verification and limits
 
 ```sh
 cd research/panel_wake_runtime
-python -m unittest -v test_prepare_complete_runtime test_prepare_runtime
+python -m unittest -v test_complete_selftest test_prepare_complete_runtime \
+  test_prepare_runtime test_audit_runtime_selftest
 python review_complete_runtime_flow.py \
   --legacy-ref 68d27387e9916f350bf733aa1b04e271885d5f80 \
   --output "$PRIVATE_NEW_FLOW_OUTPUT"

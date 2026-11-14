@@ -23,7 +23,7 @@ def run(database, output):
         build.mkdir()
         header = ('#pragma once\n#define PANEL_WAKE_MODEL_SHA256 "constructed-compilation-only"\n'
             '#define PANEL_WAKE_THRESHOLD .98828125\n#define PANEL_WAKE_SMOOTHING_STEPS 5\n'
-            '#define PANEL_WAKE_PRIME_SAMPLES 68000\n')
+            '#define PANEL_WAKE_PRIME_SAMPLES 68000\n#define PANEL_WAKE_SELFTEST_SHA256 "constructed-compilation-only"\n')
         if complete:
             header += '#define PANEL_WAKE_COMPLETE_INPUT 1\n#define PANEL_WAKE_SELFTEST_VERSION 2\n'
         (build/'wake_config.h').write_text(header)

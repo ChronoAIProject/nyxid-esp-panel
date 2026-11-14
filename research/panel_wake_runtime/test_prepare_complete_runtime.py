@@ -91,6 +91,7 @@ class CompletePreparation(unittest.TestCase):
         self.assertIn('#define PANEL_WAKE_THRESHOLD 0.98828125\n', config)
         self.assertIn('#define PANEL_WAKE_PRIME_SAMPLES 68000\n', config)
         self.assertIn('#define PANEL_WAKE_COMPLETE_INPUT 1\n', config)
+        self.assertIn('#define PANEL_WAKE_SELFTEST_SHA256 "'+runtime.digest(self.fixture)+'"\n', config)
         before = {p.name: p.read_bytes() for p in self.output.iterdir()}
         self.assertEqual(self.prepare(), result)
         self.assertEqual({p.name: p.read_bytes() for p in self.output.iterdir()}, before)
