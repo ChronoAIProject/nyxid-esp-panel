@@ -8159,3 +8159,28 @@ accuracy. Next integrateactualfolded graph with input/activation/state/weight/
 biasquantizer mapping and actualbatch loss/gradient/variablechecks before formal
 trainingprotocol. No hyperparameterchosen to rescueNyxonefailure, no newexport/
 training/dev/acceptance; v30frozen, goalactive.
+
+### Fixed-grid actual-batch quantization surrogate passes after metadata fix
+
+dce15045 registeredv1 fixedactualequalizedgrids/BNfoldedweights/bias/headmapping,
+original39883 exit1 atNyxmetadata setup afterWillowbatchpreflight. Wrongassumption:
+fixedREAD_VARIABLE tensorIDs have sameorder acrossmodels. Originalfailurelog
+preserved; not evidence of statequantizermismatch orbrokenruntime. Nooptimizer.
+0e062b42 registers v2 ONLYmetadata connectiondiscovery: actualCONCATinputs to
+actualREADoutputs, rather than hardcodedstateIDs; validate source/read/concat
+grids andflattenactualconnection. Doesnot change quantizationpolicy/tolerances.
+
+Originalv2 session57640 exit0:4actualfulltrainingbatches, twoeach originalheads.
+Allactualx/y/weights matchpriorhashes; forward/logit/prob/loss/allgradients repeat
+exact, finite/nonNone andnonzerooverallgradient. Allparameters/statistics exact,
+optimizerupdates0. Biasquantint32wide, depthwiseperchannelaxis explicit, original
+boundedFC transformedcoordinates; precliprawlogitweightedBCEretainsgradient for
+confident-wrong cases. Diagnosticfullbounded/requantizedprobability recorded
+separately andoutsideBCEgradient; do notcallcompleteinference-lossQAT.
+NPZ SHA/actualtensorchains, stableNumPyweightedBCE andallgradientnorms independently
+verified. Config binds everyactualweight/bias/activationquantgrid.
+
+Nextsurrogatevalidation mustcoverpersistent streamingstate and compare samewhole
+trainingwaveform withactualINT8/reference outputs; nearest-even surrogate is not
+integerfixedpointoracle. Noprematureformaltraining/export/dev/acceptance; v30
+retained, goalactive.
