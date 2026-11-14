@@ -72,3 +72,35 @@ all-region ranges by engine and common phrase; it selects no threshold. Actual
 saved events can distinguish observed failures on these training examples from
 the already-known development failures, but cannot certify the full training
 distribution, a unique root cause, independent acceptance or P4 qualification.
+
+## Completed v3 result
+
+The published v3 plan was executed unchanged after source commit `0904ef0`.
+The original local session `80130` exited 0. The result is
+`../results/mac-original-training-witness-events-v3.json`: 1,104 points,
+149,040 case/point records, 29,788 emitted events and zero TF/LiteRT event
+sequence differences. There were no model invocations, audio decodes, selected
+thresholds or acceptance scoring.
+
+Ranges below include every original registered point and are identical for
+both saved backends. "Complete" uses the generated prefix allocation, not a
+measured phonetic end; some early Qwen triggers therefore count as any-target
+events without counting as complete-prefix events.
+
+| Original model | Own any / 27 | Own complete / 27 | Common false / 81 | Reciprocal false / 27 |
+| --- | ---: | ---: | ---: | ---: |
+| Willow float | 27–27 | 13–24 | 0–0 | 0–0 |
+| Willow integer-trained raw | 27–27 | 15–24 | 0–0 | 0–0 |
+| Nyx float | 26–27 | 17–25 | 0–0 | 0–0 |
+| Nyx integer-trained raw | 27–27 | 17–25 | 0–1 | 0–0 |
+
+The possible Nyx integer-trained raw common false clip is Hey Next. Each
+model's 27 own examples derive from nine source utterance IDs, not 27
+independent voices. The float models fit these selected training witnesses
+well while the reused Semaine development source has substantial failures.
+This supports investigating source/carrier coverage and generalization; it
+does not establish the unique cause or whole-training fit.
+
+The complete gzip ledger is 2,455,915 bytes, SHA-256
+`4d28f03c8f37ca78ca72f077a3d751671cf6eb11b798b1c2d987333b1f59a1e9`.
+Both earlier reader failures and the original partial v2 ledger are retained.
