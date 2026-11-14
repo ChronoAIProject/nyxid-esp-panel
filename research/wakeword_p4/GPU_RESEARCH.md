@@ -9369,3 +9369,25 @@ update. Original losses are diagnostic only, not checkpoint/scale selection.
 Next step is vectorized complete-batch integration/performance with exact same
 per-window reset/terminalphase and exporter parity before a fixedgrid-vs-learned
 paired recipe. No freshdev/acceptance/FAR qualification; v30 remains frozen.
+
+### 2026-11-14 — Complete128 batched supervised update/export smoke
+
+0207b27d prospectively locks vectorized per-window causal-reset/terminal loss,
+original full128batch1 labels/weights, fourmodels/twofresh repeats/oneAdamupdate.
+Batched tensors use independent history axis. LSQ output-step normalization uses
+per-window time×channel count, excluding batchdimension: global mean loss matches
+mean serial-window surrogate semantics. Before any update, fixed originalrows0/1
+serial vs batched loss and all21variable gradients agree within preregistered
+rtol/atol1e-10 (float64 reduction equivalence, distinct from exactrepeat gate).
+
+Original session46696exit0. All fourfull128 weightedBCE updates finite, actual
+updated W/b+step exports all9encoder/embedding/INT8logit mismatch0 on original
+complete request0 startup. Fullvariables/44Adam arrays/loss/modelbytes/outputs
+repeat byteexact. Independent saved audit1681912code values/hash/state passes,
+checks all128labels32positive96negative/weights1and20. No runtime/throughput numbers
+were instrumented: do not infer formal training throughput from session polling.
+
+This validates one fullbatch mechanical update only. Next requires repeatable
+multi-update fixedgridcontrol vs learnedstep treatment integration, actual batch
+schedule guards and explicit fixedfinal training recipe before formal runs.
+No recognition/FAR claim, freshdata/threshold selection or v30 replacement.
