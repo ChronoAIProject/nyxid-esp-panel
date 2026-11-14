@@ -9130,3 +9130,26 @@ Remaining assignments: original input/logistic/output groups frozen, nine encode
 output groups eligible for shared learned steps; bias code/metadata must change
 with consuming input step. A uint8 conversion with changed zero does not imply
 same affine grid. No scale changes, compiler or training yet; v30/fresh unchanged.
+
+### 2026-11-14 — Mechanical changed-grid export and original compiler failure
+
+New compiler constructs original/half/double encoder steps on all4 original matched
+INT8 models, no converter/calibration/training/invoke. Original factor1 bytes exact.
+Nine encoder groups update every state/shape alias; dependent9 bias scales/codes
+are re-encoded from ORIGINAL QUANTIZED real bias, not originalFP32/trained bias.
+This is explicitly a mechanical witness, not final learned-weights export.
+
+Original execution failed exit1 at Willowflat factor.5 allocation: original buffer2
+is shared by ExpandDims axis tensor1 and Dense bias tensor13. Direct bias mutation
+changed the axis, triggering EXPAND_DIMS axis<=input_dims.size. Original two artifacts
+remain in learned-grid-compile-witness-v1; failure receipt includes original source
+SHA and error. No model invoke occurred. This is a compiler implementation defect,
+not a learned-scale efficacy result. Fixed compiler clones any shared bias buffer
+before writing; v2 uses separate directory and preserves original failed artifacts.
+
+V2 all12 original/half/double cases allocate and expose expected metadata. It also
+reverts only declared scales/bias writes/cloned-buffer references then requires
+whole packed model equal original packed model, guarding unrelated mutation.
+All original weights and initializer bytes remain unchanged. Runtime arithmetic
+parity against an independent changed-grid forward remains unproven; no new
+recognition/data/threshold or candidate admission allowed from allocation alone.
