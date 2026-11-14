@@ -28,6 +28,10 @@ Nyx node, display/image, camera, heap and voice binding. Wait for
 `net.connected=true`, `time_valid=true` and `nyx.state=up` before a signed-service
 test. An IP response alone does not establish which USB board is attached.
 
+For background heap, fragmentation, uptime and reachability observation, use
+[STABILITY.md](STABILITY.md). It documents the read-only macOS monitor, private
+configuration, retained logs, matched-state trends, and sleep/network limitations.
+
 Use a private ignored directory for UART logs, NVS backups, audio, screenshots
 and histories. UART echoes typed commands: do not record credential-entry
 commands. Do not commit `.env` files, device/owner/provider credentials, NVS
