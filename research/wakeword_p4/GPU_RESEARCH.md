@@ -9236,3 +9236,24 @@ with immutable quantized weights/realbias, not trained-weight QAT or recognition
 Next required checks are nonuniform non-power2 per-layer steps vs actual exporter,
 actual folded trainable bias/weight and head connections, then prospective paired
 training. No fresh data/threshold choice or candidate admission; v30 unchanged.
+
+### 2026-11-14 — Nonuniform non-power2 step export/TF encoder parity
+
+Prospective56c7bf81 locks nine per-layer factors .73/1.31/.89/1.17/.67/1.41/.83/
+1.23/.91 as explicit log-ratios in execution JSON before run. Original session42829
+exit0 on all4complete request0 streams/startup/twofresh actualbuiltinref plus two
+TF deterministic forwards/gradients. Actual exporter shares all group/state scales,
+re-encodes dependent bias and clones shared buffers. Float64 base*exp(logratio)
+serialized float32 consistently between TF/export (not float32-factor multiplication).
+
+All9encoder mismatches0, actual/TF forward repeats exact, nine diagnostic step
+gradients finite/nonzero/exact repeats. Separate saved audit checks572160encoder
+values across both repeats and actual finalUINT8 repeat identity. Originalquantized
+realbias/weights only: still not trained folded-parameter/head parity or efficacy.
+
+Execution prose inherited stale phrases 'nine zero-initialized logsteps' and
+'exact vs saved originalactual' from baseline runner. Explicit prospective `ratios`
+array and pinned executable actually initialize nonzero ratios and compare against
+new actual exported model; saved arrays/audit prove this. Do not edit original lock
+or reinterpret this as baseline comparison. Next execution must clean that prose.
+No optimizer/newdata/threshold choice; original rejected candidates and v30 retained.
