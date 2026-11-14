@@ -1,0 +1,82 @@
+{
+  "archive_url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/mac-fixed-grid-native-four-witness-replay-v2.tar.gz",
+  "archive_sha256": "2417ab71f9e6160ee361ced911d8653c20ebbff64c959c6869dc65c191c64952",
+  "archive_bytes": 108280,
+  "anonymous_download": true,
+  "verified_payloads": 19,
+  "original_mac_report_sha256": "425b4670815cea35f8b7bf8e54f157d905ca26646dcb1c827d6f8a9799b5ca72",
+  "gpu_screen_sha256": "458d47eb8c876b1dbf8284ae1a4819fd548353f7bb365a5546494ebfae315e3f",
+  "gpu_recursive_sha256": "cbc52e51ed2c66db22d6374e95460772735aab1d10539ff635519cc82e6f1616",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "request_order": 14,
+      "steps": 167,
+      "input_codes_output_embedding_fc_cross_host_exact": true,
+      "all_saved_repeats_exact": true,
+      "mac_numerical_passed": true,
+      "gpu_numerical_passed": true,
+      "mac_five_stats": {
+        "mean": 0.003181880776787554,
+        "p99": 0.0670888826138107,
+        "maximum": 0.06813720539212227
+      },
+      "cross_host_float_max_abs": 3.2782554626464844e-07,
+      "cross_host_phase_max_abs": 1.0669231414794922e-05
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "request_order": 14,
+      "steps": 167,
+      "input_codes_output_embedding_fc_cross_host_exact": true,
+      "all_saved_repeats_exact": true,
+      "mac_numerical_passed": false,
+      "gpu_numerical_passed": false,
+      "mac_five_stats": {
+        "mean": 0.005278154233137739,
+        "p99": 0.14613856488175223,
+        "maximum": 0.14718688766006377
+      },
+      "cross_host_float_max_abs": 1.1175870895385742e-07,
+      "cross_host_phase_max_abs": 4.76837158203125e-07
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "request_order": 48394,
+      "steps": 229,
+      "input_codes_output_embedding_fc_cross_host_exact": true,
+      "all_saved_repeats_exact": true,
+      "mac_numerical_passed": false,
+      "gpu_numerical_passed": false,
+      "mac_five_stats": {
+        "mean": 0.006275428167880617,
+        "p99": 0.19490882612951105,
+        "maximum": 0.1963583588600159
+      },
+      "cross_host_float_max_abs": 2.384185791015625e-06,
+      "cross_host_phase_max_abs": 3.427267074584961e-06
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "request_order": 48394,
+      "steps": 229,
+      "input_codes_output_embedding_fc_cross_host_exact": true,
+      "all_saved_repeats_exact": true,
+      "mac_numerical_passed": true,
+      "gpu_numerical_passed": true,
+      "mac_five_stats": {
+        "mean": 0.0007658296196928455,
+        "p99": 0.0035709142684936523,
+        "maximum": 0.0035709142684936523
+      },
+      "cross_host_float_max_abs": 0.0,
+      "cross_host_phase_max_abs": 0.0
+    }
+  ],
+  "total_steps": 792,
+  "limits": "Read-only saved-array crosscheck, no model invoke/export/training. Registered FC execution remains original Mac source/log evidence; independently verifies its saved codes vs both Mac actualFC and original GPU recursive actualFC. Four consumed predetermined witnesses only; all540 models remain rejected, no newdev/P4wholemodel/resource/human-generalization admission."
+}
