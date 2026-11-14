@@ -9,9 +9,17 @@ def main():
     audit=json.loads(auditpath.read_text());summarypath=OUT/'diagnostic/summary.json'
     assert audit['all_passed'] and audit['points']==552 and audit['summary_sha256']==sha(summarypath)
     plan=json.loads(LOCK.read_text());models=[]
+    for path,expected in plan['files'].items():assert sha(path)==expected
+    assert json.loads(summarypath.read_text())['execution_sha256']==sha(LOCK)
+    source_hashes={str(LOCK):sha(LOCK),str(auditpath):sha(auditpath),str(summarypath):sha(summarypath)}
     for model in plan['models']:
         name=model['target']+'-'+model['condition'];records=json.loads((OUT/name/'report.json').read_text())['records']
-        points=[json.loads(s) for s in (OUT/'diagnostic'/(name+'.jsonl')).read_text().splitlines()];assert len(points)==138
+        pointpath=OUT/'diagnostic'/(name+'.jsonl')
+        expected=next(m for m in audit['models'] if m['model']==name)
+        assert sha(pointpath)==expected['records_sha256']
+        source_hashes[str(pointpath)]=sha(pointpath)
+        points=[json.loads(s) for s in pointpath.read_text().splitlines()];assert len(points)==138
+        assert [p['summary']['threshold'] for p in points]==plan['grid']
         inventory={};missing={key:0 for key in ('engine','voice','literal','source_id')}
         for rec in records:
             if rec['phase']!='synthetic':continue
@@ -34,7 +42,7 @@ def main():
                 assert sum(g['complete_clips'] for g in groups.values() if g['dimension']==dimension)==point['summary']['positive']['all']['complete']
             s=point['summary'];output.append(dict(threshold=s['threshold'],background=s['background'],far_requirement_satisfied=s['background']['far_upper95']<=.5,positive=s['positive'],negative=s['negative'],groups=[groups[k] for k in sorted(groups)]))
         models.append(dict(model=name,points=output,all_far_qualified_thresholds=[p['threshold'] for p in output if p['far_requirement_satisfied']],voice_inventory=inventory,missing_metadata_counts=missing))
-    report=dict(scoring_audit_sha256=sha(auditpath),summary_sha256=sha(summarypath),models=models,threshold_selected=False,candidate_promoted=False,limits='All138points per model and all FARqualified points, no best-only selection. Aggregates authenticated already-audited events; shared/correlated reused sources are not independent voices. Missing engine metadata stays missing. Complete counts use generated prefix timing only, not human phonetic truth. Old fourcarrier failure retained; intervention jointly changes context/duration/crop/stochastic realization.')
+    report=dict(source_hashes=source_hashes,source_sha256=sha(Path(__file__)),scoring_audit_sha256=sha(auditpath),summary_sha256=sha(summarypath),models=models,threshold_selected=False,candidate_promoted=False,limits='All138points per model and all FARqualified points, no best-only selection. Aggregates authenticated already-audited events; shared/correlated reused sources are not independent voices. Missing engine metadata stays missing. Complete counts use generated prefix timing only, not human phonetic truth. Old fourcarrier failure retained; intervention jointly changes context/duration/crop/stochastic realization.')
     with (R/'4090-hey-common-carrier-raw-grouped-diagnostic-v1.json').open('x') as f:f.write(json.dumps(report,indent=2)+'\n')
     return 0
 if __name__=='__main__':raise SystemExit(main())

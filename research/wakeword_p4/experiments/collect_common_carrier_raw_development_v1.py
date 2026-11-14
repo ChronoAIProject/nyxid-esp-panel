@@ -1,4 +1,4 @@
-"""Original four raw FP32 models on complete reused development; no scoring."""
+"""Four new raw continuation models on complete reused development; no scoring."""
 import hashlib,importlib.metadata,json,subprocess,sys,traceback
 from pathlib import Path
 import numpy as np
@@ -24,11 +24,16 @@ def lock(check_only=False):
   if not path.exists():print(json.dumps(dict(status='not_ready',missing=str(path))));return 2
  export,screen,audit,protocol=[json.loads(path.read_text()) for path in required]
  assert export['all_static_passed'] and screen['all_passed'] and audit['all_passed'] and audit['all540_saved_cases_audited'] and audit['original_result_sha256']==sha(required[1])
+ numerical_execution=R/'4090-hey-common-carrier-raw-fp32-waveform-execution-v1.json'
+ assert screen['execution_sha256']==sha(numerical_execution)
+ numerical=json.loads(numerical_execution.read_text())
+ assert numerical['files'][str(required[0])]==sha(required[0])
+ assert numerical['models']==export['models']
  assert len(protocol['recognition']['grid'])==138
  if check_only:print(json.dumps(dict(status='ready',models=4,inputs=372)));return 0
  from collect_complete_development_v1 import runtime_identity_files
- paths=[*required,Path(__file__),Path('research/wakeword_p4/training/features.py')]+runtime_identity_files()
- for name in ('score_common_carrier_raw_development_v1.py','audit_common_carrier_raw_collection_v1.py','audit_common_carrier_raw_scoring_v1.py','fp32_event_policy_v1.py','hey_development_metrics_v1.py'):paths.append(Path(__file__).with_name(name))
+ paths=[*required,numerical_execution,Path(__file__),Path('research/wakeword_p4/training/features.py')]+runtime_identity_files()
+ for name in ('score_common_carrier_raw_development_v1.py','audit_common_carrier_raw_collection_v1.py','audit_common_carrier_raw_scoring_v1.py','report_common_carrier_raw_groups_v1.py','fp32_event_policy_v1.py','hey_development_metrics_v1.py'):paths.append(Path(__file__).with_name(name))
  models=[]
  for model in export['models']:
   artifact=model['artifacts']['fp32'];assert sha(artifact['path'])==artifact['sha256'];paths.append(Path(artifact['path']))
