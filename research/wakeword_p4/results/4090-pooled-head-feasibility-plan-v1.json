@@ -1,0 +1,49 @@
+{
+  "seed": 20261114,
+  "models": [
+    {
+      "target": "hey_willow",
+      "condition": "float_control",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-float_control-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829",
+      "role": "primary same-recipe float control"
+    },
+    {
+      "target": "hey_willow",
+      "condition": "integer_qat",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-integer_qat-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54",
+      "role": "diagnostic integer-trained float reconstruction"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "float_control",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-float_control-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77",
+      "role": "primary same-recipe float control"
+    },
+    {
+      "target": "hey_nyx",
+      "condition": "integer_qat",
+      "path": ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-integer_qat-0/final.weights.h5",
+      "bytes": 178736,
+      "sha256": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9",
+      "role": "diagnostic integer-trained float reconstruction"
+    }
+  ],
+  "files": {
+    "research/wakeword_p4/results/4090-fp32-internal-fullstream-execution-v1.json": "14a794d477c62ab1846b49488e09fec230bcddcb8d29872ad106ddf9ca90506d",
+    "research/wakeword_p4/experiments/pooled_head_feasibility_v1.py": "9015f6dc5b919f6b56b6702bb61aeb47bf4f79c08e8057fc6db29c887bf27302",
+    "research/wakeword_p4/experiments/probe_hey_context_transfer_shapes_v1.py": "f2486cca3950bd7d916115187de55b414540f9825a89eed5eed626c17a2e45e3",
+    ".local/wakeword/microWakeWord/microwakeword/mixednet.py": "64ba771d4e523170e85f9f5921c94c6a61c4609da714707582a8d631db2b595d",
+    ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-float_control-0/final.weights.h5": "6a763ffd0dd6c4d9a3c43395602a1b106baf8723328487b613855bc8bacfb829",
+    ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_willow-integer_qat-0/final.weights.h5": "bc6b59109ff85ae4cb91b94690bf7d26b63438281082bcb296e610e864956f54",
+    ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-float_control-0/final.weights.h5": "a8e45f24c959a31d8ea4c303b5413295873041dc7d13702182e528bf6f06dd77",
+    ".local/wakeword/hey-broad-paired-qat-formal-v1/hey_nyx-integer_qat-0/final.weights.h5": "dc3a123d1467e97f9057f665184a8af43b908d49f39f8f31abe0f9ce7ef2a5b9"
+  },
+  "hypothesis": "Existing time-average pooling replaces 1800-dimensional flattened classifier with 60-dimensional readout; may reduce sensitivity to representation errors but can lose ordering. No benefit assumed.",
+  "scope": "All four original final10000 H5; only structure and exact encoder/BN transfer. No forward, export, training, feature or recognition access. Future experiment must separately lock numerical/learning protocol; current failures and v30 unchanged."
+}
