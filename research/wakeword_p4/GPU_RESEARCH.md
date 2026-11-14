@@ -9279,3 +9279,17 @@ rawkernel/frozenBN optimization and must be shared by future pairedcontrol/treat
 Large diagnostic linear-objective norms are not BCE tuning evidence. Still missing
 FC/head integration, actual post-update parameter export and original full540 gates;
 no formal training, recognition qualification or new data access. v30 remains.
+
+### 2026-11-14 — Original head integration failure retained
+
+7a87165b prelock; original session76938 exit1, all4 reports/arrays saved. All9encoder
+codes/repeat exact. Flat both embedding/FC logit0mismatch; pool Willow embedding71/
+logit15 and Nyx65/23 mismatches. All parameter/step gradients finite/connected and
+repeat exact; headbias diagnostic gradient may be zero because symmetric linear
+objective weights sum0, not a missing gradient path. No nonzero-gradient claim.
+
+Code inspection finds pooled rounding applied after centering instead of original
+signed raw-code sum. Half ties with negative raw sum differ under away-from-zero
+rounding despite integer zero-point offset. Must correct raw-code pooling then
+subtract zero, preserve original failure, prospective new lock before execution.
+No training/threshold/data changes, v30 retained.
