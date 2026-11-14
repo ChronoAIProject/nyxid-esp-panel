@@ -137,9 +137,10 @@ was created from that publication, SHA256
 `65b47c4324f02c3068f519a539446de4cc5f4eadd9b5478290b2dff474c4a1dd`.
 Both input entries and the installed FC report/library locks equal the earlier
 executed consistency-family plan exactly. Its four final H5/model hashes are
-fixed before transport intake and native execution. Publish this actual plan
-before running the replay. Native execution and actual artifact intake remain
-pending; full540/recursive, recognition/FAR and P4 qualification are not proven.
+fixed before transport intake and native execution. The actual plan was
+published before the replay; subsequent intake and execution are recorded
+below. This identity lock itself establishes no numerical, recognition/FAR
+or P4 qualification.
 
 The actual handoff was published at GPU `ee0883f` after complete540 rejected
 both conditions: raw control Willow123/Nyx130 and bounded treatment
@@ -162,3 +163,35 @@ All four model/H5/training and fixed screen NPZ identities match; the existing
 old feature files also match. Sixteen private payload files are copied under
 their original relative paths. Archive reports retain their original
 `receipts/` names. This is rejected-model diagnostic transport, not admission.
+
+Actual native replay exited0: four cases/792 steps, all two-fresh-interpreter
+and explicit-reset float repeats exact, original variables unchanged by the
+producer's live checks, float phase check passed, and all792 installed TFLM
+registered FC results exact against actual LiteRT FC results. The independent
+NumPy auditor authenticated all received members, read both hosts' original
+saved arrays and found raw/quantized inputs and UINT8 outputs byte-exact on
+all792 steps. Saved native float/UINT8/embedding/FC repeats are exact. It
+recomputes each host's error statistics from that host's arrays; all four
+original numerical gate outcomes match. Largest cross-platform float difference
+is `4.9173831939697266e-6`, descriptive only.
+
+| Fixed old witness | Condition | Native five-step error p99 | Original gate |
+| --- | --- | ---: | --- |
+| Willow14 | raw control | .08936259676876941 | pass |
+| Willow14 | bounded treatment | .17625624054379294 | fail |
+| Nyx48394 | raw control | .03505361832864582 | pass |
+| Nyx48394 | bounded treatment | .0035709142684936523 | pass |
+
+These are four preselected numerical witnesses. They do not estimate wakeup
+accuracy, FAR or human generalization, and do not replace the rejected
+complete540. The saved-array auditor does not independently repeat the live
+variable snapshots or execute the registered C kernel; those are original Mac
+runner execution evidence. Whole-model inference uses LiteRT on Mac, not P4.
+
+The original four native NPZs, raw runner log, native/independent audit reports,
+actual plan and source snapshots are published as
+`mac-bounded-consistency-native-four-witness-replay-v1.tar.gz` on release
+`research-hey-nyx-20261110`. The committed
+`mac-bounded-consistency-native-artifact-v1.json` receipt records the actual
+archive size/SHA and anonymous redownload/member verification. No inference is
+repeated to construct or authenticate that artifact.
