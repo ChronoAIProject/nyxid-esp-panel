@@ -29,6 +29,14 @@ clocks remain; no cropping, re-export, new inference, source selection or
 workpoint selection occurs. Both backends are scored and event differences are
 retained rather than assumed absent from a small probability error.
 
+The first scoring attempt at `efb731f` stopped before reading probabilities or
+creating an output directory: its reader incorrectly required original request
+orders to be consecutive. The 135 distinct retained orders extend to 106334.
+The additive `mac-original-training-witness-events-plan-v2.json` fixes only this
+reader contract: array positions and original request orders are checked
+separately, without renumbering or changing inputs. The original plan/source and
+`mac-original-training-witness-events-initial-setup-failure-v1.json` remain.
+
 Each model has 27 own-target derived examples (Piper 12, Kokoro 12, Qwen 3),
 27 reciprocal-word examples and 81 common negatives. These counts include
 correlated variants. They are training witnesses, not independent voices or a

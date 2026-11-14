@@ -39,12 +39,16 @@ def create_plan(repo, training_packet, development_packet, plan_path):
         k: v["model_sha256"] for k, v in report["contracts"].items()}
     source = Path(__file__).resolve()
     dependencies = [source, source.with_name("audit_fp32_reused_saved_arrays_mac_v1.py")]
-    locked = {str(p.relative_to(repo)): file_sha(p) for p in dependencies + [intake, old_audit]}
+    failure = repo / BASE / "results/mac-original-training-witness-events-initial-setup-failure-v1.json"
+    locked = {str(p.relative_to(repo)): file_sha(p) for p in dependencies + [intake, old_audit, failure]}
     packet_files = {"training_requests": dict(member=str(requests_path.relative_to(training_packet)), sha256=file_sha(requests_path)),
                     "development_grid": dict(member=str(grid_path.relative_to(development_packet)), sha256=file_sha(grid_path))}
     plan = dict(schema="mac-original-training-witness-events-plan-v1", files=locked, packet_files=packet_files,
                 original_training_archive_sha256=report["archive_sha256"], models=grid_lock["models"],
-                fixed_grid=grid_lock["grid"], complete_requests=135, source_role="already-consumed-training-witness",
+                fixed_grid=grid_lock["grid"], complete_requests=135,
+                request_orders=[r["order"] for r in request_lock["requests"]],
+                index_contract="Packet position indexes arrays; retain distinct original request.order without renumbering",
+                source_role="already-consumed-training-witness",
                 own_positive_derived_clips=27, reciprocal_positive_clips=27, common_negative_clips=81,
                 backends=["tf", "litert"], state_policy="Original complete cold-start streams, no crop/reset/removal",
                 event_policy="Original raw float32 -> binary64 fsum5, 67-step cooldown and half-threshold rearm",
@@ -71,7 +75,8 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
     prior = json.loads((repo / BASE / "results/mac-fp32-internal-fullstream-intake-v1.json").read_bytes())
     request_lock = json.loads((training_packet / plan["packet_files"]["training_requests"]["member"]).read_bytes())
     requests = request_lock["requests"]
-    assert len(requests) == 135 and [r["order"] for r in requests] == list(range(135))
+    assert len(requests) == len(set(r["order"] for r in requests)) == 135
+    assert [r["order"] for r in requests] == plan["request_orders"]
     output.mkdir(exist_ok=False)
     ledger = output / "original-training-witness-events.jsonl.gz"
     summaries, differences, events_total = [], 0, 0
@@ -84,6 +89,7 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
                 member = "arrays/" + name + f"-{index:03}.npz"
                 path = training_packet / member
                 case = next(c for c in prior["cases"] if c["model"] == name and c["index"] == index)
+                assert case["request_order"] == request["order"]
                 assert file_sha(path) == case["original_npz_sha256"]
                 with np.load(path, allow_pickle=False) as z:
                     support = (3 * np.arange(1, case["steps"] + 1, dtype=np.int64) + 2) * 160
@@ -102,7 +108,7 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
             model_points = []
             for threshold in plan["fixed_grid"]:
                 records = {backend: [] for backend in plan["backends"]}
-                for request, avg in zip(requests, captured, strict=True):
+                for index, (request, avg) in enumerate(zip(requests, captured, strict=True)):
                     source = request["source"]
                     role = "own" if source["target"] == model["target"] else "common" if source["kind"] == "negative" else "reciprocal"
                     per_backend_steps = []
@@ -110,7 +116,7 @@ def run(repo, training_packet, development_packet, plan_path, output, report_pat
                         steps = event_indices(avg[backend], threshold)
                         times = [min((3 * s + 2) * 160, request["samples"]) for s in steps]
                         after = [t for t in times if t >= request["lead_samples"]]
-                        records[backend].append(dict(index=request["order"], source_id=source["id"], engine=source["engine"],
+                        records[backend].append(dict(index=index, request_order=request["order"], source_id=source["id"], engine=source["engine"],
                                                      source_text=source["text"], role=role, variant=request["variant"],
                                                      events=[dict(step=s, sample=t, prefix_signed_ms=(t-request["generated_prefix_end_sample"])/16,
                                                                   container_signed_ms=(t-request["generated_container_end_sample"])/16)
