@@ -10199,3 +10199,8 @@ Actualexistingprimed plan d3ebba04d073473714332a92aed14c9a089c4169853add5dd927a2
 ## Actual existing-primed primary job live after lockpush
 
 After d9d6374b remote push, originalsession91169/PID284611/start1082474 actuallylive, plan d3ebba04d073473714332a92aed14c9a089c4169853add5dd927a2255b0c7fd5. All720synthetic modelstreams completed, originalwholecontinuousbackgrounds underway, no restart. Prime169calls+1pendingfeature at81600sample transition, actual sourcecontinuous code used. No newFP32/numericalgate or repeatedcoldjob. The same81600priming is controlled preparation for bothoriginalmodelbytes; v30frozen label refers bytes/postprocessing, not an assertion about every historicalfirmwareprofile prime length. Currentcandidate actualexistingprime is primary; no outcome yet. CanonicalMac modelasset available and anonymousverified, cold-only label superseded as documented. Goalcontinues/freshroles closed/v30unchanged.
+
+
+## Existing primed primary full collection actualexit0; scoring live
+
+Original91169/PID284611/start1082474 naturallycompleted trueexit0/all744actualmodelstreams (bothmodels×372inputs). ResultSHA cb4346e9870762c10a335d17706550f773de3a9b2d21d79ce3d20f675af56a75. No restart/re-export/guard. Existingprimed primary scorer originalsession8224 nowactuallylive,277fixedpoints incloriginalv30frozenreference; PID/start recorded in results/4090-causal-sequence-formal-primed-scoring-launch-v1.json. Fullcurves pending, no wholecandidatepass/reject conclusion from cold. Mac6885465709 sentwhile collectionfinishing, originalexit nowrecorded; canonicalMacasset34902B/SHA984b66b1…available. No newdev/acceptance opened or extra numericalalignment gate; v30retained/goalcontinues.
