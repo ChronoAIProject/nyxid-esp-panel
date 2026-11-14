@@ -8017,3 +8017,24 @@ sequence encoder-range observation (prefixseparate from100x75actualcrop slices)
 before considering any calibrationchange; natural-logit sentinel-negativecontrol
 does not ruleout sentinel effect on earlierencoder ranges. No newexport/retrain/
 newdev/acceptance, v30frozen and goalactive.
+
+### Complete representative encoder ranges reject prefix-only remedy
+
+dc1f0219 prospectivelyfixedCPU2threads originalH5/full100x75actualPTQ material,
+zero+full26 versuszero+zero, no source reset, twofreshsix-state reset repeats per
+arm. Originalsession97489 exited0, allfulltensorSHA andsavedtraces repeats exact;
+7502steps/arm/target. Saved15site min/max eachstep plusprob/logit. Independently
+verified all7502x15 arrays/hash/range partitions and comparedstaticINT8scales.
+
+Wholeextrema unchanged at13/15sites perarm. ChangedonlyfirstActivationtensor50
+anditsfirststateconcat51: maxima341.72250366->317.27258301Willow,
+309.13491821->301.72390747Nyx. Firstfloatclaim14unchangedwascountingerror,
+immediatelycorrected; exactauditauthoritative. Alllateractivation/depthwise/state/
+flatten globalextremaidentical. LastActivationmax811.63897705/174.03982544 persists
+withoutfull26. Prefixcanstillaltertransients; no claimdynamictrajectoriesidentical.
+Floatobservedminmax/255 predicts coarseexistingINT8ranges closely; this is not
+proof of originalMLIRcalibratorinternals. Removingfull26alone hasno basis as
+wholeencoderresolutionfix; no blindPTQretry. Nextinterventionmusttarget real
+activationdynamicrange/quantizationrobustness, e.g.prospectivelyvalidatedtraining
+or exactrangeequalization, after checking priorfailurehistory. No newtraining/
+export/newdev/acceptance, v30retained, goalactive.
