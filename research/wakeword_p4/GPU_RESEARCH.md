@@ -8897,3 +8897,6 @@ Pinned libritts-high speaker keys pNNNN and libritts_r-medium NNNN normalize to 
 
 ### Historical training-source reader aliases authenticated
 Authenticated original checkpoint config SHA against material plan, actual16128record manifest SHA against original generation result and original independent audit. All672actual material speaker IDs map unambiguously to original reader names and both catalog configurations.538keep high-model numeric ID;134change ID. These alias readers are consumed training-material identities, not independent heldout voices. Other232not thereby eligible: other history/whole-family policy still applies. Metadata only, no media/model reads.
+
+### Known-reader role-conflict detector
+Implemented callable conflicts(proposed,aliases,history) over authenticated actual historical672reader identities. Constructed development/acceptance proposals through each of2catalog families all reject672/672, including renamed/reindexed readers; unknown speaker IDs fail closed. Same training-role aliases cause no reader conflict but explicitly do not constitute source admission, family clearance or permission to synthesize. No proposals persisted as actual roles, no media/model IO. Mac has not published a later result than6874645329 at this read.

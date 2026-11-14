@@ -1,0 +1,34 @@
+{
+  "schema": "piper-reader-role-conflict-negative-checks-v1",
+  "files": {
+    "research/wakeword_p4/results/4090-libritts-config-reader-alias-overlap-v1.json": "85154ca8d8206ce9d0af9fa57292375d20a7b79971c778385d15ec8d09d01dab",
+    "research/wakeword_p4/results/4090-historical-piper-reader-mapping-v1.json": "80e93d636fb5012d219fa726ebe53f8023174fb3c162c90eb7a1d00f79e2f28e",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_piper_reader_role_isolation_v1.py": "7f170c7b548fbe00a0ba46caa1504a02402c7971e4162a32c526132b544998eb"
+  },
+  "negative_checks": [
+    {
+      "family": "en_US-libritts-high",
+      "role": "development",
+      "rejected_reader_conflicts": 672
+    },
+    {
+      "family": "en_US-libritts-high",
+      "role": "acceptance",
+      "rejected_reader_conflicts": 672
+    },
+    {
+      "family": "en_US-libritts_r-medium",
+      "role": "development",
+      "rejected_reader_conflicts": 672
+    },
+    {
+      "family": "en_US-libritts_r-medium",
+      "role": "acceptance",
+      "rejected_reader_conflicts": 672
+    }
+  ],
+  "unknown_identity_rejected": true,
+  "matching_training_identity_no_conflict": true,
+  "source_admission_created": false,
+  "limits": "Constructed proposals against actual historical identities. Detector checks known reader aliases only, not whole-family exclusions, other engines/readers/ancestry or complete training eligibility. No-conflict is not admission or permission to generate. No roles assigned or media read."
+}
