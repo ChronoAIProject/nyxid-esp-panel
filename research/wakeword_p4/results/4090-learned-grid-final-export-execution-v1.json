@@ -1,0 +1,55 @@
+{
+  "files": {
+    "research/wakeword_p4/results/4090-learned-grid-paired-formal-result-v1.json": "bf87fc332d3ee5d262d8497491430dbc60a55a9077901e0fcdc4b89deb736c85",
+    "research/wakeword_p4/results/4090-learned-grid-paired-formal-independent-audit-v1.json": "025a6280ad0120599a66543a826fb53d539f11ed110ac9fbf3a3b77cfdbb486e",
+    "research/wakeword_p4/results/4090-matched-internal-boundaries-execution-v1.json": "315fc8ed0767e35107184737d17512b737d213fefee6d5156df02fdf7cd21061",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/export_learned_grid_paired_final_v1.py": "7169ed955a15d568c34dd817e4fe7b842eae520214e1916b44b0d04541c81a27",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/compile_learned_grid_float_parameters_v1.py": "05a772ac37e8c339167167f7c51a99487f1474f14d14d71e5c63835011828a2d",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-fixed_grid-0.tflite": "1a8126828aa6c68573647b3152067e9d9ef56d1099ca7cde140078e249951595",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-fixed_grid-0.npz": "281b4183a9baca414ef645ab7e230daf3e159c5b310fb6011182dfbc6a73acc8",
+    ".local/wakeword/pooled-matched-export-v1/hey_willow-flat/fp32.tflite": "d9ce184d155c82a869912479d75ee890b9392b21c7bdb98dac3f336dda5623a5",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-learned_step-0.tflite": "c45c4a03b30ea5e11d91dc26f6bb85cbe6d48d635b6957b4c1c5a0e56e071f7f",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-learned_step-0.npz": "b80912ff976bd4ae9010efb379c9bc922f57bd19f6c1c1636409e6443e2b5b3d",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.tflite": "fc05af56def76bb2bec9dccb4c76cd3a13681c654d4000f5501e6ec0dd470619",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.npz": "c1335084873af53a8fbd21ebb6c77c0c4a2516cd2ff29a7fae472ca5607d3c60",
+    ".local/wakeword/pooled-matched-export-v1/hey_nyx-flat/fp32.tflite": "0822450f8a8f934c7cdddd63384b8451aec16395081d819d76941b308eabe9f0",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-learned_step-0.tflite": "0f31023ae9d5f45fcf41ee55a4f116ff21f0fbe0837bd79423953041dfb8405f",
+    ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-learned_step-0.npz": "ea43486743ea5b93c567ac4265b1e05028b3dfd38270dad890b310bdbe10d3d3"
+  },
+  "cases": [
+    {
+      "target": "hey_willow",
+      "training_arm": "fixed_grid",
+      "final_arrays": ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-fixed_grid-0.npz",
+      "original_int8": ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-fixed_grid-0.tflite",
+      "fp32_template": ".local/wakeword/pooled-matched-export-v1/hey_willow-flat/fp32.tflite"
+    },
+    {
+      "target": "hey_willow",
+      "training_arm": "learned_step",
+      "final_arrays": ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-learned_step-0.npz",
+      "original_int8": ".local/wakeword/learned-grid-paired-formal-v1/hey_willow-flat-learned_step-0.tflite",
+      "fp32_template": ".local/wakeword/pooled-matched-export-v1/hey_willow-flat/fp32.tflite"
+    },
+    {
+      "target": "hey_nyx",
+      "training_arm": "fixed_grid",
+      "final_arrays": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.npz",
+      "original_int8": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-fixed_grid-0.tflite",
+      "fp32_template": ".local/wakeword/pooled-matched-export-v1/hey_nyx-flat/fp32.tflite"
+    },
+    {
+      "target": "hey_nyx",
+      "training_arm": "learned_step",
+      "final_arrays": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-learned_step-0.npz",
+      "original_int8": ".local/wakeword/learned-grid-paired-formal-v1/hey_nyx-flat-learned_step-0.tflite",
+      "fp32_template": ".local/wakeword/pooled-matched-export-v1/hey_nyx-flat/fp32.tflite"
+    }
+  ],
+  "versions": {
+    "numpy": "2.4.6",
+    "flatbuffers": "25.12.19",
+    "ai-edge-litert": "2.3.0"
+  },
+  "policy": "Auditedfinal10000only all4pairedconditions. Actualfloat32 folded W/b directly encode originalFP32rawsigmoidgraph; originalfinalINT8 bytes copied unchanged. No converter/PTQ/calibration/training/invoke. Floatgraph excludes activationquantizers by definition; gate actualFP32vsINT8/fullwave separately. No checkpointselection/recognition/freshdata/v30promotion."
+}
