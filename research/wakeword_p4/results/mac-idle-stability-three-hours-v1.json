@@ -1,0 +1,136 @@
+{
+  "observer_session": 31496,
+  "observer_exit_code": 0,
+  "terminal_reason": "three_hour_idle_record_ready",
+  "monitor_pid_directly_checked": 84894,
+  "monitor_source_sha256": "c29c5aa9c14aefd82ec1b67b804f3480271ff66f268174d1467eddee240c354d",
+  "snapshot_utc": "2026-11-14T20:44:07.152291+00:00",
+  "firmware": "0.6.27",
+  "app_sha256": "0a37320a642226dc020a94ccf81dfd290eef3723f0fce38e46d4fe1c100329a8",
+  "boot_uptime_s_at_end": 10816,
+  "current_boot_samples": 362,
+  "current_boot_observed_span_s": 10805.7672021389,
+  "largest_sample_gap_s": 30.20050811767578,
+  "same_phase_after_startup_samples": 352,
+  "same_phase_raw_span_s": 10504.951111078262,
+  "phase": {
+    "voice_active": false,
+    "voice_busy": false,
+    "voice_state": "error",
+    "wake_enabled": true,
+    "wake_listening": true,
+    "wake_state": "listening",
+    "microphone_muted": false,
+    "voice_mode": "automatic",
+    "media_mode": "idle",
+    "display_mode": "home",
+    "display_depth": 2,
+    "background_storage": "builtin",
+    "background_bytes": 59049,
+    "temporary_image_active": false,
+    "temporary_image_bytes": 0,
+    "temporary_image_width": 0,
+    "temporary_image_height": 0,
+    "ota_stage": "idle"
+  },
+  "trends": [
+    {
+      "metric": "internal_free",
+      "buckets": 36,
+      "observed_seconds": 10369.711043834686,
+      "bytes_per_hour": 0.0,
+      "retained_drop_bytes": 0.0,
+      "suspected_retained_loss": false
+    },
+    {
+      "metric": "internal_largest_free",
+      "buckets": 36,
+      "observed_seconds": 10369.711043834686,
+      "bytes_per_hour": 0.0,
+      "retained_drop_bytes": 0.0,
+      "suspected_retained_loss": false
+    },
+    {
+      "metric": "dma_free",
+      "buckets": 36,
+      "observed_seconds": 10369.711043834686,
+      "bytes_per_hour": 0.0,
+      "retained_drop_bytes": 0.0,
+      "suspected_retained_loss": false
+    },
+    {
+      "metric": "dma_largest_free",
+      "buckets": 36,
+      "observed_seconds": 10369.711043834686,
+      "bytes_per_hour": 0.0,
+      "retained_drop_bytes": 0.0,
+      "suspected_retained_loss": false
+    },
+    {
+      "metric": "spiram_free",
+      "buckets": 36,
+      "observed_seconds": 10369.711043834686,
+      "bytes_per_hour": 0.0,
+      "retained_drop_bytes": 0.0,
+      "suspected_retained_loss": false
+    }
+  ],
+  "sampled_minima": {
+    "free": 19481544,
+    "spiram_free": 19354752,
+    "dma_free": 217319,
+    "dma_largest_free": 126976,
+    "internal_free": 256931,
+    "internal_largest_free": 126976
+  },
+  "sampled_maxima": {
+    "free": 19672996,
+    "spiram_free": 19524404,
+    "dma_free": 239119,
+    "dma_largest_free": 126976,
+    "internal_free": 278731,
+    "internal_largest_free": 126976
+  },
+  "terminal_heap": {
+    "free": 19670456,
+    "spiram_free": 19521864,
+    "dma_free": 239119,
+    "dma_largest_free": 126976,
+    "internal_free": 278731,
+    "internal_largest_free": 126976
+  },
+  "observed_restarts_total": 3,
+  "additional_boots_during_observer": 0,
+  "recorded_gap_error_boot_events_in_current_boot_interval": {
+    "monitor_gap": 0,
+    "monitor_error": 0,
+    "boot_boundary": 1
+  },
+  "activity_counters": {
+    "call_seconds": 0,
+    "sent_packets": 0,
+    "received_packets": 0,
+    "wake_detections": 0,
+    "buffered_ms": 0,
+    "transmitted_ms": 0,
+    "camera_captures": 0,
+    "camera_failures": 0
+  },
+  "suspected_losses": [],
+  "archive": {
+    "path": "research/wakeword_p4/results/mac-idle-stability-three-hours-samples-v1.json.gz",
+    "bytes": 10297,
+    "sha256": "52c6a30976b41084f2fa66b92cb8cf65e150db4a4b895a954c64a87858c6a29e",
+    "raw_bytes": 482645,
+    "raw_sha256": "77e51a8543e047a925a4abc68c0ecbd597f5a32108538b11e8d2fe7e92133c03"
+  },
+  "interpretation": "Same development-board boot observed through three hours of idle Hi ESP listening. No new restart or sustained retained heap loss found in this interval; instantaneous dips and original complete samples are retained. Earlier unknown restart and rearm retention remain unproven. Old firmware has no reset_reason field, so its cause is unavailable. Local voice backend is unavailable and all call/wake/camera counters remain zero. This does not establish absence of all leaks, long-call/reconnect/AEC quality or Hey Nyx recognition. Independent launchd monitor remains running; this read-only observer did not reboot, flash, open UART, record or play audio. The single boot_boundary event coincides with the first sample of this boot; there are no later boot boundaries in the three-hour archive.",
+  "boot_boundary_events": [
+    {
+      "utc": "2026-11-14T17:44:01.385089+00:00",
+      "at_first_sample": true,
+      "reboot_observed": true
+    }
+  ],
+  "new_boot_boundaries_after_first_sample": 0
+}
