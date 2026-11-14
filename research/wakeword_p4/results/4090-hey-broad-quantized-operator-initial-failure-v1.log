@@ -1,0 +1,30 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794618528.478068 1182360 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794618528.511250 1182360 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794618529.211882 1182360 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+W0000 00:00:1794618530.228857 1182360 loop_optimizer.cc:934] Skipping loop optimization for Merge node with control input: assert_positive_28/assert_less/Assert/AssertGuard/branch_executed/_260
+{"target": "hey_willow", "batch": 1, "actual_input_label_weight_sha256": "b9583eab7cc1c11f7ab472f1e9a8e079e1a50bcd367818f396a834aa43db7039", "weighted_bce": 6.112719574957737e-07, "gradient_l2": 0.0022948987100248897, "twice_exact": true, "finite_loss_gradients": true, "variables_exact_unchanged": true, "optimizer_updates": 0, "arrays_path": ".local/wakeword/hey-broad-quantized-operator-v1/hey_willow-01.npz", "arrays_sha256": "9ff01272579063229a131b39279d81bfb750a2b865da2eb505c38ffeb68238fa"}
+{"target": "hey_willow", "batch": 2, "actual_input_label_weight_sha256": "bc982960f1de197ae9bda4d44feb94240da9ec8db80d50242515f98faa5dab0c", "weighted_bce": 1.5942007394187385e-06, "gradient_l2": 0.01185684715872401, "twice_exact": true, "finite_loss_gradients": true, "variables_exact_unchanged": true, "optimizer_updates": 0, "arrays_path": ".local/wakeword/hey-broad-quantized-operator-v1/hey_willow-02.npz", "arrays_sha256": "896918d57900415dd41b1c04f1c42adca07535619198bbcf4b4455c5f4e3a57b"}
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 4
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 8
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 12
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 20
+WARNING:absl:ring_buffer_size_in_time_dim overwritten by the passed-in value: 29
+Traceback (most recent call last):
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_quantized_operators_v1.py", line 58, in <module>
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('action',choices=['plan','run']);a=p.parse_args();plan() if a.action=='plan' else run()
+                                                                                                                                                    ^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/probe_hey_broad_quantized_operators_v1.py", line 36, in run
+    config=configuration(next(r for r in exports if r['target']==target));configs[target]=config
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_quantized_operators_v1.py", line 20, in configuration
+    assert p['scales']==r['scales']==c['scales'] and p['zeros']==r['zeros']==c['zeros']
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
