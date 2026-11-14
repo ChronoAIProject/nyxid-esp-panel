@@ -1,5 +1,5 @@
 """Fixed-final matched nominal/phase Nyx raw training; never auto-restarts."""
-import hashlib,json,subprocess,sys,time,traceback
+import hashlib,importlib.metadata,json,subprocess,sys,time,traceback
 from pathlib import Path
 import numpy as np
 from common_carrier_training_batches_v1 import Batches
@@ -11,18 +11,20 @@ def signature(vs):return hashlib.sha256(b''.join(v.numpy().tobytes() for v in vs
 def main(action):
  if action=='lock':
   parent=R/'4090-phase-aligned-preflight-execution-v1.json';result=R/'4090-phase-aligned-preflight-result-v1.json';p=json.loads(parent.read_text());test=json.loads(result.read_text())
+  auditpath=R/'4090-phase-aligned-preflight-independent-audit-v1.json';audit=json.loads(auditpath.read_text());assert audit['all_passed'] and audit['original_result_sha256']==sha(result)
   assert test['all_passed'] and test['gradient_variables_unchanged'] and test['execution_sha256']==sha(parent) and len(test['gradient_probe'])==50
   assert len(test['smoke'])==2 and all(a['repeat_exact'] for a in test['smoke'])
   for entry in test['gradient_probe']:assert sha(entry['gradient_path'])==entry['gradient_sha256']
   for a in test['smoke']:
    for r in a['repeats']:assert sha(r['weights_path'])==r['weights_sha256'] and sha(r['optimizer_path'])==r['optimizer_sha256']
-  for f in (parent,result,Path(__file__)):p['files'][str(f)]=sha(f)
-  p.update(steps=10000,repeats=1,arms=['nominal','phase'],preflight_result=str(result),policy='Fresh nominal/phase Nyx from same original raw init, exact10000 shared command_context inputs/labels/weights/endpoints, freshAdam/rawBCE/frozenBN. Eager training expression as smoke; first2 loss/tensorSHA/final optimizer/model signature must match preflight at step2. Fixedfinal10000 only; snapshots evidence, no score selection/restarts/heldout/export.')
+  for f in (parent,result,auditpath,Path(__file__)):p['files'][str(f)]=sha(f)
+  p.update(versions={n:importlib.metadata.version(n) for n in ('tensorflow','keras','numpy','h5py')},steps=10000,repeats=1,arms=['nominal','phase'],preflight_result=str(result),policy='Fresh nominal/phase Nyx from same original raw init, exact10000 shared command_context inputs/labels/weights/endpoints, freshAdam/rawBCE/frozenBN. Eager training expression as smoke; first2 loss/tensorSHA/final optimizer/model signature must match preflight at step2. Fixedfinal10000 only; snapshots evidence, no score selection/restarts/heldout/export.')
   for f,h in p['files'].items():assert sha(f)==h,f
   with LOCK.open('x') as f:json.dump(p,f,indent=2)
  else:
   assert subprocess.check_output(['git','show','origin/research-hye-nyx-voice-gpu:'+str(LOCK)])==LOCK.read_bytes();p=json.loads(LOCK.read_text())
   for f,h in p['files'].items():assert sha(f)==h,f
+  for n,v in p['versions'].items():assert importlib.metadata.version(n)==v
   OUT.mkdir(exist_ok=False)
   import hey_broad_gpu_training_factory_v1 as helper
   tf=helper.tf;test=json.loads(Path(p['preflight_result']).read_text());schedule=[json.loads(l) for l in Path(p['schedule']).read_text().splitlines()];cases=[];current=None
