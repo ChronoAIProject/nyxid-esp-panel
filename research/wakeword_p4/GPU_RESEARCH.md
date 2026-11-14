@@ -10032,3 +10032,8 @@ Original session8257/PID84435/procstart438879 returned actualexit0 after both ar
 ## Prospective consumed recognition adapters prepared
 
 While independent full formal audit runs (13000pairedsteps observed), prepared original consumed372input collector/twofreshrepeat, collection auditor,138point scorer/independent event oracle and pairedreport adapters for narrow/broad. No newwaveforms/thresholdselection: same complete continuous originalbackground, codes/probabilities/quantization/fullstartup/tail, syntheticgenerated boundary signedlatency retained; numerical qualification separately required before anypromotion. Collector requires actualfinal exportABI audit and diskguard, but consumed usability diagnosis does not hide model behavior behind numerical pass. Scripts compilechecked only, no collection/scoring locks created or inference performed. Broad remains solecandidate.
+
+
+## Complete formal audit exit0; fixedfinal export lock
+
+Original independent session17673/PID91551 actualexit0 (starttime not captured); all40000batches/5120000raw windows rebuilt from original sharedfeatures, emittedx/y/weights hashes exact, everyrole/label/fullpositivegeometry and pairedcells/ambientwindows match. Botharms initial31 exact,15trainables changed,16frozen unchanged, Adam30zeroslots→finite nonzero/iter20000, finalH5 all31variables exact to finalNPZ. No independent gradient reexecution claimed. New fixedfinal20000 export lock SHA4f8f2cdaca48229a8a1ed83ce42858130a93cfb9d7a9e5141b49b3d470065115 uses same fixedfirst16trainingwindows/arm plus zero26calibration, oneFP32+onebuiltinINT8 each/no retries. Pushbeforeoriginalexport; no freshdev/acceptance use.
