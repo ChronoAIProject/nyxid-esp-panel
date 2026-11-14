@@ -8699,3 +8699,16 @@ or causal proof. Differences on original training support have available but
 variable/conflicting correction signals; no single mechanism explains all cases.
 No training on scored diagnostic records, new threshold or candidate promotion;
 freshdev/acceptanceclosed and v30 frozen. Mac native experiment remains separate.
+
+### One-way consistency hypothesis, not training launch (2026-11-14)
+
+Complete saved-gradient algebra: bounded F/Q cosines negative21/21 both-nonzero
+batches across both targets/modes. Q vs supervised conflicts Willow0/0,Nyx1/3;
+therefore no guarantee one-way improves outcomes. Opposing derivatives of a
+shared difference loss are expected and not proof of harmful cancellation.
+Added one-way helper stopping only float-bounded C input, preserving dual rawBCE;
+float target still shares updated weights and is not a fixed teacher. Proposal
+requires all fixed-batch actual no-update wiring validation, then separately
+locked fresh matched smoke, before any formal training proposal. Helper not yet
+executed. Original losses/gates/failures/data roles retained, no tail mining or
+newdev/acceptance/v30 replacement.
