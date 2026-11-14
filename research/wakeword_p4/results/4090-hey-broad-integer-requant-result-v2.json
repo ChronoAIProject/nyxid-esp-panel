@@ -1,0 +1,260 @@
+{
+  "plan_sha256": "916073d52db00ad62d3524ab118bdaefe3e1cfb9c6f273c427227d578d6cf65f",
+  "operators": [
+    {
+      "index": 50,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 1,
+          "total": 5010
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 5010
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 1,
+          "total": 5010
+        }
+      },
+      "accumulator_min": -538248,
+      "accumulator_max": 445620
+    },
+    {
+      "index": 52,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 4,
+          "total": 5010
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 5010
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 4,
+          "total": 5010
+        }
+      },
+      "accumulator_min": -42335,
+      "accumulator_max": 34350
+    },
+    {
+      "index": 53,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 53,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 53,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -24837,
+      "accumulator_max": 12800
+    },
+    {
+      "index": 55,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 9,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 9,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -39120,
+      "accumulator_max": 49704
+    },
+    {
+      "index": 56,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 27,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 27,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -20129,
+      "accumulator_max": 15922
+    },
+    {
+      "index": 58,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 11,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 11,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -35722,
+      "accumulator_max": 46584
+    },
+    {
+      "index": 59,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 22,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 22,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -15345,
+      "accumulator_max": 9245
+    },
+    {
+      "index": 61,
+      "kind": "DEPTHWISE_CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 3,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 3,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -190768,
+      "accumulator_max": 50317
+    },
+    {
+      "index": 62,
+      "kind": "CONV_2D",
+      "metrics": {
+        "nearest_even": {
+          "maximum": 1,
+          "unequal": 35,
+          "total": 10020
+        },
+        "double_rounding": {
+          "maximum": 0,
+          "unequal": 0,
+          "total": 10020
+        },
+        "single_rounding": {
+          "maximum": 1,
+          "unequal": 35,
+          "total": 10020
+        }
+      },
+      "accumulator_min": -18482,
+      "accumulator_max": 15601
+    }
+  ],
+  "arrays_path": ".local/wakeword/hey-broad-integer-requant-v2.npz",
+  "arrays_sha256": "4054aa17515fa389e4945696fd19ad5f12e1b643cbec736981a3efb8b46aec37",
+  "limits": "All167 steps Willow14 nine encoder operators, actual saved inputs/history and actual exported integer weights/bias. V2 uses original initializer-subgraph bytes, not assumed zero histories. V1 and84startup mismatches retained. Exact int64 accumulator with int32 bounds assertion. Compare mathematical nearest-even versus source-based double/single fixedpoint rounding, both reported without selecting by candidate gate. Reference sources public LiteRT v2.3.0 tag, not proof of installed binary build flags. No invoke, training, export, new data or admission changes.",
+  "model_invocations": 0,
+  "initializers": {
+    "2": {
+      "shape": [
+        2,
+        40
+      ],
+      "nonzero_real_codes": 0
+    },
+    "4": {
+      "shape": [
+        4,
+        30
+      ],
+      "nonzero_real_codes": 0
+    },
+    "8": {
+      "shape": [
+        8,
+        60
+      ],
+      "nonzero_real_codes": 16
+    },
+    "12": {
+      "shape": [
+        12,
+        60
+      ],
+      "nonzero_real_codes": 11
+    },
+    "20": {
+      "shape": [
+        20,
+        60
+      ],
+      "nonzero_real_codes": 4
+    },
+    "29": {
+      "shape": [
+        29,
+        60
+      ],
+      "nonzero_real_codes": 4
+    }
+  }
+}
