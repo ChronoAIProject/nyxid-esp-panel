@@ -48,8 +48,11 @@ counts match; the 227,714 surviving common-negative slots per word are all bare.
 This is a coverage observation, not proof of the cause of the recognition gap.
 
 GPU subsequently locked 1,620 Kokoro common-negative command-context requests
-and reported starting native CPU synthesis (46d7e75d / d335edac). These are
-reported partial results, not a complete admitted pack or new trained candidate.
+and reported completed native synthesis, 4,860 rendered variants and 4,860
+feature rows, with their mechanical audits. GPU d1ac29bf / 0f96496a now also
+reports all four actual 10,000-batch schedules complete and their independent
+coordinate-to-tensor reconstruction passed. These are GPU reports, not a new
+Mac tensor reconstruction or a recognition result.
 The derived Kokoro graph has explicit random seeds; its new waveforms do not
 share the original bare anchors' random realization. The proposed intervention
 therefore changes command context, duration/crop and waveform realization; it
@@ -69,10 +72,17 @@ Mac has independently checked saved window coordinates and grouped metadata
 counts, plus all prospective slot/cell choices. All 74,219 eligible original
 Kokoro coordinates pair exactly between words, and the ordered decision hash
 matches GPU; 37,114 slots per word are selected. These checks are closed, not a
-new recognition result. GPU completes the native pack audit and renderer/features/schedule lock,
-then executes the paired recognition continuation according to the existing
-sequencing plan. A synthesis timeout is not permission to restart or silently
-replace requests. Preserve failures and do not filter by wake scores.
+new recognition result. The material and actual-schedule stage is now reported
+complete: each treatment selects 37,114 windows across 9,773 changed batches;
+both controls leave every original batch unchanged. The independent GPU audit
+reconstructs all original/control/treatment tensors, labels, weights and mapped
+endpoints for both words; its shared NumPy math limitation remains explicit.
+Do not repeat these closed audits. Continue to the paired raw-FP32 smoke and
+fixed-final training after the original learned-grid job's true terminal
+receipt, following the existing sequencing plan. The latest GPU process report
+has that original job still running; do not interrupt or restart it. Every new
+weight set needs its own numerical/phase checks before the reused recognition
+report. Preserve failures and do not filter by wake scores.
 
 The next result must report all fixed, already-consumed diagnostic points and
 separate target recall, bare versus command-carrier near-word errors,
