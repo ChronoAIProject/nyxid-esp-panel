@@ -9997,3 +9997,8 @@ Original session33511/PID81315 genuinely exit0; starttime unavailable after proc
 ## Original paired formal run launched
 
 Pushed execution lock2f24ac0a before launch. Original session8257/PID84435/procstart438879 observed live; actual4090 admitted and narrow first700updates observed, finite loss/all15gradients and periodic16frozen checks. Two20000 fixedfinal arms, shared original initialization; broad sole candidate, narrow control. gzip ordered descriptors/actualx-y-weight digests everyupdate; 1GiB newallocation estimate guarded with100GiB reserve and periodic disk checks. Original process remains live, no restart. No recognition/freshdev/acceptance result yet; losses mechanical only.
+
+
+## Formal audit and downstream implementation prepared while original job runs
+
+Original session8257/PID84435 remains live; narrow10400 progress observed. Added no-model independent auditor to reconstruct all40000 batches/5120000raw windows from original shared features, verify each emitted digest/roles/positivegeometry/pairedcells, initial31/final31/frozen16 and Adam0→20000 state. Added final-export/independentABI auditors and original135-consumed-waveform numerical screen adapted explicitly context225→309, offlinephase224→308, startupindex74→102. Gates remain FP32vsTF1e-4, phase1e-4, five-step INT8 MAE.02/p99.1/max.25, all270cases. Scripts only compiled, not executed; export/screen locks cannot be written until upstream actual results/audits exist. No new dev/acceptance use. No inference or accuracy claim from these implementations.
