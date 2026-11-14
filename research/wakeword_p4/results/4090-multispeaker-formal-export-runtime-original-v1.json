@@ -1,0 +1,73 @@
+{
+  "schema": "multispeaker-formal-export-runtime-v1",
+  "execution_sha256": "4f8f2cdaca48229a8a1ed83ce42858130a93cfb9d7a9e5141b49b3d470065115",
+  "static_result_sha256": "b8a46fe5cae56e5b68e32ee2ae4c7a751b84cf635942bc5626673641ed273189",
+  "artifacts": [
+    {
+      "arm": "narrow",
+      "kind": "fp32",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-formal-export-v1/hey_nyx-narrow/fp32-abi-replay.npz",
+      "trace_sha256": "ec67923c4af9f9abfa15431d975637eedc8fc3660c4ddd65b61f4a271522013f",
+      "input_quantization": [
+        0.0,
+        0
+      ],
+      "output_quantization": [
+        0.0,
+        0
+      ]
+    },
+    {
+      "arm": "narrow",
+      "kind": "int8",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-formal-export-v1/hey_nyx-narrow/int8-abi-replay.npz",
+      "trace_sha256": "2baa1cf13de99c9b02e9efb44eddb83470477207207a48afaafc7b3de587d346",
+      "input_quantization": [
+        0.10196078568696976,
+        -128
+      ],
+      "output_quantization": [
+        0.00390625,
+        0
+      ]
+    },
+    {
+      "arm": "broad",
+      "kind": "fp32",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-formal-export-v1/hey_nyx-broad/fp32-abi-replay.npz",
+      "trace_sha256": "df1a6eeda266255212283cd61da3c9397c1048210b19345448f297f42f498223",
+      "input_quantization": [
+        0.0,
+        0
+      ],
+      "output_quantization": [
+        0.0,
+        0
+      ]
+    },
+    {
+      "arm": "broad",
+      "kind": "int8",
+      "calls_per_repeat": 103,
+      "repeats_exact": true,
+      "trace_path": ".local/wakeword/multispeaker-formal-export-v1/hey_nyx-broad/int8-abi-replay.npz",
+      "trace_sha256": "00b6369e13dba27e6ab20a42cc7eaeb3deca02adaec0b51d834fadd0337f8612",
+      "input_quantization": [
+        0.10196078568696976,
+        -128
+      ],
+      "output_quantization": [
+        0.00390625,
+        0
+      ]
+    }
+  ],
+  "all_static_and_runtime_abi_checks_passed": true,
+  "limits": "Two original fixedfinal20000 models only, broad sole candidate/narrow diagnostic. Unchanged rawsigmoid/frozenBN. OneFP32+onebuiltinINT8 each. Fixedsamefirst16actualtrainingwindows/arm from preformal smoke material plus zero/26sentinels, no intermediate calibrationreset. Sixrealzero states. StaticABI and 824freshinterpretercalls only; numerical fidelity/wholewaveartifact/recognition/freshdev/acceptance/P4resources remain separate. No weight/calibration/checkpoint rescue."
+}

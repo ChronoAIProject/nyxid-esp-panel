@@ -10037,3 +10037,8 @@ While independent full formal audit runs (13000pairedsteps observed), prepared o
 ## Complete formal audit exit0; fixedfinal export lock
 
 Original independent session17673/PID91551 actualexit0 (starttime not captured); all40000batches/5120000raw windows rebuilt from original sharedfeatures, emittedx/y/weights hashes exact, everyrole/label/fullpositivegeometry and pairedcells/ambientwindows match. Botharms initial31 exact,15trainables changed,16frozen unchanged, Adam30zeroslots→finite nonzero/iter20000, finalH5 all31variables exact to finalNPZ. No independent gradient reexecution claimed. New fixedfinal20000 export lock SHA4f8f2cdaca48229a8a1ed83ce42858130a93cfb9d7a9e5141b49b3d470065115 uses same fixedfirst16trainingwindows/arm plus zero26calibration, oneFP32+onebuiltinINT8 each/no retries. Pushbeforeoriginalexport; no freshdev/acceptance use.
+
+
+## Actual fixedfinal streaming exports and independent ABI replay exit0
+
+Original export session93521 genuineexit0; PID/starttime unavailable after short process completed, explicitnull. Fouractualexports, unchangedoriginalweights; narrowFP32/INT8 139936/60952bytes, broad140248/61192bytes. Staticbuiltin/noCustom/nofloatI8/sixrealzero states passed; original824actualcalls/twofreshrepeat exact. Independent session75264 genuineexit0 verifies FlatBuffers/material/inputquantization/savedtraces plus412freshcalls exact. Originalstatic/runtimebytes published unchanged, formal_training_completed metadata true. Broad INT8SHA0ec2c6901b1f88088f711a537aedc59fa70b4e015a25eb2826e3e5493b1d7ec0. Locked consumed135waveform numerical screen and372input recognition diagnostic separately; pushbeforeexecution. No numerical/recognition/FAR/freshdev/acceptance/P4 qualification yet; v30 unchanged.
