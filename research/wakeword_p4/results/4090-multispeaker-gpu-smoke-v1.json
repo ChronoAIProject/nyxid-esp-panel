@@ -1,0 +1,85 @@
+{
+  "schema": "multispeaker-gpu-smoke-v1",
+  "plan_sha256": "792e033b8551292d7b5d08a484d9e5527eff59d1640fc898a5c7d202c7739db0",
+  "device": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "arms": [
+    {
+      "arm": "narrow",
+      "steps": [
+        {
+          "step": 1,
+          "loss": 17.3009090423584,
+          "x_sha256": "651046d5d4adf8d7570a30de45ed841b1db10cd185cbcbf44fc1f9bf29cb45f9",
+          "logits_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+          "optimizer_iteration": 1,
+          "all15_gradients_finite": true,
+          "frozen_bn_unchanged": true
+        },
+        {
+          "step": 2,
+          "loss": 15.974503517150879,
+          "x_sha256": "f013cef8a5dd997393c238c83f54365916453c554327232cfb75d75a5da929fc",
+          "logits_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+          "optimizer_iteration": 2,
+          "all15_gradients_finite": true,
+          "frozen_bn_unchanged": true
+        }
+      ],
+      "trainable_variables": 15,
+      "optimizer_variables": 32,
+      "initial_matches_preserved_snapshot": true,
+      "files": {
+        "initial-model-variables.npz": "934b192afded73924c24ceac646fcaa9f169a1b12544ef4a239ca848bcf6f628",
+        "initial-optimizer.npz": "6bc892a31731e5da6ca1689ca13d6ac6e66a9cdb176833c587686ecf89e580f1",
+        "final-optimizer.npz": "2851e9ac0391c90c3bd20f73449d464a7820d75502164199353a4365a42e5108",
+        "final.weights.h5": "2142268c4b67bc7e08e197f1907125936aac6515ff397f749d6042db6c71665b",
+        "final-model-variables.npz": "2bbdaf1bc6b8eb2eec2a0e73f2ae803c939bef979c27b3f061036f76be055e75"
+      }
+    },
+    {
+      "arm": "broad",
+      "steps": [
+        {
+          "step": 1,
+          "loss": 17.096654891967773,
+          "x_sha256": "37d6b0034c808f989ce2cdfe016982699f43dfc17ddf7a6c2b2a7912a8e199a0",
+          "logits_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+          "optimizer_iteration": 1,
+          "all15_gradients_finite": true,
+          "frozen_bn_unchanged": true
+        },
+        {
+          "step": 2,
+          "loss": 16.294464111328125,
+          "x_sha256": "cb47eb8f1b5f52daa05b6f0ed069a9f9961ecca7ace1cb2528c65bcfc5513c5a",
+          "logits_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+          "optimizer_iteration": 2,
+          "all15_gradients_finite": true,
+          "frozen_bn_unchanged": true
+        }
+      ],
+      "trainable_variables": 15,
+      "optimizer_variables": 32,
+      "initial_matches_preserved_snapshot": true,
+      "files": {
+        "initial-model-variables.npz": "934b192afded73924c24ceac646fcaa9f169a1b12544ef4a239ca848bcf6f628",
+        "initial-optimizer.npz": "6bc892a31731e5da6ca1689ca13d6ac6e66a9cdb176833c587686ecf89e580f1",
+        "final-optimizer.npz": "b0aaddd792996547bddf31d31b4dd00447c186f7d87d3544554153d81e7974d1",
+        "final.weights.h5": "8672157a0e0dd54855d0977298d3ccba945d712242ecda5db9e7c67abed2ebe0",
+        "final-model-variables.npz": "1c373caf1c2655ad7ff27ece1a1b880d6d25d7b45d3053d32076194fb4d468f7"
+      }
+    }
+  ],
+  "all_update_checks_passed": true,
+  "formal_training_started": false,
+  "exports_created": false,
+  "development_scored": false,
+  "acceptance_scored": false,
+  "limits": "Two disposable integration updates per arm only. Streaming export/INT8 runtime admission and formal execution pins still required; no efficacy or candidate qualification."
+}
