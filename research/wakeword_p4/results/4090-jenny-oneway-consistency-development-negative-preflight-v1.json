@@ -1,0 +1,9 @@
+{
+  "expected_missing_numerical_receipt_rejected": true,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "fatal: path 'research/wakeword_p4/results/4090-hey-broad-oneway-consistency-numerical-admission-v1.json' does not exist in 'origin/research-hye-nyx-voice-gpu'\nTraceback (most recent call last):\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/lock_jenny_oneway_consistency_complete_development_v1.py\", line 102, in <module>\n    main()\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/lock_jenny_oneway_consistency_complete_development_v1.py\", line 14, in main\n    published(admission_path)\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/run_hey_broad_trained_quantization_v1.py\", line 21, in published\n    assert subprocess.check_output(['git', 'show', 'origin/research-hye-nyx-voice-gpu:'+str(path)]) == path.read_bytes()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.11/subprocess.py\", line 466, in check_output\n    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['git', 'show', 'origin/research-hye-nyx-voice-gpu:research/wakeword_p4/results/4090-hey-broad-oneway-consistency-numerical-admission-v1.json']' returned non-zero exit status 128.\n",
+  "execution_lock_created": false,
+  "admission_receipt_created": false,
+  "limits": "First published-admission check rejects before material/model reads. No scoring or authorization."
+}

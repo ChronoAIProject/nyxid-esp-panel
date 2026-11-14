@@ -8766,3 +8766,16 @@ compileplan/model access and writes no plan. This is not actual compilation.
 Original1450872 observedlive2m02s, current saved1000/10000Willowtwoway; otherarms
 pending in same original process. Original TF layoutoptimizer message preserved
 before successful updates, no policychange/retry. V30 remains frozen.
+
+### One-way future-development guard prepared (2026-11-14)
+
+1fe7c22a adds one-way-only numerical admission + guarded Jenny complete-tail
+collection lock, preserving original gates/270full coverage/references and source
+quality/history/native/render/format/v30hash checks. No actual admission or fresh
+collection. Ten historical regression rejection cases pass: prior float/integer,
+falsepassflags/duplicate requests, both previousraw/boundedconditions and misleading
+pass flags, plus oldbounded unable to impersonate newonewaycondition.
+Actual negative lock preflight rejects at first missing publishedoneway numerical
+receipt before reading material/model, creates neither admission nor executionlock.
+Freshdev remainsclosed. Original formal1450872 and waiter1455248 live at3m59/2m18;
+Willowtwoway latest2000, no restart/config change. V30 frozen.
