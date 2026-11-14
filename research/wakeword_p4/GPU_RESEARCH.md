@@ -10012,3 +10012,8 @@ Added explicit architecture/name routing for all31 H5 datasets to variable-inven
 ## Narrow fixed-final20000 completed; broad running same original process
 
 Original session8257/PID84435 transitioned naturally to broad (actual broadstep1 observed). Narrow original per-arm report published byte-identical; original process has not exited, no per-arm process exit claim. Executed saved-state/H5 portion of published auditor on narrow: all31initial exact, all15trainables changed,16frozen byte-identical, Adam30slots initiallyzero/finalfinite nonzero/iteration20000, finalH5 all31datasets exactly match finalNPZ. Interim report explicitly excludes batch reconstruction/fullpaired completion, modelcalls0. Full40000batch audit remains after broad completes. v30 unchanged.
+
+
+## Bind independent reconstruction to actual locked formal inputs
+
+Independent full auditor now requires shared-binary SHA to equal both formal arm binary pins, all23220 shared rows to correspond exactly to each12960row formal arm metadata view, and both human/ambient manifest hashes to match formal pins. Executed this binding against actual inputs successfully, zero model calls. Original broad6000 observed under session8257/PID84435, disk622.69GiBfree; complete formal audit still pending actual final result.

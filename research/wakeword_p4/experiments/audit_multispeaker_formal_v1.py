@@ -66,6 +66,18 @@ def main():
     assert {a['arm'] for a in arms}=={'narrow','broad'}
     shared=np.memmap(FEATURES/'shared-features.bin',dtype='<u2',mode='r').reshape(-1,40)
     rows={r['shared_index']:r for r in json.loads((FEATURES/'shared-metadata.json').read_text())}
+    assert len(rows)==23220
+    binary_hash=sha(FEATURES/'shared-features.bin')
+    for arm in ['narrow','broad']:
+        root=FEATURES/arm
+        assert binary_hash==plan['files'][str(root/'features.bin')]
+        metadata=root/'features.json'
+        assert sha(metadata)==plan['files'][str(metadata)]
+        actual=json.loads(metadata.read_text())
+        assert len(actual)==12960 and {r['shared_index'] for r in actual}=={i for i,r in rows.items() if arm in r['arms']}
+        assert all(r==rows[r['shared_index']] for r in actual)
+        for name in ['human.json','ambient.json']:
+            assert sha(root/name)==plan['files'][str(root/name)]
     ambient=sum([json.loads((FEATURES/'narrow'/n).read_text()) for n in ['human.json','ambient.json']],[])
     arrays={}
     def reconstruct(arm,record):
