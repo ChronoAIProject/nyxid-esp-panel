@@ -22,6 +22,7 @@ def main():
     parser.add_argument('--payload-root', type=Path, required=True)
     parser.add_argument('--upstream', type=Path, required=True)
     parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--execution-mode', choices=('graph', 'eager'), default='graph')
     args = parser.parse_args()
     import numpy as np
     import tensorflow as tf
@@ -128,7 +129,6 @@ def main():
         snapshots.append(dict(target=name, all33_same_instance_arrays_byte_exact=True,
             original_h5_sha256=init['initial_h5_sha256']))
 
-        @tf.function
         def calculate(x, y, weights, ax, labels):
             with tf.GradientTape(persistent=True) as tape:
                 logits = tf.linalg.matmul(embeddings(x, training=False), head.kernel) + head.bias
@@ -150,6 +150,9 @@ def main():
                 payload.update({f'{tag}_{i}': g for i, g in enumerate(gradients) if g is not None})
             del tape
             return payload
+
+        if args.execution_mode == 'graph':
+            calculate = tf.function(calculate)
 
         for index, case in enumerate(target['cases']):
             assert case['step'] == index + 1 and case['aux_arrays_sha256'] == aux[index]['arrays_sha256']
@@ -191,6 +194,7 @@ def main():
         tf.keras.backend.clear_session()
     assert len(cases) == 100
     report = dict(schema='mac-engine-gradient-original-snapshot-replay-v1',
+        execution_mode=args.execution_mode,
         reviewer_sha256=sha(__file__), manifest_sha256=sha(root / 'manifest.json'),
         producer_commit=manifest['producer_source_commit'], result_commit=manifest['result_commit'],
         runtime_versions=versions, original_upstream_python_sha256=verified,
