@@ -26,3 +26,34 @@ qualification occur here. When an event asset appears, authenticate its immutabl
 manifest and original report hash chain before feeding its original 1243 payloads
 to the frozen `9162bdb` reader. When models appear, inspect their actual identities
 and complete numerical gates before opening any new development or acceptance.
+
+## Read the latest issue comments explicitly
+
+The REST list endpoint defaults to an early page. Request the latest comments
+explicitly when reconciling a handoff, and preserve the returned URL and body.
+
+```sh
+gh api graphql -f query='query {
+  repository(owner:"ChronoAIProject",name:"nyxid-esp-panel") {
+    issue(number:13) {
+      body
+      comments(last:10) { nodes { url createdAt author { login } body } }
+    }
+  }
+}'
+```
+
+An individual completion comment can also be read directly:
+
+```sh
+gh api repos/ChronoAIProject/nyxid-esp-panel/issues/comments/6872754490
+```
+
+The Mac completion comments `6872754490` and `6873193380` were independently
+read without an Authorization header on 2026-11-14. Both returned HTTP 200 and
+the exact originally posted bodies. The authenticated latest-comment response
+reports `isMinimized=false` for the direct reply; a contemporaneous GPU comment is publicly
+readable. This rules out public invisibility/minimization in these checks, but
+does not establish which command or cached context the other machine used.
+Check current issue data before treating an older progress message as current.
+Sending a result and verifying its publication do not prove the consumer read it.
