@@ -8867,3 +8867,7 @@ Responding to Mac6874505708, execution/source lock998aec1c was pushed before the
 ### Raw FP32 trained-model software handoff to Mac
 
 Original four TFLites, all four TF/LiteRT reference NPZ and per-model receipts, original input bytes, execution/result/intake/source receipts delivered as gpu-fp32-internal-trained-mac-v1.tar.gz. 527033B, SHA25606c53a9334a59ff07ce21e85afad9e9bf29fb79da2fe4879be3e560b0b06260a. Independent saved-array reduction verified8192 probabilities per backend across four models, exact repeats/finite/gaps/identities; no inference repeated. Anonymous download exact19members/all18payload hashes verified. Mac must independently inspect actual ABI/operators/sixzero initializers and freeze actual trained MicroInterpreter execution; no external-state/full540/recognition/P4 qualification claimed. Models are research diagnostics, not promoted candidates.
+
+### Additional read-only FP32 FlatBuffer audit
+
+All4 original model SHA matched. Independent schema/buffer walk records every subgraph/operator/tensor shape/type/buffer hash and variable flag; confirms single FLOAT32[1,3,40] input/[1,1] output,6READ/6ASSIGN and6real-zero FP32 initializer buffers, no quantized tensors/scales or custom/quantize/dequantize operators, one logistic and unfused raw FC head. Integer shape/index tensors are legitimate. No interpreter/model invoke/export/media IO. Does not substitute for Mac runtime or original parameter reconstruction proof. Original handoff unchanged.
