@@ -8819,3 +8819,7 @@ Delivered original synthetic manifest + all 1242 event NPZ, preserving original 
 ### 2026-11-14 Independent Linux audit of Mac bounded witnesses
 
 Authenticated anonymous Mac archive aaf5c052… (114887 bytes, exact20 entries/19 payload hashes). Independent saved-array audit verifies all792 raw/input/UINT8/embedding/actualFC codes against original GPU screen/recursive, all saved fresh/reset repeats, and registeredFC saved codes. Recomputed original numerical gates agree 3pass/1fail, Willow bounded remains failed (fivep99 .17625624054379294). No model invocation or new scoring. Four consumed witnesses do not qualify the complete540 screen, recognition or P4; v30 unchanged.
+
+### 2026-11-14 One-way full540 rejection and original continuation stop
+
+Original complete540 result: twoway Willow125/Nyx126 of135; oneway Willow126/Nyx127 of135. Neither condition qualifies complete270. Original v1 auditor reached final qualification reduction then KeyError on inherited old condition names; original continuation stopped as locked, no restart/recursive execution. Original result, traceback and failure receipt preserved c7490388. Separate read-only v2 auditor changes only actual condition names and fresh output filename; same540 saved arrays independently checked with unchanged gates, qualified conditions empty. No model rerun, freshdev or promotion; v30 unchanged.
