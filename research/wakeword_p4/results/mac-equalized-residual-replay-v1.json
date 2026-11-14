@@ -1,0 +1,203 @@
+{
+  "schema": "mac-equalized-residual-replay-v1",
+  "gpu_ref": "697ccc3c7f4f64cb550680b7d370fcc48aaa3e7c",
+  "source_reports": {
+    "research/wakeword_p4/results/4090-hey-broad-equalized-export-result-v1.json": "22da47fb73755204db3a7adaba806100f02687f78372865c8ddc76460dae8ae1",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-weights-receipt-v1.json": "bca90059077183775fbf38aac0c11a9196ba0003b087c7e81527491e4943a664",
+    "research/wakeword_p4/results/4090-hey-broad-equalized-screen-result-v1.json": "d45a065f595e04b69dd8fbc0884ff420296465ddbb446b1a9b94098d075fa1f3",
+    "research/wakeword_p4/results/4090-hey-broad-trained-quantization-plan-v1.json": "4b3a0bf6c69911de6c54a109fcce2059905bc656d0c380e196e522ac671944fb"
+  },
+  "artifacts": {
+    ".local/wakeword/hey-broad-equalized-export-v1/hey_willow/hey_nyx.tflite": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+    ".local/wakeword/hey-broad-equalized-v1/hey_willow/equalized.weights.h5": "54277919b75b3bdfccc3674f03ad4dfb6a89d839d344c31c5a8b90421845d23a",
+    ".local/wakeword/hey-broad-equalized-screen-v1/hey_willow-014.npz": "85fd28409838e28176323f2cd22677d47905306b95f4f3f8e38829a9756906af",
+    ".local/wakeword/hey-broad-equalized-export-v1/hey_nyx/hey_nyx.tflite": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+    ".local/wakeword/hey-broad-equalized-v1/hey_nyx/equalized.weights.h5": "00820ba7ebdcf15389a977e8cbb89a859036a6236c877df1b86a9aa2dc848f20",
+    ".local/wakeword/hey-broad-equalized-screen-v1/hey_nyx-034.npz": "414860425d99194428e2aaad8a23f01ab999dc439a1f8730e77d616dc298e6da"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "h5py": "3.14.0",
+    "ai-edge-litert": "2.3.0"
+  },
+  "script_sha256": "3adf7924f2f160a9e652666937b84c6d812455bc730e7af9a66fbd67091b843d",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "request_order": 14,
+      "steps": 167,
+      "original_uint8_byte_exact": true,
+      "all_tensor_repeats_exact": true,
+      "observed_tensors": 34,
+      "boundaries": {
+        "encoder_embedding": {
+          "raw_max_abs": 0.9993292997316311,
+          "five_mean_abs": 0.016289221865928134,
+          "five_p99_abs": 0.484536503487722,
+          "five_max_abs": 0.4936506921832967
+        },
+        "head_weight_bias": {
+          "raw_max_abs": 0.18889957072706895,
+          "five_mean_abs": 0.0012967941351788087,
+          "five_p99_abs": 0.037795188739005885,
+          "five_max_abs": 0.037795188739005885
+        },
+        "integer_fc": {
+          "raw_max_abs": 0.0026063534092839874,
+          "five_mean_abs": 2.6243114887531667e-05,
+          "five_p99_abs": 0.000505636061663132,
+          "five_max_abs": 0.0005212705979335292
+        },
+        "post_fc_probability": {
+          "raw_max_abs": 0.006811971418681562,
+          "five_mean_abs": 0.0007357899922714247,
+          "five_p99_abs": 0.0035708999744376024,
+          "five_max_abs": 0.004205228513494308
+        }
+      },
+      "hybrid_original_float_head": {
+        "raw_max_abs": 0.9993292997316311,
+        "five_mean_abs": 0.016289221865928134,
+        "five_p99_abs": 0.484536503487722,
+        "five_max_abs": 0.4936506921832967
+      },
+      "hybrid_passed_on_this_witness": false,
+      "actual_total": {
+        "raw_max_abs": 0.9957583998620976,
+        "five_mean_abs": 0.015276400191692258,
+        "five_p99_abs": 0.4430138743780553,
+        "five_max_abs": 0.4519727566861548
+      },
+      "original_gate_passed": false,
+      "state_checks": [
+        {
+          "handle": 40,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        },
+        {
+          "handle": 39,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        },
+        {
+          "handle": 38,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        },
+        {
+          "handle": 37,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        },
+        {
+          "handle": 36,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        },
+        {
+          "handle": 35,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 166
+        }
+      ],
+      "arrays": "hey_willow.npz",
+      "arrays_sha256": "9ad14ac55c2e72bc89dd15b5b002252434ec9b352e54e1d3d69d4597933c13cc"
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48394,
+      "steps": 229,
+      "original_uint8_byte_exact": true,
+      "all_tensor_repeats_exact": true,
+      "observed_tensors": 34,
+      "boundaries": {
+        "encoder_embedding": {
+          "raw_max_abs": 0.9334207012256601,
+          "five_mean_abs": 0.004186178693845519,
+          "five_p99_abs": 0.18668414531689728,
+          "five_max_abs": 0.18668415176430014
+        },
+        "head_weight_bias": {
+          "raw_max_abs": 0.016884585560945204,
+          "five_mean_abs": 7.580917809839526e-05,
+          "five_p99_abs": 0.0033769171121890407,
+          "five_max_abs": 0.0033769171121890407
+        },
+        "integer_fc": {
+          "raw_max_abs": 0.0003083807786024729,
+          "five_mean_abs": 1.4497982018528508e-06,
+          "five_p99_abs": 6.167619264673264e-05,
+          "five_max_abs": 6.16762396437629e-05
+        },
+        "post_fc_probability": {
+          "raw_max_abs": 0.0035708999744376024,
+          "five_mean_abs": 0.0007040590928837691,
+          "five_p99_abs": 0.0035708999744376024,
+          "five_max_abs": 0.0035708999744376024
+        }
+      },
+      "hybrid_original_float_head": {
+        "raw_max_abs": 0.9334207012256601,
+        "five_mean_abs": 0.004186178693845519,
+        "five_p99_abs": 0.18668414531689728,
+        "five_max_abs": 0.18668415176430014
+      },
+      "hybrid_passed_on_this_witness": false,
+      "actual_total": {
+        "raw_max_abs": 0.9487450122833252,
+        "five_mean_abs": 0.004964755578173531,
+        "five_p99_abs": 0.19115620114095508,
+        "five_max_abs": 0.19260573387145996
+      },
+      "original_gate_passed": false,
+      "state_checks": [
+        {
+          "handle": 38,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        },
+        {
+          "handle": 37,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        },
+        {
+          "handle": 36,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        },
+        {
+          "handle": 35,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        },
+        {
+          "handle": 40,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        },
+        {
+          "handle": 39,
+          "next_read_equals_previous_assignment": true,
+          "concat_equals_history_then_current": true,
+          "state_transition_pairs": 228
+        }
+      ],
+      "arrays": "hey_nyx.npz",
+      "arrays_sha256": "bc437452c8cdfc517931ad3ddfea191c43a4abdf5af21530691d7eea5b66f29f"
+    }
+  ],
+  "limits": "Two fixed selected training failures only. GPU saved float A is not independently recomputed in this run. Actual Mac builtin-ref integer outputs, all tensor reset repeats, and hybrid head calculations executed here. Boundary maxima occur at different steps and cannot be added as causal shares. A hybrid pass on a witness does not establish all270, recognition/FAR, new development, P4 performance or candidate admission. No optimizer, export, waveform playback/recording or board write."
+}

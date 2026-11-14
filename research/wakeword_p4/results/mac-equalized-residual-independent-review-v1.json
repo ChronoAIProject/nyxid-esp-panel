@@ -1,0 +1,83 @@
+{
+  "schema": "mac-equalized-residual-independent-review-v1",
+  "gpu_ref": "697ccc3c7f4f64cb550680b7d370fcc48aaa3e7c",
+  "archive_url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/gpu-equalized-mac-witnesses-v1.tar.gz",
+  "archive_sha256": "c97df8a5856881b0a10e698bd307fdee98c9adbeb46f0a49aab61594f2c5dea8",
+  "all_six_payloads_match_published_records": true,
+  "payloads": [
+    {
+      "path": ".local/wakeword/hey-broad-equalized-export-v1/hey_willow/hey_nyx.tflite",
+      "sha256": "4dcb1cbe3ab2d2eefde5548335a05266c87c12f8c664ed57ff1faa9b3ef0afc4",
+      "bytes": 58616
+    },
+    {
+      "path": ".local/wakeword/hey-broad-equalized-export-v1/hey_nyx/hey_nyx.tflite",
+      "sha256": "43c5109e3c140b7eb7d36fe806e98a58636922a563c0336b1cc4edb6a67a72d7",
+      "bytes": 58688
+    },
+    {
+      "path": ".local/wakeword/hey-broad-equalized-v1/hey_willow/equalized.weights.h5",
+      "sha256": "54277919b75b3bdfccc3674f03ad4dfb6a89d839d344c31c5a8b90421845d23a",
+      "bytes": 178736
+    },
+    {
+      "path": ".local/wakeword/hey-broad-equalized-v1/hey_nyx/equalized.weights.h5",
+      "sha256": "00820ba7ebdcf15389a977e8cbb89a859036a6236c877df1b86a9aa2dc848f20",
+      "bytes": 178736
+    },
+    {
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_willow-014.npz",
+      "sha256": "85fd28409838e28176323f2cd22677d47905306b95f4f3f8e38829a9756906af",
+      "bytes": 69174
+    },
+    {
+      "path": ".local/wakeword/hey-broad-equalized-screen-v1/hey_nyx-034.npz",
+      "sha256": "414860425d99194428e2aaad8a23f01ab999dc439a1f8730e77d616dc298e6da",
+      "bytes": 94266
+    }
+  ],
+  "replay_reports_sha256": {
+    "mac-equalized-residual-replay-v1.json": "0a1d07595a5a91e1c5ef6891571c434b1f5ff5b3e019e3c8fdd750eb2d6df374",
+    "mac-equalized-residual-float-replay-v1.json": "0603f392bf4f327e1cec74e7f554feab17ec7cf5fb4d21effb5e7b841bf86f0f"
+  },
+  "state_helper_sha256": "10c621a22e04b60b84782f7b951b3b06da808ed3c056139396ef2705919c36a2",
+  "cases": [
+    {
+      "target": "hey_willow",
+      "request_order": 14,
+      "hybrid_vs_independent_mac_float": {
+        "mean": 0.016289233998047343,
+        "p99": 0.4845366571918027,
+        "maximum": 0.4936510971805598
+      },
+      "actual_int8_vs_independent_mac_float": {
+        "mean": 0.015276412323811463,
+        "p99": 0.443014028082136,
+        "maximum": 0.45197316168341783
+      },
+      "float_head_alone_still_fails_this_witness": true
+    },
+    {
+      "target": "hey_nyx",
+      "request_order": 48394,
+      "hybrid_vs_independent_mac_float": {
+        "mean": 0.0041861811359802685,
+        "p99": 0.18668424068432893,
+        "maximum": 0.18668424713173176
+      },
+      "actual_int8_vs_independent_mac_float": {
+        "mean": 0.0049647580203082825,
+        "p99": 0.19115629650838672,
+        "maximum": 0.1926058292388916
+      },
+      "float_head_alone_still_fails_this_witness": true
+    }
+  ],
+  "exact_native_integer_steps": 396,
+  "exact_state_transition_pairs": 2364,
+  "exact_concat_step_pairs": 2376,
+  "mac_vs_gpu_float_max_abs": 2.0265579223632812e-06,
+  "candidate_admitted": false,
+  "new_development_authorized": false,
+  "limits": "Actual two-witness native Mac integer/float replay and hybrid arithmetic. State byte equality verifies observed transport/order on these streams, not float-state numerical equivalence or all270. Both float-head hybrids still fail against independently recomputed Mac float baselines. This supports encoder quantization robustness work; it does not isolate an encoder operator, guarantee QAT success, prove recognition/FAR or authorize P4 candidate use. No optimizer/export/audio I/O or board write."
+}
