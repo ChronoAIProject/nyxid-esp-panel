@@ -1,0 +1,32 @@
+{
+  "schema": "mac-fp32-internal-model-contract-constructed-review-v1",
+  "original_model_sha256": "7d0a9a8d9b8d1db765df0bad5071f270157db4d48a6bf9e368184189444a2c61",
+  "accepted_original": true,
+  "original_states": 6,
+  "original_state_bytes": 17360,
+  "rejected_cases": [
+    {
+      "case": "seven-input ABI with unchanged internal-state body",
+      "error": "Single audio input and probability output"
+    },
+    {
+      "case": "nonzero first state initializer",
+      "error": "Exact positive-zero state bytes"
+    },
+    {
+      "case": "float16 probability output",
+      "error": "Exact FP32 input/output ABI"
+    },
+    {
+      "case": "bounded activation on original Dense head",
+      "error": "Original unbounded Dense head"
+    }
+  ],
+  "all_checks_passed": true,
+  "inspector_sha256": "2ce72aee4aaca09bf1b847b45d059c68ad071abfcca21bd121e92e77c2d3b858",
+  "review_sha256": "bb11c99480196f657b531ef35773067bcf3fc2dd6697185d4667f9614e0e2716",
+  "original_bytes_unchanged": true,
+  "model_invocations": 0,
+  "media_reads": 0,
+  "limits": "Static random-model/copy-mutation checks only. Seven-input fixture is not an implemented external-state adapter. No trained model, numerical inference, allocation, timing or recognition tested."
+}

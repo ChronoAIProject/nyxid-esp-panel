@@ -73,3 +73,30 @@ by this single-input stage. Full-stream phase/numerical validation requires a
 separate actual execution lock for the chosen representation. Existing integer
 rejections, fresh-development admission, shared-FAR evaluation, independent
 acceptance, P4 resource/audio/first-utterance/long-call requirements all remain.
+
+## Consumer preflight implemented before trained-model intake
+
+`inspect_fp32_internal_model_mac_v1.py` checks the actual FlatBuffer: one fixed
+FP32 audio input/output, the eleven registered builtin types, finite FP32
+constants, no quantization/dynamic dimensions, original unbounded Dense head,
+six unique named states read/carried once, and matching initializer identities/
+shapes with exactly positive-zero bytes. It does not modify or invoke a model.
+It cannot establish H5 parameter equality or numerical/recognition behavior.
+
+The existing original random model was accepted: six states,17,360 bytes.
+`review_fp32_internal_model_contract_mac_v1.py` then exercised four copied-model
+rejections: seven-input ABI, nonzero initializer, float16 output and bounded
+Dense activation. All four were rejected and original bytes remained unchanged.
+The seven-input constructed graph is not an implemented external-state adapter.
+No trained weights or reference outputs were accessed for these checks.
+
+```sh
+PYTHON research/wakeword_p4/experiments/inspect_fp32_internal_model_mac_v1.py \
+  --model ORIGINAL_RANDOM.tflite --report NEW_CONTRACT.json
+PYTHON research/wakeword_p4/experiments/review_fp32_internal_model_contract_mac_v1.py \
+  --model ORIGINAL_RANDOM.tflite --report NEW_REVIEW.json
+```
+
+Actual reports are `mac-fp32-internal-model-contract-random-v1.json` and
+`mac-fp32-internal-model-contract-constructed-review-v1.json`. This tests only
+the parser/contract rejection; it is not a model inference or deployment pass.
