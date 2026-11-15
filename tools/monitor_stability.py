@@ -75,11 +75,46 @@ def sample(status, expected_slug, epoch):
         counters=dict({k: integer(voice.get(k, 0)) for k in
                   ('call_seconds', 'sent_packets', 'received_packets')},
             wake_detections=integer(wake.get('detections', 0)),
+            capture_frames=integer(voice['capture_frames']) if voice.get('capture_frames') is not None else None,
+            wake_processed_frames=integer(wake['processed_frames']) if wake.get('processed_frames') is not None else None,
             buffered_ms=integer(wake.get('buffered_ms', 0)),
             transmitted_ms=integer(wake.get('transmitted_ms', 0)),
             camera_captures=integer(status.get('media', {}).get('captures', 0)),
             camera_failures=integer(status.get('media', {}).get('failed_captures', 0))),
         network_connected=status.get('net', {}).get('connected') is True)
+
+
+def audio_progress(previous, current, interval_s):
+    """Observe task progress, independently of HTTP and remembered UI state.
+
+    A missing counter means old firmware, not a frozen microphone. Disabled,
+    muted and suspended listening is expected to stop. No counter equality is
+    required across calls; any change (including uint32 wrap) shows progress.
+    """
+    phase = current['phase']
+    expected = dict(capture=phase['wake_listening'] or phase['voice_active'],
+                    wake=phase['wake_listening'] and not phase['voice_busy'])
+    elapsed = current['t'] - previous['t'] if previous else 0
+    same_window = (previous is not None and current.get('boot') == previous.get('boot')
+                   and current['app_sha256'] == previous['app_sha256']
+                   and current['uptime_s'] >= previous['uptime_s']
+                   and max(15, interval_s / 2) <= elapsed <= max(120, interval_s * 3))
+    prior = previous['phase'] if previous else {}
+    prior_expected = dict(capture=prior.get('wake_listening') or prior.get('voice_active'),
+                          wake=prior.get('wake_listening') and not prior.get('voice_busy'))
+    result = dict(observed_seconds=elapsed if same_window else 0)
+    for layer, key in (('capture', 'capture_frames'), ('wake', 'wake_processed_frames')):
+        value = current['counters'].get(key)
+        old = previous['counters'].get(key) if previous else None
+        if not expected[layer]:
+            result[layer] = 'inactive'
+        elif value is None:
+            result[layer] = 'unreported'
+        elif not same_window or not prior_expected[layer] or old is None:
+            result[layer] = 'starting'
+        else:
+            result[layer] = 'advancing' if value != old else 'no_progress'
+    return result
 
 
 def analyze(rows):
@@ -218,6 +253,8 @@ class Monitor:
                 self.log(dict(kind='monitor_gap', t=now, utc=utc(now), seconds=now - last['t']))
             row['boot'] = boot
             row['device_fingerprint'] = self.identity
+            progress = audio_progress(last if not self.state.get('consecutive_errors') else None,
+                                      row, self.config['interval_s'])
             self.rows.append(row)
             while self.rows and self.rows[0]['t'] < now - 21600:
                 self.rows.popleft()
@@ -228,7 +265,10 @@ class Monitor:
                 last_sample=row, consecutive_errors=0, recent_samples=len(self.rows),
                 sampled_minima={k: min(r['heap'][k] for r in self.rows) for k in HEAP},
                 trends=trends, suspected_losses=[t for t in trends if t['suspected_retained_loss']],
+                audio_progress=progress,
+                suspected_audio_stalls=[layer for layer in ('capture', 'wake') if progress[layer] == 'no_progress'],
                 interpretation='Sampled values only. Matched-state retained loss is a suspicion, not proof of a leak. '
+                               'Unchanged expected audio counters suggest a stalled task, not an acoustic diagnosis. '
                                'Long-call/reconnect/hardware acceptance is separate.')
             self.last = row
         except (OSError, ValueError, KeyError, TypeError) as error:
@@ -238,6 +278,7 @@ class Monitor:
             self.state.update(health='identity_mismatch' if isinstance(error, IdentityMismatch) else 'unreachable_or_invalid',
                 consecutive_errors=self.state.get('consecutive_errors', 0) + 1, last_error_utc=utc(now),
                 last_error_type=kind, recent_samples=0, trends=[], suspected_losses=[])
+            self.state.update(audio_progress=dict(capture='unknown', wake='unknown'), suspected_audio_stalls=[])
         self.state['updated_utc'] = utc(now)
         self.save()
         return self.state

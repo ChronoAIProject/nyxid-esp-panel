@@ -125,6 +125,9 @@ static SemaphoreHandle_t wake_lock;
 static voice_call_t *wake_call;
 static panel_voice_pcm_t wake_tail;
 static atomic_bool wake_enabled=true, wake_listening;
+// Progress counters are independent of UI state: a stuck audio task can leave
+// HTTP and "listening" responsive. Wrap is harmless to progress comparisons.
+static atomic_uint capture_frames, wake_processed_frames;
 static atomic_int_fast64_t wake_yield_until;
 static void wake_task(void *arg);
 static esp_err_t open_peer(voice_call_t *c);
@@ -180,6 +183,8 @@ void panel_voice_snapshot(panel_voice_snapshot_t *out)
     out->microphone_muted=atomic_load(&microphone_muted);
     out->wake_enabled=atomic_load(&wake_enabled);
     out->wake_listening=atomic_load(&wake_listening);
+    out->capture_frames=atomic_load_explicit(&capture_frames,memory_order_relaxed);
+    out->wake_processed_frames=atomic_load_explicit(&wake_processed_frames,memory_order_relaxed);
 }
 static bool valid_config(const voice_config_t *cfg)
 {
@@ -789,6 +794,7 @@ static void mic_task(void *arg)
         if (product_i2s_read(capture,chunk*4,&got,1000)!=ESP_OK || got!=(size_t)chunk*4) {
             state("error","Voice microphone read failed");atomic_store(&c->running,false);break;
         }
+        atomic_fetch_add_explicit(&capture_frames,1,memory_order_relaxed);
         for (int i=0;i<chunk;i++) {mic[i]=capture[2*i];ref[i]=capture[2*i+1];}
         aec_process(aec,mic,ref,clean);
         for (int i=0;i<chunk && atomic_load(&c->running);i++) {
@@ -904,6 +910,7 @@ static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *m
         }
 #endif
         if(detected<0)return -1;
+        atomic_fetch_add_explicit(&wake_processed_frames,1,memory_order_relaxed);
         if(detected>0)hit=true;
     }
     return hit;
@@ -1082,6 +1089,7 @@ static void wake_task(void *arg)
                 if(c){state("error","Voice microphone read failed");atomic_store(&c->running,false);}
                 xSemaphoreGive(wake_lock);break;
             }
+            atomic_fetch_add_explicit(&capture_frames,1,memory_order_relaxed);
             // M/R are sampled by the same I2S clock, as in the factory MR
             // input format. Queued outgoing PCM is not a playback clock.
             for(int i=0;i<chunk;++i){mic[i]=capture[2*i];ref[i]=c?capture[2*i+1]:0;}

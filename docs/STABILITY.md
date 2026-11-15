@@ -93,6 +93,19 @@ records uptime, firmware/app SHA, voice/wake/media/display/OTA state, image
 allocation sizes, packet/FIFO/wake/camera counters, and network-connected status.
 The HTTP response is limited to 64 KiB with a four-second network timeout.
 
+New firmware also reports `voice.capture_frames` (successful full I2S reads)
+and `voice.wake.processed_frames` (successful detector calls), both cumulative
+since boot. These counters contain no audio. The monitor reports
+`audio_progress` separately from HTTP health: an online board can still have a
+stuck microphone or detector. `suspected_audio_stalls` lists a layer when its
+counter did not advance between contiguous samples while that layer was
+expected to run. Capture is expected during wake listening or an active call;
+the detector is expected only during idle wake listening. Muting, suspending,
+changing boots/apps or a monitoring gap resets the comparison. Older firmware
+reports `unreported`, rather than a false stall. Counter wrap counts as progress.
+This detects lack of processing, not recognition accuracy, acoustic quality or
+whether hardware samples were dropped. It never restarts or unmutes the board.
+
 New firmware also reports the numeric ESP-IDF `reset_reason`; the monitor retains
 it in samples and observed boot-boundary events. Older firmware is recorded as
 `null`, preserving compatibility. IDF 5.5.4 codes include 1=power-on, 2=external

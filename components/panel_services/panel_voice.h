@@ -20,6 +20,8 @@ typedef struct {
     char greeting_state[24];
     bool wake_enabled, wake_listening, wake_initiated;
     unsigned wake_detections, buffered_ms, replayed_ms;
+    // Successful full I2S reads and detector calls since boot; no audio data.
+    unsigned capture_frames, wake_processed_frames;
     char wake_state[32];
 } panel_voice_snapshot_t;
 

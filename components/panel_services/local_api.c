@@ -145,12 +145,14 @@ static cJSON *voice_json(void)
     cJSON_AddStringToObject(j,"input_mode",panel_voice_input_mode_name(v.input_mode));
     cJSON_AddStringToObject(j,"preferred_input_mode",panel_voice_input_mode_name(v.preferred_input_mode));
     cJSON_AddBoolToObject(j,"microphone_muted",v.microphone_muted);
+    cJSON_AddNumberToObject(j,"capture_frames",v.capture_frames);
     cJSON *wake=cJSON_AddObjectToObject(j,"wake");
     cJSON_AddBoolToObject(wake,"enabled",v.wake_enabled);
     cJSON_AddBoolToObject(wake,"listening",v.wake_listening);
     cJSON_AddStringToObject(wake,"word",panel_voice_wake_word());
     cJSON_AddStringToObject(wake,"state",v.wake_state);
     cJSON_AddNumberToObject(wake,"detections",v.wake_detections);
+    cJSON_AddNumberToObject(wake,"processed_frames",v.wake_processed_frames);
     cJSON_AddBoolToObject(wake,"initiated_call",v.wake_initiated);
     cJSON_AddNumberToObject(wake,"buffered_ms",v.buffered_ms);
     cJSON_AddNumberToObject(wake,"transmitted_ms",v.replayed_ms);

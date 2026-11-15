@@ -50,6 +50,80 @@ class StabilityMonitorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             monitor.sample(current, 'test-board', 1000000)
 
+    def progress_row(self, timestamp, capture=100, wake=100):
+        s = status()
+        s['voice']['capture_frames'] = capture
+        s['voice']['wake']['processed_frames'] = wake
+        s['uptime_s'] += timestamp - 1000000
+        return dict(monitor.sample(s, 'test-board', timestamp), boot=1)
+
+    def test_audio_progress_distinguishes_capture_and_detector_stalls(self):
+        previous = self.progress_row(1000000)
+        current = self.progress_row(1000030, capture=110)
+        progress = monitor.audio_progress(previous, current, 30)
+        self.assertEqual(progress['capture'], 'advancing')
+        self.assertEqual(progress['wake'], 'no_progress')
+        current['counters']['capture_frames'] = 100
+        self.assertEqual(monitor.audio_progress(previous, current, 30)['capture'], 'no_progress')
+        current['phase'].update(voice_active=True, voice_busy=True, wake_listening=False)
+        previous['phase'].update(voice_active=True, voice_busy=True, wake_listening=False)
+        progress = monitor.audio_progress(previous, current, 30)
+        self.assertEqual(progress['capture'], 'no_progress')
+        self.assertEqual(progress['wake'], 'inactive')
+
+    def test_audio_progress_requires_a_contiguous_expected_observation(self):
+        previous = self.progress_row(1000000)
+        current = self.progress_row(1000030)
+        for field, value in (('boot', 2), ('app_sha256', 'b' * 64), ('t', 1000600), ('uptime_s', 2)):
+            changed = dict(current, **{field: value})
+            self.assertEqual(monitor.audio_progress(previous, changed, 30)['wake'], 'starting')
+        current['phase']['wake_listening'] = False
+        self.assertEqual(monitor.audio_progress(previous, current, 30)['wake'], 'inactive')
+        previous['phase']['wake_listening'] = False
+        current['phase']['wake_listening'] = True
+        self.assertEqual(monitor.audio_progress(previous, current, 30)['wake'], 'starting')
+
+    def test_old_firmware_and_counter_wrap_do_not_report_a_stall(self):
+        previous = self.progress_row(1000000, capture=2**32 - 1, wake=2**32 - 1)
+        current = self.progress_row(1000030, capture=0, wake=0)
+        progress = monitor.audio_progress(previous, current, 30)
+        self.assertEqual(progress['capture'], 'advancing')
+        self.assertEqual(progress['wake'], 'advancing')
+        old = monitor.sample(status(), 'test-board', 1000030)
+        self.assertEqual(monitor.audio_progress(previous, old, 30)['wake'], 'unreported')
+        previous['counters'].pop('wake_processed_frames')
+        self.assertEqual(monitor.audio_progress(previous, current, 30)['wake'], 'starting')
+        invalid = status()
+        invalid['voice']['capture_frames'] = True
+        with self.assertRaises(ValueError):
+            monitor.sample(invalid, 'test-board', 1000000)
+
+    def test_online_monitor_reports_no_audio_progress_and_clears_it_on_recovery(self):
+        with tempfile.TemporaryDirectory() as root:
+            m = monitor.Monitor(dict(status_url='http://unused/status', expected_slug='test-board',
+                                     state_dir=root, interval_s=30))
+            s = status()
+            s['voice']['capture_frames'] = 10
+            s['voice']['wake']['processed_frames'] = 10
+            def poll(timestamp):
+                s['uptime_s'] = timestamp - 999000
+                with patch.object(monitor.time, 'time', return_value=timestamp), patch.object(
+                        monitor.urllib.request, 'urlopen', return_value=io.BytesIO(json.dumps(s).encode())):
+                    return m.poll()
+            poll(1000000)
+            state = poll(1000030)
+            self.assertEqual(state['health'], 'online')
+            self.assertEqual(state['suspected_audio_stalls'], ['capture', 'wake'])
+            s['voice']['capture_frames'] += 10
+            s['voice']['wake']['processed_frames'] += 10
+            self.assertEqual(poll(1000060)['suspected_audio_stalls'], [])
+            with patch.object(monitor.urllib.request, 'urlopen', side_effect=OSError('private-url')):
+                m.poll()
+            self.assertEqual(poll(1000090)['audio_progress']['wake'], 'starting')
+            s['voice']['wake']['listening'] = False
+            s['voice']['microphone_muted'] = True
+            self.assertEqual(poll(1000120)['suspected_audio_stalls'], [])
+
     def rows(self, decline=False, separate_phases=False):
         rows = []
         for i in range(60):
