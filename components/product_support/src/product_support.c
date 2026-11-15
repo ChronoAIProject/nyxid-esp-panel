@@ -96,6 +96,10 @@ static void audio_callback(audio_player_cb_ctx_t *ctx)
 
 int product_display_brightness_get(void)
 {
+#if CONFIG_NYX_PANEL_BOARD_LCD_X8
+    uint32_t duty = ledc_get_duty(LEDC_LOW_SPEED_MODE, CONFIG_BSP_DISPLAY_BRIGHTNESS_LEDC_CH);
+    return (int)((duty * 100 + 511) / 1023);
+#else
     uint8_t reg_addr = PRODUCT_BRIGHTNESS_REG;
     uint8_t data = 0;
     i2c_master_dev_handle_t dev_handle = NULL;
@@ -131,6 +135,7 @@ int product_display_brightness_get(void)
     }
 
     return (data * 100 + 127) / 255;
+#endif
 }
 
 esp_err_t product_i2s_read(void *audio_buffer, size_t len, size_t *bytes_read, uint32_t timeout_ms)

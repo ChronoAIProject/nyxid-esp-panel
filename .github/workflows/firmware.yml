@@ -29,9 +29,11 @@ jobs:
       matrix:
         include:
           - profile: p4-rev1-16mb
-            revision: rev1_3
+            defaults: sdkconfig.defaults;sdkconfig.rev1_3.defaults;sdkconfig.board-16mb.defaults
           - profile: p4-rev3-16mb
-            revision: rev3_x
+            defaults: sdkconfig.defaults;sdkconfig.rev3_x.defaults;sdkconfig.board-16mb.defaults
+          - profile: p4-rev3-lcd-x8-16mb
+            defaults: sdkconfig.defaults;sdkconfig.rev3_x.defaults;sdkconfig.board-16mb.defaults;sdkconfig.lcd-8inch-a.defaults
     container: espressif/idf:v5.5.4
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +48,7 @@ jobs:
         shell: bash
         run: |
           . "$IDF_PATH/export.sh"
-          idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.${{ matrix.revision }}.defaults;sdkconfig.board-16mb.defaults" build
+          idf.py -D SDKCONFIG_DEFAULTS="${{ matrix.defaults }}" build
       - name: Package production OTA and factory images
         run: python3 tools/package_release.py --build build --output dist --profile '${{ matrix.profile }}'
       - uses: actions/upload-artifact@v4
