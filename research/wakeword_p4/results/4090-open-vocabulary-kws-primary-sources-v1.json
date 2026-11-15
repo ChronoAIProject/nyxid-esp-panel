@@ -1,0 +1,43 @@
+{
+  "accessed_utc": "2026-11-15T02:29:59.739301+00:00",
+  "sources": [
+    {
+      "url": "https://k2-fsa.github.io/sherpa/onnx/kws/index.html",
+      "bytes": 26306,
+      "sha256": "04b7ce6d20ca549d07e3eb882c5aa57b7293fc6546d6e2d5a96421074728e94a"
+    },
+    {
+      "url": "https://api.github.com/repos/k2-fsa/sherpa-onnx/releases/tags/kws-models",
+      "bytes": 11221,
+      "sha256": "7f584c801efc688bcaf0c0bcc89c209d1a115ea168eb0d513e86e54bafed4e57"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/78022953788ff05f62f4a733c6268a5689efeb86/python-api-examples/keyword-spotter.py",
+      "bytes": 3771,
+      "sha256": "18a6425a297db4d947ac49fcb53d1cca2646be47cbe9ff5c3901c25a021f2ab8"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/78022953788ff05f62f4a733c6268a5689efeb86/sherpa-onnx/python/sherpa_onnx/keyword_spotter.py",
+      "bytes": 9526,
+      "sha256": "6b8ed936d10e98c066a993e8dc58342aa8f4f0f04083706b178e3fe7fb5a4452"
+    }
+  ],
+  "upstream_example_commit": "78022953788ff05f62f4a733c6268a5689efeb86",
+  "runtime_versions": {
+    "sherpa_onnx": "2.0.1",
+    "sherpa_onnx_core": "2.0.1",
+    "sentencepiece": "0.2.1"
+  },
+  "archive": {
+    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/kws-models/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01.tar.bz2",
+    "bytes": 17626723,
+    "sha256": "f170013b4716e41b62b9bfd809687c207cef798ef9bc6534d524e17af9b6561a",
+    "official_release_checksum_matched": true
+  },
+  "primary_claims": [
+    "Open vocabulary keyword spotting uses a tiny ASR constrained to selected keyword token sequences, without keyword-specific retraining.",
+    "Keyword boost and trigger threshold trade hit rate and false alarms; use fixed upstream defaults, no development sweeps.",
+    "Official Python example accepts full waveforms, adds0.66seconds silence and resets native keyword stream on each detection."
+  ],
+  "scope": "New native ASR-token reference only, not model quality, phone truth, MCU INT8 feasibility or promotion. Prior openWakeWord embedding-head failures and wav2vec2/Whisper lexical-disagreement evidence retained."
+}
