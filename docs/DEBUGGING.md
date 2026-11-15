@@ -86,6 +86,15 @@ firmware. Packaging also rejects a build labeled with the other board's profile.
 The BSP compatibility patch is conditional on `CONFIG_NYX_PANEL_BOARD_LCD_X8`;
 the external-screen configuration uses the original BSP behavior.
 
+The integrated panel uses the official 12-line vertical back porch (the generic
+Waveshare 800x1280 macro uses 10). Its GT911 register transport uses a finite
+50 ms I2C timeout and a 7-cycle bus glitch filter. The IDF 5.5 generic panel IO
+uses an infinite timeout: a touch NACK followed by a stuck-busy bus can leave
+`lvgl` spinning in `s_i2c_send_commands`, starve `IDLE1`, and block audio codec
+operations on the shared bus. Keep the watchdog enabled; check UART for that
+stack and for DSI `underrun` errors when investigating a solid-color flash.
+This recovery does not reset the display or reinitialize the shared bus.
+
 Local **voice only**, with the node still on production:
 
 ```sh
