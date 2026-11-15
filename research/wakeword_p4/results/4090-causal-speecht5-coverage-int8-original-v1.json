@@ -1,0 +1,138 @@
+{
+  "schema": "causal-speecht5-coverage-int8-original-v1",
+  "plan_sha256": "52a4bc877e0fa23a311eb7e54935fd2a1dfe6ab16648d73d7823ccb78291c0d7",
+  "launch": {
+    "pid": 3320472,
+    "proc_starttime": "8168352",
+    "plan_sha256": "52a4bc877e0fa23a311eb7e54935fd2a1dfe6ab16648d73d7823ccb78291c0d7"
+  },
+  "model": {
+    "path": ".local/wakeword/causal-speecht5-coverage-int8-v1/int8.tflite",
+    "bytes": 60952,
+    "sha256": "79c33ec6c2f2938259482c3ac50dcca9fb3e04033ebecf38c69c2712856a86e2"
+  },
+  "ops": [
+    "CALL_ONCE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "EXPAND_DIMS",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "RESHAPE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "QUANTIZE"
+  ],
+  "initializers": [
+    {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        4,
+        1,
+        30
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        8,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        12,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        20,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        57,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    }
+  ],
+  "input_quantization": [
+    0.10196078568696976,
+    -128
+  ],
+  "output_quantization": [
+    0.00390625,
+    0
+  ],
+  "functional_replay_calls": 200,
+  "repeat_comparison_performed": false,
+  "replay_sha256": "3c67441a93cdc2358a9340c50be1f43dbbb3e36f25870b73cdce6a72fc9db425",
+  "source_weights_file_unchanged": true,
+  "all_static_and_runtime_abi_passed": true,
+  "recognition_scored": false,
+  "policy": "Original fixedfinal20000 causal candidate only. SpeechT5 paired-source data-coverage experiment; same exercised one builtinINT8 exporter/context309/sixrealzero states/frozenBN/rawsigmoid. Representative material fixed before formal training: zero/26 then first16actualbatch1/actual lengths/final<=2featurezero pads; no intermediate reset. StaticABI and one fresh interpreter functional replay, no FP32 export/comparison or calibration retry. Basic file integrity/interface/reset/function checks only, no savedstate numericalaudit or equality gate. Actual complete waveform INT8 recognition follows. No threshold selection/freshdev/acceptance/qualification here; v30 retained."
+}
