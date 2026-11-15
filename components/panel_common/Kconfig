@@ -1,5 +1,14 @@
 menu "WebRTC Demo Common"
 
+config NYX_PANEL_BOARD_LCD_X8
+   bool "Waveshare ESP32-P4-WIFI6-Touch-LCD-X 8-inch board"
+   default n
+   depends on IDF_TARGET_ESP32P4 && ESP32P4_REV_MIN_FULL >= 300 && BSP_LCD_TYPE_800_1280_8_INCH_A
+   help
+      Select the integrated LCD-X8 board wiring: LCD reset on GPIO 27,
+      PWM backlight on GPIO 26, ES8311 speaker and ES7210 microphones.
+      The default remains the ESP32-P4-Platform with an external DSI LCD.
+
 config NETWORK_USE_ETHERNET
    bool "Network use Ethernet"
    default n

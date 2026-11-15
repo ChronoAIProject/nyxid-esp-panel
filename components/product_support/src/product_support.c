@@ -22,6 +22,7 @@
 
 #include "bsp/esp-bsp.h"
 #include "product_support.h"
+#include "product_audio_layout.h"
 #include "freertos/semphr.h"
 
 static const char *TAG = "product_support";
@@ -96,6 +97,10 @@ static void audio_callback(audio_player_cb_ctx_t *ctx)
 
 int product_display_brightness_get(void)
 {
+#if CONFIG_NYX_PANEL_BOARD_LCD_X8
+    uint32_t duty = ledc_get_duty(LEDC_LOW_SPEED_MODE, CONFIG_BSP_DISPLAY_BRIGHTNESS_LEDC_CH);
+    return (int)((duty * 100 + 511) / 1023);
+#else
     uint8_t reg_addr = PRODUCT_BRIGHTNESS_REG;
     uint8_t data = 0;
     i2c_master_dev_handle_t dev_handle = NULL;
@@ -131,14 +136,34 @@ int product_display_brightness_get(void)
     }
 
     return (data * 100 + 127) / 255;
+#endif
 }
 
 esp_err_t product_i2s_read(void *audio_buffer, size_t len, size_t *bytes_read, uint32_t timeout_ms)
 {
+#if CONFIG_NYX_PANEL_BOARD_LCD_X8
+    // Capture stays 16-bit M/R even when a media player changes output format.
+    // Read complete four-slot TDM frames with one reader and bounded scratch space.
+    if (bytes_read) *bytes_read = 0;
+    if ((!audio_buffer && len) || len % (2 * sizeof(int16_t))) return ESP_ERR_INVALID_ARG;
+    int16_t tdm[128 * 4];
+    size_t done = 0;
+    while (done < len) {
+        size_t frames = (len - done) / (2 * sizeof(int16_t));
+        if (frames > 128) frames = 128;
+        esp_err_t ret = esp_codec_dev_read(record_dev_handle, tdm, frames * 4 * sizeof(int16_t));
+        if (ret != ESP_OK) return ret;
+        product_lcd_x8_normalize_capture((int16_t *)((uint8_t *)audio_buffer + done), tdm, frames);
+        done += frames * 2 * sizeof(int16_t);
+        if (bytes_read) *bytes_read = done;
+    }
+    return ESP_OK;
+#else
     esp_err_t ret = ESP_OK;
     ret = esp_codec_dev_read(record_dev_handle, audio_buffer, len);
     *bytes_read = len;
     return ret;
+#endif
 }
 
 esp_err_t product_i2s_write(void *audio_buffer, size_t len, size_t *bytes_written, uint32_t timeout_ms)
@@ -151,6 +176,33 @@ esp_err_t product_i2s_write(void *audio_buffer, size_t len, size_t *bytes_writte
 
 esp_err_t product_codec_set_fs(uint32_t rate, uint32_t bits_cfg, i2s_slot_mode_t ch)
 {
+#if CONFIG_NYX_PANEL_BOARD_LCD_X8
+    // ES7210 needs all four 16-bit slots for MIC3 to remain the echo reference.
+    // Playback shares the clock but retains the format requested by the player.
+    ESP_RETURN_ON_FALSE(play_dev_handle && record_dev_handle, ESP_ERR_INVALID_STATE, TAG, "Codec is not initialized");
+    ESP_RETURN_ON_FALSE((bits_cfg == 16 || bits_cfg == 32) &&
+                       (ch == I2S_SLOT_MODE_MONO || ch == I2S_SLOT_MODE_STEREO),
+                       ESP_ERR_NOT_SUPPORTED, TAG, "Unsupported LCD-X8 audio format");
+    esp_codec_dev_sample_info_t input_fs = {
+        .sample_rate = rate, .channel = 4, .channel_mask = 0xF, .bits_per_sample = 16,
+    };
+    esp_codec_dev_sample_info_t output_fs = {
+        .sample_rate = rate, .channel = ch, .bits_per_sample = bits_cfg,
+    };
+    esp_err_t ret = esp_codec_dev_close(record_dev_handle);
+    if (ret == ESP_OK) ret = esp_codec_dev_close(play_dev_handle);
+    if (ret == ESP_OK) ret = esp_codec_dev_open(play_dev_handle, &output_fs);
+    if (ret == ESP_OK) ret = esp_codec_dev_open(record_dev_handle, &input_fs);
+    if (ret == ESP_OK) ret = esp_codec_dev_set_in_channel_gain(record_dev_handle,
+        ES7210_SEL_MIC1 | ES7210_SEL_MIC2, PRODUCT_CODEC_DEFAULT_ADC_VOLUME);
+    // MIC3 carries the line-level DAC output; microphone gain would clip it.
+    if (ret == ESP_OK) ret = esp_codec_dev_set_in_channel_gain(record_dev_handle, ES7210_SEL_MIC3, 0.0f);
+    if (ret != ESP_OK) {
+        (void)esp_codec_dev_close(record_dev_handle);
+        (void)esp_codec_dev_close(play_dev_handle);
+    }
+    return ret;
+#else
     esp_err_t ret = ESP_OK;
 
     esp_codec_dev_sample_info_t fs = {
@@ -174,6 +226,7 @@ esp_err_t product_codec_set_fs(uint32_t rate, uint32_t bits_cfg, i2s_slot_mode_t
         ret |= esp_codec_dev_open(record_dev_handle, &fs);
     }
     return ret;
+#endif
 }
 
 esp_err_t product_codec_volume_set(int volume, int *volume_set)
@@ -236,7 +289,8 @@ esp_err_t product_codec_init(void)
     record_dev_handle = bsp_audio_codec_microphone_init();
     assert((record_dev_handle) && "record_dev_handle not initialized");
 
-    product_codec_set_fs(PRODUCT_CODEC_DEFAULT_SAMPLE_RATE, PRODUCT_CODEC_DEFAULT_BIT_WIDTH, PRODUCT_CODEC_DEFAULT_CHANNEL);
+    ESP_RETURN_ON_ERROR(product_codec_set_fs(PRODUCT_CODEC_DEFAULT_SAMPLE_RATE, PRODUCT_CODEC_DEFAULT_BIT_WIDTH,
+                                           PRODUCT_CODEC_DEFAULT_CHANNEL), TAG, "Open codecs failed");
 
     _is_audio_init = true;
 

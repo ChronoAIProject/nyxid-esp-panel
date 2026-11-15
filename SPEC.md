@@ -32,6 +32,13 @@ JD9365 800×1280 DSI display, GT911 touch, OV5647 CSI camera and ES8311 audio.
 Use ESP-IDF 5.5.x with the explicit legacy silicon profile. A separate rev3_x
 configuration is permitted, but it cannot substitute for a verified v1.3 build.
 
+The integrated Waveshare ESP32-P4-WIFI6-Touch-LCD-X 8-inch rev3 board uses a
+separate `p4-rev3-lcd-x8-16mb` build/OTA profile: JD9365 800×1280 with its own
+initialization sequence, GPIO27 reset, GPIO26 PWM backlight, ES8311 output and
+ES7210 TDM input. Its product audio adapter exposes the existing signed 16-bit
+microphone/reference pair from MIC1/MIC3 without another capture pipeline or
+resampling. It retains the same 16 MiB partition layout even on 32 MiB flash.
+
 The existing factory image is backed up separately on the operator's machine.
 Never commit that backup or restore a raw NVS image from another device.
 

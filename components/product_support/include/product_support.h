@@ -102,6 +102,9 @@ esp_err_t product_codec_set_fs(uint32_t rate, uint32_t bits_cfg, i2s_slot_mode_t
 /**
  * @brief Read data from recoder.
  *
+ * LCD-X8 always returns interleaved signed 16-bit microphone/echo-reference
+ * frames; playback format changes do not alter its capture layout.
+ *
  * @param audio_buffer: The pointer of receiving data buffer
  * @param len: Max data buffer length
  * @param bytes_read: Byte number that actually be read, can be NULL if not needed

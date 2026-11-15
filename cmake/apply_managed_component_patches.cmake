@@ -4,6 +4,7 @@ set(_ha_cam_managed_component_patches
     "gmf_video_force_sw_mjpeg.patch"
     "esp_video_codec_sw_mjpeg_rgb565.patch"
     "esp_lvgl_adapter_dma_scanout.patch"
+    "waveshare_lcd_x8_board.patch"
 )
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/managed_components")

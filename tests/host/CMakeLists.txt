@@ -19,6 +19,8 @@ function(haCam_add_test name)
 endfunction()
 
 haCam_add_test(test_smoke)
+haCam_add_test(test_product_audio_layout)
+target_include_directories(test_product_audio_layout PRIVATE ../../components/product_support/include)
 haCam_add_test(test_scanout_gate)
 target_include_directories(test_scanout_gate PRIVATE ../../compat/include)
 haCam_add_test(test_mailbox ../../components/panel_services/mailbox.c)

@@ -12,7 +12,9 @@ Do not disconnect power while the update is being written.
 
 Only a strictly newer stable `major.minor.patch` version for the compiled
 hardware profile is eligible. Legacy P4 and revision 3 P4 have separate release
-assets and manifests. HTTPS certificate validation stays enabled across every
+assets and manifests. The integrated LCD-X8 board also uses its own
+`p4-rev3-lcd-x8-16mb` assets, so it cannot automatically install an external-screen
+image. HTTPS certificate validation stays enabled across every
 redirect; release URLs are restricted to this repository and GitHub asset hosts.
 The manifest's exact size, SHA256, project name and app-descriptor version are
 checked before flash writes. IDF validates image/chip compatibility before
@@ -58,7 +60,7 @@ USB console equivalent: `panel-update status|check|install|auto on|off`.
 ## Publish a version
 
 1. Update `VERSION` and open a PR. Firmware CI runs all host/release tests and
-   builds both hardware profiles with ESP-IDF 5.5.4.
+   builds all three hardware profiles with ESP-IDF 5.5.4.
 2. Merge the tested change to `main`, then tag that exact commit:
 
    ```sh

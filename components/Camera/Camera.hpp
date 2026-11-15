@@ -50,7 +50,6 @@ private:
     TaskHandle_t _preview_task_handle = nullptr;
     TaskHandle_t _close_wait_task = nullptr;
     int _video_fd = -1;
-    bool _video_driver_initialized = false;
     std::atomic_bool _preview_running{false};
     bool _dummy_enabled = false;
     bool _lvgl_paused = false;
