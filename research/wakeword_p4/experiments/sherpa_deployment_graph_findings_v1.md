@@ -1,0 +1,13 @@
+# Sequence reference: static deployment audit
+
+Original ONNX protobuf inventory, no inference or new audio consumption. Reproduce with `/usr/bin/python3 research/wakeword_p4/experiments/audit_sherpa_deployment_graph_v1.py` in an output-free checkout. Original file hashes, operator inventories, typed interfaces and metadata are in `../results/4090-sherpa-deployment-graph-audit-v1.json`.
+
+The consumed reference used 6,033,728 bytes of models. The archive also contains an INT8-named decoder, making a different available triplet 5,248,524 bytes; that triplet has not been scored and inherits none of the reference's wakeword results. Merely swapping it does not create a qualified detector.
+
+Encoder batch-one explicit incoming state is **318,984 bytes across 38 tensors**; feature input adds 14,400 bytes. This is a static lower bound, excluding new state buffers, internal activations, model weights, frontend, runtime and token-search memory. Allocation aliasing and peak RAM are unmeasured. Encoder caches and features remain FLOAT. The INT8 graph includes dynamic quantization/integer matmul alongside float convolution, attention matmul, softmax, exp/log and other float operations. Smaller weight files do not establish an all-integer TFLite Micro graph.
+
+Upstream metadata says decode_chunk_len=32, T=45. These are feature geometry, not an isolated latency measurement. No reliable MAC/s, P4 speed or RAM conclusion follows from counting graph operators. Direct P4 conversion remains unproven; this audit neither rejects every possible mixed-runtime port nor authorizes a new firmware handoff.
+
+Decision: retain the native lexical-sequence reference as evidence of a different discrimination mechanism, but do not spend a fresh training budget on a copied small CTC head or claim weight quantization solves deployment. Any next compact-sequence protocol needs (1) source-disjoint training supervision for full nearwords including Nick versus Nicks; (2) explicit causal receptive field/state and token/blank event timing; (3) an integer-supported operator and memory/compute budget; and (4) a concrete distinction from the already failed compact CTC experiments. Source-only auditing can precede that protocol without opening sealed development or acceptance material. No candidate promoted; v30 and Mac c161 unchanged.
+
+Latest MatchboxNet failure and complete public evidence were communicated in Issue #13 comment 6900134674. Disk reserve remains 100 GiB; approximately 554 GiB free at this audit. No training job is running: RTX4090 training finished; CPU TFLite execution was deployment-byte inference rather than a CPU training fallback. Broad synthetic qualification goal remains active and unmet.

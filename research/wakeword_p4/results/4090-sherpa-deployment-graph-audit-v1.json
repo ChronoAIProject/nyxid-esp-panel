@@ -1,0 +1,1972 @@
+{
+  "schema": "sherpa-deployment-graph-audit-v1",
+  "script_sha256": "11d4c24818dcd944cb5ab03461943a076a9b214530e10a7a9a2ba64b428a67da",
+  "onnx_version": "1.23.2",
+  "graphs": [
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/decoder-epoch-12-avg-2-chunk-16-left-64.int8.onnx",
+      "bytes": 277985,
+      "sha256": "e40ff43297abe815e8898494c17e71bba2152d9d40fa3eb803f75d0f7533329a",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Add": 1,
+        "Cast": 3,
+        "Clip": 1,
+        "Constant": 4,
+        "Conv": 1,
+        "DequantizeLinear": 1,
+        "DynamicQuantizeLinear": 1,
+        "Gather": 1,
+        "GreaterOrEqual": 1,
+        "MatMulInteger": 1,
+        "Mul": 3,
+        "Relu": 1,
+        "Squeeze": 1,
+        "Transpose": 2,
+        "Unsqueeze": 1
+      },
+      "inputs": [
+        {
+          "name": "y",
+          "dtype": "INT64",
+          "dimensions": [
+            "N",
+            2
+          ],
+          "batch_one_bytes": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "decoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        }
+      ],
+      "initializers": {
+        "count": 8,
+        "logical_bytes": 273930
+      },
+      "metadata": {
+        "onnx.infer": "onnxruntime.quant",
+        "context_size": "2",
+        "vocab_size": "500"
+      }
+    },
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/decoder-epoch-12-avg-2-chunk-16-left-64.onnx",
+      "bytes": 1063189,
+      "sha256": "f61ebd3eed3773a44d088d53dfae92dbb6aec4839f4dcaee2d402414741663a3",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Cast": 2,
+        "Clip": 1,
+        "Constant": 4,
+        "Conv": 1,
+        "Gather": 1,
+        "Gemm": 1,
+        "GreaterOrEqual": 1,
+        "Mul": 1,
+        "Relu": 1,
+        "Squeeze": 1,
+        "Transpose": 2,
+        "Unsqueeze": 1
+      },
+      "inputs": [
+        {
+          "name": "y",
+          "dtype": "INT64",
+          "dimensions": [
+            "N",
+            2
+          ],
+          "batch_one_bytes": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "decoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        }
+      ],
+      "initializers": {
+        "count": 4,
+        "logical_bytes": 1061120
+      },
+      "metadata": {
+        "context_size": "2",
+        "vocab_size": "500"
+      }
+    },
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/encoder-epoch-12-avg-2-chunk-16-left-64.int8.onnx",
+      "bytes": 4807159,
+      "sha256": "1e721676515bcd42a186979733981213c66c80db680e1cc582dfedf3be76e678",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Abs": 4,
+        "Add": 318,
+        "Cast": 182,
+        "Concat": 160,
+        "Constant": 1583,
+        "ConstantOfShape": 19,
+        "Conv": 30,
+        "Div": 24,
+        "DynamicQuantizeLinear": 104,
+        "Equal": 42,
+        "Exp": 41,
+        "Expand": 30,
+        "Gather": 190,
+        "GatherElements": 6,
+        "LessOrEqual": 1,
+        "Log": 34,
+        "MatMul": 30,
+        "MatMulInteger": 110,
+        "Max": 4,
+        "Mul": 417,
+        "Neg": 16,
+        "Pow": 14,
+        "Range": 12,
+        "ReduceMean": 7,
+        "ReduceSum": 6,
+        "Reshape": 102,
+        "Shape": 220,
+        "Sigmoid": 12,
+        "Slice": 171,
+        "Softmax": 12,
+        "Sub": 167,
+        "Tanh": 6,
+        "Tile": 6,
+        "Transpose": 87,
+        "Unsqueeze": 364,
+        "Where": 60
+      },
+      "inputs": [
+        {
+          "name": "x",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            45,
+            80
+          ],
+          "batch_one_bytes": 14400
+        },
+        {
+          "name": "cached_key_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 32768
+        },
+        {
+          "name": "cached_nonlin_attn_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            64,
+            96
+          ],
+          "batch_one_bytes": 24576
+        },
+        {
+          "name": "cached_val1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_conv1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_key_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 16384
+        },
+        {
+          "name": "cached_nonlin_attn_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            32,
+            96
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_conv1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_key_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            16,
+            96
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            256
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            8,
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            16,
+            96
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 16384
+        },
+        {
+          "name": "cached_nonlin_attn_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            32,
+            96
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_conv1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "embed_states",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            3,
+            19
+          ],
+          "batch_one_bytes": 29184
+        },
+        {
+          "name": "processed_lens",
+          "dtype": "INT64",
+          "dimensions": [
+            "N"
+          ],
+          "batch_one_bytes": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "encoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            "Addencoder_out_dim_1",
+            320
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_0_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_0_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_0_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_0_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_0_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_0_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_1_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_1_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_1_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_1_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_1_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_1_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_2_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_2_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_2_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_2_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_2_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_2_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_3_dim_0",
+            "N",
+            256
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_3_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_3_dim_0",
+            "N",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_3_dim_0",
+            "N",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_3_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_3_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_4_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_4_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_4_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_4_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_4_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_4_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_5_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_5_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_5_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_5_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_5_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_5_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_embed_states",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            "Slicenew_embed_states_dim_1",
+            "Slicenew_embed_states_dim_2",
+            "Slicenew_embed_states_dim_3"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_processed_lens",
+          "dtype": "INT64",
+          "dimensions": [
+            "N"
+          ],
+          "batch_one_bytes": 8
+        }
+      ],
+      "initializers": {
+        "count": 555,
+        "logical_bytes": 3713946
+      },
+      "metadata": {
+        "onnx.infer": "onnxruntime.quant",
+        "model_type": "zipformer2",
+        "version": "1",
+        "model_author": "k2-fsa",
+        "comment": "streaming zipformer2",
+        "decode_chunk_len": "32",
+        "T": "45",
+        "num_encoder_layers": "1,1,1,1,1,1",
+        "encoder_dims": "128,128,128,128,128,128",
+        "cnn_module_kernels": "31,31,15,15,15,31",
+        "left_context_len": "64,32,16,8,16,32",
+        "query_head_dims": "32,32,32,32,32,32",
+        "value_head_dims": "12,12,12,12,12,12",
+        "num_heads": "4,4,4,8,4,4"
+      }
+    },
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/encoder-epoch-12-avg-2-chunk-16-left-64.onnx",
+      "bytes": 12174219,
+      "sha256": "063fbc1aeae8a9b574607a331a00e60371846ef9eaa3c1d9ea48176665dfc693",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Abs": 4,
+        "Add": 318,
+        "Cast": 72,
+        "Concat": 160,
+        "Constant": 1583,
+        "ConstantOfShape": 19,
+        "Conv": 30,
+        "Div": 24,
+        "Equal": 42,
+        "Exp": 41,
+        "Expand": 30,
+        "Gather": 190,
+        "GatherElements": 6,
+        "LessOrEqual": 1,
+        "Log": 34,
+        "MatMul": 140,
+        "Max": 4,
+        "Mul": 197,
+        "Neg": 16,
+        "Pow": 14,
+        "Range": 12,
+        "ReduceMean": 7,
+        "ReduceSum": 6,
+        "Reshape": 102,
+        "Shape": 220,
+        "Sigmoid": 12,
+        "Slice": 171,
+        "Softmax": 12,
+        "Sub": 167,
+        "Tanh": 6,
+        "Tile": 6,
+        "Transpose": 87,
+        "Unsqueeze": 364,
+        "Where": 60
+      },
+      "inputs": [
+        {
+          "name": "x",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            45,
+            80
+          ],
+          "batch_one_bytes": 14400
+        },
+        {
+          "name": "cached_key_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 32768
+        },
+        {
+          "name": "cached_nonlin_attn_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            64,
+            96
+          ],
+          "batch_one_bytes": 24576
+        },
+        {
+          "name": "cached_val1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            64,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_conv1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_key_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 16384
+        },
+        {
+          "name": "cached_nonlin_attn_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            32,
+            96
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_conv1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_key_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            16,
+            96
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            256
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            8,
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            8,
+            "N",
+            96
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 8192
+        },
+        {
+          "name": "cached_nonlin_attn_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            16,
+            96
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_val2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            16,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 3072
+        },
+        {
+          "name": "cached_conv1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_conv2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            7
+          ],
+          "batch_one_bytes": 3584
+        },
+        {
+          "name": "cached_key_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            128
+          ],
+          "batch_one_bytes": 16384
+        },
+        {
+          "name": "cached_nonlin_attn_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            32,
+            96
+          ],
+          "batch_one_bytes": 12288
+        },
+        {
+          "name": "cached_val1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_val2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            32,
+            "N",
+            48
+          ],
+          "batch_one_bytes": 6144
+        },
+        {
+          "name": "cached_conv1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "cached_conv2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            15
+          ],
+          "batch_one_bytes": 7680
+        },
+        {
+          "name": "embed_states",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            3,
+            19
+          ],
+          "batch_one_bytes": 29184
+        },
+        {
+          "name": "processed_lens",
+          "dtype": "INT64",
+          "dimensions": [
+            "N"
+          ],
+          "batch_one_bytes": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "encoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            "Addencoder_out_dim_1",
+            320
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_0_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_0_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_0_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_0_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_0_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_0",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_0_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_1_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_1_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_1_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_1_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_1_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_1",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_1_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_2_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_2_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_2_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_2_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_2_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_2",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_2_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_3_dim_0",
+            "N",
+            256
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_3_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_3_dim_0",
+            "N",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_3_dim_0",
+            "N",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_3_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_3",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_3_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_4_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_4_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_4_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_4_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_4_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_4",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_4_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_key_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_key_5_dim_0",
+            "N",
+            128
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_nonlin_attn_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            1,
+            "N",
+            "Slicenew_cached_nonlin_attn_5_dim_2",
+            96
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val1_5_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_val2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "Slicenew_cached_val2_5_dim_0",
+            "N",
+            48
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv1_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv1_5_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_cached_conv2_5",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            128,
+            "Slicenew_cached_conv2_5_dim_2"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_embed_states",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            "Slicenew_embed_states_dim_1",
+            "Slicenew_embed_states_dim_2",
+            "Slicenew_embed_states_dim_3"
+          ],
+          "batch_one_bytes": null
+        },
+        {
+          "name": "new_processed_lens",
+          "dtype": "INT64",
+          "dimensions": [
+            "N"
+          ],
+          "batch_one_bytes": 8
+        }
+      ],
+      "initializers": {
+        "count": 335,
+        "logical_bytes": 11341940
+      },
+      "metadata": {
+        "model_type": "zipformer2",
+        "version": "1",
+        "model_author": "k2-fsa",
+        "comment": "streaming zipformer2",
+        "decode_chunk_len": "32",
+        "T": "45",
+        "num_encoder_layers": "1,1,1,1,1,1",
+        "encoder_dims": "128,128,128,128,128,128",
+        "cnn_module_kernels": "31,31,15,15,15,31",
+        "left_context_len": "64,32,16,8,16,32",
+        "query_head_dims": "32,32,32,32,32,32",
+        "value_head_dims": "12,12,12,12,12,12",
+        "num_heads": "4,4,4,8,4,4"
+      }
+    },
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/joiner-epoch-12-avg-2-chunk-16-left-64.int8.onnx",
+      "bytes": 163380,
+      "sha256": "eae9da0c7e1e6c6a3f4cc42d167899c388f6c6701b94cb96320e4f55df79624c",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Add": 2,
+        "Cast": 1,
+        "DynamicQuantizeLinear": 1,
+        "MatMulInteger": 1,
+        "Mul": 2,
+        "Tanh": 1
+      },
+      "inputs": [
+        {
+          "name": "encoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        },
+        {
+          "name": "decoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        }
+      ],
+      "outputs": [
+        {
+          "name": "logit",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            500
+          ],
+          "batch_one_bytes": 2000
+        }
+      ],
+      "initializers": {
+        "count": 4,
+        "logical_bytes": 162005
+      },
+      "metadata": {
+        "onnx.infer": "onnxruntime.quant",
+        "joiner_dim": "320"
+      }
+    },
+    {
+      "path": ".local/wakeword/sherpa-kws-reference-v1/sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01/joiner-epoch-12-avg-2-chunk-16-left-64.onnx",
+      "bytes": 642462,
+      "sha256": "0d7a37e749d8055223029318d6ffae82db1dae2d315d0892a68ba5dad17c1d2d",
+      "opsets": [
+        {
+          "domain": "",
+          "version": 13
+        }
+      ],
+      "operators": {
+        "Add": 1,
+        "Gemm": 1,
+        "Tanh": 1
+      },
+      "inputs": [
+        {
+          "name": "encoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        },
+        {
+          "name": "decoder_out",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            320
+          ],
+          "batch_one_bytes": 1280
+        }
+      ],
+      "outputs": [
+        {
+          "name": "logit",
+          "dtype": "FLOAT",
+          "dimensions": [
+            "N",
+            500
+          ],
+          "batch_one_bytes": 2000
+        }
+      ],
+      "initializers": {
+        "count": 2,
+        "logical_bytes": 642000
+      },
+      "metadata": {
+        "joiner_dim": "320"
+      }
+    }
+  ],
+  "original_reference_model_bytes": 6033728,
+  "available_quantized_triplet_bytes": 5248524,
+  "encoder_batch_one_explicit_state_bytes": 318984,
+  "encoder_state_tensor_count": 38,
+  "encoder_feature_input_bytes": 14400,
+  "scope": "Static original protobuf inventory only. No candidate creation, inference, audio, acceptance access, conversion or numerical comparison.",
+  "conclusions": [
+    "The available INT8 decoder is a distinct original archive member, not the decoder used in the consumed native reference. No behavioral result transfers to it.",
+    "INT8 filenames describe weight/dynamic matmul quantization, not all-integer execution: encoder external features/caches/output are FLOAT; Conv, MatMul, Softmax, Exp, Log and other float paths remain.",
+    "Explicit input state bytes are a batch-one lower bound on live memory, excluding outgoing states, all intermediate activations, graph/runtime/search/frontend memory and model weights. Do not double-count aliased buffers or call it measured peak RAM.",
+    "decode_chunk_len=32 and T=45 are feature-frame geometry, not an isolated measured acoustic latency. Existing host-return latency includes frontend/decoder effects.",
+    "No P4 throughput/MAC count derived: dynamic graph and search need a separately specified implementation/profile. Static operator counts are not runtime cost.",
+    "Direct all-integer TFLite Micro deployment is unproven. Requires explicit float-path/state/attention replacement or a supported mixed runtime, a conversion audit and whole-system measurement. No automatic admission based on archive size.",
+    "Compact lexical-sequence research must preserve full nearword supervision, specify causal state and token timing/decoder events, and prove feasible operators before a new training budget. Prior small-encoder CTC failures remain relevant; copying a token head is insufficient."
+  ],
+  "candidate_promoted": false
+}
