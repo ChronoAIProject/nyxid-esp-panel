@@ -48,6 +48,26 @@ No TTS generation, Mac speaker fixture, raw microphone recording, new PCM speed,
 or inference-score agreement is needed for this memory check. It does not test
 recognition, AEC quality or first-utterance delivery.
 
+## Quiet-call timeout is not a connection failure
+
+The follow-up muted call connected in 5.32 seconds and exchanged media until
+NyxID's existing 180-second user-idle limit. The authenticated session-status
+endpoint confirmed `end_reason: idle` and 179 observed media seconds. The panel
+did not reset and returned to unmuted wake listening; subsequent read-only
+monitoring covered more than four minutes of that idle state.
+
+This does **not** pass the originally planned 30-minute conversation check. A
+silent 30-minute test is incompatible with the unmodified idle policy. Do not
+disable that policy or manufacture user activity to obtain a passing result.
+Long-conversation and acoustic/AEC acceptance still need representative use.
+The sanitized evidence is in
+`../results/mac-quiet-call-idle-stability-v1.json`.
+
+Judge usability from actual wake detection, commands, false wakes, timing and
+stability. Exact heap recovery is not required: use matched-state memory trends
+to find sustained resource loss. CPU/GPU or FP32/INT8 score agreement is not an
+acceptance gate.
+
 ## Temporary IDF diagnostic
 
 Apply `trace-call-and-rearm.patch` only in a disposable development checkout.

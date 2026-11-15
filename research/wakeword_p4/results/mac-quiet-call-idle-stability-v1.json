@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-15T01:51:28Z",
+  "scope": "Isolated USB development panel; normal firmware; muted real local NyxID/provider call. No TTS, speaker playback or microphone recording. Production panel untouched.",
+  "numerical_inference_agreement_required": false,
+  "source_fix_commit": "2d1262d2",
+  "image": {
+    "sha256": "5e9775457f55458ddbd92c6395a296b4ebb6e31b30784a408b6c29151383c544",
+    "app_descriptor_sha256": "c5edd0890bceadb52e685f70311e0d6a1fbb6f8553244232e780b96698ce5f4b",
+    "bytes": 5984288,
+    "diagnostic_tracing": false,
+    "wake_model_sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+    "fixes": [
+      "DTLS final owner cleanup",
+      "TLS role change setup cleanup"
+    ]
+  },
+  "planned_duration_s": 1800,
+  "long_call_qualified": false,
+  "test_design_correction": "A silent 30-minute call cannot exercise the unmodified 180-second user-idle policy. The driver incorrectly treated expected idle closure as a connection failure. Do not disable policy or invent activity just to pass this test.",
+  "connect_s": 5.323,
+  "active_samples": 35,
+  "observed_media_duration_s": 179,
+  "session_end": {
+    "state": "closed",
+    "created_at": "2026-11-15T01:43:17.743Z",
+    "closed_at": "2026-11-15T01:46:18.465Z",
+    "end_reason": "idle",
+    "observed_seconds": 179,
+    "final_usage_confirmed": true,
+    "muted": false,
+    "input_muted": false,
+    "idle_warning": false,
+    "resumable": false
+  },
+  "last_sampled_active": {
+    "uptime_s": 818,
+    "heap": {
+      "free": 20600468,
+      "spiram_free": 20545160,
+      "dma_free": 27035,
+      "dma_largest_free": 12288,
+      "internal_free": 66647,
+      "internal_largest_free": 31744
+    },
+    "voice_state": "active",
+    "active": true,
+    "busy": true,
+    "microphone_muted": true,
+    "wake_state": "muted",
+    "wake_listening": false,
+    "sent_packets": 8778,
+    "received_packets": 8851,
+    "call_seconds": 176,
+    "wake_detections": 0
+  },
+  "active_internal_free_range": [
+    66291,
+    66647
+  ],
+  "active_spiram_free_range": [
+    20545160,
+    20548508
+  ],
+  "active_packet_progress_monotonic": true,
+  "reset_observed": false,
+  "after_idle": {
+    "samples": 10,
+    "span_s": 271.5,
+    "internal_free_range": [
+      219119,
+      219119
+    ],
+    "spiram_free_range": [
+      20885408,
+      20885416
+    ],
+    "uptime_monotonic": true
+  },
+  "current_idle": {
+    "uptime_s": 1129,
+    "heap": {
+      "free": 20974392,
+      "spiram_free": 20885412,
+      "dma_free": 179507,
+      "dma_largest_free": 126976,
+      "internal_free": 219119,
+      "internal_largest_free": 126976
+    },
+    "voice_state": "idle",
+    "active": false,
+    "busy": false,
+    "microphone_muted": false,
+    "wake_state": "listening",
+    "wake_listening": true,
+    "sent_packets": 8878,
+    "received_packets": 8913,
+    "call_seconds": 178,
+    "wake_detections": 0
+  },
+  "confirmed": [
+    "Real provider connection transmitted and received media until expected idle close",
+    "Server confirmed idle as end reason and final usage",
+    "Development board returned to unmuted wake listening without an observed reset"
+  ],
+  "limits": [
+    "No 30-minute conversation acceptance",
+    "No acoustic recognition, connected first utterance or AEC acceptance",
+    "Matched-state heap drift is monitored; exact byte equality is not required"
+  ],
+  "full_goal_complete": false
+}
