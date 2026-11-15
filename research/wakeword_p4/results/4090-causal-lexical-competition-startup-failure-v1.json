@@ -1,0 +1,19 @@
+{
+  "schema": "causal-lexical-competition-startup-failure-v1",
+  "session_id": 33691,
+  "exit_code": 1,
+  "launch": {
+    "pid": 2900924,
+    "proc_starttime": "7629438",
+    "plan_sha256": "0ca0ac4d169df4c7e194884f1abde35d9dc363b1a31b00f469f5d5f6caec47c8"
+  },
+  "optimizer_updates": 0,
+  "first_update_completed": false,
+  "original_failure": {
+    "path": "research/wakeword_p4/results/4090-causal-lexical-competition-startup-failure-original-v1.log.gz",
+    "sha256": "14abfb7afba1f57b010e0751492f346b1a18b6a4aba202bd6de992517302b84a",
+    "original_sha256": "8316882ca97d9551c485b70e8e052831179b3a348a7e9ace457d25ae3200e2cd"
+  },
+  "cause": "AutoGraph recovered historical source from filename of dynamically compiled AST; old scalar-head assertion reappeared during first tf.function trace.",
+  "correction": "Separate explicit six-class graph v2, unchanged training recipe; retain original v1 sources/lock/output and create separate v2 execution lock/output."
+}
