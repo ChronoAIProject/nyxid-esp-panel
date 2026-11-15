@@ -1,0 +1,935 @@
+{
+  "schema": "causal-existing-nearword-fixed-reference-behavior-v1",
+  "threshold": 0.91796875,
+  "comparisons": [
+    {
+      "model": "existing-nearword",
+      "source": ".local/wakeword/causal-existing-nearword-primed-v1/diagnostic/hey_nyx-existing-nearword.jsonl",
+      "source_sha256": "b24f4eb6ca170efcf5b1434d39d12ea0396ab4f8241ca6257879ead3fbcba830",
+      "summary": {
+        "model": "hey_nyx-existing-nearword",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 34,
+            "complete": 32,
+            "before_only": 2,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 134.625,
+              "p95": 205.92187499999991,
+              "observed": 34
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 7,
+            "before_only": 2,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 248.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 25,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 139.5,
+              "p95": 189.39999999999995,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 10,
+            "before_only": 1,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 132.6875,
+              "p95": 200.0,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 11,
+            "before_only": 1,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 112.84375,
+              "p95": 182.58124999999998,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 226.59375,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 3,
+            "events": 3
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "by_carrier": {
+        "bare": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 7,
+          "misses": 0,
+          "first_event_before_generated_prefix": 2,
+          "first_event_0_to_300ms": 7,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            -18.25,
+            -18.25,
+            101.75,
+            230.5,
+            140.5,
+            260.5,
+            87.25,
+            57.25,
+            57.25
+          ],
+          "hit_conditioned_median_ms": 87.25
+        },
+        "turn on the light": {
+          "clips": 9,
+          "any_after_source": 7,
+          "complete": 7,
+          "misses": 2,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 7,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            174.3125,
+            162.6875,
+            192.6875,
+            192.6875,
+            132.6875,
+            132.6875,
+            162.6875
+          ],
+          "hit_conditioned_median_ms": 162.6875
+        },
+        "what time is it": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            169.5,
+            139.5,
+            139.5,
+            123.0,
+            93.0,
+            123.0,
+            153.0,
+            93.0,
+            153.0
+          ],
+          "hit_conditioned_median_ms": 139.5
+        },
+        "set a timer": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            86.25,
+            86.25,
+            116.25,
+            116.25,
+            86.25,
+            176.25,
+            166.5625,
+            136.5625,
+            166.5625
+          ],
+          "hit_conditioned_median_ms": 116.25
+        }
+      }
+    },
+    {
+      "model": "aligned-prefix",
+      "source": ".local/wakeword/causal-aligned-prefix-primed-v1/diagnostic/hey_nyx-aligned-prefix.jsonl",
+      "source_sha256": "98b1122339f2192acbd062d74f6c931fd7a1f2d284cd72d610e0994cbd2a219f",
+      "summary": {
+        "model": "hey_nyx-aligned-prefix",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 28,
+            "before_only": 5,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 106.5625,
+              "p95": 178.77499999999998,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 4,
+            "before_only": 5,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": -2.75,
+              "p95": 112.99999999999997,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 24,
+            "complete": 24,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 127.84375,
+              "p95": 189.20937499999994,
+              "observed": 24
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 9,
+            "before_only": 2,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 93.0,
+              "p95": 161.25,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 9,
+            "before_only": 2,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 93.0,
+              "p95": 181.09375,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 10,
+            "before_only": 1,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 136.5625,
+              "p95": 187.875,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 17,
+            "events": 17
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "by_carrier": {
+        "bare": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 4,
+          "misses": 0,
+          "first_event_before_generated_prefix": 5,
+          "first_event_0_to_300ms": 4,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            -18.25,
+            -18.25,
+            71.75,
+            20.5,
+            50.5,
+            140.5,
+            -32.75,
+            -2.75,
+            -2.75
+          ],
+          "hit_conditioned_median_ms": -2.75
+        },
+        "turn on the light": {
+          "clips": 9,
+          "any_after_source": 6,
+          "complete": 6,
+          "misses": 3,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 6,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            132.6875,
+            192.6875,
+            162.6875,
+            102.6875,
+            132.6875,
+            132.6875
+          ],
+          "hit_conditioned_median_ms": 132.6875
+        },
+        "what time is it": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            169.5,
+            169.5,
+            169.5,
+            93.0,
+            93.0,
+            123.0,
+            153.0,
+            93.0,
+            153.0
+          ],
+          "hit_conditioned_median_ms": 153.0
+        },
+        "set a timer": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            86.25,
+            56.25,
+            86.25,
+            86.25,
+            116.25,
+            206.25,
+            106.5625,
+            106.5625,
+            136.5625
+          ],
+          "hit_conditioned_median_ms": 106.5625
+        }
+      }
+    },
+    {
+      "model": "bare-positive",
+      "source": ".local/wakeword/causal-bare-positive-primed-v1/diagnostic/hey_nyx-bare-positive.jsonl",
+      "source_sha256": "165f4ea0abea1dd7258171580a7d7b2edd8054013a1b680a1303570cc8844c00",
+      "summary": {
+        "model": "hey_nyx-bare-positive",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 28,
+            "complete": 28,
+            "before_only": 0,
+            "missing": 8,
+            "signed_latency_ms": {
+              "median": 179.625,
+              "p95": 230.5,
+              "observed": 28
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 71.75,
+              "p95": 230.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 19,
+            "complete": 19,
+            "before_only": 0,
+            "missing": 8,
+            "signed_latency_ms": {
+              "median": 183.0,
+              "p95": 230.17499999999998,
+              "observed": 19
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 176.25,
+              "p95": 230.1,
+              "observed": 9
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 176.25,
+              "p95": 200.1,
+              "observed": 9
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 183.0,
+              "p95": 233.6625,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 1,
+            "events": 1
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "by_carrier": {
+        "bare": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            71.75,
+            41.75,
+            131.75,
+            230.5,
+            200.5,
+            230.5,
+            57.25,
+            57.25,
+            57.25
+          ],
+          "hit_conditioned_median_ms": 71.75
+        },
+        "turn on the light": {
+          "clips": 9,
+          "any_after_source": 1,
+          "complete": 1,
+          "misses": 8,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 1,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            222.6875
+          ],
+          "hit_conditioned_median_ms": 222.6875
+        },
+        "what time is it": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            229.5,
+            199.5,
+            199.5,
+            153.0,
+            183.0,
+            183.0,
+            213.0,
+            183.0,
+            183.0
+          ],
+          "hit_conditioned_median_ms": 183.0
+        },
+        "set a timer": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            146.25,
+            146.25,
+            146.25,
+            176.25,
+            176.25,
+            236.25,
+            196.5625,
+            166.5625,
+            166.5625
+          ],
+          "hit_conditioned_median_ms": 166.5625
+        }
+      }
+    },
+    {
+      "model": "previous-causal",
+      "source": ".local/wakeword/causal-sequence-formal-primed-v1/diagnostic/hey_nyx-causal.jsonl",
+      "source_sha256": "c9de8843faf9c08db3803fe4baf61f1acbf3fd42bce1f33bbee44ac81967881d",
+      "summary": {
+        "model": "hey_nyx-causal",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 32,
+            "complete": 32,
+            "before_only": 0,
+            "missing": 4,
+            "signed_latency_ms": {
+              "median": 183.0,
+              "p95": 1286.1875,
+              "observed": 32
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 117.25,
+              "p95": 236.49999999999997,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 23,
+            "complete": 23,
+            "before_only": 0,
+            "missing": 4,
+            "signed_latency_ms": {
+              "median": 206.25,
+              "p95": 1299.6875,
+              "observed": 23
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 179.625,
+              "p95": 817.2031249999989,
+              "observed": 10
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 179.625,
+              "p95": 803.2531249999988,
+              "observed": 10
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 200.0,
+              "p95": 1321.41875,
+              "observed": 12
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 9,
+            "events": 9
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 1,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.45248850475156144
+        },
+        "threshold_selected": false
+      },
+      "by_carrier": {
+        "bare": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            101.75,
+            101.75,
+            131.75,
+            260.5,
+            170.5,
+            200.5,
+            87.25,
+            87.25,
+            117.25
+          ],
+          "hit_conditioned_median_ms": 117.25
+        },
+        "turn on the light": {
+          "clips": 9,
+          "any_after_source": 5,
+          "complete": 5,
+          "misses": 4,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 0,
+          "first_event_after_300ms": 5,
+          "signed_first_event_ms": [
+            1344.3125,
+            1302.6875,
+            1272.6875,
+            1272.6875,
+            1242.6875
+          ],
+          "hit_conditioned_median_ms": 1272.6875
+        },
+        "what time is it": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            229.5,
+            229.5,
+            199.5,
+            183.0,
+            183.0,
+            183.0,
+            213.0,
+            213.0,
+            243.0
+          ],
+          "hit_conditioned_median_ms": 213.0
+        },
+        "set a timer": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            146.25,
+            176.25,
+            176.25,
+            176.25,
+            206.25,
+            206.25,
+            166.5625,
+            166.5625,
+            166.5625
+          ],
+          "hit_conditioned_median_ms": 176.25
+        }
+      }
+    },
+    {
+      "model": "v30-frozen",
+      "source": ".local/wakeword/causal-sequence-formal-primed-v1/diagnostic/hey_nyx-v30-frozen.jsonl",
+      "source_sha256": "43401aabd8c481936fab4ec2c80ec17c5e9b994190d059e4d29ed74fd760e100",
+      "summary": {
+        "model": "hey_nyx-v30-frozen",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "original-float64-convolution-five-v30",
+        "frozen_parameters_reference": true,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 25,
+            "complete": 25,
+            "before_only": 0,
+            "missing": 11,
+            "signed_latency_ms": {
+              "median": 176.25,
+              "p95": 261.5999999999999,
+              "observed": 25
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 8,
+            "complete": 8,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 117.25,
+              "p95": 181.24999999999997,
+              "observed": 8
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 17,
+            "complete": 17,
+            "before_only": 0,
+            "missing": 10,
+            "signed_latency_ms": {
+              "median": 183.0,
+              "p95": 266.25,
+              "observed": 17
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 8,
+            "complete": 8,
+            "before_only": 0,
+            "missing": 4,
+            "signed_latency_ms": {
+              "median": 149.625,
+              "p95": 227.77499999999998,
+              "observed": 8
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 176.25,
+              "p95": 251.54999999999998,
+              "observed": 9
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 8,
+            "complete": 8,
+            "before_only": 0,
+            "missing": 4,
+            "signed_latency_ms": {
+              "median": 179.625,
+              "p95": 253.3875,
+              "observed": 8
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 2,
+            "events": 2
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "by_carrier": {
+        "bare": {
+          "clips": 9,
+          "any_after_source": 8,
+          "complete": 8,
+          "misses": 1,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 8,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            191.75,
+            161.75,
+            110.5,
+            140.5,
+            110.5,
+            117.25,
+            117.25,
+            57.25
+          ],
+          "hit_conditioned_median_ms": 117.25
+        },
+        "turn on the light": {
+          "clips": 9,
+          "any_after_source": 0,
+          "complete": 0,
+          "misses": 9,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 0,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [],
+          "hit_conditioned_median_ms": null
+        },
+        "what time is it": {
+          "clips": 9,
+          "any_after_source": 9,
+          "complete": 9,
+          "misses": 0,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 9,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            199.5,
+            229.5,
+            229.5,
+            243.0,
+            183.0,
+            213.0,
+            153.0,
+            183.0,
+            183.0
+          ],
+          "hit_conditioned_median_ms": 199.5
+        },
+        "set a timer": {
+          "clips": 9,
+          "any_after_source": 8,
+          "complete": 8,
+          "misses": 1,
+          "first_event_before_generated_prefix": 0,
+          "first_event_0_to_300ms": 8,
+          "first_event_after_300ms": 0,
+          "signed_first_event_ms": [
+            146.25,
+            176.25,
+            176.25,
+            266.25,
+            266.25,
+            106.5625,
+            136.5625,
+            166.5625
+          ],
+          "hit_conditioned_median_ms": 171.40625
+        }
+      }
+    }
+  ],
+  "threshold_selected": false,
+  "candidate_promoted": false,
+  "limits": "Saved app-event behavioral reduction only, no raw score reconstruction or numerical agreement test. Identical consumed complete waveforms/81600continuousprime. Timing is relative to generated-prefix support, not human phonetic truth. First-event timing remains signed, with misses and before-prefix events explicit; 300ms is a descriptive bucket, not a new pass/fail gate. Neither this consumed comparison nor a zero-confusion diagnostic point establishes independent acceptance. Retained mature Muse reference has its own near-word errors; do not invent a perfect-model gate. Official HiESP same-protocol independent comparison remains required."
+}
