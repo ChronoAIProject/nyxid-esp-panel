@@ -10618,3 +10618,11 @@ Mac暂未回复现成未消费开发包。继续查找不同来源选项而非�
 本次只保存上游元数据，不下载权重、不生成音频、不预留声音、不评分或访问受保护材料；仍无可执行未消费开发包，不能把来源选项写成独立资格已满足。若后续使用，需要先固定实际未消费声音/来源、文本/描述/seed/runtime和完整原生输出保存方案，沿用已有机械质量与角色隔离规则。现有失败/v30和完整研究目标保留。
 
 Parler具体声音谱系继续核查：固定上游代码revision `d108732cd57788ec86bc857d99a6cabd66663d68`的训练说明/starting_point_v1配方及LibriTTS描述dataset card原文/hash，见 `4090-prospective-parler-lineage-v1/` 和 `4090-prospective-parler-speaker-lineage-v1.json`。dataset card为main获取、内容哈希固定但未捕获不可变仓库revision，限制明确保留。配方佐证LibriTTS-R/MLS来源，但不是已发布权重精确训练收据；描述schema含speaker_id/phonemes/speech_duration，不可迁移为新生成结果的音素时长真值。已查看资料未找到34命名声音到语料speaker_id映射，不能以名字不同证明物理说话人独立，也不声称映射绝不存在。仅元数据读取，无权重/新音频/模型调用/受保护材料访问。下一步需区分未消费生成请求与未知上游说话人重叠，不重复消耗Jenny或将其重新标签为fresh；总目标未完成。
+
+### 未消费开发阈值选择器落实（2026-11-15）
+
+Mac新留言6898443186/commit60b07f6a：实际隔离开发板已安装c161（不是v30/3ea7），短静音通话6.04秒与后半句回复正常；用户一轮非受控试用三次发声第三次唤醒。仅观察，不推导人口识别率/人类声学时延，不将其加入合成训练/阈值开发。Mac每小时检查已存在，无需新建调度。
+
+独立阈值下一步从元数据探索推进到可执行算法：`experiments/unconsumed_threshold_selection_protocol_v1.md` 与 `select_unconsumed_threshold_v1.py`。预先固定完整k/1280,k1..1280开发网格，原连续prime/五步/67refractory/half-rearm。先满足背景Poisson单侧95%FAR上界<=0.5/h，再最大化预先指定voice×bare/command最弱组命中率、总命中、最少误触，最后较高阈值。没有可行点则报告失败，不能借曝光/补时或丢难声音。未知上游物理说话人重叠保留为限制，不自动作为泄漏或必须证明普遍不存在才能继续研究的条件。
+
+选择器拒绝缺网格/换分母/空组，保存输入/代码hash，始终promotion_qualified:false；role字符串本身不证明fresh，实际执行仍须绑定未消费材料/完整质量/候选/背景清单。纯分析fixture检查最弱声音优先（10/10+0/10不能压过6/10+6/10）、5h零事件曝光不足、分母漂移拒绝均通过，无语音/模型调用或阈值实选。不将脚手架称为最终独立资格，既有final/Mike保持保护，v30保留。
