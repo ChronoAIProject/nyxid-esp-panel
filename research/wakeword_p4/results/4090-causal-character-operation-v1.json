@@ -1,0 +1,33 @@
+{
+  "schema": "causal-character-operation-v1",
+  "device": {
+    "compute_capability": [
+      8,
+      9
+    ],
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "loss_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+  "binary_shape": [
+    128,
+    282,
+    1
+  ],
+  "character_shape": [
+    128,
+    282,
+    28
+  ],
+  "head_parameters": 1708,
+  "original_model_parameters": 25981,
+  "known_transcripts": 80,
+  "unknown_ambient": 48,
+  "ctc_blank_id": 0,
+  "total_loss": 50.009521484375,
+  "binary_loss": 23.193273544311523,
+  "length_normalized_ctc_loss": 26.816247940063477,
+  "optimizer_updates": 0,
+  "recognition_scored": false,
+  "numerical_comparison_performed": false,
+  "limits": "One actual existing training batch forward/loss interface on RTX4090 only. No optimizer/gradients/CPU-GPU/FP32-INT8 comparison, source substitution, coefficient tuning, TTS or final access. Auxiliary character head not deployed; recognition benefit unproven."
+}
