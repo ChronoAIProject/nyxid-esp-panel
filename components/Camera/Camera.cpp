@@ -230,10 +230,9 @@ namespace esp_brookesia::apps
 
     esp_err_t Camera::initDirectVideoDriver()
     {
-        if (_video_driver_initialized) {
-            return ESP_OK;
-        }
-
+        // Remote snapshots can deinitialize CSI/ISP between Camera visits.
+        // The video driver's initializer tracks its live devices; an app-local
+        // cached flag cannot establish that /dev/video0 still exists.
         esp_video_init_csi_config_t csi_config[] = {
             {
                 .sccb_config = {
@@ -252,7 +251,6 @@ namespace esp_brookesia::apps
 
         esp_err_t ret = esp_video_init(&cam_config);
         if (ret == ESP_OK || ret == ESP_ERR_INVALID_STATE) {
-            _video_driver_initialized = true;
             return ESP_OK;
         }
 
@@ -438,8 +436,11 @@ namespace esp_brookesia::apps
         }
 
         if (_touch_handle) {
+            // The GT911 driver owns its touch state, but not its panel IO.
+            esp_lcd_panel_io_handle_t touch_io = _touch_handle->io;
             esp_lcd_touch_del(_touch_handle);
             _touch_handle = nullptr;
+            esp_lcd_panel_io_del(touch_io);
         }
 
         _touch_active = false;

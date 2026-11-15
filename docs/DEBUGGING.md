@@ -95,6 +95,14 @@ operations on the shared bus. Keep the watchdog enabled; check UART for that
 stack and for DSI `underrun` errors when investigating a solid-color flash.
 This recovery does not reset the display or reinitialize the shared bus.
 
+For camera handoff regression, alternate native Camera preview, Home, a remote
+JPEG snapshot, and Camera again. Snapshots release CSI/ISP, so native preview
+must call the idempotent video initializer on every entry. A Camera-local
+"initialized" flag becomes stale after remote cleanup. Native preview also
+owns a separate GT911 panel IO handle: delete it after deleting the temporary
+touch handle on exit. While native direct preview owns the camera, remote
+capture is rejected; after leaving preview, capture must succeed again.
+
 Local **voice only**, with the node still on production:
 
 ```sh
