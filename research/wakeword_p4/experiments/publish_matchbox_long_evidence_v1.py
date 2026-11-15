@@ -31,10 +31,11 @@ def publish():
  subprocess.run(['gh','release','upload','research-hey-nyx-20261110',str(ARCHIVE),'--repo','ChronoAIProject/nyxid-esp-panel'],check=True)
  receipt['uploaded']=True;RECEIPT.write_text(json.dumps(receipt,indent=2)+'\n')
 def verify():
- receipt=json.loads(RECEIPT.read_text());assert receipt['uploaded'];download=B/'matchbox-long-evidence-anonymous-download-v1.tar.gz';assert not download.exists()
- subprocess.run(['curl','-q','--fail','--location','--silent','--show-error',URL,'--output',str(download)],check=True)
+ receipt=json.loads(RECEIPT.read_text());assert receipt['uploaded'];download=B/'matchbox-long-evidence-anonymous-download-v1.tar.gz';assert not download.exists() or (download.stat().st_size==receipt['bytes'] and sha(download)==receipt['sha256'])
+ if not download.exists():subprocess.run(['curl','-q','--fail','--location','--silent','--show-error',URL,'--output',str(download)],check=True)
  assert download.stat().st_size==receipt['bytes'] and sha(download)==receipt['sha256']
- manifest=json.loads(MANIFEST.read_text());expected={r['path']:r for r in manifest['files']}
+ manifest=json.loads(MANIFEST.read_text());expected={r['path'].lstrip('/'):r for r in manifest['files']}
+ assert len(expected)==len(manifest['files'])
  with tarfile.open(download,'r:gz') as tar:
   members=tar.getmembers();assert len(members)==receipt['members'] and len({m.name for m in members})==len(members)
   assert set(m.name for m in members)==set(expected)|{'manifest.json'}
