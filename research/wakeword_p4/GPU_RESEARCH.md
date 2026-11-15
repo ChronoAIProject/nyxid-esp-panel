@@ -10486,3 +10486,7 @@ Mac-reported evidence (Issue13 comment6888388709, source75f17e3d; not independen
 
 Original character-auxiliary session85591/PID388881/start2489436 remains live, unchanged. Actual progress2000/20000, elapsed1899.0443815769977s, GPU:0; observedRTX4090 utilization58%/2593MiB. Binaryloss1.6548869609832764, characterloss3.7466518878936768 are training diagnostics, not recognition qualification. Natural completion followed by existing binary-only export and full behavior protocol; no new numerical admission, TTS, firmware request or frozenv30 change.
 
+
+## Character auxiliary v1 terminal result
+
+Original training 85591 and export 53839 exited 0; full waveform sessions 61181/98052/85307 also exited 0. Binary INT8 SHA 446f56e7e3bb749b138a29a274d78676dedb06f065a2fb0515975dc72bfacff0, 60952 bytes. Compared with c161, legacy targets 35→30/36 and commands 26→22/27; Jenny targets 33→29/36 and commands 24→22/27; Joe remains 0/72. Legacy false clips 4→0; Jenny 44→31 (Next 8→11, Mix 25→18, Muse 11→2). Both full background streams zero events; reused, nonadditive evidence. Preserve 1140 traces/original JSON losslessly (518968 published bytes). See experiments/causal_character_auxiliary_findings_v1.md and behavior-comparison JSON. Coverage/latency regression prevents promotion; frozen v30 retained. No coefficient/threshold/checkpoint rescue. Full goal remains incomplete.
