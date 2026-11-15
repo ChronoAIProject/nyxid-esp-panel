@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-15T02:20:43Z",
+  "source_commit": "d012c489",
+  "image": {
+    "sha256": "290e3d1ca4d7123af3af8ba3e19820e70c6b3771fdc949b93f98715ee8f60146",
+    "app_descriptor_sha256": "301f013ed5bba2583dcddab85780700deb5544244a4f82fd4af97b880450a42f",
+    "bytes": 5984448,
+    "diagnostic_tracing": false,
+    "wake_model_sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+    "fixes": [
+      "DTLS final owner cleanup",
+      "TLS role change setup cleanup"
+    ],
+    "audio_progress_counters": true
+  },
+  "scope": "Owned muted development calls only; targeted local control-lease interruption. No speech/playback fixture or recording. Explicit calls do not qualify wake FIFO/recognition/AEC.",
+  "fault_method": "Only the owned active local session/generation/live-slot control socket lease was replaced by a temporary marker for eight or forty seconds. Provider ownership, authentication, grants and generation were unchanged. Expire only the matching marker on cleanup.",
+  "stages": [
+    {
+      "name": "eight-second control interruption",
+      "connect_s": 4.98,
+      "recovery_s": 9.042,
+      "same_generation": true,
+      "live_owner_sessions": 1,
+      "sample_count": 16,
+      "observed_states": [
+        "active",
+        "connecting"
+      ],
+      "uptime_monotonic": true,
+      "capture_counter_increase": 461,
+      "after": {
+        "uptime_s": 1035,
+        "state": "idle",
+        "busy": false,
+        "muted": false,
+        "wake_listening": true,
+        "heap": {
+          "free": 20978832,
+          "spiram_free": 20889840,
+          "dma_free": 179519,
+          "dma_largest_free": 126976,
+          "internal_free": 219131,
+          "internal_largest_free": 126976
+        }
+      }
+    },
+    {
+      "name": "control outage longer than client grace",
+      "connect_s": 4.422,
+      "local_cleanup_s": 26.74,
+      "server_end": {
+        "state": "closed",
+        "end_reason": "client_lost",
+        "observed_seconds": 31,
+        "final_usage_confirmed": true
+      },
+      "live_owner_sessions": 0,
+      "sample_count": 42,
+      "observed_states": [
+        "active",
+        "connecting",
+        "error"
+      ],
+      "uptime_monotonic": true,
+      "capture_counter_increase": 1226,
+      "after": {
+        "uptime_s": 1076,
+        "state": "error",
+        "busy": false,
+        "muted": false,
+        "wake_listening": true,
+        "heap": {
+          "free": 20974972,
+          "spiram_free": 20885980,
+          "dma_free": 179519,
+          "dma_largest_free": 126976,
+          "internal_free": 219131,
+          "internal_largest_free": 126976
+        }
+      }
+    },
+    {
+      "name": "fresh call after fault",
+      "connect_s": 4.116,
+      "sent_packet_increase": 518,
+      "after": {
+        "uptime_s": 1096,
+        "state": "idle",
+        "busy": false,
+        "muted": false,
+        "wake_listening": true,
+        "heap": {
+          "free": 20974976,
+          "spiram_free": 20885984,
+          "dma_free": 179519,
+          "dma_largest_free": 126976,
+          "internal_free": 219131,
+          "internal_largest_free": 126976
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "reset_observed": false,
+  "production_board_touched": false,
+  "limits": [
+    "Explicit remote-open muted calls, not physical wake-started calls.",
+    "Does not qualify initial wake FIFO preservation, first utterance, gap-audio replay or acoustic AEC.",
+    "Three short calls do not establish long-conversation or leak-free lifetime.",
+    "The long fault intentionally leaves an error message while idle wake listening resumes; a fresh call and normal hangup return state to idle."
+  ],
+  "full_goal_complete": false,
+  "no_new_speech_fixture_or_recording": true
+}

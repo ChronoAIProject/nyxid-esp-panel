@@ -68,6 +68,31 @@ stability. Exact heap recovery is not required: use matched-state memory trends
 to find sustained resource loss. CPU/GPU or FP32/INT8 score agreement is not an
 acceptance gate.
 
+## Control failure and recovery with the lifetime fixes
+
+The normal development image also completed three muted provider calls with no
+speech fixture or recording. For each fault, match only the authenticated test
+call's `_id`, observed `generation` and `live_slot:true` in the local Mongo
+`assistant_voice_sessions` collection. Temporarily replace `control_socket_id`
+with a unique diagnostic marker and set `control_socket_until` to now plus the
+fault duration. Require exactly one matched document. Do not change provider
+ownership, generation, authentication, service grants or other calls. Expire only
+that matching marker in cleanup. The full setup is described under
+"Reconnection fault test" in `../../../docs/DEBUGGING.md`.
+
+- An eight-second control lease interruption recovered the original call in
+  9.04 seconds, with the same generation and one live owner session.
+- A forty-second interruption exceeded the client's existing grace period. The
+  client released its failed call in 26.74 seconds; the server closed it with
+  `end_reason: client_lost`, confirmed final usage and released the live slot.
+- A fresh call then connected in 4.12 seconds, exchanged media and hung up
+  normally. The unmuted wake listener resumed, without an observed board reset.
+
+These were explicit remote-open calls. They exercise reconnect, failed-call
+cleanup and subsequent connection after the DTLS fixes, but do not establish
+wake FIFO preservation, first-utterance delivery or acoustic echo cancellation.
+The sanitized result is `../results/mac-control-fault-recovery-v1.json`.
+
 ## Temporary IDF diagnostic
 
 Apply `trace-call-and-rearm.patch` only in a disposable development checkout.
