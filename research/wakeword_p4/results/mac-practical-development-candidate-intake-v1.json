@@ -1,0 +1,151 @@
+{
+  "schema": "mac-practical-development-candidate-intake-v1",
+  "recorded_utc": "2026-11-15T15:55:22.830426+00:00",
+  "gpu_source_commit": "965b5ec5eae25a1f14c142ae492e99d003c4c6ea",
+  "models": {
+    "installed": {
+      "path": ".local/wakeword/causal-aligned-prefix-int8-v1/int8.tflite",
+      "bytes": 60952,
+      "sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7"
+    },
+    "development_trial": {
+      "path": ".local/wakeword/causal-source-balanced-int8-v1/int8.tflite",
+      "bytes": 60952,
+      "sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
+    },
+    "latest_experiment": {
+      "path": ".local/wakeword/causal-bn-affine-int8-v1/int8.tflite",
+      "bytes": 60952,
+      "sha256": "ba9aff8c2e6b0f8a3807db1286b8b2ca5f43b829c6372b78e5d1a3ebcd3c6c97"
+    }
+  },
+  "installed_model_confirmed_by_live_app_descriptor_and_retained_build_manifest": true,
+  "same_existing_legacy_development_group": {
+    "installed_aligned_prefix": {
+      "targets": 33,
+      "target_clips": 36,
+      "commands": 24,
+      "command_clips": 27,
+      "common_false_clips": 17,
+      "common_clips": 288,
+      "command_hit_latency_median_ms": 127.84375,
+      "background_events": 0,
+      "background_hours": 10.483944826388889
+    },
+    "source-balanced": {
+      "targets": 35,
+      "target_clips": 36,
+      "commands": 26,
+      "command_clips": 27,
+      "common_false_clips": 4,
+      "common_clips": 288,
+      "command_hit_latency_median_ms": 153.0,
+      "background_events": 0,
+      "background_hours": 10.483944826388889
+    },
+    "bn-affine": {
+      "targets": 34,
+      "target_clips": 36,
+      "commands": 25,
+      "command_clips": 27,
+      "common_false_clips": 3,
+      "common_clips": 288,
+      "command_hit_latency_median_ms": 153.0,
+      "background_events": 0,
+      "background_hours": 10.483944826388889
+    }
+  },
+  "other_existing_development_results": [
+    {
+      "model": "source-balanced",
+      "group": "legacy",
+      "targets": 35,
+      "target_clips": 36,
+      "commands": 26,
+      "command_clips": 27,
+      "common_false_clips": 4,
+      "common_clips": 288,
+      "command_hit_latency_median_ms": 153.0,
+      "background_events": 0,
+      "background_hours": 10.483944826388889
+    },
+    {
+      "model": "source-balanced",
+      "group": "jenny",
+      "targets": 33,
+      "target_clips": 36,
+      "commands": 24,
+      "command_clips": 27,
+      "common_false_clips": 44,
+      "common_clips": 324,
+      "command_hit_latency_median_ms": 66.40625,
+      "background_events": 0,
+      "background_hours": 9.614419583333333
+    },
+    {
+      "model": "source-balanced",
+      "group": "joe",
+      "targets": 0,
+      "target_clips": 72,
+      "commands": 0,
+      "command_clips": 36,
+      "background": "not present; no exposure inferred",
+      "timing": "whole-container labels; no keyword timing inferred"
+    },
+    {
+      "model": "bn-affine",
+      "group": "legacy",
+      "targets": 34,
+      "target_clips": 36,
+      "commands": 25,
+      "command_clips": 27,
+      "common_false_clips": 3,
+      "common_clips": 288,
+      "command_hit_latency_median_ms": 153.0,
+      "background_events": 0,
+      "background_hours": 10.483944826388889
+    },
+    {
+      "model": "bn-affine",
+      "group": "jenny",
+      "targets": 32,
+      "target_clips": 36,
+      "commands": 24,
+      "command_clips": 27,
+      "common_false_clips": 43,
+      "common_clips": 324,
+      "command_hit_latency_median_ms": 66.40625,
+      "background_events": 0,
+      "background_hours": 9.614419583333333
+    },
+    {
+      "model": "bn-affine",
+      "group": "joe",
+      "targets": 0,
+      "target_clips": 72,
+      "commands": 0,
+      "command_clips": 36,
+      "background": "not present; no exposure inferred",
+      "timing": "whole-container labels; no keyword timing inferred"
+    }
+  ],
+  "decision": "Request original source-balanced c161 model and minimal streaming profile for a reversible development-board trial. It improves observed legacy hits/commands and reduces false clips relative to the actually installed model. No new training or re-export. Lack of overall promotion does not prohibit practical development-board testing.",
+  "limits": [
+    "Reused consumed synthetic development material, not independent acceptance.",
+    "No equivalent installed-model Jenny/Joe result in these selected reports; global superiority not claimed.",
+    "Source-balanced still has44/324 Jenny common false clips and0/72 Joe targets; coverage/confusion remain open.",
+    "Signed latency uses generated references and hit-conditioned summaries; not human phonetic truth or a speed gate.",
+    "Human wake, buffered first utterance and long-conversation/AEC acceptance remain open.",
+    "No CPU/GPU, FP32/INT8 or intermediate-score agreement gate. Keep identity/interface/allocation/inference-health checks."
+  ],
+  "source_sha256": {
+    "research/wakeword_p4/results/4090-causal-aligned-prefix-fixed-reference-behavior-v1.json": "1d55d411df9538953ff42dee1217b4b3f62786c30960d074b6a1a8de198663a9",
+    "research/wakeword_p4/results/4090-causal-source-balanced-behavior-comparison-v1.json": "aae213d600d4bd3f69b7c994f7df07361d46b3180a498bb6cdf8ed73f134e5d0",
+    "research/wakeword_p4/results/4090-causal-bn-affine-behavior-comparison-v1.json": "ec0dc9846eb2c79af3079daa8d032e7a6018e2086e52d38265a2594bca1b3320",
+    "research/wakeword_p4/results/4090-causal-aligned-prefix-int8-original-v1.json": "c7d5b626493a294f5c0ab1d5c34c333ab60f04182eeeecc87bce3da1a6858177",
+    "research/wakeword_p4/results/4090-causal-source-balanced-int8-original-v1.json": "2ac46ed50620349a30ba6c80101702cea3533524a556e819e879038213ccfade",
+    "research/wakeword_p4/results/4090-causal-bn-affine-int8-original-v1.json": "630397b1af4b7751d1ad8a9b4403e21e26e60672faff064f07ab599c7212ff9f"
+  },
+  "new_inference_synthesis_playback_recording_or_firmware_action": false,
+  "full_goal_complete": false
+}
