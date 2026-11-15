@@ -40,9 +40,9 @@ resource feasibility. Candidate training completed20000RTX4090updates; CPU repla
 evaluated actual deployment INT8 bytes and the unchanged official reference.
 
 First detected positive event minus generated-prefix reference, median:
-new7.9375ms, c16159.78125ms, v300.25ms, official-8.4375ms. Populations differ
+new 7.9375ms, c161 59.78125ms, v30 0.25ms, official -8.4375ms. Populations differ
 (70/60/5/33 detected clips), so these medians do not establish a latency ranking.
-New33/70, c16114/60 and v302/5 first hits precede that reference. Complete signed
+New 33/70, c161 14/60 and v30 2/5 first hits precede that reference. Complete signed
 per-event records, including all four generation/container/RIR reference clocks,
 are retained. These are internal synthesis coordinates, not human last-phoneme
 truth; early events were not reclassified as failures or trimmed from recall.
