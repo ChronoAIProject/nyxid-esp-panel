@@ -10592,3 +10592,9 @@ Latent-command posttraining pipeline prepared while originalsession83064/PID2341
 Negative-peak 原session29984/PID2672594固定20000步RTX4090训练完成，exit0，1272.7331222079956s；原始报告 `4090-causal-negative-peak-original-v1.json`，最终权重SHA256 `0de96e628f876dede4ad8dccc7a9c103872e03355c620db33aa767633b8409da`。无重启/挑checkpoint/改配方。一次最终导出锁SHA256 `dfc6e2cfc0248bb6e6e2abb3aa05c649b53e9904fb1319718453ced1b81f9c05` 先推后执行；尚无新识别结论。
 
 Negative-peak 完整评估结束：原导出session48697exit0，60952B / `c5c69335e16f0a90d8adda7513ce7c3b593b6e73bd447453a1a73e9907520e46`。原采集67613/64117/83979均exit0，1140条原报告/UINT8输出无损保存499233B。legacy33/36命中、24/27命令、1/288误触；Jenny15/36命中、11/27命令、12/324误触（Next2/Mix6/Muse4）；Joe0/72。相对c161，Jenny丢18目标命中、移除33/新增1误触，不能把误触下降单独称为提升。两组已有背景均0事件且不可累加为独立新证据。完整结论 `experiments/causal_negative_peak_findings_v1.md`。本轮拒绝作为整体替代，不调阈值/系数救援；冻结v30保留，总研究目标未完成。
+
+### 直接部署六类别竞争输出头（2026-11-15）
+
+二分类positive-latent和negative-peak出现相反敏感度/误触取舍后，实施不同部署函数：3480→6softmax（背景/Nyx/Nick/Next/Mix/Muse），部署输出Nyx概率，保留全部竞争类别在分母；非训练后丢弃的辅助头。模型43386参数/31变量/15可训练/冻结16，原编码器初始化，独立头seed2726，原source-balanced输入/seed726/Adam1e-5/20000final-only。每批原8条bare近音负例在生成容器+3..27hop区域给已知类别，其余时间背景；原正例Nyx/启动背景及其他负例监督权重1/20保持，稀疏分类CE。生成结束仅为合成参考。元数据盘点31644条/15engine-class组，实际GPU单批功能调用及标量接口成功，不是识别结论。
+
+原执行锁0d6bd292后session33691/PID2900924在首次更新前exit1：动态AST函数被AutoGraph按历史源码路径重新读取，旧二分类head形状断言失败。0优化更新，原失败日志/锁/输出完整保留。修正为独立显式图函数v2，不改变配方；修正及新锁c3a17d61先推，SHA256 `88ca5e1dfd18fd73aeba88a4bf807de8eab6a30078ee64e657552b1db3aa1cdc`。新session41023/PID2902126/start7637377首步在RTX4090完成，loss62.78789138793945/15梯度有限/冻结16未变；原会话继续。启动见 `4090-causal-lexical-competition-launch-v2.json`。没有新TTS/开发例入训/数值一致性门槛/阈值救援。后续仍需一次原最终INT8导出、三组完整波形实测；冻结v30保留、总目标未完成。
