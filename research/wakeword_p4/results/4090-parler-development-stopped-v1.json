@@ -1,0 +1,140 @@
+{
+  "schema": "parler-development-stopped-v1",
+  "execution_lock_commit": "1b394e6f",
+  "device": "NVIDIA GeForce RTX 4090",
+  "requested": 144,
+  "generated": 41,
+  "mechanically_passed": 40,
+  "ungenerated": 103,
+  "acceptance_generated": 0,
+  "training_or_wake_scoring_performed": false,
+  "pack_qualified": false,
+  "promotion_qualified": false,
+  "failure": {
+    "request_id": "parler-development-jon-moderate-mix-bare",
+    "role": "development",
+    "voice_id": "parler-mini:0392b9451a601e528fd863bbb0598431fee810d9:Jon",
+    "physical_speaker_id": null,
+    "text": "Hey Mix.",
+    "pronunciation_input": "Hey Mix.",
+    "description": "Jon's voice delivers very clear audio at a moderate speaking rate, with a close recording and no background noise.",
+    "seed": 2654456869,
+    "carrier": "bare",
+    "phrase_id": "mix",
+    "native_rate": 44100,
+    "trimmed": false,
+    "native_return_saved_before_transform": true,
+    "duration_metadata_interface": "No exposed generated phone-boundary interface authenticated; store null.",
+    "phoneme_metadata_interface": "Input tokenizer IDs may be saved; do not infer phoneme truth from text tokens.",
+    "pretraining_overlap_status": "unknown",
+    "raw_path": "parler-development-jon-moderate-mix-bare.native.npy",
+    "raw_sha256": "17fac360a7736315aa5bfc3d73f531f6b30772466c6b6ad8b80d835dfadd8d91",
+    "path": "parler-development-jon-moderate-mix-bare.wav",
+    "sha256": "bb6200661dc56c772c7b97203f16a324bc92106812e537aaa4bc6f4cd51e577f",
+    "engine_path": "parler-development-jon-moderate-mix-bare.engine.npy",
+    "engine_sha256": "bd9f53b721adc0cc4c6b298c70d2947533d3f83147400662f9cdb5cf0824217f",
+    "native_samples": 497664,
+    "samples": 180559,
+    "generated_reference_end_sample": 180559,
+    "generated_phonemes": null,
+    "generated_phone_durations": null,
+    "engine_shape": [
+      1,
+      497664
+    ],
+    "engine_audio_lengths": [
+      497664
+    ],
+    "tokens_path": "parler-development-jon-moderate-mix-bare.tokens.npy",
+    "tokens_sha256": "7211b8d854fd4b6f70c9386acef4b74aba1fe92bd56251eb39cffd50d7b037a0",
+    "token_shape": [
+      9,
+      982
+    ],
+    "description_input_ids": [
+      [
+        8178,
+        31,
+        7,
+        2249,
+        9250,
+        182,
+        964,
+        2931,
+        44,
+        3,
+        9,
+        8107,
+        4461,
+        1080,
+        6,
+        28,
+        3,
+        9,
+        885,
+        5592,
+        11,
+        150,
+        2458,
+        4661,
+        5,
+        1
+      ]
+    ],
+    "prompt_input_ids": [
+      [
+        9459,
+        7382,
+        5,
+        1
+      ]
+    ],
+    "reached_token_limit": false,
+    "eos_each_row": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "quality": {
+      "checks": {
+        "mono_pcm16_16k": true,
+        "native_finite": true,
+        "native_sample_ledger": true,
+        "native_no_clipping": true,
+        "resampled_no_clipping": true,
+        "full_resampled_length": true,
+        "full_resampled_values": true,
+        "pcm_sample_ledger": true,
+        "no_saturated_pcm16": true,
+        "nonempty_nonzero": true,
+        "duration_in_spec": false,
+        "rms_in_spec": true,
+        "no_declared_trimming": true,
+        "generation_reference_is_full_output": true
+      },
+      "passed": false,
+      "native_samples": 497664,
+      "transport_samples": 180559,
+      "maximum_transport_error": 3.051714156754315e-05,
+      "rms": 0.028038171345421043,
+      "saturated_samples": 0
+    },
+    "passed": false
+  },
+  "failure_policy": "retain-all-stop-pack-no-substitution",
+  "archive": {
+    "url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/parler-development-v1-stopped-pack.tar.gz",
+    "bytes": 34598334,
+    "sha256": "9ef512dc09e994ee490365e80d550181b6b3690e8e263d9832d78b47ec25a397",
+    "anonymous_verified": true,
+    "verified_member_hashes": 164
+  },
+  "interpretation": "Mechanical duration failure only: 11.2849375 seconds exceeds precommitted 5 second limit. Not a token-cap failure. No phonetic correctness claim; no waveform listening or diagnosis. Preserve all 41 outputs, do not silently omit or regenerate the failed request. Remaining 103 development and all 144 acceptance requests ungenerated.",
+  "next": "This source pack is not eligible for threshold selection or acceptance. Review synthetic quality/source design before a separately preregistered generation attempt; do not tune on acceptance or promote a candidate from these outputs."
+}
