@@ -1,0 +1,100 @@
+{
+  "schema": "mac-aligned-prefix-p4-integration-v1",
+  "recorded_utc": "2026-11-15T00:19:23.370075+00:00",
+  "scope": "Original GPU candidate on the isolated USB development panel: real model inference, board-owned local authorization, muted provider connections and teardown. Practical acoustic recognition and long-call echo acceptance remain open.",
+  "source_commit": "25b84bef",
+  "gpu_handoff_comment": "https://github.com/ChronoAIProject/nyxid-esp-panel/issues/13#issuecomment-6886290830",
+  "model": {
+    "sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+    "bytes": 60952,
+    "context_frames": 309,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "original_export_reused": true
+  },
+  "firmware": {
+    "version": "0.6.28",
+    "idf": "5.5.4",
+    "bytes": 5984160,
+    "slot_bytes": 6881280,
+    "binary_sha256": "5abb776780d6b0a2425a262676734b51da1fc3cd64f6551b1f9668db8a23cd95",
+    "descriptor_elf_sha256": "a06ba9026d94ce333bbab0b656c3b3fc578fcf5da28d757c69a3eeb8af790558",
+    "local_development_profile": true,
+    "app_partition_only_flashed": true,
+    "production_board_touched": false,
+    "local_hiesp_recovery_available": true,
+    "selected_dependency_versions": {
+      "esp-sr": "2.6.1",
+      "esp-dl": "3.3.14",
+      "esp-tflite-micro": "1.3.3~1",
+      "esp_lv_decoder": "0.5.0"
+    }
+  },
+  "p4_inference": {
+    "allocation_succeeded": true,
+    "tensor_bytes": 29836,
+    "arena_bytes": 65536,
+    "variable_arena_bytes": 16384,
+    "priming_completed": true,
+    "listening_for": "Hey Nyx",
+    "observed_progress_step": 1002,
+    "observed_mean_us": 1321,
+    "observed_max_us": 6168,
+    "wake_task_stack_free_bytes": 11784,
+    "no_inference_error_in_observed_uart": true
+  },
+  "authorization": {
+    "local_existing_node_reused": true,
+    "only_development_node_credentials_rotated": true,
+    "voice_credential_delivered_to_board_via_agent_key_login": true,
+    "existing_restricted_voice_key_reused": true,
+    "board_voice_key_service_count": 1,
+    "board_voice_key_allow_all_services": false,
+    "board_voice_key_allow_all_nodes": false,
+    "owner_or_mac_account_key_installed_on_board": false,
+    "local_test_bot_granted_development_panel_daily_service": true,
+    "other_local_panel_grants_removed_from_test_bot": true,
+    "daily_service_local_policy_auto_allow": true,
+    "production_authorization_changed": false
+  },
+  "connection_cleanup": {
+    "passed": true,
+    "rounds": 3,
+    "microphone_muted_during_calls": true,
+    "announcement_text_sent": false,
+    "mac_speaker_fixture_played": false,
+    "raw_audio_recorded": false,
+    "connected_seconds": [
+      6.795,
+      4.086,
+      5.049
+    ],
+    "connected_hold_seconds_per_round": 20,
+    "idle_internal_free_bytes": [
+      219119,
+      219119,
+      219119
+    ],
+    "idle_dma_free_bytes": [
+      179507,
+      179507,
+      179507
+    ],
+    "idle_internal_largest_free_bytes": [
+      126976,
+      126976,
+      126976
+    ],
+    "listener_rearmed": [
+      true,
+      true,
+      true
+    ]
+  },
+  "limits": [
+    "Three short muted calls do not prove long-call memory, microphone recognition, first-utterance preservation or AEC/reconnect stability.",
+    "Existing consumed GPU recognition gains and near-word false wakes remain unchanged; the P4 run does not qualify independent recognition.",
+    "No CPU/GPU, FP32/INT8 or intermediate-score agreement was required."
+  ],
+  "full_goal_complete": false
+}

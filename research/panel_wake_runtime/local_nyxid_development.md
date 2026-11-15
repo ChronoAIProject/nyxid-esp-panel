@@ -5,6 +5,12 @@ also needs a reachable NyxID backend. Check the board's configured API origin
 after changing networks. An idle listener with voice state `error` does not
 establish a working conversation path.
 
+On macOS, enumerate all `/dev/cu.*` ports. Some USB bridges appear as
+`cu.wchusbserial...`, so searching only for `cu.usb...` can incorrectly report
+that a connected board is missing. Opening the serial port may reset the board
+even with DTR and RTS disabled; count such resets separately from unexplained
+stability failures and close the port during passive observation.
+
 Use a clean NyxID worktree at the intended server revision. Preserve any
 uncommitted work in the main checkout. Keep the build target, Mongo data,
 environment file, signing keys and logs outside the panel repository.
@@ -51,9 +57,27 @@ namespaces. A new origin therefore needs the board's own login and local
 authorization. A Mac account or CLI key is not a substitute for the board key.
 Provider credentials stay in NyxID.
 
+The development profile namespace includes both origins. Changing the LAN IP
+therefore creates an empty profile even when the same physical board already
+has a local node. A fresh registration can then fail with a duplicate-name
+conflict. Reuse the verified existing development node instead of creating or
+renaming another one: its service must point to that node, and its hardware
+identity must match the USB development board. Local owner administration can
+rotate that node's credentials and provision them through the existing UART
+setters into the new development namespace. Keep credentials and UART echoes
+private. The Voice Agent Key still comes from the board's own sign-in request
+and poll; do not install the owner's account token or a Mac CLI key.
+
 After onboarding, verify the selected Bot, its voice grant and its independent
 grant to the development board's services. Then test wake, buffered first
 utterance, reply, hangup/rearm and reconnect. API health, an offline recognition
 result or a successful firmware build alone does not establish those behaviors.
 Retain the passive stability monitor and identify the development board before
 any flash. The dining-room production board is outside this workflow.
+
+For a quiet connection/cleanup check, remotely open a call with a fresh
+`request_id` and `microphone_muted: true`, without announcement text. Observe
+connection, hang up only the test's own call, unmute and wait for the wake
+listener to rearm. Compare idle heap after each completed round. This exercises
+provider connection and call teardown without an acoustic fixture; it does not
+test wake recognition, the buffered first sentence or active-speaker AEC.
