@@ -155,6 +155,29 @@ same allowlisted sample fields without the device fingerprint. Reuse
 call/listener transitions. Preserve baseline events separately from later events;
 do not open the serial bridge or start another monitor to obtain the snapshot.
 
+### Longer passive follow-up
+
+The same monitor continued through 15:41:28 UTC: 13 hours and 41 minutes from
+the first normal-image sample, with 1,634 samples and the same app and boot.
+There were no later boot boundaries, monitor errors or gaps. Capture and
+detector counters were present in 1,624 samples, with no expected-running stall;
+the first ten still remain unreported. The current monitor reported no sustained
+memory-loss alert. No firmware, call, audio or serial action was added to collect
+this follow-up.
+
+The `long_followup_20261115` in the existing observation report references
+`../results/mac-normal-progress-long-samples-20261115.json.gz`. Earlier snapshots
+are preserved. This extends passive stability evidence after the original short
+call tests; it does not establish a long conversation, wake accuracy,
+first-utterance delivery or AEC quality.
+
+The live app descriptor was also checked over read-only HTTP as
+`301f013ed5bba2583dcddab85780700deb5544244a4f82fd4af97b880450a42f`.
+The retained build manifest maps this image to the aligned-prefix wake model
+`3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7`.
+It is the existing research image, not frozen v30 or any newly published GPU
+candidate. This identity check does not qualify the model's behavior.
+
 ## Control failure and recovery with the lifetime fixes
 
 The normal development image also completed three muted provider calls with no
