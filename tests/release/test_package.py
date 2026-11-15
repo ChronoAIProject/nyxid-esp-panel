@@ -59,6 +59,18 @@ class ReleasePackageTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.package()
 
+    def test_preview_manifest_uses_explicit_preview_tag(self):
+        manifest = module.package(self.build, self.out, "p4-rev1-16mb", "0.6.24",
+                                  "preview-0.6.24-hey-nyx.1")
+        self.assertIn("/preview-0.6.24-hey-nyx.1/", manifest["url"])
+        self.assertEqual(manifest["version"], "0.6.24")
+
+    def test_mismatched_or_unsafe_release_tags_refused(self):
+        for tag in ("v0.6.25", "preview-0.6.25-hey-nyx.1", "preview-0.6.24-x/../y",
+                    "preview-0.6.24-x?query", "other-0.6.24"):
+            with self.subTest(tag=tag), self.assertRaises(ValueError):
+                module.package(self.build, self.out, "p4-rev1-16mb", "0.6.24", tag)
+
     def test_mismatched_version_and_oversized_image_refused(self):
         path = self.build / "nyxid-esp-panel.bin"
         image = bytearray(path.read_bytes())

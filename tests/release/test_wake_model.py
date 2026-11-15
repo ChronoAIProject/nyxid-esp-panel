@@ -14,7 +14,7 @@ class WakeModelTest(unittest.TestCase):
     def test_compressed_model_preserves_vendor_header_offsets_and_all_weights(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            source = root / "source"
+            source = root / "wn9_hiesp"
             source.mkdir()
             contents = {"wn9_data": bytes(range(256)) * 20, "_MODEL_INFO_": b"wakeNet9_v1h24_Hi,ESP_3_0.63_0.635", "wn9_index": b"index"}
             for name, data in contents.items():

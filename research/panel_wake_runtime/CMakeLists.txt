@@ -92,10 +92,10 @@ set(_selftest_args)
 set(_candidate_profile_args)
 set(_prepare_script "${CMAKE_CURRENT_LIST_DIR}/prepare_runtime.py")
 if(NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE)
-    if(NOT NYX_PANEL_NODE_DEV_MODE OR NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR
+    if(NYX_PANEL_EXPERIMENTAL_WAKE_CANDIDATE_PROFILE OR
             NYX_PANEL_EXPERIMENTAL_WAKE_COMPLETE_PROFILE OR NYX_PANEL_EXPERIMENTAL_WAKE_SELFTEST OR
             NYX_PANEL_EXPERIMENTAL_WAKE_CALIBRATION)
-        message(FATAL_ERROR "Streaming profile requires isolated node development mode and cannot mix legacy calibration/profile/self-test inputs")
+        message(FATAL_ERROR "Streaming profile cannot mix legacy calibration/profile/self-test inputs")
     endif()
     execute_process(COMMAND ${PYTHON} "${CMAKE_CURRENT_LIST_DIR}/prepare_streaming_runtime.py"
         --profile "${NYX_PANEL_EXPERIMENTAL_WAKE_STREAMING_PROFILE}"

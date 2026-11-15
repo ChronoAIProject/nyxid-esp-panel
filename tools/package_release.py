@@ -15,11 +15,17 @@ PROFILES = {"p4-rev1-16mb": 100, "p4-rev3-16mb": 300}
 SLOT_SIZE = 0x690000
 
 
-def package(build: Path, output: Path, profile: str, version: str):
+def package(build: Path, output: Path, profile: str, version: str, release_tag=None):
     if not re.fullmatch(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", version):
         raise ValueError("Release must use a stable major.minor.patch version")
     if any(int(part) > 65535 for part in version.split(".")):
         raise ValueError("Version component too large")
+    release_tag = release_tag or f"v{version}"
+    if release_tag != f"v{version}" and not re.fullmatch(
+            rf"preview-{re.escape(version)}-[a-z0-9]+(?:[.-][a-z0-9]+)*", release_tag):
+        raise ValueError("Release tag must identify this version as stable or preview")
+    if len(release_tag) > 100:
+        raise ValueError("Release tag is too long")
     config = json.loads((build / "config/sdkconfig.json").read_text())
     if config.get("ESPTOOLPY_FLASHSIZE") != "16MB" or not config.get("BOOTLOADER_APP_ROLLBACK_ENABLE"):
         raise ValueError("Release requires 16 MB flash and boot rollback")
@@ -44,7 +50,7 @@ def package(build: Path, output: Path, profile: str, version: str):
     name = f"{PROJECT}-{profile}.bin"
     shutil.copyfile(build / f"{PROJECT}.bin", output / name)
     manifest = dict(schema=1, project=PROJECT, profile=profile, version=version,
-                    url=f"{ROOT}/v{version}/{name}", size=len(image),
+                    url=f"{ROOT}/{release_tag}/{name}", size=len(image),
                     sha256=hashlib.sha256(image).hexdigest())
     (output / f"update-{profile}.json").write_text(json.dumps(manifest, indent=2) + "\n")
     with zipfile.ZipFile(output / f"{PROJECT}-{profile}-factory.zip", "w", zipfile.ZIP_DEFLATED) as archive:
@@ -63,12 +69,14 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--profile", choices=PROFILES, required=True)
     parser.add_argument("--version-file", type=Path, default=Path("VERSION"))
-    parser.add_argument("--tag")
+    parser.add_argument("--tag", help="Stable or preview tag; defaults to RELEASE_TAG beside VERSION when present")
     args = parser.parse_args()
     version = args.version_file.read_text().strip()
-    if args.tag is not None and args.tag != f"v{version}":
-        parser.error("Git tag must exactly match VERSION")
-    print(json.dumps(package(args.build, args.output, args.profile, version), indent=2))
+    release_tag = args.tag
+    tag_file = args.version_file.with_name("RELEASE_TAG")
+    if release_tag is None and tag_file.is_file():
+        release_tag = tag_file.read_text().strip()
+    print(json.dumps(package(args.build, args.output, args.profile, version, release_tag), indent=2))
 
 
 if __name__ == "__main__":

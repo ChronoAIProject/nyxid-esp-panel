@@ -57,6 +57,31 @@ USB console equivalent: `panel-update status|check|install|auto on|off`.
 
 ## Publish a version
 
+### Opt-in Hey Nyx preview
+
+`preview-0.6.29-hey-nyx.1` uses the tested original c161 model and the DTLS
+session-resource cleanup from PR #15. This release branch builds c161 with
+production NyxID endpoints. It has no baked account credentials or local API
+configuration. Its `RELEASE_TAG` file makes the normal packaging command emit
+manifests with the exact preview download URLs; `VERSION` remains the app
+descriptor version `0.6.29`.
+
+Publish this tag as a GitHub **prerelease**, with `latest=false`, only after the
+same host tests and both hardware-profile builds succeed. The stable release
+workflow is not invoked by `preview-*` tags. Existing panels continue checking
+the stable channel and do not install a GitHub prerelease automatically. An
+authorized manager can opt in with the existing explicit URL/SHA256 OTA path.
+Normal app-only OTA retains saved settings and credentials; factory images are
+for initial setup/recovery and overwrite storage. To revert, use an explicit
+app-only OTA image from the previous stable release, with its published hash.
+
+Wake sensitivity and nearword generalization remain incomplete. The preview
+does not distribute the later failed SpeechT5 candidate or the unscored
+MatchboxNet experiment. Neither development nor dining-room panels are updated
+as part of publication.
+
+### Stable versions
+
 1. Update `VERSION` and open a PR. Firmware CI runs all host/release tests and
    builds both hardware profiles with ESP-IDF 5.5.4.
 2. Merge the tested change to `main`, then tag that exact commit:
