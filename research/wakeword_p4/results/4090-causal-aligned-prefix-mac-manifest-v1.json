@@ -1,0 +1,45 @@
+{
+  "schema": "causal-aligned-prefix-mac-handoff-v1",
+  "source_commit": "797baa52",
+  "results_commit": "f9ad72b7",
+  "model": {
+    "file": "hey_nyx.tflite",
+    "bytes": 60952,
+    "sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+    "original_path": ".local/wakeword/causal-aligned-prefix-int8-v1/int8.tflite",
+    "export_report": "research/wakeword_p4/results/4090-causal-aligned-prefix-int8-original-v1.json"
+  },
+  "profile": {
+    "context": 309,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "stride": 3,
+    "input_dtype": "int8",
+    "input_shape": [
+      1,
+      3,
+      40
+    ],
+    "output_dtype": "uint8",
+    "output_shape": [
+      1,
+      1
+    ],
+    "output_scale": 0.00390625,
+    "output_zero_point": 0
+  },
+  "deployment": {
+    "existing_prime_samples": 81600,
+    "frontend": "existing unchanged frontend",
+    "event_policy": "existing smoothing/rearm/cooldown, continuous through priming; ignore only application priming notifications"
+  },
+  "status": "Experimental candidate for actual P4 functionality/stability evaluation; v30 not replaced",
+  "observed_consumed_behavior": {
+    "commands": "24/27",
+    "light": "6/9; hit-conditioned generated-prefix median132.6875ms",
+    "common_false_clips": "17/288",
+    "background_events": 0,
+    "background_hours": 10.483944826388889
+  },
+  "limits": "Original export bytes; no re-export, PCM selftest or numerical admission requirement. Generated-end early bare events are not by themselves failure or phonetic truth. Known nearword errors and misses retained; independent acceptance and officialHiESP same-protocol comparison remain incomplete. No audio or credentials included."
+}
