@@ -29,6 +29,14 @@ Keep dataset separation and the original PCM/audio path unchanged. Check the
 chosen model on the actual P4 runtime before deployment, and continue the
 [long-term stability monitor](../../docs/STABILITY.md).
 
+The original source-balanced c161 model has now had a reversible
+[development-board trial](diagnostics/c161-development-trial.md). Runtime
+progress and one short muted call passed. In the user's informal test, the third
+of three attempts woke the panel; after that wake the first request was heard
+completely and answered normally. Wake sensitivity remains open. This does not
+qualify the model, demonstrate mature-reference parity or replace long-call/AEC
+acceptance.
+
 The original four-arm engine-adversarial run was interrupted. Its completed
 Hey Nyx pair showed worse recognition/false-activation tradeoffs after the
 intervention; it did not produce a qualified candidate. The GPU study now
