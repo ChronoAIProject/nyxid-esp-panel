@@ -10578,3 +10578,7 @@ Latent-command posttraining pipeline prepared while originalsession83064/PID2341
 ### Latent complete-command 固定训练完成（2026-11-15）
 
 原 session83064 / PID2341885 正常 exit0，RTX4090 固定20000步全部完成，耗时1670.689794918988秒。原始报告 `results/4090-causal-latent-command-original-v1.json`；最终权重SHA256 `84080b3341beceee64647199bc8539243ead0cfd5fd8b08574175cef05e38eaa`。训练过程未重启、未挑checkpoint。导出锁 `4090-causal-latent-command-int8-plan-v1.json` SHA256 `56e46c5fffff2e41d28a04774c9b575aeec071c0ce8b186ec97f810e6bbd90f1`，先推后执行一次原最终权重导出。训练完成不等于识别合格，尚无新识别结论。
+
+### Latent complete-command 完整评估：有命中收益，但误触恶化（2026-11-15）
+
+导出原session8805 exit0，60952B INT8 SHA256 `e8e083687126d9076b8e9c6b590c447d6d66b212fdeb61187fc9f6806370c3a3`。三组原采集session88076/84657/46251全部exit0，共1140条完整输入，原始报告与UINT8输出无损保存491442B。固定阈值下legacy34/36（命令26/27）、误触3/288；Jenny35/36（命令26/27）、误触52/324；Joe0/72。相对c161，Jenny多2命中，但新增11/移除3误触，净增8，且legacy丢1命中。两组已有背景各0事件，不能累加为独立新证据。详见 `experiments/causal_latent_command_findings_v1.md`。本轮不作为整体提升或替代v30候选，不作阈值/配方救援；更大研究目标仍未完成。
