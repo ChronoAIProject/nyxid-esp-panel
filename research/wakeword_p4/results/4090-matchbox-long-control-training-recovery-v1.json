@@ -1,0 +1,553 @@
+{
+  "schema": "matchbox-long-training-original-v1",
+  "arm": "control",
+  "plan_sha256": "a742f78de029516b80725e01b31728f2973c98d1e6d7dd6370d99b47ed2a53e0",
+  "launch": {
+    "pid": 2847,
+    "starttime": "9139",
+    "plan_sha256": "a742f78de029516b80725e01b31728f2973c98d1e6d7dd6370d99b47ed2a53e0"
+  },
+  "steps": 5000,
+  "optimizer_iterations": 5000,
+  "device": "NVIDIA GeForce RTX 4090",
+  "elapsed_seconds": 215.23942804799998,
+  "resumed_from_step": 3500,
+  "resume_plan_sha256": "4dcbe52c3b42638331882d10f0f851aeaa03ecbbdd3a84db4bf3967937d96c30",
+  "all_training_checks_passed": true,
+  "frozen_bn_buffer_hashes": {
+    "encoder.encoder.0.mconv.2.running_mean": "1f54313baef8fe5fc0379c386928e51986ca6e4f440103e19012b8023ee39c5b",
+    "encoder.encoder.0.mconv.2.running_var": "e6c4d6d433daa46d55c4e886215f90f1250dd4a696be63419ddd6d8408b06829",
+    "encoder.encoder.0.mconv.2.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.1.mconv.2.running_mean": "bc83ef1463041e9130a50fae256b1f1a0e4efa0d596366804e7607b7c2de7b6e",
+    "encoder.encoder.1.mconv.2.running_var": "4b38246a92e78f8af13b134a25485b7e5f8197a70357a0188b403b23b5aa7afd",
+    "encoder.encoder.1.mconv.2.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.1.res.0.1.running_mean": "d42533c1d8f51877bdba69ea89f4b852669c6f422a0b51ed0d179cad4237ca65",
+    "encoder.encoder.1.res.0.1.running_var": "f86615df7829847d62caddab3ba66cd56e46ee9656fade8e397c0243a0f96eb7",
+    "encoder.encoder.1.res.0.1.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.2.mconv.2.running_mean": "2c0c213f5cbe0020ea17815972570977266238d202e60d41e64c67d18ca7506d",
+    "encoder.encoder.2.mconv.2.running_var": "8aa0d582a5d44e842dd6264676d4c129d2f595971a17e285deb2f5f58bdef8af",
+    "encoder.encoder.2.mconv.2.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.2.res.0.1.running_mean": "eb76fc5916647f2b1d23998fdb4cafdc40dc650088e957e65e8c2c82054c54d7",
+    "encoder.encoder.2.res.0.1.running_var": "a30bd3489832af831ec9bf01c1b5fe0e17c4a10f1f686a5ab231ce9ac7d1d07d",
+    "encoder.encoder.2.res.0.1.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.3.mconv.2.running_mean": "63b95cc12e46317ef5c718ce0c65c18e3ee9fc25aae3ba178025ccc39bd14f0c",
+    "encoder.encoder.3.mconv.2.running_var": "29a3847e2a5abe80b8a6c8b046949663884af0db8f751f6170d50f843498b444",
+    "encoder.encoder.3.mconv.2.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.3.res.0.1.running_mean": "0243cfd3f1a2d04931ada8ee1d00cda830c163d9d60a152393528c8639084b80",
+    "encoder.encoder.3.res.0.1.running_var": "5ca2316b3567f28c2a7dfa10a938a817dd4816d4c0996e094ace3e168b68c3da",
+    "encoder.encoder.3.res.0.1.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.4.mconv.2.running_mean": "070040db033a61c7045cd0db256d1f9c9d32bc0f0f8d0ec9390849aae988b51a",
+    "encoder.encoder.4.mconv.2.running_var": "f93ac2ef511ce7d5aa4d916a2261661acd642bd791f1ee61805caf9a4f4340bb",
+    "encoder.encoder.4.mconv.2.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d",
+    "encoder.encoder.5.mconv.1.running_mean": "579e07aa6f6c2d2a96064d8c5c24dc54d4a115f90f47aa03a417e7e58bb38ea8",
+    "encoder.encoder.5.mconv.1.running_var": "136a6784daf0c8477e8660924388409e7ee00100fcc69059003a315f4bdadff3",
+    "encoder.encoder.5.mconv.1.num_batches_tracked": "d8b12d93d994684ae9e85d86b6a3dfb451074480372df603dae007c73097e73d"
+  },
+  "progress": [
+    {
+      "process_io": "rchar: 408290613\nwchar: 9737406\nsyscr: 9098\nsyscw: 2306\nread_bytes: 2557305728\nwrite_bytes: 9678848\ncancelled_write_bytes: 4096\n",
+      "step": 1,
+      "loss": 2.255087375640869,
+      "elapsed_seconds": 0.8221218270000037,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 318790144,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 1704130804\nwchar: 9843798\nsyscr: 145861\nsyscw: 2312\nread_bytes: 2807468928\nwrite_bytes: 9785344\ncancelled_write_bytes: 4096\n",
+      "step": 100,
+      "loss": 0.48511365056037903,
+      "elapsed_seconds": 12.167373451000003,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 3001627165\nwchar: 9964651\nsyscr: 282873\nsyscw: 2318\nread_bytes: 2830386048\nwrite_bytes: 9908224\ncancelled_write_bytes: 4096\n",
+      "step": 200,
+      "loss": 0.03075740486383438,
+      "elapsed_seconds": 22.649043434999996,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 4294277528\nwchar: 10085733\nsyscr: 419639\nsyscw: 2324\nread_bytes: 2831537024\nwrite_bytes: 10027008\ncancelled_write_bytes: 4096\n",
+      "step": 300,
+      "loss": 0.007486035581678152,
+      "elapsed_seconds": 33.161523656,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 5606354650\nwchar: 10206604\nsyscr: 557932\nsyscw: 2330\nread_bytes: 2833404800\nwrite_bytes: 10153984\ncancelled_write_bytes: 4096\n",
+      "step": 400,
+      "loss": 0.005011893808841705,
+      "elapsed_seconds": 48.87964358399999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 6895257181\nwchar: 10328173\nsyscr: 694125\nsyscw: 2336\nread_bytes: 2834527104\nwrite_bytes: 10276864\ncancelled_write_bytes: 4096\n",
+      "step": 500,
+      "loss": 0.0020215350668877363,
+      "elapsed_seconds": 62.218834637,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 8228083677\nwchar: 11556384\nsyscr: 834717\nsyscw: 2392\nread_bytes: 2863653760\nwrite_bytes: 11513856\ncancelled_write_bytes: 4096\n",
+      "step": 600,
+      "loss": 0.0012263276148587465,
+      "elapsed_seconds": 75.64560598999999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 9533233279\nwchar: 11677528\nsyscr: 972339\nsyscw: 2398\nread_bytes: 2898256768\nwrite_bytes: 11632640\ncancelled_write_bytes: 4096\n",
+      "step": 700,
+      "loss": 0.0014526729937642813,
+      "elapsed_seconds": 90.76671146099999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 10843969462\nwchar: 11798666\nsyscr: 1110625\nsyscw: 2404\nread_bytes: 2907734912\nwrite_bytes: 11759616\ncancelled_write_bytes: 4096\n",
+      "step": 800,
+      "loss": 0.000860036991070956,
+      "elapsed_seconds": 105.37001906100001,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 12153838672\nwchar: 11919636\nsyscr: 1249022\nsyscw: 2410\nread_bytes: 2908320640\nwrite_bytes: 11878400\ncancelled_write_bytes: 4096\n",
+      "step": 900,
+      "loss": 0.00032069243025034666,
+      "elapsed_seconds": 119.463173169,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 13468687100\nwchar: 12041905\nsyscr: 1387884\nsyscw: 2416\nread_bytes: 2908402560\nwrite_bytes: 12001280\ncancelled_write_bytes: 4096\n",
+      "step": 1000,
+      "loss": 0.0005067731835879385,
+      "elapsed_seconds": 133.094709137,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 14770464195\nwchar: 13271017\nsyscr: 1525460\nsyscw: 2472\nread_bytes: 2908627840\nwrite_bytes: 13234176\ncancelled_write_bytes: 4096\n",
+      "step": 1100,
+      "loss": 0.00017014730838127434,
+      "elapsed_seconds": 148.90761943500002,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 16064493198\nwchar: 13392550\nsyscr: 1662320\nsyscw: 2478\nread_bytes: 2953438080\nwrite_bytes: 13357056\ncancelled_write_bytes: 4096\n",
+      "step": 1200,
+      "loss": 0.0019153710454702377,
+      "elapsed_seconds": 164.91110882000004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 17389262546\nwchar: 13513993\nsyscr: 1802059\nsyscw: 2484\nread_bytes: 2991309696\nwrite_bytes: 13479936\ncancelled_write_bytes: 4096\n",
+      "step": 1300,
+      "loss": 0.00022175135381985456,
+      "elapsed_seconds": 179.909685745,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 18692254134\nwchar: 13635056\nsyscr: 1939745\nsyscw: 2490\nread_bytes: 3007271808\nwrite_bytes: 13615104\ncancelled_write_bytes: 4096\n",
+      "step": 1400,
+      "loss": 0.000220933769014664,
+      "elapsed_seconds": 192.447919253,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 20017568542\nwchar: 13756412\nsyscr: 2079439\nsyscw: 2496\nread_bytes: 3009110912\nwrite_bytes: 13737984\ncancelled_write_bytes: 4096\n",
+      "step": 1500,
+      "loss": 0.0005675420397892594,
+      "elapsed_seconds": 206.40749199700002,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 21321792294\nwchar: 14988111\nsyscr: 2217420\nsyscw: 2552\nread_bytes: 3035009920\nwrite_bytes: 14974976\ncancelled_write_bytes: 4096\n",
+      "step": 1600,
+      "loss": 0.00017291713447775692,
+      "elapsed_seconds": 220.52431591000004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 22659229958\nwchar: 15109351\nsyscr: 2358361\nsyscw: 2558\nread_bytes: 3041014656\nwrite_bytes: 15097856\ncancelled_write_bytes: 4096\n",
+      "step": 1700,
+      "loss": 9.691072045825422e-05,
+      "elapsed_seconds": 234.93249722300004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 23949336721\nwchar: 15230629\nsyscr: 2495074\nsyscw: 2564\nread_bytes: 3042231168\nwrite_bytes: 15220736\ncancelled_write_bytes: 4096\n",
+      "step": 1800,
+      "loss": 9.60597099037841e-05,
+      "elapsed_seconds": 249.83855902100004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 25260839910\nwchar: 15351421\nsyscr: 2633289\nsyscw: 2570\nread_bytes: 3043017600\nwrite_bytes: 15339520\ncancelled_write_bytes: 4096\n",
+      "step": 1900,
+      "loss": 8.197950955945998e-05,
+      "elapsed_seconds": 264.168663056,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 26548992366\nwchar: 15472833\nsyscr: 2769403\nsyscw: 2576\nread_bytes: 3043279744\nwrite_bytes: 15474688\ncancelled_write_bytes: 4096\n",
+      "step": 2000,
+      "loss": 6.508469232358038e-05,
+      "elapsed_seconds": 279.928431154,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 27852597236\nwchar: 16704919\nsyscr: 2907054\nsyscw: 2632\nread_bytes: 3044217728\nwrite_bytes: 16707584\ncancelled_write_bytes: 4096\n",
+      "step": 2100,
+      "loss": 6.348204624373466e-05,
+      "elapsed_seconds": 294.729095984,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 29178737196\nwchar: 16826131\nsyscr: 3046622\nsyscw: 2638\nread_bytes: 3044414336\nwrite_bytes: 16830464\ncancelled_write_bytes: 4096\n",
+      "step": 2200,
+      "loss": 4.253772203810513e-05,
+      "elapsed_seconds": 308.79462191100004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 30484638315\nwchar: 16947988\nsyscr: 3184872\nsyscw: 2644\nread_bytes: 3044504448\nwrite_bytes: 16953344\ncancelled_write_bytes: 4096\n",
+      "step": 2300,
+      "loss": 5.556481846724637e-05,
+      "elapsed_seconds": 322.424581955,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 31798053123\nwchar: 17069113\nsyscr: 3323525\nsyscw: 2650\nread_bytes: 3045045120\nwrite_bytes: 17076224\ncancelled_write_bytes: 4096\n",
+      "step": 2400,
+      "loss": 6.399986159522086e-05,
+      "elapsed_seconds": 337.785268813,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 33103391524\nwchar: 17189985\nsyscr: 3461374\nsyscw: 2656\nread_bytes: 3054044032\nwrite_bytes: 17199104\ncancelled_write_bytes: 4096\n",
+      "step": 2500,
+      "loss": 4.169508974882774e-05,
+      "elapsed_seconds": 354.525800753,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 34402348798\nwchar: 18423626\nsyscr: 3598841\nsyscw: 2712\nread_bytes: 3083957120\nwrite_bytes: 18436096\ncancelled_write_bytes: 4096\n",
+      "step": 2600,
+      "loss": 5.2753835916519165e-05,
+      "elapsed_seconds": 372.05790899100003,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 35729775099\nwchar: 18544799\nsyscr: 3738659\nsyscw: 2718\nread_bytes: 3095618432\nwrite_bytes: 18563072\ncancelled_write_bytes: 4096\n",
+      "step": 2700,
+      "loss": 0.00014381864457391202,
+      "elapsed_seconds": 389.926394639,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 37037807871\nwchar: 18666860\nsyscr: 3876407\nsyscw: 2724\nread_bytes: 3104183168\nwrite_bytes: 18685952\ncancelled_write_bytes: 4096\n",
+      "step": 2800,
+      "loss": 6.83406469761394e-05,
+      "elapsed_seconds": 406.046951999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 38336011769\nwchar: 18788032\nsyscr: 4013697\nsyscw: 2730\nread_bytes: 3114148736\nwrite_bytes: 18812928\ncancelled_write_bytes: 4096\n",
+      "step": 2900,
+      "loss": 0.00011813962191808969,
+      "elapsed_seconds": 425.147201529,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 39636416472\nwchar: 18908936\nsyscr: 4151103\nsyscw: 2736\nread_bytes: 3126543232\nwrite_bytes: 18931712\ncancelled_write_bytes: 4096\n",
+      "step": 3000,
+      "loss": 4.269190685590729e-05,
+      "elapsed_seconds": 442.054296817,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 40935861702\nwchar: 20143664\nsyscr: 4288258\nsyscw: 2792\nread_bytes: 3137459072\nwrite_bytes: 20168704\ncancelled_write_bytes: 4096\n",
+      "step": 3100,
+      "loss": 5.4133666708366945e-05,
+      "elapsed_seconds": 459.62086243199997,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 42250085476\nwchar: 20264255\nsyscr: 4426650\nsyscw: 2798\nread_bytes: 3146478464\nwrite_bytes: 20295680\ncancelled_write_bytes: 4096\n",
+      "step": 3200,
+      "loss": 2.406715793767944e-05,
+      "elapsed_seconds": 479.41745828399996,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 43558485988\nwchar: 20385726\nsyscr: 4565099\nsyscw: 2804\nread_bytes: 3157267328\nwrite_bytes: 20418560\ncancelled_write_bytes: 4096\n",
+      "step": 3300,
+      "loss": 3.6980778531869873e-05,
+      "elapsed_seconds": 496.34863841000004,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 44867641743\nwchar: 20507055\nsyscr: 4703340\nsyscw: 2810\nread_bytes: 3157574528\nwrite_bytes: 20541440\ncancelled_write_bytes: 4096\n",
+      "step": 3400,
+      "loss": 3.2254272809950635e-05,
+      "elapsed_seconds": 514.358209277,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 46173523799\nwchar: 20627361\nsyscr: 4841011\nsyscw: 2816\nread_bytes: 3203744640\nwrite_bytes: 20672512\ncancelled_write_bytes: 4096\n",
+      "step": 3500,
+      "loss": 2.5574670871719718e-05,
+      "elapsed_seconds": 535.69383484,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319852032,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 1723630476\nwchar: 14486201\nsyscr: 145260\nsyscw: 222\nread_bytes: 1405182848\nwrite_bytes: 14434304\ncancelled_write_bytes: 417792\n",
+      "step": 3600,
+      "loss": 1.7824655515141785e-05,
+      "elapsed_seconds": 15.654084837999989,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 3039690608\nwchar: 14608042\nsyscr: 283917\nsyscw: 228\nread_bytes: 1430537088\nwrite_bytes: 14561280\ncancelled_write_bytes: 417792\n",
+      "step": 3700,
+      "loss": 1.3431827028398402e-05,
+      "elapsed_seconds": 26.59446005599999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 4308045854\nwchar: 14729419\nsyscr: 418439\nsyscw: 234\nread_bytes: 1436320640\nwrite_bytes: 14680064\ncancelled_write_bytes: 417792\n",
+      "step": 3800,
+      "loss": 1.852379136835225e-05,
+      "elapsed_seconds": 39.344323488,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 5614147974\nwchar: 14850756\nsyscr: 556486\nsyscw: 240\nread_bytes: 1438208896\nwrite_bytes: 14811136\ncancelled_write_bytes: 417792\n",
+      "step": 3900,
+      "loss": 1.7728798411553726e-05,
+      "elapsed_seconds": 57.029642724,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 6910340960\nwchar: 14972523\nsyscr: 693825\nsyscw: 246\nread_bytes: 1505252224\nwrite_bytes: 14934016\ncancelled_write_bytes: 417792\n",
+      "step": 4000,
+      "loss": 1.2900263755000196e-05,
+      "elapsed_seconds": 77.28707902799998,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 8241719302\nwchar: 16209586\nsyscr: 834094\nsyscw: 302\nread_bytes: 1643709312\nwrite_bytes: 16179200\ncancelled_write_bytes: 417792\n",
+      "step": 4100,
+      "loss": 1.2667300325119868e-05,
+      "elapsed_seconds": 94.43301948599999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 9545172709\nwchar: 16331167\nsyscr: 971769\nsyscw: 308\nread_bytes: 1655255936\nwrite_bytes: 16297984\ncancelled_write_bytes: 417792\n",
+      "step": 4200,
+      "loss": 1.696984691079706e-05,
+      "elapsed_seconds": 109.774493464,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 10833842896\nwchar: 16452713\nsyscr: 1107962\nsyscw: 314\nread_bytes: 1656406912\nwrite_bytes: 16424960\ncancelled_write_bytes: 417792\n",
+      "step": 4300,
+      "loss": 8.38263804325834e-06,
+      "elapsed_seconds": 124.39723873199999,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 12123706284\nwchar: 16574003\nsyscr: 1244351\nsyscw: 320\nread_bytes: 1656406912\nwrite_bytes: 16543744\ncancelled_write_bytes: 417792\n",
+      "step": 4400,
+      "loss": 5.862548277946189e-06,
+      "elapsed_seconds": 138.849488114,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 13429041597\nwchar: 16695788\nsyscr: 1381915\nsyscw: 326\nread_bytes: 1656406912\nwrite_bytes: 16666624\ncancelled_write_bytes: 417792\n",
+      "step": 4500,
+      "loss": 1.9136936316499487e-05,
+      "elapsed_seconds": 152.149978046,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 14734547078\nwchar: 17933791\nsyscr: 1519854\nsyscw: 382\nread_bytes: 1735377792\nwrite_bytes: 17911808\ncancelled_write_bytes: 417792\n",
+      "step": 4600,
+      "loss": 1.5163112038862891e-05,
+      "elapsed_seconds": 168.16854843199997,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 16034352820\nwchar: 18055852\nsyscr: 1657246\nsyscw: 388\nread_bytes: 1840378752\nwrite_bytes: 18034688\ncancelled_write_bytes: 417792\n",
+      "step": 4700,
+      "loss": 1.2155253898527008e-05,
+      "elapsed_seconds": 179.32140323299996,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 17349925247\nwchar: 18175851\nsyscr: 1795926\nsyscw: 394\nread_bytes: 1847899008\nwrite_bytes: 18153472\ncancelled_write_bytes: 417792\n",
+      "step": 4800,
+      "loss": 8.72251985128969e-06,
+      "elapsed_seconds": 190.23946192699998,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 18675620332\nwchar: 18297278\nsyscr: 1935666\nsyscw: 400\nread_bytes: 1848726400\nwrite_bytes: 18280448\ncancelled_write_bytes: 417792\n",
+      "step": 4900,
+      "loss": 6.710954949085135e-06,
+      "elapsed_seconds": 203.037568238,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    },
+    {
+      "process_io": "rchar: 19978940045\nwchar: 18418964\nsyscr: 2073144\nsyscw: 406\nread_bytes: 1848931200\nwrite_bytes: 18403328\ncancelled_write_bytes: 417792\n",
+      "step": 5000,
+      "loss": 4.188084858469665e-06,
+      "elapsed_seconds": 215.160402718,
+      "device": "cuda:0",
+      "peak_allocated_bytes": 319779840,
+      "frozen_bn_buffers_unchanged": true
+    }
+  ],
+  "files": {
+    "launch.json": {
+      "bytes": 118,
+      "sha256": "217b45d8ae3c1c50b1b0cc29a4664ad3e6bbf29b041f7781dccc82d90e449231"
+    },
+    "optimizer-final.pt": {
+      "bytes": 623635,
+      "sha256": "c5b4577ff35b3f04c723291d838142258deb98495b34999ef1127185b89d55ab"
+    },
+    "decoded-source-hashes.json": {
+      "bytes": 188870,
+      "sha256": "fe2b621a16e49d2a3e5023bd046a704c390fe35b2270bdbd1bab70b8aaf30b6e"
+    },
+    "frontend.pt": {
+      "bytes": 85994,
+      "sha256": "feb4b44d5f50c8ff05a81fabfd4b454537fb948454790fa8c219906bfa3f9f2c"
+    },
+    "first-labels.npy": {
+      "bytes": 1152,
+      "sha256": "789673fe192145a7cadf0d96a3fb8f1eeac658eebf7dc20a00a3873a3d259c5b"
+    },
+    "final.pt": {
+      "bytes": 323622,
+      "sha256": "7c2f245bd11dc0fd545932df33c113fdaa1c41b44101b31e91af66dc05c02be6"
+    },
+    "representative.npy": {
+      "bytes": 9246848,
+      "sha256": "5eb3c8bab27f92c4da3ae32bddf5591df95f624912c759ac981320aed2e941d1"
+    },
+    "recovery.pt": {
+      "bytes": 1118176,
+      "sha256": "cb4d2ad14c71a5edd79dacbb9303f871f29d3f6fa2f6d9671cc1a1b36d04ea5b"
+    },
+    "batches.jsonl.gz": {
+      "bytes": 6046594,
+      "sha256": "bb16ae11792519b82a05ef408757adac8fcf3e603c03a55a05015cbd00c93341"
+    },
+    "initial.pt": {
+      "bytes": 326508,
+      "sha256": "f5d30f69f252bfb6f8b182b0c986dcd3d0217f1cdb67dcc76af54040bbfa1e8d"
+    }
+  },
+  "recognition_scored": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "policy": "Exactly one5000update RTX4090 run perarm, matched long context/protocol, finalonly. Source-balanced pool versus SpeechT5-only, not isolated pretraining attribution or comparison to oldwindow. Original source/voice restrictions and sharedlineage disclosures retained. No protected/acceptance input, threshold/seed/LR/checkpoint/window/head/calibration rescue or neuralnumericalcomparison admission. No promotion; v30/Mac unchanged."
+}
