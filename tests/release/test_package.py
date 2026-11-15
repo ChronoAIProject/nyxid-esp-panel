@@ -59,6 +59,25 @@ class ReleasePackageTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.package()
 
+    def test_lcd_x8_and_external_display_cannot_share_update_profile(self):
+        self.config.update(ESP32P4_REV_MIN_FULL=300, NYX_PANEL_BOARD_LCD_X8=True,
+                           BSP_LCD_TYPE_800_1280_8_INCH_A=True)
+        self.write_config()
+        with self.assertRaisesRegex(ValueError, "board wiring"):
+            module.package(self.build, self.out, "p4-rev3-16mb", "0.6.24")
+        manifest = module.package(self.build, self.out, "p4-rev3-lcd-x8-16mb", "0.6.24")
+        self.assertEqual(manifest["profile"], "p4-rev3-lcd-x8-16mb")
+        self.config["NYX_PANEL_BOARD_LCD_X8"] = False
+        self.write_config()
+        with self.assertRaisesRegex(ValueError, "board wiring"):
+            module.package(self.build, self.out, "p4-rev3-lcd-x8-16mb", "0.6.24")
+
+    def test_lcd_x8_wrong_panel_sequence_refused(self):
+        self.config.update(ESP32P4_REV_MIN_FULL=300, NYX_PANEL_BOARD_LCD_X8=True)
+        self.write_config()
+        with self.assertRaisesRegex(ValueError, "8-inch"):
+            module.package(self.build, self.out, "p4-rev3-lcd-x8-16mb", "0.6.24")
+
     def test_preview_manifest_uses_explicit_preview_tag(self):
         manifest = module.package(self.build, self.out, "p4-rev1-16mb", "0.6.24",
                                   "preview-0.6.24-hey-nyx.1")

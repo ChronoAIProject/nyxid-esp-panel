@@ -61,6 +61,27 @@ on revision 1. Compare `build/CMakeCache.txt`, `sdkconfig`, the IDF revision and
 component/source-list change. Component Manager older than the pinned version
 can produce misleading missing-Kconfig failures from unselected candidates.
 
+The integrated **ESP32-P4-WIFI6-Touch-LCD-X 8-inch** board requires a separate
+profile. Its 800x1280 resolution matches the external 10.1-inch screen, but its
+JD9365 initialization sequence, GPIO 27 reset, GPIO 26 PWM backlight and ES7210
+microphone ADC differ. The LCD-X8 configuration keeps the same PCM sample rate
+and single capture/AEC pipeline, selecting ES7210 microphone inputs 1 and 2.
+Identify the actual board before installing either image; a chip revision alone
+does not identify the screen or board wiring.
+
+```sh
+idf.py -B build-lcd-x8 -D SDKCONFIG=sdkconfig.local-lcd-x8 \
+  -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.rev3_x.defaults;sdkconfig.board-16mb.defaults;sdkconfig.lcd-8inch-a.defaults" build
+python3 tools/package_release.py --build build-lcd-x8 --output .local/lcd-x8-dist \
+  --profile p4-rev3-lcd-x8-16mb
+```
+
+The LCD-X8 OTA profile is distinct from `p4-rev3-16mb`. Until matching release
+assets are published, its update checks cannot install the external-screen
+firmware. Packaging also rejects a build labeled with the other board's profile.
+The BSP compatibility patch is conditional on `CONFIG_NYX_PANEL_BOARD_LCD_X8`;
+the external-screen configuration uses the original BSP behavior.
+
 Local **voice only**, with the node still on production:
 
 ```sh
