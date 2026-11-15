@@ -1,0 +1,613 @@
+{
+  "schema": "causal-phone-auxiliary-behavior-comparison-v1",
+  "model": {
+    "path": ".local/wakeword/causal-phone-auxiliary-int8-v1/int8.tflite",
+    "bytes": 60952,
+    "sha256": "d94d9e9a96135f59ce6c12ecf85a59fbcdae877d9c421b3cd0829eee9cc4ddb5"
+  },
+  "inputs": [
+    {
+      "path": "research/wakeword_p4/results/4090-causal-phone-auxiliary-int8-original-v1.json",
+      "sha256": "dd32d48b99afd688f15707be1874aa46e8bc2e53e8404fe972e1d0eeebc33f6f"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/result.json",
+      "sha256": "d71be4f8b59dbbfc571f376428e920091a2542f3822f38725690efe5c648c010"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/summary.json",
+      "sha256": "08296a25a6ff8dbf79bd62eca8a72763476bca5c96cb7ded9d04c9c2fb31c120"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "68cfaac70ba816167412b7ae5b03d0f347ba40cbb9ea1998376731bf7d3be6b2"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-primed-v1/result.json",
+      "sha256": "08004eea696be8e56e176454faa740f150b8914709fd118c7a66c33f7bc1b627"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-primed-v1/diagnostic/summary.json",
+      "sha256": "0c9747fc054485c8cf7a9649673acb40758864e149f3539fc7d3e7cfeec24e3a"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-primed-v1/diagnostic/hey_nyx-phone-auxiliary.jsonl",
+      "sha256": "d5f18ff71a3352fbc070c5203a0852f0b15e1038f34e9bf82e47d9f8a8986b6e"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/result.json",
+      "sha256": "5f6b54f4614d211e1e8ea9a361d0f882cee51909d492c38116271b6429c3dcb1"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/summary.json",
+      "sha256": "f1b06a3e7686aba8580ce4c88e702a75816d5fc7cbe8837bce6cc7e71a7dc8cd"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "bd776f7f0ff7c3bf393ddf6f7538938a8f9b86bfb0d043cac64124469621c9d9"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-jenny-v1/result.json",
+      "sha256": "8564cc172f33e9bf48efe81925aec378d0611601963ee34e162252ff6e0097a6"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-jenny-v1/diagnostic/summary.json",
+      "sha256": "22a1286a9880d1e5b258ade982defad905a8b530ad5775f4673bb0a7d3e69911"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-jenny-v1/diagnostic/hey_nyx-phone-auxiliary.jsonl",
+      "sha256": "7cc01023c3da99e94abdd3887e3e9a5665982fe5fecca5b979c950e6cabb7381"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/result.json",
+      "sha256": "ec66b6673691a756d684cfb23e6e563788ffee4afbd2691180db72c89ef460a0"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/diagnostic/summary.json",
+      "sha256": "f803a5eea681f5f016d8981dcf3b8a73940b8d646490bdfdb20d78a73955c9c7"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "2a39ebc1b82e530cb7338c2e06a584c9f799d2a750a81f3d27f41c7945089456"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-joe-v1/result.json",
+      "sha256": "eb722883cb0a2600470d79b4b624a62a3596557fd53b23c8333cc8f7b51fbc9f"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-joe-v1/diagnostic/summary.json",
+      "sha256": "6d31d31960bd0d66b39314a172843d681c5feaaf064cf271021c148b793b3198"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-joe-v1/diagnostic/hey_nyx-phone-auxiliary.jsonl",
+      "sha256": "11b8c70af2fb828f258b03ca3350a4f7eeed451ec4a07da4b1a0eb6a07c0f516"
+    }
+  ],
+  "records": [
+    {
+      "group": "legacy",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 35,
+            "complete": 35,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 140.5,
+              "p95": 200.94375,
+              "observed": 35
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 158.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 26,
+            "complete": 26,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 203.109375,
+              "observed": 26
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 162.6875,
+              "p95": 196.09375,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 108.53125,
+              "p95": 197.91875,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 146.75,
+              "p95": 278.9187499999999,
+              "observed": 12
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 4,
+            "events": 4
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "common_negative": 4
+      }
+    },
+    {
+      "group": "legacy",
+      "condition": "phone-auxiliary",
+      "summary": {
+        "model": "hey_nyx-phone-auxiliary",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 27,
+            "complete": 27,
+            "before_only": 0,
+            "missing": 9,
+            "signed_latency_ms": {
+              "median": 199.5,
+              "p95": 255.25,
+              "observed": 27
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 147.25,
+              "p95": 236.49999999999997,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 18,
+            "complete": 18,
+            "before_only": 0,
+            "missing": 9,
+            "signed_latency_ms": {
+              "median": 202.875,
+              "p95": 247.49999999999994,
+              "observed": 18
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 176.25,
+              "p95": 248.99999999999997,
+              "observed": 9
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 200.5,
+              "p95": 222.9,
+              "observed": 9
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 199.5,
+              "p95": 253.5,
+              "observed": 9
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 1,
+            "events": 1
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "common_negative": 1
+      }
+    },
+    {
+      "group": "jenny",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 25,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 272.0,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 245.9375,
+              "p95": 288.275,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 24,
+            "complete": 16,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 66.40625,
+              "p95": 172.375,
+              "observed": 24
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 123.5,
+              "p95": 241.16562499999995,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 258.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 8,
+            "before_only": 2,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 94.46875,
+              "p95": 286.91875,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 44,
+            "events": 44
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "hey_next": 8,
+        "hey_mix": 25,
+        "hey_muse": 11
+      }
+    },
+    {
+      "group": "jenny",
+      "condition": "phone-auxiliary",
+      "summary": {
+        "model": "hey_nyx-phone-auxiliary",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 26,
+            "complete": 21,
+            "before_only": 5,
+            "missing": 10,
+            "signed_latency_ms": {
+              "median": 140.4375,
+              "p95": 270.078125,
+              "observed": 26
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 7,
+            "complete": 7,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 245.9375,
+              "p95": 311.98749999999995,
+              "observed": 7
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 19,
+            "complete": 14,
+            "before_only": 5,
+            "missing": 8,
+            "signed_latency_ms": {
+              "median": 86.25,
+              "p95": 226.8499999999999,
+              "observed": 19
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 9,
+            "before_only": 2,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 144.3125,
+              "p95": 240.5625,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 9,
+            "complete": 7,
+            "before_only": 2,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 136.5625,
+              "p95": 306.275,
+              "observed": 9
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 6,
+            "complete": 5,
+            "before_only": 1,
+            "missing": 6,
+            "signed_latency_ms": {
+              "median": 169.46875,
+              "p95": 259.71875,
+              "observed": 6
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 39,
+            "events": 39
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "hey_next": 14,
+        "hey_mix": 20,
+        "hey_muse": 5
+      }
+    },
+    {
+      "group": "joe",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "smoothing_steps": 5,
+        "positive": {
+          "all": {
+            "clips": 72,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "bare": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "command": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          }
+        },
+        "negative": {
+          "cross_target": {
+            "clips": 72,
+            "activated_clips": 0,
+            "events": 0
+          },
+          "common": {
+            "clips": 216,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "priming_events_ignored_by_app": 0,
+        "event_policy": "uint8-sum-binary64-v1"
+      },
+      "false_by_phrase": {}
+    },
+    {
+      "group": "joe",
+      "condition": "phone-auxiliary",
+      "summary": {
+        "model": "hey_nyx-phone-auxiliary",
+        "threshold": 0.91796875,
+        "smoothing_steps": 5,
+        "positive": {
+          "all": {
+            "clips": 72,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "bare": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "command": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          }
+        },
+        "negative": {
+          "cross_target": {
+            "clips": 72,
+            "activated_clips": 0,
+            "events": 0
+          },
+          "common": {
+            "clips": 216,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "priming_events_ignored_by_app": 0,
+        "event_policy": "uint8-sum-binary64-v1"
+      },
+      "false_by_phrase": {}
+    }
+  ],
+  "threshold_selected": false,
+  "candidate_promoted": false,
+  "limits": "Saved original actual app events only; all sources consumed development. No baseline inference, final access, threshold rescue or new exposure; reused background is not independent additive evidence. Training-only pronunciation-codepoint CTC adds ordered supervision; primary deployed binary output only, no character decoder or head selection. Generated boundaries describe synthesis, not phonetic truth. Joe has whole-container timing only."
+}
