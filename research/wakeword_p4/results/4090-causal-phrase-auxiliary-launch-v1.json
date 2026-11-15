@@ -1,0 +1,45 @@
+{
+  "schema": "causal-phrase-auxiliary-launch-v1",
+  "launch": {
+    "pid": 2034914,
+    "proc_starttime": "6668007",
+    "plan_sha256": "9303a6fbe69f287792cfe3f98e99e42bbf5b86a286ec34327c8013eb2ba9dd58"
+  },
+  "session": 99251,
+  "command": "/usr/bin/python3 research/wakeword_p4/training/gpu_python.py research/wakeword_p4/experiments/train_causal_phrase_auxiliary_v1.py run",
+  "first_progress": {
+    "launch": {
+      "pid": 2034914,
+      "proc_starttime": "6668007",
+      "plan_sha256": "9303a6fbe69f287792cfe3f98e99e42bbf5b86a286ec34327c8013eb2ba9dd58"
+    },
+    "latest": {
+      "step": 400,
+      "loss": 7.7321672439575195,
+      "binary_loss": 4.398602485656738,
+      "phrase_loss": 3.3335647583007812,
+      "elapsed_seconds": 30.994255328012514,
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iterations": 400,
+      "frozen16_unchanged": true,
+      "all17_gradients_finite": true
+    }
+  },
+  "bootstrap_failure": {
+    "session": 85542,
+    "exit_code": 1,
+    "launch": {
+      "pid": 2032552,
+      "proc_starttime": "6665514",
+      "plan_sha256": "9303a6fbe69f287792cfe3f98e99e42bbf5b86a286ec34327c8013eb2ba9dd58"
+    },
+    "reason": "Direct invocation omitted CUDA runtime launcher; factory GPU identity assertion failed before create(model)/optimizer. No optimizer updates or trained artifact.",
+    "files": {
+      ".local/wakeword/causal-phrase-auxiliary-bootstrap-failure-v1.log": "74fba4a26d1d37640d00fe21e21258cd38801e688f68e7409ad27377f3d42bab",
+      ".local/wakeword/causal-phrase-auxiliary-bootstrap-failure-v1/launch.json": "fe353f18d4d1ff7f83413a3efea5ba73bd0825742d2ac35046264851d8a95318",
+      ".local/wakeword/causal-phrase-auxiliary-bootstrap-failure-v1/failure.log": "251bdcd1c36a9e4ae796556d4eb727655dc0b02c6c2482de6248d161ec79359c"
+    },
+    "log": "{\"path\": \".local/wakeword\", \"free_gib\": 576.45, \"expected_gib\": 1.0, \"reserve_gib\": 100, \"required_gib\": 101.5, \"passed\": true}\n{\"pid\": 2032552, \"proc_starttime\": \"6665514\", \"plan_sha256\": \"9303a6fbe69f287792cfe3f98e99e42bbf5b86a286ec34327c8013eb2ba9dd58\"}\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1794752430.641859 2032552 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nI0000 00:00:1794752430.763664 2032552 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.\nTo enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1794752432.120187 2032552 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nW0000 00:00:1794752432.682176 2032552 gpu_device.cc:2365] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.\nSkipping registering GPU devices...\nTraceback (most recent call last):\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/train_causal_phrase_auxiliary_v1.py\", line 87, in <module>\n    parser=argparse.ArgumentParser();parser.add_argument('action',choices=['plan','run']);a=parser.parse_args();plan() if a.action=='plan' else run()\n                                                                                                                                                ^^^^^\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/train_causal_phrase_auxiliary_v1.py\", line 38, in run\n    import hey_broad_gpu_training_factory_v1 as factory\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/hey_broad_gpu_training_factory_v1.py\", line 6, in <module>\n    assert len(physical)==1,physical\n           ^^^^^^^^^^^^^^^^\nAssertionError: []\n"
+  },
+  "policy": "Bootstrap failure preserved, runtime launcher corrected without training/loss/threshold/checkpoint/seed/calibration change. Active original GPU training remains incomplete; frozen v30 retained."
+}
