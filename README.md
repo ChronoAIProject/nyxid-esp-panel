@@ -35,6 +35,11 @@ voice scenarios, service discovery, camera/display diagnosis and cleanup.
   `caaf44a1473d1806b2249f0a9eb3d1fdfdd9cc57`,
   `src/voice_presence_ha_camera`, version 0.3.1.
 - Retains the GUI close-event lock fix discovered during the baseline flash.
+- LCD-X8 audio wiring and native TDM configuration: `waveshareteam/waveshare_boards`,
+  commit `0740b975b0fa5c9706b2f898856673be9298c2a6`,
+  `boards/esp32_p4_wifi6_touch_lcd_x`; codec/frame-layout reference:
+  `waveshareteam/ESP32-P4-WIFI6-Touch-LCD-X`, commit
+  `637b8798542c3d043c9b309e894dbb3456c06469`, `firmware/brookesia/components/board`.
 
 Device credentials, device tables, flash backups, generated configuration and
 local build output are excluded from version control.
