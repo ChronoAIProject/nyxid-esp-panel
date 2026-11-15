@@ -1,0 +1,671 @@
+{
+  "schema": "causal-multivoice-fixed-reference-comparison-v1",
+  "comparisons": [
+    {
+      "group": "legacy",
+      "model": "hey_nyx-multivoice-nearword",
+      "source": ".local/wakeword/causal-multivoice-nearword-primed-v1/diagnostic/hey_nyx-multivoice-nearword.jsonl",
+      "sha256": "cfa48f307c0e5fc8372221dbddb29d175acd7b6a672f5bf896114769602cb8c1",
+      "summary": {
+        "model": "hey_nyx-multivoice-nearword",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 32,
+            "before_only": 1,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 140.5,
+              "p95": 195.4125,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 8,
+            "complete": 7,
+            "before_only": 1,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 64.5,
+              "p95": 218.49999999999994,
+              "observed": 8
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 25,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 192.6875,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 157.84375,
+              "p95": 196.434375,
+              "observed": 10
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 11,
+            "before_only": 1,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 138.53125,
+              "p95": 182.58124999999998,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 136.5625,
+              "p95": 226.59375,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 1,
+            "events": 1
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "positive_by_carrier": {
+        "": {
+          "clips": 9,
+          "hits": 8,
+          "misses": 1
+        },
+        "turn on the light": {
+          "clips": 9,
+          "hits": 7,
+          "misses": 2
+        },
+        "what time is it": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "set a timer": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        }
+      },
+      "false_clips_by_phrase": {
+        "Hey next, turn on the light.": 1
+      }
+    },
+    {
+      "group": "legacy",
+      "model": "hey_nyx-existing-nearword",
+      "source": ".local/wakeword/causal-existing-nearword-primed-v1/diagnostic/hey_nyx-existing-nearword.jsonl",
+      "sha256": "b24f4eb6ca170efcf5b1434d39d12ea0396ab4f8241ca6257879ead3fbcba830",
+      "summary": {
+        "model": "hey_nyx-existing-nearword",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 34,
+            "complete": 32,
+            "before_only": 2,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 134.625,
+              "p95": 205.92187499999991,
+              "observed": 34
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 7,
+            "before_only": 2,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 248.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 25,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 139.5,
+              "p95": 189.39999999999995,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 10,
+            "before_only": 1,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 132.6875,
+              "p95": 200.0,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 11,
+            "before_only": 1,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 112.84375,
+              "p95": 182.58124999999998,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 226.59375,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 3,
+            "events": 3
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "positive_by_carrier": {
+        "": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "turn on the light": {
+          "clips": 9,
+          "hits": 7,
+          "misses": 2
+        },
+        "what time is it": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "set a timer": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        }
+      },
+      "false_clips_by_phrase": {
+        "Hey next, turn on the light.": 3
+      }
+    },
+    {
+      "group": "jenny",
+      "model": "hey_nyx-multivoice",
+      "source": ".local/wakeword/causal-multivoice-jenny-v1/diagnostic/hey_nyx-multivoice.jsonl",
+      "sha256": "3ef5edcceca56458fb08b2e68967d3b8101ae935f7affa17cba14a6d69f98901",
+      "summary": {
+        "model": "hey_nyx-multivoice",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 24,
+            "before_only": 9,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 243.575,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 215.9375,
+              "p95": 277.84999999999997,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 24,
+            "complete": 15,
+            "before_only": 9,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 46.5625,
+              "p95": 169.60937499999997,
+              "observed": 24
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 93.5,
+              "p95": 242.19062499999998,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 213.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 7,
+            "before_only": 3,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 64.46875,
+              "p95": 273.41874999999993,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 48,
+            "events": 48
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "positive_by_carrier": {
+        "bare": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "light": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "time": {
+          "clips": 9,
+          "hits": 6,
+          "misses": 3
+        },
+        "timer": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        }
+      },
+      "false_clips_by_phrase": {
+        "Hey Nick": 1,
+        "Hey Next": 8,
+        "Hey Mix": 24,
+        "Hey Muse": 15
+      }
+    },
+    {
+      "group": "jenny",
+      "model": "hey_nyx-nearword",
+      "source": ".local/wakeword/causal-nearword-jenny-v1/diagnostic/hey_nyx-nearword.jsonl",
+      "sha256": "237d5b6cbd79c35be1438f1e6ff3dea2c8f3e8f050abbfa7a7804216bcc2827b",
+      "summary": {
+        "model": "hey_nyx-nearword",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 34,
+            "complete": 25,
+            "before_only": 9,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 215.9375,
+              "observed": 34
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 212.0,
+              "p95": 247.84999999999997,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 16,
+            "before_only": 9,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 46.5625,
+              "p95": 152.01249999999996,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 93.5,
+              "p95": 213.771875,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 213.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 242.53125,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 55,
+            "events": 55
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "positive_by_carrier": {
+        "bare": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "light": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "time": {
+          "clips": 9,
+          "hits": 7,
+          "misses": 2
+        },
+        "timer": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        }
+      },
+      "false_clips_by_phrase": {
+        "Hey Nick": 1,
+        "Hey Next": 13,
+        "Hey Mix": 25,
+        "Hey Muse": 16
+      }
+    },
+    {
+      "group": "jenny",
+      "model": "hey_nyx-v30",
+      "source": ".local/wakeword/causal-nearword-jenny-v1/diagnostic/hey_nyx-v30.jsonl",
+      "sha256": "0bfb9b2a57e3d67e70569759fe16652ae4d2b1189548714404c5859a3c63f2a5",
+      "summary": {
+        "model": "hey_nyx-v30",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "original-float64-convolution-five-v30",
+        "frozen_parameters_reference": true,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 23,
+            "complete": 16,
+            "before_only": 7,
+            "missing": 13,
+            "signed_latency_ms": {
+              "median": 84.3125,
+              "p95": 155.9375,
+              "observed": 23
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 6,
+            "complete": 6,
+            "before_only": 0,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 155.9375,
+              "p95": 263.328125,
+              "observed": 6
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 17,
+            "complete": 10,
+            "before_only": 7,
+            "missing": 10,
+            "signed_latency_ms": {
+              "median": 42.6875,
+              "p95": 144.6875,
+              "observed": 17
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 7,
+            "before_only": 3,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 113.34375,
+              "p95": 234.69062499999984,
+              "observed": 10
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 7,
+            "complete": 5,
+            "before_only": 2,
+            "missing": 5,
+            "signed_latency_ms": {
+              "median": 84.3125,
+              "p95": 145.75624999999997,
+              "observed": 7
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 6,
+            "complete": 4,
+            "before_only": 2,
+            "missing": 6,
+            "signed_latency_ms": {
+              "median": 69.3125,
+              "p95": 151.09375,
+              "observed": 6
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 12,
+            "events": 12
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "positive_by_carrier": {
+        "bare": {
+          "clips": 9,
+          "hits": 6,
+          "misses": 3
+        },
+        "light": {
+          "clips": 9,
+          "hits": 9,
+          "misses": 0
+        },
+        "time": {
+          "clips": 9,
+          "hits": 4,
+          "misses": 5
+        },
+        "timer": {
+          "clips": 9,
+          "hits": 4,
+          "misses": 5
+        }
+      },
+      "false_clips_by_phrase": {
+        "Hey Next": 1,
+        "Hey Mix": 2,
+        "Hey Muse": 9
+      }
+    }
+  ],
+  "threshold_selected": false,
+  "candidate_promoted": false,
+  "limits": "Consumed development, fixed.91796875/smoothing5/81600continuousprime. Original saved app events, no repeated baseline inference or score alignment. Correlated render variants; generated boundaries are not phonetic truth. Jenny remains development only and is not used in training. No final acceptance or HiESP equality claim."
+}
