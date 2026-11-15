@@ -34,9 +34,9 @@
      assert(i2s_data_if);
 
 +#if CONFIG_NYX_PANEL_BOARD_LCD_X8
-+    // The integrated board routes its microphones through ES7210, separately
-+    // from the ES8311 speaker DAC. Keep the existing 16-bit stereo PCM clock;
-+    // select the two microphones, leaving AEC's software reference unchanged.
++    // ES7210 MIC1/MIC2 are microphones; MIC3 is the ES8311 hardware echo
++    // reference. Enable TDM; product_support normalizes the four DMA slots
++    // to the existing 16-bit microphone/reference capture contract.
 +    audio_codec_i2c_cfg_t i2c_cfg = {
 +        .port = BSP_I2C_NUM,
 +        .addr = ES7210_CODEC_DEFAULT_ADDR,
@@ -46,7 +46,7 @@
 +    assert(i2c_ctrl_if);
 +    es7210_codec_cfg_t es7210_cfg = {
 +        .ctrl_if = i2c_ctrl_if,
-+        .mic_selected = ES7210_SEL_MIC1 | ES7210_SEL_MIC2,
++        .mic_selected = ES7210_SEL_MIC1 | ES7210_SEL_MIC2 | ES7210_SEL_MIC3,
 +    };
 +    const audio_codec_if_t *es7210_dev = es7210_codec_new(&es7210_cfg);
 +    assert(es7210_dev);
