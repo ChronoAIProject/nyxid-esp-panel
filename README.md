@@ -5,9 +5,19 @@ remote control, pushed text and images, on-demand camera capture, provisioning
 and standalone two-way voice with a selected NyxBot.
 Continuous H.264/WHIP publishing was retired in v0.3.0.
 
-The hardware target is the attached legacy ESP32-P4 v1.3 board: 16 MiB flash,
-32 MiB PSRAM, ESP32-C6 over SDIO, a Waveshare 10.1-inch 800×1280 JD9365 touch
-display, an OV5647 camera, and ES8311 audio.
+Supported hardware uses ESP32-P4 with 32 MiB PSRAM and ESP32-C6 over SDIO.
+Select the matching build and OTA profile; firmware does not automatically
+detect board wiring.
+
+| Profile | Board and display | Audio |
+| --- | --- | --- |
+| `p4-rev1-16mb` | ESP32-P4-Platform rev1, external 10.1-inch 800×1280 JD9365 | ES8311 |
+| `p4-rev3-16mb` | ESP32-P4-Platform rev3, external 10.1-inch 800×1280 JD9365 | ES8311 |
+| `p4-rev3-lcd-x8-16mb` | Integrated ESP32-P4-WIFI6-Touch-LCD-X 8-inch, rev3 | ES8311 output, ES7210 microphones |
+
+All profiles use the same 16 MiB partition layout. See the
+[LCD-X8 build instructions](docs/DEBUGGING.md#build-profiles-and-flash) for its
+separate defaults. Camera features require a compatible attached OV5647 sensor.
 
 Implementation is governed by [SPEC.md](SPEC.md). Feature migration and hardware
 acceptance are tracked there; an imported source file alone is not a completed
@@ -47,7 +57,7 @@ at 200 MHz and a 360 MHz CPU. Do not use a rev3-only image on the v1.3 board.
 Host signing tests require OpenSSL development headers (`libssl-dev` on Linux,
 `brew install openssl` on macOS). The dependency lock and fail-closed managed
 component patches are part of the build. Run `idf.py reconfigure` after changing
-component source lists. CI builds the same hardware profile.
+component source lists. CI builds and packages all three hardware profiles.
 
 The Python requirements pin Component Manager 2.4.11, which fixes false
 missing-Kconfig errors when the solver considers newer, unselected dependency
