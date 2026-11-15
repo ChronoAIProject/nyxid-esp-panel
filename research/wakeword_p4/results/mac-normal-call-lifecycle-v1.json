@@ -1,0 +1,651 @@
+{
+  "schema": "mac-normal-call-lifecycle-v1",
+  "recorded_utc": "2026-11-15T03:49:23.377829+00:00",
+  "scope": "Isolated development ESP32-P4, own local NyxID profile. Muted 15-second provider calls, hang-up, unmute and 20-second wake-listening settle; no speech fixture, new TTS, microphone recording, production-panel action or firmware change.",
+  "numerical_inference_agreement_required": false,
+  "exact_heap_recovery_required": false,
+  "build": {
+    "app_descriptor_sha256": "301f013ed5bba2583dcddab85780700deb5544244a4f82fd4af97b880450a42f",
+    "binary_sha256": "290e3d1ca4d7123af3af8ba3e19820e70c6b3771fdc949b93f98715ee8f60146",
+    "diagnostic_tracing": false,
+    "dtls_lifetime_fixes": true,
+    "audio_progress_counters": true
+  },
+  "planned_calls": 32,
+  "attempted_calls": 31,
+  "completed_connected_stopped_rearmed_calls": 30,
+  "planned_run_passed": false,
+  "stop_reason": {
+    "attempt": 31,
+    "http_status": 429,
+    "board_message": "Voice connection failed (429 / ESP_OK)",
+    "nyxid_stage": "thread",
+    "nyxid_error_code": 1005,
+    "provider": null,
+    "cause": "Existing user voice admission limit, 30 created sessions per rolling hour (also 5 per minute). The 31st attempt was rejected before provider creation. No limiter or session data changed to finish the test.",
+    "backend_source": "f26b73b232da20abc8d5775f872020d88af88a09:backend/src/services/voice/session.rs:155",
+    "read_only_database_evidence": {
+      "owner_sessions_last_hour": 30,
+      "states": {
+        "closed": 30
+      },
+      "end_reasons": {
+        "user_ended": 30
+      },
+      "owner_live_slots": 0,
+      "first_created_utc": "2026-11-15T03:25:08.028Z",
+      "last_created_utc": "2026-11-15T03:45:53.048Z"
+    }
+  },
+  "connect_seconds": {
+    "min": 3.564151500002481,
+    "median": 3.942530208500102,
+    "max": 5.23004895800841
+  },
+  "matched_idle_memory": {
+    "psram_free_first_completed_call": 20888396,
+    "psram_free_last_completed_call": 20880268,
+    "first_to_last_retained_bytes": 8128,
+    "range_bytes": 8452,
+    "internal_free_range_bytes": 0,
+    "interpretation": "Prior approximately 21KB-per-call loss did not recur across the 30 completed calls. About 8KB of first-to-last PSRAM drift remains descriptive; it is not an exact-recovery failure or proof that every lifetime/cache is resolved. Do not extend this into numerical-equality tests; existing passive monitoring continues."
+  },
+  "all_completed_calls_rearmed": true,
+  "all_completed_calls_capture_advanced": true,
+  "all_completed_calls_media_send_advanced": true,
+  "uptime_monotonic": true,
+  "restored": {
+    "uptime_s": 6373,
+    "heap": {
+      "free": 20968884,
+      "spiram_free": 20879892,
+      "dma_free": 179519,
+      "dma_largest_free": 126976,
+      "internal_free": 219131,
+      "internal_largest_free": 126976
+    },
+    "nyx": "up",
+    "voice_state": "error",
+    "active": false,
+    "busy": false,
+    "microphone_muted": false,
+    "wake_state": "listening",
+    "wake_listening": true,
+    "sent_packets": 0,
+    "received_packets": 0,
+    "capture_frames": 386311,
+    "wake_processed_frames": 186515,
+    "volume": 80
+  },
+  "original_volume": 80,
+  "cleanup_error": null,
+  "independent_cleanup_check": {
+    "volume": 80,
+    "microphone_muted": false,
+    "wake_listening": true,
+    "busy": false,
+    "active": false,
+    "capture_and_wake_counters_advanced": true,
+    "same_app_and_boot": true
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.880185624992009,
+      "idle_heap": {
+        "free": 20977388,
+        "spiram_free": 20888396,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5126,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 2,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 5.23004895800841,
+      "idle_heap": {
+        "free": 20973916,
+        "spiram_free": 20884924,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5170,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 3,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.564151500002481,
+      "idle_heap": {
+        "free": 20973472,
+        "spiram_free": 20884480,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5212,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 4,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.546662999986438,
+      "idle_heap": {
+        "free": 20973668,
+        "spiram_free": 20884676,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5255,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 5,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.771610124997096,
+      "idle_heap": {
+        "free": 20973400,
+        "spiram_free": 20884408,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5298,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 6,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.865516249992652,
+      "idle_heap": {
+        "free": 20973652,
+        "spiram_free": 20884660,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5341,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 7,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.735640291997697,
+      "idle_heap": {
+        "free": 20972924,
+        "spiram_free": 20883932,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5383,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 8,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.683233374991687,
+      "idle_heap": {
+        "free": 20973136,
+        "spiram_free": 20884144,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5425,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 9,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.391657000000123,
+      "idle_heap": {
+        "free": 20971264,
+        "spiram_free": 20882272,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5468,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 10,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.92269654199481,
+      "idle_heap": {
+        "free": 20971468,
+        "spiram_free": 20882476,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5510,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 11,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.479075167007977,
+      "idle_heap": {
+        "free": 20971252,
+        "spiram_free": 20882260,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5554,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 12,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.7867145409982186,
+      "idle_heap": {
+        "free": 20971448,
+        "spiram_free": 20882456,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5596,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 13,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.29411912499927,
+      "idle_heap": {
+        "free": 20971256,
+        "spiram_free": 20882264,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5638,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 14,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.787387292017229,
+      "idle_heap": {
+        "free": 20971368,
+        "spiram_free": 20882376,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5680,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 15,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.005674292013282,
+      "idle_heap": {
+        "free": 20971160,
+        "spiram_free": 20882168,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5723,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 16,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.4682141250232235,
+      "idle_heap": {
+        "free": 20971368,
+        "spiram_free": 20882376,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5767,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 17,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.903715625026962,
+      "idle_heap": {
+        "free": 20970716,
+        "spiram_free": 20881724,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5810,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 18,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.4973745419993065,
+      "idle_heap": {
+        "free": 20970900,
+        "spiram_free": 20881908,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5853,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 19,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.9091785829805303,
+      "idle_heap": {
+        "free": 20970740,
+        "spiram_free": 20881748,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5896,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 20,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.342881541000679,
+      "idle_heap": {
+        "free": 20970952,
+        "spiram_free": 20881960,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5939,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 21,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.7822466249926947,
+      "idle_heap": {
+        "free": 20970648,
+        "spiram_free": 20881656,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 5982,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 22,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.51527945799171,
+      "idle_heap": {
+        "free": 20969240,
+        "spiram_free": 20880248,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6026,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 23,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.1104152080079075,
+      "idle_heap": {
+        "free": 20969056,
+        "spiram_free": 20880064,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6069,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 24,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.697293792007258,
+      "idle_heap": {
+        "free": 20969280,
+        "spiram_free": 20880288,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6111,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 25,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.238091750012245,
+      "idle_heap": {
+        "free": 20969044,
+        "spiram_free": 20880052,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6155,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 26,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.6809112500050105,
+      "idle_heap": {
+        "free": 20969224,
+        "spiram_free": 20880232,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6196,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 27,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 4.33280916698277,
+      "idle_heap": {
+        "free": 20969064,
+        "spiram_free": 20880072,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6241,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 28,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.653220792009961,
+      "idle_heap": {
+        "free": 20969240,
+        "spiram_free": 20880248,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6285,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 29,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.962363875005394,
+      "idle_heap": {
+        "free": 20968936,
+        "spiram_free": 20879944,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6328,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 30,
+      "open_http_status": 202,
+      "connected": true,
+      "connected_seconds": 3.750816207990283,
+      "idle_heap": {
+        "free": 20969260,
+        "spiram_free": 20880268,
+        "dma_free": 179519,
+        "dma_largest_free": 126976,
+        "internal_free": 219131,
+        "internal_largest_free": 126976
+      },
+      "uptime_s": 6370,
+      "wake_listening": true,
+      "capture_advanced_during_active": true,
+      "media_send_advanced_during_active": true
+    },
+    {
+      "round": 31,
+      "open_http_status": 202,
+      "connected": false,
+      "final_voice_state": "error",
+      "http_failure": 429
+    }
+  ],
+  "original_selected_states": {
+    "file": "mac-normal-call-lifecycle-original-v1.json.gz",
+    "sha256": "bf6594e6781016704b3fadd4fdcda563e0e3acc37d1a48fcc2657e5e289168b3",
+    "uncompressed_bytes": 392178
+  },
+  "limits": [
+    "30 successful short muted calls; not a completed 32-call run. Preserve the 31st rejection.",
+    "No acoustic wake recall, first-utterance, long conversation or AEC qualification.",
+    "Local development caller remains subject to the ordinary rolling-hour limiter; no bypass, database deletion or automatic retry loop.",
+    "Dining-room production panel untouched; normal firmware retained, serial reader closed."
+  ]
+}

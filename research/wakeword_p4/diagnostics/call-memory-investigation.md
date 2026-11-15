@@ -68,6 +68,37 @@ stability. Exact heap recovery is not required: use matched-state memory trends
 to find sustained resource loss. CPU/GPU or FP32/INT8 score agreement is not an
 acceptance gate.
 
+## Longer normal-firmware lifecycle follow-up
+
+The follow-up planned 32 muted calls, with 15 seconds connected and 20 seconds
+of unmuted wake listening after each hang-up. Save the original output volume
+and temporarily set it to zero to avoid repeated ringback; restore it in cleanup,
+including on interruption or failure. Check the development panel identity and
+only stop the call owned by the test. Do not open the serial bridge for this
+test, because doing so can reset the panel.
+
+Thirty calls connected, exchanged outgoing media, hung up and restored wake
+listening. The 31st attempt returned HTTP 429 before provider creation: the
+existing NyxID admission limit permits five new voice sessions per minute and
+30 per rolling hour. Read-only database inspection confirmed 30 closed sessions,
+all `user_ended`, and zero live owner slots. No limiter, credentials or session
+records were changed to manufacture a completed 32-call result.
+
+Across the completed calls the median connection time was 3.94 seconds and no
+reset was observed. The former approximately 21 KB-per-call loss did not recur;
+first-to-last idle PSRAM drift was 8128 bytes across 30 calls. This small drift
+remains an observation, not an exact-recovery failure or proof that every cache
+or lifetime has been resolved. Continue the existing passive monitor; do not add
+more numerical-agreement gates or repeat this run just to obtain matching heaps.
+
+Cleanup restored volume 80 and unmuted wake listening. Independent status reads
+confirmed advancing capture/detection counters and the same normal firmware.
+The voice state retained the 429 error, with no active or busy call; the ordinary
+rolling-hour admission limit still applies to this local test caller. The result
+is in `../results/mac-normal-call-lifecycle-v1.json`, with all selected original
+state samples retained in the adjacent gzip. These short muted calls do not
+qualify recognition, first-utterance delivery, long conversations or AEC.
+
 ## Control failure and recovery with the lifetime fixes
 
 The normal development image also completed three muted provider calls with no
