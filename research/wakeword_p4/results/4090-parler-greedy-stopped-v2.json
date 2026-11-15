@@ -1,0 +1,142 @@
+{
+  "schema": "parler-greedy-stopped-v2",
+  "execution_lock_commit": "0ff6f0f1",
+  "requested": 144,
+  "generated": 1,
+  "mechanically_passed": 0,
+  "ungenerated": 143,
+  "acceptance_generated": 0,
+  "device": "NVIDIA GeForce RTX 4090",
+  "training_or_wake_scoring_performed": false,
+  "pack_qualified": false,
+  "promotion_qualified": false,
+  "failure": {
+    "request_id": "parler-greedy-v2-development-jon-slow-nyx-bare",
+    "role": "development",
+    "voice_id": "parler-mini:0392b9451a601e528fd863bbb0598431fee810d9:Jon",
+    "physical_speaker_id": null,
+    "text": "Hey Nicks.",
+    "pronunciation_input": "Hey Nicks.",
+    "description": "Jon's voice delivers very clear audio at a slow speaking rate, with a close recording and no background noise.",
+    "seed": 4003497303,
+    "carrier": "bare",
+    "phrase_id": "nyx",
+    "native_rate": 44100,
+    "trimmed": false,
+    "native_return_saved_before_transform": true,
+    "duration_metadata_interface": "No exposed generated phone-boundary interface authenticated; store null.",
+    "phoneme_metadata_interface": "Input tokenizer IDs may be saved; do not infer phoneme truth from text tokens.",
+    "pretraining_overlap_status": "unknown",
+    "parent_request_id": "parler-development-jon-slow-nyx-bare",
+    "decoding": "greedy-do_sample-false; seed recorded but sampling disabled",
+    "raw_path": "parler-greedy-v2-development-jon-slow-nyx-bare.native.npy",
+    "raw_sha256": "a4cc64c09d6f1929a31327fc9f42d8ab6e7f5b4407f06a63b0f5d12f421c8efa",
+    "path": "parler-greedy-v2-development-jon-slow-nyx-bare.wav",
+    "sha256": "ee58d44ef478bb0205f2a145e65b65fa3a00816dacf1250cf31ce4647b9fe950",
+    "engine_path": "parler-greedy-v2-development-jon-slow-nyx-bare.engine.npy",
+    "engine_sha256": "892d5d2adc46a627f02c83652863e9bcf379e488c10872134793ffdcba3c3c36",
+    "native_samples": 515072,
+    "samples": 186875,
+    "generated_reference_end_sample": 186875,
+    "generated_phonemes": null,
+    "generated_phone_durations": null,
+    "engine_shape": [
+      1,
+      515072
+    ],
+    "engine_audio_lengths": [
+      515072
+    ],
+    "tokens_path": "parler-greedy-v2-development-jon-slow-nyx-bare.tokens.npy",
+    "tokens_sha256": "a3d587d867d7518ef0a21ead1eb5e9ffddd1956fff44efd7805ad4eab26a5625",
+    "token_shape": [
+      9,
+      1016
+    ],
+    "description_input_ids": [
+      [
+        8178,
+        31,
+        7,
+        2249,
+        9250,
+        182,
+        964,
+        2931,
+        44,
+        3,
+        9,
+        2684,
+        4461,
+        1080,
+        6,
+        28,
+        3,
+        9,
+        885,
+        5592,
+        11,
+        150,
+        2458,
+        4661,
+        5,
+        1
+      ]
+    ],
+    "prompt_input_ids": [
+      [
+        9459,
+        7486,
+        7,
+        5,
+        1
+      ]
+    ],
+    "reached_token_limit": false,
+    "eos_each_row": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "quality": {
+      "checks": {
+        "mono_pcm16_16k": true,
+        "native_finite": true,
+        "native_sample_ledger": true,
+        "native_no_clipping": true,
+        "resampled_no_clipping": true,
+        "full_resampled_length": true,
+        "full_resampled_values": true,
+        "pcm_sample_ledger": true,
+        "no_saturated_pcm16": true,
+        "nonempty_nonzero": true,
+        "duration_in_spec": false,
+        "rms_in_spec": true,
+        "no_declared_trimming": true,
+        "generation_reference_is_full_output": true
+      },
+      "passed": false,
+      "native_samples": 515072,
+      "transport_samples": 186875,
+      "maximum_transport_error": 3.0517112463712692e-05,
+      "rms": 0.02011507920129802,
+      "saturated_samples": 0
+    },
+    "passed": false
+  },
+  "archive": {
+    "url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/parler-development-greedy-v2-stopped-pack.tar.gz",
+    "bytes": 3137354,
+    "sha256": "1d0fc54f8b5592823ae8cde6ca4e2129122068c39de2488764ef1a383a0844db",
+    "anonymous_verified": true,
+    "verified_member_hashes": 4
+  },
+  "interpretation": "Greedy decoding did not solve the fixed native duration gate: first Hey Nicks request produced 11.6796875 seconds. No token cap. Does not diagnose acoustic content or prove all greedy requests fail. Stop-pack policy obeyed; no substitutions, pooled successes, threshold edits or candidate promotion.",
+  "next": "Stop decoder parameter rescue for this source; review a different GPU TTS architecture with explicitly reserved voice roles. Preserve unknown pretraining/physical overlap rather than require universally zero overlap."
+}
