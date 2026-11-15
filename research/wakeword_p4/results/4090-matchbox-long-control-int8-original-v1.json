@@ -1,0 +1,64 @@
+{
+  "schema": "matchbox-long-int8-original-v1",
+  "arm": "control",
+  "plan_sha256": "89f0da928f7210a2b64dbbbf88042da7720dd7a88640a49b0d214d14e0ec7d3a",
+  "model": {
+    "path": ".local/wakeword/matchbox-long-control-int8-v1/int8.tflite",
+    "bytes": 115408,
+    "sha256": "44782a4b7bfcf8f8ca63a025caa99affb1c191a98b1bdc5dbb74631840b59240"
+  },
+  "input_shape": [
+    1,
+    280,
+    1,
+    64
+  ],
+  "output_shape": [
+    1,
+    1
+  ],
+  "input_quantization": [
+    0.5890968441963196,
+    60
+  ],
+  "output_quantization": [
+    0.00390625,
+    0
+  ],
+  "ops": [
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "MEAN",
+    "FULLY_CONNECTED",
+    "SOFTMAX",
+    "STRIDED_SLICE",
+    "QUANTIZE"
+  ],
+  "all_static_and_runtime_abi_passed": true,
+  "neural_model_stateless": true,
+  "external_raw_context_samples": 44800,
+  "representative_windows": 129,
+  "functional_calls": 1,
+  "functional_output_code": 0,
+  "source_weights_file_unchanged": true,
+  "model_numerical_comparison_performed": false,
+  "recognition_scored": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "policy": "Fixed final5000only, one builtinINT8 conversion. Exact trained PyTorch arrays unpacked without model inference into bound NPZ; CPU tensor deserialization is not CPU training. Standard symmetric depthwise/pointwise/residual/BN/ReLU/globalmean/7softmax/Nyxslice Keras graph; stored129actual preupdate representative windows, no calibration retry. One fresh interpreter functional call and basic static integer/interface checks only, no FP32 or neuralCPU/GPU numerical comparison gate. Float32MFCC raw-window frontend remains external. Actual complete waveform INT8 diagnostics still required; no freshdev/acceptance/threshold selection/promotion, v30 retained."
+}
