@@ -26,7 +26,7 @@ def plan():
  rep=np.load(TRAIN/'representative.npy',allow_pickle=False);assert rep.shape==(129,280,1,64) and rep.dtype==np.float32 and np.isfinite(rep).all()
  if not (TRAIN/'export-pack.json').exists():subprocess.run([sys.executable,str(Path(__file__)),'pack','--arm',ARM],check=True)
  packed=json.loads((TRAIN/'export-pack.json').read_text());assert packed['source_sha256']==sha(TRAIN/'final.pt') and packed['packed_sha256']==sha(TRAIN/'final-for-export.npz')
- files=dict(p['files']);paths=[Path(__file__),R/'4090-matchbox-long-recovery-plan-v1.json',R/'4090-matchbox-long-original-interruption-v1.json',parent,ORIGINAL,TRAIN/'final.pt',TRAIN/'frontend.pt',TRAIN/'representative.npy',TRAIN/'final-for-export.npz',TRAIN/'export-pack.json']
+ files=dict(p['files']);paths=[Path(__file__),R/'4090-matchbox-long-control-resume-plan-v1.json',R/'4090-matchbox-long-recovery-plan-v1.json',R/'4090-matchbox-long-original-interruption-v1.json',parent,ORIGINAL,TRAIN/'final.pt',TRAIN/'frontend.pt',TRAIN/'representative.npy',TRAIN/'final-for-export.npz',TRAIN/'export-pack.json']
  files.update({str(x):sha(x) for x in paths})
  lock=dict(schema='matchbox-long-int8-plan-v1',arm=ARM,files=files,versions={n:metadata.version(n) for n in ['tensorflow','keras','numpy','ai-edge-litert']},expected_new_gib=.2,representative_shape=list(rep.shape),retries=0,policy='Fixed final5000only, one builtinINT8 conversion. Exact trained PyTorch arrays unpacked without model inference into bound NPZ; CPU tensor deserialization is not CPU training. Standard symmetric depthwise/pointwise/residual/BN/ReLU/globalmean/7softmax/Nyxslice Keras graph; stored129actual preupdate representative windows, no calibration retry. One fresh interpreter functional call and basic static integer/interface checks only, no FP32 or neuralCPU/GPU numerical comparison gate. Float32MFCC raw-window frontend remains external. Actual complete waveform INT8 diagnostics still required; no freshdev/acceptance/threshold selection/promotion, v30 retained.')
  with LOCK.open('x') as f:f.write(json.dumps(lock,indent=2)+'\n')
@@ -85,5 +85,5 @@ def run():
   (OUT/'failure.log').write_text(traceback.format_exc());raise
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('action',choices=['plan','pack','run']);parser.add_argument('--arm',choices=['control','pooled'],required=True);a=parser.parse_args()
- ARM=a.arm;TRAIN=Path('.local/wakeword')/f'matchbox-long-{ARM}-recovery-v1';OUT=Path('.local/wakeword')/f'matchbox-long-{ARM}-int8-v1';LOCK=R/f'4090-matchbox-long-{ARM}-int8-plan-v1.json';ORIGINAL=R/f'4090-matchbox-long-{ARM}-training-recovery-v1.json'
+ ARM=a.arm;TRAIN=Path('.local/wakeword')/f"matchbox-long-{ARM}-{'resumed' if ARM=='control' else 'recovery'}-v1";OUT=Path('.local/wakeword')/f'matchbox-long-{ARM}-int8-v1';LOCK=R/f'4090-matchbox-long-{ARM}-int8-plan-v1.json';ORIGINAL=R/f'4090-matchbox-long-{ARM}-training-recovery-v1.json'
  raise SystemExit({'plan':plan,'pack':pack,'run':run}[a.action]())

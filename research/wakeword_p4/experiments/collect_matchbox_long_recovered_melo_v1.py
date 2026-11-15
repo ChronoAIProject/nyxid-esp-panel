@@ -23,7 +23,7 @@ def plan():
  parent=R/'4090-melo-development-int8-execution-v2.json';p=json.loads(parent.read_text());assert len(p['records'])==474
  contract=R/'4090-finite-pcm-long-window-analytic-check-v1.json';assert json.loads(contract.read_text())['all_passed']
  files={str(Path(row['path'])):row['sha256'] for row in p['records']}
- paths=[Path(__file__),Path(__file__).with_name('finite_pcm_long_window_v1.py'),Path(__file__).with_name('uint8_event_policy_v1.py'),Path(__file__).with_name('select_melo_joint_development_v2.py'),Path(__file__).with_name('matchbox_long_protocol_v1.md'),Path('research/wakeword_p4/training/matchboxnet_pretrained_v1.py'),Path('research/wakeword_p4/training/matchboxnet_long_window_v1.py'),Path('research/wakeword_p4/tools/check_disk_budget.py'),BASE/f'matchbox-long-{ARM}-recovery-v1/frontend.pt',Path(model['path']),export,parent,contract,R/'4090-melo-joint-development-findings-v2.json']
+ paths=[Path(__file__),Path(__file__).with_name('finite_pcm_long_window_v1.py'),Path(__file__).with_name('uint8_event_policy_v1.py'),Path(__file__).with_name('select_melo_joint_development_v2.py'),Path(__file__).with_name('matchbox_long_protocol_v1.md'),Path('research/wakeword_p4/training/matchboxnet_pretrained_v1.py'),Path('research/wakeword_p4/training/matchboxnet_long_window_v1.py'),Path('research/wakeword_p4/tools/check_disk_budget.py'),BASE/f"matchbox-long-{ARM}-{'resumed' if ARM=='control' else 'recovery'}-v1/frontend.pt",Path(model['path']),export,parent,contract,R/'4090-melo-joint-development-findings-v2.json']
  spec=importlib.util.find_spec('ai_edge_litert');paths.extend(x for x in Path(spec.origin).parent.rglob('*') if x.is_file() and x.suffix in ['.py','.so'])
  import torch
  paths.extend([Path(torch.__file__),Path(torch._C.__file__),Path(torch.__file__).parent/'lib/libtorch_cuda.so'])
@@ -47,7 +47,7 @@ def run():
   from matchboxnet_long_window_v1 import LongLogMFCC
   from matchboxnet_pretrained_v1 import FRONTEND_KEYS
   assert torch.cuda.is_available();torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
-  state=torch.load(BASE/f'matchbox-long-{ARM}-recovery-v1/frontend.pt',map_location='cpu',weights_only=True)
+  state=torch.load(BASE/f"matchbox-long-{ARM}-{'resumed' if ARM=='control' else 'recovery'}-v1/frontend.pt",map_location='cpu',weights_only=True)
   front=LongLogMFCC({key:state[name] for key,name in zip(FRONTEND_KEYS,['dct','window','mel'],strict=True)}).cuda().eval()
   metrics=dict(threshold=p['threshold'],positive={s:dict(clips=0,hits=0) for s in STRATA},confusion_clips=0,confusion_activated_clips=0,cross_target_clips=0,cross_target_activated_clips=0,background_events=0,priming_events=0);hours=0.;start=time.monotonic();latencies=[]
   with (OUT/'records.jsonl').open('x') as log:

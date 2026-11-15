@@ -7,7 +7,7 @@ def sha(p):
 def main():
  rows=json.loads((B/'matchbox-long-material-v1/records.json').read_text());reports={};negatives={};files={str(Path(__file__)):sha(Path(__file__))}
  for arm in ['control','pooled']:
-  report=R/f'4090-matchbox-long-{arm}-training-recovery-v1.json';run=B/f'matchbox-long-{arm}-recovery-v1'
+  report=R/f'4090-matchbox-long-{arm}-training-recovery-v1.json';run=B/f"matchbox-long-{arm}-{'resumed' if arm=='control' else 'recovery'}-v1"
   if not report.exists():print(json.dumps(dict(status='not_ready',arm=arm,model_calls=0)));return
   r=json.loads(report.read_text());assert r['all_training_checks_passed'] and r['steps']==r['optimizer_iterations']==5000
   for name,d in r['files'].items():assert sha(run/name)==d['sha256'],name
@@ -19,7 +19,8 @@ def main():
     assert collections.Counter(x['label'] for x in ds)=={0:32,1:16,2:16,3:16,4:16,5:16,6:16}
     neg=[];pairs=collections.defaultdict(list)
     for d in ds:
-     row=rows[d['index']];assert row['role']=='training' and d['label']==row['class_id'] if d['label'] else row['role']=='training'
+     row=rows[d['index']];assert row['role']=='training'
+     if d['label']:assert d['label']==row['class_id']
      source_indices.add(d['index']);assert d['start']>=0
      if d['kind']=='full-bare':
       assert row['kind']=='synthetic-full-bare' and row['engine']==d['engine']
