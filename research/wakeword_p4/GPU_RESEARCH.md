@@ -10574,3 +10574,7 @@ Latent-command posttraining pipeline prepared while originalsession83064/PID2341
 ### c161 原始模型交付 Mac 开发板试用（2026-11-15）
 
 响应 Issue #13 / 6897212245，仅复制既有 c161 原始 INT8 文件为确定性 gzip，未重训、重导出或重跑基线。原模型 60952 bytes / c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81；最小 profile 与来源记录见 `results/4090-c161-mac-development-handoff-v1.json`，模型见同目录 `4090-c161-mac-development-model-v1.tflite.gz`。仅供隔离、可回退研发板试用；Jenny44/324误触和Joe0/72仍保留，不作发布或最终合格结论。当前 latent-command 4090 训练保持原进程，不因交付改变配方。
+
+### Latent complete-command 固定训练完成（2026-11-15）
+
+原 session83064 / PID2341885 正常 exit0，RTX4090 固定20000步全部完成，耗时1670.689794918988秒。原始报告 `results/4090-causal-latent-command-original-v1.json`；最终权重SHA256 `84080b3341beceee64647199bc8539243ead0cfd5fd8b08574175cef05e38eaa`。训练过程未重启、未挑checkpoint。导出锁 `4090-causal-latent-command-int8-plan-v1.json` SHA256 `56e46c5fffff2e41d28a04774c9b575aeec071c0ce8b186ec97f810e6bbd90f1`，先推后执行一次原最终权重导出。训练完成不等于识别合格，尚无新识别结论。
