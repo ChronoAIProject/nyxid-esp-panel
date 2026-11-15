@@ -61,12 +61,15 @@ The integrated **ESP32-P4-WIFI6-Touch-LCD-X 8-inch** board requires a separate
 profile. Its 800x1280 resolution matches the external 10.1-inch screen, but its
 JD9365 initialization sequence, GPIO 27 reset, GPIO 26 PWM backlight and ES7210
 microphone ADC differ. ES7210 MIC1/MIC2 are microphones and MIC3 is the hardware
-echo reference from the ES8311 output. Capture reads full 16-bit TDM frames
+echo reference from the ES8311 output. The I2S peripheral uses native TDM mode
+as in the [official board configuration](https://github.com/waveshareteam/waveshare_boards/blob/main/boards/esp32_p4_wifi6_touch_lcd_x/board_peripherals.yaml).
+Capture reads full 16-bit TDM frames
 (`MIC1, MIC3, MIC2, MIC4`) and the product audio adapter exposes `MIC1, MIC3`
 as the existing microphone/reference pair. Microphones use 24 dB gain; the
 line-level reference uses 0 dB to avoid clipping. This preserves the sample
 rate and single capture/AEC pipeline. Media playback retains its output format;
-LCD-X8 capture remains signed 16-bit microphone/reference stereo.
+LCD-X8 capture remains signed 16-bit microphone/reference stereo. Do not pack
+these slots into 32-bit standard-I2S words: that changes the DMA half-word order.
 Identify the actual board before installing either image; a chip revision alone
 does not identify the screen or board wiring.
 

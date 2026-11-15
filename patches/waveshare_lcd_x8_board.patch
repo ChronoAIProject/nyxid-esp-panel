@@ -17,7 +17,60 @@
 
 --- a/waveshare__esp32_p4_platform/esp32_p4_platform.c
 +++ b/waveshare__esp32_p4_platform/esp32_p4_platform.c
-@@ -373,7 +373,11 @@
+@@ -1,6 +1,9 @@
+ #include "sdkconfig.h"
+ #include "driver/gpio.h"
+ #include "driver/ledc.h"
++#if CONFIG_NYX_PANEL_BOARD_LCD_X8
++#include "driver/i2s_tdm.h"
++#endif
+ #include "esp_err.h"
+ #include "esp_log.h"
+ #include "esp_check.h"
+@@ -295,11 +298,34 @@
+         return ESP_OK;
+     }
+
++#if CONFIG_NYX_PANEL_BOARD_LCD_X8
++    ESP_RETURN_ON_FALSE(!i2s_config, ESP_ERR_NOT_SUPPORTED, TAG, "LCD-X8 uses TDM configuration");
++#endif
+     /* Setup I2S peripheral */
+     i2s_chan_config_t chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(CONFIG_BSP_I2S_NUM, I2S_ROLE_MASTER);
+     chan_cfg.auto_clear = true; // Auto clear the legacy data in the DMA buffer
+     ESP_ERROR_CHECK(i2s_new_channel(&chan_cfg, &i2s_tx_chan, &i2s_rx_chan));
+
++#if CONFIG_NYX_PANEL_BOARD_LCD_X8
++    // Match the official LCD-X board: real 16-bit TDM slots. Standard I2S
++    // with two 32-bit words reverses the half-word order seen by PCM readers.
++    i2s_tdm_config_t tdm = {
++        .clk_cfg = I2S_TDM_CLK_DEFAULT_CONFIG(22050),
++        .slot_cfg = I2S_TDM_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT,
++            I2S_SLOT_MODE_STEREO, I2S_TDM_SLOT0 | I2S_TDM_SLOT1 | I2S_TDM_SLOT2 | I2S_TDM_SLOT3),
++        .gpio_cfg = {
++            .mclk = BSP_I2S_MCLK, .bclk = BSP_I2S_SCLK, .ws = BSP_I2S_LCLK,
++            .dout = BSP_I2S_DOUT, .din = BSP_I2S_DSIN,
++        },
++    };
++    tdm.slot_cfg.total_slot = 4;
++    tdm.slot_cfg.ws_width = 32;
++    tdm.slot_cfg.left_align = true;
++    ESP_ERROR_CHECK(i2s_channel_init_tdm_mode(i2s_tx_chan, &tdm));
++    ESP_ERROR_CHECK(i2s_channel_init_tdm_mode(i2s_rx_chan, &tdm));
++    ESP_ERROR_CHECK(i2s_channel_enable(i2s_tx_chan));
++    ESP_ERROR_CHECK(i2s_channel_enable(i2s_rx_chan));
++#else
+     /* Setup I2S channels */
+     const i2s_std_config_t std_cfg_default = BSP_I2S_DUPLEX_MONO_CFG(22050);
+     const i2s_std_config_t *p_i2s_cfg = &std_cfg_default;
+@@ -320,6 +346,7 @@
+         ESP_ERROR_CHECK(i2s_channel_enable(i2s_rx_chan));
+     }
+
++#endif
+     audio_codec_i2s_cfg_t i2s_cfg = {
+         .port = CONFIG_BSP_I2S_NUM,
+         .tx_handle = i2s_tx_chan,
+@@ -373,7 +400,11 @@
      assert(es8311_dev);
 
      esp_codec_dev_cfg_t codec_dev_cfg = {
@@ -29,7 +82,7 @@
          .codec_if = es8311_dev,
          .data_if = i2s_data_if,
      };
-@@ -391,6 +395,30 @@
+@@ -391,6 +422,30 @@
      }
      assert(i2s_data_if);
 
@@ -60,7 +113,7 @@
      const audio_codec_gpio_if_t *gpio_if = audio_codec_new_gpio();
 
      audio_codec_i2c_cfg_t i2c_cfg = {
-@@ -429,6 +457,7 @@
+@@ -429,6 +484,7 @@
          .data_if = i2s_data_if,
      };
      return esp_codec_dev_new(&codec_es8311_dev_cfg);
@@ -68,7 +121,7 @@
  }
 
  // Bit number used to represent command and parameter
-@@ -436,8 +465,28 @@
+@@ -436,8 +492,28 @@
 
  esp_err_t bsp_display_brightness_init(void)
  {
@@ -97,7 +150,7 @@
  }
 
  esp_err_t bsp_display_brightness_set(int brightness_percent)
-@@ -451,6 +500,11 @@
+@@ -451,6 +527,11 @@
          brightness_percent = 0;
      }
 
@@ -109,7 +162,7 @@
      uint8_t data = (uint8_t)(255 * brightness_percent * 0.01);
      uint8_t chip_addr = 0x45;
      uint8_t data_addr = 0x96;
-@@ -477,6 +531,7 @@
+@@ -477,6 +558,7 @@
      i2c_master_bus_rm_device(dev_handle);
 
      return ESP_OK;
