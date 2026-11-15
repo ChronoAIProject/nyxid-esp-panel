@@ -261,9 +261,10 @@ int dtls_srtp_decrypt_rtcp_packet(dtls_srtp_t *dtls_srtp, uint8_t *packet, int *
 
 
 /**
- * @brief  Deinitialize of DTLS SRTP
+ * @brief  Release DTLS SRTP resources and the instance itself
  *
- * @param[in]      dtls_srtp  DTLS SRTP instance
+ * @param[in]      dtls_srtp  Instance to consume, or NULL. Do not use or free it
+ *                           after this call.
  */
 void dtls_srtp_deinit(dtls_srtp_t *dtls_srtp);
 

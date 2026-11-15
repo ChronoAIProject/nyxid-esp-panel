@@ -150,7 +150,6 @@ int dtls_srtp_gen_cert(void)
     mbedtls_ctr_drbg_init(&dtls_srtp->ctr_drbg);
     int ret = dtls_srtp_selfsign_cert(dtls_srtp, true);
     dtls_srtp_deinit(dtls_srtp);
-    media_lib_free(dtls_srtp);
     return ret;
 #else
     return -1;
@@ -217,9 +216,11 @@ dtls_srtp_t *dtls_srtp_init(dtls_srtp_cfg_t *cfg)
 
 void dtls_srtp_deinit(dtls_srtp_t *dtls_srtp)
 {
-    if (dtls_srtp->state == DTLS_SRTP_STATE_NONE) {
+    if (dtls_srtp == NULL) {
         return;
     }
+    // Certificate pre-generation owns crypto state but no SRTP reference.
+    bool has_srtp = dtls_srtp->state != DTLS_SRTP_STATE_NONE;
     mbedtls_ssl_free(&dtls_srtp->ssl);
     mbedtls_ssl_config_free(&dtls_srtp->conf);
 
@@ -245,8 +246,9 @@ void dtls_srtp_deinit(dtls_srtp_t *dtls_srtp)
     if (dtls_srtp->lock) {
         media_lib_mutex_destroy(dtls_srtp->lock);
     }
-    check_srtp(false);
-    dtls_srtp->state = DTLS_SRTP_STATE_NONE;
+    if (has_srtp) check_srtp(false);
+    // The bundled peer calls deinit as the final owner; it never frees this.
+    media_lib_free(dtls_srtp);
 }
 
 void dtls_srtp_reset_session(dtls_srtp_t *dtls_srtp, dtls_srtp_role_t role)
@@ -259,6 +261,12 @@ void dtls_srtp_reset_session(dtls_srtp_t *dtls_srtp, dtls_srtp_role_t role)
         mbedtls_ssl_session_reset(&dtls_srtp->ssl);
     }
     if (role != dtls_srtp->role) {
+        // ssl_setup allocates new record buffers; it does not release an
+        // existing setup. Drop the old SSL/config state before changing roles.
+        mbedtls_ssl_free(&dtls_srtp->ssl);
+        mbedtls_ssl_init(&dtls_srtp->ssl);
+        mbedtls_ssl_config_free(&dtls_srtp->conf);
+        mbedtls_ssl_config_init(&dtls_srtp->conf);
         if (dtls_srtp->role == DTLS_SRTP_ROLE_SERVER) {
             mbedtls_ssl_cookie_free(&dtls_srtp->cookie_ctx);
         }
