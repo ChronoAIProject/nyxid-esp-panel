@@ -1,0 +1,191 @@
+{
+  "schema": "melo-joint-development-findings-v2",
+  "selection": {
+    "status": "joint_development_point_selected",
+    "selected_candidate": "speecht5-final20000",
+    "selected_threshold": 0.3546875,
+    "selected_model_sha256": "79c33ec6c2f2938259482c3ac50dcca9fb3e04033ebecf38c69c2712856a86e2",
+    "selected_point": {
+      "threshold": 0.3546875,
+      "positive": {
+        "EN-US/bare": {
+          "clips": 9,
+          "hits": 9
+        },
+        "EN-US/command": {
+          "clips": 27,
+          "hits": 27
+        },
+        "EN-BR/bare": {
+          "clips": 9,
+          "hits": 7
+        },
+        "EN-BR/command": {
+          "clips": 27,
+          "hits": 27
+        }
+      },
+      "confusion_clips": 288,
+      "confusion_activated_clips": 109,
+      "background_events": 0,
+      "cross_target_clips": 72,
+      "cross_target_activated_clips": 20,
+      "priming_events": 0
+    },
+    "per_candidate": {
+      "c161": {
+        "status": "development_point_selected",
+        "selected_threshold": 0.8984375,
+        "worst_stratum_recall": 0.7407407407407407,
+        "overall_recall": 0.8333333333333334,
+        "confusion_activated_clips": 55,
+        "background_far_upper95": 0.3790692776004911,
+        "background_events": 0,
+        "background_hours": 7.902862222222223,
+        "promotion_qualified": false,
+        "limits": "Development selection only; maximum recall may still be poor. Fresh independent final comparison and preregistered acceptance gates remain mandatory. No claim of human generalization or acoustic phonetic timing.",
+        "model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
+      },
+      "speecht5-final20000": {
+        "status": "development_point_selected",
+        "selected_threshold": 0.3546875,
+        "worst_stratum_recall": 0.7777777777777778,
+        "overall_recall": 0.9722222222222222,
+        "confusion_activated_clips": 109,
+        "background_far_upper95": 0.3790692776004911,
+        "background_events": 0,
+        "background_hours": 7.902862222222223,
+        "promotion_qualified": false,
+        "limits": "Development selection only; maximum recall may still be poor. Fresh independent final comparison and preregistered acceptance gates remain mandatory. No claim of human generalization or acoustic phonetic timing.",
+        "model_sha256": "79c33ec6c2f2938259482c3ac50dcca9fb3e04033ebecf38c69c2712856a86e2"
+      }
+    },
+    "promotion_qualified": false,
+    "viability_checked": false,
+    "limits": "Fixed two-model development selection only. No runner-up fallback after failed viability; independent acceptance and fixed reference gates remain required. Repeated models/grid do not add background exposure.",
+    "tables": {
+      "c161": {
+        "path": ".local/wakeword/melo-development-int8-v2/metrics/c161-table.json",
+        "sha256": "df6e32fc370632ba4c3a2ad0965227aec3e450a2750b7e5d7af3f9fadf99b60b"
+      },
+      "speecht5-final20000": {
+        "path": ".local/wakeword/melo-development-int8-v2/metrics/speecht5-final20000-table.json",
+        "sha256": "efd0fc531eb02f7bc1549c626a43e85ad8dd04b40be68d0d53bb46b8e11b7ce4"
+      }
+    },
+    "selector_sha256": "c4fde05410ae587db42ac3db5f2027e4e102b4efb9a8f1655b9f41e3fce9989c"
+  },
+  "viability": {
+    "stage": "development-viability",
+    "checks": {
+      "overall_at_least_80pct": true,
+      "worst_stratum_at_least_75pct": true,
+      "overall_at_least_v30": true,
+      "overall_within_5pp_of_official": true,
+      "command_within_5pp_of_official": true,
+      "confusion_within_2point5pp_of_official": false,
+      "candidate_far_upper95_at_most_half": true
+    },
+    "passed": false,
+    "candidate_metrics": {
+      "overall": 0.9722222222222222,
+      "command": 1.0,
+      "worst": 0.7777777777777778,
+      "confusion": 0.3784722222222222
+    },
+    "candidate_far_upper95": 0.3790692776004911,
+    "official_far_upper95": 0.3790692776004911,
+    "promotion_qualified": false,
+    "limits": "Count/FAR gates only. Native/render/ABI/source-role/full-stream execution gates and exact model/threshold lock remain separate requirements. Point-estimate engineering allowances are not statistical equivalence or human phonetic/generalization truth. A failed selected point cannot fall back to runner-up."
+  },
+  "official": {
+    "schema": "melo-official-point-v2",
+    "point": {
+      "threshold": 0.6299999952316284,
+      "positive": {
+        "EN-US/bare": {
+          "clips": 9,
+          "hits": 9
+        },
+        "EN-US/command": {
+          "clips": 27,
+          "hits": 11
+        },
+        "EN-BR/bare": {
+          "clips": 9,
+          "hits": 6
+        },
+        "EN-BR/command": {
+          "clips": 27,
+          "hits": 7
+        }
+      },
+      "confusion_clips": 288,
+      "confusion_activated_clips": 0,
+      "cross_target_clips": 72,
+      "cross_target_activated_clips": 0,
+      "background_events": 0,
+      "priming_events": 0
+    },
+    "background_hours": 7.902862222222223,
+    "execution_sha256": "22e9a4154680da3c58ab4323d18a8ceba24c71547fd02048c6495a6937021c33",
+    "acceptance_accessed": false,
+    "promotion_qualified": false,
+    "limits": "Unchanged official wn9_hiesp DEFAULT DET_MODE_95, fixed getter0.6299999952316284. Same432Melo+42complete background PCM as two fixed candidates/v30, total81600zeroPCM continuous prime, native512block with192pending hostprefix samples. No transition reset or readiness censoring. Preserve every raw return, prime event, UART, stage104, CRC, exact runtime and source identities. QEMU classicESP32 reference, not P4 hardware/numerical equivalence, human phonetic truth or promotion. Acceptance remains unopened."
+  },
+  "v30": {
+    "role": "unconsumed-threshold-development",
+    "candidate_id": "v30-frozen",
+    "model_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "population_sha256": "6a51880a97b7ab944f2b72276f7c23c2e514712ac9bb0ac08d8fdb78db68d367",
+    "background_manifest_sha256": "b6ab85ea987955dd3ab7fb781ddd962114132578c3f10e89c1305b36a35ad6a3",
+    "background_hours": 7.902862222222223,
+    "expected_positive_strata": [
+      "EN-US/bare",
+      "EN-US/command",
+      "EN-BR/bare",
+      "EN-BR/command"
+    ],
+    "points": [
+      {
+        "threshold": 0.91796875,
+        "positive": {
+          "EN-US/bare": {
+            "clips": 9,
+            "hits": 0
+          },
+          "EN-US/command": {
+            "clips": 27,
+            "hits": 5
+          },
+          "EN-BR/bare": {
+            "clips": 9,
+            "hits": 0
+          },
+          "EN-BR/command": {
+            "clips": 27,
+            "hits": 0
+          }
+        },
+        "confusion_clips": 288,
+        "confusion_activated_clips": 1,
+        "background_events": 0,
+        "cross_target_clips": 72,
+        "cross_target_activated_clips": 0,
+        "priming_events": 0
+      }
+    ],
+    "collection_execution_sha256": "651acf653939d8cab3f747b3f3249261fc010f37e876cfa5e305410fe3c76d6a",
+    "promotion_qualified": false
+  },
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "v30_retained": true,
+  "inputs": {
+    ".local/wakeword/melo-development-int8-v2/metrics/joint-selection.json": "16ec0ceeea372a937cc9cb904edfea894e69dba5eaea47f7384383b9529201a9",
+    ".local/wakeword/melo-development-int8-v2/metrics/completed.json": "f79a8634d37464d9a855738738bd764fe239fdd063c34bdd70df4e7b896cfc96",
+    ".local/wakeword/melo-official-v2/complete.json": "37f2e066c6ac9256f24264d4fba6c767bc74bf94e368255453faf314175ebe7f",
+    ".local/wakeword/melo-official-v2/point.json": "dabc363bd5be93e9efe5d0bf9f6b1479d0277d241ac3e021fc9c1273a59539dd"
+  },
+  "next_action": "Development failed; preserve all evidence, do not open acceptance or fall back to runner-up"
+}
