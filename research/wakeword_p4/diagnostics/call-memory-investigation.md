@@ -5,6 +5,14 @@ Keep the production panel out of this experiment. Read-only long-term sampling i
 already supported by `tools/monitor_stability.py`; its records exclude captions,
 audio, network names, account identifiers and credentials.
 
+The production-source cleanup is isolated in
+[PR #15](https://github.com/ChronoAIProject/nyxid-esp-panel/pull/15): only the two
+DTLS implementations and their ownership declaration change. It was extracted
+onto the production main branch and built locally with ESP-IDF 5.5.4, including
+the normal P4 rev1.3 OTA/factory packaging checks. The hardware evidence below
+comes from the development research firmware with the same DTLS fix; the newly
+built production-profile image was not flashed during this investigation.
+
 ## Reproduction used on 2026-11-15
 
 1. Sample `/status` once a second for 90 seconds with no call. Compare the start
