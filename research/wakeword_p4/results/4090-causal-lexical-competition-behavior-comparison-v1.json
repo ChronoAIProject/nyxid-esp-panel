@@ -1,0 +1,614 @@
+{
+  "schema": "causal-lexical-competition-behavior-comparison-v1",
+  "model": {
+    "path": ".local/wakeword/causal-lexical-competition-int8-v1/int8.tflite",
+    "bytes": 81264,
+    "sha256": "6cee66f1177be8791162888208d4941dfec2f4d2a7fbc340b95bdecbb7356c3b"
+  },
+  "inputs": [
+    {
+      "path": "research/wakeword_p4/results/4090-causal-lexical-competition-int8-original-v1.json",
+      "sha256": "f4fff8132850b3b88f10245efa707a4e0128fb21877a90f4c58fca240dbce2c5"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/result.json",
+      "sha256": "d71be4f8b59dbbfc571f376428e920091a2542f3822f38725690efe5c648c010"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/summary.json",
+      "sha256": "08296a25a6ff8dbf79bd62eca8a72763476bca5c96cb7ded9d04c9c2fb31c120"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "68cfaac70ba816167412b7ae5b03d0f347ba40cbb9ea1998376731bf7d3be6b2"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-primed-v1/result.json",
+      "sha256": "6a412b4eb68c4fe4e137b810d21d596ba83bc4247d01d0cb84d2cf222489361a"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-primed-v1/diagnostic/summary.json",
+      "sha256": "132cb83883b0df59c36bbfb158c0ab6fda7ad522fe2412d1d27166fe5969f8d6"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-primed-v1/diagnostic/hey_nyx-lexical-competition.jsonl",
+      "sha256": "cc5d4ed74d90d3afd64af8b68793bf8f01e6cc966f4e465dfc02280e07c2d907"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/result.json",
+      "sha256": "5f6b54f4614d211e1e8ea9a361d0f882cee51909d492c38116271b6429c3dcb1"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/summary.json",
+      "sha256": "f1b06a3e7686aba8580ce4c88e702a75816d5fc7cbe8837bce6cc7e71a7dc8cd"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "bd776f7f0ff7c3bf393ddf6f7538938a8f9b86bfb0d043cac64124469621c9d9"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-jenny-v1/result.json",
+      "sha256": "892735d720d8cda581d1ae15355e3395638dd24247f4bb15f797f233e2f49835"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-jenny-v1/diagnostic/summary.json",
+      "sha256": "16ceca8b56cd444f35d3b9b4f758f4eb7368e75f86843324e6b48f319e24471c"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-jenny-v1/diagnostic/hey_nyx-lexical-competition.jsonl",
+      "sha256": "e7448074edffd863c6503730b596c23e51249e522f956a5bd4e8df568e814855"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/result.json",
+      "sha256": "ec66b6673691a756d684cfb23e6e563788ffee4afbd2691180db72c89ef460a0"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/diagnostic/summary.json",
+      "sha256": "f803a5eea681f5f016d8981dcf3b8a73940b8d646490bdfdb20d78a73955c9c7"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-joe-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "2a39ebc1b82e530cb7338c2e06a584c9f799d2a750a81f3d27f41c7945089456"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-joe-v1/result.json",
+      "sha256": "c6f8fa48547be9587d539a43fe8b746112964164401e50ea19be9493164e68d9"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-joe-v1/diagnostic/summary.json",
+      "sha256": "aaafb9803744f7dc9e831de71db14e2bcf96f5bcb58cbb82f3c58b6d6315706f"
+    },
+    {
+      "path": ".local/wakeword/causal-lexical-competition-joe-v1/diagnostic/hey_nyx-lexical-competition.jsonl",
+      "sha256": "acac96db5d611506497bad8f0f176e281c1cb6ffdb3a32ebc581db0a19a160f7"
+    }
+  ],
+  "records": [
+    {
+      "group": "legacy",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 35,
+            "complete": 35,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 140.5,
+              "p95": 200.94375,
+              "observed": 35
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 158.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 26,
+            "complete": 26,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 203.109375,
+              "observed": 26
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 162.6875,
+              "p95": 196.09375,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 108.53125,
+              "p95": 197.91875,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 146.75,
+              "p95": 278.9187499999999,
+              "observed": 12
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 4,
+            "events": 4
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "common_negative": 4
+      }
+    },
+    {
+      "group": "legacy",
+      "condition": "lexical-competition",
+      "summary": {
+        "model": "hey_nyx-lexical-competition",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 31,
+            "complete": 31,
+            "before_only": 0,
+            "missing": 5,
+            "signed_latency_ms": {
+              "median": 196.5625,
+              "p95": 284.625,
+              "observed": 31
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 147.25,
+              "p95": 230.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 22,
+            "complete": 22,
+            "before_only": 0,
+            "missing": 5,
+            "signed_latency_ms": {
+              "median": 204.78125,
+              "p95": 286.36875,
+              "observed": 22
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 213.0,
+              "p95": 303.03125,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 164.625,
+              "p95": 242.25312499999998,
+              "observed": 10
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 10,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 189.78125,
+              "p95": 261.790625,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 1,
+            "events": 1
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "common_negative": 1
+      }
+    },
+    {
+      "group": "jenny",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 25,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 272.0,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 245.9375,
+              "p95": 288.275,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 24,
+            "complete": 16,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 66.40625,
+              "p95": 172.375,
+              "observed": 24
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 123.5,
+              "p95": 241.16562499999995,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 258.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 8,
+            "before_only": 2,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 94.46875,
+              "p95": 286.91875,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 44,
+            "events": 44
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "hey_next": 8,
+        "hey_mix": 25,
+        "hey_muse": 11
+      }
+    },
+    {
+      "group": "jenny",
+      "condition": "lexical-competition",
+      "summary": {
+        "model": "hey_nyx-lexical-competition",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 30,
+            "complete": 23,
+            "before_only": 7,
+            "missing": 6,
+            "signed_latency_ms": {
+              "median": 104.625,
+              "p95": 230.27187499999994,
+              "observed": 30
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 7,
+            "complete": 7,
+            "before_only": 0,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 215.9375,
+              "p95": 242.0,
+              "observed": 7
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 23,
+            "complete": 16,
+            "before_only": 7,
+            "missing": 4,
+            "signed_latency_ms": {
+              "median": 56.25,
+              "p95": 182.78124999999997,
+              "observed": 23
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 10,
+            "before_only": 2,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 158.34375,
+              "p95": 227.66562499999998,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 228.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 7,
+            "complete": 5,
+            "before_only": 2,
+            "missing": 5,
+            "signed_latency_ms": {
+              "median": 56.25,
+              "p95": 199.96249999999998,
+              "observed": 7
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 32,
+            "events": 32
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "false_by_phrase": {
+        "hey_nick": 1,
+        "hey_next": 8,
+        "hey_mix": 20,
+        "hey_muse": 3
+      }
+    },
+    {
+      "group": "joe",
+      "condition": "source-balanced",
+      "summary": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "smoothing_steps": 5,
+        "positive": {
+          "all": {
+            "clips": 72,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "bare": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          },
+          "command": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          }
+        },
+        "negative": {
+          "cross_target": {
+            "clips": 72,
+            "activated_clips": 0,
+            "events": 0
+          },
+          "common": {
+            "clips": 216,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "priming_events_ignored_by_app": 0,
+        "event_policy": "uint8-sum-binary64-v1"
+      },
+      "false_by_phrase": {}
+    },
+    {
+      "group": "joe",
+      "condition": "lexical-competition",
+      "summary": {
+        "model": "hey_nyx-lexical-competition",
+        "threshold": 0.91796875,
+        "smoothing_steps": 5,
+        "positive": {
+          "all": {
+            "clips": 72,
+            "hits": 1,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": -24.9375
+          },
+          "bare": {
+            "clips": 36,
+            "hits": 1,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": -24.9375
+          },
+          "command": {
+            "clips": 36,
+            "hits": 0,
+            "whole_generated_complete": 0,
+            "signed_container_median_ms": null
+          }
+        },
+        "negative": {
+          "cross_target": {
+            "clips": 72,
+            "activated_clips": 0,
+            "events": 0
+          },
+          "common": {
+            "clips": 216,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "priming_events_ignored_by_app": 0,
+        "event_policy": "uint8-sum-binary64-v1"
+      },
+      "false_by_phrase": {}
+    }
+  ],
+  "threshold_selected": false,
+  "candidate_promoted": false,
+  "limits": "Saved original actual app events only; all sources consumed development. No baseline inference, final access, threshold rescue or new exposure; reused background is not independent additive evidence. Direct deployed six-class softmax competition; original source-balanced inputs, categorical known-phrase labels on eight bare nearword endpoint regions and original positive/negative region weights1/20; scalar Nyx probability from six deployed competing logits, no discarded auxiliary head or additional decoder. Generated boundaries describe synthesis, not phonetic truth. Joe has whole-container timing only."
+}
