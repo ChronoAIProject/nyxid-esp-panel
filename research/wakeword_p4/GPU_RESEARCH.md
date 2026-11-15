@@ -10604,3 +10604,9 @@ Negative-peak 完整评估结束：原导出session48697exit0，60952B / `c5c693
 六类别竞争原session41023/PID2902126固定20000步完成、exit0，1038.7200842540042秒。原报告 `4090-causal-lexical-competition-original-v2.json`，最终权重SHA256 `1d1b6309bc9285ede65772db94d4b3832f5901b6ae6aa53de53a188b7ac8c7e5`。v2过程无重启/改配方/挑checkpoint，v1零更新启动失败仍保留。一次原最终权重INT8导出锁SHA256 `a753596049765eb2a746003e362ab76a82875c0fb5a96762bad65bbac0566167`先推后执行；尚无识别结论。
 
 六类别竞争完整结果：原export session49409exit0，81264B INT8 SHA256 `6cee66f1177be8791162888208d4941dfec2f4d2a7fbc340b95bdecbb7356c3b`，SOFTMAX保留、标量UINT8接口/六realzero状态基本功能通过。三组原采集78433/49072/26511全部exit0，1140条原始报告/UINT8输出无损保存484316B。legacy31/36目标、22/27命令、1/288误触；Jenny30/36目标、23/27命令、32/324误触（Nick1/Next8/Mix20/Muse3）；Joe1/72目标（bare1/36、命令0/36），该事件在生成整容器结束前24.9375ms仅作描述。相对c161，legacy丢4目标命中/移除3误触；Jenny丢3目标命中/移除15新增3误触。减少误触未保留敏感度，不作为整体替代。两组已有背景均0事件、不可累加为独立资格。详见 `experiments/causal_lexical_competition_findings_v1.md`；不调阈值/配方救援，冻结v30与总目标保留。
+
+### 开发材料实际用途更新（2026-11-15）
+
+完整六类别实验后，推进尚缺失的独立阈值选择前置事实核查：旧 `4090-synthetic-source-role-reconciliation-v1.json` 对Jenny仍记录reserved/process-audited且评分未确定，已不代表现状。新增 `4090-causal-development-usage-reconciliation-v2.json`，以九个完成干预×legacy/Jenny/Joe共27份原始报告和无损发布凭据建立实际消费证据，覆盖已知完整372/408/360输入组。旧文件与其哈希保留，不修改历史执行锁或声称穷尽历史。
+
+已知三组均为consumed development，不能再用于未消费开发阈值选择或新独立最终验收；Jenny预留状态由实际评分证据覆盖。Mike继续受保护且不默认独立，三个历史最终集继续禁止训练/选阈值。该范围未发现可用未消费开发材料，不能据此声称其他来源绝对不存在。本次仅读已发布报告元数据，无PCM/特征复制、无Mike/final内容访问、无新TTS/模型调用或阈值搜索。下一步阈值选择须绑定真正未消费开发来源及明确阈值/平局规则；不把固定点失败改称完成，不通过反复查看Jenny调阈值。冻结v30与研究总目标保留。
