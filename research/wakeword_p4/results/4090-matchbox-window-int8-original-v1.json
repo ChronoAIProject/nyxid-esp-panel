@@ -1,0 +1,63 @@
+{
+  "schema": "matchbox-window-int8-original-v1",
+  "plan_sha256": "def762b3e31e43f834728f4f52b26bd4c4277902af4411c937deff8d1d96a096",
+  "model": {
+    "path": ".local/wakeword/matchbox-window-int8-v1/int8.tflite",
+    "bytes": 115408,
+    "sha256": "af644f35a9aa3eb65293f5ee780dcab5d95e842d0be1d63a3d6d9307f8052988"
+  },
+  "input_shape": [
+    1,
+    128,
+    1,
+    64
+  ],
+  "output_shape": [
+    1,
+    1
+  ],
+  "input_quantization": [
+    0.5953947901725769,
+    58
+  ],
+  "output_quantization": [
+    0.00390625,
+    0
+  ],
+  "ops": [
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONV_2D",
+    "MEAN",
+    "FULLY_CONNECTED",
+    "SOFTMAX",
+    "STRIDED_SLICE",
+    "QUANTIZE"
+  ],
+  "all_static_and_runtime_abi_passed": true,
+  "neural_model_stateless": true,
+  "external_raw_context_samples": 20480,
+  "representative_windows": 129,
+  "functional_calls": 1,
+  "functional_output_code": 0,
+  "source_weights_file_unchanged": true,
+  "model_numerical_comparison_performed": false,
+  "recognition_scored": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "policy": "Fixed final5000only, one builtinINT8 conversion. Exact trained PyTorch arrays unpacked without model inference into bound NPZ; CPU tensor deserialization is not CPU training. Standard symmetric depthwise/pointwise/residual/BN/ReLU/globalmean/7softmax/Nyxslice Keras graph; stored129actual preupdate representative windows, no calibration retry. One fresh interpreter functional call and basic static integer/interface checks only, no FP32 or neuralCPU/GPU numerical comparison gate. Float32MFCC raw-window frontend remains external. Actual complete waveform INT8 diagnostics still required; no freshdev/acceptance/threshold selection/promotion, v30 retained."
+}
