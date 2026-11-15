@@ -1,0 +1,78 @@
+{
+  "plan_sha256": "80a383f16019b2593be6aab6778d8ab5db29be224d81477e96b04402963b5d1c",
+  "generator_sha256": "2a44f0d3cddd04478c3a7285b93b013ce91642ae6e6902eb3aaf01c806ffeafc",
+  "files": {
+    "README.md": {
+      "bytes": 6677,
+      "sha256": "c5fdea7e1d315372c681be0e6b156d23f359f3b0c999ff8badd2b3953863b829"
+    },
+    "config.json": {
+      "bytes": 6930,
+      "sha256": "d8d2afa72bf3b098263a073c4d4df18627b76e1eb454c48f60bc5f787b2433b1"
+    },
+    "generation_config.json": {
+      "bytes": 265,
+      "sha256": "77831b39a5e0c4dba09b4dcbe37ce082e10f94c646920b20678c9c5289e52440"
+    },
+    "model.safetensors": {
+      "bytes": 3511490560,
+      "sha256": "bc430eb6752b96ffb3f67036d1a6e207fbd031575a775716ffa64ef1eeb03692"
+    },
+    "preprocessor_config.json": {
+      "bytes": 234,
+      "sha256": "a40e7af494ad239db3a472a3e0a5e1dbdd80319cce865d3f731c23da7f9e241c"
+    },
+    "special_tokens_map.json": {
+      "bytes": 2543,
+      "sha256": "7a1985a994c41886db38c719d2a3d2f40606663cc19d7c5d6a85d349320e06d2"
+    },
+    "spiece.model": {
+      "bytes": 791656,
+      "sha256": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86"
+    },
+    "tokenizer.json": {
+      "bytes": 2422234,
+      "sha256": "4d4b21a8cc7c0407dafd8ac6215269cd05c8e49a521c3580479b567879526160"
+    },
+    "tokenizer_config.json": {
+      "bytes": 20797,
+      "sha256": "a7ac580b91d2867dabcac34173420401f61fe08e3d811ab5bd2a934846eed70d"
+    }
+  },
+  "packages": {
+    "torch": "2.15.0",
+    "transformers": "4.46.1",
+    "parler-tts": "0.2.2",
+    "descript-audio-codec": "1.0.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0",
+    "sentencepiece": "0.2.3",
+    "huggingface-hub": "0.36.2"
+  },
+  "device": "NVIDIA GeForce RTX 4090",
+  "dtype": "float32",
+  "generation": {
+    "_from_model_config": true,
+    "bos_token_id": 1025,
+    "decoder_start_token_id": 1025,
+    "min_new_tokens": 10,
+    "do_sample": false,
+    "eos_token_id": 1024,
+    "guidance_scale": 1,
+    "max_length": 2580,
+    "pad_token_id": 1024,
+    "transformers_version": "4.40.2"
+  },
+  "source_commit": "d108732cd57788ec86bc857d99a6cabd66663d68",
+  "role": "development",
+  "requests": 144,
+  "policy": "retain-all-stop-pack-no-substitution",
+  "training_prohibited": true,
+  "stopping": "Capture unmodified _sample token sequences before audio decoding; reject length >=2580 or missing EOS in any codebook row.",
+  "quality": "synthetic_output_quality_v1.audit_output; unchanged 0.2..5 seconds",
+  "quality_code_sha256": "d6fa920016e70ab2bdc556e586f288c867e40d111ccbf46f146840f61ba5425c",
+  "overlap": "Physical-speaker/pretraining overlap unknown. Shared TTS parent across roles is an explicit exception to old role auditor; no claim it passed.",
+  "metadata": "No authenticated generated phonemes/durations; null. Input tokens are text tokens, not phonetic truth.",
+  "scope": "Clean development native source only. Noise/RIR/background protocol must be locked separately before wake scoring."
+}
