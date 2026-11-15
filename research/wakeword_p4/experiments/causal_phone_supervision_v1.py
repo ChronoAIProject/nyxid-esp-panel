@@ -3,7 +3,7 @@ import hashlib,importlib.metadata,json
 from pathlib import Path
 import numpy as np
 import piper_phonemize
-from causal_character_supervision_v1 import Sampler as Parent
+from causal_character_supervision_v1 import Sampler as Parent, normalize
 R=Path('research/wakeword_p4/results')
 LEXICON=R/'4090-causal-phone-lexicon-v1.json'
 DROP=set('ˈˌ.,!?')
@@ -28,12 +28,17 @@ class Sampler(Parent):
   return arrays,descriptors,rows,targets
 
 def main():
- source=R/'4090-causal-character-supervision-v1.json';texts=sorted(json.loads(source.read_text())['transcript_counts'])
+ source=R/'4090-causal-character-supervision-v1.json';texts=set(json.loads(source.read_text())['transcript_counts'])
+ owner=Parent()
+ for rows in (owner.by_index.values(),owner.broad_by_offset.values(),owner.near_by_index.values(),owner.carrier_by_order.values()):
+  for row in rows:
+   texts.add(normalize(row.get('text',row.get('source',{}).get('text',''))))
+ texts=sorted(texts)
  converted={s:phones(s) for s in texts};alphabet=''.join(sorted(set(''.join(converted.values()))));assert all(converted.values())
  package=Path(piper_phonemize.__file__).parent;native=package.parent/'piper_phonemize_cpp.cpython-311-x86_64-linux-gnu.so'
  libraries=sorted((package.parent/'piper_phonemize.libs').glob('*espeak*'))
  identities=[Path(__file__),source,Path(piper_phonemize.__file__),native,*libraries,*sorted(p for p in (package/'espeak-ng-data').rglob('*') if p.is_file())]
- result=dict(schema='causal-phone-lexicon-v1',texts=converted,alphabet=alphabet,blank_id=0,classes=len(alphabet)+1,voice='en-us',drop_characters=sorted(DROP),units='Unicode IPA codepoints, not guaranteed atomic phonemes',version=importlib.metadata.version('piper-phonemize'),files={str(p):sha(p) for p in identities},policy='Existing generator orthography mapped without producing audio. Fixed bundled eSpeak en-us pronunciation is a weak synthetic reference, not phonetic truth or speaker-specific alignment. No human/newTTS/ASR/final access or aliases. Stress and sentence punctuation removed, word spaces and length markers retained. Unknown ambient excluded, never blank-labeled. 45 observed training strings; any unseen text fails explicitly rather than silently deriving new labels during training.')
+ result=dict(schema='causal-phone-lexicon-v1',texts=converted,alphabet=alphabet,blank_id=0,classes=len(alphabet)+1,voice='en-us',drop_characters=sorted(DROP),units='Unicode IPA codepoints, not guaranteed atomic phonemes',version=importlib.metadata.version('piper-phonemize'),files={str(p):sha(p) for p in identities},policy='Existing generator orthography mapped without producing audio. Fixed bundled eSpeak en-us pronunciation is a weak synthetic reference, not phonetic truth or speaker-specific alignment. No human/newTTS/ASR/final access or aliases. Stress and sentence punctuation removed, word spaces and length markers retained. Unknown ambient excluded, never blank-labeled. Covers observed strings plus full four training-source metadata owners; any unseen text fails explicitly rather than silently deriving new labels during training.')
  with LEXICON.open('x') as f:f.write(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  sampler=Sampler();seen=set();maximum=0
  for _ in range(12):
