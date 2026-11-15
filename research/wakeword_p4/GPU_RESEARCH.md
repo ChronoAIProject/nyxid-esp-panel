@@ -10626,3 +10626,9 @@ Mac新留言6898443186/commit60b07f6a：实际隔离开发板已安装c161（不
 独立阈值下一步从元数据探索推进到可执行算法：`experiments/unconsumed_threshold_selection_protocol_v1.md` 与 `select_unconsumed_threshold_v1.py`。预先固定完整k/1280,k1..1280开发网格，原连续prime/五步/67refractory/half-rearm。先满足背景Poisson单侧95%FAR上界<=0.5/h，再最大化预先指定voice×bare/command最弱组命中率、总命中、最少误触，最后较高阈值。没有可行点则报告失败，不能借曝光/补时或丢难声音。未知上游物理说话人重叠保留为限制，不自动作为泄漏或必须证明普遍不存在才能继续研究的条件。
 
 选择器拒绝缺网格/换分母/空组，保存输入/代码hash，始终promotion_qualified:false；role字符串本身不证明fresh，实际执行仍须绑定未消费材料/完整质量/候选/背景清单。纯分析fixture检查最弱声音优先（10/10+0/10不能压过6/10+6/10）、5h零事件曝光不足、分母漂移拒绝均通过，无语音/模型调用或阈值实选。不将脚手架称为最终独立资格，既有final/Mike保持保护，v30保留。
+
+### Parler实际准备与具体请求冻结（2026-11-15）
+
+从纯元数据推进到实际环境/模型准备：全局torch2.15.0复用，独立`.local/wakeword/parler-runtime-v1`（system-site-packages）已安装transformers4.46.1及固定Parler代码d108732cd57788ec86bc857d99a6cabd66663d68；首次import明确缺dac，原错误保留在会话记录，现安装descript-audio-codec依赖原session59870/PID2938169，未宣称运行环境已可用。固定模型revision0392b9451a601e528fd863bbb0598431fee810d9通过snapshot_download原session91781/PID2937132持续下载（同句柄，不超时重启），目录parler-mini-pinned-v1。8GiB预算检查通过/100GiB保留，下载权重不提交Git，pip禁缓存。未执行TTS或唤醒评分。
+
+具体计划 `4090-parler-prospective-request-plan-v1.json`：288请求，development Jon/Lea各3语速×6短语×4carrier共144；acceptance Gary/Jenna同规格144，所有请求禁止训练。每条有命名空间voice_id、完整输入text/description和seed。固定候选c161 SHA，v30/官方参考不作为评分后换选候选。共用TTS父模型但命名voice-disjoint，未知物理说话人及预训练重叠明确披露，不以换名称宣称严格物理独立；也不把证明普遍零重叠作为继续工作的条件。此计划明确不同于旧v1审计器禁止跨role共享TTS模型hash的实现限制，不声称该旧审计器通过。实际生成锁仍需绑定完成的权重hash/runtime/生成器和质量，不由本请求计划授权直接运行；最终留出不在开发执行时生成/打开。噪声/RIR及实际背景清单仍需在评分前绑定，未把计划或下载称为资格已完成。
