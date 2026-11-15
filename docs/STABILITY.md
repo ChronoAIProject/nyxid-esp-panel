@@ -146,6 +146,14 @@ reconnect, camera and image operations, then reproduce the responsible cycle.
 Record firmware and the full trend interval. Long-call/AEC acceptance still
 needs real call evidence; idle heap observation cannot substitute for it.
 
+The development image with DTLS cleanup and audio progress counters has a saved
+[normal-firmware observation](../research/wakeword_p4/results/mac-normal-progress-stability-observation-v1.json).
+It covers about 49 minutes on one boot, including earlier short-call fault tests,
+with continuing audio processing and no new observed reset. Its short settled
+idle interval shows no sustained memory loss; it is not long-conversation or
+leak-free acceptance. An optional camera-preview attempt did not execute because
+navigation required management approval; its test-owned request was rejected.
+
 ## Bounded idle wake/AEC rearm check
 
 `tools/check_wake_rearm.py` temporarily mutes and unmutes an already idle,
