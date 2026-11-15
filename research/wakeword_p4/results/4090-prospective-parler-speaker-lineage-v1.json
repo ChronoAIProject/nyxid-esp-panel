@@ -1,0 +1,55 @@
+{
+  "schema": "prospective-parler-speaker-lineage-v1",
+  "files": [
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-lineage-v1/training-README.md",
+      "url": "https://raw.githubusercontent.com/huggingface/parler-tts/d108732cd57788ec86bc857d99a6cabd66663d68/training/README.md",
+      "bytes": 13612,
+      "sha256": "fd37d12112ff6b3a12f992d0dd3a0063fa4eef1e43665712fa4d8e1e21723ae0"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-lineage-v1/starting-point-v1.json",
+      "url": "https://raw.githubusercontent.com/huggingface/parler-tts/d108732cd57788ec86bc857d99a6cabd66663d68/helpers/training_configs/starting_point_v1.json",
+      "bytes": 2561,
+      "sha256": "ac7fe3524a4628e4629696ec37a1bfa2969d47fcaa583e72559b185f8907ec1f"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-lineage-v1/libritts-descriptions-README.md",
+      "url": "https://huggingface.co/datasets/parler-tts/libritts-r-filtered-speaker-descriptions/raw/main/README.md",
+      "bytes": 9484,
+      "sha256": "3cfdb87e2c050a4ff3bbf830a0d37813a82060ef37cc241e54598cecd74c4b1c"
+    }
+  ],
+  "upstream_code_revision": "d108732cd57788ec86bc857d99a6cabd66663d68",
+  "dataset_card_revision": "main at retrieval; content SHA256 pinned, immutable repository revision not captured",
+  "observations": [
+    {
+      "source": "training-README.md",
+      "evidence": "Lists LibriTTS-R/MLS-English training mixtures and their description datasets.",
+      "implication": "Corroborates parent corpus families; does not prove exact released checkpoint training membership."
+    },
+    {
+      "source": "starting-point-v1.json",
+      "evidence": "Example recipe uses LibriTTS-R clean100/clean360/other500 plus MLS train, with description metadata.",
+      "implication": "Recipe is implementation context, not a released-weight training receipt."
+    },
+    {
+      "source": "libritts-descriptions-README.md",
+      "evidence": "Schema includes speaker_id, phonemes, speech_duration and text_description.",
+      "implication": "Corpus metadata cannot be transferred as generated-output phoneme or duration truth."
+    },
+    {
+      "source": "4090-prospective-parler-mini-source-v1/README.md",
+      "evidence": "Checkpoint names34voices and examples Jon/Lea/Gary/Jenna/Mike/Laura, without an explicit named-voice-to-corpus-speaker mapping in reviewed files.",
+      "implication": "Names can define prompt identities; physical-speaker overlap with existing training remains unknown."
+    }
+  ],
+  "named_voice_to_physical_id_mapping_found": false,
+  "physical_speaker_disjointness_established": false,
+  "scope": "Three upstream metadata documents plus prior pinned checkpoint card; not exhaustive search or proof mapping cannot exist elsewhere.",
+  "next_action": "For a prospective development pack, distinguish unused generated requests/named prompt identities from unknown physical-speaker and pretraining independence. Seek existing mapping or a source with explicit identities; do not silently relabel consumed data or require human recordings.",
+  "model_weights_downloaded": false,
+  "audio_generated": false,
+  "detector_invocations": 0,
+  "protected_material_accessed": false
+}

@@ -10616,3 +10616,5 @@ Negative-peak 完整评估结束：原导出session48697exit0，60952B / `c5c693
 Mac暂未回复现成未消费开发包。继续查找不同来源选项而非在Jenny调阈值：上游Parler-TTS Mini `parler-tts/parler-tts-mini-v1` 固定revision `0392b9451a601e528fd863bbb0598431fee810d9`，原API/模型卡/config及哈希保存在 `4090-prospective-parler-mini-source-v1/`，评审 `4090-prospective-parler-mini-source-review-v1.json`。模型卡声明34命名声音/Apache2.0，API参数877842290，native44100Hz。当前HEAD tracked research明确名称搜索无历史使用命中，但范围不能证明Mac/物理说话人从未使用。其训练父语料LibriTTS/MLS存在潜在重叠，换引擎不能直接宣称来源独立。
 
 本次只保存上游元数据，不下载权重、不生成音频、不预留声音、不评分或访问受保护材料；仍无可执行未消费开发包，不能把来源选项写成独立资格已满足。若后续使用，需要先固定实际未消费声音/来源、文本/描述/seed/runtime和完整原生输出保存方案，沿用已有机械质量与角色隔离规则。现有失败/v30和完整研究目标保留。
+
+Parler具体声音谱系继续核查：固定上游代码revision `d108732cd57788ec86bc857d99a6cabd66663d68`的训练说明/starting_point_v1配方及LibriTTS描述dataset card原文/hash，见 `4090-prospective-parler-lineage-v1/` 和 `4090-prospective-parler-speaker-lineage-v1.json`。dataset card为main获取、内容哈希固定但未捕获不可变仓库revision，限制明确保留。配方佐证LibriTTS-R/MLS来源，但不是已发布权重精确训练收据；描述schema含speaker_id/phonemes/speech_duration，不可迁移为新生成结果的音素时长真值。已查看资料未找到34命名声音到语料speaker_id映射，不能以名字不同证明物理说话人独立，也不声称映射绝不存在。仅元数据读取，无权重/新音频/模型调用/受保护材料访问。下一步需区分未消费生成请求与未知上游说话人重叠，不重复消耗Jenny或将其重新标签为fresh；总目标未完成。
