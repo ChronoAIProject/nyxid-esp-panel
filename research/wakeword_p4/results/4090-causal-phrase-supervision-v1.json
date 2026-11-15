@@ -1,0 +1,138 @@
+{
+  "schema": "causal-phrase-supervision-v1",
+  "classes": [
+    "E S P",
+    "HELLO",
+    "HEY",
+    "HEY FIX",
+    "HEY MIX",
+    "HEY MUSE",
+    "HEY NEXT",
+    "HEY NEXUS",
+    "HEY NICE",
+    "HEY NICK",
+    "HEY NICKS",
+    "HEY PILLOW",
+    "HEY WILLIAM",
+    "HEY WILLOW",
+    "HI",
+    "HI E S B",
+    "HI E S P",
+    "HIGH SPEED",
+    "NICKS"
+  ],
+  "command_suffixes": [
+    " SET A TIMER",
+    " TURN ON THE LIGHT",
+    " WHAT TIME IS IT"
+  ],
+  "batches": [
+    {
+      "batch": 1,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 67,
+      "max_steps": 238
+    },
+    {
+      "batch": 2,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 64,
+      "max_steps": 221
+    },
+    {
+      "batch": 3,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 56,
+      "max_steps": 254
+    },
+    {
+      "batch": 4,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 68,
+      "max_steps": 230
+    },
+    {
+      "batch": 5,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 63,
+      "max_steps": 226
+    },
+    {
+      "batch": 6,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 64,
+      "max_steps": 236
+    },
+    {
+      "batch": 7,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 63,
+      "max_steps": 221
+    },
+    {
+      "batch": 8,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 59,
+      "max_steps": 271
+    },
+    {
+      "batch": 9,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 60,
+      "max_steps": 233
+    },
+    {
+      "batch": 10,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 61,
+      "max_steps": 238
+    },
+    {
+      "batch": 11,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 56,
+      "max_steps": 249
+    },
+    {
+      "batch": 12,
+      "known": 80,
+      "unknown": 48,
+      "min_steps": 68,
+      "max_steps": 233
+    }
+  ],
+  "counts": {
+    "HEY NICKS": 384,
+    "HEY MUSE": 69,
+    "HI E S P": 70,
+    "HEY WILLIAM": 20,
+    "HEY NEXT": 81,
+    "HEY PILLOW": 14,
+    "HEY": 28,
+    "HEY NICK": 85,
+    "HELLO": 61,
+    "E S P": 10,
+    "HIGH SPEED": 14,
+    "HEY MIX": 51,
+    "NICKS": 14,
+    "HEY NICE": 12,
+    "HI": 11,
+    "HEY FIX": 16,
+    "HI E S B": 11,
+    "HEY NEXUS": 9
+  },
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "policy": "Complete existing training source containers only, same source-balanced inputs and binary weights. Mean class logits over true full container excluding batch padding. Fixed19 intent classes, not phonetic truth. Unknown ambient excluded auxiliary CE, remains binary negative. No CTC, local phoneme alignment, partial crop class labels, new TTS or evaluation inputs. No trained result or qualification claim."
+}
