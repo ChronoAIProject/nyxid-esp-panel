@@ -10494,3 +10494,7 @@ Original training 85591 and export 53839 exited 0; full waveform sessions 61181/
 ### Character auxiliary paired event delta
 
 Saved application events only, no model/audio calls: legacy lost5/gained0 target; Jenny lost4/gained0, all four new misses variant2. Jenny false44→31 hides removed19/new6/retained25; all6new Next, including slow bare in all3variants (quiet included). Cannot explain exclusively by noise/RIR or treat net false reduction as uniform lexical improvement. Exact cases/source IDs/original events retained in 4090-causal-character-event-delta-v1.json. No coefficient/threshold rescue or automatic next fit inferred.
+
+### Distinct direct character decoder protocol implemented
+
+After failed binary auxiliary result, defined separate direct ordered-decoder experiment, not posthoc replacement/promotion or coefficient rescue. Fixed final encoder/head only, separate five-state character INT8 export pending; greedy CTC exact HEY NICKS at start/space, argmax tie lowestID, no binaryfusion/confidence/beam/aliases/endpoint/finishflush, preserve continuous prime/state. Explicit right-continuation limitation (NICKSON can trigger). Five functional state-machine tests pass; no acoustic model calls or claim. See experiments/compact_character_decoder_proposal_v1.md. Next lock distinct INT8 export then full existing waveform behavior; v30 unchanged.
