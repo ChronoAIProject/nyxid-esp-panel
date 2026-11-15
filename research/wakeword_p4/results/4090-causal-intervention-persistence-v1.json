@@ -1,0 +1,2171 @@
+{
+  "schema": "causal-intervention-persistence-v1",
+  "conditions": [
+    "source-balanced",
+    "character-auxiliary",
+    "phone-auxiliary",
+    "phrase-auxiliary",
+    "nonlinear-readout",
+    "bn-affine"
+  ],
+  "inputs": [
+    {
+      "path": ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "68cfaac70ba816167412b7ae5b03d0f347ba40cbb9ea1998376731bf7d3be6b2"
+    },
+    {
+      "path": ".local/wakeword/causal-character-auxiliary-primed-v1/diagnostic/hey_nyx-character-auxiliary.jsonl",
+      "sha256": "b33d442ed9d170fc226123d7d11f309bbad3265ceda6219d702f4e61f90df89e"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-primed-v1/diagnostic/hey_nyx-phone-auxiliary.jsonl",
+      "sha256": "d5f18ff71a3352fbc070c5203a0852f0b15e1038f34e9bf82e47d9f8a8986b6e"
+    },
+    {
+      "path": ".local/wakeword/causal-phrase-auxiliary-primed-v1/diagnostic/hey_nyx-phrase-auxiliary.jsonl",
+      "sha256": "f64cb330ae72b31ca33bfaae1c529cf4b6c92ea546c6583e75b7d3947e11ce79"
+    },
+    {
+      "path": ".local/wakeword/causal-nonlinear-readout-primed-v1/diagnostic/hey_nyx-nonlinear-readout.jsonl",
+      "sha256": "4d7c5a4c4fbd307941a6f160707a4f43308cb572238a79fb18905353ea492a94"
+    },
+    {
+      "path": ".local/wakeword/causal-bn-affine-primed-v1/diagnostic/hey_nyx-bn-affine.jsonl",
+      "sha256": "15cb6af791f2145ea3181eda297d526334e3af27408ca12272448753fd89dcbd"
+    },
+    {
+      "path": ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/hey_nyx-source-balanced.jsonl",
+      "sha256": "bd776f7f0ff7c3bf393ddf6f7538938a8f9b86bfb0d043cac64124469621c9d9"
+    },
+    {
+      "path": ".local/wakeword/causal-character-auxiliary-jenny-v1/diagnostic/hey_nyx-character-auxiliary.jsonl",
+      "sha256": "f515b1ed5cb1c12acf67bf96520999a50f41a2520cff63904498d931beafe089"
+    },
+    {
+      "path": ".local/wakeword/causal-phone-auxiliary-jenny-v1/diagnostic/hey_nyx-phone-auxiliary.jsonl",
+      "sha256": "7cc01023c3da99e94abdd3887e3e9a5665982fe5fecca5b979c950e6cabb7381"
+    },
+    {
+      "path": ".local/wakeword/causal-phrase-auxiliary-jenny-v1/diagnostic/hey_nyx-phrase-auxiliary.jsonl",
+      "sha256": "03b4c52b0cfed8b29292955c63988a1768a9915ce4fcd63464f09dd3098e1e55"
+    },
+    {
+      "path": ".local/wakeword/causal-nonlinear-readout-jenny-v1/diagnostic/hey_nyx-nonlinear-readout.jsonl",
+      "sha256": "f97b7da4005c1e1ceeccd7dfbf6ea08e8febb993d35f3af71f9bedf4fb6a7641"
+    },
+    {
+      "path": ".local/wakeword/causal-bn-affine-jenny-v1/diagnostic/hey_nyx-bn-affine.jsonl",
+      "sha256": "628784bcf0f89869c9a64be13a634fb33279ebdff92a95e2883e0992af46f6bd"
+    }
+  ],
+  "groups": [
+    {
+      "group": "primed",
+      "error_frequency_histogram": {
+        "target_misses": {
+          "0": 26,
+          "1": 4,
+          "5": 1,
+          "4": 2,
+          "2": 2,
+          "3": 1
+        },
+        "negative_activations": {
+          "0": 301,
+          "1": 18,
+          "3": 2,
+          "2": 2,
+          "4": 1
+        }
+      },
+      "persistent_target_misses": 0,
+      "persistent_false_clips": 0,
+      "persistent_false_by_phrase": {},
+      "cases": [
+        {
+          "phase": "synthetic",
+          "index": 41,
+          "source_id": "v2-t01-c0-s1-r00",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 45,
+          "source_id": "v2-t01-c1-s0-r00",
+          "target_id": "hey_nyx",
+          "variant": 0,
+          "carrier": "turn on the light",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 46,
+          "source_id": "v2-t01-c1-s0-r00",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 47,
+          "source_id": "v2-t01-c1-s0-r00",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 48,
+          "source_id": "v2-t01-c1-s1-r00",
+          "target_id": "hey_nyx",
+          "variant": 0,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 49,
+          "source_id": "v2-t01-c1-s1-r00",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 50,
+          "source_id": "v2-t01-c1-s1-r00",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 51,
+          "source_id": "v2-t01-c1-s2-r00",
+          "target_id": "hey_nyx",
+          "variant": 0,
+          "carrier": "turn on the light",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 52,
+          "source_id": "v2-t01-c1-s2-r00",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 53,
+          "source_id": "v2-t01-c1-s2-r00",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 257,
+          "source_id": "v2-t07-c0-s1-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 258,
+          "source_id": "v2-t07-c0-s2-r00",
+          "target_id": "common_negative",
+          "variant": 0,
+          "carrier": "",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 264,
+          "source_id": "v2-t07-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 0,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 265,
+          "source_id": "v2-t07-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 266,
+          "source_id": "v2-t07-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 270,
+          "source_id": "v2-t07-c2-s0-r00",
+          "target_id": "common_negative",
+          "variant": 0,
+          "carrier": "what time is it",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 271,
+          "source_id": "v2-t07-c2-s0-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "what time is it",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 272,
+          "source_id": "v2-t07-c2-s0-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "what time is it",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 280,
+          "source_id": "v2-t07-c3-s0-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "set a timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 292,
+          "source_id": "v2-t08-c0-s1-r00",
+          "target_id": "hi_esp",
+          "variant": 1,
+          "carrier": "",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 335,
+          "source_id": "v2-t09-c1-s0-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 336,
+          "source_id": "v2-t09-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 0,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 337,
+          "source_id": "v2-t09-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 338,
+          "source_id": "v2-t09-c1-s1-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 340,
+          "source_id": "v2-t09-c1-s2-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "turn on the light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 341,
+          "source_id": "v2-t09-c1-s2-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "turn on the light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 350,
+          "source_id": "v2-t09-c2-s2-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "what time is it",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 352,
+          "source_id": "v2-t09-c3-s0-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "set a timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 353,
+          "source_id": "v2-t09-c3-s0-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "set a timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 355,
+          "source_id": "v2-t09-c3-s1-r00",
+          "target_id": "common_negative",
+          "variant": 1,
+          "carrier": "set a timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 356,
+          "source_id": "v2-t09-c3-s1-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "set a timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 357,
+          "source_id": "v2-t09-c3-s2-r00",
+          "target_id": "common_negative",
+          "variant": 0,
+          "carrier": "set a timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 359,
+          "source_id": "v2-t09-c3-s2-r00",
+          "target_id": "common_negative",
+          "variant": 2,
+          "carrier": "set a timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        }
+      ]
+    },
+    {
+      "group": "jenny",
+      "error_frequency_histogram": {
+        "target_misses": {
+          "0": 22,
+          "1": 6,
+          "2": 5,
+          "5": 1,
+          "6": 2
+        },
+        "negative_activations": {
+          "0": 299,
+          "2": 11,
+          "3": 10,
+          "5": 8,
+          "4": 7,
+          "6": 17,
+          "1": 8
+        }
+      },
+      "persistent_target_misses": 2,
+      "persistent_false_clips": 17,
+      "persistent_false_by_phrase": {
+        "hey_next": 2,
+        "hey_mix": 13,
+        "hey_muse": 2
+      },
+      "cases": [
+        {
+          "phase": "synthetic",
+          "index": 39,
+          "source_id": "jenny-development-013",
+          "target_id": "hey_nyx",
+          "variant": 0,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 40,
+          "source_id": "jenny-development-013",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 41,
+          "source_id": "jenny-development-013",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 44,
+          "source_id": "jenny-development-014",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 50,
+          "source_id": "jenny-development-016",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 52,
+          "source_id": "jenny-development-017",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 53,
+          "source_id": "jenny-development-017",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 56,
+          "source_id": "jenny-development-018",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 58,
+          "source_id": "jenny-development-019",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 59,
+          "source_id": "jenny-development-019",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 62,
+          "source_id": "jenny-development-020",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 63,
+          "source_id": "jenny-development-021",
+          "target_id": "hey_nyx",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 64,
+          "source_id": "jenny-development-021",
+          "target_id": "hey_nyx",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 0.9,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 68,
+          "source_id": "jenny-development-022",
+          "target_id": "hey_nyx",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": true,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 265,
+          "source_id": "jenny-development-088",
+          "target_id": "hey_nick",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 288,
+          "source_id": "jenny-development-096",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 289,
+          "source_id": "jenny-development-096",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 290,
+          "source_id": "jenny-development-096",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 297,
+          "source_id": "jenny-development-099",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 298,
+          "source_id": "jenny-development-099",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 299,
+          "source_id": "jenny-development-099",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 300,
+          "source_id": "jenny-development-100",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": false
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 301,
+          "source_id": "jenny-development-100",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 302,
+          "source_id": "jenny-development-100",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 303,
+          "source_id": "jenny-development-101",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 305,
+          "source_id": "jenny-development-101",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 309,
+          "source_id": "jenny-development-103",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 310,
+          "source_id": "jenny-development-103",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 312,
+          "source_id": "jenny-development-104",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 313,
+          "source_id": "jenny-development-104",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 314,
+          "source_id": "jenny-development-104",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 319,
+          "source_id": "jenny-development-106",
+          "target_id": "hey_next",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 320,
+          "source_id": "jenny-development-106",
+          "target_id": "hey_next",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 321,
+          "source_id": "jenny-development-107",
+          "target_id": "hey_next",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 324,
+          "source_id": "jenny-development-108",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 325,
+          "source_id": "jenny-development-108",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 326,
+          "source_id": "jenny-development-108",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 328,
+          "source_id": "jenny-development-109",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 329,
+          "source_id": "jenny-development-109",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 330,
+          "source_id": "jenny-development-110",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "bare",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 331,
+          "source_id": "jenny-development-110",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 333,
+          "source_id": "jenny-development-111",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 336,
+          "source_id": "jenny-development-112",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 337,
+          "source_id": "jenny-development-112",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 338,
+          "source_id": "jenny-development-112",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 339,
+          "source_id": "jenny-development-113",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 341,
+          "source_id": "jenny-development-113",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": false,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 342,
+          "source_id": "jenny-development-114",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "time",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 343,
+          "source_id": "jenny-development-114",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 345,
+          "source_id": "jenny-development-115",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 346,
+          "source_id": "jenny-development-115",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 347,
+          "source_id": "jenny-development-115",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 348,
+          "source_id": "jenny-development-116",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 349,
+          "source_id": "jenny-development-116",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 350,
+          "source_id": "jenny-development-116",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 351,
+          "source_id": "jenny-development-117",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 352,
+          "source_id": "jenny-development-117",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 353,
+          "source_id": "jenny-development-117",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 0.9,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 354,
+          "source_id": "jenny-development-118",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 355,
+          "source_id": "jenny-development-118",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 356,
+          "source_id": "jenny-development-118",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 357,
+          "source_id": "jenny-development-119",
+          "target_id": "hey_mix",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 358,
+          "source_id": "jenny-development-119",
+          "target_id": "hey_mix",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 359,
+          "source_id": "jenny-development-119",
+          "target_id": "hey_mix",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 363,
+          "source_id": "jenny-development-121",
+          "target_id": "hey_muse",
+          "variant": 0,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 5
+        },
+        {
+          "phase": "synthetic",
+          "index": 364,
+          "source_id": "jenny-development-121",
+          "target_id": "hey_muse",
+          "variant": 1,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 365,
+          "source_id": "jenny-development-121",
+          "target_id": "hey_muse",
+          "variant": 2,
+          "carrier": "bare",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 2
+        },
+        {
+          "phase": "synthetic",
+          "index": 372,
+          "source_id": "jenny-development-124",
+          "target_id": "hey_muse",
+          "variant": 0,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 373,
+          "source_id": "jenny-development-124",
+          "target_id": "hey_muse",
+          "variant": 1,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 374,
+          "source_id": "jenny-development-124",
+          "target_id": "hey_muse",
+          "variant": 2,
+          "carrier": "light",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 385,
+          "source_id": "jenny-development-128",
+          "target_id": "hey_muse",
+          "variant": 1,
+          "carrier": "time",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": false
+          },
+          "error_count": 1
+        },
+        {
+          "phase": "synthetic",
+          "index": 390,
+          "source_id": "jenny-development-130",
+          "target_id": "hey_muse",
+          "variant": 0,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 4
+        },
+        {
+          "phase": "synthetic",
+          "index": 391,
+          "source_id": "jenny-development-130",
+          "target_id": "hey_muse",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": true,
+            "phone-auxiliary": true,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": true,
+            "bn-affine": true
+          },
+          "error_count": 6
+        },
+        {
+          "phase": "synthetic",
+          "index": 392,
+          "source_id": "jenny-development-130",
+          "target_id": "hey_muse",
+          "variant": 2,
+          "carrier": "timer",
+          "length_scale": 1.0,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": true,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 3
+        },
+        {
+          "phase": "synthetic",
+          "index": 394,
+          "source_id": "jenny-development-131",
+          "target_id": "hey_muse",
+          "variant": 1,
+          "carrier": "timer",
+          "length_scale": 1.1,
+          "target": false,
+          "errors": {
+            "source-balanced": true,
+            "character-auxiliary": false,
+            "phone-auxiliary": false,
+            "phrase-auxiliary": false,
+            "nonlinear-readout": false,
+            "bn-affine": true
+          },
+          "error_count": 2
+        }
+      ]
+    }
+  ],
+  "limits": "Saved consumed-development events at one fixed reference threshold only; no model calls, audio generation/access, threshold selection, causal attribution or training-data admission. Variants correlated. Joe complete misses already established separately; not included because its record schema differs. Frozenv30 retained; independent qualification incomplete."
+}
