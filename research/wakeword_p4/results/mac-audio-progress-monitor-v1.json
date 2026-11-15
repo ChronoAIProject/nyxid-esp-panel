@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-15T02:10:00Z",
+  "source_commit": "d012c489",
+  "scope": "Isolated USB development board, original aligned-prefix wake model and DTLS fixes. Normal firmware, tracing off. No synthesized speech, Mac speaker playback or raw microphone recording.",
+  "image": {
+    "sha256": "290e3d1ca4d7123af3af8ba3e19820e70c6b3771fdc949b93f98715ee8f60146",
+    "app_descriptor_sha256": "301f013ed5bba2583dcddab85780700deb5544244a4f82fd4af97b880450a42f",
+    "bytes": 5984448,
+    "diagnostic_tracing": false,
+    "wake_model_sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+    "fixes": [
+      "DTLS final owner cleanup",
+      "TLS role change setup cleanup"
+    ],
+    "audio_progress_counters": true
+  },
+  "code_checks": {
+    "monitor_unit_tests_passed": 14,
+    "idf5_p4_app_build_passed": true,
+    "idf6_build_tested": false
+  },
+  "app_only_flash": true,
+  "intentional_development_reset": true,
+  "production_board_touched": false,
+  "stages": [
+    {
+      "name": "idle listening",
+      "duration_s": 20.78,
+      "progress": {
+        "observed_seconds": 20.77794098854065,
+        "capture": "advancing",
+        "wake": "advancing"
+      },
+      "counter_changes": {
+        "capture_frames": 1298,
+        "wake_processed_frames": 692,
+        "sent_packets": 0
+      },
+      "first_uptime_s": 95,
+      "last_uptime_s": 116
+    },
+    {
+      "name": "idle microphone muted",
+      "duration_s": 10.27,
+      "progress": {
+        "observed_seconds": 0,
+        "capture": "inactive",
+        "wake": "inactive"
+      },
+      "counter_changes": {
+        "capture_frames": 0,
+        "wake_processed_frames": 0,
+        "sent_packets": 0
+      },
+      "first_uptime_s": 119,
+      "last_uptime_s": 129
+    },
+    {
+      "name": "listener resumed",
+      "duration_s": 20.93,
+      "progress": {
+        "observed_seconds": 20.933446884155273,
+        "capture": "advancing",
+        "wake": "advancing"
+      },
+      "counter_changes": {
+        "capture_frames": 1300,
+        "wake_processed_frames": 693,
+        "sent_packets": 0
+      },
+      "first_uptime_s": 130,
+      "last_uptime_s": 151
+    },
+    {
+      "name": "muted provider call",
+      "duration_s": 19.91,
+      "progress": {
+        "observed_seconds": 19.91146993637085,
+        "capture": "advancing",
+        "wake": "inactive"
+      },
+      "counter_changes": {
+        "capture_frames": 1234,
+        "wake_processed_frames": 0,
+        "sent_packets": 987
+      },
+      "first_uptime_s": 156,
+      "last_uptime_s": 176
+    },
+    {
+      "name": "listener after call",
+      "duration_s": 20.81,
+      "progress": {
+        "observed_seconds": 20.812039136886597,
+        "capture": "advancing",
+        "wake": "advancing"
+      },
+      "counter_changes": {
+        "capture_frames": 1300,
+        "wake_processed_frames": 694,
+        "sent_packets": 0
+      },
+      "first_uptime_s": 179,
+      "last_uptime_s": 200
+    }
+  ],
+  "provider_connect_s": 5.008,
+  "hardware_stages_passed": true,
+  "installed_read_only_monitor": {
+    "health": "online",
+    "updated_utc": "2026-11-15T02:09:45.152559+00:00",
+    "last_success_utc": "2026-11-15T02:09:45.152559+00:00",
+    "audio_progress": {
+      "observed_seconds": 30.137405157089233,
+      "capture": "advancing",
+      "wake": "advancing"
+    },
+    "suspected_audio_stalls": [],
+    "suspected_losses": []
+  },
+  "limits": [
+    "Counters show completed full reads and detector calls, not sample integrity, acoustic recognition or AEC quality.",
+    "No forced audio-task stall was injected into hardware; detection/recovery boundaries were exercised by unit tests.",
+    "No thirty-minute conversation qualification; the earlier quiet call correctly reached user-idle timeout.",
+    "Only development firmware was flashed. This is research evidence, not a stable model promotion."
+  ],
+  "full_goal_complete": false
+}
