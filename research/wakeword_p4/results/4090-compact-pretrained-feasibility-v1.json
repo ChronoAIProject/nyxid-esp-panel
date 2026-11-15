@@ -1,0 +1,103 @@
+{
+  "schema": "compact-pretrained-feasibility-v1",
+  "purpose": "A distinct pretrained acoustic encoder hypothesis after synthetic source-coverage intervention failed lexical confusion; no new training or operating point",
+  "model": {
+    "name": "commandrecognition_en_matchboxnet3x1x64_v2",
+    "version": "1.0.0rc1",
+    "archive_bytes": 321610,
+    "archive_sha256": "0697bff0f8b7cb77052a2c2204680b1f948c646664406a4121944880d0a54286",
+    "upstream_training": "Google Speech Commands v2, 35 labels, about 105000 utterances as stated by upstream",
+    "pretraining_overlap": "Unknown physical-speaker/pretraining overlap; not an independent synthetic evaluation source",
+    "license": "NGC Terms of Use as stated by upstream model card, not inferred from NeMo source license",
+    "learnable_parameters": 77859,
+    "stored_tensor_elements": 100348,
+    "stored_tensor_bytes": 401428,
+    "frontend": "Stored 64x64 DCT, 400-sample Hann, 257x64 mel bank; configured 64 MFCC, 512 FFT, 25ms window/10ms stride",
+    "architecture": "6 convolutional blocks, residual and time/channel separable conv, final global average pool and 35-class head",
+    "source_temporal_padding": "Exact runtime still requires audit; no causal flag in original model configuration; cannot claim causal deployment",
+    "convolution_linear_macs_per128frames": 9195904,
+    "mac_count_limits": "Static weight-shape estimate, excluding frontend, BN, ReLU, residual additions, state, padding, transfer and runtime overhead; not measured P4 speed"
+  },
+  "google_alternative": {
+    "name": "kws_streaming ds_tc_resnet",
+    "pinned_commit": "bb18d9b0cb460fee1a080fa2eeb4109fe3805275",
+    "finding": "Source explicitly supports causal padding and stream-aware states; not evidence its weights are compatible with NVIDIA pretrained model"
+  },
+  "next_required": [
+    "Audit original MFCC and convolution/BN/pooling semantics before reconstruction or training",
+    "Define explicit finite-window versus causal/limited-lookahead deployment behavior and cost; changing padding is an architectural intervention",
+    "Use existing training-only source identities, freeze one experiment before GPU training; all Melo development and acceptance remain excluded",
+    "A future candidate needs newly preregistered unconsumed development, full original acceptance remains sealed; consumed Melo cannot qualify a retrained candidate"
+  ],
+  "model_forward_calls": 0,
+  "training": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "sources": {
+    ".local/wakeword/compact-pretrained-feasibility-v1/checkpoint-static-inventory.json": {
+      "bytes": 11971,
+      "sha256": "ddf227bcc6617cd88fe877916e7b15331a16f414a9b92174be32cd9310ecc96d"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/classification-retrieval.json": {
+      "bytes": 269,
+      "sha256": "3a057a5219fd4c03232f45191ec2c24faabea3bf737308589d5c345f5e39050f"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/google-ds-tc-resnet.txt": {
+      "bytes": 14527,
+      "sha256": "f8a5af369aeb5f786d9714e47c89a2516e0b318fdb194839efce7554d7b71025"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/google-kws-streaming-readme.txt": {
+      "bytes": 40665,
+      "sha256": "436d9f15ba131850d62442d882e29d8ca49b044143c89a5abc3c835159f0241d"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/google-streaming-experiments.txt": {
+      "bytes": 5280,
+      "sha256": "a7cbfcbe7b9bc3ddc1c95efd4883417e9da6be7152a898f7a5d4fa8c811bd994"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/matchboxnet-original-config.yaml": {
+      "bytes": 4619,
+      "sha256": "39094ca2352adece60631da2baf8f3d04c84c9bb5e1afb6b2cd7b7820d32aed2"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/matchboxnet-paper.txt": {
+      "bytes": 40909,
+      "sha256": "d7068ba2603cabc0c1b92eb34a36c6d4eb2bc35a9cabcfd9ae85e4ccf62b06e9"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/model-download.json": {
+      "bytes": 321,
+      "sha256": "0f073759b6a625497647fda4ae345b8fc5ff0413d61ce0b1e7cb009e6fa6d4c7"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-classification-doc.txt": {
+      "bytes": 1800,
+      "sha256": "2ac58ec0ebe1219c3300b7f3cc9a5064c055ea536f89af3d0e5588e3e8b165b5"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-classification-results.csv": {
+      "bytes": 1564,
+      "sha256": "0de232eb3e8380995fc5b555ac497a3af8a4f49ac5e1606f31dbf41b0a826d27"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-models.txt": {
+      "bytes": 4232,
+      "sha256": "17011e0748d2e5be0e1616d0ca25adef80b2c51c7ef1d486ec6b894d5401e3e6"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-results.txt": {
+      "bytes": 5860,
+      "sha256": "68d2c410e1a5baa781802f27c298e184f83232f76a29311cf0d27b9c0d4c905c"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/ngc-files.json": {
+      "bytes": 1049,
+      "sha256": "86faec4f61d48ed4cead2824c299df058b5d134507eb9ca410d0506681b928b2"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/ngc-versions.json": {
+      "bytes": 5776,
+      "sha256": "2fb4050760f508737de3604d3cba22ea4b6901f29cadafda313e3feb4d8980ba"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/pinned-retrieval.json": {
+      "bytes": 1551,
+      "sha256": "50ae519718f37983741a63a88ab285d62e0096513e528e195fe1e1be58192d0c"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/retrieval.json": {
+      "bytes": 1281,
+      "sha256": "9a45aabafcff2649a0c3d14c1e8b1bdf62ea2b793b1c99712fba39902c4cad6a"
+    }
+  },
+  "limits": "Upstream Speech Commands accuracy is not Hey Nicks performance, streaming wakeword FAR or P4 feasibility. No NeMo bulk install, new audio generation, detector scoring or numerical comparison gate was performed."
+}
