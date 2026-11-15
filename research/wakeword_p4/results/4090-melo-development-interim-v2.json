@@ -1,0 +1,87 @@
+{
+  "schema": "melo-development-interim-v2",
+  "selection": {
+    "status": "joint_development_point_selected",
+    "selected_candidate": "speecht5-final20000",
+    "selected_threshold": 0.3546875,
+    "selected_model_sha256": "79c33ec6c2f2938259482c3ac50dcca9fb3e04033ebecf38c69c2712856a86e2",
+    "selected_point": {
+      "threshold": 0.3546875,
+      "positive": {
+        "EN-US/bare": {
+          "clips": 9,
+          "hits": 9
+        },
+        "EN-US/command": {
+          "clips": 27,
+          "hits": 27
+        },
+        "EN-BR/bare": {
+          "clips": 9,
+          "hits": 7
+        },
+        "EN-BR/command": {
+          "clips": 27,
+          "hits": 27
+        }
+      },
+      "confusion_clips": 288,
+      "confusion_activated_clips": 109,
+      "background_events": 0,
+      "cross_target_clips": 72,
+      "cross_target_activated_clips": 20,
+      "priming_events": 0
+    },
+    "per_candidate": {
+      "c161": {
+        "status": "development_point_selected",
+        "selected_threshold": 0.8984375,
+        "worst_stratum_recall": 0.7407407407407407,
+        "overall_recall": 0.8333333333333334,
+        "confusion_activated_clips": 55,
+        "background_far_upper95": 0.3790692776004911,
+        "background_events": 0,
+        "background_hours": 7.902862222222223,
+        "promotion_qualified": false,
+        "limits": "Development selection only; maximum recall may still be poor. Fresh independent final comparison and preregistered acceptance gates remain mandatory. No claim of human generalization or acoustic phonetic timing.",
+        "model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
+      },
+      "speecht5-final20000": {
+        "status": "development_point_selected",
+        "selected_threshold": 0.3546875,
+        "worst_stratum_recall": 0.7777777777777778,
+        "overall_recall": 0.9722222222222222,
+        "confusion_activated_clips": 109,
+        "background_far_upper95": 0.3790692776004911,
+        "background_events": 0,
+        "background_hours": 7.902862222222223,
+        "promotion_qualified": false,
+        "limits": "Development selection only; maximum recall may still be poor. Fresh independent final comparison and preregistered acceptance gates remain mandatory. No claim of human generalization or acoustic phonetic timing.",
+        "model_sha256": "79c33ec6c2f2938259482c3ac50dcca9fb3e04033ebecf38c69c2712856a86e2"
+      }
+    },
+    "promotion_qualified": false,
+    "viability_checked": false,
+    "limits": "Fixed two-model development selection only. No runner-up fallback after failed viability; independent acceptance and fixed reference gates remain required. Repeated models/grid do not add background exposure.",
+    "tables": {
+      "c161": {
+        "path": ".local/wakeword/melo-development-int8-v2/metrics/c161-table.json",
+        "sha256": "df6e32fc370632ba4c3a2ad0965227aec3e450a2750b7e5d7af3f9fadf99b60b"
+      },
+      "speecht5-final20000": {
+        "path": ".local/wakeword/melo-development-int8-v2/metrics/speecht5-final20000-table.json",
+        "sha256": "efd0fc531eb02f7bc1549c626a43e85ad8dd04b40be68d0d53bb46b8e11b7ce4"
+      }
+    },
+    "selector_sha256": "c4fde05410ae587db42ac3db5f2027e4e102b4efb9a8f1655b9f41e3fce9989c"
+  },
+  "official_complete": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "v30_retained": true,
+  "limits": "Candidate collection and joint selection only; 109/288 common confusion activations require full official comparison. No final viability or matched-level claim.",
+  "artifacts": {
+    ".local/wakeword/melo-development-int8-v2/result.json": "f2f5ccec1a44ecf54d86d670b7961b6b91af353e8fe0a8cd42f07bdf5021ad43",
+    ".local/wakeword/melo-development-int8-v2/metrics/joint-selection.json": "16ec0ceeea372a937cc9cb904edfea894e69dba5eaea47f7384383b9529201a9"
+  }
+}
