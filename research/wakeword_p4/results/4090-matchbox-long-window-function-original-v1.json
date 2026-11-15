@@ -1,0 +1,98 @@
+{
+  "schema": "matchbox-long-window-function-original-v1",
+  "plan_sha256": "f49d51d9ff80521e508f5cde3d16f2654e0413c461a06a7332e0b4f7f1a349c5",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch_version": "2.15.0+cu132",
+  "full_feature_shape": [
+    128,
+    64,
+    280
+  ],
+  "trainable_parameters": 74247,
+  "convolutions": [
+    {
+      "name": "encoder.encoder.0.mconv.0.conv",
+      "weights": 704,
+      "macs_per_window": 197120
+    },
+    {
+      "name": "encoder.encoder.0.mconv.1.conv",
+      "weights": 8192,
+      "macs_per_window": 2293760
+    },
+    {
+      "name": "encoder.encoder.1.mconv.0.conv",
+      "weights": 1664,
+      "macs_per_window": 465920
+    },
+    {
+      "name": "encoder.encoder.1.mconv.1.conv",
+      "weights": 8192,
+      "macs_per_window": 2293760
+    },
+    {
+      "name": "encoder.encoder.1.res.0.0.conv",
+      "weights": 8192,
+      "macs_per_window": 2293760
+    },
+    {
+      "name": "encoder.encoder.2.mconv.0.conv",
+      "weights": 960,
+      "macs_per_window": 268800
+    },
+    {
+      "name": "encoder.encoder.2.mconv.1.conv",
+      "weights": 4096,
+      "macs_per_window": 1146880
+    },
+    {
+      "name": "encoder.encoder.2.res.0.0.conv",
+      "weights": 4096,
+      "macs_per_window": 1146880
+    },
+    {
+      "name": "encoder.encoder.3.mconv.0.conv",
+      "weights": 1088,
+      "macs_per_window": 304640
+    },
+    {
+      "name": "encoder.encoder.3.mconv.1.conv",
+      "weights": 4096,
+      "macs_per_window": 1146880
+    },
+    {
+      "name": "encoder.encoder.3.res.0.0.conv",
+      "weights": 4096,
+      "macs_per_window": 1146880
+    },
+    {
+      "name": "encoder.encoder.4.mconv.0.conv",
+      "weights": 1856,
+      "macs_per_window": 519680
+    },
+    {
+      "name": "encoder.encoder.4.mconv.1.conv",
+      "weights": 8192,
+      "macs_per_window": 2293760
+    },
+    {
+      "name": "encoder.encoder.5.mconv.0.conv",
+      "weights": 16384,
+      "macs_per_window": 4587520
+    }
+  ],
+  "conv_plus_dense_macs_per_window": 20107136,
+  "conv_plus_dense_macs_per_second_at480cadence": 670237866.6666666,
+  "raw_int16_context_bytes": 89600,
+  "mfcc_int8_input_bytes": 17920,
+  "mfcc_float32_input_bytes": 71680,
+  "batch128_gpu_function_seconds": 0.8659817799925804,
+  "batch128_cuda_peak_allocated_bytes": 318192640,
+  "all_functional_checks_passed": true,
+  "optimizer_updates": 0,
+  "actual_audio_calls": 0,
+  "p4_runtime_measured": false,
+  "recognition_scored": false,
+  "policy": "Exactly one pseudorandom GPU MFCC+7-class forward/backward, no optimizer or actual audio/model comparison. Static conv MAC estimate and CUDA peak are host feasibility only, not P4 peak/RAM/latency or recognition. Original short adapter unchanged; no developer/final/acceptance input.",
+  "limitations": "MACs omit MFCC/FFT, BN/nonlinear/add/mean/softmax/quantization, memory copies and interpreter. CUDA batch backward peak is not single-stream P4 arena RAM or walltime. Whole finite context at480 sample cadence is a computationally costly deployable algorithm proposal, not an incremental-conv implementation."
+}
