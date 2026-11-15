@@ -10490,3 +10490,7 @@ Original character-auxiliary session85591/PID388881/start2489436 remains live, u
 ## Character auxiliary v1 terminal result
 
 Original training 85591 and export 53839 exited 0; full waveform sessions 61181/98052/85307 also exited 0. Binary INT8 SHA 446f56e7e3bb749b138a29a274d78676dedb06f065a2fb0515975dc72bfacff0, 60952 bytes. Compared with c161, legacy targets 35→30/36 and commands 26→22/27; Jenny targets 33→29/36 and commands 24→22/27; Joe remains 0/72. Legacy false clips 4→0; Jenny 44→31 (Next 8→11, Mix 25→18, Muse 11→2). Both full background streams zero events; reused, nonadditive evidence. Preserve 1140 traces/original JSON losslessly (518968 published bytes). See experiments/causal_character_auxiliary_findings_v1.md and behavior-comparison JSON. Coverage/latency regression prevents promotion; frozen v30 retained. No coefficient/threshold/checkpoint rescue. Full goal remains incomplete.
+
+### Character auxiliary paired event delta
+
+Saved application events only, no model/audio calls: legacy lost5/gained0 target; Jenny lost4/gained0, all four new misses variant2. Jenny false44→31 hides removed19/new6/retained25; all6new Next, including slow bare in all3variants (quiet included). Cannot explain exclusively by noise/RIR or treat net false reduction as uniform lexical improvement. Exact cases/source IDs/original events retained in 4090-causal-character-event-delta-v1.json. No coefficient/threshold rescue or automatic next fit inferred.
