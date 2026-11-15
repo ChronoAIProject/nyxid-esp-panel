@@ -9,6 +9,11 @@ The selected phrase is **Hey Nyx**, pronounced **Hey Nicks**. `Hey Nix` and `Hey
 Following the user's 2026-11-15 clarification, prioritize actual recognition,
 false activations, wake latency, the buffered first request and board stability.
 CPU/GPU training logits or gradients need not match to qualify a usable detector.
+Do not require matching FP32/INT8 scores, intermediate values or exact event
+sequences across implementations. A candidate should advance when its actual
+wake behavior and P4 operation are useful; numerical differences alone do not
+justify holding it back. Keep basic model identity, interface and allocation
+checks, and use numerical comparisons only to investigate a concrete failure.
 Keep the completed numerical discrepancies as diagnostic evidence; do not add
 more cross-platform gradient or TF32 experiments without a concrete behavioral
 failure that they can help explain. Evaluate actual recognition before spending
