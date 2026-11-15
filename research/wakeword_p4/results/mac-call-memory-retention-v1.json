@@ -1,0 +1,204 @@
+{
+  "schema": "mac-call-memory-retention-v1",
+  "recorded_utc": "2026-11-15T01:38:06.283116+00:00",
+  "scope": "Isolated development ESP32-P4, own local NyxID profile. Muted real provider calls; no speech recognition, first-utterance or acoustic acceptance.",
+  "numerical_inference_agreement_required": false,
+  "pre_fix": {
+    "additional_calls": 6,
+    "retained_psram_bytes": 143332,
+    "idle_90_second_status_poll_control_start_end_equal": true
+  },
+  "root_causes": [
+    {
+      "defect": "dtls_srtp_deinit did not free its final-owner context and skipped certificate-only cleanup",
+      "confirmed_context_bytes": 1840,
+      "fix": "Always release initialized crypto state; release SRTP only when acquired; consume/free the context once."
+    },
+    {
+      "defect": "dtls_srtp_reset_session changed roles by calling ssl_setup on an already set-up context, overwriting old record buffer pointers",
+      "heap_walk_new_untraced_record_buffer_bytes": [
+        16896,
+        4480
+      ],
+      "fix": "Free and initialize SSL/context configuration before role-changing setup. Retain certificate and peer callback ownership."
+    }
+  ],
+  "isolation": {
+    "mute_rearm_without_connection_rounds": 5,
+    "mute_rearm_psram_free": [
+      20373976,
+      20373900,
+      20372008,
+      20373932,
+      20373880
+    ],
+    "wake_disabled_before_psram_free": 20373880,
+    "wake_disabled_two_calls_psram_free": [
+      20350236,
+      20328284
+    ],
+    "continuous_two_call_system_trace_overflow": false,
+    "listener_frontend_and_aec_duplicate_instance_found": false,
+    "system_trace_coverage_gap": "This IDF5.5 standalone trace does not wrap heap_caps_calloc_base; same-translation-unit malloc bypasses wrapping. MbedTLS external calloc blocks were absent. Heap walking exposed them."
+  },
+  "normal_firmware_retest": {
+    "build": {
+      "sha256": "5e9775457f55458ddbd92c6395a296b4ebb6e31b30784a408b6c29151383c544",
+      "app_descriptor_sha256": "c5edd0890bceadb52e685f70311e0d6a1fbb6f8553244232e780b96698ce5f4b",
+      "bytes": 5984288,
+      "diagnostic_tracing": false,
+      "wake_model_sha256": "3ea7b067f1000516c8dfe9c6005bccdbe7360a2c26fc3d7790b70e5d26e8d3b7",
+      "fixes": [
+        "DTLS final owner cleanup",
+        "TLS role change setup cleanup"
+      ]
+    },
+    "calls": 8,
+    "provider_hold_seconds": 15,
+    "idle_seconds_after_rearm": 10,
+    "microphone_muted_during_calls": true,
+    "greeting_enabled": false,
+    "rounds": [
+      {
+        "round": 1,
+        "connected_seconds": 4.009624957980122,
+        "uptime_s": 79,
+        "idle_heap": {
+          "free": 20983200,
+          "spiram_free": 20894220,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 809,
+        "wake_listening": true
+      },
+      {
+        "round": 2,
+        "connected_seconds": 4.151865375024499,
+        "uptime_s": 111,
+        "idle_heap": {
+          "free": 20980424,
+          "spiram_free": 20891444,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 808,
+        "wake_listening": true
+      },
+      {
+        "round": 3,
+        "connected_seconds": 3.94579891601461,
+        "uptime_s": 144,
+        "idle_heap": {
+          "free": 20977952,
+          "spiram_free": 20888972,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 808,
+        "wake_listening": true
+      },
+      {
+        "round": 4,
+        "connected_seconds": 4.327265500003705,
+        "uptime_s": 176,
+        "idle_heap": {
+          "free": 20977864,
+          "spiram_free": 20888884,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 802,
+        "wake_listening": true
+      },
+      {
+        "round": 5,
+        "connected_seconds": 4.191969040984986,
+        "uptime_s": 210,
+        "idle_heap": {
+          "free": 20976628,
+          "spiram_free": 20887648,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 845,
+        "wake_listening": true
+      },
+      {
+        "round": 6,
+        "connected_seconds": 4.892382749996614,
+        "uptime_s": 244,
+        "idle_heap": {
+          "free": 20975160,
+          "spiram_free": 20886180,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 848,
+        "wake_listening": true
+      },
+      {
+        "round": 7,
+        "connected_seconds": 4.51289395900676,
+        "uptime_s": 277,
+        "idle_heap": {
+          "free": 20974864,
+          "spiram_free": 20885884,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 813,
+        "wake_listening": true
+      },
+      {
+        "round": 8,
+        "connected_seconds": 3.945166833989788,
+        "uptime_s": 309,
+        "idle_heap": {
+          "free": 20974680,
+          "spiram_free": 20885700,
+          "dma_free": 179507,
+          "dma_largest_free": 126976,
+          "internal_free": 219119,
+          "internal_largest_free": 126976
+        },
+        "sent_packets": 835,
+        "wake_listening": true
+      }
+    ],
+    "all_connected_hung_up_and_rearmed": true,
+    "uptime_monotonic": true,
+    "idle_psram_free_range_bytes": [
+      20885700,
+      20894220
+    ],
+    "last_five_psram_free_range_bytes": [
+      20885700,
+      20888884
+    ],
+    "first_to_eighth_idle_psram_drop_bytes": 8520,
+    "interpretation": "The prior ~21KB-per-call loss no longer reproduces. Smaller first-to-eighth retained drift8520B and last-five range3184B remain; short runs do not establish every cache/lifetime or long-term stability."
+  },
+  "limits": [
+    "Only IDF5/P4 built and exercised; the IDF6 source uses matching cleanup but was not compiled here.",
+    "These short muted calls do not establish long-call AEC, actual wake recognition or first-utterance delivery.",
+    "Production dining-room panel untouched. Normal development app restored, tracing disabled, serial reader closed.",
+    "Historical SAL SCTP unmatched7479B was not established as a real leak; do not combine it with the confirmed DTLS leak."
+  ],
+  "full_goal_complete": false,
+  "source_fix_commit": "2d1262d2"
+}

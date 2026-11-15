@@ -1,0 +1,53 @@
+{
+  "schema": "mac-existing-nearword-p4-integration-v1",
+  "recorded_utc": "2026-11-15T00:47:00.612425+00:00",
+  "scope": "Small original model packaged and actually running in a temporary call-memory diagnostic firmware on the isolated P4. Recognition in use is not established.",
+  "model": {
+    "sha256": "9307e6c13b7bc269f2566f111acdddcd8a2fedac569ce9f5c35b4e9fd030a7d6",
+    "bytes": 60952,
+    "context_frames": 309,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "original_export_reused": true
+  },
+  "normal_build": {
+    "bytes": 5984160,
+    "slot_bytes": 6881280,
+    "binary_sha256": "9f8cf8ac8f0f99ad97d8ebf81d72d805bc8aac37b966d11c520f77c2de9ce28e",
+    "flashed": false
+  },
+  "temporary_diagnostic_build": {
+    "binary_sha256": "64ddb9474b40d40693ea1281936f5c871619990f4b96b677b06b153eb50bc5c3",
+    "flashed": true,
+    "app_only": true,
+    "production_board_touched": false
+  },
+  "p4_inference": {
+    "allocation_succeeded": true,
+    "tensor_bytes": 29836,
+    "arena_bytes": 65536,
+    "variable_arena_bytes": 16384,
+    "listening": true,
+    "observed_progress_step": 334,
+    "observed_mean_us": 1315,
+    "observed_max_us": 7474,
+    "wake_task_stack_free_bytes": 11760
+  },
+  "provider_smoke": {
+    "rounds": 2,
+    "connected_seconds": [
+      4.23,
+      3.71
+    ],
+    "muted": true,
+    "all_connected_and_rearmed": true,
+    "memory_recovered": false
+  },
+  "behavior_limits": [
+    "Training-related voices improved from 17/288 to 3/288 common nearword false clips, with 25/27 commands.",
+    "Other existing Jenny development voice produced 55/324 common nearword false clips, compared with frozen v30 12/324. This candidate is not promoted as a stable wake model.",
+    "No new synthesis, Mac playback or raw microphone recording. Human recognition, first utterance and long-call/reconnect AEC remain open.",
+    "No CPU/GPU or FP32/INT8 numerical agreement gate."
+  ],
+  "full_goal_complete": false
+}

@@ -89,12 +89,58 @@
       true,
       true,
       true
+    ],
+    "passed_scope": "Provider connection, hangup and listening rearm only; memory acceptance remains open",
+    "initial_spiram_free_bytes": 20898712,
+    "idle_spiram_free_bytes": [
+      20867484,
+      20842484,
+      20818724
     ]
   },
   "limits": [
+    "Repeated calls retain PSRAM after hangup. Stable internal/DMA values do not establish full memory recovery; investigate before claiming long-run stability.",
     "Three short muted calls do not prove long-call memory, microphone recognition, first-utterance preservation or AEC/reconnect stability.",
     "Existing consumed GPU recognition gains and near-word false wakes remain unchanged; the P4 run does not qualify independent recognition.",
     "No CPU/GPU, FP32/INT8 or intermediate-score agreement was required."
   ],
-  "full_goal_complete": false
+  "full_goal_complete": false,
+  "followup_retained_psram": {
+    "recorded_utc": "2026-11-15T00:40:42.445137+00:00",
+    "idle_poll_control_seconds": 90,
+    "idle_poll_interval_seconds": 1,
+    "idle_control_start_bytes": 20819440,
+    "idle_control_end_bytes": 20819440,
+    "additional_muted_connection_rounds": 6,
+    "provider_hold_seconds": 15,
+    "idle_seconds_after_teardown": 30,
+    "idle_spiram_free_bytes": [
+      20796100,
+      20770840,
+      20747744,
+      20724204,
+      20701148,
+      20676108
+    ],
+    "idle_internal_free_bytes": [
+      219119,
+      219119,
+      219119,
+      219119,
+      219119,
+      219119
+    ],
+    "connected_seconds": [
+      4.172,
+      4.87,
+      4.209,
+      4.006,
+      3.811,
+      4.243
+    ],
+    "retained_drop_bytes": 143332,
+    "connection_and_rearm_passed": true,
+    "root_cause": "DTLS final-owner object leak and repeated ssl_setup on role changes without releasing existing SSL record buffers; normal-firmware retest recorded in mac-call-memory-retention-v1.json",
+    "memory_acceptance_passed": false
+  }
 }

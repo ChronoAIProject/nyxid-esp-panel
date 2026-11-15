@@ -1,0 +1,62 @@
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -24,6 +24,8 @@
+ #include "esp_peer.h"
+ #include "esp_peer_default.h"
+ #include "media_lib_adapter.h"
++#include "esp_heap_trace.h"
++#include "esp_memory_utils.h"
+ #include "esp_opus_enc.h"
+ #include "esp_opus_dec.h"
+ #include "esp_timer.h"
+@@ -42,6 +44,7 @@
+ #include <strings.h>
+ #include <stdio.h>
+ #include <math.h>
++static atomic_bool call_memory_trace_waiting;
+ 
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+ extern void nyx_wake_capture_counters(uint32_t *bytes, uint32_t *overflows);
+@@ -1050,6 +1053,21 @@
+         // just as the original microphone task constructs a fresh AEC per call.
+         aec_destroy(aec);aec=create_voice_aec();
+         if(!aec){goto unavailable;}
++        if(atomic_exchange(&call_memory_trace_waiting,false)) {
++        heap_trace_alloc_pause();
++        vTaskDelay(pdMS_TO_TICKS(500));
++        heap_trace_stop();
++        heap_trace_summary_t summary={0};
++        heap_trace_summary(&summary);
++        ESP_LOGI("panel.memtrace","IDF summary count=%u high_water=%u overflow=%u",(unsigned)summary.count,(unsigned)summary.high_water_mark,(unsigned)summary.has_overflowed);
++        for(size_t i=0;i<summary.count;i++) {
++            heap_trace_record_t record;
++            if(heap_trace_get(i,&record)!=ESP_OK || !esp_ptr_external_ram(record.address))continue;
++            ESP_LOGI("panel.memtrace","PSRAM bytes=%u pc=%p:%p:%p:%p:%p:%p",(unsigned)record.size,
++                record.alloced_by[0],record.alloced_by[1],record.alloced_by[2],record.alloced_by[3],record.alloced_by[4],record.alloced_by[5]);
++            vTaskDelay(pdMS_TO_TICKS(5));
++        }
++        }
+         xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
+         wake_status("listening");
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+@@ -1382,6 +1400,12 @@
+ static void call_task(void *arg)
+ {
+     voice_call_t *c=arg;bool owns=false;unsigned tasks=0;char *sdp=NULL;int64_t connected_at=0;
++    static heap_trace_record_t *call_trace_records;
++    if(!call_trace_records)call_trace_records=heap_caps_calloc(4096,sizeof(*call_trace_records),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++    esp_err_t trace_started=call_trace_records?heap_trace_init_standalone(call_trace_records,4096):ESP_ERR_NO_MEM;
++    if(trace_started==ESP_OK)trace_started=heap_trace_start(HEAP_TRACE_LEAKS);
++    ESP_LOGI("panel.memtrace","IDF call trace start result=%d",trace_started);
++
+     cJSON *preferences=NULL;char path[256];
+     // The display lock must never stall the wake task's continuous I2S reader.
+     if(c->wake_initiated)(void)lcd_renderer_show_voice();
+@@ -1583,6 +1607,7 @@
+     bool failed=!strcmp(status.state,"error");xSemaphoreGive(state_lock);
+     if (!failed || atomic_load(&stopping)) state("idle","Ready");
+     atomic_store(&active_mode,atomic_load(&input_mode));
++    if(trace_started==ESP_OK)atomic_store(&call_memory_trace_waiting,true);
+     memset(c,0,sizeof(*c));free(c);atomic_store(&busy,false);vTaskDelete(NULL);
+ }
+ static esp_err_t start_call(const panel_voice_remote_t *remote, bool wake)
