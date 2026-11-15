@@ -1,0 +1,316 @@
+{
+  "schema": "matchbox-long-behavior-comparison-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/compare_matchbox_long_behavior_v1.py": "0b6d4a7aa4a247db85795676c5423235b4d03087afff4a7aa1de9a0f29e318ee",
+    "research/wakeword_p4/results/4090-matchbox-long-control-consumed-melo-original-v1.json": "532369323389bde81d1a06a9be8c35d2a43d757b43517ca67793ce5d71bbab5b",
+    ".local/wakeword/matchbox-long-control-consumed-melo-v1/records.jsonl": "452762d17c3cb482432f58091e401e478b6acd5b28c02920fd515ed924e57d82",
+    "research/wakeword_p4/results/4090-matchbox-long-control-consumed-melo-records-v1.jsonl.gz": "153fbb84c5dcbfa6619d176858a351bea7bdb50c8ee4e4b01b0e1207e8a75e6d",
+    "research/wakeword_p4/results/4090-matchbox-long-pooled-consumed-melo-original-v1.json": "bb3cee45344faa2dfcba5b79d079bccf93a91ecc5f73b6a9ed9cb8601d34b9b0",
+    ".local/wakeword/matchbox-long-pooled-consumed-melo-v1/records.jsonl": "e6312a602ffa147dc0e6514843ad7ad6964da4ef5df8601984775e27e31fad3a",
+    "research/wakeword_p4/results/4090-matchbox-long-pooled-consumed-melo-records-v1.jsonl.gz": "00d0f24af9daf3d49f03bbf9497fcaeb9e4784dc007f5129b6fa9759773acc4b"
+  },
+  "arms": {
+    "control": {
+      "model": {
+        "path": ".local/wakeword/matchbox-long-control-int8-v1/int8.tflite",
+        "bytes": 115408,
+        "sha256": "44782a4b7bfcf8f8ca63a025caa99affb1c191a98b1bdc5dbb74631840b59240"
+      },
+      "metrics": {
+        "threshold": 0.91796875,
+        "positive": {
+          "EN-US/bare": {
+            "clips": 9,
+            "hits": 2
+          },
+          "EN-US/command": {
+            "clips": 27,
+            "hits": 0
+          },
+          "EN-BR/bare": {
+            "clips": 9,
+            "hits": 0
+          },
+          "EN-BR/command": {
+            "clips": 27,
+            "hits": 1
+          }
+        },
+        "confusion_clips": 288,
+        "confusion_activated_clips": 0,
+        "cross_target_clips": 72,
+        "cross_target_activated_clips": 0,
+        "background_events": 0,
+        "priming_events": 0
+      },
+      "background_hours": 7.902862222222223,
+      "background_far_upper95": 0.3790692776004911,
+      "by_phrase_carrier": {
+        "nyx/bare": {
+          "clips": 18,
+          "activated": 2
+        },
+        "nyx/light": {
+          "clips": 18,
+          "activated": 1
+        },
+        "nyx/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nyx/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/timer": {
+          "clips": 18,
+          "activated": 0
+        }
+      },
+      "elapsed_seconds": 729.0908651340001
+    },
+    "pooled": {
+      "model": {
+        "path": ".local/wakeword/matchbox-long-pooled-int8-v1/int8.tflite",
+        "bytes": 115408,
+        "sha256": "deafd3c651b7ff7acd0db740eb2f7b5262068dbf640f0c65a5dbae85133a7b42"
+      },
+      "metrics": {
+        "threshold": 0.91796875,
+        "positive": {
+          "EN-US/bare": {
+            "clips": 9,
+            "hits": 9
+          },
+          "EN-US/command": {
+            "clips": 27,
+            "hits": 19
+          },
+          "EN-BR/bare": {
+            "clips": 9,
+            "hits": 0
+          },
+          "EN-BR/command": {
+            "clips": 27,
+            "hits": 7
+          }
+        },
+        "confusion_clips": 288,
+        "confusion_activated_clips": 9,
+        "cross_target_clips": 72,
+        "cross_target_activated_clips": 0,
+        "background_events": 0,
+        "priming_events": 0
+      },
+      "background_hours": 7.902862222222223,
+      "background_far_upper95": 0.3790692776004911,
+      "by_phrase_carrier": {
+        "nyx/bare": {
+          "clips": 18,
+          "activated": 9
+        },
+        "nyx/light": {
+          "clips": 18,
+          "activated": 8
+        },
+        "nyx/time": {
+          "clips": 18,
+          "activated": 10
+        },
+        "nyx/timer": {
+          "clips": 18,
+          "activated": 8
+        },
+        "official/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "official/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "nick/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/bare": {
+          "clips": 18,
+          "activated": 5
+        },
+        "next/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "next/timer": {
+          "clips": 18,
+          "activated": 3
+        },
+        "mix/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "mix/time": {
+          "clips": 18,
+          "activated": 1
+        },
+        "mix/timer": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/bare": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/light": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/time": {
+          "clips": 18,
+          "activated": 0
+        },
+        "muse/timer": {
+          "clips": 18,
+          "activated": 0
+        }
+      },
+      "elapsed_seconds": 860.003079528
+    }
+  },
+  "paired_activation_delta": {
+    "nyx": {
+      "pooled_only": 32,
+      "neither": 37,
+      "both": 3
+    },
+    "official": {
+      "neither": 72
+    },
+    "nick": {
+      "neither": 72
+    },
+    "next": {
+      "pooled_only": 8,
+      "neither": 64
+    },
+    "mix": {
+      "neither": 71,
+      "pooled_only": 1
+    },
+    "muse": {
+      "neither": 72
+    },
+    "background": {
+      "neither": 42
+    }
+  },
+  "neural_calls": 0,
+  "threshold_selected": false,
+  "acceptance_accessed": false,
+  "candidate_promoted": false,
+  "limits": "Full consumed diagnostic at one fixed point. Paired event activation is not source-independent population inference; events before generated source onset remain visible in original receipts. Whole reused background hours not additive. No confidence claim from correlated synthetic variants, P4 resource/latency proof or HiESP parity. Original source and execution/restart limitations retained. No rescue sweep or protected acceptance opening."
+}
