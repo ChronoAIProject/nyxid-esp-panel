@@ -1,0 +1,60 @@
+{
+  "schema": "matchbox-consumed-melo-original-v1",
+  "plan_sha256": "8ff9cdc84d2e0d8f9264408818b4698b45c13cbbd1019f06ba062782bdd71b36",
+  "launch": {
+    "pid": 3866200,
+    "starttime": "8466930",
+    "plan_sha256": "8ff9cdc84d2e0d8f9264408818b4698b45c13cbbd1019f06ba062782bdd71b36"
+  },
+  "model": {
+    "path": ".local/wakeword/matchbox-window-int8-v1/int8.tflite",
+    "bytes": 115408,
+    "sha256": "af644f35a9aa3eb65293f5ee780dcab5d95e842d0be1d63a3d6d9307f8052988"
+  },
+  "metrics": {
+    "threshold": 0.91796875,
+    "positive": {
+      "EN-US/bare": {
+        "clips": 9,
+        "hits": 0
+      },
+      "EN-US/command": {
+        "clips": 27,
+        "hits": 1
+      },
+      "EN-BR/bare": {
+        "clips": 9,
+        "hits": 0
+      },
+      "EN-BR/command": {
+        "clips": 27,
+        "hits": 1
+      }
+    },
+    "confusion_clips": 288,
+    "confusion_activated_clips": 0,
+    "cross_target_clips": 72,
+    "cross_target_activated_clips": 0,
+    "background_events": 0,
+    "priming_events": 0
+  },
+  "background_hours": 7.902862222222223,
+  "background_far_upper95": 0.3790692776004911,
+  "first_detected_target_generated_prefix_signed_ms": {
+    "min": 8.0625,
+    "p25": 24.46875,
+    "median": 40.875,
+    "p75": 57.28125,
+    "max": 73.6875
+  },
+  "all474streams_complete": true,
+  "elapsed_seconds": 405.0863817720092,
+  "records_sha256": "96308650063decba38df63195fa6679da809680830b6f6fefaaa00fb16a5e66b",
+  "frontend_device": "NVIDIA GeForce RTX 4090",
+  "neural_runtime": "CPU builtin/defaultdelegate singlethread actualINT8",
+  "consumed_diagnostic_only": true,
+  "threshold_selected": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "policy": "Consumed diagnostic only, no winner/threshold selection or qualification. All432sameMelo and42wholebackground PCM, same81600continuous zeros; finite past20480PCM window and480cadence, no transition reset/readiness censoring. Fixed0.91796875/fiveUINT8/67refractory/halfthreshold rearm, preserve allprime/finish/events. CUDA float32MFCC is the exact saved-buffer bounded-window training frontend; offline batches contain only each window's available pastPCM. Actual exportedINT8 neural bytes execute CPU builtin optimized/defaultdelegate singlethread, one fresh interpreter per recording. No neuralCPU/GPU equality gate or FP32recognition. HostCUDA frontend is not a P4 frontend port/performance proof; same exact algorithm remains to port. Capture source/input/runtime/trace hashes. Never open acceptance, reinterpret consumedMelo as fresh, retry thresholds/calibration or promote; v30/Mac unchanged."
+}
