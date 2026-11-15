@@ -42,7 +42,7 @@ def main():
  assert negatives['control']==negatives['pooled']
  # Identity/provenance check only; not a neural output numerical-agreement gate.
  import torch
- states={arm:torch.load(B/f'matchbox-long-{arm}-recovery-v1/initial.pt',map_location='cpu',weights_only=True) for arm in reports}
+ states={arm:torch.load(B/f"matchbox-long-{arm}-{'resumed' if arm=='control' else 'recovery'}-v1/initial.pt",map_location='cpu',weights_only=True) for arm in reports}
  assert states['control'].keys()==states['pooled'].keys()
  tensors={}
  for name,v in states['control'].items():
