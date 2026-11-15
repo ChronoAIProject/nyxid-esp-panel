@@ -10588,3 +10588,5 @@ Latent-command posttraining pipeline prepared while originalsession83064/PID2341
 原c161源平衡输入和全部正例监督保持不变，只对每批8条原有同声音bare Nick/Next/Mix/Muse负例，将整段平均负BCE替换为20×最危险有效连续5步算术sigmoid均值的负对数补概率。使用稳定logmeanexp(logsigmoid(-z))形式，不裁概率，不增加系数。不同于历史固定端点五视图temporal-tail-risk/paired-ranking及上一轮正例latent-support；仍可能损害命中，不能预设成功。无开发例入训/新TTS/阈值救援。
 
 实现和执行锁84477eb3先推，锁SHA256 `b113fd4c216e0a2d274044076cac387c36791d7c1d8d25e349d929b78f8572c4`。原session29984/PID2672594/start7455876在RTX4090完成首步，loss25.71006965637207，15梯度有限，冻结16未变；首个真实批次8条峰值负例记录见 `4090-causal-negative-peak-launch-v1.json`。固定原初始化/Adam1e-5/seed726/20000final-only训练进行中。独立导出/三组完整波形评估/证据发布脚本已准备并通过Python解析，尚未生成依赖最终权重的导出或采集锁。冻结v30保留，总目标未完成。
+
+Negative-peak 原session29984/PID2672594固定20000步RTX4090训练完成，exit0，1272.7331222079956s；原始报告 `4090-causal-negative-peak-original-v1.json`，最终权重SHA256 `0de96e628f876dede4ad8dccc7a9c103872e03355c620db33aa767633b8409da`。无重启/挑checkpoint/改配方。一次最终导出锁SHA256 `dfc6e2cfc0248bb6e6e2abb3aa05c649b53e9904fb1319718453ced1b81f9c05` 先推后执行；尚无新识别结论。
