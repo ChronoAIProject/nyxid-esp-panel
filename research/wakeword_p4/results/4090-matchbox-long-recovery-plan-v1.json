@@ -1,0 +1,17 @@
+{
+  "schema": "matchbox-long-recovery-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/recover_matchbox_long_training_v1.py": "0695a17aa6674ffd504dd113bc38e49c2b72329f97c93e3f8c74b9cf2e7d4516",
+    "research/wakeword_p4/experiments/train_matchbox_long_v1.py": "b7132d0ea1040b5f22b43b076efd53ce560a0aa8c02719470a8de0c79209e0a2",
+    "research/wakeword_p4/results/4090-matchbox-long-original-interruption-v1.json": "f1ffbb80180677fd1bdccbeb265bbac9e81e3598eb367e897e7badbc20a45cf0",
+    "research/wakeword_p4/results/4090-matchbox-long-training-plan-v1.json": "a742f78de029516b80725e01b31728f2973c98d1e6d7dd6370d99b47ed2a53e0"
+  },
+  "arms": [
+    "control",
+    "pooled"
+  ],
+  "steps_each": 5000,
+  "seed": 726,
+  "checkpoint_every": 500,
+  "policy": "One new full run per arm because original exact resume state is missing after verified infrastructure interruption; not performance rescue. Original5000step recipe/seed/optimizer/source sampler/frontend/finalonly selection unchanged. Original interrupted outputs retained byte-for-byte. Separate recovered output/report names. Atomic overwritten recovery checkpoint every500: model,optimizer,torch/CUDA and sampler RNGs,progress/sourcehashes. Checkpoints for infrastructure recovery only, never recognition/selection. No neural numerical-equality gate, new source or heldout consumption. Record /proc/self/io every100steps. Execution wrapper uses bound original runner and applies only explicit logging/output/checkpoint hooks."
+}
