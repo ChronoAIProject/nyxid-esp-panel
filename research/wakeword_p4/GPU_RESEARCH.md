@@ -10610,3 +10610,9 @@ Negative-peak 完整评估结束：原导出session48697exit0，60952B / `c5c693
 完整六类别实验后，推进尚缺失的独立阈值选择前置事实核查：旧 `4090-synthetic-source-role-reconciliation-v1.json` 对Jenny仍记录reserved/process-audited且评分未确定，已不代表现状。新增 `4090-causal-development-usage-reconciliation-v2.json`，以九个完成干预×legacy/Jenny/Joe共27份原始报告和无损发布凭据建立实际消费证据，覆盖已知完整372/408/360输入组。旧文件与其哈希保留，不修改历史执行锁或声称穷尽历史。
 
 已知三组均为consumed development，不能再用于未消费开发阈值选择或新独立最终验收；Jenny预留状态由实际评分证据覆盖。Mike继续受保护且不默认独立，三个历史最终集继续禁止训练/选阈值。该范围未发现可用未消费开发材料，不能据此声称其他来源绝对不存在。本次仅读已发布报告元数据，无PCM/特征复制、无Mike/final内容访问、无新TTS/模型调用或阈值搜索。下一步阈值选择须绑定真正未消费开发来源及明确阈值/平局规则；不把固定点失败改称完成，不通过反复查看Jenny调阈值。冻结v30与研究总目标保留。
+
+### 未消费开发材料的多声音来源选项（2026-11-15）
+
+Mac暂未回复现成未消费开发包。继续查找不同来源选项而非在Jenny调阈值：上游Parler-TTS Mini `parler-tts/parler-tts-mini-v1` 固定revision `0392b9451a601e528fd863bbb0598431fee810d9`，原API/模型卡/config及哈希保存在 `4090-prospective-parler-mini-source-v1/`，评审 `4090-prospective-parler-mini-source-review-v1.json`。模型卡声明34命名声音/Apache2.0，API参数877842290，native44100Hz。当前HEAD tracked research明确名称搜索无历史使用命中，但范围不能证明Mac/物理说话人从未使用。其训练父语料LibriTTS/MLS存在潜在重叠，换引擎不能直接宣称来源独立。
+
+本次只保存上游元数据，不下载权重、不生成音频、不预留声音、不评分或访问受保护材料；仍无可执行未消费开发包，不能把来源选项写成独立资格已满足。若后续使用，需要先固定实际未消费声音/来源、文本/描述/seed/runtime和完整原生输出保存方案，沿用已有机械质量与角色隔离规则。现有失败/v30和完整研究目标保留。

@@ -1,0 +1,65 @@
+{
+  "schema": "prospective-parler-mini-source-review-v1",
+  "repository": "parler-tts/parler-tts-mini-v1",
+  "revision": "0392b9451a601e528fd863bbb0598431fee810d9",
+  "files": [
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-mini-source-v1/README.md",
+      "bytes": 6677,
+      "sha256": "c5fdea7e1d315372c681be0e6b156d23f359f3b0c999ff8badd2b3953863b829",
+      "url": "https://huggingface.co/parler-tts/parler-tts-mini-v1/resolve/0392b9451a601e528fd863bbb0598431fee810d9/README.md"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-mini-source-v1/config.json",
+      "bytes": 6930,
+      "sha256": "d8d2afa72bf3b098263a073c4d4df18627b76e1eb454c48f60bc5f787b2433b1",
+      "url": "https://huggingface.co/parler-tts/parler-tts-mini-v1/resolve/0392b9451a601e528fd863bbb0598431fee810d9/config.json"
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-prospective-parler-mini-source-v1/model-api-original.json",
+      "bytes": 3132,
+      "sha256": "6cad6f754879c7318160669639e141dc5d96523b25d01941a8d733ed33b78754",
+      "url": "https://huggingface.co/api/models/parler-tts/parler-tts-mini-v1"
+    }
+  ],
+  "declared_parameters": 877842290,
+  "declared_named_speakers": 34,
+  "declared_license": "apache-2.0",
+  "declared_training_datasets": [
+    "parler-tts/mls_eng",
+    "parler-tts/libritts_r_filtered",
+    "parler-tts/libritts-r-filtered-speaker-descriptions",
+    "parler-tts/mls-eng-speaker-descriptions"
+  ],
+  "native_sampling_rate": 44100,
+  "text_encoder": "google/flan-t5-large",
+  "history_search": {
+    "commit": "46f968ce866cddd732d230bd950fd79e652d69ff",
+    "command": [
+      "git",
+      "grep",
+      "-i",
+      "-l",
+      "-E",
+      "parler[-_/ ]tts|parler-tts-mini",
+      "HEAD",
+      "--",
+      "research/wakeword_p4"
+    ],
+    "matches": [],
+    "limits": "Tracked research text at this commit only; not proof of complete GPU/Mac usage, physical-speaker disjointness or absence of upstream corpus overlap."
+  },
+  "findings": [
+    "One alternative family with upstream named speaker controls can support prospective voice-disjoint development roles if actual identities/usage are recorded.",
+    "Different model family alone does not establish source independence: declared LibriTTS/MLS parents overlap broadly with existing speech ecosystems. No physical-speaker correspondence established by these files.",
+    "Named voices, text/descriptions, seed/runtime/native output and transformation provenance must be fixed before any future generation; no existing consumed clip can be relabelled fresh.",
+    "This is an option for missing unconsumed development material, not evidence that a new candidate passes or a replacement of current source policy."
+  ],
+  "model_weights_downloaded": false,
+  "audio_generated": false,
+  "source_reserved": false,
+  "independence_established": false,
+  "detector_invocations": 0,
+  "acceptance_material_opened": false,
+  "next_action": "Use actual unused prepared material if Mac supplies it; otherwise a prospective source-specific generation/role protocol is still needed. Do not select thresholds on consumed Jenny/Joe/legacy or open protected final material."
+}
