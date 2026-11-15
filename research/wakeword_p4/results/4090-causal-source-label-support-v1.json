@@ -1,0 +1,73 @@
+{
+  "schema": "causal-source-label-support-v1",
+  "inputs": [
+    {
+      "path": ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json",
+      "bytes": 69464310,
+      "sha256": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f"
+    },
+    {
+      "path": ".local/wakeword/hey-common-carrier-features-v1/features.json",
+      "bytes": 3584939,
+      "sha256": "c05a7e5c4dcb00cdd543273ccf7bb5b1d7eea2572b6c21bdbe32aca9fd5c859c"
+    }
+  ],
+  "records": [
+    {
+      "engine": "kokoro",
+      "positive_rows": 180,
+      "positive_conditioning_ids": 20,
+      "current_extra_carrier_negative_rows": 4860,
+      "current_extra_carrier_negative_conditioning_ids": 20,
+      "positive_conditioning_ids_without_current_same_source_extra_negatives": 0,
+      "available_unused_broad_bare_nearword_rows": 720,
+      "available_bare_negative_phrases": {
+        "Hey Nick.": 180,
+        "Hey Next.": 180,
+        "Hey Mix.": 180,
+        "Hey Muse.": 180
+      },
+      "available_bare_negative_conditioning_ids": 20,
+      "exact_source_speed_draw_variant_five_phrase_groups": 180,
+      "positive_groups_without_all_four_nearwords": 0
+    },
+    {
+      "engine": "piper",
+      "positive_rows": 6048,
+      "positive_conditioning_ids": 672,
+      "current_extra_carrier_negative_rows": 0,
+      "current_extra_carrier_negative_conditioning_ids": 0,
+      "positive_conditioning_ids_without_current_same_source_extra_negatives": 672,
+      "available_unused_broad_bare_nearword_rows": 24192,
+      "available_bare_negative_phrases": {
+        "Hey Nick.": 6048,
+        "Hey Next.": 6048,
+        "Hey Mix.": 6048,
+        "Hey Muse.": 6048
+      },
+      "available_bare_negative_conditioning_ids": 672,
+      "exact_source_speed_draw_variant_five_phrase_groups": 6048,
+      "positive_groups_without_all_four_nearwords": 0
+    },
+    {
+      "engine": "qwen",
+      "positive_rows": 216,
+      "positive_conditioning_ids": 24,
+      "current_extra_carrier_negative_rows": 0,
+      "current_extra_carrier_negative_conditioning_ids": 0,
+      "positive_conditioning_ids_without_current_same_source_extra_negatives": 24,
+      "available_unused_broad_bare_nearword_rows": 288,
+      "available_bare_negative_phrases": {
+        "Hey Nick.": 72,
+        "Hey Next.": 72,
+        "Hey Mix.": 72,
+        "Hey Muse.": 72
+      },
+      "available_bare_negative_conditioning_ids": 24,
+      "exact_source_speed_draw_variant_five_phrase_groups": 72,
+      "positive_groups_without_all_four_nearwords": 144
+    }
+  ],
+  "scope": "Actual positive-coverage sampler supplies8 broad barepositive slots. Current12 extraKokoro command-negative slots use CARRIERS. Other current negative pools are ARU/Arctic models, not these broad-source identifiers. Counts are metadata availability, not draw frequencies, actual model fit or proof of source shortcut.",
+  "limits": "Prior teacher/historical training used broader packs. Unused means absent from this causal broad insertion, not never seen by any ancestor. Conditioning IDs are synthetic controls, not independent people. No training, inference, new audio, numerical comparison, threshold selection or final access."
+}
