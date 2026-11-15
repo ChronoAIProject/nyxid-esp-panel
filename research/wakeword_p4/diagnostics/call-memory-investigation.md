@@ -126,6 +126,35 @@ and script changes are in `../results/mac-rate-limit-recovery-v1.json`.
 This verifies recovery after admission reopens, without extending the evidence
 to acoustic wake quality, first-utterance delivery or long conversations/AEC.
 
+## Four-hour observation of normal firmware
+
+The existing passive monitor retained 482 selected samples from 02:00:33 to
+06:02:33 UTC on 2026-11-15: four hours and two minutes, with the same normal
+application and boot. After the initial installation transition there were no
+additional boot boundaries, monitor errors or monitor gaps; the largest sample
+interval was 38.91 seconds. The original installation boot boundary and preceding
+120.64-second observation gap remain in the report as baseline events.
+
+The first ten samples predate the monitor's audio-counter fields. The remaining
+472 report both counters, starting at 02:05:43 UTC; no expected-running counter
+stall was observed. Missing early counters remain unreported, rather than being
+counted as a stall or as demonstrated progress. The current matched-state monitor
+reports no retained-loss alert. Memory values remain descriptive.
+
+The interval includes the short calls and control-fault tests above, the admission
+rejection and separate successful recovery, followed by passive wake listening.
+It does not represent four hours of conversation or uninterrupted idle. The
+`four_hour_followup` in `../results/mac-normal-progress-stability-observation-v1.json`
+references all selected original samples in
+`../results/mac-normal-progress-four-hour-samples-v1.json.gz`.
+
+For a later snapshot, read the existing `metrics-*.jsonl` files from the first
+normal-image sample, retain subsequent transition/error records, and export the
+same allowlisted sample fields without the device fingerprint. Reuse
+`tools/monitor_stability.py`'s `audio_progress` handling for missing counters and
+call/listener transitions. Preserve baseline events separately from later events;
+do not open the serial bridge or start another monitor to obtain the snapshot.
+
 ## Control failure and recovery with the lifetime fixes
 
 The normal development image also completed three muted provider calls with no
