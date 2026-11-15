@@ -1,0 +1,107 @@
+{
+  "schema": "causal-multivoice-nearword-source-coverage-v1",
+  "references": {
+    "research/wakeword_p4/results/4090-hey-common-carrier-feature-result-v1.json": {
+      "bytes": 752,
+      "sha256": "f87ac96062eb2a061b95b612b36e17da870837ced7977ec8877d92b99ea64ef2"
+    },
+    "research/wakeword_p4/results/4090-hey-common-carrier-kokoro-generation-result-v1.json": {
+      "bytes": 620,
+      "sha256": "3931b80cf42c8c593e6448dbefd183b963feedefa8202ad2c51422c108b48b7f"
+    },
+    "research/wakeword_p4/results/4090-hey-common-carrier-render-result-v1.json": {
+      "bytes": 718,
+      "sha256": "77d7173c74d39bf4dcf4a967c40127a0915c7080e90ed8c8156956571e427fc3"
+    },
+    "research/wakeword_p4/results/4090-hey-common-carrier-render-independent-audit-v1.json": {
+      "bytes": 436,
+      "sha256": "265058d80dcec04c4beae0e334746de0179276857b7e40b239bac728ea94d76f"
+    },
+    "research/wakeword_p4/results/4090-hey-common-carrier-raw-formal-result-v1.json": {
+      "bytes": 17697,
+      "sha256": "c5b8a2f42d9d3d5d04ac4ad5b9b83ce842e84ca6308021d019fa7444a019836c"
+    },
+    "research/wakeword_p4/results/4090-hey-common-carrier-raw-fp32-waveform-result-v1.json": {
+      "bytes": 262779,
+      "sha256": "2a8d6bc7d6cc7000dc0e06f23c4896406c38c9ddf3a0cb7f02ddfcf2880e08c2"
+    },
+    "research/wakeword_p4/results/4090-causal-multivoice-nearword-plan-v1.json": {
+      "bytes": 18952,
+      "sha256": "87798c91abab7a0006a6c05bd5e967dc77adbf722fddb54cdd045f632df28351"
+    },
+    ".local/wakeword/hey-common-carrier-features-v1/features.json": {
+      "bytes": 3584939,
+      "sha256": "c05a7e5c4dcb00cdd543273ccf7bb5b1d7eea2572b6c21bdbe32aca9fd5c859c"
+    },
+    ".local/wakeword/hey-common-carrier-features-v1/features.bin": {
+      "bytes": 248994480,
+      "sha256": "42296291d7912f8c755f41ac3011bdc8586a14cdcdb93d95f92e2cda27f2c81b"
+    }
+  },
+  "training_rows": 4860,
+  "unique_full_factorial_cells": 4860,
+  "counts": {
+    "conditioning_id": {
+      "af_alloy": 243,
+      "af_aoede": 243,
+      "af_bella": 243,
+      "af_heart": 243,
+      "af_jessica": 243,
+      "af_kore": 243,
+      "af_nicole": 243,
+      "af_nova": 243,
+      "af_river": 243,
+      "am_adam": 243,
+      "am_echo": 243,
+      "am_eric": 243,
+      "am_fenrir": 243,
+      "am_michael": 243,
+      "am_onyx": 243,
+      "am_santa": 243,
+      "bf_isabella": 243,
+      "bf_lily": 243,
+      "bm_fable": 243,
+      "bm_lewis": 243
+    },
+    "anchor_text": {
+      "Hello.": 540,
+      "Hey Mix.": 540,
+      "Hey Muse.": 540,
+      "Hey Next.": 540,
+      "Hey Nick.": 540,
+      "Hey William.": 540,
+      "Hey pillow.": 540,
+      "Hey.": 540,
+      "Hi E S P.": 540
+    },
+    "carrier": {
+      "light": 1620,
+      "time": 1620,
+      "timer": 1620
+    },
+    "speed": {
+      "0.9": 1620,
+      "1.0": 1620,
+      "1.1": 1620
+    },
+    "variant": {
+      "0": 1620,
+      "1": 1620,
+      "2": 1620
+    }
+  },
+  "fullwave_frames": {
+    "minimum": 546,
+    "maximum": 844,
+    "padded": 846,
+    "cropped": false
+  },
+  "role": "existing training only; historical failed common-carrier use retained",
+  "reused_audio": true,
+  "new_synthesis": false,
+  "detector_calls": 0,
+  "protected_acceptance_accessed": false,
+  "jenny_added_to_training": false,
+  "independence_claim": false,
+  "limitations": "20 Kokoro conditioning IDs, not proof of20 independent physical speakers or disjoint pretraining. Existing two-engine training sources remain; source-family count is not physical-speaker count. Jenny remains consumed development and is not introduced into training. Preserved native/render reports establish process quality only, not phonetic truth. This source summary does not establish recognition performance or promotion."
+}
