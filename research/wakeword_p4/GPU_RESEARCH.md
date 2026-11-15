@@ -10582,3 +10582,9 @@ Latent-command posttraining pipeline prepared while originalsession83064/PID2341
 ### Latent complete-command 完整评估：有命中收益，但误触恶化（2026-11-15）
 
 导出原session8805 exit0，60952B INT8 SHA256 `e8e083687126d9076b8e9c6b590c447d6d66b212fdeb61187fc9f6806370c3a3`。三组原采集session88076/84657/46251全部exit0，共1140条完整输入，原始报告与UINT8输出无损保存491442B。固定阈值下legacy34/36（命令26/27）、误触3/288；Jenny35/36（命令26/27）、误触52/324；Joe0/72。相对c161，Jenny多2命中，但新增11/移除3误触，净增8，且legacy丢1命中。两组已有背景各0事件，不能累加为独立新证据。详见 `experiments/causal_latent_command_findings_v1.md`。本轮不作为整体提升或替代v30候选，不作阈值/配方救援；更大研究目标仍未完成。
+
+### 新固定实验：已有近音负例的持续高分峰值损失（2026-11-15）
+
+原c161源平衡输入和全部正例监督保持不变，只对每批8条原有同声音bare Nick/Next/Mix/Muse负例，将整段平均负BCE替换为20×最危险有效连续5步算术sigmoid均值的负对数补概率。使用稳定logmeanexp(logsigmoid(-z))形式，不裁概率，不增加系数。不同于历史固定端点五视图temporal-tail-risk/paired-ranking及上一轮正例latent-support；仍可能损害命中，不能预设成功。无开发例入训/新TTS/阈值救援。
+
+实现和执行锁84477eb3先推，锁SHA256 `b113fd4c216e0a2d274044076cac387c36791d7c1d8d25e349d929b78f8572c4`。原session29984/PID2672594/start7455876在RTX4090完成首步，loss25.71006965637207，15梯度有限，冻结16未变；首个真实批次8条峰值负例记录见 `4090-causal-negative-peak-launch-v1.json`。固定原初始化/Adam1e-5/seed726/20000final-only训练进行中。独立导出/三组完整波形评估/证据发布脚本已准备并通过Python解析，尚未生成依赖最终权重的导出或采集锁。冻结v30保留，总目标未完成。
