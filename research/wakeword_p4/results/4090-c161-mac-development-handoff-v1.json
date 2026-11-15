@@ -1,0 +1,26 @@
+{
+  "schema": "c161-mac-development-handoff-v1",
+  "source_path": ".local/wakeword/causal-source-balanced-int8-v1/int8.tflite",
+  "source_report": "research/wakeword_p4/results/4090-causal-source-balanced-int8-original-v1.json",
+  "source_commit": "7cb83cda4964362943879f1b38e18b220fadb4d1",
+  "model": {
+    "bytes": 60952,
+    "sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
+  },
+  "gzip": {
+    "path": "research/wakeword_p4/results/4090-c161-mac-development-model-v1.tflite.gz",
+    "bytes": 33911,
+    "sha256": "929c48caf29984eb0b863df9e44fa7bbbdce4f4954c258b27983e4c0d68f655f"
+  },
+  "profile": {
+    "context": 309,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "refractory_steps": 67,
+    "rearm_threshold_ratio": 0.5,
+    "prime_samples": 81600,
+    "prime_policy": "Continuous zero PCM through frontend, model and decoder; keep state and priming events; suppress notifications only.",
+    "sample_rate_hz": 16000
+  },
+  "limitations": "Reversible isolated development-board trial only, not release or qualification. Existing consumed development: legacy35/36, commands26/27, false4/288; Jenny33/36, commands24/27, false44/324; Joe0/72. Frozen v30 retained. Original exported bytes copied, no training/export/inference rerun."
+}
