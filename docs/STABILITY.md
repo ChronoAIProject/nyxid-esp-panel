@@ -148,8 +148,9 @@ needs real call evidence; idle heap observation cannot substitute for it.
 
 The development image with DTLS cleanup and audio progress counters has a saved
 [normal-firmware observation](../research/wakeword_p4/results/mac-normal-progress-stability-observation-v1.json).
-It covers about 49 minutes on one boot, including earlier short-call fault tests,
-with continuing audio processing and no new observed reset. Its short settled
+The initial 49-minute record and its one-hour follow-up cover one boot, including
+earlier short-call fault tests, with continuing audio processing and no new
+observed reset. Their short settled
 idle interval shows no sustained memory loss; it is not long-conversation or
 leak-free acceptance. An optional camera-preview attempt did not execute because
 navigation required management approval; its test-owned request was rejected.
