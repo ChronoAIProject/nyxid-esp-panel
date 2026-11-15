@@ -107,6 +107,25 @@ is in `../results/mac-normal-call-lifecycle-v1.json`, with all selected original
 state samples retained in the adjacent gzip. These short muted calls do not
 qualify recognition, first-utterance delivery, long conversations or AEC.
 
+### Recovery after the ordinary admission window
+
+A separate single-call check was run after all 30 original sessions had aged
+beyond the rolling hour. Start from the retained 429 error with the wake listener
+running; keep the same firmware and ordinary admission policy. With greetings
+disabled, save the output volume, temporarily set it to zero and open one fresh
+test-owned call with the microphone muted. Observe eight seconds connected,
+stop that call, unmute and restore the saved volume. Do not retry in a loop or
+modify quota/session data. Keep this result separate from the incomplete 32-call
+run above.
+
+The new call connected in 4.90 seconds. Capture and outgoing media advanced;
+hang-up cleared the error to `idle` and restored wake listening. Independent
+status reads verified advancing capture/detection, volume 80, an unmuted
+microphone, no active/busy call and the same boot. The selected original states
+and script changes are in `../results/mac-rate-limit-recovery-v1.json`.
+This verifies recovery after admission reopens, without extending the evidence
+to acoustic wake quality, first-utterance delivery or long conversations/AEC.
+
 ## Control failure and recovery with the lifetime fixes
 
 The normal development image also completed three muted provider calls with no
