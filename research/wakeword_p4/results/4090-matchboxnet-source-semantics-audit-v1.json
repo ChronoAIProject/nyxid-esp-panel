@@ -1,0 +1,76 @@
+{
+  "schema": "matchboxnet-source-semantics-audit-v1",
+  "nemo_reference_commit": "977b9a2c8bee5f0575935cde9527b9fe2b7badfe",
+  "nemo_reference_tag": "v1.0.0rc1",
+  "nemo_reference_date": "2021-04-07T05:39:44Z",
+  "original_training_commit_known": false,
+  "reference_limits": "Tag is after upstream model creation2021-03-10 and not proven training revision; matching checkpoint keys/configuration establish an auditable adapter, not exact original-runtime equivalence",
+  "frontend": {
+    "kind": "natural-log MFCC",
+    "log_default": true,
+    "log_offset": 1e-06,
+    "source": "NeMo AudioToMFCCPreprocessor(log=True) passes torchaudio MFCC(log_mels=True); reference torchaudio v0.7.2 MFCC.forward uses log(mel+1e-6)",
+    "original_buffers": [
+      "64x64 DCT",
+      "400-sample window",
+      "257x64 mel filters"
+    ],
+    "no_invented_bank_reconstruction": true,
+    "fft": 512,
+    "hop": 160,
+    "window_samples": 400,
+    "center": true,
+    "pad_mode": "reflect",
+    "power": 2,
+    "per_feature_normalization": false
+  },
+  "network": {
+    "batchnorm_eps": 0.001,
+    "batchnorm_momentum": 0.1,
+    "residual": "projectedConv1x1+BN add thenReLU",
+    "convolution_padding": "symmetric same, including dilation2/k29 pad28",
+    "temporal_receptive_field_frames": 109,
+    "half_context_frames": 54,
+    "pooling": "all-frame arithmetic average then original35class linear head"
+  },
+  "adapter": {
+    "input_pcm_samples": 20480,
+    "frontend_frames": 129,
+    "explicit_first_frames": 128,
+    "variable_length_masks_supported": false,
+    "original_training_crop_augmentation_reproduced": false,
+    "continuous_frontend_or_causal_conversion": false,
+    "full_window_reflection_is_explicit": true
+  },
+  "functional_report": "research/wakeword_p4/results/4090-matchboxnet-gpu-function-v1.json",
+  "training": false,
+  "acceptance_accessed": false,
+  "promotion_qualified": false,
+  "sources": {
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-rc1-retrieval.json": {
+      "bytes": 1033,
+      "sha256": "a39b2c9813bb68a7173acc57009a7796c38d17104e77b45902daffad244a3013"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-rc1-audio_preprocessing.py": {
+      "bytes": 21482,
+      "sha256": "3c8edb47697c6c59087ee2b7d3656336f368b1fcb8960caaad6514c5627d38e2"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-rc1-conv_asr.py": {
+      "bytes": 16349,
+      "sha256": "071818a4791325d2963f9b46dcc88b60e045e743e0515b078cc24fcd497ea74c"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/nemo-rc1-jasper.py": {
+      "bytes": 27228,
+      "sha256": "a68a255dacd9209ada7fa3c13c8203f581462e72b620535cf6335e4ad80b27f8"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/torchaudio-retrieval.json": {
+      "bytes": 193,
+      "sha256": "aec2a23faead9be2c35d53d711551ae24aa5d08c5156dfcaec9161843be7f002"
+    },
+    ".local/wakeword/compact-pretrained-feasibility-v1/torchaudio-v0.7.2-transforms.py": {
+      "bytes": 43736,
+      "sha256": "f5af3ac7544dfc8aa39bfeef4484f947114b00631eca6bafa1d77ec75827a192"
+    }
+  },
+  "next": "Before training, freeze end-to-end finite raw-waveform window behavior/cadence/decoder, source-only corpus and one recipe; before promotion, untouched-development plus sealed independent acceptance and real-wave INT8/P4 feasibility remain required"
+}
