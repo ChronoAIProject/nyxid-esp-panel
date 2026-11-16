@@ -1,0 +1,46 @@
+{
+  "schema": "c161-practical-baseline-audit-v1",
+  "issue": 18,
+  "model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+  "threshold": 0.91796875,
+  "source": "research/wakeword_p4/results/4090-melo-development-v2-c161-table.json.gz",
+  "source_sha256": "590f07bbd9db89adefa06f477c9a41988c84f59881faaa6c159674932b604b43",
+  "background_hours": 7.902862222222223,
+  "population_sha256": "6a51880a97b7ab944f2b72276f7c23c2e514712ac9bb0ac08d8fdb78db68d367",
+  "fixed_point": [
+    {
+      "threshold": 0.91796875,
+      "positive": {
+        "EN-US/bare": {
+          "clips": 9,
+          "hits": 9
+        },
+        "EN-US/command": {
+          "clips": 27,
+          "hits": 24
+        },
+        "EN-BR/bare": {
+          "clips": 9,
+          "hits": 7
+        },
+        "EN-BR/command": {
+          "clips": 27,
+          "hits": 14
+        }
+      },
+      "confusion_clips": 288,
+      "confusion_activated_clips": 51,
+      "background_events": 0,
+      "cross_target_clips": 72,
+      "cross_target_activated_clips": 0,
+      "priming_events": 0
+    }
+  ],
+  "evidence_status": "Previously consumed development; extracted saved table only, no inference or threshold selection. Confusion clips are constructed probes, not everyday frequency-weighted false alarms. Background exposure is historical and nonadditive.",
+  "willow_reference": {
+    "model": "wn9_heywillow_tts",
+    "default_threshold": 0.6439999938011169,
+    "existing_receipt": "research/wakeword_p4/results/4090-hey-qemu-reference-willow-default-v1.json",
+    "status": "Zero-input transport only; no recognition, FAR or P4 equivalence established by this receipt. Use DEFAULT API: explicit SET(0.644) historically produced 0.6388480067253113, so it is not equivalent."
+  }
+}
