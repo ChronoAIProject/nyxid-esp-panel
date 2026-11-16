@@ -12,3 +12,7 @@ Neither model produced events in the 12 everyday-negative containers, 12 Willow 
 Previously isolated, separately primed playback yielded C161 5/12 and bc01 10/12 on these Nyx clips. That protocol differs materially. Short gaps in mixed continuous playback now expose substantial sensitivity, including bc01 falling to four event-bearing target containers. This does not establish whether acoustic carryover, model state, or event refractory/rearm dominates. It also does not measure retained command PCM or prove P4 behavior.
 
 C161 remains the baseline; bc01 remains experimental with known British bare-wake regression and a daily six-cups conflict. Next diagnostic should separate event-policy suppression from raw score changes using these already consumed session traces, without resetting or retuning the actual scored policy. Mac should include continuous mixed speech and short intervals in the fixed-profile P4 comparison.
+
+## Saved-score review
+
+Review of every target container's full five-step UINT8 mean found **zero above-threshold containers without an emitted event** for either model/condition. Thus the missing target-container events correspond to below-threshold scores on these fixed traces, rather than event-policy suppression of an above-threshold crossing inside the container. This narrows the next investigation toward continuous acoustic/frontend/model context; it does not isolate any one mechanism. No score or threshold was changed. Per-container maxima and counts are in `4090-continuous-chatterbox-score-review-v1.json`.
