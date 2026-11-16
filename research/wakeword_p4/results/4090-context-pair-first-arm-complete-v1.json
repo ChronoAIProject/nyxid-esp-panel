@@ -1,0 +1,62 @@
+{
+  "silence_report_sha256": "14031cc30c5cbab1ac123dd7483b00893a713e78f3fe9448ec5dbb6bfb401025",
+  "silence_final_weights_sha256": "c8031a18a5f7527380b1d940e1ff49cda7fbff9797c2e12091abb1742031226b",
+  "silence_files_hash_verified": true,
+  "silence_exit_code": 0,
+  "silence_updates": 20000,
+  "supervisor_snapshot": {
+    "pid": 1758015,
+    "proc_starttime": "8226547",
+    "status": "running",
+    "arms": [
+      {
+        "condition": "silence",
+        "pid": 1758016,
+        "proc_starttime": "8226549",
+        "status": "complete",
+        "command": [
+          "/usr/bin/python3",
+          "research/wakeword_p4/training/gpu_python.py",
+          "research/wakeword_p4/experiments/train_chatterbox_context_pair_v1.py",
+          "run",
+          "silence"
+        ],
+        "started_utc": "2026-11-16T21:49:40Z",
+        "exit_code": 0,
+        "ended_utc": "2026-11-16T22:15:47Z"
+      },
+      {
+        "condition": "speech",
+        "pid": 1780811,
+        "proc_starttime": "8383157",
+        "status": "running",
+        "command": [
+          "/usr/bin/python3",
+          "research/wakeword_p4/training/gpu_python.py",
+          "research/wakeword_p4/experiments/train_chatterbox_context_pair_v1.py",
+          "run",
+          "speech"
+        ],
+        "started_utc": "2026-11-16T22:15:47Z"
+      }
+    ]
+  },
+  "speech_initial_verified_progress": {
+    "launch": {
+      "pid": 1780811,
+      "proc_starttime": "8383157",
+      "plan_sha256": "e18090b91592e7c263f6090a52162469a6ee0f04dc72c5e0ea4ecaee3b26afa8"
+    },
+    "latest": {
+      "step": 1,
+      "loss": 23.03878402709961,
+      "elapsed_seconds": 1.4411657529999502,
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iterations": 1,
+      "frozen16_unchanged": true,
+      "all15_gradients_finite": true
+    }
+  },
+  "both_completed": false,
+  "recognition_scored": false
+}
