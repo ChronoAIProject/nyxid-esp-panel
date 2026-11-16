@@ -1,0 +1,138 @@
+{
+  "schema": "c161-chatterbox-int8-original-v1",
+  "plan_sha256": "a414d2084bf77d421e29a8649f976e4f372b692d370879e463f7bb9be99441d5",
+  "launch": {
+    "pid": 1713241,
+    "proc_starttime": "8066460",
+    "plan_sha256": "a414d2084bf77d421e29a8649f976e4f372b692d370879e463f7bb9be99441d5"
+  },
+  "model": {
+    "path": ".local/wakeword/c161-chatterbox-int8-v1/int8.tflite",
+    "bytes": 60952,
+    "sha256": "bc011e24ff04f70c3911d39b6cc027a016d68c6fd793124d777ebf5f29edefa8"
+  },
+  "ops": [
+    "CALL_ONCE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "EXPAND_DIMS",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "RESHAPE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "QUANTIZE"
+  ],
+  "initializers": [
+    {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        4,
+        1,
+        30
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        8,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        12,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        20,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        57,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    }
+  ],
+  "input_quantization": [
+    0.10196078568696976,
+    -128
+  ],
+  "output_quantization": [
+    0.00390625,
+    0
+  ],
+  "functional_replay_calls": 200,
+  "repeat_comparison_performed": false,
+  "replay_sha256": "3c67441a93cdc2358a9340c50be1f43dbbb3e36f25870b73cdce6a72fc9db425",
+  "source_weights_file_unchanged": true,
+  "all_static_and_runtime_abi_passed": true,
+  "recognition_scored": false,
+  "policy": "Original fixedfinal20000 causal candidate only. Conditioned Chatterbox training-only source expansion; same exercised one builtinINT8 exporter/context309/sixrealzero states/frozenBN/rawsigmoid. Representative material fixed before formal training: zero/26 then first16actualbatch1/actual lengths/final<=2featurezero pads; no intermediate reset. StaticABI and one fresh interpreter functional replay, no FP32 export/comparison or calibration retry. Basic file integrity/interface/reset/function checks only, no savedstate numericalaudit or equality gate. Actual complete waveform INT8 recognition follows. No threshold selection/freshdev/acceptance/qualification here; v30 retained."
+}
