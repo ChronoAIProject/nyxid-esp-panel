@@ -3,6 +3,7 @@ import ast
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -64,15 +65,18 @@ def run():
     plan=json.loads(PLAN.read_text())
     for p,h in plan['files'].items():
         assert sha(p)==h,p
-    OUT.mkdir(exist_ok=False,parents=True)
+    OUT.mkdir(exist_ok=True,parents=True)
     # Short /tmp socket path; preserve report/UART, discard only copied input after success.
     for index,row in enumerate(plan['records']):
+        if (OUT/f'{index:03d}'/'report.json').exists():
+            print(f'preserved completed {index}',flush=True)
+            continue
         tmp=Path(f'/tmp/nyx-willow-ref-{index:03d}')
         args=[sys.executable,__file__,'case','--record-index',str(index),'--model','willow','--threshold','DEFAULT','--output',str(tmp)]
         for name,path in plan['runtime'].items(): args += ['--'+name,path]
         subprocess.run(args,check=True,env=dict(os.environ,OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1'))
         (tmp/'input.pcm').unlink()
-        tmp.rename(OUT/f'{index:03d}')
+        shutil.move(str(tmp),str(OUT/f'{index:03d}'))
         print(f'completed {index+1}/{len(plan["records"])} {row["target_id"]}',flush=True)
 
 if __name__=='__main__':
