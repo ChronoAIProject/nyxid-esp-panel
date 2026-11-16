@@ -1,0 +1,3 @@
+# Paired complete-training diagnostic scope
+
+Before inspecting position-control recognition results, replay both final5000step checkpoints over all4320admitted complete training recordings. Preserve the earlier fixed24batch diagnostic as an unchanged subset. Record full collapsed paths and events, class/carrier/source indices and full-vs-chunk37 equality. No confidence tuning, checkpoint selection or heldout access. Raw float argmax exact matcher is a diagnostic only, not integer event policy or promotion evidence. This wider training census prevents deciding the next hypothesis from only four target examples. Compare paired targets and confusable classes; improvements on consumed training audio cannot establish generalization or FAR.
