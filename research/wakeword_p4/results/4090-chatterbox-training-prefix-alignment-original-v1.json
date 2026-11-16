@@ -1,0 +1,7349 @@
+{
+  "schema": "chatterbox-training-prefix-alignment-original-v1",
+  "plan_sha256": "8a8535556ebbf43391dd861a789ed30a17630bfbc852fa2b7355e84c484ba03d",
+  "mfa_version": "3.4.3",
+  "execution": {
+    "launch": {
+      "pid": 1678210,
+      "proc_starttime": "7881165",
+      "plan_sha256": "8a8535556ebbf43391dd861a789ed30a17630bfbc852fa2b7355e84c484ba03d"
+    },
+    "command": [
+      ".local/wakeword/mfa-bootstrap-v1/micromamba",
+      "--no-rc",
+      "--root-prefix",
+      ".local/wakeword/mfa-mamba-root",
+      "run",
+      "--prefix",
+      ".local/wakeword/mfa-cpu-env",
+      "mfa",
+      "align",
+      ".local/wakeword/chatterbox-training-prefix-alignment-v1/corpus",
+      ".local/wakeword/mfa-model-sources-v1/english_us_arpa.dict",
+      ".local/wakeword/mfa-model-sources-v1/english_us_arpa.zip",
+      ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment",
+      "--single_speaker",
+      "--no_use_postgres",
+      "--num_jobs",
+      "2",
+      "--clean"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 37.885555009997915
+  },
+  "records": [
+    {
+      "source": {
+        "id": "000",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/000-16k.wav",
+        "sha256": "7738358f61e4d6981c7ef986a18bfd0311dc5a8280464a1d2f307d6548068051",
+        "samples": 14720,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/000.TextGrid",
+      "textgrid_sha256": "84d4afd7f5e8eba9303e5ce34e324399dd4f08c335efd12f52fa77ebdc8d2296",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 0.92,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 0.92,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "001",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/001-16k.wav",
+        "sha256": "41fef553ca84cf4b3a0fe9637c8f4c05207164394aa72b9c95552eba35e5f82b",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/001.TextGrid",
+      "textgrid_sha256": "061f69317222ecb2af38a1d4c5a1d7749ca99bf66c6dfe1f130dd9eca977b819",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.78,
+            "label": "nicks"
+          },
+          {
+            "start": 0.78,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.78,
+            "label": "S"
+          },
+          {
+            "start": 0.78,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.78,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "002",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/002-16k.wav",
+        "sha256": "4b7e00abc03f85b31cb80c088d4651e45261bb9b96e7487e9e703c2b5fc3c98d",
+        "samples": 19200,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/002.TextGrid",
+      "textgrid_sha256": "98671d65237ff32b644a1b1bc1352fdcf5e3c716b9ae5671a1c36fbab1c06775",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.33,
+            "label": "hey"
+          },
+          {
+            "start": 0.33,
+            "end": 0.85,
+            "label": "nicks"
+          },
+          {
+            "start": 0.85,
+            "end": 1.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.33,
+            "label": "EY1"
+          },
+          {
+            "start": 0.33,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.57,
+            "label": "IH1"
+          },
+          {
+            "start": 0.57,
+            "end": 0.66,
+            "label": "K"
+          },
+          {
+            "start": 0.66,
+            "end": 0.85,
+            "label": "S"
+          },
+          {
+            "start": 0.85,
+            "end": 1.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.85,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "003",
+        "voice": "af_bella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/003-16k.wav",
+        "sha256": "223cdcd6b81643937f595366b32902ab58f2a307c722659545b060452ff74153",
+        "samples": 31360,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/003.TextGrid",
+      "textgrid_sha256": "5520678cf9a430f230c52dae89fe9f9fb86f14815447484bc62e5e46ad90d8de",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.69,
+            "label": "nicks"
+          },
+          {
+            "start": 0.69,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 1.05,
+            "label": "turn"
+          },
+          {
+            "start": 1.05,
+            "end": 1.17,
+            "label": "on"
+          },
+          {
+            "start": 1.17,
+            "end": 1.25,
+            "label": "the"
+          },
+          {
+            "start": 1.25,
+            "end": 1.58,
+            "label": "light"
+          },
+          {
+            "start": 1.58,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.69,
+            "label": "S"
+          },
+          {
+            "start": 0.69,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 0.94,
+            "label": "T"
+          },
+          {
+            "start": 0.94,
+            "end": 1.0,
+            "label": "ER1"
+          },
+          {
+            "start": 1.0,
+            "end": 1.05,
+            "label": "N"
+          },
+          {
+            "start": 1.05,
+            "end": 1.12,
+            "label": "AA1"
+          },
+          {
+            "start": 1.12,
+            "end": 1.17,
+            "label": "N"
+          },
+          {
+            "start": 1.17,
+            "end": 1.21,
+            "label": "DH"
+          },
+          {
+            "start": 1.21,
+            "end": 1.25,
+            "label": "AH1"
+          },
+          {
+            "start": 1.25,
+            "end": 1.31,
+            "label": "L"
+          },
+          {
+            "start": 1.31,
+            "end": 1.48,
+            "label": "AY1"
+          },
+          {
+            "start": 1.48,
+            "end": 1.58,
+            "label": "T"
+          },
+          {
+            "start": 1.58,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.69,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "004",
+        "voice": "af_bella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/004-16k.wav",
+        "sha256": "374945f9035da2fe6b950635f6ee76ef6b33387fcb539ead2e7656242b9894ec",
+        "samples": 31360,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/004.TextGrid",
+      "textgrid_sha256": "722f0c5f88126b29c4de7de3ef90ac51874d5b142807712a3e5213f7d2ab3ce9",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.22,
+            "label": "turn"
+          },
+          {
+            "start": 1.22,
+            "end": 1.34,
+            "label": "on"
+          },
+          {
+            "start": 1.34,
+            "end": 1.42,
+            "label": "the"
+          },
+          {
+            "start": 1.42,
+            "end": 1.8,
+            "label": "light"
+          },
+          {
+            "start": 1.8,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.09,
+            "label": "T"
+          },
+          {
+            "start": 1.09,
+            "end": 1.17,
+            "label": "ER1"
+          },
+          {
+            "start": 1.17,
+            "end": 1.22,
+            "label": "N"
+          },
+          {
+            "start": 1.22,
+            "end": 1.28,
+            "label": "AA1"
+          },
+          {
+            "start": 1.28,
+            "end": 1.34,
+            "label": "N"
+          },
+          {
+            "start": 1.34,
+            "end": 1.38,
+            "label": "DH"
+          },
+          {
+            "start": 1.38,
+            "end": 1.42,
+            "label": "AH1"
+          },
+          {
+            "start": 1.42,
+            "end": 1.51,
+            "label": "L"
+          },
+          {
+            "start": 1.51,
+            "end": 1.68,
+            "label": "AY1"
+          },
+          {
+            "start": 1.68,
+            "end": 1.8,
+            "label": "T"
+          },
+          {
+            "start": 1.8,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "005",
+        "voice": "af_bella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/005-16k.wav",
+        "sha256": "ad9e499726a712051c80de45c6ea75d46917cb27dff870b4b2555650e5878306",
+        "samples": 33280,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/005.TextGrid",
+      "textgrid_sha256": "61c75fd7ca0db1e624b22918c0a71dd11aab49e56799b6af7146b20f9e1102fe",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.81,
+            "label": "nicks"
+          },
+          {
+            "start": 0.81,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.27,
+            "label": "turn"
+          },
+          {
+            "start": 1.27,
+            "end": 1.4,
+            "label": "on"
+          },
+          {
+            "start": 1.4,
+            "end": 1.48,
+            "label": "the"
+          },
+          {
+            "start": 1.48,
+            "end": 1.9,
+            "label": "light"
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.55,
+            "label": "IH1"
+          },
+          {
+            "start": 0.55,
+            "end": 0.65,
+            "label": "K"
+          },
+          {
+            "start": 0.65,
+            "end": 0.81,
+            "label": "S"
+          },
+          {
+            "start": 0.81,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.14,
+            "label": "T"
+          },
+          {
+            "start": 1.14,
+            "end": 1.22,
+            "label": "ER1"
+          },
+          {
+            "start": 1.22,
+            "end": 1.27,
+            "label": "N"
+          },
+          {
+            "start": 1.27,
+            "end": 1.35,
+            "label": "AA1"
+          },
+          {
+            "start": 1.35,
+            "end": 1.4,
+            "label": "N"
+          },
+          {
+            "start": 1.4,
+            "end": 1.44,
+            "label": "DH"
+          },
+          {
+            "start": 1.44,
+            "end": 1.48,
+            "label": "AH1"
+          },
+          {
+            "start": 1.48,
+            "end": 1.55,
+            "label": "L"
+          },
+          {
+            "start": 1.55,
+            "end": 1.73,
+            "label": "AY1"
+          },
+          {
+            "start": 1.73,
+            "end": 1.9,
+            "label": "T"
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.81,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "006",
+        "voice": "af_bella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/006-16k.wav",
+        "sha256": "04a927c7843fb7ab36b8c76e1009df8d401ed2c285bf41d33a137804f9271aa3",
+        "samples": 28160,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/006.TextGrid",
+      "textgrid_sha256": "45266a9ab345c2a0f19ecaa5c1bfb22947512376157ffaf98437abdf4f0ac162",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 0.88,
+            "label": ""
+          },
+          {
+            "start": 0.88,
+            "end": 1.02,
+            "label": "what"
+          },
+          {
+            "start": 1.02,
+            "end": 1.23,
+            "label": "time"
+          },
+          {
+            "start": 1.23,
+            "end": 1.33,
+            "label": "is"
+          },
+          {
+            "start": 1.33,
+            "end": 1.49,
+            "label": "it"
+          },
+          {
+            "start": 1.49,
+            "end": 1.76,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.51,
+            "label": "K"
+          },
+          {
+            "start": 0.51,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 0.88,
+            "label": ""
+          },
+          {
+            "start": 0.88,
+            "end": 0.93,
+            "label": "HH"
+          },
+          {
+            "start": 0.93,
+            "end": 0.96,
+            "label": "W"
+          },
+          {
+            "start": 0.96,
+            "end": 0.99,
+            "label": "AH1"
+          },
+          {
+            "start": 0.99,
+            "end": 1.02,
+            "label": "T"
+          },
+          {
+            "start": 1.02,
+            "end": 1.09,
+            "label": "T"
+          },
+          {
+            "start": 1.09,
+            "end": 1.18,
+            "label": "AY1"
+          },
+          {
+            "start": 1.18,
+            "end": 1.23,
+            "label": "M"
+          },
+          {
+            "start": 1.23,
+            "end": 1.26,
+            "label": "IH0"
+          },
+          {
+            "start": 1.26,
+            "end": 1.33,
+            "label": "Z"
+          },
+          {
+            "start": 1.33,
+            "end": 1.44,
+            "label": "IH0"
+          },
+          {
+            "start": 1.44,
+            "end": 1.49,
+            "label": "T"
+          },
+          {
+            "start": 1.49,
+            "end": 1.76,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "007",
+        "voice": "af_bella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/007-16k.wav",
+        "sha256": "ab441b9dea4e490ae750b3c058c1c1c0d7a04602f401c3b311e0dde081c43db6",
+        "samples": 31360,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/007.TextGrid",
+      "textgrid_sha256": "39b2227698bcae7dc904155f5bf94ff9597db3ef801762d9055dfaf9152c39c9",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 0.98,
+            "label": "what"
+          },
+          {
+            "start": 0.98,
+            "end": 1.2,
+            "label": "time"
+          },
+          {
+            "start": 1.2,
+            "end": 1.33,
+            "label": "is"
+          },
+          {
+            "start": 1.33,
+            "end": 1.65,
+            "label": "it"
+          },
+          {
+            "start": 1.65,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 0.86,
+            "label": "HH"
+          },
+          {
+            "start": 0.86,
+            "end": 0.89,
+            "label": "W"
+          },
+          {
+            "start": 0.89,
+            "end": 0.94,
+            "label": "AH1"
+          },
+          {
+            "start": 0.94,
+            "end": 0.98,
+            "label": "T"
+          },
+          {
+            "start": 0.98,
+            "end": 1.04,
+            "label": "T"
+          },
+          {
+            "start": 1.04,
+            "end": 1.14,
+            "label": "AY1"
+          },
+          {
+            "start": 1.14,
+            "end": 1.2,
+            "label": "M"
+          },
+          {
+            "start": 1.2,
+            "end": 1.25,
+            "label": "IH1"
+          },
+          {
+            "start": 1.25,
+            "end": 1.33,
+            "label": "Z"
+          },
+          {
+            "start": 1.33,
+            "end": 1.43,
+            "label": "IH0"
+          },
+          {
+            "start": 1.43,
+            "end": 1.65,
+            "label": "T"
+          },
+          {
+            "start": 1.65,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "008",
+        "voice": "af_bella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/008-16k.wav",
+        "sha256": "3b806c0c03092eb2166cbf31bc01637dc9724bbd05fd50b894206b0745566abb",
+        "samples": 33280,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/008.TextGrid",
+      "textgrid_sha256": "435179c09dddb12e200237276fa63b4cd0e2f889dca9d8c9db19a9dfb8866dee",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.82,
+            "label": "nicks"
+          },
+          {
+            "start": 0.82,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.25,
+            "label": "what"
+          },
+          {
+            "start": 1.25,
+            "end": 1.5,
+            "label": "time"
+          },
+          {
+            "start": 1.5,
+            "end": 1.61,
+            "label": "is"
+          },
+          {
+            "start": 1.61,
+            "end": 1.9,
+            "label": "it"
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.55,
+            "label": "IH1"
+          },
+          {
+            "start": 0.55,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": "S"
+          },
+          {
+            "start": 0.82,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.11,
+            "label": "HH"
+          },
+          {
+            "start": 1.11,
+            "end": 1.16,
+            "label": "W"
+          },
+          {
+            "start": 1.16,
+            "end": 1.22,
+            "label": "AH1"
+          },
+          {
+            "start": 1.22,
+            "end": 1.25,
+            "label": "T"
+          },
+          {
+            "start": 1.25,
+            "end": 1.35,
+            "label": "T"
+          },
+          {
+            "start": 1.35,
+            "end": 1.44,
+            "label": "AY1"
+          },
+          {
+            "start": 1.44,
+            "end": 1.5,
+            "label": "M"
+          },
+          {
+            "start": 1.5,
+            "end": 1.54,
+            "label": "IH1"
+          },
+          {
+            "start": 1.54,
+            "end": 1.61,
+            "label": "Z"
+          },
+          {
+            "start": 1.61,
+            "end": 1.73,
+            "label": "IH0"
+          },
+          {
+            "start": 1.73,
+            "end": 1.9,
+            "label": "T"
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.82,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "009",
+        "voice": "af_bella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/009-16k.wav",
+        "sha256": "6c86603f19e6084f6e2d96cca9af2b3089cb856005a7ddb1bdb70d69d15164c3",
+        "samples": 36480,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/009.TextGrid",
+      "textgrid_sha256": "54371cce3f62929a82ec6cef9510336cf71ad828306d77031e984257dd6e59e8",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.72,
+            "label": "nicks"
+          },
+          {
+            "start": 0.72,
+            "end": 1.02,
+            "label": ""
+          },
+          {
+            "start": 1.02,
+            "end": 1.29,
+            "label": "set"
+          },
+          {
+            "start": 1.29,
+            "end": 1.35,
+            "label": "a"
+          },
+          {
+            "start": 1.35,
+            "end": 1.92,
+            "label": "timer"
+          },
+          {
+            "start": 1.92,
+            "end": 2.28,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.46,
+            "label": "IH1"
+          },
+          {
+            "start": 0.46,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.72,
+            "label": "S"
+          },
+          {
+            "start": 0.72,
+            "end": 1.02,
+            "label": ""
+          },
+          {
+            "start": 1.02,
+            "end": 1.17,
+            "label": "S"
+          },
+          {
+            "start": 1.17,
+            "end": 1.25,
+            "label": "EH1"
+          },
+          {
+            "start": 1.25,
+            "end": 1.29,
+            "label": "T"
+          },
+          {
+            "start": 1.29,
+            "end": 1.35,
+            "label": "AH0"
+          },
+          {
+            "start": 1.35,
+            "end": 1.48,
+            "label": "T"
+          },
+          {
+            "start": 1.48,
+            "end": 1.62,
+            "label": "AY1"
+          },
+          {
+            "start": 1.62,
+            "end": 1.69,
+            "label": "M"
+          },
+          {
+            "start": 1.69,
+            "end": 1.92,
+            "label": "ER0"
+          },
+          {
+            "start": 1.92,
+            "end": 2.28,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.72,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "010",
+        "voice": "af_bella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/010-16k.wav",
+        "sha256": "5fd033f33ba24335081c9149e85089e5afd5f4038880dcacc87ad6567f78ac1a",
+        "samples": 31360,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/010.TextGrid",
+      "textgrid_sha256": "223e62b056fefccf14609e95fc87e5729ec7059bc80cc41b08b917ae8be7ce36",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.72,
+            "label": "nicks"
+          },
+          {
+            "start": 0.72,
+            "end": 0.86,
+            "label": ""
+          },
+          {
+            "start": 0.86,
+            "end": 1.09,
+            "label": "set"
+          },
+          {
+            "start": 1.09,
+            "end": 1.15,
+            "label": "a"
+          },
+          {
+            "start": 1.15,
+            "end": 1.69,
+            "label": "timer"
+          },
+          {
+            "start": 1.69,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.72,
+            "label": "S"
+          },
+          {
+            "start": 0.72,
+            "end": 0.86,
+            "label": ""
+          },
+          {
+            "start": 0.86,
+            "end": 0.99,
+            "label": "S"
+          },
+          {
+            "start": 0.99,
+            "end": 1.05,
+            "label": "EH1"
+          },
+          {
+            "start": 1.05,
+            "end": 1.09,
+            "label": "T"
+          },
+          {
+            "start": 1.09,
+            "end": 1.15,
+            "label": "AH0"
+          },
+          {
+            "start": 1.15,
+            "end": 1.28,
+            "label": "T"
+          },
+          {
+            "start": 1.28,
+            "end": 1.43,
+            "label": "AY1"
+          },
+          {
+            "start": 1.43,
+            "end": 1.51,
+            "label": "M"
+          },
+          {
+            "start": 1.51,
+            "end": 1.69,
+            "label": "ER0"
+          },
+          {
+            "start": 1.69,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.72,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "011",
+        "voice": "af_bella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/011-16k.wav",
+        "sha256": "9e2eca4c3966fcac67e48cd1a9be428451be3be29b2b01fcd1bc9c49cf94840a",
+        "samples": 35200,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/af_bella/011.TextGrid",
+      "textgrid_sha256": "2343a10f3a2f4cf5316b72a9b5e868498d9e778bf43b2989ca8c6229b85ff362",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.35,
+            "label": "hey"
+          },
+          {
+            "start": 0.35,
+            "end": 0.8,
+            "label": "nicks"
+          },
+          {
+            "start": 0.8,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.3,
+            "label": "set"
+          },
+          {
+            "start": 1.3,
+            "end": 1.35,
+            "label": "a"
+          },
+          {
+            "start": 1.35,
+            "end": 1.92,
+            "label": "timer"
+          },
+          {
+            "start": 1.92,
+            "end": 2.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.35,
+            "label": "EY1"
+          },
+          {
+            "start": 0.35,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.55,
+            "label": "IH1"
+          },
+          {
+            "start": 0.55,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.8,
+            "label": "S"
+          },
+          {
+            "start": 0.8,
+            "end": 1.06,
+            "label": ""
+          },
+          {
+            "start": 1.06,
+            "end": 1.19,
+            "label": "S"
+          },
+          {
+            "start": 1.19,
+            "end": 1.26,
+            "label": "EH1"
+          },
+          {
+            "start": 1.26,
+            "end": 1.3,
+            "label": "T"
+          },
+          {
+            "start": 1.3,
+            "end": 1.35,
+            "label": "AH0"
+          },
+          {
+            "start": 1.35,
+            "end": 1.48,
+            "label": "T"
+          },
+          {
+            "start": 1.48,
+            "end": 1.62,
+            "label": "AY1"
+          },
+          {
+            "start": 1.62,
+            "end": 1.68,
+            "label": "M"
+          },
+          {
+            "start": 1.68,
+            "end": 1.92,
+            "label": "ER0"
+          },
+          {
+            "start": 1.92,
+            "end": 2.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.8,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "024",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/024-16k.wav",
+        "sha256": "f5d064db2227c975802baa930604b34a54d44e08f5ab9324bcea5c436c2746af",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/024.TextGrid",
+      "textgrid_sha256": "1f07c61a7e73724cc7769a26badd4752b6f25a7cc3d0249f70c1f026572f9921",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.25,
+            "label": "hey"
+          },
+          {
+            "start": 0.25,
+            "end": 0.71,
+            "label": "nicks"
+          },
+          {
+            "start": 0.71,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.16,
+            "label": "HH"
+          },
+          {
+            "start": 0.16,
+            "end": 0.25,
+            "label": "EY1"
+          },
+          {
+            "start": 0.25,
+            "end": 0.32,
+            "label": "N"
+          },
+          {
+            "start": 0.32,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.51,
+            "label": "K"
+          },
+          {
+            "start": 0.51,
+            "end": 0.71,
+            "label": "S"
+          },
+          {
+            "start": 0.71,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.71,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "025",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/025-16k.wav",
+        "sha256": "6146f03f7efb7e7bf29faa67f32e5d0a41bc0703dced78f36447dce408ff6506",
+        "samples": 15040,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/025.TextGrid",
+      "textgrid_sha256": "a684f72b8221c534c36be1ab00527cf5e33bb52aeeeee44d567969f9825eb5ff",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.21,
+            "label": "hey"
+          },
+          {
+            "start": 0.21,
+            "end": 0.64,
+            "label": "nicks"
+          },
+          {
+            "start": 0.64,
+            "end": 0.94,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.21,
+            "label": "EY1"
+          },
+          {
+            "start": 0.21,
+            "end": 0.27,
+            "label": "N"
+          },
+          {
+            "start": 0.27,
+            "end": 0.36,
+            "label": "IH1"
+          },
+          {
+            "start": 0.36,
+            "end": 0.44,
+            "label": "K"
+          },
+          {
+            "start": 0.44,
+            "end": 0.64,
+            "label": "S"
+          },
+          {
+            "start": 0.64,
+            "end": 0.94,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.64,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "026",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/026-16k.wav",
+        "sha256": "7f535efe806194fec872d93c628abd1f995e0e57c6d6becc3dffeb9a817d5ab3",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/026.TextGrid",
+      "textgrid_sha256": "409d597663b552a44ae71d1a21e98bbc25ac9c69ff93e5a5b98103d5bb95f37b",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.55,
+            "label": "K"
+          },
+          {
+            "start": 0.55,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "027",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/027-16k.wav",
+        "sha256": "625b1ca91760dcc2a03f9065384adf75bca6ea2d75ef0990a0a1cecc32c47f80",
+        "samples": 32320,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/027.TextGrid",
+      "textgrid_sha256": "71ba6dd6c47476e4d9907e30b4d1e029101b28d1ecda6e870189145969d7e8b1",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.18,
+            "label": "turn"
+          },
+          {
+            "start": 1.18,
+            "end": 1.27,
+            "label": "on"
+          },
+          {
+            "start": 1.27,
+            "end": 1.34,
+            "label": "the"
+          },
+          {
+            "start": 1.34,
+            "end": 1.72,
+            "label": "light"
+          },
+          {
+            "start": 1.72,
+            "end": 2.02,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.12,
+            "label": "HH"
+          },
+          {
+            "start": 0.12,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.55,
+            "label": "K"
+          },
+          {
+            "start": 0.55,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.06,
+            "label": "T"
+          },
+          {
+            "start": 1.06,
+            "end": 1.11,
+            "label": "ER1"
+          },
+          {
+            "start": 1.11,
+            "end": 1.18,
+            "label": "N"
+          },
+          {
+            "start": 1.18,
+            "end": 1.22,
+            "label": "AA1"
+          },
+          {
+            "start": 1.22,
+            "end": 1.27,
+            "label": "N"
+          },
+          {
+            "start": 1.27,
+            "end": 1.3,
+            "label": "DH"
+          },
+          {
+            "start": 1.3,
+            "end": 1.34,
+            "label": "AH1"
+          },
+          {
+            "start": 1.34,
+            "end": 1.42,
+            "label": "L"
+          },
+          {
+            "start": 1.42,
+            "end": 1.57,
+            "label": "AY1"
+          },
+          {
+            "start": 1.57,
+            "end": 1.72,
+            "label": "T"
+          },
+          {
+            "start": 1.72,
+            "end": 2.02,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "028",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/028-16k.wav",
+        "sha256": "908cf1e67765dc25524924a49678d021f633f6e0b94c90e4195a66e3dd528c99",
+        "samples": 29760,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/028.TextGrid",
+      "textgrid_sha256": "3c9effd5a20eaaad84a1dd583f851df410d695c3e51f98a6b234d78c09e64d86",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.21,
+            "label": "hey"
+          },
+          {
+            "start": 0.21,
+            "end": 0.65,
+            "label": "nicks"
+          },
+          {
+            "start": 0.65,
+            "end": 0.91,
+            "label": ""
+          },
+          {
+            "start": 0.91,
+            "end": 1.1,
+            "label": "turn"
+          },
+          {
+            "start": 1.1,
+            "end": 1.21,
+            "label": "on"
+          },
+          {
+            "start": 1.21,
+            "end": 1.29,
+            "label": "the"
+          },
+          {
+            "start": 1.29,
+            "end": 1.56,
+            "label": "light"
+          },
+          {
+            "start": 1.56,
+            "end": 1.86,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.21,
+            "label": "EY1"
+          },
+          {
+            "start": 0.21,
+            "end": 0.27,
+            "label": "N"
+          },
+          {
+            "start": 0.27,
+            "end": 0.36,
+            "label": "IH1"
+          },
+          {
+            "start": 0.36,
+            "end": 0.44,
+            "label": "K"
+          },
+          {
+            "start": 0.44,
+            "end": 0.65,
+            "label": "S"
+          },
+          {
+            "start": 0.65,
+            "end": 0.91,
+            "label": ""
+          },
+          {
+            "start": 0.91,
+            "end": 0.99,
+            "label": "T"
+          },
+          {
+            "start": 0.99,
+            "end": 1.04,
+            "label": "ER1"
+          },
+          {
+            "start": 1.04,
+            "end": 1.1,
+            "label": "N"
+          },
+          {
+            "start": 1.1,
+            "end": 1.17,
+            "label": "AA1"
+          },
+          {
+            "start": 1.17,
+            "end": 1.21,
+            "label": "N"
+          },
+          {
+            "start": 1.21,
+            "end": 1.24,
+            "label": "DH"
+          },
+          {
+            "start": 1.24,
+            "end": 1.29,
+            "label": "AH1"
+          },
+          {
+            "start": 1.29,
+            "end": 1.36,
+            "label": "L"
+          },
+          {
+            "start": 1.36,
+            "end": 1.5,
+            "label": "AY1"
+          },
+          {
+            "start": 1.5,
+            "end": 1.56,
+            "label": "T"
+          },
+          {
+            "start": 1.56,
+            "end": 1.86,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.65,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "029",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/029-16k.wav",
+        "sha256": "4415d1b39b2990599f19ecada204383538bf74118dd7c8f2f310dff86978bc25",
+        "samples": 32320,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/029.TextGrid",
+      "textgrid_sha256": "96685a2b302891960b687802133e395c8ae7caf63970b1a8abf86089172c53d0",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.93,
+            "label": ""
+          },
+          {
+            "start": 0.93,
+            "end": 1.16,
+            "label": "turn"
+          },
+          {
+            "start": 1.16,
+            "end": 1.38,
+            "label": "on"
+          },
+          {
+            "start": 1.38,
+            "end": 1.45,
+            "label": "the"
+          },
+          {
+            "start": 1.45,
+            "end": 1.83,
+            "label": "light"
+          },
+          {
+            "start": 1.83,
+            "end": 2.02,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.53,
+            "label": "K"
+          },
+          {
+            "start": 0.53,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.93,
+            "label": ""
+          },
+          {
+            "start": 0.93,
+            "end": 1.03,
+            "label": "T"
+          },
+          {
+            "start": 1.03,
+            "end": 1.11,
+            "label": "ER1"
+          },
+          {
+            "start": 1.11,
+            "end": 1.16,
+            "label": "N"
+          },
+          {
+            "start": 1.16,
+            "end": 1.32,
+            "label": "AA1"
+          },
+          {
+            "start": 1.32,
+            "end": 1.38,
+            "label": "N"
+          },
+          {
+            "start": 1.38,
+            "end": 1.42,
+            "label": "DH"
+          },
+          {
+            "start": 1.42,
+            "end": 1.45,
+            "label": "AH1"
+          },
+          {
+            "start": 1.45,
+            "end": 1.54,
+            "label": "L"
+          },
+          {
+            "start": 1.54,
+            "end": 1.69,
+            "label": "AY1"
+          },
+          {
+            "start": 1.69,
+            "end": 1.83,
+            "label": "T"
+          },
+          {
+            "start": 1.83,
+            "end": 2.02,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "030",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/030-16k.wav",
+        "sha256": "7b3f9dd8b41bb62b326e99e603460dacf2dda0ed6e840863a86f282f65ff7410",
+        "samples": 27200,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/030.TextGrid",
+      "textgrid_sha256": "847d096d7629e7e357e22ff39871c6d0c9a9b3ca095742364b9029f2f92229ac",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.25,
+            "label": "hey"
+          },
+          {
+            "start": 0.25,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 0.88,
+            "label": "what"
+          },
+          {
+            "start": 0.88,
+            "end": 1.14,
+            "label": "time"
+          },
+          {
+            "start": 1.14,
+            "end": 1.26,
+            "label": "is"
+          },
+          {
+            "start": 1.26,
+            "end": 1.42,
+            "label": "it"
+          },
+          {
+            "start": 1.42,
+            "end": 1.7,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.25,
+            "label": "EY1"
+          },
+          {
+            "start": 0.25,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 0.79,
+            "label": "W"
+          },
+          {
+            "start": 0.79,
+            "end": 0.84,
+            "label": "AH1"
+          },
+          {
+            "start": 0.84,
+            "end": 0.88,
+            "label": "T"
+          },
+          {
+            "start": 0.88,
+            "end": 0.95,
+            "label": "T"
+          },
+          {
+            "start": 0.95,
+            "end": 1.05,
+            "label": "AY1"
+          },
+          {
+            "start": 1.05,
+            "end": 1.14,
+            "label": "M"
+          },
+          {
+            "start": 1.14,
+            "end": 1.2,
+            "label": "IH0"
+          },
+          {
+            "start": 1.2,
+            "end": 1.26,
+            "label": "Z"
+          },
+          {
+            "start": 1.26,
+            "end": 1.36,
+            "label": "IH0"
+          },
+          {
+            "start": 1.36,
+            "end": 1.42,
+            "label": "T"
+          },
+          {
+            "start": 1.42,
+            "end": 1.7,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "031",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/031-16k.wav",
+        "sha256": "358084bd5ca60bc9b0412949b3cfdd268ba3909b67f93c59184ed533244b87b0",
+        "samples": 29120,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/031.TextGrid",
+      "textgrid_sha256": "574d67cc0091c59a90a0696c0e7b8165ccec7106f58c39a98d95326f7e90696a",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.21,
+            "label": "hey"
+          },
+          {
+            "start": 0.21,
+            "end": 0.64,
+            "label": "nicks"
+          },
+          {
+            "start": 0.64,
+            "end": 0.96,
+            "label": ""
+          },
+          {
+            "start": 0.96,
+            "end": 1.12,
+            "label": "what"
+          },
+          {
+            "start": 1.12,
+            "end": 1.32,
+            "label": "time"
+          },
+          {
+            "start": 1.32,
+            "end": 1.43,
+            "label": "is"
+          },
+          {
+            "start": 1.43,
+            "end": 1.55,
+            "label": "it"
+          },
+          {
+            "start": 1.55,
+            "end": 1.82,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.21,
+            "label": "EY1"
+          },
+          {
+            "start": 0.21,
+            "end": 0.27,
+            "label": "N"
+          },
+          {
+            "start": 0.27,
+            "end": 0.36,
+            "label": "IH1"
+          },
+          {
+            "start": 0.36,
+            "end": 0.44,
+            "label": "K"
+          },
+          {
+            "start": 0.44,
+            "end": 0.64,
+            "label": "S"
+          },
+          {
+            "start": 0.64,
+            "end": 0.96,
+            "label": ""
+          },
+          {
+            "start": 0.96,
+            "end": 1.01,
+            "label": "HH"
+          },
+          {
+            "start": 1.01,
+            "end": 1.04,
+            "label": "W"
+          },
+          {
+            "start": 1.04,
+            "end": 1.08,
+            "label": "AH1"
+          },
+          {
+            "start": 1.08,
+            "end": 1.12,
+            "label": "T"
+          },
+          {
+            "start": 1.12,
+            "end": 1.18,
+            "label": "T"
+          },
+          {
+            "start": 1.18,
+            "end": 1.26,
+            "label": "AY1"
+          },
+          {
+            "start": 1.26,
+            "end": 1.32,
+            "label": "M"
+          },
+          {
+            "start": 1.32,
+            "end": 1.36,
+            "label": "IH0"
+          },
+          {
+            "start": 1.36,
+            "end": 1.43,
+            "label": "Z"
+          },
+          {
+            "start": 1.43,
+            "end": 1.49,
+            "label": "IH0"
+          },
+          {
+            "start": 1.49,
+            "end": 1.55,
+            "label": "T"
+          },
+          {
+            "start": 1.55,
+            "end": 1.82,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.64,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "032",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/032-16k.wav",
+        "sha256": "a52bc5bb21b93907c064013e1eadc27749736ce6887a25067e7a18a1cfaeb600",
+        "samples": 25920,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/032.TextGrid",
+      "textgrid_sha256": "8ba14c373b59cb848b69df3e931d7905d3b60ae5bfa3f049462b032838031e77",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.05,
+            "label": ""
+          },
+          {
+            "start": 0.05,
+            "end": 0.17,
+            "label": "hey"
+          },
+          {
+            "start": 0.17,
+            "end": 0.62,
+            "label": "nicks"
+          },
+          {
+            "start": 0.62,
+            "end": 0.78,
+            "label": ""
+          },
+          {
+            "start": 0.78,
+            "end": 0.95,
+            "label": "what"
+          },
+          {
+            "start": 0.95,
+            "end": 1.2,
+            "label": "time"
+          },
+          {
+            "start": 1.2,
+            "end": 1.3,
+            "label": "is"
+          },
+          {
+            "start": 1.3,
+            "end": 1.47,
+            "label": "it"
+          },
+          {
+            "start": 1.47,
+            "end": 1.62,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.05,
+            "label": ""
+          },
+          {
+            "start": 0.05,
+            "end": 0.11,
+            "label": "HH"
+          },
+          {
+            "start": 0.11,
+            "end": 0.17,
+            "label": "EY1"
+          },
+          {
+            "start": 0.17,
+            "end": 0.26,
+            "label": "N"
+          },
+          {
+            "start": 0.26,
+            "end": 0.35,
+            "label": "IH1"
+          },
+          {
+            "start": 0.35,
+            "end": 0.44,
+            "label": "K"
+          },
+          {
+            "start": 0.44,
+            "end": 0.62,
+            "label": "S"
+          },
+          {
+            "start": 0.62,
+            "end": 0.78,
+            "label": ""
+          },
+          {
+            "start": 0.78,
+            "end": 0.83,
+            "label": "HH"
+          },
+          {
+            "start": 0.83,
+            "end": 0.87,
+            "label": "W"
+          },
+          {
+            "start": 0.87,
+            "end": 0.92,
+            "label": "AH1"
+          },
+          {
+            "start": 0.92,
+            "end": 0.95,
+            "label": "T"
+          },
+          {
+            "start": 0.95,
+            "end": 1.03,
+            "label": "T"
+          },
+          {
+            "start": 1.03,
+            "end": 1.13,
+            "label": "AY1"
+          },
+          {
+            "start": 1.13,
+            "end": 1.2,
+            "label": "M"
+          },
+          {
+            "start": 1.2,
+            "end": 1.23,
+            "label": "IH0"
+          },
+          {
+            "start": 1.23,
+            "end": 1.3,
+            "label": "Z"
+          },
+          {
+            "start": 1.3,
+            "end": 1.4,
+            "label": "IH0"
+          },
+          {
+            "start": 1.4,
+            "end": 1.47,
+            "label": "T"
+          },
+          {
+            "start": 1.47,
+            "end": 1.62,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.62,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "033",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/033-16k.wav",
+        "sha256": "491a9c8cc301e492af27e1b386a25ed477ba62cffca11ec23f987b52cb7d8583",
+        "samples": 31040,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/033.TextGrid",
+      "textgrid_sha256": "74de2694d8105f53d4c5accf00d2a3f4c1397e755e3b51ab95f12c87463f39a2",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.75,
+            "label": "nicks"
+          },
+          {
+            "start": 0.75,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.16,
+            "label": "set"
+          },
+          {
+            "start": 1.16,
+            "end": 1.21,
+            "label": "a"
+          },
+          {
+            "start": 1.21,
+            "end": 1.69,
+            "label": "timer"
+          },
+          {
+            "start": 1.69,
+            "end": 1.94,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.12,
+            "label": "HH"
+          },
+          {
+            "start": 0.12,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.75,
+            "label": "S"
+          },
+          {
+            "start": 0.75,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.07,
+            "label": "S"
+          },
+          {
+            "start": 1.07,
+            "end": 1.13,
+            "label": "EH1"
+          },
+          {
+            "start": 1.13,
+            "end": 1.16,
+            "label": "T"
+          },
+          {
+            "start": 1.16,
+            "end": 1.21,
+            "label": "AH0"
+          },
+          {
+            "start": 1.21,
+            "end": 1.32,
+            "label": "T"
+          },
+          {
+            "start": 1.32,
+            "end": 1.45,
+            "label": "AY1"
+          },
+          {
+            "start": 1.45,
+            "end": 1.54,
+            "label": "M"
+          },
+          {
+            "start": 1.54,
+            "end": 1.69,
+            "label": "ER0"
+          },
+          {
+            "start": 1.69,
+            "end": 1.94,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.75,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "034",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/034-16k.wav",
+        "sha256": "b8557142b8fcc95abc7f2ad5d27fc525d1b7f91696e7c799e2f7c86627b9d1b6",
+        "samples": 30400,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/034.TextGrid",
+      "textgrid_sha256": "efaa95d91b2e445ddc15c58429c9e3ee7f434324aa514fecb8db5e39ea95d04f",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.21,
+            "label": "hey"
+          },
+          {
+            "start": 0.21,
+            "end": 0.65,
+            "label": "nicks"
+          },
+          {
+            "start": 0.65,
+            "end": 0.9,
+            "label": ""
+          },
+          {
+            "start": 0.9,
+            "end": 1.12,
+            "label": "set"
+          },
+          {
+            "start": 1.12,
+            "end": 1.17,
+            "label": "a"
+          },
+          {
+            "start": 1.17,
+            "end": 1.66,
+            "label": "timer"
+          },
+          {
+            "start": 1.66,
+            "end": 1.9,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.21,
+            "label": "EY1"
+          },
+          {
+            "start": 0.21,
+            "end": 0.27,
+            "label": "N"
+          },
+          {
+            "start": 0.27,
+            "end": 0.36,
+            "label": "IH1"
+          },
+          {
+            "start": 0.36,
+            "end": 0.44,
+            "label": "K"
+          },
+          {
+            "start": 0.44,
+            "end": 0.65,
+            "label": "S"
+          },
+          {
+            "start": 0.65,
+            "end": 0.9,
+            "label": ""
+          },
+          {
+            "start": 0.9,
+            "end": 1.03,
+            "label": "S"
+          },
+          {
+            "start": 1.03,
+            "end": 1.09,
+            "label": "EH1"
+          },
+          {
+            "start": 1.09,
+            "end": 1.12,
+            "label": "T"
+          },
+          {
+            "start": 1.12,
+            "end": 1.17,
+            "label": "AH0"
+          },
+          {
+            "start": 1.17,
+            "end": 1.27,
+            "label": "T"
+          },
+          {
+            "start": 1.27,
+            "end": 1.39,
+            "label": "AY1"
+          },
+          {
+            "start": 1.39,
+            "end": 1.48,
+            "label": "M"
+          },
+          {
+            "start": 1.48,
+            "end": 1.66,
+            "label": "ER0"
+          },
+          {
+            "start": 1.66,
+            "end": 1.9,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.65,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "035",
+        "voice": "am_onyx",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/035-16k.wav",
+        "sha256": "cfbfe8acc78075ffd47b9ea8f7389e1d5e530f3f2cdeaf50c76503791b4aabca",
+        "samples": 30400,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/am_onyx/035.TextGrid",
+      "textgrid_sha256": "86ae86b84381af576ba1b755e1737efd481618892afd41882c774fe676323ac6",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.75,
+            "label": "nicks"
+          },
+          {
+            "start": 0.75,
+            "end": 0.86,
+            "label": ""
+          },
+          {
+            "start": 0.86,
+            "end": 1.11,
+            "label": "set"
+          },
+          {
+            "start": 1.11,
+            "end": 1.15,
+            "label": "a"
+          },
+          {
+            "start": 1.15,
+            "end": 1.69,
+            "label": "timer"
+          },
+          {
+            "start": 1.69,
+            "end": 1.9,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.55,
+            "label": "K"
+          },
+          {
+            "start": 0.55,
+            "end": 0.75,
+            "label": "S"
+          },
+          {
+            "start": 0.75,
+            "end": 0.86,
+            "label": ""
+          },
+          {
+            "start": 0.86,
+            "end": 1.01,
+            "label": "S"
+          },
+          {
+            "start": 1.01,
+            "end": 1.07,
+            "label": "EH1"
+          },
+          {
+            "start": 1.07,
+            "end": 1.11,
+            "label": "T"
+          },
+          {
+            "start": 1.11,
+            "end": 1.15,
+            "label": "AH0"
+          },
+          {
+            "start": 1.15,
+            "end": 1.26,
+            "label": "T"
+          },
+          {
+            "start": 1.26,
+            "end": 1.4,
+            "label": "AY1"
+          },
+          {
+            "start": 1.4,
+            "end": 1.48,
+            "label": "M"
+          },
+          {
+            "start": 1.48,
+            "end": 1.69,
+            "label": "ER0"
+          },
+          {
+            "start": 1.69,
+            "end": 1.9,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.75,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "048",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/048-16k.wav",
+        "sha256": "d5c2018411e3167ceed2a994d52d630d0dabd5be567afc6271b42fff6f6dedf4",
+        "samples": 20480,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/048.TextGrid",
+      "textgrid_sha256": "2f03908693a7a9f191334e9356d385412a9cbcabec013fcf620c65c2d53090b6",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.15,
+            "label": ""
+          },
+          {
+            "start": 0.15,
+            "end": 0.35,
+            "label": "hey"
+          },
+          {
+            "start": 0.35,
+            "end": 0.89,
+            "label": "nicks"
+          },
+          {
+            "start": 0.89,
+            "end": 1.28,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.15,
+            "label": ""
+          },
+          {
+            "start": 0.15,
+            "end": 0.22,
+            "label": "HH"
+          },
+          {
+            "start": 0.22,
+            "end": 0.35,
+            "label": "EY1"
+          },
+          {
+            "start": 0.35,
+            "end": 0.42,
+            "label": "N"
+          },
+          {
+            "start": 0.42,
+            "end": 0.56,
+            "label": "IH1"
+          },
+          {
+            "start": 0.56,
+            "end": 0.7,
+            "label": "K"
+          },
+          {
+            "start": 0.7,
+            "end": 0.89,
+            "label": "S"
+          },
+          {
+            "start": 0.89,
+            "end": 1.28,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.89,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "049",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/049-16k.wav",
+        "sha256": "d4163a146af7b9aee988c892a27c08df97c44119421619dc5e6a281fa9ae03ad",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/049.TextGrid",
+      "textgrid_sha256": "4d46ac547b0a68cf5485de67689474d3b40508e00817c18cca45a4677d8141ff",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.78,
+            "label": "nicks"
+          },
+          {
+            "start": 0.78,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.59,
+            "label": "K"
+          },
+          {
+            "start": 0.59,
+            "end": 0.78,
+            "label": "S"
+          },
+          {
+            "start": 0.78,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.78,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "050",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/050-16k.wav",
+        "sha256": "8e9e528e7644ade8981c609598b2c140971c43d1eb5f9c84028ce6277aba8de9",
+        "samples": 18560,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/050.TextGrid",
+      "textgrid_sha256": "ad46a0fdcf9084ab956c0b140f113d1fd0e68c20e92879720d154b6237c2a5f9",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.81,
+            "label": "nicks"
+          },
+          {
+            "start": 0.81,
+            "end": 1.16,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.81,
+            "label": "S"
+          },
+          {
+            "start": 0.81,
+            "end": 1.16,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.81,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "051",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/051-16k.wav",
+        "sha256": "72828c376365f31a83e3d99f5688d872373c36cfee22314c3da4c3b586d96312",
+        "samples": 37760,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/051.TextGrid",
+      "textgrid_sha256": "51d75f7d3618c28022890a423ee8bd73fe9312fd8cca9fcd7fcdd5b8966f169b",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.78,
+            "label": "nicks"
+          },
+          {
+            "start": 0.78,
+            "end": 1.05,
+            "label": ""
+          },
+          {
+            "start": 1.05,
+            "end": 1.27,
+            "label": "turn"
+          },
+          {
+            "start": 1.27,
+            "end": 1.39,
+            "label": "on"
+          },
+          {
+            "start": 1.39,
+            "end": 1.46,
+            "label": "the"
+          },
+          {
+            "start": 1.46,
+            "end": 1.95,
+            "label": "light"
+          },
+          {
+            "start": 1.95,
+            "end": 2.36,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.22,
+            "label": "HH"
+          },
+          {
+            "start": 0.22,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.78,
+            "label": "S"
+          },
+          {
+            "start": 0.78,
+            "end": 1.05,
+            "label": ""
+          },
+          {
+            "start": 1.05,
+            "end": 1.13,
+            "label": "T"
+          },
+          {
+            "start": 1.13,
+            "end": 1.21,
+            "label": "ER1"
+          },
+          {
+            "start": 1.21,
+            "end": 1.27,
+            "label": "N"
+          },
+          {
+            "start": 1.27,
+            "end": 1.33,
+            "label": "AA1"
+          },
+          {
+            "start": 1.33,
+            "end": 1.39,
+            "label": "N"
+          },
+          {
+            "start": 1.39,
+            "end": 1.43,
+            "label": "DH"
+          },
+          {
+            "start": 1.43,
+            "end": 1.46,
+            "label": "AH0"
+          },
+          {
+            "start": 1.46,
+            "end": 1.57,
+            "label": "L"
+          },
+          {
+            "start": 1.57,
+            "end": 1.76,
+            "label": "AY1"
+          },
+          {
+            "start": 1.76,
+            "end": 1.95,
+            "label": "T"
+          },
+          {
+            "start": 1.95,
+            "end": 2.36,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.78,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "052",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/052-16k.wav",
+        "sha256": "0a8dc02ac068d13ac664a656436d101a8dadf168168b060c5591f9fbf498ed50",
+        "samples": 33920,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/052.TextGrid",
+      "textgrid_sha256": "46067a59ba25f06f31056a05244d4f0477d11c8ea76ee4366877ce0638a47a8e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 0.87,
+            "label": ""
+          },
+          {
+            "start": 0.87,
+            "end": 1.11,
+            "label": "turn"
+          },
+          {
+            "start": 1.11,
+            "end": 1.19,
+            "label": "on"
+          },
+          {
+            "start": 1.19,
+            "end": 1.27,
+            "label": "the"
+          },
+          {
+            "start": 1.27,
+            "end": 1.75,
+            "label": "light"
+          },
+          {
+            "start": 1.75,
+            "end": 2.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 0.87,
+            "label": ""
+          },
+          {
+            "start": 0.87,
+            "end": 0.96,
+            "label": "T"
+          },
+          {
+            "start": 0.96,
+            "end": 1.06,
+            "label": "ER1"
+          },
+          {
+            "start": 1.06,
+            "end": 1.11,
+            "label": "N"
+          },
+          {
+            "start": 1.11,
+            "end": 1.14,
+            "label": "AA1"
+          },
+          {
+            "start": 1.14,
+            "end": 1.19,
+            "label": "N"
+          },
+          {
+            "start": 1.19,
+            "end": 1.23,
+            "label": "DH"
+          },
+          {
+            "start": 1.23,
+            "end": 1.27,
+            "label": "AH0"
+          },
+          {
+            "start": 1.27,
+            "end": 1.33,
+            "label": "L"
+          },
+          {
+            "start": 1.33,
+            "end": 1.51,
+            "label": "AY1"
+          },
+          {
+            "start": 1.51,
+            "end": 1.75,
+            "label": "T"
+          },
+          {
+            "start": 1.75,
+            "end": 2.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "053",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/053-16k.wav",
+        "sha256": "96b78db3d4821ea66e5704f57d9b19e346edfbb24fd7fdcfe617529475c28249",
+        "samples": 35840,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/053.TextGrid",
+      "textgrid_sha256": "9add33530efcebabf7d1ab17ceb7cf72713d95d41c531e69e7cce75729df862e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.23,
+            "label": "turn"
+          },
+          {
+            "start": 1.23,
+            "end": 1.36,
+            "label": "on"
+          },
+          {
+            "start": 1.36,
+            "end": 1.43,
+            "label": "the"
+          },
+          {
+            "start": 1.43,
+            "end": 1.93,
+            "label": "light"
+          },
+          {
+            "start": 1.93,
+            "end": 2.24,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.08,
+            "label": "T"
+          },
+          {
+            "start": 1.08,
+            "end": 1.17,
+            "label": "ER1"
+          },
+          {
+            "start": 1.17,
+            "end": 1.23,
+            "label": "N"
+          },
+          {
+            "start": 1.23,
+            "end": 1.29,
+            "label": "AA1"
+          },
+          {
+            "start": 1.29,
+            "end": 1.36,
+            "label": "N"
+          },
+          {
+            "start": 1.36,
+            "end": 1.4,
+            "label": "DH"
+          },
+          {
+            "start": 1.4,
+            "end": 1.43,
+            "label": "AH0"
+          },
+          {
+            "start": 1.43,
+            "end": 1.52,
+            "label": "L"
+          },
+          {
+            "start": 1.52,
+            "end": 1.72,
+            "label": "AY1"
+          },
+          {
+            "start": 1.72,
+            "end": 1.93,
+            "label": "T"
+          },
+          {
+            "start": 1.93,
+            "end": 2.24,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "054",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/054-16k.wav",
+        "sha256": "2c21b6e9f5372748b7804b8b4e041d18ea72b9d5503e6d3340e543215fadf6e4",
+        "samples": 35840,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/054.TextGrid",
+      "textgrid_sha256": "14e4a9fc2bfcc25db26a0b620c1da2625e3fe3ed479d2b54de0178b0d087d6ea",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.84,
+            "label": "nicks"
+          },
+          {
+            "start": 0.84,
+            "end": 1.0,
+            "label": ""
+          },
+          {
+            "start": 1.0,
+            "end": 1.2,
+            "label": "what"
+          },
+          {
+            "start": 1.2,
+            "end": 1.47,
+            "label": "time"
+          },
+          {
+            "start": 1.47,
+            "end": 1.63,
+            "label": "is"
+          },
+          {
+            "start": 1.63,
+            "end": 1.95,
+            "label": "it"
+          },
+          {
+            "start": 1.95,
+            "end": 2.24,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.42,
+            "label": "N"
+          },
+          {
+            "start": 0.42,
+            "end": 0.53,
+            "label": "IH1"
+          },
+          {
+            "start": 0.53,
+            "end": 0.64,
+            "label": "K"
+          },
+          {
+            "start": 0.64,
+            "end": 0.84,
+            "label": "S"
+          },
+          {
+            "start": 0.84,
+            "end": 1.0,
+            "label": ""
+          },
+          {
+            "start": 1.0,
+            "end": 1.03,
+            "label": "HH"
+          },
+          {
+            "start": 1.03,
+            "end": 1.08,
+            "label": "W"
+          },
+          {
+            "start": 1.08,
+            "end": 1.15,
+            "label": "AH1"
+          },
+          {
+            "start": 1.15,
+            "end": 1.2,
+            "label": "T"
+          },
+          {
+            "start": 1.2,
+            "end": 1.29,
+            "label": "T"
+          },
+          {
+            "start": 1.29,
+            "end": 1.4,
+            "label": "AY1"
+          },
+          {
+            "start": 1.4,
+            "end": 1.47,
+            "label": "M"
+          },
+          {
+            "start": 1.47,
+            "end": 1.54,
+            "label": "IH1"
+          },
+          {
+            "start": 1.54,
+            "end": 1.63,
+            "label": "Z"
+          },
+          {
+            "start": 1.63,
+            "end": 1.74,
+            "label": "IH0"
+          },
+          {
+            "start": 1.74,
+            "end": 1.95,
+            "label": "T"
+          },
+          {
+            "start": 1.95,
+            "end": 2.24,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.84,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "055",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/055-16k.wav",
+        "sha256": "1082cc88a8964234463f9e247c9542af134430cbd6be9460838ddda9e15c3b08",
+        "samples": 35200,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/055.TextGrid",
+      "textgrid_sha256": "fee1818d41611bab698298cf3115078c03db14b8ca88ac0aec6aa275aaa57e96",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.83,
+            "label": "nicks"
+          },
+          {
+            "start": 0.83,
+            "end": 1.09,
+            "label": ""
+          },
+          {
+            "start": 1.09,
+            "end": 1.28,
+            "label": "what"
+          },
+          {
+            "start": 1.28,
+            "end": 1.55,
+            "label": "time"
+          },
+          {
+            "start": 1.55,
+            "end": 1.68,
+            "label": "is"
+          },
+          {
+            "start": 1.68,
+            "end": 2.01,
+            "label": "it"
+          },
+          {
+            "start": 2.01,
+            "end": 2.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.53,
+            "label": "IH1"
+          },
+          {
+            "start": 0.53,
+            "end": 0.63,
+            "label": "K"
+          },
+          {
+            "start": 0.63,
+            "end": 0.83,
+            "label": "S"
+          },
+          {
+            "start": 0.83,
+            "end": 1.09,
+            "label": ""
+          },
+          {
+            "start": 1.09,
+            "end": 1.14,
+            "label": "HH"
+          },
+          {
+            "start": 1.14,
+            "end": 1.19,
+            "label": "W"
+          },
+          {
+            "start": 1.19,
+            "end": 1.24,
+            "label": "AH1"
+          },
+          {
+            "start": 1.24,
+            "end": 1.28,
+            "label": "T"
+          },
+          {
+            "start": 1.28,
+            "end": 1.36,
+            "label": "T"
+          },
+          {
+            "start": 1.36,
+            "end": 1.5,
+            "label": "AY1"
+          },
+          {
+            "start": 1.5,
+            "end": 1.55,
+            "label": "M"
+          },
+          {
+            "start": 1.55,
+            "end": 1.6,
+            "label": "IH1"
+          },
+          {
+            "start": 1.6,
+            "end": 1.68,
+            "label": "Z"
+          },
+          {
+            "start": 1.68,
+            "end": 1.82,
+            "label": "IH0"
+          },
+          {
+            "start": 1.82,
+            "end": 2.01,
+            "label": "T"
+          },
+          {
+            "start": 2.01,
+            "end": 2.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.83,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "056",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/056-16k.wav",
+        "sha256": "f3bd8e43d92a4e00700ef6e5a840927a6a2bc326ed505e253c6418fa491d8e5e",
+        "samples": 35200,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/056.TextGrid",
+      "textgrid_sha256": "1df59d28f49ddfbeac732c9304fc23b4c40e2309e470e6571befba8e7a2ae40c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.7,
+            "label": "nicks"
+          },
+          {
+            "start": 0.7,
+            "end": 0.9,
+            "label": ""
+          },
+          {
+            "start": 0.9,
+            "end": 1.09,
+            "label": "what"
+          },
+          {
+            "start": 1.09,
+            "end": 1.4,
+            "label": "time"
+          },
+          {
+            "start": 1.4,
+            "end": 1.52,
+            "label": "is"
+          },
+          {
+            "start": 1.52,
+            "end": 1.87,
+            "label": "it"
+          },
+          {
+            "start": 1.87,
+            "end": 2.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.7,
+            "label": "S"
+          },
+          {
+            "start": 0.7,
+            "end": 0.9,
+            "label": ""
+          },
+          {
+            "start": 0.9,
+            "end": 0.95,
+            "label": "HH"
+          },
+          {
+            "start": 0.95,
+            "end": 0.99,
+            "label": "W"
+          },
+          {
+            "start": 0.99,
+            "end": 1.02,
+            "label": "AH1"
+          },
+          {
+            "start": 1.02,
+            "end": 1.09,
+            "label": "T"
+          },
+          {
+            "start": 1.09,
+            "end": 1.21,
+            "label": "T"
+          },
+          {
+            "start": 1.21,
+            "end": 1.33,
+            "label": "AY1"
+          },
+          {
+            "start": 1.33,
+            "end": 1.4,
+            "label": "M"
+          },
+          {
+            "start": 1.4,
+            "end": 1.43,
+            "label": "IH1"
+          },
+          {
+            "start": 1.43,
+            "end": 1.52,
+            "label": "Z"
+          },
+          {
+            "start": 1.52,
+            "end": 1.63,
+            "label": "IH0"
+          },
+          {
+            "start": 1.63,
+            "end": 1.87,
+            "label": "T"
+          },
+          {
+            "start": 1.87,
+            "end": 2.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.7,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "057",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/057-16k.wav",
+        "sha256": "6ab9e07be650837976d21d4c4df167dd5e195f3b07f9ef77c92e29ae438a2ef2",
+        "samples": 30720,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/057.TextGrid",
+      "textgrid_sha256": "c2577c25ab34ec0b66e5537ede9e5cb01bff20f53716121b691fea81efbfa1e4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.62,
+            "label": "nicks"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 1.1,
+            "label": "set"
+          },
+          {
+            "start": 1.1,
+            "end": 1.14,
+            "label": "a"
+          },
+          {
+            "start": 1.14,
+            "end": 1.59,
+            "label": "timer"
+          },
+          {
+            "start": 1.59,
+            "end": 1.92,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.13,
+            "label": "HH"
+          },
+          {
+            "start": 0.13,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.28,
+            "label": "N"
+          },
+          {
+            "start": 0.28,
+            "end": 0.39,
+            "label": "IH1"
+          },
+          {
+            "start": 0.39,
+            "end": 0.47,
+            "label": "K"
+          },
+          {
+            "start": 0.47,
+            "end": 0.62,
+            "label": "S"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 0.95,
+            "label": "S"
+          },
+          {
+            "start": 0.95,
+            "end": 1.02,
+            "label": "EH1"
+          },
+          {
+            "start": 1.02,
+            "end": 1.1,
+            "label": "T"
+          },
+          {
+            "start": 1.1,
+            "end": 1.14,
+            "label": "AH0"
+          },
+          {
+            "start": 1.14,
+            "end": 1.25,
+            "label": "T"
+          },
+          {
+            "start": 1.25,
+            "end": 1.38,
+            "label": "AY1"
+          },
+          {
+            "start": 1.38,
+            "end": 1.46,
+            "label": "M"
+          },
+          {
+            "start": 1.46,
+            "end": 1.59,
+            "label": "ER0"
+          },
+          {
+            "start": 1.59,
+            "end": 1.92,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.62,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "058",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/058-16k.wav",
+        "sha256": "ad554bfcbd12188ad124e595194749e4745c4303de9f8f7635ef2ecc033b6733",
+        "samples": 34560,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/058.TextGrid",
+      "textgrid_sha256": "eb325157d70f13fdc01f91f663242d31c1f5ece1bac02b6f683867bbd50ec547",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 0.96,
+            "label": ""
+          },
+          {
+            "start": 0.96,
+            "end": 1.22,
+            "label": "set"
+          },
+          {
+            "start": 1.22,
+            "end": 1.27,
+            "label": "a"
+          },
+          {
+            "start": 1.27,
+            "end": 1.78,
+            "label": "timer"
+          },
+          {
+            "start": 1.78,
+            "end": 2.16,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 0.96,
+            "label": ""
+          },
+          {
+            "start": 0.96,
+            "end": 1.08,
+            "label": "S"
+          },
+          {
+            "start": 1.08,
+            "end": 1.15,
+            "label": "EH1"
+          },
+          {
+            "start": 1.15,
+            "end": 1.22,
+            "label": "T"
+          },
+          {
+            "start": 1.22,
+            "end": 1.27,
+            "label": "AH0"
+          },
+          {
+            "start": 1.27,
+            "end": 1.36,
+            "label": "T"
+          },
+          {
+            "start": 1.36,
+            "end": 1.52,
+            "label": "AY1"
+          },
+          {
+            "start": 1.52,
+            "end": 1.59,
+            "label": "M"
+          },
+          {
+            "start": 1.59,
+            "end": 1.78,
+            "label": "ER0"
+          },
+          {
+            "start": 1.78,
+            "end": 2.16,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "059",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/059-16k.wav",
+        "sha256": "a9c0c9bce92427b4263ed55c8f02353132ee724856d028c3d8fbb2fdafe40224",
+        "samples": 33280,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bf_isabella/059.TextGrid",
+      "textgrid_sha256": "f0e475f9e40b7fabac6513b9b851186135de8d069763459eec00eb699b9ce42f",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 0.95,
+            "label": ""
+          },
+          {
+            "start": 0.95,
+            "end": 1.23,
+            "label": "set"
+          },
+          {
+            "start": 1.23,
+            "end": 1.27,
+            "label": "a"
+          },
+          {
+            "start": 1.27,
+            "end": 1.8,
+            "label": "timer"
+          },
+          {
+            "start": 1.8,
+            "end": 2.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 0.95,
+            "label": ""
+          },
+          {
+            "start": 0.95,
+            "end": 1.08,
+            "label": "S"
+          },
+          {
+            "start": 1.08,
+            "end": 1.14,
+            "label": "EH1"
+          },
+          {
+            "start": 1.14,
+            "end": 1.23,
+            "label": "T"
+          },
+          {
+            "start": 1.23,
+            "end": 1.27,
+            "label": "AH0"
+          },
+          {
+            "start": 1.27,
+            "end": 1.4,
+            "label": "T"
+          },
+          {
+            "start": 1.4,
+            "end": 1.56,
+            "label": "AY1"
+          },
+          {
+            "start": 1.56,
+            "end": 1.65,
+            "label": "M"
+          },
+          {
+            "start": 1.65,
+            "end": 1.8,
+            "label": "ER0"
+          },
+          {
+            "start": 1.8,
+            "end": 2.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "072",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/072-16k.wav",
+        "sha256": "cb59945d39322a49a2dad5c9f6d2566f857e69c03ea22f2a237d629e3b38f973",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/072.TextGrid",
+      "textgrid_sha256": "41c640d9d0711f8770cace23f074c71e5d70dc0e7a97b64a72e775bbb52799b6",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.14,
+            "label": ""
+          },
+          {
+            "start": 0.14,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.14,
+            "label": ""
+          },
+          {
+            "start": 0.14,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "073",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/073-16k.wav",
+        "sha256": "560f84331475438d4a507a3fc4d66a91f40951c7e5580a003f486706d52ef702",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/073.TextGrid",
+      "textgrid_sha256": "7eb541e9432054be713e868e4a63c8f0f3f80ac77b28b1f8f1d4550f23170ad8",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.71,
+            "label": "nicks"
+          },
+          {
+            "start": 0.71,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.71,
+            "label": "S"
+          },
+          {
+            "start": 0.71,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.71,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "074",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/074-16k.wav",
+        "sha256": "8cbdd898c4a10bc2c8c561e9f21408393e73f02338fbd476b8a75bcf325ca614",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/074.TextGrid",
+      "textgrid_sha256": "d74c66419e79b3232828218a9a8d7133a1e9569d1434a98117a834379cd58013",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.37,
+            "label": "N"
+          },
+          {
+            "start": 0.37,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "075",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/075-16k.wav",
+        "sha256": "efa4a8f8dccf38e0342958125c1a5b69d804a847f70892506dd18e4667577901",
+        "samples": 33280,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/075.TextGrid",
+      "textgrid_sha256": "86f864f7481284b941409d9fd6cf6da088fcb96e40b4abc93198515892a7e965",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.75,
+            "label": "nicks"
+          },
+          {
+            "start": 0.75,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.14,
+            "label": "turn"
+          },
+          {
+            "start": 1.14,
+            "end": 1.23,
+            "label": "on"
+          },
+          {
+            "start": 1.23,
+            "end": 1.3,
+            "label": "the"
+          },
+          {
+            "start": 1.3,
+            "end": 1.74,
+            "label": "light"
+          },
+          {
+            "start": 1.74,
+            "end": 2.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.75,
+            "label": "S"
+          },
+          {
+            "start": 0.75,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.01,
+            "label": "T"
+          },
+          {
+            "start": 1.01,
+            "end": 1.09,
+            "label": "ER1"
+          },
+          {
+            "start": 1.09,
+            "end": 1.14,
+            "label": "N"
+          },
+          {
+            "start": 1.14,
+            "end": 1.18,
+            "label": "AA1"
+          },
+          {
+            "start": 1.18,
+            "end": 1.23,
+            "label": "N"
+          },
+          {
+            "start": 1.23,
+            "end": 1.27,
+            "label": "DH"
+          },
+          {
+            "start": 1.27,
+            "end": 1.3,
+            "label": "AH1"
+          },
+          {
+            "start": 1.3,
+            "end": 1.38,
+            "label": "L"
+          },
+          {
+            "start": 1.38,
+            "end": 1.51,
+            "label": "AY1"
+          },
+          {
+            "start": 1.51,
+            "end": 1.74,
+            "label": "T"
+          },
+          {
+            "start": 1.74,
+            "end": 2.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.75,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "076",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/076-16k.wav",
+        "sha256": "de1482259eb3c3f5f9a9d97a8f39780511206dbcb2451260cf5c7d9f891486b5",
+        "samples": 30720,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/076.TextGrid",
+      "textgrid_sha256": "3ce43530f080af820b65e185cced0fb4ae2131d4d0737ee784fb8ca774666f81",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.72,
+            "label": "nicks"
+          },
+          {
+            "start": 0.72,
+            "end": 0.87,
+            "label": ""
+          },
+          {
+            "start": 0.87,
+            "end": 1.05,
+            "label": "turn"
+          },
+          {
+            "start": 1.05,
+            "end": 1.16,
+            "label": "on"
+          },
+          {
+            "start": 1.16,
+            "end": 1.24,
+            "label": "the"
+          },
+          {
+            "start": 1.24,
+            "end": 1.66,
+            "label": "light"
+          },
+          {
+            "start": 1.66,
+            "end": 1.92,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.72,
+            "label": "S"
+          },
+          {
+            "start": 0.72,
+            "end": 0.87,
+            "label": ""
+          },
+          {
+            "start": 0.87,
+            "end": 0.96,
+            "label": "T"
+          },
+          {
+            "start": 0.96,
+            "end": 1.01,
+            "label": "ER1"
+          },
+          {
+            "start": 1.01,
+            "end": 1.05,
+            "label": "N"
+          },
+          {
+            "start": 1.05,
+            "end": 1.11,
+            "label": "AA1"
+          },
+          {
+            "start": 1.11,
+            "end": 1.16,
+            "label": "N"
+          },
+          {
+            "start": 1.16,
+            "end": 1.19,
+            "label": "DH"
+          },
+          {
+            "start": 1.19,
+            "end": 1.24,
+            "label": "AH1"
+          },
+          {
+            "start": 1.24,
+            "end": 1.3,
+            "label": "L"
+          },
+          {
+            "start": 1.3,
+            "end": 1.45,
+            "label": "AY1"
+          },
+          {
+            "start": 1.45,
+            "end": 1.66,
+            "label": "T"
+          },
+          {
+            "start": 1.66,
+            "end": 1.92,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.72,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "077",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, turn on the light.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/077-16k.wav",
+        "sha256": "019fb407441ac931ad4451d029528a0be3e9fd3368bf9c2b7a37cfde1dd25c8d",
+        "samples": 35200,
+        "transcript": "HEY NICKS TURN ON THE LIGHT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/077.TextGrid",
+      "textgrid_sha256": "e2bf1883900766f626e515aa103e288b0019b845b1ce3652602ad30d5018a830",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.82,
+            "label": "nicks"
+          },
+          {
+            "start": 0.82,
+            "end": 1.04,
+            "label": ""
+          },
+          {
+            "start": 1.04,
+            "end": 1.26,
+            "label": "turn"
+          },
+          {
+            "start": 1.26,
+            "end": 1.36,
+            "label": "on"
+          },
+          {
+            "start": 1.36,
+            "end": 1.44,
+            "label": "the"
+          },
+          {
+            "start": 1.44,
+            "end": 1.87,
+            "label": "light"
+          },
+          {
+            "start": 1.87,
+            "end": 2.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.52,
+            "label": "IH1"
+          },
+          {
+            "start": 0.52,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": "S"
+          },
+          {
+            "start": 0.82,
+            "end": 1.04,
+            "label": ""
+          },
+          {
+            "start": 1.04,
+            "end": 1.14,
+            "label": "T"
+          },
+          {
+            "start": 1.14,
+            "end": 1.22,
+            "label": "ER1"
+          },
+          {
+            "start": 1.22,
+            "end": 1.26,
+            "label": "N"
+          },
+          {
+            "start": 1.26,
+            "end": 1.31,
+            "label": "AA1"
+          },
+          {
+            "start": 1.31,
+            "end": 1.36,
+            "label": "N"
+          },
+          {
+            "start": 1.36,
+            "end": 1.4,
+            "label": "DH"
+          },
+          {
+            "start": 1.4,
+            "end": 1.44,
+            "label": "AH1"
+          },
+          {
+            "start": 1.44,
+            "end": 1.52,
+            "label": "L"
+          },
+          {
+            "start": 1.52,
+            "end": 1.67,
+            "label": "AY1"
+          },
+          {
+            "start": 1.67,
+            "end": 1.87,
+            "label": "T"
+          },
+          {
+            "start": 1.87,
+            "end": 2.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.82,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "078",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/078-16k.wav",
+        "sha256": "9fb5b4deeb03e85fb7e896f8db58ce594718ced48f8b36f7ecd652f80c8454c7",
+        "samples": 30080,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/078.TextGrid",
+      "textgrid_sha256": "96df835a6c4cee45464cd13e8a6160d16ed341ad77346ec08d8ae1363a4ae96a",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.74,
+            "label": "nicks"
+          },
+          {
+            "start": 0.74,
+            "end": 0.99,
+            "label": ""
+          },
+          {
+            "start": 0.99,
+            "end": 1.16,
+            "label": "what"
+          },
+          {
+            "start": 1.16,
+            "end": 1.4,
+            "label": "time"
+          },
+          {
+            "start": 1.4,
+            "end": 1.49,
+            "label": "is"
+          },
+          {
+            "start": 1.49,
+            "end": 1.67,
+            "label": "it"
+          },
+          {
+            "start": 1.67,
+            "end": 1.88,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.74,
+            "label": "S"
+          },
+          {
+            "start": 0.74,
+            "end": 0.99,
+            "label": ""
+          },
+          {
+            "start": 0.99,
+            "end": 1.03,
+            "label": "HH"
+          },
+          {
+            "start": 1.03,
+            "end": 1.08,
+            "label": "W"
+          },
+          {
+            "start": 1.08,
+            "end": 1.12,
+            "label": "AH1"
+          },
+          {
+            "start": 1.12,
+            "end": 1.16,
+            "label": "T"
+          },
+          {
+            "start": 1.16,
+            "end": 1.25,
+            "label": "T"
+          },
+          {
+            "start": 1.25,
+            "end": 1.33,
+            "label": "AY1"
+          },
+          {
+            "start": 1.33,
+            "end": 1.4,
+            "label": "M"
+          },
+          {
+            "start": 1.4,
+            "end": 1.43,
+            "label": "IH0"
+          },
+          {
+            "start": 1.43,
+            "end": 1.49,
+            "label": "Z"
+          },
+          {
+            "start": 1.49,
+            "end": 1.55,
+            "label": "IH1"
+          },
+          {
+            "start": 1.55,
+            "end": 1.67,
+            "label": "T"
+          },
+          {
+            "start": 1.67,
+            "end": 1.88,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.74,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "079",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/079-16k.wav",
+        "sha256": "fada1d8ce27fbf60f2c7652fccbd835c7afdd70a7c7a24091afe406ee3d83f7d",
+        "samples": 33920,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/079.TextGrid",
+      "textgrid_sha256": "cd9790da307390f69a4e94188f70dbe7d60378db24be3d0d2b0458fa62d1b40b",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.71,
+            "label": "nicks"
+          },
+          {
+            "start": 0.71,
+            "end": 1.03,
+            "label": ""
+          },
+          {
+            "start": 1.03,
+            "end": 1.19,
+            "label": "what"
+          },
+          {
+            "start": 1.19,
+            "end": 1.47,
+            "label": "time"
+          },
+          {
+            "start": 1.47,
+            "end": 1.58,
+            "label": "is"
+          },
+          {
+            "start": 1.58,
+            "end": 1.84,
+            "label": "it"
+          },
+          {
+            "start": 1.84,
+            "end": 2.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.53,
+            "label": "K"
+          },
+          {
+            "start": 0.53,
+            "end": 0.71,
+            "label": "S"
+          },
+          {
+            "start": 0.71,
+            "end": 1.03,
+            "label": ""
+          },
+          {
+            "start": 1.03,
+            "end": 1.08,
+            "label": "HH"
+          },
+          {
+            "start": 1.08,
+            "end": 1.11,
+            "label": "W"
+          },
+          {
+            "start": 1.11,
+            "end": 1.15,
+            "label": "AH1"
+          },
+          {
+            "start": 1.15,
+            "end": 1.19,
+            "label": "T"
+          },
+          {
+            "start": 1.19,
+            "end": 1.28,
+            "label": "T"
+          },
+          {
+            "start": 1.28,
+            "end": 1.4,
+            "label": "AY1"
+          },
+          {
+            "start": 1.4,
+            "end": 1.47,
+            "label": "M"
+          },
+          {
+            "start": 1.47,
+            "end": 1.51,
+            "label": "IH0"
+          },
+          {
+            "start": 1.51,
+            "end": 1.58,
+            "label": "Z"
+          },
+          {
+            "start": 1.58,
+            "end": 1.67,
+            "label": "IH0"
+          },
+          {
+            "start": 1.67,
+            "end": 1.84,
+            "label": "T"
+          },
+          {
+            "start": 1.84,
+            "end": 2.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.71,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "080",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, what time is it?",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/080-16k.wav",
+        "sha256": "a2c2a37d87411ba8bacdf02f58217d487fa8b5371d3c92742ba6bf1055741051",
+        "samples": 32640,
+        "transcript": "HEY NICKS WHAT TIME IS IT"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/080.TextGrid",
+      "textgrid_sha256": "fb71853783b2e40011af9ffa82a3c114b6642f18773ef809487b73d4ddab216e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.82,
+            "label": "nicks"
+          },
+          {
+            "start": 0.82,
+            "end": 1.04,
+            "label": ""
+          },
+          {
+            "start": 1.04,
+            "end": 1.23,
+            "label": "what"
+          },
+          {
+            "start": 1.23,
+            "end": 1.46,
+            "label": "time"
+          },
+          {
+            "start": 1.46,
+            "end": 1.58,
+            "label": "is"
+          },
+          {
+            "start": 1.58,
+            "end": 1.73,
+            "label": "it"
+          },
+          {
+            "start": 1.73,
+            "end": 2.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.51,
+            "label": "IH1"
+          },
+          {
+            "start": 0.51,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": "S"
+          },
+          {
+            "start": 0.82,
+            "end": 1.04,
+            "label": ""
+          },
+          {
+            "start": 1.04,
+            "end": 1.09,
+            "label": "HH"
+          },
+          {
+            "start": 1.09,
+            "end": 1.15,
+            "label": "W"
+          },
+          {
+            "start": 1.15,
+            "end": 1.2,
+            "label": "AH1"
+          },
+          {
+            "start": 1.2,
+            "end": 1.23,
+            "label": "T"
+          },
+          {
+            "start": 1.23,
+            "end": 1.3,
+            "label": "T"
+          },
+          {
+            "start": 1.3,
+            "end": 1.39,
+            "label": "AY1"
+          },
+          {
+            "start": 1.39,
+            "end": 1.46,
+            "label": "M"
+          },
+          {
+            "start": 1.46,
+            "end": 1.5,
+            "label": "IH1"
+          },
+          {
+            "start": 1.5,
+            "end": 1.58,
+            "label": "Z"
+          },
+          {
+            "start": 1.58,
+            "end": 1.67,
+            "label": "IH0"
+          },
+          {
+            "start": 1.67,
+            "end": 1.73,
+            "label": "T"
+          },
+          {
+            "start": 1.73,
+            "end": 2.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.82,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "081",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/081-16k.wav",
+        "sha256": "264885bf782b9ec4a84879d98bc5312dd340b20a43d881b5773f79cd9856364c",
+        "samples": 31360,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/081.TextGrid",
+      "textgrid_sha256": "b3f765df44f06bebed6ba3b00f3b6340fbdc55e556738b02cc65b7914b631fea",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.7,
+            "label": "nicks"
+          },
+          {
+            "start": 0.7,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 1.1,
+            "label": "set"
+          },
+          {
+            "start": 1.1,
+            "end": 1.14,
+            "label": "a"
+          },
+          {
+            "start": 1.14,
+            "end": 1.63,
+            "label": "timer"
+          },
+          {
+            "start": 1.63,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.7,
+            "label": "S"
+          },
+          {
+            "start": 0.7,
+            "end": 0.82,
+            "label": ""
+          },
+          {
+            "start": 0.82,
+            "end": 0.96,
+            "label": "S"
+          },
+          {
+            "start": 0.96,
+            "end": 1.02,
+            "label": "EH1"
+          },
+          {
+            "start": 1.02,
+            "end": 1.1,
+            "label": "T"
+          },
+          {
+            "start": 1.1,
+            "end": 1.14,
+            "label": "AH0"
+          },
+          {
+            "start": 1.14,
+            "end": 1.25,
+            "label": "T"
+          },
+          {
+            "start": 1.25,
+            "end": 1.4,
+            "label": "AY1"
+          },
+          {
+            "start": 1.4,
+            "end": 1.49,
+            "label": "M"
+          },
+          {
+            "start": 1.49,
+            "end": 1.63,
+            "label": "ER0"
+          },
+          {
+            "start": 1.63,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.7,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "082",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/082-16k.wav",
+        "sha256": "353f5bcaff6e85c13a3942396fa7ade029fbc447fdb743c1bb7515a47c462e3d",
+        "samples": 31360,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/082.TextGrid",
+      "textgrid_sha256": "088412816a6983a8d08e32028715833ab1e41072784931b7132609fb8c6f2008",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.72,
+            "label": "nicks"
+          },
+          {
+            "start": 0.72,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.16,
+            "label": "set"
+          },
+          {
+            "start": 1.16,
+            "end": 1.21,
+            "label": "a"
+          },
+          {
+            "start": 1.21,
+            "end": 1.69,
+            "label": "timer"
+          },
+          {
+            "start": 1.69,
+            "end": 1.96,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.72,
+            "label": "S"
+          },
+          {
+            "start": 0.72,
+            "end": 0.92,
+            "label": ""
+          },
+          {
+            "start": 0.92,
+            "end": 1.05,
+            "label": "S"
+          },
+          {
+            "start": 1.05,
+            "end": 1.11,
+            "label": "EH1"
+          },
+          {
+            "start": 1.11,
+            "end": 1.16,
+            "label": "T"
+          },
+          {
+            "start": 1.16,
+            "end": 1.21,
+            "label": "AH0"
+          },
+          {
+            "start": 1.21,
+            "end": 1.31,
+            "label": "T"
+          },
+          {
+            "start": 1.31,
+            "end": 1.46,
+            "label": "AY1"
+          },
+          {
+            "start": 1.46,
+            "end": 1.53,
+            "label": "M"
+          },
+          {
+            "start": 1.53,
+            "end": 1.69,
+            "label": "ER0"
+          },
+          {
+            "start": 1.69,
+            "end": 1.96,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.72,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "083",
+        "voice": "bm_fable",
+        "text": "Hey Nicks, set a timer.",
+        "path": ".local/wakeword/chatterbox-conditioned-training-v1/083-16k.wav",
+        "sha256": "450a4b5a345289269752c8b9f8f920a41dde87a42c861ab1589c1f7174e26bc6",
+        "samples": 32640,
+        "transcript": "HEY NICKS SET A TIMER"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-training-prefix-alignment-v1/alignment/bm_fable/083.TextGrid",
+      "textgrid_sha256": "afc73deb910ed22143e9aad85bd1c2b4857fbf830e4c7a64f46248d7286c4cb4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.82,
+            "label": "nicks"
+          },
+          {
+            "start": 0.82,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.2,
+            "label": "set"
+          },
+          {
+            "start": 1.2,
+            "end": 1.24,
+            "label": "a"
+          },
+          {
+            "start": 1.24,
+            "end": 1.76,
+            "label": "timer"
+          },
+          {
+            "start": 1.76,
+            "end": 2.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.51,
+            "label": "IH1"
+          },
+          {
+            "start": 0.51,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.82,
+            "label": "S"
+          },
+          {
+            "start": 0.82,
+            "end": 0.98,
+            "label": ""
+          },
+          {
+            "start": 0.98,
+            "end": 1.12,
+            "label": "S"
+          },
+          {
+            "start": 1.12,
+            "end": 1.16,
+            "label": "EH1"
+          },
+          {
+            "start": 1.16,
+            "end": 1.2,
+            "label": "T"
+          },
+          {
+            "start": 1.2,
+            "end": 1.24,
+            "label": "AH0"
+          },
+          {
+            "start": 1.24,
+            "end": 1.35,
+            "label": "T"
+          },
+          {
+            "start": 1.35,
+            "end": 1.49,
+            "label": "AY1"
+          },
+          {
+            "start": 1.49,
+            "end": 1.59,
+            "label": "M"
+          },
+          {
+            "start": 1.59,
+            "end": 1.76,
+            "label": "ER0"
+          },
+          {
+            "start": 1.76,
+            "end": 2.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.82,
+      "mechanically_usable": true
+    }
+  ],
+  "quality": [
+    {
+      "file": "056",
+      "begin": "0.0",
+      "end": "2.2",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-54.74485973011364",
+      "speech_log_likelihood": "-61.24005800134995",
+      "phone_duration_deviation": "3.470527565560148",
+      "max_running_short_interval": "0",
+      "snr": "21.689638498512302",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "054",
+      "begin": "0.0",
+      "end": "2.24",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-54.48771449497768",
+      "speech_log_likelihood": "-57.78193238202263",
+      "phone_duration_deviation": "2.7262933586121485",
+      "max_running_short_interval": "0",
+      "snr": "20.086159069430224",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "080",
+      "begin": "0.0",
+      "end": "2.04",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-54.01617072610294",
+      "speech_log_likelihood": "-59.26159780165728",
+      "phone_duration_deviation": "2.654155516231163",
+      "max_running_short_interval": "0",
+      "snr": "16.391937429356503",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "008",
+      "begin": "0.0",
+      "end": "2.08",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.7287362905649",
+      "speech_log_likelihood": "-58.09103079403148",
+      "phone_duration_deviation": "2.654155516231163",
+      "max_running_short_interval": "0",
+      "snr": "22.367920228191338",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "083",
+      "begin": "0.0",
+      "end": "2.04",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-54.175680721507355",
+      "speech_log_likelihood": "-58.67497171674456",
+      "phone_duration_deviation": "2.5924531722749493",
+      "max_running_short_interval": "0",
+      "snr": "15.543408606740936",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "048",
+      "begin": "0.0",
+      "end": "1.28",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-50.3837776184082",
+      "speech_log_likelihood": "-57.57013193766276",
+      "phone_duration_deviation": "2.557393360306152",
+      "max_running_short_interval": "0",
+      "snr": "19.48473016906942",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "076",
+      "begin": "0.0",
+      "end": "1.92",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.74026997884115",
+      "speech_log_likelihood": "-56.99952673912048",
+      "phone_duration_deviation": "2.4123057242323926",
+      "max_running_short_interval": "0",
+      "snr": "13.909458685864966",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "077",
+      "begin": "0.0",
+      "end": "2.2",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-51.90553533380682",
+      "speech_log_likelihood": "-55.34472846984863",
+      "phone_duration_deviation": "2.4123057242323926",
+      "max_running_short_interval": "0",
+      "snr": "14.75786118539861",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "028",
+      "begin": "0.0",
+      "end": "1.86",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-49.860131048387096",
+      "speech_log_likelihood": "-53.24951887130737",
+      "phone_duration_deviation": "2.4122902145728964",
+      "max_running_short_interval": "0",
+      "snr": "18.107094623991884",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "029",
+      "begin": "0.0",
+      "end": "2.02",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-53.2327554532797",
+      "speech_log_likelihood": "-54.259215354919434",
+      "phone_duration_deviation": "2.361064256939674",
+      "max_running_short_interval": "0",
+      "snr": "19.851575924093666",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "058",
+      "begin": "0.0",
+      "end": "2.16",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-51.94145598234954",
+      "speech_log_likelihood": "-59.67974989754813",
+      "phone_duration_deviation": "2.180838627179111",
+      "max_running_short_interval": "0",
+      "snr": "23.46113674206349",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "050",
+      "begin": "0.0",
+      "end": "1.16",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-48.16253030711207",
+      "speech_log_likelihood": "-57.23657035827637",
+      "phone_duration_deviation": "2.122587184606431",
+      "max_running_short_interval": "0",
+      "snr": "23.248328698088827",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "078",
+      "begin": "0.0",
+      "end": "1.88",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-55.624070187832444",
+      "speech_log_likelihood": "-61.31877674775965",
+      "phone_duration_deviation": "2.064429445646505",
+      "max_running_short_interval": "0",
+      "snr": "14.328980615355782",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "031",
+      "begin": "0.0",
+      "end": "1.82",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-53.15176425137363",
+      "speech_log_likelihood": "-56.68475319357479",
+      "phone_duration_deviation": "2.064429445646505",
+      "max_running_short_interval": "0",
+      "snr": "17.738502167871466",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "007",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-53.07987882653061",
+      "speech_log_likelihood": "-57.001701579374426",
+      "phone_duration_deviation": "2.0209281596274167",
+      "max_running_short_interval": "0",
+      "snr": "20.09910446756849",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "055",
+      "begin": "0.0",
+      "end": "2.2",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-56.04654208096591",
+      "speech_log_likelihood": "-61.06559506584616",
+      "phone_duration_deviation": "2.020921393887169",
+      "max_running_short_interval": "0",
+      "snr": "21.176333303192123",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "006",
+      "begin": "0.0",
+      "end": "1.76",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-53.54848965731534",
+      "speech_log_likelihood": "-60.5641331392176",
+      "phone_duration_deviation": "1.9707231620270078",
+      "max_running_short_interval": "0",
+      "snr": "19.394922202494136",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "034",
+      "begin": "0.0",
+      "end": "1.9",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-50.03068462171053",
+      "speech_log_likelihood": "-54.3335805620466",
+      "phone_duration_deviation": "1.8990165588397954",
+      "max_running_short_interval": "0",
+      "snr": "17.206710625271274",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "025",
+      "begin": "0.0",
+      "end": "0.94",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-47.301664311835104",
+      "speech_log_likelihood": "-52.54175313313802",
+      "phone_duration_deviation": "1.8990165588397954",
+      "max_running_short_interval": "0",
+      "snr": "17.503479620724484",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "032",
+      "begin": "0.0",
+      "end": "1.62",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-53.68700569058642",
+      "speech_log_likelihood": "-56.395647161147174",
+      "phone_duration_deviation": "1.8990156555721152",
+      "max_running_short_interval": "0",
+      "snr": "24.382305327134212",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "033",
+      "begin": "0.0",
+      "end": "1.94",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-47.96992288176546",
+      "speech_log_likelihood": "-50.43671253749302",
+      "phone_duration_deviation": "1.8887890687241486",
+      "max_running_short_interval": "0",
+      "snr": "18.063248917523342",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "027",
+      "begin": "0.0",
+      "end": "2.02",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-50.648563196163366",
+      "speech_log_likelihood": "-53.937248945236206",
+      "phone_duration_deviation": "1.8887890687241486",
+      "max_running_short_interval": "0",
+      "snr": "17.50830667649914",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "052",
+      "begin": "0.0",
+      "end": "2.12",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-52.8375773879717",
+      "speech_log_likelihood": "-58.874412298202515",
+      "phone_duration_deviation": "1.8499971113140126",
+      "max_running_short_interval": "0",
+      "snr": "21.57160014882703",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "051",
+      "begin": "0.0",
+      "end": "2.36",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-52.966312731726696",
+      "speech_log_likelihood": "-60.70275402069092",
+      "phone_duration_deviation": "1.8485100014083886",
+      "max_running_short_interval": "0",
+      "snr": "24.8278808221729",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "072",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-50.91902982271635",
+      "speech_log_likelihood": "-60.542388916015625",
+      "phone_duration_deviation": "1.81807218655173",
+      "max_running_short_interval": "0",
+      "snr": "15.243739882294964",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "030",
+      "begin": "0.0",
+      "end": "1.7",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.06815257352941",
+      "speech_log_likelihood": "-55.28027606010437",
+      "phone_duration_deviation": "1.8079270212634901",
+      "max_running_short_interval": "0",
+      "snr": "17.968489543777487",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "053",
+      "begin": "0.0",
+      "end": "2.24",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-55.27911376953125",
+      "speech_log_likelihood": "-60.32103681564331",
+      "phone_duration_deviation": "1.792867764012235",
+      "max_running_short_interval": "0",
+      "snr": "21.88994385171797",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "075",
+      "begin": "0.0",
+      "end": "2.08",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.27528263972356",
+      "speech_log_likelihood": "-56.0718355178833",
+      "phone_duration_deviation": "1.775261705270542",
+      "max_running_short_interval": "0",
+      "snr": "14.998304609031022",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "082",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-51.96682676977041",
+      "speech_log_likelihood": "-56.0785939352853",
+      "phone_duration_deviation": "1.7126430097801475",
+      "max_running_short_interval": "0",
+      "snr": "16.27046291489135",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "057",
+      "begin": "0.0",
+      "end": "1.92",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-54.7174326578776",
+      "speech_log_likelihood": "-60.94246918814523",
+      "phone_duration_deviation": "1.7126403278464464",
+      "max_running_short_interval": "0",
+      "snr": "19.913482751642206",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "010",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-51.02487244897959",
+      "speech_log_likelihood": "-54.72104072570801",
+      "phone_duration_deviation": "1.7126403278464464",
+      "max_running_short_interval": "0",
+      "snr": "21.12684840510427",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "059",
+      "begin": "0.0",
+      "end": "2.08",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-55.75561053936298",
+      "speech_log_likelihood": "-59.86383710588728",
+      "phone_duration_deviation": "1.7126376459139792",
+      "max_running_short_interval": "0",
+      "snr": "18.1970095311688",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "011",
+      "begin": "0.0",
+      "end": "2.2",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-51.565571732954545",
+      "speech_log_likelihood": "-55.687400000435964",
+      "phone_duration_deviation": "1.7126349639827378",
+      "max_running_short_interval": "0",
+      "snr": "20.934040336384435",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "002",
+      "begin": "0.0",
+      "end": "1.2",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-47.89482828776042",
+      "speech_log_likelihood": "-52.79799016316732",
+      "phone_duration_deviation": "1.650266617493161",
+      "max_running_short_interval": "0",
+      "snr": "21.320219070134158",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "009",
+      "begin": "0.0",
+      "end": "2.28",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-50.17160516036184",
+      "speech_log_likelihood": "-57.031231198992046",
+      "phone_duration_deviation": "1.5462015803337545",
+      "max_running_short_interval": "0",
+      "snr": "24.70422407038776",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "005",
+      "begin": "0.0",
+      "end": "2.08",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.55046668419471",
+      "speech_log_likelihood": "-57.2923641204834",
+      "phone_duration_deviation": "1.43356650705379",
+      "max_running_short_interval": "0",
+      "snr": "21.62263085002724",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "004",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.55905213647959",
+      "speech_log_likelihood": "-56.21349835395813",
+      "phone_duration_deviation": "1.3755703521808076",
+      "max_running_short_interval": "0",
+      "snr": "21.766640953940627",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "001",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-48.540658456307874",
+      "speech_log_likelihood": "-53.39546140034994",
+      "phone_duration_deviation": "1.3755703521808076",
+      "max_running_short_interval": "0",
+      "snr": "21.889498148242964",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "035",
+      "begin": "0.0",
+      "end": "1.9",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-50.248231907894734",
+      "speech_log_likelihood": "-51.89644159589495",
+      "phone_duration_deviation": "1.2963678977146753",
+      "max_running_short_interval": "0",
+      "snr": "17.00827273492965",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "079",
+      "begin": "0.0",
+      "end": "2.12",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-52.732237617924525",
+      "speech_log_likelihood": "-58.2679640826057",
+      "phone_duration_deviation": "1.2963626643737236",
+      "max_running_short_interval": "0",
+      "snr": "9.833398119370532",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "003",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.010667450573976",
+      "speech_log_likelihood": "-56.010676860809326",
+      "phone_duration_deviation": "1.2931186868688103",
+      "max_running_short_interval": "0",
+      "snr": "21.778085649706355",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "081",
+      "begin": "0.0",
+      "end": "1.96",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.50909797512755",
+      "speech_log_likelihood": "-58.62954330444336",
+      "phone_duration_deviation": "1.279153689131504",
+      "max_running_short_interval": "0",
+      "snr": "14.508407086255716",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "073",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-51.9831689453125",
+      "speech_log_likelihood": "-56.248495737711586",
+      "phone_duration_deviation": "1.1949634381794536",
+      "max_running_short_interval": "0",
+      "snr": "13.616713947528645",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "026",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-46.397625358737244",
+      "speech_log_likelihood": "-48.807779947916664",
+      "phone_duration_deviation": "1.1949634381794536",
+      "max_running_short_interval": "0",
+      "snr": "19.3193015566786",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "049",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-51.49071796123798",
+      "speech_log_likelihood": "-58.23729387919108",
+      "phone_duration_deviation": "1.1424462485664193",
+      "max_running_short_interval": "0",
+      "snr": "20.765176777858564",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "000",
+      "begin": "0.0",
+      "end": "0.92",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-50.079276706861414",
+      "speech_log_likelihood": "-56.93374061584473",
+      "phone_duration_deviation": "0.8527052175881639",
+      "max_running_short_interval": "0",
+      "snr": "21.489905984039616",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "024",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-48.91029077646684",
+      "speech_log_likelihood": "-52.467297871907554",
+      "phone_duration_deviation": "0.8071802527928582",
+      "max_running_short_interval": "0",
+      "snr": "18.392690163882303",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "074",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-49.7142333984375",
+      "speech_log_likelihood": "-55.910291035970054",
+      "phone_duration_deviation": "0.5000405248840749",
+      "max_running_short_interval": "0",
+      "snr": "14.771458259612388",
+      "intensity_deviation": ""
+    }
+  ],
+  "analysis_sha256": "9a704fa01fdc55ff3967c3dc6537109d284b3df0be75453729706e003c429acc",
+  "all_mechanically_usable": true,
+  "wake_detector_invocations": 0,
+  "training_run": false,
+  "phonetic_truth_claim": false,
+  "policy": "All48training-only positive whole waveforms, including12bare and36commands; no ASR/wake score selection. Pinned existing MFA3.4.3 English US ARPA, SQLite2jobs no speakeradaptation. All word/phone intervals and quality preserved. Forced supplied transcript is not independent text verification or phonetic truth. No missing prefix replacement with clipend. No training/label changes/heldout access."
+}
