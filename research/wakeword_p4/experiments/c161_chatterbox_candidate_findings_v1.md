@@ -81,3 +81,29 @@ official-target clips versus C161 zero. Constructed nearwords remain diagnostic;
 whole-container activations still do not establish phonetic correctness or
 daily occurrence rates. Complete474 traces, records and result are archived in
 `4090-bc01-melo-evidence-v1.tar.gz`, with verified member hashes in its manifest.
+
+## Common-language expansion and six-cups review
+
+Locked32 intended daily sentences x3 seeds, one consumed builtin development
+voice, generated96 full watermarked clips (165seconds) and replayed both
+fixed models. All tasks exited0. Conversation24/household24/name-address24:
+both zero activated clips. Next/mix/six daily sentences24: C161 zero, bc01 one.
+These are correlated synthetic clips, not exposure frequencies or FAR hours.
+
+The triggered request is “We need six cups of water.” seed726, index69.
+Independent pinned small.en CUDA float16 beam3/no prompt/VAD transcribes all
+three sentence seeds exactly as requested. bc01 triggers at0.75seconds for
+seed726; the other seeds do not trigger. C161 never triggers on these three.
+Descriptive maximum5-step means: C161 .87109375/.6046875/.22734375 versus
+bc01 .94921875/.60546875/.1390625. Threshold remains .91796875; no rescue.
+The event overlaps ASR's automatic “six” interval .46–.76seconds. This is a
+daily lexical-conflict lead, not precise phonetic truth or causal localization.
+One successful ASR transcript does not substitute for acoustic/P4 review.
+
+First ASR review failed while serializing already-recursive word dictionaries,
+before writing a result. Failure log retained; corrected execution lockv2 and
+unchanged audio/ASR parameters completed with exit0. Raw word/timestamp reports
+and saved-trace peak checks are published. No new generation/retries to find
+cleaner examples, no samples relabeled or admitted to training. Mac should
+include natural “need six” contexts in C161/bc01 practical comparison; retain
+C161 as baseline, alongside the British standalone regression noted above.
