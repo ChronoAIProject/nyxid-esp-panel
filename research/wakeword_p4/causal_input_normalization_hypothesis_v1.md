@@ -1,0 +1,7 @@
+# Conditioning invariance architecture hypothesis
+
+The conditioning-disjoint contextual candidate fails broadly:47/144 target hits and29/720 negative events, with target hits by reserved voice10/36,17/36,16/36,4/36 and an `af_kore` negative outlier25/180. Scalar objective changes on the same encoder did not establish transfer.
+
+Next hypothesis: normalize each 64-channel MFCC frame immediately before the causal cached encoder using only that frame (`(x-mean_channel)/sqrt(var_channel+eps)`), with fixed epsilon and an explicit bounded affine scale if needed. This uses no future PCM, no record-level/global statistics, and no state crossing resets. It targets conditioning-dependent channel gain/offset while retaining temporal evidence. It changes the ABI arithmetic and therefore requires a new cache INT8 feasibility audit, real-state calibration and full development replay. The original encoder and all failures remain controls.
+
+Pre-registration: train only on the 16 conditioning training split; reserve the same four conditioning names for development; 5000 AdamW steps, seed726, same complete-wave sampler and exact decoder. Do not consume protected final sets. Reject if source hashes/role assertions fail, if CPU/GPU normalization mismatch exceeds tolerance, if any cache graph falls back to float, or if development target/negative gates are not met. No claim of human or Hi ESP equivalence.
