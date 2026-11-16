@@ -1,0 +1,44 @@
+{
+  "schema": "current-causal-completion-gap-audit-v1",
+  "branch": "research-hye-nyx-voice-gpu",
+  "latest_commit": "e280e6ae",
+  "items": {
+    "frozen_v30": {
+      "path": ".local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite",
+      "required_sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+      "status": "available",
+      "bytes": 54440,
+      "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c"
+    },
+    "fresh_threshold_development": {
+      "status": "missing",
+      "evidence": "research/wakeword_p4/results/4090-unused-development-inventory-audit-v1.json"
+    },
+    "sealed_acceptance": {
+      "status": "missing",
+      "reason": "No candidate has passed reused-development viability; protected final sets remain closed"
+    },
+    "candidate_int8_qualification": {
+      "status": "missing",
+      "reason": "All recent causal controls rejected before export"
+    },
+    "official_hiesp_matched_protocol": {
+      "status": "incomplete",
+      "reason": "Existing synthetic references are diagnostic and not a qualified candidate comparison"
+    },
+    "human_generalization": {
+      "status": "out_of_scope",
+      "reason": "Objective explicitly limits claims to synthetic protocol"
+    }
+  },
+  "executed_controls": [
+    "contextual",
+    "normalized",
+    "styleaug",
+    "conditioning-risk",
+    "allocation-margin",
+    "channel-mask"
+  ],
+  "policy": "Do not promote or handoff any rejected control; do not open protected final sets; next work requires a genuinely unconsumed causal-compatible development pack or a separately justified new source protocol.",
+  "limits": "Read-only state audit; no model/audio/threshold calls."
+}
