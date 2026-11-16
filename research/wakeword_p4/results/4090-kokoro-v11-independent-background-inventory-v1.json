@@ -1,0 +1,17 @@
+{
+  "schema": "kokoro-v11-independent-background-inventory-v1",
+  "status": "no-admissible-new-background-source-found",
+  "search_root": ".local/wakeword",
+  "existing_admitted_background": {"manifest": ".local/wakeword/backgrounds/manifest.json", "hours": 1.1505941840277776},
+  "excluded_families": [
+    "AMI independent/final and far-field copies",
+    "DiPCo development/training copies",
+    "LibriSpeech/AISHELL/Libri dev-other corpora already used by prior training or diagnostics",
+    "Hey/Jenny/Piper/Kokoro/Melo/SpeechT5/Qwen rendered and native packs",
+    "frozen negatives, prospective whole-waveform, and historical handoff packs"
+  ],
+  "policy": "Do not count an audio file as independent exposure without an authenticated new source manifest, source hash, continuous traversal record, and proof it was not consumed by prior training/threshold selection.",
+  "far_gap_hours": 4.84087,
+  "disk_budget": {"reserve_gib": 100, "new_expected_gib": 0},
+  "action": "retain v30; await genuinely new background source or leave FAR gate failed"
+}
