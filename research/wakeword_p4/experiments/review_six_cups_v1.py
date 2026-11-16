@@ -7,10 +7,10 @@ import subprocess
 import sys
 
 R = Path('research/wakeword_p4/results')
-PLAN = R / '4090-six-cups-asr-plan-v1.json'
+PLAN = R / '4090-six-cups-asr-plan-v2.json'
 DATA = Path('.local/wakeword/chatterbox-daily-language-v1')
 MODEL = Path('.local/wakeword/whisper-small-en')
-RESULT = R / '4090-six-cups-asr-original-v1.json'
+RESULT = R / '4090-six-cups-asr-original-v2.json'
 
 
 def sha(path):
@@ -58,8 +58,6 @@ def run():
         assert rate == 16000 and pcm.ndim == 1
         segments, info = model.transcribe(pcm, **p['config'])
         segments = [segment._asdict() for segment in segments]
-        for segment in segments:
-            segment['words'] = [word._asdict() for word in segment['words']]
         row = dict(index=source['index'], request=source['request'], wav_sha256=sha(wav),
                    segments=segments, transcript=' '.join(s['text'] for s in segments).strip(),
                    model_events=events[source['index']]['models'])
