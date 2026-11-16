@@ -1,0 +1,15 @@
+{
+  "schema": "kokoro-v11-candidate-teacher60-balanced-qualification-v1",
+  "candidate_sha256": "1e78994c48292ca2866b2ea581ffad9ec4bbc099014e8283c2e3d154ca2ac16d",
+  "candidate_bytes": 52584,
+  "training_steps": 3000,
+  "device": "NVIDIA GeForce RTX 4090",
+  "hypothesis": "equal engine sampling (source-exponent=0) will prevent Kokoro from being drowned out by Piper",
+  "selected_threshold": 0.95,
+  "stream_replay": {"positive_records":48,"negative_records":96,"positive_event_records":24,"negative_event_records":0},
+  "validation": {"kokoro_v11_fullwave_recall":0.0,"ambient_hours":1.2048112673611107,"ambient_events":0},
+  "passed": false,
+  "failure_reasons": ["fullwave Kokoro independent voice validation remained at zero recall", "stream replay reached only 24/48 positive events", "FAR exposure remains below 5.99146 hours required for <=0.5/h zero-event upper bound"],
+  "v30_retained": true,
+  "scope": "synthetic protocol only; no human generalization claim"
+}
