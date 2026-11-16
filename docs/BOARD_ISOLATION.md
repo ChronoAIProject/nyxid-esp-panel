@@ -95,7 +95,12 @@ rejected after its fragmented prefix with HTTP 422 and connection closure;
 the running image and slot were unchanged. The canonical local images also
 passed startup health verification. On the legacy board, URL OTA rejected the
 LCD-X8 production image despite its correct digest, then installed the matching
-local image into the other slot and passed the startup health gate.
+local image into the other slot and passed the startup health gate. The retained
+OTA UART traces show the ESP-Hosted peripheral reaching `Received INIT event`
+and `Base transport is set-up` after each captured reboot. The earlier
+experimental note about an ESP-Hosted startup failure is therefore not
+reproducible evidence; its later WebSocket errors target the historical `.57`
+backend address.
 
 Both boards completed an existing English acoustic fixture with the complete
 user directive and an audible-response data path: microphone and output peaks,
