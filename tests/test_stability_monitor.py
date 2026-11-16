@@ -25,6 +25,103 @@ def status():
 
 
 class StabilityMonitorTests(unittest.TestCase):
+    def test_config_accepts_distinct_additional_targets(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / 'config.json'
+            state = Path(root) / 'state'
+            secondary = state / 'x8'
+            path.write_text(json.dumps(dict(
+                status_url='http://legacy/status', expected_slug='legacy',
+                interval_s=30, state_dir=str(state), additional_targets=[dict(
+                    label='lcd-x8', status_url='http://x8/status',
+                    expected_slug='x8', state_dir=str(secondary))])))
+            config = monitor.config_read(path)
+            self.assertEqual(config['label'], 'primary')
+            self.assertEqual(config['additional_targets'][0]['label'], 'lcd-x8')
+            self.assertEqual(config['additional_targets'][0]['interval_s'], 30)
+
+    def test_config_rejects_shared_identity_directory_or_label(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / 'config.json'
+            base = dict(label='legacy', status_url='http://legacy/status',
+                        expected_slug='legacy', state_dir=str(Path(root) / 'state'))
+            other = dict(label='lcd-x8', status_url='http://x8/status',
+                         expected_slug='x8', state_dir=str(Path(root) / 'state' / 'x8'))
+            for field in ('label', 'expected_slug', 'state_dir'):
+                with self.subTest(field=field):
+                    path.write_text(json.dumps(dict(base, additional_targets=[dict(
+                        other, **{field: base[field]})])))
+                    with self.assertRaises(ValueError):
+                        monitor.config_read(path)
+            path.write_text(json.dumps(base))
+            self.assertIsInstance(monitor.configured_monitor(monitor.config_read(path)), monitor.Monitor)
+
+    def test_monitor_group_keeps_independent_status_and_histories(self):
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            config = dict(status_url='http://legacy/status', expected_slug='test-board',
+                          state_dir=str(root / 'legacy'), interval_s=30, label='legacy',
+                          additional_targets=[dict(label='lcd-x8', status_url='http://x8/status',
+                                                   expected_slug='x8-board',
+                                                   state_dir=str(root / 'x8'), interval_s=30)])
+            first = status()
+            second = status()
+            second['nyx']['slug'] = 'x8-board'
+            responses = [io.BytesIO(json.dumps(first).encode()), io.BytesIO(json.dumps(second).encode())]
+            group = monitor.MonitorGroup(config)
+            with patch.object(monitor.time, 'time', return_value=1000000), patch.object(
+                    monitor.urllib.request, 'urlopen', side_effect=responses):
+                state = group.poll()
+            self.assertEqual(state['health'], 'online')
+            self.assertEqual(set(state['targets']), {'legacy', 'lcd-x8'})
+            self.assertEqual(state['targets']['legacy']['health'], 'online')
+            self.assertEqual(state['targets']['lcd-x8']['health'], 'online')
+            self.assertTrue((root / 'legacy' / 'status.json').exists())
+            self.assertTrue((root / 'x8' / 'status.json').exists())
+            self.assertTrue(group.state_path.exists())
+            self.assertNotEqual(group.monitors[0].identity, group.monitors[1].identity)
+            # A restart on the second board must not break the first board's history.
+            first['uptime_s'] += 30
+            second['uptime_s'] = 2
+            with patch.object(monitor.time, 'time', return_value=1000030), patch.object(
+                    monitor.urllib.request, 'urlopen', side_effect=[
+                        io.BytesIO(json.dumps(first).encode()), io.BytesIO(json.dumps(second).encode())]):
+                state = group.poll()
+            self.assertEqual(state['targets']['legacy']['recent_samples'], 2)
+            self.assertEqual(state['targets']['lcd-x8']['recent_samples'], 1)
+            self.assertEqual(state['targets']['lcd-x8']['observed_restarts'], 1)
+            self.assertNotIn('observed_restarts', state['targets']['legacy'])
+            saved = group.state_path.read_text()
+            for private in ('private-agent', 'private-session', 'private-transcript',
+                            'private-ssid', 'private-password', 'test-board', 'x8-board',
+                            'http://legacy', 'http://x8'):
+                self.assertNotIn(private, saved)
+
+    def test_monitor_group_degrades_when_one_target_is_unreachable(self):
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            config = dict(status_url='http://legacy/status', expected_slug='test-board',
+                          state_dir=str(root / 'legacy'), interval_s=30, label='legacy',
+                          additional_targets=[dict(label='lcd-x8', status_url='http://x8/status',
+                                                   expected_slug='x8-board',
+                                                   state_dir=str(root / 'x8'), interval_s=30)])
+            first = io.BytesIO(json.dumps(status()).encode())
+            group = monitor.MonitorGroup(config)
+            with patch.object(monitor.time, 'time', return_value=1000000), patch.object(
+                    monitor.urllib.request, 'urlopen', side_effect=[first, OSError('offline')]):
+                state = group.poll()
+            self.assertEqual(state['health'], 'degraded')
+            self.assertEqual(state['targets']['legacy']['health'], 'online')
+            self.assertEqual(state['targets']['lcd-x8']['health'], 'unreachable_or_invalid')
+            second = status()
+            second['nyx']['slug'] = 'x8-board'
+            with patch.object(monitor.time, 'time', return_value=1000030), patch.object(
+                    monitor.urllib.request, 'urlopen', side_effect=[
+                        OSError('offline'), io.BytesIO(json.dumps(second).encode())]):
+                state = group.poll()
+            self.assertEqual(state['health'], 'degraded')
+            self.assertEqual(state['targets']['legacy']['health'], 'unreachable_or_invalid')
+            self.assertEqual(state['targets']['lcd-x8']['health'], 'online')
     def test_allowlist_excludes_private_response_fields(self):
         row = monitor.sample(status(), 'test-board', 1000000)
         data = json.dumps(row)

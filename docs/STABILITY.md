@@ -48,6 +48,37 @@ This is observation while this Mac is awake, logged in, and able to reach the
 board. It cannot provide continuous coverage during sleep, logout, power-off,
 or network absence. Gaps are recorded; no power-management settings are changed.
 
+### Multiple development boards in the same process
+
+Add `additional_targets` to the existing private configuration. All targets use
+the top-level sampling interval and the same existing LaunchAgent. For example,
+add this field alongside the original board's configuration:
+
+```json
+"additional_targets": [
+  {
+    "label": "lcd-x8",
+    "status_url": "http://SECOND_DEVELOPMENT_BOARD/status",
+    "expected_slug": "VERIFIED_SECOND_DEVELOPMENT_BOARD_NODE_SLUG",
+    "state_dir": "/PRIVATE_ABSOLUTE_PATH/NyxPanelMonitor/stability/lcd-x8"
+  }
+]
+```
+
+Labels, identities and resolved state directories must be distinct. The
+original board keeps its `status.json` and history unchanged; the second board
+gets its own `status.json` and daily logs in its state directory. A combined
+`targets-status.json` in the primary directory contains each labeled target's
+sanitized state and reports `degraded` if any target is unreachable or has the
+wrong identity. It describes reachability; check each target's voice state,
+audio counters and timestamp separately. Older firmware without progress
+counters reports `unreported`, which cannot establish that audio is advancing.
+
+Stop the existing process before updating its installed script and private
+configuration, then resume that same LaunchAgent. Do not install a second
+monitor or change the hourly research task. A monitor restart preserves recent
+same-device samples; it does not reboot either board.
+
 ## Read, stop, resume, or update
 
 The report command reads saved state without querying the board:

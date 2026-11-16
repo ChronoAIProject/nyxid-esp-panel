@@ -159,17 +159,37 @@ def analyze(rows):
     return trends
 
 
-def config_read(path):
-    d = json.loads(Path(path).read_text())
+def target_config(d, interval_s):
+    d = dict(d)
+    label = d.get('label', 'primary')
+    if not isinstance(label, str) or not re.fullmatch(r'[A-Za-z0-9_.:-]{1,48}', label):
+        raise ValueError('Target label is invalid')
+    d['label'] = label
     url = urlsplit(d['status_url'])
     if url.scheme not in ('http', 'https') or not url.hostname or url.username or url.password:
         raise ValueError('Expected a status URL without credentials')
     if not isinstance(d['expected_slug'], str) or not d['expected_slug']:
         raise ValueError('Explicit device identity required')
-    d['interval_s'] = int(d.get('interval_s', 30))
+    d['interval_s'] = interval_s
     if not 15 <= d['interval_s'] <= 3600:
         raise ValueError('Sampling interval out of range')
     d['state_dir'] = str(Path(d['state_dir']).expanduser().resolve())
+    return d
+
+
+def config_read(path):
+    d = json.loads(Path(path).read_text())
+    interval_s = int(d.get('interval_s', 30))
+    additional = d.pop('additional_targets', [])
+    if not isinstance(additional, list):
+        raise ValueError('Additional targets must be a list')
+    d = target_config(d, interval_s)
+    targets = [target_config(target, interval_s) for target in additional]
+    for field in ('label', 'expected_slug', 'state_dir'):
+        values = [target[field] for target in [d, *targets]]
+        if len(set(values)) != len(values):
+            raise ValueError('Each target needs a distinct label, identity and state directory')
+    d['additional_targets'] = targets
     return d
 
 
@@ -284,11 +304,43 @@ class Monitor:
         return self.state
 
 
+class MonitorGroup:
+    """One process, independent histories; keep the primary status path intact."""
+    def __init__(self, config):
+        self.monitors = [Monitor(target) for target in
+                         [config, *config.get('additional_targets', [])]]
+        self.root = self.monitors[0].root
+        self.state_path = self.root / 'targets-status.json'
+
+    @property
+    def state(self):
+        states = [monitor.state for monitor in self.monitors]
+        targets = {monitor.config['label']: state
+                   for monitor, state in zip(self.monitors, states)}
+        return dict(health='online' if all(s.get('health') == 'online' for s in states) else 'degraded',
+                    updated_utc=max((s.get('updated_utc', '') for s in states), default=''),
+                    targets=targets,
+                    interpretation='Each target has an independent identity, history and health state.')
+
+    def poll(self):
+        for monitor in self.monitors:
+            monitor.poll()
+        state = self.state
+        temp = self.state_path.with_suffix('.json.tmp')
+        temp.write_text(json.dumps(state, indent=2) + '\n')
+        temp.replace(self.state_path)
+        return state
+
+
+def configured_monitor(config):
+    return MonitorGroup(config) if config.get('additional_targets') else Monitor(config)
+
+
 def install(config_path, config):
     agent = Path.home() / 'Library/LaunchAgents' / (LABEL + '.plist')
     if agent.exists():
         raise ValueError('Monitor already installed; stop/uninstall it before replacing')
-    monitor = Monitor(config)
+    monitor = configured_monitor(config)
     if monitor.poll()['health'] != 'online':
         raise ValueError('Device preflight failed; background monitor not installed')
     installed = monitor.root / 'monitor_stability.py'
@@ -317,7 +369,7 @@ def main():
     if args.action == 'install':
         install(args.config, config)
         return
-    monitor = Monitor(config)
+    monitor = configured_monitor(config)
     if args.action == 'report':
         print(json.dumps(monitor.state, indent=2))
     elif args.action == 'sample':
