@@ -2,6 +2,7 @@
  * User-session tokens stay in RAM. A hardware client API key is never a node token.
  */
 #include "device_code.h"
+#include "panel_board.h"
 #include "device_login_proto.h"
 #include "devices.h"
 #include "net_manager.h"
@@ -390,7 +391,7 @@ static void login_task(void *arg)
     cJSON_AddStringToObject(body, "client_label", devices_self()->label);
     cJSON_AddStringToObject(body, "client_app", "nyxid-esp-panel");
     cJSON_AddStringToObject(body, "client_platform", "esp32p4");
-    cJSON_AddStringToObject(body, "client_model", "Waveshare ESP32-P4 10.1");
+    cJSON_AddStringToObject(body, "client_model", PANEL_BOARD_NAME);
     int status = request(HTTP_METHOD_POST, node_setup ? "/auth/device/request" : "/auth/agent-key/request", NULL, body, response);
     cJSON_Delete(body);
     if (status != 200 || !(node_setup ? device_login_parse_request_at(response, NYX_NODE_VERIFICATION_URI, &login) :

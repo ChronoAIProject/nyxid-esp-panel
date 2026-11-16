@@ -1,4 +1,5 @@
 #include "panel_ota.h"
+#include "panel_board.h"
 #include <stdatomic.h>
 static atomic_bool busy;
 static _Atomic(const char *) stage = "idle";
@@ -132,6 +133,7 @@ static void url_ota_task(void *arg)
     }
     mbedtls_sha256_free(&hash);
     if (client) esp_http_client_cleanup(client);
+    if (err == ESP_OK && !panel_board_image_matches(image, received)) err = ESP_ERR_INVALID_VERSION;
     if (err == ESP_OK && job->version[0]) {
         const size_t description_offset = sizeof(esp_image_header_t) + sizeof(esp_image_segment_header_t);
         if (received < description_offset + sizeof(esp_app_desc_t)) err = ESP_ERR_INVALID_SIZE;

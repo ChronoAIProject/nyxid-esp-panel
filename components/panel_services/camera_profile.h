@@ -1,9 +1,10 @@
 #pragma once
+#include "panel_board_config.h"
 
 // Match the vendor Camera app on the 800x1280 OV5647 board. The sensor runs
 // at its native 50 FPS only while a capture or native preview owns the camera.
-#define PANEL_CAMERA_WIDTH 800u
-#define PANEL_CAMERA_HEIGHT 1280u
+#define PANEL_CAMERA_WIDTH PANEL_BOARD_CAMERA_WIDTH
+#define PANEL_CAMERA_HEIGHT PANEL_BOARD_CAMERA_HEIGHT
 #define PANEL_CAMERA_FRAME_BYTES (PANEL_CAMERA_WIDTH * PANEL_CAMERA_HEIGHT * 2u)
 #define PANEL_CAMERA_BUFFER_COUNT 2u
 #define PANEL_CAMERA_TASK_STACK 8192u

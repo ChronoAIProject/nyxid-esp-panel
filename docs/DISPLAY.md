@@ -1,5 +1,24 @@
 # Display compatibility
 
+## UI redraw diagnosis across board profiles
+
+Screen, touch and audio wiring use separate hardware profiles; Nyx Panel's UI
+and refresh timer are shared. Compare the source commit and ELF hash as well as
+the profile: a research image can contain UI fixes absent from a main image.
+
+The voice timer runs every 250 ms. LVGL style setters invalidate objects even
+when the color is unchanged, so the timer checks each object's local style
+before setting its color. This avoids repeatedly redrawing the full image
+behind the voice button while the panel is idle. State changes still repaint.
+
+For a UART comparison, use `i` to sample task load while stopped on Nyx Panel,
+then `screen back` and `i` on the launcher, followed by `screen home` and `i`.
+Wait for startup notices and page transitions to settle before each sample.
+Inspect `swdraw`, `lvgl` and both idle tasks separately from wake inference.
+Opening the USB serial port may reset the board. HTTP navigation latency also
+includes network delay, and neither remote navigation nor idle CPU samples
+establishes physical touch responsiveness; check scrolling on the actual panel.
+
 ## Compressed bitmap glyphs and software render threads
 
 The user still observed damaged letters on the home board with v0.4.0. Its
@@ -42,7 +61,7 @@ OV5647's native 50 FPS mode. v0.3.1 restores that capture profile, including
 the modern sensor component's explicit default-format choice. The preview
 keeps the single shared owner used by remote photos and Wi-Fi QR scanning.
 
-The panel uses the same BSP and JD9365 driver as that Brookesia checkout:
+The external 10.1-inch profile uses the same BSP and JD9365 driver as that Brookesia checkout:
 800×1280 RGB565, 80 MHz DPI, two DSI lanes at 1500 Mbps, and the vendor's
 horizontal porches/pulse 20/20/40 and vertical 10/4/30. These panel initialization
 commands and electrical/timing settings are unchanged by the compatibility fix.

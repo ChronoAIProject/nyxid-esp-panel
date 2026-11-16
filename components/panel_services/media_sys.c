@@ -276,7 +276,8 @@ static void preview_pump_task_fn(void *arg)
         if (ioctl(fd, VIDIOC_G_FMT, &format) != 0 ||
             format.fmt.pix.width != PREVIEW_WIDTH || format.fmt.pix.height != PREVIEW_HEIGHT ||
             format.fmt.pix.pixelformat != V4L2_PIX_FMT_RGB565) {
-            ESP_LOGE(TAG, "Camera does not match the native 800x1280 RGB565 profile");
+            ESP_LOGE(TAG, "Camera does not match the configured %ux%u RGB565 profile",
+                     (unsigned)PREVIEW_WIDTH, (unsigned)PREVIEW_HEIGHT);
             break;
         }
         actual_w = format.fmt.pix.width;

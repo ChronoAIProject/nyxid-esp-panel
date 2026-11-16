@@ -13,6 +13,7 @@
 #include "esp_timer.h"
 #include "nvs.h"
 #include "sdkconfig.h"
+#include "panel_board.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include <stdatomic.h>
@@ -22,13 +23,6 @@
 #ifndef NYX_PANEL_UPDATE_DISABLED
 #define NYX_PANEL_UPDATE_DISABLED 0
 #endif
-#if CONFIG_NYX_PANEL_BOARD_LCD_X8
-#define UPDATE_PROFILE "p4-rev3-lcd-x8-16mb"
-#elif CONFIG_ESP32P4_REV_MIN_FULL < 300
-#define UPDATE_PROFILE "p4-rev1-16mb"
-#else
-#define UPDATE_PROFILE "p4-rev3-16mb"
-#endif
 #define CHECK_INTERVAL_US (6LL*60*60*1000000)
 static portMUX_TYPE lock=portMUX_INITIALIZER_UNLOCKED;
 static panel_update_snapshot_t snapshot;
@@ -36,7 +30,7 @@ static atomic_int requested;
 static atomic_bool started;
 static const char *TAG="panel.update";
 
-const char *panel_update_profile(void) { return UPDATE_PROFILE; }
+const char *panel_update_profile(void) { return PANEL_BOARD_PROFILE; }
 void panel_update_snapshot(panel_update_snapshot_t *out)
 {
     if (!out) return;
@@ -108,7 +102,7 @@ static bool boot_valid(void)
 static esp_err_t fetch_release(panel_release_t *release)
 {
     char url[256];
-    snprintf(url,sizeof(url),PANEL_RELEASE_ROOT "latest/download/update-%s.json",UPDATE_PROFILE);
+    snprintf(url,sizeof(url),PANEL_RELEASE_ROOT "latest/download/update-%s.json",PANEL_BOARD_PROFILE);
     esp_http_client_config_t config={.url=url,.crt_bundle_attach=esp_crt_bundle_attach,
         .timeout_ms=15000,.disable_auto_redirect=true,.buffer_size=2048,
         // GitHub asset redirects carry a signed query longer than IDF's
@@ -144,7 +138,7 @@ static esp_err_t fetch_release(panel_release_t *release)
         received+=(size_t)count;
     }
     esp_http_client_cleanup(http);
-    if (err==ESP_OK && !panel_update_parse_release(body,received,UPDATE_PROFILE,release)) err=ESP_ERR_INVALID_RESPONSE;
+    if (err==ESP_OK && !panel_update_parse_release(body,received,PANEL_BOARD_PROFILE,release)) err=ESP_ERR_INVALID_RESPONSE;
     return err;
 }
 static void update_task(void *arg)

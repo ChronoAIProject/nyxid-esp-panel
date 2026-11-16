@@ -7,6 +7,7 @@
 #include "product_support.h"
 #include "esp_log.h"
 #include "esp_ota_ops.h"
+#include "panel_board.h"
 #include "esp_partition.h"
 #include "esp_system.h"
 #include "esp_timer.h"
@@ -199,7 +200,17 @@ size_t local_api_format_status_json(char *resp, size_t cap)
     char app_sha[65];
     for (size_t i=0;i<32;++i) snprintf(app_sha+i*2,3,"%02x",esp_app_get_description()->app_elf_sha256[i]);
     cJSON_AddStringToObject(root, "app_sha256", app_sha);
-    cJSON_AddStringToObject(root, "board", "Waveshare ESP32-P4 JD9365 / OV5647 / ES8311");
+    cJSON_AddStringToObject(root, "board", PANEL_BOARD_NAME);
+    cJSON *hardware = cJSON_AddObjectToObject(root, "hardware");
+    cJSON_AddStringToObject(hardware, "id", PANEL_BOARD_ID);
+    cJSON_AddStringToObject(hardware, "profile", PANEL_BOARD_PROFILE);
+    cJSON_AddStringToObject(hardware, "audio_input", PANEL_BOARD_AUDIO_INPUT);
+    cJSON_AddStringToObject(hardware, "audio_output", PANEL_BOARD_AUDIO_OUTPUT);
+    cJSON_AddStringToObject(hardware, "capture_layout", PANEL_BOARD_CAPTURE_LAYOUT);
+    cJSON_AddStringToObject(hardware, "camera_sensor", PANEL_BOARD_CAMERA_SENSOR);
+    cJSON_AddBoolToObject(hardware, "camera_optional", PANEL_BOARD_CAMERA_OPTIONAL);
+    cJSON_AddNumberToObject(hardware, "display_width", PANEL_BOARD_DISPLAY_WIDTH);
+    cJSON_AddNumberToObject(hardware, "display_height", PANEL_BOARD_DISPLAY_HEIGHT);
     cJSON_AddNumberToObject(root, "uptime_s", esp_timer_get_time() / 1000000ULL);
     cJSON_AddBoolToObject(root, "time_valid", time(NULL) >= 1700000000);
     cJSON *network = cJSON_AddObjectToObject(root, "net");
@@ -749,7 +760,7 @@ static int h_camera_openapi(const nyx_proxy_request_t *req, char *resp, size_t c
         else if(!strcmp(r->path,"/lcd/clear"))description="Clear temporary images and captions, keep the persistent fallback.";
         else if(!strcmp(r->path,"/system/update"))description="Manage stable firmware updates for this panel. GET reads version, automatic, available, state and blocked_version. POST exactly one field: automatic (boolean), or action (check or install). Asynchronous: 202 queues work; poll /status update and ota. Installation waits for idle. A rolled-back version is blocked. Management service only.";
         else if(!strcmp(r->path,"/camera/capture"))description="Take one camera photo, show the same photo fullscreen on Nyx Panel for two minutes, and return that JPEG for visual understanding. Keep voice controls and captions. Does not change the saved fallback image. No continuous stream.";
-        else if(!strcmp(r->path,"/camera/snapshot.jpg") || !strcmp(r->path,"/snapshot.jpg"))description="Take a fresh native 800x1280 JPEG without changing the display. Use POST /camera/capture for a user-facing photo that is also shown on the panel. Release camera resources afterwards. Concurrent capture returns 503. No continuous stream.";
+        else if(!strcmp(r->path,"/camera/snapshot.jpg") || !strcmp(r->path,"/snapshot.jpg"))description="Take a fresh JPEG at the configured camera resolution without changing the display. Use POST /camera/capture for a user-facing photo that is also shown on the panel. Release camera resources afterwards. Concurrent capture returns 503. No continuous stream.";
         else if(!strcmp(r->path,"/lcd/snapshot.jpg"))description="Read a JPEG screenshot of the current LCD.";
         cJSON_AddStringToObject(op,"summary",description);
         cJSON *responses=cJSON_AddObjectToObject(op,"responses");

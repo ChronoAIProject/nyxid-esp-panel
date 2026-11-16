@@ -20,6 +20,7 @@
 #include "panel_flash.h"
 #include "nyx_creds.h"
 #include "esp_ota_ops.h"
+#include "panel_board.h"
 #include "esp_system.h"
 #include "mbedtls/sha256.h"
 
@@ -525,7 +526,7 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     for (size_t i=0; i<strlen(key); ++i) diff |= (unsigned char)auth[7+i] ^ (unsigned char)key[i];
     if (diff) { httpd_resp_set_status(req,"401 Unauthorized"); return httpd_resp_sendstr(req,"unauthorized"); }
     const esp_partition_t *update=esp_ota_get_next_update_partition(NULL);
-    if (!update || req->content_len <= 0 || (size_t)req->content_len > update->size ||
+    if (!update || req->content_len < PANEL_BOARD_IMAGE_HEADER_SIZE || (size_t)req->content_len > update->size ||
         httpd_req_get_hdr_value_str(req,"X-SHA256",expected,sizeof(expected)) != ESP_OK || strlen(expected)!=64) {
         httpd_resp_set_status(req,"400 Bad Request"); return httpd_resp_sendstr(req,"invalid size or X-SHA256");
     }
@@ -535,14 +536,14 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     if (!panel_ota_try_lock()) { httpd_resp_set_status(req,"409 Conflict"); return httpd_resp_sendstr(req,"OTA busy"); }
     panel_ota_progress("receiving", ESP_OK);
     esp_ota_handle_t handle=0;
-    panel_flash_lock();
-    esp_err_t err=esp_ota_begin(update,req->content_len,&handle);
-    panel_flash_unlock();
+    // Read and validate the fixed board descriptor before erasing the OTA slot.
+    esp_err_t err=ESP_OK;
     mbedtls_sha256_context sha;
     mbedtls_sha256_init(&sha); mbedtls_sha256_starts(&sha,0);
     char *buffer=malloc(4096);
     if (!buffer) err=ESP_ERR_NO_MEM;
-    size_t received=0;
+    uint8_t header[PANEL_BOARD_IMAGE_HEADER_SIZE];
+    size_t received=0, header_received=0;
     int64_t deadline=esp_timer_get_time()+300000000LL;
     while (err==ESP_OK && received<(size_t)req->content_len) {
         size_t n=MIN(4096u,(size_t)req->content_len-received);
@@ -550,13 +551,30 @@ static esp_err_t ota_image_post(httpd_req_t *req)
         if (got==HTTPD_SOCK_ERR_TIMEOUT && esp_timer_get_time()<deadline) continue;
         if (got<=0) { err=ESP_ERR_TIMEOUT; break; }
         mbedtls_sha256_update(&sha,(const uint8_t *)buffer,got);
-        err=esp_ota_write(handle,buffer,got); received+=got;
+        received+=got;
+        size_t used=0;
+        if (header_received<sizeof(header)) {
+            used=MIN((size_t)got,sizeof(header)-header_received);
+            memcpy(header+header_received,buffer,used);
+            header_received+=used;
+            if (header_received<sizeof(header)) continue;
+            if (!panel_board_image_matches(header,sizeof(header))) {
+                err=ESP_ERR_INVALID_VERSION;
+                break;
+            }
+            panel_flash_lock();
+            err=esp_ota_begin(update,OTA_WITH_SEQUENTIAL_WRITES,&handle);
+            panel_flash_unlock();
+            if (err==ESP_OK) err=esp_ota_write(handle,header,sizeof(header));
+        }
+        if (err==ESP_OK && (size_t)got>used) err=esp_ota_write(handle,buffer+used,got-used);
     }
     free(buffer);
     uint8_t digest[32]; mbedtls_sha256_finish(&sha,digest); mbedtls_sha256_free(&sha);
     char actual[65];
     for (int i=0;i<32;++i) snprintf(actual+i*2,3,"%02x",digest[i]);
     if (err==ESP_OK) panel_ota_progress("verifying", ESP_OK);
+    if (err==ESP_OK && header_received!=sizeof(header)) err=ESP_ERR_INVALID_VERSION;
     if (err==ESP_OK && strcasecmp(actual,expected)) err=ESP_ERR_INVALID_CRC;
     if (err==ESP_OK) {
         panel_flash_lock();
@@ -569,8 +587,14 @@ static esp_err_t ota_image_post(httpd_req_t *req)
     if (err!=ESP_OK) {
         panel_ota_progress("failed", err);
         panel_ota_unlock();
-        httpd_resp_set_status(req,err==ESP_ERR_INVALID_CRC?"422 Unprocessable Entity":"500 Internal Server Error");
-        return httpd_resp_sendstr(req,"{\"ok\":false,\"error\":\"ota_image_rejected\"}");
+        httpd_resp_set_status(req,(err==ESP_ERR_INVALID_CRC || err==ESP_ERR_INVALID_VERSION)?"422 Unprocessable Entity":"500 Internal Server Error");
+        // A mismatched header is rejected before consuming a potentially large
+        // body. Close that session so unread image bytes cannot become the next
+        // request or keep the HTTP server busy draining an invalid upload.
+        bool unread_body = received < (size_t)req->content_len;
+        if (unread_body) httpd_resp_set_hdr(req,"Connection","close");
+        esp_err_t sent=httpd_resp_sendstr(req,"{\"ok\":false,\"error\":\"ota_image_rejected\"}");
+        return unread_body ? ESP_FAIL : sent;
     }
     panel_ota_progress("rebooting", ESP_OK);
     httpd_resp_set_status(req,"202 Accepted");

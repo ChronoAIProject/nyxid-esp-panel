@@ -9,8 +9,9 @@
 
 static const char *TAG = "haCam.lcd_image";
 
-#define LCD_IMAGE_MAX_WIDTH 800u
-#define LCD_IMAGE_MAX_HEIGHT 1280u
+#include "panel_board_config.h"
+#define LCD_IMAGE_MAX_WIDTH PANEL_BOARD_DISPLAY_WIDTH
+#define LCD_IMAGE_MAX_HEIGHT PANEL_BOARD_DISPLAY_HEIGHT
 
 static void log_decode_heap(const char *phase)
 {

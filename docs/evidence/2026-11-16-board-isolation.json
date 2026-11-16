@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-16",
+  "scope": "Main-based board isolation; local functional regression, not wake candidate evaluation",
+  "idf": "5.5.4",
+  "source_base": "1ff1c5033f60efca9b590fe057f79b190de79cd9",
+  "host_suites_passed": 25,
+  "python_tests_passed": 23,
+  "production_builds": [
+    {
+      "profile": "p4-rev1-16mb",
+      "bytes": 6818368,
+      "sha256": "4bc6c4e8b58dcc6cec0c486bae37c622114205ef603ae38d4d8fc2afc74dc4de",
+      "elf_sha256": "0d649dc7dc40631daefc41834479a7b05042f86ff208256cb7fa2fcbbf842098",
+      "backends": [
+        "boards/platform/product_backend.c"
+      ],
+      "board_marker_offset": 288
+    },
+    {
+      "profile": "p4-rev3-16mb",
+      "bytes": 6832288,
+      "sha256": "01bb7591456764008c447471f4eb53e03626fedccb01bb0608d8f2a3fe7f63dd",
+      "elf_sha256": "38eabaa4a72ff20b1531aca123e4c6b1b81980c3e5bf9180d895fc840305e278",
+      "backends": [
+        "boards/platform/product_backend.c"
+      ],
+      "board_marker_offset": 288
+    },
+    {
+      "profile": "p4-rev3-lcd-x8-16mb",
+      "bytes": 6845232,
+      "sha256": "0e2058cfccc504d65a7bd12da49ce62d98eab50d2144b3ab018724c0b30c9eef",
+      "elf_sha256": "25d8b9a40737de1370ea044cf82d60597e21438299e806d49721633f694cf8de",
+      "backends": [
+        "boards/lcd_x8/product_backend.c"
+      ],
+      "board_marker_offset": 288
+    }
+  ],
+  "physical_boards": [
+    {
+      "profile": "p4-rev1-16mb",
+      "local_elf_sha256": "5914be6fa5ed12abbc3124e93a8fd571eef01b26667c93d77038daee0fdb337b",
+      "brightness_write_read_restore": true,
+      "existing_fixture_complete_user_directive": true,
+      "expected_reply": "purple elephant",
+      "quiet_after_reply_seconds": 10,
+      "extra_user_turns_during_quiet": 0,
+      "audio_path_counters": {
+        "source_peak": 13805,
+        "output_peak": 31039,
+        "sent_packets": 1150,
+        "received_packets": 1202,
+        "playback_ms": 23940
+      },
+      "mute_unmute_hangup_wake_rearm": true,
+      "second_call_connected": true,
+      "screen_navigation_esp_ok_count": 3,
+      "screenshots_reviewed": [
+        "home",
+        "launcher",
+        "settings"
+      ],
+      "idle_swdraw_percent_samples": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "watchdog_or_panic_observed": false,
+      "dsi_underrun_observed": false,
+      "touch_bus_error_count": 0,
+      "intentional_uart_resets": true,
+      "preserving_usb_protected_regions_verified": true,
+      "url_ota": {
+        "wrong_profile_correct_digest_rejected": true,
+        "right_profile_installed_and_boot_valid": true
+      },
+      "quick_redial_limit": "First redial reached backend before previous asynchronous call shutdown completed; backend rejected overlap"
+    },
+    {
+      "profile": "p4-rev3-lcd-x8-16mb",
+      "local_elf_sha256": "7029f9b9a6b5fc79c9e7dc5307382df26836f86c2c950a2198b7cb9baec39d82",
+      "brightness_write_read_restore": true,
+      "existing_fixture_complete_user_directive": true,
+      "expected_reply": "purple elephant",
+      "quiet_after_reply_seconds": 10,
+      "extra_user_turns_during_quiet": 0,
+      "audio_path_counters": {
+        "source_peak": 10282,
+        "output_peak": 30055,
+        "sent_packets": 1077,
+        "received_packets": 1106,
+        "playback_ms": 22040
+      },
+      "mute_unmute_hangup_wake_rearm": true,
+      "second_call_connected": true,
+      "screen_navigation_esp_ok_count": 3,
+      "screenshots_reviewed": [
+        "home",
+        "launcher",
+        "settings"
+      ],
+      "idle_swdraw_percent_samples": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "watchdog_or_panic_observed": false,
+      "dsi_underrun_observed": false,
+      "touch_bus_error_count": 0,
+      "intentional_uart_resets": true,
+      "preserving_usb_protected_regions_verified": true,
+      "raw_ota": {
+        "matching_image_fragmented_first_400_bytes_installed_and_boot_valid": true,
+        "incompatible_full_content_length_rejected_after_prefix": true,
+        "reject_http_status": 422,
+        "connection_closed_on_early_rejection": true,
+        "canonical_image_boot_valid": true
+      }
+    }
+  ],
+  "limitations": [
+    "Framebuffer snapshots and bounded UART logs do not prove physical touch/scroll responsiveness or absence of intermittent optical flashes.",
+    "Native MusicPlayer and SpecAnalyzer transitions were not independently exercised after isolation.",
+    "Short calls are not long-call/reconnect AEC qualification.",
+    "Office-specific lag was not reproduced on the attached home boards.",
+    "External-screen rev3 built and packaged; no separate rev3 external-screen device was attached."
+  ],
+  "dining_production_board_touched": false,
+  "legacy_research_restoration": {
+    "exact_original_c161": true,
+    "image_sha256": "d405555880cdcb47f6f31a4b6fb1f580b2725231e2535a43d641529199057fdc",
+    "elf_sha256": "b427b14aa73b2db7d08d71eee0801c4572bc3f652ec3677146a710e4ba813ec9",
+    "protected_regions_unchanged": true,
+    "wake_listening_observed": true,
+    "historical_local_server_address_retained": true
+  }
+}

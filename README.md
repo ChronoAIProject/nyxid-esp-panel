@@ -8,6 +8,9 @@ Continuous H.264/WHIP publishing was retired in v0.3.0.
 Supported hardware uses ESP32-P4 with 32 MiB PSRAM and ESP32-C6 over SDIO.
 Select the matching build and OTA profile; firmware does not automatically
 detect board wiring.
+The authoritative profile catalog is [boards/catalog.json](boards/catalog.json).
+See [board isolation and adding hardware](docs/BOARD_PROFILES.md) for the
+build, backend, image identity and acceptance contracts.
 
 | Profile | Board and display | Audio |
 | --- | --- | --- |
@@ -51,7 +54,7 @@ Use ESP-IDF **v5.5.4**, its Python environment and the P4 toolchain:
 ```sh
 . /path/to/esp-idf/export.sh
 python -m pip install -r tools/requirements-build.txt
-idf.py build
+python3 tools/build_profile.py --profile p4-rev1-16mb
 cmake -S tests/host -B build-host
 cmake --build build-host -j8
 ctest --test-dir build-host --output-on-failure

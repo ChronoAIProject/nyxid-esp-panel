@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.19)
 project(haCam_host_tests C)
 
 set(CMAKE_C_STANDARD 11)
@@ -7,6 +7,26 @@ include_directories(unity ../../components/panel_services)
 include_directories(third_party/cjson)
 
 enable_testing()
+
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+set(_board_tool "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/board_profiles.py")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${_board_tool}" "${CMAKE_CURRENT_SOURCE_DIR}/../../boards/catalog.json")
+execute_process(COMMAND "${Python3_EXECUTABLE}" "${_board_tool}" matrix
+    OUTPUT_VARIABLE _board_matrix COMMAND_ERROR_IS_FATAL ANY)
+string(JSON _board_count LENGTH "${_board_matrix}" profile)
+math(EXPR _board_last "${_board_count}-1")
+foreach(index RANGE ${_board_last})
+    string(JSON profile GET "${_board_matrix}" profile ${index})
+    set(generated "${CMAKE_CURRENT_BINARY_DIR}/profiles/${profile}")
+    execute_process(COMMAND "${Python3_EXECUTABLE}" "${_board_tool}" header
+        --profile "${profile}" --output "${generated}/panel_board_config.h"
+        COMMAND_ERROR_IS_FATAL ANY)
+    add_executable(test_board_image_${profile} test_board_image.c ../../components/panel_board/panel_board.c)
+    target_include_directories(test_board_image_${profile} PRIVATE "${generated}" ../../components/panel_board/include)
+    target_link_libraries(test_board_image_${profile} unity)
+    add_test(NAME test_board_image_${profile} COMMAND test_board_image_${profile})
+endforeach()
 
 add_library(unity STATIC unity/unity.c)
 target_compile_definitions(unity PUBLIC UNITY_INCLUDE_CONFIG_H)
@@ -20,7 +40,7 @@ endfunction()
 
 haCam_add_test(test_smoke)
 haCam_add_test(test_product_audio_layout)
-target_include_directories(test_product_audio_layout PRIVATE ../../components/product_support/include)
+target_include_directories(test_product_audio_layout PRIVATE ../../boards/lcd_x8)
 haCam_add_test(test_scanout_gate)
 target_include_directories(test_scanout_gate PRIVATE ../../compat/include)
 haCam_add_test(test_mailbox ../../components/panel_services/mailbox.c)
@@ -60,7 +80,8 @@ target_compile_options(test_nyx_security PRIVATE -Wno-deprecated-declarations)
 
 find_package(Threads REQUIRED)
 haCam_add_test(test_media_mode ../../components/panel_services/media_mode.c)
-target_include_directories(test_media_mode PRIVATE camera_shim platform_shim)
+target_include_directories(test_media_mode PRIVATE camera_shim platform_shim
+    "${CMAKE_CURRENT_BINARY_DIR}/profiles/p4-rev1-16mb")
 target_link_libraries(test_media_mode Threads::Threads)
 set_tests_properties(test_media_mode PROPERTIES TIMEOUT 20)
 
