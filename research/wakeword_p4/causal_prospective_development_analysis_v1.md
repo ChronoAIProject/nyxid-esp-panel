@@ -1,5 +1,10 @@
-# Prospective development failure decomposition
+# Corrected prospective development decomposition
 
-The conditioning-disjoint contextual candidate reaches only47/144 target recordings (32.6%) and29/720 negatives (4.0%) on the reserved development partition. Target hits are36 records per carrier before any carrier-specific filtering; negative events are bare4/180, light9/180, time7/180, timer9/180. The failure is therefore spread across all four carriers, with no carrier meeting a viable transfer gate.
+The earlier statement that36targets per carrier were hits was incorrect:36is the sample count. Actual counts follow. The previous aggregate47/144target hits and29/720negative hits remains correct.
 
-This confirms a broad conditioning-transfer failure rather than a single carrier bug. The candidate is rejected before INT8 export or threshold selection. Training-set performance cannot be used to rescue it, and the development partition will not be reused as training. A future architecture must address voice/conditioning invariance at the representation or data-design level with a newly preregistered split. Frozen v30 remains unchanged.
+- bare: target 6/36, negative 4/180.
+- light: target 20/36, negative 9/180.
+- time: target 16/36, negative 7/180.
+- timer: target 5/36, negative 9/180.
+
+Carrier and conditioning effects are descriptive; neither uniform failure nor a single threshold cause is established. The four conditioning sources were excluded from this candidate optimization, but their recordings and aggregate behavior were already consumed by earlier experiments, so this is reused development, not globally fresh evidence. No acceptance claim.
