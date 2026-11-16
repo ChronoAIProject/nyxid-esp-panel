@@ -1,0 +1,11 @@
+{
+  "schema": "kokoro-v11-role-isolated-execution-lock-v1",
+  "plan": "research/wakeword_p4/results/4090-kokoro-v11-role-isolated-request-plan-v1.json",
+  "plan_sha256": "8f7d5efa4dcd34b0e9cb1a4e9298403a49ea102a98f8b9bb9e8e5a6aedd1b43c",
+  "revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+  "runtime": {"python": "3.11", "kokoro": "0.9.4", "misaki": "0.9.4", "transformers": "4.46.1", "torch": "global", "device": "cuda if available (RTX 4090 expected)", "sample_rate": 24000},
+  "generator": "research/wakeword_p4/experiments/generate_kokoro_v11_role_isolated_v1.py",
+  "policy": {"native_before_pcm": true, "trim": false, "gain": false, "retry": false, "stop_on_failure": true, "phoneme_metadata": null, "duration_metadata": null, "acceptance_sealed": true},
+  "roles": {"development": {"output": ".local/wakeword/kokoro-v11-role-isolated-development-v1", "count": 144}, "acceptance": {"output": ".local/wakeword/kokoro-v11-role-isolated-acceptance-v1", "count": 72}},
+  "created_utc": "2026-11-16T00:00:00Z"
+}
