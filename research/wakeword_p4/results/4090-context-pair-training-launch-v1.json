@@ -1,0 +1,56 @@
+{
+  "supervisor_state": {
+    "pid": 1758015,
+    "proc_starttime": "8226547",
+    "status": "running",
+    "arms": [
+      {
+        "condition": "silence",
+        "pid": 1758016,
+        "proc_starttime": "8226549",
+        "status": "running",
+        "command": [
+          "/usr/bin/python3",
+          "research/wakeword_p4/training/gpu_python.py",
+          "research/wakeword_p4/experiments/train_chatterbox_context_pair_v1.py",
+          "run",
+          "silence"
+        ],
+        "started_utc": "2026-11-16T21:49:40Z"
+      }
+    ]
+  },
+  "verified_live_proc_identities": true,
+  "initial_verified_progress": {
+    "launch": {
+      "pid": 1758016,
+      "proc_starttime": "8226549",
+      "plan_sha256": "2ba99cc372edf40538b8771e31ee0e25dae839a2284f68b4178d678569c4cd5c"
+    },
+    "latest": {
+      "step": 200,
+      "loss": 6.147691249847412,
+      "elapsed_seconds": 17.095590063996497,
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iterations": 200,
+      "frozen16_unchanged": true,
+      "all15_gradients_finite": true
+    }
+  },
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "2",
+    "TF_NUM_INTRAOP_THREADS": "2",
+    "TF_NUM_INTEROP_THREADS": "1"
+  },
+  "plans": {
+    "silence": "2ba99cc372edf40538b8771e31ee0e25dae839a2284f68b4178d678569c4cd5c",
+    "speech": "e18090b91592e7c263f6090a52162469a6ee0f04dc72c5e0ea4ecaee3b26afa8"
+  },
+  "training_completed": false,
+  "order": [
+    "silence",
+    "speech"
+  ],
+  "note": "Point-in-time launch receipt; inspect live processes and supervisor state for subsequent status, not this historical snapshot."
+}
