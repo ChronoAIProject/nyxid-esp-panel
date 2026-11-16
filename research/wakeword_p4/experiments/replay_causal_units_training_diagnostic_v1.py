@@ -12,7 +12,7 @@ from ordered_generator_matcher_v1 import OrderedMatcher
 OUT=Path('.local/wakeword/causal-generator-unit-supervised-v1')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--run',default='causal-generator-unit-supervised-v1',choices=['causal-generator-unit-supervised-v1','causal-generator-position-supervised-v1','causal-generator-delay40-supervised-v1']);parser.add_argument('--all-training',action='store_true');args=parser.parse_args();root=Path('.local/wakeword')/args.run
+ parser=argparse.ArgumentParser();parser.add_argument('--run',default='causal-generator-unit-supervised-v1',choices=['causal-generator-unit-supervised-v1','causal-generator-position-supervised-v1','causal-generator-delay40-supervised-v1','causal-generator-contextual-supervised-v1']);parser.add_argument('--all-training',action='store_true');args=parser.parse_args();root=Path('.local/wakeword')/args.run
  torch.set_num_threads(1);assert torch.cuda.is_available();torch.backends.cudnn.allow_tf32=False;torch.backends.cuda.matmul.allow_tf32=False
  checkpoint=root/'final.pt';s=torch.load(checkpoint,map_location='cpu',weights_only=False);assert s['step']==5000
  sampler=Sampler();mapping=sampler.data['dense_to_original_label'];model=CausalGeneratorUnitModel(len(mapping)).cuda().eval();model.load_state_dict(s['model'])
@@ -33,6 +33,7 @@ def main():
    results.append(dict(index=d['index'],class_id=r['class_id'],carrier=r['carrier'],path=r['path'],sha256=r['sha256'],frames=len(frames),events_samples=events,collapsed_tokens=collapsed,chunk37_vs_full_max_abs=difference))
  out=dict(schema='causal-unit-training-wave-diagnostic-v1',checkpoint_sha256=sha(checkpoint),script_sha256=sha(__file__),selection='All4320training recordings, no checkpoint/threshold selection.' if args.all_training else 'First fixed-seed sampler batch24, training only; no selection of checkpoint or threshold.',decoder='Raw float argmax exact ordered matcher; no confidence threshold, cooldown or maxspan. NOT integer event policy and NOT qualification.',records=results,target_hits=sum(bool(r['events_samples']) for r in results if r['class_id']==1),target_count=sum(r['class_id']==1 for r in results),negative_hits=sum(bool(r['events_samples']) for r in results if r['class_id']!=1),negative_count=sum(r['class_id']!=1 for r in results))
  dest=Path('research/wakeword_p4/results')/('4090-causal-position-training-wave-diagnostic-v1.json' if args.run=='causal-generator-position-supervised-v1' else '4090-causal-unit-training-wave-diagnostic-v1.json')
+ if args.run=='causal-generator-contextual-supervised-v1':dest=Path('research/wakeword_p4/results/4090-causal-contextual-training-wave-diagnostic-v1.json')
  if args.run=='causal-generator-delay40-supervised-v1':dest=Path('research/wakeword_p4/results/4090-causal-delay40-training-wave-diagnostic-v1.json')
  if args.all_training:dest=dest.with_name(dest.stem.replace('training-wave','all-training-wave')+'.json')
  with dest.open('x') as f:json.dump(out,f,indent=2);f.write('\n')
