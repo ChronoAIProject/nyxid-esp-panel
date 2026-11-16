@@ -30,3 +30,7 @@ Replay and saved-trace scoring both genuine exit0. All474mixed traces, ledger, l
 | British command | 14/27 | 18/27 | 6 / 2 |
 
 Total54/72 to53/72: no overall coverage gain, British bare regression remains. US reciprocal official0/36both; British C1610/36,mixed7/36. Constructed nearwords US38/144 to44/144; British13/144 to8/144, diagnostic not zero gates or language frequencies. Reused7.902862222h background0events both, not new/additive exposure. Mixed-context support does not resolve the previously observed coverage tradeoff. No promotion or threshold rescue. Remaining cohorts still to execute.
+
+## Full Legacy372 result
+
+Sequential supervisor records genuine replay exit0; raw-trace score/archive exit0. All372mixed traces plus ledger/report/launch/result archived (376members), each member size/SHA verified. C161 saved report/trace identities authenticated. Targets35/36→36/36, commands26/27→27/27, bare9/9both;1gain/no loss. Other constructed synthetic containers4→8events (activated containers), diagnostic not everyday frequency or zero gate. Willow/HiESP reciprocal containers remain0. Same reused10.483944826h backgrounds0events both, not fresh/additive hours. This local gain does not remove British bare regression or six-cups conflict. Jenny/Joe/Mac still pending; C161 baseline retained.
