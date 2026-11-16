@@ -44,3 +44,7 @@ Jenny mixed34/36targets vsC16133/36, commands25/27vs24/27, bare9/9both:1command 
 Joe mixed0/72targets, same asC161; negatives0/288both, no background hours. Do not invent bare/command labels from absent carrier metadata. Voice blind spot remains.
 
 Mac host consumed synthetic Nyx2/4, Samantha2/2/Daniel0/2; other targets0/8. Not P4 execution, numerical parity or real-human validation. C161's previously reported Mac total1/4 remains historical reference; no baseline rerun. Mixed does not fix Daniel/Joe coverage. All three contextual variants remain experimental, C161 baseline retained. Training84 fit diagnostic is separately locked, not a generalization test.
+
+## Training84 fit diagnostic
+
+Mixed replay genuine exit0,84raw traces event-recomputed and169archive members size/SHA verified. Bare5/6, command29/30, daily negatives0/48, prime0. Previous silence arm6/6,29/30; speech4/6,26/30; C1611/6,6/30. Mixed improves isolated training fit versus speech but does not reproduce silence bare fit; all are training diagnostics, not voice generalization. Full consumed coverage is now complete, no live training/replay job awaiting completion. C161 remains baseline. A next solution must address actual cross-source/lexical coverage or deployment mechanism; repeatedly varying context mixture based on these consumed scores is not an independent solution or qualification.
