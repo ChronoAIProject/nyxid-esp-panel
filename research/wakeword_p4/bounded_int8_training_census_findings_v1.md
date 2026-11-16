@@ -1,0 +1,7 @@
+# Actual integer full-training census
+
+Frozen trained delay40INT8 model SHA25621dbf17f03459c1fe213c83182d246594cde66f1e649ae8330d54b49bb85c0d7 and fixed bounded uncertainty policy (confidence128,wait2,span200,refractory200) were replayed on all4320complete training waves. Result476/720target recordings hit and26/3600negative recordings hit,502total events. Target hits by carrier bare99/180,light133/180,time141/180,timer103/180. Negative hits are Nick18/720 andMix8/720; HiESP/Next/Muse0. This is training/calibration-overlapping diagnostic evidence, not independent recognition or FAR.
+
+Every source/PCMhash was verified, no waveform regenerated or cut. External past-only float MFCC runs onRTX4090; integer neural runtime usesCPU1thread, INT8cache zero-point reset and explicit feedback requantization. Complete source input is retained; each recording's0–2final complete frames remain unscored bychunk3ABI with no fabricated finish padding. Residual counts and all event timestamps/code hashes are recorded. Per-record reset applies only to this matched synthetic census.
+
+A separate continuous training-background diagnostic is running over1004admitted Libri sources,3.5722input hours, with one initial reset and residual/neural/event state preserved across artificial joins. It is consumed training material and cannot establish independent FAR; even zero events would give an upper95bound above0.5/h. No fresh/heldout acceptance material was opened. The model remains unqualified, frozenv30 unchanged.
