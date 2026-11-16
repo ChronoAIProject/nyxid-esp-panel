@@ -2,7 +2,7 @@ import json,hashlib
 from pathlib import Path
 import numpy as np,soundfile as sf
 from openwakeword.utils import AudioFeatures
-root=Path('.local/wakeword/kokoro-v11-role-isolated-development-v2'); out=Path('.local/wakeword/kokoro-v11-embeddings-v1'); out.mkdir(exist_ok=False)
+root=Path('.local/wakeword/kokoro-v11-role-isolated-development-v2'); out=Path('.local/wakeword/kokoro-v11-embeddings-v2'); out.mkdir(exist_ok=False)
 models=Path('.local/wakeword/oww-models'); af=AudioFeatures(melspec_model_path=str(models/'melspectrogram.onnx'),embedding_model_path=str(models/'embedding_model.onnx'),inference_framework='onnx',device='gpu',ncpu=2)
 rows=json.loads((root/'records.json').read_text()); rec=[]
 for i,r in enumerate(rows):
