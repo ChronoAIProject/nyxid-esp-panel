@@ -17,3 +17,16 @@ All initial builtin36/daily96/continuous2 replay processes exit0; all134raw trac
 Mixed retains the isolated aggregate11/12 and most short-gap improvement, but does not combine all best outcomes: short-gap below speech and long-gap below both arms. Counts alone do not establish paired clip improvement. Mixed daily conflict is again index69 “We need six cups of water.” seed726, return sample12000 (.75s), so common lexical conflict remains. Continuous negatives/Willow/gaps/prime/tail all0events. Synthetic container counts are not phonetic truth, independent speakers or first-command retention.
 
 Full Melo/Legacy/Jenny/Joe/Mac and training84 coverage remains outstanding. No threshold or checkpoint rescue based on these results. Preserve prior British bare losses and Joe/Daniel failures in comparison; do not infer they are fixed. P4 resource/stability/PCM handoff still unverified. Coordinate viaIssue18.
+
+## Full Melo474 result
+
+Replay and saved-trace scoring both genuine exit0. All474mixed traces, ledger, launch and original result archived (477members), every member size/hash verified. Saved C161 ledger/result/trace identities authenticated, no baseline inference. Fixed original event policy, no grid.
+
+| Melo target | C161 | Mixed | Mixed gains / losses |
+|---|---:|---:|---:|
+| US bare | 9/9 | 9/9 | 0 / 0 |
+| US command | 24/27 | 23/27 | 1 / 2 |
+| British bare | 7/9 | 3/9 | 0 / 4 |
+| British command | 14/27 | 18/27 | 6 / 2 |
+
+Total54/72 to53/72: no overall coverage gain, British bare regression remains. US reciprocal official0/36both; British C1610/36,mixed7/36. Constructed nearwords US38/144 to49/144; British13/144 to8/144, diagnostic not zero gates or language frequencies. Reused7.902862222h background0events both, not new/additive exposure. Mixed-context support does not resolve the previously observed coverage tradeoff. No promotion or threshold rescue. Remaining cohorts still to execute.
