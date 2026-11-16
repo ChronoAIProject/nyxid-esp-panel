@@ -1,0 +1,22 @@
+# C161 coverage: upstream practice and next intervention
+
+## Evidence motivating the priority
+
+C161 fixed .91796875/5 has legacy35/36 and Jenny33/36, but Joe0/72, consumed Melo EN-BR command14/27, and Mac Daniel/Samantha target1/4. These are different consumed protocols, not interchangeable or additive samples. Together they motivate investigating voice/pronunciation coverage before prioritizing rejection of rare constructed nearwords. They do not prove one acoustic cause.
+
+C161 already draws broad bare positives from Piper672 conditioning pools, Kokoro20 and Qwen24. Thus simply proposing more named voices or another positive-loss term ignores existing work. Bare broad positives occupy8slots per128batch; other32-positive total, full command supervision and source-matched negatives must be considered when interpreting support. Existing character/phone/phrase, latent-positive and negative-peak attempts did not produce a uniform replacement. Historical v10 SpecAugment exists and must not be renamed as new work.
+
+## Primary upstream sources inspected 2026-11-16
+
+- openWakeWord README at `97a48a211dd1bd89bd96877ea9ca6f7f756352e9`: https://github.com/dscripka/openWakeWord/blob/97a48a211dd1bd89bd96877ea9ca6f7f756352e9/README.md . Recommends thousands of synthetic examples and large, diverse speech/noise/music negatives. Its advertised negative corpus scale is not a requirement to download30,000h here, and it is not direct P4 evidence.
+- Same revision, `docs/synthetic_data_generation.md`: https://github.com/dscripka/openWakeWord/blob/97a48a211dd1bd89bd96877ea9ca6f7f756352e9/docs/synthetic_data_generation.md . Emphasizes multispeaker models, sampling variability and interpolated speaker embeddings. These are generation strategies, not independent physical speakers.
+- Same revision, `openwakeword/data.py`: https://github.com/dscripka/openWakeWord/blob/97a48a211dd1bd89bd96877ea9ca6f7f756352e9/openwakeword/data.py . `augment_clips` includes PitchShift(.25 default probability), EQ, filtering, noise and RIR. Upstream probabilities reflect its pipeline and are not automatically a suitable Nyx recipe.
+- microWakeWord README at `761e829d7d9a780cc0696869bede5eaf9309379e`: https://github.com/OHF-Voice/micro-wake-word/blob/761e829d7d9a780cc0696869bede5eaf9309379e/README.md . Describes synthetic generation, separate ambient validation, SpecAugment and quantized streaming deployment. Explicitly warns that training usable models remains difficult. Also notes preprocessing should cover longer context because PCAN/noise reduction state matters; our current continuous waveform warmup must be preserved.
+
+## Concrete next investigation
+
+Inspect original training-only waveform provenance and existing pitch/generation settings before deciding that an augmentation is absent. Evaluate duration-preserving waveform pitch perturbation as a prospective controlled intervention, rather than spectrogram masking or another auxiliary loss. First build a small deterministic training-only pilot and check full length, finiteness, clipping, source/derived hashes and frontend coverage. Do not touch development/acceptance audio to fit transformation parameters. Timing labels remain synthesis reference coordinates, not measured phonetics; equal sample count alone does not prove a transformed phrase boundary is exact.
+
+If this intervention adds measurable training variation not already present, compare one fixed-budget GPU candidate against saved C161 with unchanged profile and consumed diagnostics, keeping the existing source mix and supervision otherwise fixed. Augment source-matched positives AND lexical negatives consistently to avoid a new class-specific shortcut. Do not pick per-example transforms according to development errors. New training plan must bind concrete source inventory, parameters, seed, cache budget and runtime before launch; this note does not claim a launched job or establish efficacy.
+
+Use limited workers and bounded feature caches, retain>=100GiB free, and never duplicate full historical feature trees. Waveform augmentation is CPU preprocessing unless explicitly implemented on CUDA; subsequent model training uses4090. Derived pitch variants are not new independent voices or new FAR exposure. Existing independent source/voice and Mac/P4 requirements remain outstanding. Official Willow's tiny consumed control is useful for runtime recognition but insufficient as a general benchmark.
