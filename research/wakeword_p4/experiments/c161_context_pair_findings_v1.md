@@ -45,3 +45,19 @@ Decision: retain C161 baseline. Preserve the paired short-interval benefit as ev
 ## Legacy consumed coverage
 
 Complete372-input double-model replay and saved-trace comparison exited0; C161 report and compared trace hashes were authenticated. Both arms target36/36 and command27/27 versus C16135/36 and26/27, respectively (gain1/loss0). Target standalone9/9 for all. Other synthetic containers with events:7 for each new arm versus4 C161, including constructed-nearword diagnostics. All models have zero events on the identical reused10.483944826h background; this is nonadditive exposure. New744 traces plus ledgers/reports archived with member sizes/SHA verified. Jenny and Joe are pending; Legacy results do not erase British bare regression or daily six-cups conflict. C161 remains baseline.
+
+## Jenny, Joe and Mac synthetic witnesses
+
+Jenny408 and Joe360 complete deployment-byte replays exited0. Jenny scoring exited0. Joe initial scoring failed because its preserved source metadata has no `carrier`; no inference was repeated. The repaired scorer uses `whole-utterance-unclassified` instead of inventing a bare/command label. A subsequent Git-path readiness check also failed before scoring; the path check was corrected, then saved-trace scoring exited0. Both failure logs/hashes and the repair receipt are preserved. Source labels, raw bytes, threshold and events remain unchanged.
+
+|Target diagnostic|C161|Silence control|Speech history|
+|---|---:|---:|---:|
+|Jenny all|33/36|32/36|34/36|
+|Jenny bare|9/9|8/9|9/9|
+|Jenny command|24/27|24/27|25/27|
+|Joe whole utterance, unclassified|0/72|0/72|0/72|
+|Mac synthetic Nyx|1/4 (prior saved evidence)|2/4|2/4|
+
+Speech history gains one Jenny command without losing targets relative to C161; silence loses one Jenny bare without gains. Jenny other synthetic containers with events are44/360,65/360,60/360 respectively (includes constructed negatives and reciprocal targets). These are diagnostic counts, not common-language frequency or a zero-required gate. Jenny reused9.614419583h background has zero events for all, nonadditive to previous evaluations. Joe negatives0/288 for all, with no background exposure denominator.
+
+Both Mac12 replays exited0: Samantha Nyx2/2, Daniel Nyx0/2; other targets0/8 for each arm. These are the existing consumed synthetic PCM witnesses on the host, not fresh voices or ESP32-P4 execution. Coverage remains voice-dependent; neither model resolves Joe or Daniel failures. Jenny/Joe complete original traces and ledgers were archived with member sizes/hashes verified; Mac24 traces similarly archived and saved event steps recomputed. C161 remains baseline. Next mechanism work should address remaining pronunciation/source gaps without training on these consumed development voices; Mac/P4 operational feedback is still outstanding.
