@@ -38,7 +38,7 @@ server environment and wake model selection.
 - [x] Report correct board identity and hardware capabilities.
 - [x] Enforce image identity in packaging, flashing and every OTA entry point.
 - [x] Build all supported profiles with CI-equivalent configuration locally.
-- [ ] Pass GitHub CI at the reviewable branch head.
+- [x] Pass GitHub CI at the reviewable branch head.
 - [x] Regress rendered pages, brightness, audio capture/playback and voice/wake
   ownership on the attached 10.1-inch and 8-inch development boards.
 - [ ] Confirm physical scrolling/touch and intermittent optical display behavior
@@ -170,13 +170,14 @@ No new training, duplicate acoustic baseline, TTS playback or recording is
 authorized by the hourly check. Judge delivered candidates by practical
 behavior; do not add a numerical-equivalence requirement.
 
-Latest reviewed GPU head: `9bc0ce2646673edebe762b3cea4385b5f825e3ad`.
-The allocation weighted contextual margin and MFCC channel masking controls were
-rejected before INT8 export (development targets 46/144 and 28/144, negative
-activations 30/720 and 18/720 respectively). Issue #13 still records no
-qualified replacement; frozen v30 remains the only approved handoff. These are
-development diagnostics, not physical-board acceptance. No research model was
-installed. The existing hourly task remains enabled.
+Latest reviewed GPU head: `57803e9901f4c1d25cb356f11debe1c7d41fb01a`.
+The latest commits corrected the teacher60 candidate replay threshold and passed
+relative-boundary/voice-split auditing for the 288-record fullwave overlay. They
+did not change model weights or produce a qualified deployment: the candidate
+still has zero fullwave recall, and Issue #13 has no approved replacement. Frozen
+v30 remains the only approved handoff. These are development diagnostics, not
+physical-board acceptance. No research model was installed. The existing hourly
+task remains enabled.
 
 Kokoro v1.1 now has 144 development recordings and 72 isolated acceptance
 recordings that passed the corrected 24 kHz native/16 kHz resampling audit. The
