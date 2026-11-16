@@ -16,3 +16,16 @@ C161 remains the baseline; bc01 remains experimental with known British bare-wak
 ## Saved-score review
 
 Review of every target container's full five-step UINT8 mean found **zero above-threshold containers without an emitted event** for either model/condition. Thus the missing target-container events correspond to below-threshold scores on these fixed traces, rather than event-policy suppression of an above-threshold crossing inside the container. This narrows the next investigation toward continuous acoustic/frontend/model context; it does not isolate any one mechanism. No score or threshold was changed. Per-container maxima and counts are in `4090-continuous-chatterbox-score-review-v1.json`.
+
+## Phase-matched silence-history counterfactual
+
+Protocol 596ba445 was pushed before execution; all 24 target/phase conditions and both fixed models completed with exit 0. Target waveform bytes are unchanged. Each target's original session start modulo480 is retained using 81600 + start%480 leading zero samples, followed by the complete clip and 32000 zero samples. This preserves frontend hop and model call phase while removing preceding speech jointly from frontend and model history. It is a diagnostic counterfactual, not a deployment reset policy. Event clocks and complete raw traces are retained and archived members and recomputed events verified.
+
+| Gap/phase schedule | Model | Original continuous target containers | Silence-history target containers | Gained / lost |
+|---|---|---:|---:|---:|
+|0.5 seconds|C161|0/12|4/12|4 / 0|
+|0.5 seconds|bc01|4/12|11/12|7 / 0|
+|2 seconds|C161|2/12|4/12|2 / 0|
+|2 seconds|bc01|10/12|11/12|1 / 0|
+
+These paired results support a preceding-audio effect beyond target start phase alone. They do not isolate MicroFrontend adaptation versus model context, and do not prove an exact speech duration or reset mechanism. Comparison between the two silence-history columns also changes phase schedules, so the matching aggregate counts do not demonstrate phase invariance. No tuning, training or fresh/independent exposure is claimed. Baseline remains C161. Next step is a locked frontend-versus-model history intervention on the consumed traces, before choosing a training remedy.
