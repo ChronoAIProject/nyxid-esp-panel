@@ -1,0 +1,7 @@
+# Full-pattern background gradient admission
+
+The four-class/two-unit analytic oracle established arithmetic correctness, not practical optimization support for the actual ten-unit wake pattern. The new training-only waveform check uses three deterministically selected shortest admitted Libri backgrounds, complete 16 kHz PCM, continuous past-only features, seed 726, and the untrained 34-class causal model on RTX 4090. Source and PCM hashes are recorded. No transcripts, heldout recordings, optimizer updates, or new PCM files are used.
+
+Actual-pattern acceptance probabilities are 1.34e-14–6.05e-14. Parameter gradient L2 norms are 7.01e-13–3.99e-12 and logit gradient L2 norms 6.45e-15–2.61e-14. This is a vanishing initial signal for ordinary mixed-objective training; finite/nonzero does not establish effectiveness. No coefficient is selected or training launched on that premise. These three short recordings do not characterize later trained-model gradients or long-stream saturation.
+
+Next design must provide local sequence discrimination without inventing empty background transcripts or penalizing all legitimate individual speech units. A candidate is a separately declared bounded sequence ranking/contrastive objective with training-only positive and confusable sequences; any background surrogate must be measured against supervised gradient scale before selecting its coefficient. Preserve the full-pattern implementation and this negative admission result. No model is qualified, and frozen v30 remains unchanged.

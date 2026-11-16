@@ -1,0 +1,94 @@
+{
+  "schema": "ordered-background-real-gradient-v1",
+  "seed": 726,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "dense_pattern": [
+    8,
+    31,
+    7,
+    29,
+    5,
+    14,
+    31,
+    29,
+    11,
+    16
+  ],
+  "dense_boundaries": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "selection": "Three shortest admitted training-only Libri backgrounds, deterministic samples/path order; full PCM, no crop, no transcript used.",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_ordered_background_real_gradient_v1.py": "6054d1f08b5130ea2984dccc41bbc1b5e3eb72099558351c819c97c23552708c",
+    "research/wakeword_p4/results/4090-causal-unit-training-index-v1.json.gz": "8cf1893f13042da5fdbf877112f174d5b791c06fbd0afddab747fd7bec5a590c",
+    ".local/wakeword/matchbox-long-material-v1/records.json": "8f373c741553c8a560764f822c669aabeec4ddf91b558df3a28af35a6e4559c0",
+    ".local/wakeword/matchbox-grid-aligned-v1/frontend.pt": "feb4b44d5f50c8ff05a81fabfd4b454537fb948454790fa8c219906bfa3f9f2c",
+    "research/wakeword_p4/training/ordered_unit_background_loss_v1.py": "e37a87636736b0652fc619ea8ee0c13a168f167cbf5c42550cfe9ed80e8f9590"
+  },
+  "records": [
+    {
+      "path": ".local/wakeword/libri-train-clean-100-source-v1/LibriSpeech/train-clean-100/1447/130550/1447-130550-0000.flac",
+      "sha256": "429b1f123455eb2acf6efbee50ef84db9bbc135611926aaf3a9b2542245604ed",
+      "pcm_sha256": "5f3eadc115e08f845d43f09c30c3033a684b4a00876602c3d50e9881caea8882",
+      "samples": 26320,
+      "frames": 163,
+      "clock": {
+        "received_samples": 26320,
+        "next_frame_start_sample": 26080,
+        "residual_samples": 240,
+        "padding_applied": false
+      },
+      "acceptance_probability": 1.3449959420283144e-14,
+      "loss": 1.3449959420283234e-14,
+      "parameter_gradient_l2": 7.00550403277822e-13,
+      "parameter_gradient_abs_max": 1.6993038107291497e-13,
+      "logit_gradient_l2": 6.450836484314616e-15,
+      "nonzero_parameter_gradients": 26678
+    },
+    {
+      "path": ".local/wakeword/libri-train-clean-100-source-v1/LibriSpeech/train-clean-100/403/126855/403-126855-0000.flac",
+      "sha256": "16c88954883ae3baca45c60fa1ad6e50aa1a828733017ade8a2abb7a5098a184",
+      "pcm_sha256": "e0d0813f3f18a550300bc90bf7d2bb5b4f29a0bc5db43a60fe6fbf8464b1d347",
+      "samples": 30320,
+      "frames": 188,
+      "clock": {
+        "received_samples": 30320,
+        "next_frame_start_sample": 30080,
+        "residual_samples": 240,
+        "padding_applied": false
+      },
+      "acceptance_probability": 6.054162460133389e-14,
+      "loss": 6.054162460133572e-14,
+      "parameter_gradient_l2": 3.991002407027766e-12,
+      "parameter_gradient_abs_max": 8.204264633111802e-13,
+      "logit_gradient_l2": 2.6149380919068474e-14,
+      "nonzero_parameter_gradients": 26962
+    },
+    {
+      "path": ".local/wakeword/libri-train-clean-100-source-v1/LibriSpeech/train-clean-100/19/198/19-198-0000.flac",
+      "sha256": "bf83de38f487ca007be1ffdb160a5e64e1ade77aecd146f92ae057c5dbd77c18",
+      "pcm_sha256": "b37b12ba3b89e5e82f77d4766465fe5a471321c14e8f402fc508e5cbab30ca4d",
+      "samples": 31440,
+      "frames": 195,
+      "clock": {
+        "received_samples": 31440,
+        "next_frame_start_sample": 31200,
+        "residual_samples": 240,
+        "padding_applied": false
+      },
+      "acceptance_probability": 3.4148461840750596e-14,
+      "loss": 3.4148461840751176e-14,
+      "parameter_gradient_l2": 1.6372712647455545e-12,
+      "parameter_gradient_abs_max": 4.1041817297124417e-13,
+      "logit_gradient_l2": 1.4277533148809862e-14,
+      "nonzero_parameter_gradients": 26928
+    }
+  ],
+  "optimizer_updates": 0,
+  "peak_cuda_bytes": 11827200,
+  "limitations": "Untrained model only; sequence-probability surrogate differs from deployed greedy event decoder. Nonzero gradients do not establish useful background rejection. No heldout data consumed. No model qualification."
+}
