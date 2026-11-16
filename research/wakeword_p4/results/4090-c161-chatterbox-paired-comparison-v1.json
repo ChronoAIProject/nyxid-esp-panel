@@ -1,0 +1,757 @@
+{
+  "schema": "c161-chatterbox-paired-comparison-v1",
+  "inputs": {
+    ".local/wakeword/causal-source-balanced-primed-v1/diagnostic/hey_nyx-source-balanced.jsonl": "68cfaac70ba816167412b7ae5b03d0f347ba40cbb9ea1998376731bf7d3be6b2",
+    ".local/wakeword/c161-chatterbox-primed-v1/diagnostic/hey_nyx-source-balanced.jsonl": "77c89cd7da075e469f840db6049058c8dd46f3848a109c1ada53971ff2102afc",
+    ".local/wakeword/causal-source-balanced-jenny-v1/diagnostic/hey_nyx-source-balanced.jsonl": "bd776f7f0ff7c3bf393ddf6f7538938a8f9b86bfb0d043cac64124469621c9d9",
+    ".local/wakeword/c161-chatterbox-jenny-v1/diagnostic/hey_nyx-source-balanced.jsonl": "4f2be187c00450fdc80f6d602d166354836817f87bda2c433e99ce71beab775a",
+    ".local/wakeword/c161-chatterbox-v1/result.json": "d24ab0d8ce99cc2fc7144e5d4e6b1cf13d326b0442b8e1ae2c8e377ee78c7fa6",
+    ".local/wakeword/c161-chatterbox-builtin-v1/result.json": "f1ed1cf363649e3de11611592bcb656c42e653358402b5aa46f15c191bcb4a20",
+    ".local/wakeword/c161-mac12-v1/result.json": "c79afc0a0e91a7ce9b5383e3e8d0c38b1b18a840e65700ccd6e2f29696e2ee75",
+    ".local/wakeword/c161-chatterbox-mac12-v1/result.json": "006b18b4bfe8775bcad85a37ad8899b866dab4611af695b2c322601bdc903e80"
+  },
+  "groups": {
+    "primed": {
+      "baseline": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 35,
+            "complete": 35,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 140.5,
+              "p95": 200.94375,
+              "observed": 35
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 158.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 26,
+            "complete": 26,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 203.109375,
+              "observed": 26
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 11,
+            "before_only": 0,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 162.6875,
+              "p95": 196.09375,
+              "observed": 11
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 108.53125,
+              "p95": 197.91875,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 146.75,
+              "p95": 278.9187499999999,
+              "observed": 12
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 4,
+            "events": 4
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "candidate": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 36,
+            "complete": 36,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 140.0,
+              "p95": 204.3125,
+              "observed": 36
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 87.25,
+              "p95": 188.5,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 27,
+            "complete": 27,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 204.3125,
+              "observed": 27
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 149.625,
+              "p95": 202.215625,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 111.40625,
+              "p95": 197.91875,
+              "observed": 12
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 12,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 153.0,
+              "p95": 224.91874999999993,
+              "observed": 12
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 288,
+            "activated_clips": 6,
+            "events": 6
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 10.483944826388889,
+          "far_upper95": 0.2857447576425148
+        },
+        "threshold_selected": false
+      },
+      "paired_counts": {
+        "negative/retained_silent": 316,
+        "target/retained_hit": 35,
+        "target/gained": 1,
+        "negative/gained": 4,
+        "negative/retained_hit": 2,
+        "negative/lost": 2
+      },
+      "candidate_false_by_phrase": {
+        "common_negative": 6
+      },
+      "changed_cases": [
+        {
+          "source_id": "v2-t01-c1-s0-r00",
+          "variant": 0,
+          "target_id": "hey_nyx",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "turn on the light"
+        },
+        {
+          "source_id": "v2-t07-c1-s1-r00",
+          "variant": 0,
+          "target_id": "common_negative",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "turn on the light"
+        },
+        {
+          "source_id": "v2-t07-c2-s0-r00",
+          "variant": 1,
+          "target_id": "common_negative",
+          "old_activated": true,
+          "new_activated": false,
+          "carrier": "what time is it"
+        },
+        {
+          "source_id": "v2-t07-c2-s0-r00",
+          "variant": 2,
+          "target_id": "common_negative",
+          "old_activated": true,
+          "new_activated": false,
+          "carrier": "what time is it"
+        },
+        {
+          "source_id": "v2-t09-c1-s1-r00",
+          "variant": 2,
+          "target_id": "common_negative",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "turn on the light"
+        },
+        {
+          "source_id": "v2-t09-c2-s2-r00",
+          "variant": 2,
+          "target_id": "common_negative",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "what time is it"
+        },
+        {
+          "source_id": "v2-t09-c3-s1-r00",
+          "variant": 2,
+          "target_id": "common_negative",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "set a timer"
+        }
+      ]
+    },
+    "jenny": {
+      "baseline": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 33,
+            "complete": 25,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 272.0,
+              "observed": 33
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 245.9375,
+              "p95": 288.275,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 24,
+            "complete": 16,
+            "before_only": 8,
+            "missing": 3,
+            "signed_latency_ms": {
+              "median": 66.40625,
+              "p95": 172.375,
+              "observed": 24
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 123.5,
+              "p95": 241.16562499999995,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 258.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 10,
+            "complete": 8,
+            "before_only": 2,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 94.46875,
+              "p95": 286.91875,
+              "observed": 10
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 44,
+            "events": 44
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "candidate": {
+        "model": "hey_nyx-source-balanced",
+        "threshold": 0.91796875,
+        "priming_events_ignored_by_app": 0,
+        "event_arithmetic": "uint8-sum-binary64-v1",
+        "frozen_parameters_reference": false,
+        "positive": {
+          "all": {
+            "clips": 36,
+            "any_after_source": 34,
+            "complete": 26,
+            "before_only": 8,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 267.003125,
+              "observed": 34
+            }
+          },
+          "standalone": {
+            "clips": 9,
+            "any_after_source": 9,
+            "complete": 9,
+            "before_only": 0,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 215.9375,
+              "p95": 288.275,
+              "observed": 9
+            }
+          },
+          "command": {
+            "clips": 27,
+            "any_after_source": 25,
+            "complete": 17,
+            "before_only": 8,
+            "missing": 2,
+            "signed_latency_ms": {
+              "median": 72.6875,
+              "p95": 172.375,
+              "observed": 25
+            }
+          },
+          "variant0": {
+            "clips": 12,
+            "any_after_source": 12,
+            "complete": 9,
+            "before_only": 3,
+            "missing": 0,
+            "signed_latency_ms": {
+              "median": 93.5,
+              "p95": 213.771875,
+              "observed": 12
+            }
+          },
+          "variant1": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 8,
+            "before_only": 3,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 243.96875,
+              "observed": 11
+            }
+          },
+          "variant2": {
+            "clips": 12,
+            "any_after_source": 11,
+            "complete": 9,
+            "before_only": 2,
+            "missing": 1,
+            "signed_latency_ms": {
+              "median": 102.6875,
+              "p95": 281.71875,
+              "observed": 11
+            }
+          }
+        },
+        "negative": {
+          "common": {
+            "clips": 324,
+            "activated_clips": 56,
+            "events": 56
+          },
+          "cross_target": {
+            "clips": 36,
+            "activated_clips": 0,
+            "events": 0
+          }
+        },
+        "pre_source_events": 0,
+        "background": {
+          "events": 0,
+          "hours": 9.614419583333333,
+          "far_upper95": 0.31158742840255416
+        },
+        "threshold_selected": false
+      },
+      "paired_counts": {
+        "negative/retained_silent": 303,
+        "target/retained_hit": 33,
+        "target/gained": 1,
+        "target/retained_silent": 2,
+        "negative/gained": 13,
+        "negative/retained_hit": 43,
+        "negative/lost": 1
+      },
+      "candidate_false_by_phrase": {
+        "hey_next": 15,
+        "hey_mix": 28,
+        "hey_muse": 13
+      },
+      "changed_cases": [
+        {
+          "source_id": "jenny-development-018",
+          "variant": 2,
+          "target_id": "hey_nyx",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "time"
+        },
+        {
+          "source_id": "jenny-development-096",
+          "variant": 0,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "bare"
+        },
+        {
+          "source_id": "jenny-development-096",
+          "variant": 2,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "bare"
+        },
+        {
+          "source_id": "jenny-development-100",
+          "variant": 2,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "light"
+        },
+        {
+          "source_id": "jenny-development-103",
+          "variant": 1,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "time"
+        },
+        {
+          "source_id": "jenny-development-104",
+          "variant": 0,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "time"
+        },
+        {
+          "source_id": "jenny-development-106",
+          "variant": 0,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "timer"
+        },
+        {
+          "source_id": "jenny-development-107",
+          "variant": 1,
+          "target_id": "hey_next",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "timer"
+        },
+        {
+          "source_id": "jenny-development-109",
+          "variant": 0,
+          "target_id": "hey_mix",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "bare"
+        },
+        {
+          "source_id": "jenny-development-109",
+          "variant": 1,
+          "target_id": "hey_mix",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "bare"
+        },
+        {
+          "source_id": "jenny-development-110",
+          "variant": 0,
+          "target_id": "hey_mix",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "bare"
+        },
+        {
+          "source_id": "jenny-development-113",
+          "variant": 1,
+          "target_id": "hey_mix",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "light"
+        },
+        {
+          "source_id": "jenny-development-115",
+          "variant": 2,
+          "target_id": "hey_mix",
+          "old_activated": true,
+          "new_activated": false,
+          "carrier": "time"
+        },
+        {
+          "source_id": "jenny-development-126",
+          "variant": 0,
+          "target_id": "hey_muse",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "time"
+        },
+        {
+          "source_id": "jenny-development-131",
+          "variant": 0,
+          "target_id": "hey_muse",
+          "old_activated": false,
+          "new_activated": true,
+          "carrier": "timer"
+        }
+      ]
+    },
+    "builtin36": {
+      "paired_counts": {
+        "nyx/gained": 5,
+        "nyx/retained_silent": 2,
+        "nyx/retained_hit": 5,
+        "willow/retained_silent": 12,
+        "everyday-negative/retained_silent": 12
+      },
+      "changed_cases": [
+        {
+          "index": 0,
+          "source": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks.",
+            "seed": 726,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "old_activated": false,
+          "new_activated": true
+        },
+        {
+          "index": 2,
+          "source": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks.",
+            "seed": 728,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "old_activated": false,
+          "new_activated": true
+        },
+        {
+          "index": 4,
+          "source": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, turn on the light.",
+            "seed": 727,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "old_activated": false,
+          "new_activated": true
+        },
+        {
+          "index": 9,
+          "source": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, set a timer.",
+            "seed": 726,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "old_activated": false,
+          "new_activated": true
+        },
+        {
+          "index": 11,
+          "source": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, set a timer.",
+            "seed": 728,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "old_activated": false,
+          "new_activated": true
+        }
+      ]
+    },
+    "mac12": {
+      "paired_counts": {
+        "hey_nyx/retained_silent": 2,
+        "hi_esp/retained_silent": 4,
+        "hey_willow/retained_silent": 4,
+        "hey_nyx/gained": 1,
+        "hey_nyx/retained_hit": 1
+      },
+      "changed_cases": [
+        {
+          "index": 7,
+          "source": {
+            "voice": "Samantha",
+            "target": "hey_nyx",
+            "form": "bare",
+            "text": "Hey Nicks.",
+            "path": "clip-07.wav",
+            "source_path": "clip-07.aiff",
+            "source_sha256": "ad67ed392983c078363ab7a45ac8643d71246879efaa73db6c0b984fb23241bf",
+            "sha256": "51769b9220109ec4951d1c5ef4edcdcb211b6c4fdd01fd9a16710fc268acae39",
+            "pcm_sha256": "7e29e46c45290920bbe2a6dd4469b42a62ae5ef6f1d135e62cbea9ac1eb62440",
+            "samples": 54580,
+            "native": {
+              "native_rate": 22050,
+              "native_samples": 13478,
+              "resampled_samples": 9780,
+              "native_pcm_sha256": "bb900851750e356b7a9a9839ed31c8533cadbda438e421fd55e3bc5b8e07d9c3"
+            },
+            "role": "consumed-source development transport diagnostic",
+            "synthesis_default_rate_preserved": true,
+            "source_index": 7,
+            "point": 0,
+            "requested_decimal": null,
+            "reference_threshold_f32_hex": null
+          },
+          "old_activated": false,
+          "new_activated": true
+        }
+      ]
+    }
+  },
+  "decision": "pending_evidence_review",
+  "policy": "Summarize complete saved events at fixed original threshold only; no automatic candidate promotion or rejection. Constructed nearwords diagnostic, prioritize common-language conflicts and voice/command coverage. Reused backgrounds nonadditive. Human/P4/resource conclusions require separate evidence."
+}
