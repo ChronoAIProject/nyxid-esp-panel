@@ -1,0 +1,90 @@
+{
+  "schema": "matchbox-incremental-geometry-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/audit_matchbox_incremental_geometry_v1.py": "9642139331eb7b525b5004baa39c4fedabdd02a3121cf9030bdddbc0604d3932",
+    "research/wakeword_p4/training/matchboxnet_pretrained_v1.py": "3ff7ad6ed8a7187c734ef78cdcc639beb20d822b3b61cd8884d813f60d461174",
+    "research/wakeword_p4/training/matchboxnet_long_window_v1.py": "1e3e0d13802b3009c0810b13eb1cb5dad6510e215f0f1a0fe2bbfa37973bcb41"
+  },
+  "torch_version": "2.15.0+cu132",
+  "blocks": [
+    {
+      "block": 0,
+      "input_channels": 64,
+      "output_channels": 128,
+      "kernel": 11,
+      "dilation": 1,
+      "radius_frames": 5,
+      "conv_mac_per_output_frame": 8896,
+      "temporal_input_cache_elements": 640,
+      "residual_alignment_delay_elements": 0
+    },
+    {
+      "block": 1,
+      "input_channels": 128,
+      "output_channels": 64,
+      "kernel": 13,
+      "dilation": 1,
+      "radius_frames": 6,
+      "conv_mac_per_output_frame": 18048,
+      "temporal_input_cache_elements": 1536,
+      "residual_alignment_delay_elements": 768
+    },
+    {
+      "block": 2,
+      "input_channels": 64,
+      "output_channels": 64,
+      "kernel": 15,
+      "dilation": 1,
+      "radius_frames": 7,
+      "conv_mac_per_output_frame": 9152,
+      "temporal_input_cache_elements": 896,
+      "residual_alignment_delay_elements": 448
+    },
+    {
+      "block": 3,
+      "input_channels": 64,
+      "output_channels": 64,
+      "kernel": 17,
+      "dilation": 1,
+      "radius_frames": 8,
+      "conv_mac_per_output_frame": 9280,
+      "temporal_input_cache_elements": 1024,
+      "residual_alignment_delay_elements": 512
+    },
+    {
+      "block": 4,
+      "input_channels": 64,
+      "output_channels": 128,
+      "kernel": 29,
+      "dilation": 2,
+      "radius_frames": 28,
+      "conv_mac_per_output_frame": 10048,
+      "temporal_input_cache_elements": 3584,
+      "residual_alignment_delay_elements": 0
+    },
+    {
+      "block": 5,
+      "input_channels": 128,
+      "output_channels": 128,
+      "kernel": 1,
+      "dilation": 1,
+      "radius_frames": 0,
+      "conv_mac_per_output_frame": 16384,
+      "temporal_input_cache_elements": 0,
+      "residual_alignment_delay_elements": 0
+    }
+  ],
+  "encoder_receptive_field_frames": 109,
+  "encoder_right_context_frames": 54,
+  "encoder_lookahead_ms_at10ms_hop": 540,
+  "conv_mac_per_frame": 71808,
+  "conv_mac_per_second_at100fps": 7180800,
+  "temporal_input_cache_elements": 7680,
+  "residual_alignment_delay_elements": 1728,
+  "cache_bytes_if_all_int8_and_separate_residual": 9408,
+  "cache_bytes_if_float32_and_separate_residual": 37632,
+  "head_mac_per_call": 896,
+  "rolling_mean_ring_int8_bytes_280frames": 35840,
+  "neural_forward_calls": 0,
+  "policy": "Geometry only, not exported streaming graph. Symmetric stride1 encoder could delay outputs by54frames with perlayer caches; listed temporal cache is a conservative full effective history arrangement, residual alignment separately budgeted and potentially aliasable. Excludes chunk buffers, quantization/requant scales, BN/activations, pooling accumulator, frontend, arena and runtime. No proven memory lower bound or P4 peak. Continuing past original window boundaries changes original centered reflection/zero-padding and wholewindow pooling semantics, hence no behavioral inheritance. Removing lookahead changes network function; simply making symmetric layers causal cannot preserve recognition. Integer-state export/calibration remain unproven. No training/new data/qualification."
+}
