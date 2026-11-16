@@ -7,12 +7,12 @@ CARRIERS=('bare','light','time','timer')
 class Sampler:
  def __init__(self,seed=726):
   with gzip.open(INDEX,'rt') as f:self.data=json.load(f)
-  self.rows=self.data['records'];self.cells={c:[g for g in self.data['cells'] if g['carrier']==c] for c in CARRIERS};assert all(len(v)==180 for v in self.cells.values())
+  self.rows=self.data['records'];self.cells={c:[g for g in self.data['cells'] if g['carrier']==c] for c in CARRIERS};assert all(len(v)==144 for v in self.cells.values())
   self.rngs={c:np.random.default_rng(seed+100+i) for i,c in enumerate(CARRIERS)};self.permutation=np.random.default_rng(seed+200)
  def descriptors(self):
   result=[]
   for carrier in CARRIERS:
-   group=int(self.rngs[carrier].integers(180));cell=self.cells[carrier][group]
+   group=int(self.rngs[carrier].integers(144));cell=self.cells[carrier][group]
    for label,index in enumerate(cell['indices'],1):
     row=self.rows[index];assert row['role']=='training' and row['class_id']==label and row['carrier']==carrier
     result.append(dict(index=index,class_id=label,carrier=carrier,cell=group,samples=row['samples']))
