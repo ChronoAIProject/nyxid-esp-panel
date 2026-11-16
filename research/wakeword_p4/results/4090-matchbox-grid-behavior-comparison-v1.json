@@ -1,0 +1,509 @@
+{
+  "schema": "matchbox-grid-behavior-comparison-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/compare_matchbox_grid_behavior_v1.py": "5022e411fbc46e374122ee903492372ea5fc3be19d7b3b5fea693c52ad38102e",
+    "research/wakeword_p4/results/4090-matchbox-long-pooled-consumed-melo-original-v1.json": "bb3cee45344faa2dfcba5b79d079bccf93a91ecc5f73b6a9ed9cb8601d34b9b0",
+    ".local/wakeword/matchbox-long-pooled-consumed-melo-v1/records.jsonl": "e6312a602ffa147dc0e6514843ad7ad6964da4ef5df8601984775e27e31fad3a",
+    "research/wakeword_p4/results/4090-matchbox-grid-aligned-consumed-melo-original-v1.json": "8122dcb1e5fba1eaea349bda93510bd8f1a13af5f0327263796299133c1421c2",
+    ".local/wakeword/matchbox-grid-aligned-consumed-melo-v1/records.jsonl": "8c6319563d89f5bfe57e2d61b495a5008d7f7f49146848d09bd5c3178cc6b5b9",
+    "research/wakeword_p4/results/4090-matchbox-grid-aligned-consumed-melo-records-v1.jsonl.gz": "0d4c620cc532dd514183c1237517ad1f9c35e79213f7a3489491c260a2dd7164"
+  },
+  "arms": {
+    "original": {
+      "model": {
+        "path": ".local/wakeword/matchbox-long-pooled-int8-v1/int8.tflite",
+        "bytes": 115408,
+        "sha256": "deafd3c651b7ff7acd0db740eb2f7b5262068dbf640f0c65a5dbae85133a7b42"
+      },
+      "metrics": {
+        "threshold": 0.91796875,
+        "positive": {
+          "EN-US/bare": {
+            "clips": 9,
+            "hits": 9
+          },
+          "EN-US/command": {
+            "clips": 27,
+            "hits": 19
+          },
+          "EN-BR/bare": {
+            "clips": 9,
+            "hits": 0
+          },
+          "EN-BR/command": {
+            "clips": 27,
+            "hits": 7
+          }
+        },
+        "confusion_clips": 288,
+        "confusion_activated_clips": 9,
+        "cross_target_clips": 72,
+        "cross_target_activated_clips": 0,
+        "background_events": 0,
+        "priming_events": 0
+      },
+      "background_hours": 7.902862222222223,
+      "far_upper95": 0.3790692776004911,
+      "by_voice_phrase_carrier": {
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/bare": {
+          "clips": 9,
+          "activated": 9
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/light": {
+          "clips": 9,
+          "activated": 3
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/time": {
+          "clips": 9,
+          "activated": 8
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/timer": {
+          "clips": 9,
+          "activated": 8
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/bare": {
+          "clips": 9,
+          "activated": 5
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/timer": {
+          "clips": 9,
+          "activated": 3
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/time": {
+          "clips": 9,
+          "activated": 1
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/light": {
+          "clips": 9,
+          "activated": 5
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/time": {
+          "clips": 9,
+          "activated": 2
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/timer": {
+          "clips": 9,
+          "activated": 0
+        }
+      },
+      "pre_source_events": 0
+    },
+    "aligned": {
+      "model": {
+        "path": ".local/wakeword/matchbox-grid-aligned-int8-v1/int8.tflite",
+        "bytes": 115408,
+        "sha256": "2df2d90f13406f79aff2cbe642408cc35251c489af4bca26e3f545a98fa31a8e"
+      },
+      "metrics": {
+        "threshold": 0.91796875,
+        "positive": {
+          "EN-US/bare": {
+            "clips": 9,
+            "hits": 9
+          },
+          "EN-US/command": {
+            "clips": 27,
+            "hits": 21
+          },
+          "EN-BR/bare": {
+            "clips": 9,
+            "hits": 1
+          },
+          "EN-BR/command": {
+            "clips": 27,
+            "hits": 11
+          }
+        },
+        "confusion_clips": 288,
+        "confusion_activated_clips": 16,
+        "cross_target_clips": 72,
+        "cross_target_activated_clips": 0,
+        "background_events": 0,
+        "priming_events": 0
+      },
+      "background_hours": 7.902862222222223,
+      "far_upper95": 0.3790692776004911,
+      "by_voice_phrase_carrier": {
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/bare": {
+          "clips": 9,
+          "activated": 9
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/light": {
+          "clips": 9,
+          "activated": 4
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/time": {
+          "clips": 9,
+          "activated": 8
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nyx/timer": {
+          "clips": 9,
+          "activated": 9
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/official/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/nick/timer": {
+          "clips": 9,
+          "activated": 1
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/bare": {
+          "clips": 9,
+          "activated": 7
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/next/timer": {
+          "clips": 9,
+          "activated": 7
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/time": {
+          "clips": 9,
+          "activated": 1
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/mix/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US/muse/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/bare": {
+          "clips": 9,
+          "activated": 1
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/light": {
+          "clips": 9,
+          "activated": 5
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/time": {
+          "clips": 9,
+          "activated": 6
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nyx/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/official/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/nick/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/next/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/mix/timer": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/bare": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/light": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/time": {
+          "clips": 9,
+          "activated": 0
+        },
+        "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR/muse/timer": {
+          "clips": 9,
+          "activated": 0
+        }
+      },
+      "pre_source_events": 0
+    }
+  },
+  "paired_delta": {
+    "nyx": {
+      "both": 35,
+      "neither": 30,
+      "aligned_only": 7
+    },
+    "official": {
+      "neither": 72
+    },
+    "nick": {
+      "neither": 71,
+      "aligned_only": 1
+    },
+    "next": {
+      "both": 8,
+      "neither": 58,
+      "aligned_only": 6
+    },
+    "mix": {
+      "neither": 71,
+      "both": 1
+    },
+    "muse": {
+      "neither": 72
+    },
+    "background": {
+      "neither": 42
+    }
+  },
+  "all948trace_hashes_verified": true,
+  "neural_calls": 0,
+  "threshold_selected": false,
+  "promotion_qualified": false,
+  "limits": "Consumed fixed-point diagnosis only. Same complete background recordings, hours not additive or fresh acceptance. Source+RIR generated boundaries not phonetic truth. No threshold rescue, phase causality, P4 feasibility or HiESP parity claim."
+}
