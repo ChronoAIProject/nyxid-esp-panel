@@ -1,0 +1,7 @@
+# Training path diagnosis
+
+All four failures from the fixed batch24 are inspected, without new examples, changes to weights or decoder search. Both Mix false events substitute generator token55 with56 across every center frame of that position (3/3 and2/2). In the light target miss, the corresponding token56 interval contains token55 for one of its two center frames. The bare target miss additionally has transient substitutions near short-unit boundaries. These are descriptive center-frame counts, not acoustic phone labels.
+
+The rectangular/RIR allocation-argmax reference yields an exact target event for both target misses and no event for either Mix negative. Thus these four failures are not forced by the declared target construction itself. This does not prove its intervals are acoustic truth.
+
+A concrete next hypothesis is equal mass per original generator position, mixed with the existing recording-normalized frame objective so silence/unallocated-time discrimination is retained. The new position loss normalizes each position's overlap distribution separately, preserving repeat-position identity, then averages positions. It is not class-inverse weighting or additional background transcripts. A local token55/56 confusion can then receive more weight than its2–3frame duration under a recording-level average. This proposal still needs gradient/support admission and a fixed coefficient/budget before any new training; it is not a demonstrated fix. Decoder remains exact and unchanged.
