@@ -1,0 +1,217 @@
+{
+  "schema": "causal-cache-int8-feasibility-original-v1",
+  "plan_sha256": "23de1df9b1bda35f07f0701060801dfed8f5a9ab8d82ac006b986105e2048989",
+  "model": {
+    "path": ".local/wakeword/causal-cache-int8-feasibility-v2/prototype.tflite",
+    "bytes": 57040,
+    "sha256": "504c338ed651778fc942dc02d8fe6b75e0d89ecd7362736af6dfb40d5c4b4e02"
+  },
+  "inputs": {
+    "cache0": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.007842466235160828,
+      "zero": 0
+    },
+    "cache1": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008567930199205875,
+      "zero": -11
+    },
+    "cache2": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008823051117360592,
+      "zero": -15
+    },
+    "cache3": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008997290395200253,
+      "zero": -17
+    },
+    "cache4": {
+      "shape": [
+        1,
+        64,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.009331830777227879,
+      "zero": -21
+    },
+    "cache5": {
+      "shape": [
+        1,
+        128,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.009803105145692825,
+      "zero": -26
+    },
+    "chunk": {
+      "shape": [
+        1,
+        3,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.007842466235160828,
+      "zero": 0
+    }
+  },
+  "outputs": {
+    "cache0_out": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.007842466235160828,
+      "zero": 0
+    },
+    "cache1_out": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008567930199205875,
+      "zero": -11
+    },
+    "cache2_out": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008823051117360592,
+      "zero": -15
+    },
+    "cache3_out": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.008997290395200253,
+      "zero": -17
+    },
+    "cache4_out": {
+      "shape": [
+        1,
+        64,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.009331830777227879,
+      "zero": -21
+    },
+    "cache5_out": {
+      "shape": [
+        1,
+        128,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.009803105145692825,
+      "zero": -26
+    },
+    "encoded": {
+      "shape": [
+        1,
+        3,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.005949231330305338,
+      "zero": -128
+    }
+  },
+  "ops": [
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "ADD",
+    "DELEGATE"
+  ],
+  "cache_feedback_requantization_required": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "cache_input_bytes": 16128,
+  "analytic_feedback_calls": 256,
+  "feedback_output_sha256": "7a7c21a41c3cee005a6a7d403df33bcd4258ea297d7352a3f4e705828ff6e1c8",
+  "fresh_same_runtime_reset_passed": true,
+  "all_neural_tensors_integer": true,
+  "trained": false,
+  "recognition_calls": 0,
+  "promotion_qualified": false,
+  "policy": "Untrained TensorFlowgraph with six causaldepthwise5tap/pointwise64residualReLUblocks and explicitpastcaches4*d,d1/2/4/8/16/32. RandomKerasinitializationseed726, no transfer ofPyTorchweights/recognitionclaim. Analyticuniform[-1,1]features/caches for64calibrationexamples, not realactivationcalibration. SinglebuiltinINT8conversion; allinput/outputcachequantparams anddtypes audited. Feedbackrequantizationexplicit ifscalesdiffer; zeroreset usesinputzeropoints.256analyticcontinuouscalls plusfreshinterpreterresetrepeat. No neuralCPU/GPU/fullchunk equalitygate, training/audio/heldoutdata/thresholdselection orqualification. ExternalMFCCfloat andP4runtime/arena remainunproven."
+}
