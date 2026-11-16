@@ -21,7 +21,12 @@ def main():
     out=chunks[0]; native=np.asarray(out.audio,dtype=np.float32)
     if native.ndim!=1 or not np.isfinite(native).all() or native.size==0: raise RuntimeError(f'quality failure {r["request_id"]}')
     stem=f'{i:04d}-{r["request_id"]}'; np.save(a.output/(stem+'.native.npy'),native,allow_pickle=False); pcm=resample_poly(native,2,3); wav=a.output/(stem+'.wav'); sf.write(wav,pcm,16000,subtype='PCM_16')
-    records.append({**r,'native_path':str((stem+'.native.npy')),'pcm_path':str(stem+'.wav'),'native_sha256':sha(a.output/(stem+'.native.npy')),'pcm_sha256':sha(wav),'native_samples':int(native.size),'native_sample_rate':SR,'sample_rate':16000,'pcm_samples':int(len(pcm)),'phoneme_metadata':out.phonemes,'duration_metadata':out.pred_dur.detach().cpu().tolist() if out.pred_dur is not None else None})
+    prefix_text='Hey Nicks.' if r['phrase_id'] in ('nyx','official') else ('Hey '+{'nick':'Nick','next':'Next','mix':'Mix','muse':'Muse'}[r['phrase_id']]+'.')
+    prefix=list(pipes[r['voice'][:2]](prefix_text,voice=r['voice'],speed=r['speed'],model=None))[0].phonemes
+    prefix_tokens=sum(model.vocab.get(c) is not None for c in prefix)+2
+    keyword_native=int(out.pred_dur[:prefix_tokens].sum())*600 if r['phrase_id'] in ('nyx','nick','next','mix','muse','official') else None
+    keyword_end=int(round(keyword_native*16000/SR)) if keyword_native is not None else None
+    records.append({**r,'native_path':str((stem+'.native.npy')),'pcm_path':str(stem+'.wav'),'native_sha256':sha(a.output/(stem+'.native.npy')),'pcm_sha256':sha(wav),'native_samples':int(native.size),'native_sample_rate':SR,'sample_rate':16000,'pcm_samples':int(len(pcm)),'phoneme_metadata':out.phonemes,'duration_metadata':out.pred_dur.detach().cpu().tolist() if out.pred_dur is not None else None,'keyword_native_samples':keyword_native,'keyword_end_samples':keyword_end,'keyword_boundary_method':'prefix phoneme token duration; ratio 600 native samples per pred_dur unit'})
     if i%8==0: print(json.dumps({'role':a.role,'done':i+1,'total':len(req),'device':device}),flush=True)
   (a.output/'records.json').write_text(json.dumps(records,indent=2)+'\n')
   print(json.dumps({'role':a.role,'records':len(records),'seconds':round(time.time()-start,1),'device':device}),flush=True)
