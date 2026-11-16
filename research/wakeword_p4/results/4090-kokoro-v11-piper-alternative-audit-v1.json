@@ -1,0 +1,9 @@
+{
+  "schema": "kokoro-v11-piper-alternative-audit-v1",
+  "status": "not-admitted",
+  "available_models": ["en_US-libritts_r-medium", "en_GB-vctk-medium", "en_GB-cori-high", "en_GB-alba-medium"],
+  "consumption_evidence": ["4090-piper-vctk-source-v1.json", "4090-multispeaker-coverage-native-plan-v1.json", "4090-piper-balanced-training-pilot-run-v1.json"],
+  "finding": "Local Piper alternatives are already part of historical training/development source families or prospective source reviews; no fresh non-overlap lock was established in this turn.",
+  "action": "Do not restart Piper generation without a new pinned revision, source manifest, and non-overlap audit.",
+  "v30_retained": true
+}
