@@ -13,7 +13,7 @@ from contextual_generator_contrast_v1 import contextual_contrast_loss,selected_p
 P=Path('research/wakeword_p4/causal_generator_contextual_training_plan_v1.json');OUT=Path('.local/wakeword/causal-generator-contextual-supervised-v1')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
- plan=json.load(P.open());torch.set_num_threads(1);assert torch.cuda.is_available();assert not (OUT/'initial.pt').exists(),'Existing run: explicit resume required'
+ plan=json.load(P.open());OUT.mkdir(parents=True,exist_ok=True);torch.set_num_threads(1);assert torch.cuda.is_available();assert not (OUT/'initial.pt').exists(),'Existing run: explicit resume required'
  torch.manual_seed(plan['seed']);torch.cuda.manual_seed_all(plan['seed']);torch.backends.cudnn.allow_tf32=False;torch.backends.cuda.matmul.allow_tf32=False
  sampler=Sampler(plan['seed']);model=CausalGeneratorUnitModel(len(sampler.data['dense_to_original_label'])).cuda();optimizer=torch.optim.AdamW(model.parameters(),lr=plan['learning_rate'],weight_decay=plan['weight_decay'])
  fp=Path('.local/wakeword/matchbox-grid-aligned-v1/frontend.pt');front=ContinuousPastMFCC(torch.load(fp,map_location='cpu',weights_only=True)).cuda().eval()
