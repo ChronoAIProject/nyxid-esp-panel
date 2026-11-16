@@ -1,0 +1,38 @@
+{
+  "schema": "kokoro-v11-candidate-training-lock-v1",
+  "status": "preflight-locked",
+  "device": "RTX 4090",
+  "seed": 726,
+  "source": {
+    "development_root": ".local/wakeword/kokoro-v11-development-boundary-v2",
+    "training_manifest": "research/wakeword_p4/results/4090-kokoro-v11-training-manifest-v5.jsonl",
+    "mfcc_cache": ".local/wakeword/kokoro-v11-mfcc-boundary-v3",
+    "embedding_cache": ".local/wakeword/kokoro-v11-embeddings-boundary-v3",
+    "cache_verification": "research/wakeword_p4/results/4090-kokoro-v11-boundary-v2-cache-verification-v1.json",
+    "positive_records": 48,
+    "negative_records": 96,
+    "development_voices": ["af_maple", "af_sol"],
+    "acceptance_voice": "bf_vale"
+  },
+  "isolation": {
+    "acceptance_excluded": true,
+    "threshold_selection_excluded": true,
+    "historical_final_sets_excluded": true,
+    "keyword_boundary": "boundary-v2 keyword_end_samples; generated timing reference only"
+  },
+  "training": {
+    "upstream": "microWakeWord project path must be supplied at execution",
+    "architecture": "teacher60",
+    "context_frames": 150,
+    "batchnorm": "frozen",
+    "device": "cuda",
+    "candidate_export": "INT8 only after full stream and calibration checks",
+    "precondition": "build and validate contiguous features overlay with explicit split/voice identity before starting train_stream"
+  },
+  "qualification": {
+    "frozen_v30": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "far_upper_bound_per_hour": 0.5,
+    "required_independent_background_hours": 5.99146,
+    "promotion_requires_all_gates": true
+  }
+}
