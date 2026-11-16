@@ -1,0 +1,43 @@
+{
+  "schema": "causal-cache-clock-function-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_causal_cache_clock_v1.py": "38602c8b5b55d860a97f179665372dfbcbc455a578c22f91aa734062f8adf519",
+    "research/wakeword_p4/training/causal_cached_encoder_v1.py": "5bbcb40be78dd3b32e9124c9380665d764379d83e16e6db977c61cfe7c2058f1"
+  },
+  "geometry": {
+    "channels": 64,
+    "kernel": 5,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "history_frames": [
+      4,
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "receptive_field_frames": 253,
+    "right_context_frames": 0,
+    "state_elements": 16128,
+    "conv_mac_per_frame": 26496,
+    "parameters": 27264,
+    "chunk_frames": 3,
+    "feature_hop_samples": 160
+  },
+  "analytic_cache_index_cases": 24,
+  "all_index_cases_passed": true,
+  "cuda_interface_calls": 16,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch_version": "2.15.0+cu132",
+  "state_bytes_float32": 64512,
+  "state_bytes_if_int8": 16128,
+  "conv_mac_per_second_at100fps": 2649600,
+  "policy": "Untrained architecture/interface feasibility only. Analytic cache/frame index oracle and finiteCUDAshape calls onzeroanalyticinput, no audio, recognition, CPU/GPU or full/chunk neural equality gate. Rightcontext0 byconstruction. Receptivefield253frames spans2520msbetweenframecenters, not completephrase duration guarantee or triggerlatency. No lexicalhead/objective chosen, no qualification. INT8statebytes conditional; currentprototypefloatstates. Quantization acrossstateABI, calibration, exporter, frontendP4port/arena/resourceperformance unproven. Caches/activations/weights/temporarybuffers additional; no pretrainedbehavior inherited."
+}

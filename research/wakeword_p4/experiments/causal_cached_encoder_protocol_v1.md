@@ -1,0 +1,11 @@
+# Causal cached encoder feasibility prototype
+
+New untrained architecture:64inputMFCCchannels,6depthwise5tap+pointwise64residualReLU blocks, dilations1/2/4/8/16/32. Explicit pastcache4*d frames perlayer, three incoming10msframes per30mscall. No normalizationstate, futurecontext, globalmean or pretrainedweightclaim. Featurefrontendcontinuouspast400/160 is separate andstillfloat. Outputs retain every temporalposition for a future lexicalreadout; no recognitionhead/objective yet.
+
+Static27264parameters,26496convMAC/frame (~2.6496MMAC/s at100fps),16128cacheelements (~16KiBifINT8,64512bytescurrentFP32), receptivefield253frames with0rightcontext. Geometry excludeshead/frontend/accumulators/requant/chunkcopies/arena/runtime. It does not prove P4performance, completecommandmemory or humanlatency.253centersspan2520ms and initialacquisition25ms; no semanticwakeendpoint claim.
+
+Analyticcacheoracle covers6histories*4chunkschedules,12updates each, checks exactglobalindexretention and eachkernel's5past/currenttaps. CUDAinterface16threeframecalls finite andshapecorrect onzeroanalyticinput. No neuralCPU/GPU or full/chunk numericalequalitygate. These limitedchecks do not replace futuretrainedbehavior tests; no real/syntheticheldoutaudio used.
+
+Next execute separately bound builtinINT8conversion feasibility with explicit sixcacheinputs/outputs, fixed analyticcalibration onlyforoperatorABI, testquantizationfeedback/resetcodes and longanalyticstateflow. Random/untrainedexport cannot serve as recognitioncandidate or finalcalibration. Ifstateinput/outputquantizationsdiffer, requantizationmust be explicit, neverbytecopyincorrectly. Floatfallback/Flex forbidden forclaimedintegerneuralgraph; frontendremainsexternal. Bindruntime andsource beforeconversion. Preservefailures ratherthanquietlychangingdilations/operators.
+
+Historical oldencodercharacter/phoneCTC,binaryauxiliary,latentcommand,wholecommand andsourcecoverage failures are retained. A causalencoder alone is not a newlexicalmechanism; beforetraining require distinctdeployedtemporalreadout and intendedtext/containerreferences oncompleteoriginalsources withmatchedcommandnegatives. No automaticphoneendpointclaims, no blindCTCheadrepeat. v30 unchanged, noMacfirmwarehandoff, broadgoal incomplete.
