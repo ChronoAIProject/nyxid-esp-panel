@@ -80,7 +80,8 @@ flags, malformed/truncated image headers, revision/device checks, OTA metadata
 and a real CMake rejection before SDK discovery when a build directory belongs
 to another profile. All three production configurations built and packaged;
 the two attached hardware profiles also built against the current local server.
-This is local build evidence, not a claim of a completed GitHub CI run.
+The reviewable PR head subsequently passed the complete GitHub CI matrix,
+including all three profile builds, host, profiles and CodeQL.
 
 Both development boards passed app-only USB write and protected-region hash
 verification. Wi-Fi, existing local/production namespaces and persistent artwork
