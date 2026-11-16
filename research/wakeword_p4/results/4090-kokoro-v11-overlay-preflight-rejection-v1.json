@@ -1,0 +1,14 @@
+{
+  "schema": "kokoro-v11-overlay-preflight-rejection-v1",
+  "overlay": ".local/wakeword/features-kokoro-v11-boundary-v2-v1",
+  "status": "rejected-before-training",
+  "reasons": [
+    "raw MFCC cache contains only utterance-duration frames and no continuous lead/tail rendering required by train_stream",
+    "some keyword boundaries are at or beyond the appended sequence end, so context-150 sampling cannot satisfy the stream contract",
+    "the direct append does not implement the existing synthetic_worker noise/room-response and complete waveform window policy"
+  ],
+  "action": "discard overlay and rebuild through full waveform renderer with explicit lead/tail and boundary validation",
+  "base_unchanged": true,
+  "acceptance_excluded": true,
+  "threshold_selection_excluded": true
+}
