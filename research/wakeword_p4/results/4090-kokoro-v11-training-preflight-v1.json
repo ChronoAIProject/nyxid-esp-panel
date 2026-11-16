@@ -1,0 +1,16 @@
+{
+  "schema":"kokoro-v11-training-preflight-v1",
+  "manifest":"research/wakeword_p4/results/4090-kokoro-v11-training-manifest-v1.jsonl",
+  "records":144,
+  "positive":48,
+  "negative":96,
+  "sha_verified":true,
+  "pcm_contract":{"sample_rate":16000,"mono":true,"pcm16":true,"nonempty":true},
+  "streaming_trainer":"research/wakeword_p4/training/train_stream.py",
+  "missing_required_inputs":["embedding/features pack","continuous background corpus","RIR/noise augmentation manifest","validation/testing split compatible with train_stream.py"],
+  "training_started":false,
+  "int8_export_started":false,
+  "promotion_qualified":false,
+  "v30_status":"unchanged approved baseline",
+  "scope":"Synthetic-only preflight; no human generalization claim"
+}
