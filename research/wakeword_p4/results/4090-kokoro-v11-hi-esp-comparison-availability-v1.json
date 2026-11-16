@@ -1,9 +1,13 @@
 {
   "schema": "kokoro-v11-hi-esp-comparison-availability-v1",
-  "status": "comparison-not-admitted",
-  "required": "authenticated official Hi ESP model and same boundary-v2 PCM replay protocol",
-  "repository_search": {"official_hiesp_tflite": false, "authenticated_model_artifact": false},
-  "existing_evidence": "4090-v40-vctk-development-v1.json is a historical frozen synthetic diagnostic with generation-end windows, threshold_selected=false, final_data_used=false, and explicitly no matched FAR or acceptance claim.",
+  "status": "artifact-exists-but-same-protocol-not-admitted",
+  "required": "authenticated official Hi ESP QEMU/ELF/flash fixture plus identical boundary-v2 synthetic PCM replay",
+  "repository_search": {
+    "official_hiesp_tflite": false,
+    "authenticated_model_artifact": true,
+    "authenticated_artifacts": ".local/wakeword/hiesp-official-probe-v1 and qemu_esp32_replay inputs"
+  },
+  "existing_evidence": "4090-v40-vctk-development-v1.json is a historical frozen synthetic diagnostic with generation-end windows, threshold_selected=false, final_data_used=false, and explicitly no matched FAR or acceptance claim. Official fixture artifacts exist, but hiesp-official-probe-v1 is developer transport control and its manifest explicitly excludes independent validation; no matched boundary-v2 synthetic replay result is available.",
   "action": "do not manufacture a Hi ESP comparison from historical diagnostic summaries",
   "v30_status": "retained",
   "scope": "synthetic research evidence audit"
