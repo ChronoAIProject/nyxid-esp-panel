@@ -2,6 +2,7 @@
 import hashlib
 import importlib.metadata
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -11,8 +12,10 @@ DATA = Path('.local/wakeword/chatterbox-conditioned-training-v1')
 MODEL = Path('.local/wakeword/whisper-small-en')
 MODEL_SOURCE = Path('.local/wakeword/whisper-small-en-source.json')
 RUNNER = ROOT / 'training/audit_comparison_asr.py'
-PLAN = ROOT / 'results/4090-chatterbox-training-asr-plan-v1.json'
-OUT = Path('.local/wakeword/chatterbox-training-asr-v1')
+PLAN = ROOT / 'results/4090-chatterbox-training-asr-plan-v2.json'
+OUT = Path('.local/wakeword/chatterbox-training-asr-v2')
+CUDA_LIBS = [Path('.local/wakeword/chatterbox-env-v1/lib/python3.11/site-packages/nvidia') / name / 'lib'
+             for name in ['cublas', 'cudnn']]
 
 
 def sha(path):
@@ -40,9 +43,13 @@ def lock():
             speakers=[request['voice']], label=request['requested_label'],
             text=request['text'], sha256=wav['sha256']))
     manifest_path = DATA / 'manifest.jsonl'
-    with manifest_path.open('x') as stream:
-        stream.write(''.join(json.dumps(row) + '\n' for row in manifest))
+    manifest_bytes = ''.join(json.dumps(row) + '\n' for row in manifest).encode()
+    if manifest_path.exists():
+        assert manifest_path.read_bytes() == manifest_bytes
+    else:
+        manifest_path.write_bytes(manifest_bytes)
     paths.append(manifest_path)
+    paths += [p for folder in CUDA_LIBS for p in folder.glob('*.so*') if p.is_file()]
     plan = dict(files={str(path): sha(path) for path in paths},
         versions={name: importlib.metadata.version(name) for name in
                   ['faster-whisper', 'ctranslate2', 'numpy', 'soundfile']},
@@ -60,11 +67,12 @@ def run():
     for name, expected in plan['versions'].items():
         assert importlib.metadata.version(name) == expected
     OUT.mkdir(exist_ok=False)
+    env = dict(os.environ, LD_LIBRARY_PATH=':'.join(str(p.resolve()) for p in CUDA_LIBS))
     subprocess.run([sys.executable, str(RUNNER), '--dataset', str(DATA),
         '--model', str(MODEL), '--device', 'cuda', '--model-description',
         'Pinned existing small.en CUDA float16 beam3 no prompt/VAD',
         '--model-source', str(MODEL_SOURCE), '--training-source',
-        '--details', str(OUT / 'details.jsonl'), '--output', str(OUT / 'result.json')], check=True)
+        '--details', str(OUT / 'details.jsonl'), '--output', str(OUT / 'result.json')], check=True, env=env)
 
 
 if __name__ == '__main__':
