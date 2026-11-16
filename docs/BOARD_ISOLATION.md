@@ -167,26 +167,28 @@ partition layout needs a reviewed contract extension and physical acceptance.
 
 ## GPU delivery monitoring
 
-Continue the existing hourly job, Issue #13 and the
-`research-hye-nyx-voice-gpu` branch. Inspect useful deliveries and the original
-development panel's stability state once per scheduled round. Do not create
-another schedule or densely poll. Test useful compatible candidates through
-the existing reversible development-board procedure, preserving the current
-working fallback and recording the board/profile for each result.
+Continue the existing hourly job, Issue #18 and the
+`research-hye-nyx-voice-gpu` branch. Issue #13 is historical context only.
+Inspect useful deliveries and the development panels' stability state once per
+scheduled round. Do not create another schedule or densely poll. Test useful
+compatible candidates through the existing reversible development-board
+procedure, preserving the current working fallback and recording the
+board/profile for each result.
 
 No new training, duplicate acoustic baseline, TTS playback or recording is
 authorized by the hourly check. Judge delivered candidates by practical
 behavior; do not add a numerical-equivalence requirement.
 
-Latest reviewed GPU head: `f84a255dc3a14a9cc9d305401fbc327687f3943f`.
-The zf candidate and its 6000-step follow-up were rejected: corrected independent
-Sol replay produced 0/24 events, the 3000-step candidate's fullwave recall was
-0.0208, and the background exposure was below the preregistered FAR bound. The
-Hi ESP QEMU check passed only as a transport control and is not a matched quality
-comparison. The later Piper source-overlap audit also found no fresh non-overlap
-source lock, so it produced no deployment artifact. Issue #13 has no approved
-replacement; frozen v30 remains the only approved handoff. No research model was
-installed. The existing hourly task remains enabled.
+The active C161 benchmark is model SHA256
+`c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81`, 16 kHz,
+threshold `0.91796875`, smoothing `5`, context `309`, refractory `67`, and
+81600 priming samples. The latest reviewed GPU head is
+`9da81adcf5b236ae8a2a2f303698cf8def79fda9`. Its paired speech-history and
+silence-history models completed host replays, but retained the daily
+“six cups” conflict and did not receive P4 or first-command qualification;
+neither is promoted or installed. Their host results are evidence for research,
+not a deployment decision. v30 remains a historical rollback reference only.
+The existing hourly task remains enabled.
 
 Kokoro v1.1 now has 144 development recordings and 72 isolated acceptance
 recordings that passed the corrected 24 kHz native/16 kHz resampling audit. The
