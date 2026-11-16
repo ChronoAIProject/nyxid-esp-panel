@@ -40,6 +40,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <errno.h>
+#include <limits.h>
 
 static const char *TAG = "haCam";
 
@@ -262,6 +264,24 @@ static int screen_cli(int argc, char **argv)
     return err == ESP_OK ? 0 : -1;
 }
 
+static int app_cli(int argc, char **argv)
+{
+    int id = 0;
+    if (argc == 3 && (!strcmp(argv[1], "inspect") || !strcmp(argv[1], "open") || !strcmp(argv[1], "close"))) {
+        char *end;
+        errno = 0;
+        long value = strtol(argv[2], &end, 10);
+        if (errno || end == argv[2] || *end || value <= 0 || value > INT_MAX) return -1;
+        id = (int)value;
+    } else if (argc != 2 || strcmp(argv[1], "status")) {
+        printf("Usage: app status | app <inspect|open|close> <installed-id>\n");
+        return -1;
+    }
+    esp_err_t err = lcd_renderer_debug_app(argv[1], id);
+    printf("Application request: %s\n", esp_err_to_name(err));
+    return err == ESP_OK ? 0 : -1;
+}
+
 static int nyx_login_cli(int argc, char **argv)
 {
     if (argc != 2 || (strcmp(argv[1], "start") && strcmp(argv[1], "node-setup") && strcmp(argv[1], "status") && strcmp(argv[1], "cancel"))) {
@@ -476,6 +496,7 @@ static int init_console(void)
         { .command = "nyx-slug",      .help = "nyx-slug service_slug\r\n",   .func = nyx_slug_cli },
         { .command = "nyx-status",    .help = "Print reprovisioning status", .func = nyx_status_cli },
         { .command = "screen",        .help = "Open a native screen", .func = screen_cli },
+        { .command = "app", .help = "USB diagnostics: inspect/open/close installed apps or show active app", .func = app_cli },
         { .command = "nyx-login",     .help = "Panel Agent Key login start/status/cancel; no secret tokens", .func = nyx_login_cli },
         { .command = "nyx-voice",     .help = "Voice status or local SDP test; no provider call", .func = nyx_voice_cli },
         { .command = "provision-mode", .help = "Enter provisioning mode",     .func = provision_mode_cli },

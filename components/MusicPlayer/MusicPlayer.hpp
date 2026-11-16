@@ -50,6 +50,7 @@ protected:
 private:
     static MusicPlayer *_instance;
     file_iterator_instance_t *_file_iterator;
+    bool _player_ready = false;
 };
 
 } // namespace esp_brookesia::apps

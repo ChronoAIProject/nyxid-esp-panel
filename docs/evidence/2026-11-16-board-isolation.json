@@ -123,10 +123,11 @@
   ],
   "limitations": [
     "Framebuffer snapshots and bounded UART logs do not prove physical touch/scroll responsiveness or absence of intermittent optical flashes.",
-    "Native MusicPlayer and SpecAnalyzer transitions were not independently exercised after isolation.",
     "Short calls are not long-call/reconnect AEC qualification.",
     "Office-specific lag was not reproduced on the attached home boards.",
-    "External-screen rev3 built and packaged; no separate rev3 external-screen device was attached."
+    "External-screen rev3 built and packaged; no separate rev3 external-screen device was attached.",
+    "One diagnostic OTA reboot temporarily failed to initialize ESP-Hosted; the board recovered after a serial reset and was restored to the canonical image.",
+    "Native lifecycle fix validated on X8; legacy native transitions were not physically exercised."
   ],
   "dining_production_board_touched": false,
   "legacy_research_restoration": {
@@ -136,5 +137,45 @@
     "protected_regions_unchanged": true,
     "wake_listening_observed": true,
     "historical_local_server_address_retained": true
+  },
+  "native_app_transition_regression": {
+    "profile": "p4-rev3-lcd-x8-16mb",
+    "image_sha256": "1614064f3fcc5aa4ea2db37c755dd567be775317dd94149eb1bcbeede758e1c8",
+    "elf_sha256": "554ab0f3028dede17a2b4d3399a388499dc95f8703baba57326165a9f8342cb7",
+    "spec_analyzer": {
+      "opened": true,
+      "audio_state": "audio_busy",
+      "switch_to_panel_wake": "listening",
+      "voice_after_switch": "connected_muted",
+      "closed": "ESP_OK"
+    },
+    "music_player": {
+      "opened": true,
+      "audio_state": "audio_busy",
+      "switch_to_panel_wake": "listening",
+      "closed": "ESP_OK",
+      "resumed_after_switch": true,
+      "wake_after_second_switch": "listening"
+    },
+    "panic_or_watchdog": false,
+    "i2s_read_errors": 0,
+    "cleanup_errors": [],
+    "canonical_restored_after_test": true,
+    "scope": "X8 open/pause/switch/voice/close plus MusicPlayer resume and second switch",
+    "source_published": false,
+    "working_tree_patch": "Uncommitted experimental lifecycle and USB diagnostics changes retained for review",
+    "changes_not_pushed": true
+  },
+  "supplemental_builds": {
+    "scope": "Uncommitted native lifecycle patch",
+    "profiles": [
+      "p4-rev1-16mb production",
+      "p4-rev3-16mb production",
+      "p4-rev3-lcd-x8-16mb local"
+    ],
+    "host_suites": 25,
+    "python_tests": 23,
+    "all_passed": true,
+    "x8_production_rebuild_pending": true
   }
 }

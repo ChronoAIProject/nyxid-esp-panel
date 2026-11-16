@@ -114,9 +114,17 @@ loads per board were 0%. No watchdog, panic, DSI underrun or touch-bus error was
 observed in these bounded runs. UART opening deliberately restarted each board;
 these restarts are excluded from stability-failure conclusions. Remote
 navigation does not exercise a physical finger, nor does a framebuffer JPEG
-prove that the panel never flashes. Native MusicPlayer/SpecAnalyzer transitions
-were not independently exercised after this change; their compile/dependency
-checks and the voice/wake ownership test are separate evidence.
+prove that the panel never flashes. The X8 native transition check then opened
+SpecAnalyzer and MusicPlayer, verified that each acquired the shared codec
+(`audio_busy`), switched back to Nyx Panel, and confirmed `wake=listening` plus
+a muted voice connection without closing the native app first. MusicPlayer was
+resumed after that switch, reacquired the codec, and released it again on the
+second switch. Closing each app afterwards returned `ESP_OK`; no panic,
+watchdog, I2S read error or cleanup error occurred. This check used the
+experimental lifecycle image
+`1614064f3fcc5aa4ea2db37c755dd567be775317dd94149eb1bcbeede758e1c8` (ELF
+`554ab0f3028dede17a2b4d3399a388499dc95f8703baba57326165a9f8342cb7`). The
+board was restored to the canonical X8 image after the check.
 
 Sanitized hashes and bounded observations are recorded in
 [the regression receipt](evidence/2026-11-16-board-isolation.json). Private raw
@@ -150,10 +158,19 @@ No new training, duplicate acoustic baseline, TTS playback or recording is
 authorized by the hourly check. Judge delivered candidates by practical
 behavior; do not add a numerical-equivalence requirement.
 
-Latest reviewed GPU head: `67288dab25f2209ebbaf0f71499d4860a665cc9b`.
-Frame normalization and MFCC style augmentation were rejected before INT8
-export (development targets 51/144 and 65/144, negative activations 19/720 and
-39/720 respectively). Issue #13 also reports a rejected SpeechT5 coverage run:
-97.22% target recall with 37.85% confusion activation. These are development
-diagnostics, not physical-board acceptance. No useful replacement was delivered
-or installed. The existing hourly task remains enabled.
+Latest reviewed GPU head: `9bc0ce2646673edebe762b3cea4385b5f825e3ad`.
+The allocation weighted contextual margin and MFCC channel masking controls were
+rejected before INT8 export (development targets 46/144 and 28/144, negative
+activations 30/720 and 18/720 respectively). Issue #13 still records no
+qualified replacement; frozen v30 remains the only approved handoff. These are
+development diagnostics, not physical-board acceptance. No research model was
+installed. The existing hourly task remains enabled.
+
+Kokoro v1.1 now has 144 development recordings and 72 isolated acceptance
+recordings that passed the corrected 24 kHz native/16 kHz resampling audit. The
+CUDA embedding cache and a linear frame-classifier diagnostic completed. The
+latter reports 91.88% INT8 frame accuracy; it is not a deployable streaming
+wakeword model. Frozen v30 replay on these development streams activated on
+28/48 positive and 20/96 negative recordings. These recording activations use
+the existing raw threshold and are diagnostic only, not a new operating point
+or physical wake accuracy. No candidate was delivered for a board trial.

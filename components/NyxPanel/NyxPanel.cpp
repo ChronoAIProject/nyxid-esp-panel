@@ -65,6 +65,9 @@ extern const uint8_t builtin_end[] asm("_binary_nyxbot_default_jpg_end");
 bool dirty;
 char pending_navigation[4][24];
 size_t navigation_count;
+enum class AppDiagnostic { None, Status, Inspect, Open, Close };
+AppDiagnostic pending_app_diagnostic{AppDiagnostic::None};
+int diagnostic_app_id;
 std::atomic<bool> pending_voice{false};
 char noticed_bot[40]{};
 int64_t bot_notice_until;
@@ -165,6 +168,26 @@ void expire(lv_timer_t *) {
         --navigation_count;
         esp_err_t err=navigate_now(target);
         if (err!=ESP_OK) ESP_LOGE("panel.gui","Native navigation failed: %s",esp_err_to_name(err));
+    }
+    if (pending_app_diagnostic != AppDiagnostic::None) {
+        const auto operation = pending_app_diagnostic;
+        const int id = diagnostic_app_id;
+        pending_app_diagnostic = AppDiagnostic::None;
+        auto target = id ? phone->getManager().getInstalledApp(id) : nullptr;
+        esp_err_t result = ESP_OK;
+        const char *action = "status";
+        if (operation == AppDiagnostic::Open) {
+            action = "open";
+            result = activate(target);
+        } else if (operation == AppDiagnostic::Close) {
+            action = "close";
+            Context::AppEventData event{id, Context::AppEventType::STOP, nullptr};
+            result = phone->sendAppEvent(&event) ? ESP_OK : ESP_FAIL;
+        } else if (operation == AppDiagnostic::Inspect) action = "inspect";
+        auto active = phone->getManager().getActiveApp();
+        printf("Native app: id=%d name=%s action=%s result=%s active_id=%d active_name=%s\n",
+            id, target ? target->getName() : "(none)", action, esp_err_to_name(result),
+            active ? active->getId() : 0, active ? active->getName() : "(none)");
     }
     if ((changed || dirty) && app) { dirty=false; app->render(); }
     if (app) app->refreshVoice();
@@ -704,6 +727,24 @@ esp_err_t lcd_renderer_navigate(const char *target) {
         if (camera && !camera->scanning()) camera->stopPreviewForNavigation();
         err=ESP_OK;
     }
+    bsp_display_unlock();
+    return err;
+}
+esp_err_t lcd_renderer_debug_app(const char *action, int id) {
+    if (!phone || !action) return ESP_ERR_INVALID_ARG;
+    AppDiagnostic operation = AppDiagnostic::None;
+    if (!strcmp(action, "status") && id == 0) operation = AppDiagnostic::Status;
+    else if (id > 0) {
+        if (!strcmp(action, "inspect")) operation = AppDiagnostic::Inspect;
+        else if (!strcmp(action, "open")) operation = AppDiagnostic::Open;
+        else if (!strcmp(action, "close")) operation = AppDiagnostic::Close;
+    }
+    if (operation == AppDiagnostic::None) return ESP_ERR_INVALID_ARG;
+    if (bsp_display_lock(1000) != ESP_OK) return ESP_ERR_TIMEOUT;
+    esp_err_t err = ESP_OK;
+    if (id && !phone->getManager().getInstalledApp(id)) err = ESP_ERR_NOT_FOUND;
+    else if (pending_app_diagnostic != AppDiagnostic::None) err = ESP_ERR_INVALID_STATE;
+    else { pending_app_diagnostic = operation; diagnostic_app_id = id; }
     bsp_display_unlock();
     return err;
 }

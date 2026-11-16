@@ -200,8 +200,64 @@ bool SpecAnalyzer::close(void)
 
 bool SpecAnalyzer::init() { return true; }
 bool SpecAnalyzer::deinit() { return true; }
-bool SpecAnalyzer::pause() { return true; }
-bool SpecAnalyzer::resume() { return true; }
+bool SpecAnalyzer::pause()
+{
+    ESP_UTILS_LOGD("Pause");
+
+    // The phone manager keeps paused apps in its running map.  Stop the
+    // capture worker here so a hidden analyzer does not retain the shared
+    // codec owner while another app (or Nyx Panel voice) is active.
+    if (_audio_task_running) {
+        _audio_task_running = false;
+        for (int i = 0; i < 20 && _audio_task_handle != nullptr; ++i) {
+            vTaskDelay(pdMS_TO_TICKS(10));
+        }
+        if (_audio_task_handle != nullptr) {
+            vTaskDelete(_audio_task_handle);
+            _audio_task_handle = nullptr;
+        }
+    }
+    if (_timer != nullptr) {
+        lv_timer_pause(_timer);
+    }
+    if (_owns_audio) {
+        product_audio_release();
+        _owns_audio = false;
+    }
+    return true;
+}
+
+bool SpecAnalyzer::resume()
+{
+    ESP_UTILS_LOGD("Resume");
+
+    if (_owns_audio) {
+        return true;
+    }
+    if (product_audio_claim() != ESP_OK) {
+        ESP_UTILS_LOGW("Audio is busy while resuming");
+        return false;
+    }
+    _owns_audio = true;
+    if (product_codec_dev_resume() != ESP_OK) {
+        product_audio_release();
+        _owns_audio = false;
+        return false;
+    }
+
+    _audio_task_running = true;
+    if (xTaskCreatePinnedToCore(audio_fft_task, "audio_fft", 8 * 1024, this, 5,
+                                &_audio_task_handle, PRO_CPU_NUM) != pdPASS) {
+        _audio_task_running = false;
+        product_audio_release();
+        _owns_audio = false;
+        return false;
+    }
+    if (_timer != nullptr) {
+        lv_timer_resume(_timer);
+    }
+    return true;
+}
 
 // Audio processing task. The current hardware renders one microphone while the BSP
 // frame layout may still contain interleaved stereo samples.
