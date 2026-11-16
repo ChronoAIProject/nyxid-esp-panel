@@ -1,0 +1,35 @@
+{
+  "schema": "kokoro-v11-research-gate-status-v1",
+  "branch": "research-hye-nyx-voice-gpu",
+  "frozen_v30": {
+    "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c",
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "status": "retained"
+  },
+  "candidate_status": {
+    "teacher60_3000": "rejected: independent Sol recall 0/24 after corrected filtering",
+    "teacher60_6000_zf": "rejected: independent Sol recall 0/24; zf training diagnostic 20/24",
+    "int8_export": "verified for candidates, but no candidate meets promotion gates"
+  },
+  "paired_qemu_development": {
+    "hiesp_hi_esp": "Maple 1 event, Sol 1 event",
+    "hiesp_hey_nicks": "Maple 0 events, Sol 0 events",
+    "v30_same_pcm": "all four paired files 0 events",
+    "scope": "developer synthetic transport diagnostic; no human endpoint claim"
+  },
+  "far_gate": {
+    "independent_background_hours": 1.1506,
+    "zero_event_upper_bound_per_hour": 2.6036393327,
+    "required_hours_for_upper_bound_0.5": 5.99146,
+    "gap_hours": 4.84087,
+    "passed": false
+  },
+  "promotion": {
+    "passed": false,
+    "reason": "No candidate passes independent synthetic positive recall and FAR exposure gates",
+    "official_hiesp_same_protocol": "transport fixture available; matched acceptance comparison not admitted",
+    "human_generalization": false,
+    "generated_boundary_is_human_phone_truth": false
+  }
+}
