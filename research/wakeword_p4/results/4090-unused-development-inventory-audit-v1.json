@@ -1,0 +1,22 @@
+{
+  "schema": "unused-development-inventory-audit-v1",
+  "files": {
+    ".local/wakeword/hey-paired-earnings-development-v1/manifest.json": "ff0519e735e1c9bb1205ec0ddc7422c7cca74cf1c07678f352b23dca70809841",
+    "research/wakeword_p4/results/4090-hey-common-carrier-raw-recognition-protocol-v1.json": "c40333373d74bcb7c502cf051e43d377e42ffe9b25355a5bc20fe6e722403d84"
+  },
+  "findings": [
+    {
+      "path": ".local/wakeword/hey-paired-earnings-development-v1/manifest.json",
+      "records": 12,
+      "fresh_development_open": null,
+      "policy": null
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-hey-common-carrier-raw-recognition-protocol-v1.json",
+      "records": 0,
+      "fresh_development_open": null,
+      "policy": null
+    }
+  ],
+  "decision": "Do not consume this inventory for causal-unit threshold selection: paired-earnings manifest is prior development material, while the raw recognition protocol declares fresh_development_open false and its sources are tied to earlier models/protocols. A new causal-compatible development protocol must be constructed and audited before threshold selection."
+}
