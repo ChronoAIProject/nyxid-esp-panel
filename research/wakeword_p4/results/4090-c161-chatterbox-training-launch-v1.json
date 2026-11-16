@@ -1,0 +1,34 @@
+{
+  "schema": "c161-chatterbox-training-launch-v1",
+  "plan": "4090-c161-chatterbox-training-plan-v1.json",
+  "session": 25548,
+  "launch": {
+    "pid": 1687672,
+    "proc_starttime": "7912407",
+    "plan_sha256": "0fcc0b9788a66a670f4bc3ecc2b1010626a9d7d55c283251becf9462914013d6"
+  },
+  "observed": {
+    "launch": {
+      "pid": 1687672,
+      "proc_starttime": "7912407",
+      "plan_sha256": "0fcc0b9788a66a670f4bc3ecc2b1010626a9d7d55c283251becf9462914013d6"
+    },
+    "latest": {
+      "step": 400,
+      "loss": 4.38303804397583,
+      "elapsed_seconds": 32.31237939899438,
+      "device": "/job:localhost/replica:0/task:0/device:GPU:0",
+      "optimizer_iterations": 400,
+      "frozen16_unchanged": true,
+      "all15_gradients_finite": true
+    }
+  },
+  "startup_failure": {
+    "path": ".local/wakeword/c161-chatterbox-training-startup-failed-v1/failure.log",
+    "sha256": "91bcca3fd5be346c6c0fabab4a29eef88b2abf30fe9d7fd3d8527bc0fdf80bdb",
+    "reason": "TensorFlow GPU libraries not on process loader path; failure before model creation or optimizer updates"
+  },
+  "retry": "Same locked recipe via existing gpu_python.py CUDA12 process-local runtime loader; no package changes or CPU fallback",
+  "wrapper_sha256": "ba91f202efe4895f09ea71fae5bdec9456a7ed7d30d2cda60af8c07492c8f0b2",
+  "completed": false
+}
