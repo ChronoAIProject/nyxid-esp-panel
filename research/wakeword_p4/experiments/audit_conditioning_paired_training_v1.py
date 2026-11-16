@@ -1,7 +1,10 @@
 """Validate paired final artifacts and every saved batch descriptor before replay."""
-import hashlib,json
+import hashlib,json,sys
 from pathlib import Path
 import torch
+sys.path.insert(0,str(Path("research/wakeword_p4/training").resolve()))
+from causal_conditioning_risk_weights_v1 import GroupRisk
+from causal_conditioning_balanced_sampler_v1 import Sampler
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
@@ -14,15 +17,22 @@ def main():
  initial={a:torch.load(r/'initial.pt',map_location='cpu',weights_only=False) for a,r in roots.items()}
  assert initial['uniform']['model'].keys()==initial['risk']['model'].keys()
  assert all(torch.equal(v,initial['risk']['model'][k]) for k,v in initial['uniform']['model'].items())
- count=0;descriptor_hash=hashlib.sha256()
+ count=0;descriptor_hash=hashlib.sha256();risk=GroupRisk();sampler=Sampler(726)
  with (roots['uniform']/'training.jsonl').open() as f,(roots['risk']/'training.jsonl').open() as g:
   for count,(left,right) in enumerate(zip(f,g,strict=True),1):
    a=json.loads(left);b=json.loads(right);assert a['step']==b['step']==count
    assert a['descriptors']==b['descriptors'] and a['group']==b['group'];assert a['multiplier']==1.
+   expected=sampler.descriptors()
+   for actual,reference in zip(a['descriptors'],expected,strict=True):
+    assert {k:actual[k] for k in reference}==reference
+   assert b['multiplier']==risk.multiplier(b['group'])
+   assert abs(b['loss']-b['unweighted_loss']*b['multiplier'])<=1e-5*max(1.,abs(b['loss']))
+   risk.observe(b['group'],b['unweighted_loss'])
    assert all(torch.isfinite(torch.tensor(row[k])) for row in [a,b] for k in ['loss','unweighted_loss','gradient_norm','multiplier'])
    descriptor_hash.update((json.dumps(a['descriptors'],sort_keys=True)+'\n').encode())
  assert count==5000
- out=dict(schema='conditioning-paired-training-audit-v1',steps=count,all_passed=True,identical_initial_model=True,identical_all_batch_descriptors=True,descriptor_sha256=descriptor_hash.hexdigest(),inputs={str(r/'result.json'):sha(r/'result.json') for r in roots.values()},script_sha256=sha(__file__),limits='Training provenance audit only, not recognition/INT8/fresh acceptance.')
+ final=torch.load(roots['risk']/'final.pt',map_location='cpu',weights_only=False);assert final['step']==5000 and final['group_risk']==risk.state()
+ out=dict(exact_training_risk_updates_verified=True,all_sampling_descriptors_reconstructed=True,schema='conditioning-paired-training-audit-v1',steps=count,all_passed=True,identical_initial_model=True,identical_all_batch_descriptors=True,descriptor_sha256=descriptor_hash.hexdigest(),inputs={str(r/'result.json'):sha(r/'result.json') for r in roots.values()},script_sha256=sha(__file__),limits='Training provenance audit only, not recognition/INT8/fresh acceptance.')
  p=Path('research/wakeword_p4/results/4090-conditioning-paired-training-audit-v1.json')
  with p.open('x') as f:json.dump(out,f,indent=2);f.write('\n')
  print(json.dumps(out))
