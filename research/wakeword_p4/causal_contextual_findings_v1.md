@@ -1,0 +1,5 @@
+# Contextual contrast training result
+
+The fixed5000step RTX4090 run completed in533.65seconds with identical original seed and sampler order. The objective was0.4frame CE +0.5position CE +0.1local contrast on declared terminal53→61 and class5 55/56 positions. All4320training-wave raw exact matcher replay gives538/720 target hits and51/3600 negative hits. Position-balanced control gave520/720 and39/3600; original frame-only gave530/720 and149/3600. Thus contextual contrast restores some target recall relative to position control but increases negative events; it does not meet a promotion gate. No threshold/decoder tuning, heldout access or INT8 export was performed.
+
+This is a consumed training diagnostic. The local contrast alternatives are synthetic allocation labels, not phone truth. The result does not prove the contextual objective handles unknown speech or full continuous FAR. Preserve all three paired runs and do not select a checkpoint based on this training census. Frozen v30 remains unchanged.
