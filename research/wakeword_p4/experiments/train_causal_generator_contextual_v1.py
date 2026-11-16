@@ -1,6 +1,7 @@
 """Fixed-budget complete-wave CUDA generator-unit supervised baseline."""
 import hashlib,json,shutil,sys,time
 from pathlib import Path
+import numpy as np
 import torch
 sys.path.insert(0,str(Path('research/wakeword_p4/training').resolve()))
 from causal_unit_full_batch_v1 import batch,recording_normalized_loss
@@ -8,6 +9,7 @@ from causal_unit_sampler_v1 import Sampler,INDEX
 from generator_position_balanced_loss_v1 import position_weights,position_balanced_loss
 from causal_generator_unit_model_v1 import CausalGeneratorUnitModel
 from continuous_past_mfcc_v1 import ContinuousPastMFCC
+from contextual_generator_contrast_v1 import contextual_contrast_loss,selected_position_labels
 P=Path('research/wakeword_p4/causal_generator_contextual_training_plan_v1.json');OUT=Path('.local/wakeword/causal-generator-contextual-supervised-v1')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
