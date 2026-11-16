@@ -1,0 +1,44 @@
+{
+  "schema": "command-retention-host-audit-v1",
+  "source_commit": "cb2e51df9632252001da65371d1abc1f2a4a03b6",
+  "files": {
+    "components/panel_services/panel_voice.c": {
+      "bytes": 79425,
+      "sha256": "4130612a2b7ff518ab63d024cacfb52b709f26193767a5bbe7e08dd47c37b854"
+    },
+    "components/panel_services/panel_voice_audio.c": {
+      "bytes": 3022,
+      "sha256": "5b6feb313074d72d3b0ce0a5f8cec3be409ffdc3a1cdbd620a581cc8bd172aa3"
+    },
+    "components/panel_services/panel_voice_audio.h": {
+      "bytes": 1570,
+      "sha256": "2fb8d5fae62a59f022b0ed3ca581bed1ed77643051553025fabc2f60b7257f86"
+    },
+    "tests/host/test_panel_voice_audio.c": {
+      "bytes": 8736,
+      "sha256": "ca9b66fa4d7a4146d536a8dc1bc34f4e4fffd6bd4a6266fd045384a7a508357d"
+    },
+    "tests/host/unity/unity.c": {
+      "bytes": 65486,
+      "sha256": "dfbbddc69499979994d5c536e7303ab2eec39243d60b078d998c8138ee6b9a61"
+    },
+    ".local/wakeword/command-retention-host-audit-v1/test_panel_voice_audio": {
+      "bytes": 41336,
+      "sha256": "12d57edef83a0b52e28215f5ef3bb8a4c69a68825f567f1975ddca54cc9cc3de"
+    },
+    ".local/wakeword/command-retention-host-audit-v1/test.log": {
+      "bytes": 953,
+      "sha256": "3a0d1c3a9387fb2f39b9e1a78939a6ec395c73ca03326e5aec6c6e24224faf67"
+    }
+  },
+  "compiler": "cc (Debian 12.2.0-14+deb12u1) 12.2.0",
+  "actual_compile_exit": 0,
+  "actual_test_exit": 0,
+  "tests": 7,
+  "failures": 0,
+  "stdout": "tests/host/test_panel_voice_audio.c:169:test_preroll_preserves_speech_at_detection_boundary_including_wrap:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:170:test_connecting_audio_and_live_audio_are_one_lossless_ordered_stream:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:171:test_recording_overflow_never_discards_old_speech_and_clear_removes_it:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:172:test_reconnect_discards_pending_and_gap_audio_but_preserves_first_connection:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:173:test_mute_clears_initial_and_live_recordings_without_resetting_connection_history:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:174:test_playback_gain_is_symmetric_monotonic_and_bounded_at_full_scale:\u001b[42mPASS\u001b[00m\ntests/host/test_panel_voice_audio.c:175:test_ringback_has_bounded_volume_silent_gap_and_continuous_chunks:\u001b[42mPASS\u001b[00m\n\n-----------------------\n7 Tests 0 Failures 0 Ignored \n\u001b[42mOK\u001b[00m\n",
+  "lookback_samples": 32000,
+  "capture_capacity_samples": 960000,
+  "sample_rate": 16000,
+  "limits": "Existing helper tests only; production listener source is Hi ESP WakeNet, not C161/P4 execution. Synthetic monotonic sample sequences prove tested FIFO order, not actual task/I2S/AGC/Opus/provider command retention. Lookback can cover command onset only when trigger return minus command onset <=32000 samples, subject to block/startup and queue continuity. No model qualification."
+}
