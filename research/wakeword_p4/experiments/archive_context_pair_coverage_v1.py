@@ -11,7 +11,11 @@ def main(cohort):
     assert cohort in ['primed','jenny','joe']
     out=Path(f'.local/wakeword/context-pair-{cohort}-coverage-v1');result=json.loads((out/'result.json').read_text());assert result['all_passed']
     state=json.load(open('.local/wakeword/context-pair-coverage-execution-v1/state.json'))
-    assert all(next(a for a in state if a['cohort']==cohort and a['action']==action)['exit_code']==0 for action in ['run','score'])
+    assert next(a for a in state if a['cohort']==cohort and a['action']=='run')['exit_code']==0
+    score_exit=next(a for a in state if a['cohort']==cohort and a['action']=='score')['exit_code']
+    if score_exit!=0:
+        repair=json.loads((R/f'4090-context-pair-{cohort}-score-repair-v2.json').read_text())
+        assert repair['scoring_exit_code']==0 and repair['comparison_sha256']==sha(R/f'4090-context-pair-{cohort}-coverage-comparison-v1.json')
     files=[out/'result.json',out/'launch.json']
     for model in result['models']:
         report=Path(model['path']);assert sha(report)==model['sha256'];p=json.loads(report.read_text());assert p['all_passed'];files.extend([report,report.parent/'records.jsonl'])
