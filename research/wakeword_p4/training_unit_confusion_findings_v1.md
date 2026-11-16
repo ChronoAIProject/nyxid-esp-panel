@@ -1,0 +1,7 @@
+# Training-unit confusion diagnostic
+
+Both fixed final models were run over all3456training waveforms with the same past-only frontend and full forward pass. For every declared generator position, prediction argmax mass was normalized by that position's declared overlap allocation and grouped by class/RIR. The exact input/model/frontend hashes and all groups are in `results/4090-training-unit-confusion-v1.json`.
+
+The confusion is distributed across adjacent units and boundary/silence outputs rather than one isolated terminal path. For example, in class1 non-RIR training positions, the first declared boundary token has uniform-control prediction mass0.741 on itself,0.114 on unallocated output and0.113 on boundary4; allocation-weighted control is0.774,0.094 and0.099. The first lexical token50 is0.888/0.897 on itself, with most residual mass on adjacent token156. Similar adjacent-unit mass appears at token156/47/102. The diagnostic intentionally reports allocation mass, not hard acoustic truth.
+
+This does not justify another token-specific penalty, boundary blanket penalty, threshold rescue or decoder relaxation. It is a training-only complete-wave diagnostic; no development/final/optimizer access and no INT8 qualification. The two local contextual-margin variants have already failed reused-development replay, so the next intervention must differ in mechanism rather than reweighting the same local frames. Frozen v30 remains unchanged.
