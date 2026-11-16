@@ -1,0 +1,5 @@
+# Boundary-context audit
+
+The matched corpus contains 720 target recordings whose first phrase has the ten wake units; their terminal61 is followed by boundary4 in180 recordings and boundary3 in540. Nick class3 has no terminal61 in the first phrase: it has53 followed by boundary4/3. Mix class5 does contain terminal61 followed by the same boundaries as the target and therefore cannot be rejected by a blanket penalty on61 or on the boundary alone. Hi ESP class2 and Muse class6 provide additional terminal61 contexts with different following units.
+
+The correct next objective must score the joint ordered context around the final transition (`...53,61,boundary`) and preserve legitimate class5 `...53,61,boundary` occurrences. A useful negative must be conditioned on the preceding sequence and missing terminal support, rather than treating token61 as globally bad. Metadata durations are allocation references, not acoustic truth. No weights or thresholds changed; protected sets remain untouched.
