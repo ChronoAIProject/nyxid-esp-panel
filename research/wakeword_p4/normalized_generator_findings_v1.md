@@ -1,0 +1,5 @@
+# Frame-normalized encoder result
+
+The fixed5000step RTX4090 run completed in538.507seconds on3456 records from16 conditioning names. The only architecture change was parameter-free per-frame 64-channel normalization with epsilon1e-5; objective and sampler matched the prospective contextual control. Raw float exact-matcher replay gives424/576 target hits and62/2880 negative events on the optimization partition, and51/144 target hits and19/720 negative events on the reused conditioning-disjoint development partition.
+
+This does not improve the prior prospective contextual development result (47/144 targets,29/720 negatives) enough to qualify; target recall remains poor and development material was previously consumed by earlier experiments. The normalized candidate is rejected before threshold locking, trained INT8 export or Mac handoff. Full flat initial-weight normalized graph conversion succeeded at66800bytes with all integer tensors, but final trained-state conversion and accuracy were not attempted after the recognition gate failed. Frozen v30 remains unchanged.
