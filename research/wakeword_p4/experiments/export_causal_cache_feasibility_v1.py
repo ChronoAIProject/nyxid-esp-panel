@@ -2,7 +2,7 @@
 import argparse,hashlib,importlib.metadata as metadata,json,subprocess
 from pathlib import Path
 import numpy as np
-R=Path('research/wakeword_p4/results');B=Path('.local/wakeword/causal-cache-int8-feasibility-v1');LOCK=R/'4090-causal-cache-int8-feasibility-plan-v1.json'
+R=Path('research/wakeword_p4/results');B=Path('.local/wakeword/causal-cache-int8-feasibility-v2');LOCK=R/'4090-causal-cache-int8-feasibility-plan-v2.json'
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def plan():
  files=[Path(__file__),Path('research/wakeword_p4/training/causal_cached_encoder_v1.py'),R/'4090-causal-cache-clock-function-v1.json']
@@ -23,7 +23,7 @@ def run():
  outputs['encoded']=x;model=tf.keras.Model(inputs,outputs)
  def representative():
   rng=np.random.default_rng(p['seed'])
-  for _ in range(p['representatives']):yield [rng.uniform(-1,1,size=tuple(v.shape)).astype(np.float32) for v in inputs]
+  for _ in range(p['representatives']):yield {v.name.split(':')[0]:rng.uniform(-1,1,size=tuple(v.shape)).astype(np.float32) for v in inputs}
  c=tf.lite.TFLiteConverter.from_keras_model(model);c.optimizations=[tf.lite.Optimize.DEFAULT];c.representative_dataset=representative;c.target_spec.supported_ops=[tf.lite.OpsSet.TFLITE_BUILTINS_INT8];c.inference_input_type=tf.int8;c.inference_output_type=tf.int8
  raw=c.convert();path=B/'prototype.tflite';path.write_bytes(raw)
  def interpreter():
