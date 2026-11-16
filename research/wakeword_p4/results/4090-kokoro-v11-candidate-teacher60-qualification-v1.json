@@ -1,0 +1,35 @@
+{
+  "schema": "kokoro-v11-candidate-teacher60-qualification-v1",
+  "candidate": ".local/wakeword/kokoro-v11-candidate-teacher60-v1/hey_nyx.tflite",
+  "candidate_sha256": "c5b07ba9e326d6bcdb605dbfd2f51e93b4b413c171d2965f8caa102a22eb0bbb",
+  "candidate_bytes": 52584,
+  "device": "NVIDIA GeForce RTX 4090",
+  "training_steps": 3000,
+  "architecture": "teacher60",
+  "context_frames": 150,
+  "batchnorm": "frozen",
+  "selected_threshold": 0.9,
+  "synthetic_development_stream": {
+    "positive_records": 48,
+    "negative_records": 96,
+    "positive_event_records": 14,
+    "negative_event_records": 0,
+    "scope": "boundary-v2 development replay"
+  },
+  "training_validation": {
+    "kokoro_v11_fullwave_recall_at_selected_threshold": 0.0,
+    "ambient_hours": 1.2048112673611107,
+    "ambient_events": 0
+  },
+  "qualification": {
+    "passed": false,
+    "failure_reasons": [
+      "candidate synthetic positive event recall is 14/48 in stream replay",
+      "training validation recall for the fullwave Kokoro source is 0 at selected threshold",
+      "independent background exposure is below the preregistered 5.99146 hours required for a zero-event FAR upper bound <=0.5/h"
+    ],
+    "v30_retained": true,
+    "human_generalization_claim": false,
+    "generated_boundary_is_human_phone_truth": false
+  }
+}
