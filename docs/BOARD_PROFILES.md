@@ -83,10 +83,13 @@ through their existing exact-profile release channel or USB. Downgrading to a
 descriptor-less historical image requires explicit USB recovery. Partition
 offsets, server namespaces and the release manifest schema are unchanged.
 
-Use esptool 5 or later for a normal preserving USB update:
+Use a separate esptool 5.x environment for a preserving USB update. ESP-IDF
+5.5 uses the incompatible esptool 4.x Python API; keep its build environment intact:
 
 ```sh
-python3 tools/flash_profile.py --port /dev/cu.YOUR_PORT \
+python3 -m venv .local/flash-env
+.local/flash-env/bin/python -m pip install -r tools/requirements-flash.txt
+.local/flash-env/bin/python tools/flash_profile.py --port /dev/cu.YOUR_PORT \
   --profile p4-rev3-lcd-x8-16mb --expected-mac aa:bb:cc:dd:ee:ff \
   --image build/profiles/p4-rev3-lcd-x8-16mb/production/nyxid-esp-panel.bin \
   --backup-dir .local/flash-backups/unique-run

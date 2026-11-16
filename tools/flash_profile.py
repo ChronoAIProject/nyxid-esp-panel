@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Preserving app-only USB update with board, device and rollback checks.
 
-Requires esptool >= 5. A chip revision identifies silicon, never board wiring:
+Requires esptool 5.x. A chip revision identifies silicon, never board wiring:
 the operator supplies the actual board profile and the intended P4 MAC.
 """
 import argparse
@@ -103,8 +103,13 @@ def main():
     if len(image) > 0x690000:
         parser.error("Application exceeds the OTA slot")
     # Import only when actually flashing; policy checks and --help need no SDK.
-    import esptool
-    from esptool.cmds import attach_flash, detect_flash_size, write_flash
+    try:
+        import esptool
+        from esptool.cmds import attach_flash, detect_flash_size, write_flash
+    except ImportError as error:
+        parser.error("Install tools/requirements-flash.txt in a separate virtual environment; "
+                     "the ESP-IDF build environment's esptool 4.x API is incompatible. "
+                     f"({error})")
     os.umask(0o077)
     root = args.backup_dir.resolve()
     root.mkdir(parents=True, exist_ok=False)

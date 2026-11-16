@@ -126,11 +126,23 @@ experimental lifecycle image
 `554ab0f3028dede17a2b4d3399a388499dc95f8703baba57326165a9f8342cb7`). The
 board was restored to the canonical X8 image after the check.
 
+The legacy rev1 board was then tested with a matching local `.57` build
+(`p4-rev1-16mb`, app SHA `38a0330fdb0cea585a658d3564d7a658ecbaecb293ed36151149dd358121b62e`,
+ELF SHA `9f1f2953dc639a90617222aff587cd0e5a620a55563c9d293be57441833c0801`).
+Its pre-existing local Bot/service configuration loaded with `configured=true`
+and `wake=listening`; Settings/Home navigation, SpecAnalyzer ownership and
+MusicPlayer pause/resume/release all passed. The run observed no watchdog,
+panic, I2S read error or cleanup error. The exact historical c161 image was
+restored afterwards with the protected NVS/storage hashes unchanged.
+
 Sanitized hashes and bounded observations are recorded in
 [the regression receipt](evidence/2026-11-16-board-isolation.json). Private raw
 logs and failed attempts are retained alongside successful runs rather than
 counted as passes. The office-board lag was not reproduced on the attached
 home boards and is not claimed fixed.
+
+The follow-up legacy-profile/native-audio receipt is
+[evidence/2026-11-17-legacy-isolation.json](evidence/2026-11-17-legacy-isolation.json).
 
 After its temporary main-based regression, the legacy board was restored to
 the exact c161 research image, with app and ELF hashes verified and protected
