@@ -29,3 +29,18 @@ Protocol 596ba445 was pushed before execution; all 24 target/phase conditions an
 |2 seconds|bc01|10/12|11/12|1 / 0|
 
 These paired results support a preceding-audio effect beyond target start phase alone. They do not isolate MicroFrontend adaptation versus model context, and do not prove an exact speech duration or reset mechanism. Comparison between the two silence-history columns also changes phase schedules, so the matching aggregate counts do not demonstrate phase invariance. No tuning, training or fresh/independent exposure is claimed. Baseline remains C161. Next step is a locked frontend-versus-model history intervention on the consumed traces, before choosing a training remedy.
+
+## Frontend/model history feature intervention
+
+Preregistered e635ef77 completed exit 0, 24 target/phase cases x2 models x4 conditions. Reconstructed session PCM hashes match; continuous-control raw UINT8 outputs reproduce the saved original traces byte for byte. All 192 trace members were verified and saved event steps/clocks rescored. Splice point is the first model call whose unrounded support exceeds target onset. The group can straddle onset; this is a feature intervention, not a physical reset or perfectly separable causal decomposition.
+
+|Gap|Model|Continuous|All-silence history|Continuous prefix + silence-history target features|Silence prefix + continuous-history target features|
+|---|---|---:|---:|---:|---:|
+|0.5 s|C161|0/12|4/12|5/12|0/12|
+|0.5 s|bc01|4/12|11/12|8/12|2/12|
+|2 s|C161|2/12|4/12|4/12|2/12|
+|2 s|bc01|10/12|11/12|11/12|10/12|
+
+Counts are target containers with an event under the unchanged full-session event policy. At 2 seconds, supplying silence-history target features recovers the all-silence aggregate with either prefix, while replacing only the prefix does not recover events. At 0.5 seconds, frontend-conditioned target features remain important, but prefix interactions are evident (C161 5 versus 4; bc01 8 versus 11, and 2 versus 4). Aggregate equality is not proof of identical paired behavior. These results support frontend-history mismatch as a major investigation direction, not an exclusive cause; model context and boundary interactions cannot be discarded.
+
+A training remedy should expose training-only positives and negatives to actual continuous frontend history, rather than merely concatenate cached per-utterance features or reset on unknown boundaries. First audit existing training cache generation and masks for such a mismatch, then preregister an intervention using training-only sources. No consumed builtin development audio may enter training. No threshold or deployed frontend/reset policy changed; C161 remains baseline and bc01 experimental. This experiment provides no new human/P4 qualification or first-command PCM-retention evidence.
