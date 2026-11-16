@@ -36,7 +36,9 @@ def main():
         for member in archive.getmembers():
             assert member.isfile() or member.isdir(), 'No archive links'
             assert (runtime / member.name).resolve().is_relative_to(runtime.resolve())
-        archive.extractall(runtime, filter='data')
+        # Python 3.11 on this host predates extraction filters. The checks
+        # above reject links, special files and paths outside the destination.
+        archive.extractall(runtime)
     package, = runtime.iterdir()
     subprocess.run([sys.executable, '-m', 'pip', 'install', '--no-cache-dir',
                     f'git+https://github.com/resemble-ai/Perth.git@{PERTH}'], check=True)
