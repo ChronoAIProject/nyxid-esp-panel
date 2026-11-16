@@ -1,0 +1,85 @@
+{
+  "schema": "continuous-past-mfcc-function-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_continuous_past_mfcc_v1.py": "6cf9bd2b5a8704a699fc2d2fd9e02691274c78e993a184bfed300b069bd319b9",
+    "research/wakeword_p4/training/continuous_past_mfcc_v1.py": "6b3e25a1369b71f587a82075d0c0fc745473728c80ae711916c523a1acfbbaff",
+    ".local/wakeword/matchbox-long-material-v1/records.json": "8f373c741553c8a560764f822c669aabeec4ddf91b558df3a28af35a6e4559c0",
+    ".local/wakeword/matchbox-grid-aligned-v1/frontend.pt": "feb4b44d5f50c8ff05a81fabfd4b454537fb948454790fa8c219906bfa3f9f2c",
+    ".local/wakeword/speecht5-training-rendered-v1/speecht5-training-bdl-nyx-bare-slow-v0.wav": "075275530f4b61fd653a17b17b62669cd2e655161769876a14d322e26345f125"
+  },
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch_version": "2.15.0+cu132",
+  "index_oracle_cases": [
+    {
+      "samples": 0,
+      "frames": 0,
+      "residual": 0
+    },
+    {
+      "samples": 1,
+      "frames": 0,
+      "residual": 1
+    },
+    {
+      "samples": 159,
+      "frames": 0,
+      "residual": 159
+    },
+    {
+      "samples": 160,
+      "frames": 0,
+      "residual": 160
+    },
+    {
+      "samples": 399,
+      "frames": 0,
+      "residual": 399
+    },
+    {
+      "samples": 400,
+      "frames": 1,
+      "residual": 240
+    },
+    {
+      "samples": 401,
+      "frames": 1,
+      "residual": 241
+    },
+    {
+      "samples": 559,
+      "frames": 1,
+      "residual": 399
+    },
+    {
+      "samples": 560,
+      "frames": 2,
+      "residual": 240
+    },
+    {
+      "samples": 561,
+      "frames": 2,
+      "residual": 241
+    },
+    {
+      "samples": 44800,
+      "frames": 278,
+      "residual": 320
+    },
+    {
+      "samples": 75378,
+      "frames": 469,
+      "residual": 338
+    }
+  ],
+  "chunk_schedules_per_case": 4,
+  "all_raw_frame_indices_and_timestamps_passed": true,
+  "training_pcm_frames": 469,
+  "frontend_output_sha256": "fbcf8a9fa9207e89ff94591ed2302865c6a3eae3a3f901398fde3ee9351ea8cc",
+  "max_residual_pcm16_bytes": 798,
+  "frame_acquisition_samples": 400,
+  "hop_samples": 160,
+  "future_samples": 0,
+  "finish_padding": false,
+  "neural_calls": 0,
+  "policy": "Newfrontendproposal only. Raw index/chunk checks and finiteCUDAfeatures, no neuralCPU/GPU equality gate, recognition, numerical equivalence to historical frontend, calibration, P4port or promotion. Frame at400samples needs25msinitialacquisition and onlypastPCM.512FFTzeroextension and400Hann inheritbuffer values but continuousframe semantics differ from frozenwindowreflectMFCC. Incomingchunk memory and outputbatch excluded from residualbound; FFT/mel/DCT remainfloat. Full training recording loaded for diagnostic only; no heldout access."
+}
