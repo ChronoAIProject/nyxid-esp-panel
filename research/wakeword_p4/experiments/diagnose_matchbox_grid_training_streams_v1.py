@@ -1,7 +1,7 @@
 """Same fixed96training records, new frozen grid-aligned bytes only."""
 import argparse,hashlib,json
 from pathlib import Path
-R=Path('research/wakeword_p4/results');B=Path('.local/wakeword');SCRIPT=Path('research/wakeword_p4/experiments/diagnose_matchbox_long_training_streams_v1.py');LOCK=R/'4090-matchbox-grid-training-stream-plan-v1.json'
+R=Path('research/wakeword_p4/results');B=Path('.local/wakeword');SCRIPT=Path('research/wakeword_p4/experiments/diagnose_matchbox_long_training_streams_v1.py');LOCK=R/'4090-matchbox-grid-training-stream-plan-v2.json'
 def sha(p):
  with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def plan():
@@ -12,7 +12,7 @@ def plan():
  with LOCK.open('x') as f:json.dump(p,f,indent=2);f.write('\n')
  print(sha(LOCK))
 def run():
- s=SCRIPT.read_text();old='B/f"matchbox-long-{arm}-{\'resumed\' if arm==\'control\' else \'recovery\'}-v1/frontend.pt"';assert s.count(old)==1;s=s.replace(old,"B/'matchbox-grid-aligned-v1/frontend.pt'")
+ s=SCRIPT.read_text();old='B/f"matchbox-long-{arm}-{\'resumed\' if arm==\'control\' else \'recovery\'}-v1/frontend.pt"';assert s.count(old)==2;s=s.replace(old,"B/'matchbox-grid-aligned-v1/frontend.pt'")
  s=s.replace("'4090-matchbox-long-training-stream-original-v1.json'","'4090-matchbox-grid-training-stream-original-v1.json'")
  ns=dict(__name__='grid_training_stream_adapter',__file__=str(SCRIPT));exec(compile(s,str(SCRIPT),'exec'),ns);ns.update(LOCK=LOCK,OUT=B/'matchbox-grid-training-stream-v1');ns['run']()
 if __name__=='__main__':
