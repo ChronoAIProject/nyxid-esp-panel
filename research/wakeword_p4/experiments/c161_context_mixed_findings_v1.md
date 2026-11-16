@@ -29,4 +29,4 @@ Replay and saved-trace scoring both genuine exit0. All474mixed traces, ledger, l
 | British bare | 7/9 | 3/9 | 0 / 4 |
 | British command | 14/27 | 18/27 | 6 / 2 |
 
-Total54/72 to53/72: no overall coverage gain, British bare regression remains. US reciprocal official0/36both; British C1610/36,mixed7/36. Constructed nearwords US38/144 to49/144; British13/144 to8/144, diagnostic not zero gates or language frequencies. Reused7.902862222h background0events both, not new/additive exposure. Mixed-context support does not resolve the previously observed coverage tradeoff. No promotion or threshold rescue. Remaining cohorts still to execute.
+Total54/72 to53/72: no overall coverage gain, British bare regression remains. US reciprocal official0/36both; British C1610/36,mixed7/36. Constructed nearwords US38/144 to44/144; British13/144 to8/144, diagnostic not zero gates or language frequencies. Reused7.902862222h background0events both, not new/additive exposure. Mixed-context support does not resolve the previously observed coverage tradeoff. No promotion or threshold rescue. Remaining cohorts still to execute.
