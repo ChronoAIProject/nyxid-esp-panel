@@ -53,3 +53,31 @@ retention. No automatic firmware switch or baseline promotion. Hey Willow
 remains the primary reference; its same-source builtin target control12/12
 is useful but not a universal P4 or human comparison. Practical P4 evidence
 and broader daily interference remain outstanding.
+
+## Subsequent consumed Melo check
+
+The complete474-input Melo replay also exited0:432 synthetic presentations
+and42 reused whole backgrounds. Fixed .91796875/5 only, no grid search.
+Saved C161 trace identities and per-source hashes were verified before paired
+comparison. EN-BR denotes British, not Brazilian.
+
+| Melo target | C161 | bc01 |
+|---|---:|---:|
+| EN-US bare | 9/9 | 9/9 |
+| EN-US commands | 24/27 | 23/27 |
+| EN-BR bare | 7/9 | 3/9 |
+| EN-BR commands | 14/27 | 18/27 |
+
+This extends the earlier four-cohort improvement evidence with real regressions:
+US commands gain1/lose2; British bare gains0/loses4; British commands gain6/
+lose2. Total target54/72 to53/72. Do not describe bc01 as uniformly improving
+voice coverage. British bare loss is a material reason to retain C161 and make
+bc01 experimental only. It must be included in Mac/P4 comparison. No threshold
+or training rescue follows from this consumed set.
+
+Both models have zero events on the reused7.902862222h backgrounds; these
+hours are not fresh or additive. bc01 also activates7 British reciprocal
+official-target clips versus C161 zero. Constructed nearwords remain diagnostic;
+whole-container activations still do not establish phonetic correctness or
+daily occurrence rates. Complete474 traces, records and result are archived in
+`4090-bc01-melo-evidence-v1.tar.gz`, with verified member hashes in its manifest.

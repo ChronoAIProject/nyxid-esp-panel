@@ -18,6 +18,8 @@ def main():
     result = json.loads((OUT / 'result.json').read_text())
     assert result['all_passed'] and result['counts'] == {'bc01': 474}
     paths = [BASE / 'records.jsonl', OUT / 'bc01/records.jsonl']
+    baseline = json.loads((BASE.parent / 'result.json').read_text())
+    assert baseline['all_passed'] and sha(paths[0]) == baseline['record_files']['c161']
     assert sha(paths[1]) == result['record_files']['bc01']
     old, new = [[json.loads(line) for line in p.read_text().splitlines()] for p in paths]
     assert len(old) == len(new) == 474
