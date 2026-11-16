@@ -170,14 +170,14 @@ No new training, duplicate acoustic baseline, TTS playback or recording is
 authorized by the hourly check. Judge delivered candidates by practical
 behavior; do not add a numerical-equivalence requirement.
 
-Latest reviewed GPU head: `57803e9901f4c1d25cb356f11debe1c7d41fb01a`.
-The latest commits corrected the teacher60 candidate replay threshold and passed
-relative-boundary/voice-split auditing for the 288-record fullwave overlay. They
-did not change model weights or produce a qualified deployment: the candidate
-still has zero fullwave recall, and Issue #13 has no approved replacement. Frozen
-v30 remains the only approved handoff. These are development diagnostics, not
-physical-board acceptance. No research model was installed. The existing hourly
-task remains enabled.
+Latest reviewed GPU head: `138faed5ee3e050a7e74edcd7222a5605f6e7dba`.
+The zf candidate and its 6000-step follow-up were rejected: corrected independent
+Sol replay produced 0/24 events, the 3000-step candidate's fullwave recall was
+0.0208, and the background exposure was below the preregistered FAR bound. The
+Hi ESP QEMU check passed only as a transport control and is not a matched quality
+comparison. Issue #13 has no approved replacement; frozen v30 remains the only
+approved handoff. No research model was installed. The existing hourly task
+remains enabled.
 
 Kokoro v1.1 now has 144 development recordings and 72 isolated acceptance
 recordings that passed the corrected 24 kHz native/16 kHz resampling audit. The
