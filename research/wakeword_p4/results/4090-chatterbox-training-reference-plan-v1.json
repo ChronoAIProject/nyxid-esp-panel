@@ -1,0 +1,23 @@
+{
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/generate_chatterbox_training_references_v1.py": "7417ffc61b63a235bf6182827ce45653598873148ef6eac0760b4e583e945754",
+    ".local/wakeword/hey-nyx/kokoro/generation.json": "79b1277b20e629e0befa4e34b5f1376bff890b69d3093032d007e486ff6c5bac",
+    ".local/wakeword/kokoro-models/kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+    ".local/wakeword/kokoro-models/voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+  },
+  "voices": [
+    "af_bella",
+    "am_onyx",
+    "bf_isabella",
+    "bm_fable"
+  ],
+  "text": "The morning light comes through the window as I prepare breakfast. Later today I plan to walk through the park, visit the library, and return home before the evening rain begins.",
+  "speed": 1.0,
+  "versions": {
+    "kokoro-onnx": "0.4.9",
+    "onnxruntime": "1.31.1",
+    "numpy": "2.4.6",
+    "soundfile": "0.14.0"
+  },
+  "policy": "One coherent utterance per training-only conditioning identity, no looping or concatenation. CPU ONNX preprocessing limited2threads; downstream Chatterbox synthesis and wake model training on4090. Reused synthetic identities, not new independent human speakers. Mechanical QA does not prove text correctness. All four retained, no score-based selection; fail if <=5seconds."
+}
