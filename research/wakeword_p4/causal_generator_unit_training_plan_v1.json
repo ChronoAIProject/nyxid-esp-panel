@@ -1,0 +1,18 @@
+{
+  "schema": "causal-generator-unit-training-plan-v1",
+  "hypothesis": "Retained per-frame generator-allocation supervision with a past-only cached encoder can learn ordered complete wake and confusable sequences without pooled command shortcuts or discarded auxiliary heads.",
+  "seed": 726,
+  "optimizer": "AdamW",
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "gradient_clip_norm": 5.0,
+  "steps": 5000,
+  "batch_size": 24,
+  "sampling": "One independently sampled full six-class matched cell per each of four carriers; fixed resumable sampler seeds.",
+  "objective": "Soft generator-allocation cross entropy: valid-frame mean per complete recording then mean across batch. No background loss, no pseudo-empty background transcript.",
+  "checkpoint_policy": "Save latest every 250 steps and final at 5000; no checkpoint selection on validation. Final checkpoint only for subsequent diagnostic replay.",
+  "event_policy": "Existing exact ordered unit event policy; confidence code 128, span 200 frames, refractory 200 frames. Fixed diagnostic only, no qualified threshold.",
+  "resources": "RTX4090 required; CPU numerical threads1. Read existing PCM, no new waveform/features cache, disk reserve100GiB. Keep initial/latest/final checkpoints only.",
+  "acceptance": "Training diagnostic only. No replacement of frozen v30. Trained full-wave float behavior, actual-state INT8 calibration/export, fresh development and sealed acceptance including FAR upper95<=0.5/h remain required.",
+  "stop_conditions": "Nonfinite loss/gradient, unavailable CUDA, insufficient disk reserve, or failed source hashes: stop and retain failure. Do not silently retry with changed hyperparameters."
+}
