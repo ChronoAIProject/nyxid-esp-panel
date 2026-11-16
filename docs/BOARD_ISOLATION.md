@@ -97,10 +97,12 @@ passed startup health verification. On the legacy board, URL OTA rejected the
 LCD-X8 production image despite its correct digest, then installed the matching
 local image into the other slot and passed the startup health gate. The retained
 OTA UART traces show the ESP-Hosted peripheral reaching `Received INIT event`
-and `Base transport is set-up` after each captured reboot. The earlier
-experimental note about an ESP-Hosted startup failure is therefore not
-reproducible evidence; its later WebSocket errors target the historical `.57`
-backend address.
+and `Base transport is set-up` after the captured reboots. Those successful
+traces also contain WebSocket timeouts to the historical `.57` backend. A
+separate experimental receipt reports post-OTA connectivity loss and rollback,
+but no retained failing transport trace has been correlated with that event.
+Its cause remains unconfirmed; the successful traces do not resolve it or
+establish a board-isolation regression.
 
 Both boards completed an existing English acoustic fixture with the complete
 user directive and an audible-response data path: microphone and output peaks,
