@@ -1,0 +1,138 @@
+{
+  "schema": "context-mixed-int8-original-v1",
+  "plan_sha256": "7584a5b4c4d332e0756712ebf22eadd00427fe83741f1d30bb690d11534a93ac",
+  "launch": {
+    "pid": 1860233,
+    "proc_starttime": "8836042",
+    "plan_sha256": "7584a5b4c4d332e0756712ebf22eadd00427fe83741f1d30bb690d11534a93ac"
+  },
+  "model": {
+    "path": ".local/wakeword/context-mixed-int8-v1/int8.tflite",
+    "bytes": 60952,
+    "sha256": "c61de56ab4af4b6ba3eeb4bf4b49e59a2aec19e6f7f30887ae8f20ea7ca18f39"
+  },
+  "ops": [
+    "CALL_ONCE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "VAR_HANDLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "READ_VARIABLE",
+    "EXPAND_DIMS",
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "CONCATENATION",
+    "RESHAPE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "STRIDED_SLICE",
+    "ASSIGN_VARIABLE",
+    "QUANTIZE"
+  ],
+  "initializers": [
+    {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        4,
+        1,
+        30
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        8,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        12,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        20,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    },
+    {
+      "shape": [
+        1,
+        57,
+        1,
+        60
+      ],
+      "zero_point": -128,
+      "all_real_zero": true
+    }
+  ],
+  "input_quantization": [
+    0.10196078568696976,
+    -128
+  ],
+  "output_quantization": [
+    0.00390625,
+    0
+  ],
+  "functional_replay_calls": 200,
+  "repeat_comparison_performed": false,
+  "replay_sha256": "c2c6f8bba3de5718e994962d2fb1796b1fabfcd33f61bf858c6d21087100ba7a",
+  "source_weights_file_unchanged": true,
+  "all_static_and_runtime_abi_passed": true,
+  "recognition_scored": false,
+  "policy": "One final mixed-context model export, same unchanged representative and ABI as both prior arms. No calibration or checkpoint retry. C161 remains baseline. One fixedfinal20000 INT8 export for this paired arm, same exercised builtinINT8 ABI/context309/realzero states/rawsigmoid. Retain old calibration representative batch unchanged as control; not actual first batch of this arm. Zero/26 sentinels then16saved sequences, no intermediate reset. Static ABI and one fresh-interpreter functional replay only, no FP32 equivalence or calibration retry. No checkpoint/threshold rescue, acceptance or qualification. Both arm outcomes reported, C161 retained."
+}
