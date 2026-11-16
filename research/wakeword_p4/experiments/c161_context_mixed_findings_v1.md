@@ -34,3 +34,13 @@ Total54/72 to53/72: no overall coverage gain, British bare regression remains. U
 ## Full Legacy372 result
 
 Sequential supervisor records genuine replay exit0; raw-trace score/archive exit0. All372mixed traces plus ledger/report/launch/result archived (376members), each member size/SHA verified. C161 saved report/trace identities authenticated. Targets35/36→36/36, commands26/27→27/27, bare9/9both;1gain/no loss. Other constructed synthetic containers4→8events (activated containers), diagnostic not everyday frequency or zero gate. Willow/HiESP reciprocal containers remain0. Same reused10.483944826h backgrounds0events both, not fresh/additive hours. This local gain does not remove British bare regression or six-cups conflict. Jenny/Joe/Mac still pending; C161 baseline retained.
+
+## Jenny/Joe/Mac coverage
+
+Sequential replay supervisor terminal completed-await-score, all four cohort exit codes0; original receipt preserved. Jenny/Joe saved-trace scorers exit0, Joe missing carrier retained whole-utterance-unclassified from first score. Mac12 raw events independently recomputed; all archive members size/SHA verified.
+
+Jenny mixed34/36targets vsC16133/36, commands25/27vs24/27, bare9/9both:1command gain, no loss. Other synthetic/reciprocal containers60/360vs44/360, diagnostic not everyday frequency (prior44/324 excluded36reciprocal cases). Reused9.614419583h backgrounds0events both, nonadditive/not fresh exposure. Jenny result does not remove British bare regression or daily conflict.
+
+Joe mixed0/72targets, same asC161; negatives0/288both, no background hours. Do not invent bare/command labels from absent carrier metadata. Voice blind spot remains.
+
+Mac host consumed synthetic Nyx2/4, Samantha2/2/Daniel0/2; other targets0/8. Not P4 execution, numerical parity or real-human validation. C161's previously reported Mac total1/4 remains historical reference; no baseline rerun. Mixed does not fix Daniel/Joe coverage. All three contextual variants remain experimental, C161 baseline retained. Training84 fit diagnostic is separately locked, not a generalization test.
