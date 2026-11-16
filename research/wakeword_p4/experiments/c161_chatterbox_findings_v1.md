@@ -30,3 +30,28 @@ its actual DEFAULT profile and matched continuous prime; investigate separately
 conditioned training voices before proposing source expansion. Do not select
 spelling, seed, threshold or generation retries from these results. Practical
 P4 and resource feedback remains pending in Issue #18.
+
+## Completed official reference
+
+Official `wn9_heywillow_tts` DEFAULT completed all36 inputs with exit0.
+Every report confirms getter bits `3f24dd2f`, firmware32256 plus host49344
+continuous zero prime, intact source PCM CRC and full native512 returns.
+Willow bare3/3, command9/9; Nyx reciprocal0/12; everyday negatives0/12;
+prime events0. UART, return bytes and reports are archived with member hashes
+in `4090-chatterbox-willow-reference-result-v1.json`; archive SHA256
+`3734c354e6a6aa085eacabb7c068a3fba565a2338efd29833d2bd4d7bb9e6b4a`.
+
+This source supplies a successful Willow positive control, unlike the earlier
+Semaine diagnostic. It demonstrates a C161 coverage deficit on these respective
+target phrases, not universal model superiority: words, model architecture,
+frontend and native event rules differ, and this is one synthetic conditioning
+voice. No additional background hours or real-world false activation rate is
+inferred from the twelve short negative clips.
+
+Training-source inventory checked all rows of the existing Piper13920,
+Kokoro644 and Qwen360 manifests: none exceeds5seconds. They cannot directly
+meet Turbo's >5second reference requirement. Generate new coherent long
+training-only synthetic reference utterances from pinned existing engines;
+do not loop short clips or recycle the evaluated builtin voice. Reusing
+training synthetic conditioning identities creates engine diversity, not
+independent human speaker evidence.
