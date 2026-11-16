@@ -1,0 +1,28 @@
+{
+  "schema": "normalized-generator-training-plan-v1",
+  "hypothesis": "Parameter-free current-frame normalization reduces conditioning variation; sole architectural intervention against prospective contextual control.",
+  "seed": 726,
+  "optimizer": "AdamW",
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "gradient_clip_norm": 5.0,
+  "steps": 5000,
+  "batch_size": 24,
+  "sampling": "One independently sampled full six-class matched cell per each of four carriers; fixed resumable sampler seeds.",
+  "objective": "0.4 recording-normalized frame CE + 0.5 equal-position CE + 0.1 contextual local contrast CE; fixed confidence policy unchanged.",
+  "checkpoint_policy": "Save latest every 250 steps and final at 5000; no checkpoint selection on validation. Final checkpoint only for subsequent diagnostic replay.",
+  "event_policy": "Existing exact ordered unit event policy; confidence code 128, span 200 frames, refractory 200 frames. Fixed diagnostic only, no qualified threshold.",
+  "resources": "RTX4090 required; CPU numerical threads1. Read existing PCM, no new waveform/features cache, disk reserve100GiB. Keep initial/latest/final checkpoints only.",
+  "acceptance": "Training diagnostic only. No replacement of frozen v30. Trained full-wave float behavior, actual-state INT8 calibration/export, fresh development and sealed acceptance including FAR upper95<=0.5/h remain required.",
+  "stop_conditions": "Nonfinite loss/gradient, unavailable CUDA, insufficient disk reserve, or failed source hashes: stop and retain failure. Do not silently retry with changed hyperparameters.",
+  "control": "Same seed726, all learned initial tensors, sampler schedule, objective0.4frame+0.5position+0.1contrast,5000steps.",
+  "contrast_positions": "Only declared terminal53->61 positions and class5 token55 positions; negative alternatives 53 for terminal position and56 for token55 position; no blanket token61 penalty.",
+  "normalization": {
+    "axis": "64 MFCC channels per frame",
+    "epsilon": 1e-05,
+    "affine": false
+  },
+  "data": "3456 records,16conditioning; exclude af_alloy/af_kore/am_echo/am_santa from optimization and calibration.",
+  "development": "864 reused development records, previously consumed by other experiments; not globally fresh or independent acceptance.",
+  "qualification": false
+}
