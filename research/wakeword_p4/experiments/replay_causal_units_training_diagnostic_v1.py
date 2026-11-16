@@ -1,5 +1,5 @@
 """Final checkpoint full-wave training diagnostic, not heldout qualification."""
-import hashlib,json,sys
+import argparse,hashlib,json,sys
 from pathlib import Path
 import numpy as np
 import soundfile as sf
@@ -12,8 +12,9 @@ from ordered_generator_matcher_v1 import OrderedMatcher
 OUT=Path('.local/wakeword/causal-generator-unit-supervised-v1')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--run',default='causal-generator-unit-supervised-v1',choices=['causal-generator-unit-supervised-v1','causal-generator-position-supervised-v1']);args=parser.parse_args();root=Path('.local/wakeword')/args.run
  torch.set_num_threads(1);assert torch.cuda.is_available();torch.backends.cudnn.allow_tf32=False;torch.backends.cuda.matmul.allow_tf32=False
- checkpoint=OUT/'final.pt';s=torch.load(checkpoint,map_location='cpu',weights_only=False);assert s['step']==5000
+ checkpoint=root/'final.pt';s=torch.load(checkpoint,map_location='cpu',weights_only=False);assert s['step']==5000
  sampler=Sampler();mapping=sampler.data['dense_to_original_label'];model=CausalGeneratorUnitModel(len(mapping)).cuda().eval();model.load_state_dict(s['model'])
  front=ContinuousPastMFCC(torch.load('.local/wakeword/matchbox-grid-aligned-v1/frontend.pt',weights_only=True,map_location='cpu')).cuda().eval();results=[]
  with torch.no_grad():
@@ -31,7 +32,7 @@ def main():
     elif matcher.push(token):events.append(int(ends[i]))
    results.append(dict(index=d['index'],class_id=r['class_id'],carrier=r['carrier'],path=r['path'],sha256=r['sha256'],frames=len(frames),events_samples=events,collapsed_tokens=collapsed,chunk37_vs_full_max_abs=difference))
  out=dict(schema='causal-unit-training-wave-diagnostic-v1',checkpoint_sha256=sha(checkpoint),script_sha256=sha(__file__),selection='First fixed-seed sampler batch24, training only; no selection of checkpoint or threshold.',decoder='Raw float argmax exact ordered matcher; no confidence threshold, cooldown or maxspan. NOT integer event policy and NOT qualification.',records=results,target_hits=sum(bool(r['events_samples']) for r in results if r['class_id']==1),target_count=4,negative_hits=sum(bool(r['events_samples']) for r in results if r['class_id']!=1),negative_count=20)
- dest=Path('research/wakeword_p4/results/4090-causal-unit-training-wave-diagnostic-v1.json')
+ dest=Path('research/wakeword_p4/results')/('4090-causal-position-training-wave-diagnostic-v1.json' if args.run=='causal-generator-position-supervised-v1' else '4090-causal-unit-training-wave-diagnostic-v1.json')
  with dest.open('x') as f:json.dump(out,f,indent=2);f.write('\n')
  print(json.dumps({k:v for k,v in out.items() if k!='records'}))
 if __name__=='__main__':main()
