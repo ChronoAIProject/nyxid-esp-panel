@@ -1,0 +1,74 @@
+{
+  "groups": {},
+  "records": [
+    {
+      "gap_samples": 8000,
+      "containers": {
+        "nyx": [
+          1,
+          3,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      "outside_clip_events": [],
+      "pcm_sha256": "75d217049ae1690bbff134fb1fc196d30519805e507752e2a8632a0a7976c04d"
+    },
+    {
+      "gap_samples": 32000,
+      "containers": {
+        "nyx": [
+          3,
+          5,
+          6,
+          7
+        ]
+      },
+      "outside_clip_events": [
+        {
+          "event": {
+            "step": 512,
+            "relative_sample": 164640
+          },
+          "owner": {
+            "kind": "gap",
+            "after": 1,
+            "start": 163200,
+            "end": 195200
+          }
+        }
+      ],
+      "pcm_sha256": "2ed69b0f594301e02062e99f23f88e7032894b6607e5707d87bc4ff88add5a0d"
+    }
+  ],
+  "regularization_arm": "decay",
+  "schema": "binary40-consumed-comparison-v1",
+  "cohort": "continuous",
+  "original_result_sha256": "a5f9624147f6f26c373db1c3355b871ab7f5fc8d873c823611bd2a3e47111057",
+  "archive": {
+    "path": "research/wakeword_p4/results/4090-binary40-regularization-decay-continuous-evidence-v1.tar.gz",
+    "bytes": 18613,
+    "sha256": "3c4c98f3ad5d1cfe99ae5c1c59c93122c43af2158fa14724a99e332a67c4a2b3",
+    "members": {
+      "32000-binary40.npz": {
+        "bytes": 19162,
+        "sha256": "3a983fdae6c7634d336e50c767c09b113e0619fccd03d95e1983ca7e896680f9"
+      },
+      "8000-binary40.npz": {
+        "bytes": 12044,
+        "sha256": "79e7551256d24d45434b630e224ed98a8a141e1629567056ffdcf45f8d6ac84c"
+      },
+      "binary40-execution.json": {
+        "bytes": 494,
+        "sha256": "9402cc3ac2b9bad8a9034bdfb57dfecfd65054d84dc90d2a44962f9c823c1c39"
+      },
+      "result.json": {
+        "bytes": 26586,
+        "sha256": "a5f9624147f6f26c373db1c3355b871ab7f5fc8d873c823611bd2a3e47111057"
+      }
+    }
+  },
+  "limits": "Fixed original profile, raw-code rescoring, consumed synthetic diagnostics only; reused background hours nonadditive. Missing carrier remains unclassified; container timing not phonetic truth or first-command retention. No tuning, acceptance, human/P4 claim or automatic promotion. Actual process exit receipts are separate."
+}
