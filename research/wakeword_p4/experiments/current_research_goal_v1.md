@@ -22,3 +22,7 @@ The existing system goal remains active. Its API permits no in-place objective r
 4. Push reviewed findings and original artifacts promptly and update Issue #18 for Mac. Keep C161 as the fixed baseline and Binary40 as an unaccepted research candidate. Mac owns independent P4 numerical agreement, command retention, memory, realtime and stability checks; no new human recording or board dependency is introduced into synthetic research.
 
 The broad system goal remains active and unchanged. The goal API cannot replace an unfinished objective, so this file refreshes its concrete milestones without falsely declaring success. Completion still requires a useful reproducible candidate and separate Mac/P4 evidence. Preserve at least 100 GiB free disk, numeric CPU threads 2 / interop 1, and one-thread BUILTIN_REF replay. Preserve failed results and independent acceptance boundaries.
+
+## Capacity review completed
+
+Independent consumed review verified16archives/3574members and53successful execution stages. See binary40_capacity_consumed_findings_v1.md and 4090-binary40-capacity-consumed-review-v1.json. Neither continuation is selected as overall replacement: wide128 improves Melo but regresses builtin, short-gap continuity and Joe versus originalBinary40. Next milestone is an original-training-data temporal-supervision audit before any distinct training proposal; no new optimizer run or sweep is authorized by a favorable subset. C161 remains baseline; broad goal active.
