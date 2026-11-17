@@ -26,3 +26,7 @@ The broad system goal remains active and unchanged. The goal API cannot replace 
 ## Capacity review completed
 
 Independent consumed review verified16archives/3574members and53successful execution stages. See binary40_capacity_consumed_findings_v1.md and 4090-binary40-capacity-consumed-review-v1.json. Neither continuation is selected as overall replacement: wide128 improves Melo but regresses builtin, short-gap continuity and Joe versus originalBinary40. Next milestone is an original-training-data temporal-supervision audit before any distinct training proposal; no new optimizer run or sweep is authorized by a favorable subset. C161 remains baseline; broad goal active.
+
+## Continuous decoder mechanism checked
+
+The fixed decoder exactly reproduces all eight continuous traces. All62missed target containers lack any five-code crossing; none has a blocked crossing. See binary40_continuous_decoder_findings_v1.md. Do not pursue decoder-rearm rescue from the post-positive supervision observation. Next isolate frontend-history versus neural-context effects on original training-only material, accounting for prior C161 context-pair failures before proposing new training.
