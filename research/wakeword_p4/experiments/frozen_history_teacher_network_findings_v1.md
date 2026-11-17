@@ -1,0 +1,16 @@
+# Actual fixed-teacher network preflight
+
+Full4320training-source census plus first50paired/main batches completed on RTX4090, actual session83789 exit0. No optimizer. Teacher and student tensors remained exactly equal to original final20000weights; separate teacher requires_gradFalse and gradients disconnected. Original main128feature/mask/descriptor hashes match saved original first50batches. Paired tensors replay exactly for all50batches. Complete per-source probabilities and component gradients preserved, independently recalculated by review script.
+
+| Label group | Quiet crossing | Speech-history crossing | Quiet mean-label contradictions | Speech mean-label contradictions |
+|---|---:|---:|---:|---:|
+| Target /864 |864|820|0|9|
+| Negative /3456 |6|0|0|0|
+
+Crossing and region-average contradiction are different metrics. Quiet teacher has six five-call false-crossings despite zero negative region-average contradictions: five Hey Mix and one Hey Nice. Their complete identities are in network review. The earlier600source negative0/480 was true only of its fixed subset and is superseded in scope by this full census, not retroactively changed. Teacher errors must not be silently filtered; labels remain authoritative. These constructed training negatives do not measure daily conflict frequency or independent FAR.
+
+First50 actual-network gradient components: supervised norm median1.19347 (range.02759..5.82633); KL norm median.49037 (range.00009989..9.79276).29/50dot products oppose, cosine median-.09130. This differs from the earlier aggregate90source supervised quiet/history comparison: here the objectives are main+pair supervised BCE versus a frozen-teacher KL, evaluated batchwise. It is not a contradiction or a reason to select a new coefficient. Coefficient remains predeclared0/1; conflicts and imperfect teacher are experimental risks rather than evidence of efficacy. Do not claim the teacher preserves hard-label discrimination automatically.
+
+Single-update wiring prelock8cc6354f: actual session91460 exit0. Two disposable clones each made exactly one freshAdam step (control0/treatment1). Both start the same original parameter hash and calculate identical main/pair/KL losses. Actual backward matches expected supervised+coefficient*KL component gradients within predeclared rtol1e-5/atol1e-6; optimizer states allstep1, final states differ, teacher unchanged/disconnected. No clone checkpoint saved or eligible for formal reuse. This gate tests implementation, not improvement.
+
+All required metadata/math, physical frontend cache, actual-gradient/immutability, paired tensor replay and clone wiring gates now have concrete evidence. Remaining before formal execution: bind complete training scripts/runtime/source closure, fixed model/export/consumed replay scope and per-arm terminal receipts; pair teacher computations matched in both arms; start fresh from original checkpoints, not probe clones. Current proposal is one matched experiment with no sweeps, threshold/calibration rescue or score-based source filtering. Negative teacher errors and gradient opposition remain visible throughout interpretation. C161 stays baseline; separate full synthetic practical and Mac/P4 requirements are incomplete.
