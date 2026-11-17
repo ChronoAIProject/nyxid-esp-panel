@@ -1,0 +1,5742 @@
+{
+  "schema": "parallel-history-context-gaps-original-v1",
+  "plan_sha256": "c65d06d23eb77fb74c4ebb35789fa1ebf891b2dd548529954b4312da8a95a4ad",
+  "all_passed": true,
+  "summary": [
+    {
+      "condition": "builtin",
+      "hits": 11,
+      "miss_text_indices": [
+        10
+      ],
+      "misses_without_any_model_crossing": 1,
+      "misses_with_own_events": 0,
+      "isolated_dual_hits_lost": [],
+      "isolated_dual_misses_recovered": []
+    },
+    {
+      "condition": "melo-US",
+      "hits": 11,
+      "miss_text_indices": [
+        6
+      ],
+      "misses_without_any_model_crossing": 1,
+      "misses_with_own_events": 0,
+      "isolated_dual_hits_lost": [
+        6
+      ],
+      "isolated_dual_misses_recovered": []
+    },
+    {
+      "condition": "melo-BR",
+      "hits": 9,
+      "miss_text_indices": [
+        3,
+        4,
+        7
+      ],
+      "misses_without_any_model_crossing": 3,
+      "misses_with_own_events": 0,
+      "isolated_dual_hits_lost": [
+        4,
+        7
+      ],
+      "isolated_dual_misses_recovered": []
+    }
+  ],
+  "records": [
+    {
+      "condition": "builtin",
+      "text_index": 0,
+      "source_index": 0,
+      "intended_text": "Hey Nicks, could you switch off the study lamp?",
+      "pcm_sha256": "47bd9c778e55c356bf4c5a372c03f822208c2fd8caecd7ac437ca27ebce8f3fb",
+      "container": {
+        "kind": "clip",
+        "start": 0,
+        "end": 41600,
+        "text_index": 0,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, could you switch off the study lamp?"
+      },
+      "asr": {
+        "text": " Hey Nix, could you switch off the steady lamp?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.9169921875
+          },
+          {
+            "start": 0.26,
+            "end": 0.62,
+            "word": " Nix,",
+            "probability": 0.6241455078125
+          },
+          {
+            "start": 0.94,
+            "end": 1.02,
+            "word": " could",
+            "probability": 0.97900390625
+          },
+          {
+            "start": 1.02,
+            "end": 1.16,
+            "word": " you",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.16,
+            "end": 1.36,
+            "word": " switch",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.36,
+            "end": 1.56,
+            "word": " off",
+            "probability": 0.99169921875
+          },
+          {
+            "start": 1.56,
+            "end": 1.7,
+            "word": " the",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.7,
+            "end": 1.94,
+            "word": " steady",
+            "probability": 0.76416015625
+          },
+          {
+            "start": 1.94,
+            "end": 2.24,
+            "word": " lamp?",
+            "probability": 0.97509765625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1234,
+          "max_sum_native_step": 202,
+          "max_sum_clip_relative_sample": 15840,
+          "threshold_crossing_steps": [
+            201,
+            202,
+            203,
+            204,
+            205
+          ],
+          "own_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 198,
+          "max_sum_clip_relative_sample": 13920,
+          "threshold_crossing_steps": [
+            197,
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207
+          ],
+          "own_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 199,
+          "max_sum_clip_relative_sample": 14400,
+          "threshold_crossing_steps": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206
+          ],
+          "own_events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 197,
+          "relative_sample": 13440,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 198,
+          "relative_sample": 13920,
+          "model": "history_expert"
+        },
+        {
+          "step": 201,
+          "relative_sample": 15360,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13440
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 1,
+      "source_index": 1,
+      "intended_text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "pcm_sha256": "55ca4eff1688b7aa848159df0ca461b54af9a1a3c069683a34d44896aaade0ec",
+      "container": {
+        "kind": "clip",
+        "start": 225280,
+        "end": 288640,
+        "text_index": 1,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, please remind me to take the bread out in twelve minutes."
+      },
+      "asr": {
+        "text": " Hey Nix, please remind me to take the bread out in 12 minutes.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.8642578125
+          },
+          {
+            "start": 0.26,
+            "end": 0.62,
+            "word": " Nix,",
+            "probability": 0.5360107421875
+          },
+          {
+            "start": 1.02,
+            "end": 1.26,
+            "word": " please",
+            "probability": 0.94970703125
+          },
+          {
+            "start": 1.26,
+            "end": 1.54,
+            "word": " remind",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 1.54,
+            "end": 1.72,
+            "word": " me",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.72,
+            "end": 1.86,
+            "word": " to",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.86,
+            "end": 2.04,
+            "word": " take",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.04,
+            "end": 2.2,
+            "word": " the",
+            "probability": 0.9814453125
+          },
+          {
+            "start": 2.2,
+            "end": 2.36,
+            "word": " bread",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 2.36,
+            "end": 2.56,
+            "word": " out",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.56,
+            "end": 2.76,
+            "word": " in",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.76,
+            "end": 3.0,
+            "word": " 12",
+            "probability": 0.8984375
+          },
+          {
+            "start": 3.0,
+            "end": 3.36,
+            "word": " minutes.",
+            "probability": 0.986328125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1215,
+          "max_sum_native_step": 674,
+          "max_sum_clip_relative_sample": 17120,
+          "threshold_crossing_steps": [
+            673,
+            674,
+            675
+          ],
+          "own_events": [
+            {
+              "step": 673,
+              "relative_sample": 241920
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 202,
+              "relative_sample": 15840
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1215,
+          "max_sum_native_step": 673,
+          "max_sum_clip_relative_sample": 16640,
+          "threshold_crossing_steps": [
+            673,
+            674,
+            675
+          ],
+          "own_events": [
+            {
+              "step": 673,
+              "relative_sample": 241920
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 672,
+          "max_sum_clip_relative_sample": 16160,
+          "threshold_crossing_steps": [
+            672,
+            673,
+            674,
+            675,
+            676,
+            677,
+            678
+          ],
+          "own_events": [
+            {
+              "step": 672,
+              "relative_sample": 241440
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 672,
+          "relative_sample": 241440,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 673,
+          "relative_sample": 241920,
+          "model": "c161"
+        },
+        {
+          "step": 673,
+          "relative_sample": 241920,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        16160
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 2,
+      "source_index": 2,
+      "intended_text": "Hey Nicks, is there any rain expected this afternoon?",
+      "pcm_sha256": "0538972d0b7ef24b07c9a0a52bdaf23e2424f3457801cd084780b218ec30680d",
+      "container": {
+        "kind": "clip",
+        "start": 464640,
+        "end": 522880,
+        "text_index": 2,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, is there any rain expected this afternoon?"
+      },
+      "asr": {
+        "text": " Hey Nix, is there any rain expected this afternoon?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.84765625
+          },
+          {
+            "start": 0.26,
+            "end": 0.64,
+            "word": " Nix,",
+            "probability": 0.625244140625
+          },
+          {
+            "start": 0.94,
+            "end": 1.14,
+            "word": " is",
+            "probability": 0.95751953125
+          },
+          {
+            "start": 1.14,
+            "end": 1.32,
+            "word": " there",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 1.32,
+            "end": 1.6,
+            "word": " any",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 1.6,
+            "end": 1.9,
+            "word": " rain",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 1.9,
+            "end": 2.3,
+            "word": " expected",
+            "probability": 0.9873046875
+          },
+          {
+            "start": 2.3,
+            "end": 2.66,
+            "word": " this",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.66,
+            "end": 3.14,
+            "word": " afternoon?",
+            "probability": 0.9970703125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1067,
+          "max_sum_native_step": 1173,
+          "max_sum_clip_relative_sample": 17280,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1261,
+          "max_sum_native_step": 1168,
+          "max_sum_clip_relative_sample": 14880,
+          "threshold_crossing_steps": [
+            1167,
+            1168,
+            1169,
+            1170,
+            1171,
+            1172
+          ],
+          "own_events": [
+            {
+              "step": 1167,
+              "relative_sample": 479040
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 1171,
+          "max_sum_clip_relative_sample": 16320,
+          "threshold_crossing_steps": [
+            1169,
+            1170,
+            1171,
+            1172,
+            1173,
+            1174,
+            1175,
+            1176
+          ],
+          "own_events": [
+            {
+              "step": 1169,
+              "relative_sample": 480000
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 1167,
+          "relative_sample": 479040,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 1169,
+          "relative_sample": 480000,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14400
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 3,
+      "source_index": 3,
+      "intended_text": "Hey Nicks, lower the music so I can answer the phone.",
+      "pcm_sha256": "102283725f0479bcec88bf6b44f39ee2d16d92c5534498a0ac8c7516cb8527d7",
+      "container": {
+        "kind": "clip",
+        "start": 721280,
+        "end": 769280,
+        "text_index": 3,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, lower the music so I can answer the phone."
+      },
+      "asr": {
+        "text": " Lower the music so I can answer the phone.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.32,
+            "word": " Lower",
+            "probability": 0.0038909912109375
+          },
+          {
+            "start": 0.32,
+            "end": 1.38,
+            "word": " the",
+            "probability": 0.9853515625
+          },
+          {
+            "start": 1.38,
+            "end": 1.56,
+            "word": " music",
+            "probability": 0.98876953125
+          },
+          {
+            "start": 1.56,
+            "end": 1.84,
+            "word": " so",
+            "probability": 0.9384765625
+          },
+          {
+            "start": 1.84,
+            "end": 1.96,
+            "word": " I",
+            "probability": 0.9599609375
+          },
+          {
+            "start": 1.96,
+            "end": 2.06,
+            "word": " can",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.06,
+            "end": 2.28,
+            "word": " answer",
+            "probability": 0.359130859375
+          },
+          {
+            "start": 2.28,
+            "end": 2.44,
+            "word": " the",
+            "probability": 0.9873046875
+          },
+          {
+            "start": 2.44,
+            "end": 2.7,
+            "word": " phone.",
+            "probability": 0.994140625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 988,
+          "max_sum_native_step": 1708,
+          "max_sum_clip_relative_sample": 17440,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 202,
+              "relative_sample": 15840
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 1703,
+          "max_sum_clip_relative_sample": 15040,
+          "threshold_crossing_steps": [
+            1702,
+            1703,
+            1704,
+            1705,
+            1706,
+            1707,
+            1708,
+            1709,
+            1710,
+            1711
+          ],
+          "own_events": [
+            {
+              "step": 1702,
+              "relative_sample": 735840
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 1700,
+          "max_sum_clip_relative_sample": 13600,
+          "threshold_crossing_steps": [
+            1699,
+            1700,
+            1701,
+            1702,
+            1703,
+            1704,
+            1705,
+            1706,
+            1707,
+            1708,
+            1709,
+            1710,
+            1711,
+            1712
+          ],
+          "own_events": [
+            {
+              "step": 1699,
+              "relative_sample": 734400
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 1699,
+          "relative_sample": 734400,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 1702,
+          "relative_sample": 735840,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13120
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 4,
+      "source_index": 4,
+      "intended_text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "pcm_sha256": "748414cc830f17dd3613f29d61d400c6691976bc1a8d1007d7ecdaf73150bc30",
+      "container": {
+        "kind": "clip",
+        "start": 947840,
+        "end": 1004800,
+        "text_index": 4,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, I would like to hear the news while I make breakfast."
+      },
+      "asr": {
+        "text": " Hey Nix, I would like to hear the news while I make breakfast.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.7734375
+          },
+          {
+            "start": 0.26,
+            "end": 0.62,
+            "word": " Nix,",
+            "probability": 0.5926513671875
+          },
+          {
+            "start": 0.92,
+            "end": 1.16,
+            "word": " I",
+            "probability": 0.9892578125
+          },
+          {
+            "start": 1.16,
+            "end": 1.26,
+            "word": " would",
+            "probability": 0.955078125
+          },
+          {
+            "start": 1.26,
+            "end": 1.42,
+            "word": " like",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 1.42,
+            "end": 1.6,
+            "word": " to",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.6,
+            "end": 1.72,
+            "word": " hear",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 1.72,
+            "end": 1.88,
+            "word": " the",
+            "probability": 0.99609375
+          },
+          {
+            "start": 1.88,
+            "end": 2.1,
+            "word": " news",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.1,
+            "end": 2.36,
+            "word": " while",
+            "probability": 0.98974609375
+          },
+          {
+            "start": 2.36,
+            "end": 2.5,
+            "word": " I",
+            "probability": 0.9873046875
+          },
+          {
+            "start": 2.5,
+            "end": 2.66,
+            "word": " make",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.66,
+            "end": 3.02,
+            "word": " breakfast.",
+            "probability": 0.99853515625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1270,
+          "max_sum_native_step": 2179,
+          "max_sum_clip_relative_sample": 16960,
+          "threshold_crossing_steps": [
+            2176,
+            2177,
+            2178,
+            2179,
+            2180,
+            2181
+          ],
+          "own_events": [
+            {
+              "step": 2176,
+              "relative_sample": 963360
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2175,
+          "max_sum_clip_relative_sample": 15040,
+          "threshold_crossing_steps": [
+            2173,
+            2174,
+            2175,
+            2176,
+            2177,
+            2178,
+            2179,
+            2180,
+            2181,
+            2182,
+            2183
+          ],
+          "own_events": [
+            {
+              "step": 2173,
+              "relative_sample": 961920
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2176,
+          "max_sum_clip_relative_sample": 15520,
+          "threshold_crossing_steps": [
+            2172,
+            2173,
+            2174,
+            2175,
+            2176,
+            2177,
+            2178,
+            2179,
+            2180,
+            2181,
+            2182,
+            2183,
+            2184
+          ],
+          "own_events": [
+            {
+              "step": 2172,
+              "relative_sample": 961440
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 2172,
+          "relative_sample": 961440,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 2173,
+          "relative_sample": 961920,
+          "model": "binary40"
+        },
+        {
+          "step": 2176,
+          "relative_sample": 963360,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13600
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 5,
+      "source_index": 5,
+      "intended_text": "Hey Nicks, put milk and apples on my shopping list.",
+      "pcm_sha256": "74bb3bc734434e4c516a0cc174681d3efe8df33c8ad2f545433c11c68e223482",
+      "container": {
+        "kind": "clip",
+        "start": 1185280,
+        "end": 1240320,
+        "text_index": 5,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, put milk and apples on my shopping list."
+      },
+      "asr": {
+        "text": " Hey Nix, put milk and apples on my shopping list.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.86181640625
+          },
+          {
+            "start": 0.26,
+            "end": 0.66,
+            "word": " Nix,",
+            "probability": 0.5428466796875
+          },
+          {
+            "start": 1.0,
+            "end": 1.22,
+            "word": " put",
+            "probability": 0.9462890625
+          },
+          {
+            "start": 1.22,
+            "end": 1.44,
+            "word": " milk",
+            "probability": 0.9755859375
+          },
+          {
+            "start": 1.44,
+            "end": 1.64,
+            "word": " and",
+            "probability": 0.97607421875
+          },
+          {
+            "start": 1.64,
+            "end": 1.92,
+            "word": " apples",
+            "probability": 0.98974609375
+          },
+          {
+            "start": 1.92,
+            "end": 2.14,
+            "word": " on",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.14,
+            "end": 2.3,
+            "word": " my",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.3,
+            "end": 2.54,
+            "word": " shopping",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.54,
+            "end": 2.94,
+            "word": " list.",
+            "probability": 0.99755859375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 769,
+          "max_sum_native_step": 2674,
+          "max_sum_clip_relative_sample": 17120,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1270,
+          "max_sum_native_step": 2673,
+          "max_sum_clip_relative_sample": 16640,
+          "threshold_crossing_steps": [
+            2669,
+            2670,
+            2671,
+            2672,
+            2673,
+            2674,
+            2675,
+            2676,
+            2677
+          ],
+          "own_events": [
+            {
+              "step": 2669,
+              "relative_sample": 1200000
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2668,
+          "max_sum_clip_relative_sample": 14240,
+          "threshold_crossing_steps": [
+            2667,
+            2668,
+            2669,
+            2670,
+            2671,
+            2672,
+            2673,
+            2674,
+            2675,
+            2676,
+            2677,
+            2678,
+            2679
+          ],
+          "own_events": [
+            {
+              "step": 2667,
+              "relative_sample": 1199040
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 2667,
+          "relative_sample": 1199040,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 2669,
+          "relative_sample": 1200000,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13760
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 6,
+      "source_index": 6,
+      "intended_text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "pcm_sha256": "26cc11576a381e3def6a26aca497cebad78681eaa1dfa8a0a4647e0360de6e72",
+      "container": {
+        "kind": "clip",
+        "start": 1429760,
+        "end": 1488640,
+        "text_index": 6,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, leave the hallway light on until I get upstairs."
+      },
+      "asr": {
+        "text": " Hey Nix, leave the hallway light on until I get upstairs.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.24,
+            "word": " Hey",
+            "probability": 0.77978515625
+          },
+          {
+            "start": 0.24,
+            "end": 0.64,
+            "word": " Nix,",
+            "probability": 0.5963134765625
+          },
+          {
+            "start": 0.94,
+            "end": 1.22,
+            "word": " leave",
+            "probability": 0.9677734375
+          },
+          {
+            "start": 1.22,
+            "end": 1.4,
+            "word": " the",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.4,
+            "end": 1.64,
+            "word": " hallway",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.64,
+            "end": 1.94,
+            "word": " light",
+            "probability": 0.9921875
+          },
+          {
+            "start": 1.94,
+            "end": 2.22,
+            "word": " on",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 2.22,
+            "end": 2.48,
+            "word": " until",
+            "probability": 0.9892578125
+          },
+          {
+            "start": 2.48,
+            "end": 2.6,
+            "word": " I",
+            "probability": 0.98046875
+          },
+          {
+            "start": 2.6,
+            "end": 2.72,
+            "word": " get",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.72,
+            "end": 3.16,
+            "word": " upstairs.",
+            "probability": 0.9921875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1273,
+          "max_sum_native_step": 3182,
+          "max_sum_clip_relative_sample": 16480,
+          "threshold_crossing_steps": [
+            3180,
+            3181,
+            3182,
+            3183,
+            3184,
+            3185,
+            3186
+          ],
+          "own_events": [
+            {
+              "step": 3180,
+              "relative_sample": 1445280
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 3183,
+          "max_sum_clip_relative_sample": 16960,
+          "threshold_crossing_steps": [
+            3176,
+            3177,
+            3178,
+            3179,
+            3180,
+            3181,
+            3182,
+            3183,
+            3184,
+            3185
+          ],
+          "own_events": [
+            {
+              "step": 3176,
+              "relative_sample": 1443360
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 3176,
+          "max_sum_clip_relative_sample": 13600,
+          "threshold_crossing_steps": [
+            3175,
+            3176,
+            3177,
+            3178,
+            3179,
+            3180,
+            3181,
+            3182,
+            3183,
+            3184,
+            3185,
+            3186
+          ],
+          "own_events": [
+            {
+              "step": 3175,
+              "relative_sample": 1442880
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 3175,
+          "relative_sample": 1442880,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 3176,
+          "relative_sample": 1443360,
+          "model": "binary40"
+        },
+        {
+          "step": 3180,
+          "relative_sample": 1445280,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13120
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 7,
+      "source_index": 7,
+      "intended_text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "pcm_sha256": "0080a2c08e636b74a6a50b42fadf010a4f46e8f011f422f030252c1da1836b69",
+      "container": {
+        "kind": "clip",
+        "start": 1666560,
+        "end": 1719680,
+        "text_index": 7,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, tell me how long the journey to the airport will take."
+      },
+      "asr": {
+        "text": " Hey Nix, tell me how long the journey to the airport will take.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.7529296875
+          },
+          {
+            "start": 0.26,
+            "end": 0.66,
+            "word": " Nix,",
+            "probability": 0.62548828125
+          },
+          {
+            "start": 0.92,
+            "end": 1.08,
+            "word": " tell",
+            "probability": 0.98193359375
+          },
+          {
+            "start": 1.08,
+            "end": 1.22,
+            "word": " me",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.22,
+            "end": 1.38,
+            "word": " how",
+            "probability": 0.9921875
+          },
+          {
+            "start": 1.38,
+            "end": 1.54,
+            "word": " long",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.54,
+            "end": 1.72,
+            "word": " the",
+            "probability": 0.99072265625
+          },
+          {
+            "start": 1.72,
+            "end": 1.92,
+            "word": " journey",
+            "probability": 0.9794921875
+          },
+          {
+            "start": 1.92,
+            "end": 2.14,
+            "word": " to",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 2.14,
+            "end": 2.24,
+            "word": " the",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.24,
+            "end": 2.44,
+            "word": " airport",
+            "probability": 0.98388671875
+          },
+          {
+            "start": 2.44,
+            "end": 2.7,
+            "word": " will",
+            "probability": 0.99609375
+          },
+          {
+            "start": 2.7,
+            "end": 3.0,
+            "word": " take.",
+            "probability": 0.99951171875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 997,
+          "max_sum_native_step": 3675,
+          "max_sum_clip_relative_sample": 16320,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 202,
+              "relative_sample": 15840
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1142,
+          "max_sum_native_step": 3675,
+          "max_sum_clip_relative_sample": 16320,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 3675,
+          "max_sum_clip_relative_sample": 16320,
+          "threshold_crossing_steps": [
+            3671,
+            3672,
+            3673,
+            3674,
+            3675,
+            3676,
+            3677,
+            3678,
+            3679,
+            3680
+          ],
+          "own_events": [
+            {
+              "step": 3671,
+              "relative_sample": 1680960
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 3671,
+          "relative_sample": 1680960,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14400
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 8,
+      "source_index": 8,
+      "intended_text": "Hey Nicks, pause the television for a moment please.",
+      "pcm_sha256": "fbb593994ca7b8976f7e4bd53018a625b17fb25f6c9edf7c30f7c62f94d198ce",
+      "container": {
+        "kind": "clip",
+        "start": 1880960,
+        "end": 1928960,
+        "text_index": 8,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, pause the television for a moment please."
+      },
+      "asr": {
+        "text": " Pause the television for a moment, please.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 1.12,
+            "word": " Pause",
+            "probability": 0.4954643249511719
+          },
+          {
+            "start": 1.12,
+            "end": 1.26,
+            "word": " the",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.26,
+            "end": 1.62,
+            "word": " television",
+            "probability": 0.9873046875
+          },
+          {
+            "start": 1.62,
+            "end": 1.94,
+            "word": " for",
+            "probability": 0.98291015625
+          },
+          {
+            "start": 1.94,
+            "end": 2.08,
+            "word": " a",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 2.08,
+            "end": 2.24,
+            "word": " moment,",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 2.24,
+            "end": 2.52,
+            "word": " please.",
+            "probability": 0.998046875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1028,
+          "max_sum_native_step": 4122,
+          "max_sum_clip_relative_sample": 16480,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 4118,
+          "max_sum_clip_relative_sample": 14560,
+          "threshold_crossing_steps": [
+            4117,
+            4118,
+            4119,
+            4120,
+            4121,
+            4122,
+            4123,
+            4124,
+            4125
+          ],
+          "own_events": [
+            {
+              "step": 4117,
+              "relative_sample": 1895040
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 4117,
+          "max_sum_clip_relative_sample": 14080,
+          "threshold_crossing_steps": [
+            4115,
+            4116,
+            4117,
+            4118,
+            4119,
+            4120,
+            4121,
+            4122,
+            4123,
+            4124,
+            4125,
+            4126
+          ],
+          "own_events": [
+            {
+              "step": 4115,
+              "relative_sample": 1894080
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 4115,
+          "relative_sample": 1894080,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 4117,
+          "relative_sample": 1895040,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13120
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 9,
+      "source_index": 9,
+      "intended_text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "pcm_sha256": "491ba6de801218e3aa0d801ee7a58a47b6bad5d9e4eb4e75e880d27d877a4fe9",
+      "container": {
+        "kind": "clip",
+        "start": 2098560,
+        "end": 2155520,
+        "text_index": 9,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, make the room a little warmer before bedtime."
+      },
+      "asr": {
+        "text": " Hey Nix, make the room a little warmer before bedtime.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.8427734375
+          },
+          {
+            "start": 0.26,
+            "end": 0.66,
+            "word": " Nix,",
+            "probability": 0.5714111328125
+          },
+          {
+            "start": 1.08,
+            "end": 1.34,
+            "word": " make",
+            "probability": 0.95458984375
+          },
+          {
+            "start": 1.34,
+            "end": 1.52,
+            "word": " the",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.52,
+            "end": 1.68,
+            "word": " room",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.68,
+            "end": 1.82,
+            "word": " a",
+            "probability": 0.994140625
+          },
+          {
+            "start": 1.82,
+            "end": 1.94,
+            "word": " little",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.94,
+            "end": 2.3,
+            "word": " warmer",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.3,
+            "end": 2.64,
+            "word": " before",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.64,
+            "end": 3.2,
+            "word": " bedtime.",
+            "probability": 0.951904296875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1237,
+          "max_sum_native_step": 4577,
+          "max_sum_clip_relative_sample": 17280,
+          "threshold_crossing_steps": [
+            4576,
+            4577,
+            4578
+          ],
+          "own_events": [
+            {
+              "step": 4576,
+              "relative_sample": 2115360
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 933,
+          "max_sum_native_step": 4579,
+          "max_sum_clip_relative_sample": 18240,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 4572,
+          "max_sum_clip_relative_sample": 14880,
+          "threshold_crossing_steps": [
+            4570,
+            4571,
+            4572,
+            4573,
+            4574,
+            4575,
+            4576,
+            4577,
+            4578,
+            4579,
+            4580,
+            4581,
+            4582
+          ],
+          "own_events": [
+            {
+              "step": 4570,
+              "relative_sample": 2112480
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 4570,
+          "relative_sample": 2112480,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 4576,
+          "relative_sample": 2115360,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        13920
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "builtin",
+      "text_index": 10,
+      "source_index": 10,
+      "intended_text": "Hey Nicks, cancel the reminder about the laundry.",
+      "pcm_sha256": "2205e5d7a7c2ee1bd13d39c00d75d76ce4804a1ffec20bb19ef52c424e2ee657",
+      "container": {
+        "kind": "clip",
+        "start": 2338560,
+        "end": 2384000,
+        "text_index": 10,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, cancel the reminder about the laundry."
+      },
+      "asr": {
+        "text": " Hey Nix, cancel the reminder about the laundry.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.2,
+            "word": " Hey",
+            "probability": 0.89208984375
+          },
+          {
+            "start": 0.2,
+            "end": 0.56,
+            "word": " Nix,",
+            "probability": 0.57666015625
+          },
+          {
+            "start": 0.9,
+            "end": 1.04,
+            "word": " cancel",
+            "probability": 0.9453125
+          },
+          {
+            "start": 1.04,
+            "end": 1.26,
+            "word": " the",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.26,
+            "end": 1.52,
+            "word": " reminder",
+            "probability": 0.9609375
+          },
+          {
+            "start": 1.52,
+            "end": 1.9,
+            "word": " about",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "word": " the",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.08,
+            "end": 2.36,
+            "word": " laundry.",
+            "probability": 0.9912109375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 4,
+          "max_sum_native_step": 5070,
+          "max_sum_clip_relative_sample": 13920,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 0,
+          "max_sum_native_step": 5042,
+          "max_sum_clip_relative_sample": 480,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "history_expert": {
+          "max_five_code_sum": 178,
+          "max_sum_native_step": 5068,
+          "max_sum_clip_relative_sample": 12960,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [],
+      "suppressed": [],
+      "hit": false,
+      "all_models_without_crossing": true,
+      "emitted_clip_relative_samples": [],
+      "isolated_dual_hit": false
+    },
+    {
+      "condition": "builtin",
+      "text_index": 11,
+      "source_index": 11,
+      "intended_text": "Hey Nicks, do I have any appointments after lunch?",
+      "pcm_sha256": "0ad4f6bf3ecab72a201fc3847e4e73f74870418d9126059eedc5a0d8437e8742",
+      "container": {
+        "kind": "clip",
+        "start": 2569600,
+        "end": 2616320,
+        "text_index": 11,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, do I have any appointments after lunch?"
+      },
+      "asr": {
+        "text": " Hey Nix, do I have any appointments after lunch?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.26,
+            "word": " Hey",
+            "probability": 0.7880859375
+          },
+          {
+            "start": 0.26,
+            "end": 0.6,
+            "word": " Nix,",
+            "probability": 0.6121826171875
+          },
+          {
+            "start": 0.88,
+            "end": 1.02,
+            "word": " do",
+            "probability": 0.96826171875
+          },
+          {
+            "start": 1.02,
+            "end": 1.16,
+            "word": " I",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 1.16,
+            "end": 1.26,
+            "word": " have",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.26,
+            "end": 1.4,
+            "word": " any",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.4,
+            "end": 1.72,
+            "word": " appointments",
+            "probability": 0.9794921875
+          },
+          {
+            "start": 1.72,
+            "end": 2.08,
+            "word": " after",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 2.08,
+            "end": 2.36,
+            "word": " lunch?",
+            "probability": 0.998046875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1170,
+          "max_sum_native_step": 5556,
+          "max_sum_clip_relative_sample": 16160,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 861,
+          "max_sum_native_step": 5559,
+          "max_sum_clip_relative_sample": 17600,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 197,
+              "relative_sample": 13440
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 5558,
+          "max_sum_clip_relative_sample": 17120,
+          "threshold_crossing_steps": [
+            5555,
+            5556,
+            5557,
+            5558,
+            5559,
+            5560,
+            5561
+          ],
+          "own_events": [
+            {
+              "step": 5555,
+              "relative_sample": 2585280
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 5555,
+          "relative_sample": 2585280,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        15680
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 0,
+      "source_index": 0,
+      "intended_text": "Hey Nicks, could you switch off the study lamp?",
+      "pcm_sha256": "f8250703b4e8ee40e4611351e2788e28fe61f51d136aabdcc57e1bd421eabd3b",
+      "container": {
+        "kind": "clip",
+        "start": 0,
+        "end": 53499,
+        "text_index": 0,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, could you switch off the study lamp?"
+      },
+      "asr": {
+        "text": " Hey Nix, could you switch off the study lamp?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.68,
+            "word": " Hey",
+            "probability": 0.8876953125
+          },
+          {
+            "start": 0.68,
+            "end": 1.02,
+            "word": " Nix,",
+            "probability": 0.5667724609375
+          },
+          {
+            "start": 1.28,
+            "end": 1.36,
+            "word": " could",
+            "probability": 0.8310546875
+          },
+          {
+            "start": 1.36,
+            "end": 1.5,
+            "word": " you",
+            "probability": 0.94677734375
+          },
+          {
+            "start": 1.5,
+            "end": 1.78,
+            "word": " switch",
+            "probability": 0.95361328125
+          },
+          {
+            "start": 1.78,
+            "end": 2.06,
+            "word": " off",
+            "probability": 0.97314453125
+          },
+          {
+            "start": 2.06,
+            "end": 2.24,
+            "word": " the",
+            "probability": 0.97802734375
+          },
+          {
+            "start": 2.24,
+            "end": 2.58,
+            "word": " study",
+            "probability": 0.82861328125
+          },
+          {
+            "start": 2.58,
+            "end": 2.9,
+            "word": " lamp?",
+            "probability": 0.99658203125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1264,
+          "max_sum_native_step": 213,
+          "max_sum_clip_relative_sample": 21120,
+          "threshold_crossing_steps": [
+            211,
+            212,
+            213,
+            214,
+            215,
+            216
+          ],
+          "own_events": [
+            {
+              "step": 211,
+              "relative_sample": 20160
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 211,
+              "relative_sample": 20160
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 210,
+          "max_sum_clip_relative_sample": 19680,
+          "threshold_crossing_steps": [
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217
+          ],
+          "own_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 210,
+          "max_sum_clip_relative_sample": 19680,
+          "threshold_crossing_steps": [
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217
+          ],
+          "own_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 210,
+          "relative_sample": 19680,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 210,
+          "relative_sample": 19680,
+          "model": "history_expert"
+        },
+        {
+          "step": 211,
+          "relative_sample": 20160,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        19680
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 1,
+      "source_index": 1,
+      "intended_text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "pcm_sha256": "5ae95c2dfe0aac30bd9bca5e37c2bd51b8084af164c7d56dcc02b1ae0c9089e5",
+      "container": {
+        "kind": "clip",
+        "start": 275904,
+        "end": 350580,
+        "text_index": 1,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, please remind me to take the bread out in twelve minutes."
+      },
+      "asr": {
+        "text": " Hey Nix, please remind me to take the brat out in 12 minutes.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.62,
+            "word": " Hey",
+            "probability": 0.84912109375
+          },
+          {
+            "start": 0.62,
+            "end": 0.94,
+            "word": " Nix,",
+            "probability": 0.60595703125
+          },
+          {
+            "start": 1.3,
+            "end": 1.54,
+            "word": " please",
+            "probability": 0.93115234375
+          },
+          {
+            "start": 1.54,
+            "end": 1.92,
+            "word": " remind",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 1.92,
+            "end": 2.14,
+            "word": " me",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 2.14,
+            "end": 2.34,
+            "word": " to",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 2.34,
+            "end": 2.56,
+            "word": " take",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.56,
+            "end": 2.78,
+            "word": " the",
+            "probability": 0.97607421875
+          },
+          {
+            "start": 2.78,
+            "end": 3.04,
+            "word": " brat",
+            "probability": 0.825439453125
+          },
+          {
+            "start": 3.04,
+            "end": 3.28,
+            "word": " out",
+            "probability": 0.99609375
+          },
+          {
+            "start": 3.28,
+            "end": 3.48,
+            "word": " in",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 3.48,
+            "end": 3.8,
+            "word": " 12",
+            "probability": 0.8876953125
+          },
+          {
+            "start": 3.8,
+            "end": 4.2,
+            "word": " minutes.",
+            "probability": 0.9853515625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 794,
+          "max_sum_native_step": 791,
+          "max_sum_clip_relative_sample": 22656,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 785,
+          "max_sum_clip_relative_sample": 19776,
+          "threshold_crossing_steps": [
+            784,
+            785,
+            786,
+            787,
+            788,
+            789,
+            790,
+            791,
+            792,
+            793,
+            794,
+            795
+          ],
+          "own_events": [
+            {
+              "step": 784,
+              "relative_sample": 295200
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 208,
+              "relative_sample": 18720
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 787,
+          "max_sum_clip_relative_sample": 20736,
+          "threshold_crossing_steps": [
+            785,
+            786,
+            787,
+            788,
+            789,
+            790,
+            791,
+            792,
+            793,
+            794,
+            795
+          ],
+          "own_events": [
+            {
+              "step": 785,
+              "relative_sample": 295680
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 784,
+          "relative_sample": 295200,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 785,
+          "relative_sample": 295680,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        19296
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 2,
+      "source_index": 2,
+      "intended_text": "Hey Nicks, is there any rain expected this afternoon?",
+      "pcm_sha256": "9494b5d3c297e4df82c179bbf6e4d09c2bca60c2355029b1e38cceb232f1f1e3",
+      "container": {
+        "kind": "clip",
+        "start": 579115,
+        "end": 642274,
+        "text_index": 2,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, is there any rain expected this afternoon?"
+      },
+      "asr": {
+        "text": " Hey Nix, is there any rain expected this afternoon?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.66,
+            "word": " Hey",
+            "probability": 0.90234375
+          },
+          {
+            "start": 0.66,
+            "end": 1.02,
+            "word": " Nix,",
+            "probability": 0.6239013671875
+          },
+          {
+            "start": 1.3,
+            "end": 1.48,
+            "word": " is",
+            "probability": 0.96240234375
+          },
+          {
+            "start": 1.48,
+            "end": 1.66,
+            "word": " there",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 1.66,
+            "end": 1.84,
+            "word": " any",
+            "probability": 0.990234375
+          },
+          {
+            "start": 1.84,
+            "end": 2.08,
+            "word": " rain",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 2.08,
+            "end": 2.62,
+            "word": " expected",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.62,
+            "end": 2.98,
+            "word": " this",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.98,
+            "end": 3.44,
+            "word": " afternoon?",
+            "probability": 0.9970703125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 326,
+          "max_sum_native_step": 1423,
+          "max_sum_clip_relative_sample": 22805,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 212,
+              "relative_sample": 20640
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1238,
+          "max_sum_native_step": 1423,
+          "max_sum_clip_relative_sample": 22805,
+          "threshold_crossing_steps": [
+            1420,
+            1421,
+            1422,
+            1423,
+            1424
+          ],
+          "own_events": [
+            {
+              "step": 1420,
+              "relative_sample": 600480
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 1423,
+          "max_sum_clip_relative_sample": 22805,
+          "threshold_crossing_steps": [
+            1422,
+            1423,
+            1424,
+            1425
+          ],
+          "own_events": [
+            {
+              "step": 1422,
+              "relative_sample": 601440
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 1420,
+          "relative_sample": 600480,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 1422,
+          "relative_sample": 601440,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        21365
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 3,
+      "source_index": 3,
+      "intended_text": "Hey Nicks, lower the music so I can answer the phone.",
+      "pcm_sha256": "901b5d1ebd8420d81a82d688e93003d98db4c516b3726ef964055e9b1d59f335",
+      "container": {
+        "kind": "clip",
+        "start": 873595,
+        "end": 937497,
+        "text_index": 3,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, lower the music so I can answer the phone."
+      },
+      "asr": {
+        "text": " Hey Nix, lower the music so I can answer the phone.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.62,
+            "word": " Hey",
+            "probability": 0.73681640625
+          },
+          {
+            "start": 0.62,
+            "end": 1.0,
+            "word": " Nix,",
+            "probability": 0.606201171875
+          },
+          {
+            "start": 1.3,
+            "end": 1.46,
+            "word": " lower",
+            "probability": 0.9873046875
+          },
+          {
+            "start": 1.46,
+            "end": 1.64,
+            "word": " the",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.64,
+            "end": 1.9,
+            "word": " music",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.9,
+            "end": 2.32,
+            "word": " so",
+            "probability": 0.96435546875
+          },
+          {
+            "start": 2.32,
+            "end": 2.48,
+            "word": " I",
+            "probability": 0.9658203125
+          },
+          {
+            "start": 2.48,
+            "end": 2.66,
+            "word": " can",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.66,
+            "end": 3.04,
+            "word": " answer",
+            "probability": 0.78564453125
+          },
+          {
+            "start": 3.04,
+            "end": 3.24,
+            "word": " the",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 3.24,
+            "end": 3.56,
+            "word": " phone.",
+            "probability": 0.99658203125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 439,
+          "max_sum_native_step": 2035,
+          "max_sum_clip_relative_sample": 22085,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 211,
+              "relative_sample": 20160
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2030,
+          "max_sum_clip_relative_sample": 19685,
+          "threshold_crossing_steps": [
+            2029,
+            2030,
+            2031,
+            2032,
+            2033,
+            2034,
+            2035,
+            2036,
+            2037,
+            2038,
+            2039
+          ],
+          "own_events": [
+            {
+              "step": 2029,
+              "relative_sample": 892800
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 208,
+              "relative_sample": 18720
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2034,
+          "max_sum_clip_relative_sample": 21605,
+          "threshold_crossing_steps": [
+            2029,
+            2030,
+            2031,
+            2032,
+            2033,
+            2034,
+            2035,
+            2036,
+            2037,
+            2038,
+            2039,
+            2040
+          ],
+          "own_events": [
+            {
+              "step": 2029,
+              "relative_sample": 892800
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 2029,
+          "relative_sample": 892800,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 2029,
+          "relative_sample": 892800,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        19205
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 4,
+      "source_index": 4,
+      "intended_text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "pcm_sha256": "f8bfca3467f3461e3baa615007d68314559ba998322760f9a5cac0b03ac1f4d0",
+      "container": {
+        "kind": "clip",
+        "start": 1163617,
+        "end": 1231977,
+        "text_index": 4,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, I would like to hear the news while I make breakfast."
+      },
+      "asr": {
+        "text": " Hey Nix, I would like to hear the news while I make breakfast.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.64,
+            "word": " Hey",
+            "probability": 0.916015625
+          },
+          {
+            "start": 0.64,
+            "end": 0.98,
+            "word": " Nix,",
+            "probability": 0.5858154296875
+          },
+          {
+            "start": 1.22,
+            "end": 1.4,
+            "word": " I",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.4,
+            "end": 1.54,
+            "word": " would",
+            "probability": 0.8759765625
+          },
+          {
+            "start": 1.54,
+            "end": 1.74,
+            "word": " like",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.74,
+            "end": 1.92,
+            "word": " to",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 1.92,
+            "end": 2.1,
+            "word": " hear",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.1,
+            "end": 2.28,
+            "word": " the",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 2.28,
+            "end": 2.52,
+            "word": " news",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.52,
+            "end": 2.84,
+            "word": " while",
+            "probability": 0.98046875
+          },
+          {
+            "start": 2.84,
+            "end": 2.96,
+            "word": " I",
+            "probability": 0.9921875
+          },
+          {
+            "start": 2.96,
+            "end": 3.16,
+            "word": " make",
+            "probability": 0.8369140625
+          },
+          {
+            "start": 3.16,
+            "end": 3.6,
+            "word": " breakfast.",
+            "probability": 0.9970703125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 18,
+          "max_sum_native_step": 2638,
+          "max_sum_clip_relative_sample": 21503,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 213,
+              "relative_sample": 21120
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2637,
+          "max_sum_clip_relative_sample": 21023,
+          "threshold_crossing_steps": [
+            2634,
+            2635,
+            2636,
+            2637,
+            2638,
+            2639,
+            2640,
+            2641,
+            2642
+          ],
+          "own_events": [
+            {
+              "step": 2634,
+              "relative_sample": 1183200
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 209,
+              "relative_sample": 19200
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2635,
+          "max_sum_clip_relative_sample": 20063,
+          "threshold_crossing_steps": [
+            2634,
+            2635,
+            2636,
+            2637,
+            2638,
+            2639,
+            2640,
+            2641,
+            2642,
+            2643,
+            2644
+          ],
+          "own_events": [
+            {
+              "step": 2634,
+              "relative_sample": 1183200
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 2634,
+          "relative_sample": 1183200,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 2634,
+          "relative_sample": 1183200,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        19583
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 5,
+      "source_index": 5,
+      "intended_text": "Hey Nicks, put milk and apples on my shopping list.",
+      "pcm_sha256": "926ec4cbffc8e787bb6da743054a6cccf8203f9a12ef83826fab5b10ae07caa5",
+      "container": {
+        "kind": "clip",
+        "start": 1474258,
+        "end": 1535559,
+        "text_index": 5,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, put milk and apples on my shopping list."
+      },
+      "asr": {
+        "text": " Hey Nix, put milk and apples on my shopping list.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.64,
+            "word": " Hey",
+            "probability": 0.81689453125
+          },
+          {
+            "start": 0.64,
+            "end": 0.98,
+            "word": " Nix,",
+            "probability": 0.44775390625
+          },
+          {
+            "start": 1.26,
+            "end": 1.46,
+            "word": " put",
+            "probability": 0.9501953125
+          },
+          {
+            "start": 1.46,
+            "end": 1.72,
+            "word": " milk",
+            "probability": 0.9794921875
+          },
+          {
+            "start": 1.72,
+            "end": 1.98,
+            "word": " and",
+            "probability": 0.97509765625
+          },
+          {
+            "start": 1.98,
+            "end": 2.34,
+            "word": " apples",
+            "probability": 0.98681640625
+          },
+          {
+            "start": 2.34,
+            "end": 2.6,
+            "word": " on",
+            "probability": 0.9921875
+          },
+          {
+            "start": 2.6,
+            "end": 2.76,
+            "word": " my",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.76,
+            "end": 3.1,
+            "word": " shopping",
+            "probability": 0.998046875
+          },
+          {
+            "start": 3.1,
+            "end": 3.44,
+            "word": " list.",
+            "probability": 0.99365234375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 267,
+          "max_sum_native_step": 3287,
+          "max_sum_clip_relative_sample": 22382,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 211,
+              "relative_sample": 20160
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 3291,
+          "max_sum_clip_relative_sample": 24302,
+          "threshold_crossing_steps": [
+            3284,
+            3285,
+            3289,
+            3290,
+            3291
+          ],
+          "own_events": [
+            {
+              "step": 3284,
+              "relative_sample": 1495200
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 209,
+              "relative_sample": 19200
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 3289,
+          "max_sum_clip_relative_sample": 23342,
+          "threshold_crossing_steps": [
+            3286,
+            3287,
+            3288,
+            3289,
+            3290,
+            3291
+          ],
+          "own_events": [
+            {
+              "step": 3286,
+              "relative_sample": 1496160
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 3284,
+          "relative_sample": 1495200,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 3286,
+          "relative_sample": 1496160,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        20942
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 6,
+      "source_index": 6,
+      "intended_text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "pcm_sha256": "13612f768c10995aacb430bfedaaf8ff843f2e936d5ac6b16e9a387cb760fa1c",
+      "container": {
+        "kind": "clip",
+        "start": 1777469,
+        "end": 1842671,
+        "text_index": 6,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, leave the hallway light on until I get upstairs."
+      },
+      "asr": {
+        "text": " Hey mix, leave the hallway light on until I get upstairs.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.66,
+            "word": " Hey",
+            "probability": 0.85546875
+          },
+          {
+            "start": 0.66,
+            "end": 0.92,
+            "word": " mix,",
+            "probability": 0.180908203125
+          },
+          {
+            "start": 1.28,
+            "end": 1.46,
+            "word": " leave",
+            "probability": 0.97802734375
+          },
+          {
+            "start": 1.46,
+            "end": 1.66,
+            "word": " the",
+            "probability": 0.98974609375
+          },
+          {
+            "start": 1.66,
+            "end": 1.98,
+            "word": " hallway",
+            "probability": 0.98876953125
+          },
+          {
+            "start": 1.98,
+            "end": 2.28,
+            "word": " light",
+            "probability": 0.96826171875
+          },
+          {
+            "start": 2.28,
+            "end": 2.44,
+            "word": " on",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.44,
+            "end": 2.74,
+            "word": " until",
+            "probability": 0.984375
+          },
+          {
+            "start": 2.74,
+            "end": 2.9,
+            "word": " I",
+            "probability": 0.9326171875
+          },
+          {
+            "start": 2.9,
+            "end": 3.06,
+            "word": " get",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 3.06,
+            "end": 3.52,
+            "word": " upstairs.",
+            "probability": 0.98193359375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 160,
+          "max_sum_native_step": 3919,
+          "max_sum_clip_relative_sample": 22531,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 212,
+              "relative_sample": 20640
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1151,
+          "max_sum_native_step": 3916,
+          "max_sum_clip_relative_sample": 21091,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 212,
+              "relative_sample": 20640
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 887,
+          "max_sum_native_step": 3918,
+          "max_sum_clip_relative_sample": 22051,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [],
+      "suppressed": [],
+      "hit": false,
+      "all_models_without_crossing": true,
+      "emitted_clip_relative_samples": [],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 7,
+      "source_index": 7,
+      "intended_text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "pcm_sha256": "5efcb6aa1bd471b280726d8ec86441c551b9e418c6f5830b233fd94211b49e44",
+      "container": {
+        "kind": "clip",
+        "start": 2068420,
+        "end": 2139752,
+        "text_index": 7,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, tell me how long the journey to the airport will take."
+      },
+      "asr": {
+        "text": " Hey Nix, tell me how long the journey to the airport will take.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.72,
+            "word": " Hey",
+            "probability": 0.95263671875
+          },
+          {
+            "start": 0.72,
+            "end": 1.06,
+            "word": " Nix,",
+            "probability": 0.5693359375
+          },
+          {
+            "start": 1.32,
+            "end": 1.58,
+            "word": " tell",
+            "probability": 0.98193359375
+          },
+          {
+            "start": 1.58,
+            "end": 1.74,
+            "word": " me",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.74,
+            "end": 1.98,
+            "word": " how",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 1.98,
+            "end": 2.26,
+            "word": " long",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 2.26,
+            "end": 2.46,
+            "word": " the",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.46,
+            "end": 2.66,
+            "word": " journey",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 2.66,
+            "end": 2.94,
+            "word": " to",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.94,
+            "end": 3.1,
+            "word": " the",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 3.1,
+            "end": 3.4,
+            "word": " airport",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 3.4,
+            "end": 3.74,
+            "word": " will",
+            "probability": 0.99267578125
+          },
+          {
+            "start": 3.74,
+            "end": 4.1,
+            "word": " take.",
+            "probability": 0.99951171875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 997,
+          "max_sum_native_step": 4528,
+          "max_sum_clip_relative_sample": 23900,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 214,
+              "relative_sample": 21600
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 4523,
+          "max_sum_clip_relative_sample": 21500,
+          "threshold_crossing_steps": [
+            4522,
+            4523,
+            4524,
+            4525,
+            4526,
+            4527,
+            4528,
+            4529,
+            4530,
+            4531
+          ],
+          "own_events": [
+            {
+              "step": 4522,
+              "relative_sample": 2089440
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 212,
+              "relative_sample": 20640
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 4522,
+          "max_sum_clip_relative_sample": 21020,
+          "threshold_crossing_steps": [
+            4522,
+            4523,
+            4524,
+            4525,
+            4526,
+            4527,
+            4528,
+            4529,
+            4530,
+            4531
+          ],
+          "own_events": [
+            {
+              "step": 4522,
+              "relative_sample": 2089440
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 4522,
+          "relative_sample": 2089440,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 4522,
+          "relative_sample": 2089440,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        21020
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 8,
+      "source_index": 8,
+      "intended_text": "Hey Nicks, pause the television for a moment please.",
+      "pcm_sha256": "aa778b4bda00dd77e2bd52ba88f01e8ef4e7409eacdc2ed573d13d24995d1c9c",
+      "container": {
+        "kind": "clip",
+        "start": 2343582,
+        "end": 2404326,
+        "text_index": 8,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, pause the television for a moment please."
+      },
+      "asr": {
+        "text": " Hey, Nix, pause the television for a moment, please.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.7,
+            "word": " Hey,",
+            "probability": 0.7744140625
+          },
+          {
+            "start": 0.88,
+            "end": 1.1,
+            "word": " Nix,",
+            "probability": 0.593505859375
+          },
+          {
+            "start": 1.54,
+            "end": 1.64,
+            "word": " pause",
+            "probability": 0.984375
+          },
+          {
+            "start": 1.64,
+            "end": 1.86,
+            "word": " the",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 1.86,
+            "end": 2.36,
+            "word": " television",
+            "probability": 0.986328125
+          },
+          {
+            "start": 2.36,
+            "end": 2.66,
+            "word": " for",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.66,
+            "end": 3.02,
+            "word": " a",
+            "probability": 0.97119140625
+          },
+          {
+            "start": 3.02,
+            "end": 3.02,
+            "word": " moment,",
+            "probability": 0.99951171875
+          },
+          {
+            "start": 3.02,
+            "end": 3.34,
+            "word": " please.",
+            "probability": 0.998046875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1231,
+          "max_sum_native_step": 5101,
+          "max_sum_clip_relative_sample": 23778,
+          "threshold_crossing_steps": [
+            5099,
+            5100,
+            5101,
+            5102
+          ],
+          "own_events": [
+            {
+              "step": 5099,
+              "relative_sample": 2366400
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 213,
+              "relative_sample": 21120
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1271,
+          "max_sum_native_step": 5097,
+          "max_sum_clip_relative_sample": 21858,
+          "threshold_crossing_steps": [
+            5096,
+            5097,
+            5098,
+            5099
+          ],
+          "own_events": [
+            {
+              "step": 5096,
+              "relative_sample": 2364960
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 211,
+              "relative_sample": 20160
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 5099,
+          "max_sum_clip_relative_sample": 22818,
+          "threshold_crossing_steps": [
+            5097,
+            5098,
+            5099,
+            5100,
+            5101,
+            5102,
+            5103,
+            5104
+          ],
+          "own_events": [
+            {
+              "step": 5097,
+              "relative_sample": 2365440
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 5096,
+          "relative_sample": 2364960,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 5097,
+          "relative_sample": 2365440,
+          "model": "history_expert"
+        },
+        {
+          "step": 5099,
+          "relative_sample": 2366400,
+          "model": "c161"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        21378
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 9,
+      "source_index": 9,
+      "intended_text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "pcm_sha256": "4c2b3d60d70865f2c2efaa4d7c53e2afa9ae3b0d00c98a43baf5dccb11d68ff3",
+      "container": {
+        "kind": "clip",
+        "start": 2617257,
+        "end": 2684688,
+        "text_index": 9,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, make the room a little warmer before bedtime."
+      },
+      "asr": {
+        "text": " Hey Nicks, make the room a little warmer before bedtime.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.76,
+            "word": " Hey",
+            "probability": 0.83349609375
+          },
+          {
+            "start": 0.76,
+            "end": 1.1,
+            "word": " Nicks,",
+            "probability": 0.315673828125
+          },
+          {
+            "start": 1.36,
+            "end": 1.56,
+            "word": " make",
+            "probability": 0.958984375
+          },
+          {
+            "start": 1.56,
+            "end": 1.74,
+            "word": " the",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.74,
+            "end": 1.94,
+            "word": " room",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.94,
+            "end": 2.12,
+            "word": " a",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.12,
+            "end": 2.32,
+            "word": " little",
+            "probability": 0.9765625
+          },
+          {
+            "start": 2.32,
+            "end": 2.76,
+            "word": " warmer",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.76,
+            "end": 3.18,
+            "word": " before",
+            "probability": 0.99609375
+          },
+          {
+            "start": 3.18,
+            "end": 3.84,
+            "word": " bedtime.",
+            "probability": 0.9248046875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1056,
+          "max_sum_native_step": 5672,
+          "max_sum_clip_relative_sample": 24183,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 214,
+              "relative_sample": 21600
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 5670,
+          "max_sum_clip_relative_sample": 23223,
+          "threshold_crossing_steps": [
+            5667,
+            5668,
+            5669,
+            5670,
+            5671,
+            5672,
+            5673
+          ],
+          "own_events": [
+            {
+              "step": 5667,
+              "relative_sample": 2639040
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 212,
+              "relative_sample": 20640
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1270,
+          "max_sum_native_step": 5669,
+          "max_sum_clip_relative_sample": 22743,
+          "threshold_crossing_steps": [
+            5667,
+            5668,
+            5669,
+            5670,
+            5671,
+            5672,
+            5673
+          ],
+          "own_events": [
+            {
+              "step": 5667,
+              "relative_sample": 2639040
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 5667,
+          "relative_sample": 2639040,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 5667,
+          "relative_sample": 2639040,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        21783
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 10,
+      "source_index": 10,
+      "intended_text": "Hey Nicks, cancel the reminder about the laundry.",
+      "pcm_sha256": "b6a01c37449ea3b8aa89ac5d4250b0081bd0930d6f628bcc72ee369b78c9c0e7",
+      "container": {
+        "kind": "clip",
+        "start": 2931242,
+        "end": 2989571,
+        "text_index": 10,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, cancel the reminder about the laundry."
+      },
+      "asr": {
+        "text": " Hey Nix, cancel the reminder about the laundry.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.64,
+            "word": " Hey",
+            "probability": 0.93798828125
+          },
+          {
+            "start": 0.64,
+            "end": 1.06,
+            "word": " Nix,",
+            "probability": 0.6148681640625
+          },
+          {
+            "start": 1.34,
+            "end": 1.62,
+            "word": " cancel",
+            "probability": 0.95458984375
+          },
+          {
+            "start": 1.62,
+            "end": 1.86,
+            "word": " the",
+            "probability": 0.990234375
+          },
+          {
+            "start": 1.86,
+            "end": 2.2,
+            "word": " reminder",
+            "probability": 0.9755859375
+          },
+          {
+            "start": 2.2,
+            "end": 2.56,
+            "word": " about",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.56,
+            "end": 2.74,
+            "word": " the",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 2.74,
+            "end": 3.08,
+            "word": " laundry.",
+            "probability": 0.99658203125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 158,
+          "max_sum_native_step": 6323,
+          "max_sum_clip_relative_sample": 22678,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 214,
+              "relative_sample": 21600
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1273,
+          "max_sum_native_step": 6320,
+          "max_sum_clip_relative_sample": 21238,
+          "threshold_crossing_steps": [
+            6318,
+            6319,
+            6320,
+            6321,
+            6322,
+            6323,
+            6324,
+            6325,
+            6326,
+            6327
+          ],
+          "own_events": [
+            {
+              "step": 6318,
+              "relative_sample": 2951520
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 210,
+              "relative_sample": 19680
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 6322,
+          "max_sum_clip_relative_sample": 22198,
+          "threshold_crossing_steps": [
+            6321,
+            6322,
+            6323,
+            6324,
+            6325,
+            6326,
+            6327,
+            6328
+          ],
+          "own_events": [
+            {
+              "step": 6321,
+              "relative_sample": 2952960
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 6318,
+          "relative_sample": 2951520,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 6321,
+          "relative_sample": 2952960,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        20278
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-US",
+      "text_index": 11,
+      "source_index": 11,
+      "intended_text": "Hey Nicks, do I have any appointments after lunch?",
+      "pcm_sha256": "0669c7db0fd3236bb65fbf0835d545a2c7dceabfec08d11ff9ad64e64813cb60",
+      "container": {
+        "kind": "clip",
+        "start": 3220707,
+        "end": 3281637,
+        "text_index": 11,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, do I have any appointments after lunch?"
+      },
+      "asr": {
+        "text": " Hey Nix, do I have any appointments after lunch?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.74,
+            "word": " Hey",
+            "probability": 0.9248046875
+          },
+          {
+            "start": 0.74,
+            "end": 1.08,
+            "word": " Nix,",
+            "probability": 0.37841796875
+          },
+          {
+            "start": 1.36,
+            "end": 1.52,
+            "word": " do",
+            "probability": 0.947265625
+          },
+          {
+            "start": 1.52,
+            "end": 1.64,
+            "word": " I",
+            "probability": 0.98095703125
+          },
+          {
+            "start": 1.64,
+            "end": 1.84,
+            "word": " have",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.84,
+            "end": 2.02,
+            "word": " any",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.02,
+            "end": 2.52,
+            "word": " appointments",
+            "probability": 0.9658203125
+          },
+          {
+            "start": 2.52,
+            "end": 3.02,
+            "word": " after",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 3.02,
+            "end": 3.32,
+            "word": " lunch?",
+            "probability": 0.99853515625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1145,
+          "max_sum_native_step": 6932,
+          "max_sum_clip_relative_sample": 25533,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 216,
+              "relative_sample": 22560
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1267,
+          "max_sum_native_step": 6927,
+          "max_sum_clip_relative_sample": 23133,
+          "threshold_crossing_steps": [
+            6926,
+            6927,
+            6928
+          ],
+          "own_events": [
+            {
+              "step": 6926,
+              "relative_sample": 3243360
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 216,
+              "relative_sample": 22560
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 6932,
+          "max_sum_clip_relative_sample": 25533,
+          "threshold_crossing_steps": [
+            6927,
+            6928,
+            6929,
+            6930,
+            6931,
+            6932,
+            6933
+          ],
+          "own_events": [
+            {
+              "step": 6927,
+              "relative_sample": 3243840
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 6926,
+          "relative_sample": 3243360,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 6927,
+          "relative_sample": 3243840,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        22653
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 0,
+      "source_index": 48,
+      "intended_text": "Hey Nicks, could you switch off the study lamp?",
+      "pcm_sha256": "8390c3690023ff2cc56c3f0d5b39509a10f54f595e8793d02275da7f7e00e8c0",
+      "container": {
+        "kind": "clip",
+        "start": 0,
+        "end": 45326,
+        "text_index": 0,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, could you switch off the study lamp?"
+      },
+      "asr": {
+        "text": " Hey Nix, could you switch off the study lamp?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.34,
+            "word": " Hey",
+            "probability": 0.67333984375
+          },
+          {
+            "start": 0.34,
+            "end": 0.7,
+            "word": " Nix,",
+            "probability": 0.6768798828125
+          },
+          {
+            "start": 0.96,
+            "end": 1.04,
+            "word": " could",
+            "probability": 0.9814453125
+          },
+          {
+            "start": 1.04,
+            "end": 1.22,
+            "word": " you",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.22,
+            "end": 1.42,
+            "word": " switch",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 1.42,
+            "end": 1.62,
+            "word": " off",
+            "probability": 0.9892578125
+          },
+          {
+            "start": 1.62,
+            "end": 1.78,
+            "word": " the",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.78,
+            "end": 2.08,
+            "word": " study",
+            "probability": 0.9541015625
+          },
+          {
+            "start": 2.08,
+            "end": 2.36,
+            "word": " lamp?",
+            "probability": 0.99560546875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1125,
+          "max_sum_native_step": 203,
+          "max_sum_clip_relative_sample": 16320,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 200,
+          "max_sum_clip_relative_sample": 14880,
+          "threshold_crossing_steps": [
+            199,
+            200,
+            201,
+            202,
+            203
+          ],
+          "own_events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 201,
+          "max_sum_clip_relative_sample": 15360,
+          "threshold_crossing_steps": [
+            200,
+            201,
+            202,
+            203
+          ],
+          "own_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 199,
+          "relative_sample": 14400,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 200,
+          "relative_sample": 14880,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14400
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 1,
+      "source_index": 49,
+      "intended_text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+      "container": {
+        "kind": "clip",
+        "start": 242282,
+        "end": 306741,
+        "text_index": 1,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, please remind me to take the bread out in twelve minutes."
+      },
+      "asr": {
+        "text": " Hey Nix, please remind me to take the bread out in 12 minutes.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.52490234375
+          },
+          {
+            "start": 0.36,
+            "end": 0.74,
+            "word": " Nix,",
+            "probability": 0.6732177734375
+          },
+          {
+            "start": 1.04,
+            "end": 1.24,
+            "word": " please",
+            "probability": 0.9365234375
+          },
+          {
+            "start": 1.24,
+            "end": 1.56,
+            "word": " remind",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 1.56,
+            "end": 1.78,
+            "word": " me",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.78,
+            "end": 1.94,
+            "word": " to",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.94,
+            "end": 2.12,
+            "word": " take",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.12,
+            "end": 2.3,
+            "word": " the",
+            "probability": 0.984375
+          },
+          {
+            "start": 2.3,
+            "end": 2.48,
+            "word": " bread",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.48,
+            "end": 2.7,
+            "word": " out",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.7,
+            "end": 2.9,
+            "word": " in",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.9,
+            "end": 3.16,
+            "word": " 12",
+            "probability": 0.81787109375
+          },
+          {
+            "start": 3.16,
+            "end": 3.54,
+            "word": " minutes.",
+            "probability": 0.93359375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 112,
+          "max_sum_native_step": 713,
+          "max_sum_clip_relative_sample": 18838,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 206,
+              "relative_sample": 17760
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 840,
+          "max_sum_native_step": 713,
+          "max_sum_clip_relative_sample": 18838,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1230,
+          "max_sum_native_step": 714,
+          "max_sum_clip_relative_sample": 19318,
+          "threshold_crossing_steps": [
+            707,
+            708,
+            714
+          ],
+          "own_events": [
+            {
+              "step": 707,
+              "relative_sample": 258240
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 707,
+          "relative_sample": 258240,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        15958
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 2,
+      "source_index": 50,
+      "intended_text": "Hey Nicks, is there any rain expected this afternoon?",
+      "pcm_sha256": "8387c09f6735771acea8b7806396cdf908c84ed4b2f558a1664264a35606079c",
+      "container": {
+        "kind": "clip",
+        "start": 499610,
+        "end": 554967,
+        "text_index": 2,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, is there any rain expected this afternoon?"
+      },
+      "asr": {
+        "text": " Hey Nix, is there any rain expected this afternoon?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.67431640625
+          },
+          {
+            "start": 0.36,
+            "end": 0.7,
+            "word": " Nix,",
+            "probability": 0.698974609375
+          },
+          {
+            "start": 0.92,
+            "end": 1.04,
+            "word": " is",
+            "probability": 0.97119140625
+          },
+          {
+            "start": 1.04,
+            "end": 1.22,
+            "word": " there",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 1.22,
+            "end": 1.42,
+            "word": " any",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.42,
+            "end": 1.68,
+            "word": " rain",
+            "probability": 0.99072265625
+          },
+          {
+            "start": 1.68,
+            "end": 2.16,
+            "word": " expected",
+            "probability": 0.994140625
+          },
+          {
+            "start": 2.16,
+            "end": 2.52,
+            "word": " this",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.52,
+            "end": 2.96,
+            "word": " afternoon?",
+            "probability": 0.99658203125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 15,
+          "max_sum_native_step": 1246,
+          "max_sum_clip_relative_sample": 17350,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 202,
+              "relative_sample": 15840
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1231,
+          "max_sum_native_step": 1242,
+          "max_sum_clip_relative_sample": 15430,
+          "threshold_crossing_steps": [
+            1242
+          ],
+          "own_events": [
+            {
+              "step": 1242,
+              "relative_sample": 515040
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 1242,
+          "max_sum_clip_relative_sample": 15430,
+          "threshold_crossing_steps": [
+            1241,
+            1242,
+            1243
+          ],
+          "own_events": [
+            {
+              "step": 1241,
+              "relative_sample": 514560
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 1241,
+          "relative_sample": 514560,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 1242,
+          "relative_sample": 515040,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14950
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 3,
+      "source_index": 51,
+      "intended_text": "Hey Nicks, lower the music so I can answer the phone.",
+      "pcm_sha256": "aa25d6c416a87720264b745eab1e9b593bd7e54a2933bdc7e97f05d1c77e64a4",
+      "container": {
+        "kind": "clip",
+        "start": 758796,
+        "end": 810438,
+        "text_index": 3,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, lower the music so I can answer the phone."
+      },
+      "asr": {
+        "text": " Hey Nix, lower the music so I can answer the phone.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.34,
+            "word": " Hey",
+            "probability": 0.673828125
+          },
+          {
+            "start": 0.34,
+            "end": 0.74,
+            "word": " Nix,",
+            "probability": 0.61279296875
+          },
+          {
+            "start": 0.94,
+            "end": 1.02,
+            "word": " lower",
+            "probability": 0.9853515625
+          },
+          {
+            "start": 1.02,
+            "end": 1.2,
+            "word": " the",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 1.2,
+            "end": 1.46,
+            "word": " music",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 1.46,
+            "end": 1.78,
+            "word": " so",
+            "probability": 0.97216796875
+          },
+          {
+            "start": 1.78,
+            "end": 1.92,
+            "word": " I",
+            "probability": 0.931640625
+          },
+          {
+            "start": 1.92,
+            "end": 2.06,
+            "word": " can",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.06,
+            "end": 2.32,
+            "word": " answer",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 2.32,
+            "end": 2.48,
+            "word": " the",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.48,
+            "end": 2.78,
+            "word": " phone.",
+            "probability": 0.99853515625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 123,
+          "max_sum_native_step": 1784,
+          "max_sum_clip_relative_sample": 16404,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 159,
+          "max_sum_native_step": 1789,
+          "max_sum_clip_relative_sample": 18804,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "history_expert": {
+          "max_five_code_sum": 205,
+          "max_sum_native_step": 1790,
+          "max_sum_clip_relative_sample": 19284,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [],
+      "suppressed": [],
+      "hit": false,
+      "all_models_without_crossing": true,
+      "emitted_clip_relative_samples": [],
+      "isolated_dual_hit": false
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 4,
+      "source_index": 52,
+      "intended_text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "pcm_sha256": "44bc7b0761694e4a8950337b8fb0055a76b051c4a326910315f41b5bb8d677c6",
+      "container": {
+        "kind": "clip",
+        "start": 999592,
+        "end": 1057735,
+        "text_index": 4,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, I would like to hear the news while I make breakfast."
+      },
+      "asr": {
+        "text": " Hey Nix, I would like to hear the news while I make breakfast.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.62060546875
+          },
+          {
+            "start": 0.36,
+            "end": 0.74,
+            "word": " Nix,",
+            "probability": 0.611328125
+          },
+          {
+            "start": 0.84,
+            "end": 0.98,
+            "word": " I",
+            "probability": 0.92236328125
+          },
+          {
+            "start": 0.98,
+            "end": 1.1,
+            "word": " would",
+            "probability": 0.97998046875
+          },
+          {
+            "start": 1.1,
+            "end": 1.26,
+            "word": " like",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 1.26,
+            "end": 1.46,
+            "word": " to",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.46,
+            "end": 1.6,
+            "word": " hear",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 1.6,
+            "end": 1.76,
+            "word": " the",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 1.76,
+            "end": 1.96,
+            "word": " news",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.96,
+            "end": 2.2,
+            "word": " while",
+            "probability": 0.98779296875
+          },
+          {
+            "start": 2.2,
+            "end": 2.34,
+            "word": " I",
+            "probability": 0.984375
+          },
+          {
+            "start": 2.34,
+            "end": 2.58,
+            "word": " make",
+            "probability": 0.998046875
+          },
+          {
+            "start": 2.58,
+            "end": 3.06,
+            "word": " breakfast.",
+            "probability": 0.9990234375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 0,
+          "max_sum_native_step": 2252,
+          "max_sum_clip_relative_sample": 248,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 569,
+          "max_sum_native_step": 2284,
+          "max_sum_clip_relative_sample": 15608,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1025,
+          "max_sum_native_step": 2284,
+          "max_sum_clip_relative_sample": 15608,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [],
+      "suppressed": [],
+      "hit": false,
+      "all_models_without_crossing": true,
+      "emitted_clip_relative_samples": [],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 5,
+      "source_index": 53,
+      "intended_text": "Hey Nicks, put milk and apples on my shopping list.",
+      "pcm_sha256": "a90e116201556d0827aeeea71ad5c6bb17c1c9fb3f5f1b66b5e2db6094d8f945",
+      "container": {
+        "kind": "clip",
+        "start": 1261750,
+        "end": 1311906,
+        "text_index": 5,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, put milk and apples on my shopping list."
+      },
+      "asr": {
+        "text": " Hey Nix, put milk and apples on my shopping list.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.7939453125
+          },
+          {
+            "start": 0.36,
+            "end": 0.72,
+            "word": " Nix,",
+            "probability": 0.6043701171875
+          },
+          {
+            "start": 0.9,
+            "end": 1.0,
+            "word": " put",
+            "probability": 0.9794921875
+          },
+          {
+            "start": 1.0,
+            "end": 1.24,
+            "word": " milk",
+            "probability": 0.97900390625
+          },
+          {
+            "start": 1.24,
+            "end": 1.44,
+            "word": " and",
+            "probability": 0.96533203125
+          },
+          {
+            "start": 1.44,
+            "end": 1.7,
+            "word": " apples",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.7,
+            "end": 1.9,
+            "word": " on",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 1.9,
+            "end": 2.08,
+            "word": " my",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 2.08,
+            "end": 2.36,
+            "word": " shopping",
+            "probability": 0.99609375
+          },
+          {
+            "start": 2.36,
+            "end": 2.72,
+            "word": " list.",
+            "probability": 0.99560546875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 1,
+          "max_sum_native_step": 2830,
+          "max_sum_clip_relative_sample": 15530,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 1057,
+          "max_sum_native_step": 2831,
+          "max_sum_clip_relative_sample": 16010,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1275,
+          "max_sum_native_step": 2837,
+          "max_sum_clip_relative_sample": 18890,
+          "threshold_crossing_steps": [
+            2831,
+            2832,
+            2833,
+            2834,
+            2835,
+            2836,
+            2837,
+            2838,
+            2839
+          ],
+          "own_events": [
+            {
+              "step": 2831,
+              "relative_sample": 1277760
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 2831,
+          "relative_sample": 1277760,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        16010
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 6,
+      "source_index": 54,
+      "intended_text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "pcm_sha256": "e503c7f058e3bfedecc962dc504437cb065fc5ca47fa0f61484b4c72ba2948b8",
+      "container": {
+        "kind": "clip",
+        "start": 1516478,
+        "end": 1573878,
+        "text_index": 6,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, leave the hallway light on until I get upstairs."
+      },
+      "asr": {
+        "text": " Hey Nix, leave the hallway light on until I get upstairs.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.34,
+            "word": " Hey",
+            "probability": 0.546875
+          },
+          {
+            "start": 0.34,
+            "end": 0.72,
+            "word": " Nix,",
+            "probability": 0.636474609375
+          },
+          {
+            "start": 0.94,
+            "end": 1.12,
+            "word": " leave",
+            "probability": 0.94921875
+          },
+          {
+            "start": 1.12,
+            "end": 1.3,
+            "word": " the",
+            "probability": 0.9892578125
+          },
+          {
+            "start": 1.3,
+            "end": 1.54,
+            "word": " hallway",
+            "probability": 0.986328125
+          },
+          {
+            "start": 1.54,
+            "end": 1.84,
+            "word": " light",
+            "probability": 0.99365234375
+          },
+          {
+            "start": 1.84,
+            "end": 2.04,
+            "word": " on",
+            "probability": 0.99658203125
+          },
+          {
+            "start": 2.04,
+            "end": 2.26,
+            "word": " until",
+            "probability": 0.98583984375
+          },
+          {
+            "start": 2.26,
+            "end": 2.42,
+            "word": " I",
+            "probability": 0.95166015625
+          },
+          {
+            "start": 2.42,
+            "end": 2.58,
+            "word": " get",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 2.58,
+            "end": 3.02,
+            "word": " upstairs.",
+            "probability": 0.99267578125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 454,
+          "max_sum_native_step": 3365,
+          "max_sum_clip_relative_sample": 17602,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1247,
+          "max_sum_native_step": 3362,
+          "max_sum_clip_relative_sample": 16162,
+          "threshold_crossing_steps": [
+            3361,
+            3362,
+            3363
+          ],
+          "own_events": [
+            {
+              "step": 3361,
+              "relative_sample": 1532160
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1190,
+          "max_sum_native_step": 3362,
+          "max_sum_clip_relative_sample": 16162,
+          "threshold_crossing_steps": [
+            3362,
+            3363
+          ],
+          "own_events": [
+            {
+              "step": 3362,
+              "relative_sample": 1532640
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 3361,
+          "relative_sample": 1532160,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 3362,
+          "relative_sample": 1532640,
+          "model": "history_expert"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        15682
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 7,
+      "source_index": 55,
+      "intended_text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "pcm_sha256": "840a75b47dffd0875fa0fb9c8454232e92937182fc654ae900c10c4b003435e7",
+      "container": {
+        "kind": "clip",
+        "start": 1763218,
+        "end": 1824333,
+        "text_index": 7,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, tell me how long the journey to the airport will take."
+      },
+      "asr": {
+        "text": " Hey Nix, tell me how long the journey to the airport will take.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.701171875
+          },
+          {
+            "start": 0.36,
+            "end": 0.72,
+            "word": " Nix,",
+            "probability": 0.6845703125
+          },
+          {
+            "start": 1.0,
+            "end": 1.16,
+            "word": " tell",
+            "probability": 0.98681640625
+          },
+          {
+            "start": 1.16,
+            "end": 1.3,
+            "word": " me",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.3,
+            "end": 1.48,
+            "word": " how",
+            "probability": 0.99169921875
+          },
+          {
+            "start": 1.48,
+            "end": 1.68,
+            "word": " long",
+            "probability": 0.9990234375
+          },
+          {
+            "start": 1.68,
+            "end": 1.88,
+            "word": " the",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 1.88,
+            "end": 2.12,
+            "word": " journey",
+            "probability": 0.99560546875
+          },
+          {
+            "start": 2.12,
+            "end": 2.36,
+            "word": " to",
+            "probability": 0.9970703125
+          },
+          {
+            "start": 2.36,
+            "end": 2.48,
+            "word": " the",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.48,
+            "end": 2.74,
+            "word": " airport",
+            "probability": 0.9794921875
+          },
+          {
+            "start": 2.74,
+            "end": 3.02,
+            "word": " will",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 3.02,
+            "end": 3.38,
+            "word": " take.",
+            "probability": 0.99951171875
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 145,
+          "max_sum_native_step": 3879,
+          "max_sum_clip_relative_sample": 17582,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 269,
+          "max_sum_native_step": 3875,
+          "max_sum_clip_relative_sample": 15662,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 212,
+          "max_sum_native_step": 3882,
+          "max_sum_clip_relative_sample": 19022,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [],
+      "suppressed": [],
+      "hit": false,
+      "all_models_without_crossing": true,
+      "emitted_clip_relative_samples": [],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 8,
+      "source_index": 56,
+      "intended_text": "Hey Nicks, pause the television for a moment please.",
+      "pcm_sha256": "c952779c4de405c5643d7df5bf331a9412d901a9d3f8499a0b4900ecdedd75a8",
+      "container": {
+        "kind": "clip",
+        "start": 1993982,
+        "end": 2045066,
+        "text_index": 8,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, pause the television for a moment please."
+      },
+      "asr": {
+        "text": " Hey, Nix. Pause the television for a moment, please.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.34,
+            "word": " Hey,",
+            "probability": 0.6865234375
+          },
+          {
+            "start": 0.5,
+            "end": 0.74,
+            "word": " Nix.",
+            "probability": 0.74365234375
+          },
+          {
+            "start": 1.08,
+            "end": 1.18,
+            "word": " Pause",
+            "probability": 0.994873046875
+          },
+          {
+            "start": 1.18,
+            "end": 1.34,
+            "word": " the",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.34,
+            "end": 1.76,
+            "word": " television",
+            "probability": 0.99169921875
+          },
+          {
+            "start": 1.76,
+            "end": 2.04,
+            "word": " for",
+            "probability": 0.9892578125
+          },
+          {
+            "start": 2.04,
+            "end": 2.14,
+            "word": " a",
+            "probability": 0.9931640625
+          },
+          {
+            "start": 2.14,
+            "end": 2.38,
+            "word": " moment,",
+            "probability": 0.99951171875
+          },
+          {
+            "start": 2.38,
+            "end": 2.66,
+            "word": " please.",
+            "probability": 0.99853515625
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 47,
+          "max_sum_native_step": 4360,
+          "max_sum_clip_relative_sample": 17698,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 1247,
+          "max_sum_native_step": 4363,
+          "max_sum_clip_relative_sample": 19138,
+          "threshold_crossing_steps": [
+            4363
+          ],
+          "own_events": [
+            {
+              "step": 4363,
+              "relative_sample": 2013120
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1268,
+          "max_sum_native_step": 4363,
+          "max_sum_clip_relative_sample": 19138,
+          "threshold_crossing_steps": [
+            4362,
+            4363
+          ],
+          "own_events": [
+            {
+              "step": 4362,
+              "relative_sample": 2012640
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 4362,
+          "relative_sample": 2012640,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 4363,
+          "relative_sample": 2013120,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        18658
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 9,
+      "source_index": 57,
+      "intended_text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "pcm_sha256": "9d4f768044788e32e800ba6d623ae814b751f1ff24825cd2619489c91e8872e4",
+      "container": {
+        "kind": "clip",
+        "start": 2229204,
+        "end": 2284004,
+        "text_index": 9,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, make the room a little warmer before bedtime."
+      },
+      "asr": {
+        "text": " Hey Nix, make the room a little warmer before bedtime.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.779296875
+          },
+          {
+            "start": 0.36,
+            "end": 0.7,
+            "word": " Nix,",
+            "probability": 0.62158203125
+          },
+          {
+            "start": 0.94,
+            "end": 1.14,
+            "word": " make",
+            "probability": 0.96728515625
+          },
+          {
+            "start": 1.14,
+            "end": 1.3,
+            "word": " the",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 1.3,
+            "end": 1.46,
+            "word": " room",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 1.46,
+            "end": 1.64,
+            "word": " a",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 1.64,
+            "end": 1.8,
+            "word": " little",
+            "probability": 0.99462890625
+          },
+          {
+            "start": 1.8,
+            "end": 2.14,
+            "word": " warmer",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.14,
+            "end": 2.46,
+            "word": " before",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 2.46,
+            "end": 3.02,
+            "word": " bedtime.",
+            "probability": 0.982177734375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 180,
+          "max_sum_native_step": 4849,
+          "max_sum_clip_relative_sample": 17196,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 201,
+              "relative_sample": 15360
+            }
+          ]
+        },
+        "binary40": {
+          "max_five_code_sum": 1273,
+          "max_sum_native_step": 4845,
+          "max_sum_clip_relative_sample": 15276,
+          "threshold_crossing_steps": [
+            4845,
+            4846
+          ],
+          "own_events": [
+            {
+              "step": 4845,
+              "relative_sample": 2244480
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1274,
+          "max_sum_native_step": 4846,
+          "max_sum_clip_relative_sample": 15756,
+          "threshold_crossing_steps": [
+            4844,
+            4845,
+            4846,
+            4847,
+            4848,
+            4849,
+            4850
+          ],
+          "own_events": [
+            {
+              "step": 4844,
+              "relative_sample": 2244000
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 4844,
+          "relative_sample": 2244000,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 4845,
+          "relative_sample": 2244480,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14796
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 10,
+      "source_index": 58,
+      "intended_text": "Hey Nicks, cancel the reminder about the laundry.",
+      "pcm_sha256": "e6219ee300856bfc409ab1ff39da0f0720e6de241ab2f5b49d2aa8da36fd7e7f",
+      "container": {
+        "kind": "clip",
+        "start": 2484490,
+        "end": 2533531,
+        "text_index": 10,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, cancel the reminder about the laundry."
+      },
+      "asr": {
+        "text": " Hey Nix, cancel the reminder about the laundry.",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.34,
+            "word": " Hey",
+            "probability": 0.57861328125
+          },
+          {
+            "start": 0.34,
+            "end": 0.7,
+            "word": " Nix,",
+            "probability": 0.636474609375
+          },
+          {
+            "start": 0.98,
+            "end": 1.08,
+            "word": " cancel",
+            "probability": 0.95703125
+          },
+          {
+            "start": 1.08,
+            "end": 1.34,
+            "word": " the",
+            "probability": 0.99609375
+          },
+          {
+            "start": 1.34,
+            "end": 1.62,
+            "word": " reminder",
+            "probability": 0.97412109375
+          },
+          {
+            "start": 1.62,
+            "end": 2.02,
+            "word": " about",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.02,
+            "end": 2.22,
+            "word": " the",
+            "probability": 0.9951171875
+          },
+          {
+            "start": 2.22,
+            "end": 2.52,
+            "word": " laundry.",
+            "probability": 0.93896484375
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 23,
+          "max_sum_native_step": 5381,
+          "max_sum_clip_relative_sample": 17270,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 1190,
+          "max_sum_native_step": 5377,
+          "max_sum_clip_relative_sample": 15350,
+          "threshold_crossing_steps": [
+            5377
+          ],
+          "own_events": [
+            {
+              "step": 5377,
+              "relative_sample": 2499840
+            }
+          ],
+          "isolated_original_events": [
+            {
+              "step": 200,
+              "relative_sample": 14880
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1271,
+          "max_sum_native_step": 5377,
+          "max_sum_clip_relative_sample": 15350,
+          "threshold_crossing_steps": [
+            5376,
+            5377,
+            5378
+          ],
+          "own_events": [
+            {
+              "step": 5376,
+              "relative_sample": 2499360
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 5376,
+          "relative_sample": 2499360,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 5377,
+          "relative_sample": 2499840,
+          "model": "binary40"
+        }
+      ],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        14870
+      ],
+      "isolated_dual_hit": true
+    },
+    {
+      "condition": "melo-BR",
+      "text_index": 11,
+      "source_index": 59,
+      "intended_text": "Hey Nicks, do I have any appointments after lunch?",
+      "pcm_sha256": "b33810092858b53e9712aae5f59e88f24751ccfb61a895bc69716b7eb84ff54e",
+      "container": {
+        "kind": "clip",
+        "start": 2729558,
+        "end": 2781571,
+        "text_index": 11,
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, do I have any appointments after lunch?"
+      },
+      "asr": {
+        "text": " Hey Nix, do I have any appointments after lunch?",
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.36,
+            "word": " Hey",
+            "probability": 0.54541015625
+          },
+          {
+            "start": 0.36,
+            "end": 0.7,
+            "word": " Nix,",
+            "probability": 0.636474609375
+          },
+          {
+            "start": 0.92,
+            "end": 1.04,
+            "word": " do",
+            "probability": 0.9521484375
+          },
+          {
+            "start": 1.04,
+            "end": 1.16,
+            "word": " I",
+            "probability": 0.96240234375
+          },
+          {
+            "start": 1.16,
+            "end": 1.3,
+            "word": " have",
+            "probability": 0.998046875
+          },
+          {
+            "start": 1.3,
+            "end": 1.5,
+            "word": " any",
+            "probability": 0.99755859375
+          },
+          {
+            "start": 1.5,
+            "end": 1.98,
+            "word": " appointments",
+            "probability": 0.9755859375
+          },
+          {
+            "start": 1.98,
+            "end": 2.4,
+            "word": " after",
+            "probability": 0.99853515625
+          },
+          {
+            "start": 2.4,
+            "end": 2.68,
+            "word": " lunch?",
+            "probability": 0.99658203125
+          }
+        ],
+        "reference_only_not_phonetic_truth": true
+      },
+      "models": {
+        "c161": {
+          "max_five_code_sum": 179,
+          "max_sum_native_step": 5890,
+          "max_sum_clip_relative_sample": 16522,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": []
+        },
+        "binary40": {
+          "max_five_code_sum": 1009,
+          "max_sum_native_step": 5888,
+          "max_sum_clip_relative_sample": 15562,
+          "threshold_crossing_steps": [],
+          "own_events": [],
+          "isolated_original_events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ]
+        },
+        "history_expert": {
+          "max_five_code_sum": 1211,
+          "max_sum_native_step": 5888,
+          "max_sum_clip_relative_sample": 15562,
+          "threshold_crossing_steps": [
+            5888
+          ],
+          "own_events": [
+            {
+              "step": 5888,
+              "relative_sample": 2745120
+            }
+          ],
+          "isolated_original_events": null
+        }
+      },
+      "emitted": [
+        {
+          "step": 5888,
+          "relative_sample": 2745120,
+          "model": "history_expert"
+        }
+      ],
+      "suppressed": [],
+      "hit": true,
+      "all_models_without_crossing": false,
+      "emitted_clip_relative_samples": [
+        15562
+      ],
+      "isolated_dual_hit": true
+    }
+  ],
+  "optimizer_updates": 0,
+  "inference_calls": 0,
+  "limits": "All36target containers in all3existing physical continuous context streams. Exact trailing-five sums independently cumsum/convolve checked; count per-detector crossings/events and shared emitted/suppressed, include complete original isolated dual events and unfiltered source ASR text/words. No inference, crop, resynthesis, new labels, threshold/policy/source selection or training. ASR is corroboration only, not acoustic truth or first-command/phone timing. Consumeddiagnostic, no FAR/P4/independent qualification."
+}
