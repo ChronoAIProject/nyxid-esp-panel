@@ -1,0 +1,389 @@
+{
+  "schema": "binary40-paired-carrier-arm-export-original-v1",
+  "arm": "paired",
+  "plan_sha256": "257dbe0c5ea7d328813e7dba5813f89137c48903919f303e3b88fce5419e59bf",
+  "training_report_sha256": "6b49770ab29cd6c6af5ac9d3f5aeb41b7fc488c248953065a1edb141668fe657",
+  "checkpoint_sha256": "f184aa2b6027831f8a5c5f8c6134464e1c3914601642762d04e362138aa89814",
+  "model": {
+    "path": ".local/wakeword/binary40-paired-carrier-final-int8-v1/paired/int8.tflite",
+    "bytes": 64800,
+    "sha256": "ca42573ac4797d8784aa752c9f3aff5cbadd0b1287395b114b62910c95c14a77"
+  },
+  "files": {
+    "calibration.npz": "0261f9e5f8f20b5a50bf85534139600cbdf403129d5dfc326372975beb1c66e5",
+    "trained.keras": "34ab8f529721244c5130d4241b9b69696304f1cf9bd91e791e6385e146d75864",
+    "int8.tflite": "ca42573ac4797d8784aa752c9f3aff5cbadd0b1287395b114b62910c95c14a77"
+  },
+  "calibration_representatives": 128,
+  "calibration_descriptors": [
+    {
+      "kind": "ambient",
+      "index": 962,
+      "start": 435,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "paired_carrier_positive",
+      "index": 24967447,
+      "source_id": "kokoro-positive-00029",
+      "conditioning_id": "af_aoede",
+      "carrier": "time",
+      "speed": 0.9,
+      "variant": 2,
+      "positive_offset": 24967447,
+      "negative_offset": 186864,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 805,
+      "start": 816,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 262,
+      "start": 30569,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 25,
+      "start": 25898,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "paired_carrier_positive",
+      "index": 25069526,
+      "source_id": "kokoro-positive-00085",
+      "conditioning_id": "af_heart",
+      "carrier": "time",
+      "speed": 1.0,
+      "variant": 1,
+      "positive_offset": 25069526,
+      "negative_offset": 544304,
+      "label": 1
+    },
+    {
+      "kind": "paired_carrier_positive",
+      "index": 25570948,
+      "source_id": "kokoro-positive-00357",
+      "conditioning_id": "am_onyx",
+      "carrier": "time",
+      "speed": 1.1,
+      "variant": 2,
+      "positive_offset": 25570948,
+      "negative_offset": 2297923,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 1318,
+      "start": 15198,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 721,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 1123,
+      "start": 2938,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "paired_carrier_positive",
+      "index": 25471038,
+      "source_id": "kokoro-positive-00303",
+      "conditioning_id": "am_fenrir",
+      "carrier": "timer",
+      "speed": 1.0,
+      "variant": 2,
+      "positive_offset": 25471038,
+      "negative_offset": 1937276,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 1280,
+      "start": 3181,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 3956,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 3828,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 81,
+      "start": 92237,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 25417798,
+      "source_id": "kokoro-positive-00273",
+      "variant": 2,
+      "label": 1
+    }
+  ],
+  "original_batch_hashes": {
+    "features": "206323fd0942d076c2700f350a9d8027d9d8249805a32352b88b0d7938534aef",
+    "positive": "485895a28ba3b6cf67f7c103af1cf996c8acf9e5b95bbcdafe71219cf4df1c14",
+    "negative": "61870505cda46aa5636a8db443a86149257b3e9022ba5d3edeba6592eb6dd7cc"
+  },
+  "full_chunk_max_logit_error": 0.0,
+  "parity_calls": 64,
+  "max_probability_error": 8.526512829121202e-14,
+  "max_cache_error": 2.6702880859375e-05,
+  "inputs": {
+    "cache0": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "scale": 0.09911151975393295,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache1": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "scale": 0.3265708386898041,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache2": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "scale": 0.3574267029762268,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache3": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "scale": 0.40274885296821594,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache4": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "scale": 0.39885562658309937,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache5": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "scale": 0.3731549084186554,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache6": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "scale": 0.2952667474746704,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "chunk": {
+      "shape": [
+        1,
+        3,
+        1,
+        40
+      ],
+      "scale": 0.09911151975393295,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    }
+  },
+  "outputs": {
+    "cache0_out": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "scale": 0.09911151975393295,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache1_out": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "scale": 0.3265708386898041,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache2_out": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "scale": 0.3574267029762268,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache3_out": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "scale": 0.40274885296821594,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache4_out": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "scale": 0.39885562658309937,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache5_out": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "scale": 0.3731549084186554,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache6_out": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "scale": 0.2952667474746704,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "probability": {
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "scale": 0.00390625,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    }
+  },
+  "ops": [
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "CONV_2D",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE"
+  ],
+  "feedback_calls": 256,
+  "feedback_sha256": "520981c64a603ff96575059e93869b40e12d81803c421c245cc651bf701e394a",
+  "fresh_reset_exact": true,
+  "all_neural_tensors_integer": true,
+  "cache_requantization_required": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "recognition_scored": false,
+  "policy": "Only final20000 checkpoint with authenticated completed training artifacts. Own arm Sampler726 first16rows and all282calls, save state inputs at fixed0/40/80/120/160/200/240/280 perrow:128representatives. No new voices or altered sampler/masks, no evaluation calibration. GPU PyTorch full/chunk parity and CPU Keras probability/allcache parity; one builtin INT8 export and BUILTIN_REF1thread feedback/reset. Preserve failure, no calibration/threshold/checkpoint rescue. Actual training-state calibration is not physical priming or recognition qualification."
+}
