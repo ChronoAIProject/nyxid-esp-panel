@@ -53,3 +53,9 @@ control: original positive-source gains89, losses22.
 teacher: original positive-source gains71, losses67.
 
 The paired training does not cause a global loss of broad-bare training fit: aggregates hold or improve while consumed Jenny/BR regressions persist. Exact local gains/losses remain and aggregate retention cannot exclude selective forgetting elsewhere. These data weaken a blanket catastrophic-forgetting explanation; do not automatically add distillation or reduce pair coefficients. Next account for source/voice distribution and unmeasured main sampler families before choosing a new training objective.
+
+## Complete training-voice stratification
+
+All6444broad positive rows grouped into716engine/conditioning IDs:672Piper,20Kokoro,24Qwen. Teacher has56voices with at least one lost original crossing,59with gains;47networse and52netbetter. Control20withlosses/65withgains,17networse/62netbetter. Exact allvoice counts retained in4090-frozen-history-teacher-voice-retention-v1.json; do not conflate conditioning IDs with human independence or derive accent labels from IDs. Teacher's near-flat aggregate masks dispersed local losses, not just one voice.
+
+Original first128batch verified descriptors contain48ambient negatives,8broadbare positives,12Kokoro carrier negatives,24other synthetic positives,12nearwords,8sourcebalancedbare negatives,16other synthetic negatives. This is the observed firstbatch composition, not exhaustive source inventory. Current31644audit covers broadbare positives/sourcebalancednearword pools, not all original main families or full commanded positive support. Next inventory and audit the original synthetic positive/negative sequence cache with its unchanged prefix alignment and masks across the same three finalweights; no new training or coefficient selection yet.
