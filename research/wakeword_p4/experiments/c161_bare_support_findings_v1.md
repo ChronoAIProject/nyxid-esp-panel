@@ -26,3 +26,13 @@ Legacy372 replay/score actualexit0; all376archive members verified, all4arms sav
 ## Jenny complete consumed coverage
 
 Jenny408 replay/score actualexit0; all412archive members size/SHA verified, all4arms UINT8 events rescored. Target33/36(bare9/9,commands24/27), sameC161, one time-command lost vsdaily/mixed34/36(commands25/27). No target gains vsdaily/mixed in this cohort. Other synthetic/reciprocal containers58/360 vsdaily65/mixed60/C16144; diagnostic families, not daily false-alarm frequency or a zero gate. Reduced other-word count does not automatically compensate for lost command. Reused9.614419583h background0events all4, no new exposure. Joe/Mac/trainingfit pending, C161 baseline retained.
+
+## Joe, Mac and full training-fit completion
+
+Joe360 replay/score actualexit0; all364archive members verified. All4arms0/72 target whole-utterance-unclassified; carrier absent, no fabricated bare/command breakdown. Mac12 replay/score actualexit0; all13archive members verified. Samantha Nyx2/2,Daniel0/2,other8containers0events, same mixed/daily. Host synthetic only, no P4 runtime/numeric/command/resource claim.
+
+All three training-fit replays/scores actualexit0 with saved6stage execution receipt; per-member archives169old84/343new171/47bare23 verified, exactUINT8 events recomputed. Oldtraining bare5/6,command28/30,negative0/48; daily control6/6,28/30,0/48; mixed5/6,29/30,0/48; C1611/6,6/30,0/48. Newdaily171negative0events. Newbare20/23 isolated target containers triggered. Provisional labels are not acoustic truth; isolated fit does not evaluate all speech-prefix training conditions. No quarantined reinsertions, developer training inputs or acceptance access.
+
+## Intervention decision
+
+Complete planned consumed coverage now finished: builtin36,daily96,continuous2,Melo474,Legacy372,Jenny408,Joe360,Mac12 plus trainingfit84+171+23. Adding two bare-support slots modestly recovers British bare1container and2sgap1container, but USbare loses1, Jennytimecommand loses1, British commands exchange1gain/1loss, oldtrainingbare loses1, and newbarefit20/23 is incomplete. Daily six-cups conflict remains unchanged; Joe/Mac unchanged. Reduced constructed other-word counts are informative but do not justify trading away normal hits. Therefore no broad replacement established; keep C161 baseline, preserve candidate and all failed hypotheses without threshold/checkpoint/calibration rescue. Next step should localize the3newbare training misses and context dependence from saved data before another training proposal, rather than repeat bare quota/negative expansion blindly. Overall goal and Mac/P4 firstcommand/resource/stability requirements remain incomplete.
