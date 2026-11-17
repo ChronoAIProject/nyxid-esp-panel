@@ -1,0 +1,19 @@
+{
+  "schema": "parallel-history-expert-scope-archive-failure-v1",
+  "review_python_exit_code": 1,
+  "review_event_and_hit_audit_completed": true,
+  "archive_verification_passed": false,
+  "failed_archive": {
+    "path": "research/wakeword_p4/results/4090-parallel-history-expert-scope-evidence-failure-v1.tar.gz",
+    "bytes": 335519,
+    "sha256": "a7d4a615af4949e024100e978ca8282fec3c50a1e57b784d855789a884601612",
+    "actual_member_names": [
+      "research/wakeword_p4/results/4090-parallel-history-expert-scope-plan-v1.json",
+      "research/wakeword_p4/results/4090-parallel-history-expert-scope-original-v1.json",
+      "research/wakeword_p4/results/4090-parallel-history-expert-scope-review-v1.json",
+      "home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/review_parallel_history_expert_scope_v1.py",
+      "home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/replay_parallel_history_expert_scope_v1.py"
+    ]
+  },
+  "cause": "Review script used absolute __file__ paths in ledger; tarfile stripped leading slash. Bytes/event audit unchanged; archive path equality assertion failed. Original review output and script retained. Correct only archive canonical member paths in separate v2 packer, no reinference/redecode/reaggregation."
+}
