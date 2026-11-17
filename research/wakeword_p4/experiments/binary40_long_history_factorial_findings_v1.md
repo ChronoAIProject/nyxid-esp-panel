@@ -1,0 +1,19 @@
+# Original training sources under longer repeated history
+
+Locked4a891273: all90original stratified training-only native sources, same30condition IDs and bare/time/light source selection, same original B40INT8. Instead of one samevoice HeyNick negative, repeat that complete negative16times, each padded to480plus8160zeros, after81600zeroPCM prime. Histories range16.32–30.72seconds beyond prime. Equal-length zero prefix is control. No new audio, source/length/gap/threshold sweep, optimizer, dev/acceptance material or P4 inference. Actual BUILTIN_REF1thread execution exited0; nice10, numerical threads2 and disk-reserve check passed. Existing single-prefix INT8 reference reused without inference.
+
+Cross frontend suffix and pretarget explicit neural cache independently. Every180physical diagonal suffix agrees byte-for-byte with complete original-adapter replay. Artificial offdiagonal swaps are interventions, not deployed resets or independently natural histories. Preserve the original residual feature phase at the complete three-frame split. Full uint16 frontend outputs remain local with hashes; final feature padding only, no PCM trimming. All360 trailing-five-code metrics independently rederived using cumulative integer sums and original prefix support ledger.
+
+| Phrase /30 | Single silence/silence | Long silence/silence | Single silence/speech | Long silence/speech | Single speech/silence | Long speech/silence | Single speech/speech | Long speech/speech |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Bare |30|30|30|29|29|29|25|24|
+| Time command |30|30|30|30|30|30|30|28|
+| Light command |30|30|30|30|30|30|28|26|
+
+Columns are frontend-history/cache-history. All changes are losses, no gains in this fixed source scope; exact identities and sums are in the review. Quiet physical diagonal90/90 remains, long speech physical diagonal78/90 versus single83/90. Time/light additional losses appear only with combined speech-conditioned frontend and speech cache; this supports an interaction, not a universally bad frontend or cache-only explanation. Bare silence-frontend/speech-cache also loses one, so a frontend-only fix is not established.
+
+The intervention changes recent repeated acoustic context and frontend adaptation together; a finite neural receptive field can contain more repeated speech than the single-prefix version. Do not infer an unbounded neural memory, a unique PCAN defect, or duration-only causality. Repetition of one intended nearname is controlled stress, not natural conversation or population frequency. Five-code crossings at original automatic support references are not full event decoder, phonetic alignment, retained command or independent recognition accuracy. No comparison to new-context development failures is used to select individual training sources.
+
+Historical reconciliation: short history training/teacher controls already improved old continuous scores but lost quiet BR/Jenny coverage; broad native/cache training support stayed near-perfect. Current additional training-source command losses show that the single-prefix diagnostic does not cover all physical histories. They justify keeping longer, varied acoustic-state coverage as a specific unresolved requirement, not blindly rerunning paired BCE/KL, reducing a coefficient, resetting deployment state, or changing the threshold. PCAN/noise reduction already exists; adding it again is not a novel route. A future intervention must have a distinct mechanism and a matched control that preserves quiet support, with full original comparison and source roles fixed before gradients.
+
+C161 remains baseline, original B40/parallel remain unaccepted; Mac handoff bytes unchanged. Separate P4 numerical, resources, realtime, first-command and stability evidence remains pending. No training remedy or deployment promotion is selected from this diagnostic alone.
