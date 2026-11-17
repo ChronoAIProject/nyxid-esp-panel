@@ -1,0 +1,57 @@
+{
+  "schema": "binary40-widen-functional-v1",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "checkpoint_sha256": "f99e553b87aa18450f084eaaf9f261dcbd930c8f7d93bb2317d9dc93cbad8877",
+  "source_sha256": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_binary40_widen_v1.py": "22db7f0ff90e1418e8c34f6abe97ea4f296c1761c97013284259313cbe942040",
+    "research/wakeword_p4/training/causal_binary40_wide_v1.py": "fb344fc86f1122ad5b25092b893f44e3fa7b97e2a76bc8ea3699d8fdbef1b900"
+  },
+  "geometry": {
+    "input_channels": 40,
+    "channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      10
+    ],
+    "feature_stride": 3,
+    "stem_phase_feature_index": 0,
+    "receptive_field_frames": 306,
+    "right_context_frames": 0,
+    "state_elements": 13008,
+    "conv_mac_per_call": 100736
+  },
+  "parameters": 102145,
+  "batch_features_sha256": "95ed402665f9c6a4bf6edce7f7354eb2b26585cd52b0f701b55741e754f24cca",
+  "initial_max_probability_error": 7.748603820800781e-07,
+  "initial_max_logit_error": 7.62939453125e-05,
+  "chunk_checks": [
+    {
+      "chunk_frames": 3,
+      "max_logit_error": 0.0
+    },
+    {
+      "chunk_frames": 6,
+      "max_logit_error": 0.0
+    },
+    {
+      "chunk_frames": 37,
+      "max_logit_error": 0.0
+    },
+    {
+      "chunk_frames": 128,
+      "max_logit_error": 0.0
+    },
+    {
+      "chunk_frames": 846,
+      "max_logit_error": 0.0
+    }
+  ],
+  "causality_prior141_exact": true,
+  "finite_gradients": true,
+  "stem_duplicate_gradient_difference": 7.974546861078124e-06,
+  "optimizer_updates": 0,
+  "policy": "Fixed128channels and zero-sum split noise0.01RMS/seed727. Engineering gate only; no training benefit, INT8 feasibility or P4 claim. Future comparison must include equal continuation64control with same data/optimizer/final-only protocol; not a width/noise/seed sweep."
+}
