@@ -1,0 +1,749 @@
+{
+  "schema": "binary40-regularization-continuation-v1",
+  "pid": 2447165,
+  "training_supervisor_pid": 2441166,
+  "training_supervisor_starttime": "11514257",
+  "status": "completed-await-independent-review",
+  "stages": [
+    {
+      "name": "review-pair",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_binary40_regularization_training_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 8.852578207006445,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/review-pair.log",
+      "log_sha256": "0b20d90f8593ff1741ebb59f63c2bd045686a4e1a4722eb1a329aae7bce3a61b"
+    },
+    {
+      "name": "plan-export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_binary40_regularization_v1.py",
+        "plan",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.19446429499657825,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-export-control.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-export-decay",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_binary40_regularization_v1.py",
+        "plan",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12113974800740834,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-export-decay.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_binary40_regularization_v1.py",
+        "run",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 13.008336484010215,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/export-control.log",
+      "log_sha256": "5b9934c73fcd2c2292bd97fb7ad7619e9c71cf9ad3227d3fa39d6a0905cc712e"
+    },
+    {
+      "name": "export-decay",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_binary40_regularization_v1.py",
+        "run",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 10.625197458997718,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/export-decay.log",
+      "log_sha256": "d02a407b3e00952541fe04ba5da9abee66cc9f4eb265e0c336ed1d74af0d04af"
+    },
+    {
+      "name": "plan-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12832427000103053,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13782344400533475,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13984230300411582,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13230727201153059,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14388478000182658,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14017393400717992,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1397931900137337,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12205377200734802,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-control-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "builtin",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12488937099988107,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "daily",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13927038499969058,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "continuous",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1321603899996262,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "primed",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12733831199875567,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "jenny",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13878580200253054,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "joe",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.10116416600067168,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "melo",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13427299000613857,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-decay-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "plan",
+        "mac",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12679214900708757,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/plan-decay-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "replay-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.3540734039997915,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-builtin.log",
+      "log_sha256": "dc88fac8d3868255ebddc4b767834d417fb8242677e850bbb216fe153e2277c8"
+    },
+    {
+      "name": "score-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14686234699911438,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-builtin.log",
+      "log_sha256": "3c73331d3494264d13fd133f375787c84f29a5c41ccda7eb725ef556a770db3a"
+    },
+    {
+      "name": "replay-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 2.064061864002724,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-daily.log",
+      "log_sha256": "5ff7127d4863506171ead15396ca0163fb0edc96fa27e44894266e6ba82939dc"
+    },
+    {
+      "name": "score-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.18081983299634885,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.131212868989678,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-continuous.log",
+      "log_sha256": "94459d6164d02dc9d26b616c3a3ff30eb12698b7a5b9237e7a8f4e20f7329791"
+    },
+    {
+      "name": "score-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12587935500778258,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 100.6442841609969,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-primed.log",
+      "log_sha256": "4d55f32b88eadbe83c546a5e5db42ce65a581baee235ad774aa652353cac6c5f"
+    },
+    {
+      "name": "score-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.6488578169955872,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-primed.log",
+      "log_sha256": "1774d8449df7f2167972ed7b365dd1c07541a782d893269265bc48a0ad35880d"
+    },
+    {
+      "name": "replay-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 93.607075049993,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-jenny.log",
+      "log_sha256": "47cdaf08237aba1555a5e0677b6f5aca55454e1a6a9548af438c0ffb1dd69f76"
+    },
+    {
+      "name": "score-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.5678306769987103,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-jenny.log",
+      "log_sha256": "b63a21aebc39ec20dffbe62b076a9e7b07f1a1b01e4c8e844d35598a7494fa04"
+    },
+    {
+      "name": "replay-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 8.336352536993218,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-joe.log",
+      "log_sha256": "cd3a76841f279b653734f3648762c742e826a3fa8a362c11614a067277907024"
+    },
+    {
+      "name": "score-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.6076088410045486,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-joe.log",
+      "log_sha256": "7a00b4f7422c3b92d44f4073c8b75f4cc79f34d713a5dacd6b48df09987d627f"
+    },
+    {
+      "name": "replay-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 75.76680878199113,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-melo.log",
+      "log_sha256": "212ed5a102768ce3e1e5e790e6d49a00d6f13a516b9c9a88d1e10f170a2545a2"
+    },
+    {
+      "name": "score-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.2362598229956347,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-melo.log",
+      "log_sha256": "a5b53a32130fa8982ddb82a57cbaed7c63ea1f8f78b090a94a9514d8905cb226"
+    },
+    {
+      "name": "replay-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.793951821004157,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-control-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14429585699690506,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-control-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    },
+    {
+      "name": "replay-decay-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "builtin",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.0696815539995441,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-builtin.log",
+      "log_sha256": "c2dc0d1559370d715161633ed10794b93bccf8d68bf099b1eb19bfb5ff3b860b"
+    },
+    {
+      "name": "score-decay-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "builtin",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1583608649962116,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-builtin.log",
+      "log_sha256": "d82aab4db02ba48ee741f46d010b2ce930e17c87b1f97dc49cf30a92b59fc9ae"
+    },
+    {
+      "name": "replay-decay-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "daily",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 2.248740587005159,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-daily.log",
+      "log_sha256": "4557574bf630a4a770e9b2e0c38da810722c4e7ec73fc16dde4c3163f6a0a042"
+    },
+    {
+      "name": "score-decay-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "daily",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.19776583000202663,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-decay-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "continuous",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.0356050879927352,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-continuous.log",
+      "log_sha256": "acc54245abfcf052b71a27c4d91d0158c9eca0ccaf964cefbf0877634409decf"
+    },
+    {
+      "name": "score-decay-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "continuous",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.15084775700233877,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-decay-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "primed",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 100.42426855699159,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-primed.log",
+      "log_sha256": "77a768a504d193a3a109fae641e7e4c3ed72e2ba9862e6d375241b24d4534a82"
+    },
+    {
+      "name": "score-decay-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "primed",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.5201509030011948,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-primed.log",
+      "log_sha256": "42e63b0fb273c41929ff140876c38fd865d055ae650fb4cff883e340d26de1f8"
+    },
+    {
+      "name": "replay-decay-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "jenny",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 92.37656365700241,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-jenny.log",
+      "log_sha256": "5ea7f32b9b4f020bbe6d6a081c6f5152cbd0d24d1867382ecc76bb84d8fb300f"
+    },
+    {
+      "name": "score-decay-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "jenny",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.4357367729971884,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-jenny.log",
+      "log_sha256": "dcca10661334a0862ec4a6771de7a3563e722950f91af0f54feac9d29bab8804"
+    },
+    {
+      "name": "replay-decay-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "joe",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.846953590007615,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-joe.log",
+      "log_sha256": "e05f3112806277fe5e2de743bb5d80f6e351a2aadb507e6bed8505a7e052fb2c"
+    },
+    {
+      "name": "score-decay-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "joe",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.4740730470075505,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-joe.log",
+      "log_sha256": "e12ea722810f392ca06d191e19a1c2f803dac61543a5d3f6088c0565682330b1"
+    },
+    {
+      "name": "replay-decay-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "melo",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 77.3093256780121,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-melo.log",
+      "log_sha256": "28f6fb009c0f69f61dd2af237926b582a879b0b3236a5ed84073e12b7c58f8e9"
+    },
+    {
+      "name": "score-decay-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "melo",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1090382729889825,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-melo.log",
+      "log_sha256": "2d7cae9bc8ca5b4b592635c2425e8660c926f8a36ee05f9c0b2e2ebd50aaaf79"
+    },
+    {
+      "name": "replay-decay-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_regularization_v1.py",
+        "run",
+        "mac",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.7519516799948178,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/replay-decay-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-decay-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_regularization_v1.py",
+        "mac",
+        "decay"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13209373599966057,
+      "log": ".local/wakeword/binary40-regularization-continuation-v1/score-decay-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    }
+  ],
+  "continuation_plan_sha256": "64224152568bfe6842c2d2eff5bf7de239b726f336d9c08467f15e46fae90d28",
+  "actual_training_subprocess_receipts": [
+    {
+      "arm": "control",
+      "pid": 2441322,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1798.891182613006,
+      "log_path": ".local/wakeword/binary40-regularization-training-v1/control-execution.log",
+      "log_sha256": "e4dba00c35f5216b9eb03229bff65a9c94b1dd4c2b35eaa8a996a726df356749"
+    },
+    {
+      "arm": "decay",
+      "pid": 2467852,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1840.9218579169974,
+      "log_path": ".local/wakeword/binary40-regularization-training-v1/decay-execution.log",
+      "log_sha256": "f14bcaae0012337565990e5fd39739dca2cdb226b8b23c33cfe675d4ddc15e48"
+    }
+  ]
+}
