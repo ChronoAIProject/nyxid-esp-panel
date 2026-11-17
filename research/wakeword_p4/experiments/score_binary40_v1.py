@@ -5,6 +5,7 @@ import numpy as np
 from export_binary40_trained_v1 import sha
 from replay_binary40_v1 import R,COUNTS,output,lock
 from uint8_event_policy_v1 import event_steps
+C161='c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81'
 
 def read(p):return json.loads(Path(p).read_text())
 def archive(c):
@@ -29,14 +30,22 @@ def coverage(c):
     assert receipt['all_passed'] and receipt['execution_sha256']==sha(lock(c))
     if c=='melo':
         base=Path('.local/wakeword/melo-development-int8-v2');br=read(base/'result.json')
+        baseline_plan=R/'4090-melo-development-int8-execution-v2.json'
+        assert br['all_passed'] and br['execution_sha256']==sha(baseline_plan)
+        bm,=[m for m in read(baseline_plan)['models'] if m['id']=='c161']
+        assert bm['sha256']==C161 and sha(bm['path'])==C161
         paths={'c161':base/'c161/records.jsonl','binary40':root/'binary40/records.jsonl'}
         for name,p in paths.items():assert sha(p)==(br if name=='c161' else receipt)['record_files'][name]
         ledgers={k:[json.loads(s) for s in p.read_text().splitlines()] for k,p in paths.items()}
     else:
         base=Path(f'.local/wakeword/causal-source-balanced-{c}-v1');br=read(base/'result.json');assert br['all_passed'];ledgers={}
+        baseline_plan=R/f'4090-causal-source-balanced-{c}-plan-v1.json'
+        assert br['execution_sha256']==sha(baseline_plan)
         for name,rec,identity in [('c161',br,'hey_nyx-source-balanced'),('binary40',receipt,'hey_nyx-binary40')]:
             m,=[m for m in rec['models'] if m['model']==identity];assert sha(m['path'])==m['sha256']
             report=read(m['path']);assert report['all_passed'];ledgers[name]=report['records']
+            assert report['execution_sha256']==rec['execution_sha256']
+            if name=='c161':assert report['model']['sha256']==C161 and sha(report['model']['path'])==C161
     assert all(len(rows)==COUNTS[c] for rows in ledgers.values())
     groups={};records=[];hours=0.;bg={n:0 for n in ledgers}
     for i in range(COUNTS[c]):
