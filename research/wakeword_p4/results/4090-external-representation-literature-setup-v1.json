@@ -1,0 +1,45 @@
+{
+  "schema": "external-representation-literature-and-setup-v1",
+  "sources": [
+    {
+      "url": "https://arxiv.org/abs/2110.01900",
+      "bytes": 40768,
+      "sha256": "8a254d24b938311baf2c25975dd6309ef4332a726150ed0960b7a439805d63b3",
+      "title": "DistilHuBERT: Speech Representation Learning by Layer-wise Distillation of Hidden-unit BERT",
+      "read_scope": "Abstract only; continuous hidden-state distillation, HuBERT size75% reduction and speed73% increase reported by authors, not reproduced for KWS."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/s3prl/s3prl/master/s3prl/upstream/distiller/README.md",
+      "bytes": 1455,
+      "sha256": "d16e5d4ef60f287923de2fd95db166be1ba8877454d3fefa10a9cb733e04be22",
+      "read_scope": "Full README"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/s3prl/s3prl/master/s3prl/upstream/distiller/model.py",
+      "bytes": 11018,
+      "sha256": "43bc8c7cd0d9bbe9c01964f37cdebb818cf43e4768c07b9805dad55f60d40d65",
+      "read_scope": "First7500characters; config/model construction; no claim of full loss implementation review."
+    }
+  ],
+  "setup_failures": [
+    {
+      "action": "initial audit plan",
+      "actual_exit_code": 1,
+      "reason": "No transformers in /usr/bin/python3; before model inference/output creation."
+    },
+    {
+      "action": "pip dry-run without system override",
+      "actual_exit_code": 1,
+      "reason": "PEP668 externally-managed environment; no install happened."
+    }
+  ],
+  "dependency_install": {
+    "actual_exit_code": 0,
+    "transformers": "5.23.0",
+    "safetensors": "0.8.0",
+    "existing_torch_unchanged": true,
+    "no_new_model_download": true,
+    "log_sha256": "54603f7a9e0dccb5d864c98e2084fae0e6caa109f75fa7e617dae9066447750b"
+  },
+  "limits": "Literature motivates only a preflight; local ASR-finetuned wav2vec2 and 30k causal KWS differ from HuBERT/transformer distillation. No claimed research efficacy."
+}
