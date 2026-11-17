@@ -1,0 +1,744 @@
+{
+  "schema": "binary40-capacity-continuation-v1",
+  "pid": 2209014,
+  "training_supervisor_pid": 2204532,
+  "training_supervisor_starttime": "10342953",
+  "status": "completed-await-independent-review",
+  "stages": [
+    {
+      "name": "review-pair",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_binary40_capacity_pair_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 8.530360827993718,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/review-pair.log",
+      "log_sha256": "65d3202dee42b62b110d666bd6c9eedad8f4337756f8300164f38d53c782f2c6"
+    },
+    {
+      "name": "plan-export-control64",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_binary40_capacity_final_v1.py",
+        "plan",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06407569200382568,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-export-control64.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-export-wide128",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_binary40_capacity_final_v1.py",
+        "plan",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.05195317600737326,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-export-wide128.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "export-control64",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_binary40_capacity_final_v1.py",
+        "run",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 12.798007379009505,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/export-control64.log",
+      "log_sha256": "5456e15900e2901fd430b8aee734aae12d54db58c3173e75d08aa2507ec41b9e"
+    },
+    {
+      "name": "export-wide128",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_binary40_capacity_final_v1.py",
+        "run",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 11.844460011998308,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/export-wide128.log",
+      "log_sha256": "a13d2db9d238a8677bf25c4aa79c2e1ebad53a71c7988efdf2a7ffced603ebe6"
+    },
+    {
+      "name": "plan-control64-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "builtin",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07842846200219356,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "daily",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06942812600755133,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "continuous",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06753471400588751,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "primed",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07270817700191401,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "jenny",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06980813600239344,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "joe",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07000318200152833,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "melo",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.08171351499913726,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control64-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "mac",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06932434800546616,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-control64-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "builtin",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07187143999908585,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "daily",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07031914399703965,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "continuous",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06973264399857726,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "primed",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06988424499286339,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "jenny",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06873891600116622,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "joe",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06989235199580435,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "melo",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.08403139699657913,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-wide128-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "plan",
+        "mac",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06691670100553893,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/plan-wide128-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "replay-control64-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "builtin",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.2849169240071205,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-builtin.log",
+      "log_sha256": "0c4fac61d0699f8f5d1327fd26c861c3653d1b04c232cb23add6ad5cc6f70fb9"
+    },
+    {
+      "name": "score-control64-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "builtin",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.09297951000917237,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-builtin.log",
+      "log_sha256": "a68440daf4c4314a5d5be2b24529ed0c3452deeb971dd857242aa10527d5369e"
+    },
+    {
+      "name": "replay-control64-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "daily",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 2.1054494109994266,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-daily.log",
+      "log_sha256": "f0b659f1b050f6da38cf5df03fde43d7bac2d9a4641b906bf79125818cc67c82"
+    },
+    {
+      "name": "score-control64-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "daily",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.130990218007355,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-control64-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "continuous",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.9696414019999793,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-continuous.log",
+      "log_sha256": "303b2f71221ab55ef2c067b2c1b94e30051874d29fb2ada7d84150fc1b076d1a"
+    },
+    {
+      "name": "score-control64-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "continuous",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.0635230589978164,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-control64-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "primed",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 100.74272292500245,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-primed.log",
+      "log_sha256": "7cdad2d6b55b9bc6009375f3bd85a80d8a005c4a1589298ce8c51085f2cdf25d"
+    },
+    {
+      "name": "score-control64-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "primed",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.5731869430019287,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-primed.log",
+      "log_sha256": "445eb5f68a0cc2ea3533a648c90144d64bd7d28ea325940670859de26ecc8736"
+    },
+    {
+      "name": "replay-control64-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "jenny",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 94.35208151199913,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-jenny.log",
+      "log_sha256": "1777e1cd781875189c23a0fe393e6c1a98f12989c2c8223d06b2e273096d1876"
+    },
+    {
+      "name": "score-control64-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "jenny",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.651056663991767,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-jenny.log",
+      "log_sha256": "6b58d7a9c6dbc0e775e4af871ecc391490fbab78fde8597276f09171d2b4f00b"
+    },
+    {
+      "name": "replay-control64-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "joe",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.780651841996587,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-joe.log",
+      "log_sha256": "4b21bae7544ffa919e475801d66624a609337d3d8a44cbf1badedad5470dcdec"
+    },
+    {
+      "name": "score-control64-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "joe",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.4687450969940983,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-joe.log",
+      "log_sha256": "e12ea722810f392ca06d191e19a1c2f803dac61543a5d3f6088c0565682330b1"
+    },
+    {
+      "name": "replay-control64-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "melo",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 77.76369619301113,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-melo.log",
+      "log_sha256": "b7652fa7b2540c9d5aa5db5c02e1250197ecc0ece20783e5548f68609720e688"
+    },
+    {
+      "name": "score-control64-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "melo",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1305628730042372,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-melo.log",
+      "log_sha256": "3978de0e31de58cc942281550b8e50c9837e844febbfe77fe3fc00e77a596e9a"
+    },
+    {
+      "name": "replay-control64-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "mac",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.6646516929904465,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-control64-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-control64-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "mac",
+        "control64"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06329644800280221,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-control64-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    },
+    {
+      "name": "replay-wide128-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "builtin",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.3083066859981045,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-builtin.log",
+      "log_sha256": "cf4423fea65db2309d96df4350d4993abd2d8bb7b64ea1184c52c37ef04af253"
+    },
+    {
+      "name": "score-wide128-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "builtin",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.08429610599705484,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-builtin.log",
+      "log_sha256": "2d763a269b10176fc1ebb1abf580a0ad587c02db7018cfa9a5d6a73bad75cd60"
+    },
+    {
+      "name": "replay-wide128-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "daily",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 2.6273418630007654,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-daily.log",
+      "log_sha256": "7081e10d8c6958bef562923ee1d2f5802a4dbaf2b1a101e7ac8947cb982f7b48"
+    },
+    {
+      "name": "score-wide128-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "daily",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.11571216399897821,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-wide128-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "continuous",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1371826300019166,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-continuous.log",
+      "log_sha256": "09a38a49ce10c2441e8d0a2881eb52c378fc17d76c1965755e2716be6e684b0c"
+    },
+    {
+      "name": "score-wide128-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "continuous",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06533194400253706,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-wide128-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "primed",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 138.4392656580021,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-primed.log",
+      "log_sha256": "c008b4ce72c30208756905df5ab66d62abb27515927baef9288a8e5c87fe816a"
+    },
+    {
+      "name": "score-wide128-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "primed",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.4018734629935352,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-primed.log",
+      "log_sha256": "fa0d96b180315cd959cb2a9cf741cfc4939ffcdc726fc6b3359c15eafaef836a"
+    },
+    {
+      "name": "replay-wide128-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "jenny",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 130.0783897509973,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-jenny.log",
+      "log_sha256": "cca386aab69710f1838178ec26c9ed59b335c31dbbda2d152daf1dd1187cdba5"
+    },
+    {
+      "name": "score-wide128-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "jenny",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.5089801750000333,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-jenny.log",
+      "log_sha256": "a1ace52b70af2497cc31189df36c4a8c1f67e1d1e061bcbc809a9c8a599239e2"
+    },
+    {
+      "name": "replay-wide128-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "joe",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 11.033169014001032,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-joe.log",
+      "log_sha256": "b21160823efa101d565de1f39abeb6bed50758b7a16a551e2312dbda3988a90b"
+    },
+    {
+      "name": "score-wide128-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "joe",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.3940499610034749,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-joe.log",
+      "log_sha256": "9703e66918c6bd8565d200831d936c015506fa7396562e7647f5faee4036b6ff"
+    },
+    {
+      "name": "replay-wide128-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "melo",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 108.10204057100054,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-melo.log",
+      "log_sha256": "7a11ae3c38442c7aacaeba393ce43c5909b05235f0e2aacf2fe9f6355cf273f6"
+    },
+    {
+      "name": "score-wide128-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "melo",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.0308349269907922,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-melo.log",
+      "log_sha256": "b7426ecf2d91931e20038b7d36933d254bc2fd6e578529a35364c65eb841115b"
+    },
+    {
+      "name": "replay-wide128-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_binary40_capacity_v1.py",
+        "run",
+        "mac",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.7631555059924722,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/replay-wide128-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-wide128-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_binary40_capacity_v1.py",
+        "mac",
+        "wide128"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.061706427004537545,
+      "log": ".local/wakeword/binary40-capacity-continuation-v1/score-wide128-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    }
+  ],
+  "actual_training_subprocess_receipts": [
+    {
+      "arm": "control64",
+      "pid": 2204533,
+      "exit_code": 0,
+      "log": "/tmp/binary40-capacity-control64-v1.log"
+    },
+    {
+      "arm": "wide128",
+      "pid": 2223580,
+      "exit_code": 0,
+      "log": "/tmp/binary40-capacity-wide128-v1.log"
+    }
+  ]
+}
