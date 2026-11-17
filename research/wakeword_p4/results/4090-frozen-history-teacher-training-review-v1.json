@@ -1,0 +1,28 @@
+{
+  "schema": "frozen-history-teacher-training-review-v1",
+  "all_passed": true,
+  "every_batch_identical_to_original": true,
+  "every_paired_batch_identical_between_arms": true,
+  "pair_indices_match_fixed_schedule": true,
+  "steps": 20000,
+  "unique_paired_sources": 4320,
+  "terminal_receipt_sha256": "8281375512ba90b22fbbaefa7437d1a59ed74a78bb03581d5c279aa7aa9c26cf",
+  "plan_sha256": "378e2679edc412813c7cbc91131c499cbedf2bad7314d323e51fbc0a8ea65061",
+  "arms": {
+    "control": {
+      "training_report_sha256": "00059c49618cb289f9eaecf742636d6be8e9de4d4ff85ea191bf13aea6121caf",
+      "final_checkpoint_sha256": "abf2fee6c851fd9b00cdfb07a682eac4f912adb3fee39562f65aea1e02ff319f",
+      "initial_checkpoint_sha256": "881032c426c6ec1bc631631729584615d2e3cdb90802991398bdb788c7a783c6",
+      "teacher_unchanged_reported": true,
+      "optimizer_updates": 20000
+    },
+    "teacher": {
+      "training_report_sha256": "397e365966a1a0db426067e7caf43e1961b0cfe0e7ec45493ed579c416fdebd6",
+      "final_checkpoint_sha256": "f19388bd9ce8ead14ad6218cb03f825c1816dbedff87b7d21af16837aa5f8845",
+      "initial_checkpoint_sha256": "4fab5ae2b87f318cb1813b9a669c9e5f8343b9aa1644ba5b8c502043d998d558",
+      "teacher_unchanged_reported": true,
+      "optimizer_updates": 20000
+    }
+  },
+  "limits": "Exhaustive saved main hashes/descriptors checked against original and paired tensor hashes between arms; no new full tensor generation. Teacher immutability enforced in original training code and reported, not reconstructed intermediate tensors. Recognition/INT8/P4 unproven."
+}
