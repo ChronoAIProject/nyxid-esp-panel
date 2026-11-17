@@ -1,0 +1,749 @@
+{
+  "schema": "external-representation-continuation-v1",
+  "pid": 2601318,
+  "training_supervisor_pid": 2599129,
+  "training_supervisor_starttime": "12411306",
+  "status": "completed-await-independent-review",
+  "stages": [
+    {
+      "name": "review-pair",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_external_representation_training_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 8.421914935999666,
+      "log": ".local/wakeword/external-representation-continuation-v1/review-pair.log",
+      "log_sha256": "1f6cc38327a30f47f71d1df728899cd9d5709d07318a98a6a071d2c1c09cddf7"
+    },
+    {
+      "name": "plan-export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_external_representation_v1.py",
+        "plan",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1212198819994228,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-export-control.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-export-feature",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_external_representation_v1.py",
+        "plan",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12157238001236692,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-export-feature.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_external_representation_v1.py",
+        "run",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 11.439861979000852,
+      "log": ".local/wakeword/external-representation-continuation-v1/export-control.log",
+      "log_sha256": "f5cfa6799e9885695fba07da6775ee5b7e53fffe9de94c5d0245f435eaf6b9fc"
+    },
+    {
+      "name": "export-feature",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_external_representation_v1.py",
+        "run",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 10.494596726988675,
+      "log": ".local/wakeword/external-representation-continuation-v1/export-feature.log",
+      "log_sha256": "b5215c53d03f93917e8a18d420d065cc382f667bbd99dc2ac9f4bf3736ce3dc2"
+    },
+    {
+      "name": "plan-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14125049499853048,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.15911642200080678,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1359708570089424,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13451401601196267,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14641159999882802,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13403295099851675,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1475700900045922,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1333462630136637,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-control-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "builtin",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12355231199762784,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "daily",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1142741400108207,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "continuous",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13311423300183378,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "primed",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.11133063099987339,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "jenny",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13945094699738547,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "joe",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.12498876899189781,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "melo",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1489647300040815,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-feature-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "plan",
+        "mac",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.13624712600721978,
+      "log": ".local/wakeword/external-representation-continuation-v1/plan-feature-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "replay-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.243943497989676,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-builtin.log",
+      "log_sha256": "4b708e62ea07f26ad5e3e59395cd0cafc5d76365c3a4e51b92a1b3a2d190c048"
+    },
+    {
+      "name": "score-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1763454530009767,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-builtin.log",
+      "log_sha256": "c659e1277831c7e812c12e9debd304dd522df18308d288ef1e0859d56b923fb8"
+    },
+    {
+      "name": "replay-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 2.001771876006387,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-daily.log",
+      "log_sha256": "6ca908133e2aa895d61b9050b243b85cc4cdc4ffd75c8df617ee7d4d0abdbe01"
+    },
+    {
+      "name": "score-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.17655245000787545,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-daily.log",
+      "log_sha256": "c4edd129e523f17580bdd8c5940de47443d7f960dd6c39bdf6a3c986b88c72a5"
+    },
+    {
+      "name": "replay-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.055559351996635,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-continuous.log",
+      "log_sha256": "9ae8185c6c9eb65d1f62c16881409eddb6840613d8ab00c4d9edf1c6d8f324fd"
+    },
+    {
+      "name": "score-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.14539279000018723,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 97.72853186300199,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-primed.log",
+      "log_sha256": "0a13da619a1e6d34950dc13094fcc3e922cba4556ae2eb756914d3dceb819e45"
+    },
+    {
+      "name": "score-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.5373817030049395,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-primed.log",
+      "log_sha256": "ac9b938db2630bffe986e4cac0648ec48decb5560be63128df3d0bcf61400cb3"
+    },
+    {
+      "name": "replay-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 90.66337880099309,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-jenny.log",
+      "log_sha256": "0d6a90acc6e051ab11e3e348fb8bb7958c313fa3c1e7436b8e5b74bb234d0fe6"
+    },
+    {
+      "name": "score-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.539325198988081,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-jenny.log",
+      "log_sha256": "67f2ae8202823ea8f29cef916d96547928311e3c5764f75b6566ebc410a6b70a"
+    },
+    {
+      "name": "replay-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.79237398999976,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-joe.log",
+      "log_sha256": "9d23eead40d1ad9ab30a41698091f533fd896c3450b7716d1bd62a06bd559b35"
+    },
+    {
+      "name": "score-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.5765185460040811,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-joe.log",
+      "log_sha256": "3c82af0387156459ac9c27825aba24d010f658e546c2a53d50b190eccedb1a61"
+    },
+    {
+      "name": "replay-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 74.68626701500034,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-melo.log",
+      "log_sha256": "4837b76d59a3a211300f1b38d3412a9d62e3066f00bdc45a219367b27a27f918"
+    },
+    {
+      "name": "score-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1761088310013292,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-melo.log",
+      "log_sha256": "b499f7df49031f74773455784b5b880a44b551ea18d308454f0a771566977290"
+    },
+    {
+      "name": "replay-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.8023318000050494,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-control-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1516426500020316,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-control-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    },
+    {
+      "name": "replay-feature-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "builtin",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.074985152008594,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-builtin.log",
+      "log_sha256": "1a1cba57ab51aebddaf2aaecf8dca3a2e3b072efa0ca781dbc35de0950d8c4d7"
+    },
+    {
+      "name": "score-feature-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "builtin",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1476444980071392,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-builtin.log",
+      "log_sha256": "a68440daf4c4314a5d5be2b24529ed0c3452deeb971dd857242aa10527d5369e"
+    },
+    {
+      "name": "replay-feature-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "daily",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.966003962996183,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-daily.log",
+      "log_sha256": "700d2150f5ce4ae754fa8a20aa675cc521cf5ba013f061da417268c7529fb370"
+    },
+    {
+      "name": "score-feature-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "daily",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.17960408100043423,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-feature-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "continuous",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.054697389001376,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-continuous.log",
+      "log_sha256": "adb78a61a485ade4715ab431500163c08928eb09fd436d3f8674bddd1a102cb7"
+    },
+    {
+      "name": "score-feature-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "continuous",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.17020402500929777,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-feature-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "primed",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 96.46973980299663,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-primed.log",
+      "log_sha256": "cd4c40d1f29316d1b4004e4168c2e99b0296c50715074c18ac5e62af95d7a7a0"
+    },
+    {
+      "name": "score-feature-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "primed",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.485329585004365,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-primed.log",
+      "log_sha256": "d121a15c1fa62a243f7cadf386c25c05682ec7c2ccd41173da862628a9978ca9"
+    },
+    {
+      "name": "replay-feature-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "jenny",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 89.97751342099218,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-jenny.log",
+      "log_sha256": "5a933a63e96e9215831268f10962859b843d80145b5e601fb51a07f9d16f2710"
+    },
+    {
+      "name": "score-feature-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "jenny",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.4199208200006979,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-jenny.log",
+      "log_sha256": "f7e63ebdc68d6d54c4fb39d8bd7bbc4fe903e69e7ee0d036c684129286cc1418"
+    },
+    {
+      "name": "replay-feature-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "joe",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.817586874007247,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-joe.log",
+      "log_sha256": "35d1d25b6abbf5a466071f8696c5ad127bfc5ee7f4e763fb0005f343d5fc9712"
+    },
+    {
+      "name": "score-feature-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "joe",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.4898698470060481,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-joe.log",
+      "log_sha256": "3866bba178bd72241ad401e8795474774b2fb810ac73f427ba8cc987b586d180"
+    },
+    {
+      "name": "replay-feature-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "melo",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 74.19349870999577,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-melo.log",
+      "log_sha256": "9529fc8e78cda5243b6086a0968eaaceec84f98f9e82db097ae14876306841ca"
+    },
+    {
+      "name": "score-feature-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "melo",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1253802279970841,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-melo.log",
+      "log_sha256": "bb6770ab560d68dace73c0bb07d7277e336c04fe2962e94e26dfd9bd99e74c71"
+    },
+    {
+      "name": "replay-feature-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_external_representation_v1.py",
+        "run",
+        "mac",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.8098687610035995,
+      "log": ".local/wakeword/external-representation-continuation-v1/replay-feature-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-feature-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_external_representation_v1.py",
+        "mac",
+        "feature"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.1672211779950885,
+      "log": ".local/wakeword/external-representation-continuation-v1/score-feature-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    }
+  ],
+  "continuation_plan_sha256": "1ca75288e008f0ec8fa9d3d9d970b9e34dec36a0caaa10d333e70b8eeabd2b50",
+  "actual_training_subprocess_receipts": [
+    {
+      "arm": "control",
+      "pid": 2599132,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1594.493246951999,
+      "log_path": ".local/wakeword/external-representation-training-v1/control-execution.log",
+      "log_sha256": "111aa0d29a455e5d42f14b4f3fccad4bf964f60bb6109c4644546f6f8124b1e8"
+    },
+    {
+      "arm": "feature",
+      "pid": 2605389,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1564.185359504001,
+      "log_path": ".local/wakeword/external-representation-training-v1/feature-execution.log",
+      "log_sha256": "2b978a6a434d6ba4bef28136e73d2ff501c45a0bab5848b2939167d904be89b7"
+    }
+  ]
+}
