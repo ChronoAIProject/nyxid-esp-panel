@@ -1,0 +1,84 @@
+{
+  "schema": "multiscale-broad-command-support-inventory-v1",
+  "groups": {
+    "piper/bare": {
+      "rows": 6048,
+      "conditioning_ids": 672,
+      "source_ids": 2016,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 6048
+    },
+    "piper/light": {
+      "rows": 6048,
+      "conditioning_ids": 672,
+      "source_ids": 2016,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 6048
+    },
+    "piper/time": {
+      "rows": 6048,
+      "conditioning_ids": 672,
+      "source_ids": 2016,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 6048
+    },
+    "piper/timer": {
+      "rows": 6048,
+      "conditioning_ids": 672,
+      "source_ids": 2016,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 6048
+    },
+    "kokoro/bare": {
+      "rows": 180,
+      "conditioning_ids": 20,
+      "source_ids": 60,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 180
+    },
+    "kokoro/light": {
+      "rows": 180,
+      "conditioning_ids": 20,
+      "source_ids": 60,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 180
+    },
+    "kokoro/time": {
+      "rows": 180,
+      "conditioning_ids": 20,
+      "source_ids": 60,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 180
+    },
+    "kokoro/timer": {
+      "rows": 180,
+      "conditioning_ids": 20,
+      "source_ids": 60,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 180
+    },
+    "qwen/bare": {
+      "rows": 216,
+      "conditioning_ids": 24,
+      "source_ids": 72,
+      "frames_over846": 0,
+      "existing_aligned_map_matches": 0,
+      "generated_prefix_present": 216
+    }
+  },
+  "input_sha256": {
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f",
+    "research/wakeword_p4/results/4090-causal-command-prefix-reference-map-v1.json": "e5cf0805e6bef39eac5360df7a84c49d9f2589d3fd98a7e84874510569b8c1f0",
+    "research/wakeword_p4/experiments/causal_positive_coverage_batch_v1.py": "6488f87c736fdee383e53c1c6f748fa58d88ff8c2e22ac78e059df24c07b0b24",
+    "research/wakeword_p4/experiments/matchbox_command_material_findings_v1.md": "c3dd1eca4d2fb67b0a39928f399cf033f9dc08bc26788d002c15e673f45ae70f"
+  },
+  "interpretation": "Current broad insertion explicitly selects carrierbare only. Command rows already exist and include generated prefix metadata; zero source-id matches to the current MFA aligned map does not prove missing acoustic timing or label defect. Generated boundaries and MFA estimates are different provenance, neither phonetic truth. Rows exceeding846 cannot enter current sampler unchanged. Prior wholecommand/alignedprefix/positivecoverage failures retained; this is not authorization to silently truncate or relabel, nor evidence that broader commands cure generalization."
+}

@@ -1,0 +1,9 @@
+# Existing broad command support inventory
+
+Current causal broad insertion is bare-only, while existing training metadata also containscommand rows across Piper/Kokoro: Piper6048rows perlight/time/timer across672conditioning IDs; Kokoro180rows percarrier across20IDs. Thus18684totalcommandrenderedrows alreadyexist, all<=846frames. Qwen contributes216bare rows/24IDs but no command rows in this pack. Conditioning IDs are not independent human speakers.
+
+Allcommandrows retain generated_prefix_end_sample metadata; none of their sourceIDs matches the current432entry MFAaligned-prefix map used for original ARU/Arctic command labels. This is provenance/support asymmetry, not evidence that broad timing is invalid or missing. Generated boundary and forcedalignment estimate are distinct, neither phonetictruth. Do not silently substitute one for another or claim newsourcecoverage simply because rawdataexists.
+
+Source inspection and full completed descriptor census confirm current broad draws are160000barepositives; ordinary syntheticpositive slots supply480000originalpresentations. Existing broadcommand rows are available but not selected by that insertion. This cannot establish that excluding them caused BRregression. Previous broadpositive/wholecommand/alignedprefix and commandmaterial studies already report recall/confusion tradeoffs; repeating positivecommand additions alone is not a distinct remedy. Prior negativesupport gaps and missing matched lexical carriers must be accounted for.
+
+Reproducible metadata inventory inventory_multiscale_broad_command_support_v1.py actualexit0 and4090-multiscale-broad-command-support-inventory-v1.json bind featuremetadata/currentprefixmap/sampler/previousfindings. No inference, training,synthesis or exposure. Next decision must inspect generatedprefix provenance and existing command-label/negative-pair support before proposing newfit. Keep C161,originalMac handoffs and independent P4engineering requirements.
