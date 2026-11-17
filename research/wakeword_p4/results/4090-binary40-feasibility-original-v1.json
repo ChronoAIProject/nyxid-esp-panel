@@ -1,0 +1,251 @@
+{
+  "schema": "binary40-feasibility-original-v1",
+  "plan_sha256": "89d5815e2134393f7399f5a132b09de0c4fb12040cf6afd640831312b219ad63",
+  "model": {
+    "bytes": 64800,
+    "sha256": "577ce9b0b5f6d672af79b02dc5ea088ffde7ceb6cd2b5b2daf3ebbede44af32a",
+    "path": ".local/wakeword/binary40-feasibility-v1/random.tflite"
+  },
+  "torch": "2.15.0+cu132",
+  "tensorflow": "2.21.0",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "parity_calls": 64,
+  "maximum_probability_error": 8.344650268554688e-07,
+  "maximum_cache_error": 1.33514404296875e-05,
+  "inputs": {
+    "cache0": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10195358097553253,
+      "zero": -128
+    },
+    "cache1": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.11547692865133286,
+      "zero": -128
+    },
+    "cache2": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.11479860544204712,
+      "zero": -128
+    },
+    "cache3": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10763019323348999,
+      "zero": -128
+    },
+    "cache4": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.09829197824001312,
+      "zero": -128
+    },
+    "cache5": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.09455014765262604,
+      "zero": -128
+    },
+    "cache6": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10096103698015213,
+      "zero": -128
+    },
+    "chunk": {
+      "shape": [
+        1,
+        3,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10195358097553253,
+      "zero": -128
+    }
+  },
+  "outputs": {
+    "cache0_out": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10195358097553253,
+      "zero": -128
+    },
+    "cache1_out": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.11547692865133286,
+      "zero": -128
+    },
+    "cache2_out": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.11479860544204712,
+      "zero": -128
+    },
+    "cache3_out": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10763019323348999,
+      "zero": -128
+    },
+    "cache4_out": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.09829197824001312,
+      "zero": -128
+    },
+    "cache5_out": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.09455014765262604,
+      "zero": -128
+    },
+    "cache6_out": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.10096103698015213,
+      "zero": -128
+    },
+    "probability": {
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "scale": 0.00390625,
+      "zero": -128
+    }
+  },
+  "ops": [
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "CONV_2D",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE"
+  ],
+  "cache_feedback_requantization_required": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "cache_input_bytes": 6544,
+  "feedback_calls": 256,
+  "feedback_sha256": "d6387e30e10748483aa91c435c73f4992bd5f7aef2cf1553beef869764dcf4c5",
+  "fresh_reset_exact": true,
+  "all_neural_tensors_integer": true,
+  "trained": false,
+  "recognition_calls": 0,
+  "policy": "Single untrained transferred Binary40 graph. Analytic continuous uniform[0,26] feature streams, actual random-model float cache states for representative examples, not trained/audio calibration. CUDA PyTorch vs CPU Keras logits/cache parity, single builtin INT8 export, explicit cache requantization and zeropoint reset. No optimization, recognition, tuning or P4 qualification. External original40-channel frontend remains separate."
+}
