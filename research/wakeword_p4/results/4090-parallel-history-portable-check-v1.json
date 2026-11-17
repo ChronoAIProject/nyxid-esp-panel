@@ -1,0 +1,33 @@
+{
+  "schema": "parallel-history-portable-check-v1",
+  "plan_sha256": "5c360dc4e6d22e11dc36b3ec5ae3457a9e02242a20c1cfbc940536e8499723d8",
+  "all_passed": true,
+  "compile_actual_exit_code": 0,
+  "check_actual_exit_code": 0,
+  "compile_args": [
+    "g++",
+    "-std=c++11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "research/wakeword_p4/portable/check_c161_binary40_history_events_v1.cpp",
+    "-o",
+    ".local/wakeword/parallel-history-portable-v1/check-policy"
+  ],
+  "stdout": "All 1763 streams, 3961012 calls match saved events exactly.\n",
+  "stderr": "",
+  "streams": 1763,
+  "calls": 3961012,
+  "fixture": {
+    "path": "research/wakeword_p4/results/4090-parallel-history-portable-scores-v1.bin.gz",
+    "bytes": 96623,
+    "sha256": "0cb1cb1b9e6c695de500cb3f226c099a5b2a3c88327b9248b5c084542cdd1a2a"
+  },
+  "files": {
+    ".local/wakeword/parallel-history-portable-v1/check.log": "0f0df77d26bca7f7e1abf7c7302302d590555ccdabbe76ab00eebc9d808c3327",
+    ".local/wakeword/parallel-history-portable-v1/check-policy": "5b8a46c79bfc4ece1f6d5e3c40027b6ad59ec4a7e8b267eba44505fef0dfec7a",
+    ".local/wakeword/parallel-history-portable-v1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limits": "All authenticated actual triple-runtime traces in original order. Score-only six-byte/call fixture: C161/B40/historyuint8 then own/emitted/suppressed masks(1/2/4). Fixed native235/256/5/67 independent detectors + shared67emitted cooldown, tie priorityC161/B40/history. No PCM, inference, training, threshold/parent/policy sweep, P4/resources or new exposure."
+}

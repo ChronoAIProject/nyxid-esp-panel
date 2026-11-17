@@ -169,3 +169,7 @@ Prelocke730ff61: all1760consumed sources/8cohorts rawcode/clock/own-event/source
 ## Actual fixed triple runtime completed — 2026-11-17
 
 Prelockac02db49, runtime and independent review actualexit0:1763streams/3961012nativecalls, all3rawuint8/nativeclocks/own/emitted/suppressed events exactly authenticated. All1785archive members size/SHA verified; no new training/exposure or P4 claim. See parallel_history_expert_runtime_findings_v1.md. Next portable triple policy and third-model ABI/resource prerequisites; original dualMac package unchanged. Retain Nick/common-name and existing background risks, C161baseline and broad active goal.
+
+## Portable triple and third-model ABI verified — 2026-11-17
+
+Prelockd3be37a5, portable C++11 build/check all1763streams/3961012calls and third-model ABI audit actualexit0. All79expert tensor metadata and original export/signatures agree;7cache pairs byte-feedback, realzero-128. Threefiles190552B, retainedstate19108B are logical payloads only, not P4 arena/RAM. See parallel_history_portable_abi_findings_v1.md. Next optional separately named Mac triple handoff with originals/metadata/policy/scorefixture, anonymous download/member verification; preserve dualpackage and all recognition/P4 limitations. Broadgoalactive.
