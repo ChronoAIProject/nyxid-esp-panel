@@ -1,0 +1,43 @@
+{
+  "schema": "binary40-additive-carrier-training-review-v1",
+  "reviewer_sha256": "9b89f75af67e7432893d9d8279feddef3fe95cde675c8cc3325c5be73fd98628",
+  "plan_sha256": "da47a7c89173ea8f212c385f72f33af84fc25771e23cf1d0078c1e4bf424617f",
+  "terminal_receipts": [
+    {
+      "arm": "control",
+      "pid": 3170907,
+      "actual_exit_code": 0
+    },
+    {
+      "arm": "additive",
+      "pid": 3199587,
+      "actual_exit_code": 0
+    }
+  ],
+  "reports": {
+    "control": {
+      "path": "research/wakeword_p4/results/4090-binary40-additive-carrier-control-training-original-v1.json",
+      "sha256": "6556e78fe3536a52e7f77da2e5ea079d4d81a4ac531442380824a9b26d9b3893",
+      "final_sha256": "987873071e271801432795308a01e3187a527cf6b05f7c749cef45045e880a88"
+    },
+    "additive": {
+      "path": "research/wakeword_p4/results/4090-binary40-additive-carrier-additive-training-original-v1.json",
+      "sha256": "bdbd6e849560a49199f561dae78d52bf65364ee3e4c43da99d90e539cd66175e",
+      "final_sha256": "3e9ee9f9bedc2f90ae46303072fd6b023d721e49defd02a343cf50c5964d3cbc"
+    }
+  },
+  "all_sampling_checks_passed": true,
+  "control_every_batch_identical_to_original": true,
+  "treatment_every_batch_independently_reconstructed": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": {
+    "control": 2560000,
+    "additive": 2720000
+  },
+  "initial_control_exact": true,
+  "same_initial_backbone_tensors_exact": true,
+  "both_initial_models_exact": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
