@@ -1,0 +1,20 @@
+# Production-size PCM retention at actual triple event clocks
+
+Prelock9dc2c030, original production PCM helper compiled unchanged with strict hostcc;31independent counterfactual handoff probes completed actualexit0. Independent source reconstruction/event/hash/analytic-capacity review passed. No model inference, training, firmware modification, buffer resize, AEC/AGC processing, PCM disk copy or new exposure.
+
+Existing production panel_voice.c remains HiESP, not integrated C161/triple. Its configured lookback32000samples(2s) and callcapture960000samples(60s) are used exactly. Every complete existing builtin/US/BR context waveform including81600prime is fed continuously to the production preroll helper in160sample blocks. At each authenticated triple emitted event, copy the two wrapped segments using production FIFO push as start_call does. For that counterfactual call, continue wholePCM input, gate first connection notready for48000samples(3s), then ready; drain up to4x320samples per160sample capture tick for10seconds after event. This is a fixed synthetic schedule, not measured FreeRTOS/network throughput. A new independent handoff probe is made per event; it does not pretend idle detector execution continues during one real active call.
+
+All31emitted target events retained their **entire original target clip**, including wake phrase and connected command. Each192000sample retained/lookback+future output exactly equals the original contiguous reference suffix, by full array equality andSHA256. Independent review rederived all31output hashes and verified all36target identities. Minimum source-clip start margin9347samples=584.1875ms. Five target misses remain failures to wake and are not counted as retained-command successes. Wholeclip containment is a concrete synthetic sample guarantee for these31cases; no phonetic/ASR command boundary assumption is required, and this is not a universal future-latency guarantee.
+
+| Host fixture accounting | Bytes/samples |
+|---|---:|
+| Idle lookback allocated sample capacity |32000samples /64000bytes|
+| Per-call capture allocated capacity |960000samples /1920000bytes|
+| Maximum occupied call queue under fixed3sdelay |80160samples /160320bytes|
+| Minimum full-clip start lookback margin |9347samples /584.1875ms|
+
+Do not mistake queue occupancy160320bytes for the actual allocated1.92MB call buffer. Combined lookback/capture allocations are1984000bytes before frontend, model arenas/cache/scratch, task stacks, codec, network and panel resources. Production capability flags request PSRAM; host allocation does not prove device success. Post-AEC/AGC input replaces corpusPCM in production, and the real capture block/event-return scheduling can add different latency. Actual sender advances according to task readiness and may taskYIELD while backlogged; the synthetic four-frame-per10ms schedule here is not a timing prediction. Mute/reconnect intentionally clears audio and is covered only by earlier helper scenarios, not this new unmuted first-connect fixture.
+
+Mac/P4 next: report input processing identity and native sample clock; detector block begin/end and event-return sample; oldest retained sample and both copied wrapped ranges; ready transition and capture/encoder sequence/hash; high-water occupancy versus allocated memory; intentional gate clears, overflow/errors and dropped samples. Compare whole sourceclip or a separately declared synthetic command-start reference against oldest retained sample. Measure three-resident model arenas plus fullpanel internal/PSRAM peaks and actual capture/encode/network pacing. Keep misses separate from lossless retained-command hits. No new board/human requirement for synthetic research, no model promotion or generic context/teacher rerun selected.
+
+Original optional triple Release package remains unchanged. This adds reproducible host integration evidence on the research branch; it does not fulfill independent P4 numerical/resources/realtime/first-command/stability requirements. C161 baseline and broad useful-system goal remain active.
