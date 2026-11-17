@@ -1,0 +1,90 @@
+{
+  "schema": "binary40-regularization-training-review-v1",
+  "all_passed": true,
+  "every_batch_identical_to_original": true,
+  "every_paired_batch_identical_between_arms": true,
+  "pair_indices_match_fixed_schedule": true,
+  "steps": 20000,
+  "unique_paired_sources": 4320,
+  "terminal_receipt_sha256": "8b4613f7d4424288d039b7ecc431c90eef63308765f8598d6dbf81561b4cc33f",
+  "plan_sha256": "f61d7185a977adae77677de249439d0d5d311186a36b438130726b8c6ff88e80",
+  "arms": {
+    "control": {
+      "training_report_sha256": "4b848a5f9fae5fe1cb10b85742977287c79eafd3be92d28ff671a6675b2e3671",
+      "final_checkpoint_sha256": "140575dbdee7c2cb8dccf393449cab577a097b73ed24fcb82e05be2ef99023d9",
+      "initial_checkpoint_sha256": "3f459cc31457728edc27312a2542ad7f7088d116ada4e87e7889db2d3d133e32",
+      "teacher_unchanged_reported": true,
+      "optimizer_updates": 20000,
+      "teacher_kl_coefficient": 1,
+      "matrix_weight_decay": 0.0,
+      "matrix_parameter_names": [
+        "stem.weight",
+        "dw.0.weight",
+        "dw.1.weight",
+        "dw.2.weight",
+        "dw.3.weight",
+        "dw.4.weight",
+        "pw.0.weight",
+        "pw.1.weight",
+        "pw.2.weight",
+        "pw.3.weight",
+        "pw.4.weight",
+        "head.weight"
+      ],
+      "excluded_vector_parameter_names": [
+        "stem.bias",
+        "dw.0.bias",
+        "dw.1.bias",
+        "dw.2.bias",
+        "dw.3.bias",
+        "dw.4.bias",
+        "pw.0.bias",
+        "pw.1.bias",
+        "pw.2.bias",
+        "pw.3.bias",
+        "pw.4.bias",
+        "head.bias"
+      ],
+      "optimizer_groups_verified": true
+    },
+    "decay": {
+      "training_report_sha256": "e312780438e93cd4f404a47535bf5249b0212991dfad4081256fd60579ea9630",
+      "final_checkpoint_sha256": "67ddcab33ac239174bdc3c79b51de39f71cf6924f8824ae41a6410dba8be2897",
+      "initial_checkpoint_sha256": "8489889e93f48f403b6ead324de7770c97704328fd74411b8336d6018960d78f",
+      "teacher_unchanged_reported": true,
+      "optimizer_updates": 20000,
+      "teacher_kl_coefficient": 1,
+      "matrix_weight_decay": 0.01,
+      "matrix_parameter_names": [
+        "stem.weight",
+        "dw.0.weight",
+        "dw.1.weight",
+        "dw.2.weight",
+        "dw.3.weight",
+        "dw.4.weight",
+        "pw.0.weight",
+        "pw.1.weight",
+        "pw.2.weight",
+        "pw.3.weight",
+        "pw.4.weight",
+        "head.weight"
+      ],
+      "excluded_vector_parameter_names": [
+        "stem.bias",
+        "dw.0.bias",
+        "dw.1.bias",
+        "dw.2.bias",
+        "dw.3.bias",
+        "dw.4.bias",
+        "pw.0.bias",
+        "pw.1.bias",
+        "pw.2.bias",
+        "pw.3.bias",
+        "pw.4.bias",
+        "head.bias"
+      ],
+      "optimizer_groups_verified": true
+    }
+  },
+  "limits": "Exhaustive saved main hashes/descriptors checked against original and paired tensor hashes between arms; no new full tensor generation. Teacher immutability enforced in original training code and reported, not reconstructed intermediate tensors. Recognition/INT8/P4 unproven."
+}
