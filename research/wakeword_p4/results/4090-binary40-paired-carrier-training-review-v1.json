@@ -1,0 +1,44 @@
+{
+  "schema": "binary40-paired-carrier-training-review-v1",
+  "reviewer_sha256": "a586b77246bb8f67c217e94c78744e44145db4e61027951f8a5bbc6fc836bbc9",
+  "plan_sha256": "5d063a9e69ee7f58b2f2b49c02740e0bf735423ae0d1fb1485f8a83c68b8323b",
+  "terminal_receipts": [
+    {
+      "arm": "control",
+      "pid": 2802177,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-paired-carrier-continuation-v1/train-control.log",
+      "log_sha256": "7b803ec96df40ccbaa42b121ee89c19d31ecc68d8f326c6f95992dbdd9dddd15"
+    },
+    {
+      "arm": "paired",
+      "pid": 2831236,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-paired-carrier-continuation-v1/train-paired.log",
+      "log_sha256": "adced6c97d4562dd25f33b5814fb27374a17a62f6fad5701867bbb62d2dc60bb"
+    }
+  ],
+  "reports": {
+    "control": {
+      "path": "research/wakeword_p4/results/4090-binary40-paired-carrier-control-training-original-v1.json",
+      "sha256": "caf70255cc2e892f551d19383533d4772f854e471920fa656d345a3f60ede455",
+      "final_sha256": "96d98b97a39fce3520f55cd97bb8e4fb405bc43db06310667b31ca728a1065cc"
+    },
+    "paired": {
+      "path": "research/wakeword_p4/results/4090-binary40-paired-carrier-paired-training-original-v1.json",
+      "sha256": "6b49770ab29cd6c6af5ac9d3f5aeb41b7fc488c248953065a1edb141668fe657",
+      "final_sha256": "f184aa2b6027831f8a5c5f8c6134464e1c3914601642762d04e362138aa89814"
+    }
+  },
+  "all_sampling_checks_passed": true,
+  "control_every_batch_identical_to_original": true,
+  "treatment_every_batch_independently_reconstructed": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": 2560000,
+  "initial_control_exact": true,
+  "same_initial_backbone_tensors_exact": true,
+  "both_initial_models_exact": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
