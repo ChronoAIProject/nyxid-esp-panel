@@ -1,0 +1,4274 @@
+{
+  "schema": "parallel-context-streams-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/run_parallel_context_streams_v1.py": "dfbd0ab15c0ab695f4ed41676da943ab41fe292f1851ca6ce413fc2411b034fb",
+    "research/wakeword_p4/experiments/run_c161_binary40_parallel_v1.py": "e2780660c22c9258ad3e680fe18ffb3b3c0f48995c32cdbc898555f9e517906f",
+    "research/wakeword_p4/experiments/c161_binary40_parallel_sources_v1.py": "79fd64f82317e497a87f1a52ba43e40007b364fc334657ea0f95f1dd4c5805e0",
+    "research/wakeword_p4/experiments/replay_c161_binary40_parallel_events_v2.py": "06aa0e98e0425915bd7dcc5bc54e64fb390c713edfa502db8fdc10d3c4d5eeb8",
+    "research/wakeword_p4/experiments/collect_multispeaker_formal_v1.py": "5d5c8e2d702c3aaf49d42b7be17268448006bbe6ed2fb0686a48eee6d5733a88",
+    "research/wakeword_p4/experiments/uint8_event_policy_v1.py": "6a35d8e591545881a42c5d3e4a8b0bac62a4940bbf042a1b01fa44049409653f",
+    "research/wakeword_p4/training/features.py": "4adbe49be07aad3c2a010811ebfb208a5f76601db8a63f87e7f748468d191785",
+    "research/wakeword_p4/results/4090-parallel-prospective-replay-plan-v1.json": "4ef4c3b7a191dae0e62c04e02d79acb281f68da8a86d02682aa9b9208d24917e",
+    "research/wakeword_p4/results/4090-parallel-prospective-replay-original-v1.json": "83ba31ea5ea85898b33abd9be2a075ab7f0a9cf415ade999f04fb3587868c4c4",
+    "research/wakeword_p4/results/4090-parallel-prospective-review-original-v1.json": "36b983fd0a6dcb4eb39d422d98d8cf38d0a1dc04638e9d161ad7643dd50c77b8",
+    ".local/wakeword/parallel-prospective-language-v1/000-16k.wav": "b48dd286b9da6317c9c687a03bfd40ef268c354a004629f92668bd6367711be7",
+    ".local/wakeword/parallel-prospective-language-v1/012-16k.wav": "a6a42cac112aa9527deb045a9c61a57b581657d768adaf130f60711fff58d4ae",
+    ".local/wakeword/parallel-prospective-language-v1/013-16k.wav": "7f00aadca8c3d932851a1cad31472b4bc7298a5b81001754334aca12e9209022",
+    ".local/wakeword/parallel-prospective-language-v1/036-16k.wav": "5aa2542332d48f05c7255b54da7fb8c633d51a8ccc1e1a2778908bf484a246e2",
+    ".local/wakeword/parallel-prospective-language-v1/001-16k.wav": "ae963ae13d0a496c3a53ee5a80a9d8ce8a919d0fc878362fbb41b1f5bdfee141",
+    ".local/wakeword/parallel-prospective-language-v1/014-16k.wav": "04748d0269d083c1a9a4ec0262aaa24751542c1ee0fd5d7b983e2cfa6e7947bd",
+    ".local/wakeword/parallel-prospective-language-v1/015-16k.wav": "95e0a4cdbb574376f67da0994a3a199e9c969c191ea4362a6079b98360b101d3",
+    ".local/wakeword/parallel-prospective-language-v1/037-16k.wav": "a578a461a64452312d7f0b2c037c2d13c2ba7167af592d6d36f402d32b8ad78b",
+    ".local/wakeword/parallel-prospective-language-v1/002-16k.wav": "878c549ad7890b184e7d682ddf6d9d91398dd3792b949abfb2e652738a0d334b",
+    ".local/wakeword/parallel-prospective-language-v1/016-16k.wav": "f5135680a5f9f9a7be4559ed4e431683c5bb6b33681550c828b17707ecdcc677",
+    ".local/wakeword/parallel-prospective-language-v1/017-16k.wav": "bb4acadf85048e3ba9e6025c5d35a34847edc7d4502b2ea648031cf0d52cd871",
+    ".local/wakeword/parallel-prospective-language-v1/038-16k.wav": "1fcd470b765806088632d9a7c9704280ef2713063db0a827c8805b465d72eaee",
+    ".local/wakeword/parallel-prospective-language-v1/003-16k.wav": "bf31e50ecfb3d5d093e5094b65661b46596c9f30af04bf49bd6a811bbeecf58b",
+    ".local/wakeword/parallel-prospective-language-v1/018-16k.wav": "eaa79895e90ee9e7ae3833cc7369faa3c3c2fcbfc5a70bcba824c6ff7adafcde",
+    ".local/wakeword/parallel-prospective-language-v1/019-16k.wav": "fa6845d3ce794925c9d18d27f7361a169859b28ad8d1cb49115ccc53423bf53f",
+    ".local/wakeword/parallel-prospective-language-v1/039-16k.wav": "ca2b571c652594a13e8628e2c5441c6147ec1b01192b1f488cf3c8931f7bb758",
+    ".local/wakeword/parallel-prospective-language-v1/004-16k.wav": "25364e1800ffb637929fab45f3b792031d72ff1b6b9e7a6fb8f63efa5f1fcdcf",
+    ".local/wakeword/parallel-prospective-language-v1/020-16k.wav": "51dad70aba651897a852633d34930c2282a492210e074094b63750c7b07efabe",
+    ".local/wakeword/parallel-prospective-language-v1/021-16k.wav": "f3e5e12fa0b38b07cf0182ca84367de072d8c5c50bb55713e67b1bd9b25f1949",
+    ".local/wakeword/parallel-prospective-language-v1/040-16k.wav": "6840059e89eca66a5f9132b4e418f6e38ee098b677664663b95d1adc1245c2e1",
+    ".local/wakeword/parallel-prospective-language-v1/005-16k.wav": "13cb542aaefb45f248c79ddb9470081ddadce25cc9ba2236d8e5dd8f6c4079c1",
+    ".local/wakeword/parallel-prospective-language-v1/022-16k.wav": "2e916b861fd0d175dbbdf78d9ea415b9d57a5c9561137db2b418b76c87d8c856",
+    ".local/wakeword/parallel-prospective-language-v1/023-16k.wav": "2abb545d36b0267b4ef92fdbede15ba94fedeb3854f61fdb4e418ad6b26fefea",
+    ".local/wakeword/parallel-prospective-language-v1/041-16k.wav": "6f748d3c2ac3ab1be64b644352112c11cf4de52514c184c55077df1b196acb84",
+    ".local/wakeword/parallel-prospective-language-v1/006-16k.wav": "524a3e62e571760a8467b1c03a0f14b9f21f3dbbb396b55354663e899970eb07",
+    ".local/wakeword/parallel-prospective-language-v1/024-16k.wav": "39a635d1037826e768867efd4919c8a531d9a8a9c6208e677945706f766ebb26",
+    ".local/wakeword/parallel-prospective-language-v1/025-16k.wav": "b7750ecad28d479e36b82d0b8e7bf01fd021e684003f5a3961c877155ad1525e",
+    ".local/wakeword/parallel-prospective-language-v1/042-16k.wav": "5bd2c23b7594af5c87ecdab1a452ffedbc6d146e65ac1053ef5dfda0200e088e",
+    ".local/wakeword/parallel-prospective-language-v1/007-16k.wav": "35630e6727705fdf768699fe4d4259901ebbc9126f6da095600345d72307a572",
+    ".local/wakeword/parallel-prospective-language-v1/026-16k.wav": "15f3a668e3cd1be4a900fc4317841f50ba34b90522c1e722878c8cf1d9e88f57",
+    ".local/wakeword/parallel-prospective-language-v1/027-16k.wav": "f20e20f12c61c2490e7eea324da7f9cced1ece9c7acdb6a98560556133198a56",
+    ".local/wakeword/parallel-prospective-language-v1/043-16k.wav": "14d84d2b73f46e8b4e01bd9e109f94c588ccf6169ed58e90ba6e425701c7d85e",
+    ".local/wakeword/parallel-prospective-language-v1/008-16k.wav": "74f531f3f8bf264fe26f91aa3a5aec82ec0ddaed1823847cef4f335c20e33a81",
+    ".local/wakeword/parallel-prospective-language-v1/028-16k.wav": "3794279a2927f11adc8efe0cae53de1abfc47b0d2547ed5e7ef448856b77c2de",
+    ".local/wakeword/parallel-prospective-language-v1/029-16k.wav": "ab0474be615345c09c1200209bb9b80151685472524a70127ce0a1e66e9a6b9d",
+    ".local/wakeword/parallel-prospective-language-v1/044-16k.wav": "34bc3edf25b8bd57eae1ff6c0d072856d464658348613f49404799b5bcea4ed8",
+    ".local/wakeword/parallel-prospective-language-v1/009-16k.wav": "4b6e884daa4518c035f8c8b07dcb93791500ef08e71604cd6688fece5ac7dcf2",
+    ".local/wakeword/parallel-prospective-language-v1/030-16k.wav": "feabac257712534521d4659b8d02f45c6f8fa8a06ff968a82c4038a745a370e9",
+    ".local/wakeword/parallel-prospective-language-v1/031-16k.wav": "4bb1d4e9201a1a574a1c22078bbb89b650f9be9488a5bfa058cfd7c5b6a3c9b8",
+    ".local/wakeword/parallel-prospective-language-v1/045-16k.wav": "09d0204016521a176e152b9b43c7b4e7356fbe6373ef872f1223a2830f4bfb78",
+    ".local/wakeword/parallel-prospective-language-v1/010-16k.wav": "7b137c5b40f6f3ed28dbd3bedef5fb348f354df8f763e311d2c52b2b5fcf0731",
+    ".local/wakeword/parallel-prospective-language-v1/032-16k.wav": "a0e69340b2124069649bf4130e6f20eaaaaa833f6a4af70a9bc5069be6930f9f",
+    ".local/wakeword/parallel-prospective-language-v1/033-16k.wav": "bd9fc3dc7f48a8d8225e3f597d6ff3c8581492a174f248b1d61784fab9adac70",
+    ".local/wakeword/parallel-prospective-language-v1/046-16k.wav": "f707fc27ecec2c477c7d81315c87296270c6eb9680052f3bcf7832b707046d5e",
+    ".local/wakeword/parallel-prospective-language-v1/011-16k.wav": "66aaf7f52276d1b1460a558bc18c7063ad133f86095f8e9eb459e8a116f6dddb",
+    ".local/wakeword/parallel-prospective-language-v1/034-16k.wav": "b84ddc9ba313f1ff54a3b5f9bcd88025cf44c100bc7e3d4185d60dad9c96d680",
+    ".local/wakeword/parallel-prospective-language-v1/035-16k.wav": "94fcb9c1884ccaf27b4d4dc824bd9dfd78b4f944a7ab3055f93801a9b3c36c21",
+    ".local/wakeword/parallel-prospective-language-v1/047-16k.wav": "faf5aeb3884a98512651964de9974d9e41623478da2e461900fd5174d2cad762",
+    "research/wakeword_p4/results/4090-parallel-melo-context-replay-plan-v1.json": "2a26ff6d15dde3c54817aa5c938f0341a7f8da26142a087687e77fbc9fbedc51",
+    "research/wakeword_p4/results/4090-parallel-melo-context-replay-original-v1.json": "7d67633dce3551a07ff91775e407452d9f2d686b0e0d840fb9dd59c6d194a4e5",
+    "research/wakeword_p4/results/4090-parallel-melo-context-review-original-v1.json": "591d8292f4d16892fcd4d03427edb2545c68af0b23c174463c45846eb0149f91",
+    ".local/wakeword/parallel-melo-context-language-v1/000-16k.wav": "346884058b2503ac912f415da015f69a2ea643b76488f0abe49f00fba4161af1",
+    ".local/wakeword/parallel-melo-context-language-v1/012-16k.wav": "3a93829d2d93a5495478f25fecddde58a2d574581dfb5fe5ea4124be2aa105b8",
+    ".local/wakeword/parallel-melo-context-language-v1/013-16k.wav": "455f16e3c52c1f749be73d59f8cdef41fecf185485cfbad246e151a8c84f0f76",
+    ".local/wakeword/parallel-melo-context-language-v1/036-16k.wav": "38adcd66ca6db77ae487e65e144206710e900478675ef26f37a2a4adfcf1985f",
+    ".local/wakeword/parallel-melo-context-language-v1/001-16k.wav": "dcdfdfb1f0abd2a5365d6f3925467b1fbd96d0e8619ddd23696aefce5606fac1",
+    ".local/wakeword/parallel-melo-context-language-v1/014-16k.wav": "c5c43dedb5f175c5404a5959cfe14e81e05121177f894d1d61bc4b8684840b63",
+    ".local/wakeword/parallel-melo-context-language-v1/015-16k.wav": "0b9ce07f1a37a627249b3c697f5bac906725b213b8e58a41e0a96cb519c4b6d4",
+    ".local/wakeword/parallel-melo-context-language-v1/037-16k.wav": "75a1aa7b55ebde8ea810a024e6f9fcd1159a02a214a6cec2f51c6fb098087535",
+    ".local/wakeword/parallel-melo-context-language-v1/002-16k.wav": "2244ad46b8d06f54bc40d6abdcc58233bfc9e4d02760db76792f7404062b68f1",
+    ".local/wakeword/parallel-melo-context-language-v1/016-16k.wav": "119e3ca0174d2257b8f2801d10d8cb39a73afd7227262daa0815a7ac5600e865",
+    ".local/wakeword/parallel-melo-context-language-v1/017-16k.wav": "47daf90462c2408a577a5790afbbb5aaae2fb938e36ecc5d0b7cf35ef62d1b87",
+    ".local/wakeword/parallel-melo-context-language-v1/038-16k.wav": "8f1601b0f49df2594d5d00668f88fcc4efe052d502be7c7a285f52d2e3a777d3",
+    ".local/wakeword/parallel-melo-context-language-v1/003-16k.wav": "e2af06c97d19dc59ce90a177bcc44ebbb600cb99e4ee240537367da09ddc5a21",
+    ".local/wakeword/parallel-melo-context-language-v1/018-16k.wav": "09a347ecf882def92254ee63d559548d9525cf63487057334511f4d7ddb2a605",
+    ".local/wakeword/parallel-melo-context-language-v1/019-16k.wav": "202bf793075166c0a10632035568a020bb9a2e42a608510ad1cb55742803c59c",
+    ".local/wakeword/parallel-melo-context-language-v1/039-16k.wav": "c3e930ba9c70bab0e86549074061dde115fbd9b6d4a087e93997927ee8edfb5f",
+    ".local/wakeword/parallel-melo-context-language-v1/004-16k.wav": "ea1aa8bbdd08b778167a62cb46276ed12718e7a55a2a7bab73f174986498e729",
+    ".local/wakeword/parallel-melo-context-language-v1/020-16k.wav": "3f50a0392adbfe154da9ffc237a36a8bb3e6124c6c082d3fee66d7aefffce07c",
+    ".local/wakeword/parallel-melo-context-language-v1/021-16k.wav": "7bcdadf3aad2ff89dd21e89c72427831aab57cb2b12c37b15fb252a3427cae10",
+    ".local/wakeword/parallel-melo-context-language-v1/040-16k.wav": "055262a6dfef6bd2740e0c00526c2320207857ed7a4eec3fdbe1d4a61126551d",
+    ".local/wakeword/parallel-melo-context-language-v1/005-16k.wav": "883bcd9b28682acd5eca0342c786d4aec743caa6076df1b7084be5a8b69cccf3",
+    ".local/wakeword/parallel-melo-context-language-v1/022-16k.wav": "c43a10726730e47906aa92519caba7beaaf0542f152f715f584714cf3a04f98a",
+    ".local/wakeword/parallel-melo-context-language-v1/023-16k.wav": "11efdfe08e894dedfc2dadf8402e7350b114bd598fe667d919b8d5eb99d9ceb3",
+    ".local/wakeword/parallel-melo-context-language-v1/041-16k.wav": "074d16504c53414d4628386cdbb746dae9965b49d2d00a339dbfd2734c9c773a",
+    ".local/wakeword/parallel-melo-context-language-v1/006-16k.wav": "6f2eb9e77c7c754ae2bf81a9ae9f41bf4cc7eef5530900a0c63d83c0e7e37785",
+    ".local/wakeword/parallel-melo-context-language-v1/024-16k.wav": "7dde8d7c38ea3b7a2b8b17c91d4e53168093506b62b2ccfa49b8b1cc811aee53",
+    ".local/wakeword/parallel-melo-context-language-v1/025-16k.wav": "7a664399e3afec5d9429b46594df8378bb677761c4432d63e264c8139026debf",
+    ".local/wakeword/parallel-melo-context-language-v1/042-16k.wav": "551cb36043d3fc33e86fc13741ddafccd76373cfa62f07b8eba8fa2d25fdaece",
+    ".local/wakeword/parallel-melo-context-language-v1/007-16k.wav": "fbf2f052a1b8f94fb450c5e28539dc6aab9757b7249132b0b995ccd6f87e0f94",
+    ".local/wakeword/parallel-melo-context-language-v1/026-16k.wav": "14bf68f522d310e6a557af664487fcf72b0809a71dccf1dc7763ee1c4ec1a784",
+    ".local/wakeword/parallel-melo-context-language-v1/027-16k.wav": "764fe4aef225855a7b19822e5c407af67fb494820d73b56d8cd74f179cbf26b7",
+    ".local/wakeword/parallel-melo-context-language-v1/043-16k.wav": "900e32e9c18c9964b784db8b912c04dbf580e77ff44a1a0f738963369186125b",
+    ".local/wakeword/parallel-melo-context-language-v1/008-16k.wav": "7be390fb108926921ddd1e7964133fcac829142eca1abff9307efea398c277b0",
+    ".local/wakeword/parallel-melo-context-language-v1/028-16k.wav": "d0037f8f2da394ef4cb9d31a1091400494071957ce6e54ef5359b5b3aa8bd99b",
+    ".local/wakeword/parallel-melo-context-language-v1/029-16k.wav": "73e4631e6e113aa9a2e4c8a02cf9d3caec83c80fcb01179424ce3431f9b0757b",
+    ".local/wakeword/parallel-melo-context-language-v1/044-16k.wav": "f61fa4ec9f0ac3df474fbc08952cf4c49ecab9f37f573949a09ec47656a3de30",
+    ".local/wakeword/parallel-melo-context-language-v1/009-16k.wav": "4e1099224fd23d6951538f7fa3e1c7507ea730b9aef4742316f1db5350f07e6b",
+    ".local/wakeword/parallel-melo-context-language-v1/030-16k.wav": "da5eef9fe658b3db7ce66713032c0862179cc16822d2961f695429c7ff0ff471",
+    ".local/wakeword/parallel-melo-context-language-v1/031-16k.wav": "634b3fba3af5af50b47268cae99968c4f936ecc8cec92554d5bfafdf18073793",
+    ".local/wakeword/parallel-melo-context-language-v1/045-16k.wav": "58c34313a582406a4b7ffc29e324a871929d0ad17a0a2e6caa84f71c17ce96a9",
+    ".local/wakeword/parallel-melo-context-language-v1/010-16k.wav": "d2644d07d04a2663aab6db676caa7ec69e362bc733c49a3be8853781e106982f",
+    ".local/wakeword/parallel-melo-context-language-v1/032-16k.wav": "8e5fa00479c3ea50e1b5d024d391275c34f17fb60dcd26db807056a257843849",
+    ".local/wakeword/parallel-melo-context-language-v1/033-16k.wav": "b2a886840bf79ae107df12d4f1b784b860caca88621098e1e5fbc11648d428e1",
+    ".local/wakeword/parallel-melo-context-language-v1/046-16k.wav": "a61f7f141aba830f44069008a44131c7655f6ae611f8673112af024951b45837",
+    ".local/wakeword/parallel-melo-context-language-v1/011-16k.wav": "e303d6ff04b46d346999554593c4edb099f196e32a36d8dbca5f510675f7c860",
+    ".local/wakeword/parallel-melo-context-language-v1/034-16k.wav": "d990a78a132e818da153944c42dfd4f6f28229449b6f1bc73540f06d864d63b2",
+    ".local/wakeword/parallel-melo-context-language-v1/035-16k.wav": "c6cba02fc1cdd30ad9490a8171a3cf518464f4bf9dc714ce72cf10a2dcd1eb2c",
+    ".local/wakeword/parallel-melo-context-language-v1/047-16k.wav": "7e1f30aecac49abdc68db2898026c0dedc7299bbd728413b472dd883db34a02c",
+    ".local/wakeword/parallel-melo-context-language-v1/048-16k.wav": "f2fc8c06c19b77172cbec14f2bec0e12512b5da84644aae7e2bee149868cbc79",
+    ".local/wakeword/parallel-melo-context-language-v1/060-16k.wav": "20c023cd3f490fbfb4f24c5fe17465bd59ae4cc103e8cd9e62bf48421fadac8a",
+    ".local/wakeword/parallel-melo-context-language-v1/061-16k.wav": "d7a7da5604aeeacbe69b0725f9a75cb3f6b0521774830de2f0bf54cfedfad732",
+    ".local/wakeword/parallel-melo-context-language-v1/084-16k.wav": "97e6484c67b46e3911bfc0efe59d5beddd59c606ec9e30da71bf3e604f52100d",
+    ".local/wakeword/parallel-melo-context-language-v1/049-16k.wav": "1ad1540e20ec6460b57f91d98a860e8828290cb2ccf78aa54e00d7e35f421547",
+    ".local/wakeword/parallel-melo-context-language-v1/062-16k.wav": "7de97020f35fdcf88ef36b7740120d71df7594fd3f5d8a6f843779385689d26a",
+    ".local/wakeword/parallel-melo-context-language-v1/063-16k.wav": "97a34de4c09f8de4cabcf1352cf5879de43ba713959d377292919cb04a1cc733",
+    ".local/wakeword/parallel-melo-context-language-v1/085-16k.wav": "2b27aa79d9b9cdbb2bd201b6281d9e100fe314d5c272726433af12c72ae55e53",
+    ".local/wakeword/parallel-melo-context-language-v1/050-16k.wav": "ce05c543ed4adf9e84cf359ea78996fe131622f258ebead6c3ec1769ce275514",
+    ".local/wakeword/parallel-melo-context-language-v1/064-16k.wav": "97fdc97bd6895792b80e4f4d5a949056c870e6b2155f736840e3b3dbbddc82e4",
+    ".local/wakeword/parallel-melo-context-language-v1/065-16k.wav": "dd73a0935572f05850d8283c3d90e9f67c5db605ca99be04e8513a73eaec5379",
+    ".local/wakeword/parallel-melo-context-language-v1/086-16k.wav": "8e7ecf295b51ee11ddd2742cc8a450275558d7020beb8c9c5036dff2796fffc9",
+    ".local/wakeword/parallel-melo-context-language-v1/051-16k.wav": "505eec233466a8b089c940e4b9c93698cd68546c635a0c578d248272b04bfa75",
+    ".local/wakeword/parallel-melo-context-language-v1/066-16k.wav": "e9d9a8c7e8ebffbe64931c9c280cf8b0445e6f015d8332576243b52d8216630d",
+    ".local/wakeword/parallel-melo-context-language-v1/067-16k.wav": "5d8395cf3f02723a1878d62e5e3daaa2ae099f27507061f7180189b8bbd91eba",
+    ".local/wakeword/parallel-melo-context-language-v1/087-16k.wav": "d234990b44c0bf6880b89d6a257b2d86bb32e1378a9107dde756eda77f0aa086",
+    ".local/wakeword/parallel-melo-context-language-v1/052-16k.wav": "03872615bbec7b1f79d265f736e1d120fae197725ef30748c8a4926f93a7c5b9",
+    ".local/wakeword/parallel-melo-context-language-v1/068-16k.wav": "5ddd61cce1501bf3c61bc1ce20feec2e530df56211150e394d12e0eafca106b0",
+    ".local/wakeword/parallel-melo-context-language-v1/069-16k.wav": "b8a83d4430b733f84d0257f7821668d4994bb69b040e4c45cbbcc6c690a7c6f2",
+    ".local/wakeword/parallel-melo-context-language-v1/088-16k.wav": "86e260390109de9c03dbeec4fe7b5ba0369356701c25c26f1e970cfc3b41c7fd",
+    ".local/wakeword/parallel-melo-context-language-v1/053-16k.wav": "16992ddc8922e86180df52c13606390da02368ead939e307c67e92db2eea08de",
+    ".local/wakeword/parallel-melo-context-language-v1/070-16k.wav": "bc00916e18da9736792b1477ef5fd9c5b608a8d5ce7e61dc699a5f628cb8f865",
+    ".local/wakeword/parallel-melo-context-language-v1/071-16k.wav": "38773d10d8068ac1ad0bd303d673ea0b323d46bbdf340253d35f5f3167a2b080",
+    ".local/wakeword/parallel-melo-context-language-v1/089-16k.wav": "71a17175d7e71916c9a3d0300f8944f888faf5432b00a04db6f10c40d158eb2a",
+    ".local/wakeword/parallel-melo-context-language-v1/054-16k.wav": "5000c05015a8bf2f999ece827fe487a93ec529cd423666f93767c1126b686145",
+    ".local/wakeword/parallel-melo-context-language-v1/072-16k.wav": "e7a77be5991072a1795fe168c62638c6a1a37f1b3d10fdb5da0f4bd29396bc09",
+    ".local/wakeword/parallel-melo-context-language-v1/073-16k.wav": "3ddc1aa5ad16f5c4cca4d05466d04bced9c699d1b18954595cc5d1247ed88f56",
+    ".local/wakeword/parallel-melo-context-language-v1/090-16k.wav": "aa86aa120f0737172205435a5c8cd7c3c4d9ce1658667d8f2009ec6c07988e16",
+    ".local/wakeword/parallel-melo-context-language-v1/055-16k.wav": "b3f26bd7fede2d0edabbbea0ccdd778077af90a42b175bdbb8b26dc0d2f5a63e",
+    ".local/wakeword/parallel-melo-context-language-v1/074-16k.wav": "5b101a5978fd72643a36d740a29ef3a0250c0aa63f87be8808d5b16e451d450b",
+    ".local/wakeword/parallel-melo-context-language-v1/075-16k.wav": "311aa7e2e39af6ee297ac30d0b0150084ec391c1c61d7c7fc65a943de6b24f9f",
+    ".local/wakeword/parallel-melo-context-language-v1/091-16k.wav": "9fa1b52b101393aaeb22256bbcf81ee09d515013044032fb66d488a21d08fc81",
+    ".local/wakeword/parallel-melo-context-language-v1/056-16k.wav": "319c0d27cb3089e2560379266edd26973bc10041d5e95259965175ad72c5c98c",
+    ".local/wakeword/parallel-melo-context-language-v1/076-16k.wav": "6e3d0ddc21c7ff7d6ec8d9ec88ae8f71cab3787490422df84b8daf8c3c50c78b",
+    ".local/wakeword/parallel-melo-context-language-v1/077-16k.wav": "c8bd28efbc3616b7ac5e40bef989dc65dca33f084ef7c33ed2f17781d69fff20",
+    ".local/wakeword/parallel-melo-context-language-v1/092-16k.wav": "af73efb7a91469b7ecf49c67e4da097a14545f596685ec9ea4251840200dc628",
+    ".local/wakeword/parallel-melo-context-language-v1/057-16k.wav": "f2db44b86483becfb7ef4fbbbafcc39e9627c5573a7daaef0e64b842f30171a9",
+    ".local/wakeword/parallel-melo-context-language-v1/078-16k.wav": "d670f19ce460b72c40b2a4298b9c5775a863be993b9ca40e21e34df935d1cf1d",
+    ".local/wakeword/parallel-melo-context-language-v1/079-16k.wav": "a38b3c1ac71f7e495b33c6bed77b01409acdfcabf59b9673bfd1540af992c593",
+    ".local/wakeword/parallel-melo-context-language-v1/093-16k.wav": "41fb62d36509d15b2d195187ce94301f5c795eccbdd007fdb20ac2504db33811",
+    ".local/wakeword/parallel-melo-context-language-v1/058-16k.wav": "255409b87946bd06389405cc9ad857d08c10bf593c9ed1016a03e16ef7d8b2ea",
+    ".local/wakeword/parallel-melo-context-language-v1/080-16k.wav": "0b2cf90750639ab1bb203f7fe0dd864c67dbb2345ff53aba514511c5ca703c66",
+    ".local/wakeword/parallel-melo-context-language-v1/081-16k.wav": "f08b0d7b8b5652421c2cab29daef974518863ef98753a2b60a85b2a53bbc9e49",
+    ".local/wakeword/parallel-melo-context-language-v1/094-16k.wav": "01f36d5435bf5bed69785c8c496b521c85c15f9e02ac69568b3f11b9ca2994d1",
+    ".local/wakeword/parallel-melo-context-language-v1/059-16k.wav": "80dfe8af407c9f7ccce287cc6eee5d12b0a9f5d12cec266e4733ec35368a6cb0",
+    ".local/wakeword/parallel-melo-context-language-v1/082-16k.wav": "0831e8e39c4b87eae83ffe19948f01755fd64a4e9368803ec2c979f2ab03be9f",
+    ".local/wakeword/parallel-melo-context-language-v1/083-16k.wav": "0582ebea496c6d50dd0dbf01f6ca019d6ec58a5a112a285f2d609bb60235ed62",
+    ".local/wakeword/parallel-melo-context-language-v1/095-16k.wav": "8ec36804d83f87357a16bc5d8109a2c1e3a825eed429aa167227eae8c69c1489",
+    ".local/wakeword/causal-source-balanced-int8-v1/int8.tflite": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    ".local/wakeword/binary40-trained-int8-v1/int8.tflite": "454058039dd41e729ce82ac7f33a84edec4af9554615a632e3b33d47de38009c"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "soundfile": "0.14.0",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2"
+  },
+  "streams": [
+    {
+      "name": "builtin",
+      "items": [
+        {
+          "text_index": 0,
+          "source_index": 0,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/000-16k.wav",
+          "pcm_sha256": "47bd9c778e55c356bf4c5a372c03f822208c2fd8caecd7ac437ca27ebce8f3fb",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 12,
+          "source_index": 12,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/012-16k.wav",
+          "pcm_sha256": "73c867c278a16c55a1e3b099743cc8e457e8eaa7a03b3f84b6cae5cb007d1ce3",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 13,
+          "source_index": 13,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "Could you move your bag so that I can sit beside the window?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/013-16k.wav",
+          "pcm_sha256": "2c8c8190b5db66f4d64fdfc79118f5688452bedb194889b58f677efae92b1e0f",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 36,
+          "source_index": 36,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/036-16k.wav",
+          "pcm_sha256": "9b28fb1164988a2200ee8f5e5b7eb633821d2a0c6cc8746e82e7bc8b45244fdc",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 1,
+          "source_index": 1,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/001-16k.wav",
+          "pcm_sha256": "55ca4eff1688b7aa848159df0ca461b54af9a1a3c069683a34d44896aaade0ec",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 202,
+                "relative_sample": 15840
+              }
+            ],
+            "binary40": [
+              {
+                "step": 198,
+                "relative_sample": 13920
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 198,
+              "relative_sample": 13920,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 14,
+          "source_index": 14,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "We have already eaten, so please do not wait for us.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/014-16k.wav",
+          "pcm_sha256": "fc54c5c7d805aa06248e64a25361d7f3ffa4d36bc9acd58abb5065d2f30b4d3c",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 15,
+          "source_index": 15,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "She said the shop closes early on Sundays.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/015-16k.wav",
+          "pcm_sha256": "b0b5b4e9fb70f04eb6ae445b2856d172d637596753274f4dd18f8b6ff95b767b",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 37,
+          "source_index": 37,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/037-16k.wav",
+          "pcm_sha256": "790feef9f1643691ff76aa74e915f7c2f953cfe3afd81f28793fffd32fe75f78",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 2,
+          "source_index": 2,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/002-16k.wav",
+          "pcm_sha256": "0538972d0b7ef24b07c9a0a52bdaf23e2424f3457801cd084780b218ec30680d",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 198,
+                "relative_sample": 13920
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 198,
+              "relative_sample": 13920,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 16,
+          "source_index": 16,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "There is a little more soup in the pot if you are still hungry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/016-16k.wav",
+          "pcm_sha256": "7c03023c97e17e269464dec2257b2d5d19445ee2d99c52472ecceb7504ac5988",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 17,
+          "source_index": 17,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/017-16k.wav",
+          "pcm_sha256": "69a83bca2cfd0acc7dfeaf53ac3cb4525fb90e738a41005034f7b881f927ea8d",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 38,
+          "source_index": 38,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/038-16k.wav",
+          "pcm_sha256": "2ae99206d72dfd1bbc2554b1323fe5e74726bba35e8dddc7176ed0ae6f63cb64",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 3,
+          "source_index": 3,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/003-16k.wav",
+          "pcm_sha256": "102283725f0479bcec88bf6b44f39ee2d16d92c5534498a0ac8c7516cb8527d7",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 202,
+                "relative_sample": 15840
+              }
+            ],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 18,
+          "source_index": 18,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "The children would rather stay indoors until the rain stops.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/018-16k.wav",
+          "pcm_sha256": "4f50264519aa0c5684e184b2de9bfb95328d5b70213b301608274e0d23c9ac64",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 19,
+          "source_index": 19,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_conversation",
+            "text": "Let me finish this message before we leave for the station.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/019-16k.wav",
+          "pcm_sha256": "da2605664cd68a88890df640645403969c310cbaa17c375c069b2313019f0074",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 39,
+          "source_index": 39,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/039-16k.wav",
+          "pcm_sha256": "f7895712d2319e5a389ad13b36bc73a2ae77bf71e0ed4f11c24352dfddc4eada",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 4,
+          "source_index": 4,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/004-16k.wav",
+          "pcm_sha256": "748414cc830f17dd3613f29d61d400c6691976bc1a8d1007d7ecdaf73150bc30",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 20,
+          "source_index": 20,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "After the next announcement, we should know which platform to use.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/020-16k.wav",
+          "pcm_sha256": "2784440f76c78ae56adee1d410bb486e04735d76f67fad1d5e2b02e3f086a499",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 21,
+          "source_index": 21,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "I was hoping to visit next month, if the trains are running.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/021-16k.wav",
+          "pcm_sha256": "6e2aef42c34aee944af1f0e7571ed3b84bae9f00a9a80c5c73f143bf616e8d0b",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 40,
+          "source_index": 40,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Nick, did you remember to bring the charger from the car?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/040-16k.wav",
+          "pcm_sha256": "93f0fffd0486de32b78125cde74ab0e7846b1fa19869988b97d2641d96ec0fc7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 5,
+          "source_index": 5,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, put milk and apples on my shopping list.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/005-16k.wav",
+          "pcm_sha256": "74bb3bc734434e4c516a0cc174681d3efe8df33c8ad2f545433c11c68e223482",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 198,
+                "relative_sample": 13920
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 198,
+              "relative_sample": 13920,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 22,
+          "source_index": 22,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "You need to mix it slowly or the sauce will become lumpy.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/022-16k.wav",
+          "pcm_sha256": "7731ec2dc6674ee3b9979bdeb67ea7e2e22c69b951883c914d6a17fb724973ff",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 23,
+          "source_index": 23,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "This playlist has a mixture of old songs and newer recordings.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/023-16k.wav",
+          "pcm_sha256": "10af7468f235e79a488e0f1aa259f3b09d5cb6c43495de744c014159320a004a",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 41,
+          "source_index": 41,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "I spoke to Nick yesterday and he is feeling much better.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/041-16k.wav",
+          "pcm_sha256": "38e00d7de9940451c693c39459fd57d8180946f75195a15242914b93e87b7a1d",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 6,
+          "source_index": 6,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/006-16k.wav",
+          "pcm_sha256": "26cc11576a381e3def6a26aca497cebad78681eaa1dfa8a0a4647e0360de6e72",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 24,
+          "source_index": 24,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "There are six people waiting outside and another two on the stairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/024-16k.wav",
+          "pcm_sha256": "1ed18a8729335ce3f3257575e7a143a000b059044fde885ab65d391e1effeeed",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 25,
+          "source_index": 25,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "The price was sixty pounds, including delivery.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/025-16k.wav",
+          "pcm_sha256": "89ccaeecf8222dd87153a356228110ae3b57f25432fe1e97b352e93fe6cacefd",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 42,
+          "source_index": 42,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicky, your breakfast is getting cold.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/042-16k.wav",
+          "pcm_sha256": "2cf7edcae0e33c0b42ba7ac3d6df7085081d36c54f5b010c8e037b47bd20f09c",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 7,
+          "source_index": 7,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/007-16k.wav",
+          "pcm_sha256": "0080a2c08e636b74a6a50b42fadf010a4f46e8f011f422f030252c1da1836b69",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 202,
+                "relative_sample": 15840
+              }
+            ],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 26,
+          "source_index": 26,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "I found a nice little cafe near the museum yesterday.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/026-16k.wav",
+          "pcm_sha256": "25d84e00f13540d57e5417c775f5a4b139df81221af12253811ae50b2402e9f7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 27,
+          "source_index": 27,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_common_words",
+            "text": "That fixes the problem with the kitchen cupboard.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/027-16k.wav",
+          "pcm_sha256": "542a8254da139c020bb71761df10d30818c735d90e24dd14d692773593a7fcf0",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 43,
+          "source_index": 43,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Alex, would you mind answering the door?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/043-16k.wav",
+          "pcm_sha256": "e60cf393a4e4dc392bf87b826196f7f656eb188f58c087866d39ccc92190a657",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 8,
+          "source_index": 8,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, pause the television for a moment please.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/008-16k.wav",
+          "pcm_sha256": "fbb593994ca7b8976f7e4bd53018a625b17fb25f6c9edf7c30f7c62f94d198ce",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 198,
+                "relative_sample": 13920
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 198,
+              "relative_sample": 13920,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 28,
+          "source_index": 28,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "Would you leave a small light on in the kitchen tonight?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/028-16k.wav",
+          "pcm_sha256": "e27ea47fa0a4aa1e8ed1634eb2bded9bb12f53d838a65696715c633119988c99",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 29,
+          "source_index": 29,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "The timer should ring just before the potatoes are ready.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/029-16k.wav",
+          "pcm_sha256": "c3364063b1b6faedf7ac89ccde376750fd07c96c0e0e22a2bc5e85b851e54da7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 44,
+          "source_index": 44,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Mike, I think you left your coat in the hallway.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/044-16k.wav",
+          "pcm_sha256": "0521f355f0b23cf4436a9a483f84c1c15eefee973f831325ee99da3393fd4804",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 9,
+          "source_index": 9,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, make the room a little warmer before bedtime.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/009-16k.wav",
+          "pcm_sha256": "491ba6de801218e3aa0d801ee7a58a47b6bad5d9e4eb4e75e880d27d877a4fe9",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 30,
+          "source_index": 30,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "I turned the bedroom speaker down because the baby was asleep.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/030-16k.wav",
+          "pcm_sha256": "32c1b41d233bdd24878ffe9cf70032fc8b3db137a18b203085e50b0a6155217c",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 31,
+          "source_index": 31,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "Please check whether the back door is locked before you go upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/031-16k.wav",
+          "pcm_sha256": "66df465ba4126d2b00ea27675999d0a6ee08e10df3557ab95ee625ef5c3778b5",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 45,
+          "source_index": 45,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/045-16k.wav",
+          "pcm_sha256": "1940c023813ddeec6244138b4ce41ae7db92fbabbbb05dc2c8dfff98387dcc44",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 10,
+          "source_index": 10,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, cancel the reminder about the laundry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/010-16k.wav",
+          "pcm_sha256": "2205e5d7a7c2ee1bd13d39c00d75d76ce4804a1ffec20bb19ef52c424e2ee657",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 32,
+          "source_index": 32,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "The washing machine has finished, but the clothes are still wet.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/032-16k.wav",
+          "pcm_sha256": "85337ac4c388c564f600c7bbb082288ad4f9bb6f8a3e7d330b2bf15051969c5b",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 33,
+          "source_index": 33,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "We can open the windows once the traffic has settled down.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/033-16k.wav",
+          "pcm_sha256": "97d6dd90dbb5f9d0d0d2cc982a5f897d1e5673ece5139293d612b2c39aa1774d",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 46,
+          "source_index": 46,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Max, can you carry the other bag upstairs?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/046-16k.wav",
+          "pcm_sha256": "d22e817a8715885529902b3886a18c89a361dd0775b07a0d495ee8e718153cc8",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 11,
+          "source_index": 11,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, do I have any appointments after lunch?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/011-16k.wav",
+          "pcm_sha256": "0ad4f6bf3ecab72a201fc3847e4e73f74870418d9126059eedc5a0d8437e8742",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 197,
+                "relative_sample": 13440
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 197,
+              "relative_sample": 13440,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 34,
+          "source_index": 34,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "I will call you when the kettle starts boiling.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/034-16k.wav",
+          "pcm_sha256": "d36e6c714f119460ed701c8b7e6e1d245cd1a0926d3c02704f84aeb3535fef90",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 35,
+          "source_index": 35,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_household",
+            "text": "Please put the remote control back beside the sofa.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/035-16k.wav",
+          "pcm_sha256": "fffca8aa414a37d4a97c0e72207e9a1376324b7cf0c51d1416d1543a95a4bf22",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 47,
+          "source_index": 47,
+          "request": {
+            "role": "prospective-targeted-development-not-acceptance",
+            "voice": "turbo-builtin-default-already-consumed",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicole, are we still meeting outside the cinema?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "wav": ".local/wakeword/parallel-prospective-language-v1/047-16k.wav",
+          "pcm_sha256": "3998a035e076c69bb1de693d24cbde3164ebd95dd2b2ff370451b533e6a5bd49",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        }
+      ]
+    },
+    {
+      "name": "melo-US",
+      "items": [
+        {
+          "text_index": 0,
+          "source_index": 0,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 0,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/000-16k.wav",
+          "pcm_sha256": "f8250703b4e8ee40e4611351e2788e28fe61f51d136aabdcc57e1bd421eabd3b",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 211,
+                "relative_sample": 20160
+              }
+            ],
+            "binary40": [
+              {
+                "step": 210,
+                "relative_sample": 19680
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 210,
+              "relative_sample": 19680,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 12,
+          "source_index": 12,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 12,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/012-16k.wav",
+          "pcm_sha256": "63ff8237426026be5afc3f8adefe1e91a05834825e52e8fc10c3c6645e1f5c2d",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 13,
+          "source_index": 13,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "Could you move your bag so that I can sit beside the window?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 13,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/013-16k.wav",
+          "pcm_sha256": "5c447a3592eb6afcc90446988bd24a41ab84621f8e2e6452369a02eb30cef35d",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 36,
+          "source_index": 36,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 36,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/036-16k.wav",
+          "pcm_sha256": "d4070c6604bb93f41f245e820565ddeef18e75fc8ed68d51aadb8e81c5888824",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 1,
+          "source_index": 1,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 1,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/001-16k.wav",
+          "pcm_sha256": "5ae95c2dfe0aac30bd9bca5e37c2bd51b8084af164c7d56dcc02b1ae0c9089e5",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 210,
+                "relative_sample": 19680
+              }
+            ],
+            "binary40": [
+              {
+                "step": 208,
+                "relative_sample": 18720
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 208,
+              "relative_sample": 18720,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 14,
+          "source_index": 14,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "We have already eaten, so please do not wait for us.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 14,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/014-16k.wav",
+          "pcm_sha256": "ef68f9f8b270ebbe35e9d6a5027580dba9a5f332b727bb896e3210b1ec52076e",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 15,
+          "source_index": 15,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "She said the shop closes early on Sundays.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 15,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/015-16k.wav",
+          "pcm_sha256": "07fa56b55f7a1847f0bb45db954485e6d6875522d9c25e6b42a54f91220ec44c",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 37,
+          "source_index": 37,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 37,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/037-16k.wav",
+          "pcm_sha256": "399fc49240c8042dbe7fd299239eb3e4d1cd68b5cf24c92fde068324cf195766",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 2,
+          "source_index": 2,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 2,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/002-16k.wav",
+          "pcm_sha256": "9494b5d3c297e4df82c179bbf6e4d09c2bca60c2355029b1e38cceb232f1f1e3",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 212,
+                "relative_sample": 20640
+              }
+            ],
+            "binary40": [
+              {
+                "step": 210,
+                "relative_sample": 19680
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 210,
+              "relative_sample": 19680,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 16,
+          "source_index": 16,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "There is a little more soup in the pot if you are still hungry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 16,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/016-16k.wav",
+          "pcm_sha256": "b7894d62a09f188cd818d1c6dde2d0e61739ccd80815828f16c0f942be2e3ef8",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 17,
+          "source_index": 17,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 17,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/017-16k.wav",
+          "pcm_sha256": "34a09ea743242c9d6d62a6fe65d0fa4959835053920464d0db5a201f2b64bab0",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 38,
+          "source_index": 38,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 38,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/038-16k.wav",
+          "pcm_sha256": "4d612f825e859d8ac2b43eb2be0da42af09e31a41fb114e682cc348f0325dc72",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 3,
+          "source_index": 3,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 3,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/003-16k.wav",
+          "pcm_sha256": "901b5d1ebd8420d81a82d688e93003d98db4c516b3726ef964055e9b1d59f335",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 211,
+                "relative_sample": 20160
+              }
+            ],
+            "binary40": [
+              {
+                "step": 208,
+                "relative_sample": 18720
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 208,
+              "relative_sample": 18720,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 18,
+          "source_index": 18,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "The children would rather stay indoors until the rain stops.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 18,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/018-16k.wav",
+          "pcm_sha256": "1c279742c5856ea7643ec3dfa3788bb311ff8888ca0e5facf695ee40e0961197",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 19,
+          "source_index": 19,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_conversation",
+            "text": "Let me finish this message before we leave for the station.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 19,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/019-16k.wav",
+          "pcm_sha256": "e67ec307d9ff8054a54f3e151b600ee327b9954add099a79829af92d7c065000",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 39,
+          "source_index": 39,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 39,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/039-16k.wav",
+          "pcm_sha256": "640f2111e98e945661b213b43c5323aac6c1a7f4c3f3693c47adf0a6c2a5dccf",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 4,
+          "source_index": 4,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 4,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/004-16k.wav",
+          "pcm_sha256": "f8bfca3467f3461e3baa615007d68314559ba998322760f9a5cac0b03ac1f4d0",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 213,
+                "relative_sample": 21120
+              }
+            ],
+            "binary40": [
+              {
+                "step": 209,
+                "relative_sample": 19200
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 209,
+              "relative_sample": 19200,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 20,
+          "source_index": 20,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "After the next announcement, we should know which platform to use.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 20,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/020-16k.wav",
+          "pcm_sha256": "59adafba72f42aa3ffc4833b330228add42c2db555209a68a0bc24dfad23321f",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 21,
+          "source_index": 21,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "I was hoping to visit next month, if the trains are running.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 21,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/021-16k.wav",
+          "pcm_sha256": "d995bdd82ab72cd7b9501821f4c00641e11a8117ad11b6185ab1dd724fec578b",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 40,
+          "source_index": 40,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Nick, did you remember to bring the charger from the car?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 40,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/040-16k.wav",
+          "pcm_sha256": "e07bcb1c8f4c0d9fff1d6869b4eebda0674fb94fc92804c55a680c7876e35cdc",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 5,
+          "source_index": 5,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, put milk and apples on my shopping list.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 5,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/005-16k.wav",
+          "pcm_sha256": "926ec4cbffc8e787bb6da743054a6cccf8203f9a12ef83826fab5b10ae07caa5",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 211,
+                "relative_sample": 20160
+              }
+            ],
+            "binary40": [
+              {
+                "step": 209,
+                "relative_sample": 19200
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 209,
+              "relative_sample": 19200,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 22,
+          "source_index": 22,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "You need to mix it slowly or the sauce will become lumpy.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 22,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/022-16k.wav",
+          "pcm_sha256": "184df5502c57505c9752abc03d4f9733f1a4b0150b343b1c48004700d894b876",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 23,
+          "source_index": 23,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "This playlist has a mixture of old songs and newer recordings.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 23,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/023-16k.wav",
+          "pcm_sha256": "8567ffa6028930cdddd970683c8fba144257dec22a3e0ff956223229c7233449",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 41,
+          "source_index": 41,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "I spoke to Nick yesterday and he is feeling much better.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 41,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/041-16k.wav",
+          "pcm_sha256": "48d95d42ed9434f13ccb3ba76dcc7766ab8898bc4a1e05f91e271692278fa157",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 6,
+          "source_index": 6,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 6,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/006-16k.wav",
+          "pcm_sha256": "13612f768c10995aacb430bfedaaf8ff843f2e936d5ac6b16e9a387cb760fa1c",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 212,
+                "relative_sample": 20640
+              }
+            ],
+            "binary40": [
+              {
+                "step": 212,
+                "relative_sample": 20640
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 212,
+              "relative_sample": 20640,
+              "model": "c161"
+            }
+          ]
+        },
+        {
+          "text_index": 24,
+          "source_index": 24,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "There are six people waiting outside and another two on the stairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 24,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/024-16k.wav",
+          "pcm_sha256": "d5679ef9765fdb1a649557de0ea770612e9ab8d554c6833d17d8fd8f272550f2",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 25,
+          "source_index": 25,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "The price was sixty pounds, including delivery.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 25,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/025-16k.wav",
+          "pcm_sha256": "b42a81bf051f268567cb485760e6cc7f7b24a9165d2c8b133fb3809d6a01f369",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 42,
+          "source_index": 42,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicky, your breakfast is getting cold.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 42,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/042-16k.wav",
+          "pcm_sha256": "1e82e2d73c78ed92e5e883bedb33af141dfe9415b84d79e13c351181b7950c02",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 7,
+          "source_index": 7,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 7,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/007-16k.wav",
+          "pcm_sha256": "5efcb6aa1bd471b280726d8ec86441c551b9e418c6f5830b233fd94211b49e44",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 214,
+                "relative_sample": 21600
+              }
+            ],
+            "binary40": [
+              {
+                "step": 212,
+                "relative_sample": 20640
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 212,
+              "relative_sample": 20640,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 26,
+          "source_index": 26,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "I found a nice little cafe near the museum yesterday.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 26,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/026-16k.wav",
+          "pcm_sha256": "e7b6f55bb70e263eef09208a61d4f2a0bbb6c7214313270f4ad428e3a0c51b4a",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 27,
+          "source_index": 27,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_common_words",
+            "text": "That fixes the problem with the kitchen cupboard.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 27,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/027-16k.wav",
+          "pcm_sha256": "0af91893572129737bf3f9094eef8c307c0ad2f8a705f27ac974c655c6a68452",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 43,
+          "source_index": 43,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Alex, would you mind answering the door?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 43,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/043-16k.wav",
+          "pcm_sha256": "212684dbc545cb2d303db6e7530ca844350618ba14dc9ba7a4383a1a0e4abf62",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 8,
+          "source_index": 8,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, pause the television for a moment please.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 8,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/008-16k.wav",
+          "pcm_sha256": "aa778b4bda00dd77e2bd52ba88f01e8ef4e7409eacdc2ed573d13d24995d1c9c",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 213,
+                "relative_sample": 21120
+              }
+            ],
+            "binary40": [
+              {
+                "step": 211,
+                "relative_sample": 20160
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 211,
+              "relative_sample": 20160,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 28,
+          "source_index": 28,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "Would you leave a small light on in the kitchen tonight?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 28,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/028-16k.wav",
+          "pcm_sha256": "8cb953ca1e389b5b3d3b1dd86449622836dd049ef6cd139185f8450f480356a9",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 29,
+          "source_index": 29,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "The timer should ring just before the potatoes are ready.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 29,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/029-16k.wav",
+          "pcm_sha256": "3372ecfd2f78c4f67a8fb8a4a2e2d7c51a2216b51c9ea28f90986018c362b7dc",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 44,
+          "source_index": 44,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Mike, I think you left your coat in the hallway.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 44,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/044-16k.wav",
+          "pcm_sha256": "b9e2a7b9b8c611d5072a67c02773a5fe5353e790d2ebfdfaef4b105bda1114aa",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 9,
+          "source_index": 9,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, make the room a little warmer before bedtime.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 9,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/009-16k.wav",
+          "pcm_sha256": "4c2b3d60d70865f2c2efaa4d7c53e2afa9ae3b0d00c98a43baf5dccb11d68ff3",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 214,
+                "relative_sample": 21600
+              }
+            ],
+            "binary40": [
+              {
+                "step": 212,
+                "relative_sample": 20640
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 212,
+              "relative_sample": 20640,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 30,
+          "source_index": 30,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "I turned the bedroom speaker down because the baby was asleep.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 30,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/030-16k.wav",
+          "pcm_sha256": "913f7db718e8308fbd969c5b11eb64791ef9c9c8b0dc2489dea0fe76b2841b84",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 31,
+          "source_index": 31,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "Please check whether the back door is locked before you go upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 31,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/031-16k.wav",
+          "pcm_sha256": "28bdb3aaa9123b308eb2fb213d923f235ee768ee2d92ac153735a4854dc4769a",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 45,
+          "source_index": 45,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 45,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/045-16k.wav",
+          "pcm_sha256": "ae8ea5e49f5a37b3b3541becbc11c75813add2f0b45ee8d5b3522cc2c23b03ab",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 10,
+          "source_index": 10,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, cancel the reminder about the laundry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 10,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/010-16k.wav",
+          "pcm_sha256": "b6a01c37449ea3b8aa89ac5d4250b0081bd0930d6f628bcc72ee369b78c9c0e7",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 214,
+                "relative_sample": 21600
+              }
+            ],
+            "binary40": [
+              {
+                "step": 210,
+                "relative_sample": 19680
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 210,
+              "relative_sample": 19680,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 32,
+          "source_index": 32,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "The washing machine has finished, but the clothes are still wet.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 32,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/032-16k.wav",
+          "pcm_sha256": "4301b258744eeb2b0b6c84f69901c5cc8b89db5ff8b3b41ddec170b5571ebdd7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 33,
+          "source_index": 33,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "We can open the windows once the traffic has settled down.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 33,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/033-16k.wav",
+          "pcm_sha256": "ae0be27d191c25914e1b2d7484a9cc68eed9a4dc27fe959f8e0da4d77460f62e",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 46,
+          "source_index": 46,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Max, can you carry the other bag upstairs?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 46,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/046-16k.wav",
+          "pcm_sha256": "bdf7e4fe697d68542c793898aacdfd7c5044e24239e25e999dfb813061250e52",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 11,
+          "source_index": 11,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, do I have any appointments after lunch?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 11,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/011-16k.wav",
+          "pcm_sha256": "0669c7db0fd3236bb65fbf0835d545a2c7dceabfec08d11ff9ad64e64813cb60",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 216,
+                "relative_sample": 22560
+              }
+            ],
+            "binary40": [
+              {
+                "step": 216,
+                "relative_sample": 22560
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 216,
+              "relative_sample": 22560,
+              "model": "c161"
+            }
+          ]
+        },
+        {
+          "text_index": 34,
+          "source_index": 34,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "I will call you when the kettle starts boiling.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 34,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/034-16k.wav",
+          "pcm_sha256": "dd585c0cb9f4c4681847f3d4bcd5c7e12da648785855bee69a3cf4d5c649ffb7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 35,
+          "source_index": 35,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_household",
+            "text": "Please put the remote control back beside the sofa.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 35,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/035-16k.wav",
+          "pcm_sha256": "1f84effde3db342a607b5ef825998655a39c78a045a1c7811f5a861f4af2cfca",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 47,
+          "source_index": 47,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-US",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicole, are we still meeting outside the cinema?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-US",
+            "speaker_condition_id": 0,
+            "text_index": 47,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/047-16k.wav",
+          "pcm_sha256": "1f7ca925deefcba55f40beb68690ec59cef71df58380ff191ceda02ef4079c15",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        }
+      ]
+    },
+    {
+      "name": "melo-BR",
+      "items": [
+        {
+          "text_index": 0,
+          "source_index": 48,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 0,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/048-16k.wav",
+          "pcm_sha256": "8390c3690023ff2cc56c3f0d5b39509a10f54f595e8793d02275da7f7e00e8c0",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 199,
+                "relative_sample": 14400
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 199,
+              "relative_sample": 14400,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 12,
+          "source_index": 60,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 12,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/060-16k.wav",
+          "pcm_sha256": "5e8e02f0a2d0330915186b28c68db1685f0a66d0c16618d658ec6be7a599b835",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 13,
+          "source_index": 61,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "Could you move your bag so that I can sit beside the window?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 13,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/061-16k.wav",
+          "pcm_sha256": "ce50d2b40521a60e614c8023aada9d5d8e8855a30b533aebee1e6ec9fd93a0cb",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 36,
+          "source_index": 84,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, could you switch off the study lamp?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 36,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/084-16k.wav",
+          "pcm_sha256": "429742ad5ff60c7f4ae0bbe31b80fc3bbbb2c952a7aa071b829ce2df942c5bf9",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 1,
+          "source_index": 49,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 1,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/049-16k.wav",
+          "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 206,
+                "relative_sample": 17760
+              }
+            ],
+            "binary40": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 201,
+              "relative_sample": 15360,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 14,
+          "source_index": 62,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "We have already eaten, so please do not wait for us.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 14,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/062-16k.wav",
+          "pcm_sha256": "1cf1857a424f4a608af48e870f4b34dcad8ab6a6ef40bf6f23501167886ed728",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 15,
+          "source_index": 63,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "She said the shop closes early on Sundays.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 15,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/063-16k.wav",
+          "pcm_sha256": "7a63ec7b9a9d496e9860304e3fa979efc6111583f034ad53547897848a5ceb7f",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 37,
+          "source_index": 85,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 37,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/085-16k.wav",
+          "pcm_sha256": "c8958ee40c13d53d28948ab577a816e6ede4575998fd30f545b786350ebb6463",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 2,
+          "source_index": 50,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 2,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/050-16k.wav",
+          "pcm_sha256": "8387c09f6735771acea8b7806396cdf908c84ed4b2f558a1664264a35606079c",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 202,
+                "relative_sample": 15840
+              }
+            ],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 16,
+          "source_index": 64,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "There is a little more soup in the pot if you are still hungry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 16,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/064-16k.wav",
+          "pcm_sha256": "b0dcec3253fc323b51d006560120655dda8a87d1a4bb9ed648311a7df5dd5454",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 17,
+          "source_index": 65,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 17,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/065-16k.wav",
+          "pcm_sha256": "63a4bf8dc2779599f42ade6fd783a7bee8b2c4c59488348b2310165a1a6fae19",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 38,
+          "source_index": 86,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, is there any rain expected this afternoon?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 38,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/086-16k.wav",
+          "pcm_sha256": "86784d9522436efd4d770bbbee3b0633681eb97237e6eb3724e778f1de67bfb0",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 3,
+          "source_index": 51,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 3,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/051-16k.wav",
+          "pcm_sha256": "aa25d6c416a87720264b745eab1e9b593bd7e54a2933bdc7e97f05d1c77e64a4",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 18,
+          "source_index": 66,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "The children would rather stay indoors until the rain stops.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 18,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/066-16k.wav",
+          "pcm_sha256": "99f0dbac6d308aa921c3a63a35099bf1caff93beb1bb3dd45abc6566a9a61c95",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 19,
+          "source_index": 67,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_conversation",
+            "text": "Let me finish this message before we leave for the station.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 19,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/067-16k.wav",
+          "pcm_sha256": "fb847b32508c91754e5914e5029c65fafe1257c30f86a56f1e8566d7a32def77",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 39,
+          "source_index": 87,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nick, lower the music so I can answer the phone.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 39,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/087-16k.wav",
+          "pcm_sha256": "49ba12cbba26be9d5c92052bd685d588caabf3e46773ae61f1ce9cbeaf5d9ef9",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 4,
+          "source_index": 52,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 4,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/052-16k.wav",
+          "pcm_sha256": "44bc7b0761694e4a8950337b8fb0055a76b051c4a326910315f41b5bb8d677c6",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 20,
+          "source_index": 68,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "After the next announcement, we should know which platform to use.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 20,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/068-16k.wav",
+          "pcm_sha256": "9764a6307bae11975a5b844a679de984e23789d2bcbd0db500242decc23c84fb",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 21,
+          "source_index": 69,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "I was hoping to visit next month, if the trains are running.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 21,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/069-16k.wav",
+          "pcm_sha256": "79c0a1b1fc68034977e13732b608ceaceb332e48cb26e2bc0523d5291e40fd63",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 40,
+          "source_index": 88,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Nick, did you remember to bring the charger from the car?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 40,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/088-16k.wav",
+          "pcm_sha256": "7c32a0e723c345fd7a12b25157f423a4ef57dc623241d4d6b3357c387f32a8b8",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 5,
+          "source_index": 53,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, put milk and apples on my shopping list.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 5,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/053-16k.wav",
+          "pcm_sha256": "a90e116201556d0827aeeea71ad5c6bb17c1c9fb3f5f1b66b5e2db6094d8f945",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 201,
+              "relative_sample": 15360,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 22,
+          "source_index": 70,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "You need to mix it slowly or the sauce will become lumpy.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 22,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/070-16k.wav",
+          "pcm_sha256": "76673a1e10aaa1017ec9045d477938c01800877885e46ef8d5a4ee53ae3aa77e",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 23,
+          "source_index": 71,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "This playlist has a mixture of old songs and newer recordings.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 23,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/071-16k.wav",
+          "pcm_sha256": "6cd74fcb862678cc8d5e10595e3ef4e9f08cfc776f24ea4a682b1a34c6bb5d63",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 41,
+          "source_index": 89,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "I spoke to Nick yesterday and he is feeling much better.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 41,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/089-16k.wav",
+          "pcm_sha256": "caed9c8866fb0197239ad5fb073cad7340c7a7d205ae31742a00d62b27f91d73",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 6,
+          "source_index": 54,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 6,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/054-16k.wav",
+          "pcm_sha256": "e503c7f058e3bfedecc962dc504437cb065fc5ca47fa0f61484b4c72ba2948b8",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 201,
+              "relative_sample": 15360,
+              "model": "c161"
+            }
+          ]
+        },
+        {
+          "text_index": 24,
+          "source_index": 72,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "There are six people waiting outside and another two on the stairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 24,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/072-16k.wav",
+          "pcm_sha256": "f3dc9896e2d73edc55aab00f94c63da1a5640886066ab1ad0954df937386b697",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 25,
+          "source_index": 73,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "The price was sixty pounds, including delivery.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 25,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/073-16k.wav",
+          "pcm_sha256": "e5cd0e290c372ecc69b2d65d62222047104c977318adb4014361082e4a83e7fd",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 42,
+          "source_index": 90,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicky, your breakfast is getting cold.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 42,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/090-16k.wav",
+          "pcm_sha256": "181f96964eb962b1239ac7c64ad4d707ee5e93f0123d3d659f237ff2cb73d6e4",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 7,
+          "source_index": 55,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 7,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/055-16k.wav",
+          "pcm_sha256": "840a75b47dffd0875fa0fb9c8454232e92937182fc654ae900c10c4b003435e7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 26,
+          "source_index": 74,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "I found a nice little cafe near the museum yesterday.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 26,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/074-16k.wav",
+          "pcm_sha256": "459a08910b858cbab94420de5919b6298316aecf98647706785266258ace20af",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 27,
+          "source_index": 75,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_common_words",
+            "text": "That fixes the problem with the kitchen cupboard.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 27,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/075-16k.wav",
+          "pcm_sha256": "02bc97a5ccde8df17c125295d02c789779c916b46ff4f0c0cf6ecdd6c121e3a5",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 43,
+          "source_index": 91,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Alex, would you mind answering the door?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 43,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/091-16k.wav",
+          "pcm_sha256": "bae130b649b5ace6400882c4b6f350b9b528d569f42b126f1e25d8dbdfc0c092",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 8,
+          "source_index": 56,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, pause the television for a moment please.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 8,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/056-16k.wav",
+          "pcm_sha256": "c952779c4de405c5643d7df5bf331a9412d901a9d3f8499a0b4900ecdedd75a8",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 28,
+          "source_index": 76,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "Would you leave a small light on in the kitchen tonight?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 28,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/076-16k.wav",
+          "pcm_sha256": "de0e62218697ccd2af84a92fbbddb9a835d3e2018e45fe1409d14d48c802ef66",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 29,
+          "source_index": 77,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "The timer should ring just before the potatoes are ready.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 29,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/077-16k.wav",
+          "pcm_sha256": "83bd632e45bfc0438c0672d918123fa265f4e3eca6a8ffc5c5cd9d164f742734",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 44,
+          "source_index": 92,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Mike, I think you left your coat in the hallway.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 44,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/092-16k.wav",
+          "pcm_sha256": "3fe7e8876c3ef85df07ecb732c2735dce149deab2bb32d87dc19190d220e69ea",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 9,
+          "source_index": 57,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, make the room a little warmer before bedtime.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 9,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/057-16k.wav",
+          "pcm_sha256": "9d4f768044788e32e800ba6d623ae814b751f1ff24825cd2619489c91e8872e4",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 201,
+                "relative_sample": 15360
+              }
+            ],
+            "binary40": [
+              {
+                "step": 199,
+                "relative_sample": 14400
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 199,
+              "relative_sample": 14400,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 30,
+          "source_index": 78,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "I turned the bedroom speaker down because the baby was asleep.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 30,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/078-16k.wav",
+          "pcm_sha256": "4d126968790cd77eff8ecf74806f72ec3fa8a2d7613168296c81b837b0700d5c",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 31,
+          "source_index": 79,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "Please check whether the back door is locked before you go upstairs.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 31,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/079-16k.wav",
+          "pcm_sha256": "273e7ab769f855cc8f96dcc7a23610af3aa2b59dc9797c3a734387d2e7bb8fdb",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 45,
+          "source_index": 93,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 45,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/093-16k.wav",
+          "pcm_sha256": "71cf082706a5ebfa644a7287205787a2b57609923291d964070041ea6bfce868",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 10,
+          "source_index": 58,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, cancel the reminder about the laundry.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 10,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/058-16k.wav",
+          "pcm_sha256": "e6219ee300856bfc409ab1ff39da0f0720e6de241ab2f5b49d2aa8da36fd7e7f",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 200,
+                "relative_sample": 14880
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 200,
+              "relative_sample": 14880,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 32,
+          "source_index": 80,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "The washing machine has finished, but the clothes are still wet.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 32,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/080-16k.wav",
+          "pcm_sha256": "589ba542700e2b1d925ac6247fa2ce1b15f393af4693bac90781644b4b8c19d9",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 33,
+          "source_index": 81,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "We can open the windows once the traffic has settled down.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 33,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/081-16k.wav",
+          "pcm_sha256": "a9f91ab6d24b4e3d0ba96783a6ea66de778f27e72c9f5219e18944cbee2c2504",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 46,
+          "source_index": 94,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Max, can you carry the other bag upstairs?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 46,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/094-16k.wav",
+          "pcm_sha256": "a22f4b87d8b3eca8cbd3891cfffb5771423d18dc1cfa6cd22ba498724d563ad7",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 11,
+          "source_index": 59,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "nyx_connected_command",
+            "text": "Hey Nicks, do I have any appointments after lunch?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 11,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/059-16k.wav",
+          "pcm_sha256": "b33810092858b53e9712aae5f59e88f24751ccfb61a895bc69716b7eb84ff54e",
+          "isolated_events": {
+            "c161": [],
+            "binary40": [
+              {
+                "step": 199,
+                "relative_sample": 14400
+              }
+            ]
+          },
+          "isolated_emitted": [
+            {
+              "step": 199,
+              "relative_sample": 14400,
+              "model": "binary40"
+            }
+          ]
+        },
+        {
+          "text_index": 34,
+          "source_index": 82,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "I will call you when the kettle starts boiling.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 34,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/082-16k.wav",
+          "pcm_sha256": "845a81585fb2bf9a1e9abd3f763e1c39d5cdac87684faf60f5a0d363140cd628",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 35,
+          "source_index": 83,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_household",
+            "text": "Please put the remote control back beside the sofa.",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 35,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/083-16k.wav",
+          "pcm_sha256": "a3e89cc472a02784e17467e82decd8d16fdd50e0bf2a4d1bc2f3cb96586d9103",
+          "isolated_events": {
+            "c161": [],
+            "binary40": []
+          },
+          "isolated_emitted": []
+        },
+        {
+          "text_index": 47,
+          "source_index": 95,
+          "request": {
+            "role": "targeted-new-context-development-not-acceptance",
+            "voice": "melo-existing-development:EN-BR",
+            "group": "ordinary_name_address",
+            "text": "Hey Nicole, are we still meeting outside the cinema?",
+            "seed": 731,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2,
+            "speaker_condition": "EN-BR",
+            "speaker_condition_id": 1,
+            "text_index": 47,
+            "speed": 1.0
+          },
+          "wav": ".local/wakeword/parallel-melo-context-language-v1/095-16k.wav",
+          "pcm_sha256": "efba0b54a250747a8781a5a09a426fd68205af15c284d452a8309474af181a7b",
+          "isolated_events": {
+            "c161": [
+              {
+                "step": 196,
+                "relative_sample": 12960
+              }
+            ],
+            "binary40": []
+          },
+          "isolated_emitted": [
+            {
+              "step": 196,
+              "relative_sample": 12960,
+              "model": "c161"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gap_samples": 8000,
+  "prime_samples": 81600,
+  "profile": {
+    "threshold": 0.91796875,
+    "smoothing": 5,
+    "refractory": 67,
+    "native_samples": 480
+  },
+  "policy": "Three whole48clip physical streams, original shortgap8000between clips only, fixed interleave target/twoordinary/name. One continuous81600zeroPCM prime, no model/frontend/decoder/arbiter reset at any clip or prime boundary. Original C161/B40, online independent detectors/shared67call policy. Complete waveforms and raw scores/clocks/events retained, exact (start,end] block-return container ownership. Gap events separate, not automatically false or target; container counts not phonetic onset/first-command proof. Reused consumed audio, no new independent speaker/acceptance/background exposure, synthesis, training, threshold/order/gap sweep or tuning."
+}
