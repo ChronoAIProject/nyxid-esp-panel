@@ -1,0 +1,40 @@
+{
+  "schema": "external-representation-step-original-v1",
+  "plan_sha256": "b9207bd38f8c55bfe04d500d1e37a2547c3a22dfe8b7bd98874b8299d099c064",
+  "rows": [
+    {
+      "coefficient": 0,
+      "main_bce": 0.0005804304964840412,
+      "paired_bce": 0.00018768475274555385,
+      "feature_cosine": 1.0287493467330933,
+      "optimizer_steps": 1,
+      "optimizer_parameter_states": 26,
+      "gradient_max_error": 0.0,
+      "update_max_error": 2.9802322387695312e-08,
+      "control_projection_unchanged": true,
+      "student_updated": true
+    },
+    {
+      "coefficient": 1,
+      "main_bce": 0.0005804304964840412,
+      "paired_bce": 0.00018768475274555385,
+      "feature_cosine": 1.0287493467330933,
+      "optimizer_steps": 1,
+      "optimizer_parameter_states": 26,
+      "gradient_max_error": 1.1175870895385742e-08,
+      "update_max_error": 2.9802322387695312e-08,
+      "control_projection_unchanged": false,
+      "student_updated": true
+    }
+  ],
+  "trace": {
+    "path": ".local/wakeword/external-representation-step-v1/audit.npz",
+    "bytes": 4047002,
+    "sha256": "b376b7fb406319664be3e7dfc92228bdc70ef539a6320e6788cbfa69a17f1897"
+  },
+  "fixed_targets_unchanged": true,
+  "formal_training_reuse_eligible": false,
+  "checkpoints_saved": false,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "policy": "Fresh original student and identical seed726projection per two disposable clones; exactly first original main128/schedule4pair and one Adam update each. Verify actual gradient against saved S+coefficientD and analytic projection derivative; independent first-step Adam formula, all optimizer counters1. Control projection unchanged, treatment updates, fixed targets immutable. Save audit arrays only; no checkpoint/formal reuse, tuning, teacher inference or recognition/P4claim."
+}
