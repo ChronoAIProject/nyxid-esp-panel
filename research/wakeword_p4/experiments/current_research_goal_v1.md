@@ -30,3 +30,7 @@ Independent consumed review verified16archives/3574members and53successful execu
 ## Continuous decoder mechanism checked
 
 The fixed decoder exactly reproduces all eight continuous traces. All62missed target containers lack any five-code crossing; none has a blocked crossing. See binary40_continuous_decoder_findings_v1.md. Do not pursue decoder-rearm rescue from the post-positive supervision observation. Next isolate frontend-history versus neural-context effects on original training-only material, accounting for prior C161 context-pair failures before proposing new training.
+
+## Stratified history evidence confirmed in deployment bytes
+
+All30original training voices, bare/time/light90sources: physical silence frontend/cache INT8 crossings30/30each; physical speech frontend/cache25/30bare,30/30time,28/30light. All180diagonal continuation/full byte checks passed. Float speech results26/30,30/30,30/30; three extra INT8 losses preserved without threshold/calibration rescue. See binary40_context_int8_findings_v1.md. Next compare concrete candidate objectives against historical rendering/bounded/oneway consistency and C161 context-pair failures before selecting new gradients. No automatic promotion; full practical/Mac requirements remain.
