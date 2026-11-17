@@ -64,8 +64,8 @@ USB console equivalent: `panel-update status|check|install|auto on|off`.
 2. Merge the tested change to `main`, then tag that exact commit:
 
    ```sh
-   git tag v0.6.24 <tested-main-commit>
-   git push origin v0.6.24
+   git tag v0.6.29 <tested-main-commit>
+   git push origin v0.6.29
    ```
 
 3. The **Release firmware** workflow verifies the stable tag matches `VERSION`
@@ -86,3 +86,32 @@ Factory flash is for initial setup/recovery and can overwrite existing storage.
 Normal updates use only the app binary. Existing v0.6.23 and earlier boards need
 one explicit OTA or USB installation of this updater; subsequent releases update
 without the development machine.
+
+## v0.6.29
+
+The stable channel uses Hey Nyx C161 on all three hardware profiles and includes
+the board isolation from PR #17. Existing production credentials and storage
+are preserved. LCD-X8 has separate audio/display wiring and release assets.
+C161 sensitivity remains under improvement; this release uses the original
+model and deployed settings, without training or audio-speed changes.
+
+The earlier `preview-0.6.29-hey-nyx.1` also reports application version 0.6.29.
+Those devices require explicit app-only OTA or USB installation of the stable
+image; the automatic updater only accepts a strictly newer application version.
+
+## Branches and channels
+
+- `main` is the default stable branch. Merge approved/tested changes here and
+  tag `vX.Y.Z` matching `VERSION` to publish a formal release and update stable OTA.
+- `dev` is the integration/test branch. Each push runs host/model/release tests
+  and all board builds, then publishes an immutable `dev-vX.Y.Z-RUN-SHA`
+  prerelease. Its manifests point to that exact release. It never becomes
+  GitHub's latest stable release, and normal panels do not auto-install it.
+- Feature/fix branches target `dev`; promote tested `dev` changes to `main` by PR.
+  Keep `dev` synchronized with `main` after a stable release. Research branches
+  stay separate until a candidate is selected and tested.
+
+The C161 detector, voice integration and model preparation source are preserved
+unchanged from the existing tested implementation. See the
+[source receipt](evidence/2026-11-17-c161-source.json). Production builds select
+production endpoints rather than embedding the monitored local server address.

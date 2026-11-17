@@ -4,11 +4,13 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.19)
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/panel_board.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/panel_wake.cmake")
 set(EXTRA_COMPONENT_DIRS "$ENV{IDF_PATH}/examples/ethernet/basic/components/ethernet_init")
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 # IDF discovers component requirements in a separate CMake process. A build
 # property carries the selected dependency into that early expansion too.
 idf_build_set_property(PANEL_BOARD_BSP_COMPONENT "${PANEL_BOARD_BSP_COMPONENT}")
+idf_build_set_property(NYX_PANEL_WAKE_ENGINE "${NYX_PANEL_WAKE_ENGINE}")
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" PANEL_VERSION LIMIT_COUNT 1)
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION")
 set(PROJECT_VER "${PANEL_VERSION}")

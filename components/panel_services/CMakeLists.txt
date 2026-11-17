@@ -38,6 +38,11 @@ set(panel_sources
     status_bar.c
     wifi_qr.c
 )
+idf_build_get_property(_wake_engine NYX_PANEL_WAKE_ENGINE)
+set(_wake_requires)
+if(_wake_engine STREQUAL "hey-nyx")
+    list(APPEND _wake_requires panel_wake_runtime)
+endif()
 idf_component_register(
     SRCS ${panel_sources} "fonts/lv_font_noto_sans_sc_med_20.c" "fonts/lv_font_noto_sans_sc_speech_20.c"
     INCLUDE_DIRS "."
@@ -45,7 +50,11 @@ idf_component_register(
         esp_https_ota esp_http_client esp_http_server app_update
         esp_timer esp_websocket_client esp_new_jpeg esp_driver_jpeg esp_video
         json lvgl nvs_flash spi_flash quirc
-        product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib)
+        product_support esp_peer media_lib_sal esp_audio_codec esp-sr espressif__zlib ${_wake_requires})
+
+if(_wake_engine STREQUAL "hey-nyx")
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME=1)
+else()
 
 # Embed weights in each app slot: an OTA update must not depend on a separately
 # flashed model partition, or change any existing board's partition layout.
@@ -60,6 +69,7 @@ add_custom_command(OUTPUT "${_wake_binary}"
 add_custom_target(panel_wake_model DEPENDS "${_wake_binary}")
 add_dependencies(${COMPONENT_LIB} panel_wake_model)
 target_add_binary_data(${COMPONENT_LIB} "${_wake_binary}" BINARY)
+endif()
 
 set(NYX_PANEL_AGENT_DEV_API_URL "" CACHE STRING "LAN NyxID API origin for Agent Key development")
 set(NYX_PANEL_AGENT_DEV_LOGIN_URL "" CACHE STRING "LAN Agent Key verification page")

@@ -9,6 +9,9 @@ on:
       ref:
         required: false
         type: string
+      release_tag:
+        required: false
+        type: string
 permissions:
   contents: read
 jobs:
@@ -54,7 +57,15 @@ jobs:
           . "$IDF_PATH/export.sh"
           python3 tools/build_profile.py --profile '${{ matrix.profile }}'
       - name: Package production OTA and factory images
-        run: python3 tools/package_release.py --build 'build/profiles/${{ matrix.profile }}/production' --output dist --profile '${{ matrix.profile }}'
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          BOARD_PROFILE: ${{ matrix.profile }}
+        run: |
+          if [ -n "$RELEASE_TAG" ]; then
+            python3 tools/package_release.py --build "build/profiles/$BOARD_PROFILE/production" --output dist --profile "$BOARD_PROFILE" --tag "$RELEASE_TAG"
+          else
+            python3 tools/package_release.py --build "build/profiles/$BOARD_PROFILE/production" --output dist --profile "$BOARD_PROFILE"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ matrix.profile }}

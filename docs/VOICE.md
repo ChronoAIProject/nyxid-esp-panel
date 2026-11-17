@@ -87,9 +87,9 @@ are adapted without dropping samples. MusicPlayer and SpecAnalyzer release the s
 claims it. Ending a call releases the codec to idle wake listening when enabled.
 The panel does not upload microphone audio while waiting for its wake word.
 
-## Hi ESP wake-up and speech during connection
+## Hey Nyx wake-up and speech during connection
 
-Local WakeNet9 **Hi ESP** detection is enabled by default. The voice panel has
+Local **Hey Nyx (C161)** detection is enabled by default. The voice panel has
 a wake switch, and the daily service exposes `GET/POST /voice/wake`:
 
 ```json
@@ -103,7 +103,7 @@ the saved wake preference. An active call keeps exclusive audio ownership.
 
 After detection, the same microphone task keeps reading AEC/AGC-processed
 16 kHz mono samples while NyxID connects. A two-second local lookback protects
-speech that starts before WakeNet has confirmed the keyword. The call task posts
+speech that starts before the detector has confirmed the keyword. The call task posts
 an idempotent request to the LVGL timer to expand the controls; it does not wait
 for the display lock. Rendering cannot stall the microphone reader or delay
 network preparation.
@@ -125,9 +125,25 @@ unmute. Disabling wake during a call affects later wake-ups, not the active call
 `GET /voice` reports `wake.enabled`, `listening`, `state`, `detections`,
 `initiated_call`, `buffered_ms` and `transmitted_ms` for diagnosis.
 
-The pinned Hi ESP model is compressed inside each OTA application image and
-expanded into PSRAM once. Existing partitions, login and stored pictures stay
-compatible; no separate model partition or model flashing step is needed.
+The original C161 model is embedded in each OTA application image. Its SHA256
+is `c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81`.
+It retains 16 kHz PCM, threshold 0.91796875, five-step smoothing, context 309,
+refractory 67 and an 81,600-sample startup prime. The idle detector reads raw mic
+from the sole I2S producer; preroll and call audio still use AEC/AGC. Its 64 KiB
+tensor arena and 16 KiB variable arena are released before a wake-initiated call.
+Existing partitions, login and stored pictures stay compatible.
+
+C161 is the accepted initial stable Hey Nyx version, with sensitivity still
+being improved. A previous user trial needed three attempts; the successful
+wake preserved the complete following request. Shipping it does not declare
+wake research or long-call acoustic testing complete.
+
+The fallback WakeNet9 Hi ESP detector is available with
+`idf.py -B build-hi-esp -D NYX_PANEL_WAKE_ENGINE=hi-esp build`. Use a fresh build
+directory and the correct hardware profile. Wake engine selection is independent
+of board wiring and local/production server selection. The UI and `/voice/wake`
+report the phrase actually compiled. `capture_frames` and `wake.processed_frames`
+in `/status.voice` allow stability checks without collecting audio.
 
 Control WebSocket interruptions pause microphone input and reconnect within a
 25-second grace period, retaining the existing media session. Only the first
@@ -283,3 +299,9 @@ voice access from the board Key remains a separate per-Bot grant in NyxID.
 Software restart validation uses the configured C6 reset GPIO before Hosted SDIO
 setup. The live Panel and USB recovery console initialize before the network
 transport so Wi-Fi hardware setup cannot hold the picture page offscreen.
+
+
+C161 source provenance is recorded in
+[`evidence/2026-11-17-c161-source.json`](evidence/2026-11-17-c161-source.json).
+The existing detector and voice implementation are reused without algorithm
+changes; only build integration, phrase reporting and release channels are added.

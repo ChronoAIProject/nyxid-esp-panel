@@ -119,7 +119,7 @@ behavior and capabilities intentionally left for later.
 Tap the microphone icon to open voice controls. Calls support **Hold to talk**
 and **Auto conversation**, with echo cancellation, adjustable output gain and
 separate user/Bot caption colors. The controls start collapsed and no microphone
-audio is uploaded at boot. Local **Hi ESP** wake-word detection is enabled by
+audio is uploaded at boot. Local **Hey Nyx (C161)** wake-word detection is enabled by
 default and can be disabled in the voice panel. Say the wake word and continue
 speaking: the panel records during connection and sends that speech before live
 audio, without switching microphone readers or sending an opening greeting.
