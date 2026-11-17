@@ -1,0 +1,6673 @@
+{
+  "schema": "binary40-training-fit-original-v1",
+  "plan_sha256": "0ab4a4d347a579a1dfd4c0b5e5d6675827ca935feea062d00e68e33848245ee3",
+  "checkpoint_sha256": "f99e553b87aa18450f084eaaf9f261dcbd930c8f7d93bb2317d9dc93cbad8877",
+  "model_sha256": "454058039dd41e729ce82ac7f33a84edec4af9554615a632e3b33d47de38009c",
+  "rows": 128,
+  "positive_rows": 32,
+  "calibration_overlapping_rows": 16,
+  "groups": {
+    "ambient/negative": {
+      "rows": 48,
+      "float_positive_crossings": 0,
+      "int8_positive_crossings": 0,
+      "float_event_rows": 0,
+      "int8_event_rows": 0,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "existing_broad_bare_positive/positive": {
+      "rows": 8,
+      "float_positive_crossings": 8,
+      "int8_positive_crossings": 8,
+      "float_event_rows": 8,
+      "int8_event_rows": 8,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "existing_kokoro_carrier/negative": {
+      "rows": 12,
+      "float_positive_crossings": 0,
+      "int8_positive_crossings": 0,
+      "float_event_rows": 0,
+      "int8_event_rows": 0,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "synthetic/positive": {
+      "rows": 24,
+      "float_positive_crossings": 24,
+      "int8_positive_crossings": 24,
+      "float_event_rows": 24,
+      "int8_event_rows": 24,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "existing_nearword/negative": {
+      "rows": 12,
+      "float_positive_crossings": 0,
+      "int8_positive_crossings": 0,
+      "float_event_rows": 0,
+      "int8_event_rows": 0,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "source_balanced_bare_negative/negative": {
+      "rows": 8,
+      "float_positive_crossings": 0,
+      "int8_positive_crossings": 0,
+      "float_event_rows": 0,
+      "int8_event_rows": 0,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    },
+    "synthetic/negative": {
+      "rows": 16,
+      "float_positive_crossings": 0,
+      "int8_positive_crossings": 0,
+      "float_event_rows": 0,
+      "int8_event_rows": 0,
+      "float_negative_event_rows": 0,
+      "int8_negative_event_rows": 0
+    }
+  },
+  "records": [
+    {
+      "index": 0,
+      "source": {
+        "kind": "ambient",
+        "index": 962,
+        "start": 435,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "874723ef37e83e7b31c28c1f572fa2d93ef217fefb5f50b7e4ed89f45164b069",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 24988691,
+        "source_id": "kokoro-positive-00041",
+        "variant": 2,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": true,
+      "float_events": [
+        138
+      ],
+      "int8_events": [
+        138
+      ],
+      "float_positive_mask_crossings": [
+        148,
+        149,
+        150,
+        151,
+        152
+      ],
+      "int8_positive_mask_crossings": [
+        148,
+        149,
+        150,
+        151,
+        152
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.1459757387638092,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "1e9d394926fd1d34ed994b8202ea063fbf4027ffa616d7b28ce1fb841c8252e1",
+        "quantized_input_sha256": "42e915200efec72386169f3a5968a8c6659cacc0555bae6dc54c679413854996",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "source": {
+        "kind": "ambient",
+        "index": 805,
+        "start": 816,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.996322892722674e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "228eceb8e1f8f7650745ae1a713467e37d6bdd8f9eaf69dfa769e995ccd9e8a1",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "source": {
+        "kind": "ambient",
+        "index": 262,
+        "start": 30569,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "ed1d1d40f5544f7ee117745406434feec201bcbda353ec2609fa024bbe8df53f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "source": {
+        "kind": "ambient",
+        "index": 25,
+        "start": 25898,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 8.686785180067602e-10,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "084c2ab3f39bc60396c87c2551168c46615b67c082e7a1a120b5c4064a468d65",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 25665662,
+        "source_id": "kokoro-positive-00409",
+        "variant": 1,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": true,
+      "float_events": [
+        146
+      ],
+      "int8_events": [
+        146
+      ],
+      "float_positive_mask_crossings": [
+        161,
+        162,
+        163,
+        164
+      ],
+      "int8_positive_mask_crossings": [
+        161,
+        162,
+        163,
+        164
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.3195725232362747,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "225519d2e484bd393ba480af32166019dcc34b0dac129c4a533d57d7ad374015",
+        "quantized_input_sha256": "6c6102e6b3ea2f889a1f7c26ecdc6259db69d67c3f07c7a9486150893a3bd933",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 25445040,
+        "source_id": "kokoro-positive-00289",
+        "variant": 0,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": true,
+      "float_events": [
+        134
+      ],
+      "int8_events": [
+        134
+      ],
+      "float_positive_mask_crossings": [
+        150,
+        151,
+        152,
+        153
+      ],
+      "int8_positive_mask_crossings": [
+        150,
+        151,
+        152,
+        153
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.6335421800613403,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "c83eb7782f38145362c7c9257a5f39094399fd2db0a9e77bbb9c00d9344fecfe",
+        "quantized_input_sha256": "aac63c417e753be11d0d328a769dd4ba9e5fe2d9dfa134fa9f4d9cb64fda1cd3",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "source": {
+        "kind": "ambient",
+        "index": 1318,
+        "start": 15198,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 2.3047925424179994e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8b6710680e5d9358589590408811faf24632c676cd0174a4c4caac672768ab7e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 721,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0024923606542870402,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "4370b962073238f3f59b4777b15869e14ef5c86f21f37a5fa0d27fedd24869ed",
+        "quantized_input_sha256": "d288d68dd593d0f791e06abc042a9bf19fb0721c99224e5611566745c7277b65",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "source": {
+        "kind": "ambient",
+        "index": 1123,
+        "start": 2938,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.972124649313628e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "3b3da015b175689a8fb19ea280814002b634b78a4103913f501c92157e8e3fb4",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 22123969,
+        "source_id": "piper-positive-14321",
+        "variant": 2,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": true,
+      "float_events": [
+        130
+      ],
+      "int8_events": [
+        130
+      ],
+      "float_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "int8_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "float_positive_events": [
+        130
+      ],
+      "int8_positive_events": [
+        130
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.061926186084747314,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "09c8539ab7e30116beafc5ab4e0e695b1965d56bdbad7169a1da199970fcf1fd",
+        "quantized_input_sha256": "2f74667a1b0d3a1d45c47ff310fc61e8f97dd0c4ef2e605955b7e6a717a4eb65",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 11,
+      "source": {
+        "kind": "ambient",
+        "index": 1280,
+        "start": 3181,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.6751928342273459e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "bc8ec4655ac3f643905ecb717f6a9d1a9ee3063f9a954395c2b2a0bcb98b771f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3956,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.236542387545342e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "4013efc694e48207b062e388c78822384894ad905e62e2239b27752a61f9afba",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 13,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3828,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "141d1ac719aa4a850552e0674d50b60eec3f1dca1cafd882c31a875f21f2db99",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "source": {
+        "kind": "ambient",
+        "index": 81,
+        "start": 92237,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": true,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.203822747214872e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "3a0bab59945b78896b546a727f2a4e813a7933c9fccd939337ed2dbe255184d1",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 25417798,
+        "source_id": "kokoro-positive-00273",
+        "variant": 2,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": true,
+      "float_events": [
+        136
+      ],
+      "int8_events": [
+        139
+      ],
+      "float_positive_mask_crossings": [
+        147,
+        148,
+        149,
+        150
+      ],
+      "int8_positive_mask_crossings": [
+        147,
+        148,
+        149,
+        150
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.17929261922836304,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "eed628efab13942628e31b363423e858def206e73ae7148ce8c20061cf5fcaab",
+        "quantized_input_sha256": "591c2ee6895ecedfe15725be767df8a475f398de8b0291686ca187e9b8d3c649",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 16,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 2696,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.825777975587698e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "e034806ef5a3cfea27ffafa48f296c3d1a22aa18bb327799b5033a1b79581c05",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "source": {
+        "kind": "ambient",
+        "index": 315,
+        "start": 984,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.2660741958825383e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "5cb6e164cdda12d26823e5875451648283cd341b2f1cd4da248b11dd09d3914a",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "source": {
+        "kind": "ambient",
+        "index": 861,
+        "start": 1617,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 4.302045454096515e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "9b910d5d91815cc8bb3388704ee6f9cf541d3fb24f9661ff477a405973102610",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 19,
+      "source": {
+        "kind": "ambient",
+        "index": 303,
+        "start": 2612,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.626793063764126e-08,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "1e41a585fcf97a9de99f170fc5a8cf99c9f66d8535d877f845c8b4d2a6ef2ed5",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 2076,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "62622218bec07d2fbfaee84513f33e8de4116ca23f04daa985f4746b6b6db925",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 21,
+      "source": {
+        "kind": "ambient",
+        "index": 296,
+        "start": 62776,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.6960770153673366e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "982f9edaa2649d82fbc09c8488e68fea14ea41a3b6cf2bada59943458c1d1967",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 22,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 25787172,
+        "source_id": "kokoro-positive-00473",
+        "variant": 1,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        139
+      ],
+      "int8_events": [
+        139
+      ],
+      "float_positive_mask_crossings": [
+        154,
+        155,
+        156,
+        157
+      ],
+      "int8_positive_mask_crossings": [
+        154,
+        155,
+        156,
+        157
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0906723141670227,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "8d5609d2a34bd689a7b7b8fad7d4256c08557333216bc4108d119ae2bcb250a7",
+        "quantized_input_sha256": "ff6fa15a4c8c704359009a5296507ea5d963d77226738609538f64a7b4088793",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 23,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 431,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 8.979932317743078e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6fefd72f923127361c80866c7264baf04b19af6d5fa105a56cda07b7f3c159f3",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 24,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 26009132,
+        "source_id": "qwen-positive-00139",
+        "variant": 1,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        140
+      ],
+      "int8_events": [
+        140
+      ],
+      "float_positive_mask_crossings": [
+        145,
+        146,
+        147,
+        148
+      ],
+      "int8_positive_mask_crossings": [
+        145,
+        146,
+        147,
+        148
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.1553700566291809,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "be0f45b5f650c0a3eacb4e1a16436ba4f13a64e7e1086bf7bd05c60b6280af6f",
+        "quantized_input_sha256": "c9de5465495c87c59eeb64220ca3bebb0e912dbe9a1255102f29fca38b501d6e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 25,
+      "source": {
+        "kind": "ambient",
+        "index": 111,
+        "start": 36161,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 2.7909490274424797e-09,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "a6387256601cd0640099abdfa90894185fc878b24eacae53af477ba39aa01c7c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 26,
+      "source": {
+        "kind": "ambient",
+        "index": 298,
+        "start": 590,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 2.7662695245567193e-08,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "0794be3e7f39ea353e0cd8a2ea10fdc5a2b8c0995092d416241d03c33101ae89",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 27,
+      "source": {
+        "kind": "ambient",
+        "index": 418,
+        "start": 7193,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0002149440988432616,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "2b3b1cbe905064cacde87c48542be2602fae14e29edadc4e4c1fad3d1eda10ba",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 28,
+      "source": {
+        "kind": "ambient",
+        "index": 676,
+        "start": 16449,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.0672981665702537e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8f65ea3293e37a3ea0f1988ee8f887071fff0f5c9149835337b53de008089402",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 29,
+      "source": {
+        "kind": "ambient",
+        "index": 266,
+        "start": 46060,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.9812741992051315e-10,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f86718dca504e824e8703c8144330d352e930cb0252b7d0b52b4c93086f07043",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 30,
+      "source": {
+        "kind": "ambient",
+        "index": 43,
+        "start": 41254,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 4.321601863921387e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "aac6794e03a18cbc7300d9673a902700b444c05d4243104e017a883e8909eaf1",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 31,
+      "source": {
+        "kind": "ambient",
+        "index": 735,
+        "start": 0,
+        "frames": 598,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.2729890335758682e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8a3c9e94d76cc9d758f471c19dd1b9208b6a27540392ee5e1630ec2e04756ed9",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 32,
+      "source": {
+        "kind": "ambient",
+        "index": 1325,
+        "start": 19827,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.1443041785241803e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f13a942371c9ffc122fec2d9cf5b7f085569eb3ebe083a2191b7eace31aaad0f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 33,
+      "source": {
+        "kind": "existing_broad_bare_positive",
+        "index": 25871164,
+        "source_id": "qwen-positive-00047",
+        "variant": 1,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        150
+      ],
+      "int8_events": [
+        150
+      ],
+      "float_positive_mask_crossings": [
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "int8_positive_mask_crossings": [
+        155,
+        156,
+        157,
+        158,
+        159
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.18298077583312988,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "c2774fab35060c7b7a3efc81554e4ab81f2956e6bfe1a5ae727acbd3f3135312",
+        "quantized_input_sha256": "b758ea8d91c9ebedb0fc3cf5dfacb5fc9e9bf16a9c60d94cda608982e5d29469",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 34,
+      "source": {
+        "kind": "ambient",
+        "index": 260,
+        "start": 13086,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0002161696320399642,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6c1add28c9e5d12706321717b977d3ac677c55062f63b069b78f785b5da7a17e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 35,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 1616,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.4066604712279513e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "83d23f5301abb7760fc41b6be640102a88e2397c7df634ea243892b6cd5c3aa2",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 36,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3987,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8c4ea208aad8f963c6bd979106ec64b476106e76ea794db8baba712c3e8b29b5",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 37,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 757,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.089675492949027e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f192b07126f89d31bd985bde3289e6bd35ad9bcff308c824ec444f649147c143",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 38,
+      "source": {
+        "kind": "synthetic",
+        "index": 2415,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        73
+      ],
+      "int8_events": [
+        73
+      ],
+      "float_positive_mask_crossings": [
+        78,
+        79,
+        80,
+        81
+      ],
+      "int8_positive_mask_crossings": [
+        78,
+        79,
+        80,
+        81
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.38134294748306274,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "30ef4bd321fcae11ba6a4d162818fef7c410275a1298e61f092f65e91eacc23c",
+        "quantized_input_sha256": "2214205641db193b10fdb5b6b680b739b7645954db46bfe10021b00a2f1c9a4c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 39,
+      "source": {
+        "kind": "ambient",
+        "index": 339,
+        "start": 17893,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.2504722469184344e-08,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "52bcace5407ec76190d0c734601d696722240516ef1704ad6e1cba21e49cbabb",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 40,
+      "source": {
+        "kind": "synthetic",
+        "index": 46336,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        60
+      ],
+      "int8_events": [
+        60
+      ],
+      "float_positive_mask_crossings": [
+        62,
+        63,
+        64,
+        65
+      ],
+      "int8_positive_mask_crossings": [
+        62,
+        63,
+        64,
+        65
+      ],
+      "float_positive_events": [
+        60
+      ],
+      "int8_positive_events": [
+        60
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.247745543718338,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "a11cadce3f50ff5892b44a2d9878b68764909c2d3275676d7b08552c38d9e3c2",
+        "quantized_input_sha256": "516e67eb1edf247380f6b166e72390498b6fdfba2ab949b6f189897f4c751c70",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 41,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3972,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6201ffee5a36723025aeb9a345bd5cdd1775176c8d9740dc6ee2c777d290da32",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 42,
+      "source": {
+        "kind": "ambient",
+        "index": 322,
+        "start": 563,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.211184098792728e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "ac37f02672ea4d5bb2c28645ef142c4480d0eed18b8f32a20ef0585f123e6fc0",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 43,
+      "source": {
+        "kind": "synthetic",
+        "index": 10984,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        57
+      ],
+      "int8_events": [
+        57
+      ],
+      "float_positive_mask_crossings": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "int8_positive_mask_crossings": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.7239426374435425,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "de9142d5d1c0dedaea4d29962f0cafe2c8c91e533151fd670f018747c3426cef",
+        "quantized_input_sha256": "3ac40849fb2c8a536987622ab1d0895c875bbcaa589b287233e2a3ce2263522d",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 44,
+      "source": {
+        "kind": "synthetic",
+        "index": 6726,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        81
+      ],
+      "int8_events": [
+        81
+      ],
+      "float_positive_mask_crossings": [
+        84,
+        85,
+        86,
+        87
+      ],
+      "int8_positive_mask_crossings": [
+        84,
+        85,
+        86,
+        87
+      ],
+      "float_positive_events": [
+        81
+      ],
+      "int8_positive_events": [
+        81
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.16080254316329956,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "be2bf68a564a62dde1459fbe86506c3d59f986ece9c0a70e616d84536f9b33fb",
+        "quantized_input_sha256": "007e524299be9ed3840050bc4d1ff5e2eb0e6db39b7ff9bf9a7a88491ae2df7a",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 45,
+      "source": {
+        "kind": "synthetic",
+        "index": 8776,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        55
+      ],
+      "int8_events": [
+        55
+      ],
+      "float_positive_mask_crossings": [
+        62,
+        63,
+        64,
+        65
+      ],
+      "int8_positive_mask_crossings": [
+        62,
+        63,
+        64,
+        65
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.1868509277701378,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "230fdada1f53795ef9d86503fa281dd682dd924fdc93a48634d284e127f7ad0c",
+        "quantized_input_sha256": "9b8c3a0053d15e936f94f6123f7345bf4c97cbdc929fd0e42f23b5c24797dbbe",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 46,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3971,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.8201237708126428e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "9ceb8f1f2f23969c6820ad0d8d583e3a875d97784606420150b69971ec963a2b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 47,
+      "source": {
+        "kind": "synthetic",
+        "index": 27563,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        130
+      ],
+      "int8_events": [
+        129
+      ],
+      "float_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "int8_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "float_positive_events": [
+        130
+      ],
+      "int8_positive_events": [
+        129
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.11207753419876099,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "3020eabd1ef06f3b9042a968cabf61df350847a0286f8ea5a41487f34f4485e0",
+        "quantized_input_sha256": "8a5ef57c948d885bd0372db75e5f0dcc6f0920fa086004b6318437443a77de01",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 48,
+      "source": {
+        "kind": "existing_kokoro_carrier",
+        "index": 3684,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "1a21b6da8888e7829a769ed163e4667ff41aa7a5fdfd181e6e3b3229f7e245fb",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 49,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 179,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 6.434069064198411e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "bfdec9f335d423b9244724d6b343df9bb230f936c71b3f745bc3f6404bfea983",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 50,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 27,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "1dd87f0b99809d4b59fc3047bdaeb140cb71357c9be50b98f9ce2de69ffff319",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 51,
+      "source": {
+        "kind": "synthetic",
+        "index": 28880,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        82
+      ],
+      "int8_events": [
+        83
+      ],
+      "float_positive_mask_crossings": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "int8_positive_mask_crossings": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "float_positive_events": [
+        82
+      ],
+      "int8_positive_events": [
+        83
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.37739843130111694,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "db26f75589accfdbc7eb648b14b264b2e27cee75088362c9fe614c3629d23fb3",
+        "quantized_input_sha256": "0aa92c45d8cc19756ac3c7915a42b2824ca4184dd131fd2394e9a1041774fb4b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 52,
+      "source": {
+        "kind": "ambient",
+        "index": 797,
+        "start": 6170,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.263189460587455e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f4f094d825e89e7d03d666599246220a9afca79c226835f8738a3deb81649925",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 53,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 189,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "a49f4d1506f1a54d1016108a4a7d450d20fe3cf3de795f87e374d47f81a8fae9",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 54,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 174,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "37f10ff9cbdad1cd30748361f9888e85eedd9738cd1e44cb567cee2ac4161111",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 55,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 8,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.00045498355757445097,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "093f1894fc37854cad7a357b6890ab2c23f277138be5f3ee1422d9deeb359ea6",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 56,
+      "source": {
+        "kind": "synthetic",
+        "index": 12967,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        82
+      ],
+      "int8_events": [
+        82
+      ],
+      "float_positive_mask_crossings": [
+        88,
+        89,
+        90,
+        91
+      ],
+      "int8_positive_mask_crossings": [
+        88,
+        89,
+        90,
+        91
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.27228718996047974,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "f627560bcbc7fa0a51745194a886644cf37a143ee6ff251c908e95f236d871d8",
+        "quantized_input_sha256": "22bee106300206c92a0d087e80294701f0a3d5bded1a656029f20d51e339be6e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 57,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 178,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.377389129535004e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "3688f582381e62a957eb43b61fa72bd5ea9a86fa0f1ca5ae8dd214c01ef559c6",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 58,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 171,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8a41c011032d2f4db7bded3f790a0c93bb6febb24d9f32145c4d62898e006b36",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 59,
+      "source": {
+        "kind": "ambient",
+        "index": 450,
+        "start": 1233,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 4.889687374998175e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6a58447eec6f9f67d2c61faf7cd419748cae04da5d5cc8073e2d85cf9a1e58f9",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 60,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 69,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.005395055748522282,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "786a684f0d5445eeb090d731c733ed0a84ddfdc3b428a4e51895c6d18563c13b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 61,
+      "source": {
+        "kind": "synthetic",
+        "index": 2160,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        53
+      ],
+      "int8_events": [
+        53
+      ],
+      "float_positive_mask_crossings": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "int8_positive_mask_crossings": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "float_positive_events": [
+        53
+      ],
+      "int8_positive_events": [
+        53
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.1183171272277832,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "f0f588079a7380bd7a37a96d72cdc9100e86e2aa8e850f3716c0b44d9ea068e0",
+        "quantized_input_sha256": "120a5aeb2aca9dd9fb73e144d0f5b9ab077ab49f5be24ec84b85f3557df1f432",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 62,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 119,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.5386926861538086e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "fc1861173fd5f4139e151615059234b37a26d2639d83b6e234749f851d297511",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 63,
+      "source": {
+        "kind": "synthetic",
+        "index": 46353,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        131
+      ],
+      "int8_events": [
+        131
+      ],
+      "float_positive_mask_crossings": [
+        132,
+        133,
+        134,
+        135,
+        136
+      ],
+      "int8_positive_mask_crossings": [
+        132,
+        133,
+        134,
+        135,
+        136
+      ],
+      "float_positive_events": [
+        131
+      ],
+      "int8_positive_events": [
+        131
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.38232553005218506,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "4a905f05eea1378ccbc5e0d74534ff7651015ec17dc4a44802a34474f6b99dfb",
+        "quantized_input_sha256": "80904707ecb451b3f7e60b56eab965a5d4027a51c95b914d328a477799f27c56",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 64,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 287,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.144695710943779e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d4b60c5bc912d5bc31a303822ce7cbc4dcdae7bddfb1456adec729efe558b108",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 65,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 165,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "668bdd55666cac363515271467c041d20a3128d7fe7f41c45533e7e1c7c5ac6c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 66,
+      "source": {
+        "kind": "ambient",
+        "index": 910,
+        "start": 9743,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.684958528538118e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "e1f257b911aabce0ae343edc2725921b54e9e6c7744b1ca3a71323f95bc03022",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 67,
+      "source": {
+        "kind": "existing_nearword",
+        "index": 265,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.4739516700501554e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "7e8ee92c5d726a562b9ec4c26a8b825df73099708c6d38e3ab507aace8fbe835",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 68,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 51300542,
+        "source_id": "kokoro-negative-18193",
+        "engine": "kokoro",
+        "conditioning_id": "af_aoede",
+        "phrase": "Hey Nick.",
+        "positive_offset": 24988691,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0001589041785337031,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "e7029778434a258e23de3fb195e6a8295b6be12ac5079f9d158df3d7e8e15eec",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 69,
+      "source": {
+        "kind": "ambient",
+        "index": 26,
+        "start": 64961,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.1797273044940084e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "b5cb86d8695ad139f5f99d0688d094c5e3cf6d9a805d3c7e132ff2f74e71da2e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 70,
+      "source": {
+        "kind": "synthetic",
+        "index": 31680,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        38
+      ],
+      "int8_events": [
+        39
+      ],
+      "float_positive_mask_crossings": [
+        39,
+        40,
+        41,
+        42
+      ],
+      "int8_positive_mask_crossings": [
+        39,
+        40,
+        41,
+        42
+      ],
+      "float_positive_events": [
+        38
+      ],
+      "int8_positive_events": [
+        39
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.341849684715271,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "6872aa1be4bcf3d8950fd61f3cabdb5231daae97f888ceaf507bd6c12d198e7e",
+        "quantized_input_sha256": "c8d910e2a969fe59b7dbb029de3f4fc1c654c7597e614f4dc3d7f47ca8fcc955",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 71,
+      "source": {
+        "kind": "ambient",
+        "index": 33,
+        "start": 131983,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 4.078860001754947e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f413ec1aa62d88b66007431ec4b64db1b5dc3d17278d13677369d93a4653b97c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 72,
+      "source": {
+        "kind": "ambient",
+        "index": 285,
+        "start": 9216,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 2.943373544894712e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "af52c4d44e136a9a0d0015e690928a29455292ad59516fc29593f5d01a0a6155",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 73,
+      "source": {
+        "kind": "synthetic",
+        "index": 8817,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        133
+      ],
+      "int8_events": [
+        133
+      ],
+      "float_positive_mask_crossings": [
+        140,
+        141,
+        142,
+        143
+      ],
+      "int8_positive_mask_crossings": [
+        140,
+        141,
+        142,
+        143
+      ],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.49446213245391846,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "20b12b86c866829c77f16554f37560848460f0620d5cb3eef504a28f8117175e",
+        "quantized_input_sha256": "1565d0d715134008ddc8b79dededfa176d1a424d5dd59e04fc00dd2cf350e5d0",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 74,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 51978338,
+        "source_id": "kokoro-negative-18608",
+        "engine": "kokoro",
+        "conditioning_id": "bf_lily",
+        "phrase": "Hey Next.",
+        "positive_offset": 25665662,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 8.941332794165646e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "19467fedb55819182ae422c826a4fb35caa6b49c2dff8a4cac254fb0a2034dda",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 75,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 51759177,
+        "source_id": "kokoro-negative-18473",
+        "engine": "kokoro",
+        "conditioning_id": "am_fenrir",
+        "phrase": "Hey Next.",
+        "positive_offset": 25445040,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.500750830833567e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "9b88ce6524449d9f68242685ab03c4b382db7da94494eb124bc0e144c9a70aae",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 76,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 48407647,
+        "source_id": "piper-negative-16118",
+        "engine": "piper",
+        "conditioning_id": "774",
+        "phrase": "Hey Muse.",
+        "positive_offset": 22123969,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.9503420389810344e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "eb3a38d7650091ed9505589d36db0f377e6af963e2d7dc47a2c01f328d9c58b0",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 77,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 51730268,
+        "source_id": "kokoro-negative-18454",
+        "engine": "kokoro",
+        "conditioning_id": "am_eric",
+        "phrase": "Hey Nick.",
+        "positive_offset": 25417798,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0016021011397242546,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "2c9ae230e1edeb5c848ab03aaadc5fa686406a077bd19cc51378cbfd9f8c9f4e",
+        "quantized_input_sha256": "32d84b09205e010aa0b38668a683b318a89143a3bf591eaff657efbc908c8dec",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 78,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 52096289,
+        "source_id": "kokoro-negative-18679",
+        "engine": "kokoro",
+        "conditioning_id": "bm_lewis",
+        "phrase": "Hey Nick.",
+        "positive_offset": 25787172,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0002471977495588362,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "12610f5db344557ab0b0a34328c444de50e7238904b8a8f73bec37b49c012f4c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 79,
+      "source": {
+        "kind": "synthetic",
+        "index": 29010,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        84
+      ],
+      "int8_events": [
+        84
+      ],
+      "float_positive_mask_crossings": [
+        87,
+        88,
+        89,
+        90
+      ],
+      "int8_positive_mask_crossings": [
+        87,
+        88,
+        89,
+        90
+      ],
+      "float_positive_events": [
+        84
+      ],
+      "int8_positive_events": [
+        84
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.8540170192718506,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "5b5126d6b16e70e56049de101e3b2ba07b91aea94461f99e04f949bcea8c769b",
+        "quantized_input_sha256": "4387f8d5a3fb60d4293d303472639c5cc3e6dca5d376666a7b0e89ec2bfb61ab",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 80,
+      "source": {
+        "kind": "ambient",
+        "index": 774,
+        "start": 620,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "1b4dd94d1db7c6194a026e9e2adf3fa3bb2844305e1794ff4e154bdc5c6e5118",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 81,
+      "source": {
+        "kind": "synthetic",
+        "index": 13297,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        29
+      ],
+      "int8_events": [
+        29
+      ],
+      "float_positive_mask_crossings": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "int8_positive_mask_crossings": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "float_positive_events": [
+        29
+      ],
+      "int8_positive_events": [
+        29
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.2696973979473114,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "9d1a9d43ac68931549a3294aa07b631ccf14595a3aec39dfc5c7c22f3396ab52",
+        "quantized_input_sha256": "80a2cbbe1552246b5f48e762d3ae93c7e2ea81c5ac8e4ef1a2090bd8fa881abe",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 82,
+      "source": {
+        "kind": "ambient",
+        "index": 577,
+        "start": 14138,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.954406788077904e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "97c5e29ab31688e05b7bc38d1a63c4f325feab4c48775fda0ed892102a8a0c71",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 83,
+      "source": {
+        "kind": "ambient",
+        "index": 1298,
+        "start": 19877,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 9.130199885021284e-08,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "90d649f6b8db273d8b972432ed218db86bd7480c67b29a2b3f2c0268af225455",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 84,
+      "source": {
+        "kind": "synthetic",
+        "index": 24086,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        29
+      ],
+      "int8_events": [
+        29
+      ],
+      "float_positive_mask_crossings": [
+        32,
+        33,
+        34,
+        35
+      ],
+      "int8_positive_mask_crossings": [
+        32,
+        33,
+        34,
+        35
+      ],
+      "float_positive_events": [
+        29
+      ],
+      "int8_positive_events": [
+        29
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.00390625,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "6ac39c9e1d04a838afbb27fb992eb3651e80d5ca69cf1139baa4e81e0c1818ca",
+        "quantized_input_sha256": "4ed1be29d7d698129419bb6a41847a06858d706d96b294a6c2223ae132c41d1a",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 85,
+      "source": {
+        "kind": "ambient",
+        "index": 1328,
+        "start": 27862,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 6.015811777615454e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "80679146f739a9ac1827e425837ffde85ced57c0d67a6c71bee2360f647e862b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 86,
+      "source": {
+        "kind": "ambient",
+        "index": 78,
+        "start": 79443,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "ef49a8329083903149b9ac1de7b7371945fa91b437814883c12a61834a19e969",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 87,
+      "source": {
+        "kind": "ambient",
+        "index": 290,
+        "start": 10406,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.200617811671691e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6523f5d6b6b89a937e9795e58ab799e07a90face7e94b443aec21fe45ff9a313",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 88,
+      "source": {
+        "kind": "ambient",
+        "index": 1276,
+        "start": 15831,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.9088652152277064e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "030b7d6453188bdeeb7eabd9a4d0a49a00f9afa363ff8ef80fd7433bf934551d",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 89,
+      "source": {
+        "kind": "synthetic",
+        "index": 4468,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        71
+      ],
+      "int8_events": [
+        72
+      ],
+      "float_positive_mask_crossings": [
+        75,
+        76,
+        77,
+        78
+      ],
+      "int8_positive_mask_crossings": [
+        75,
+        76,
+        77,
+        78
+      ],
+      "float_positive_events": [
+        71
+      ],
+      "int8_positive_events": [
+        72
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.32996177673339844,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "351d9928be43a37240601215aa7dca7f186f898f03fe8fd79a6e86ba58318f28",
+        "quantized_input_sha256": "95824de003875d5badae3dace024e5e856d20d549139f00753471cb34e210288",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 90,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 52420452,
+        "source_id": "qwen-negative-00355",
+        "engine": "qwen",
+        "conditioning_id": "condition_023",
+        "phrase": "Hey Nick.",
+        "positive_offset": 26009132,
+        "match": "exact_source_speed_draw_variant",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.852422246884089e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "087c836e78c87adf771e37598a674623b3c3b957e24e9b435a57543176689c88",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 91,
+      "source": {
+        "kind": "source_balanced_bare_negative",
+        "index": 52207098,
+        "source_id": "qwen-negative-00212",
+        "engine": "qwen",
+        "conditioning_id": "condition_007",
+        "phrase": "Hey Next.",
+        "positive_offset": 25871164,
+        "match": "same_engine_conditioning_fallback",
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.00012619569315575063,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "49401a28d4e74d929f00b702ff7ed019e454b7cc3eaf77da5c8e1fb1fb57d57d",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 92,
+      "source": {
+        "kind": "synthetic",
+        "index": 27189,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f4b02f82d289dbc6f27b8c3b17b0a5710ef312ebc2d0b574f6ccfc812e8d6c1e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 93,
+      "source": {
+        "kind": "synthetic",
+        "index": 36462,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "acbc27ec1bdd6aa5878b04701a59c74c9cb53b799b7177f06a351c91ae749bf5",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 94,
+      "source": {
+        "kind": "synthetic",
+        "index": 41667,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f15a413c2e956aa07cf0b0d2049e70ef4bf6fa655a8d4fc714b6154877667e98",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 95,
+      "source": {
+        "kind": "synthetic",
+        "index": 4692,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        33
+      ],
+      "int8_events": [
+        33
+      ],
+      "float_positive_mask_crossings": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "int8_positive_mask_crossings": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "float_positive_events": [
+        33
+      ],
+      "int8_positive_events": [
+        33
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.29214927554130554,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "0e03b3b4342319f1e7f5dd3c4c1c7d94d05d8e1dc0d44939c0a1aa642abefc2d",
+        "quantized_input_sha256": "ad5500f8c5af5feabcc7e401578b6fff081ac75e18baf5dccd5377f3e2adb288",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 96,
+      "source": {
+        "kind": "synthetic",
+        "index": 30145,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 8.497822818753775e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d9e0fea42a04396b9ed8b55441c573c5ed095a201be0020a3ce39f3b406cb135",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 97,
+      "source": {
+        "kind": "ambient",
+        "index": 32,
+        "start": 136128,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 8.880638802111207e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "653f37cb165bb63df595c1ea6283d13507fc31b5d72f5bc57ae9cd5ce382da52",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 98,
+      "source": {
+        "kind": "synthetic",
+        "index": 24162,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        78
+      ],
+      "int8_events": [
+        78
+      ],
+      "float_positive_mask_crossings": [
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "int8_positive_mask_crossings": [
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "float_positive_events": [
+        78
+      ],
+      "int8_positive_events": [
+        78
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.015710068866610527,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "994a07571a8894fbd66bf1d96025c46cffe818d37a6cc4f048c5f04c2e9469ee",
+        "quantized_input_sha256": "fe99425c0d57810b25fbdc61721af641eba4f02a927b9450444e8c0bf4f4d787",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 99,
+      "source": {
+        "kind": "synthetic",
+        "index": 9762,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.009709058329463005,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "5d56fc9d4123eabd72213ad6866540dd3b7b3896f218832890630287242bbf39",
+        "quantized_input_sha256": "03cff11b0ac5f591029fbbbf4cc8ed37f8e2d2e4203e454c571122c0a7e8d58c",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 100,
+      "source": {
+        "kind": "synthetic",
+        "index": 14673,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.04964736138936132,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "cb53d287f36767d2cb9851cf79bc10a98ab0dc8a92eeee6fbc157f8ed625d52c",
+        "quantized_input_sha256": "efc3f5e085db090704872698340b3822d487c9fc938e520aa74377be980e9ae1",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 101,
+      "source": {
+        "kind": "ambient",
+        "index": 1228,
+        "start": 203,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.00010045483941212296,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d0aef5671b4068d96ff26290369b5f5ee5d6b7c7d01c032f201547e037e5b785",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 102,
+      "source": {
+        "kind": "synthetic",
+        "index": 45318,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.010262182913720608,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "e1f16ff0d45af5941bf31278b5e93632ac669d4aa69a62610a3f05e4fc21530b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 103,
+      "source": {
+        "kind": "synthetic",
+        "index": 43452,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        35
+      ],
+      "int8_events": [
+        35
+      ],
+      "float_positive_mask_crossings": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "int8_positive_mask_crossings": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "float_positive_events": [
+        35
+      ],
+      "int8_positive_events": [
+        35
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.3272849917411804,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "b1640e6d6c18e4f5bb158741c8656a09ec0235d9dbb2cf258594a5f8708802a5",
+        "quantized_input_sha256": "f6b4dd7fb2dc74f769f97a3a1d39992d03807c6c03640f2ae297731d9c6ecaf9",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 104,
+      "source": {
+        "kind": "synthetic",
+        "index": 13330,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        127
+      ],
+      "int8_events": [
+        127
+      ],
+      "float_positive_mask_crossings": [
+        128,
+        129,
+        130,
+        131
+      ],
+      "int8_positive_mask_crossings": [
+        128,
+        129,
+        130,
+        131
+      ],
+      "float_positive_events": [
+        127
+      ],
+      "int8_positive_events": [
+        127
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.20179051160812378,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "c0462ec798dcb42309803cbd57c36cf59b6ae3a43098d229d98d367c4a368ec5",
+        "quantized_input_sha256": "3cda9b8d4245592587ca34c327a9c12890a94c354b3ee3be89df1b859e3313bd",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 105,
+      "source": {
+        "kind": "ambient",
+        "index": 27,
+        "start": 158551,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.7169730199384503e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "40d45fdffcfe3176716fe0643abe795ae991dc8e4e63d37cd43458e5c65bdb9a",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 106,
+      "source": {
+        "kind": "synthetic",
+        "index": 27535,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        85
+      ],
+      "int8_events": [
+        85
+      ],
+      "float_positive_mask_crossings": [
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "int8_positive_mask_crossings": [
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "float_positive_events": [
+        85
+      ],
+      "int8_positive_events": [
+        85
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.14387905597686768,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "6107050b55bfc1d3bd82b843fd4974d0765682e638cc70d4fde9a9863916ab2d",
+        "quantized_input_sha256": "0045e8551348db50cc0ba22cc0f85ffd0fe54b68e2fa7b25493bc9c0cbe0d01e",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 107,
+      "source": {
+        "kind": "ambient",
+        "index": 24,
+        "start": 91450,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 6.585122491742368e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "4cb5f8c6dffcafb074078193777fe9bb1104098efa72693e2208e37976742185",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 108,
+      "source": {
+        "kind": "synthetic",
+        "index": 48829,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 7.059948643473035e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "e4bfbadfe2a864480617a4ff0cef8307e6354c40dab8dbac9429c66618e2c3fb",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 109,
+      "source": {
+        "kind": "synthetic",
+        "index": 37347,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "0d854e794564ea9e29095cc3aea9c5b10c4275d56b24cb6696f03e2ba9dc156d",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 110,
+      "source": {
+        "kind": "ambient",
+        "index": 285,
+        "start": 313,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.281139237922616e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "7d81195109baf037833d1332a66f72a24ac331432eb2b6209e78e9cbe4282907",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 111,
+      "source": {
+        "kind": "ambient",
+        "index": 306,
+        "start": 2351,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "72bb831d5040ff8765d18630a137712fa5d24f8b602ba62fdc70b276e871253f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 112,
+      "source": {
+        "kind": "ambient",
+        "index": 1103,
+        "start": 2560,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0002430907334201038,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "6fe299fa87b0507afb865cc0ea9a3f9e3e132f3e7aeeb3da7f9a196781b2efeb",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 113,
+      "source": {
+        "kind": "synthetic",
+        "index": 31786,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        127
+      ],
+      "int8_events": [
+        127
+      ],
+      "float_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "int8_positive_mask_crossings": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "float_positive_events": [
+        127
+      ],
+      "int8_positive_events": [
+        127
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.16798663139343262,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "1f6191f73996f6d0130f5f6028f6609d31dfc7ab508de2f140168b149639eb71",
+        "quantized_input_sha256": "766021fa5b47c9b04faae8824801aa27bb1892b2c1d3dca56caeff6964634fdb",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 114,
+      "source": {
+        "kind": "synthetic",
+        "index": 711,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "dc6c0a1749b8881ff908d0aedb233a0308ff37ce4f8ade187c335208e307d6da",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 115,
+      "source": {
+        "kind": "synthetic",
+        "index": 24316,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 1.2041195986967068e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "a49fac1fe2d635a31b1d54d39983d6ec2a314c95425bee558123fe088a39b8e5",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 116,
+      "source": {
+        "kind": "synthetic",
+        "index": 31230,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "f63a5309dc0ff7c9ed1b82211583f70ac30a1f84f86a79002683d29a24842b87",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 117,
+      "source": {
+        "kind": "synthetic",
+        "index": 36772,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.00035510820453055203,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d2988514a5fb1e9843f911afe84b0105ff4e606e09b128444699472f75f5a11f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 118,
+      "source": {
+        "kind": "ambient",
+        "index": 31,
+        "start": 115787,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d3c9aa61b8c03119ca5c5e0f1c77e7ff362803559758e64f154e774bc5f480fe",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 119,
+      "source": {
+        "kind": "synthetic",
+        "index": 38917,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        37
+      ],
+      "int8_events": [
+        37
+      ],
+      "float_positive_mask_crossings": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "int8_positive_mask_crossings": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "float_positive_events": [
+        37
+      ],
+      "int8_positive_events": [
+        37
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.09266011416912079,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "5298a35816bff917d10b0d32b20d11393269072f30a9385f7985434b913cf708",
+        "quantized_input_sha256": "86420340d4d1f4eef52cb5ee3204f7bd40efda667c955d045eb2accf7677f620",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 120,
+      "source": {
+        "kind": "synthetic",
+        "index": 24545,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 5.546368356590392e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "975ca5a351094893db0ef93a77f84f62ae38dc004e2ebe8a3bcd12883fa18c08",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 121,
+      "source": {
+        "kind": "ambient",
+        "index": 25,
+        "start": 117593,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6357394037622726e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "719971f02d764c06aa0f87cee6e6e691a795f937025d6f3aeeb071bf537b79c6",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 122,
+      "source": {
+        "kind": "synthetic",
+        "index": 23980,
+        "label": 1
+      },
+      "positive": true,
+      "calibration_overlap": false,
+      "float_events": [
+        49
+      ],
+      "int8_events": [
+        49
+      ],
+      "float_positive_mask_crossings": [
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "int8_positive_mask_crossings": [
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "float_positive_events": [
+        49
+      ],
+      "int8_positive_events": [
+        49
+      ],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.5172951817512512,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "5c9aaf06a8ef1e11edcb655a482c330c284568b2b7984bcceca6ecf5a3e26e2c",
+        "quantized_input_sha256": "6bc9e7f6644d1231465488c590a4fd31d3a82112fe62cae3ff352ead7c0e6025",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 123,
+      "source": {
+        "kind": "synthetic",
+        "index": 3224,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 9.084537282433303e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "a17fafa32b175ce9d77f7981db6f3c6b64b377c99d263232ec97e108accfb0fd",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 124,
+      "source": {
+        "kind": "ambient",
+        "index": 531,
+        "start": 58,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 3.6646597436629236e-06,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "8232573683be945163a11c32336d4d395b73aadc465fccdbbbac1687cef0f8b6",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 125,
+      "source": {
+        "kind": "ambient",
+        "index": 494,
+        "start": 5996,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 0.0002495335356798023,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "d7bd217144d3cd1345b216f3879e026432b701ffc1d2a1086bfcc8fe741ba0d3",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 126,
+      "source": {
+        "kind": "synthetic",
+        "index": 27947,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 6.838653234808589e-07,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "27730977add3ee7c0c51701d505474522ad2b313c83e59ff59e561fc7bf2df0b",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "index": 127,
+      "source": {
+        "kind": "ambient",
+        "index": 337,
+        "start": 23553,
+        "frames": 600,
+        "label": 0
+      },
+      "positive": false,
+      "calibration_overlap": false,
+      "float_events": [],
+      "int8_events": [],
+      "float_positive_mask_crossings": [],
+      "int8_positive_mask_crossings": [],
+      "float_positive_events": [],
+      "int8_positive_events": [],
+      "float_negative_events": [],
+      "int8_negative_events": [],
+      "max_probability_difference": 4.878594336332753e-05,
+      "quantization": {
+        "input": [
+          0.09957107901573181,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          0
+        ],
+        "native_output": [
+          0.00390625,
+          -128
+        ],
+        "signed_to_uint8_offset": 128,
+        "native_signed_sha256": "712457af35eede68849676990c6449c7d34eb6620d62b80cea3f2efc5112b08f",
+        "quantized_input_sha256": "ec0913e509c9d5cd3a66e6ccc4f8a88711b4b657d3984738cd2fe4399a97bf5f",
+        "cache_reset": "input quantization zero points at complete stream start only",
+        "cache_requantization_required": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    }
+  ],
+  "trace": {
+    "path": ".local/wakeword/binary40-training-fit-v1/all128.npz",
+    "bytes": 119164,
+    "sha256": "78c50e8fa2cf553741faf133a53d4d763dd039f7c62a65f30c694ae854216a7e"
+  },
+  "elapsed_seconds": 1.9914138330059359,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "optimizer_updates": 0,
+  "policy": "Final20000 only, original Sampler726 first full128 batch, original feature/mask/descriptor hashes verified against savedstep1. GPUfloat and BUILTIN_REF1thread INT8 complete282calls perrow, per-layer realzero cache startup exactly as training. Float five-probability event policy versus original exactUINT8 policy; keep every crossing/event and positive mask-contained fivecall crossing. All128rows, no selection/retry/optimization/threshold/calibration rescue or dev/acceptance input. Cached training features are not whole primed PCM. First16rows overlap fixed export calibration; report that dependence, not independent quantization validation."
+}
