@@ -14,3 +14,5 @@ Original history treatment FlatBuffer and original export agree on every signatu
 | Both explicit-cache output payloads |13088|
 
 These are logical payloads, not arena/heap or total RAM. Tensor liveness/aliasing, scratch/alignment/resource overhead and frontend/audio/panel tasks remain unmeasured on P4. Host times cannot establish realtime or first-command retention. Both exact model/ABI checks and portable policy are ready to support an optional separately named Mac handoff; the original dual Release package remains unchanged. No model promotion or fourth model selected. Recognition limitations and synthetic-only/consumed-data boundaries from the actual-runtime findings remain in force.
+
+Optional Mac handoff published as `c161-binary40-history-mac-handoff-v1.tar.gz` in Release `research-hey-nyx-20261110`:829353bytes, SHA256 `9433a14aadd507331f9d6539e3858c23a2a9dff1201ba1939f16cf2418e8235c`. Anonymous redownload verified46members and downloaded-source complete portable self-test. Originaldualasset unchanged. Manifest and receipt committed separately; no device acceptance implied.
