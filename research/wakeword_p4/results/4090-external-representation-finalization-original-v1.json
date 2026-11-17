@@ -1,0 +1,34 @@
+{
+  "schema": "external-representation-finalization-v1",
+  "pid": 2601847,
+  "proc_starttime": "12471645",
+  "parent_pid": 2601318,
+  "parent_starttime": "12463346",
+  "plan_sha256": "ea74a135aae598948714261f41578dd290c9654c2c398a9bd98a97224f670bd2",
+  "status": "failed-preserved",
+  "stages": [
+    {
+      "name": "independent-consumed-review",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_external_representation_consumed_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.6246710020059254,
+      "log": ".local/wakeword/external-representation-finalization-v1/independent-consumed-review.log",
+      "log_sha256": "217697fab3d7ec884ede1bc7129e5ffdf51a0a3321beab707cbe81d0d4c01d58"
+    },
+    {
+      "name": "complete-comparison",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/summarize_external_representation_v1.py"
+      ],
+      "actual_exit_code": 1,
+      "elapsed_seconds": 0.06089634200907312,
+      "log": ".local/wakeword/external-representation-finalization-v1/complete-comparison.log",
+      "log_sha256": "c2664d4556beba783af86b83ee059a63db42ccce5c233d0549d2fc9332fa106a"
+    }
+  ],
+  "error": "Traceback (most recent call last):\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/finalize_external_representation_v1.py\", line 42, in main\n    stage('complete-comparison',[py,base+'summarize_external_representation_v1.py'])\n  File \"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/finalize_external_representation_v1.py\", line 23, in stage\n    assert process.returncode==0,row\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'name': 'complete-comparison', 'args': ['/usr/bin/python3', 'research/wakeword_p4/experiments/summarize_external_representation_v1.py'], 'actual_exit_code': 1, 'elapsed_seconds': 0.06089634200907312, 'log': '.local/wakeword/external-representation-finalization-v1/complete-comparison.log', 'log_sha256': 'c2664d4556beba783af86b83ee059a63db42ccce5c233d0549d2fc9332fa106a'}\n"
+}
