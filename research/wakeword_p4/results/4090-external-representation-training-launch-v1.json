@@ -1,0 +1,51 @@
+{
+  "observed_at": "2026-11-17T09:29:12.197852+00:00",
+  "state": {
+    "supervisor_pid": 2599129,
+    "supervisor_starttime": "12411306",
+    "status": "running",
+    "child_pid": 2599132,
+    "arm": "control",
+    "args": [
+      "/usr/bin/python3",
+      "research/wakeword_p4/training/gpu_python.py",
+      "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/train_external_representation_v1.py",
+      "run",
+      "control"
+    ],
+    "plan_sha256": "cb36d1f1afcc2b36f52f38351c63b42ae8ae831efa677dc50697dc6d9c674507"
+  },
+  "process_identities": {
+    "supervisor_pid": {
+      "pid": 2599129,
+      "starttime": "12411306",
+      "state": "S"
+    },
+    "child_pid": {
+      "pid": 2599132,
+      "starttime": "12411605",
+      "state": "R"
+    }
+  },
+  "progress_observed": {
+    "launch": {
+      "pid": 2599132,
+      "proc_starttime": "12411605",
+      "arm": "control",
+      "coefficient": 0,
+      "plan_sha256": "cb36d1f1afcc2b36f52f38351c63b42ae8ae831efa677dc50697dc6d9c674507"
+    },
+    "latest": {
+      "step": 1400,
+      "optimizer_updates": 1400,
+      "elapsed_seconds": 111.04364768200321,
+      "main_bce": 0.00047052139416337013,
+      "paired_bce": 4.365495260572061e-05,
+      "feature_cosine": 1.0307629108428955,
+      "total": 0.0005141763249412179
+    }
+  },
+  "gpu_process_query": "2599132, [N/A]\n",
+  "source_commit": "e60e33bd5fef8dcb8c9087fb45c62122ce7af98f",
+  "limits": "Live launch/progress observation only, not future liveness, terminal exit, model recognition or P4 success. Revalidate handles; never restart on observation timeout."
+}
