@@ -38,3 +38,7 @@ All30original training voices, bare/time/light90sources: physical silence fronte
 ## Fixed independent history teacher preflight
 
 Proposal binary40_frozen_history_teacher_proposal_v1.md distinguishes frozen independent teacher from historical moving shared-weight consistency. Full4320source metadata/49formula checks and physical cache build passed;432command references,30voices,80000paired draws covering allsources,60frontend full/split byte checks,587866560cachebytes. See frozen_history_teacher_preflight_findings_v1.md. Formal fitting still pending actual-network contradiction/gradient/immutability, paired tensor parity and disposable one-update wiring gates; do not skip these or imply model efficacy.
+
+## Matched fixed teacher formal training launched
+
+Prelock44f8e1a6 binds full source/runtime closure, fixed control0/teacher1 recipe, export and complete consumed replay scope. Supervisor exec49366 PID2319330; initial control PID2319333 verified in liveprocess/GPU query and actual first optimizer step observed. These identifiers are historical launch references, not proof of future liveness. State/progress logs in .local/wakeword/frozen-history-teacher-training-v1. Sequential20000updates perarm, teacher starts only after control actualexit0. Do not restart on observation timeout. Preserve all actual terminal receipts, verify every paired/main batch identity and teacher invariants before final export. C161 baseline unchanged; training loss does not establish recognition benefit.
