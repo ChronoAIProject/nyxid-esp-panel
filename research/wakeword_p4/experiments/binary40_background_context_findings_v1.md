@@ -6,10 +6,10 @@ Original source is already-consumed development shard test-00004-of-00011.parque
 
 Whole-file ASR context:
 
--111.22–116.04s: 'whose loss is no less profound and our hearts go out to their friends and families too,'
--116.82–124.70s: 'I wish I could say something to make sense of it all and I can’t find the words to say.'
--124.76–132.06s: 'All I can think of is this, if you can, take a moment, tonight, tomorrow, to call up someone'
--132.06–134.56s: 'you love and just let them know.'
+- 111.22–116.04s: 'whose loss is no less profound and our hearts go out to their friends and families too,'
+- 116.82–124.70s: 'I wish I could say something to make sense of it all and I can’t find the words to say.'
+- 124.76–132.06s: 'All I can think of is this, if you can, take a moment, tonight, tomorrow, to call up someone'
+- 132.06–134.56s: 'you love and just let them know.'
 
 Estimated words around the event: 'I'121.56–121.86, 'can’t'121.86–122.82, 'find'122.82–123.22, 'the'123.22–123.40, 'words'123.40–123.70, 'to'123.70–124.50, 'say'124.50–124.70. These are ASR estimates, not phone alignment or independent human listening. The detector's block-return event is not the exact sound or word causing activation; a306-frame receptive field plus smoothing uses prior context. Do not attribute it solely to 'to' or 'say', or infer a label defect.
 
