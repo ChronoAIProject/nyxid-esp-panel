@@ -1,0 +1,51 @@
+{
+  "schema": "binary40-midpoint-finalization-v1",
+  "pid": 2546185,
+  "proc_starttime": "12086802",
+  "parent_pid": 2545044,
+  "parent_starttime": "12075036",
+  "plan_sha256": "86a4afa6f99f1956647a457f8c2d9f64dd9eef02815e6a3377b11ca5fa75ca3e",
+  "status": "completed-await-research-decision",
+  "stages": [
+    {
+      "name": "independent-consumed-review",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_binary40_midpoint_consumed_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.3237166680046357,
+      "log": ".local/wakeword/binary40-midpoint-finalization-v1/independent-consumed-review.log",
+      "log_sha256": "dbb0525bade0c3e7e339d6da9ead78cfea08f44ca18bfbb1107a56a8c281df50"
+    },
+    {
+      "name": "complete-comparison",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/summarize_binary40_midpoint_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06283134900149889,
+      "log": ".local/wakeword/binary40-midpoint-finalization-v1/complete-comparison.log",
+      "log_sha256": "9852d13ffa1814374b4562085a2a653d4ca70739ba7fc93804b07da0b8920976"
+    },
+    {
+      "name": "issue18-update",
+      "args": [
+        "gh",
+        "issue",
+        "comment",
+        "18",
+        "--repo",
+        "ChronoAIProject/nyxid-esp-panel",
+        "--body-file",
+        ".local/wakeword/binary40-midpoint-finalization-v1/issue18-body.md"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.7192160160047933,
+      "log": ".local/wakeword/binary40-midpoint-finalization-v1/issue18-update.log",
+      "log_sha256": "ce1d454cb2bef4343f5274d5b454b3494950fae1f25dfb237218afc71764fec9"
+    }
+  ],
+  "result_commit": "1fdf711d6c9322473ba849d3e59952ddda6ce917"
+}
