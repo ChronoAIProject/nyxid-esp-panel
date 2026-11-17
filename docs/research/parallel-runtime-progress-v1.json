@@ -1,0 +1,66 @@
+{
+  "schema": "panel-parallel-runtime-progress-v1",
+  "source_base": "7955dc2bfea71aa99d786aee0feb75ed30f08732",
+  "default_engine": "original single C161; unchanged",
+  "optional_profile": "C161/Binary40/history original research handoff",
+  "host_model_wrapper": {
+    "actual_tflm": true,
+    "exit_code": 0,
+    "sanitizer": "undefined",
+    "model_invocations": 144,
+    "constructed_feature_chunks": 24,
+    "independent_interpreter_sets": 2,
+    "allocation_fault_sites": 18,
+    "wrapper_allocations_leaked_at_test_end": 0,
+    "wrapper_resident_reserved_bytes": 226080,
+    "arena_used_host_bytes": {
+      "c161": 28368,
+      "binary40": 24416,
+      "history_expert": 24416
+    },
+    "explicit_retained_bytes_each": 6544,
+    "models_sha256": {
+      "c161.tflite": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+      "binary40.tflite": "454058039dd41e729ce82ac7f33a84edec4af9554615a632e3b33d47de38009c",
+      "history_expert.tflite": "d92b95278334043ff70c20c6e8f267e13fe83acac7dbcf705cc2177df9130950"
+    }
+  },
+  "host_python_tests": {
+    "passed": 31,
+    "exit_code": 0
+  },
+  "host_asan_attempt": {
+    "status": "Host sanitizer initialization deadlocked before main; sampled, terminated and retained",
+    "asan_runtime_passed": false
+  },
+  "p4_rev1_build": {
+    "exit_code": 0,
+    "image_bytes": 6761648,
+    "image_sha256": "97305dca4ee89e9eec2b58319eafae7a095d08632d74998cb845544896db17e7",
+    "ota_partition_bytes": 6881280,
+    "automatic_updates_disabled": true
+  },
+  "p4_x8_build": "In progress; will report actual terminal result separately",
+  "hardware_tested": false,
+  "candidate_promoted": false,
+  "serial_accessed": false,
+  "production_device_untouched": true,
+  "new_audio_training_tts_or_recording": false,
+  "limitations": [
+    "No actual P4 allocation/inference/timing measurement yet",
+    "No new acoustic, first-command, daily interference or long-call acceptance",
+    "Original optional combination retains a disclosed daily Nick conflict; not a replacement release candidate",
+    "ASan startup failure is not an executed runtime pass",
+    "Default CI exercises single C161; optional manual build required"
+  ],
+  "source_sha256": {
+    "components/panel_wake_runtime/CMakeLists.txt": "f074d1827a8dee6240e63b5d2fcbf7436240958f2b32bb6ffb7bf43dc7829cca",
+    "components/panel_wake_runtime/panel_wake_parallel.cpp": "84ba1741d4dcf5a78c1b51d1b08123d028c75a79a19c7055aa5174f12a899d99",
+    "components/panel_wake_runtime/prepare_parallel_runtime.py": "36f937943579164bcacd53725c1982af24a473d94fe27c0f3d0ca9390a9d9d65",
+    "components/panel_wake_runtime/idf_component.yml": "0c2293e7ebef1a403ad6327922b921e110baa6c666a11b8dfca22c168a50c056",
+    "components/panel_wake_runtime/panel_wake_runtime.cpp": "617890a1eda6dc1d756884dce5ccfabdef5037e20fb8e6f5515856c33f9fbc0e",
+    "components/panel_wake_runtime/parallel_model.h": "3c1daf6f8465137b4201b8f409e987004814b9d0a7410b4b2120266c1fec7d1e",
+    "components/panel_wake_runtime/panel_wake_runtime.h": "8bb92533b52e12b460f1f434473a1dbc653a75f926249a628f0278905f9bdc4b",
+    "components/panel_wake_runtime/prepare_streaming_runtime.py": "e02306fcc6221936c85e2c94f437c8ba82151c623d83493aae73f9c89ec28307"
+  }
+}

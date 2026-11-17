@@ -54,6 +54,9 @@ idf_component_register(
 
 if(_wake_engine STREQUAL "hey-nyx")
     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME=1)
+    if(NYX_PANEL_WAKE_RESEARCH_HANDOFF)
+        target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_UPDATE_DISABLED=1)
+    endif()
 else()
 
 # Embed weights in each app slot: an OTA update must not depend on a separately
