@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 SOURCES = [
     "tensorflow/compiler/mlir/lite/core/api/error_reporter.cc",
@@ -75,13 +76,18 @@ SOURCES = [
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--handoff',type=Path,required=True)
+    parser.add_argument('--handoff',type=Path)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--compiler',default='c++')
     parser.add_argument('--c-compiler',default='cc')
     parser.add_argument('--sanitizer',choices=['undefined','address'],default='undefined')
     parser.add_argument('--frontend',action='store_true',help='Exercise shared frontend, priming/live join and fail-stop lifecycle')
+    parser.add_argument('--single',action='store_true',help='Exercise the unchanged default C161 caller and frontend allocation-failure cleanup')
     args=parser.parse_args()
+    if not args.single and args.handoff is None:
+        parser.error('--handoff is required for the optional parallel detector')
+    if args.single:
+        args.frontend=True
     root=Path(__file__).resolve().parents[2]
     component=root/'managed_components/espressif__esp-tflite-micro'
     frontend=root/'managed_components/esphome__esp-micro-speech-features'
@@ -94,13 +100,31 @@ def main():
              component,component/'third_party/gemmlowp',component/'third_party/flatbuffers/include',
              component/'third_party/ruy',component/'third_party/kissfft']
     if args.frontend: include += [frontend/'include',frontend/'src']
+    if args.single:
+        generated=args.output/'generated'
+        subprocess.run([sys.executable,str(root/'components/panel_wake_runtime/prepare_streaming_runtime.py'),
+                        '--profile',str(root/'models/hey-nyx-c161/profile.json'),
+                        '--model',str(root/'models/hey-nyx-c161/model.tflite'),
+                        '--output',str(generated)],check=True,capture_output=True,text=True)
+        model=(generated/'hey_nyx_model.bin').read_bytes()
+        (args.output/'single_model.h').write_text(
+            'alignas(16) const uint8_t model_bytes[] asm("_binary_hey_nyx_model_bin_start") = {\n'+
+            ','.join(str(value) for value in model)+'\n};\n')
+        flags += ['-DPANEL_WAKE_STREAMING_PROFILE=1']
+        include += [generated,args.output,root/'managed_components/espressif__esp-sr/include/esp32p4']
     flags += ['-I'+str(p) for p in include]
     sources=[component/p for p in SOURCES]
     if args.frontend: sources += sorted((frontend/'src').glob('*.c'))
-    sources += [root/'tests/parallel_wake'/('frontend_flow.cpp' if args.frontend else 'runtime_flow.cpp')]
+    flow='single_frontend_flow.cpp' if args.single else ('frontend_flow.cpp' if args.frontend else 'runtime_flow.cpp')
+    sources += [root/'tests/parallel_wake'/flow]
     hash_paths=[*sources,*sorted((root/'components/panel_wake_runtime').glob('*.h')),
                 *sorted((root/'tests/parallel_wake/shims').rglob('*.h')),
                 *sorted((root/'components/panel_wake_runtime/portable').glob('*.h'))]
+    if args.single:
+        hash_paths += [root/'components/panel_wake_runtime/panel_wake_runtime.cpp',
+                       root/'components/panel_wake_runtime/prepare_streaming_runtime.py',
+                       root/'models/hey-nyx-c161/profile.json',args.output/'single_model.h',
+                       generated/'wake_config.h']
     hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in hash_paths}
     def compile_one(item):
         i,path=item
@@ -123,8 +147,9 @@ def main():
         objects=list(pool.map(compile_one,enumerate(sources)))
     executable=args.output/'runtime-flow'
     subprocess.run([args.compiler,sanitize,*[str(p) for p in objects],'-o',str(executable)],check=True)
-    models=[args.handoff/'models'/f'{name}.tflite' for name in ['c161','binary40','history_expert']]
-    command=[str(executable),*[str(p) for p in models]]
+    models=([root/'models/hey-nyx-c161/model.tflite'] if args.single else
+            [args.handoff/'models'/f'{name}.tflite' for name in ['c161','binary40','history_expert']])
+    command=[str(executable)]+([] if args.single else [str(p) for p in models])
     timed_out=False
     try:
         result=subprocess.run(command,capture_output=True,text=True,timeout=30)
@@ -139,6 +164,7 @@ def main():
             'source_sha256':hashes,'model_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in models},
             'compiler':subprocess.check_output([args.compiler,'--version'],text=True).splitlines()[0],
             'flags':flags,'sanitizer':args.sanitizer,'frontend_exercised':args.frontend,
+            'default_single_c161_caller_exercised':args.single,
             'input_kind':'in-memory constructed PCM' if args.frontend else 'constructed feature chunks',
             'new_training_tts_playback_or_recording':False,
             'scope':'Actual host TFLM allocation, ABI/cache ownership, invocation and failure cleanup; optional actual shared frontend/prime-live continuity. Not P4 recognition, memory peaks or acoustic acceptance.'}

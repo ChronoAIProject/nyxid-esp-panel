@@ -82,3 +82,19 @@ processing when allocation succeeds. Configure the project first so its managed
 patches are applied before running the host check. The unpatched failure at
 allocation site 9 was reproduced under UBSan and retained separately from the
 successful patched run. This does not establish P4 peak memory or heap behavior.
+
+To check the default single-C161 caller independently of the optional triple:
+
+```sh
+python3 tests/parallel_wake/run.py --single --output /new/single-c161/output
+```
+
+This includes the unchanged `panel_wake_runtime.cpp`, its generated C161
+configuration and the actual ESP-SR interface header. It calls public
+create/detect/destroy, preserves the 81,600-sample prime/live join, and fails
+each of the two arena allocations and 17 frontend allocations separately.
+Every failed public create must release its tracked arena/frontend storage,
+then permit a fresh public create/detect/destroy. A successful UBSan run is
+recorded in [the single-C161 receipt](research/single-c161-frontend-20261118-v1.json).
+The check tracks explicit arena/frontend allocations; it does not inject C++
+`new` failures or qualify P4 peak memory, timing, acoustic quality or long calls.
