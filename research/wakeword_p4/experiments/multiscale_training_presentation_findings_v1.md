@@ -1,0 +1,11 @@
+# Completed training presentation population audit
+
+The90native factorial sources have substantial actual training exposure; their good factorial scores must not be called unseen-source evidence. Complete20000batch/2560000descriptor census verifies49868positive draws across their1080rendered material rows. Variant0/1/2 draws16380/16808/16680. Leads4800/14400/28800/49920samples have12513/12391/12436/12528draws respectively. Per-source counts are retained in4090-multiscale-training-presentation-census-v1.json.
+
+Actual population:960000ambient,160000broadbarepositive,240000Kokorocarriernegative,800000synthetic,240000existingnearwordnegative,160000sourcebalancedbarenegative. Positives640000total:480000synthetic+160000broadbare. Bothformal arms used the same authenticated batches; prior complete training review covers that identity.
+
+Source inspection confirms each batch uses128x846x40normalized feature tensors and initializes neuralstate tozero, then applies normalized positiveBCE plus20negativeBCE. Labels for original connected positives use the existing aligned-prefix map; broadbare uses generatedcontainerend. Supervision starts480samples after its referenceend and lasts through4320samples; referenceend is not true phonetic alignment. The native factorial uses fresh nativePCM plus controlledspeechhistory, rather than these actual rendered augmented training tensors/masks.
+
+These are actual input/support differences, not proof of a labelbug or that resetting trainingstate causes the observed BRloss. Previous pairedhistory/contextmixed/historyteacher/consistency interventions already tested related remedies and did not yield an overallreplacement. Do not simply rerun genericcontexttraining or relabel consumed failures. A useful next zero-update check would replay original augmented trainingpresentations with their exact masks and compare bothfinalarms before considering a distinct intervention.
+
+Metadata-only script audit_multiscale_training_presentation_v1.py actualexit0. Original sourceledger,selectionplan and actualcompressedbatchledger bound by SHA256. No inference, training, newdata/exposure or deploymentchange. C161 retained; Mac/P4 integration/resources/realtime/firstcommand/stability remains independent outstandingwork.
