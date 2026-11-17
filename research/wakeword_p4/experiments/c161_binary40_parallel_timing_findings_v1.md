@@ -1,0 +1,11 @@
+# Parallel event timing and suppression audit
+
+Fixed saved scope ce372df1: all1760 consumed rows, no inference, new synthesis, training, policy selection or additional independent background exposure. Actual dual-runtime source closure binds the original saved events. Independent sorted-event arbitration reproduces every emitted/suppressed event, including prime/negative/background events.
+
+Across130 target windows where original C161 and parallel both trigger, parallel's first block-return event is earlier65 and equal65, later0. No C161 target window lost. Earliest shift is180ms earlier (Melo); other ranges: builtin60ms, continuous90ms, Legacy/Jenny120ms, Mac150ms earlier. This is sample-return timing within existing target windows, not phonetic wake latency or command onset. Joe has no paired C161 hits and contributes no paired latency claim.
+
+All159 suppressed events have an actual preceding emitted suppressor within67calls:87C161 and72Binary40. These totals include negative/other-target windows and are not87 lost positive detections. Earlier Binary40 emissions account for suppressed C161 events; in this finite scope C161 target-window coverage is retained. Future B40 events could suppress a later useful C161 wake; no universal monotonic guarantee follows.
+
+Original continuous ownership is (start,end] because clocks represent returned block endpoints. Auditv1 used [start,end), exited0 but counted14parallel Nyx containers rather than original15: one long-gap event returns exactly at sample163200, the end of Nyx clip1. Preserve originalv1 output; separately prelocked v2 changes only interval semantics. v2 restores15/24 (short7/12,long8/12), with original exact container identities independently recovered. No waveform, inference result or policy was changed. Independent review also re-sorts original sample events for all130 paired rows and checks all159 suppressor identities/distances.
+
+Mac/P4 still must prove command-onset audio retention, capture/encoder ordering, per-model numerical output, dual arenas/whole-panel resources, realtime and stability. A non-later saved event is not proof of retained audio. Existing Nick common-name conflict and Melo background event remain; no promotion or parameter change is selected from this diagnostic. Original handoff asset and bytes stay unchanged.
