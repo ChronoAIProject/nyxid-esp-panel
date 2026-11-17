@@ -20,6 +20,8 @@ typedef struct {
     char greeting_state[24];
     bool wake_enabled, wake_listening, wake_initiated;
     unsigned wake_detections, buffered_ms, replayed_ms;
+    // Successful full I2S reads and detector calls since boot; no audio data.
+    unsigned capture_frames, wake_processed_frames;
     char wake_state[32];
 } panel_voice_snapshot_t;
 
@@ -39,6 +41,7 @@ void panel_voice_greeting_get(panel_voice_greeting_t *out);
 esp_err_t panel_voice_greeting_update(const void *json, size_t size);
 void panel_voice_microphone_mute(bool muted);
 esp_err_t panel_voice_wake_set(bool enabled);
+const char *panel_voice_wake_word(void);
 esp_err_t panel_voice_remote_open(const panel_voice_remote_t *request, bool *duplicate);
 esp_err_t panel_voice_remote_say(const panel_voice_remote_t *request, bool *duplicate);
 // Bounded codec/mic/speaker exercise without a provider or an account session.

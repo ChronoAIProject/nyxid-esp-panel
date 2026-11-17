@@ -52,6 +52,17 @@ class ReleasePackageTest(unittest.TestCase):
         self.assertEqual(len(list(self.out.iterdir())), 4)
         self.assertIn(manifest["sha256"], (self.out / "checksums-p4-rev1-16mb.txt").read_text())
 
+    def test_dev_manifest_downloads_its_own_immutable_assets(self):
+        tag = "dev-v0.6.24-12-123456abcdef"
+        manifest = module.package(self.build, self.out, "p4-rev1-16mb", "0.6.24", tag)
+        self.assertIn(f"/download/{tag}/", manifest["url"])
+        self.assertEqual(manifest["version"], "0.6.24")
+
+    def test_tag_cannot_mix_versions_or_escape_the_release_path(self):
+        for tag in ("v0.6.25", "dev-v0.6.25-12-123456abcdef", "../../latest", "dev-v0.6.24-x-123456abcdef"):
+            with self.subTest(tag=tag), self.assertRaises(ValueError):
+                module.package(self.build, self.out, "p4-rev1-16mb", "0.6.24", tag)
+
     def test_wrong_revision_or_disabled_rollback_refused(self):
         for field, value in (("ESP32P4_REV_MIN_FULL", 300), ("BOOTLOADER_APP_ROLLBACK_ENABLE", False)):
             old = self.config[field]

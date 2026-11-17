@@ -19,11 +19,16 @@ PROFILES = catalog()["profiles"]
 SLOT_SIZE = 0x690000
 
 
-def package(build: Path, output: Path, profile: str, version: str):
+def package(build: Path, output: Path, profile: str, version: str, tag=None):
     if not re.fullmatch(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", version):
         raise ValueError("Release must use a stable major.minor.patch version")
     if any(int(part) > 65535 for part in version.split(".")):
         raise ValueError("Version component too large")
+    if tag is None:
+        tag = f"v{version}"
+    if tag != f"v{version}" and not re.fullmatch(
+            rf"dev-v{re.escape(version)}-[1-9][0-9]*-[0-9a-f]{{7,40}}", tag):
+        raise ValueError("Release tag must match the application version and channel")
     config = json.loads((build / "config/sdkconfig.json").read_text())
     validate_config(config, profile)
     # The generated compilation database records all CMake command-line defines.
@@ -46,7 +51,7 @@ def package(build: Path, output: Path, profile: str, version: str):
     name = f"{PROJECT}-{profile}.bin"
     shutil.copyfile(build / f"{PROJECT}.bin", output / name)
     manifest = dict(schema=1, project=PROJECT, profile=profile, version=version,
-                    url=f"{ROOT}/v{version}/{name}", size=len(image),
+                    url=f"{ROOT}/{tag}/{name}", size=len(image),
                     sha256=hashlib.sha256(image).hexdigest())
     (output / f"update-{profile}.json").write_text(json.dumps(manifest, indent=2) + "\n")
     with zipfile.ZipFile(output / f"{PROJECT}-{profile}-factory.zip", "w", zipfile.ZIP_DEFLATED) as archive:
@@ -68,9 +73,7 @@ def main():
     parser.add_argument("--tag")
     args = parser.parse_args()
     version = args.version_file.read_text().strip()
-    if args.tag is not None and args.tag != f"v{version}":
-        parser.error("Git tag must exactly match VERSION")
-    print(json.dumps(package(args.build, args.output, args.profile, version), indent=2))
+    print(json.dumps(package(args.build, args.output, args.profile, version, args.tag), indent=2))
 
 
 if __name__ == "__main__":
