@@ -1,0 +1,15 @@
+# C161 envelope intervention execution
+
+Hypothesis and limitations are fixed in envelope_harmonics_findings_v1.md. Original C161 shared initializer, source schedule, fullsequence graph, loss, supervision and original calibration representative remain unchanged. No daily-context/bare-support candidate finetuning. One fixed50% substitution in eligible8positive/8negative broad bare slots, separate RNG734, alpha.9/1.1 hashed by source group and variant. No parameter sweep. Fullwave envelope/RMS/possible peak-limiting effects must be reported together, not as pure formant isolation.
+
+Commands use /usr/bin/python3; the shell's python3 is a different installation. Run sequentially, preserving terminal receipts:
+
+1. build_c161_envelope_cache_v1.py lock, push immutable plan, then run once. Existing cache execution is exec75705/PID2039860; query the original handle and actual process before any action. Never restart on a timeout. A failure.log or actual nonzero exit is a failed run, not permission to overwrite it.
+2. check_c161_envelope_batch_v1.py validates entire cache row hashes and12 actual paired128-presentation batches. It must complete before training plan creation. Source descriptor schedule, all masks and every unselected tensor must agree with C161.
+3. train_c161_envelope_v1.py plan, commit/push its immutable files, then supervise_c161_envelope_v1.py once. Supervisor launches the exercised gpu_python.py and exact original run implementation. CPU2/TFinterop1, RTX4090 required. Originalseed726/freshAdam1e-5/frozenBN/20000updates/finalonly. Retain every batch descriptor and original loss, no update budget extension or checkpoint selection.
+4. Supervisor state .local/wakeword/c161-envelope-supervisor-v1/state.json records supervisor/child PID and starttime, and real child exit code. Live status must be confirmed by a current process/handle, not inferred from state.json. Log is training.log in that directory. A daemon/observation failure alone does not justify a second process.
+5. Real training exit0 and original receipt/all artifact hashes are required before the single final INT8 export. Export keeps original representative, no retry/calibration rescue. Preserve original weights and report even on failure.
+
+Recognition remains unproven until full fixed-profile deployment coverage on consumed builtin/daily/continuous, Legacy/Jenny/Joe/Melo/Mac sources. Compare original saved C161 with gains AND losses, ordinary/approximate target/command coverage, common daily-word conflicts and background, retaining rare constructed-word diagnostics without treating their count as daily frequency. Reused background hours never add across models. MAC host TTS is not P4 evidence. No fresh acceptance access or development audio/voice training. C161 is retained while evidence is incomplete or the candidate is worse. Mac/P4 numeric, first-command retention, resources and stability remain separate requirements.
+
+This runbook describes the required path, not a claim that all stages have already executed. Reports and real execution state determine progress.
