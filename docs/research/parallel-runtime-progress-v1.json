@@ -35,19 +35,21 @@
   },
   "p4_rev1_build": {
     "exit_code": 0,
-    "image_bytes": 6761648,
-    "image_sha256": "97305dca4ee89e9eec2b58319eafae7a095d08632d74998cb845544896db17e7",
+    "image_bytes": 6761664,
+    "image_sha256": "eca43e26c6cb002c4c78e6212c273353ec215220de9a98f1d26b2ab1d74cb171",
     "ota_partition_bytes": 6881280,
     "automatic_updates_disabled": true,
-    "hardware_profile": "p4-rev1-16mb"
+    "hardware_profile": "p4-rev1-16mb",
+    "ota_headroom_bytes": 119616
   },
   "p4_x8_build": {
     "exit_code": 0,
     "hardware_profile": "p4-rev3-lcd-x8-16mb",
-    "image_bytes": 6788432,
-    "image_sha256": "a7318f843c5e323618870cf3dab082b12d85698bd12400f661dd83102b37370a",
+    "image_bytes": 6788448,
+    "image_sha256": "7c0dd90176642a5106ad1ae1626e4e716655e0a58d8a4cbdfcb4fa5e06172fbf",
     "ota_partition_bytes": 6881280,
-    "automatic_updates_disabled": true
+    "automatic_updates_disabled": true,
+    "ota_headroom_bytes": 92832
   },
   "hardware_tested": false,
   "candidate_promoted": false,
@@ -63,13 +65,50 @@
   ],
   "source_sha256": {
     "components/panel_wake_runtime/CMakeLists.txt": "f074d1827a8dee6240e63b5d2fcbf7436240958f2b32bb6ffb7bf43dc7829cca",
-    "components/panel_wake_runtime/panel_wake_parallel.cpp": "84ba1741d4dcf5a78c1b51d1b08123d028c75a79a19c7055aa5174f12a899d99",
+    "components/panel_wake_runtime/panel_wake_parallel.cpp": "1bd1c17f2c3613288bf132a21c5411702c97258b5f5f23bc6b1d1ab373958096",
     "components/panel_wake_runtime/prepare_parallel_runtime.py": "36f937943579164bcacd53725c1982af24a473d94fe27c0f3d0ca9390a9d9d65",
     "components/panel_wake_runtime/idf_component.yml": "0c2293e7ebef1a403ad6327922b921e110baa6c666a11b8dfca22c168a50c056",
     "components/panel_wake_runtime/panel_wake_runtime.cpp": "617890a1eda6dc1d756884dce5ccfabdef5037e20fb8e6f5515856c33f9fbc0e",
     "components/panel_wake_runtime/parallel_model.h": "3c1daf6f8465137b4201b8f409e987004814b9d0a7410b4b2120266c1fec7d1e",
     "components/panel_wake_runtime/panel_wake_runtime.h": "8bb92533b52e12b460f1f434473a1dbc653a75f926249a628f0278905f9bdc4b",
-    "components/panel_wake_runtime/prepare_streaming_runtime.py": "e02306fcc6221936c85e2c94f437c8ba82151c623d83493aae73f9c89ec28307"
+    "components/panel_wake_runtime/prepare_streaming_runtime.py": "e02306fcc6221936c85e2c94f437c8ba82151c623d83493aae73f9c89ec28307",
+    "components/panel_wake_runtime/parallel_detector.h": "82a313542fc1a3cef7886cac8b7878eef604c964d5a1d4d5368034176e7dd68e",
+    "tests/parallel_wake/frontend_flow.cpp": "3b400d576f256b5b4c7169f1d681ccda119d76a778fafc2dadb275cb739ad84e",
+    "tests/parallel_wake/run.py": "fa8f6e243ae080769bb7d3576c7bcda58c55d44c0397ac5e266348c55a3565f5",
+    "cmake/apply_managed_component_patches.cmake": "159648ebcb324980e4e11d062854d8e8438aef87a50181413bc7911370e6bb9c",
+    "patches/micro_speech_filterbank_allocation.patch": "a2775343e7f333ce2017ce052780bd4af5fe6e36a138654ef91844900643e44e"
   },
-  "host_flow_timeout_seconds": 30
+  "host_flow_timeout_seconds": 30,
+  "host_frontend_flow": {
+    "exit_code": 0,
+    "sanitizer": "undefined",
+    "actual_frontend_and_tflm": true,
+    "input_kind": "in-memory zero and constructed PCM only",
+    "prime_samples": 81600,
+    "prime_native_blocks": 170,
+    "prime_model_calls": 169,
+    "live_native_blocks": 12,
+    "live_model_calls": 12,
+    "pending_features_preserved": 1,
+    "frontend_and_interpreter_identity_preserved": true,
+    "cache_abi_corruption_fail_stop": true,
+    "wrapper_allocation_fault_sites": 18,
+    "frontend_allocation_fault_sites": 17,
+    "tracked_allocations_outstanding_after_each_destroy": 0,
+    "fresh_initialization_recovery": true,
+    "p4_executed": false
+  },
+  "frontend_allocation_regression": {
+    "dependency": "esphome/esp-micro-speech-features 1.2.3",
+    "reproduced_unpatched_exit_code": -6,
+    "failure_site": 9,
+    "failure": "Missing filterbank work allocation null check leads to null write in FrontendReset",
+    "fix": "Check work allocation with all other filterbank buffers and fail initialization before reset",
+    "patch": "patches/micro_speech_filterbank_allocation.patch",
+    "applies_to": "shared frontend low-memory failure path; successful feature processing unchanged",
+    "patched_frontend_fault_sites_passed": 17
+  },
+  "default_c161_model_and_processing_source_unchanged": true,
+  "shared_dependency_failure_guard_changed": true,
+  "checked_utc": "2026-11-17T20:41:33.628084+00:00"
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and run the actual TFLM cache/allocator smoke; no audio or recognition replay."""
+"""Build the actual runtime smoke with in-memory constructed inputs only."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
@@ -78,10 +78,13 @@ def main():
     parser.add_argument('--handoff',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--compiler',default='c++')
+    parser.add_argument('--c-compiler',default='cc')
     parser.add_argument('--sanitizer',choices=['undefined','address'],default='undefined')
+    parser.add_argument('--frontend',action='store_true',help='Exercise shared frontend, priming/live join and fail-stop lifecycle')
     args=parser.parse_args()
     root=Path(__file__).resolve().parents[2]
     component=root/'managed_components/espressif__esp-tflite-micro'
+    frontend=root/'managed_components/esphome__esp-micro-speech-features'
     args.output.mkdir(parents=True,exist_ok=False)
     sanitize='-fsanitize='+args.sanitizer
     flags=['-std=c++17','-O1','-g',sanitize,'-fno-sanitize-recover=all','-fno-omit-frame-pointer',
@@ -90,13 +93,28 @@ def main():
     include=[root/'tests/parallel_wake/shims',root/'components/panel_wake_runtime',
              component,component/'third_party/gemmlowp',component/'third_party/flatbuffers/include',
              component/'third_party/ruy',component/'third_party/kissfft']
+    if args.frontend: include += [frontend/'include',frontend/'src']
     flags += ['-I'+str(p) for p in include]
-    sources=[component/p for p in SOURCES]+[root/'tests/parallel_wake/runtime_flow.cpp']
-    hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
+    sources=[component/p for p in SOURCES]
+    if args.frontend: sources += sorted((frontend/'src').glob('*.c'))
+    sources += [root/'tests/parallel_wake'/('frontend_flow.cpp' if args.frontend else 'runtime_flow.cpp')]
+    hash_paths=[*sources,*sorted((root/'components/panel_wake_runtime').glob('*.h')),
+                *sorted((root/'tests/parallel_wake/shims').rglob('*.h')),
+                *sorted((root/'components/panel_wake_runtime/portable').glob('*.h'))]
+    hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in hash_paths}
     def compile_one(item):
         i,path=item
         obj=args.output/f'{i}.o'
-        command=[args.compiler,*flags,'-c',str(path),'-o',str(obj)]
+        if path.suffix=='.c':
+            cflags=[flag for flag in flags if flag not in ['-std=c++17','-fno-rtti','-fno-exceptions']]
+            # Track only the frontend's explicit C allocations. TFLM and the
+            # host C++ library retain their normal allocator behavior.
+            cflags += ['-Dmalloc=nyx_test_frontend_malloc',
+                       '-Dcalloc=nyx_test_frontend_calloc',
+                       '-Dfree=nyx_test_frontend_free']
+            command=[args.c_compiler,'-std=c11',*cflags,'-c',str(path),'-o',str(obj)]
+        else:
+            command=[args.compiler,*flags,'-c',str(path),'-o',str(obj)]
         result=subprocess.run(command,text=True,capture_output=True)
         (args.output/f'{i}.log').write_text(result.stdout+result.stderr)
         if result.returncode: raise RuntimeError(f'Compile failed: {path}; see {args.output}/{i}.log')
@@ -120,8 +138,10 @@ def main():
     report={'schema':'parallel-runtime-host-flow-v1','exit_code':result.returncode,'timed_out':timed_out,
             'source_sha256':hashes,'model_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in models},
             'compiler':subprocess.check_output([args.compiler,'--version'],text=True).splitlines()[0],
-            'flags':flags,'sanitizer':args.sanitizer,'new_pcm_training_tts_recording':False,
-            'scope':'Actual host TFLM allocation, named ABI, retained-cache ownership, invocation and allocation-failure cleanup; not P4 recognition, memory peaks or acoustic acceptance.'}
+            'flags':flags,'sanitizer':args.sanitizer,'frontend_exercised':args.frontend,
+            'input_kind':'in-memory constructed PCM' if args.frontend else 'constructed feature chunks',
+            'new_training_tts_playback_or_recording':False,
+            'scope':'Actual host TFLM allocation, ABI/cache ownership, invocation and failure cleanup; optional actual shared frontend/prime-live continuity. Not P4 recognition, memory peaks or acoustic acceptance.'}
     (args.output/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     print(result.stdout[-4000:],flush=True)
     if result.returncode: print(result.stderr[-4000:],flush=True)

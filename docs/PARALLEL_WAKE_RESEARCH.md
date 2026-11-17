@@ -53,3 +53,21 @@ Behavior Sanitizer, invokes two independent sets using constructed feature chunk
 injects failure into every wrapper allocation. It does not read PCM or claim
 P4 equivalence, daily wake quality, or device memory peaks.
 `--sanitizer address` is also available where the host ASan runtime works.
+
+Add `--frontend` to exercise the same shared frontend and detector used in the
+firmware. It generates in-memory zero/constructed PCM, primes exactly 81,600
+samples, checks frame accounting at the live join and injects a bad cache ABI
+to verify that a partial model failure stops the shared detector. It also
+checks fresh initialization after every wrapper-allocation failure. This is a
+software flow check; it adds no recorded or spoken acoustic baseline.
+
+The frontend check also intercepts only the frontend C allocator calls, fails
+each of its 17 allocation sites, and verifies that all tracked frontend and
+wrapper storage is released. The standard managed-component patch set now
+checks `filterbank.work` alongside the other allocations: version 1.2.3 omitted
+this null check and could reach `FrontendReset` with a null work buffer. This
+changes the low-memory failure path for both engines, without changing feature
+processing when allocation succeeds. Configure the project first so its managed
+patches are applied before running the host check. The unpatched failure at
+allocation site 9 was reproduced under UBSan and retained separately from the
+successful patched run. This does not establish P4 peak memory or heap behavior.
