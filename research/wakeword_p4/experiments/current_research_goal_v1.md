@@ -1,5 +1,17 @@
 # Current research objective — 2026-11-17
 
+## 最新目标重设 — 2026-11-17
+
+本节覆盖下方历史待办；系统总目标继续 active，不将尚未完成的研究标为完成来重建目标。
+
+1. 以原始 C161 为固定基准，交付实用、可复现的合成 Hye Nyx 唤醒方案。优先正常近似发音、跨声音、连续语境和连接命令；重点记录常用词/人名冲突，罕见构造近音仅作诊断。Hey Willow 为主要参考，无需真人录音或研究端接板。
+2. 下一里程碑：预先锁定原始 C161 + 原始 Binary40 + 原始 frozen-history-teacher treatment 三解释器实际交错执行；覆盖原有 1760 来源及三个新增完整连续语境流。逐调用核对三个模型的 uint8 输出、原生时钟、各自事件及三路合并/抑制事件，与已认证保存参考完全比较。已完成的保存事件审计不重复，不冒充实际三路运行。
+3. 固定 threshold=0.91796875、smoothing_steps=5、独立解码器和共享 67-call 冷却；保持原始模型字节、物理连续输入和零边界重置协议。无第四专家、模型库搜索、阈值搜索或新训练。通过实际执行与独立证据复核后，才推进便携三路策略及资源可行性评估。
+4. 保留现有已发布双模型 Mac 交接包，不用三路保存事件成绩覆盖它。通过 Issue #18 跟进独立 Mac/ESP32-P4 数值、内存/整机资源、实时性、首句保留与稳定性；主机通过和 190552-byte 模型总大小均不代表 P4 可用。
+5. 及时推送原始结果、失败记录和审核证据到 research-hye-nyx-voice-gpu 与 Issue #18。训练用 RTX 4090；当前参考推理为单线程 CPU，数值线程上限 2 / interop 1，磁盘至少保留 100 GiB。不重复失败配方、不以已消费材料调参、不累加复用背景时长。
+
+完成条件：具有实用覆盖与明确常用词冲突报告的可复现交接方案，并取得独立 P4 工程验证。一次实验结束或保存事件覆盖提升不代表总目标完成。
+
 ## Active milestones refreshed — 2026-11-17, C161 + Binary40 handoff
 
 This section supersedes older pending-work milestones below. Keep the existing broad system goal active; its API does not allow replacing an unfinished objective. Do not falsely mark it complete to reset it.
