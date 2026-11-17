@@ -1,0 +1,748 @@
+{
+  "schema": "frozen-history-teacher-continuation-v1",
+  "pid": 2322737,
+  "training_supervisor_pid": 2319330,
+  "training_supervisor_starttime": "10896257",
+  "status": "completed-await-independent-review",
+  "stages": [
+    {
+      "name": "review-pair",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/review_frozen_history_teacher_training_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 8.165409524008282,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/review-pair.log",
+      "log_sha256": "42059a7c5f746834e20dc0625fd2ef3472be67b946f02a22962e6baf2efe02ec"
+    },
+    {
+      "name": "plan-export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_frozen_history_teacher_v1.py",
+        "plan",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.0928142030024901,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-export-control.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-export-teacher",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_frozen_history_teacher_v1.py",
+        "plan",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.055669337991275825,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-export-teacher.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "export-control",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_frozen_history_teacher_v1.py",
+        "run",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 12.714781114002108,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/export-control.log",
+      "log_sha256": "b8b8d9328e5e89fd996c8539fbde1b255f637bf5d51e00675e964b6bbaf6b289"
+    },
+    {
+      "name": "export-teacher",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_frozen_history_teacher_v1.py",
+        "run",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 11.560480964006274,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/export-teacher.log",
+      "log_sha256": "b1bc3f8fc5f13ca98605a1c8789c41a909daee498001f5a147cba43fb1d08493"
+    },
+    {
+      "name": "plan-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06578671500028577,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06504690599103924,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06428558699553832,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06428802499431185,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06272057299793232,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07137131500348914,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07315473799826577,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.0643148600065615,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-control-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "builtin",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06278089700208511,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-builtin.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "daily",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06230102300469298,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-daily.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "continuous",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06056239099416416,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-continuous.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "primed",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.062540924991481,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-primed.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "jenny",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06171763100428507,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-jenny.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "joe",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06155473500257358,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-joe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "melo",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07235401000070851,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-melo.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-teacher-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "plan",
+        "mac",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06882582200341858,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/plan-teacher-mac.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "replay-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1748960230033845,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-builtin.log",
+      "log_sha256": "7efa60c12546f05ab5c6d4e1ba6f056dff7c22b61de0ffae7a7e7a3d47557dca"
+    },
+    {
+      "name": "score-control-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "builtin",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.08156596800836269,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-builtin.log",
+      "log_sha256": "2d763a269b10176fc1ebb1abf580a0ad587c02db7018cfa9a5d6a73bad75cd60"
+    },
+    {
+      "name": "replay-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.9794972310046433,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-daily.log",
+      "log_sha256": "2a727de45f589cc220fd397bd1b2b536d231797ddf13f143b7abd693153e37ef"
+    },
+    {
+      "name": "score-control-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "daily",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.11009074100002181,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-daily.log",
+      "log_sha256": "f77cec4bdd444eb515eb1f087f25c95d2ee750c0270093fe885a81714489a843"
+    },
+    {
+      "name": "replay-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.9787102279951796,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-continuous.log",
+      "log_sha256": "9a43c7f4b96385bf05259f02d8ca1049847b4497581e9521b3130dd7bf188337"
+    },
+    {
+      "name": "score-control-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "continuous",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.0652874450024683,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 102.02503934399283,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-primed.log",
+      "log_sha256": "f6c9c44f995e27594ac7bf02ed06985b1690f1e839f46d2497c9efc0d50a36f0"
+    },
+    {
+      "name": "score-control-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "primed",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.6313695429998916,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-primed.log",
+      "log_sha256": "53667af4b0e57b1b5ea73c3580259474f8ed9adc6aec2b7acc4daeb905985f4c"
+    },
+    {
+      "name": "replay-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 92.00224922598863,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-jenny.log",
+      "log_sha256": "a88a68015ac58a40cbf13dd26e35455a540fd3f39787b56028923a5c72c1a853"
+    },
+    {
+      "name": "score-control-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "jenny",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.4750820970075438,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-jenny.log",
+      "log_sha256": "4b4f68074344dc8d7d290f0cbedbb36b97e2bdfe769d42a97b6db96794c2c44a"
+    },
+    {
+      "name": "replay-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.758248637008364,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-joe.log",
+      "log_sha256": "203561c27ff28cb77dd49eedf2635d5ede7f75a41513995b73b6568be946b691"
+    },
+    {
+      "name": "score-control-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "joe",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.5584749650006415,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-joe.log",
+      "log_sha256": "c546deeb2428e6ef9ab0747bfde74b7319e7cd6da1478f3ea55d9ff0c4d7cadc"
+    },
+    {
+      "name": "replay-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 74.98901938498602,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-melo.log",
+      "log_sha256": "0fe393136e2ab7c628eabb55cbfebd8fba58d4a05f2308b6c867edf7aae74a48"
+    },
+    {
+      "name": "score-control-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "melo",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.1468340889987303,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-melo.log",
+      "log_sha256": "4414ce835351891b3cb82918c00245f3c300039e5e5a090805ee16d2a9fb7011"
+    },
+    {
+      "name": "replay-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.6691037550044712,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-control-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-control-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "mac",
+        "control"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06317369198950473,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-control-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    },
+    {
+      "name": "replay-teacher-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "builtin",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.9636731330101611,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-builtin.log",
+      "log_sha256": "2c632405d6546fc5fe3e44400b42d328b02422bade8b79a93e558a638664a614"
+    },
+    {
+      "name": "score-teacher-builtin",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "builtin",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.07223839500511531,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-builtin.log",
+      "log_sha256": "3c73331d3494264d13fd133f375787c84f29a5c41ccda7eb725ef556a770db3a"
+    },
+    {
+      "name": "replay-teacher-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "daily",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.8701933989941608,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-daily.log",
+      "log_sha256": "a6f2ffe21679082b1ff8958a66fcd1085109b25da35ceaaaedb21aee42a684cf"
+    },
+    {
+      "name": "score-teacher-daily",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "daily",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.10041016699688043,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-daily.log",
+      "log_sha256": "c4edd129e523f17580bdd8c5940de47443d7f960dd6c39bdf6a3c986b88c72a5"
+    },
+    {
+      "name": "replay-teacher-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "continuous",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.9425085910042981,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-continuous.log",
+      "log_sha256": "cfb0a093ad17f01a6d9a073b5c1a017714e183acc0ea4ed8a7b73a6f03625b52"
+    },
+    {
+      "name": "score-teacher-continuous",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "continuous",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.06380170999909751,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-continuous.log",
+      "log_sha256": "f649c7e8838b669b6a7da18845d2a423e0d434fe60a10eeac8a923629114db96"
+    },
+    {
+      "name": "replay-teacher-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "primed",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 98.73359864699887,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-primed.log",
+      "log_sha256": "261a7523ed45a1b166e20d2593221478fefff1ff4758efb4e90ae3f34457fd4c"
+    },
+    {
+      "name": "score-teacher-primed",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "primed",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.3873318749974715,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-primed.log",
+      "log_sha256": "1124d3957c977d4d757cd464f55962038e03e7f3265aa50a6760290494a7d290"
+    },
+    {
+      "name": "replay-teacher-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "jenny",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 92.0379480470001,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-jenny.log",
+      "log_sha256": "a31400a3dd3eba5398c806514ef00c759291ffdd3adca9403e771a3e6a36333a"
+    },
+    {
+      "name": "score-teacher-jenny",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "jenny",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.4937312779948115,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-jenny.log",
+      "log_sha256": "fc406170ee1e724c595243238bf11498481a769445561188eac950efbe84ee72"
+    },
+    {
+      "name": "replay-teacher-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "joe",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 7.761574228992686,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-joe.log",
+      "log_sha256": "e9f32821114e8c9290603a45f447082f09b7e50786e52053207e4c41c1b3b16e"
+    },
+    {
+      "name": "score-teacher-joe",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "joe",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.48055025799840223,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-joe.log",
+      "log_sha256": "3c82af0387156459ac9c27825aba24d010f658e546c2a53d50b190eccedb1a61"
+    },
+    {
+      "name": "replay-teacher-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "melo",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 75.22882784399553,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-melo.log",
+      "log_sha256": "5a22a0362cb4fd4ef687624197b42d13325347d22d1f4f9e1fa4a381bd4f1c35"
+    },
+    {
+      "name": "score-teacher-melo",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "melo",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.0428900379920378,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-melo.log",
+      "log_sha256": "0c541c0f59d5b67fb86d21e4c550d3638d7bc8cb07eaef0b40eb34f98d6ec8cf"
+    },
+    {
+      "name": "replay-teacher-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_frozen_history_teacher_v1.py",
+        "run",
+        "mac",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.6431022729957476,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/replay-teacher-mac.log",
+      "log_sha256": "7e2abbd008b1933a30f70bcdceb63b94176b508d37d993fc7eba30356adff036"
+    },
+    {
+      "name": "score-teacher-mac",
+      "args": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_frozen_history_teacher_v1.py",
+        "mac",
+        "teacher"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.0630962519935565,
+      "log": ".local/wakeword/frozen-history-teacher-continuation-v1/score-teacher-mac.log",
+      "log_sha256": "afe9c3b8ff320ad144acc18334b15d2fa455b905020f7c4f157ae6fb359c426f"
+    }
+  ],
+  "actual_training_subprocess_receipts": [
+    {
+      "arm": "control",
+      "pid": 2319333,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1771.3247918069974,
+      "log_path": ".local/wakeword/frozen-history-teacher-training-v1/control-execution.log",
+      "log_sha256": "58ad99e6562050325c994ba0f797b4cb6796c549cf75a0746a4fc708b685cfb1"
+    },
+    {
+      "arm": "teacher",
+      "pid": 2344372,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1830.177338281006,
+      "log_path": ".local/wakeword/frozen-history-teacher-training-v1/teacher-execution.log",
+      "log_sha256": "e797f0afb4c3b5faddb4cba8aca0b97e05aa360b80ab1248a98efcbe0156c424"
+    }
+  ]
+}
