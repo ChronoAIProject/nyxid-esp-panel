@@ -1,0 +1,30 @@
+{
+  "schema": "external-representation-training-review-v1",
+  "all_passed": true,
+  "every_batch_identical_to_original": true,
+  "every_paired_batch_identical_between_arms": true,
+  "pair_indices_match_fixed_schedule": true,
+  "steps": 20000,
+  "unique_paired_sources": 4320,
+  "terminal_receipt_sha256": "b9108f7751096b3a75c23e4e36a4068b2ddc1197d1731fa7c7e0f3a3eafd82ba",
+  "plan_sha256": "cb36d1f1afcc2b36f52f38351c63b42ae8ae831efa677dc50697dc6d9c674507",
+  "arms": {
+    "control": {
+      "training_report_sha256": "3551a3a3de5795c76638b5a0b8ef7caea1955d6cec0806d7c25a124579eb54a5",
+      "final_checkpoint_sha256": "6dce7a41d6075b58e2cc5c74cf8cb7e03b0d1621646f27a176e87bb70585a52d",
+      "optimizer_updates": 20000,
+      "coefficient": 0,
+      "projection_changed": false,
+      "optimizer_verified": true
+    },
+    "feature": {
+      "training_report_sha256": "bff760a1e072e0b2a8671479e121c484530647f85d6999f7ede5a254c2d049f4",
+      "final_checkpoint_sha256": "c211a58314ead17b525777e9300ff406be94832f0bacc235af879ab7b1cfc690",
+      "optimizer_updates": 20000,
+      "coefficient": 1,
+      "projection_changed": true,
+      "optimizer_verified": true
+    }
+  },
+  "limits": "Exhaustive saved main hashes/descriptors checked against original and paired tensor hashes between arms; no new full tensor generation. All normalized target hashes and anchor calls independently reconstructed; runtime target immutability asserted by original code, not reconstructed intermediate tensors. Recognition/INT8/P4 unproven."
+}
