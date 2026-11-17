@@ -1,0 +1,4624 @@
+{
+  "schema": "chatterbox-bare-training-prefix-alignment-original-v1",
+  "plan_sha256": "6afe89c74a79e53bebce3a2eff1d55fa98653bd8e94789f10489779ab6183cb6",
+  "mfa_version": "3.4.3",
+  "execution": {
+    "launch": {
+      "pid": 1943613,
+      "proc_starttime": "9201783",
+      "plan_sha256": "6afe89c74a79e53bebce3a2eff1d55fa98653bd8e94789f10489779ab6183cb6"
+    },
+    "command": [
+      ".local/wakeword/mfa-bootstrap-v1/micromamba",
+      "--no-rc",
+      "--root-prefix",
+      ".local/wakeword/mfa-mamba-root",
+      "run",
+      "--prefix",
+      ".local/wakeword/mfa-cpu-env",
+      "mfa",
+      "align",
+      ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/corpus",
+      ".local/wakeword/mfa-model-sources-v1/english_us_arpa.dict",
+      ".local/wakeword/mfa-model-sources-v1/english_us_arpa.zip",
+      ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment",
+      "--single_speaker",
+      "--no_use_postgres",
+      "--num_jobs",
+      "2",
+      "--clean"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 37.64963079200243
+  },
+  "records": [
+    {
+      "source": {
+        "id": "000",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/000-16k.wav",
+        "sha256": "0ecae65cac662430d15a1f6b8a16a216119b6f363b7b7330b0503e1ce1ae0c61",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/000.TextGrid",
+      "textgrid_sha256": "b39b486b09c2ad3cbfa01537225a690020bd1e4ada05f84a14f283ff9a09258e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "001",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/001-16k.wav",
+        "sha256": "205d020a427070e2ded0eb8b5e47abfca0180245e9892a7f925d641ff85da756",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/001.TextGrid",
+      "textgrid_sha256": "2c44efcb2919d974cb784a03f836efde8f71f18a7e13255599e16a270c977fd7",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.35,
+            "label": "hey"
+          },
+          {
+            "start": 0.35,
+            "end": 0.81,
+            "label": "nicks"
+          },
+          {
+            "start": 0.81,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.26,
+            "label": "HH"
+          },
+          {
+            "start": 0.26,
+            "end": 0.35,
+            "label": "EY1"
+          },
+          {
+            "start": 0.35,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.53,
+            "label": "IH1"
+          },
+          {
+            "start": 0.53,
+            "end": 0.61,
+            "label": "K"
+          },
+          {
+            "start": 0.61,
+            "end": 0.81,
+            "label": "S"
+          },
+          {
+            "start": 0.81,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.81,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "002",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/002-16k.wav",
+        "sha256": "821bcf6cbe28534bd3f93f24fa63967268ada506ad5372d50f018155bc01f742",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/002.TextGrid",
+      "textgrid_sha256": "a9b637b4c15858287deebdaf1c588d20340f4254ed2d05278248452bf15be492",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "003",
+        "voice": "af_bella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/003-16k.wav",
+        "sha256": "3c47affca84cc7c931743597fa03ed39c129f31652abd62752fb48a649f4df87",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/003.TextGrid",
+      "textgrid_sha256": "aad8f87679e0897f27bb6f112371a2106bb3ed507837e5a2874a80160b760d47",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "004",
+        "voice": "af_bella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/004-16k.wav",
+        "sha256": "1557828ce0ea02a1111b251b59c347ece55ad72b445f28731e1806a78b73377e",
+        "samples": 14720,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/004.TextGrid",
+      "textgrid_sha256": "98cdac3ef37dbeae81fd021981db386cd74472559af14c329c019ea9e55f5e97",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 0.92,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.42,
+            "label": "IH1"
+          },
+          {
+            "start": 0.42,
+            "end": 0.5,
+            "label": "K"
+          },
+          {
+            "start": 0.5,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 0.92,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "005",
+        "voice": "af_bella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/005-16k.wav",
+        "sha256": "6455994a46b9f17df8ea3152acfb08518218f0fed3af9eabccd5245a5b554bba",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/005.TextGrid",
+      "textgrid_sha256": "8d1d5cee3406f4a975dda1025c432a07ba3abbfd8d743fbca15451af26010331",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "006",
+        "voice": "af_bella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/006-16k.wav",
+        "sha256": "eb6000ca3f87fa8a9a2ae8f62e19b8023d7b4aff286b384a79f2a2d36f7da366",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/006.TextGrid",
+      "textgrid_sha256": "fe55408d16f383eaaca3481a918bcace74bc6e42e7b2c40ff91c53aa140fec8e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.38,
+            "label": "N"
+          },
+          {
+            "start": 0.38,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "007",
+        "voice": "af_bella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/007-16k.wav",
+        "sha256": "3c47affca84cc7c931743597fa03ed39c129f31652abd62752fb48a649f4df87",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/007.TextGrid",
+      "textgrid_sha256": "7aab6c5d5de9714abd1a3a0567adaf41e0bfd78cd42a3baff54449f3c0d4b3fc",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "008",
+        "voice": "af_bella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/008-16k.wav",
+        "sha256": "2153130104340819668fcc2502a00393f8934d252dd4cadbd0dc972dae5068c0",
+        "samples": 23680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/008.TextGrid",
+      "textgrid_sha256": "6d5f0853665d33720aa1606c512556ea671c6576e6d9c959f7f8f90f539d03f5",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.53,
+            "label": "hey"
+          },
+          {
+            "start": 0.53,
+            "end": 0.6,
+            "label": ""
+          },
+          {
+            "start": 0.6,
+            "end": 1.13,
+            "label": "nicks"
+          },
+          {
+            "start": 1.13,
+            "end": 1.48,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.53,
+            "label": "EY1"
+          },
+          {
+            "start": 0.53,
+            "end": 0.6,
+            "label": ""
+          },
+          {
+            "start": 0.6,
+            "end": 0.69,
+            "label": "N"
+          },
+          {
+            "start": 0.69,
+            "end": 0.83,
+            "label": "IH1"
+          },
+          {
+            "start": 0.83,
+            "end": 0.94,
+            "label": "K"
+          },
+          {
+            "start": 0.94,
+            "end": 1.13,
+            "label": "S"
+          },
+          {
+            "start": 1.13,
+            "end": 1.48,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 1.13,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "009",
+        "voice": "af_bella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/009-16k.wav",
+        "sha256": "f9f07578ae035dd34844fafe8d66f13eccf1131c1591e032031afad815e0a6ac",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/009.TextGrid",
+      "textgrid_sha256": "b6b36e697fa92aacb30001be82e8859bf92f9b8ba347bf59a857e0f3cdd3c0a3",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.27,
+            "label": "hey"
+          },
+          {
+            "start": 0.27,
+            "end": 0.8,
+            "label": "nicks"
+          },
+          {
+            "start": 0.8,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.21,
+            "label": "HH"
+          },
+          {
+            "start": 0.21,
+            "end": 0.27,
+            "label": "EY1"
+          },
+          {
+            "start": 0.27,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.57,
+            "label": "K"
+          },
+          {
+            "start": 0.57,
+            "end": 0.8,
+            "label": "S"
+          },
+          {
+            "start": 0.8,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.8,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "010",
+        "voice": "af_bella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/010-16k.wav",
+        "sha256": "80ec321fa56466dea1f10df341f7573ea1ee7852a146fe421bda60efb3e32056",
+        "samples": 18560,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/010.TextGrid",
+      "textgrid_sha256": "b2bb63478087e1405f56a272f58df2258514cbacf0eb1554087607c4b4f9e915",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.31,
+            "label": "hey"
+          },
+          {
+            "start": 0.31,
+            "end": 0.85,
+            "label": "nicks"
+          },
+          {
+            "start": 0.85,
+            "end": 1.16,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.31,
+            "label": "EY1"
+          },
+          {
+            "start": 0.31,
+            "end": 0.37,
+            "label": "N"
+          },
+          {
+            "start": 0.37,
+            "end": 0.56,
+            "label": "IH1"
+          },
+          {
+            "start": 0.56,
+            "end": 0.63,
+            "label": "K"
+          },
+          {
+            "start": 0.63,
+            "end": 0.85,
+            "label": "S"
+          },
+          {
+            "start": 0.85,
+            "end": 1.16,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.85,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "011",
+        "voice": "af_bella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/011-16k.wav",
+        "sha256": "3c47affca84cc7c931743597fa03ed39c129f31652abd62752fb48a649f4df87",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/af_bella/011.TextGrid",
+      "textgrid_sha256": "7aab6c5d5de9714abd1a3a0567adaf41e0bfd78cd42a3baff54449f3c0d4b3fc",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.76,
+            "label": "nicks"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.76,
+            "label": "S"
+          },
+          {
+            "start": 0.76,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.76,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "012",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/012-16k.wav",
+        "sha256": "9fec4a3c2736c115344df434f9c50291e037becb241f009c7904434b6e185403",
+        "samples": 15040,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/012.TextGrid",
+      "textgrid_sha256": "59e9c7fdaeb0683c7a89fe7b64354e933cee373ffcee0fae84448ed58184191d",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.67,
+            "label": "nicks"
+          },
+          {
+            "start": 0.67,
+            "end": 0.94,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.5,
+            "label": "K"
+          },
+          {
+            "start": 0.5,
+            "end": 0.67,
+            "label": "S"
+          },
+          {
+            "start": 0.67,
+            "end": 0.94,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.67,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "013",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/013-16k.wav",
+        "sha256": "cd1f908636259841f22f4cbc05814ad5d61d6fb62160b9c3ed4cd5debccf2e38",
+        "samples": 15040,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/013.TextGrid",
+      "textgrid_sha256": "0806b2996a68a69ce14af9f093f0bd3ca38293f6c33d321046a4eb7784e449b6",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 0.94,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.29,
+            "label": "N"
+          },
+          {
+            "start": 0.29,
+            "end": 0.42,
+            "label": "IH1"
+          },
+          {
+            "start": 0.42,
+            "end": 0.49,
+            "label": "K"
+          },
+          {
+            "start": 0.49,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 0.94,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "014",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/014-16k.wav",
+        "sha256": "2a5af6e037c6b31e782686b628208e1387a7b3ef382e982478b0d8e501a101de",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/014.TextGrid",
+      "textgrid_sha256": "cc575423af2075d22a2073f6fc944ae23d1b705ca1e185c839c7e930f5941943",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.71,
+            "label": "nicks"
+          },
+          {
+            "start": 0.71,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.41,
+            "label": "IH1"
+          },
+          {
+            "start": 0.41,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.71,
+            "label": "S"
+          },
+          {
+            "start": 0.71,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.71,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "015",
+        "voice": "am_onyx",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/015-16k.wav",
+        "sha256": "82c78c2bffebe556e900e481071727a34647127ccb61e4f22c4d3775a8c03386",
+        "samples": 13760,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/015.TextGrid",
+      "textgrid_sha256": "2f2b24a683b06bba7ca97e67867dbe6d988b2cfbe360cfdc5d0fd9f92c6d9ffc",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.66,
+            "label": "nicks"
+          },
+          {
+            "start": 0.66,
+            "end": 0.86,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.12,
+            "label": "HH"
+          },
+          {
+            "start": 0.12,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.66,
+            "label": "S"
+          },
+          {
+            "start": 0.66,
+            "end": 0.86,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.66,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "016",
+        "voice": "am_onyx",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/016-16k.wav",
+        "sha256": "43111c9ed0b2c7c345a82b8caabc3821e8b3b4247d77e045f43ea0674088ca46",
+        "samples": 14400,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/016.TextGrid",
+      "textgrid_sha256": "c9103eb65e6608853067334abf73064fd66e712b8e4fd58079617a0b806e93ad",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.67,
+            "label": "nicks"
+          },
+          {
+            "start": 0.67,
+            "end": 0.9,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.06,
+            "label": ""
+          },
+          {
+            "start": 0.06,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.5,
+            "label": "K"
+          },
+          {
+            "start": 0.5,
+            "end": 0.67,
+            "label": "S"
+          },
+          {
+            "start": 0.67,
+            "end": 0.9,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.67,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "017",
+        "voice": "am_onyx",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/017-16k.wav",
+        "sha256": "e3b71d96578d2343fe115c7971f7f4b78ce52e5c738cf5eca7547010e5a513ed",
+        "samples": 15040,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/017.TextGrid",
+      "textgrid_sha256": "af0783280a7883d2daaf9f0c987f25be7994aa187502e141ba5aa2adc8a46261",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.72,
+            "label": "nicks"
+          },
+          {
+            "start": 0.72,
+            "end": 0.94,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.3,
+            "label": "N"
+          },
+          {
+            "start": 0.3,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.53,
+            "label": "K"
+          },
+          {
+            "start": 0.53,
+            "end": 0.72,
+            "label": "S"
+          },
+          {
+            "start": 0.72,
+            "end": 0.94,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.72,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "018",
+        "voice": "am_onyx",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/018-16k.wav",
+        "sha256": "e6ce17c49f736da8760a67c04e3bab00ee5ae703982f131dd049fa2052df1971",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/018.TextGrid",
+      "textgrid_sha256": "8d3ed6c75a6df0ae30f80bf30e7756c89befe9f079c4f0024f4354df8f6b74eb",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "019",
+        "voice": "am_onyx",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/019-16k.wav",
+        "sha256": "5f6d6c25fa5b8acf469418c7e7613a7937718d0a09e9488f9b3657f3031391c2",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/019.TextGrid",
+      "textgrid_sha256": "79d0803d36f10945fe3778340659bb3fb4a2911879456d515fe7212893b31324",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.32,
+            "label": "N"
+          },
+          {
+            "start": 0.32,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "020",
+        "voice": "am_onyx",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/020-16k.wav",
+        "sha256": "5b330565ca25bbcd8f2aecb1cdb670cadce7c286e5fdc2420de774fd0b6390d0",
+        "samples": 14400,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/020.TextGrid",
+      "textgrid_sha256": "4ff3913004847263271d14a975ac1bb557448b1ecd3bc0d72e55687ba0e5a358",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.23,
+            "label": "hey"
+          },
+          {
+            "start": 0.23,
+            "end": 0.67,
+            "label": "nicks"
+          },
+          {
+            "start": 0.67,
+            "end": 0.9,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.15,
+            "label": "HH"
+          },
+          {
+            "start": 0.15,
+            "end": 0.23,
+            "label": "EY1"
+          },
+          {
+            "start": 0.23,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.5,
+            "label": "K"
+          },
+          {
+            "start": 0.5,
+            "end": 0.67,
+            "label": "S"
+          },
+          {
+            "start": 0.67,
+            "end": 0.9,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.67,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "021",
+        "voice": "am_onyx",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/021-16k.wav",
+        "sha256": "43cdcaf97be780cb5114155f54fced9e0d83203aa8b48109d1a4ce0c7da57635",
+        "samples": 18880,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/021.TextGrid",
+      "textgrid_sha256": "7b858698c1a54fd882734ad36a63a163a82927f95aa99e737f06ca50eda8446c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.4,
+            "label": "hey"
+          },
+          {
+            "start": 0.4,
+            "end": 0.45,
+            "label": ""
+          },
+          {
+            "start": 0.45,
+            "end": 0.97,
+            "label": "nicks"
+          },
+          {
+            "start": 0.97,
+            "end": 1.18,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.4,
+            "label": "EY1"
+          },
+          {
+            "start": 0.4,
+            "end": 0.45,
+            "label": ""
+          },
+          {
+            "start": 0.45,
+            "end": 0.55,
+            "label": "N"
+          },
+          {
+            "start": 0.55,
+            "end": 0.66,
+            "label": "IH1"
+          },
+          {
+            "start": 0.66,
+            "end": 0.76,
+            "label": "K"
+          },
+          {
+            "start": 0.76,
+            "end": 0.97,
+            "label": "S"
+          },
+          {
+            "start": 0.97,
+            "end": 1.18,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.97,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "022",
+        "voice": "am_onyx",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/022-16k.wav",
+        "sha256": "17dac1bf7770a655e65e4bb2c253fa449030050025060672c89242c70339a34b",
+        "samples": 16320,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/022.TextGrid",
+      "textgrid_sha256": "9070ed6cebdfc1476f340f3ef0317b07fbda5a9647e5d89e60ccd57253843de1",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 1.02,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.17,
+            "label": "HH"
+          },
+          {
+            "start": 0.17,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.34,
+            "label": "N"
+          },
+          {
+            "start": 0.34,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 1.02,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "023",
+        "voice": "am_onyx",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/023-16k.wav",
+        "sha256": "a8cbbc343fd226c6a265792aee515a2f70535fff83201821a30577a8bade8b32",
+        "samples": 15680,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/am_onyx/023.TextGrid",
+      "textgrid_sha256": "6e3aa0addacebf10e60a0e43b2cc634b930e93f1604db914c11606e037a48fec",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 0.98,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.13,
+            "label": "HH"
+          },
+          {
+            "start": 0.13,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 0.98,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "024",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/024-16k.wav",
+        "sha256": "3e74be296658f0868728540f8568ed98ba07115eafb2023245c1f09eed037a82",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/024.TextGrid",
+      "textgrid_sha256": "fab2da3195b3dd1cea17e86beefbc79dda38df0ddf3464debf4ebc394b94d8c4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "025",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/025-16k.wav",
+        "sha256": "5236a9691cf358d25ccbf055a1e7a9cf8ee3b11461e5a627fdda5cac33c40ece",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/025.TextGrid",
+      "textgrid_sha256": "ccc6f8ac63704eaa3124a87c122b6735fb30802bcd0536b5c240aad3513de9c4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.24,
+            "label": "hey"
+          },
+          {
+            "start": 0.24,
+            "end": 0.7,
+            "label": "nicks"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.07,
+            "label": ""
+          },
+          {
+            "start": 0.07,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.24,
+            "label": "EY1"
+          },
+          {
+            "start": 0.24,
+            "end": 0.31,
+            "label": "N"
+          },
+          {
+            "start": 0.31,
+            "end": 0.44,
+            "label": "IH1"
+          },
+          {
+            "start": 0.44,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.7,
+            "label": "S"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.7,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "026",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/026-16k.wav",
+        "sha256": "e478385dfc5078680db8f24e6e82d107eade4f4cfb0631ed5efce6868e550ecd",
+        "samples": 18560,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/026.TextGrid",
+      "textgrid_sha256": "fe7588412ba987e464fc7fa848bd566fea76402247588178241e54ce50787da4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.84,
+            "label": "nicks"
+          },
+          {
+            "start": 0.84,
+            "end": 1.16,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.43,
+            "label": "N"
+          },
+          {
+            "start": 0.43,
+            "end": 0.57,
+            "label": "IH1"
+          },
+          {
+            "start": 0.57,
+            "end": 0.66,
+            "label": "K"
+          },
+          {
+            "start": 0.66,
+            "end": 0.84,
+            "label": "S"
+          },
+          {
+            "start": 0.84,
+            "end": 1.16,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.84,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "027",
+        "voice": "bf_isabella",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/027-16k.wav",
+        "sha256": "b6ba9228eaf61fbf9cac16182a5f9884fcad3fdffc763fb140f3dcf78a25c364",
+        "samples": 19840,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/027.TextGrid",
+      "textgrid_sha256": "e9581945cfa24f5ca4a8f68bbaaf74fb67f4b65d258f1f8fbf0170cd8d8f45f8",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.32,
+            "label": "hey"
+          },
+          {
+            "start": 0.32,
+            "end": 0.91,
+            "label": "nicks"
+          },
+          {
+            "start": 0.91,
+            "end": 1.24,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.32,
+            "label": "EY1"
+          },
+          {
+            "start": 0.32,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.58,
+            "label": "IH1"
+          },
+          {
+            "start": 0.58,
+            "end": 0.71,
+            "label": "K"
+          },
+          {
+            "start": 0.71,
+            "end": 0.91,
+            "label": "S"
+          },
+          {
+            "start": 0.91,
+            "end": 1.24,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.91,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "028",
+        "voice": "bf_isabella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/028-16k.wav",
+        "sha256": "3e74be296658f0868728540f8568ed98ba07115eafb2023245c1f09eed037a82",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/028.TextGrid",
+      "textgrid_sha256": "fab2da3195b3dd1cea17e86beefbc79dda38df0ddf3464debf4ebc394b94d8c4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "029",
+        "voice": "bf_isabella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/029-16k.wav",
+        "sha256": "43e132ee7c8f723ee43b69fce544a6f4c4958bd77ea9ac5f91d4e30a5bc8266c",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/029.TextGrid",
+      "textgrid_sha256": "a3d9755c3c739d3229b03a9d342136f8298793a64daf0b744629ce5811c11a00",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.8,
+            "label": "nicks"
+          },
+          {
+            "start": 0.8,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.5,
+            "label": "IH1"
+          },
+          {
+            "start": 0.5,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.8,
+            "label": "S"
+          },
+          {
+            "start": 0.8,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.8,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "030",
+        "voice": "bf_isabella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/030-16k.wav",
+        "sha256": "2b541dd26373d00b132dc453c881356a9e77e96ed9c37dc1ff2ae16cae37b441",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/030.TextGrid",
+      "textgrid_sha256": "d7951ff4ae1f879eccedde6eba881ef92e845b6188f1a8e9a762d6ccc7e08872",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.67,
+            "label": "nicks"
+          },
+          {
+            "start": 0.67,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.3,
+            "label": "N"
+          },
+          {
+            "start": 0.3,
+            "end": 0.41,
+            "label": "IH1"
+          },
+          {
+            "start": 0.41,
+            "end": 0.5,
+            "label": "K"
+          },
+          {
+            "start": 0.5,
+            "end": 0.67,
+            "label": "S"
+          },
+          {
+            "start": 0.67,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.67,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "031",
+        "voice": "bf_isabella",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/031-16k.wav",
+        "sha256": "397c5d7ca5beee50365b191fe41a33b63c3d34331de07274f88782bb2fbee9a5",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/031.TextGrid",
+      "textgrid_sha256": "8563edfd0431efef90575be3fc46710c740904122a8392323054244ea8711fa4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.82,
+            "label": "nicks"
+          },
+          {
+            "start": 0.82,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.41,
+            "label": "N"
+          },
+          {
+            "start": 0.41,
+            "end": 0.54,
+            "label": "IH1"
+          },
+          {
+            "start": 0.54,
+            "end": 0.66,
+            "label": "K"
+          },
+          {
+            "start": 0.66,
+            "end": 0.82,
+            "label": "S"
+          },
+          {
+            "start": 0.82,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.82,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "032",
+        "voice": "bf_isabella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/032-16k.wav",
+        "sha256": "949c8bf07a2426981188dded682c3701dd87510e01d901168c3d5fcbc1b7cb38",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/032.TextGrid",
+      "textgrid_sha256": "8aeb1e97e1187192000bc58b4b34fc2e45c7f04d5aa584c310cb99c47208efaf",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.16,
+            "label": "HH"
+          },
+          {
+            "start": 0.16,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "033",
+        "voice": "bf_isabella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/033-16k.wav",
+        "sha256": "6d9bb5b0ef90bceab32074c92c4d0114c0efba012e3fa700c2f6950f45581eb6",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/033.TextGrid",
+      "textgrid_sha256": "7f1f5a8473e514f9bb66a344c1ac6ca61884a22a85c46be1caa095c71d6e114e",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.03,
+            "label": ""
+          },
+          {
+            "start": 0.03,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.69,
+            "label": "nicks"
+          },
+          {
+            "start": 0.69,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.03,
+            "label": ""
+          },
+          {
+            "start": 0.03,
+            "end": 0.1,
+            "label": "HH"
+          },
+          {
+            "start": 0.1,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.29,
+            "label": "N"
+          },
+          {
+            "start": 0.29,
+            "end": 0.43,
+            "label": "IH1"
+          },
+          {
+            "start": 0.43,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.69,
+            "label": "S"
+          },
+          {
+            "start": 0.69,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.69,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "034",
+        "voice": "bf_isabella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/034-16k.wav",
+        "sha256": "cec5927c4b8487f412e799a9e5442b4e92a00c107f8984cb58acc7a5f038a6cf",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/034.TextGrid",
+      "textgrid_sha256": "641149fbf1d36f38753593b57cb6471915fdfcb9b9e0a13f1cc1a85a060991fd",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.22,
+            "label": "hey"
+          },
+          {
+            "start": 0.22,
+            "end": 0.67,
+            "label": "nicks"
+          },
+          {
+            "start": 0.67,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.08,
+            "label": ""
+          },
+          {
+            "start": 0.08,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.22,
+            "label": "EY1"
+          },
+          {
+            "start": 0.22,
+            "end": 0.3,
+            "label": "N"
+          },
+          {
+            "start": 0.3,
+            "end": 0.4,
+            "label": "IH1"
+          },
+          {
+            "start": 0.4,
+            "end": 0.49,
+            "label": "K"
+          },
+          {
+            "start": 0.49,
+            "end": 0.67,
+            "label": "S"
+          },
+          {
+            "start": 0.67,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.67,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "035",
+        "voice": "bf_isabella",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/035-16k.wav",
+        "sha256": "cd3af5f8d385e592cd4baaf8cfa1d67dcf8ed6bb7cb867157753f11dea6178cc",
+        "samples": 19200,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bf_isabella/035.TextGrid",
+      "textgrid_sha256": "7e7096d5253e05924188610a951c721357fb402f9fb3b8354cba583ce4caccd4",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.75,
+            "label": "nicks"
+          },
+          {
+            "start": 0.75,
+            "end": 1.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.18,
+            "label": "HH"
+          },
+          {
+            "start": 0.18,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.49,
+            "label": "IH1"
+          },
+          {
+            "start": 0.49,
+            "end": 0.59,
+            "label": "K"
+          },
+          {
+            "start": 0.59,
+            "end": 0.75,
+            "label": "S"
+          },
+          {
+            "start": 0.75,
+            "end": 1.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.75,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "036",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/036-16k.wav",
+        "sha256": "8d7ad9fd87d2f66607e4c947cd3158306d198668b053be67f4c48ef0700a41de",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/036.TextGrid",
+      "textgrid_sha256": "bebcaaab702112bad60c6dbf6a99dc71b1dd39b8634095f83221f2b25959e7cb",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.73,
+            "label": "nicks"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.16,
+            "label": "HH"
+          },
+          {
+            "start": 0.16,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.46,
+            "label": "IH1"
+          },
+          {
+            "start": 0.46,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.73,
+            "label": "S"
+          },
+          {
+            "start": 0.73,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.73,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "037",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/037-16k.wav",
+        "sha256": "6245239dbbb9417d0dc9d0853402d539c86b76f6d7fe47b0a4f57fd73ec480d5",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/037.TextGrid",
+      "textgrid_sha256": "62e58a47402e9fbe04d99ab3afb89666687b433fcc42f57b888a5072d2e4476d",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "038",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/038-16k.wav",
+        "sha256": "09e63fb35072ae6eeae8e761d5c6969a23c3276af948a988a6f835310b7f940f",
+        "samples": 19200,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/038.TextGrid",
+      "textgrid_sha256": "d012ecf558502de7a3f96bea18fbc136647eb5dd4100b183f4a2e905d4dd0198",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.32,
+            "label": "hey"
+          },
+          {
+            "start": 0.32,
+            "end": 0.87,
+            "label": "nicks"
+          },
+          {
+            "start": 0.87,
+            "end": 1.2,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.13,
+            "label": ""
+          },
+          {
+            "start": 0.13,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.32,
+            "label": "EY1"
+          },
+          {
+            "start": 0.32,
+            "end": 0.4,
+            "label": "N"
+          },
+          {
+            "start": 0.4,
+            "end": 0.52,
+            "label": "IH1"
+          },
+          {
+            "start": 0.52,
+            "end": 0.62,
+            "label": "K"
+          },
+          {
+            "start": 0.62,
+            "end": 0.87,
+            "label": "S"
+          },
+          {
+            "start": 0.87,
+            "end": 1.2,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.87,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "039",
+        "voice": "bm_fable",
+        "text": "Hey Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/039-16k.wav",
+        "sha256": "ea660cad1a6ff664b29497532e156d09685a41241735607087072e9c4ed050da",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/039.TextGrid",
+      "textgrid_sha256": "c92fcd8c00c6ccefb96f2d0626fe9ce1c9c6c944b609ac8771d272c2b4d14071",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "040",
+        "voice": "bm_fable",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/040-16k.wav",
+        "sha256": "3a0404b627146e23ef483b7a475441f5b27faa21aebf0c2351514cff4e68fb49",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/040.TextGrid",
+      "textgrid_sha256": "d2c119290e84fa14565e69d8323f24cd8bdf1f8dc922add3051316b5a516f318",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.7,
+            "label": "nicks"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.16,
+            "label": "HH"
+          },
+          {
+            "start": 0.16,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.46,
+            "label": "IH1"
+          },
+          {
+            "start": 0.46,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.7,
+            "label": "S"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.7,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "041",
+        "voice": "bm_fable",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/041-16k.wav",
+        "sha256": "6845225a944829f2ed0d80266d3979bf935e4eeb304d65463d855a850c020e70",
+        "samples": 18560,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/041.TextGrid",
+      "textgrid_sha256": "4fe5194c0913631eb26e6f0c740a81c395b4c4ef56c41ee1ecdc019eb26bcd65",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.83,
+            "label": "nicks"
+          },
+          {
+            "start": 0.83,
+            "end": 1.16,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.09,
+            "label": ""
+          },
+          {
+            "start": 0.09,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.39,
+            "label": "N"
+          },
+          {
+            "start": 0.39,
+            "end": 0.53,
+            "label": "IH1"
+          },
+          {
+            "start": 0.53,
+            "end": 0.63,
+            "label": "K"
+          },
+          {
+            "start": 0.63,
+            "end": 0.83,
+            "label": "S"
+          },
+          {
+            "start": 0.83,
+            "end": 1.16,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.83,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "042",
+        "voice": "bm_fable",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/042-16k.wav",
+        "sha256": "89f27d7bf4e328dd7aa3e01814d997ca0f7ea0c8e8e0d16fbd60fd076e5654c3",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/042.TextGrid",
+      "textgrid_sha256": "807faf39ed8ec3b9ef745720132183af200e15bc72e0c66ec38701ec902052ee",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.28,
+            "label": "hey"
+          },
+          {
+            "start": 0.28,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.28,
+            "label": "EY1"
+          },
+          {
+            "start": 0.28,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.48,
+            "label": "IH1"
+          },
+          {
+            "start": 0.48,
+            "end": 0.58,
+            "label": "K"
+          },
+          {
+            "start": 0.58,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "043",
+        "voice": "bm_fable",
+        "text": "Hey Nyx.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/043-16k.wav",
+        "sha256": "296244797ec191c24f41b8fcb75b26d7da1bfe2e4d50a038663929c8d71e4a15",
+        "samples": 16640,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/043.TextGrid",
+      "textgrid_sha256": "5e3288ed7f519d78999f91847d0563eb199235ece3d0e09612c0a65917a46e7c",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.75,
+            "label": "nicks"
+          },
+          {
+            "start": 0.75,
+            "end": 1.04,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.75,
+            "label": "S"
+          },
+          {
+            "start": 0.75,
+            "end": 1.04,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.75,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "044",
+        "voice": "bm_fable",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/044-16k.wav",
+        "sha256": "2bb4c2c3ee109a2800b3d7a98da79c7e7f14787c7a338a4beb3d79b457f58a46",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/044.TextGrid",
+      "textgrid_sha256": "d2c119290e84fa14565e69d8323f24cd8bdf1f8dc922add3051316b5a516f318",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.29,
+            "label": "hey"
+          },
+          {
+            "start": 0.29,
+            "end": 0.7,
+            "label": "nicks"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.12,
+            "label": ""
+          },
+          {
+            "start": 0.12,
+            "end": 0.16,
+            "label": "HH"
+          },
+          {
+            "start": 0.16,
+            "end": 0.29,
+            "label": "EY1"
+          },
+          {
+            "start": 0.29,
+            "end": 0.35,
+            "label": "N"
+          },
+          {
+            "start": 0.35,
+            "end": 0.46,
+            "label": "IH1"
+          },
+          {
+            "start": 0.46,
+            "end": 0.54,
+            "label": "K"
+          },
+          {
+            "start": 0.54,
+            "end": 0.7,
+            "label": "S"
+          },
+          {
+            "start": 0.7,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.7,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "045",
+        "voice": "bm_fable",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/045-16k.wav",
+        "sha256": "ed3fc754a15986f2a81367f3adf8659c36658397d0c12534ea090a2344011d79",
+        "samples": 17920,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/045.TextGrid",
+      "textgrid_sha256": "62e58a47402e9fbe04d99ab3afb89666687b433fcc42f57b888a5072d2e4476d",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.3,
+            "label": "hey"
+          },
+          {
+            "start": 0.3,
+            "end": 0.77,
+            "label": "nicks"
+          },
+          {
+            "start": 0.77,
+            "end": 1.12,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.1,
+            "label": ""
+          },
+          {
+            "start": 0.1,
+            "end": 0.19,
+            "label": "HH"
+          },
+          {
+            "start": 0.19,
+            "end": 0.3,
+            "label": "EY1"
+          },
+          {
+            "start": 0.3,
+            "end": 0.36,
+            "label": "N"
+          },
+          {
+            "start": 0.36,
+            "end": 0.47,
+            "label": "IH1"
+          },
+          {
+            "start": 0.47,
+            "end": 0.56,
+            "label": "K"
+          },
+          {
+            "start": 0.56,
+            "end": 0.77,
+            "label": "S"
+          },
+          {
+            "start": 0.77,
+            "end": 1.12,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.77,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "046",
+        "voice": "bm_fable",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/046-16k.wav",
+        "sha256": "7945f6cc6440620035edf87891bfbeaac4d835d78f19f066bef61124745651be",
+        "samples": 17280,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/046.TextGrid",
+      "textgrid_sha256": "da906cce00e3fd80b030956bd25849f65caf1d5e1789c6a43f675ba34484b4e6",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.34,
+            "label": "hey"
+          },
+          {
+            "start": 0.34,
+            "end": 0.79,
+            "label": "nicks"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.2,
+            "label": "HH"
+          },
+          {
+            "start": 0.2,
+            "end": 0.34,
+            "label": "EY1"
+          },
+          {
+            "start": 0.34,
+            "end": 0.42,
+            "label": "N"
+          },
+          {
+            "start": 0.42,
+            "end": 0.52,
+            "label": "IH1"
+          },
+          {
+            "start": 0.52,
+            "end": 0.6,
+            "label": "K"
+          },
+          {
+            "start": 0.6,
+            "end": 0.79,
+            "label": "S"
+          },
+          {
+            "start": 0.79,
+            "end": 1.08,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.79,
+      "mechanically_usable": true
+    },
+    {
+      "source": {
+        "id": "047",
+        "voice": "bm_fable",
+        "text": "Hey, Nicks.",
+        "path": ".local/wakeword/chatterbox-bare-training-v1/047-16k.wav",
+        "sha256": "ea660cad1a6ff664b29497532e156d09685a41241735607087072e9c4ed050da",
+        "samples": 16000,
+        "transcript": "HEY NICKS"
+      },
+      "textgrid_path": ".local/wakeword/chatterbox-bare-training-prefix-alignment-v1/alignment/bm_fable/047.TextGrid",
+      "textgrid_sha256": "c92fcd8c00c6ccefb96f2d0626fe9ce1c9c6c944b609ac8771d272c2b4d14071",
+      "tiers": {
+        "words": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.26,
+            "label": "hey"
+          },
+          {
+            "start": 0.26,
+            "end": 0.68,
+            "label": "nicks"
+          },
+          {
+            "start": 0.68,
+            "end": 1.0,
+            "label": ""
+          }
+        ],
+        "phones": [
+          {
+            "start": 0.0,
+            "end": 0.11,
+            "label": ""
+          },
+          {
+            "start": 0.11,
+            "end": 0.14,
+            "label": "HH"
+          },
+          {
+            "start": 0.14,
+            "end": 0.26,
+            "label": "EY1"
+          },
+          {
+            "start": 0.26,
+            "end": 0.33,
+            "label": "N"
+          },
+          {
+            "start": 0.33,
+            "end": 0.45,
+            "label": "IH1"
+          },
+          {
+            "start": 0.45,
+            "end": 0.52,
+            "label": "K"
+          },
+          {
+            "start": 0.52,
+            "end": 0.68,
+            "label": "S"
+          },
+          {
+            "start": 0.68,
+            "end": 1.0,
+            "label": ""
+          }
+        ]
+      },
+      "bounds_valid": true,
+      "expected_words_preserved": true,
+      "automatic_prefix_end_seconds": 0.68,
+      "mechanically_usable": true
+    }
+  ],
+  "quality": [
+    {
+      "file": "008",
+      "begin": "0.0",
+      "end": "1.48",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.4766845703125",
+      "speech_log_likelihood": "-59.06191953023275",
+      "phone_duration_deviation": "4.063586380780727",
+      "max_running_short_interval": "0",
+      "snr": "17.45516044523012",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "010",
+      "begin": "0.0",
+      "end": "1.16",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-46.33136196794181",
+      "speech_log_likelihood": "-56.01458930969238",
+      "phone_duration_deviation": "3.1186288212014612",
+      "max_running_short_interval": "0",
+      "snr": "23.14726100993474",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "031",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-55.129561812789355",
+      "speech_log_likelihood": "-61.85058911641439",
+      "phone_duration_deviation": "3.0894165179554953",
+      "max_running_short_interval": "0",
+      "snr": "19.971835259932682",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "021",
+      "begin": "0.0",
+      "end": "1.18",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-49.849001092425844",
+      "speech_log_likelihood": "-54.28042030334473",
+      "phone_duration_deviation": "2.9854489643437443",
+      "max_running_short_interval": "0",
+      "snr": "16.844228801221085",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "015",
+      "begin": "0.0",
+      "end": "0.86",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.92315248001454",
+      "speech_log_likelihood": "-56.869101206461586",
+      "phone_duration_deviation": "2.456335203046275",
+      "max_running_short_interval": "0",
+      "snr": "17.458098915524555",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "027",
+      "begin": "0.0",
+      "end": "1.24",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-54.444076045866936",
+      "speech_log_likelihood": "-63.486266454060875",
+      "phone_duration_deviation": "2.3249288481298103",
+      "max_running_short_interval": "0",
+      "snr": "20.49256220087627",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "038",
+      "begin": "0.0",
+      "end": "1.2",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.7363525390625",
+      "speech_log_likelihood": "-60.65919748942057",
+      "phone_duration_deviation": "2.2695494390005577",
+      "max_running_short_interval": "0",
+      "snr": "14.353220881135123",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "004",
+      "begin": "0.0",
+      "end": "0.92",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-53.18900199558424",
+      "speech_log_likelihood": "-60.45170593261719",
+      "phone_duration_deviation": "2.213450667175465",
+      "max_running_short_interval": "0",
+      "snr": "20.216002556007957",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "029",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-52.90177263532366",
+      "speech_log_likelihood": "-64.93728574117024",
+      "phone_duration_deviation": "2.16140693526789",
+      "max_running_short_interval": "0",
+      "snr": "22.909824803987465",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "001",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-50.30692093460648",
+      "speech_log_likelihood": "-59.03656323750814",
+      "phone_duration_deviation": "2.151406492596603",
+      "max_running_short_interval": "0",
+      "snr": "21.738050918385206",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "047",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-55.8829541015625",
+      "speech_log_likelihood": "-67.87411562601726",
+      "phone_duration_deviation": "2.104983231313531",
+      "max_running_short_interval": "0",
+      "snr": "12.871870374812367",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "043",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-56.95952899639423",
+      "speech_log_likelihood": "-67.90207163492839",
+      "phone_duration_deviation": "2.104983231313531",
+      "max_running_short_interval": "0",
+      "snr": "11.933350651180056",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "039",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-55.948271484375",
+      "speech_log_likelihood": "-67.60388565063477",
+      "phone_duration_deviation": "2.104983231313531",
+      "max_running_short_interval": "0",
+      "snr": "12.871870374812367",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "005",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-49.955991391782405",
+      "speech_log_likelihood": "-58.88614718119303",
+      "phone_duration_deviation": "1.892315546057308",
+      "max_running_short_interval": "0",
+      "snr": "23.511591576760853",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "009",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-49.787196568080354",
+      "speech_log_likelihood": "-58.0258591969808",
+      "phone_duration_deviation": "1.8725850214943116",
+      "max_running_short_interval": "0",
+      "snr": "22.31011205614172",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "016",
+      "begin": "0.0",
+      "end": "0.9",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.58404405381945",
+      "speech_log_likelihood": "-53.9035390218099",
+      "phone_duration_deviation": "1.6109742662831643",
+      "max_running_short_interval": "0",
+      "snr": "17.347130035985884",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "012",
+      "begin": "0.0",
+      "end": "0.94",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-50.742587475066486",
+      "speech_log_likelihood": "-52.80129941304525",
+      "phone_duration_deviation": "1.6109742662831643",
+      "max_running_short_interval": "0",
+      "snr": "14.425234527950913",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "020",
+      "begin": "0.0",
+      "end": "0.9",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.021809895833336",
+      "speech_log_likelihood": "-51.93157831827799",
+      "phone_duration_deviation": "1.6109742662831643",
+      "max_running_short_interval": "0",
+      "snr": "15.49756126467846",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "013",
+      "begin": "0.0",
+      "end": "0.94",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.21432949634308",
+      "speech_log_likelihood": "-59.78381601969401",
+      "phone_duration_deviation": "1.6109716208182154",
+      "max_running_short_interval": "0",
+      "snr": "18.94074537230826",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "046",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-50.79853425202546",
+      "speech_log_likelihood": "-58.121411641438804",
+      "phone_duration_deviation": "1.4616026442419328",
+      "max_running_short_interval": "0",
+      "snr": "15.86049447719802",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "034",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-50.66009051983173",
+      "speech_log_likelihood": "-64.92710049947102",
+      "phone_duration_deviation": "1.4616026442419328",
+      "max_running_short_interval": "0",
+      "snr": "20.922557666205492",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "014",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.43398238201531",
+      "speech_log_likelihood": "-56.452622731526695",
+      "phone_duration_deviation": "1.4616026442419328",
+      "max_running_short_interval": "0",
+      "snr": "18.55224920025636",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "040",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-55.183134765625",
+      "speech_log_likelihood": "-63.063315073649086",
+      "phone_duration_deviation": "1.373499318166838",
+      "max_running_short_interval": "0",
+      "snr": "12.340765617529403",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "044",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-54.981044921875",
+      "speech_log_likelihood": "-62.732823053995766",
+      "phone_duration_deviation": "1.373499318166838",
+      "max_running_short_interval": "0",
+      "snr": "12.184940515750366",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "036",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-55.272744140625",
+      "speech_log_likelihood": "-62.32226880391439",
+      "phone_duration_deviation": "1.373499318166838",
+      "max_running_short_interval": "0",
+      "snr": "12.951032970429353",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "032",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-52.0396963266226",
+      "speech_log_likelihood": "-61.92830340067545",
+      "phone_duration_deviation": "1.373499318166838",
+      "max_running_short_interval": "0",
+      "snr": "20.560326196886436",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "017",
+      "begin": "0.0",
+      "end": "0.94",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-55.181277011303195",
+      "speech_log_likelihood": "-62.39992078145345",
+      "phone_duration_deviation": "1.373499318166838",
+      "max_running_short_interval": "0",
+      "snr": "20.58210496456895",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "025",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-55.7487744140625",
+      "speech_log_likelihood": "-66.15759976704915",
+      "phone_duration_deviation": "1.3679742764475915",
+      "max_running_short_interval": "0",
+      "snr": "20.650821480043273",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "035",
+      "begin": "0.0",
+      "end": "1.2",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-48.49578857421875",
+      "speech_log_likelihood": "-61.09219233194987",
+      "phone_duration_deviation": "1.3679712401004283",
+      "max_running_short_interval": "0",
+      "snr": "23.2628164760567",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "006",
+      "begin": "0.0",
+      "end": "1.0",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-51.6656298828125",
+      "speech_log_likelihood": "-59.663525899251304",
+      "phone_duration_deviation": "1.3679712401004283",
+      "max_running_short_interval": "0",
+      "snr": "22.10761297763028",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "026",
+      "begin": "0.0",
+      "end": "1.16",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-53.81256313981681",
+      "speech_log_likelihood": "-62.4967098236084",
+      "phone_duration_deviation": "1.3639784491561395",
+      "max_running_short_interval": "0",
+      "snr": "18.165831455368448",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "018",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-50.48188376913265",
+      "speech_log_likelihood": "-53.87197685241699",
+      "phone_duration_deviation": "1.3639784491561395",
+      "max_running_short_interval": "0",
+      "snr": "22.796257805883837",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "041",
+      "begin": "0.0",
+      "end": "1.16",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-54.364501953125",
+      "speech_log_likelihood": "-61.973992029825844",
+      "phone_duration_deviation": "1.3639764630876068",
+      "max_running_short_interval": "0",
+      "snr": "14.197217159078134",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "000",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-48.739065987723215",
+      "speech_log_likelihood": "-58.04288991292318",
+      "phone_duration_deviation": "1.2276255006661316",
+      "max_running_short_interval": "0",
+      "snr": "20.516517284243722",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "003",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.99185884915865",
+      "speech_log_likelihood": "-59.59173456827799",
+      "phone_duration_deviation": "1.1975252642972762",
+      "max_running_short_interval": "0",
+      "snr": "20.154484818578318",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "007",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-53.36559119591346",
+      "speech_log_likelihood": "-59.312400817871094",
+      "phone_duration_deviation": "1.1975252642972762",
+      "max_running_short_interval": "0",
+      "snr": "20.48721310783669",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "011",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-52.8947988656851",
+      "speech_log_likelihood": "-59.42227045694987",
+      "phone_duration_deviation": "1.1975252642972762",
+      "max_running_short_interval": "0",
+      "snr": "20.48721310783669",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "022",
+      "begin": "0.0",
+      "end": "1.02",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-49.05557789522059",
+      "speech_log_likelihood": "-53.450221379597984",
+      "phone_duration_deviation": "1.1975252642972762",
+      "max_running_short_interval": "0",
+      "snr": "17.79326171614494",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "037",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.065115792410715",
+      "speech_log_likelihood": "-60.75191879272461",
+      "phone_duration_deviation": "1.0678899225406597",
+      "max_running_short_interval": "0",
+      "snr": "12.608235810080032",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "045",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-53.059291294642854",
+      "speech_log_likelihood": "-60.99898910522461",
+      "phone_duration_deviation": "1.0678899225406597",
+      "max_running_short_interval": "0",
+      "snr": "12.948261586942886",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "002",
+      "begin": "0.0",
+      "end": "1.12",
+      "speaker": "af_bella",
+      "overall_log_likelihood": "-48.217882428850444",
+      "speech_log_likelihood": "-57.08909352620443",
+      "phone_duration_deviation": "1.0678899225406597",
+      "max_running_short_interval": "0",
+      "snr": "21.398672900256628",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "033",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-52.9751962515024",
+      "speech_log_likelihood": "-64.21416664123535",
+      "phone_duration_deviation": "0.9394444252635797",
+      "max_running_short_interval": "0",
+      "snr": "20.04066074391187",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "042",
+      "begin": "0.0",
+      "end": "1.08",
+      "speaker": "bm_fable",
+      "overall_log_likelihood": "-51.72200972945602",
+      "speech_log_likelihood": "-57.66898536682129",
+      "phone_duration_deviation": "0.9194835405241818",
+      "max_running_short_interval": "0",
+      "snr": "14.481203168442885",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "030",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-51.03551776592548",
+      "speech_log_likelihood": "-64.21213150024414",
+      "phone_duration_deviation": "0.9194835405241818",
+      "max_running_short_interval": "0",
+      "snr": "20.95027341504705",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "028",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-53.04304387019231",
+      "speech_log_likelihood": "-64.05418459574382",
+      "phone_duration_deviation": "0.8484605936226656",
+      "max_running_short_interval": "0",
+      "snr": "22.374233730102016",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "024",
+      "begin": "0.0",
+      "end": "1.04",
+      "speaker": "bf_isabella",
+      "overall_log_likelihood": "-53.80426964393029",
+      "speech_log_likelihood": "-63.88748677571615",
+      "phone_duration_deviation": "0.8484605936226656",
+      "max_running_short_interval": "0",
+      "snr": "22.374233730102016",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "023",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-51.960474131058675",
+      "speech_log_likelihood": "-56.57626088460287",
+      "phone_duration_deviation": "0.8484605936226656",
+      "max_running_short_interval": "0",
+      "snr": "19.682280968699768",
+      "intensity_deviation": ""
+    },
+    {
+      "file": "019",
+      "begin": "0.0",
+      "end": "0.98",
+      "speaker": "am_onyx",
+      "overall_log_likelihood": "-52.68374322385204",
+      "speech_log_likelihood": "-56.553113301595054",
+      "phone_duration_deviation": "0.6575477738708965",
+      "max_running_short_interval": "0",
+      "snr": "19.59527221228939",
+      "intensity_deviation": ""
+    }
+  ],
+  "analysis_sha256": "3a8c87d72df7d0709f69b7210e98b22d6498c266c8faf1b8c8921bf8e8e5db3a",
+  "all_mechanically_usable": true,
+  "wake_detector_invocations": 0,
+  "training_run": false,
+  "phonetic_truth_claim": false,
+  "policy": "All48training-only positive whole waveforms, all48bare forms with original text retained; supplied canonical alignment transcript HEY NICKS for Nicks/Nyx/pause forms; no ASR/wake score selection. Pinned existing MFA3.4.3 English US ARPA, SQLite2jobs no speakeradaptation. All word/phone intervals and quality preserved. Forced supplied transcript is not independent text verification or phonetic truth. No missing prefix replacement with clipend. No training/label changes/heldout access."
+}
