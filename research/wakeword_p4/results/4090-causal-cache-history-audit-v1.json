@@ -1,0 +1,92 @@
+{
+  "schema": "causal-cache-history-audit-v1",
+  "encoder": "research/wakeword_p4/training/causal_cached_encoder_v1.py",
+  "encoder_sha256": "5bbcb40be78dd3b32e9124c9380665d764379d83e16e6db977c61cfe7c2058f1",
+  "matching_original_training_reports": [
+    {
+      "report": "research/wakeword_p4/results/4090-causal-delay40-supervised-training-v1.json",
+      "sha256": "79271f5de755ec0b3b68cedede08b32a15285a809bc29fa761d9ae4f917fae2b",
+      "schema": "causal-generator-delay40-supervised-training-v1",
+      "top_level_fields": [
+        "schema",
+        "provenance",
+        "steps",
+        "elapsed_seconds",
+        "final_loss",
+        "peak_cuda_bytes",
+        "artifacts",
+        "qualification",
+        "paired_initial_tensors_exact",
+        "paired_sampler_steps_exact"
+      ],
+      "encoder_matches_current": true
+    },
+    {
+      "report": "research/wakeword_p4/results/4090-causal-position-supervised-training-v1.json",
+      "sha256": "5b96d6ddb6364423b8009f103071eebb1c35b7dacc57c404a69edca841201ea4",
+      "schema": "causal-generator-position-supervised-training-v1",
+      "top_level_fields": [
+        "schema",
+        "provenance",
+        "steps",
+        "elapsed_seconds",
+        "final_loss",
+        "peak_cuda_bytes",
+        "artifacts",
+        "qualification",
+        "paired_control_initial_tensors_exact",
+        "paired_sampler_steps_exact"
+      ],
+      "encoder_matches_current": true
+    },
+    {
+      "report": "research/wakeword_p4/results/4090-causal-unit-supervised-training-v1.json",
+      "sha256": "ccc1a7bb40bb87bee8719e03b37e14bc5fdee48c8e7ee9701849d3b6f00b5ac1",
+      "schema": "causal-generator-unit-supervised-training-v1",
+      "top_level_fields": [
+        "schema",
+        "provenance",
+        "steps",
+        "elapsed_seconds",
+        "final_loss",
+        "peak_cuda_bytes",
+        "artifacts",
+        "qualification"
+      ],
+      "encoder_matches_current": true
+    },
+    {
+      "report": "research/wakeword_p4/results/4090-conditioning-risk-training-original-v1.json",
+      "sha256": "d69f02f1f4ee81be9ff47a3f21f9b673240008ab4fba12f117c1cfdb1b19c8fc",
+      "schema": "causal-generator-unit-supervised-training-v1",
+      "top_level_fields": [
+        "schema",
+        "provenance",
+        "steps",
+        "elapsed_seconds",
+        "final_loss",
+        "peak_cuda_bytes",
+        "artifacts",
+        "qualification"
+      ],
+      "encoder_matches_current": true
+    },
+    {
+      "report": "research/wakeword_p4/results/4090-conditioning-uniform-training-original-v1.json",
+      "sha256": "ff53a6e143b316d9860a201fd56cfa8d784913ad92c93f168ff68ae3549d4517",
+      "schema": "causal-generator-unit-supervised-training-v1",
+      "top_level_fields": [
+        "schema",
+        "provenance",
+        "steps",
+        "elapsed_seconds",
+        "final_loss",
+        "peak_cuda_bytes",
+        "artifacts",
+        "qualification"
+      ],
+      "encoder_matches_current": true
+    }
+  ],
+  "decision": "The encoder is historically trained, not a new untrained architecture. No training launched. Historical generator-unit supervision and raw matcher differ from C161 binary event protocol; do not claim a direct benchmark or that all possible heads have failed."
+}
