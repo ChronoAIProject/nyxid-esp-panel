@@ -1,5 +1,16 @@
 # Current research objective — 2026-11-17
 
+## Active milestones refreshed — 2026-11-17, C161 + Binary40 handoff
+
+This section supersedes older pending-work milestones below. Keep the existing broad system goal active; its API does not allow replacing an unfinished objective. Do not falsely mark it complete to reset it.
+
+1. Preserve C161 as the fixed baseline and original Binary40 as a research candidate. Actual interleaved dual-model host execution is complete: 1760 streams, 3941335 native calls; independent review passed for 1760 dual traces and 1777 archive members. Portable C++11 policy exactly matches all calls. Do not rerun completed training or replay.
+2. Prepare a compact Mac handoff of the two exact original INT8 models, original export metadata, fixed independent-detector/shared-refractory policy, portable C++ source and score-only fixture, and manifest with sizes, SHA256 and source commits. No PCM, Linux executable, reexport or retraining. Upload a new uniquely named asset to research-hey-nyx-20261110, anonymously redownload and verify archive/member hashes, then push manifest and receipt to research-hye-nyx-voice-gpu and notify Issue #18.
+3. Obtain independent Mac/ESP32-P4 numerical agreement, dual-model arena and whole-panel resources, realtime performance, first-command retention and stability. Host success is not P4 acceptance. Parallel consumed coverage improves builtin to 10/12, Legacy/Jenny/MeloUS to 36/36 and MeloBR to 25/36, but retains the common-name Nick conflict (1/96 daily clips) and one Melo background event. Report these limitations; do not promote automatically or pool reused background hours.
+4. Continue evidence-led synthetic-only RTX 4090 research on ordinary approximate pronunciation, crossvoice and connected commands. Common-word conflicts have priority over rare constructed nearwords; Hey Willow is the main comparison. Do not tune consumed acceptance material or repeat rejected recipes. Preserve original models and failed reports, limit numerical CPU threads to 2 / interop 1 and replay BUILTIN_REF to 1, retain at least 100 GiB free disk, and publish research promptly through the branch and Issue #18.
+
+Completion requires a useful reproducible handoff plus independent P4 evidence; a passed host replay or rejected experiment alone does not complete the broad goal.
+
 Continue synthetic-only Hye Nyx research on research-hye-nyx-voice-gpu using RTX 4090, with original C161 as the fixed development baseline. Seek a practically usable wake detector with better ordinary approximate-pronunciation, crossvoice and continuous wake-plus-command coverage, while tracking everyday word conflicts and preserving first-command audio. No human recordings or board are required for GPU research; Mac owns independent ESP32-P4 validation through Issue #18.
 
 Keep C161 SHA256 c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81, 60952 bytes, threshold 0.91796875, smoothing 5, and the documented continuous 81600-zero-PCM priming/event protocol fixed for comparisons. Preserve models, original reports and failed results. Rare constructed nearwords are diagnostic, not a zero-error gate; do not trade normal wake hits for lower constructed-word counts. Use concrete Hey Willow references; Hi ESP is auxiliary engineering context.
