@@ -1,0 +1,28 @@
+{
+  "schema": "multiscale-broad-prefix-provenance-v1",
+  "command_rows_verified": 18684,
+  "groups": {
+    "piper/light": 6048,
+    "piper/time": 6048,
+    "piper/timer": 6048,
+    "kokoro/light": 180,
+    "kokoro/time": 180,
+    "kokoro/timer": 180
+  },
+  "exact_pair_support": {
+    "with_same_draw_variant_Willow": 18684,
+    "with_same_draw_variant_Nick": 0,
+    "with_same_draw_variant_Next_Mix_Muse": 0
+  },
+  "input_sha256": {
+    ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f",
+    "research/wakeword_p4/results/4090-hey-broad-render-plan-v1.json": "addc799b74593234c0b5920e4e240304a81169cd76f41e938b64e2d6cf769665",
+    ".local/wakeword/hey-broad-render-schedule-v1.jsonl": "046deb68c7f45452e2c3b499f35ab9ef7b88311df09f42e25ddeee973032ff08",
+    "research/wakeword_p4/experiments/generate_hey_broad_piper_v1.py": "2088140d7be3b2e8fcf33ceaed2456afcd3fae1809163f23de47801df79a1ff9",
+    "research/wakeword_p4/experiments/generate_hey_broad_kokoro_v1.py": "0a175468342b0a00d381db0fc80219ea5333b42cc4f65fe88100b99aa4d82a10",
+    "research/wakeword_p4/experiments/render_hey_broad_training_v1.py": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143",
+    "research/wakeword_p4/experiments/build_hey_broad_features_v1.py": "0c0e04f80fdab07eb64c82fe02944f60ed7d86f0637467c5cb9b4df316093570"
+  },
+  "provenance": "Piper generator cumulative token durations (native22050\u219216000ceil mapping); Kokoro native duration600samples/token (24000\u219216000ceil mapping); rendering adds48000lead and960fullRIRtail forvariant2; featurekeyword=floor(prefix/160)-2. No forcedalignment applied here.",
+  "limits": "Exact metadata propagation/pairkeys only; existing generator audits retained, no new PCM/native tensor reread or phonetic truth. Same conditioning IDs do not prove independent voices. No inference, training, synthesis, exposure or modelpromotion."
+}
