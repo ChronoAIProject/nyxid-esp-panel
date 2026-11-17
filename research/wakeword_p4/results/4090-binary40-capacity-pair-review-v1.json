@@ -1,0 +1,39 @@
+{
+  "schema": "binary40-capacity-pair-review-v1",
+  "reviewer_sha256": "fa7a6ba16ddd6b7566ff95ea29ff45da5e3db27f9b15d3c60671065d7cd7c3d4",
+  "plan_sha256": "418048269c5a01e25fa22c6a654e6d004a8540010ba74096f5d1e4b787cdd151",
+  "terminal_receipts": [
+    {
+      "arm": "control64",
+      "pid": 2204533,
+      "exit_code": 0,
+      "log": "/tmp/binary40-capacity-control64-v1.log"
+    },
+    {
+      "arm": "wide128",
+      "pid": 2223580,
+      "exit_code": 0,
+      "log": "/tmp/binary40-capacity-wide128-v1.log"
+    }
+  ],
+  "reports": {
+    "control64": {
+      "path": "research/wakeword_p4/results/4090-binary40-capacity-control64-training-original-v1.json",
+      "sha256": "e24777bf5079b5ac37835dad2a55d46b1a60cf495dea1d9e6ebdd0123c889cba",
+      "final_sha256": "5b9ea16ec8083abcef979dbe4352803fb77e6b582426f4c383be65acdf1b37a2"
+    },
+    "wide128": {
+      "path": "research/wakeword_p4/results/4090-binary40-capacity-wide128-training-original-v1.json",
+      "sha256": "46d49eabf6f3765a6f0a95c52965e42610504c4508c758655e684508edfb9883",
+      "final_sha256": "69f2fac4e9cbf0792326acb1063b97e6cf00f0f98132ede652ef6b1f1008071a"
+    }
+  },
+  "every_batch_identical_to_original": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": 2560000,
+  "initial_control_exact": true,
+  "wide_initial_split_structure_verified": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
