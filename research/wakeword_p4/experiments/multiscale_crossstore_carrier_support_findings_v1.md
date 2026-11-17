@@ -1,0 +1,9 @@
+# Cross-store Nick command support
+
+No new synthesis is required to establish conditioning/speed/carrier/variant coverage for existingKokoro commands: all540positive renderedrows match one existingcommon-carrier Nicknegative each across20conditioningIDs,3speeds,3carriers,3variants. Piper18144commandrows have no correspondingNickcommands in these stores. This qualifies the previous same-store gap; it does not erase it or imply globalnegativecoverage.
+
+Matchedvoice/speed/carrier/variant does not mean same stochasticdraw/noise realization. Existingcommon-carrier generator uses a derivedKokoroONNX with fixedseedattributes, while original broadpositive generator uses its originalruntime. Preserve that provenance and no claim of purelylexical intervention. Positive/negative waveformSHA identities retained in540pair mapping; no audio copying, inference or synthesis.
+
+Current sampler already draws240000Kokorocarriernegative presentations over20000updates but its broadpositive insertion remainsbare-only. A possible boundedfuture hypothesis is pairedKokorocommandpositive support using existingmaterial, not another globalpositivecoverage expansion. It is not yet selected: prior rawcommand-context and alignedprefix/positivecoverage failures need exact overlap checking, and retaining broadbare/othercommand support plus originalclock/masks must be explicit. Do not use consumedBR/Max/Jenny to choose slots, coefficient or boundary. No claim that all540pairs were drawn in a particular ratio or that pairing solves ordinaryname ambiguity.
+
+Code audit_multiscale_crossstore_carrier_support_v1.py actualexit0;4090-multiscale-crossstore-carrier-support-v1.json binds bothfeatureinventories/generators/priorfailurefindings and everypair. No newdata/exposure/training or acceptance/P4claim. KeepC161 and currentMac handoffs; actualP4 resource/realtime/firstcommand/stability work remains outstanding.
