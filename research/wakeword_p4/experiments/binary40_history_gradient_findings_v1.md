@@ -1,0 +1,15 @@
+# History objective compatibility and historical exclusions
+
+Prelock410e94aa, actual RTX4090 session73233 exit0. All90 fixed training-source strata, both complete saved physical feature histories, original Binary40 final weights. No optimizer updates, all model weights unchanged. Gradient arrays retained; aggregate dot/norm/cosine independently recomputed. This diagnostic surrogate uses independently normalized positive BCE+20negative BCE, original positive endpoint band, and all pretarget support as negative including preceding Nick speech. It is not the original full128 training sampler objective or a training acceptance result.
+
+Aggregate quiet gradient norm0.01290367550, speech3.395743957; ratio263.16. Dot0.02284191879, cosine+0.5212957852. Thus there is no aggregate opposing-gradient evidence at these final weights under this surrogate. A history gradient projected to avoid a negative quiet dot would be unchanged here. Do not launch PCGrad/projection on a presumed conflict. Positive aggregate cosine does not prove no per-layer/row conflicts, finite-step preservation, optimizer compatibility or generalization. The larger history gradient is consistent with worse history fit; it does not identify a cause or justify fitting a coefficient from these scores.
+
+Historical routes checked:
+
+- `c161_context_pair_findings_v1.md`: speech-history training improves short-gap coverage but loses British standalone hits and retains daily six-cups conflict.
+- `c161_context_mixed_findings_v1.md` and `causal_chatterbox_context_mixed_batch_v1.py`: already tested equal per-label silence/speech budgets. Mixed retains most continuous gains, but British bare3/9 versus C1617/9 and US command23/27 versus24/27. “Mix both histories” is not untried.
+- `c161_bare_support_findings_v1.md`: extra bare support does not remove normal-hit trades and common-language conflict; do not repeat a bare quota rescue.
+- `paired_consistency_controlled_recipe_v1.md`: same-source quiet/rendered normalized representation consistency was proposed with gradient-scale preflight; not a new idea to rename as invariance.
+- `hey_same_recipe_evidence_inventory_v1.md`: completed QAT, bounded and one-way consistency families retain their numerical/recognition limitations. One-way shared-weight stop-gradient is not an independent frozen teacher; these historical results do not prove every possible teacher route fails.
+
+Next decision must address a specific remaining evidence gap rather than blindly add mixed history, lower threshold or project a nonopposing gradient. The physical-history feature/cache interaction has now been demonstrated, but a remedy retaining crossvoice bare and common-language discrimination remains unproven. Prior original-prefix/label audits and matched-source nearword supervision should be checked against the now-identified context-sensitive training distribution before choosing new gradients. Do not fit only the seven score-picked INT8 failures. All90-source selection and original identities remain fixed; protected acceptance material remains untouched. C161 stays baseline; broad practical/Mac goal is not complete.
