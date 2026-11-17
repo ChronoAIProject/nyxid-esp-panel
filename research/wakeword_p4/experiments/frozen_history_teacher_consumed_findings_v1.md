@@ -28,3 +28,9 @@ Each reused background set separately has0events in both new arms: Legacy10.4839
 Independent physical training-fit review recomputes all saved probabilities/masks: both arms864/864positive crossings for quiet and speech; control0/3456negative crossings in each view, teacher4/3456in each view. Teacher negatives include HeyNick and HeyMix; source identities differ between views. Original teacher quiet864/864,speech820/864. This supports fitting the intended physical histories, not generalization or a proven causal explanation for crossvoice losses.
 
 C161 remains baseline. Next work must explain the teacher's quiet crossvoice losses relative to original Binary40 and the already completed C161 mixed-history failures before selecting a distinct intervention; no blind coefficient/seed sweep or reuse of acceptance material. Mac owns independent P4 numeric, first-command retention, resources, realtime and stability. Mac host replay is not P4. No human-generalization or final acceptance claim.
+
+## Complete paired float diagnosis
+
+Both prelocked full8cohort float replays completedactualexit0 on RTX4090 without optimization. Independent review authenticated1760unique traces perarm (phase-prefixed filenames avoid synthetic/background index collisions), all trace hashes and float event redecoding. Saved INT8 input and block clocks were checked by original replay.
+
+Teacher Jenny float andINT8 both bare9,light7,time9,timer5 per9; MeloUS both8,8,9,7 and MeloBR both3,2,7,1. Thus these teacher ordinary-crossvoice misses are already present in finalfloat; they do not justify quantization-only rescue. ControlJenny also identical8,8,9,7; controlBRfloat3,2,7,1 versusINT8 2,1,7,2 shows some quantization effects, but poor BR coverage predates them. Counts alone are not full waveform numerical equivalence. Exact perclip differences across all cohorts remain in4090-frozen-history-teacher-float-review-v1.json. No threshold/calibration/QAT sweep selected.
