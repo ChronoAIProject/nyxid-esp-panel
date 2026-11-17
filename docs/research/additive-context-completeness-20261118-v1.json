@@ -1,0 +1,38 @@
+{
+  "original_empty_context_accepted": true,
+  "patched_complete_six_contexts_passed": true,
+  "invalid_cases_rejected": [
+    "empty",
+    "missing_stream",
+    "duplicate_stream",
+    "wrong_timeline",
+    "wrong_plan",
+    "truncated_trace",
+    "wrong_model",
+    "missing_reference_pin"
+  ],
+  "gpu_commit": "757962e71ed50a2f33cb11024e30947608b62448",
+  "source_sha256": "4092a46746ccaf176e07257cc1f663dcff626e4b60fb785e6c66f476ef6ef1c0",
+  "patch_sha256": "a0c763c4d6a132183dc6f6d75a68c3ffcbb4ed7ce9a4655e096d194ab217602e",
+  "new_inference_training_baseline_tts_or_recording": false,
+  "schema": "additive-context-review-completeness-fix-v1",
+  "checked_utc": "2026-11-17T21:42:06.176224+00:00",
+  "reproducer": "python3 tests/research_context_coverage.py",
+  "patch_path": "patches/research_additive_context_completeness.patch",
+  "patched_review_file_not_pinned_by_original_training_lock": true,
+  "existing_reference_plan_identity_verified": true,
+  "checks_added": [
+    "Require builtin/melo-US/melo-BR exactly once for each arm",
+    "Authenticate context plan, final export and original source/reference identities",
+    "Require the frozen reference timeline and all 48 clips per stream",
+    "Require complete uint8 score/native-clock arrays using original input-call counts"
+  ],
+  "model_scores_compared_for_numeric_equality": false,
+  "firmware_model_threshold_or_event_policy_changed": false,
+  "hardware_accessed": false,
+  "limits": [
+    "Constructed metadata/NPZ regression only; no delivered additive model/evaluation acceptance",
+    "No training, inference, source synthesis, acoustic baseline, TTS or recording",
+    "GPU must retain actual original audit/export/evaluation exit receipts and file identities"
+  ]
+}

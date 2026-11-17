@@ -1,0 +1,42 @@
+--- a/research/wakeword_p4/experiments/review_binary40_additive_carrier_consumed_v1.py
++++ b/research/wakeword_p4/experiments/review_binary40_additive_carrier_consumed_v1.py
+@@ -62,13 +62,36 @@
+ # Independently decode each final context raw trace with cumulative integer sums.
+ import numpy as np
+ context_checks={}
++source_path=R/'4090-parallel-context-streams-plan-v1.json'
++reference_path=R/'4090-parallel-context-streams-original-v1.json'
++source=read(source_path);reference=read(reference_path)
++expected_names=['builtin','melo-US','melo-BR']
++assert [s['name'] for s in source['streams']]==expected_names
++assert [s['name'] for s in reference['streams']]==expected_names
++assert reference['plan_sha256']==sha(source_path)
+ for arm in ['control','additive']:
+- d=read(R/f'4090-binary40-additive-carrier-{arm}-context-original-v1.json');assert d['all_passed'] and d['arm']==arm
++ plan_path=R/f'4090-binary40-additive-carrier-{arm}-context-plan-v1.json'
++ export_path=R/f'4090-binary40-additive-carrier-{arm}-export-original-v1.json'
++ plan=read(plan_path);export=read(export_path)
++ assert plan['arm']==export['arm']==arm and plan['model']==export['model']
++ for path in [source_path,reference_path,export_path,Path(export['model']['path'])]:
++  assert plan['files'][str(path)]==sha(path)
++ assert sha(export['model']['path'])==export['model']['sha256']
++ d=read(R/f'4090-binary40-additive-carrier-{arm}-context-original-v1.json')
++ assert d['all_passed'] and d['arm']==arm and d['plan_sha256']==sha(plan_path)
++ assert [s['name'] for s in d['streams']]==expected_names
+  own=[]
+- for row in d['streams']:
++ for row,expected in zip(d['streams'],reference['streams'],strict=True):
++  assert row['timeline']==expected['timeline']
++  assert sum(t['kind']=='clip' for t in row['timeline'])==48
++  assert Path(row['trace']['path']).stat().st_size==row['trace']['bytes']
+   assert sha(row['trace']['path'])==row['trace']['sha256']
+   with np.load(row['trace']['path'],allow_pickle=False) as z:
+-   codes=z['uint8'];clock=z['relative_block_return'];prefix=np.r_[0,np.cumsum(codes,dtype=np.int64)];sums=prefix[5:]-prefix[:-5];events=[];armed=True;last=-1000
++   codes=z['uint8'];clock=z['relative_block_return']
++   assert codes.dtype==np.uint8 and codes.ndim==clock.ndim==1
++   assert np.issubdtype(clock.dtype,np.integer)
++   assert len(codes)==len(clock)==expected['timing']['calls']
++   prefix=np.r_[0,np.cumsum(codes,dtype=np.int64)];sums=prefix[5:]-prefix[:-5];events=[];armed=True;last=-1000
+    for i,total in enumerate(sums,5):
+     if i-last>=67:
+      if 2*total<1175:armed=True
