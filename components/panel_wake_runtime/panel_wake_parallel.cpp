@@ -13,13 +13,32 @@ using panel_wake_parallel::ParallelDetector;
 using panel_wake_parallel::chunk_samples;
 using panel_wake_parallel::tag;
 
+void log_heap(const char* phase) {
+    constexpr unsigned caps = MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT;
+    ESP_LOGI(tag, "resources phase=%s internal_free=%u internal_largest=%u internal_global_min=%u",
+        phase, unsigned(heap_caps_get_free_size(caps)),
+        unsigned(heap_caps_get_largest_free_block(caps)),
+        unsigned(heap_caps_get_minimum_free_size(caps)));
+}
+
 model_iface_data_t* create(const void*, det_mode_t) {
+    log_heap("before_create");
     auto* detector = new(std::nothrow)ParallelDetector;
     if (!detector) return nullptr;
-    if (!detector->initialize(c161_bytes, binary40_bytes, history_bytes)) { ESP_LOGE(tag, "Parallel initialization failed"); delete detector; return nullptr; }
+    if (!detector->initialize(c161_bytes, binary40_bytes, history_bytes)) {
+        ESP_LOGE(tag, "Parallel initialization failed");
+        log_heap("failed_before_cleanup");
+        delete detector;
+        log_heap("failed_after_cleanup");
+        return nullptr;
+    }
+    log_heap("after_create");
     return reinterpret_cast<model_iface_data_t*>(detector);
 }
-void destroy(model_iface_data_t* data) { delete reinterpret_cast<ParallelDetector*>(data); }
+void destroy(model_iface_data_t* data) {
+    delete reinterpret_cast<ParallelDetector*>(data);
+    log_heap("after_destroy");
+}
 wakenet_state_t detect(model_iface_data_t* data, int16_t* pcm) {
     return static_cast<wakenet_state_t>(reinterpret_cast<ParallelDetector*>(data)->detect(pcm));
 }

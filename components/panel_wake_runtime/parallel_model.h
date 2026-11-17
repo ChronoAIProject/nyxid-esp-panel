@@ -36,6 +36,7 @@ struct Model {
     uint8_t* variable_arena = nullptr;
     tflite::MicroMutableOpResolver<15> ops;
     tflite::MicroInterpreter* interpreter = nullptr;
+    tflite::MicroAllocator* variable_allocator = nullptr;
     const tflite::Model* model = nullptr;
     TfLiteTensor* input = nullptr;
     TfLiteTensor* probability = nullptr;
@@ -86,9 +87,9 @@ struct Model {
         if (!explicit_cache) {
             variable_arena = static_cast<uint8_t*>(heap_caps_aligned_alloc(16, variable_size, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
             if (!variable_arena) return false;
-            auto* allocator = tflite::MicroAllocator::Create(variable_arena, variable_size);
-            if (!allocator) return false;
-            variables = tflite::MicroResourceVariables::Create(allocator, 20);
+            variable_allocator = tflite::MicroAllocator::Create(variable_arena, variable_size);
+            if (!variable_allocator) return false;
+            variables = tflite::MicroResourceVariables::Create(variable_allocator, 20);
             if (!variables) return false;
         }
         if (ops.AddCallOnce() != kTfLiteOk || ops.AddVarHandle() != kTfLiteOk ||
@@ -138,8 +139,9 @@ struct Model {
         }
         size_t cache_bytes = 0;
         for (const auto& cache : retained) cache_bytes += cache.size;
-        ESP_LOGI(tag, "model=%s arena_used=%u arena_alloc=%u variables_alloc=%u retained=%u",
+        ESP_LOGI(tag, "model=%s arena_used=%u arena_alloc=%u variables_used=%u variables_alloc=%u retained=%u",
                  name, unsigned(interpreter->arena_used_bytes()), unsigned(arena_size),
+                 unsigned(variable_allocator ? variable_allocator->used_bytes() : 0),
                  unsigned(variable_arena ? variable_size : 0), unsigned(cache_bytes));
         return true;
     }

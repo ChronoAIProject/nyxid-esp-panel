@@ -23,6 +23,8 @@ struct ParallelDetector {
     bool frontend_started = false, failed = false;
     uint64_t steps = 0, inference_us = 0;
     unsigned inference_max_us = 0;
+    uint64_t detector_calls = 0, detector_us = 0, detector_over_budget = 0;
+    unsigned detector_max_us = 0;
 
     ~ParallelDetector() { if (frontend_started) FrontendFreeStateContents(&frontend); }
 
@@ -47,6 +49,25 @@ struct ParallelDetector {
 
     int detect(const int16_t* pcm) {
         if (failed || !pcm) return -1;
+        const int64_t started = esp_timer_get_time();
+        const int result = process_pcm(pcm);
+        const unsigned elapsed = unsigned(esp_timer_get_time() - started);
+        ++detector_calls; detector_us += elapsed;
+        detector_max_us = std::max(detector_max_us, elapsed);
+        // One native 480-sample block represents 30 ms. Count overruns for
+        // diagnosis only; never change event policy, input rate or buffer order.
+        if (elapsed > 30000) ++detector_over_budget;
+        if (detector_calls % 167 == 0) ESP_LOGI(tag,
+            "progress calls=%llu step=%llu detector_mean_us=%u detector_max_us=%u over_30ms=%llu inference_mean_us=%u inference_max_us=%u stack_free=%u",
+            (unsigned long long)detector_calls, (unsigned long long)steps,
+            unsigned(detector_us / detector_calls), detector_max_us,
+            (unsigned long long)detector_over_budget,
+            unsigned(steps ? inference_us / steps : 0), inference_max_us,
+            unsigned(uxTaskGetStackHighWaterMark(nullptr)));
+        return result;
+    }
+
+    int process_pcm(const int16_t* pcm) {
         bool triggered = false;
         for (size_t at = 0; at < chunk_samples;) {
             size_t consumed = 0;
@@ -77,9 +98,6 @@ struct ParallelDetector {
                 ESP_LOGI(tag, "activation step=%llu emitted=%u detected=%u suppressed=%u",
                          (unsigned long long)steps, unsigned(event.emitted), unsigned(event.detected), unsigned(event.suppressed));
             }
-            if (steps % 167 == 0) ESP_LOGI(tag, "progress step=%llu mean_us=%u max_us=%u stack_free=%u",
-                (unsigned long long)steps, unsigned(inference_us / steps), inference_max_us,
-                unsigned(uxTaskGetStackHighWaterMark(nullptr)));
         }
         return triggered ? 1 : 0;
     }

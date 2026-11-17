@@ -35,21 +35,21 @@
   },
   "p4_rev1_build": {
     "exit_code": 0,
-    "image_bytes": 6761664,
-    "image_sha256": "eca43e26c6cb002c4c78e6212c273353ec215220de9a98f1d26b2ab1d74cb171",
+    "image_bytes": 6762592,
+    "image_sha256": "372de914c88599baeeb23796b015aa44df93710b6cc157a99d98215f00ec8266",
     "ota_partition_bytes": 6881280,
     "automatic_updates_disabled": true,
     "hardware_profile": "p4-rev1-16mb",
-    "ota_headroom_bytes": 119616
+    "ota_headroom_bytes": 118688
   },
   "p4_x8_build": {
     "exit_code": 0,
     "hardware_profile": "p4-rev3-lcd-x8-16mb",
-    "image_bytes": 6788448,
-    "image_sha256": "7c0dd90176642a5106ad1ae1626e4e716655e0a58d8a4cbdfcb4fa5e06172fbf",
+    "image_bytes": 6789360,
+    "image_sha256": "7f0697a747e2b53c23b53a3c328f82f48e165d4c22a6f3987c3083b24cb06dd5",
     "ota_partition_bytes": 6881280,
     "automatic_updates_disabled": true,
-    "ota_headroom_bytes": 92832
+    "ota_headroom_bytes": 91920
   },
   "hardware_tested": false,
   "candidate_promoted": false,
@@ -65,14 +65,14 @@
   ],
   "source_sha256": {
     "components/panel_wake_runtime/CMakeLists.txt": "f074d1827a8dee6240e63b5d2fcbf7436240958f2b32bb6ffb7bf43dc7829cca",
-    "components/panel_wake_runtime/panel_wake_parallel.cpp": "1bd1c17f2c3613288bf132a21c5411702c97258b5f5f23bc6b1d1ab373958096",
+    "components/panel_wake_runtime/panel_wake_parallel.cpp": "bccec8924bb3355aaf2fd5d8d488d7754ad77f4a865cef2827bbe3d756001445",
     "components/panel_wake_runtime/prepare_parallel_runtime.py": "36f937943579164bcacd53725c1982af24a473d94fe27c0f3d0ca9390a9d9d65",
     "components/panel_wake_runtime/idf_component.yml": "0c2293e7ebef1a403ad6327922b921e110baa6c666a11b8dfca22c168a50c056",
     "components/panel_wake_runtime/panel_wake_runtime.cpp": "617890a1eda6dc1d756884dce5ccfabdef5037e20fb8e6f5515856c33f9fbc0e",
-    "components/panel_wake_runtime/parallel_model.h": "3c1daf6f8465137b4201b8f409e987004814b9d0a7410b4b2120266c1fec7d1e",
+    "components/panel_wake_runtime/parallel_model.h": "b1f0edb29a2966a5034c912669f68ddba9ae9782b7f3099d2af88c42e18b1d8f",
     "components/panel_wake_runtime/panel_wake_runtime.h": "8bb92533b52e12b460f1f434473a1dbc653a75f926249a628f0278905f9bdc4b",
     "components/panel_wake_runtime/prepare_streaming_runtime.py": "e02306fcc6221936c85e2c94f437c8ba82151c623d83493aae73f9c89ec28307",
-    "components/panel_wake_runtime/parallel_detector.h": "82a313542fc1a3cef7886cac8b7878eef604c964d5a1d4d5368034176e7dd68e",
+    "components/panel_wake_runtime/parallel_detector.h": "d6a042e14a307036f9e7dc6c0dc3a4b3b5710f69aa916c5ba5c0fb8f336f1f79",
     "tests/parallel_wake/frontend_flow.cpp": "3b400d576f256b5b4c7169f1d681ccda119d76a778fafc2dadb275cb739ad84e",
     "tests/parallel_wake/run.py": "fa8f6e243ae080769bb7d3576c7bcda58c55d44c0397ac5e266348c55a3565f5",
     "cmake/apply_managed_component_patches.cmake": "159648ebcb324980e4e11d062854d8e8438aef87a50181413bc7911370e6bb9c",
@@ -96,7 +96,8 @@
     "frontend_allocation_fault_sites": 17,
     "tracked_allocations_outstanding_after_each_destroy": 0,
     "fresh_initialization_recovery": true,
-    "p4_executed": false
+    "p4_executed": false,
+    "resource_observation_revision_passed": true
   },
   "frontend_allocation_regression": {
     "dependency": "esphome/esp-micro-speech-features 1.2.3",
@@ -110,15 +111,57 @@
   },
   "default_c161_model_and_processing_source_unchanged": true,
   "shared_dependency_failure_guard_changed": true,
-  "checked_utc": "2026-11-17T20:41:33.628084+00:00",
+  "checked_utc": "2026-11-17T21:00:48.737706+00:00",
   "p4_rev3_build": {
     "exit_code": 0,
     "hardware_profile": "p4-rev3-16mb",
-    "image_bytes": 6775456,
-    "image_sha256": "33cc0b9bd12d8acd8b7123275ae424ce2563dd33ca5f0dbc4e155a0755a183f5",
+    "image_bytes": 6776368,
+    "image_sha256": "7e301e454a22ba495f630b4d23c7d79129dffab26f7cb8e449013640ab2981d6",
     "ota_partition_bytes": 6881280,
-    "ota_headroom_bytes": 105824,
+    "ota_headroom_bytes": 104912,
     "automatic_updates_disabled": true
   },
-  "all_supported_optional_profiles_compiled": true
+  "all_supported_optional_profiles_compiled": true,
+  "runtime_resource_observation": {
+    "implemented": true,
+    "hardware_executed": false,
+    "memory_reservations_unchanged": true,
+    "wrapper_reserved_bytes": 226080,
+    "adapter_heap_phases": [
+      "before_create",
+      "after_create",
+      "failed_before_cleanup",
+      "failed_after_cleanup",
+      "after_destroy"
+    ],
+    "heap_fields": [
+      "internal_free",
+      "internal_largest",
+      "internal_global_min"
+    ],
+    "model_fields": [
+      "arena_used",
+      "arena_alloc",
+      "variables_used",
+      "variables_alloc",
+      "retained"
+    ],
+    "host_c161_variable_allocator_metadata_used_bytes": 1040,
+    "variable_tensor_buffers_in_interpreter_arena": true,
+    "timing_fields": [
+      "detector_mean_us",
+      "detector_max_us",
+      "over_30ms",
+      "inference_mean_us",
+      "inference_max_us",
+      "stack_free"
+    ],
+    "detector_timing_includes": "Shared frontend and all3model invokes/cache/event processing, including in-process activation/failure logs",
+    "detector_timing_excludes": "I2S/AEC/AGC, downstream call startup and periodic timing log emission",
+    "native_block_samples": 480,
+    "native_block_ms": 30,
+    "overrun_count_changes_detection_policy_or_input_speed": false,
+    "host_timing_not_p4_acceptance": true,
+    "heap_snapshots_not_isolated_peak_or_leak_proof": true
+  }
 }

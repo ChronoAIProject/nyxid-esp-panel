@@ -23,8 +23,19 @@ priority; priming continues for 81,600 samples without a state reset at live joi
 Each interpreter currently reserves 64 KiB of internal arena memory, with 16 KiB
 additional C161 variable storage and separate explicit-cache allocations. These
 are allocation budgets, not measured P4 peak usage or realtime guarantees.
-Startup logs report used arenas and retained bytes; progress logs report combined
-inference timing and free task stack. The model lifecycle releases all buffers
+Startup logs report used arenas, variable allocator metadata and retained bytes.
+The C161 `variables_used` field describes its separate allocator metadata; the
+resource tensor buffers allocated by the interpreter are included in `arena_used`.
+The adapter logs internal heap free/largest-block sizes before and after create,
+failure cleanup and destruction; its minimum-free value is a system lifetime
+low-water mark, not this detector's isolated peak. Concurrent allocations can
+affect these snapshots, so differing heap totals alone do not prove a leak.
+Progress logs separately report combined model inference and complete detector
+call timing (frontend included), free task stack and the count of calls over the
+native 30 ms block duration. The overrun count is diagnostic and never changes
+the input speed, event rules or FIFO. It excludes upstream I2S/AEC/AGC, downstream
+call startup and the periodic timing-log emission itself. Any activation/error
+log emitted inside processing is included. The model lifecycle releases all buffers
 on initialization failure and normal destruction.
 
 This is an opt-in research implementation, not a release candidate or evidence
