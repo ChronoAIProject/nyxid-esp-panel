@@ -106,9 +106,18 @@ def main():
     executable=args.output/'runtime-flow'
     subprocess.run([args.compiler,sanitize,*[str(p) for p in objects],'-o',str(executable)],check=True)
     models=[args.handoff/'models'/f'{name}.tflite' for name in ['c161','binary40','history_expert']]
-    result=subprocess.run([str(executable),*[str(p) for p in models]],capture_output=True,text=True)
+    command=[str(executable),*[str(p) for p in models]]
+    timed_out=False
+    try:
+        result=subprocess.run(command,capture_output=True,text=True,timeout=30)
+    except subprocess.TimeoutExpired as error:
+        timed_out=True
+        def decoded(value):
+            return value.decode(errors='replace') if isinstance(value,bytes) else (value or '')
+        result=subprocess.CompletedProcess(command,124,decoded(error.stdout),
+                    decoded(error.stderr)+'\nHost smoke exceeded 30 seconds; child terminated.\n')
     (args.output/'runtime.log').write_text(result.stdout+result.stderr)
-    report={'schema':'parallel-runtime-host-flow-v1','exit_code':result.returncode,
+    report={'schema':'parallel-runtime-host-flow-v1','exit_code':result.returncode,'timed_out':timed_out,
             'source_sha256':hashes,'model_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in models},
             'compiler':subprocess.check_output([args.compiler,'--version'],text=True).splitlines()[0],
             'flags':flags,'sanitizer':args.sanitizer,'new_pcm_training_tts_recording':False,
