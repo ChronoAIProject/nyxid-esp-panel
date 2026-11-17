@@ -1,0 +1,42 @@
+{
+  "schema": "binary40-multiscale-training-review-v1",
+  "reviewer_sha256": "8094ff1e9c52ceb78dce3f2c45bd80cafdacc9c3cbf134483fdef42db613adbb",
+  "plan_sha256": "efd3711000b2cf88fb969d485019cb263d608602428be219ca70f779fcc12d81",
+  "terminal_receipts": [
+    {
+      "arm": "control",
+      "pid": 2740345,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-multiscale-continuation-v1/train-control.log",
+      "log_sha256": "1f6eeb8a65b4bc63916af6c2e1aa74d748a4b094dbf7615dffc88ef14d9b2eb4"
+    },
+    {
+      "arm": "multiscale",
+      "pid": 2746451,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-multiscale-continuation-v1/train-multiscale.log",
+      "log_sha256": "3e2d6049b408c91106f2c666fa0cd459e1cf12802677b3c57edc68b4b4da32e7"
+    }
+  ],
+  "reports": {
+    "control": {
+      "path": "research/wakeword_p4/results/4090-binary40-multiscale-control-training-original-v1.json",
+      "sha256": "8d09c9ebeb3c271dac1c88a241017253e325b1f3731e758a5733befdc2f18694",
+      "final_sha256": "5967c257dc119359f8ac6f1fb467491b4ed562a94c601906f1aa27d8fd23b0c9"
+    },
+    "multiscale": {
+      "path": "research/wakeword_p4/results/4090-binary40-multiscale-multiscale-training-original-v1.json",
+      "sha256": "5fe793f531c6ea16a8191c5de90297b9b8a437d39af097b308b0040052a3c6ef",
+      "final_sha256": "7914293818192b761b4fe876c2aa2e4deee053905710ad45462cfc0006463dca"
+    }
+  },
+  "every_batch_identical_to_original": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": 2560000,
+  "initial_control_exact": true,
+  "same_initial_backbone_tensors_exact": true,
+  "function_preserving_head_initialization_verified": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
