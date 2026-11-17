@@ -1,0 +1,123 @@
+{
+  "schema": "frozen-history-teacher-loss-balance-v1",
+  "arms": {
+    "control": {
+      "ledger_sha256": "49803affca770c715733b8015a44f0e926028ee82059c95df1182078a61fa4a4",
+      "phases": {
+        "all": {
+          "steps": 20000,
+          "mean": {
+            "main_bce": 0.007183326739912854,
+            "paired_bce": 0.002545699969211808,
+            "kl": 0.0131254686048
+          },
+          "median": {
+            "main_bce": 0.0014975392841733992,
+            "paired_bce": 7.267000455613015e-06,
+            "kl": 0.0001644047661102377
+          },
+          "paired_larger_than_main_steps": 1156,
+          "kl_larger_than_main_steps": 5388
+        },
+        "first2000": {
+          "steps": 2000,
+          "mean": {
+            "main_bce": 0.008130403673413639,
+            "paired_bce": 0.004696350656610413,
+            "kl": 0.010783609489618588
+          },
+          "median": {
+            "main_bce": 0.002414857503026724,
+            "paired_bce": 4.1924511606339365e-05,
+            "kl": 0.0001285456382902339
+          },
+          "paired_larger_than_main_steps": 191,
+          "kl_larger_than_main_steps": 394
+        },
+        "last2000": {
+          "steps": 2000,
+          "mean": {
+            "main_bce": 0.00800800222869384,
+            "paired_bce": 0.003225356377446168,
+            "kl": 0.012859784678675174
+          },
+          "median": {
+            "main_bce": 0.0014886715216562152,
+            "paired_bce": 7.244829248520546e-06,
+            "kl": 0.00017838925123214722
+          },
+          "paired_larger_than_main_steps": 116,
+          "kl_larger_than_main_steps": 522
+        }
+      },
+      "pair_draws": 80000,
+      "positive_pair_draws": 40000,
+      "negative_pair_draws": 40000,
+      "source_draw_min": 1,
+      "source_draw_max": 69
+    },
+    "teacher": {
+      "ledger_sha256": "eb17925d974e998212d1a9b7a79cffc710e282c54ef6bd3103c617027e42c195",
+      "phases": {
+        "all": {
+          "steps": 20000,
+          "mean": {
+            "main_bce": 0.009374627783342566,
+            "paired_bce": 0.004523575900752236,
+            "kl": 0.004351502604853431
+          },
+          "median": {
+            "main_bce": 0.0030013812938705087,
+            "paired_bce": 7.707745317020454e-05,
+            "kl": 0.00011168223136337474
+          },
+          "paired_larger_than_main_steps": 2041,
+          "kl_larger_than_main_steps": 2770
+        },
+        "first2000": {
+          "steps": 2000,
+          "mean": {
+            "main_bce": 0.00872981861353037,
+            "paired_bce": 0.00473759470094754,
+            "kl": 0.005708277752885596
+          },
+          "median": {
+            "main_bce": 0.003417412401176989,
+            "paired_bce": 9.497565406491049e-05,
+            "kl": 9.78152638708707e-05
+          },
+          "paired_larger_than_main_steps": 210,
+          "kl_larger_than_main_steps": 284
+        },
+        "last2000": {
+          "steps": 2000,
+          "mean": {
+            "main_bce": 0.010616627475792484,
+            "paired_bce": 0.0043191475880624995,
+            "kl": 0.0032607404886561115
+          },
+          "median": {
+            "main_bce": 0.0021253833547234535,
+            "paired_bce": 6.067830145184416e-05,
+            "kl": 0.00011522330896696076
+          },
+          "paired_larger_than_main_steps": 226,
+          "kl_larger_than_main_steps": 303
+        }
+      },
+      "pair_draws": 80000,
+      "positive_pair_draws": 40000,
+      "negative_pair_draws": 40000,
+      "source_draw_min": 1,
+      "source_draw_max": 69
+    }
+  },
+  "structural_normalization": {
+    "main_rows": 128,
+    "paired_rows": 8,
+    "main_group_coefficient": 1,
+    "paired_group_coefficient": 1,
+    "paired_per_row_relative_to_main": 16
+  },
+  "limits": "Retrospective scalar loss magnitudes are not gradient magnitudes, causal attribution, generalization or coefficient selection. Pair labels/masks/history distributions differ from main. No model/threshold change."
+}
