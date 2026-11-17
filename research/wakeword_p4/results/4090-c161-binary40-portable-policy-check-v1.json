@@ -1,0 +1,33 @@
+{
+  "schema": "c161-binary40-portable-policy-check-v1",
+  "plan_sha256": "66eb6d1313bee64395883777504cde6f17a35f921c84b5f1d9c47dc9ca7d423e",
+  "compile_args": [
+    "g++",
+    "-std=c++11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "research/wakeword_p4/portable/check_c161_binary40_events_v1.cpp",
+    "-o",
+    ".local/wakeword/c161-binary40-portable-policy-v1/check-policy"
+  ],
+  "compile_actual_exit_code": 0,
+  "check_actual_exit_code": 0,
+  "stdout": "All 1760 streams, 3941335 calls match saved events exactly.\n",
+  "stderr": "",
+  "streams": 1760,
+  "calls": 3941335,
+  "fixture": {
+    "path": ".local/wakeword/c161-binary40-portable-policy-v1/scores-and-events.bin.gz",
+    "bytes": 77590,
+    "sha256": "709c6f7eb8c6a31af84f38cb63ba4a74d6ecbbfc37842f0a8b8ab1f27d82fc97"
+  },
+  "files": {
+    ".local/wakeword/c161-binary40-portable-policy-v1/check.log": "8503c382243e6e751e5fd9f00cd0cb69d9c0de6e8d86fe88c71675cc2145f0e2",
+    ".local/wakeword/c161-binary40-portable-policy-v1/check-policy": "d9da843485683d4b5ad03c8d592924811e0e131eb4140e32324d2e34e2d8f791",
+    ".local/wakeword/c161-binary40-portable-policy-v1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".local/wakeword/c161-binary40-portable-policy-v1/scores-and-events.bin.gz": "709c6f7eb8c6a31af84f38cb63ba4a74d6ecbbfc37842f0a8b8ab1f27d82fc97"
+  },
+  "limits": "All1760consumed saved-score streams, no PCM or model inference. Portable policy matches independent detector/shared-cooldown event reference; not P4 model numerical/resource/realtime/first-command proof."
+}
