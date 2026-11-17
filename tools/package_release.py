@@ -8,10 +8,14 @@ import shutil
 import struct
 import zipfile
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from board_profiles import catalog, validate_config, validate_image
 
 PROJECT = "nyxid-esp-panel"
 ROOT = "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download"
-PROFILES = {"p4-rev1-16mb": 100, "p4-rev3-16mb": 300, "p4-rev3-lcd-x8-16mb": 300}
+PROFILES = catalog()["profiles"]
 SLOT_SIZE = 0x690000
 
 
@@ -21,15 +25,7 @@ def package(build: Path, output: Path, profile: str, version: str):
     if any(int(part) > 65535 for part in version.split(".")):
         raise ValueError("Version component too large")
     config = json.loads((build / "config/sdkconfig.json").read_text())
-    if config.get("ESPTOOLPY_FLASHSIZE") != "16MB" or not config.get("BOOTLOADER_APP_ROLLBACK_ENABLE"):
-        raise ValueError("Release requires 16 MB flash and boot rollback")
-    if config.get("ESP32P4_REV_MIN_FULL") != PROFILES[profile]:
-        raise ValueError("Build profile does not match minimum chip revision")
-    lcd_x8 = bool(config.get("NYX_PANEL_BOARD_LCD_X8"))
-    if lcd_x8 != (profile == "p4-rev3-lcd-x8-16mb"):
-        raise ValueError("Build profile does not match board wiring")
-    if lcd_x8 and not config.get("BSP_LCD_TYPE_800_1280_8_INCH_A"):
-        raise ValueError("LCD-X8 requires the 8-inch JD9365 initialization sequence")
+    validate_config(config, profile)
     # The generated compilation database records all CMake command-line defines.
     compile_commands = (build / "compile_commands.json").read_text()
     if any(marker in compile_commands for marker in (
@@ -45,6 +41,7 @@ def package(build: Path, output: Path, profile: str, version: str):
     actual_project = image[80:112].split(b"\0", 1)[0].decode("ascii")
     if magic != 0xABCD5432 or actual_version != version or actual_project != PROJECT:
         raise ValueError("Application descriptor does not match release identity")
+    validate_image(image, profile)
     output.mkdir(parents=True, exist_ok=True)
     name = f"{PROJECT}-{profile}.bin"
     shutil.copyfile(build / f"{PROJECT}.bin", output / name)

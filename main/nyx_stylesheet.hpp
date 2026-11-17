@@ -1,6 +1,7 @@
 #pragma once
 
-#include "systems/phone/stylesheets/800_1280/dark/stylesheet.hpp"
+#include "panel_board_config.h"
+#include PANEL_BOARD_STYLESHEET_HEADER
 #include "nyx_theme.h"
 
 // Keep the vendor's panel dimensions, typography and gestures; supply NyxID colors.
@@ -9,8 +10,8 @@ inline const esp_brookesia::systems::phone::Stylesheet &nyx_stylesheet()
     using namespace esp_brookesia;
     // The stylesheet is larger than the 4 KiB startup stack. Keep both its
     // storage and the returned value off the stack (including call-site copies).
-    static auto sheet = systems::phone::STYLESHEET_800_1280_DARK;
-    sheet.core.name = "NyxID 800x1280";
+    static auto sheet = systems::phone::PANEL_BOARD_STYLESHEET;
+    sheet.core.name = "NyxID";
     sheet.core.display.background.color = gui::StyleColor::COLOR(NYX_BG);
     auto &display = sheet.display;
     display.status_bar.data.main.background_color = gui::StyleColor::COLOR(NYX_BG);

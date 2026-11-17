@@ -1,6 +1,8 @@
+idf_build_get_property(PANEL_BOARD_BSP_COMPONENT PANEL_BOARD_BSP_COMPONENT)
 set(SRCS "")
 list(APPEND SRCS
     "src/product_support.c"
+    "../../boards/${PANEL_BOARD_BACKEND}/product_backend.c"
 )
 
 set(INCLUDE_DIRS "")
@@ -15,7 +17,7 @@ endforeach()
 idf_component_register(
     SRCS ${SRCS}
     INCLUDE_DIRS ${INCLUDE_DIRS}
-    REQUIRES driver esp_codec_dev esp32_p4_platform esp-audio-player esp-file-iterator
+    REQUIRES driver esp_codec_dev ${PANEL_BOARD_BSP_COMPONENT} esp-audio-player esp-file-iterator
     PRIV_REQUIRES esp_timer fatfs esp_psram esp_mm
 )
 

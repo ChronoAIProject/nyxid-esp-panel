@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "common_defaults": [
+    "sdkconfig.defaults",
+    "sdkconfig.board-16mb.defaults"
+  ],
+  "boards": {
+    "waveshare-p4-platform-10_1": {
+      "name": "Waveshare ESP32-P4-Platform / external 10.1-inch JD9365",
+      "backend": "platform",
+      "bsp_component": "waveshare__esp32_p4_platform",
+      "defaults": "boards/platform/sdkconfig.defaults",
+      "config": {
+        "NYX_PANEL_BOARD_LCD_X8": false,
+        "BSP_LCD_TYPE_800_1280_8_INCH_A": false,
+        "BSP_LCD_TYPE_800_1280_10_1_INCH_A": true
+      },
+      "display": {
+        "width": 800,
+        "height": 1280,
+        "stylesheet": "800_1280"
+      },
+      "audio": {
+        "output": "ES8311",
+        "input": "ES8311",
+        "capture": "i2s-mic-reference"
+      },
+      "camera": {
+        "sensor": "OV5647",
+        "optional": true,
+        "width": 800,
+        "height": 1280
+      },
+      "bsp_adapter": "boards/platform/bsp.cmake",
+      "bsp_patch": ""
+    },
+    "waveshare-p4-lcd-x8": {
+      "name": "Waveshare ESP32-P4-WIFI6-Touch-LCD-X / integrated 8-inch JD9365",
+      "backend": "lcd_x8",
+      "bsp_component": "waveshare__esp32_p4_platform",
+      "defaults": "sdkconfig.lcd-8inch-a.defaults",
+      "config": {
+        "NYX_PANEL_BOARD_LCD_X8": true,
+        "BSP_LCD_TYPE_800_1280_8_INCH_A": true,
+        "BSP_LCD_TYPE_800_1280_10_1_INCH_A": false
+      },
+      "display": {
+        "width": 800,
+        "height": 1280,
+        "stylesheet": "800_1280"
+      },
+      "audio": {
+        "output": "ES8311",
+        "input": "ES7210",
+        "capture": "tdm4-to-mic-reference"
+      },
+      "camera": {
+        "sensor": "OV5647",
+        "optional": true,
+        "width": 800,
+        "height": 1280
+      },
+      "bsp_adapter": "boards/platform/bsp.cmake",
+      "bsp_patch": "patches/waveshare_lcd_x8_board.patch"
+    }
+  },
+  "profiles": {
+    "p4-rev1-16mb": {
+      "board": "waveshare-p4-platform-10_1",
+      "min_revision": 100,
+      "max_revision": 199,
+      "revision_defaults": "sdkconfig.rev1_3.defaults"
+    },
+    "p4-rev3-16mb": {
+      "board": "waveshare-p4-platform-10_1",
+      "min_revision": 300,
+      "max_revision": 399,
+      "revision_defaults": "sdkconfig.rev3_x.defaults"
+    },
+    "p4-rev3-lcd-x8-16mb": {
+      "board": "waveshare-p4-lcd-x8",
+      "min_revision": 300,
+      "max_revision": 399,
+      "revision_defaults": "sdkconfig.rev3_x.defaults"
+    }
+  }
+}

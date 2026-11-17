@@ -50,9 +50,10 @@ python -m unittest discover -s tests/release -v
 git diff --check
 ```
 
-The ordinary build targets the legacy revision-1 board. CI also builds/packages
-the revision-3 profile using `sdkconfig.rev3_x.defaults`; do not flash that image
-on revision 1. Compare `build/CMakeCache.txt`, `sdkconfig`, the IDF revision and
+The ordinary build targets the legacy revision-1 board. CI derives all supported
+profiles from `boards/catalog.json` and builds/packages them separately; never
+flash a different profile. Compare the selected build's `CMakeCache.txt`,
+`sdkconfig`, the IDF revision and
 `dependencies.lock` when local and CI differ. Run `idf.py reconfigure` after a
 component/source-list change. Component Manager older than the pinned version
 can produce misleading missing-Kconfig failures from unselected candidates.
@@ -74,17 +75,17 @@ Identify the actual board before installing either image; a chip revision alone
 does not identify the screen or board wiring.
 
 ```sh
-idf.py -B build-lcd-x8 -D SDKCONFIG=sdkconfig.local-lcd-x8 \
-  -D SDKCONFIG_DEFAULTS="sdkconfig.defaults;sdkconfig.rev3_x.defaults;sdkconfig.board-16mb.defaults;sdkconfig.lcd-8inch-a.defaults" build
-python3 tools/package_release.py --build build-lcd-x8 --output .local/lcd-x8-dist \
+python3 tools/build_profile.py --profile p4-rev3-lcd-x8-16mb
+python3 tools/package_release.py --build build/profiles/p4-rev3-lcd-x8-16mb/production --output .local/lcd-x8-dist \
   --profile p4-rev3-lcd-x8-16mb
 ```
 
 The LCD-X8 OTA profile is distinct from `p4-rev3-16mb`. Until matching release
 assets are published, its update checks cannot install the external-screen
 firmware. Packaging also rejects a build labeled with the other board's profile.
-The BSP compatibility patch is conditional on `CONFIG_NYX_PANEL_BOARD_LCD_X8`;
-the external-screen configuration uses the original BSP behavior.
+Each profile compiles its own BSP copy and selected product backend. Board
+patches no longer modify the shared managed BSP. The external-screen copy uses
+the original BSP behavior. See [board profiles](BOARD_PROFILES.md).
 
 The integrated panel uses the official 12-line vertical back porch (the generic
 Waveshare 800x1280 macro uses 10). Its GT911 register transport uses a finite

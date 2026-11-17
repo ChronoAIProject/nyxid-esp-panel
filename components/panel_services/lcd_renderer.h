@@ -55,6 +55,10 @@ esp_err_t lcd_renderer_snapshot_jpeg(uint8_t *out, size_t cap, size_t *out_len);
 // "back" invokes native navigation (scan returns to its originating Settings page).
 esp_err_t lcd_renderer_navigate(const char *target);
 
+// USB-console diagnostics for installed native apps. Runs on the GUI timer.
+// action: status (id=0), inspect/open/close (a positive installed app ID).
+esp_err_t lcd_renderer_debug_app(const char *action, int id);
+
 // Read-only: which screen is currently on top + how deep is the stack.
 // out_target points to a static string ("home"/"settings"/etc) — do not free.
 esp_err_t lcd_renderer_current_screen(const char **out_target, size_t *out_depth);
