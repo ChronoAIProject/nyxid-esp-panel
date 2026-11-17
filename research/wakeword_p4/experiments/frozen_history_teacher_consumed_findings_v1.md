@@ -42,3 +42,14 @@ All20000saved steps perarm audited in4090-frozen-history-teacher-loss-balance-v1
 Paired scalar loss exceeds main in1156/20000control and2041/20000teacher steps. Teacher mean mainBCE.0093746 versuscontrol.0071833; teacher meanKL.0043515 versuscontrol diagnosticKL.0131255 (controlKLcoefficient0). These are descriptive optimization traces, not causal forgetting evidence, gradient scales or a coefficient recommendation. Both arms have ordinary BR regression, so KL alone cannot explain the shared loss; teacher improves continuous coverage while sacrificing some Jenny commands.
 
 Historical c161_context_mixed_findings_v1.md already reports builtin11/12,continuous11/12and10/12 but BRbare7→3/9,UScommands24→23/27 and everyday sixcups conflict. New teacher BRbare3/9 repeats the practical pattern under a distinct network/objective; merely changing quiet/speech ratios or sweeping KL would not be a demonstrated new solution. Next measure retention of original main training support across original/control/teacher under identical saved source identities before claiming forgetting or selecting a distinct intervention. The first128batch alone is insufficient for a broad retention claim.
+
+## Original broad bare support retention
+
+Prelock10d8d405; both GPUfloat final-weight audits actualexit0. Independent review source/variant/offset identities and all original positive-mask fivecall crossings recomputed from saved probability for all31644rows per model (original/control/teacher). This scope is original admitted broad bare training support, not every main128sampler family or physical PCM/generalization. Valid event counts use authenticated original event records, not independent event redecoding in this review.
+
+Piper positive crossings original5918/6048,control5985,teacher5922; Kokoro180/180 andQwen216/216 in allthree. Piper HeyMix valid event rows431/6048→216control/468teacher; constructed nearword metric is diagnostic, not the reason to reject teacher.
+
+control: original positive-source gains89, losses22.
+teacher: original positive-source gains71, losses67.
+
+The paired training does not cause a global loss of broad-bare training fit: aggregates hold or improve while consumed Jenny/BR regressions persist. Exact local gains/losses remain and aggregate retention cannot exclude selective forgetting elsewhere. These data weaken a blanket catastrophic-forgetting explanation; do not automatically add distillation or reduce pair coefficients. Next account for source/voice distribution and unmeasured main sampler families before choosing a new training objective.
