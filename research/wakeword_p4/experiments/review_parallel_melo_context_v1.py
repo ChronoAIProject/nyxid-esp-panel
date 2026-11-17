@@ -12,6 +12,10 @@ def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
  plan=json.loads((R/'4090-parallel-melo-context-replay-plan-v1.json').read_text());report=json.loads((R/'4090-parallel-melo-context-replay-original-v1.json').read_text());source=json.loads((R/'4090-parallel-melo-context-language-plan-v1.json').read_text())
  assert report['completed_rows']==len(plan['rows'])==len(source['requests'])==96
+ parent=json.loads((R/'4090-parallel-prospective-language-plan-v1.json').read_text())
+ for i,req in enumerate(source['requests']):
+  assert req['text_index']==i%48 and req['text']==parent['requests'][i%48]['text']
+  assert req['speaker_condition']==('EN-US' if i<48 else 'EN-BR')
  for path,h in plan['files'].items():assert sha(path)==h,path
  assert report['plan_sha256']==sha(R/'4090-parallel-melo-context-replay-plan-v1.json')
  summaries=defaultdict(Counter);changed=[];non_target=[];members=[];seconds=0
@@ -19,6 +23,8 @@ def main():
   assert gen['index']==r['index']==i and r['request']==gen['request']==source['requests'][i]
   npy,=[x['path'] for x in gen['files'] if x['path'].endswith('.npy')];wav,=[x['path'] for x in gen['files'] if x['path'].endswith('.wav')]
   native=np.load(npy,allow_pickle=False);assert native.dtype==np.float32 and list(native.shape)==gen['native_shape'] and np.isfinite(native).all()
+  extra,=[x['path'] for x in gen['files'] if x['path'].endswith('.npz')];alignment=np.load(extra,allow_pickle=False)
+  assert np.array_equal(alignment['engine'][0],native) and native.shape[1]==alignment['alignment'].shape[2]*512 and alignment['mask'].shape[-1]==alignment['alignment'].shape[2]
   rate=gen['native_rate'];q=math.gcd(rate,16000);v=resample_poly(native[0],16000//q,rate//q);expected=np.rint(np.clip(v,-1,32767/32768)*32768).astype(np.int16);pcm,rate=sf.read(wav,dtype='int16')
   assert rate==16000 and np.array_equal(expected,pcm) and len(pcm)==r['pcm_samples'] and hashlib.sha256(pcm.tobytes()).hexdigest()==r['pcm_sha256'];seconds+=len(pcm)/16000
   assert sha(r['trace']['path'])==r['trace']['sha256'];z=np.load(r['trace']['path'],allow_pickle=False);clock=z['relative_block_return'];own={}
@@ -43,7 +49,7 @@ def main():
   assert len(tf.getmembers())==len(ledger)
   for x,m in zip(ledger,tf.getmembers(),strict=True):
    b=tf.extractfile(m).read();assert m.name==x['path'] and len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256']
- out=dict(schema='parallel-melo-context-independent-review-v1',all_passed=True,rows=96,whole_audio_seconds=seconds,groups=summaries,changed_vs_c161=changed,non_target_triggers=non_target,archive=dict(path=str(archive),bytes=archive.stat().st_size,sha256=sha(archive),members=ledger),limits='Whole synthesized waveforms mechanically validated and retained locally; archive contains score traces and metadata only, no PCM/native audio. One previously consumed builtin voice, targeted contexts, not independent acceptance/human speech/FAR. ASR separately reported without relabeling. No P4 resources or first-command proof.')
+ out=dict(schema='parallel-melo-context-independent-review-v1',all_passed=True,rows=96,whole_audio_seconds=seconds,groups=summaries,changed_vs_c161=changed,non_target_triggers=non_target,archive=dict(path=str(archive),bytes=archive.stat().st_size,sha256=sha(archive),members=ledger),limits='Whole synthesized waveforms mechanically validated and retained locally; archive contains score traces and metadata only, no PCM/native audio. Two previously consumed Melo condition voices, same targeted contexts, no independent new-person claim, not independent acceptance/human speech/FAR. ASR separately reported without relabeling. No P4 resources or first-command proof.')
  with (R/'4090-parallel-melo-context-review-original-v1.json').open('x') as f:json.dump(out,f,indent=2);f.write('\n')
  print(json.dumps({k:v for k,v in out.items() if k!='archive'},indent=2))
 if __name__=='__main__':main()
