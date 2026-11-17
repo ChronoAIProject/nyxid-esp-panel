@@ -1,0 +1,599 @@
+{
+  "schema": "c161-envelope-final-summary-v1",
+  "decision": "retain-c161-do-not-promote-envelope",
+  "execution_stages": 49,
+  "training_seconds": 1758.0978991890006,
+  "model": {
+    "path": ".local/wakeword/context-envelope-int8-v1/int8.tflite",
+    "bytes": 60952,
+    "sha256": "142e7929eda03e65235599984bd7281aaa22a6bf9a25a0d0f83ad4f9167d1953"
+  },
+  "source_files": {
+    "research/wakeword_p4/results/4090-c161-envelope-continuation-original-v1.json": "39caa75d62cada1960eaa90c922e4c43808d5f215a5fe8102534c5313e4b4c36",
+    "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json": "74d96e7d4ee98c2e2f8de6954185d4320726be9ae2b5d42f76569dd76d46d729",
+    "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json": "2f026816c737704ce1af6b93fd032cef2aac316c1376fbf1671a0f8fbbebb28d",
+    "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json": "cb5e48958edbe4ac16cbc7cc149b8c150f73e3aba015543d3214da66610ef152",
+    "research/wakeword_p4/results/4090-context-envelope-mac-comparison-v1.json": "3d813a928b119b4396d68b123b9c490e9c1f74f80219290e906fef767c693244",
+    ".local/wakeword/c161-mac12-v1/result.json": "c79afc0a0e91a7ce9b5383e3e8d0c38b1b18a840e65700ccd6e2f29696e2ee75",
+    "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json": "76758859e1d3736ce4a4d8358cad88dcb46c03e74ee4668f75dd61be1a795027",
+    "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json": "afdf62ffc7cdf04477c13a2c6d132b49b73629a4de15b2f2dff039756e515611",
+    "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json": "05e107b42d6383f64d7e30721df170e54f1f60390e1e72fdaf127c2b0fc203f1",
+    "research/wakeword_p4/results/4090-context-envelope-melo-comparison-v1.json": "3e36c50e38826d433c57767f007378b05002f4bbded4785519daadc5d9cb8894",
+    ".local/wakeword/c161-chatterbox-v1/result.json": "d24ab0d8ce99cc2fc7144e5d4e6b1cf13d326b0442b8e1ae2c8e377ee78c7fa6",
+    "research/wakeword_p4/results/4090-c161-chatterbox-replay-lock-v1.json": "cc22dbaba2ab8d98f4632a5d347cf70a241ad618bca02268592fdf7770cf8d6b",
+    "research/wakeword_p4/results/4090-continuous-chatterbox-original-v1.json": "c8663667cc101cb985010c45a9771331d19472487e0f543ee494937884cc2a9c",
+    "research/wakeword_p4/results/4090-daily-language-pair-result-v1.json": "3c9a7ebcf9d7f5ba022b6f654eab9557d5e47458f55642aa37dcb2f78b097d6a",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/summarize_c161_envelope_v1.py": "c354c51bd95fd051ab006fabaa00f028178d2fd8d3c36983c2f0822aaaf4d099"
+  },
+  "cohorts": {
+    "primed": {
+      "table": {
+        "primed": {
+          "target_clips": 36,
+          "bare_clips": 9,
+          "command_clips": 27,
+          "unclassified_clips": 0,
+          "other_clips": 324,
+          "models": {
+            "c161": {
+              "target": 35,
+              "bare": 9,
+              "command": 26,
+              "unclassified": 0,
+              "other": 4
+            },
+            "mixed": {
+              "target": 36,
+              "bare": 9,
+              "command": 27,
+              "unclassified": 0,
+              "other": 8
+            },
+            "daily-context": {
+              "target": 36,
+              "bare": 9,
+              "command": 27,
+              "unclassified": 0,
+              "other": 8
+            },
+            "bare-support": {
+              "target": 36,
+              "bare": 9,
+              "command": 27,
+              "unclassified": 0,
+              "other": 6
+            },
+            "envelope": {
+              "target": 35,
+              "bare": 9,
+              "command": 26,
+              "unclassified": 0,
+              "other": 4
+            }
+          },
+          "target_gains": 0,
+          "target_losses": 0,
+          "other_added": 0,
+          "other_removed": 0
+        }
+      },
+      "reused_background": {
+        "hours": 10.483944826388889,
+        "events": {
+          "c161": 0,
+          "mixed": 0,
+          "daily-context": 0,
+          "bare-support": 0,
+          "envelope": 0
+        }
+      }
+    },
+    "jenny": {
+      "table": {
+        "jenny": {
+          "target_clips": 36,
+          "bare_clips": 9,
+          "command_clips": 27,
+          "unclassified_clips": 0,
+          "other_clips": 360,
+          "models": {
+            "c161": {
+              "target": 33,
+              "bare": 9,
+              "command": 24,
+              "unclassified": 0,
+              "other": 44
+            },
+            "mixed": {
+              "target": 34,
+              "bare": 9,
+              "command": 25,
+              "unclassified": 0,
+              "other": 60
+            },
+            "daily-context": {
+              "target": 34,
+              "bare": 9,
+              "command": 25,
+              "unclassified": 0,
+              "other": 65
+            },
+            "bare-support": {
+              "target": 33,
+              "bare": 9,
+              "command": 24,
+              "unclassified": 0,
+              "other": 58
+            },
+            "envelope": {
+              "target": 31,
+              "bare": 8,
+              "command": 23,
+              "unclassified": 0,
+              "other": 44
+            }
+          },
+          "target_gains": 0,
+          "target_losses": 2,
+          "other_added": 4,
+          "other_removed": 4
+        }
+      },
+      "reused_background": {
+        "hours": 9.614419583333333,
+        "events": {
+          "c161": 0,
+          "mixed": 0,
+          "daily-context": 0,
+          "bare-support": 0,
+          "envelope": 0
+        }
+      }
+    },
+    "joe": {
+      "table": {
+        "joe": {
+          "target_clips": 72,
+          "bare_clips": 0,
+          "command_clips": 0,
+          "unclassified_clips": 72,
+          "other_clips": 288,
+          "models": {
+            "c161": {
+              "target": 0,
+              "bare": 0,
+              "command": 0,
+              "unclassified": 0,
+              "other": 0
+            },
+            "mixed": {
+              "target": 0,
+              "bare": 0,
+              "command": 0,
+              "unclassified": 0,
+              "other": 0
+            },
+            "daily-context": {
+              "target": 0,
+              "bare": 0,
+              "command": 0,
+              "unclassified": 0,
+              "other": 0
+            },
+            "bare-support": {
+              "target": 0,
+              "bare": 0,
+              "command": 0,
+              "unclassified": 0,
+              "other": 0
+            },
+            "envelope": {
+              "target": 0,
+              "bare": 0,
+              "command": 0,
+              "unclassified": 0,
+              "other": 0
+            }
+          },
+          "target_gains": 0,
+          "target_losses": 0,
+          "other_added": 0,
+          "other_removed": 0
+        }
+      },
+      "reused_background": {
+        "hours": 0,
+        "events": {
+          "c161": 0,
+          "mixed": 0,
+          "daily-context": 0,
+          "bare-support": 0,
+          "envelope": 0
+        }
+      }
+    },
+    "melo": {
+      "table": {
+        "EN-US": {
+          "target_clips": 36,
+          "bare_clips": 9,
+          "command_clips": 27,
+          "unclassified_clips": 0,
+          "other_clips": 180,
+          "models": {
+            "c161": {
+              "target": 33,
+              "bare": 9,
+              "command": 24,
+              "unclassified": 0,
+              "other": 38
+            },
+            "mixed": {
+              "target": 32,
+              "bare": 9,
+              "command": 23,
+              "unclassified": 0,
+              "other": 44
+            },
+            "daily-context": {
+              "target": 34,
+              "bare": 9,
+              "command": 25,
+              "unclassified": 0,
+              "other": 47
+            },
+            "bare-support": {
+              "target": 33,
+              "bare": 8,
+              "command": 25,
+              "unclassified": 0,
+              "other": 38
+            },
+            "envelope": {
+              "target": 33,
+              "bare": 9,
+              "command": 24,
+              "unclassified": 0,
+              "other": 33
+            }
+          },
+          "target_gains": 0,
+          "target_losses": 0,
+          "other_added": 1,
+          "other_removed": 6
+        },
+        "EN-BR": {
+          "target_clips": 36,
+          "bare_clips": 9,
+          "command_clips": 27,
+          "unclassified_clips": 0,
+          "other_clips": 180,
+          "models": {
+            "c161": {
+              "target": 21,
+              "bare": 7,
+              "command": 14,
+              "unclassified": 0,
+              "other": 13
+            },
+            "mixed": {
+              "target": 21,
+              "bare": 3,
+              "command": 18,
+              "unclassified": 0,
+              "other": 15
+            },
+            "daily-context": {
+              "target": 21,
+              "bare": 3,
+              "command": 18,
+              "unclassified": 0,
+              "other": 15
+            },
+            "bare-support": {
+              "target": 22,
+              "bare": 4,
+              "command": 18,
+              "unclassified": 0,
+              "other": 14
+            },
+            "envelope": {
+              "target": 21,
+              "bare": 7,
+              "command": 14,
+              "unclassified": 0,
+              "other": 12
+            }
+          },
+          "target_gains": 3,
+          "target_losses": 3,
+          "other_added": 1,
+          "other_removed": 2
+        }
+      },
+      "reused_background": {
+        "hours": 7.902862222222223,
+        "events": {
+          "c161": 0,
+          "mixed": 0,
+          "daily-context": 0,
+          "bare-support": 0,
+          "envelope": 0
+        }
+      }
+    }
+  },
+  "initial": {
+    "builtin": {
+      "groups": {
+        "nyx": {
+          "clips": 12,
+          "activated": 5
+        },
+        "willow": {
+          "clips": 12,
+          "activated": 0
+        },
+        "everyday-negative": {
+          "clips": 12,
+          "activated": 0
+        }
+      },
+      "activated": [
+        {
+          "index": 3,
+          "request": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, turn on the light.",
+            "seed": 726,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "events": [
+            {
+              "step": 198,
+              "relative_sample": 13920
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "request": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, turn on the light.",
+            "seed": 728,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "events": [
+            {
+              "step": 194,
+              "relative_sample": 12000
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "request": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, what time is it?",
+            "seed": 726,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "request": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, what time is it?",
+            "seed": 728,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "events": [
+            {
+              "step": 199,
+              "relative_sample": 14400
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "request": {
+            "role": "development-only",
+            "voice": "turbo-builtin-default",
+            "group": "nyx",
+            "text": "Hey Nicks, set a timer.",
+            "seed": 727,
+            "temperature": 0.8,
+            "top_p": 0.95,
+            "top_k": 1000,
+            "repetition_penalty": 1.2
+          },
+          "events": [
+            {
+              "step": 202,
+              "relative_sample": 15840
+            }
+          ]
+        }
+      ]
+    },
+    "daily": {
+      "groups": {
+        "conversation": {
+          "clips": 24,
+          "activated": 0
+        },
+        "household": {
+          "clips": 24,
+          "activated": 0
+        },
+        "next_mix": {
+          "clips": 24,
+          "activated": 0
+        },
+        "name_address": {
+          "clips": 24,
+          "activated": 0
+        }
+      },
+      "activated": []
+    },
+    "continuous": [
+      {
+        "gap_samples": 8000,
+        "target_containers": 0,
+        "negative_containers": 0,
+        "willow_containers": 0,
+        "outside_clip_events": [],
+        "pcm_sha256": "75d217049ae1690bbff134fb1fc196d30519805e507752e2a8632a0a7976c04d"
+      },
+      {
+        "gap_samples": 32000,
+        "target_containers": 2,
+        "negative_containers": 0,
+        "willow_containers": 0,
+        "outside_clip_events": [],
+        "pcm_sha256": "2ed69b0f594301e02062e99f23f88e7032894b6607e5707d87bc4ff88add5a0d"
+      }
+    ]
+  },
+  "baseline_builtin": {
+    "nyx": {
+      "clips": 12,
+      "activated": 5
+    },
+    "willow": {
+      "clips": 12,
+      "activated": 0
+    },
+    "everyday-negative": {
+      "clips": 12,
+      "activated": 0
+    }
+  },
+  "baseline_daily": {
+    "conversation": {
+      "clips": 24,
+      "c161_activated": 0,
+      "bc01_activated": 0
+    },
+    "household": {
+      "clips": 24,
+      "c161_activated": 0,
+      "bc01_activated": 0
+    },
+    "next_mix": {
+      "clips": 24,
+      "c161_activated": 0,
+      "bc01_activated": 1
+    },
+    "name_address": {
+      "clips": 24,
+      "c161_activated": 0,
+      "bc01_activated": 0
+    }
+  },
+  "baseline_continuous": [
+    {
+      "gap_samples": 8000,
+      "pcm_sha256": "75d217049ae1690bbff134fb1fc196d30519805e507752e2a8632a0a7976c04d",
+      "target_containers": 0
+    },
+    {
+      "gap_samples": 32000,
+      "pcm_sha256": "2ed69b0f594301e02062e99f23f88e7032894b6607e5707d87bc4ff88add5a0d",
+      "target_containers": 2
+    }
+  ],
+  "mac": {
+    "Daniel/hey_nyx": {
+      "clips": 2,
+      "hits": 0
+    },
+    "Samantha/hi_esp": {
+      "clips": 2,
+      "hits": 0
+    },
+    "Daniel/hi_esp": {
+      "clips": 2,
+      "hits": 0
+    },
+    "Daniel/hey_willow": {
+      "clips": 2,
+      "hits": 0
+    },
+    "Samantha/hey_willow": {
+      "clips": 2,
+      "hits": 0
+    },
+    "Samantha/hey_nyx": {
+      "clips": 2,
+      "hits": 1
+    }
+  },
+  "mac_baseline_target_hits": 1,
+  "archive_identities": [
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+      "bytes": 137661,
+      "sha256": "a756d265fa214527be6f9d2f6d587aa10bc2e000709a66a8b7d8030f89e80cc5",
+      "members": 137
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz",
+      "bytes": 5637167,
+      "sha256": "ac09fd578615ef33372034b1e61ef34ac823e91ee7488c2f3125d08bd8c5119f",
+      "members": 376
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+      "bytes": 5411970,
+      "sha256": "cacf67a15cd52826b3b48534649197de3d943292ec96a4e9940532345ce7eea9",
+      "members": 412
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+      "bytes": 955487,
+      "sha256": "8d725b5ed379f5e59c6c844b2c5f676ca423f2b730318eed7a2a8dc69c099e04",
+      "members": 364
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-melo-evidence-v1.tar.gz",
+      "bytes": 2134826,
+      "sha256": "c1c16ce3ec31c96f1a29d3af8fb962513caaf1545d6783e5d8dd2027917f312f",
+      "members": 477
+    },
+    {
+      "path": "research/wakeword_p4/results/4090-context-envelope-mac-evidence-v1.tar.gz",
+      "bytes": 22016,
+      "sha256": "3c19843d3ce53f7f19fd7de60fd670135e57aafddef7bc7dc386082c9a949ccf",
+      "members": 13
+    }
+  ],
+  "limits": "Consumed correlated synthetic diagnostics, no new independent acceptance or additive background hours. Joe carrier unclassified. Other-synthetic totals include reciprocal targets, not daily rates. No threshold/calibration/checkpoint rescue; Mac host replay not P4. Broad research goal remains incomplete."
+}

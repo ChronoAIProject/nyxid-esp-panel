@@ -1,0 +1,859 @@
+{
+  "identity": {
+    "pid": 2056564,
+    "starttime": "9678289",
+    "script_sha256": "2d4451169579953b1ad84f336e0942ce0c1320fd29adca063505e687e49a41d4"
+  },
+  "stages": [
+    {
+      "name": "export-plan",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/export_chatterbox_envelope_v1.py",
+        "plan"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.11736775700410362,
+      "log_sha256": "92e0b0061c2aa87eec9b1ab7d451df591e046e28b83a77d6c1430454eb5e2e04"
+    },
+    {
+      "name": "envelope-training-complete-export-locked-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.0070110500091686845,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-training-complete-export-locked-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope training complete export locked",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.07194428400543984,
+      "log_sha256": "8a75bafa1d051ebd645dad4e69ce32534f4a27d5170b6f6379fee2cd0a4eac77"
+    },
+    {
+      "name": "envelope-training-complete-export-locked-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.4845176649978384,
+      "log_sha256": "dbd688997a812ddc5209353a042348f0ae3b3fa47394dedb933a5d1d7c595467"
+    },
+    {
+      "name": "export-run",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/training/gpu_python.py",
+        "research/wakeword_p4/experiments/export_chatterbox_envelope_v1.py",
+        "run"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 7.640353638998931,
+      "log_sha256": "57c750297754682b18b72e591d918ddbe3cb73048e9138559af67482432f778a"
+    },
+    {
+      "name": "plan-builtin",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "plan",
+        "builtin"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.07505315900198184,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-daily",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "plan",
+        "daily"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.06735055800527334,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-continuous",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "plan",
+        "continuous"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.06652576300257351,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-primed",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "plan",
+        "primed"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.0667454039939912,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-jenny",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "plan",
+        "jenny"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.06651010099449195,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-joe",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "plan",
+        "joe"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.06433934600499924,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-melo",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "plan",
+        "melo"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.0746142310090363,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "plan-mac",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "plan",
+        "mac"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.0683957519941032,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-single-export-and-all-coverage-locks-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.013538205996155739,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-single-export-and-all-coverage-locks-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope single export and all coverage locks",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.03877813200233504,
+      "log_sha256": "5aa52ee60e47e8f32664b581bff15c0d8634b158f3d6276e84a2a3ff670623f5"
+    },
+    {
+      "name": "envelope-single-export-and-all-coverage-locks-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.5875973280053586,
+      "log_sha256": "152b9c3894110683c1717b1b266f3acf64a34aa06c88ca682564429114957644"
+    },
+    {
+      "name": "replay-builtin",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "run",
+        "builtin"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.9859336990048178,
+      "log_sha256": "702e0b4def4a6aeb32290340ae412caafe3e7236afaf3ebd9c93d8c56b37a298"
+    },
+    {
+      "name": "replay-daily",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "run",
+        "daily"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 1.5717298359959386,
+      "log_sha256": "657282603f8de6753197d5de829a2ec7463f833b777b0e69c0810d6cb0fc27bf"
+    },
+    {
+      "name": "replay-continuous",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_initial_v1.py",
+        "run",
+        "continuous"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.8702876790048322,
+      "log_sha256": "688479c0a702548d78a8d2ff8c733b5c9345644dd4cd13b4cf4b0e0fdae99c75"
+    },
+    {
+      "name": "score-initial",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_initial_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.11873984799603932,
+      "log_sha256": "85d8b09a46185b927bf66711232a7967431b0d51d19353e7ccb7b4c686cbf3ea"
+    },
+    {
+      "name": "envelope-initial-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.011264061991823837,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-initial-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope initial fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.03159505700750742,
+      "log_sha256": "76aaba4aad47fd5d3bd018398af25428ea6335cd4a0ff8cf0d0d7804821f9130"
+    },
+    {
+      "name": "envelope-initial-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.3631088499969337,
+      "log_sha256": "bb3973ae3f1386be0c5a024b48e6493c14dcbd6c5f7159b8f0dec79be8fef253"
+    },
+    {
+      "name": "replay-primed",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "run",
+        "primed"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 79.8481054300064,
+      "log_sha256": "03fa98da4e244b57d8a11ff3776edd2273500b0a2d5b6731b2915f6c1aaabb96"
+    },
+    {
+      "name": "score-primed",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_coverage_v1.py",
+        "primed"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.9739955330005614,
+      "log_sha256": "4bf573ccdaaa65296338877cab3cca816c33c48f2c709e480fc8156f374d9e6b"
+    },
+    {
+      "name": "envelope-primed-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.10200180199171882,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-primed-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope primed fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.07267357299861033,
+      "log_sha256": "1b6a3208d2f3d434b431442a139afc6e9ea924efd7ccd3dc5e9b2d6313925ba3"
+    },
+    {
+      "name": "envelope-primed-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 4.261411817991757,
+      "log_sha256": "23c433157564771e7e09cfeff0178265e7b92ecacf7038d46ee52066ad829106"
+    },
+    {
+      "name": "replay-jenny",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "run",
+        "jenny"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 73.54781785000523,
+      "log_sha256": "0f6278bc92f4ce0d00ad0cf178346d819c095b7eadd8872af3cf0769f7dc5f27"
+    },
+    {
+      "name": "score-jenny",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_coverage_v1.py",
+        "jenny"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.993570375998388,
+      "log_sha256": "95203a80a4694bf4e3b397b329d2ce966f03832e70cf709e632b2164bfa208f1"
+    },
+    {
+      "name": "envelope-jenny-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.10729725001147017,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-jenny-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope jenny fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.05597360800311435,
+      "log_sha256": "81de14cc091c367b954349866b08cba9176eb555a6d0360a7e2d629d8540d222"
+    },
+    {
+      "name": "envelope-jenny-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 4.617646087994217,
+      "log_sha256": "dae46ee8cbebdc4e434c6284b98fb6cda81cf17f3e7c24e4d5a76fa1c6277f27"
+    },
+    {
+      "name": "replay-joe",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "run",
+        "joe"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 6.0386772619967815,
+      "log_sha256": "0f90f757a67fa95152b7a3b40cf79265d8810a2d7e04cade1003badec2c59d22"
+    },
+    {
+      "name": "score-joe",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_coverage_v1.py",
+        "joe"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.9396641700004693,
+      "log_sha256": "25f442e79427b64d5b7c2327f42ac2ce95ceb6fa6faafde6e0b05d59e8bb21c0"
+    },
+    {
+      "name": "envelope-joe-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.03401401099108625,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-joe-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope joe fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.03654548201302532,
+      "log_sha256": "0044f445474aaa2f5a3815adf1d6675a50cd91477f29769aed018b34cf85fe73"
+    },
+    {
+      "name": "envelope-joe-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 3.1395572500041453,
+      "log_sha256": "1281c036c02a98adcf7627c7549765769e99eb5e74cd9dc8dcf60af804755eb0"
+    },
+    {
+      "name": "replay-melo",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "run",
+        "melo"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 59.40784998500021,
+      "log_sha256": "b72daf037133fe5ca50f1a72778e8e80c42d28e5fc6a15fc4be38fdefaf10fe7"
+    },
+    {
+      "name": "score-melo",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_coverage_v1.py",
+        "melo"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.8145364459924167,
+      "log_sha256": "e8314f00ef6baf92118f26f7ce6ba58eb7c74c2ef9088f8d0653ca76a6bd4cd0"
+    },
+    {
+      "name": "envelope-melo-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.05032569999457337,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-melo-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope melo fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.03910120599903166,
+      "log_sha256": "bdd606444a59181033a5b0c3a92638aaa4dec12b139f07744345184d878445a4"
+    },
+    {
+      "name": "envelope-melo-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.762779890006641,
+      "log_sha256": "ebfb08cb2325fb9942f3fab8c8a9885eccf5c156902b8fd52755b9632b720a70"
+    },
+    {
+      "name": "replay-mac",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/replay_context_envelope_coverage_v1.py",
+        "run",
+        "mac"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.5994702629977837,
+      "log_sha256": "bf23ed29aa6ed9c0dd7251b2a07cbba7890510c73d183ef00033105f44dcf907"
+    },
+    {
+      "name": "score-mac",
+      "argv": [
+        "/usr/bin/python3",
+        "research/wakeword_p4/experiments/score_context_envelope_mac_v1.py"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.05926669300242793,
+      "log_sha256": "b431261497065acfa318b6d50a3cbfb229202d2cc89ab917cd8d60a34215b95f"
+    },
+    {
+      "name": "envelope-mac-fixed-profile-evidence-add",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-melo-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.006761381999240257,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "envelope-mac-fixed-profile-evidence-commit",
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-m",
+        "research: envelope mac fixed profile evidence",
+        "--",
+        "research/wakeword_p4/results/4090-c161-envelope-supervisor-original-v1.json",
+        "research/wakeword_p4/results/4090-c161-envelope-training-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-builtin-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-continuous-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-daily-replay-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-initial-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-int8-original-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-int8-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-jenny-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-joe-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-joe-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-mac-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-mac-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-melo-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-melo-evidence-v1.tar.gz",
+        "research/wakeword_p4/results/4090-context-envelope-primed-comparison-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-coverage-plan-v1.json",
+        "research/wakeword_p4/results/4090-context-envelope-primed-evidence-v1.tar.gz"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 0.028892061003716663,
+      "log_sha256": "1b17a04f69f7cf789a70acb1b84f7391c17f9c0208cb179c44f8c87c322904c8"
+    },
+    {
+      "name": "envelope-mac-fixed-profile-evidence-push",
+      "argv": [
+        "git",
+        "push",
+        "origin",
+        "research-hye-nyx-voice-gpu"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 2.443128908998915,
+      "log_sha256": "48b473b2a46be1a3cb6c4aac0a5158d96a54685872bcb8b6f4422e7a27f39096"
+    },
+    {
+      "name": "issue-receipt",
+      "argv": [
+        "gh",
+        "issue",
+        "comment",
+        "18",
+        "--repo",
+        "ChronoAIProject/nyxid-esp-panel",
+        "--body-file",
+        ".local/wakeword/c161-envelope-continuation-v1/issue-body.txt"
+      ],
+      "actual_exit_code": 0,
+      "seconds": 1.2789623829885386,
+      "log_sha256": "bf7b28ccd5935e64391c96944a2f1ce83e6ab63f8c5712b3186dfa6be0567f23"
+    }
+  ],
+  "status": "completed-await-review"
+}
