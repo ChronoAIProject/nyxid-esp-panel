@@ -1,0 +1,3262 @@
+{
+  "schema": "binary40-midpoint-consumed-independent-review-v1",
+  "all_passed": true,
+  "scope": "All 8 archive/member checks and original comparison clip identities; cohort scorers already authenticate raw event replay. No new inference. Not acceptance/P4 evidence.",
+  "verified_members": 1787,
+  "execution_stages": 24,
+  "receipt_sha256": "3c10006ebef7139ffa0fb772f778467493198ac27fb662641988a0d726a01fd4",
+  "arms": {
+    "midpoint": {
+      "builtin": {
+        "comparison_sha256": "02d5ee69f6b0be4c5c6b4d6f703995b160e5fc8bb4701ff411e527455b2f41d9",
+        "groups": {
+          "nyx": {
+            "clips": 12,
+            "hits": 9
+          },
+          "willow": {
+            "clips": 12,
+            "hits": 0
+          },
+          "everyday-negative": {
+            "clips": 12,
+            "hits": 0
+          }
+        },
+        "reused_background": null,
+        "original_binary40_changes": [
+          {
+            "index": 2,
+            "request": {
+              "role": "development-only",
+              "voice": "turbo-builtin-default",
+              "group": "nyx",
+              "text": "Hey Nicks.",
+              "seed": 728,
+              "temperature": 0.8,
+              "top_p": 0.95,
+              "top_k": 1000,
+              "repetition_penalty": 1.2
+            },
+            "before": false,
+            "after": true
+          }
+        ]
+      },
+      "daily": {
+        "comparison_sha256": "1549fabb46453f49e2d9e00ac6727c578900f60356ecc57f1349499a768e2d42",
+        "groups": {
+          "conversation": {
+            "clips": 24,
+            "hits": 0
+          },
+          "household": {
+            "clips": 24,
+            "hits": 0
+          },
+          "next_mix": {
+            "clips": 24,
+            "hits": 0
+          },
+          "name_address": {
+            "clips": 24,
+            "hits": 1
+          }
+        },
+        "reused_background": null,
+        "original_binary40_changes": []
+      },
+      "continuous": {
+        "comparison_sha256": "0ee69d980c01a05b6f27e15dbef274c008021f146d7a9c9fde2f9ce021761ff4",
+        "groups": {},
+        "reused_background": null,
+        "original_binary40_changes": [
+          {
+            "gap_samples": 8000,
+            "group": "nyx",
+            "gained": [
+              4,
+              5,
+              8,
+              11
+            ],
+            "lost": []
+          },
+          {
+            "gap_samples": 32000,
+            "group": "nyx",
+            "gained": [],
+            "lost": []
+          }
+        ],
+        "containers": [
+          {
+            "gap_samples": 8000,
+            "containers": {
+              "nyx": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                11
+              ]
+            },
+            "outside_clip_events": [],
+            "pcm_sha256": "75d217049ae1690bbff134fb1fc196d30519805e507752e2a8632a0a7976c04d"
+          },
+          {
+            "gap_samples": 32000,
+            "containers": {
+              "nyx": [
+                0,
+                1,
+                3,
+                4,
+                5,
+                6,
+                7,
+                9
+              ]
+            },
+            "outside_clip_events": [
+              {
+                "event": {
+                  "step": 819,
+                  "relative_sample": 312000
+                },
+                "owner": {
+                  "kind": "gap",
+                  "after": 2,
+                  "start": 311680,
+                  "end": 343680
+                }
+              }
+            ],
+            "pcm_sha256": "2ed69b0f594301e02062e99f23f88e7032894b6607e5707d87bc4ff88add5a0d"
+          }
+        ]
+      },
+      "primed": {
+        "comparison_sha256": "64cb1294f36a651a94ce283967abf9c26c92ef3d25705358d0fa8a3ce2dceb08",
+        "groups": {
+          "negative/hey_willow/": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/turn on the light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/what time is it": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/set a timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "target/": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 9
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "target/turn on the light": {
+            "clips": 9,
+            "hits": {
+              "c161": 8,
+              "binary40": 8
+            },
+            "gained": 1,
+            "lost": 1
+          },
+          "target/what time is it": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 9
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "target/set a timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 9
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/common_negative/": {
+            "clips": 63,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/common_negative/turn on the light": {
+            "clips": 63,
+            "hits": {
+              "c161": 2,
+              "binary40": 2
+            },
+            "gained": 2,
+            "lost": 2
+          },
+          "negative/common_negative/what time is it": {
+            "clips": 63,
+            "hits": {
+              "c161": 2,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "negative/common_negative/set a timer": {
+            "clips": 63,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/turn on the light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/what time is it": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/set a timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          }
+        },
+        "reused_background": {
+          "hours": 10.483944826388889,
+          "events": {
+            "c161": 0,
+            "binary40": 0
+          }
+        },
+        "original_binary40_changes": [
+          {
+            "index": 47,
+            "source": {
+              "path": ".local/wakeword/hey-paired-development-rendered-v1/v2-t01-c1-s0-r00-n2.wav",
+              "sha256": "8a117e60ab04963093395a5fdda5cf3a170cc78feef8bc540c36684ef892ee28",
+              "pcm_sha256": "4ae9b46d252febb065d840b88a5a5316e639562d0d20c6b0f9f46d7b801431db",
+              "samples": 73339,
+              "role": "development-synthetic",
+              "split": "validation",
+              "source_id": "v2-t01-c1-s0-r00",
+              "target_id": "hey_nyx",
+              "voice": "en_GB-semaine-medium",
+              "literal": "Hey Nicks",
+              "text": "Hey Nicks, turn on the light.",
+              "carrier": "turn on the light",
+              "length_scale": 0.9,
+              "variant": 2,
+              "lead_samples": 28800,
+              "generated_prefix_end_sample": 37531,
+              "full_rir_prefix_end_sample": 38763,
+              "generated_container_end_sample": 56107,
+              "full_rir_container_end_sample": 57339,
+              "reference_kind": "Internal VITS allocation and full-convolution support; not measured acoustic or phonetic boundary"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 279,
+            "source": {
+              "path": ".local/wakeword/hey-paired-development-rendered-v1/v2-t07-c3-s0-r00-n0.wav",
+              "sha256": "f64e668eac209f023ac835cc229dec7304b8d3ea1df0c0e5e739e4028bc8b2ee",
+              "pcm_sha256": "088df8e9c4b1e832c558aeec98c67b07eb65594f02e998a1200596d3fdfd0572",
+              "samples": 72107,
+              "role": "development-synthetic",
+              "split": "validation",
+              "source_id": "v2-t07-c3-s0-r00",
+              "target_id": "common_negative",
+              "voice": "en_GB-semaine-medium",
+              "literal": "Hey next",
+              "text": "Hey next, set a timer.",
+              "carrier": "set a timer",
+              "length_scale": 0.9,
+              "variant": 0,
+              "lead_samples": 28800,
+              "generated_prefix_end_sample": 39389,
+              "full_rir_prefix_end_sample": 39389,
+              "generated_container_end_sample": 56107,
+              "full_rir_container_end_sample": 56107,
+              "reference_kind": "Internal VITS allocation and full-convolution support; not measured acoustic or phonetic boundary"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 280,
+            "source": {
+              "path": ".local/wakeword/hey-paired-development-rendered-v1/v2-t07-c3-s0-r00-n1.wav",
+              "sha256": "c89611af7cf1800f9a8d051fab4f6bccd2a580fb8bef0dbb7c354ab7d21391b2",
+              "pcm_sha256": "46b500c3c5de3694d1fe20ebbdda52cba009e5b263d4ef91f788366e16c7bd72",
+              "samples": 72107,
+              "role": "development-synthetic",
+              "split": "validation",
+              "source_id": "v2-t07-c3-s0-r00",
+              "target_id": "common_negative",
+              "voice": "en_GB-semaine-medium",
+              "literal": "Hey next",
+              "text": "Hey next, set a timer.",
+              "carrier": "set a timer",
+              "length_scale": 0.9,
+              "variant": 1,
+              "lead_samples": 28800,
+              "generated_prefix_end_sample": 39389,
+              "full_rir_prefix_end_sample": 39389,
+              "generated_container_end_sample": 56107,
+              "full_rir_container_end_sample": 56107,
+              "reference_kind": "Internal VITS allocation and full-convolution support; not measured acoustic or phonetic boundary"
+            },
+            "before": true,
+            "after": false
+          }
+        ]
+      },
+      "jenny": {
+        "comparison_sha256": "bb0d9ad6684ef4d19a1f253ba1de8bae6c2495fee19f8a30e1f2c6b8062ccbed",
+        "groups": {
+          "negative/hey_willow/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_willow/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "target/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 9
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "target/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 8
+            },
+            "gained": 0,
+            "lost": 1
+          },
+          "target/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 6,
+              "binary40": 9
+            },
+            "gained": 3,
+            "lost": 0
+          },
+          "target/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 5
+            },
+            "gained": 0,
+            "lost": 4
+          },
+          "negative/hi_esp/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hi_esp/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hello/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hello/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hello/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hello/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_william/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_william/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_william/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_william/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_pillow/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_pillow/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_pillow/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_pillow/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_nick/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_nick/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_nick/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_nick/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_next/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 2
+            },
+            "gained": 2,
+            "lost": 0
+          },
+          "negative/hey_next/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 4
+          },
+          "negative/hey_next/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 2,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "negative/hey_next/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 2,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "negative/hey_mix/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 6
+            },
+            "gained": 3,
+            "lost": 1
+          },
+          "negative/hey_mix/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 6
+            },
+            "gained": 2,
+            "lost": 0
+          },
+          "negative/hey_mix/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 8,
+              "binary40": 8
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/hey_mix/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 7
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "negative/hey_muse/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 3,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 3
+          },
+          "negative/hey_muse/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 3,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 3
+          },
+          "negative/hey_muse/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 1,
+              "binary40": 1
+            },
+            "gained": 1,
+            "lost": 1
+          },
+          "negative/hey_muse/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 4
+          }
+        },
+        "reused_background": {
+          "hours": 9.614419583333333,
+          "events": {
+            "c161": 0,
+            "binary40": 0
+          }
+        },
+        "original_binary40_changes": [
+          {
+            "index": 67,
+            "source": {
+              "source_id": "jenny-development-022",
+              "target_id": "hey_nyx",
+              "voice": "author-direct-jenny",
+              "carrier": "timer",
+              "length_scale": 1.0,
+              "variant": 1,
+              "condition": "25dB_noise",
+              "text": "Hey Nicks, set a timer.",
+              "phrase": "Hey Nicks",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000067.wav",
+              "sha256": "ffd0cb9d994abc2f1e431b4165f606f3260f896b3564a8de398d8186e202a9d9",
+              "pcm_sha256": "7b30f68a7900fe0aa6021d0ff97b30ef41c83d58d45d68ad39e9da617b66af8d",
+              "samples": 90750,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 60446,
+              "full_rir_prefix_end_sample": 60446,
+              "generated_container_end_sample": 74750,
+              "full_rir_container_end_sample": 74750,
+              "whole_input_end_sample": 90750,
+              "render_order": 67,
+              "native_source_sha256": "0338d97c4024d84fbf88c0dee870337a3a01c7176aaa47e23af53d00e394c536",
+              "native_source_pcm_sha256": "736d109d677422772bef1f83c2a3878c02447842b587a407795e23b4b3c37247",
+              "render_seed": 92826031,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 68,
+            "source": {
+              "source_id": "jenny-development-022",
+              "target_id": "hey_nyx",
+              "voice": "author-direct-jenny",
+              "carrier": "timer",
+              "length_scale": 1.0,
+              "variant": 2,
+              "condition": "15dB_noise_full_RIR",
+              "text": "Hey Nicks, set a timer.",
+              "phrase": "Hey Nicks",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000068.wav",
+              "sha256": "dba586ab5e558aa16c43a54a014c7a7011ecc031a32405af3cf2fe5b09359533",
+              "pcm_sha256": "d1a27613fc8aa84a801e1d14c08d9a88c5bd80d00cc61f27eeeffa3cca7300a4",
+              "samples": 91710,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 60446,
+              "full_rir_prefix_end_sample": 61406,
+              "generated_container_end_sample": 74750,
+              "full_rir_container_end_sample": 75710,
+              "whole_input_end_sample": 91710,
+              "render_order": 68,
+              "native_source_sha256": "0338d97c4024d84fbf88c0dee870337a3a01c7176aaa47e23af53d00e394c536",
+              "native_source_pcm_sha256": "736d109d677422772bef1f83c2a3878c02447842b587a407795e23b4b3c37247",
+              "render_seed": 92826032,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 289,
+            "source": {
+              "source_id": "jenny-development-096",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "bare",
+              "length_scale": 0.9,
+              "variant": 1,
+              "condition": "25dB_noise",
+              "text": "Hey Next.",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000289.wav",
+              "sha256": "622909a4429ee14762c17ff54ba6c2828a1554b61b9823c9fccd85eb3462edba",
+              "pcm_sha256": "a92818f4e518fb4984de0fc03a29e1b02aa6b8481a217efaeaa148da9d46d3af",
+              "samples": 75703,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 58032,
+              "full_rir_prefix_end_sample": 58032,
+              "generated_container_end_sample": 59703,
+              "full_rir_container_end_sample": 59703,
+              "whole_input_end_sample": 75703,
+              "render_order": 289,
+              "native_source_sha256": "89b817a9426ba987f0437dbddcd3067afc7e9267a839226ff555ac7d5876c72e",
+              "native_source_pcm_sha256": "34898985041c645c899e14da5666bd98280caf5b0b1e8621f98d4e92e1fe3250",
+              "render_seed": 92826001,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 290,
+            "source": {
+              "source_id": "jenny-development-096",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "bare",
+              "length_scale": 0.9,
+              "variant": 2,
+              "condition": "15dB_noise_full_RIR",
+              "text": "Hey Next.",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000290.wav",
+              "sha256": "a230f31ce1517c24dccee12758734cfad94d20e09aa57469eb220c4aa07e35e6",
+              "pcm_sha256": "1c28f5f2b00aa630f580cc4162cfdba561b26d3fa38f27c9eefd44713c576ac8",
+              "samples": 76663,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 58032,
+              "full_rir_prefix_end_sample": 58992,
+              "generated_container_end_sample": 59703,
+              "full_rir_container_end_sample": 60663,
+              "whole_input_end_sample": 76663,
+              "render_order": 290,
+              "native_source_sha256": "89b817a9426ba987f0437dbddcd3067afc7e9267a839226ff555ac7d5876c72e",
+              "native_source_pcm_sha256": "34898985041c645c899e14da5666bd98280caf5b0b1e8621f98d4e92e1fe3250",
+              "render_seed": 92826002,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 291,
+            "source": {
+              "source_id": "jenny-development-097",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "bare",
+              "length_scale": 1.0,
+              "variant": 0,
+              "condition": "quiet",
+              "text": "Hey Next.",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000291.wav",
+              "sha256": "3bb7c323ea663729ee2c024b2f39588a60d5eca839529e3f5dcc36cdc35b5bb9",
+              "pcm_sha256": "3e05065387bf2d786eaac401285371e534558cb9bd41e009f2d757827f8fc164",
+              "samples": 77747,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 59518,
+              "full_rir_prefix_end_sample": 59518,
+              "generated_container_end_sample": 61747,
+              "full_rir_container_end_sample": 61747,
+              "whole_input_end_sample": 77747,
+              "render_order": 291,
+              "native_source_sha256": "a46267e80a32bdd08d8bd7cb64129cccd2e4085edb5abfd0fd35564a747ac65a",
+              "native_source_pcm_sha256": "95096175bb1e0c98042956b51b9de5a0676102ccbd814d77752f2a7f8c58a2bd",
+              "render_seed": 92826003,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 292,
+            "source": {
+              "source_id": "jenny-development-097",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "bare",
+              "length_scale": 1.0,
+              "variant": 1,
+              "condition": "25dB_noise",
+              "text": "Hey Next.",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000292.wav",
+              "sha256": "dcaa9b6f79fdd3cb979b3a638f181043cd9cfce98318e0521123ce7586e1b75c",
+              "pcm_sha256": "063d0bcc5d719024a66d8feb05ad8bb3661c84709d752cb102025ab5f76b0016",
+              "samples": 77747,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 59518,
+              "full_rir_prefix_end_sample": 59518,
+              "generated_container_end_sample": 61747,
+              "full_rir_container_end_sample": 61747,
+              "whole_input_end_sample": 77747,
+              "render_order": 292,
+              "native_source_sha256": "a46267e80a32bdd08d8bd7cb64129cccd2e4085edb5abfd0fd35564a747ac65a",
+              "native_source_pcm_sha256": "95096175bb1e0c98042956b51b9de5a0676102ccbd814d77752f2a7f8c58a2bd",
+              "render_seed": 92826004,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 302,
+            "source": {
+              "source_id": "jenny-development-100",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "light",
+              "length_scale": 1.0,
+              "variant": 2,
+              "condition": "15dB_noise_full_RIR",
+              "text": "Hey Next, turn on the light.",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000302.wav",
+              "sha256": "0c5e239174ec4e2b7502e520102398694ad213106513beb7a28cb57c8bd0a312",
+              "pcm_sha256": "34270be9b0175c709d61ffbd52f279ae884e548c04f72e008aed1e082d5918cf",
+              "samples": 92267,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 59889,
+              "full_rir_prefix_end_sample": 60849,
+              "generated_container_end_sample": 75307,
+              "full_rir_container_end_sample": 76267,
+              "whole_input_end_sample": 92267,
+              "render_order": 302,
+              "native_source_sha256": "cc747e7a3e67c3aa10c9375fd6ecf6e2fcdb73683292b3e1c66a779982037f6b",
+              "native_source_pcm_sha256": "3aa0b06f988cd57883555bab6792a643659c3ac92cc2dd27c5b7f86dd4b20c79",
+              "render_seed": 92826014,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 313,
+            "source": {
+              "source_id": "jenny-development-104",
+              "target_id": "hey_next",
+              "voice": "author-direct-jenny",
+              "carrier": "time",
+              "length_scale": 1.1,
+              "variant": 1,
+              "condition": "25dB_noise",
+              "text": "Hey Next, what time is it?",
+              "phrase": "Hey Next",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000313.wav",
+              "sha256": "c191a0a213150e3b4fddf529d2246c680e501fc041f41f21b7bbb32f84d20d2e",
+              "pcm_sha256": "f63c64213bb566dab1f813ba94aa445722258d2f89255a75dbafc9656dae9168",
+              "samples": 94837,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 58032,
+              "full_rir_prefix_end_sample": 58032,
+              "generated_container_end_sample": 78837,
+              "full_rir_container_end_sample": 78837,
+              "whole_input_end_sample": 94837,
+              "render_order": 313,
+              "native_source_sha256": "3b74e27531533062c1ab28306eee2e35b7bb94ba1cd04d6fa622e03cf71b4877",
+              "native_source_pcm_sha256": "02bc43469befd278255a57e74598304bf596865acec1635125262ea85eb7c684",
+              "render_seed": 92826025,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 335,
+            "source": {
+              "source_id": "jenny-development-111",
+              "target_id": "hey_mix",
+              "voice": "author-direct-jenny",
+              "carrier": "light",
+              "length_scale": 0.9,
+              "variant": 2,
+              "condition": "15dB_noise_full_RIR",
+              "text": "Hey Mix, turn on the light.",
+              "phrase": "Hey Mix",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000335.wav",
+              "sha256": "4bb51ff5f7b2a3f80d93922ea285d0c9751e1632c8fba02b9f0e7ae924f79ed0",
+              "pcm_sha256": "46507b3815899618a1d4a1ef2e8646d5b511eaa1aa7935742f73dba092a619d1",
+              "samples": 90410,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 56731,
+              "full_rir_prefix_end_sample": 57691,
+              "generated_container_end_sample": 73450,
+              "full_rir_container_end_sample": 74410,
+              "whole_input_end_sample": 90410,
+              "render_order": 335,
+              "native_source_sha256": "b82a76168ad04a9eac6e9627506dae2689ee9fc9b284268552d2141cfed8f0fd",
+              "native_source_pcm_sha256": "b61b831618f4b3fb0b5526147ce68bf0504846d9bb09695eef00ef86ea9b1396",
+              "render_seed": 92826011,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 336,
+            "source": {
+              "source_id": "jenny-development-112",
+              "target_id": "hey_mix",
+              "voice": "author-direct-jenny",
+              "carrier": "light",
+              "length_scale": 1.0,
+              "variant": 0,
+              "condition": "quiet",
+              "text": "Hey Mix, turn on the light.",
+              "phrase": "Hey Mix",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000336.wav",
+              "sha256": "288e8d02952df20444fcdd7f654c162acd389a0d788fbcf9ff0f2c9fc2a99c83",
+              "pcm_sha256": "80c19ffd17632c26b7934e7050ac07a40d20334759e6fde496950630e43514bd",
+              "samples": 93722,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 58032,
+              "full_rir_prefix_end_sample": 58032,
+              "generated_container_end_sample": 77722,
+              "full_rir_container_end_sample": 77722,
+              "whole_input_end_sample": 93722,
+              "render_order": 336,
+              "native_source_sha256": "69ae7376f7224e3bf55bf41045ca52e3151814cb5f558e54a2fb71f00a4857fb",
+              "native_source_pcm_sha256": "16653bc6f61fef2691f4823766339babdfc1d9c7376d89b4935294890d8daeb5",
+              "render_seed": 92826012,
+              "gain_after_mix": 1.0
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 344,
+            "source": {
+              "source_id": "jenny-development-114",
+              "target_id": "hey_mix",
+              "voice": "author-direct-jenny",
+              "carrier": "time",
+              "length_scale": 0.9,
+              "variant": 2,
+              "condition": "15dB_noise_full_RIR",
+              "text": "Hey Mix, what time is it?",
+              "phrase": "Hey Mix",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000344.wav",
+              "sha256": "ddfdd5322d8d6cfe394c12e1de2b29a0ebfb824f97e251e687b0e45b10fb3d4a",
+              "pcm_sha256": "0a310d6b90512e0bda8a0a5e33255639c64aa55221f3c5d35deea44540b1d942",
+              "samples": 90038,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 57474,
+              "full_rir_prefix_end_sample": 58434,
+              "generated_container_end_sample": 73078,
+              "full_rir_container_end_sample": 74038,
+              "whole_input_end_sample": 90038,
+              "render_order": 344,
+              "native_source_sha256": "b949f17852eea74b4752a08df89631bcc144ef475ee5f12cd4d4f2768f81dbcb",
+              "native_source_pcm_sha256": "66fbcd853b17927454b95e4fa87b071b30eddd4ace84c775ad09b1abe44a5a1e",
+              "render_seed": 92826020,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 351,
+            "source": {
+              "source_id": "jenny-development-117",
+              "target_id": "hey_mix",
+              "voice": "author-direct-jenny",
+              "carrier": "timer",
+              "length_scale": 0.9,
+              "variant": 0,
+              "condition": "quiet",
+              "text": "Hey Mix, set a timer.",
+              "phrase": "Hey Mix",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000351.wav",
+              "sha256": "2563e7973f40d071a73c8e2e7fa8d3bec889ed43b7bd6bd94153ce56bef10166",
+              "pcm_sha256": "8d58385a5cbbcd3d40801d3a5dc080d0ec3ffd37263896beb9ef22ac0d0b2712",
+              "samples": 89450,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 57846,
+              "full_rir_prefix_end_sample": 57846,
+              "generated_container_end_sample": 73450,
+              "full_rir_container_end_sample": 73450,
+              "whole_input_end_sample": 89450,
+              "render_order": 351,
+              "native_source_sha256": "b031bac1533c72cee210d354db98b3e1f8c06534862a464034bb441fa8467eb2",
+              "native_source_pcm_sha256": "91f4db46ae8c052a3d6748c86a8e1bb337152b1253fb8d175b6d797339541ed3",
+              "render_seed": 92826027,
+              "gain_after_mix": 1.0
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 378,
+            "source": {
+              "source_id": "jenny-development-126",
+              "target_id": "hey_muse",
+              "voice": "author-direct-jenny",
+              "carrier": "time",
+              "length_scale": 0.9,
+              "variant": 0,
+              "condition": "quiet",
+              "text": "Hey Muse, what time is it?",
+              "phrase": "Hey Muse",
+              "path": ".local/wakeword/jenny-development-rendered-v1/000378.wav",
+              "sha256": "7efd53211ea2f939e9c7c645e761703480216f91101b9f4f72d00ed3ea974267",
+              "pcm_sha256": "441d9bbbba22f8e71f27fc75555661dcf4d20e88e4871ed7f8c83f4445900509",
+              "samples": 90564,
+              "role": "new-development",
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "generated_prefix_end_sample": 58217,
+              "full_rir_prefix_end_sample": 58217,
+              "generated_container_end_sample": 74564,
+              "full_rir_container_end_sample": 74564,
+              "whole_input_end_sample": 90564,
+              "render_order": 378,
+              "native_source_sha256": "580e2d45f4b3f51e90d9482f6707b81aa4d65e67e21e21e4b7554790f0b5bc17",
+              "native_source_pcm_sha256": "bc6b471979504b2d63bb6dac800c92742e2be8cfc0364f7f151f31a7a8cd3576",
+              "render_seed": 92826018,
+              "gain_after_mix": 1.0
+            },
+            "before": true,
+            "after": false
+          }
+        ]
+      },
+      "joe": {
+        "comparison_sha256": "550d621176ed82302d20e837b6ccddeedc90b202a9bf99af7520f5ea38600df7",
+        "groups": {
+          "target/whole-utterance-unclassified": {
+            "clips": 72,
+            "hits": {
+              "c161": 0,
+              "binary40": 16
+            },
+            "gained": 16,
+            "lost": 0
+          },
+          "negative/hi_esp/whole-utterance-unclassified": {
+            "clips": 72,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "negative/confusion/whole-utterance-unclassified": {
+            "clips": 216,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          }
+        },
+        "reused_background": {
+          "hours": 0.0,
+          "events": {
+            "c161": 0,
+            "binary40": 0
+          }
+        },
+        "original_binary40_changes": [
+          {
+            "index": 6,
+            "source": {
+              "id": "joe-t00-s1.0-r0-v0",
+              "source_id": "joe-t00-s1.0-r0",
+              "source_path": "joe-t00-s1.0-r0.wav",
+              "source_sha256": "ae351ca188a34f14e0c1dd07836648d4f3e6b3aa2a35c5da969b2bf2c11371c1",
+              "source_samples": 18576,
+              "target": "hey_nyx",
+              "text": "Hey Nicks.",
+              "length_scale": 1.0,
+              "draw": 0,
+              "variant": 0,
+              "seed": 12749671879730791001,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t00-s1.0-r0-v0.wav",
+              "sha256": "8906530efed3fa8b0d42f1746c4f3ba730617fa037a6fba93d5c0e4aeb013a38",
+              "pcm_sha256": "21d7e14f0dae4adf6c326c6b4c0cb9f5e706c49b4233fb0490056b0d01e5eed7",
+              "samples": 63376,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 47376,
+              "keyword_end": 47376,
+              "generated_output_end_sample": 47376,
+              "full_rir_end_sample": 47376,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 63376,
+                "maximum_quantization_error": 0.0,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 14,
+            "source": {
+              "id": "joe-t00-s1.1-r0-v2",
+              "source_id": "joe-t00-s1.1-r0",
+              "source_path": "joe-t00-s1.1-r0.wav",
+              "source_sha256": "3b059c49783612253b4c5faa5470c9e1731e9a2e9f207a961c49de8b43565f9f",
+              "source_samples": 19691,
+              "target": "hey_nyx",
+              "text": "Hey Nicks.",
+              "length_scale": 1.1,
+              "draw": 0,
+              "variant": 2,
+              "seed": 14976254502214317153,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t00-s1.1-r0-v2.wav",
+              "sha256": "4a983fc1658c1ad1d09231b2c177f08298972bc4ae45da92b8c3ef35a28b1420",
+              "pcm_sha256": "e41374ab617d6e80ceec30d0d5c12d0b847a3de27d3fbfde508b0312753ab998",
+              "samples": 65451,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 48491,
+              "keyword_end": 49451,
+              "generated_output_end_sample": 48491,
+              "full_rir_end_sample": 49451,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 960,
+              "synthetic_rir": true,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 65451,
+                "maximum_quantization_error": 3.0516752320073823e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 22,
+            "source": {
+              "id": "joe-t01-s0.9-r1-v1",
+              "source_id": "joe-t01-s0.9-r1",
+              "source_path": "joe-t01-s0.9-r1.wav",
+              "source_sha256": "cd179d113d5891c519634969fb56251f1d0efe3556db9f1eb840f9b23e70ce2a",
+              "source_samples": 16719,
+              "target": "hey_nyx",
+              "text": "Hey Nicks!",
+              "length_scale": 0.9,
+              "draw": 1,
+              "variant": 1,
+              "seed": 2709502624298050400,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t01-s0.9-r1-v1.wav",
+              "sha256": "4eefc265fccd054ba75a95ea0aff23ccd0a7387ff0dfbd7106cd918c90137b38",
+              "pcm_sha256": "bf755d8733f46aadc14e8bc16cb2338280cfb2794cde844d8928cdc9b497a121",
+              "samples": 61519,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 45519,
+              "keyword_end": 45519,
+              "generated_output_end_sample": 45519,
+              "full_rir_end_sample": 45519,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 61519,
+                "maximum_quantization_error": 3.0516695465371995e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 26,
+            "source": {
+              "id": "joe-t01-s1.0-r0-v2",
+              "source_id": "joe-t01-s1.0-r0",
+              "source_path": "joe-t01-s1.0-r0.wav",
+              "source_sha256": "2793a91cda77dfad848c5eace7de1b79ba959d37f2c5332dbb70a0e2abc687a5",
+              "source_samples": 18391,
+              "target": "hey_nyx",
+              "text": "Hey Nicks!",
+              "length_scale": 1.0,
+              "draw": 0,
+              "variant": 2,
+              "seed": 797984737408628062,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t01-s1.0-r0-v2.wav",
+              "sha256": "00bbc8afa6375b321c3e903888c747c36e173d4737b757a1cc351875e194702b",
+              "pcm_sha256": "cd3e17e51cb3f624fa35b323fd82f95d4757e12c2f5cbf7e51cc73b554e65440",
+              "samples": 64151,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 47191,
+              "keyword_end": 48151,
+              "generated_output_end_sample": 47191,
+              "full_rir_end_sample": 48151,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 960,
+              "synthetic_rir": true,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 64151,
+                "maximum_quantization_error": 3.051732147132057e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 28,
+            "source": {
+              "id": "joe-t01-s1.0-r1-v1",
+              "source_id": "joe-t01-s1.0-r1",
+              "source_path": "joe-t01-s1.0-r1.wav",
+              "source_sha256": "0b3dfa8f5a48110329d31c0a3405e69413fe371b8359327e373cc905b2a53945",
+              "source_samples": 18576,
+              "target": "hey_nyx",
+              "text": "Hey Nicks!",
+              "length_scale": 1.0,
+              "draw": 1,
+              "variant": 1,
+              "seed": 10603514777983883910,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t01-s1.0-r1-v1.wav",
+              "sha256": "5095211cc0d76a4a3c7390cbcfcc6fb459475e10d442e5044817c3522b458793",
+              "pcm_sha256": "1c5d2781b17f1573f9f2760ebdd9ae1d160e23d82e7672a6522e6922dd0ecbbe",
+              "samples": 63376,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 47376,
+              "keyword_end": 47376,
+              "generated_output_end_sample": 47376,
+              "full_rir_end_sample": 47376,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 63376,
+                "maximum_quantization_error": 3.0516542563494204e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 29,
+            "source": {
+              "id": "joe-t01-s1.0-r1-v2",
+              "source_id": "joe-t01-s1.0-r1",
+              "source_path": "joe-t01-s1.0-r1.wav",
+              "source_sha256": "0b3dfa8f5a48110329d31c0a3405e69413fe371b8359327e373cc905b2a53945",
+              "source_samples": 18576,
+              "target": "hey_nyx",
+              "text": "Hey Nicks!",
+              "length_scale": 1.0,
+              "draw": 1,
+              "variant": 2,
+              "seed": 2246618127689472782,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t01-s1.0-r1-v2.wav",
+              "sha256": "91650634900dbfe02d09854cd07a89a549def89444cc0fe6a50f3ab9bcce3d2b",
+              "pcm_sha256": "15c9c59cedc5cf9e9abbf9b448a076d93eb72919fc97f95e91e3b32128fbd2fe",
+              "samples": 64336,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 47376,
+              "keyword_end": 48336,
+              "generated_output_end_sample": 47376,
+              "full_rir_end_sample": 48336,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 960,
+              "synthetic_rir": true,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 64336,
+                "maximum_quantization_error": 3.0517332349480272e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 43,
+            "source": {
+              "id": "joe-t02-s1.0-r0-v1",
+              "source_id": "joe-t02-s1.0-r0",
+              "source_path": "joe-t02-s1.0-r0.wav",
+              "source_sha256": "c3d740f58895a15b174676a5222f612568ad1d12523752f129c2f5c8643c1c9d",
+              "source_samples": 32694,
+              "target": "hey_nyx",
+              "text": "Hey Nicks, what time is it?",
+              "length_scale": 1.0,
+              "draw": 0,
+              "variant": 1,
+              "seed": 7538064083854704170,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t02-s1.0-r0-v1.wav",
+              "sha256": "672f1cfaec2253b0c3d7a6b66cbab76cf8922ad758b9a6d82926c4e7cea9d3af",
+              "pcm_sha256": "18beba65e9908004bebf819781dbb29490b04c7855e978bcd39fbb8722fa9fc3",
+              "samples": 77494,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 61494,
+              "keyword_end": 61494,
+              "generated_output_end_sample": 61494,
+              "full_rir_end_sample": 61494,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 77494,
+                "maximum_quantization_error": 3.0517045124443115e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 48,
+            "source": {
+              "id": "joe-t02-s1.1-r0-v0",
+              "source_id": "joe-t02-s1.1-r0",
+              "source_path": "joe-t02-s1.1-r0.wav",
+              "source_sha256": "3662192509ef14bc98403afb6fa0b1671bd8b8a590b0a6709570cbfcc62dacd8",
+              "source_samples": 35109,
+              "target": "hey_nyx",
+              "text": "Hey Nicks, what time is it?",
+              "length_scale": 1.1,
+              "draw": 0,
+              "variant": 0,
+              "seed": 10407715751960850205,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t02-s1.1-r0-v0.wav",
+              "sha256": "213c88c2a4b7fda07ede91907194c7394e590d72a416a3dbbb72f0c4b6fbe3c0",
+              "pcm_sha256": "60a023e1804b251bb9319c12d166e66df93c7b9bb075722f0206f97dc5861562",
+              "samples": 79909,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 63909,
+              "keyword_end": 63909,
+              "generated_output_end_sample": 63909,
+              "full_rir_end_sample": 63909,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 79909,
+                "maximum_quantization_error": 0.0,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 50,
+            "source": {
+              "id": "joe-t02-s1.1-r0-v2",
+              "source_id": "joe-t02-s1.1-r0",
+              "source_path": "joe-t02-s1.1-r0.wav",
+              "source_sha256": "3662192509ef14bc98403afb6fa0b1671bd8b8a590b0a6709570cbfcc62dacd8",
+              "source_samples": 35109,
+              "target": "hey_nyx",
+              "text": "Hey Nicks, what time is it?",
+              "length_scale": 1.1,
+              "draw": 0,
+              "variant": 2,
+              "seed": 3933779576220643007,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t02-s1.1-r0-v2.wav",
+              "sha256": "903a9ff55da92db191079515d037976b356fda3c4c605930b6e1070a52f148cb",
+              "pcm_sha256": "a38f2ea1bccc8c16d0a43ccdacfa9ef600fa55540030c99a126fdf132fd09837",
+              "samples": 80869,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 63909,
+              "keyword_end": 64869,
+              "generated_output_end_sample": 63909,
+              "full_rir_end_sample": 64869,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 960,
+              "synthetic_rir": true,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 80869,
+                "maximum_quantization_error": 3.0516806109255265e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 51,
+            "source": {
+              "id": "joe-t02-s1.1-r1-v0",
+              "source_id": "joe-t02-s1.1-r1",
+              "source_path": "joe-t02-s1.1-r1.wav",
+              "source_sha256": "a085d12f923ade4cc13bcb362b5a42a522a115f9e1433fc18a49c5e78041ac7f",
+              "source_samples": 34923,
+              "target": "hey_nyx",
+              "text": "Hey Nicks, what time is it?",
+              "length_scale": 1.1,
+              "draw": 1,
+              "variant": 0,
+              "seed": 3321619573594810260,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t02-s1.1-r1-v0.wav",
+              "sha256": "3008c7eb9f67a1d0c09e894538d434f3618fa682b39771ab138cd0d43a8a9f62",
+              "pcm_sha256": "172674dcfd19e676f43d03a3aa27b8dbf2d1cd39d3811d330f5820e56ef8ed37",
+              "samples": 79723,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 63723,
+              "keyword_end": 63723,
+              "generated_output_end_sample": 63723,
+              "full_rir_end_sample": 63723,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 79723,
+                "maximum_quantization_error": 0.0,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 67,
+            "source": {
+              "id": "joe-t03-s1.1-r0-v1",
+              "source_id": "joe-t03-s1.1-r0",
+              "source_path": "joe-t03-s1.1-r0.wav",
+              "source_sha256": "48f4702fd1963a6dcfe2d6f9565673e66f92740bc1b60ec7f84c63d881e6aef4",
+              "source_samples": 31208,
+              "target": "hey_nyx",
+              "text": "Hey Nicks, turn on the light.",
+              "length_scale": 1.1,
+              "draw": 0,
+              "variant": 1,
+              "seed": 15366326055145603008,
+              "path": ".local/wakeword/joe-development-render-v1/joe-t03-s1.1-r0-v1.wav",
+              "sha256": "f980bd663d481b0dc9e148938ad591b0a2a5bb784743c1e867480ef8d45a5077",
+              "pcm_sha256": "73ffbc0afc0a3708fde1d5fb860f5d8edb0208b3bb2559e9f39507380fb9c187",
+              "samples": 76008,
+              "lead_samples": 28800,
+              "tail_samples": 16000,
+              "native_generation_end": 60008,
+              "keyword_end": 60008,
+              "generated_output_end_sample": 60008,
+              "full_rir_end_sample": 60008,
+              "boundary_reference": "Whole generated output, not human/wake-prefix phonetic endpoint",
+              "rir_tail_samples": 0,
+              "synthetic_rir": false,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "audit": {
+                "checks": {
+                  "source_sample_ledger": true,
+                  "presentation_sample_ledger": true,
+                  "full_source_and_rir_tail_length": true,
+                  "full_source_noise_rir_values": true,
+                  "full_native_boundary": true,
+                  "full_rir_boundary": true,
+                  "full_rir_tail": true,
+                  "padding": true,
+                  "snr": true,
+                  "rir_enabled": true,
+                  "declared_gain": true,
+                  "finite_no_clipping": true,
+                  "no_saturated_pcm16": true
+                },
+                "passed": true,
+                "expected_samples": 76008,
+                "maximum_quantization_error": 3.0516927374343514e-05,
+                "reconstructed_gain": 1.0
+              },
+              "target_id": "hey_nyx",
+              "role": "consumed-source development only"
+            },
+            "before": true,
+            "after": false
+          }
+        ]
+      },
+      "melo": {
+        "comparison_sha256": "639ed1e375acb59045de2a3af0a5480b0a3bf05ecb373b152f12ae6d6dacbb6d",
+        "groups": {
+          "EN-US/target/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 7
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "EN-US/target/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 8,
+              "binary40": 8
+            },
+            "gained": 1,
+            "lost": 1
+          },
+          "EN-US/target/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 7,
+              "binary40": 8
+            },
+            "gained": 2,
+            "lost": 1
+          },
+          "EN-US/target/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 9,
+              "binary40": 7
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "EN-US/negative/official/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/official/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/official/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/official/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/nick/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/nick/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/nick/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 1,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 1
+          },
+          "EN-US/negative/nick/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/next/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 6,
+              "binary40": 9
+            },
+            "gained": 3,
+            "lost": 0
+          },
+          "EN-US/negative/next/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 1
+            },
+            "gained": 0,
+            "lost": 3
+          },
+          "EN-US/negative/next/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 1,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 1
+          },
+          "EN-US/negative/next/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 2
+            },
+            "gained": 1,
+            "lost": 3
+          },
+          "EN-US/negative/mix/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 6,
+              "binary40": 2
+            },
+            "gained": 1,
+            "lost": 5
+          },
+          "EN-US/negative/mix/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 6,
+              "binary40": 2
+            },
+            "gained": 0,
+            "lost": 4
+          },
+          "EN-US/negative/mix/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 5,
+              "binary40": 6
+            },
+            "gained": 3,
+            "lost": 2
+          },
+          "EN-US/negative/mix/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 5,
+              "binary40": 2
+            },
+            "gained": 1,
+            "lost": 4
+          },
+          "EN-US/negative/muse/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/muse/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/muse/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-US/negative/muse/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/target/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 7,
+              "binary40": 3
+            },
+            "gained": 0,
+            "lost": 4
+          },
+          "EN-BR/target/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 5
+            },
+            "gained": 2,
+            "lost": 1
+          },
+          "EN-BR/target/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 7,
+              "binary40": 7
+            },
+            "gained": 1,
+            "lost": 1
+          },
+          "EN-BR/target/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 3,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 3
+          },
+          "EN-BR/negative/official/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/official/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/official/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/official/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/nick/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 2,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "EN-BR/negative/nick/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/nick/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/nick/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 1,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 1
+          },
+          "EN-BR/negative/next/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/next/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 2,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 2
+          },
+          "EN-BR/negative/next/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/next/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/mix/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 3,
+              "binary40": 1
+            },
+            "gained": 1,
+            "lost": 3
+          },
+          "EN-BR/negative/mix/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 1
+            },
+            "gained": 1,
+            "lost": 0
+          },
+          "EN-BR/negative/mix/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 1,
+              "binary40": 3
+            },
+            "gained": 2,
+            "lost": 0
+          },
+          "EN-BR/negative/mix/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/muse/bare": {
+            "clips": 9,
+            "hits": {
+              "c161": 4,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 4
+          },
+          "EN-BR/negative/muse/light": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/muse/time": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          },
+          "EN-BR/negative/muse/timer": {
+            "clips": 9,
+            "hits": {
+              "c161": 0,
+              "binary40": 0
+            },
+            "gained": 0,
+            "lost": 0
+          }
+        },
+        "reused_background": {
+          "hours": 7.902862222222223,
+          "events": {
+            "c161": 0,
+            "binary40": 0
+          }
+        },
+        "original_binary40_changes": [
+          {
+            "index": 8,
+            "source": {
+              "id": "melo-v2-development-en-us-0.9-nyx-time-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-0.9-nyx-time",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 0.9,
+              "carrier": "time",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks. What time is it?",
+              "variant": 2,
+              "noise_seed": 3241984513,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "0f4301c3ffcb3f43cebae72d4ad0b9d58f741802c9eaacab37adcfab18bdd281",
+              "source_samples": 41053,
+              "samples": 106285,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 57856,
+              "generated_prefix_end_sample": 68991,
+              "full_rir_prefix_end_sample": 70223,
+              "generated_container_end_sample": 89053,
+              "full_rir_container_end_sample": 90285,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-0.9-nyx-time-v2.wav",
+              "sha256": "c1f5b198b1da80f8cfea17764eeb5616e8deba127317cdd00343bb8fe5b41c15",
+              "pcm_sha256": "8a7ef383fb8859923c93b22c67e82b640ea572aaba1d246c5a75f50863a1ad0c",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 9,
+            "source": {
+              "id": "melo-v2-development-en-us-0.9-nyx-timer-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-0.9-nyx-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 0.9,
+              "carrier": "timer",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks. Set a timer for five minutes.",
+              "variant": 0,
+              "noise_seed": 2744689545,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "86fafa78ccd7b0460d7d5d5c34491c4f86e6c69d78d11305929ad5ed8911d9f1",
+              "source_samples": 58701,
+              "samples": 122701,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 58880,
+              "generated_prefix_end_sample": 69363,
+              "full_rir_prefix_end_sample": 69363,
+              "generated_container_end_sample": 106701,
+              "full_rir_container_end_sample": 106701,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-0.9-nyx-timer-v0.wav",
+              "sha256": "a21356a4c9f713560e853d1991139d9cc506c78ddb15eeec53ab8e329afbaf2e",
+              "pcm_sha256": "4249f4916339fc6bc6bcacb3fc542c602b27c5de6929c086f0fe670111e7b3ff",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 41,
+            "source": {
+              "id": "melo-v2-development-en-us-0.9-next-light-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-0.9-next-light",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 0.9,
+              "carrier": "light",
+              "phrase_id": "next",
+              "text": "Hey Next. Turn on the light.",
+              "variant": 2,
+              "noise_seed": 3203483308,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "2fbab70f23a8413052465b44ea426b209f95d53c229a8b4a2b03d5e426ad4b31",
+              "source_samples": 46812,
+              "samples": 112044,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 18,
+              "native_prefix_conditioning_sample_44100": 69120,
+              "generated_prefix_end_sample": 73078,
+              "full_rir_prefix_end_sample": 74310,
+              "generated_container_end_sample": 94812,
+              "full_rir_container_end_sample": 96044,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-0.9-next-light-v2.wav",
+              "sha256": "46f2d478aa7a66f6ed5edbeedb7774bd8974b6982d3c5712940268df05776a42",
+              "pcm_sha256": "ae0c7a39c385bc0ee4555f9d5a9e52d915423df6a6b080efe5e4efb9efe2cfbe",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 45,
+            "source": {
+              "id": "melo-v2-development-en-us-0.9-next-timer-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-0.9-next-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 0.9,
+              "carrier": "timer",
+              "phrase_id": "next",
+              "text": "Hey Next. Set a timer for five minutes.",
+              "variant": 0,
+              "noise_seed": 2744689545,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "b8996400cc95f6a8367323cfc2a0c45314b87d94b7c6caa10f69d8d7fee6aa99",
+              "source_samples": 61115,
+              "samples": 125115,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 18,
+              "native_prefix_conditioning_sample_44100": 65024,
+              "generated_prefix_end_sample": 71592,
+              "full_rir_prefix_end_sample": 71592,
+              "generated_container_end_sample": 109115,
+              "full_rir_container_end_sample": 109115,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-0.9-next-timer-v0.wav",
+              "sha256": "1419a8ac7afcc67ff433980b945855284248456466a039558e336ad73dd37bd4",
+              "pcm_sha256": "c680476a4d751e8ae9023d27632c581a9f802b4d57f097ea7d90d6a6dc20b556",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 58,
+            "source": {
+              "id": "melo-v2-development-en-us-0.9-mix-timer-v1",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-0.9-mix-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 0.9,
+              "carrier": "timer",
+              "phrase_id": "mix",
+              "text": "Hey Mix. Set a timer for five minutes.",
+              "variant": 1,
+              "noise_seed": 3188332551,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "source_sha256": "0185007c4ea23d335992f67f42dae0dc0b76c0b8157151e0de7bc5dd4f33afa0",
+              "source_samples": 56657,
+              "samples": 120657,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 55296,
+              "generated_prefix_end_sample": 68063,
+              "full_rir_prefix_end_sample": 68063,
+              "generated_container_end_sample": 104657,
+              "full_rir_container_end_sample": 104657,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-0.9-mix-timer-v1.wav",
+              "sha256": "8cd573b42a193dc95e9a4cb7582880e450e9592a85066b7fe97995c293daf92b",
+              "pcm_sha256": "7d081b2468b9c30301e8dcf4bdfa62f4a804239e837a9450e98c9a4797f3a305",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 74,
+            "source": {
+              "id": "melo-v2-development-en-us-1.0-nyx-bare-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.0-nyx-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.0,
+              "carrier": "bare",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks.",
+              "variant": 2,
+              "noise_seed": 2528347152,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "9dbc6688c2c34b48f6103dcc62738b2fea6285499bb5d54c5d4f502a70f0381a",
+              "source_samples": 20806,
+              "samples": 86038,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 53248,
+              "generated_prefix_end_sample": 67320,
+              "full_rir_prefix_end_sample": 68552,
+              "generated_container_end_sample": 68806,
+              "full_rir_container_end_sample": 70038,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.0-nyx-bare-v2.wav",
+              "sha256": "171c23a687b575060f4b9b0494e2233a1c612fd834231413a00d357df9718a71",
+              "pcm_sha256": "480e46fc8b5b5265c766a4930eab8d6450d0a43988cdc97f1f1a45af1795ed75",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 116,
+            "source": {
+              "id": "melo-v2-development-en-us-1.0-next-time-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.0-next-time",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.0,
+              "carrier": "time",
+              "phrase_id": "next",
+              "text": "Hey Next. What time is it?",
+              "variant": 2,
+              "noise_seed": 1018655170,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "7c58b428307356bca14f7c3b150d406345369b2fe52d41576acb5251d62c250a",
+              "source_samples": 38824,
+              "samples": 104056,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 18,
+              "native_prefix_conditioning_sample_44100": 58368,
+              "generated_prefix_end_sample": 69177,
+              "full_rir_prefix_end_sample": 70409,
+              "generated_container_end_sample": 86824,
+              "full_rir_container_end_sample": 88056,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.0-next-time-v2.wav",
+              "sha256": "847d2feb8fcf6d5de924de5cbe9ac9220bb299828b153296fb70a21fd12b5195",
+              "pcm_sha256": "03b2e0a9e192e7f23f2e6cead7e52012bc7fdad74b3809a166fb490bc935c729",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 123,
+            "source": {
+              "id": "melo-v2-development-en-us-1.0-mix-light-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.0-mix-light",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.0,
+              "carrier": "light",
+              "phrase_id": "mix",
+              "text": "Hey Mix. Turn on the light.",
+              "variant": 0,
+              "noise_seed": 2113221546,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "f42a95ffba2aab242fd8b1a56f168029a92c099918b3c6a19203ad7894db10ca",
+              "source_samples": 39567,
+              "samples": 103567,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 55296,
+              "generated_prefix_end_sample": 68063,
+              "full_rir_prefix_end_sample": 68063,
+              "generated_container_end_sample": 87567,
+              "full_rir_container_end_sample": 87567,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.0-mix-light-v0.wav",
+              "sha256": "8e4b008377479e8234f53b3290c658bb0bcaf8ad4670d08c1d59ed734500e39b",
+              "pcm_sha256": "f2febd1b4b9f141fe2636ca646f4f7b8e1d35a189eaa393b93dc87eaf02ac252",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": false,
+            "after": true
+          },
+          {
+            "index": 191,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-next-timer-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-next-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "timer",
+              "phrase_id": "next",
+              "text": "Hey Next. Set a timer for five minutes.",
+              "variant": 2,
+              "noise_seed": 140059153,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "bb5386fbad011f5d8598b272ad0971a22884aeffae05411a052573a7390c2068",
+              "source_samples": 51456,
+              "samples": 116688,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 18,
+              "native_prefix_conditioning_sample_44100": 56832,
+              "generated_prefix_end_sample": 68620,
+              "full_rir_prefix_end_sample": 69852,
+              "generated_container_end_sample": 99456,
+              "full_rir_container_end_sample": 100688,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-next-timer-v2.wav",
+              "sha256": "176acb41c6718fd96823f8e67b45343a498e6efcad9066643d28bc9029e1f5f3",
+              "pcm_sha256": "3361219a38613d63d5f3d141c42ac23be9cd38f7b74105fab8ecc6a7516626c1",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 193,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-mix-bare-v1",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-mix-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "bare",
+              "phrase_id": "mix",
+              "text": "Hey Mix.",
+              "variant": 1,
+              "noise_seed": 1951925758,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "source_sha256": "72733c003d13c38ab6a89be3616d1069c5320a7862369e1ee49ac094d6d03c71",
+              "source_samples": 20991,
+              "samples": 84991,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 51200,
+              "generated_prefix_end_sample": 66576,
+              "full_rir_prefix_end_sample": 66576,
+              "generated_container_end_sample": 68991,
+              "full_rir_container_end_sample": 68991,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-mix-bare-v1.wav",
+              "sha256": "36b62669284bab3b774a3a2ddf2d55856776b0a0924743a6af64daec01adcb0e",
+              "pcm_sha256": "1a42cf05b2627b09e991ce9410653d5ad80f1d390351034f177ca758da2ac7f9",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 195,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-mix-light-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-mix-light",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "light",
+              "phrase_id": "mix",
+              "text": "Hey Mix. Turn on the light.",
+              "variant": 0,
+              "noise_seed": 3895409316,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "a36534026e63b87168e41be241c214da30025a24d23c3f0e8c7e49693b2591c4",
+              "source_samples": 35852,
+              "samples": 99852,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 49152,
+              "generated_prefix_end_sample": 65833,
+              "full_rir_prefix_end_sample": 65833,
+              "generated_container_end_sample": 83852,
+              "full_rir_container_end_sample": 83852,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-mix-light-v0.wav",
+              "sha256": "1dc32ca04bae665467d6151f601e4075321151f90cd435069f8107c248abc66e",
+              "pcm_sha256": "41aafd0bbac460c2eea8c6ac781b890a1691f7a44f7de770e74c843ae64f4f7d",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 199,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-mix-time-v1",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-mix-time",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "time",
+              "phrase_id": "mix",
+              "text": "Hey Mix. What time is it?",
+              "variant": 1,
+              "noise_seed": 3846244260,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "source_sha256": "124975edd236fa0cfbc1c43efec66d2350320d4c8c2a7116d26a528538b402db",
+              "source_samples": 33809,
+              "samples": 97809,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 49152,
+              "generated_prefix_end_sample": 65833,
+              "full_rir_prefix_end_sample": 65833,
+              "generated_container_end_sample": 81809,
+              "full_rir_container_end_sample": 81809,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-mix-time-v1.wav",
+              "sha256": "95ae4a8bcfd60bb138606bfc38ea8e512a90e581e2f4c34f0da3c1cd10bb9e64",
+              "pcm_sha256": "38badd5b1dee1727e41701b1d0c84075adaeecdb0a1f77a215f3afef15b23983",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 201,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-mix-timer-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-mix-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "timer",
+              "phrase_id": "mix",
+              "text": "Hey Mix. Set a timer for five minutes.",
+              "variant": 0,
+              "noise_seed": 3622881671,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "80d095eaf919e215920883e0cc4c91922c834db290aef0de03abc97a613eed3a",
+              "source_samples": 45512,
+              "samples": 109512,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 44032,
+              "generated_prefix_end_sample": 63976,
+              "full_rir_prefix_end_sample": 63976,
+              "generated_container_end_sample": 93512,
+              "full_rir_container_end_sample": 93512,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-mix-timer-v0.wav",
+              "sha256": "d27f6e207f19a221bb9a9548fce7d7cac730f7371951aa79d2930c54011ab3e0",
+              "pcm_sha256": "d124a551eb12a603939e07b2298ac744e0cde5d7a532018ab3184d482e2af053",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 202,
+            "source": {
+              "id": "melo-v2-development-en-us-1.1-mix-timer-v1",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-us-1.1-mix-timer",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-US",
+              "speed": 1.1,
+              "carrier": "timer",
+              "phrase_id": "mix",
+              "text": "Hey Mix. Set a timer for five minutes.",
+              "variant": 1,
+              "noise_seed": 3309916467,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "source_sha256": "80d095eaf919e215920883e0cc4c91922c834db290aef0de03abc97a613eed3a",
+              "source_samples": 45512,
+              "samples": 109512,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 44032,
+              "generated_prefix_end_sample": 63976,
+              "full_rir_prefix_end_sample": 63976,
+              "generated_container_end_sample": 93512,
+              "full_rir_container_end_sample": 93512,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-us-1.1-mix-timer-v1.wav",
+              "sha256": "da1f83ba664f8b254e79a18e4221f34a25bd4478f6bfd0a35a741051ff77e260",
+              "pcm_sha256": "65f7127a4785d9c58278afaa4cf30828acc63d8d5549908deb458a78a84e41c6",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 218,
+            "source": {
+              "id": "melo-v2-development-en-br-0.9-nyx-bare-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-0.9-nyx-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 0.9,
+              "carrier": "bare",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks.",
+              "variant": 2,
+              "noise_seed": 4006192184,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "93705344a705ed4a0adc2ab8e23af149b6b298077b40441f6d7ca873e7e6b08d",
+              "source_samples": 18948,
+              "samples": 84180,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 44032,
+              "generated_prefix_end_sample": 63976,
+              "full_rir_prefix_end_sample": 65208,
+              "generated_container_end_sample": 66948,
+              "full_rir_container_end_sample": 68180,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-0.9-nyx-bare-v2.wav",
+              "sha256": "cb48069447c0403f8db40ebef51088868a89011e9c958854b044a39a6bd49b71",
+              "pcm_sha256": "84d8055877776f2477e57a1a3b3d988594e9ff54dc7a0e44ea026c59f6983b6d",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 264,
+            "source": {
+              "id": "melo-v2-development-en-br-0.9-mix-bare-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-0.9-mix-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 0.9,
+              "carrier": "bare",
+              "phrase_id": "mix",
+              "text": "Hey Mix.",
+              "variant": 0,
+              "noise_seed": 3183946023,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "12c9510b8d7156a7d767dd34e7aec792a079c3491ae91f5c6513a9f4fe8aa880",
+              "source_samples": 18576,
+              "samples": 82576,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 44032,
+              "generated_prefix_end_sample": 63976,
+              "full_rir_prefix_end_sample": 63976,
+              "generated_container_end_sample": 66576,
+              "full_rir_container_end_sample": 66576,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-0.9-mix-bare-v0.wav",
+              "sha256": "eae33e05fa70ce3b286d405e9c0b0abfbee25d97813f6eedeaf0a5b2ffbfe42f",
+              "pcm_sha256": "012d4255c00e15a3123f6f4dfbf447fbd80665b81369b782682f68976753d31c",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 288,
+            "source": {
+              "id": "melo-v2-development-en-br-1.0-nyx-bare-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-1.0-nyx-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 1.0,
+              "carrier": "bare",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks.",
+              "variant": 0,
+              "noise_seed": 2598259507,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "db3d322049906234864bf338f9e80bbb4dff7758a1aab371a6c37f3739a066ef",
+              "source_samples": 17090,
+              "samples": 81090,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 39936,
+              "generated_prefix_end_sample": 62490,
+              "full_rir_prefix_end_sample": 62490,
+              "generated_container_end_sample": 65090,
+              "full_rir_container_end_sample": 65090,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-1.0-nyx-bare-v0.wav",
+              "sha256": "cc869c45205be4db011902ac02bd8cd7514d9be1fc553c2a13117777f005c704",
+              "pcm_sha256": "9c3a1ee94691c064c3e4bb169fee637035eee9c157d235175f856e9c3699b047",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 296,
+            "source": {
+              "id": "melo-v2-development-en-br-1.0-nyx-time-v2",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-1.0-nyx-time",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 1.0,
+              "carrier": "time",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks. What time is it?",
+              "variant": 2,
+              "noise_seed": 2534949739,
+              "snr_db": 15,
+              "gain_after_mix": 1.0,
+              "source_sha256": "6eaca9d480d96017b016292460f7eed48c90a12e92063e31cd886f7aa24ab64d",
+              "source_samples": 31022,
+              "samples": 96254,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 1232,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 34304,
+              "generated_prefix_end_sample": 60446,
+              "full_rir_prefix_end_sample": 61678,
+              "generated_container_end_sample": 79022,
+              "full_rir_container_end_sample": 80254,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-1.0-nyx-time-v2.wav",
+              "sha256": "4970ae485cf0e394cf62e2df8c4324b1ff6ac53666add601bf065710b8d7cb4d",
+              "pcm_sha256": "976f0d51605f5e5cf51759e9eacd05bd717b08ee80468bf35b5ced181d78be90",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 361,
+            "source": {
+              "id": "melo-v2-development-en-br-1.1-nyx-bare-v1",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-1.1-nyx-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 1.1,
+              "carrier": "bare",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks.",
+              "variant": 1,
+              "noise_seed": 937396643,
+              "snr_db": 25,
+              "gain_after_mix": 1.0,
+              "source_sha256": "fd0d176f0fac80cef5797a34ce639da312e938aeb6624b9a9b4c9afaf3fdff25",
+              "source_samples": 15604,
+              "samples": 79604,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 38400,
+              "generated_prefix_end_sample": 61932,
+              "full_rir_prefix_end_sample": 61932,
+              "generated_container_end_sample": 63604,
+              "full_rir_container_end_sample": 63604,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-1.1-nyx-bare-v1.wav",
+              "sha256": "9b34c207647c2d805cf1cc36ed9c64fd742fa39bc6b793ee1b4562c0897ea876",
+              "pcm_sha256": "f0f355e4459eeaf20cddb7e0d8dfee462a27081e7fe2cc6d943f7786cd8fe11c",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 363,
+            "source": {
+              "id": "melo-v2-development-en-br-1.1-nyx-light-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-1.1-nyx-light",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 1.1,
+              "carrier": "light",
+              "phrase_id": "nyx",
+              "text": "Hey Nicks. Turn on the light.",
+              "variant": 0,
+              "noise_seed": 4077897274,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "f5681ea435d949d405fa8351ec92a1098bbdd4d52f7484c80109398a3a6a87a7",
+              "source_samples": 28236,
+              "samples": 92236,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 33792,
+              "generated_prefix_end_sample": 60261,
+              "full_rir_prefix_end_sample": 60261,
+              "generated_container_end_sample": 76236,
+              "full_rir_container_end_sample": 76236,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-1.1-nyx-light-v0.wav",
+              "sha256": "769fd8170e4796430443f605f9bb7514595ca7c97b429597609cd4ef1f295d30",
+              "pcm_sha256": "481b19f726ed665e3be34f9fa45455a76942cdb1806d7567fc73bd83829913ea",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": true,
+            "after": false
+          },
+          {
+            "index": 408,
+            "source": {
+              "id": "melo-v2-development-en-br-1.1-mix-bare-v0",
+              "role": "unconsumed-threshold-development",
+              "source_id": "melo-v2-development-en-br-1.1-mix-bare",
+              "voice_id": "melo-english-v2:a53e3509c4ee4ff16d79272feb2474ff864e18f3:EN-BR",
+              "speed": 1.1,
+              "carrier": "bare",
+              "phrase_id": "mix",
+              "text": "Hey Mix.",
+              "variant": 0,
+              "noise_seed": 1000161737,
+              "snr_db": null,
+              "gain_after_mix": 1.0,
+              "source_sha256": "bb9541127935387dac0d362589908b72c87e887d0f82ec7656bdbce9a58e93fd",
+              "source_samples": 15047,
+              "samples": 79047,
+              "lead_samples": 48000,
+              "tail_samples": 16000,
+              "rir_tail_samples": 0,
+              "prefix_conditioning_last_index": 16,
+              "native_prefix_conditioning_sample_44100": 35328,
+              "generated_prefix_end_sample": 60818,
+              "full_rir_prefix_end_sample": 60818,
+              "generated_container_end_sample": 63047,
+              "full_rir_container_end_sample": 63047,
+              "path": ".local/wakeword/melo-development-rendered-v1/melo-v2-development-en-br-1.1-mix-bare-v0.wav",
+              "sha256": "cb373a62da2712d745e3a0478a0947a97ae5d3501f892efb2a4d2dc99b3a7829",
+              "pcm_sha256": "a0a1f21a9f9dcbe06fba4c776e490a8c4db3d9032de9af65d5edcb7ac15a02f3",
+              "checks": {
+                "full_source_tail": true,
+                "format": true,
+                "finite_unclipped": true,
+                "no_saturation": true,
+                "transport": true
+              },
+              "passed": true,
+              "phase": "synthetic"
+            },
+            "before": false,
+            "after": true
+          }
+        ]
+      },
+      "mac": {
+        "comparison_sha256": "c1dd4f9bf9abbe3fe1508858c30b765beed73da7a79bdbf68c231a02824e331a",
+        "groups": {
+          "Daniel/hey_nyx": {
+            "clips": 2,
+            "hits": 0
+          },
+          "Samantha/hi_esp": {
+            "clips": 2,
+            "hits": 0
+          },
+          "Daniel/hi_esp": {
+            "clips": 2,
+            "hits": 0
+          },
+          "Daniel/hey_willow": {
+            "clips": 2,
+            "hits": 0
+          },
+          "Samantha/hey_willow": {
+            "clips": 2,
+            "hits": 0
+          },
+          "Samantha/hey_nyx": {
+            "clips": 2,
+            "hits": 2
+          }
+        },
+        "reused_background": null,
+        "original_binary40_changes": []
+      }
+    }
+  }
+}
