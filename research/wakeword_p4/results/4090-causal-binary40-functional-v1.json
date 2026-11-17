@@ -1,0 +1,58 @@
+{
+  "schema": "causal-binary40-functional-v1",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch_version": "2.15.0+cu132",
+  "geometry": {
+    "input_channels": 40,
+    "channels": 64,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      10
+    ],
+    "feature_stride": 3,
+    "stem_phase_feature_index": 0,
+    "receptive_field_frames": 306,
+    "right_context_frames": 0,
+    "state_elements": 6544,
+    "conv_mac_per_call": 29888
+  },
+  "parameters": 30593,
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/check_causal_binary40_v1.py": "a89c9adb13a92a22f63a337309b2defa16246da076acbb48fe561f9b457d37de",
+    "research/wakeword_p4/training/causal_binary40_v1.py": "45ffefe9f27902e0991c58a65aa90c5e13bbe68639046b39215f879cdb111c10"
+  },
+  "chunk_checks": [
+    {
+      "host_chunk_frames": 3,
+      "max_abs_error": 0.0,
+      "outputs": 282
+    },
+    {
+      "host_chunk_frames": 6,
+      "max_abs_error": 0.0,
+      "outputs": 282
+    },
+    {
+      "host_chunk_frames": 37,
+      "max_abs_error": 0.0,
+      "outputs": 282
+    },
+    {
+      "host_chunk_frames": 128,
+      "max_abs_error": 0.0,
+      "outputs": 282
+    },
+    {
+      "host_chunk_frames": 846,
+      "max_abs_error": 0.0,
+      "outputs": 282
+    }
+  ],
+  "future_perturbation_prior141_outputs_exact": true,
+  "gradient_parameters_finite": true,
+  "analytic_loss": 0.6549278497695923,
+  "limitations": "Random untrained CUDA function only; no optimizer updates, audio, accuracy, INT8/export, P4 or human claims. Full/chunk parity does not prove training startup equals physical primed audio. Same306-frame span does not mean same learned function as C161."
+}
