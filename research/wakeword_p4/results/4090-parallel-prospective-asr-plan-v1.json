@@ -1,0 +1,789 @@
+{
+  "schema": "parallel-prospective-asr-plan-v1",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/transcribe_parallel_prospective_language_v1.py": "b71ed0ae56710bdc4e4b6b3cc0a864b1a7d783d47e836931abaf01ecd665a07a",
+    "research/wakeword_p4/training/gpu_python.py": "ba91f202efe4895f09ea71fae5bdec9456a7ed7d30d2cda60af8c07492c8f0b2",
+    "research/wakeword_p4/results/4090-parallel-prospective-replay-plan-v1.json": "4ef4c3b7a191dae0e62c04e02d79acb281f68da8a86d02682aa9b9208d24917e",
+    ".local/wakeword/whisper-small-en/model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    ".local/wakeword/whisper-small-en/config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    ".local/wakeword/whisper-small-en/tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    ".local/wakeword/whisper-small-en/vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf",
+    ".local/wakeword/parallel-prospective-language-v1/000-16k.wav": "b48dd286b9da6317c9c687a03bfd40ef268c354a004629f92668bd6367711be7",
+    ".local/wakeword/parallel-prospective-language-v1/001-16k.wav": "ae963ae13d0a496c3a53ee5a80a9d8ce8a919d0fc878362fbb41b1f5bdfee141",
+    ".local/wakeword/parallel-prospective-language-v1/002-16k.wav": "878c549ad7890b184e7d682ddf6d9d91398dd3792b949abfb2e652738a0d334b",
+    ".local/wakeword/parallel-prospective-language-v1/003-16k.wav": "bf31e50ecfb3d5d093e5094b65661b46596c9f30af04bf49bd6a811bbeecf58b",
+    ".local/wakeword/parallel-prospective-language-v1/004-16k.wav": "25364e1800ffb637929fab45f3b792031d72ff1b6b9e7a6fb8f63efa5f1fcdcf",
+    ".local/wakeword/parallel-prospective-language-v1/005-16k.wav": "13cb542aaefb45f248c79ddb9470081ddadce25cc9ba2236d8e5dd8f6c4079c1",
+    ".local/wakeword/parallel-prospective-language-v1/006-16k.wav": "524a3e62e571760a8467b1c03a0f14b9f21f3dbbb396b55354663e899970eb07",
+    ".local/wakeword/parallel-prospective-language-v1/007-16k.wav": "35630e6727705fdf768699fe4d4259901ebbc9126f6da095600345d72307a572",
+    ".local/wakeword/parallel-prospective-language-v1/008-16k.wav": "74f531f3f8bf264fe26f91aa3a5aec82ec0ddaed1823847cef4f335c20e33a81",
+    ".local/wakeword/parallel-prospective-language-v1/009-16k.wav": "4b6e884daa4518c035f8c8b07dcb93791500ef08e71604cd6688fece5ac7dcf2",
+    ".local/wakeword/parallel-prospective-language-v1/010-16k.wav": "7b137c5b40f6f3ed28dbd3bedef5fb348f354df8f763e311d2c52b2b5fcf0731",
+    ".local/wakeword/parallel-prospective-language-v1/011-16k.wav": "66aaf7f52276d1b1460a558bc18c7063ad133f86095f8e9eb459e8a116f6dddb",
+    ".local/wakeword/parallel-prospective-language-v1/012-16k.wav": "a6a42cac112aa9527deb045a9c61a57b581657d768adaf130f60711fff58d4ae",
+    ".local/wakeword/parallel-prospective-language-v1/013-16k.wav": "7f00aadca8c3d932851a1cad31472b4bc7298a5b81001754334aca12e9209022",
+    ".local/wakeword/parallel-prospective-language-v1/014-16k.wav": "04748d0269d083c1a9a4ec0262aaa24751542c1ee0fd5d7b983e2cfa6e7947bd",
+    ".local/wakeword/parallel-prospective-language-v1/015-16k.wav": "95e0a4cdbb574376f67da0994a3a199e9c969c191ea4362a6079b98360b101d3",
+    ".local/wakeword/parallel-prospective-language-v1/016-16k.wav": "f5135680a5f9f9a7be4559ed4e431683c5bb6b33681550c828b17707ecdcc677",
+    ".local/wakeword/parallel-prospective-language-v1/017-16k.wav": "bb4acadf85048e3ba9e6025c5d35a34847edc7d4502b2ea648031cf0d52cd871",
+    ".local/wakeword/parallel-prospective-language-v1/018-16k.wav": "eaa79895e90ee9e7ae3833cc7369faa3c3c2fcbfc5a70bcba824c6ff7adafcde",
+    ".local/wakeword/parallel-prospective-language-v1/019-16k.wav": "fa6845d3ce794925c9d18d27f7361a169859b28ad8d1cb49115ccc53423bf53f",
+    ".local/wakeword/parallel-prospective-language-v1/020-16k.wav": "51dad70aba651897a852633d34930c2282a492210e074094b63750c7b07efabe",
+    ".local/wakeword/parallel-prospective-language-v1/021-16k.wav": "f3e5e12fa0b38b07cf0182ca84367de072d8c5c50bb55713e67b1bd9b25f1949",
+    ".local/wakeword/parallel-prospective-language-v1/022-16k.wav": "2e916b861fd0d175dbbdf78d9ea415b9d57a5c9561137db2b418b76c87d8c856",
+    ".local/wakeword/parallel-prospective-language-v1/023-16k.wav": "2abb545d36b0267b4ef92fdbede15ba94fedeb3854f61fdb4e418ad6b26fefea",
+    ".local/wakeword/parallel-prospective-language-v1/024-16k.wav": "39a635d1037826e768867efd4919c8a531d9a8a9c6208e677945706f766ebb26",
+    ".local/wakeword/parallel-prospective-language-v1/025-16k.wav": "b7750ecad28d479e36b82d0b8e7bf01fd021e684003f5a3961c877155ad1525e",
+    ".local/wakeword/parallel-prospective-language-v1/026-16k.wav": "15f3a668e3cd1be4a900fc4317841f50ba34b90522c1e722878c8cf1d9e88f57",
+    ".local/wakeword/parallel-prospective-language-v1/027-16k.wav": "f20e20f12c61c2490e7eea324da7f9cced1ece9c7acdb6a98560556133198a56",
+    ".local/wakeword/parallel-prospective-language-v1/028-16k.wav": "3794279a2927f11adc8efe0cae53de1abfc47b0d2547ed5e7ef448856b77c2de",
+    ".local/wakeword/parallel-prospective-language-v1/029-16k.wav": "ab0474be615345c09c1200209bb9b80151685472524a70127ce0a1e66e9a6b9d",
+    ".local/wakeword/parallel-prospective-language-v1/030-16k.wav": "feabac257712534521d4659b8d02f45c6f8fa8a06ff968a82c4038a745a370e9",
+    ".local/wakeword/parallel-prospective-language-v1/031-16k.wav": "4bb1d4e9201a1a574a1c22078bbb89b650f9be9488a5bfa058cfd7c5b6a3c9b8",
+    ".local/wakeword/parallel-prospective-language-v1/032-16k.wav": "a0e69340b2124069649bf4130e6f20eaaaaa833f6a4af70a9bc5069be6930f9f",
+    ".local/wakeword/parallel-prospective-language-v1/033-16k.wav": "bd9fc3dc7f48a8d8225e3f597d6ff3c8581492a174f248b1d61784fab9adac70",
+    ".local/wakeword/parallel-prospective-language-v1/034-16k.wav": "b84ddc9ba313f1ff54a3b5f9bcd88025cf44c100bc7e3d4185d60dad9c96d680",
+    ".local/wakeword/parallel-prospective-language-v1/035-16k.wav": "94fcb9c1884ccaf27b4d4dc824bd9dfd78b4f944a7ab3055f93801a9b3c36c21",
+    ".local/wakeword/parallel-prospective-language-v1/036-16k.wav": "5aa2542332d48f05c7255b54da7fb8c633d51a8ccc1e1a2778908bf484a246e2",
+    ".local/wakeword/parallel-prospective-language-v1/037-16k.wav": "a578a461a64452312d7f0b2c037c2d13c2ba7167af592d6d36f402d32b8ad78b",
+    ".local/wakeword/parallel-prospective-language-v1/038-16k.wav": "1fcd470b765806088632d9a7c9704280ef2713063db0a827c8805b465d72eaee",
+    ".local/wakeword/parallel-prospective-language-v1/039-16k.wav": "ca2b571c652594a13e8628e2c5441c6147ec1b01192b1f488cf3c8931f7bb758",
+    ".local/wakeword/parallel-prospective-language-v1/040-16k.wav": "6840059e89eca66a5f9132b4e418f6e38ee098b677664663b95d1adc1245c2e1",
+    ".local/wakeword/parallel-prospective-language-v1/041-16k.wav": "6f748d3c2ac3ab1be64b644352112c11cf4de52514c184c55077df1b196acb84",
+    ".local/wakeword/parallel-prospective-language-v1/042-16k.wav": "5bd2c23b7594af5c87ecdab1a452ffedbc6d146e65ac1053ef5dfda0200e088e",
+    ".local/wakeword/parallel-prospective-language-v1/043-16k.wav": "14d84d2b73f46e8b4e01bd9e109f94c588ccf6169ed58e90ba6e425701c7d85e",
+    ".local/wakeword/parallel-prospective-language-v1/044-16k.wav": "34bc3edf25b8bd57eae1ff6c0d072856d464658348613f49404799b5bcea4ed8",
+    ".local/wakeword/parallel-prospective-language-v1/045-16k.wav": "09d0204016521a176e152b9b43c7b4e7356fbe6373ef872f1223a2830f4bfb78",
+    ".local/wakeword/parallel-prospective-language-v1/046-16k.wav": "f707fc27ecec2c477c7d81315c87296270c6eb9680052f3bcf7832b707046d5e",
+    ".local/wakeword/parallel-prospective-language-v1/047-16k.wav": "faf5aeb3884a98512651964de9974d9e41623478da2e461900fd5174d2cad762"
+  },
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.5",
+    "numpy": "2.4.6",
+    "soundfile": "0.14.0"
+  },
+  "rows": [
+    {
+      "index": 0,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, could you switch off the study lamp?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/000-16k.wav"
+    },
+    {
+      "index": 1,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/001-16k.wav"
+    },
+    {
+      "index": 2,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, is there any rain expected this afternoon?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/002-16k.wav"
+    },
+    {
+      "index": 3,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, lower the music so I can answer the phone.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/003-16k.wav"
+    },
+    {
+      "index": 4,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/004-16k.wav"
+    },
+    {
+      "index": 5,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, put milk and apples on my shopping list.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/005-16k.wav"
+    },
+    {
+      "index": 6,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/006-16k.wav"
+    },
+    {
+      "index": 7,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/007-16k.wav"
+    },
+    {
+      "index": 8,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, pause the television for a moment please.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/008-16k.wav"
+    },
+    {
+      "index": 9,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, make the room a little warmer before bedtime.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/009-16k.wav"
+    },
+    {
+      "index": 10,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, cancel the reminder about the laundry.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/010-16k.wav"
+    },
+    {
+      "index": 11,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "nyx_connected_command",
+        "text": "Hey Nicks, do I have any appointments after lunch?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/011-16k.wav"
+    },
+    {
+      "index": 12,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/012-16k.wav"
+    },
+    {
+      "index": 13,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "Could you move your bag so that I can sit beside the window?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/013-16k.wav"
+    },
+    {
+      "index": 14,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "We have already eaten, so please do not wait for us.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/014-16k.wav"
+    },
+    {
+      "index": 15,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "She said the shop closes early on Sundays.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/015-16k.wav"
+    },
+    {
+      "index": 16,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "There is a little more soup in the pot if you are still hungry.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/016-16k.wav"
+    },
+    {
+      "index": 17,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/017-16k.wav"
+    },
+    {
+      "index": 18,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "The children would rather stay indoors until the rain stops.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/018-16k.wav"
+    },
+    {
+      "index": 19,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_conversation",
+        "text": "Let me finish this message before we leave for the station.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/019-16k.wav"
+    },
+    {
+      "index": 20,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "After the next announcement, we should know which platform to use.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/020-16k.wav"
+    },
+    {
+      "index": 21,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "I was hoping to visit next month, if the trains are running.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/021-16k.wav"
+    },
+    {
+      "index": 22,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "You need to mix it slowly or the sauce will become lumpy.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/022-16k.wav"
+    },
+    {
+      "index": 23,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "This playlist has a mixture of old songs and newer recordings.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/023-16k.wav"
+    },
+    {
+      "index": 24,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "There are six people waiting outside and another two on the stairs.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/024-16k.wav"
+    },
+    {
+      "index": 25,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "The price was sixty pounds, including delivery.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/025-16k.wav"
+    },
+    {
+      "index": 26,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "I found a nice little cafe near the museum yesterday.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/026-16k.wav"
+    },
+    {
+      "index": 27,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_common_words",
+        "text": "That fixes the problem with the kitchen cupboard.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/027-16k.wav"
+    },
+    {
+      "index": 28,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "Would you leave a small light on in the kitchen tonight?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/028-16k.wav"
+    },
+    {
+      "index": 29,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "The timer should ring just before the potatoes are ready.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/029-16k.wav"
+    },
+    {
+      "index": 30,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "I turned the bedroom speaker down because the baby was asleep.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/030-16k.wav"
+    },
+    {
+      "index": 31,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "Please check whether the back door is locked before you go upstairs.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/031-16k.wav"
+    },
+    {
+      "index": 32,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "The washing machine has finished, but the clothes are still wet.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/032-16k.wav"
+    },
+    {
+      "index": 33,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "We can open the windows once the traffic has settled down.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/033-16k.wav"
+    },
+    {
+      "index": 34,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "I will call you when the kettle starts boiling.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/034-16k.wav"
+    },
+    {
+      "index": 35,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_household",
+        "text": "Please put the remote control back beside the sofa.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/035-16k.wav"
+    },
+    {
+      "index": 36,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nick, could you switch off the study lamp?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/036-16k.wav"
+    },
+    {
+      "index": 37,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/037-16k.wav"
+    },
+    {
+      "index": 38,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nick, is there any rain expected this afternoon?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/038-16k.wav"
+    },
+    {
+      "index": 39,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nick, lower the music so I can answer the phone.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/039-16k.wav"
+    },
+    {
+      "index": 40,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Nick, did you remember to bring the charger from the car?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/040-16k.wav"
+    },
+    {
+      "index": 41,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "I spoke to Nick yesterday and he is feeling much better.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/041-16k.wav"
+    },
+    {
+      "index": 42,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nicky, your breakfast is getting cold.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/042-16k.wav"
+    },
+    {
+      "index": 43,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Alex, would you mind answering the door?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/043-16k.wav"
+    },
+    {
+      "index": 44,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Mike, I think you left your coat in the hallway.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/044-16k.wav"
+    },
+    {
+      "index": 45,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/045-16k.wav"
+    },
+    {
+      "index": 46,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Max, can you carry the other bag upstairs?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/046-16k.wav"
+    },
+    {
+      "index": 47,
+      "request": {
+        "role": "prospective-targeted-development-not-acceptance",
+        "voice": "turbo-builtin-default-already-consumed",
+        "group": "ordinary_name_address",
+        "text": "Hey Nicole, are we still meeting outside the cinema?",
+        "seed": 731,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2
+      },
+      "wav": ".local/wakeword/parallel-prospective-language-v1/047-16k.wav"
+    }
+  ],
+  "policy": "Existing pinned Whisper small.en CUDAfloat16,CPUthreads2,beam3,temperature0,English,no prompt/VAD/previous-text conditioning; full48waveforms once in original order, save all text/segments/word estimates. No rerender/relabel/filter/selection based on ASR or wake scores. Intended text and ASR are not phonetic truth. No new models, acceptance access or training."
+}
