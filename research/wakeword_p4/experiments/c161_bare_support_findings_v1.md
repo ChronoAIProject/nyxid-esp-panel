@@ -22,3 +22,7 @@ USother synthetic/nearword containers38/180 vsdaily47/mixed44/C16138; British14/
 ## Legacy complete consumed coverage
 
 Legacy372 replay/score actualexit0; all376archive members verified, all4arms savedUINT8 rescored. Targets36/36(bare9/9,commands27/27), same mixed/daily, vsC16135/36(commands26/27). Other synthetic/common_negative containers6/252 vsdaily/mixed8,C1614. Willow0/36,HiESP0/36 for all4. Reused10.483944826h background0events each, not new/additive exposure. Candidate retains Legacy positive gains while reducing2other-word containers vsdaily, but this does not offset all other-cohort normal-hit losses automatically or qualify replacement. Jenny/Joe/Mac/trainingfit remain pending.
+
+## Jenny complete consumed coverage
+
+Jenny408 replay/score actualexit0; all412archive members size/SHA verified, all4arms UINT8 events rescored. Target33/36(bare9/9,commands24/27), sameC161, one time-command lost vsdaily/mixed34/36(commands25/27). No target gains vsdaily/mixed in this cohort. Other synthetic/reciprocal containers58/360 vsdaily65/mixed60/C16144; diagnostic families, not daily false-alarm frequency or a zero gate. Reduced other-word count does not automatically compensate for lost command. Reused9.614419583h background0events all4, no new exposure. Joe/Mac/trainingfit pending, C161 baseline retained.
