@@ -1,0 +1,41 @@
+{
+  "schema": "binary40-shorter-span-training-review-v1",
+  "reviewer_sha256": "200b4d34678f189ac8758bbc2fd31f8a90af8325899abf2708acdcecd610bc05",
+  "plan_sha256": "a3e70c0d7388709c414ed6b10d8366015b372f7143acdb59a22701fe53eb1258",
+  "terminal_receipts": [
+    {
+      "arm": "control",
+      "pid": 2684888,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-shorter-span-continuation-v1/train-control.log",
+      "log_sha256": "f6d2a3cfdac9044bda8cb99c1efa0a6542c15e0e25351e3d8310ee26fdf98414"
+    },
+    {
+      "arm": "shortspan",
+      "pid": 2704527,
+      "exit_code": 0,
+      "log": ".local/wakeword/binary40-shorter-span-continuation-v1/train-shortspan.log",
+      "log_sha256": "be1dae597954595eb4f370c111ee6a47da6ee44de3b559a11e363e2bf5450eee"
+    }
+  ],
+  "reports": {
+    "control": {
+      "path": "research/wakeword_p4/results/4090-binary40-shorter-span-control-training-original-v1.json",
+      "sha256": "bb0ec2a090206d261ae935a66a1f9cd41135e1dc9979477016119fc3839805f8",
+      "final_sha256": "bc5ee5562639e9f13178498a424e797dfa335aaa95a95be91b05ccac518266d6"
+    },
+    "shortspan": {
+      "path": "research/wakeword_p4/results/4090-binary40-shorter-span-shortspan-training-original-v1.json",
+      "sha256": "da3cb028b4d5812382c43a9ba4d1424b04ab8c3e8cfae3afc4f4c4c10688ed0a",
+      "final_sha256": "94c5889983bcdec9094aa04347a33669f9bdf4b5f583765ad42bcf51fd6c23af"
+    }
+  },
+  "every_batch_identical_to_original": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": 2560000,
+  "initial_control_exact": true,
+  "same_initial_parameter_tensors_exact": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
