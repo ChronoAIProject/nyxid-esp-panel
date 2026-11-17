@@ -1,0 +1,9 @@
+# Shorter-span changed-positive strata
+
+Complete saved-source census4533c2ee and its SHA-bound target-strata report show the treatment's losses are not confined to noisy rendered variants. Legacy loses6 positives:1 light and5 timer, including variant0 once and both0.9/1.1 length scales. Jenny loses4 positives across bare/light/timer, including variant0 once. MeloBR loses13 and gains1: losses span bare5/light5/time3 and variants0/1/2 =4/6/3, speeds0.9/1.0/1.1 =6/6/1. MeloUS gains3 without target losses. Joe loses9/gains5 with carrier metadata unavailable; preserve that missing classification.
+
+These are counts of changed rows, not rates conditioned on variant or speed. Rendered variants of one source are related observations. Variant0 losses establish that a noisy-variant-only account is insufficient; the strata do not identify phonetic duration, frontend adaptation, optimization or INT8 as the cause. Prior training-window fit within234frames does not guarantee unseen phonetic/context support.
+
+Continuous target changes are builtin gains text_index7/9/11, US gain6, BR losses0/2/8/10. No extra expert or event union is proposed from this finite complementarity. Unchanged C161 and existing frozen optional triple remain the handoff baseline/candidates.
+
+Next mechanism question: are the shortspan-versus-control losses already present in each final float checkpoint under the identical physical frontend/prime and fixed decoder, or introduced by final INT8 export? Before running, bind both exact checkpoints, all original consumed scope and complete float/INT8 comparisons in a separate diagnostic plan, accounting for the earlier original-Binary40 float audit. This is analysis of a new architecture pair, not permission to rerun historical QAT, alter calibration/thresholds, or train on consumed clips. No new gradients are selected by this report. Mac/P4 runtime integration remains independently necessary.
