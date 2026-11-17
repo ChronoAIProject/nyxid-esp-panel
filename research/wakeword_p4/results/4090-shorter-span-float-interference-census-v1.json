@@ -1,0 +1,193 @@
+{
+  "schema": "shorter-span-float-interference-census-v1",
+  "arms": {
+    "control": {
+      "source_report_sha256": "f7e579ac27bd706f1bc26929d9777e14f475d4d8ca920adefb7a1e36a26e0f0c",
+      "groups": {
+        "daily": {
+          "streams": 96,
+          "events": {
+            "float": 1,
+            "int8": 1
+          },
+          "event_sources": [
+            {
+              "index": 75,
+              "source": {
+                "role": "development-only",
+                "voice": "turbo-builtin-default",
+                "group": "name_address",
+                "text": "Hey Nick, what time is it?",
+                "seed": 726,
+                "temperature": 0.8,
+                "top_p": 0.95,
+                "top_k": 1000,
+                "repetition_penalty": 1.2
+              },
+              "events": {
+                "float": [
+                  {
+                    "step": 198,
+                    "relative_sample": 13920
+                  }
+                ],
+                "int8": [
+                  {
+                    "step": 198,
+                    "relative_sample": 13920
+                  }
+                ]
+              },
+              "trace": {
+                "path": ".local/wakeword/shorter-span-float-v1/control/daily-synthetic-75.npz",
+                "sha256": "373533c10ca5be981277a023c32548a9ffc96be07f171cf32c3d5cd924c56563",
+                "bytes": 1876
+              }
+            }
+          ]
+        },
+        "primed": {
+          "streams": 12,
+          "events": {
+            "float": 0,
+            "int8": 0
+          },
+          "event_sources": []
+        },
+        "jenny": {
+          "streams": 12,
+          "events": {
+            "float": 0,
+            "int8": 0
+          },
+          "event_sources": []
+        },
+        "melo": {
+          "streams": 42,
+          "events": {
+            "float": 1,
+            "int8": 1
+          },
+          "event_sources": [
+            {
+              "index": 447,
+              "source": {
+                "path": ".local/wakeword/prospective-background-whole-waveform-v1/wav/ppexo.wav",
+                "source_shard": "test-00004-of-00011.parquet",
+                "role": "prospective-development-negative-unscored",
+                "samples": 2854912,
+                "rate": 16000,
+                "seconds": 178.432,
+                "sha256": "af447fddb627348c61c8d463ddf4e2ff72ae277b9d5bd207ecc00eed69af021f",
+                "pcm_sha256": "cc94e505f7a980d688d0004dafbb95104a1642752ab98f63d4926309159eb314",
+                "annotation_times_valid": true,
+                "invalid_annotation_intervals": [],
+                "id": "vox-test45-15",
+                "phase": "background"
+              },
+              "events": {
+                "float": [
+                  {
+                    "step": 4311,
+                    "relative_sample": 1988160
+                  }
+                ],
+                "int8": [
+                  {
+                    "step": 4311,
+                    "relative_sample": 1988160
+                  }
+                ]
+              },
+              "trace": {
+                "path": ".local/wakeword/shorter-span-float-v1/control/melo-background-447.npz",
+                "sha256": "211d76e90fe5d2b752be974451d0053a9046b90b2c5f5ae183662b298b615671",
+                "bytes": 33399
+              }
+            }
+          ]
+        }
+      }
+    },
+    "shortspan": {
+      "source_report_sha256": "3a29a739c6f65e8d6ff93c6764501900a273d115ff9bbae0e4cf18e64975d05a",
+      "groups": {
+        "daily": {
+          "streams": 96,
+          "events": {
+            "float": 0,
+            "int8": 0
+          },
+          "event_sources": []
+        },
+        "primed": {
+          "streams": 12,
+          "events": {
+            "float": 0,
+            "int8": 0
+          },
+          "event_sources": []
+        },
+        "jenny": {
+          "streams": 12,
+          "events": {
+            "float": 0,
+            "int8": 0
+          },
+          "event_sources": []
+        },
+        "melo": {
+          "streams": 42,
+          "events": {
+            "float": 1,
+            "int8": 1
+          },
+          "event_sources": [
+            {
+              "index": 471,
+              "source": {
+                "path": ".local/wakeword/prospective-background-whole-waveform-v1/wav/ofbxh.wav",
+                "source_shard": "test-00005-of-00011.parquet",
+                "role": "prospective-development-negative-unscored",
+                "samples": 19201024,
+                "rate": 16000,
+                "seconds": 1200.064,
+                "sha256": "995062c494eb4fed02c5758215a57210602901e51768f6b51ad19cd47e278625",
+                "pcm_sha256": "322813761ee32a567869ea8d342bc25b629bfc21bed2abbfd958871ab7c04681",
+                "annotation_times_valid": false,
+                "invalid_annotation_intervals": [
+                  [
+                    1185.44,
+                    1200.1200000000001
+                  ]
+                ],
+                "id": "vox-test45-39",
+                "phase": "background"
+              },
+              "events": {
+                "float": [
+                  {
+                    "step": 26822,
+                    "relative_sample": 12793440
+                  }
+                ],
+                "int8": [
+                  {
+                    "step": 26822,
+                    "relative_sample": 12793440
+                  }
+                ]
+              },
+              "trace": {
+                "path": ".local/wakeword/shorter-span-float-v1/shortspan/melo-background-471.npz",
+                "sha256": "b046f46d7c64cdde4c811aad6047fc204c6e38e23033bdd91c9f8051cf2010db",
+                "bytes": 220846
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "limits": "Consumed96daily clips and full reused backgrounds; no pooled/additional independent exposure, human or P4 claim. Equal event counts do not imply equal event identity."
+}
