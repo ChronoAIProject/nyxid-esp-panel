@@ -167,6 +167,14 @@ partition layout needs a reviewed contract extension and physical acceptance.
 
 ## GPU delivery monitoring
 
+The [2026-11-18 existing-monitor reduction](research/stability-20261118-v1.json)
+preserves uninterrupted same-boot/firmware intervals of about 8.9 hours on rev1
+and 8.2 hours on LCD-X8. Internal/DMA free and largest-block memory were constant,
+with no retained-loss flags. Rev1 capture/wake counters advanced; LCD-X8 remained
+muted. Neither interval contained an active call, so this evidence does not
+qualify long-call, reconnect or active X8 audio stability. These intervals used
+the existing images, not the optional parallel research firmware.
+
 Continue the existing hourly job, Issue #18 and the
 `research-hye-nyx-voice-gpu` branch. Issue #13 is historical context only.
 Inspect useful deliveries and the development panels' stability state once per
