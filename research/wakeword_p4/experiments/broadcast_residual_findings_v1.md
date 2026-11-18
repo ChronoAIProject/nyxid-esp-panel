@@ -68,3 +68,23 @@ bare-transitions-review, and float-context original/review/evidence. Original
 reports remain unchanged. Do not rescue this trial with threshold, checkpoint,
 seed, calibration, or extra training; any subsequent hypothesis requires its own
 justification and protocol. C161 Mac/P4 usability requirements remain open.
+
+## Fixed two-training-batch internal profile
+
+Prelocked dc3d42a9, zero-update CUDA4090 profile of the first two original128-row
+Sampler726 batches completed actualexit0. Initial and final checkpoint weights
+remain bitwise unchanged after backward. All module gradients are finite.
+Final original BCE is0.10412/0.08902 versus initial2.46579/1.98879; mean
+positive-mask probabilities rise0.09523/0.10749→0.83882/0.83032, while
+negative-mask means fall0.06638/0.05441→0.00119/0.00100. This is not an
+all-constant classifier on these training batches, and means are not event hits.
+
+Some ReLU inputs have channels nonpositive over each entire sampled batch:
+final spectral.4 has6/32, temporal.3 and temporal.4 each8/32; initial temporal.0
+and temporal.4 each9/32. Stem/head retain nonzero gradients; final temporal.1
+has no zero gradient entries. These observations do not support a claim that
+all branches died during training, and do not prove normalization would fix the
+failure. Raw branch RMS and gradient norms are preserved in
+4090-broadcast-residual-fit-profile-original-v1.json. The two batches cannot
+establish global channel inactivity or causal attribution. No tuning or new
+training follows automatically from this profile.
