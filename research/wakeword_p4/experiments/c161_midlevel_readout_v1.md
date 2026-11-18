@@ -14,3 +14,24 @@ af_aoede 在静音条件下，从唤醒开始到命令首音素后 240 ms 的五
 ## 下一次训练
 
 在有声前文父模型上读取较早卷积层已缓存的 21 步、每步 60 维历史。一个新增的 12 单元全连接层学习区分训练分区内的正常及近似 Nyx、姓名和普通句。另一路把父模型的唤醒 logit 限制在约 −3 到 +3，合并数值后使用原 Logistic 和单 UINT8 输出。这样训练可对原本低分的唤醒加分。正常训练窗以合成器或训练原音已有对齐确定的词尾为依据，额外保护已有高分窗口，负例在整句中取当前最高五步和随机位置。固定训练终点后，沿用 235/256、五步平滑与 67 步冷却，核对跨声音收益、首词时钟以及姓名、数词和完整广播。先用内存中的训练特征和实际 INT8 图核对计算，再运行现有开发回放。
+
+## 单输出 INT8 的实测结果
+
+RTX 4090 使用 334 个正例流和 990 个负例流训练 650 步。模型大小 77496 B，SHA256 为 `217f1a10a31eef92a8ca0baf95f0c41f0bbf72ae2335071c96423d3a1d4cb331`。两条训练原音的完整流共 641 步，导出图与训练近似计算只在两个时间步相差一个 logit 量化单位；下列通知均取实际导出图。[训练与模型身份](../results/4090-c161-midlevel-training-v1.json)
+
+原单路 7/36、原双路 21/36 的连续命令，新图两种路径均为 35/36。唯一漏掉的是原来命中的 US 命令 0 “could you switch off the study lamp?”。旧四声音单路 5/12，新四声音单路 7/12，官方 Willow 分别为 9/12、12/12。Mac 的四条目标全部命中；Joe 从原单路 0/72 到 7/72，七条都是不同的干声原音渲染，六条裸词、一条连接命令，同时误触三条 “Hey Mix.” 和两条单说 “Nicks.”。单独播放的 Legacy/Jenny/Melo US/Melo BR 目标各 36 条，新图分别命中 34、20、16、15。原 C161 对应 35、33、33、21。[连续命令](../results/4090-c161-midlevel-context-v1.json) · [Joe](../results/4090-c161-midlevel-joe-v1.json) · [四声音](../results/4090-c161-midlevel-forward-v1.json)
+
+独立 BR Nicole、“six cups” 及 BR 匹配场景 0 的 Nick 前文没有误触。96 条独立日常句中 “Hey Nick, can you help me?” 和 “Hey Max, come over here.” 各触发一次。108 条连续普通句中，内置 Alex、内置 Max、US Max 共触发三次。完整 kajfh 广播仍在样本 13367040 通知。完整 ofbxh 广播在新的位置 12793920 通知，旧位置 5472960 已无通知。新窗口 3 秒和 8 秒的无提示转录分别含 “here. Please.” 和 “crime will disappear please Misha”。这是事件附近的转录。[日常句](../results/4090-c161-midlevel-daily-v1.json) · [广播与旧四声音](../results/4090-c161-midlevel-transfer-v1.json) · [广播转录](../results/4090-c161-midlevel-broadcast-asr-v1.json)
+
+## 只改变合成器的唤醒词时长
+
+在 GPU Kokoro 图的时长预测出口插入逐音素加法。对每个声音的每条相同文本重新合成五次，原图、加法全零、更换 Hey 的时长、更换 Nicks 的时长、两者均更换。af_aoede 与 bf_lily 互换，am_fenrir 与 am_eric 互换。保留每个原声音的条件向量、输入音素、标点、命令时长和真实聊天前文。每次从同一随机种子开启新解释器。十二组原图与全零操作的目标 PCM 全部逐字节相同；重置生成器使十二条原图重放与历史 WAV 的字节不同，本对照采用同一轮原图控制。全部 60 次合成均无削波。[逐条时长、峰值和通知](../results/4090-c161-wake-phone-duration-v1.json) · [合成目标原件](../results/4090-c161-wake-phone-duration-targets-v1.npz)
+
+| 较早卷积层模型，单路 /3 | 本音时长 | 只更换 Hey | 只更换 Nicks | 两者均更换 |
+| --- | ---: | ---: | ---: | ---: |
+| af_aoede | 0 | 0 | 2 | 3 |
+| am_eric | 3 | 3 | 2 | 3 |
+| bf_lily | 3 | 3 | 2 | 2 |
+| am_fenrir | 1 | 1 | 1 | 1 |
+
+af_aoede 的目标在换用较长的 bf_lily 音素时长后可以触发这个模型。原 C161 和上一轮正例保护模型在同一 15 条 af_aoede 重新合成的音频上都无主路通知。这支持下一次在训练分区内改变唤醒词内部节奏，同时安排 Alex、Max、Nick、Mix 和数词控制，仍以原始自然合成请求检验收益。
