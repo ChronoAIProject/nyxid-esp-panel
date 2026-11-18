@@ -54,3 +54,19 @@ P4 QEMU 运行按根目录依赖锁校验的 ESP-SR 库。原生 dl_fft 0.8.0 �
 三个通知都发生在截止样本 104448 的同一采集回调。此时 AGC 已交付到 104416（不含），回看缓存从样本 72416 起送入编码器。六次在编码前逐样本检查全部有效载荷及末尾补零。服务延迟增加 75 个起始静音包，积压峰值为 56000 样本（3.5 秒），三条命令首音素均保留在相同源帧。数字和近场的编解码附加延迟均为 103 样本，远场为 104 样本。远场 AGC 命令段的错误转写在编码后变为空。要求核对首词可懂度时，数字和近场都有前后转写可对照。[六次逐包与转写报告](../results/4090-c161-first-command-after-agc-opus-v5.json) · [原始 Opus 包和源时钟](../results/4090-c161-first-command-after-agc-opus-v5-uart.zip)
 
 从仓库根目录运行 `run_c161_after_agc_opus_v5.py prepare` 生成本地输入，再按本项目的 Opus 配置构建，设 `NYX_AGC_FIXTURES` 为 `.local/wakeword/c161-first-command-v5/after-agc-inputs` 的绝对路径，构建目录为同级 `after-agc-build`。随后运行该脚本的 `boot score`。基础 Opus 配置也重新构建并回放，六条原始输入的包字节和时间戳全部复现历史归档。[复现程序](../experiments/run_c161_after_agc_opus_v5.py)
+
+## 相同输入上的单麦降噪
+
+在已消费的四种合成声音、每种三句命令上，逐条校验 36 个完整输入的 PCM 哈希。两个降噪器都从录音第一样本处理到末尾，只评估送往语音识别的经处理信号；原 v5 检测仍使用原路径。ESP-SR 2.6.1 的 `ns_pro_create(10, 1, 16000)` 在原生 ESP32-P4 QEMU 上运行，10 ms 帧、中等抑制、单通道。36 次创建时可用堆均减少 40952 B；每条命令互相关估计延迟均为 96 样本（6 ms）。主机对照使用 DeepFilterNet v0.5.6 的发布可执行文件及其内置模型，逐条在单个 CPU 核心运行，补偿模型延迟。两者均用 4090 上同一 Whisper small.en、无提示词，识别等长的命令段。
+
+| 同一组 12 条 | 原始首词 / 全句 | ESP-SR 首词 / 全句 | DeepFilterNet 首词 / 全句 |
+| --- | ---: | ---: | ---: |
+| 数字 | 11 / 11 | 11 / 11 | 11 / 11 |
+| 近场 | 8 / 8 | 10 / 10 | 11 / 11 |
+| 远场，命令 −6.36 至 −0.46 dB | 0 / 0 | 0 / 0 | 1 / 0 |
+
+近场 ESP-SR 恢复了 af_aoede 的 “read” 和 am_eric 的 “start”。远场 DeepFilterNet 唯一首词正确的结果为 “Start the cheat time.”，目标是 “start the kitchen timer.”。这三个输入条件各含相同的 12 个命令实例、三种文本；单独的降噪实验从原始 WAV 开始。P4 实机整机的 AEC、AGC、Opus 和新增降噪一起运行的峰值内存与音质尚待测量。[P4 逐项报告](../results/4090-c161-v5-command-ns.json) · [P4 原始 UART](../results/4090-c161-v5-command-ns-uart.zip) · [DeepFilterNet 逐项报告](../results/4090-c161-v5-command-deepfilter.json) · [同一远场样本的降噪 WAV](../results/4090-c161-v5-command-deepfilter-far.wav)
+
+切分边界也影响 Whisper。bf_lily 的数字样本按标注切到第一个音素时输出 “my shopping list.”；给相同 PCM 前置 200 ms 静音，得到 “Read my shopping list.”。12 条数字源命令前置等长静音后均全句正确。该诊断只改变送入识别器的起始上下文。
+
+复现 P4 实验时沿用前端项目 ESP-SR 组件路径，用 `-DNYX_QEMU_NS=ON` 配置 `.local/wakeword/c161-first-command-v5/ns-build`，使用默认原生 FFT。每轮将三条录音写入研究 flash 镜像 2 MiB 以后的地址。主机实验按脚本中的 SHA256 校验发布文件，16 kHz 输入上采样到 48 kHz、增强后再返回 16 kHz。[P4 回放程序](../experiments/check_c161_v5_command_ns.py) · [发布模型对照](../experiments/check_c161_v5_command_deepfilter.py) · [DeepFilterNet v0.5.6](https://github.com/Rikorose/DeepFilterNet/releases/tag/v0.5.6)

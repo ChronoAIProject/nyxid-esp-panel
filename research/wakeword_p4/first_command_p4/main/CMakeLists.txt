@@ -8,8 +8,13 @@ foreach(channel IN ITEMS digital near far)
     list(APPEND waves "${results}/4090-c161-coded-cue-v5-command-${channel}.wav")
 endforeach()
 if(DEFINED ENV{NYX_SR_COMPONENT})
-    idf_component_register(SRCS "frontend.cpp" INCLUDE_DIRS "../../portable" "$ENV{NYX_SR_COMPONENT}/include/esp32p4"
-                           PRIV_REQUIRES espressif__dl_fft EMBED_FILES ${waves})
+    set(probe "frontend.cpp")
+    if(NYX_QEMU_NS)
+        set(probe "noise_suppression.cpp")
+        set(waves "")
+    endif()
+    idf_component_register(SRCS "${probe}" INCLUDE_DIRS "../../portable" "$ENV{NYX_SR_COMPONENT}/include/esp32p4"
+                           PRIV_REQUIRES espressif__dl_fft spi_flash EMBED_FILES ${waves})
     if(NYX_QEMU_REFERENCE_FFT)
         target_sources(${COMPONENT_LIB} PRIVATE "qemu_reference_fft.c")
         target_link_options(${COMPONENT_LIB} INTERFACE "-Wl,-u,__wrap_dl_fft2r_fc32_arp4_" "-Wl,-u,__wrap_dl_ifft2r_fc32_arp4_"

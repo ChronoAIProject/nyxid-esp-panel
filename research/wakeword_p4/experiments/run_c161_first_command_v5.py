@@ -21,7 +21,7 @@ LOG = WORK / "first-command-uart.log"
 STEM = "4090-c161-first-command-opus-v5"
 
 
-def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"FIRST_COMMAND PASS"):
+def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"FIRST_COMMAND PASS", flash_payload=None):
     images = read(build / "flasher_args.json")["flash_files"]
     flash = bytearray(b"\xff" * (4 << 20))
     for offset, name in images.items():
@@ -29,6 +29,11 @@ def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"
         data = (build / name).read_bytes()
         assert start + len(data) <= len(flash) and all(b == 255 for b in flash[start:start+len(data)])
         flash[start:start+len(data)] = data
+    if flash_payload is not None:
+        offset, payload = flash_payload
+        assert offset >= max(int(at, 16) + (build / name).stat().st_size for at, name in images.items())
+        assert offset + len(payload) <= len(flash)
+        flash[offset:offset+len(payload)] = payload
     image.write_bytes(flash)
     log.unlink(missing_ok=True)
     cmd = [str(QEMU), "-machine", "esp32p4", "-display", "none", "-serial", f"file:{log.resolve()}",
