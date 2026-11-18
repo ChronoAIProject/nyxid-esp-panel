@@ -22,3 +22,7 @@ Complete connected contexts (12targets each), C161→cross-engine: builtin5→11
 Reused backgrounds: Legacy10.483944826h, Jenny9.614419583h, Melo7.902862222h: both C161/candidate0events in each source. No new background exposure; never pool these hours with earlier runs. No P4 recognition, resource, realtime, first-command or stability qualification follows from host replay.
 
 Next: retain original model and raw context traces for diagnosis/Mac review, and investigate whether the BR bare/context misses precede quantization using a separately locked zero-update float diagnostic. Do not tune thresholds, oversample the failed consumed BR clips or repeat this recipe with a rescued seed/checkpoint. C161 and existing Mac firmware handoffs remain the baseline.
+
+## Locked float context attribution
+
+Plan de778cd6; GPU4090 original inference and independent saved event/archive review both actual exit0, zero updates. All144 context clip decisions match float/INT8 exactly: target builtin11/11, US12/12, BR3/3 out of12 each. US common-name collision persists in both; other ordinary groups remain0. Thus BR continuous-context misses and this name collision precede quantization. This scope does not explain isolated BR bare/timer misses, Joe or background behavior. No calibration/QAT rescue is justified by these context results; original reports and four-member evidence archive are preserved.
