@@ -1,0 +1,40 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "seed": 726,
+  "optimizer_updates": 0,
+  "full_chunk_max_error": 0.0,
+  "state_max_error": 0.0,
+  "all_gradients_finite": true,
+  "weights_unchanged": true,
+  "prototype": {
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      10
+    ],
+    "parameters": 33281,
+    "receptive_field_frames": 306,
+    "state_elements": 6544,
+    "conv_mac_per_call": 34848,
+    "right_context_frames": 0,
+    "stem": "8 local maps, frequency kernel5/stride2, flatten160 to64 projection"
+  },
+  "original": {
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      10
+    ],
+    "parameters": 30593,
+    "receptive_field_frames": 306,
+    "state_elements": 6544,
+    "conv_mac_per_call": 29888,
+    "right_context_frames": 0
+  },
+  "source_sha256": "cc4db4928453804a2d1db54d8ceae833f116ccdc81f7bb9752bc416db053b440",
+  "limits": "Random input CUDA mechanical preflight only, not training, speech recognition, INT8 export or P4 resource evidence. Ordered frontend channels must be validated against the pinned frontend before training; locality is a hypothesis."
+}
