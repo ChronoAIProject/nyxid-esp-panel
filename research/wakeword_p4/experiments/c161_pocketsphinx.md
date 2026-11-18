@@ -20,4 +20,32 @@
 
 从发行字典提取原始两行发音后为 25 字节。24 段正负语流中，使用两词字典的原生解码器有无模型文件内存映射，逐条返回的短语、起止帧、首次报告时钟和分数均与发布字典一致。独立 Linux 主机进程中，从解码器初始化前到回放结束的 Private_Dirty 增量，完整字典为 24960 KiB，两词字典配合映射为 3244 KiB，关闭映射为 8104 KiB。这里是两个时点的内存增量，硬件、分配器和闪存路径会影响 P4 结果。两词字典仍需英语声学参数。[逐进程内存、CPU 和返回值](../results/4090-c161-pocketsphinx-dictionary-v1.json)
 
-下一组在全部设置冻结后生成四段新连续对话，声音固定为 af_nova、af_jessica、am_santa、bm_lewis，均来自已有训练声音清单。每种声音使用相同的两个新载句，开头各用 Hey Nicks、Hey Willow、Hey Nick 和 Hey Max，另有两句普通话作为对照。原速生成完整句，按固定随机顺序接成自然间隔的连续流。使用原 C161、官方 wn9_heywillow_tts 默认配置、PocketSphinx 默认及训练源标定配置，按各自适用的目标和返回样本比较。
+下一组在全部设置冻结后生成四段新连续对话，声音固定为 af_nova、af_jessica、am_santa、bm_lewis，均来自已有训练声音清单。每种声音使用相同的两个新载句，开头各用 Hey Nicks、Hey Willow、Hey Nick 和 Hey Max，另有两句日常英语作为对照。原速生成完整句，按固定随机顺序接成自然间隔的连续流。使用原 C161、官方 wn9_heywillow_tts 默认配置、PocketSphinx 默认及训练源标定配置，按各自适用的目标和返回样本比较。
+
+## 四段新对话与原速首句
+
+四个训练清单内声音各合成一段十句连续对话。两句新命令为 “set a reminder for my bus” 和 “raise the screen brightness”。每个地址词各有八句，另外八句为日常英语。按通知时钟落在各句的左闭右开区间计数，同一句最多计一次。所有路径在句间空隙均为零通知。
+
+| 监听路径 | Hey Nicks /8 | Hey Willow /8 | Hey Nick /8 | Hey Max /8 | 日常句 /8 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 原 C161 | 2 | 0 | 0 | 0 | 0 |
+| 官方 wn9_heywillow_tts，默认阈值 | 0 | 8 | 0 | 0 | 0 |
+| PocketSphinx 默认，直接监听 | 7 | 0 | 5 | 0 | 7 |
+| PocketSphinx 标定，直接监听 | 7 | 0 | 3 | 0 | 3 |
+| 原 C161 加词分类器提议、默认短语确认 | 6 | 0 | 0 | 0 | 0 |
+| 原 C161 加词分类器提议、标定短语确认 | 5 | 0 | 0 | 0 | 0 |
+
+标定直听误触包含 “The next bus leaves in five minutes.” 一次和 “Please mix the two colors before lunch.” 两次。标定组合在 af_nova、af_jessica、am_santa、bm_lewis 各命中 2、0、2、1 句。四段新流的句子和顺序相同，只提供这两个载句上的配对证据。[原速 WAV](../results/4090-c161-pocketsphinx-willow-wav.zip) · [句子和采样区间](../results/4090-c161-pocketsphinx-willow-plan.json) · [官方原始返回](../results/4090-c161-pocketsphinx-willow-official-v1.zip) · [原 C161 分数](../results/4090-c161-pocketsphinx-willow-scores-v1.npz) · [双方通知](../results/4090-c161-pocketsphinx-willow-v1.json) · [短语匹配和逐次提议](../results/4090-c161-pocketsphinx-willow-lexical.json)
+
+旧四声音每个声音依次说 lower、start、read 三条命令。从目标起点到首个命令音素后 300 ms，取前级词分类器连续五步 UINT8 输出和的最高值。通知门槛为 1175，理论最高 1275。af_aoede 三句依次为 235、160、88，am_fenrir 为 19、80、0，六个完整目标区间均零提议。am_eric、bf_lily 每句均达 1275，每句均有提议。这个差异在短语确认之前已经出现。[前级实际提议](../results/4090-c161-room-word-negatives-hard-replay-v1.json) · [逐步分数](../results/4090-c161-room-word-negatives-hard-replay-scores-v1.npz)
+
+以两条标定路径的首次通知为准，在下一个 160 样本交付边界起录，对同一份单声道 PCM 比较即时起录与回看 32000 样本。物理首音素按 Kokoro 时长标注判定。完整命令要求 RTX 4090 上无提示 Whisper small.en 的转写以全部预期命令词结尾，允许此前出现唤醒词。漏唤醒计在总请求分母中。此处回放到标注句尾，未覆盖实机端点检测。
+
+| 输入与路径 | 已通知 / 请求 | 即时保留首音素 | 即时完整命令 | 回看保留首音素 | 回看完整命令 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 旧四声音，直接 | 12/12 | 3/12 | 6/12 | 12/12 | 12/12 |
+| 旧四声音，组合 | 6/12 | 3/12 | 3/12 | 6/12 | 6/12 |
+| 新对话，直接 | 7/8 | 5/8 | 5/8 | 7/8 | 7/8 |
+| 新对话，组合 | 5/8 | 4/8 | 4/8 | 5/8 | 5/8 |
+
+新对话即时起录时，Whisper 在两条直接监听的录音中把 “set a reminder for my bus” 转写为 “a reminder for my bus”。在已有 Bot 回放中，标定的直接监听对普通回复有 9/48 条误触、对明确示范唤醒词有 6/8 条触发；标定组合依次为 0/48 和 4/8。标定组合在已有 28.001 小时背景的 203 次前级提议中确认一次，出现在 qajyo 广播的 “so many bags”。本轮 Mac 继续用原 C161 和固定 v5 做实机验证。[原速捕获和逐词转写](../results/4090-c161-pocketsphinx-first-command.json) · [Bot 及普通对话回放](../results/4090-c161-pocketsphinx-calibrated-v1.json)
