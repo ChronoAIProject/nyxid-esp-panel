@@ -1,0 +1,4691 @@
+{
+  "plan_sha256": "2d9260d842f4c514f370adf885bd6a8cf06e9cee9e17cf29080f1356c6dbed45",
+  "scores_sha256": "9fad742d043f4d1809e6a537271b628edfe021adbb034c31c081448000cde2b3",
+  "streams": [
+    {
+      "name": "builtin",
+      "events": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          },
+          {
+            "step": 673,
+            "relative_sample": 241920
+          },
+          {
+            "step": 2176,
+            "relative_sample": 963360
+          },
+          {
+            "step": 3180,
+            "relative_sample": 1445280
+          },
+          {
+            "step": 4576,
+            "relative_sample": 2115360
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 198,
+            "relative_sample": 13920
+          }
+        ],
+        "pair": [
+          {
+            "step": 198,
+            "relative_sample": 13920,
+            "model": "channel_bn"
+          },
+          {
+            "step": 673,
+            "relative_sample": 241920,
+            "model": "c161"
+          },
+          {
+            "step": 2176,
+            "relative_sample": 963360,
+            "model": "c161"
+          },
+          {
+            "step": 3180,
+            "relative_sample": 1445280,
+            "model": "c161"
+          },
+          {
+            "step": 4576,
+            "relative_sample": 2115360,
+            "model": "c161"
+          }
+        ]
+      },
+      "suppressed": [
+        {
+          "step": 201,
+          "relative_sample": 15360,
+          "model": "c161"
+        }
+      ],
+      "timing": {
+        "interleaved_inference_and_decoder_seconds": 0.8821935100131668,
+        "calls": 5958,
+        "quantized_input_sha256": {
+          "c161": "0ae064950224d4b90524c4282f4a87bf0aeee85009b9de234ec50c2a3c367c26",
+          "binary40": "862988df7e48e6c51d306bc1e055a7aa37300383c508b3bd19f09ced1cf76874"
+        }
+      }
+    },
+    {
+      "name": "melo-US",
+      "events": {
+        "c161": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          },
+          {
+            "step": 5099,
+            "relative_sample": 2366400
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 6326,
+            "relative_sample": 2955360
+          }
+        ],
+        "pair": [
+          {
+            "step": 211,
+            "relative_sample": 20160,
+            "model": "c161"
+          },
+          {
+            "step": 5099,
+            "relative_sample": 2366400,
+            "model": "c161"
+          },
+          {
+            "step": 6326,
+            "relative_sample": 2955360,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "suppressed": [],
+      "timing": {
+        "interleaved_inference_and_decoder_seconds": 0.9817186190048233,
+        "calls": 7411,
+        "quantized_input_sha256": {
+          "c161": "d15ea879d9555b9661c9903a8bc25202c27469b6f3755a28f15511f32ba44aae",
+          "binary40": "c0baa9c35732440f6794d1e06de43d5f5c2e69bca936434eaee37ced0dceb1b9"
+        }
+      }
+    },
+    {
+      "name": "melo-BR",
+      "events": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "suppressed": [],
+      "timing": {
+        "interleaved_inference_and_decoder_seconds": 0.8113344789890107,
+        "calls": 6308,
+        "quantized_input_sha256": {
+          "c161": "0fbc3dc247f2ecbf72d7ab324155a1eda71cd86a3bca0dd3595f32e1342e9683",
+          "binary40": "58759096a414f5b986717bc53f9739abe3442d7b11149294ab65b08d4ad1e099"
+        }
+      }
+    }
+  ],
+  "records": [
+    {
+      "stream": "builtin",
+      "index": 0,
+      "text": "Hey Nicks, could you switch off the study lamp?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "47bd9c778e55c356bf4c5a372c03f822208c2fd8caecd7ac437ca27ebce8f3fb",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 198,
+            "relative_sample": 13920
+          }
+        ],
+        "pair": [
+          {
+            "step": 198,
+            "relative_sample": 13920,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 201,
+          "relative_sample": 15360,
+          "model": "c161"
+        }
+      ],
+      "continuous": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 198,
+            "relative_sample": 13920
+          }
+        ],
+        "pair": [
+          {
+            "step": 198,
+            "relative_sample": 13920,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "continuous_clip_start": 0,
+      "continuous_clip_end": 41600,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039142968016676605,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "866143a116bef36c1dbcc59fb176986a3a681eea8b7ce1f0296855539a7991dd",
+          "binary40": "5551224b3bd12fd77b91be9cec8747eef95d1de2ea603a5493c92b323d6fb52c"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 12,
+      "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "73c867c278a16c55a1e3b099743cc8e457e8eaa7a03b3f84b6cae5cb007d1ce3",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 49600,
+      "continuous_clip_end": 107200,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04664774899720214,
+        "calls": 290,
+        "quantized_input_sha256": {
+          "c161": "7dcbdd79aaa244ec655ca350404e86f90e2adcfb7bc1de97ca1234d80ccddc25",
+          "binary40": "379e76bc495fb42e5c337621c156b0c2c1ee35dad2c7c20ef9df825748519d4b"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 13,
+      "text": "Could you move your bag so that I can sit beside the window?",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "2c8c8190b5db66f4d64fdfc79118f5688452bedb194889b58f677efae92b1e0f",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 115200,
+      "continuous_clip_end": 169600,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039672886981861666,
+        "calls": 283,
+        "quantized_input_sha256": {
+          "c161": "cffd087d2a6b47f49159deaae5996b0976c4d64ec161deb9f382d64ebb89ca57",
+          "binary40": "70b3be273ef7e7981bcae898de1f836eda1f793b279897e3564449f2cc36b489"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 36,
+      "text": "Hey Nick, could you switch off the study lamp?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "9b28fb1164988a2200ee8f5e5b7eb633821d2a0c6cc8746e82e7bc8b45244fdc",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 177600,
+      "continuous_clip_end": 217280,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03344436999759637,
+        "calls": 252,
+        "quantized_input_sha256": {
+          "c161": "e40dcb9fafbf4bb996658492dc74fcfad6ba818ccb722de2626262441c13fc83",
+          "binary40": "1ccdb9482d48c97d5f3dd5787df33d27480506a4987e98510001705ae4e62c27"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 1,
+      "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "55ca4eff1688b7aa848159df0ca461b54af9a1a3c069683a34d44896aaade0ec",
+      "isolated": {
+        "c161": [
+          {
+            "step": 202,
+            "relative_sample": 15840
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 202,
+            "relative_sample": 15840,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [
+          {
+            "step": 673,
+            "relative_sample": 241920
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 673,
+            "relative_sample": 241920,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 225280,
+      "continuous_clip_end": 288640,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04654736601514742,
+        "calls": 302,
+        "quantized_input_sha256": {
+          "c161": "e46c7e5b4b4736c9d9be4254271d2a83384da761543bd09a72ab3279ca3a9f1a",
+          "binary40": "6eeee756f2d00191e60c52c1365c2ab84b4262143e8053140488631b153b9522"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 14,
+      "text": "We have already eaten, so please do not wait for us.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "fc54c5c7d805aa06248e64a25361d7f3ffa4d36bc9acd58abb5065d2f30b4d3c",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 296640,
+      "continuous_clip_end": 345280,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03893101500580087,
+        "calls": 271,
+        "quantized_input_sha256": {
+          "c161": "aae696062ef9e354bc5ac74a90b9134962b75d0586ad832951f04b6947227959",
+          "binary40": "f66677448851750de00324c5e86d337a427595b9ffdae96669048baa7111ddb8"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 15,
+      "text": "She said the shop closes early on Sundays.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "b0b5b4e9fb70f04eb6ae445b2856d172d637596753274f4dd18f8b6ff95b767b",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 353280,
+      "continuous_clip_end": 394880,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.035123352019581944,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "911dd014c1bce018f9d4e63e913ed5296b1fc1c05ece3401bb3a2583ceef0c7f",
+          "binary40": "aff3f66b31b23a26bb49ec093a1737f148bc129d74117369e0467a6c68371d04"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 37,
+      "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "790feef9f1643691ff76aa74e915f7c2f953cfe3afd81f28793fffd32fe75f78",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 402880,
+      "continuous_clip_end": 456640,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.040473089000443,
+        "calls": 282,
+        "quantized_input_sha256": {
+          "c161": "9e36fe7240a9b264f8120839263784de9c449f88d86417dac02b4b67253e2744",
+          "binary40": "8fcb4b2bfd58bf73f890d60dfd9ee54996ba56dbda0b35a7aa94f4bbda34f7e7"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 2,
+      "text": "Hey Nicks, is there any rain expected this afternoon?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "0538972d0b7ef24b07c9a0a52bdaf23e2424f3457801cd084780b218ec30680d",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 201,
+            "relative_sample": 15360,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 464640,
+      "continuous_clip_end": 522880,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04026646798592992,
+        "calls": 291,
+        "quantized_input_sha256": {
+          "c161": "ead90ec16ea21812b134a3c7f17c7e799afa206941e912e9c5b7b541ce6884b7",
+          "binary40": "7154ef9003bee74fb554189679c6d5722c6f6ca0165e36c6c790dc5fffe5aa24"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 16,
+      "text": "There is a little more soup in the pot if you are still hungry.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "7c03023c97e17e269464dec2257b2d5d19445ee2d99c52472ecceb7504ac5988",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 530880,
+      "continuous_clip_end": 585920,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0400427260028664,
+        "calls": 284,
+        "quantized_input_sha256": {
+          "c161": "4cf8f1b6c872b0c434fdbfac2da90af5c4a223e03cfc93f26ae7a4439dfef0a6",
+          "binary40": "a563906ad2216a11267120aa2492fe6d97ac1499d3f8fa6fe4438ea0bb34988e"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 17,
+      "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "69a83bca2cfd0acc7dfeaf53ac3cb4525fb90e738a41005034f7b881f927ea8d",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 593920,
+      "continuous_clip_end": 656000,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03906914099934511,
+        "calls": 299,
+        "quantized_input_sha256": {
+          "c161": "6c478e2cdcb81fbfae0d62bc18464f189cc5475c92fc28dcfcc3619944f8a35b",
+          "binary40": "d1b200fdc3cfcaf562e39cf09663b75cca2322767fd2ebddd01a21babda3dcb9"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 38,
+      "text": "Hey Nick, is there any rain expected this afternoon?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "2ae99206d72dfd1bbc2554b1323fe5e74726bba35e8dddc7176ed0ae6f63cb64",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 664000,
+      "continuous_clip_end": 713280,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034350706002442166,
+        "calls": 272,
+        "quantized_input_sha256": {
+          "c161": "128a47b0dd3417ae75a67fc64f55d010647ba83b78c7059ed5e7b65a600126f5",
+          "binary40": "c11b07f80f419d361cc2aeb5f3170aee5b40e70aeae3af7fad82f1168c742662"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 3,
+      "text": "Hey Nicks, lower the music so I can answer the phone.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "102283725f0479bcec88bf6b44f39ee2d16d92c5534498a0ac8c7516cb8527d7",
+      "isolated": {
+        "c161": [
+          {
+            "step": 202,
+            "relative_sample": 15840
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 202,
+            "relative_sample": 15840,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 721280,
+      "continuous_clip_end": 769280,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038530204008566216,
+        "calls": 270,
+        "quantized_input_sha256": {
+          "c161": "736c3ca1110786e4b99c3218b2f1197b57c6b099d50c784543a411b25740b019",
+          "binary40": "3168648a8fb5da9109eba8e198754c1cdd9542027f800646a8cb2ff1eb382873"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 18,
+      "text": "The children would rather stay indoors until the rain stops.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "4f50264519aa0c5684e184b2de9bfb95328d5b70213b301608274e0d23c9ac64",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 777280,
+      "continuous_clip_end": 828480,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03630716001498513,
+        "calls": 276,
+        "quantized_input_sha256": {
+          "c161": "85da02cdb1a18817b0023ecf60f231a2662c11db83270bdfff9b691cb1c635e3",
+          "binary40": "a64a3c1561f0d5e0a573ab2f619abedd27f6888312a1905e5361c56c6d3a62a5"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 19,
+      "text": "Let me finish this message before we leave for the station.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "da2605664cd68a88890df640645403969c310cbaa17c375c069b2313019f0074",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 836480,
+      "continuous_clip_end": 881920,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034013180003967136,
+        "calls": 264,
+        "quantized_input_sha256": {
+          "c161": "f94688013f865be571cd625c0fa9d3246bd92eed9daa27cf8ad05bc5cb37b703",
+          "binary40": "0bb5e3980f33e3982e22ea9bb2c3d002f5316407f8a5105b512a20028b505a61"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 39,
+      "text": "Hey Nick, lower the music so I can answer the phone.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "f7895712d2319e5a389ad13b36bc73a2ae77bf71e0ed4f11c24352dfddc4eada",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 889920,
+      "continuous_clip_end": 939840,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03671214100904763,
+        "calls": 274,
+        "quantized_input_sha256": {
+          "c161": "d135a12378b20ead4249b9c3d4b99cc4dcd8cb65f46521e80e99c453ba6bdea0",
+          "binary40": "d6bfdfc3cb658e93b7e6f875843fe194c085ecf270e07d969340ef493930692e"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 4,
+      "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "748414cc830f17dd3613f29d61d400c6691976bc1a8d1007d7ecdaf73150bc30",
+      "isolated": {
+        "c161": [
+          {
+            "step": 200,
+            "relative_sample": 14880
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 200,
+            "relative_sample": 14880,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [
+          {
+            "step": 2176,
+            "relative_sample": 963360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 2176,
+            "relative_sample": 963360,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 947840,
+      "continuous_clip_end": 1004800,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036870098003419116,
+        "calls": 288,
+        "quantized_input_sha256": {
+          "c161": "7149c564f5541abbe92ede13855ea0c9bdd8adcc57f5442b31a4a295c500510b",
+          "binary40": "48cb5b558418b76468e9495608430d5114cdc3e006ade4d36b5b31631db1a14d"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 20,
+      "text": "After the next announcement, we should know which platform to use.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "2784440f76c78ae56adee1d410bb486e04735d76f67fad1d5e2b02e3f086a499",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1012800,
+      "continuous_clip_end": 1064640,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.037213725998299196,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "4f0184c136cc9ff7837edaf7719403acfcea7cea30ff85ad44110e272d809cd7",
+          "binary40": "0626c6ae543a7b60f6b4667039b4dc7872126d4d4b29f04c01c07150b134d8e0"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 21,
+      "text": "I was hoping to visit next month, if the trains are running.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "6e2aef42c34aee944af1f0e7571ed3b84bae9f00a9a80c5c73f143bf616e8d0b",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1072640,
+      "continuous_clip_end": 1123840,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03675930801546201,
+        "calls": 276,
+        "quantized_input_sha256": {
+          "c161": "9b532ff9740e0f4c784573039b7b938d1d1fa57263b42714a5add0e0ac04416a",
+          "binary40": "a8799242ab8e829d163c2d8c649d7a965955b4b483be1d5ec7ab42ff7ff68236"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 40,
+      "text": "Nick, did you remember to bring the charger from the car?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "93f0fffd0486de32b78125cde74ab0e7846b1fa19869988b97d2641d96ec0fc7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1131840,
+      "continuous_clip_end": 1177280,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034707740996964276,
+        "calls": 264,
+        "quantized_input_sha256": {
+          "c161": "422041f38bfe0620360aa42696aaa81a02173f120504dd3445423b71ff46ae2e",
+          "binary40": "30798bdf120d18bed2751890e9a938c037bf72506d49a762c8fe7fb91ca710d9"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 5,
+      "text": "Hey Nicks, put milk and apples on my shopping list.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "74bb3bc734434e4c516a0cc174681d3efe8df33c8ad2f545433c11c68e223482",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 201,
+            "relative_sample": 15360,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1185280,
+      "continuous_clip_end": 1240320,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03697643999475986,
+        "calls": 284,
+        "quantized_input_sha256": {
+          "c161": "790200fa1d2049cab2dd10a42ade92626fc1cfcb43839335f8399aa56e7d37a7",
+          "binary40": "f3df203d1c007b698d6ea9ae90ec23188f1d641060ea69b1c05f4be7d13a53f4"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 22,
+      "text": "You need to mix it slowly or the sauce will become lumpy.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "7731ec2dc6674ee3b9979bdeb67ea7e2e22c69b951883c914d6a17fb724973ff",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1248320,
+      "continuous_clip_end": 1298880,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.035737179015995935,
+        "calls": 275,
+        "quantized_input_sha256": {
+          "c161": "4fcd439c3273b56b11b70057fc0fb5249da86188f61e9f82a3742fbdbfa019f0",
+          "binary40": "29da25839d87ec6084f385989715685c17753e63f37694f01c41ef54f3951219"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 23,
+      "text": "This playlist has a mixture of old songs and newer recordings.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "10af7468f235e79a488e0f1aa259f3b09d5cb6c43495de744c014159320a004a",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1306880,
+      "continuous_clip_end": 1361920,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03634286500164308,
+        "calls": 284,
+        "quantized_input_sha256": {
+          "c161": "c4754242e7e4bff683a3cb13f182b1869621ba03aa1ba8a4545eef204f082d69",
+          "binary40": "56fe9577dc662c0c40bb6498645475a2f465bda871b3345b1c89ff022c9158ae"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 41,
+      "text": "I spoke to Nick yesterday and he is feeling much better.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "38e00d7de9940451c693c39459fd57d8180946f75195a15242914b93e87b7a1d",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1369920,
+      "continuous_clip_end": 1421760,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03895971001475118,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "0ccb20529b7016ad07313513688e91228fea45f1e45baa1fc55b6cf91afd66d8",
+          "binary40": "3a03b167e7f728c05b0f39ab6e8cf2940273e73f81130b02298f1cf0eb41f7b3"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 6,
+      "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "26cc11576a381e3def6a26aca497cebad78681eaa1dfa8a0a4647e0360de6e72",
+      "isolated": {
+        "c161": [
+          {
+            "step": 200,
+            "relative_sample": 14880
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 200,
+            "relative_sample": 14880,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [
+          {
+            "step": 3180,
+            "relative_sample": 1445280
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 3180,
+            "relative_sample": 1445280,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 1429760,
+      "continuous_clip_end": 1488640,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04063803100143559,
+        "calls": 292,
+        "quantized_input_sha256": {
+          "c161": "6852b487c4a8dd4d818aee8a7cb267eeae358b48d248bf672adc65f0b031e669",
+          "binary40": "17e6045469b03a5d9c77c7a65bb91e76e25a3ae81d750b46a56977ffa73ab2fc"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 24,
+      "text": "There are six people waiting outside and another two on the stairs.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "1ed18a8729335ce3f3257575e7a143a000b059044fde885ab65d391e1effeeed",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1496640,
+      "continuous_clip_end": 1554240,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04323542199563235,
+        "calls": 290,
+        "quantized_input_sha256": {
+          "c161": "25aa960a8655d20a82699a0310e60d52d1e4334b91c03ee09cb592f0ce0d8546",
+          "binary40": "1a7bfecbae631a0a20e3461e004f5a6671a95bc27971246e9ef4e58fc7ee62eb"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 25,
+      "text": "The price was sixty pounds, including delivery.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "89ccaeecf8222dd87153a356228110ae3b57f25432fe1e97b352e93fe6cacefd",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1562240,
+      "continuous_clip_end": 1606400,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03863951898529194,
+        "calls": 262,
+        "quantized_input_sha256": {
+          "c161": "ffecb55a8e0382c8307e35c35f9ffa68d1e088b53256f8467931406c56b42113",
+          "binary40": "6c9e85804b87e7de318da98c16f0123d55992a6775d4fc0f13cabbde82a0a51c"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 42,
+      "text": "Hey Nicky, your breakfast is getting cold.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "2cf7edcae0e33c0b42ba7ac3d6df7085081d36c54f5b010c8e037b47bd20f09c",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1614400,
+      "continuous_clip_end": 1658560,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03921167098451406,
+        "calls": 262,
+        "quantized_input_sha256": {
+          "c161": "7df62237386b1e85c8a0d2b2b1d11662ab49939287477568139089ab729d73d9",
+          "binary40": "441e864a1edde19f671ac07cc57b41e60129f021dcd9807cae29b9c869d2e4fa"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 7,
+      "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "0080a2c08e636b74a6a50b42fadf010a4f46e8f011f422f030252c1da1836b69",
+      "isolated": {
+        "c161": [
+          {
+            "step": 202,
+            "relative_sample": 15840
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 202,
+            "relative_sample": 15840,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1666560,
+      "continuous_clip_end": 1719680,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039445469999918714,
+        "calls": 280,
+        "quantized_input_sha256": {
+          "c161": "6f448fe303351a9cbc921c66e477179c26024a8d9d8a337b03e3b9acdc4e9afe",
+          "binary40": "e44d4f1617db526eb4e33e93d8ee4a74f4138db414522f7571fb061d2fb620f8"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 26,
+      "text": "I found a nice little cafe near the museum yesterday.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "25d84e00f13540d57e5417c775f5a4b139df81221af12253811ae50b2402e9f7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1727680,
+      "continuous_clip_end": 1775680,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03874041500966996,
+        "calls": 270,
+        "quantized_input_sha256": {
+          "c161": "7a710d1ee75aa83a881e491f6252885f1bb42bf0983dd5a1043b4e333440460a",
+          "binary40": "749aea82e693539fe7a7a1ffa66bdb9c08342622fc190f81933cc7ea926d835d"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 27,
+      "text": "That fixes the problem with the kitchen cupboard.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "542a8254da139c020bb71761df10d30818c735d90e24dd14d692773593a7fcf0",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1783680,
+      "continuous_clip_end": 1823360,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03381263397750445,
+        "calls": 252,
+        "quantized_input_sha256": {
+          "c161": "18af69af0826469158776ceb81fc9b09d17434d80c0e0f571e23b3931022370a",
+          "binary40": "a0e6cb4296d366443da4546349ca9e6aee3408de59337c222d26a884144b76fc"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 43,
+      "text": "Hey Alex, would you mind answering the door?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "e60cf393a4e4dc392bf87b826196f7f656eb188f58c087866d39ccc92190a657",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1831360,
+      "continuous_clip_end": 1872960,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03319002999342047,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "101da42a2943eb2f2fb97a420b4b7a391d7eb9ded0c3f6a9e18a609cd49705c9",
+          "binary40": "35a71095e0bfaa6f112629a927d3bd6ce04a9b52e02454693882363c88e3a68c"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 8,
+      "text": "Hey Nicks, pause the television for a moment please.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "fbb593994ca7b8976f7e4bd53018a625b17fb25f6c9edf7c30f7c62f94d198ce",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 201,
+            "relative_sample": 15360,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1880960,
+      "continuous_clip_end": 1928960,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034867582988226786,
+        "calls": 270,
+        "quantized_input_sha256": {
+          "c161": "634f91c9fa4d6a0157501dfed6081e4ee34dde88db22aa7364b9c260a505c02d",
+          "binary40": "7c35705098a76f7b3b88ea683f08384f3e3378698d981efc1b2b8bd57f51aa28"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 28,
+      "text": "Would you leave a small light on in the kitchen tonight?",
+      "group": "ordinary_household",
+      "pcm_sha256": "e27ea47fa0a4aa1e8ed1634eb2bded9bb12f53d838a65696715c633119988c99",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1936960,
+      "continuous_clip_end": 1978560,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.035575824993429706,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "e43ec486ea7ea65b889c13ee6665013ccd1d64e0f15aaf31d84bdccad727c581",
+          "binary40": "d522f36d43f77ab57f80c70bf35fb0282dcbe0c9bb4ab686f68e54b4ecf9c203"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 29,
+      "text": "The timer should ring just before the potatoes are ready.",
+      "group": "ordinary_household",
+      "pcm_sha256": "c3364063b1b6faedf7ac89ccde376750fd07c96c0e0e22a2bc5e85b851e54da7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1986560,
+      "continuous_clip_end": 2032000,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.035731992014916614,
+        "calls": 264,
+        "quantized_input_sha256": {
+          "c161": "0da3cf3df3dff8a50e92749aea74d9fee0a936d9973a88ea011046828a5f3359",
+          "binary40": "8996a9fef99dba9270b915143075cf8d81b9488ee8e9039cb41a6db8b51f6914"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 44,
+      "text": "Hey Mike, I think you left your coat in the hallway.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "0521f355f0b23cf4436a9a483f84c1c15eefee973f831325ee99da3393fd4804",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2040000,
+      "continuous_clip_end": 2090560,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03690885301330127,
+        "calls": 275,
+        "quantized_input_sha256": {
+          "c161": "b7eef63c4df6c3ae8035d5e0ae838f6e7a8389e2df5e4347c8d68a551b2b9317",
+          "binary40": "8b1bc7cba26fea11d2feda1ff123d4867324821b5bc52f7c28fcdd91477f2718"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 9,
+      "text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "491ba6de801218e3aa0d801ee7a58a47b6bad5d9e4eb4e75e880d27d877a4fe9",
+      "isolated": {
+        "c161": [
+          {
+            "step": 200,
+            "relative_sample": 14880
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 200,
+            "relative_sample": 14880,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [
+          {
+            "step": 4576,
+            "relative_sample": 2115360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 4576,
+            "relative_sample": 2115360,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 2098560,
+      "continuous_clip_end": 2155520,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.037970122997649014,
+        "calls": 288,
+        "quantized_input_sha256": {
+          "c161": "7d109c01e0949553869d63aa8bc27fd403333194005d73dd1cc130c78ca11248",
+          "binary40": "87f18d144032ee80448cd952d64e6b425f1a45c578e3af59d7d65daf703a1cef"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 30,
+      "text": "I turned the bedroom speaker down because the baby was asleep.",
+      "group": "ordinary_household",
+      "pcm_sha256": "32c1b41d233bdd24878ffe9cf70032fc8b3db137a18b203085e50b0a6155217c",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2163520,
+      "continuous_clip_end": 2214720,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03502333100186661,
+        "calls": 276,
+        "quantized_input_sha256": {
+          "c161": "f9c3915cc4c9bc1d57b0a8c799a499332e0c45d6c43747c53417e83777c0a863",
+          "binary40": "037c121e421cd9f21166b7d4e877f2178b4f2db7326ab3f0279b5e902e981df2"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 31,
+      "text": "Please check whether the back door is locked before you go upstairs.",
+      "group": "ordinary_household",
+      "pcm_sha256": "66df465ba4126d2b00ea27675999d0a6ee08e10df3557ab95ee625ef5c3778b5",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2222720,
+      "continuous_clip_end": 2275200,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03562910298933275,
+        "calls": 279,
+        "quantized_input_sha256": {
+          "c161": "8f99ace94dee752f375f49bc81c5d67d1a216fe9c255432b4b8a40b4c5174556",
+          "binary40": "e33a06493b346e4393678ab596d3674372918104413d047dcec2df4e1a5bd0d0"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 45,
+      "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "1940c023813ddeec6244138b4ce41ae7db92fbabbbb05dc2c8dfff98387dcc44",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2283200,
+      "continuous_clip_end": 2330560,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04009315400617197,
+        "calls": 268,
+        "quantized_input_sha256": {
+          "c161": "f86f80df9b13a88c6f724327d64d602f363e0eb69ed73ba81a6c681d79e79b95",
+          "binary40": "6a08cf60bd377a83914252a51d3f3caded7d8fde7d9109828b1024291ceb6fc1"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 10,
+      "text": "Hey Nicks, cancel the reminder about the laundry.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "2205e5d7a7c2ee1bd13d39c00d75d76ce4804a1ffec20bb19ef52c424e2ee657",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2338560,
+      "continuous_clip_end": 2384000,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.035623903007945046,
+        "calls": 264,
+        "quantized_input_sha256": {
+          "c161": "37ae3407da3b2c72ab6cf85701eef64760c343db69d3f32b98c11d5b4d5b82c0",
+          "binary40": "87f6af3bdd6a99c15fef7e46cd198c26c387a0df44ca0c0f477ff059220bf81c"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 32,
+      "text": "The washing machine has finished, but the clothes are still wet.",
+      "group": "ordinary_household",
+      "pcm_sha256": "85337ac4c388c564f600c7bbb082288ad4f9bb6f8a3e7d330b2bf15051969c5b",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2392000,
+      "continuous_clip_end": 2445760,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03731534499092959,
+        "calls": 282,
+        "quantized_input_sha256": {
+          "c161": "099afe1b37f90115c2cd594e7b395337b1c9ee2be50daa08081d9d1e1285df91",
+          "binary40": "53ac4b21c742063af47c9b5d7779a7ec6f099ba794a5836c575877a9537a9b96"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 33,
+      "text": "We can open the windows once the traffic has settled down.",
+      "group": "ordinary_household",
+      "pcm_sha256": "97d6dd90dbb5f9d0d0d2cc982a5f897d1e5673ece5139293d612b2c39aa1774d",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2453760,
+      "continuous_clip_end": 2505600,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03806701299617998,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "eb8891da787663b0a9a33d25fb9ab0f948e9a0ebac8b87bc5f50f08c47542732",
+          "binary40": "61d9f50f96ee4d79bd6be3d63acaf35c09a61da536d7814ab276cc3df5cf0e9e"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 46,
+      "text": "Hey Max, can you carry the other bag upstairs?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "d22e817a8715885529902b3886a18c89a361dd0775b07a0d495ee8e718153cc8",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2513600,
+      "continuous_clip_end": 2561600,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03580691199749708,
+        "calls": 270,
+        "quantized_input_sha256": {
+          "c161": "f7e256037bc3debe73ec2a924edb43dbe9cf6f0fe3e0f9197f2dc59e4341acec",
+          "binary40": "019ce2466c62075f6e94fe476dcc667ed53d585afb3c69a21bf36550817cb552"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 11,
+      "text": "Hey Nicks, do I have any appointments after lunch?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "0ad4f6bf3ecab72a201fc3847e4e73f74870418d9126059eedc5a0d8437e8742",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2569600,
+      "continuous_clip_end": 2616320,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03454069999861531,
+        "calls": 267,
+        "quantized_input_sha256": {
+          "c161": "3eec2d73985aace3441baf2b44ef64188f75a4d6ce526a49c739b38a0d05da1a",
+          "binary40": "b6becb567701b8e2c61905a490146c90087d52bee04c8cfa5f03b04167d6ef19"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 34,
+      "text": "I will call you when the kettle starts boiling.",
+      "group": "ordinary_household",
+      "pcm_sha256": "d36e6c714f119460ed701c8b7e6e1d245cd1a0926d3c02704f84aeb3535fef90",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2624320,
+      "continuous_clip_end": 2662080,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.032655782997608185,
+        "calls": 248,
+        "quantized_input_sha256": {
+          "c161": "c63a574e0ff274b1479a1a811d908526b94c4c2c20a070f99d81b01c697d7852",
+          "binary40": "a99e31a83863e9abfacafa7c22c6ad6d257977d2948667141a8696eb2f746894"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 35,
+      "text": "Please put the remote control back beside the sofa.",
+      "group": "ordinary_household",
+      "pcm_sha256": "fffca8aa414a37d4a97c0e72207e9a1376324b7cf0c51d1416d1543a95a4bf22",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2670080,
+      "continuous_clip_end": 2716800,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034142584016080946,
+        "calls": 267,
+        "quantized_input_sha256": {
+          "c161": "dd6ab0348d79180a651dca4512b43765b05b7ede2aaec9bb8b4aae0ce9e9c543",
+          "binary40": "254b9be3f4a77553b18c04f7a1fdccb33de3de7abd8fecb8e0147ceb3ccc762b"
+        }
+      }
+    },
+    {
+      "stream": "builtin",
+      "index": 47,
+      "text": "Hey Nicole, are we still meeting outside the cinema?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "3998a035e076c69bb1de693d24cbde3164ebd95dd2b2ff370451b533e6a5bd49",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2724800,
+      "continuous_clip_end": 2778560,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03594428100041114,
+        "calls": 282,
+        "quantized_input_sha256": {
+          "c161": "71bbd898bc6231c3bccc336327875b235a4ea6ea3cf446c982f8cd7a125e851f",
+          "binary40": "9dd353d03d63e00a8c58b6bbe60daba5aa624e27a91bd6d084ee0a81e03cdff9"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 0,
+      "text": "Hey Nicks, could you switch off the study lamp?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "f8250703b4e8ee40e4611351e2788e28fe61f51d136aabdcc57e1bd421eabd3b",
+      "isolated": {
+        "c161": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 211,
+            "relative_sample": 20160,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 211,
+            "relative_sample": 20160,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 0,
+      "continuous_clip_end": 53499,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036072340997634456,
+        "calls": 281,
+        "quantized_input_sha256": {
+          "c161": "d6780937a4bf92c2c392de87a9bf689d08a3f90c154fb0d32f01f18e67e07eae",
+          "binary40": "e0232767fa10d0c8e53ce3011a7b2e1c0a51cac49444702207f916cf094078d2"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 12,
+      "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "63ff8237426026be5afc3f8adefe1e91a05834825e52e8fc10c3c6645e1f5c2d",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 61499,
+      "continuous_clip_end": 141190,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04466687800595537,
+        "calls": 336,
+        "quantized_input_sha256": {
+          "c161": "4849bea35caab04c3d3f1d2d7aa31efe602f85d0b3d2299b59ab00f3076ffe07",
+          "binary40": "960c9908c6a3e295c69897f53c2d37670ae00090a79ed0f9bfae8d1cac6aba72"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 13,
+      "text": "Could you move your bag so that I can sit beside the window?",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "5c447a3592eb6afcc90446988bd24a41ab84621f8e2e6452369a02eb30cef35d",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 149190,
+      "continuous_clip_end": 207519,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03769324198947288,
+        "calls": 291,
+        "quantized_input_sha256": {
+          "c161": "0567a965619ae80aa0d965080a822fa0d2f56f21ca6ec96c26d4425876b5fcf9",
+          "binary40": "99aa972a83c1d70bf7baee339deba82b1c7f11982a24552e7fd0e9dafc2b035e"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 36,
+      "text": "Hey Nick, could you switch off the study lamp?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "d4070c6604bb93f41f245e820565ddeef18e75fc8ed68d51aadb8e81c5888824",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 215519,
+      "continuous_clip_end": 267904,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03689981802017428,
+        "calls": 279,
+        "quantized_input_sha256": {
+          "c161": "9676ab28600456f50bd15cf9139635eef7406cc6de73ff1759ea9dc7da6b8efc",
+          "binary40": "b5607538404e4f2105034bf65077204d1a57d43e50beeb1dc82dc667058eee0c"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 1,
+      "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "5ae95c2dfe0aac30bd9bca5e37c2bd51b8084af164c7d56dcc02b1ae0c9089e5",
+      "isolated": {
+        "c161": [
+          {
+            "step": 210,
+            "relative_sample": 19680
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          }
+        ],
+        "pair": [
+          {
+            "step": 210,
+            "relative_sample": 19680,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 211,
+          "relative_sample": 20160,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 275904,
+      "continuous_clip_end": 350580,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04276212598779239,
+        "calls": 325,
+        "quantized_input_sha256": {
+          "c161": "682c8497c92710bb2ce196c9ffd63d1699a4564f374380ce3bfebf6a6b2e3100",
+          "binary40": "0d220a88b05c244216f4aa493ab751a271df276306f241b2a4061fc23d9bf76d"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 14,
+      "text": "We have already eaten, so please do not wait for us.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "ef68f9f8b270ebbe35e9d6a5027580dba9a5f332b727bb896e3210b1ec52076e",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 358580,
+      "continuous_clip_end": 424711,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03923743500490673,
+        "calls": 308,
+        "quantized_input_sha256": {
+          "c161": "70de11835eeef04ae7ba9e8a6427438409e2f2116750434339080c198bf936ff",
+          "binary40": "8de0c6e4263e9cea09a9e5bf1849424be672422751a5f2384d98daa15d9f3cee"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 15,
+      "text": "She said the shop closes early on Sundays.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "07fa56b55f7a1847f0bb45db954485e6d6875522d9c25e6b42a54f91220ec44c",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 432711,
+      "continuous_clip_end": 489182,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0395542930054944,
+        "calls": 287,
+        "quantized_input_sha256": {
+          "c161": "dd527b3b831c613b1576b24a3c4cf4e7d71887a7555e4b26db4e194889e1c1d0",
+          "binary40": "ca0f0e02442c2e16771bd6f7c53505968f57f8cc3eb3aba7f1d3d25a89f215fd"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 37,
+      "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "399fc49240c8042dbe7fd299239eb3e4d1cd68b5cf24c92fde068324cf195766",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 497182,
+      "continuous_clip_end": 571115,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04334144000313245,
+        "calls": 324,
+        "quantized_input_sha256": {
+          "c161": "f15706cc2dda8fb62eddd42a301a5d89b4d8382fae4b33724952ce2bfdeba20b",
+          "binary40": "84f18ade626311635b8a22e3f9b2ef71a354759de1ebe36cd8dda5d3d3ed989f"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 2,
+      "text": "Hey Nicks, is there any rain expected this afternoon?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "9494b5d3c297e4df82c179bbf6e4d09c2bca60c2355029b1e38cceb232f1f1e3",
+      "isolated": {
+        "c161": [
+          {
+            "step": 212,
+            "relative_sample": 20640
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 213,
+            "relative_sample": 21120
+          }
+        ],
+        "pair": [
+          {
+            "step": 212,
+            "relative_sample": 20640,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 213,
+          "relative_sample": 21120,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 579115,
+      "continuous_clip_end": 642274,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03926489601144567,
+        "calls": 301,
+        "quantized_input_sha256": {
+          "c161": "ba29134a7427a9f73c69cff07c7477b7b2aeec4361f8eefced3bb735b6dec149",
+          "binary40": "46b93526f75ed98631eb15b1c39b8aee163e6361504d11cd308e26ae49386737"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 16,
+      "text": "There is a little more soup in the pot if you are still hungry.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "b7894d62a09f188cd818d1c6dde2d0e61739ccd80815828f16c0f942be2e3ef8",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 650274,
+      "continuous_clip_end": 717519,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04021653500967659,
+        "calls": 310,
+        "quantized_input_sha256": {
+          "c161": "702fa27a2be4b42e1d48117d8a7d141aadd184451fb7571a6aad64928fe8d163",
+          "binary40": "07423946ffb476d939f42ae43c92f7c582d5bf0d8d475994a61c6261e89e533b"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 17,
+      "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "34a09ea743242c9d6d62a6fe65d0fa4959835053920464d0db5a201f2b64bab0",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 725519,
+      "continuous_clip_end": 797594,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.041431267018197104,
+        "calls": 320,
+        "quantized_input_sha256": {
+          "c161": "40b322bc6ccbd44339c98ab016cb4e5a92e179a1906b8f928bf5088573b0e97a",
+          "binary40": "ebb6be0b3f5e6c8da14b76739b5085c53a48b944079522ca761ad692c0ca3c8d"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 38,
+      "text": "Hey Nick, is there any rain expected this afternoon?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "4d612f825e859d8ac2b43eb2be0da42af09e31a41fb114e682cc348f0325dc72",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 805594,
+      "continuous_clip_end": 865595,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03775560899521224,
+        "calls": 295,
+        "quantized_input_sha256": {
+          "c161": "0f94a8e805aba8e55c7ebc1a7b778b94fed970c7a7b0c1a7b2868205eb643b4c",
+          "binary40": "902eb556f0ad735d7f60439de359356a1ca5ed2df945c294aea291358131647e"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 3,
+      "text": "Hey Nicks, lower the music so I can answer the phone.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "901b5d1ebd8420d81a82d688e93003d98db4c516b3726ef964055e9b1d59f335",
+      "isolated": {
+        "c161": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 211,
+            "relative_sample": 20160,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 873595,
+      "continuous_clip_end": 937497,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039913065993459895,
+        "calls": 303,
+        "quantized_input_sha256": {
+          "c161": "dcc9b9124d402e4f2b967f33f95d64fcc9a72bffcf11d279ae75a54695f3596d",
+          "binary40": "f69f05efaad579de3922a129b1feea59f49998d5ea70cb0506d03ef4ae284092"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 18,
+      "text": "The children would rather stay indoors until the rain stops.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "1c279742c5856ea7643ec3dfa3788bb311ff8888ca0e5facf695ee40e0961197",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 945497,
+      "continuous_clip_end": 1014414,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04162896500201896,
+        "calls": 313,
+        "quantized_input_sha256": {
+          "c161": "e4e6d36dd7926408f71230d2f9e4eddc42e2c83bed507f554a2e7f5f36da2205",
+          "binary40": "3772541db24030ecac8a6a30240d487014b91f14182880e52b5cdec0a9bf539d"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 19,
+      "text": "Let me finish this message before we leave for the station.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "e67ec307d9ff8054a54f3e151b600ee327b9954add099a79829af92d7c065000",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1022414,
+      "continuous_clip_end": 1084644,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03739161600242369,
+        "calls": 299,
+        "quantized_input_sha256": {
+          "c161": "62bf876f5619fbe7ea6bd24e028fc6d8fe42843d6807513abe4e9147877bc101",
+          "binary40": "75723a783c1e53a91f8176de52a6c141f4fe01a93ce7579e44ec83bbaf564acf"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 39,
+      "text": "Hey Nick, lower the music so I can answer the phone.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "640f2111e98e945661b213b43c5323aac6c1a7f4c3f3693c47adf0a6c2a5dccf",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1092644,
+      "continuous_clip_end": 1155617,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038185754005098715,
+        "calls": 301,
+        "quantized_input_sha256": {
+          "c161": "9e6008cc6c4263d5b1617b96d5d15413de8c879538942365d580b4482a25c9cf",
+          "binary40": "40d5ef0c0ce16367a9cb2b3bcb362278374504d25dc70e538ee5fdc009552ebb"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 4,
+      "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "f8bfca3467f3461e3baa615007d68314559ba998322760f9a5cac0b03ac1f4d0",
+      "isolated": {
+        "c161": [
+          {
+            "step": 213,
+            "relative_sample": 21120
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 213,
+            "relative_sample": 21120,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1163617,
+      "continuous_clip_end": 1231977,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03957401399384253,
+        "calls": 312,
+        "quantized_input_sha256": {
+          "c161": "5369a73c9cacf06fd82a37ca4ccc6e7f201fd5e8549c59fa2d11ef9bc9c863a2",
+          "binary40": "255dbe3b8b20faaadce419b3bd01236d5046e84782367c96a6dfc336d721b085"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 20,
+      "text": "After the next announcement, we should know which platform to use.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "59adafba72f42aa3ffc4833b330228add42c2db555209a68a0bc24dfad23321f",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1239977,
+      "continuous_clip_end": 1317625,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04222316000959836,
+        "calls": 332,
+        "quantized_input_sha256": {
+          "c161": "7e5ee564c9ec75528fc14477af75e98ca7c4d561bc122f42d7792561fe32b230",
+          "binary40": "1d68d04be5771e573594bd82d1445ceee83a95f6caa748355ba3acde014bfb6b"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 21,
+      "text": "I was hoping to visit next month, if the trains are running.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "d995bdd82ab72cd7b9501821f4c00641e11a8117ad11b6185ab1dd724fec578b",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1325625,
+      "continuous_clip_end": 1397514,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.041425836010603234,
+        "calls": 320,
+        "quantized_input_sha256": {
+          "c161": "596135b0391107bf287b30caf7e6990584ed1d7c3722c0225e6914a152bf10a6",
+          "binary40": "cee73a1978df971772b4cddd2c165edc69af129efc38d6a2ebb7424c15e74718"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 40,
+      "text": "Nick, did you remember to bring the charger from the car?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "e07bcb1c8f4c0d9fff1d6869b4eebda0674fb94fc92804c55a680c7876e35cdc",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1405514,
+      "continuous_clip_end": 1466258,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038312484975904226,
+        "calls": 296,
+        "quantized_input_sha256": {
+          "c161": "4cee686de717732c56e00d7bf73215cf6d60f9a0709b7da720c81399145831be",
+          "binary40": "17a21e8ccf65e2957e809cd48f78208102a99be069154ce0a83a8765e8706d9a"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 5,
+      "text": "Hey Nicks, put milk and apples on my shopping list.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "926ec4cbffc8e787bb6da743054a6cccf8203f9a12ef83826fab5b10ae07caa5",
+      "isolated": {
+        "c161": [
+          {
+            "step": 211,
+            "relative_sample": 20160
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 212,
+            "relative_sample": 20640
+          }
+        ],
+        "pair": [
+          {
+            "step": 211,
+            "relative_sample": 20160,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 212,
+          "relative_sample": 20640,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1474258,
+      "continuous_clip_end": 1535559,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04039286001352593,
+        "calls": 298,
+        "quantized_input_sha256": {
+          "c161": "96f8122d51b107031e318b1399bf9142f2bfe0ddaadafe506c27052318af1b19",
+          "binary40": "8e0563d4e98fd101d740050b71bc71ee8699f5e77aade2c6264c66dec67f3ae3"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 22,
+      "text": "You need to mix it slowly or the sauce will become lumpy.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "184df5502c57505c9752abc03d4f9733f1a4b0150b343b1c48004700d894b876",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1543559,
+      "continuous_clip_end": 1611176,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04302495700540021,
+        "calls": 311,
+        "quantized_input_sha256": {
+          "c161": "101edcb6136ac6f957becfc0b16d3646ddfaaa523ce17f33591a562177256cd8",
+          "binary40": "e0feab8df56f153ce5c62ac4cb32e16743ae85768592a47348105798f8cee26f"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 23,
+      "text": "This playlist has a mixture of old songs and newer recordings.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "8567ffa6028930cdddd970683c8fba144257dec22a3e0ff956223229c7233449",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1619176,
+      "continuous_clip_end": 1697753,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04279982901061885,
+        "calls": 334,
+        "quantized_input_sha256": {
+          "c161": "e8d57755e5a92c5fbe49ff2e4041582dde56cc8f61f642726d6c17fb68af4afa",
+          "binary40": "373e66d106e30156f115892e9a815521e17e4915c05d317a07f785fcc574ea5f"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 41,
+      "text": "I spoke to Nick yesterday and he is feeling much better.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "48d95d42ed9434f13ccb3ba76dcc7766ab8898bc4a1e05f91e271692278fa157",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1705753,
+      "continuous_clip_end": 1769469,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038988993008388206,
+        "calls": 303,
+        "quantized_input_sha256": {
+          "c161": "ca1634995638dfe4ebd53da30f226193a98a29a4053db5f7f20f44e5e55398c6",
+          "binary40": "e9da7d7e3f40d8b07034efe7f1a9645ba2942496dd09e7796dce144f35f9e56f"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 6,
+      "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "13612f768c10995aacb430bfedaaf8ff843f2e936d5ac6b16e9a387cb760fa1c",
+      "isolated": {
+        "c161": [
+          {
+            "step": 212,
+            "relative_sample": 20640
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 212,
+            "relative_sample": 20640,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1777469,
+      "continuous_clip_end": 1842671,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03933020497788675,
+        "calls": 306,
+        "quantized_input_sha256": {
+          "c161": "46d4441ffbe323972780020e038b7237ad95d14b089ab925a39df54b38e1bb2d",
+          "binary40": "cc6d2b8550821ee445dc85c9651dd1767b9c32b3b8e75f1aa5e15bfb96e2338b"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 24,
+      "text": "There are six people waiting outside and another two on the stairs.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "d5679ef9765fdb1a649557de0ea770612e9ab8d554c6833d17d8fd8f272550f2",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1850671,
+      "continuous_clip_end": 1925904,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04417258899775334,
+        "calls": 327,
+        "quantized_input_sha256": {
+          "c161": "ad98f1a399132dc006c817d5ea9ebc0f11a425e8255dc259fcb144b12f89d8bb",
+          "binary40": "0b1ce81dbedcc5a55f987ac20dcb3cd87cce85041fddfbd9e87f4f651fee9dc9"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 25,
+      "text": "The price was sixty pounds, including delivery.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "b42a81bf051f268567cb485760e6cc7f7b24a9165d2c8b133fb3809d6a01f369",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1933904,
+      "continuous_clip_end": 1997063,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03809213999193162,
+        "calls": 301,
+        "quantized_input_sha256": {
+          "c161": "3e21be10d9a7402f935635244a1e9afb9bc032f346b9a0a94ed66e3642a2e2f2",
+          "binary40": "c8fd627d0036acfb3c20af496bbfa62d37b72a5745e7d78623c8473005057e2d"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 42,
+      "text": "Hey Nicky, your breakfast is getting cold.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "1e82e2d73c78ed92e5e883bedb33af141dfe9415b84d79e13c351181b7950c02",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2005063,
+      "continuous_clip_end": 2060420,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03578549498342909,
+        "calls": 285,
+        "quantized_input_sha256": {
+          "c161": "65a997e1ca116670b5a6e6308587339f6275ea2facb74900b0503a48d023d0d3",
+          "binary40": "45e027e68005356022dd87ac9bcabd654544f632b0dbbbfe71d34a9dfd5fd603"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 7,
+      "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "5efcb6aa1bd471b280726d8ec86441c551b9e418c6f5830b233fd94211b49e44",
+      "isolated": {
+        "c161": [
+          {
+            "step": 214,
+            "relative_sample": 21600
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 215,
+            "relative_sample": 22080
+          }
+        ],
+        "pair": [
+          {
+            "step": 214,
+            "relative_sample": 21600,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 215,
+          "relative_sample": 22080,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2068420,
+      "continuous_clip_end": 2139752,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04318991702166386,
+        "calls": 318,
+        "quantized_input_sha256": {
+          "c161": "2ac04cfcbd61b3e81527391c07f02d21a14a3c98d803b7ebf15f1e4f32b8a20a",
+          "binary40": "b2300e64223a02be5703616204b5ec70f4a940ac09cd25dc2c180c047c46bb8a"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 26,
+      "text": "I found a nice little cafe near the museum yesterday.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "e7b6f55bb70e263eef09208a61d4f2a0bbb6c7214313270f4ad428e3a0c51b4a",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2147752,
+      "continuous_clip_end": 2211654,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03969313102425076,
+        "calls": 303,
+        "quantized_input_sha256": {
+          "c161": "7b7efa3b9bf1d3a179d009c35af4002bacb30d899fb5c8cc8ce62c2dbd918aa3",
+          "binary40": "77475fd9dfcbc8f8ef52fb5702327a52efe09eeefc089ebe424bccc60e33755a"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 27,
+      "text": "That fixes the problem with the kitchen cupboard.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "0af91893572129737bf3f9094eef8c307c0ad2f8a705f27ac974c655c6a68452",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2219654,
+      "continuous_clip_end": 2275940,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0370305760006886,
+        "calls": 287,
+        "quantized_input_sha256": {
+          "c161": "527dfe20e42b077122b31778ce782dc416c93f2551c743e046604ac3291fd1a5",
+          "binary40": "b37f9e264f09206fa8bafe8be7d3c9f47e25ac7e0afba295cd40042bad0064bb"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 43,
+      "text": "Hey Alex, would you mind answering the door?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "212684dbc545cb2d303db6e7530ca844350618ba14dc9ba7a4383a1a0e4abf62",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2283940,
+      "continuous_clip_end": 2335582,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0356252420169767,
+        "calls": 277,
+        "quantized_input_sha256": {
+          "c161": "81beb86bb44504eb29ae66ba1971c6bbb12754f80bdf53d4efca1627e871c1de",
+          "binary40": "bf3b2927e4c07db3bcf197b271c66a8f05779c1073adf36202ab4121e0fbb63e"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 8,
+      "text": "Hey Nicks, pause the television for a moment please.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "aa778b4bda00dd77e2bd52ba88f01e8ef4e7409eacdc2ed573d13d24995d1c9c",
+      "isolated": {
+        "c161": [
+          {
+            "step": 213,
+            "relative_sample": 21120
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 214,
+            "relative_sample": 21600
+          }
+        ],
+        "pair": [
+          {
+            "step": 213,
+            "relative_sample": 21120,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 214,
+          "relative_sample": 21600,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [
+          {
+            "step": 5099,
+            "relative_sample": 2366400
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 5099,
+            "relative_sample": 2366400,
+            "model": "c161"
+          }
+        ]
+      },
+      "continuous_clip_start": 2343582,
+      "continuous_clip_end": 2404326,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03737629498937167,
+        "calls": 296,
+        "quantized_input_sha256": {
+          "c161": "667edb6ba6c0800131a47efed2c49ea58be9f852142bd11eb06b22b43aeaf082",
+          "binary40": "c1c2cae4c93a0621ddf91a55df554871410ab6425df12b5cd4099bbd0e793252"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 28,
+      "text": "Would you leave a small light on in the kitchen tonight?",
+      "group": "ordinary_household",
+      "pcm_sha256": "8cb953ca1e389b5b3d3b1dd86449622836dd049ef6cd139185f8450f480356a9",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2412326,
+      "continuous_clip_end": 2465825,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03800032599247061,
+        "calls": 281,
+        "quantized_input_sha256": {
+          "c161": "fd3f4d48b2fa2429e19bbca458938651e6ef8886311ec13309d966aef245618b",
+          "binary40": "ab0f4eed5dd5520dd583ffe394f82b9b523937866bd9ff6754f9d92b5a6b1d21"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 29,
+      "text": "The timer should ring just before the potatoes are ready.",
+      "group": "ordinary_household",
+      "pcm_sha256": "3372ecfd2f78c4f67a8fb8a4a2e2d7c51a2216b51c9ea28f90986018c362b7dc",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2473825,
+      "continuous_clip_end": 2539399,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039984943985473365,
+        "calls": 306,
+        "quantized_input_sha256": {
+          "c161": "9070ba9ed613f646fe05c59c6eac8a80e0e1041ce1609b080cb64857db8cca23",
+          "binary40": "4f2798242c81d7dca12983a1756f51e98e37128c6c58e2c01f574fd97b18eec4"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 44,
+      "text": "Hey Mike, I think you left your coat in the hallway.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "b9e2a7b9b8c611d5072a67c02773a5fe5353e790d2ebfdfaef4b105bda1114aa",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2547399,
+      "continuous_clip_end": 2609257,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03921406000154093,
+        "calls": 299,
+        "quantized_input_sha256": {
+          "c161": "dbceeb75c6b8e12f26138b25170b056695002207fe8739875988aa281d5db6e9",
+          "binary40": "9b68aaa4441905bdcd3fcb56e4df98140243b89c28acdfc3ae0eba7f031255a1"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 9,
+      "text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "4c2b3d60d70865f2c2efaa4d7c53e2afa9ae3b0d00c98a43baf5dccb11d68ff3",
+      "isolated": {
+        "c161": [
+          {
+            "step": 214,
+            "relative_sample": 21600
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 216,
+            "relative_sample": 22560
+          }
+        ],
+        "pair": [
+          {
+            "step": 214,
+            "relative_sample": 21600,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 216,
+          "relative_sample": 22560,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2617257,
+      "continuous_clip_end": 2684688,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039274009002838284,
+        "calls": 310,
+        "quantized_input_sha256": {
+          "c161": "250871edac2ead5984f6513ba693b88b3b47b66ed3c93ed431d015ea08372342",
+          "binary40": "2fd79ff1d1f83afc0bd9d94eb9ea8c8b18ec1637ab957e57bc9910fa78e7c92c"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 30,
+      "text": "I turned the bedroom speaker down because the baby was asleep.",
+      "group": "ordinary_household",
+      "pcm_sha256": "913f7db718e8308fbd969c5b11eb64791ef9c9c8b0dc2489dea0fe76b2841b84",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2692688,
+      "continuous_clip_end": 2764206,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03985014100908302,
+        "calls": 319,
+        "quantized_input_sha256": {
+          "c161": "0aac499b3142b578c95ad554cd78ef50aacfe95635eb0c0f26c76e750ca4483a",
+          "binary40": "76545b29396b451011b580d8292d81ee33502146a4f41f120b13932727b798ec"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 31,
+      "text": "Please check whether the back door is locked before you go upstairs.",
+      "group": "ordinary_household",
+      "pcm_sha256": "28bdb3aaa9123b308eb2fb213d923f235ee768ee2d92ac153735a4854dc4769a",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2772206,
+      "continuous_clip_end": 2847068,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0440502290148288,
+        "calls": 326,
+        "quantized_input_sha256": {
+          "c161": "f7d3ee4525c16dc71674ad038d45f3e090a1cfe9647e2a1b3cc87fcbc26053f5",
+          "binary40": "ea225d86daa2d1a7fa0066ddf408247f55aecbc2856e72f0cc09d0790375feb1"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 45,
+      "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "ae8ea5e49f5a37b3b3541becbc11c75813add2f0b45ee8d5b3522cc2c23b03ab",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2855068,
+      "continuous_clip_end": 2923242,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0406940619868692,
+        "calls": 312,
+        "quantized_input_sha256": {
+          "c161": "894a1406f52aaaa57630d59b72fde55def39139fa0fd411a012edf5e6248e29e",
+          "binary40": "f3f23317924cdb5790e76193ff512974421098209c3503fa1ee142d83dc721f4"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 10,
+      "text": "Hey Nicks, cancel the reminder about the laundry.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "b6a01c37449ea3b8aa89ac5d4250b0081bd0930d6f628bcc72ee369b78c9c0e7",
+      "isolated": {
+        "c161": [
+          {
+            "step": 214,
+            "relative_sample": 21600
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 214,
+            "relative_sample": 21600
+          }
+        ],
+        "pair": [
+          {
+            "step": 214,
+            "relative_sample": 21600,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 214,
+          "relative_sample": 21600,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [
+          {
+            "step": 6326,
+            "relative_sample": 2955360
+          }
+        ],
+        "pair": [
+          {
+            "step": 6326,
+            "relative_sample": 2955360,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "continuous_clip_start": 2931242,
+      "continuous_clip_end": 2989571,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.037017527007265016,
+        "calls": 291,
+        "quantized_input_sha256": {
+          "c161": "b42585eca98f97880cd5a9340abbf49a222b1f5e7c36997e78e45ed8a2e6aeda",
+          "binary40": "1871f0925e3a47a344f9f8f5f53e17688a17c6f41f3e289298ea6bd963d0edca"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 32,
+      "text": "The washing machine has finished, but the clothes are still wet.",
+      "group": "ordinary_household",
+      "pcm_sha256": "4301b258744eeb2b0b6c84f69901c5cc8b89db5ff8b3b41ddec170b5571ebdd7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2997571,
+      "continuous_clip_end": 3069832,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0399250180053059,
+        "calls": 320,
+        "quantized_input_sha256": {
+          "c161": "eba04cb25ad6873f70a5b2d1b1d7a81c13ec427f49c61f5f9607adf2589af8a4",
+          "binary40": "aeda36b1fd10833cac533463d7fb0ccf7090a41de0a4a2e1cbb2cb2a67299d48"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 33,
+      "text": "We can open the windows once the traffic has settled down.",
+      "group": "ordinary_household",
+      "pcm_sha256": "ae0be27d191c25914e1b2d7484a9cc68eed9a4dc27fe959f8e0da4d77460f62e",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3077832,
+      "continuous_clip_end": 3145635,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03939032900962047,
+        "calls": 311,
+        "quantized_input_sha256": {
+          "c161": "cb5e247cdfe06076f0e8ea1e46f2204ef085af8abdded4398e27a1b10d8c06db",
+          "binary40": "87c890861e63ef670adbd0f67e3dc12d016fb68be944572594b8bec9d98a0e69"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 46,
+      "text": "Hey Max, can you carry the other bag upstairs?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "bdf7e4fe697d68542c793898aacdfd7c5044e24239e25e999dfb813061250e52",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3153635,
+      "continuous_clip_end": 3212707,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03741965699009597,
+        "calls": 293,
+        "quantized_input_sha256": {
+          "c161": "19441a88ac20c5b40d5217dbf16d2e4510957ec14b49114fc9597ddc7634587d",
+          "binary40": "169a3b3c9ba5a320ba0b096b350d901eadefcdf7889b75a920a07b2be174aebe"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 11,
+      "text": "Hey Nicks, do I have any appointments after lunch?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "0669c7db0fd3236bb65fbf0835d545a2c7dceabfec08d11ff9ad64e64813cb60",
+      "isolated": {
+        "c161": [
+          {
+            "step": 216,
+            "relative_sample": 22560
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 217,
+            "relative_sample": 23040
+          }
+        ],
+        "pair": [
+          {
+            "step": 216,
+            "relative_sample": 22560,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 217,
+          "relative_sample": 23040,
+          "model": "channel_bn"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3220707,
+      "continuous_clip_end": 3281637,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03737523200106807,
+        "calls": 297,
+        "quantized_input_sha256": {
+          "c161": "9a99bd38e9c217e9709d9c6b1238e00c18883622b6401f03fe5ccee120daf5dc",
+          "binary40": "97daeac880bd43f79455d33d200f02f32920e7ea98c25577e3b2400b3402d947"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 34,
+      "text": "I will call you when the kettle starts boiling.",
+      "group": "ordinary_household",
+      "pcm_sha256": "dd585c0cb9f4c4681847f3d4bcd5c7e12da648785855bee69a3cf4d5c649ffb7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3289637,
+      "continuous_clip_end": 3342579,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036307262984337285,
+        "calls": 280,
+        "quantized_input_sha256": {
+          "c161": "9593f3a1bc275c379a698a55e55af28ceea57df1e97570adc025597fff99823b",
+          "binary40": "1b8bd25ae54107ece04e4bc903dee35bfa91b86d439e907e267c626dbc03d133"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 35,
+      "text": "Please put the remote control back beside the sofa.",
+      "group": "ordinary_household",
+      "pcm_sha256": "1f84effde3db342a607b5ef825998655a39c78a045a1c7811f5a861f4af2cfca",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3350579,
+      "continuous_clip_end": 3409094,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03741704300045967,
+        "calls": 292,
+        "quantized_input_sha256": {
+          "c161": "2ca7b740a97f3db9f0126baf44f81d3cfc37404207ff18c980770482cadeabbc",
+          "binary40": "eb1bd856e35d3c3c7e52c743050a683c516a4f9e5a5899fbc459a651d96d622b"
+        }
+      }
+    },
+    {
+      "stream": "melo-US",
+      "index": 47,
+      "text": "Hey Nicole, are we still meeting outside the cinema?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "1f7ca925deefcba55f40beb68690ec59cef71df58380ff191ceda02ef4079c15",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 3417094,
+      "continuous_clip_end": 3475609,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03762257198104635,
+        "calls": 292,
+        "quantized_input_sha256": {
+          "c161": "a90d4825d76af1d29930bcfb2e0ebcdff408afc4ce8705d3cea740670298663b",
+          "binary40": "2212f6897da2664ab21933828057f692dfc62e3937c9f544f9d3c98fcd3add1d"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 0,
+      "text": "Hey Nicks, could you switch off the study lamp?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "8390c3690023ff2cc56c3f0d5b39509a10f54f595e8793d02275da7f7e00e8c0",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 0,
+      "continuous_clip_end": 45326,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03393256099661812,
+        "calls": 264,
+        "quantized_input_sha256": {
+          "c161": "fb83611a68142680a6b127a273b2d91d7b8bcc13e61201c9575f7421598a011b",
+          "binary40": "92a095deee48f1c2f8cd9cb5b7c79b7dfc9560da35db9086dbf075831aedb1b8"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 12,
+      "text": "I thought the parcel was arriving on Thursday, but it came this morning.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "5e8e02f0a2d0330915186b28c68db1685f0a66d0c16618d658ec6be7a599b835",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 53326,
+      "continuous_clip_end": 118900,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.04005060100462288,
+        "calls": 306,
+        "quantized_input_sha256": {
+          "c161": "6506436a10615aeae2279137370d9e360086757ddeb21070945f05311955b715",
+          "binary40": "b9dc0b1b4f159f80920e925190be021b075a595a85810fd8d509beb8a6e23d26"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 13,
+      "text": "Could you move your bag so that I can sit beside the window?",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "ce50d2b40521a60e614c8023aada9d5d8e8855a30b533aebee1e6ec9fd93a0cb",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 126900,
+      "continuous_clip_end": 181885,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03697983900201507,
+        "calls": 284,
+        "quantized_input_sha256": {
+          "c161": "a21195512e4db0aa5b67b784d7d6d133cbfcd691efc48cf544090a63ebcf6cf1",
+          "binary40": "5ba9ec8f8ff515e6d0d1c48d45ec2c3ad514d1f829134d35c0b1e563ec3d7826"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 36,
+      "text": "Hey Nick, could you switch off the study lamp?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "429742ad5ff60c7f4ae0bbe31b80fc3bbbb2c952a7aa071b829ce2df942c5bf9",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 189885,
+      "continuous_clip_end": 234282,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.033856451977044344,
+        "calls": 262,
+        "quantized_input_sha256": {
+          "c161": "6213950bfe7e0db4b8151ee5820be9eedb949a9a5da7207279ae1bee2304984c",
+          "binary40": "8f41b45bbbc275315b923f5297340478952e223d76e8da0a896dfd9cff129ed7"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 1,
+      "text": "Hey Nicks, please remind me to take the bread out in twelve minutes.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+      "isolated": {
+        "c161": [
+          {
+            "step": 206,
+            "relative_sample": 17760
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 206,
+            "relative_sample": 17760,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 242282,
+      "continuous_clip_end": 306741,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03829872698406689,
+        "calls": 304,
+        "quantized_input_sha256": {
+          "c161": "83969824c84f0fdcb08b69238e042ac94ecd9632877aa038a8e0c23c10867c72",
+          "binary40": "1bcc0d8ec2d6525db15b469b5a42d26261193bc61450ab3ef83816cafdf902c4"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 14,
+      "text": "We have already eaten, so please do not wait for us.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "1cf1857a424f4a608af48e870f4b34dcad8ab6a6ef40bf6f23501167886ed728",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 314741,
+      "continuous_clip_end": 367869,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03540585900191218,
+        "calls": 281,
+        "quantized_input_sha256": {
+          "c161": "2f6353c50e420a2566867729590c253b800d36d21b72bbf260f042bb2be85cf3",
+          "binary40": "8e8e11606879435c63a8807f46667da8e5ddafeba761c89edf5eaf590fe0aca5"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 15,
+      "text": "She said the shop closes early on Sundays.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "7a63ec7b9a9d496e9860304e3fa979efc6111583f034ad53547897848a5ceb7f",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 375869,
+      "continuous_clip_end": 420080,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0333100380084943,
+        "calls": 262,
+        "quantized_input_sha256": {
+          "c161": "bf31e6ceff73f85461e8fd9f7a3eb45c307a4dfadf7cf6df4604bef571f6f0a3",
+          "binary40": "5f07360160a6be810cd4a3f9a654ab7fd090f0d117a80e4b9e9b297798f865df"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 37,
+      "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "c8958ee40c13d53d28948ab577a816e6ede4575998fd30f545b786350ebb6463",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 428080,
+      "continuous_clip_end": 491610,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03861308901105076,
+        "calls": 302,
+        "quantized_input_sha256": {
+          "c161": "569697ce51d097041582325298fed773ded9c3249b6ca4eff6ed9f34cd494ee5",
+          "binary40": "c5a46df619d263ff0af5ab2abf24ac1cb54582eb7f3c836ee7cca39865a34193"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 2,
+      "text": "Hey Nicks, is there any rain expected this afternoon?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "8387c09f6735771acea8b7806396cdf908c84ed4b2f558a1664264a35606079c",
+      "isolated": {
+        "c161": [
+          {
+            "step": 202,
+            "relative_sample": 15840
+          }
+        ],
+        "channel_bn": [
+          {
+            "step": 199,
+            "relative_sample": 14400
+          }
+        ],
+        "pair": [
+          {
+            "step": 199,
+            "relative_sample": 14400,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "isolated_suppressed": [
+        {
+          "step": 202,
+          "relative_sample": 15840,
+          "model": "c161"
+        }
+      ],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 499610,
+      "continuous_clip_end": 554967,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03719594198628329,
+        "calls": 285,
+        "quantized_input_sha256": {
+          "c161": "187502175cd54011bfa241b8bb8a0967830642ff54e7241de41838ae2843e065",
+          "binary40": "0eac2505cc34a1978c6676286c2d13756c35459bae1cf9e36a78524c0071c9b6"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 16,
+      "text": "There is a little more soup in the pot if you are still hungry.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "b0dcec3253fc323b51d006560120655dda8a87d1a4bb9ed648311a7df5dd5454",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 562967,
+      "continuous_clip_end": 616281,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036372005997691303,
+        "calls": 281,
+        "quantized_input_sha256": {
+          "c161": "ef4110a1dcf66ed2bbc3dedabd1d979f7658ffc5f6e09bbd460a628effccd08b",
+          "binary40": "2d6124a99eb4a92fb7168f3200dec60bfb2268416354a0863a155e370213cb6b"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 17,
+      "text": "I cannot find my glasses, although I was wearing them a moment ago.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "63a4bf8dc2779599f42ade6fd783a7bee8b2c4c59488348b2310165a1a6fae19",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 624281,
+      "continuous_clip_end": 688554,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.040240023023216054,
+        "calls": 304,
+        "quantized_input_sha256": {
+          "c161": "9f2990dab38a124dbb93f558863f87e11c2c3e685e99c2874b2600d026ee2200",
+          "binary40": "b9ae3e51d115d57a4e81e00423cd89f556919245de7f710afcdc9f1fb93b2e71"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 38,
+      "text": "Hey Nick, is there any rain expected this afternoon?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "86784d9522436efd4d770bbbee3b0633681eb97237e6eb3724e778f1de67bfb0",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 696554,
+      "continuous_clip_end": 750796,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03598224700544961,
+        "calls": 283,
+        "quantized_input_sha256": {
+          "c161": "4ece75e1baaca15a1dbcc338e3d1848ceb5c500a68720b7874cd9e7ae9fd0ae2",
+          "binary40": "c3e3ce179a63a9f57a14e2ac8c4c2fd6fd4c7eba3aa9081bc28bde1cb52113d9"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 3,
+      "text": "Hey Nicks, lower the music so I can answer the phone.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "aa25d6c416a87720264b745eab1e9b593bd7e54a2933bdc7e97f05d1c77e64a4",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 758796,
+      "continuous_clip_end": 810438,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034985357022378594,
+        "calls": 277,
+        "quantized_input_sha256": {
+          "c161": "ef0d3f13d5af88d4b9c33551398cc4464c173ee02cf77094d575302e73833302",
+          "binary40": "24744866537a2c27956ebb2928df39aa30edbd57b7886dc57d0ba08ca4ace055"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 18,
+      "text": "The children would rather stay indoors until the rain stops.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "99f0dbac6d308aa921c3a63a35099bf1caff93beb1bb3dd45abc6566a9a61c95",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 818438,
+      "continuous_clip_end": 873609,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03726703699794598,
+        "calls": 285,
+        "quantized_input_sha256": {
+          "c161": "bfdfa1f9f46fc316c1c1d9d515e53889a7b56c5b33e8916060667af6f7de7350",
+          "binary40": "9d895dd383c9a122c469afcd9366005c5b95da98a5ada6c2f312576e7992409b"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 19,
+      "text": "Let me finish this message before we leave for the station.",
+      "group": "ordinary_conversation",
+      "pcm_sha256": "fb847b32508c91754e5914e5029c65fafe1257c30f86a56f1e8566d7a32def77",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 881609,
+      "continuous_clip_end": 931765,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03680440000607632,
+        "calls": 274,
+        "quantized_input_sha256": {
+          "c161": "92270a552c1675ff84ec39188335429636c151d5f429e3107fdd4a748d9d44b6",
+          "binary40": "6330582d1d5124df8487b3124e3ffd4ff3ef7de47e6c8aefedf1bf4d277b3b11"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 39,
+      "text": "Hey Nick, lower the music so I can answer the phone.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "49ba12cbba26be9d5c92052bd685d588caabf3e46773ae61f1ce9cbeaf5d9ef9",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 939765,
+      "continuous_clip_end": 991592,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03687492900644429,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "8a43b70124d74d433ed0c637e737979aa1bebae71181479196a8cf66248e0d3c",
+          "binary40": "9dd9411f5d1dda6768e9a05e4cd92fd937123951764faf5b109111050387d945"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 4,
+      "text": "Hey Nicks, I would like to hear the news while I make breakfast.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "44bc7b0761694e4a8950337b8fb0055a76b051c4a326910315f41b5bb8d677c6",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [
+          {
+            "step": 204,
+            "relative_sample": 16800
+          }
+        ],
+        "pair": [
+          {
+            "step": 204,
+            "relative_sample": 16800,
+            "model": "channel_bn"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 999592,
+      "continuous_clip_end": 1057735,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0370269879931584,
+        "calls": 291,
+        "quantized_input_sha256": {
+          "c161": "31c1d657590ff6fad5e80cfdfef60229d09134f1037071bf7cafaaf05093ca76",
+          "binary40": "f89e9ced701bd8bd5fad8c87c144f9a388f2e725b71d0f5e5e458363e9bdcfae"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 20,
+      "text": "After the next announcement, we should know which platform to use.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "9764a6307bae11975a5b844a679de984e23789d2bcbd0db500242decc23c84fb",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1065735,
+      "continuous_clip_end": 1128151,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03795247501693666,
+        "calls": 300,
+        "quantized_input_sha256": {
+          "c161": "9fa5b893ff6c5ece098ce486de52d6382f17f9b13e159a0d7240079e695d5958",
+          "binary40": "13256e4e53b302108c78d43925c8dba814968fb548251c64e28cbe22c14d54c1"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 21,
+      "text": "I was hoping to visit next month, if the trains are running.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "79c0a1b1fc68034977e13732b608ceaceb332e48cb26e2bc0523d5291e40fd63",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1136151,
+      "continuous_clip_end": 1193551,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03858086699619889,
+        "calls": 289,
+        "quantized_input_sha256": {
+          "c161": "23a47b276506622afca66cef03c3c60e59bd65fa843cfa0d3f75d43568e1bf31",
+          "binary40": "f747666445fbc9662d4ffc901843bee959374325813d19a420b5ebbe8e03009e"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 40,
+      "text": "Nick, did you remember to bring the charger from the car?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "7c32a0e723c345fd7a12b25157f423a4ef57dc623241d4d6b3357c387f32a8b8",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1201551,
+      "continuous_clip_end": 1253750,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03602539701387286,
+        "calls": 279,
+        "quantized_input_sha256": {
+          "c161": "83e0c6bde3bfd5edbcdcbce22d3547b50c4feb7f3a9f0fa44ee335c42eaf515b",
+          "binary40": "6657dbfa20f36aadd7486a0700783ee69b0c482ac3f2cda5db428d552c5b7e5a"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 5,
+      "text": "Hey Nicks, put milk and apples on my shopping list.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "a90e116201556d0827aeeea71ad5c6bb17c1c9fb3f5f1b66b5e2db6094d8f945",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1261750,
+      "continuous_clip_end": 1311906,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03579985801479779,
+        "calls": 274,
+        "quantized_input_sha256": {
+          "c161": "acc567477803084c8fd666c2946ca2302ed487baaa969ccf487d52305e37454c",
+          "binary40": "a42091e5e086b2fd9554f3ea0c7bfbe316a42aae94a0119506cceafad8ff2c7e"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 22,
+      "text": "You need to mix it slowly or the sauce will become lumpy.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "76673a1e10aaa1017ec9045d477938c01800877885e46ef8d5a4ee53ae3aa77e",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1319906,
+      "continuous_clip_end": 1376563,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036734804016305134,
+        "calls": 288,
+        "quantized_input_sha256": {
+          "c161": "fa44b345962dd5ddc540efec626cfa5401f8eb0dae63e9ea9694c4d62f5ba4bd",
+          "binary40": "5fd95c94231459d2451fdfd20a28bbc730b44516399f659344547b8db6f4782e"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 23,
+      "text": "This playlist has a mixture of old songs and newer recordings.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "6cd74fcb862678cc8d5e10595e3ef4e9f08cfc776f24ea4a682b1a34c6bb5d63",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1384563,
+      "continuous_clip_end": 1448093,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038356033008312806,
+        "calls": 302,
+        "quantized_input_sha256": {
+          "c161": "40f9e2ac9b65631f840ae89cead1bfc5600e4a186e4a8f24217558df94d2af64",
+          "binary40": "c8502aca8ed88ae2a75c9c8caf3436e335a090c3af824dd1445255564ac5ee4a"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 41,
+      "text": "I spoke to Nick yesterday and he is feeling much better.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "caed9c8866fb0197239ad5fb073cad7340c7a7d205ae31742a00d62b27f91d73",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1456093,
+      "continuous_clip_end": 1508478,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03610778000438586,
+        "calls": 279,
+        "quantized_input_sha256": {
+          "c161": "9f241b64194cf3166730251d69baa66b7eed4f7fbe9c75366c0b536699f8173a",
+          "binary40": "5f39fde6a6cfeee2589fe986f12c933d7c4127753ec6b1d4ce0bf33f01a32cef"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 6,
+      "text": "Hey Nicks, leave the hallway light on until I get upstairs.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "e503c7f058e3bfedecc962dc504437cb065fc5ca47fa0f61484b4c72ba2948b8",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 201,
+            "relative_sample": 15360,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1516478,
+      "continuous_clip_end": 1573878,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.037548848980804905,
+        "calls": 289,
+        "quantized_input_sha256": {
+          "c161": "9367a1698d3170e1b826f645541aa4efa43611bd7f1971be5cfac0667a19951e",
+          "binary40": "8e2737ec1cd4f0c0e571805ca61783f86ebefe9047b23d21a055b4f9a4a030d0"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 24,
+      "text": "There are six people waiting outside and another two on the stairs.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "f3dc9896e2d73edc55aab00f94c63da1a5640886066ab1ad0954df937386b697",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1581878,
+      "continuous_clip_end": 1644665,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03906141401967034,
+        "calls": 301,
+        "quantized_input_sha256": {
+          "c161": "6b08ae254a869b39eb78ff850c45871ae0561afead1cdde80161166c68d17ae2",
+          "binary40": "ee73d291fe7f8c9cd9feb439a6cfa5647a84a6946e827023dee12381663427b7"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 25,
+      "text": "The price was sixty pounds, including delivery.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "e5cd0e290c372ecc69b2d65d62222047104c977318adb4014361082e4a83e7fd",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1652665,
+      "continuous_clip_end": 1701335,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.034708920982666314,
+        "calls": 271,
+        "quantized_input_sha256": {
+          "c161": "2c37594b5716f942d1d8390afa27e971bf8cfd9a18b25f7105f8a1244ec51e2e",
+          "binary40": "c9c48d025b3aae536019802552b8de78a799f4b6001339541b548c9e64755cce"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 42,
+      "text": "Hey Nicky, your breakfast is getting cold.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "181f96964eb962b1239ac7c64ad4d707ee5e93f0123d3d659f237ff2cb73d6e4",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1709335,
+      "continuous_clip_end": 1755218,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.033673366997390985,
+        "calls": 265,
+        "quantized_input_sha256": {
+          "c161": "fce853021157eda94ead959e666247fc8b3443aadb0f035d521381aa07d86a0f",
+          "binary40": "9c910f16ff993ac53b6f0e0c1ad0307f8b2e4407d9f2b26589b20eaeb327117f"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 7,
+      "text": "Hey Nicks, tell me how long the journey to the airport will take.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "840a75b47dffd0875fa0fb9c8454232e92937182fc654ae900c10c4b003435e7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1763218,
+      "continuous_clip_end": 1824333,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.039287958992645144,
+        "calls": 297,
+        "quantized_input_sha256": {
+          "c161": "cbbd988742740f4c7c725f2289c03aaebb5aa2efc94b377058baf32da2e25926",
+          "binary40": "e344b0c021a4e6feaa5af33b63e149ec5cc2baf784117835fa2df3e29c5f941c"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 26,
+      "text": "I found a nice little cafe near the museum yesterday.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "459a08910b858cbab94420de5919b6298316aecf98647706785266258ace20af",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1832333,
+      "continuous_clip_end": 1884160,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03683750799973495,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "1fa6e8f6dd307d3401168ea7728e9aaf371641a399c5cbf6fed2c2f4c84f62b1",
+          "binary40": "c7606e640e2426a0fd4bc8c7913b7f09b4f2d6760b2ab03549ece400413a204c"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 27,
+      "text": "That fixes the problem with the kitchen cupboard.",
+      "group": "ordinary_common_words",
+      "pcm_sha256": "02bc97a5ccde8df17c125295d02c789779c916b46ff4f0c0cf6ecdd6c121e3a5",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1892160,
+      "continuous_clip_end": 1936557,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03453239699592814,
+        "calls": 262,
+        "quantized_input_sha256": {
+          "c161": "03f717d0be5553211cad9ae20aac5511d4ca6ca6d23c8522cf51776b4c621494",
+          "binary40": "606229e70078188a638eba2ac9a3d3d62ca5b40da03785d5d676c58513532dc0"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 43,
+      "text": "Hey Alex, would you mind answering the door?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "bae130b649b5ace6400882c4b6f350b9b528d569f42b126f1e25d8dbdfc0c092",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1944557,
+      "continuous_clip_end": 1985982,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03308414400089532,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "2e7141fca56ea04b0d090446b55a2340c86bcf767bf6371ac8636e6e2541f349",
+          "binary40": "0bbb540cdd657b0e70d3ae7ee30c024e9d5c85699520893600f32838be740807"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 8,
+      "text": "Hey Nicks, pause the television for a moment please.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "c952779c4de405c5643d7df5bf331a9412d901a9d3f8499a0b4900ecdedd75a8",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 1993982,
+      "continuous_clip_end": 2045066,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03507624298799783,
+        "calls": 276,
+        "quantized_input_sha256": {
+          "c161": "950b7ed286c037e6de3df26058379c06ed3711b8d5651d41d04ccf3229f263c7",
+          "binary40": "aa36c729cd2e7150fe6f67ef8a5495f4f03215b2b1f3d88a36dad10d3e4adeac"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 28,
+      "text": "Would you leave a small light on in the kitchen tonight?",
+      "group": "ordinary_household",
+      "pcm_sha256": "de0e62218697ccd2af84a92fbbddb9a835d3e2018e45fe1409d14d48c802ef66",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2053066,
+      "continuous_clip_end": 2099506,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03565912300837226,
+        "calls": 267,
+        "quantized_input_sha256": {
+          "c161": "c6cd599223fe7a7def0ef690d869eed41747b88dbbb29050be1a65ec453797e6",
+          "binary40": "a3ad0d4d03f00d63c3e3c62fc8f05fc27957cc605205de83ac56b6fba314fdd9"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 29,
+      "text": "The timer should ring just before the potatoes are ready.",
+      "group": "ordinary_household",
+      "pcm_sha256": "83bd632e45bfc0438c0672d918123fa265f4e3eca6a8ffc5c5cd9d164f742734",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2107506,
+      "continuous_clip_end": 2161934,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036679284006822854,
+        "calls": 283,
+        "quantized_input_sha256": {
+          "c161": "f642b690de4064ab14527fcaef387d88a9b147d22b431030101c24d55389743a",
+          "binary40": "8758701ab3a79030c5f9073b6e7acdaac05ff9f8a1b80cab8b817e57adbeb2ea"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 44,
+      "text": "Hey Mike, I think you left your coat in the hallway.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "3fe7e8876c3ef85df07ecb732c2735dce149deab2bb32d87dc19190d220e69ea",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2169934,
+      "continuous_clip_end": 2221204,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03615448300843127,
+        "calls": 277,
+        "quantized_input_sha256": {
+          "c161": "91aa5635e3a28e13a99c5101ea697f33c2b813e628e3a9bd1ca36290279d9a3f",
+          "binary40": "764302cf331c2e53246393b66593b903cd9100602d8979aacef949e822a26834"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 9,
+      "text": "Hey Nicks, make the room a little warmer before bedtime.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "9d4f768044788e32e800ba6d623ae814b751f1ff24825cd2619489c91e8872e4",
+      "isolated": {
+        "c161": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 201,
+            "relative_sample": 15360,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2229204,
+      "continuous_clip_end": 2284004,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03689496099832468,
+        "calls": 284,
+        "quantized_input_sha256": {
+          "c161": "5506d4ef4a53626d12e84f121d567d6d0efc71a09fcb45cb7f015e45085200da",
+          "binary40": "636566fa3c3c1f200b31a76acb82db3995e5acba6fd34293830076059a107a7c"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 30,
+      "text": "I turned the bedroom speaker down because the baby was asleep.",
+      "group": "ordinary_household",
+      "pcm_sha256": "4d126968790cd77eff8ecf74806f72ec3fa8a2d7613168296c81b837b0700d5c",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2292004,
+      "continuous_clip_end": 2347175,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.036490817001322284,
+        "calls": 285,
+        "quantized_input_sha256": {
+          "c161": "d0cae5f504a888db29aee4ff41d7f9a52d1f0d344b6f00bf5a3179d3bbe0fcbb",
+          "binary40": "696a505205a1453e437e0f3aaff2a42ab1e5f8f97d397fb829d182952b3b97e1"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 31,
+      "text": "Please check whether the back door is locked before you go upstairs.",
+      "group": "ordinary_household",
+      "pcm_sha256": "273e7ab769f855cc8f96dcc7a23610af3aa2b59dc9797c3a734387d2e7bb8fdb",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2355175,
+      "continuous_clip_end": 2412204,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03784794299281202,
+        "calls": 289,
+        "quantized_input_sha256": {
+          "c161": "ac230655c76fe8472ed5e4851b55ec329428a0826bcee4ffc6dc11ac847ea790",
+          "binary40": "ad446a5aba86ab01f7159b07bd8a5285935f7524f6d0b3118e489c836f6c01fc"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 45,
+      "text": "Hey Chris, the taxi will be here in a couple of minutes.",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "71cf082706a5ebfa644a7287205787a2b57609923291d964070041ea6bfce868",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2420204,
+      "continuous_clip_end": 2476490,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03815047099487856,
+        "calls": 287,
+        "quantized_input_sha256": {
+          "c161": "9250b1aaca183814913a7aec205cce671fd14b29fce3035543300877e243bad3",
+          "binary40": "1e47580257de791e459a98d647a9af28efd676e3db105d3797afc761de70501c"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 10,
+      "text": "Hey Nicks, cancel the reminder about the laundry.",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "e6219ee300856bfc409ab1ff39da0f0720e6de241ab2f5b49d2aa8da36fd7e7f",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2484490,
+      "continuous_clip_end": 2533531,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03536388400243595,
+        "calls": 272,
+        "quantized_input_sha256": {
+          "c161": "d88aa53e6c3745d6f1158417927698802eed12f0519ad67500aa359f437d5fcf",
+          "binary40": "870df76df6e2895de3705823a21e3be63051df63baf731ec9b1c797a684ed67d"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 32,
+      "text": "The washing machine has finished, but the clothes are still wet.",
+      "group": "ordinary_household",
+      "pcm_sha256": "589ba542700e2b1d925ac6247fa2ce1b15f393af4693bac90781644b4b8c19d9",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2541531,
+      "continuous_clip_end": 2600417,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.038656601012917235,
+        "calls": 293,
+        "quantized_input_sha256": {
+          "c161": "787552235f15d64997c1509479ffd381adb703968baf2efedca58e4a55bc2305",
+          "binary40": "6e8dac56422be8195febad1a3526624b64cfbe6cbe8d424f5cf8dfcc2a461810"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 33,
+      "text": "We can open the windows once the traffic has settled down.",
+      "group": "ordinary_household",
+      "pcm_sha256": "a9f91ab6d24b4e3d0ba96783a6ea66de778f27e72c9f5219e18944cbee2c2504",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2608417,
+      "continuous_clip_end": 2664331,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03784876599092968,
+        "calls": 286,
+        "quantized_input_sha256": {
+          "c161": "944d03d4041b942a0328b55bb7c9e945f02432261765ffd42885046a13436e8d",
+          "binary40": "fed797d8de3471e8f008d56e008552380b3aeaa349d7f81edee5251ad4f9a494"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 46,
+      "text": "Hey Max, can you carry the other bag upstairs?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "a22f4b87d8b3eca8cbd3891cfffb5771423d18dc1cfa6cd22ba498724d563ad7",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2672331,
+      "continuous_clip_end": 2721558,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03433593601221219,
+        "calls": 272,
+        "quantized_input_sha256": {
+          "c161": "94bc72b6e16a642ed934a2ab93ea61c5b64166ec709cacbf84b28a7e517099e1",
+          "binary40": "dafa4d2732e0ba4d1fe6e1cb5c70e828225a73d9de470fb3dd3169764320c2fe"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 11,
+      "text": "Hey Nicks, do I have any appointments after lunch?",
+      "group": "nyx_connected_command",
+      "pcm_sha256": "b33810092858b53e9712aae5f59e88f24751ccfb61a895bc69716b7eb84ff54e",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2729558,
+      "continuous_clip_end": 2781571,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.0363216330006253,
+        "calls": 278,
+        "quantized_input_sha256": {
+          "c161": "5b74a1905431a4030c5fb1346d49d28a1cc9fb8daf0eb2ab913dab782ca9f5e5",
+          "binary40": "72db4fae8986fe79007fa075dcede69ebf60290e18b357b303b762fccfe29707"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 34,
+      "text": "I will call you when the kettle starts boiling.",
+      "group": "ordinary_household",
+      "pcm_sha256": "845a81585fb2bf9a1e9abd3f763e1c39d5cdac87684faf60f5a0d363140cd628",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2789571,
+      "continuous_clip_end": 2830996,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.033653771999524906,
+        "calls": 256,
+        "quantized_input_sha256": {
+          "c161": "6801ae88b037dd74d8f8d34e4c2679c4b718e9f4802bec8719ee469d86738565",
+          "binary40": "491903b2e9cc6046b845a93409839ef46bb7482cde114f0367c1e811b4df4311"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 35,
+      "text": "Please put the remote control back beside the sofa.",
+      "group": "ordinary_household",
+      "pcm_sha256": "a3e89cc472a02784e17467e82decd8d16fdd50e0bf2a4d1bc2f3cb96586d9103",
+      "isolated": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2838996,
+      "continuous_clip_end": 2887666,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03521231500781141,
+        "calls": 271,
+        "quantized_input_sha256": {
+          "c161": "06e2a1f2d7269a5f36fb7c35a03cf7ce4fad3072cd94c1b2e098a5ccf941031c",
+          "binary40": "fde2e7faaecf5329c7e3bf2f40efc9118e0665f6e8c382cc9604c85e6b99e42c"
+        }
+      }
+    },
+    {
+      "stream": "melo-BR",
+      "index": 47,
+      "text": "Hey Nicole, are we still meeting outside the cinema?",
+      "group": "ordinary_name_address",
+      "pcm_sha256": "efba0b54a250747a8781a5a09a426fd68205af15c284d452a8309474af181a7b",
+      "isolated": {
+        "c161": [
+          {
+            "step": 196,
+            "relative_sample": 12960
+          }
+        ],
+        "channel_bn": [],
+        "pair": [
+          {
+            "step": 196,
+            "relative_sample": 12960,
+            "model": "c161"
+          }
+        ]
+      },
+      "isolated_suppressed": [],
+      "continuous": {
+        "c161": [],
+        "channel_bn": [],
+        "pair": []
+      },
+      "continuous_clip_start": 2895666,
+      "continuous_clip_end": 2946379,
+      "isolated_timing": {
+        "interleaved_inference_and_decoder_seconds": 0.03512485299143009,
+        "calls": 275,
+        "quantized_input_sha256": {
+          "c161": "f7dfe9a44153b0583fa4a379cc75822a74a83b529e93a0df6a387cdc1a5ef272",
+          "binary40": "1a83eccf720286df04e82182660721905d19c35a23b9ad7feb083ed1f1681133"
+        }
+      }
+    }
+  ],
+  "policy": "All original 3x48 consumed clips and original physical streams. Run actual C161 and channel BN interpreters interleaved, native 480 sample returns. Original two-parent arbitration and fixed operating points. Compare clip identity, complete returned events and everyday/common-name collisions across history. Full priming and gap events kept. No new data, exposure, threshold, optimizer or P4 measurement."
+}
