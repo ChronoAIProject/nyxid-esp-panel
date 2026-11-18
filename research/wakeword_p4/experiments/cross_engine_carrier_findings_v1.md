@@ -26,3 +26,7 @@ Next: retain original model and raw context traces for diagnosis/Mac review, and
 ## Locked float context attribution
 
 Plan de778cd6; GPU4090 original inference and independent saved event/archive review both actual exit0, zero updates. All144 context clip decisions match float/INT8 exactly: target builtin11/11, US12/12, BR3/3 out of12 each. US common-name collision persists in both; other ordinary groups remain0. Thus BR continuous-context misses and this name collision precede quantization. This scope does not explain isolated BR bare/timer misses, Joe or background behavior. No calibration/QAT rescue is justified by these context results; original reports and four-member evidence archive are preserved.
+
+## Saved cell coverage audit
+
+The exhaustive72target-cell audit preserves PCM identity and all speed/carrier/render cells. BR bare loses six C161 hits with no gains; BR light gains two and loses one, time gains two with no losses, timer loses two with no gains. BR quiet speed1.1 bare is itself a C161-hit/candidate-miss, so this regression is not confined to the noise/RIR render. Do not infer acoustic cause from this association: speeds are separately synthesized and render variants share native speech. US aggregate33/36 conceals two new time hits and two losses (bare/timer). Native source metadata still says unconsumed-threshold-development in places; these records are already consumed diagnostics and cannot be treated as fresh acceptance. No new inference or training was performed by this audit.
