@@ -1,4 +1,8 @@
-#if defined(NYX_BAND_CODED_CUE_V4)
+#if defined(NYX_ALIGNED_CODED_CUE_V4)
+#include "../portable/c161_coded_cue_aligned_v4.h"
+using Detector = nyx::AlignedCodedCueV4;
+constexpr unsigned char kBit = 4;
+#elif defined(NYX_BAND_CODED_CUE_V4)
 #include "../portable/c161_coded_cue_band_v4.h"
 using Detector = nyx::BandCodedCueV4;
 constexpr unsigned char kBit = 4;

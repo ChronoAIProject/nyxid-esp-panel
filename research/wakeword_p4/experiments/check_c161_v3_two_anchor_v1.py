@@ -17,7 +17,7 @@ HEADER = ROOT/"portable/c161_v3_two_anchor_v1.h"
 
 
 def binding(out, coded=False):
-    subprocess.run(["c++","-O3","-std=c++17","-fPIC","-shared",*({"band":["-DNYX_BAND_CODED_CUE_V4"],True:["-DNYX_CODED_CUE_V4"],False:[]}[coded]),str(ROOT/"frontend_probe/c161_fixed_playback_probe.cpp"),"-o",str(out)],check=True)
+    subprocess.run(["c++","-O3","-std=c++17","-fPIC","-shared",*({"aligned":["-DNYX_ALIGNED_CODED_CUE_V4"],"band":["-DNYX_BAND_CODED_CUE_V4"],True:["-DNYX_CODED_CUE_V4"],False:[]}[coded]),str(ROOT/"frontend_probe/c161_fixed_playback_probe.cpp"),"-o",str(out)],check=True)
     lib = ctypes.CDLL(str(out.resolve()))
     ptr = ctypes.c_void_p
     lib.make_pcm_cue.restype = ptr
