@@ -1,0 +1,62 @@
+ESP-ROM:esp32p4-eco5-20250430
+Build:Apr 30 2025
+rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x4ffb60d0,len:0x15e4
+load:0x4ffac2c0,len:0xe88
+load:0x4ffaefc0,len:0x3560
+entry 0x4ffac2ca
+I (49) boot: ESP-IDF v5.5.4 2nd stage bootloader
+I (50) boot: compile time Nov 18 2026 21:51:23
+I (50) boot: Multicore bootloader
+I (58) boot: chip revision: v3.1
+I (59) boot: efuse block revision: v0.0
+I (59) boot.esp32p4: SPI Speed      : 80MHz
+I (59) boot.esp32p4: SPI Mode       : SLOW READ
+I (60) boot.esp32p4: SPI Flash Size : 2MB
+I (60) boot: Enabling RNG early entropy source...
+I (63) boot: Partition Table:
+I (63) boot: ## Label            Usage          Type ST Offset   Length
+I (63) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (64) boot:  2 factory          factory app      00 00 00010000 00100000
+I (70) boot: End of partition table
+I (71) esp_image: segment 0: paddr=00010020 vaddr=40020020 size=4d6b0h (317104) map
+I (95) esp_image: segment 1: paddr=0005d6d8 vaddr=30100000 size=00124h (   292) load
+I (103) esp_image: segment 2: paddr=0005d804 vaddr=30100130 size=00048h (    72) load
+I (111) esp_image: segment 3: paddr=0005d854 vaddr=4ff20000 size=027c4h ( 10180) load
+I (119) esp_image: segment 4: paddr=00060020 vaddr=40000020 size=118d0h ( 71888) map
+I (131) esp_image: segment 5: paddr=000718f8 vaddr=4ff227c4 size=0c2c8h ( 49864) load
+I (143) esp_image: segment 6: paddr=0007dbc8 vaddr=4ff2eb00 size=020f4h (  8436) load
+I (153) boot: Loaded app from partition at offset 0x10000
+I (153) boot: Disabling RNG early entropy source...
+W (167) pmu_pvt: blk_version is less than 2, pvt auto dbias init not supported in efuse.
+I (169) cpu_start: Multicore app
+I (189) cpu_start: GPIO 38 and 37 are used as console UART I/O pins
+I (189) cpu_start: Pro cpu start user code
+I (189) cpu_start: cpu freq: 400000000 Hz
+I (189) app_init: Application information:
+I (189) app_init: Project name:     nyx_cue_selftest
+I (190) app_init: App version:      v0.6.28-2536-g02edd82a-dirty
+I (190) app_init: Compile time:     Nov 18 2026 21:51:20
+I (190) app_init: ELF file SHA256:  862ac2b35...
+I (190) app_init: ESP-IDF:          v5.5.4
+I (190) efuse_init: Min chip rev:     v3.1
+I (190) efuse_init: Max chip rev:     v3.99 
+I (190) efuse_init: Chip rev:         v3.1
+I (191) heap_init: Initializing. RAM available for dynamic allocation:
+I (191) heap_init: At 4FF33030 len 00087F90 (543 KiB): RETENT_RAM
+I (191) heap_init: At 4FFBAFC0 len 00004BF0 (18 KiB): RAM
+I (191) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (192) heap_init: At 30100178 len 00001E88 (7 KiB): TCM
+I (198) spi_flash: detected chip: gd
+I (198) spi_flash: flash io: dio
+W (198) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (199) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (200) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (205) main_task: Started on CPU0
+I (215) main_task: Calling app_main()
+NYX_CUE_EVENT sample=102932 bits=8
+NYX_CUE_EVENT sample=278036 bits=8
+NYX_CUE_SELFTEST PASS hits=2 state=3448 max_block_us=424 blocks_ge_30ms=0 min_internal_heap=601044
+I (285) main_task: Returned from app_main()
