@@ -1,4 +1,5 @@
-"""Transcribe captured commands on the calibrated lexical clocks with and without panel pre-roll."""
+"""Transcribe captured commands at lexical wake notifications, with and without pre-roll."""
+import argparse
 from pathlib import Path
 
 from faster_whisper import WhisperModel
@@ -10,60 +11,89 @@ from run_c161_first_command_v5 import transcripts
 from select_c161_synthesized_cue_v2 import load_wav
 
 BASE = "4090-c161-pocketsphinx"
-FRESH = BASE+"-willow"
+FRESH = BASE + "-willow"
+MIDLEVEL = "4090-c161-midlevel-pocketsphinx"
 
 
-def inputs():
-    old = read(RESULTS / f"{BASE}-calibrated-v1.json")
-    forward = read(RESULTS/"4090-c161-signed-forward-v1.json")["records"]
-    for r in old["records"]:
-        if r["cohort"] == "forward":
-            src = forward[int(r["key"])]
-            if src["target_id"] == "nyx":
-                yield "forward",src,dict(start=src["start"],end=src["end"],first_phone=src["first_phone"],
-                                          command=src["carrier"]), dict(direct=r["direct_events"], combined=r["merged"])
-    sources = read(RESULTS/f"{FRESH}-v1.json")["records"]
-    cases = read(RESULTS/f"{FRESH}-lexical.json")["records"]
-    for src, r in zip(sources,cases,strict=True):
+def inputs(use_midlevel):
+    forward = read(RESULTS / "4090-c161-signed-forward-v1.json")["records"]
+    calibrated = read(RESULTS / f"{BASE}-calibrated-v1.json")["records"]
+    new = read(RESULTS / f"{FRESH}-v1.json")["records"]
+    lexical = read(RESULTS / f"{FRESH}-lexical.json")["records"]
+    extra = {}
+    if use_midlevel:
+        extra = {(r["cohort"], r["key"]): r for r in read(RESULTS / f"{MIDLEVEL}-v1.json")["records"]}
+
+    def routes(cohort, key, src, existing):
+        if use_midlevel:
+            row = extra[cohort, key]
+            assert row["pcm_sha256"] == src["pcm_sha256"]
+            return {"midlevel": row["events"]}
+        return existing
+
+    for r in calibrated:
+        if r["cohort"] != "forward":
+            continue
+        src = forward[int(r["key"])]
+        assert src["pcm_sha256"] == r["pcm_sha256"]
+        if src["target_id"] == "nyx":
+            span = dict(start=src["start"], end=src["end"], first_phone=src["first_phone"], command=src["carrier"])
+            existing = dict(direct=r["direct_events"], combined=r["merged"])
+            yield "forward", src, span, routes("forward", r["key"], src, existing)
+    for i, (src, r) in enumerate(zip(new, lexical, strict=True)):
         assert src["pcm_sha256"] == r["pcm_sha256"]
         for span in src["timeline"]:
-            if span["role"]=="nyx":
-                yield "new",src,dict(start=span["start"],end=span["end"],first_phone=span["first_phone"],
-                                     command=span["text"].split(",",1)[1].strip()),r["search"]["calibrated"]
+            if span["role"] == "nyx":
+                target = dict(start=span["start"], end=span["end"], first_phone=span["first_phone"],
+                              command=span["text"].split(",", 1)[1].strip())
+                existing = {k: r["search"]["calibrated"][k] for k in ("direct", "combined")}
+                yield "new", src, target, routes("new", str(i), src, existing)
 
 
-def main():
+def main(use_midlevel):
     path = Path(".local/wakeword/whisper-small-en")
-    expected = read(RESULTS/"4090-parallel-melo-context-asr-plan-v1.json")["files"]
-    identity = {p.name:sha(p) for p in path.iterdir() if p.is_file()}
-    assert all(expected[str(path/name)]==h for name,h in identity.items())
+    expected = read(RESULTS / "4090-parallel-melo-context-asr-plan-v1.json")["files"]
+    identity = {p.name: sha(p) for p in path.iterdir() if p.is_file()}
+    assert {str(path / name): h for name, h in identity.items()} == {
+        name: h for name, h in expected.items() if Path(name).parent == path
+    }
     model = WhisperModel(str(path), device="cuda", compute_type="float16", cpu_threads=1, num_workers=1)
-    assert model.model.device=="cuda"
+    assert model.model.device == "cuda"
     rows, readings = [], {}
-    for cohort, src, span, routes in inputs():
+    for cohort, src, span, routes in inputs(use_midlevel):
         pcm = load_wav(src)
-        for mode in ("direct","combined"):
-            hits=[r["sample"] for r in routes[mode] if span["start"]<=r["sample"]<span["end"]]
-            row=dict(cohort=cohort,voice=src["voice"],mode=mode,source_pcm_sha256=digest(pcm),span=span,hits=hits,captures={})
+        for mode, events in routes.items():
+            hits = [r["sample"] for r in events if span["start"] <= r["sample"] < span["end"]]
+            row = dict(cohort=cohort, voice=src["voice"], mode=mode, source_pcm_sha256=digest(pcm),
+                       span=span, hits=hits, captures={})
             if hits:
-                block_end=(hits[0]+159)//160*160
-                for label, lookback in (("immediate",0),("preroll",32000)):
-                    start=max(0,block_end-lookback)
-                    audio=pcm[start:span["end"]]
-                    key=digest(audio)
+                block_end = (hits[0] + 159) // 160 * 160
+                for label, lookback in (("immediate", 0), ("preroll", 32000)):
+                    start = max(0, block_end - lookback)
+                    audio = pcm[start:span["end"]]
+                    key = digest(audio)
                     if key not in readings:
-                        readings[key]=transcripts(model,audio)
-                    text=normalized(readings[key]["text"])
-                    command=normalized(span["command"])
-                    row["captures"][label]=dict(first_sample=start,samples=len(audio),sha256=key,
-                        onset_retained=start<=span["first_phone"],first_word_present=command[0] in text,
-                        exact_command_suffix=text[-len(command):]==command)
+                        readings[key] = transcripts(model, audio)
+                    text = normalized(readings[key]["text"])
+                    command = normalized(span["command"])
+                    row["captures"][label] = dict(first_sample=start, samples=len(audio), sha256=key,
+                        onset_retained=start <= span["first_phone"], first_word_present=command[0] in text,
+                        exact_command_suffix=text[-len(command):] == command)
             rows.append(row)
-    save(RESULTS/f"{BASE}-first-command.json",dict(model_files=identity, asr="Whisper small.en CUDA FP16, unprompted English",
-         forward_sha256=sha(RESULTS/"4090-c161-signed-forward-v1.json"),
-         forward_results_sha256=sha(RESULTS/f"{BASE}-calibrated-v1.json"), new_results_sha256=sha(RESULTS/f"{FRESH}-lexical.json"),
-         cap="mono source WAV, 160-sample delivery boundary, 32000-sample host pre-roll", records=rows, transcripts=readings))
+    results = dict(model_files=identity, asr="Whisper small.en CUDA FP16, unprompted English",
+                   forward_sha256=sha(RESULTS / "4090-c161-signed-forward-v1.json"),
+                   forward_results_sha256=sha(RESULTS / f"{BASE}-calibrated-v1.json"),
+                   new_results_sha256=sha(RESULTS / f"{FRESH}-lexical.json"),
+                   cap="mono source WAV, 160-sample delivery boundary, 32000-sample host pre-roll",
+                   records=rows, transcripts=readings)
+    stem = BASE
+    if use_midlevel:
+        results["midlevel_results_sha256"] = sha(RESULTS / f"{MIDLEVEL}-v1.json")
+        stem = MIDLEVEL
+    save(RESULTS / f"{stem}-first-command.json", results)
 
 
-if __name__=="__main__":
-    main()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--midlevel", action="store_true")
+    main(parser.parse_args().midlevel)
