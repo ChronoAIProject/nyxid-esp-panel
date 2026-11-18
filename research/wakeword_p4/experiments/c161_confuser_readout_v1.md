@@ -22,3 +22,20 @@
 相对有声前文父模型，单路丢失内置 3/5、US 2/5/6、BR 0/3/7/9/11，双路丢失内置 3、US 4/6、BR 0/3。三段会话中全部 108 条普通语句的单路与合并通知均为零。独立日常 96 句也为零，包括 “We need six cups of water.”。独立 BR Nicole、BR 场景 0 的 Nick 和其余共享前文均为零。完整广播 kajfh 中的 “Mr. Kevin Strand” 及 ofbxh 中的 “our best policemen” 在第二版单路、辅助路与合并后均为零。[连续会话每条命令、普通语句和样本时钟](../results/4090-c161-signed-confuser-audit-v1.json) · [独立日常句](../results/4090-c161-signed-confuser-daily-v1.json) · [匹配前文](../results/4090-c161-signed-confuser-willow-v1.json)
 
 旧四声音场景中，第二版单路 4/12，双路 6/12。原 C161 为 1/12、3/12，首版与有声前文父模型为 5/12、7/12，官方 Hey Willow 为 9/12。第二版四次单路通知在合成命令首音素后 60–170 ms，面板录音需要相应的前置缓冲。Mac 现有 4 条目标中命中 2 条；Joe 的 72 条仍全部漏掉。BR 连续命令单路仅 2/12。下一组比较使用冻结模型、新编的三组对话及四个既有诊断声音，同一场景的两个唤醒词共享同一份前文。66 个已消费背景按原 PCM 身份逐一清点。[旧四声音与两段广播的逐次通知](../results/4090-c161-signed-confuser-transfer-v1.json)
+
+## 新场景、完整背景和原模型的命中保留
+
+在模型冻结后用 4090 生成四个声音各三组新请求。每组的 Nyx 和 Willow 共用完全相同的聊天、姓名或数词前文和命令文本，所有合成片段无削波。在 12 个对应目标段中，C161 单路 1 次、双路 2 次，第二版分别 5 次、7 次，官方 Hey Willow DEFAULT 命中 12 次。第二版单路命中 am_eric 的场景 1/2 和 bf_lily 的全部三场，af_aoede、am_fenrir 均漏。命中的通知比命令首音素晚 70–180 ms。三条路径（原 C161、第二版与官方）在共享前文和对方目标段均为零次通知。旧、新四声音来自同一合成器，不能由此估算真人唤醒率。[新场景逐句时钟](../results/4090-c161-signed-forward-candidate-v1.json) · [官方返回和 UART](../results/4090-c161-signed-forward-official-v1.zip) · [冻结输入](../results/4090-c161-signed-forward-inputs-v1.zip)
+
+66 个已消费背景按 PCM SHA256 去重，共 28.0012 小时。两段已完整运行的广播沿用逐帧分数，其余 64 段从 PCM 运行同一模型。三批共 12/12/42 段，主路、辅助路和合并通知均为零。[按文件的事件、时钟及来源](../results/4090-c161-signed-confuser-background-v1.json)
+
+另外重放 1188 条既有的单独语句。对每条核对主路量化输入摘要、时钟及原 C161 的事件，再使用原阈值统计同一输入上的得失。下表的四组正例各含 9 个裸词、27 个命令变体。
+
+| 声音 | 原单路 /36 | 第二版 /36 | 原先命中后漏掉 | 新增命中 |
+| --- | ---: | ---: | ---: | ---: |
+| Legacy | 35 | 22 | 14 | 1 |
+| Jenny | 33 | 8 | 25 | 0 |
+| Melo US | 33 | 14 | 21 | 2 |
+| Melo BR | 21 | 5 | 17 | 1 |
+
+Jenny 的 44 次构造近音误触减少到 19 次，同时丢失 25 条原本识别的唤醒。Legacy 中新出现 1 条交叉触发，输入为 “Hi E S P, turn on the light.”，样本 41760。原 C161 继续用于面板验证。历史报告的目标事件说明负例改善伴随明显的跨声音召回损失。保留两份训练模型及完整分数供复核。[Legacy](../results/4090-c161-signed-confuser-isolated-primed-v1.json) · [Jenny](../results/4090-c161-signed-confuser-isolated-jenny-v1.json) · [Melo](../results/4090-c161-signed-confuser-isolated-melo-v1.json)
