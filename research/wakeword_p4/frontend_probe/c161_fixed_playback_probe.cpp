@@ -1,4 +1,8 @@
-#if defined(NYX_ALIGNED_CODED_CUE_V4)
+#if defined(NYX_CODED_CUE_V5)
+#include "../portable/c161_coded_cue_v5.h"
+using Detector = nyx::CodedCueV5;
+constexpr unsigned char kBit = 8;
+#elif defined(NYX_ALIGNED_CODED_CUE_V4)
 #include "../portable/c161_coded_cue_aligned_v4.h"
 using Detector = nyx::AlignedCodedCueV4;
 constexpr unsigned char kBit = 4;

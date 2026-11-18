@@ -84,3 +84,13 @@ Chris 后间隔 0、250、500 ms 时冻结词尾检测均漏检。250 ms 这一�
 另一条路线仅针对设备播放同一份生成文件。v4 使用 v3 的同一个 21200 样本录音，在 /ks/ 内以相隔 160 ms 的两个 80 ms 窗口叠加具有淡入淡出的确定性带限噪声。改动 2549 个样本，峰值 21804。检测器检查两个已知波形的相关性与间隔。v4 SHA256 为 `3d44da9645f04318e67edf5aaa1931b207a6ea3e1aac8e30dc9dc99d90d26c2f`。[固定 WAV](../results/hye-nyx-c161-synthetic-cue-v4.wav) · [生成参数](../results/4090-c161-coded-cue-v4-source.json)
 
 在共享前文和连接命令的数字、近距离反射、强反射加噪三种设置中，直接比对两段波形分别命中 12/12、12/12、0/12。对输入和模板同做带通后，三组均为 12/12；对应未加标记的 v3、Willow 和静音共 108 次均零通知。另用 Bot 播报作前文，在 24 个随机房间中 v4 命中 24/24，匹配静音零通知。普通连续对话中带通版本误触一条，Joe 也有两条额外通知。上述为固定文件检测器自身的通知。[第一版逐项结果](../results/4090-c161-coded-cue-v4-commands.json) · [带通版原始回放](../results/4090-c161-coded-cue-band-v4-commands.json) · [随机房间和 Bot 前文](../results/4090-c161-coded-cue-band-v4-fresh.json)
+
+## v5 固定播放音的 Mac / ESP32-P4 交接
+
+v4 限制两段相关性的极性和间隔后，在三批已消费完整背景上分别还有 5、4、3 次误触。v5 保留 v4 文件开头，在 /ks/ 内第 16320 至 17600 样本加入第三段独立的带限噪声。识别要求三段模板以 160 ms、120 ms 的间隔依次通过，并保持同一极性，每个间隔容许 1.5 ms 偏差。CUDA Whisper small.en 对最终文件无提示转写为 “Hey, Nix.”。16 kHz 单声道 PCM16，21200 样本，WAV SHA256 为 `79c37ecc57e3a7297f1a9ff1a9481fd56af1b985872a7875ccbadb5ffbf40f47`。[唤醒 WAV](../results/hye-nyx-c161-synthetic-cue-v5.wav) · [来源和生成参数](../results/4090-c161-coded-cue-v5-source.json)
+
+原 C161 单路与 v5 匹配器合并，数字直送、近场反射和远场反射加噪的连续命令各 12/12，均在唤醒段内恰好通知一次。相同前文和命令换成 Willow 或等长静音，共 72 次均零通知。另在 24 个新种子的房间用 Bot 回复作前文，v5 匹配器 24/24，静音对照 0/24。270 个训练分区的 MIT 房间响应以相同增益和噪声比较，有噪、无噪各命中 267/270，各漏三次。普通连续对话、96 条独立日常句、48 次普通 Bot 答复、两段冲突广播与 12 首完整音乐均无 v5 匹配事件。完整重放另三批已消费背景（10.484、9.614、7.903 小时）也均无 v5 事件。[合并路径](../results/4090-c161-coded-cue-v5-merged.json) · [新房间](../results/4090-c161-coded-cue-v5-fresh.json) · [MIT 房间响应](../results/4090-c161-coded-cue-v5-measured.json) · [完整背景 1](../results/4090-c161-coded-cue-v5-background-primed.json) · [2](../results/4090-c161-coded-cue-v5-background-jenny.json) · [3](../results/4090-c161-coded-cue-v5-background-melo.json)
+
+Mac 可独立纳入两个头文件。对每个连续采集的 16 kHz 单声道 PCM16 样本调用持久对象 `nyx::CodedCueV5::update(sample)`，返回 true 时在当前样本末记录固定音命中。主路继续执行原 C161 235/256、五步平滑，两者以同一时钟合并并共享 32160 样本冷却。探针将固定音事件标作位值 8。主机与 ESP-IDF P4 交叉编译实测对象均为 3448 B，三个常量数组另占 1040 B。整机运行成本由 Mac 在实际固件回报。[实现](../portable/c161_coded_cue_v5.h) · [模板系数](../portable/c161_coded_cue_coefficients_v5.h) · [对象符号与转写](../results/4090-c161-coded-cue-v5-audit.json)
+
+供实机复核的三个 WAV 都直接接上 “lower the fan speed.” 的首个合成音素。先输入 81600 零样本预热，再以 WAV 起点计时。数字文件的固定音事件在样本 102788，首命令音素在 106400，提前 225.75 ms。近场文件对应 102704 / 106315，远场文件对应 102932 / 106539。反射链的命令位置取输入源的时钟映射，麦克风实际到达与编码器起点由实机记录。[数字直送](../results/4090-c161-coded-cue-v5-command-digital.wav) · [近场](../results/4090-c161-coded-cue-v5-command-near.wav) · [远场](../results/4090-c161-coded-cue-v5-command-far.wav)

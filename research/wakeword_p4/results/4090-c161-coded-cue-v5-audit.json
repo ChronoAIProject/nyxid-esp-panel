@@ -1,0 +1,93 @@
+{
+  "cue_sha256": "79c37ecc57e3a7297f1a9ff1a9481fd56af1b985872a7875ccbadb5ffbf40f47",
+  "header_sha256": "9bf9bd02846576c5c103ba507870ebfafd6b7b0657017ce878137cad67eef797",
+  "coefficients_sha256": "0517d02f451cf859236e096af0ba9b40c4252eb4dd23b0835b5fb3068e69638d",
+  "p4": {
+    "compiler": "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/idf-tools/tools/riscv32-esp-elf/esp-14.2.0_20260121/riscv32-esp-elf/bin/riscv32-esp-elf-g++",
+    "compiler_sha256": "13976d952160abd3f9a711b0d92733bc182753766cf905c94f2c36c5f40d6554",
+    "object_sha256": "c57381e460a02c83147f59003f2fe90968190541aea8671f02049b1ad4675c88",
+    "source": "#include \"c161_coded_cue_v5.h\"\nextern \"C\" {\nnyx::CodedCueV5 cue;\nbool check_pcm(short x) { return cue.update(x); }\n}\n",
+    "p4_state_bytes": 3448,
+    "symbols": [
+      "00000000 00000292 W nyx::CodedCueV5::update(short)",
+      "00000000 00000044 V nyx::kCueBandFirV5",
+      "00000000 0000000c V nyx::kCueBandEnergyV5",
+      "00000000 000003c0 V nyx::kCueBandPatternsV5",
+      "00000000 00000100 W nyx::CodedCueV5::sign(int) const",
+      "         U __floatdidf",
+      "         U __floatsidf",
+      "         U __ltdf2",
+      "         U __muldf3",
+      "00000000 0000001c T check_pcm",
+      "00000000 00000d78 B cue"
+    ],
+    "build_rule": {
+      "directory": "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-vad-build-v1/app/build",
+      "command": "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/idf-tools/tools/riscv32-esp-elf/esp-14.2.0_20260121/riscv32-esp-elf/bin/riscv32-esp-elf-g++ -DESP_PLATFORM -DIDF_VER=\\\"v5.5.4\\\" -DSOC_MMU_PAGE_SIZE=CONFIG_MMU_PAGE_SIZE -DSOC_XTAL_FREQ_MHZ=CONFIG_XTAL_FREQ -D_GLIBCXX_HAVE_POSIX_SEMAPHORE -D_GLIBCXX_USE_POSIX_SEMAPHORE -D_GNU_SOURCE -D_POSIX_READER_WRITER_LOCKS -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-vad-build-v1/app/build/config -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/newlib/platform_include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/config/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/config/include/freertos -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/config/riscv/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/FreeRTOS-Kernel/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/include/freertos -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/freertos/esp_additions/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/include/soc -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/include/soc/esp32p4 -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/dma/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/ldo/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/debug_probe/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/mspi_timing_tuning/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/mspi_timing_tuning/tuning_scheme_impl/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/power_supply/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/port/esp32p4/. -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/port/esp32p4/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/port/esp32p4/private_include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_hw_support/mspi_timing_tuning/port/esp32p4/. -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/heap/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/heap/tlsf -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/log/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/soc/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/soc/esp32p4 -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/soc/esp32p4/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/soc/esp32p4/register/hw_ver3 -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/hal/platform_port/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/hal/esp32p4/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/hal/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_rom/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_rom/esp32p4/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_rom/esp32p4/include/esp32p4 -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_rom/esp32p4 -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_common/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_system/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_system/port/soc -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_system/port/include/riscv -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/esp_system/port/include/private -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/riscv/include -I/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/pthread/include @\"/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-vad-build-v1/app/build/toolchain/cxxflags\" -fdiagnostics-color=always -ffunction-sections -fdata-sections -Wall -Werror=all -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=unused-but-set-variable -Wno-error=deprecated-declarations -Wextra -Wno-error=extra -Wno-unused-parameter -Wno-sign-compare -Wno-enum-conversion -gdwarf-4 -ggdb -Og -fno-shrink-wrap -fmacro-prefix-map=/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-vad-build-v1/app=. -fmacro-prefix-map=/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf=/IDF -fstrict-volatile-bitfields -fno-jump-tables -fno-tree-switch-conversion -std=gnu++2b -fno-exceptions -fuse-cxa-atexit -o esp-idf/cxx/CMakeFiles/__idf_cxx.dir/cxx_exception_stubs.cpp.obj -c /home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/cxx/cxx_exception_stubs.cpp",
+      "file": "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/esp-idf/components/cxx/cxx_exception_stubs.cpp"
+    }
+  },
+  "host_state_bytes": 3448,
+  "whisper_model": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "transcript": "Hey, Nix.",
+  "words": [
+    {
+      "word": " Hey,",
+      "start": 0.0,
+      "end": 0.38,
+      "probability": 0.8076171875
+    },
+    {
+      "word": " Nix.",
+      "start": 0.58,
+      "end": 0.76,
+      "probability": 0.698486328125
+    }
+  ],
+  "witnesses": [
+    {
+      "wav": "4090-c161-coded-cue-v5-command-digital.wav",
+      "sha256": "fd304b4934144bea259cee4b856667b345534aa9d2a7398768439eecd6ade759",
+      "channel": "digital",
+      "notification": [
+        {
+          "t": 102788,
+          "cue_bits": 8
+        }
+      ],
+      "cue_start": 85200,
+      "command_start": 106400
+    },
+    {
+      "wav": "4090-c161-coded-cue-v5-command-near.wav",
+      "sha256": "7bd139cbcaea84aab44e79a316bcd0d035c4719f8f927fcebd27607e0fa8c694",
+      "channel": "near",
+      "notification": [
+        {
+          "t": 102704,
+          "cue_bits": 8
+        }
+      ],
+      "cue_start": 85132,
+      "command_start": 106315
+    },
+    {
+      "wav": "4090-c161-coded-cue-v5-command-far.wav",
+      "sha256": "199a6b643ab879a6e041f89c97125c10556ab37e734d365c28260744e0289e40",
+      "channel": "far",
+      "notification": [
+        {
+          "t": 102932,
+          "cue_bits": 8
+        }
+      ],
+      "cue_start": 85311,
+      "command_start": 106539
+    }
+  ]
+}

@@ -18,6 +18,9 @@ from select_c161_synthesized_cue_v2 import load_wav
 HEADER=RESULTS.parent/"portable/c161_coded_cue_v4.h"
 
 
+TARGET = "v4"
+
+
 def command_streams(cue):
     # Fresh room channels on the same dry matched triplets. The seed, carrier, timing
     # and absolute noise are identical for v4, original v3, Willow and silence.
@@ -33,8 +36,8 @@ def command_streams(cue):
         dry=load_wav(source)
         assert hashlib.sha256(dry.tobytes()).hexdigest()==source["pcm_sha256"]
         start,end=source["start"],source["end"]
-        for kind in (("v4","v3") if source["target_id"]=="nyx" else (source["target_id"],)):
-            target=cue if kind=="v4" else dry[start:end]
+        for kind in ((TARGET,"v3") if source["target_id"]=="nyx" else (source["target_id"],)):
+            target=cue if kind==TARGET else dry[start:end]
             stream=np.r_[dry[:start],target,dry[end:]]
             for name,taps,cut,snr,rate in rooms:
                 pcm=stream
@@ -71,7 +74,7 @@ def measured(cue):
         noise=lfilter([1],[1,-.85],np.random.default_rng(52631+i).normal(size=lead+len(waves[0])+8000))
         noise*=gain*np.sqrt(np.mean(v3.astype(float)**2)/np.mean(noise**2))/10
         start=lead+int(np.abs(h).argmax())
-        for role,w in zip(("v3","v4"),waves,strict=True):
+        for role,w in zip(("v3",TARGET),waves,strict=True):
             for noisy in (False,True):
                 signal=np.r_[np.zeros(lead),gain*w,np.zeros(8000)]
                 if noisy:
@@ -94,7 +97,7 @@ def run(lib,group,cue):
         if "pcm_sha256" in meta:
             assert digest==meta["pcm_sha256"]
         row=dict(source=meta,pcm_sha256=digest,events=events)
-        if group=="commands" and meta["role"]=="v4" and meta["scene"]==0 and meta["voice"]=="af_aoede":
+        if group=="commands" and meta["role"]==TARGET and meta["scene"]==0 and meta["voice"]=="af_aoede":
             path=RESULTS/f"{STEM}-command-{meta['channel']}.wav"
             with path.open("xb") as f:
                 sf.write(f,pcm,16000,format="WAV",subtype="PCM_16")
