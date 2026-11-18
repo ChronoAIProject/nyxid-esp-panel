@@ -40,7 +40,7 @@ def bands(pcm):
     return np.rint(pooled * (255 / 26)).clip(0, 255).astype(np.uint8), clock
 
 
-def training_data():
+def training_data(render=None):
     histories = [r for r in read(RESULTS/DAILY)["admitted"] if r["request"]["group"] == "conversation"]
     rng = np.random.default_rng(SEED)
     rows, arrays, labels, hard = [], [], [], []
@@ -52,6 +52,11 @@ def training_data():
         gap = (4000, 8000, 12000)[i % 3]
         onset = len(prefix) + gap
         full = np.r_[prefix, np.zeros(gap, np.int16), pcm, np.zeros(8000, np.int16)]
+        clean_digest = hashlib.sha256(full.tobytes()).hexdigest()
+        condition = {}
+        if render is not None:
+            full, condition = render(row, full, onset)
+            condition["clean_stream_sha256"] = clean_digest
         frame, clock = bands(full)
         pool = np.lib.stride_tricks.sliding_window_view(frame, WIDTH, axis=0)
         ends = clock[WIDTH-1:]
@@ -74,7 +79,7 @@ def training_data():
             arrays.extend(pool[ids])
             labels.extend([label]*len(ids))
             hard.extend([not row["positive"] and row["text"].lower().startswith("hey ")]*len(ids))
-        rows.append(dict(**row, pcm_sha256=hashlib.sha256(pcm.tobytes()).hexdigest(), prefix_id=histories[prefix_id]["index"],
+        rows.append(dict(**row, **condition, pcm_sha256=hashlib.sha256(pcm.tobytes()).hexdigest(), prefix_id=histories[prefix_id]["index"],
                          quiet=bool(i%2), onset=onset, stream_sha256=hashlib.sha256(full.tobytes()).hexdigest()))
     return torch.from_numpy(np.stack(arrays)).cuda().float()/255, np.array(labels), np.array(hard), rows
 
@@ -85,14 +90,14 @@ class WordWindow(nn.Sequential):
                          nn.Flatten(), nn.Linear(24*13, 24), nn.ReLU(), nn.Linear(24, 1))
 
 
-def train():
+def train(stem=STEM, render=None):
     torch.set_num_threads(2)
     assert "4090" in torch.cuda.get_device_name()
     torch.manual_seed(SEED)
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
     rng = np.random.default_rng(SEED)
-    x, y, hard, rows = training_data()
+    x, y, hard, rows = training_data(render)
     pos, neg, near = (np.flatnonzero(v) for v in (y == 1, y == 0, (y == 0) & hard))
     network = WordWindow().cuda()
     opt = torch.optim.AdamW(network.parameters(), lr=.0012, weight_decay=.001)
@@ -109,18 +114,18 @@ def train():
         if step in (0, 99, 499, STEPS-1):
             log.append(dict(step=step+1, loss=loss.item()))
     assert np.isfinite(log[-1]["loss"])
-    path = RESULTS / f"{STEM}-weights-v1.npz"
+    path = RESULTS / f"{stem}-weights-v1.npz"
     with path.open("xb") as f:
         np.savez_compressed(f, **{k:v.detach().cpu().numpy() for k,v in network.state_dict().items()})
     ids = np.r_[rng.choice(pos, 96, replace=False), rng.choice(neg, 160, replace=False)]
     calibration = x[ids]
     with torch.no_grad():
         prediction = network(calibration).sigmoid()[:,0].cpu().numpy()
-    samples = RESULTS / f"{STEM}-calibration-v1.npz"
+    samples = RESULTS / f"{stem}-calibration-v1.npz"
     with samples.open("xb") as f:
         np.savez_compressed(f, inputs=(calibration.cpu().numpy()*255).round().astype(np.uint8),
                             probabilities=prediction, ids=ids)
-    save(RESULTS/f"{STEM}-training-v1.json", dict(gpu=torch.cuda.get_device_name(), seed=SEED, steps=STEPS,
+    save(RESULTS/f"{stem}-training-v1.json", dict(gpu=torch.cuda.get_device_name(), seed=SEED, steps=STEPS,
          positive_windows=len(pos), negative_windows=len(neg), training=rows, history=log, weights_sha256=sha(path),
          calibration_sha256=sha(samples)))
 
