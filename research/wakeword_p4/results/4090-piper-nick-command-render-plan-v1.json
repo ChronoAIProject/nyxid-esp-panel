@@ -1,0 +1,46 @@
+{
+  "schema": "piper-nick-command-render-plan-v1",
+  "source_sha256": "172cceb6e583ccedb6c6a4b00e917ceb6cad72c788798c98738b13a7547ae2ba",
+  "files": {
+    "research/wakeword_p4/results/4090-piper-nick-command-material-original-v1.json": "6aa0ad103ef7d4a7d697042fca72d705176aef18a99b5d1fada827c397140307",
+    "research/wakeword_p4/results/4090-piper-nick-command-material-review-v1.json": "602d0bd488d6da67020289173892d3fa0dc0fc597cc74bb8c95e16e186d7c1c6",
+    "research/wakeword_p4/results/4090-piper-nick-command-material-execution-v1.json": "99356c40943a52660c77a60509b2ff8543c3f95d553274761a34130304c12715",
+    ".local/wakeword/piper-nick-command-material-v1/records.jsonl": "309f4746869ca5641ebfee2bb0b289a62ac98dac5d6f306ee04e9ad8e5502be9",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/render_hey_broad_training_v1.py": "3cd24ada437398387abe3c7df78c775293ed20302e5363164ab34715e2a5c143"
+  },
+  "context_decision_sha256": "8855ae77af1283548c13d582122e2d87b4a1b9ed467ded5bfd83cab1878e7091",
+  "versions": {
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "soundfile": "0.14.0"
+  },
+  "schedule": {
+    "path": ".local/wakeword/piper-nick-command-render-schedule-v1.jsonl",
+    "sha256": "5e32607357cebf0985e8171467bece2000f74f67f2f305fd9ae4c584fd13ee87",
+    "sources": 6048,
+    "rendered": 18144
+  },
+  "lead_samples": 48000,
+  "tail_samples": 16000,
+  "conditions": [
+    "quiet",
+    "25dB_noise",
+    "15dB_noise_full_RIR"
+  ],
+  "rir_delays": [
+    0,
+    160,
+    480,
+    960
+  ],
+  "rir_amplitudes": [
+    1.0,
+    0.25,
+    -0.12,
+    0.06
+  ],
+  "policy": "Full original serialized PCM16 source, no speed change/trim; full RIR tail, Gaussian noise from fixed seeds at dry-source RMS reference, original min(1,.95/peak) attenuation after noisy mixing only; preserve all rendered failures. Paired positives share noise seed per variant, common negatives shared across arms.",
+  "lead_change": "48000 samples leaves at least context225 before source onset; explicit change versus pilot28800, not a word/voice-only isolated intervention.",
+  "boundary": "Original source sample0 through saved generated wake-prefix end + full RIR tail; Qwen full bare clip. No token-start relaxation or invented phonetic boundary.",
+  "stage_policy": "Training-only material rendering, no model scoring or training; heldout untouched."
+}
