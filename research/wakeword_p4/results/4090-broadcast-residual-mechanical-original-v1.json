@@ -1,0 +1,47 @@
+{
+  "all_passed": true,
+  "plan_sha256": "7a11cc6c5ae3df40f7c29a28c76bfe8ae35bcfd4d85389d0fed05164581ff7f3",
+  "geometry": {
+    "parameters": 7457,
+    "channels": 32,
+    "retained_frequency_bins": 20,
+    "dilations": [
+      1,
+      2,
+      4,
+      8,
+      10
+    ],
+    "feature_stride": 3,
+    "receptive_field_frames": 306,
+    "state_elements": 3312,
+    "conv_mac_per_call": 25184,
+    "right_context_frames": 0,
+    "limits": "Nominal convolution MAC only; excludes means/adds/activations, not measured runtime or arena."
+  },
+  "checks": [
+    {
+      "training": true,
+      "output_max_error": 0.0,
+      "state_max_error": 0.0,
+      "gradient_max_error": 5.7220458984375e-06,
+      "prefix_future_perturbation_exact": true,
+      "future_gradient_nonzero": 0,
+      "fresh_reset_exact": true
+    },
+    {
+      "training": false,
+      "output_max_error": 0.0,
+      "state_max_error": 0.0,
+      "gradient_max_error": 5.7220458984375e-06,
+      "prefix_future_perturbation_exact": true,
+      "future_gradient_nonzero": 0,
+      "fresh_reset_exact": true
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "optimizer_updates": 0,
+  "weights_unchanged": true,
+  "policy": "Untrained adaptation only. Random input full/chunk outputs, all states, gradients, future perturbation and future-gradient exclusion in train/eval modes. No speech scoring, calibration, synthesis, optimizer or heldout access. Not reference BC-ResNet reproduction or evidence of Hye Nyx quality/P4 feasibility. No BN/SSN/Swish/global time pooling."
+}
