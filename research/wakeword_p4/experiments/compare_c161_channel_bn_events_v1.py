@@ -1,6 +1,6 @@
 """Exact-clock offline simulation of the existing C161-first arbiter for two frozen parents."""
 import gzip
-import hashlib
+import argparse
 import json
 from pathlib import Path
 import subprocess
@@ -13,7 +13,7 @@ PREFIX = '4090-broadcast-channel-bn-'
 STEM = '4090-c161-channel-bn-events'
 ORIGINAL = R/'4090-c161-binary40-parallel-events-original-v2.json'
 CONTEXT = R/'4090-parallel-context-streams-original-v1.json'
-PROTOCOL = Path(__file__).with_name('c161_channel_bn_event_protocol_v1.md')
+PROTOCOL = R.parent / 'experiments/c161_channel_bn_event_protocol_v1.md'
 MODEL_SHA = 'dc4e5874141828ae6bf88d03011411dbb4a617c262215467fae09fec3526945c'
 BASE_SHA = 'c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81'
 
@@ -83,7 +83,7 @@ def merge_stream(first, second):
     return dict(c161=first, channel_bn=second, pair=emitted), suppressed
 
 
-def main():
+def main(output):
     assert subprocess.check_output(['git','show','origin/research-hye-nyx-voice-gpu:'+str(PROTOCOL)]) == PROTOCOL.read_bytes()
     review_path = R/(PREFIX+'consumed-review-v1.json')
     review = read(review_path)
@@ -155,16 +155,18 @@ def main():
         outside={n:[e for e in ev if not any(c['clip']['start']<e['relative_sample']<=c['clip']['end'] for c in clips)] for n,ev in events.items()}
         records.append(dict(cohort='context',name=old['name'],events=events,suppressed=suppressed,
                             clips=clips,outside=outside,c161_trace=a['sha256'],bn_trace=b['sha256']))
-    packed = R/(STEM+'-streams-v1.jsonl.gz')
+    packed = output/(STEM+'-streams-v1.jsonl.gz')
     with packed.open('xb') as target, gzip.GzipFile(fileobj=target,mode='wb',filename='',mtime=0) as z:
         for row in records:
             z.write((json.dumps(row, separators=(',',':'))+'\n').encode())
     result=dict(inputs=inputs,c161_sha256=BASE_SHA,channel_bn_sha256=MODEL_SHA,streams=len(records),
                 groups=groups,stream_records_sha256=sha(packed),new_model_invocations=0,
                 scope='Saved complete consumed traces, original event policy, independent step-bucket merge. No new exposure, threshold adjustment or hardware claim.')
-    with (R/(STEM+'-original-v1.json')).open('x') as f:
+    with (output/(STEM+'-original-v1.json')).open('x') as f:
         json.dump(result,f,indent=2);f.write('\n')
 
 
 if __name__=='__main__':
-    main()
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--output-dir', type=Path, default=R)
+    main(cli.parse_args().output_dir)
