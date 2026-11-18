@@ -1,0 +1,79 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "baseline_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+  "parent_sha256": "8912650aa4961abba056462f96adee354ba93c77f30191f9fd09102c8eb480cf",
+  "ledger_sha256": "cee0f5bd40a4eb0b458560875c98122d44f59c06634447618ba7fd0765002a5f",
+  "seed": 5421,
+  "steps": 240,
+  "reports": [
+    {
+      "name": "free",
+      "path": "4090-c161-bounded-readout-free-v1.tflite",
+      "sha256": "8ca48d15a1803d00a16a3c43dee2bef3863b2b6d3f5fa10087e711080c367617",
+      "bytes": 60952,
+      "up": 428,
+      "down": 615,
+      "history": [
+        {
+          "step": 1,
+          "retention": 0.0,
+          "conflict": 0.012488115578889847,
+          "loss": 0.012488115578889847
+        },
+        {
+          "step": 60,
+          "retention": 0.0003288699372205883,
+          "conflict": 0.029016852378845215,
+          "loss": 0.03084382601082325
+        },
+        {
+          "step": 120,
+          "retention": 0.00046329534961842,
+          "conflict": 0.000692877802066505,
+          "loss": 0.00364088686183095
+        },
+        {
+          "step": 240,
+          "retention": 0.0005696883308701217,
+          "conflict": 0.021986771374940872,
+          "loss": 0.026162074878811836
+        }
+      ]
+    },
+    {
+      "name": "bounded",
+      "path": "4090-c161-bounded-readout-bounded-v1.tflite",
+      "sha256": "7d7d0bc151622273275ab08acfe59652119ab70416674c2b95c0b98d19643142",
+      "bytes": 60952,
+      "up": 0,
+      "down": 359,
+      "history": [
+        {
+          "step": 1,
+          "retention": 0.0,
+          "conflict": 0.012488115578889847,
+          "loss": 0.012488115578889847
+        },
+        {
+          "step": 60,
+          "retention": 0.0003058947331737727,
+          "conflict": 0.02922140620648861,
+          "loss": 0.030873145908117294
+        },
+        {
+          "step": 120,
+          "retention": 0.0010124548571184278,
+          "conflict": 0.0007350557716563344,
+          "loss": 0.0053797028958797455
+        },
+        {
+          "step": 240,
+          "retention": 0.001583055593073368,
+          "conflict": 0.022220075130462646,
+          "loss": 0.02936551533639431
+        }
+      ]
+    }
+  ]
+}
