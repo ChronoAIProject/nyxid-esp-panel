@@ -33,17 +33,19 @@ def native_features(native,pcm):
     return codes,np.minimum((support+479)//480*480,samples)-PRIME
 
 
-def infer(model,values):
+def infer(model,values,indices=None):
     inp,=model.get_input_details()
     out,=model.get_output_details()
     scale,zero=inp["quantization"]
     q=np.clip(np.rint(values.astype(np.float32)/255/scale)+zero,-128,127).astype(np.int8)
     q=np.pad(q,((31,0),(0,0)),constant_values=zero)
-    codes=np.empty(len(values),np.uint8)
-    for i in range(len(values)):
+    if indices is None:
+        indices = range(len(values))
+    codes=np.empty(len(indices),np.uint8)
+    for position, i in enumerate(indices):
         model.set_tensor(inp["index"],q[None,i:i+32,None,:])
         model.invoke()
-        codes[i]=model.get_tensor(out["index"]).item()
+        codes[position]=model.get_tensor(out["index"]).item()
     return codes
 
 

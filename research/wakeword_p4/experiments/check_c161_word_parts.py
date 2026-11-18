@@ -1,4 +1,5 @@
 """Measure the labeled word window and test its acoustic dependence on each part of the request."""
+import argparse
 import re
 
 import numpy as np
@@ -62,27 +63,7 @@ def mute(pcm, begin, end):
     return out
 
 
-def main():
-    candidate = f"{PREFIX}-hard"
-    comparison = RESULTS / f"{candidate}-comparison-v1.json"
-    training_file = RESULTS / f"{ROOM}-training-v1.json"
-    anchors = training_marks()
-    windows = []
-    unaligned = []
-    for r in read(training_file)["training"]:
-        if not r["positive"]:
-            continue
-        if r["key"] not in anchors:
-            unaligned.append(r["key"])
-            continue
-        m = anchors.pop(r["key"])
-        assert m["word_end"] == r["end"]
-        end = r["onset"] + r["end"]
-        ticks = np.arange(((end - 480 + 479) // 480) * 480, end + 2881, 480) - r["onset"]
-        windows.append(dict(key=r["key"], marks=m, ticks=ticks.tolist(),
-                            nominal_hey_fully_visible=(ticks - 15360 <= m["hey_start"]).tolist(),
-                            after_command=(ticks > m["command_start"]).tolist() if m["command_start"] is not None else []))
-    assert not anchors
+def score_forward(candidate, comparison):
     straight = {r["meta"]["pcm_sha256"]: r for r in read(comparison)["records"] if r["cohort"] == "forward"}
     models = list(detectors(candidate))
     assert sha(MODEL) == MODEL_SHA
@@ -119,10 +100,46 @@ def main():
             rows.append(dict(voice=r["voice"], scene=r["scene"], edit=label, marks=at, start=r["start"], end=r["end"],
                              input_sha256=r["pcm_sha256"], edited_sha256=digest(pcm), events=output))
     assert len(rows) == 60
+    return rows
+
+
+def main():
+    candidate = f"{PREFIX}-hard"
+    comparison = RESULTS / f"{candidate}-comparison-v1.json"
+    training_file = RESULTS / f"{ROOM}-training-v1.json"
+    anchors = training_marks()
+    windows = []
+    unaligned = []
+    for r in read(training_file)["training"]:
+        if not r["positive"]:
+            continue
+        if r["key"] not in anchors:
+            unaligned.append(r["key"])
+            continue
+        m = anchors.pop(r["key"])
+        assert m["word_end"] == r["end"]
+        end = r["onset"] + r["end"]
+        ticks = np.arange(((end - 480 + 479) // 480) * 480, end + 2881, 480) - r["onset"]
+        windows.append(dict(key=r["key"], marks=m, ticks=ticks.tolist(),
+                            nominal_hey_fully_visible=(ticks - 15360 <= m["hey_start"]).tolist(),
+                            after_command=(ticks > m["command_start"]).tolist() if m["command_start"] is not None else []))
+    assert not anchors
+    rows = score_forward(candidate, comparison)
     save(RESULTS / f"{STEM}.json", dict(forward_sha256=sha(FORWARD), comparison_sha256=sha(comparison),
          training_sha256=sha(training_file), aligned_training=windows, no_token_clock=unaligned,
          train_sources={str(p): sha(p) for p in (vowels.SOURCE, confusers.SOURCE, rhythm.META)}, records=rows))
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("mode", choices=("parent", "own", "swapped"), default="parent", nargs="?")
+    mode = parser.parse_args().mode
+    if mode == "parent":
+        main()
+    else:
+        from train_c161_command_swap import STEM as SWAP
+        candidate = f"{SWAP}-{mode}"
+        comparison = RESULTS / f"{candidate}-comparison-v1.json"
+        save(RESULTS / f"{candidate}-word-parts.json",
+             dict(comparison_sha256=sha(comparison), forward_sha256=sha(FORWARD),
+                  records=score_forward(candidate, comparison)))
