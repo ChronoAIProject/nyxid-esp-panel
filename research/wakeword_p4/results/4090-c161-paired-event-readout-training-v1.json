@@ -1,0 +1,78 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "baseline_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+  "windows_sha256": "5a5c78f62d7721ef5ddff683b00a93e449ac16901fdf8487f03a7e52190f05a9",
+  "anchor_steps": 2557,
+  "seed": 20261119,
+  "steps": 400,
+  "weight_offset": 30492,
+  "reports": [
+    {
+      "name": "silence",
+      "path": "4090-c161-paired-event-readout-silence-v1.tflite",
+      "sha256": "aa9b86437e45bb1c32ff57d7823d340e4b0bbea4719fb4a65cb2ccbbf4ebccae",
+      "bytes": 60952,
+      "weight_changes": 3151,
+      "losses": [
+        {
+          "step": 1,
+          "loss": 9.319202423095703,
+          "contrast": 3.679213523864746,
+          "drift": 0.0
+        },
+        {
+          "step": 100,
+          "loss": 4.13871431350708,
+          "contrast": 1.7990801334381104,
+          "drift": 0.4948437511920929
+        },
+        {
+          "step": 200,
+          "loss": 4.319649696350098,
+          "contrast": 1.40912663936615,
+          "drift": 0.4433196187019348
+        },
+        {
+          "step": 400,
+          "loss": 3.0082290172576904,
+          "contrast": 0.6318638920783997,
+          "drift": 0.3992937505245209
+        }
+      ]
+    },
+    {
+      "name": "speech",
+      "path": "4090-c161-paired-event-readout-speech-v1.tflite",
+      "sha256": "8912650aa4961abba056462f96adee354ba93c77f30191f9fd09102c8eb480cf",
+      "bytes": 60952,
+      "weight_changes": 3253,
+      "losses": [
+        {
+          "step": 1,
+          "loss": 10.73843002319336,
+          "contrast": 4.166880130767822,
+          "drift": 0.0
+        },
+        {
+          "step": 100,
+          "loss": 4.345363616943359,
+          "contrast": 1.597180724143982,
+          "drift": 1.1097241640090942
+        },
+        {
+          "step": 200,
+          "loss": 3.800290584564209,
+          "contrast": 1.0376180410385132,
+          "drift": 1.1139264106750488
+        },
+        {
+          "step": 400,
+          "loss": 2.5157792568206787,
+          "contrast": 0.48515668511390686,
+          "drift": 0.6596955060958862
+        }
+      ]
+    }
+  ]
+}
