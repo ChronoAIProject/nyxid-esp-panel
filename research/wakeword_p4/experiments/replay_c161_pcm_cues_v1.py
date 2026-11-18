@@ -15,10 +15,13 @@ STEM = "4090-c161-pcm-cue"
 LIB = Path(".local/wakeword/c161-vowel-name-v1/pcm-cue.so")
 
 
-def binding():
+def binding(suffix=False):
     expected=read(RESULTS/f"{STEM}-anchors-v1.json")["header_sha256"]
     assert sha(ROOT/"portable/c161_pcm_cue_coefficients_v1.h")==expected
-    subprocess.run(["c++","-O3","-std=c++17","-fPIC","-shared",str(ROOT/"frontend_probe/c161_pcm_cue_matcher_v1.cpp"),
+    extra=["-DNYX_CONFIRM_CUE_SUFFIX"] if suffix else []
+    if suffix:
+        assert read(RESULTS/"4090-c161-cue-suffix-templates-v1.json")["header_sha256"] == sha(ROOT/"portable/c161_cue_suffix_coefficients_v1.h")
+    subprocess.run(["c++",*extra,"-O3","-std=c++17","-fPIC","-shared",str(ROOT/"frontend_probe/c161_pcm_cue_matcher_v1.cpp"),
                     "-o",str(LIB)],check=True)
     lib=ctypes.CDLL(str(LIB.resolve()))
     ptr=ctypes.c_void_p
@@ -91,7 +94,13 @@ def background(lib, cohort):
 
 
 if __name__=="__main__":
-    lib=binding()
+    suffix = "--confirm-suffix" in sys.argv
+    if suffix:
+        sys.argv.remove("--confirm-suffix")
+        LIB = LIB.with_name("pcm-suffix.so")
+    lib=binding(suffix)
+    if suffix:
+        STEM = "4090-c161-confirmed-cue"
     for cohort in sys.argv[1:]:
         if cohort in ("primed","jenny","melo"):
             background(lib,cohort)
