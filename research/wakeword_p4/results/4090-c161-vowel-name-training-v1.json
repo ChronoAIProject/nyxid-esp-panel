@@ -1,0 +1,79 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "source_sha256": "e9c2e50da8afdc61e7dd5bd5e57f2d460e9d40f8fc127fed48b0144edcc56cd0",
+  "baseline_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+  "start": 30492,
+  "seed": 20261118,
+  "steps": 400,
+  "fit_clips": 204,
+  "anchor_frames": 2557,
+  "reports": [
+    {
+      "name": "canonical",
+      "path": "4090-c161-vowel-name-canonical-v1.tflite",
+      "sha256": "a7c2df9adbc93b6ce9b13a40edbba3ee22500a3561c4d478abc23ebb11d5ee85",
+      "bytes": 60952,
+      "changed": 2947,
+      "history": [
+        {
+          "step": 1,
+          "target": 1.2653578519821167,
+          "negative": 0.0458654947578907,
+          "drift": 0.0
+        },
+        {
+          "step": 100,
+          "target": 0.25452080368995667,
+          "negative": 0.23033194243907928,
+          "drift": 0.19279655814170837
+        },
+        {
+          "step": 200,
+          "target": 0.20850162208080292,
+          "negative": 0.23955924808979034,
+          "drift": 0.1350577473640442
+        },
+        {
+          "step": 400,
+          "target": 0.35280418395996094,
+          "negative": 0.15442834794521332,
+          "drift": 0.28562891483306885
+        }
+      ]
+    },
+    {
+      "name": "tolerant",
+      "path": "4090-c161-vowel-name-tolerant-v1.tflite",
+      "sha256": "27b9b64520d92b63faf87054eadc71b4f5295831920ce57af7e4a8571e4114e7",
+      "bytes": 60952,
+      "changed": 3110,
+      "history": [
+        {
+          "step": 1,
+          "target": 3.0291268825531006,
+          "negative": 0.0458654947578907,
+          "drift": 0.0
+        },
+        {
+          "step": 100,
+          "target": 0.7844351530075073,
+          "negative": 0.5178718566894531,
+          "drift": 0.6597330570220947
+        },
+        {
+          "step": 200,
+          "target": 0.8585242033004761,
+          "negative": 0.5701794624328613,
+          "drift": 0.5295332074165344
+        },
+        {
+          "step": 400,
+          "target": 1.0465751886367798,
+          "negative": 0.4271993935108185,
+          "drift": 0.8093352317810059
+        }
+      ]
+    }
+  ]
+}
