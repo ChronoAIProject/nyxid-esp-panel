@@ -37,3 +37,14 @@
 这 10 次通知来自六条录音。这批音频上每小时约 0.36 次，仅描述本组观测。用 RTX 4090 上的 Whisper small.en 对每个事件前 2 秒后 1 秒和前 5 秒后 3 秒作英语无提示转写。两种长度的上下文均未转录出唤醒词。可复核的日常话语包括 qajyo 178.47 秒的 “so many bags”、thnuq 470.82 秒的 “our first speaker”、4468919 财报 821.88 秒的 “giving us flexibility”。短窗与长窗在一些词上有分歧，报告保留了两个版本及逐词样本时钟。[全量事件](../results/4090-c161-room-word-negatives-hard-background.json) · [逐步 INT8 分数](../results/4090-c161-room-word-negatives-hard-background-scores.npz) · [十个事件的转写](../results/4090-c161-room-word-negatives-hard-background-asr.json)
 
 在四种合成声音各读三条原速命令的 forward 组中，同时确认对 bf_lily 和 am_eric 各命中 3/3，对 af_aoede 和 am_fenrir 各为 0/3，12 个平行对照零通知。两种 Bot 声音、每种两条传输路径上的 48 次普通回复零通知，8 次明确念唤醒词的自播有 4 次通知。综合常用姓名、连续背景和上述逐声音表现，本轮普通语音候选留作研究，板上普通语音验收使用原 C161，固定播放音沿用已交付的 v5。[四声音、Bot 和逐句时钟](../results/4090-c161-room-word-negatives-hard-comparison-v1.json)
+
+按 Mac 请求，在相同电平与时钟下把这四种普通发音依次以干声、仅房间响应、房间响应加 12 dB 背景回放。每个数字的分母均为两间房，每种声音复用一次合成的唤醒词。
+
+| 声音 | 原 C161，干声 / 房间 / 加背景 | 原 C161 加最高分负窗模型 | 原 C161 加双模型同时确认 |
+| --- | --- | --- | --- |
+| af_heart | 2 / 2 / 2 | 2 / 2 / 2 | 2 / 2 / 2 |
+| am_onyx | 0 / 0 / 0 | 2 / 2 / 1 | 2 / 2 / 0 |
+| bf_isabella | 2 / 2 / 1 | 2 / 2 / 2 | 2 / 2 / 2 |
+| bm_lewis | 2 / 2 / 0 | 2 / 2 / 0 | 2 / 2 / 0 |
+
+am_onyx 的干声在补充分支上恢复，两模型同时确认在两个加背景场景均漏掉。bm_lewis 的原 C161 与两个候选在加回背景后都漏掉。这些分别定位到原 C161 的干声漏检、补充分支的抗噪局限。24 段输入逐项核对原始 PCM 哈希，8 段含背景输入复现上一张比较表的全部事件时钟。[四种声音逐次峰值和时钟](../results/4090-c161-room-word-negatives-hard-quiet.json)

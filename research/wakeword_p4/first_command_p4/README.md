@@ -70,3 +70,17 @@ P4 QEMU 运行按根目录依赖锁校验的 ESP-SR 库。原生 dl_fft 0.8.0 �
 切分边界也影响 Whisper。bf_lily 的数字样本按标注切到第一个音素时输出 “my shopping list.”；给相同 PCM 前置 200 ms 静音，得到 “Read my shopping list.”。12 条数字源命令前置等长静音后均全句正确。该诊断只改变送入识别器的起始上下文。
 
 复现 P4 实验时沿用前端项目 ESP-SR 组件路径，用 `-DNYX_QEMU_NS=ON` 配置 `.local/wakeword/c161-first-command-v5/ns-build`，使用默认原生 FFT。每轮将三条录音写入研究 flash 镜像 2 MiB 以后的地址。主机实验按脚本中的 SHA256 校验发布文件，16 kHz 输入上采样到 48 kHz、增强后再返回 16 kHz。[P4 回放程序](../experiments/check_c161_v5_command_ns.py) · [发布模型对照](../experiments/check_c161_v5_command_deepfilter.py) · [DeepFilterNet v0.5.6](https://github.com/Rikorose/DeepFilterNet/releases/tag/v0.5.6)
+
+## 面板播报时的外部固定音和自播回声
+
+将两路同步 16 kHz PCM 送入同版 P4 ESP-SR AEC、AGC 与冻结 v5 匹配器。左声道是模拟麦克风，右声道是面板扬声器的数字参考。对每段左声道保持所有样本完全相同，分别送入全零和实际合成播放参考。扬声器泄漏使用已登记的厨房与客厅实测脉冲响应。两种房间复用同一条外部 v5 和 “lower the fan speed.” 命令，以及同一个 Bot 声音。外部设备直达音与面板播报在有效命令帧中等功率。自播组从同一段 Bot 前文切换到面板自己播放 v5 和命令。第三组仅播放 Bot 普通回复。
+
+| 两间房合计 | 参考置零时 v5 通知 | 送入播放参考时 v5 通知 | 置零时外部命令全句正确 | 送入参考时外部命令全句正确 |
+| --- | ---: | ---: | ---: | ---: |
+| 外部设备播放 v5 和命令，面板同时播报 | 2/2 | 2/2 | 0/2 | 2/2 |
+| 仅面板自己播放 v5 和命令 | 2/2 | 2/2 | — | — |
+| 仅面板普通播报 | 0/2 | 0/2 | — | — |
+
+外部设备的 v5 均在输出样本 104228 通知。Whisper small.en 在参考置零时转写出面板的 kitchen timer 播报，使用播放参考后，两间房均转写出外部命令 “lower the fan speed.”。面板自己播放 v5 时，以唤醒音起点至末尾在 AEC 输出端计算包络内全段 RMS，与同一麦克风输入的零参考回放相比降低 42.92 和 42.49 dB。下游 AGC 后的 v5 匹配器仍在样本 103812 和 103836 通知，命令段的转写均为空。音量下降后依然有足以匹配固定波形的残余。麦克风实际输入的回放级别、参考通道串扰和整机调度由板侧测量。[逐条事件和转写](../results/4090-c161-v5-playback-reference.json) · [12 份同步双声道 WAV](../results/4090-c161-v5-playback-reference-stereo.zip) · [P4 QEMU 原始输出](../results/4090-c161-v5-playback-reference-uart.zip)
+
+复现使用上方参考 FFT 前端配置，将构建目录设为 `.local/wakeword/c161-first-command-v5/echo-build`。从仓库根目录运行 `check_c161_v5_playback_reference.py replay score`，脚本按每次一个 QEMU 进程回放。无外部载荷的同一 ELF 复现了原三条零参考录音的全部 AEC 和 AGC 输出样本与通知时钟。12 段命令转写使用 4090、英语、无提示词，并按三条历史对照的 1440 样本延迟截取等长命令段。[回放与生成脚本](../experiments/check_c161_v5_playback_reference.py)

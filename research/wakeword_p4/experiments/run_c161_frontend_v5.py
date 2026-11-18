@@ -22,7 +22,7 @@ def replay(log):
     boot(BUILD, log, WORK / "frontend-flash.bin", b"FRONTEND PASS")
 
 
-def parse_uart(log):
+def parse_uart(log, channels=("digital", "near", "far")):
     traces = {}
     current = None
     for line in log.read_text().splitlines():
@@ -54,7 +54,7 @@ def parse_uart(log):
             traces[channel] = (length, chunk, prime, events,
                                {k: np.frombuffer(v, dtype="<i2")[-first:] for k, v in blocks.items()})
             current = None
-    assert current is None and set(traces) == {"digital", "near", "far"}
+    assert current is None and set(traces) == set(channels)
     assert "FRONTEND PASS" in log.read_text()
     return traces
 

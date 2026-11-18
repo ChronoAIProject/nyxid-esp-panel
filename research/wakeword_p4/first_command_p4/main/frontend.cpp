@@ -7,6 +7,7 @@
 #include "c161_coded_cue_v5.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
+#include "esp_flash.h"
 #include "esp_heap_caps.h"
 #include "esp_heap_caps_init.h"
 #include "freertos/FreeRTOS.h"
@@ -41,7 +42,7 @@ void emit(const char* stage, int at, const int16_t* pcm) {
     std::printf("PCM %s %d %s\n", stage, at, line);
 }
 
-void run(const char* channel, const uint8_t* wav) {
+void run(const char* channel, const uint8_t* mic_pcm, const uint8_t* ref_pcm, int length) {
     aec_config_t config{};
     config.mic_num = config.ref_num = config.out_num = 1;
     config.filter_length = 8;
@@ -59,10 +60,7 @@ void run(const char* channel, const uint8_t* wav) {
         set_agc_config(agc, 15, 1, 3);
     }
     const int chunk = aec_get_chunksize(aec);
-    uint32_t bytes;
-    std::memcpy(&bytes, wav + 40, 4);
-    if (std::memcmp(wav + 36, "data", 4) || !bytes || bytes % 2 || chunk <= 0 || chunk > max_chunk) abort();
-    const int length = bytes / 2;
+    if (chunk <= 0 || chunk > max_chunk) abort();
     const int prime = ((81600 + chunk - 1) / chunk) * chunk;
     std::printf("BEGIN %s %d %d %d\n", channel, length, chunk, prime);
     alignas(16) int16_t mic[max_chunk], ref[max_chunk]{}, clean[max_chunk];
@@ -72,8 +70,11 @@ void run(const char* channel, const uint8_t* wav) {
     for (int at = -prime; at < length + 2048; at += chunk) {
         if ((at + prime) % (64 * chunk) == 0) vTaskDelay(1);
         std::memset(mic, 0, chunk * sizeof(*mic));
+        std::memset(ref, 0, chunk * sizeof(*ref));
         if (at >= 0 && at < length) {
-            std::memcpy(mic, wav + 44 + at*2, std::min(chunk, length-at) * sizeof(*mic));
+            const size_t bytes = std::min(chunk, length-at) * sizeof(*mic);
+            std::memcpy(mic, mic_pcm + at*2, bytes);
+            if (ref_pcm) std::memcpy(ref, ref_pcm + at*2, bytes);
         }
         {
             DspSection dsp;
@@ -100,10 +101,31 @@ void run(const char* channel, const uint8_t* wav) {
     std::printf("END %s %d\n", channel, emitted);
 }
 
+void run_wav(const char* channel, const uint8_t* wav) {
+    uint32_t bytes;
+    std::memcpy(&bytes, wav + 40, sizeof(bytes));
+    if (std::memcmp(wav + 36, "data", 4) || !bytes || bytes % 2) abort();
+    run(channel, wav + 44, nullptr, bytes / 2);
+}
+
 void worker(void*) {
-    run("digital", digital);
-    run("near", near_wave);
-    run("far", far_wave);
+    // An optional research-flash payload supplies synchronous mic and speaker-reference PCM.
+    constexpr uint32_t offset = 2U << 20;
+    uint32_t header[2];
+    ESP_ERROR_CHECK(esp_flash_read(nullptr, header, offset, sizeof(header)));
+    if (header[0] == 0x35434541) {
+        const uint32_t samples = header[1];
+        if (!samples || samples > ((4U << 20) - offset - sizeof(header)) / 4) abort();
+        auto* audio = static_cast<uint8_t*>(heap_caps_malloc(samples * 4, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
+        if (!audio) abort();
+        ESP_ERROR_CHECK(esp_flash_read(nullptr, audio, offset + sizeof(header), samples * 4));
+        run("echo", audio, audio + samples * 2, samples);
+        heap_caps_free(audio);
+    } else {
+        run_wav("digital", digital);
+        run_wav("near", near_wave);
+        run_wav("far", far_wave);
+    }
     std::puts("FRONTEND PASS");
     vTaskDelete(nullptr);
 }
