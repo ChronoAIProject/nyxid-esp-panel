@@ -45,3 +45,15 @@ RTX 4090 分别完成静音和对话前文各 400 步。36 组由六个声音、
 4090 又用 Whisper small.en 无提示转录了 24 条完整目标。在 af_aoede 漏掉的三条 Nyx 请求中，两条被转为 “Hey next”，第三条被转为 “Hey Nix”。bf_lily 有一条被转为 “Hey, Nick”，检测器仍命中。三条 af_aoede 继续按原目标计入分母。[逐词转录](../results/4090-c161-four-voice-forward-asr-v1.json)
 
 已导出辅助路双输出模型并在 ESP32-P4 QEMU 完成 ANSI C 数值自测。一个图同时输出原、候选两份概率，935 条主机流逐步等同两个独立解释器。初次导出代码假设只有一个子图，在写文件前退出；改为取主子图并保留初始化子图后导出成功。板端默认优化构建在 QEMU 的 P4 向量扩展指令处产生异常，原始日志已保存。ANSI C 模拟器见证提供 489 个真实辅助输入及两种分数，实机可直接重放。[模型、构建方法和 UART](../dual_readout_p4_selftest/README.md)
+
+## 完整日常背景回放
+
+将辅助路双输出 INT8 用于 66 个此前已用过的完整背景录音，全程保留前端和模型状态。两份分数分别经过原五步事件判定，按前文切换时先逐步选择分数再判定。原辅助分数逐步对齐历史记录，原主路在这些文件中没有通知。三组时长来自既有曝光。
+
+| 旧背景组 | 原双路事件 | 原主路加常开有声辅助路 | 按前文切换辅助路 |
+| --- | ---: | ---: | ---: |
+| primed，10.484 小时 | 0 | 0 | 0 |
+| Jenny，9.614 小时 | 0 | 0 | 0 |
+| Melo 使用的背景，7.903 小时 | 0 | 2 | 1 |
+
+第三组的两次新增事件发生在不同的广播录音中。样本 13367040 的片段，两种截取长度均转写出人名 “Mr. Kevin Strand”，只在常开辅助路触发。样本 5472960 的片段均转写出 “our best policemen, our best soldiers”，也触发按前文切换的配置。这些是事件附近的 Whisper 转录，定位到具体致因音素还需对照。Mac 在 issue 中确认面板现有接口要求单输入、单输出，并维持原单 C161 实机基准。[逐文件事件](../results/4090-c161-dual-readout-background-melo-v1.json) · [两种窗口的转录](../results/4090-c161-dual-readout-background-asr-v1.json) · [Mac 反馈](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-6987657434)
