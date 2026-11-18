@@ -35,7 +35,7 @@ def training_data():
         return bounded.collect()
 
 
-def export(coefficients, offset):
+def export(coefficients, offset, weight_scale=None):
     model = graph(PARENT)
     g = model.subgraphs[0]
     fc = g.operators[32]
@@ -60,8 +60,9 @@ def export(coefficients, offset):
         g.tensors.append(t)
         return len(g.tensors)-1
 
-    penalty_weights = tensor(14, "confuser_weights", coefficients)
-    penalty_bias = tensor(13, "confuser_bias", np.array([offset], "<i4"))
+    bias_scale = None if weight_scale is None else g.tensors[62].quantization.scale[0] * weight_scale
+    penalty_weights = tensor(14, "confuser_weights", coefficients, scale=weight_scale)
+    penalty_bias = tensor(13, "confuser_bias", np.array([offset], "<i4"), scale=bias_scale)
     penalty = tensor(63, "confuser_penalty")
     joined = tensor(63, "wake_and_penalty", shape=[1,2])
     combine_weights = tensor(14, "difference_weights", np.array([64,-64],np.int8), [1,2], 1/64)

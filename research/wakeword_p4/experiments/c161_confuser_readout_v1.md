@@ -43,3 +43,20 @@ Jenny 的 44 次构造近音误触减少到 19 次，同时丢失 25 条原本�
 同一批 1188 条孤立语句又用扣分前的有声父模型回放。四组各 36 条正常目标，父模型在 Legacy、Jenny、Melo US、Melo BR 上分别命中 36、33、35、31，加入第二版扣分后分别为 22、8、14、5。Jenny 的 25 条损失全部发生在加入扣分之后。[父模型 Legacy](../results/4090-c161-confuser-parent-isolated-primed-v1.json) · [Jenny](../results/4090-c161-confuser-parent-isolated-jenny-v1.json) · [Melo](../results/4090-c161-confuser-parent-isolated-melo-v1.json)
 
 下一次训练使用同一单输出图，加入此前已许可但未用于干扰词拟合的 59 条 Chatterbox 正例。在正例的教师五步峰值窗口内保护高响应的各帧，并给干扰词权重使用独立的 INT8 尺度。在训练文件中按原音 SHA256 分出校准子集，用这部分教师已能命中的窗口确定扣分偏置，随后在四个旧声音和两套命令场景比较。训练和偏置选择均不使用回放结果或验收留出。
+
+## 增加正例保护后的 4090 结果
+
+新加入 59 条训练正例后，用 2697 个正例帧及 208 个高风险负例窗口拟合。按训练原音摘要预留的 104 个父模型命中窗口在校准计算中全数保留。新图仍为单输入、单 UINT8 输出，65384 B，SHA256 为 `6b816b3ef262a6543ec22de11c364b49caa8667d0ccdec6159f02f1b11845831`。[训练与模型身份](../results/4090-c161-protected-confuser-training-v1.json)
+
+| 目标集 | 原 C161 单路 | 前一份扣分模型单路 | 新模型单路 |
+| --- | ---: | ---: | ---: |
+| 连续命令 /36 | 7 | 19 | 29 |
+| Legacy /36 | 35 | 22 | 35 |
+| Jenny /36 | 33 | 8 | 30 |
+| Melo US /36 | 33 | 14 | 31 |
+| Melo BR /36 | 21 | 5 | 19 |
+| 最新四声音请求 /12 | 1 | 5 | 6 |
+
+新模型的单、双路连续命令逐句均与有声前文父模型相同，双路 32/36。原单路 7 条和原双路 21 条全部保留。相对原单路新增的 22 条为内置 2/3/5/7/8/11，US 1/2/3/5/6/7/9/10/11，BR 0/1/3/6/7/9/11。独立语句与原 C161 匹配时，Legacy 得一失一，Jenny 失三，US 得二失四，BR 得五失七。Joe 仍为 0/72，Mac 为 2/4。最新四声音请求中，am_eric、bf_lily 的六条均命中，af_aoede、am_fenrir 的六条单路全漏。新双路 8/12，官方 Willow 对应请求为 12/12。本次重放复用已发布场景。[每条连续语句](../results/4090-c161-protected-confuser-audit-v1.json) · [四声音每条通知](../results/4090-c161-protected-confuser-forward-v1.json)
+
+BR 场景 0 的 Nick 再次在样本 64800 误触合并路径，独立 Nicole 和 “We need six cups of water.” 在样本 12480 误触主路，广播 kajfh 的 Kevin Strand 在样本 13367040 误触主路与合并路径。另一个完整广播 ofbxh 在本模型上零通知。这份模型有已复现的日常词误唤醒，本轮只针对这两个广播做完整重放。66 段背景全部零事件的结果属于上一份扣分模型。面板普通语音基准继续使用原 C161。[独立日常句](../results/4090-c161-protected-confuser-daily-v1.json) · [两个完整广播、旧四声音](../results/4090-c161-protected-confuser-transfer-v1.json)
