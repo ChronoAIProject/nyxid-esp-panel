@@ -1,0 +1,1332 @@
+{
+  "untrained": true,
+  "optimizer_updates": 0,
+  "recognition_scored": false,
+  "model": {
+    "path": ".local/wakeword/broadcast-residual-feasibility-final-int8-v1/untrained/int8.tflite",
+    "bytes": 43000,
+    "sha256": "e9a7b863f91bce04ccf3e0e88fdf702d3b1fc82e1b675a9ec06fc82952b16ba6"
+  },
+  "runtime": "host BUILTIN_REF1thread",
+  "litert": "2.3.0",
+  "timed_calls": 100,
+  "warmup_calls": 20,
+  "constant_input": "quantization zero point only",
+  "call_us": {
+    "median": 88.82650000000001,
+    "p95": 98.97765,
+    "max": 120.749
+  },
+  "explicit_input_cache_bytes": 3312,
+  "largest_tensor": {
+    "name": "functional_1/concatenate_5_1/concat",
+    "shape": [
+      1,
+      41,
+      1,
+      32
+    ],
+    "dtype": "<class 'numpy.int8'>",
+    "bytes": 1312
+  },
+  "sum_all_tensor_bytes": 31882,
+  "tensors": [
+    {
+      "name": "serving_default_cache6:0",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "serving_default_cache0:0",
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 80
+    },
+    {
+      "name": "serving_default_cache3:0",
+      "shape": [
+        1,
+        16,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 512
+    },
+    {
+      "name": "serving_default_chunk:0",
+      "shape": [
+        1,
+        3,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 120
+    },
+    {
+      "name": "serving_default_cache1:0",
+      "shape": [
+        1,
+        4,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 128
+    },
+    {
+      "name": "serving_default_cache5:0",
+      "shape": [
+        1,
+        40,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1280
+    },
+    {
+      "name": "serving_default_cache2:0",
+      "shape": [
+        1,
+        8,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 256
+    },
+    {
+      "name": "serving_default_cache4:0",
+      "shape": [
+        1,
+        32,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/lambda_13/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "arith.constant2",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "arith.constant3",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/permute_1/transpose;functional_1/permute_1/transpose/perm",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/zero_padding2d_1/Const",
+      "shape": [
+        4,
+        2
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 32
+    },
+    {
+      "name": "arith.constant1",
+      "shape": [],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "functional_1/lambda_2_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "arith.constant",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "functional_1/lambda_4_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/lambda_6_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/lambda_8_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/lambda_10_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/lambda_12_1/strided_slice/stack",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "functional_1/head_1/Add;functional_1/head_1/convolution;functional_1/head_1/Reshape",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "functional_1/head_1/convolution",
+      "shape": [
+        1,
+        2,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 64
+    },
+    {
+      "name": "functional_1/pointwise4_1/BiasAdd;functional_1/pointwise4_1/convolution;functional_1/pointwise4_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/pointwise4_1/convolution",
+      "shape": [
+        32,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_14_1/Relu;functional_1/temporal4_1/BiasAdd;functional_1/temporal4_1/depthwise;functional_1/temporal4_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/temporal4_1/depthwise",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "functional_1/re_lu_13_1/Relu;functional_1/spectral4_1/BiasAdd;functional_1/spectral4_1/depthwise;functional_1/spectral4_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/spectral4_1/depthwise",
+      "shape": [
+        1,
+        1,
+        3,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 96
+    },
+    {
+      "name": "functional_1/pointwise3_1/BiasAdd;functional_1/pointwise3_1/convolution;functional_1/pointwise3_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/pointwise3_1/convolution",
+      "shape": [
+        32,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_11_1/Relu;functional_1/temporal3_1/BiasAdd;functional_1/temporal3_1/depthwise;functional_1/temporal3_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/temporal3_1/depthwise",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "functional_1/re_lu_10_1/Relu;functional_1/spectral3_1/BiasAdd;functional_1/spectral3_1/depthwise;functional_1/spectral3_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/spectral3_1/depthwise",
+      "shape": [
+        1,
+        1,
+        3,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 96
+    },
+    {
+      "name": "functional_1/pointwise2_1/BiasAdd;functional_1/pointwise2_1/convolution;functional_1/pointwise2_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/pointwise2_1/convolution",
+      "shape": [
+        32,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_8_1/Relu;functional_1/temporal2_1/BiasAdd;functional_1/temporal2_1/depthwise;functional_1/temporal2_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/temporal2_1/depthwise",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "functional_1/re_lu_7_1/Relu;functional_1/spectral2_1/BiasAdd;functional_1/spectral2_1/depthwise;functional_1/spectral2_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/spectral2_1/depthwise",
+      "shape": [
+        1,
+        1,
+        3,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 96
+    },
+    {
+      "name": "functional_1/pointwise1_1/BiasAdd;functional_1/pointwise1_1/convolution;functional_1/pointwise1_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/pointwise1_1/convolution",
+      "shape": [
+        32,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_5_1/Relu;functional_1/temporal1_1/BiasAdd;functional_1/temporal1_1/depthwise;functional_1/temporal1_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/temporal1_1/depthwise",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "functional_1/re_lu_4_1/Relu;functional_1/spectral1_1/BiasAdd;functional_1/spectral1_1/depthwise;functional_1/spectral1_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/spectral1_1/depthwise",
+      "shape": [
+        1,
+        1,
+        3,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 96
+    },
+    {
+      "name": "functional_1/pointwise0_1/BiasAdd;functional_1/pointwise0_1/convolution;functional_1/pointwise0_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/pointwise0_1/convolution",
+      "shape": [
+        32,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_2_1/Relu;functional_1/temporal0_1/BiasAdd;functional_1/temporal0_1/depthwise;functional_1/temporal0_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/temporal0_1/depthwise",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "functional_1/re_lu_1_2/Relu;functional_1/spectral0_1/BiasAdd;functional_1/spectral0_1/depthwise;functional_1/spectral0_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/spectral0_1/depthwise",
+      "shape": [
+        1,
+        1,
+        3,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 96
+    },
+    {
+      "name": "functional_1/re_lu_1/Relu;functional_1/stem_1/BiasAdd;functional_1/stem_1/convolution;functional_1/stem_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/stem_1/convolution",
+      "shape": [
+        32,
+        3,
+        5,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 480
+    },
+    {
+      "name": "functional_1/concatenate_1/concat",
+      "shape": [
+        1,
+        5,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 200
+    },
+    {
+      "name": "StatefulPartitionedCall_1:0",
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 80
+    },
+    {
+      "name": "functional_1/permute_1/transpose;functional_1/permute_1/transpose/perm1",
+      "shape": [
+        1,
+        5,
+        40,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 200
+    },
+    {
+      "name": "functional_1/zero_padding2d_1/Pad",
+      "shape": [
+        1,
+        5,
+        44,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 220
+    },
+    {
+      "name": "functional_1/re_lu_1/Relu;functional_1/stem_1/BiasAdd;functional_1/stem_1/convolution;functional_1/stem_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/re_lu_1_2/Relu;functional_1/spectral0_1/BiasAdd;functional_1/spectral0_1/depthwise;functional_1/spectral0_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/add_1_1/Add",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_1_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_1_2/concat",
+      "shape": [
+        1,
+        5,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 160
+    },
+    {
+      "name": "StatefulPartitionedCall_1:1",
+      "shape": [
+        1,
+        4,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 128
+    },
+    {
+      "name": "functional_1/re_lu_2_1/Relu;functional_1/temporal0_1/BiasAdd;functional_1/temporal0_1/depthwise;functional_1/temporal0_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/pointwise0_1/BiasAdd;functional_1/pointwise0_1/convolution;functional_1/pointwise0_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/add_2/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/re_lu_3_1/Relu;functional_1/add_2/BiasAdd",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/re_lu_4_1/Relu;functional_1/spectral1_1/BiasAdd;functional_1/spectral1_1/depthwise;functional_1/spectral1_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/add_3_1/Add",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_3_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_2_1/concat",
+      "shape": [
+        1,
+        9,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 288
+    },
+    {
+      "name": "StatefulPartitionedCall_1:2",
+      "shape": [
+        1,
+        8,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 256
+    },
+    {
+      "name": "functional_1/re_lu_5_1/Relu;functional_1/temporal1_1/BiasAdd;functional_1/temporal1_1/depthwise;functional_1/temporal1_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/pointwise1_1/BiasAdd;functional_1/pointwise1_1/convolution;functional_1/pointwise1_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/add_2_2/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/re_lu_6_1/Relu;functional_1/add_2_2/BiasAdd",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/re_lu_7_1/Relu;functional_1/spectral2_1/BiasAdd;functional_1/spectral2_1/depthwise;functional_1/spectral2_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/add_5_1/Add",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_5_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_3_1/concat",
+      "shape": [
+        1,
+        17,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 544
+    },
+    {
+      "name": "StatefulPartitionedCall_1:3",
+      "shape": [
+        1,
+        16,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 512
+    },
+    {
+      "name": "functional_1/re_lu_8_1/Relu;functional_1/temporal2_1/BiasAdd;functional_1/temporal2_1/depthwise;functional_1/temporal2_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/pointwise2_1/BiasAdd;functional_1/pointwise2_1/convolution;functional_1/pointwise2_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/add_4_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/re_lu_9_1/Relu;functional_1/add_4_1/BiasAdd",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/re_lu_10_1/Relu;functional_1/spectral3_1/BiasAdd;functional_1/spectral3_1/depthwise;functional_1/spectral3_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/add_7_1/Add",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_7_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_4_1/concat",
+      "shape": [
+        1,
+        33,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1056
+    },
+    {
+      "name": "StatefulPartitionedCall_1:4",
+      "shape": [
+        1,
+        32,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1024
+    },
+    {
+      "name": "functional_1/re_lu_11_1/Relu;functional_1/temporal3_1/BiasAdd;functional_1/temporal3_1/depthwise;functional_1/temporal3_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/pointwise3_1/BiasAdd;functional_1/pointwise3_1/convolution;functional_1/pointwise3_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/add_6_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/re_lu_12_1/Relu;functional_1/add_6_1/BiasAdd",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/re_lu_13_1/Relu;functional_1/spectral4_1/BiasAdd;functional_1/spectral4_1/depthwise;functional_1/spectral4_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/add_9_1/Add",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_9_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_5_1/concat",
+      "shape": [
+        1,
+        41,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1312
+    },
+    {
+      "name": "StatefulPartitionedCall_1:5",
+      "shape": [
+        1,
+        40,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1280
+    },
+    {
+      "name": "functional_1/re_lu_14_1/Relu;functional_1/temporal4_1/BiasAdd;functional_1/temporal4_1/depthwise;functional_1/temporal4_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/pointwise4_1/BiasAdd;functional_1/pointwise4_1/convolution;functional_1/pointwise4_1/Squeeze1",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/add_8_1/Squeeze",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/re_lu_15_1/Relu;functional_1/add_8_1/BiasAdd",
+      "shape": [
+        1,
+        1,
+        20,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 640
+    },
+    {
+      "name": "functional_1/lambda_11_1/Mean",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "functional_1/concatenate_6_1/concat",
+      "shape": [
+        1,
+        2,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 64
+    },
+    {
+      "name": "functional_1/head_1/Add;functional_1/head_1/convolution;functional_1/head_1/Reshape1",
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1
+    },
+    {
+      "name": "StatefulPartitionedCall_1:7",
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 1
+    },
+    {
+      "name": "StatefulPartitionedCall_1:6",
+      "shape": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "bytes": 32
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    },
+    {
+      "name": "",
+      "shape": [
+        1
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 4
+    },
+    {
+      "name": "",
+      "shape": [
+        32
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 128
+    },
+    {
+      "name": "",
+      "shape": [
+        4
+      ],
+      "dtype": "<class 'numpy.int32'>",
+      "bytes": 16
+    }
+  ],
+  "limits": "Tensor sizes are not peak live allocation or arena. Sum double-counts aliased/reused/constants. Host untrained zero-input timing excludes frontend/event/cachecopy overhead and is not P4 latency or trained range evidence."
+}
