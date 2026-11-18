@@ -1,0 +1,43 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "optimizer_updates": 0,
+  "calls": 64,
+  "probability_max_error": 1.1920928955078125e-07,
+  "cache_max_error": 9.5367431640625e-07,
+  "tone_probe": [
+    {
+      "hz": 250,
+      "peak_channel": 2
+    },
+    {
+      "hz": 500,
+      "peak_channel": 6
+    },
+    {
+      "hz": 1000,
+      "peak_channel": 12
+    },
+    {
+      "hz": 2000,
+      "peak_channel": 20
+    },
+    {
+      "hz": 4000,
+      "peak_channel": 30
+    }
+  ],
+  "frontend_binary": {
+    "path": "/usr/local/lib/python3.11/dist-packages/micro_features_cpp.abi3.so",
+    "sha256": "7c88ffb22e174fcd1fad58d4e2a850452a192f9ca32448e47d13fd3ebadb32f4"
+  },
+  "source_config": {
+    "path": ".local/wakeword/frontend-coefficients-source-v1/pymicro_features-2.0.2/src/micro_features.cpp",
+    "sha256": "bb3aa33c0ba6365a7163f2d42a8c5862794a532630fffbd07cebf86326fdd783",
+    "channels": 40,
+    "lower_hz": 125,
+    "upper_hz": 7500,
+    "pcan": true,
+    "log": true
+  },
+  "limits": "Installed frontend ascending tone peak order plus cached source configuration; not a full independent frontend binary/source equivalence proof. Random input Keras parity, no speech recognition/INT8/P4 qualification."
+}
