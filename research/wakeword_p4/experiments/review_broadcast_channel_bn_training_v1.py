@@ -2,7 +2,9 @@
 import gzip,hashlib,json,math,sys
 from pathlib import Path
 R=Path('research/wakeword_p4/results');B=Path('.local/wakeword/broadcast-channel-bn-training-v1')
-def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def sha(p):
+    with Path(p).open('rb') as source:
+        return hashlib.file_digest(source, 'sha256').hexdigest()
 def read(p):return json.loads(Path(p).read_text())
 def main():
  import torch
