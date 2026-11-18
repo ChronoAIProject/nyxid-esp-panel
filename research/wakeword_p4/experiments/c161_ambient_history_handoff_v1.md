@@ -23,3 +23,9 @@
 ## 训练和限制
 
 RTX 4090 用 227 条训练来源的合成音拟合了另一种逐频带增益。149 条目标上，C161 在等长静音前文命中 73 条，在三句日常语音前文命中 25 条。78 条负例两个条件下均无片段内事件。逐频带增益使训练语音前文的平均特征均方误差从 7.665 降到 7.507，但开发集的连续命令只从 7/36 到 8/36，单独从 26/36 到 25/36，Joe 仍为 0/72。本交接采用原 C161 与噪声估计双路。两种试验都在已消费的合成开发材料上比较，真实日常误唤醒率与设备实时性尚待验证。[4090 拟合原件](../results/4090-c161-history-gain-fit-v1.json) · [开发源对照](../results/4090-c161-history-gain-development-v1.json)
+
+## P4 的 WebRTC VAD 组件
+
+在 ESP-IDF 工程中运行 `python3 prepare_ambient_vad_component.py components/nyx_webrtc_vad`，脚本从固定的 `webrtcvad-wheels 2.0.14.post1` 源码包生成组件。也可通过 `--archive` 指定本地源码包。脚本校验 SHA256，保留上游许可证，编译原 VAD 和信号处理 C 文件。调用方声明 `PRIV_REQUIRES nyx_webrtc_vad`，创建、初始化 VAD 后使用 mode 0，每 160 样本调用一次 `WebRtcVad_Process(vad, 16000, pcm, 160)`。负返回值代表调用错误，应走运行时失败处理。[组件生成脚本](../portable/prepare_ambient_vad_component.py)
+
+用该源码重建的 Linux C 实现在 24 条匹配场景（含预热）的 34,942 个 10 ms 块上，与研究所用 Python VAD 的判定逐块一致。ESP-IDF v5.5.4 已将同一组件编译、链接进独立的 ESP32-P4 应用，分区检查通过，可执行文件中包含创建、初始化、设模式、处理、销毁五个入口。首次配置选到了 Python 3.12，切换到已安装的 IDF Python 3.11 环境后成功。178,832 字节是整个独立测试应用大小。面板固件占用和运行成本仍需单独测量。[构建、逐流决策摘要与完整调用示例](../results/4090-c161-ambient-vad-p4-link-v1.json)
