@@ -1,0 +1,77 @@
+ESP-ROM:esp32p4-eco5-20250430
+Build:Apr 30 2025
+rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x4ffb60d0,len:0x15e4
+load:0x4ffac2c0,len:0xe88
+load:0x4ffaefc0,len:0x3560
+entry 0x4ffac2ca
+I (59) boot: ESP-IDF v5.5.4 2nd stage bootloader
+I (59) boot: compile time Nov 18 2026 23:45:33
+I (59) boot: Multicore bootloader
+I (66) boot: chip revision: v3.1
+I (66) boot: efuse block revision: v0.0
+I (67) boot.esp32p4: SPI Speed      : 80MHz
+I (67) boot.esp32p4: SPI Mode       : SLOW READ
+I (67) boot.esp32p4: SPI Flash Size : 4MB
+I (68) boot: Enabling RNG early entropy source...
+I (70) boot: Partition Table:
+I (70) boot: ## Label            Usage          Type ST Offset   Length
+I (70) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (70) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00177000
+I (76) boot: End of partition table
+I (77) esp_image: segment 0: paddr=00010020 vaddr=40030020 size=cde2ch (843308) map
+I (124) esp_image: segment 1: paddr=000dde54 vaddr=30100000 size=00124h (   292) load
+I (130) esp_image: segment 2: paddr=000ddf80 vaddr=30100130 size=00048h (    72) load
+I (136) esp_image: segment 3: paddr=000ddfd0 vaddr=4ff20000 size=02048h (  8264) load
+I (143) esp_image: segment 4: paddr=000e0020 vaddr=40000020 size=2c6bch (181948) map
+I (157) esp_image: segment 5: paddr=0010c6e4 vaddr=4ff22048 size=0d220h ( 53792) load
+I (165) esp_image: segment 6: paddr=0011990c vaddr=4ff2f280 size=0241ch (  9244) load
+I (172) boot: Loaded app from partition at offset 0x10000
+I (172) boot: Disabling RNG early entropy source...
+W (183) pmu_pvt: blk_version is less than 2, pvt auto dbias init not supported in efuse.
+I (185) cpu_start: Multicore app
+I (200) cpu_start: GPIO 38 and 37 are used as console UART I/O pins
+I (201) cpu_start: Pro cpu start user code
+I (201) cpu_start: cpu freq: 400000000 Hz
+I (201) app_init: Application information:
+I (201) app_init: Project name:     nyx_midlevel_selftest
+I (201) app_init: App version:      v0.6.28-2557-g1acf9fc7
+I (201) app_init: Compile time:     Nov 18 2026 23:45:31
+I (201) app_init: ELF file SHA256:  f8dd108b0...
+I (201) app_init: ESP-IDF:          v5.5.4
+I (202) efuse_init: Min chip rev:     v3.1
+I (202) efuse_init: Max chip rev:     v3.99 
+I (202) efuse_init: Chip rev:         v3.1
+I (202) heap_init: Initializing. RAM available for dynamic allocation:
+I (203) heap_init: At 4FF5B3D0 len 0005FBF0 (382 KiB): RETENT_RAM
+I (203) heap_init: At 4FFBAFC0 len 00004BF0 (18 KiB): RAM
+I (203) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (203) heap_init: At 30100178 len 00001E88 (7 KiB): TCM
+I (209) spi_flash: detected chip: gd
+I (209) spi_flash: flash io: dio
+I (210) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (211) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (215) main_task: Started on CPU0
+I (225) main_task: Calling app_main()
+MIDLEVEL_DIFF source=0 step=370 lane=1 expected=0 actual=1
+MIDLEVEL_STREAM source=0 blocks=444 proposals=0,1
+MIDLEVEL_DIFF source=2 step=403 lane=1 expected=253 actual=254
+MIDLEVEL_STREAM source=2 blocks=475 proposals=0,0
+MIDLEVEL_STREAM source=4 blocks=491 proposals=0,1
+MIDLEVEL_STREAM source=6 blocks=456 proposals=1,1
+MIDLEVEL_STREAM source=8 blocks=486 proposals=1,1
+MIDLEVEL_STREAM source=10 blocks=497 proposals=1,2
+MIDLEVEL_DIFF source=12 step=397 lane=0 expected=5 actual=6
+MIDLEVEL_STREAM source=12 blocks=476 proposals=1,1
+MIDLEVEL_STREAM source=14 blocks=502 proposals=1,1
+MIDLEVEL_STREAM source=16 blocks=521 proposals=1,1
+MIDLEVEL_DIFF source=18 step=358 lane=1 expected=139 actual=149
+MIDLEVEL_STREAM source=18 blocks=426 proposals=0,1
+MIDLEVEL_STREAM source=20 blocks=462 proposals=1,1
+MIDLEVEL_DIFF source=22 step=192 lane=1 expected=139 actual=149
+MIDLEVEL_STREAM source=22 blocks=474 proposals=0,1
+MIDLEVEL_FAIL blocks=5710 calls=5710,8563 score_errors=5 event_errors=0 tensors=25468,25468 variables=608,608 max_us=3756 over30ms=0 min_internal=430756
+MIDLEVEL_DONE
+I (5025) main_task: Returned from app_main()
