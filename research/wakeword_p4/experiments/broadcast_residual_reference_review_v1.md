@@ -1,0 +1,12 @@
+# Broadcast residual architecture reference review
+
+Reviewed after the fixed local-frequency stem failure. This is a possible distinct research direction, not a selected training recipe or evidence of better Hye Nyx recognition.
+
+Primary paper: https://arxiv.org/abs/2106.04140 (Broadcasted Residual Learning for Efficient Keyword Spotting).
+Google Research implementation: https://github.com/google-research/google-research/blob/5b09c22d73a9d35eb6c5d2a99b95677a45053466/kws_streaming/models/bc_resnet.py ; Git blob88098918a2beef208ee90cd7d2e0ef8a48268791. The implementation explicitly says it is not the official paper implementation. The separate re9ulus/BC-ResNet repository also labels itself unofficial; its35-label Speech Commands result is not a Hye Nyx or Hey Willow comparison.
+
+The structural distinction from the failed local stem is retaining the frequency axis through spectral depthwise residual blocks. A frequency-mean branch computes temporal convolutions and broadcasts its result back to the spectral residual. The failed stem instead flattens frequency into a dense projection before all temporal blocks. Failure of that single stem does not evaluate the full broadcast residual architecture.
+
+The Google implementation offers causal temporal stream wrappers and frequency pooling. Its default padding is same, and its final time pooling is a streaming global-average wrapper. Defaults cannot be imported as proof of our finite-state cold-start/event protocol. It also uses BatchNorm and SubSpectralNormalization; training statistics over complete time sequences can introduce dependence on later frames even when temporal convolutions are causal. An adaptation must specify normalization semantics and independently check full/chunk behavior in training and inference. Replacing these layers changes the reference method and must be disclosed.
+
+Before any training: recover exact reference geometry and runtime cache semantics, measure state/MAC and P4 operator/arena feasibility, establish a finite-window causal readout without future-frame supervision leakage, and demonstrate float/chunk/export/cache equivalence with zero optimizer updates. Do not simply repeat the failed local stem, width continuation, or offline command classifier under a new name. No new model has been trained or selected from this review. C161 remains baseline; synthetic consumed evaluation is not independent acceptance, and Hey Willow distractor clips are not a deployed-detector benchmark.
