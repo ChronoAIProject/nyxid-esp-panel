@@ -45,3 +45,18 @@ af_aoede 的目标在换用较长的 bf_lily 音素时长后可以触发这个�
 原速组与节奏组的单路连续命令分别为 28/36、33/36。节奏组相对原速组找回 US 1/2/5/8/9/10，丢失 BR 5。两组双路均 35/36，漏掉原 C161 命中的 US 0。最新一批四声音单路均为 7/12，两组均未找回 af_aoede 的三条自然请求。旧四声音从 5/12 到 6/12，增加 am_eric 场景 0。Mac 两组均 3/4，Joe 单路从 6/72 到 5/72。Legacy/Jenny/Melo US/Melo BR 四组独立目标从 34/21/15/16 变为 35/24/20/16。熟悉场景的得益没有解决跨声音缺口。[两组逐句得失](../results/4090-c161-rhythm-pair-review-v1.json)
 
 两组在 108 条连续普通语句中均误触两条 Max，96 条独立日常句均误触 Nick 和 Max。BR 场景 0 的 Nick、独立 Nicole 与 “six cups” 均无通知。完整广播 kajfh 两组主路均在样本 13367040 通知；ofbxh 两组主路均为零，原速组辅助路导致合并路径在 14494080 通知，节奏组合并路径为零。保留原单 C161 作为面板普通语音基准。[原速组完整广播](../results/4090-c161-rhythm-pair-native-transfer-v1.json) · [节奏组完整广播](../results/4090-c161-rhythm-pair-rhythm-transfer-v1.json)
+
+## 在推理时改变时间尺度
+
+四种路径都在同一条原始 PCM 时间线上，使用主路、235/256 阈值、五步平滑和 67 步冷却。输入扩展把每两帧 10 ms 特征依次送入三帧，在每个原 30 ms 时钟读取当时最近的输出，原速重放逐帧复现冻结模型的结果。权重压缩将原时间延迟按 2/3 做线性插值，重新量化相应权重和偏置。两种压缩导出均为 77496 B，每 30 ms 调用一次。输入扩展平均调用 1.5 次。[输入扩展实现](check_c161_stream_stretch_v1.py) · [权重与模型摘要](../results/4090-c161-folded-time-models-v1.json)
+
+| 主路 | 原速四声音 /12 | 连续命令 /36 | 连续普通句误触 /108 | Joe 目标 /72 | 独立日常句误触 /96 | 完整广播通知 kajfh / ofbxh |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 原中间层模型 | 7 | 35 | 3 | 7 | 2 | 1 / 1 |
+| 输入特征扩展 | 11 | 26 | 1 | 27 | 7 | 0 / 2 |
+| 只压缩两个全连接层 | 4 | 35 | 3 | 13 | 6 | 5 / 2 |
+| 压缩卷积和全连接层 | 8 | 24 | 2 | 22 | 6 | 1 / 3 |
+
+输入扩展让 af_aoede 从 0/3 到 2/3，am_fenrir 从 1/3 到 3/3。在命中的 11 条中，通知比合成命令首音素晚 30–90 ms。am_eric 场景 2 的共享前文还在样本 13920 误触。独立日常误触涉及 next train、six cups、两条 Nick、Alex、Max、Chris。完整 ofbxh 广播两次通知位于样本 12497280 和 13174560。[原速四声音与首音素](../results/4090-c161-stream-stretch-forward-v1.json) · [独立日常句](../results/4090-c161-stream-stretch-daily-v1.json) · [连续语句](../results/4090-c161-stream-stretch-context-v1.json) · [两段完整广播](../results/4090-c161-stream-stretch-transfer-v1.json)
+
+全层压缩在 Joe 的 72 条目标中命中 22 条，另误触一条近音和四条 Hi ESP。完整 kajfh 广播在样本 13366080 通知，ofbxh 在 4631520、12497280、13174560 通知。原单 C161 继续作为上板基准。[Joe](../results/4090-c161-folded-time-joe-v1.json) · [两段完整广播](../results/4090-c161-folded-time-transfer-v1.json)
