@@ -1,0 +1,369 @@
+{
+  "schema": "binary40-carrier-components-arm-export-original-v1",
+  "arm": "negative_only",
+  "plan_sha256": "fc36b8b07b6efbc67ec4f12a623b4d8aa695978a12a42801954dafb618a0d24f",
+  "training_report_sha256": "366d3343ae51f1e0f381d8c051a2ec56eed6a731802c294661a141395e08fc4b",
+  "checkpoint_sha256": "62c156c21b583e9e96ad4240bbcb04b48f4b2f62117386b0c9de1f75df854b7f",
+  "model": {
+    "path": ".local/wakeword/binary40-carrier-components-final-int8-v1/negative_only/int8.tflite",
+    "bytes": 64800,
+    "sha256": "7bafbdf46a8d2d3d49fcbdee841dfe60bfd4444bdd996a755d0799ee6b485066"
+  },
+  "files": {
+    "calibration.npz": "0f02bdf77d103e5dd75d3ea09fc5bc34d67c990bc3c9fb4571205067a17bd7db",
+    "trained.keras": "68663e8b14771647c0d86f9bb834ed5c75a20aba5f6d55ab92ff38e30886e42c",
+    "int8.tflite": "7bafbdf46a8d2d3d49fcbdee841dfe60bfd4444bdd996a755d0799ee6b485066"
+  },
+  "calibration_representatives": 128,
+  "calibration_descriptors": [
+    {
+      "kind": "ambient",
+      "index": 962,
+      "start": 435,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 24988691,
+      "source_id": "kokoro-positive-00041",
+      "variant": 2,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 805,
+      "start": 816,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 262,
+      "start": 30569,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 25,
+      "start": 25898,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 25665662,
+      "source_id": "kokoro-positive-00409",
+      "variant": 1,
+      "label": 1
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 25445040,
+      "source_id": "kokoro-positive-00289",
+      "variant": 0,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 1318,
+      "start": 15198,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 721,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 1123,
+      "start": 2938,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 22123969,
+      "source_id": "piper-positive-14321",
+      "variant": 2,
+      "label": 1
+    },
+    {
+      "kind": "ambient",
+      "index": 1280,
+      "start": 3181,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 3956,
+      "label": 0
+    },
+    {
+      "kind": "existing_kokoro_carrier",
+      "index": 3828,
+      "label": 0
+    },
+    {
+      "kind": "ambient",
+      "index": 81,
+      "start": 92237,
+      "frames": 600,
+      "label": 0
+    },
+    {
+      "kind": "existing_broad_bare_positive",
+      "index": 25417798,
+      "source_id": "kokoro-positive-00273",
+      "variant": 2,
+      "label": 1
+    }
+  ],
+  "original_batch_hashes": {
+    "features": "677899851e973078ac13b3bf8b38daeff8ffe10310640c4f7513d5004c11fe03",
+    "positive": "ea280e0ff5189e375501b04497be4d18bc1127988e922c66b951b6c88069d380",
+    "negative": "788c774464319e76426a9b45e52ba8368a833108f1cc37d67f93732f214d915e"
+  },
+  "full_chunk_max_logit_error": 0.0,
+  "parity_calls": 64,
+  "max_probability_error": 9.094947017729282e-13,
+  "max_cache_error": 3.0517578125e-05,
+  "inputs": {
+    "cache0": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "scale": 0.09957107901573181,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache1": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "scale": 0.30619025230407715,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache2": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "scale": 0.371237576007843,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache3": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "scale": 0.43092021346092224,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache4": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "scale": 0.47780030965805054,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache5": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "scale": 0.4312523305416107,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache6": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "scale": 0.2819773852825165,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "chunk": {
+      "shape": [
+        1,
+        3,
+        1,
+        40
+      ],
+      "scale": 0.09957107901573181,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    }
+  },
+  "outputs": {
+    "cache0_out": {
+      "shape": [
+        1,
+        2,
+        1,
+        40
+      ],
+      "scale": 0.09957107901573181,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache1_out": {
+      "shape": [
+        1,
+        4,
+        1,
+        64
+      ],
+      "scale": 0.30619025230407715,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache2_out": {
+      "shape": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "scale": 0.371237576007843,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache3_out": {
+      "shape": [
+        1,
+        16,
+        1,
+        64
+      ],
+      "scale": 0.43092021346092224,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache4_out": {
+      "shape": [
+        1,
+        32,
+        1,
+        64
+      ],
+      "scale": 0.47780030965805054,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache5_out": {
+      "shape": [
+        1,
+        40,
+        1,
+        64
+      ],
+      "scale": 0.4312523305416107,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "cache6_out": {
+      "shape": [
+        1,
+        1,
+        1,
+        64
+      ],
+      "scale": 0.2819773852825165,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    },
+    "probability": {
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "scale": 0.00390625,
+      "zero": -128,
+      "dtype": "<class 'numpy.int8'>"
+    }
+  },
+  "ops": [
+    "CONCATENATION",
+    "STRIDED_SLICE",
+    "CONV_2D",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "DEPTHWISE_CONV_2D",
+    "CONV_2D",
+    "RESHAPE",
+    "ADD",
+    "CONCATENATION",
+    "CONV_2D",
+    "LOGISTIC",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE",
+    "STRIDED_SLICE"
+  ],
+  "feedback_calls": 256,
+  "feedback_sha256": "636591f59184596194414eab501a960be0c78d0debf3c8423784ec381c831dd5",
+  "fresh_reset_exact": true,
+  "all_neural_tensors_integer": true,
+  "cache_requantization_required": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "recognition_scored": false,
+  "policy": "Only final20000 checkpoint with authenticated completed training artifacts. Own arm Sampler726 first16rows and all282calls, save state inputs at fixed0/40/80/120/160/200/240/280 perrow:128representatives. No new voices or altered sampler/masks, no evaluation calibration. GPU PyTorch full/chunk parity and CPU Keras probability/allcache parity; one builtin INT8 export and BUILTIN_REF1thread feedback/reset. Preserve failure, no calibration/threshold/checkpoint rescue. Actual training-state calibration is not physical priming or recognition qualification."
+}
