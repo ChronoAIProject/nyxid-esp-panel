@@ -41,3 +41,7 @@ RTX 4090 分别完成静音和对话前文各 400 步。36 组由六个声音、
 | 合计 | 3/12 | 7/12 | 7/12 | 9/12 |
 
 这批 12 份共享前文中全部路径零通知，对方的 12 条目标各零通知。候选的七次命中均晚于生成器标出的首命令音素，最早 30 ms、最晚 200 ms；官方 Willow 九次命中里八次晚于首音素，范围为提前 32 ms 至滞后 156 ms。四种声音出自同一合成器。af_aoede 的症结和 P4 上从采集到编码器的首词保留均需继续验证。[逐次时钟](../results/4090-c161-four-voice-forward-review-v1.json) · [原始输入](../results/4090-c161-four-voice-forward-inputs-v1.zip) · [官方返回及 UART](../results/4090-c161-four-voice-forward-official-v1.zip)
+
+4090 又用 Whisper small.en 无提示转录了 24 条完整目标。在 af_aoede 漏掉的三条 Nyx 请求中，两条被转为 “Hey next”，第三条被转为 “Hey Nix”。bf_lily 有一条被转为 “Hey, Nick”，检测器仍命中。三条 af_aoede 继续按原目标计入分母。[逐词转录](../results/4090-c161-four-voice-forward-asr-v1.json)
+
+已导出辅助路双输出模型并在 ESP32-P4 QEMU 完成 ANSI C 数值自测。一个图同时输出原、候选两份概率，935 条主机流逐步等同两个独立解释器。初次导出代码假设只有一个子图，在写文件前退出；改为取主子图并保留初始化子图后导出成功。板端默认优化构建在 QEMU 的 P4 向量扩展指令处产生异常，原始日志已保存。ANSI C 模拟器见证提供 489 个真实辅助输入及两种分数，实机可直接重放。[模型、构建方法和 UART](../dual_readout_p4_selftest/README.md)
