@@ -1,0 +1,32 @@
+{
+  "schema": "carrier-components-positive-text-census-v1",
+  "source": ".local/wakeword/hey-broad-training-features-v1/hey_nyx/features.json",
+  "source_sha256": "8dcdb884e27c2b4afb94849e00657b1c6b1d4651227997b079abb4ca4e69d21f",
+  "groups": {
+    "original_bare_positive": {
+      "rows": 6444,
+      "texts": {
+        "Hey Nicks.": 6444
+      },
+      "engines": {
+        "piper": 6048,
+        "kokoro": 180,
+        "qwen": 216
+      },
+      "conditioning_ids": 716
+    },
+    "appended_command_positive": {
+      "rows": 540,
+      "texts": {
+        "Hey Nicks, turn on the light.": 180,
+        "Hey Nicks, what time is it?": 180,
+        "Hey Nicks, set a timer.": 180
+      },
+      "engines": {
+        "kokoro": 540
+      },
+      "conditioning_ids": 20
+    }
+  },
+  "limits": "Metadata census only, no inference/training or proof of acoustic realization. Both pools explicitly use Nicks; canonical-vs-approximate text mismatch is not established. Context/voice/mask differences remain possible, not causal conclusions."
+}
