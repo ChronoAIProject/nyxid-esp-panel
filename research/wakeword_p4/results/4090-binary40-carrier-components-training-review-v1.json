@@ -1,0 +1,43 @@
+{
+  "schema": "binary40-carrier-components-training-review-v1",
+  "reviewer_sha256": "85df1b54d7d3c2953a20a32475f8b858814702a50f57d1637950347a2e8783b5",
+  "plan_sha256": "439840345b8b3fe26f49e45babcdba5e3de73d53a49664f328e54f9b70877f4b",
+  "terminal_receipts": [
+    {
+      "arm": "positive_only",
+      "pid": 3304742,
+      "actual_exit_code": 0
+    },
+    {
+      "arm": "negative_only",
+      "pid": 3348102,
+      "actual_exit_code": 0
+    }
+  ],
+  "reports": {
+    "positive_only": {
+      "path": "research/wakeword_p4/results/4090-binary40-carrier-components-positive_only-training-original-v1.json",
+      "sha256": "b03ddc8585cdf701f218dbd9b70391a37cf03c6cebf536dfdb33841f26927e87",
+      "final_sha256": "8a61a01ae2bf80a8f46a7c71ab5fa6d5d53b2d2db2648b63064371827f4bf003"
+    },
+    "negative_only": {
+      "path": "research/wakeword_p4/results/4090-binary40-carrier-components-negative_only-training-original-v1.json",
+      "sha256": "366d3343ae51f1e0f381d8c051a2ec56eed6a731802c294661a141395e08fc4b",
+      "final_sha256": "62c156c21b583e9e96ad4240bbcb04b48f4b2f62117386b0c9de1f75df854b7f"
+    }
+  },
+  "all_sampling_checks_passed": true,
+  "original128_preserved_both_arms": true,
+  "treatment_every_batch_independently_reconstructed": true,
+  "steps_verified": 20000,
+  "descriptor_rows_verified_per_arm": {
+    "positive_only": 2640000,
+    "negative_only": 2640000
+  },
+  "initial_original_exact": true,
+  "same_initial_backbone_tensors_exact": true,
+  "both_initial_models_exact": true,
+  "all_initial_final_tensors_finite": true,
+  "recognition_scored": false,
+  "policy": "Artifact and sampling audit only. Supervisor exit receipts plus authoritative terminal session must be reported; no recognition/INT8/P4 claim."
+}
