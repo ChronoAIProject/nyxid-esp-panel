@@ -80,39 +80,52 @@ def decode(lib, packets):
     return out.ravel()
 
 
-def score():
+def score(build=BUILD, log=LOG, stem=STEM, fixture_report=RESULTS / "4090-c161-coded-cue-v5-audit.json", fixture_dir=RESULTS, clocked=False):
     from faster_whisper import WhisperModel
     model = Path(".local/wakeword/whisper-small-en")
     plan = read(RESULTS / "4090-parallel-melo-context-asr-plan-v1.json")
     assert all(sha(p)==plan["files"][str(p)] for p in model.iterdir() if p.is_file())
     reader = WhisperModel(str(model),device="cuda",compute_type="float16",cpu_threads=1,num_workers=1)
-    audit = read(RESULTS / "4090-c161-coded-cue-v5-audit.json")
+    audit = read(fixture_report)
     witnesses = {r["channel"]:r for r in audit["witnesses"]}
     lib = decoder_api()
     rows = []
     current = None
-    for line in LOG.read_text().splitlines():
+    for line in log.read_text().splitlines():
         if line.startswith("BEGIN "):
             _,channel,delay = line.split()
             assert current is None
             current = (channel,int(delay))
             packets,starts = [],[]
+            clock = None
         elif line.startswith("PACKET "):
             _,pts,source,packet = line.split()
             assert int(pts)==20*len(packets) and current is not None
             starts.append(int(source))
             packets.append(bytes.fromhex(packet))
+        elif line.startswith("CLOCK "):
+            _, channel, delay, time, step, prime = line.split()
+            assert clocked and current == (channel, int(delay)) and clock is None
+            clock = tuple(map(int, (time, step, prime)))
         elif line.startswith("END "):
             _,channel,delay,*metrics = line.split()
             assert current == (channel,int(delay))
             detected,handoff,first,stop,length,peak = map(int,metrics)
             wit = witnesses[channel]
-            source_file = RESULTS/wit["wav"]
+            source_file = fixture_dir/wit["wav"]
             assert sha(source_file) == wit["sha256"]
             source,rate = sf.read(source_file,dtype="int16")
             start = wit["command_start"]
             assert rate==16000 and len(source)==length and detected==wit["notification"][0]["t"]
-            assert detected<=handoff<detected+160 and first==handoff-32000
+            if clocked:
+                time, step, prime = clock
+                assert (step, prime) == (wit["aec_chunk_samples"], wit["prime_samples"])
+                assert (time + prime) % step == 0
+                prior = ((time - step + prime) // 160) * 160 - prime
+                assert handoff == ((time + prime) // 160) * 160 - prime and prior < detected <= handoff
+            else:
+                assert detected <= handoff < detected + 160
+            assert first == handoff - 32000
             silence = int(delay)//20
             assert starts==[-1]*silence+list(range(first,stop,320)) and peak<64000
             full = decode(lib,packets)
@@ -136,18 +149,21 @@ def score():
                   estimated_codec_delay_samples=lag,command_correlation=float(correlation[lag]),
                   command_source=transcripts(reader,source[start:]),command_decoded=transcripts(reader,decoded_cmd),
                   full_decoded=transcripts(reader,full)))
+            if clocked:
+                rows[-1]["capture_clock_at_handoff"] = time
             current = None
     assert current is None and {(r["channel"],r["ready_delay_ms"]) for r in rows}=={(c,d) for c in witnesses for d in (0,1500)}
-    assert len(rows)==6 and "FIRST_COMMAND PASS" in LOG.read_text()
-    archive = RESULTS/f"{STEM}-uart.zip"
+    assert len(rows)==6 and "FIRST_COMMAND PASS" in log.read_text()
+    archive = RESULTS/f"{stem}-uart.zip"
     with ZipFile(archive,"x",ZIP_DEFLATED) as packet_archive:
-        packet_archive.write(LOG,"uart.log")
+        packet_archive.write(log,"uart.log")
     component = WORK/"esp_audio_codec/lib/esp32p4/libesp_audio_codec.a"
     check = next(r for r in read(WORK/"codec-checksums.json")["files"] if r["path"]=="lib/esp32p4/libesp_audio_codec.a")
     assert sha(component)==check["hash"]
-    save(RESULTS/f"{STEM}.json",dict(fixture_report_sha256=sha(RESULTS/"4090-c161-coded-cue-v5-audit.json"),
+    save(RESULTS/f"{stem}.json",dict(fixture_report_sha256=sha(fixture_report),
+        **({"frontend_report_sha256": audit["frontend_report_sha256"], "prepared_fixtures": audit["witnesses"]} if clocked else {}),
         fifo_source_sha256=sha(Path("components/panel_services/panel_voice_audio.c")),fixture_source_sha256=sha(RESULTS.parent/"first_command_p4/main/main.cpp"),
-        qemu_sha256=sha(QEMU),elf_sha256=sha(BUILD/"nyx_first_command.elf"),uart_sha256=sha(LOG),archive_sha256=sha(archive),
+        qemu_sha256=sha(QEMU),elf_sha256=sha(build/"nyx_first_command.elf"),uart_sha256=sha(log),archive_sha256=sha(archive),
         codec_component_version="2.4.1",p4_codec_sha256=sha(component),codec_archive_sha256=sha(WORK/"codec.zip"),
         decoder=lib.opus_get_version_string().decode(),asr_files={p.name:sha(p) for p in model.iterdir() if p.is_file()},
         records=rows))

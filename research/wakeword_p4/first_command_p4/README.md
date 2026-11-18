@@ -40,3 +40,17 @@ ESP32-P4 QEMU 运行 v5 匹配器、面板的 `panel_voice_audio.c` 队列和生
 P4 QEMU 运行按根目录依赖锁校验的 ESP-SR 库。原生 dl_fft 0.8.0 在首个数字输入的静音预热阶段遇到模拟器缺少的 `esp.lp.setup`，指令编码为 `0x026fc02b`。完成回放的构建将正、逆浮点基 2 FFT 各切换到该组件的 ANSI 实现，并为仿真外部 RAM 注册 16 MiB 地址空间。测试在 DSP 调用期间屏蔽时钟中断，以避开模拟器恢复浮点状态时的异常。90 ms 是样本时钟上的音频处理延迟。实机优化 FFT 的输出、真实扬声器参考、I2S 采集、墙钟耗时和整机余量需由 Mac 在板上测量。
 
 复现使用上面的 ESP-IDF 和分区配置。把 `NYX_SR_COMPONENT` 指向解包的 `espressif__esp-sr`，把 `EXTRA_COMPONENT_DIRS` 指向同级 `espressif__dl_fft`。在 `.local/wakeword/c161-first-command-v5/frontend-native` 构建原生 FFT，在同级 `frontend` 构建时额外传入 `-DNYX_QEMU_REFERENCE_FFT=ON`。从仓库根目录运行 `python3 research/wakeword_p4/experiments/run_c161_frontend_v5.py native boot repeat score`。评分程序会验证串口时钟连续、两轮输出相同、模型和库文件哈希，随后写出新的研究报告。[回放和评分程序](../experiments/run_c161_frontend_v5.py)
+
+## 处理后的音频通过面板队列和 Opus
+
+从上面保存的串口记录恢复三条 AGC 输出，逐条核对 PCM 哈希，然后在第二个 P4 QEMU 进程中将同一信号送入 v5、生产 PCM 队列和 Espressif Opus 2.4.1。保留 AEC 的 256 样本输入时钟、81664 样本预热和 AGC 的 160 样本成帧相位。每次模拟采集回调实际交付 160 或 320 个处理后的样本。发送端按 20 ms 节拍在首个可运行的采集回调读出队列，按既有回放协议测试服务立即就绪和延迟 1500 ms 两种条件。两段 QEMU 回放通过归档的 PCM 连接，真实的 I2S、网络和线程抢占留待整机测量。
+
+| 输入 | 处理后命令起点（样本） | 首音素在 320 样本帧中的位置 | 解码后两种就绪条件的 Whisper 命令段转写 |
+| --- | ---: | ---: | --- |
+| 数字 | 107840 | 224 | lower the fan speed. |
+| 近场 | 107755 | 139 | lower the fan speed. |
+| 远场 | 107979 | 43 | 空 |
+
+三个通知都发生在截止样本 104448 的同一采集回调。此时 AGC 已交付到 104416（不含），回看缓存从样本 72416 起送入编码器。六次在编码前逐样本检查全部有效载荷及末尾补零。服务延迟增加 75 个起始静音包，积压峰值为 56000 样本（3.5 秒），三条命令首音素均保留在相同源帧。数字和近场的编解码附加延迟均为 103 样本，远场为 104 样本。远场 AGC 命令段的错误转写在编码后变为空。要求核对首词可懂度时，数字和近场都有前后转写可对照。[六次逐包与转写报告](../results/4090-c161-first-command-after-agc-opus-v5.json) · [原始 Opus 包和源时钟](../results/4090-c161-first-command-after-agc-opus-v5-uart.zip)
+
+从仓库根目录运行 `run_c161_after_agc_opus_v5.py prepare` 生成本地输入，再按本项目的 Opus 配置构建，设 `NYX_AGC_FIXTURES` 为 `.local/wakeword/c161-first-command-v5/after-agc-inputs` 的绝对路径，构建目录为同级 `after-agc-build`。随后运行该脚本的 `boot score`。基础 Opus 配置也重新构建并回放，六条原始输入的包字节和时间戳全部复现历史归档。[复现程序](../experiments/run_c161_after_agc_opus_v5.py)

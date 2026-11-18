@@ -17,7 +17,14 @@ extern const uint8_t digital[] asm("_binary_4090_c161_coded_cue_v5_command_digit
 extern const uint8_t near_wave[] asm("_binary_4090_c161_coded_cue_v5_command_near_wav_start");
 extern const uint8_t far_wave[] asm("_binary_4090_c161_coded_cue_v5_command_far_wav_start");
 
-constexpr int rate = 16000, capture_step = 160, frame = 320, prime = 81600;
+constexpr int rate = 16000, agc_frame = 160, frame = 320;
+#ifdef NYX_AGC_REPLAY
+#include "agc_replay.h"
+#else
+constexpr int capture_step = 160, prime = 81600;
+constexpr int events[] = {102788, 102704, 102932};
+#endif
+static_assert(capture_step >= agc_frame && capture_step <= frame);
 static int16_t lookback_memory[2 * rate], capture_memory[4 * rate];
 
 struct Fixture {
@@ -61,23 +68,29 @@ void run(const Fixture& fixture, int delay_ms) {
     cfg.enable_vbr = true;
     void* encoder = nullptr;
     int detected = -1, handoff = -1, first = -1, cursor = -1, pts = 0, peak = 0;
+    int call_clock = -1, next_send = -1;
     bool started = false;
     std::printf("BEGIN %s %d\n", fixture.name, delay_ms);
-    for (int at = -prime; at < length + 4*rate && cursor < length; at += capture_step) {
-        int16_t capture[capture_step]{};
-        if (at >= 0 && at < length) {
-            const int n = std::min(capture_step, length-at);
-            std::memcpy(capture, fixture.wav + 44 + 2*at, n*sizeof(int16_t));
+    for (int clock = -prime + capture_step; clock < length + 4*rate && cursor < length; clock += capture_step) {
+        // AEC consumes capture_step samples per read. Only completed AGC frames reach the FIFO.
+        const int end = ((clock + prime) / agc_frame) * agc_frame - prime;
+        const int at = ((clock - capture_step + prime) / agc_frame) * agc_frame - prime;
+        const int produced = end - at;
+        int16_t capture[frame]{};
+        const int start = std::max(0, at);
+        if (start < std::min(length, end)) {
+            const int n = std::min(length, end) - start;
+            std::memcpy(capture + (start-at), fixture.wav + 44 + 2*start, n*sizeof(int16_t));
         }
-        const int end = at + capture_step;
         if (!encoder) {
-            panel_voice_pcm_preroll_push(&tail, capture, capture_step);
-            for (int i = 0; i < capture_step; ++i) {
+            panel_voice_pcm_preroll_push(&tail, capture, produced);
+            for (int i = 0; i < produced; ++i) {
                 if (detector.update(capture[i])) detected = at + i + 1;
             }
             if (detected < 0) continue;
             if (detected != fixture.event) abort();
             handoff = end;
+            call_clock = next_send = clock;
             first = cursor = end - int(tail.count);
             const size_t part = std::min(tail.count, tail.capacity-tail.head);
             if (!panel_voice_pcm_push(&fifo,tail.samples+tail.head,part) ||
@@ -85,13 +98,14 @@ void run(const Fixture& fixture, int delay_ms) {
             panel_voice_pcm_clear(&tail);
             if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder) != ESP_AUDIO_ERR_OK) abort();
         } else {
-            const bool ready = end >= handoff + delay_ms*(rate/1000);
+            const bool ready = clock >= call_clock + delay_ms*(rate/1000);
             if (!panel_voice_pcm_gate(&fifo,&started,ready,false) ||
-                    !panel_voice_pcm_push(&fifo,capture,capture_step)) abort();
+                    !panel_voice_pcm_push(&fifo,capture,produced)) abort();
         }
         peak = std::max(peak, int(fifo.count));
-        if ((end - handoff) % frame != 0) continue;
-        const bool ready = end >= handoff + delay_ms*(rate/1000);
+        if (clock < next_send) continue;
+        const bool ready = next_send >= call_clock + delay_ms*(rate/1000);
+        next_send += frame;
         panel_voice_pcm_gate(&fifo,&started,ready,false);
         for (int burst = 0; burst < (ready ? 4 : 1) && cursor < length; ++burst) {
             int16_t buffer[frame]{};
@@ -111,11 +125,14 @@ void run(const Fixture& fixture, int delay_ms) {
     }
     if (!encoder || cursor < length || cursor >= length+frame || peak >= int(fifo.capacity)) abort();
     esp_opus_enc_close(encoder);
+#ifdef NYX_AGC_REPLAY
+    std::printf("CLOCK %s %d %d %d %d\n", fixture.name, delay_ms, call_clock, capture_step, prime);
+#endif
     std::printf("END %s %d %d %d %d %d %d %d\n",fixture.name,delay_ms,detected,handoff,first,cursor,length,peak);
 }
 
 void worker(void*) {
-    const Fixture fixtures[] = {{"digital",digital,102788},{"near",near_wave,102704},{"far",far_wave,102932}};
+    const Fixture fixtures[] = {{"digital",digital,events[0]},{"near",near_wave,events[1]},{"far",far_wave,events[2]}};
     for (const auto& fixture : fixtures) {
         run(fixture,0);
         run(fixture,1500);
