@@ -31,7 +31,7 @@ for arm in ['joint']:
 assert [s['stage'] for s in receipt['stages']]==expected_stages
 assert all(s['actual_exit_code']==0 for s in receipt['stages'])
 training=read(R/'4090-local-stem-training-execution-v1.json')
-assert training['exit_code']==0
+assert training['actual_exit_code']==0
 training_review=read(R/'4090-local-stem-training-review-v1.json')
 assert training_review['all_sampling_checks_passed'] and training_review['steps_verified']==20000
 summary={}; members=0

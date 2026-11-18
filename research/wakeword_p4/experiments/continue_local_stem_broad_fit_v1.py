@@ -13,6 +13,10 @@ def main():
         if fields[0]=='Z': break
         time.sleep(15)
     receipt=R/'4090-local-stem-consumed-independent-review-execution-v1.json'
+    corrected=R/'4090-local-stem-consumed-independent-review-corrected-execution-v1.json'
+    if corrected.exists():
+        assert json.loads(receipt.read_text())['actual_exit_code']==1
+        receipt=corrected
     assert json.loads(receipt.read_text())['actual_exit_code']==0
     review=R/'4090-local-stem-consumed-review-v1.json'
     assert json.loads(review.read_text())['all_passed']
