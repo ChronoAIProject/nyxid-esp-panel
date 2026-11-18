@@ -1,0 +1,301 @@
+{
+  "mode": "ESP32-P4 QEMU, registered external RAM, zero reference, two dl_fft ANSI kernels",
+  "source_report_sha256": "241699b395d9832d695218850866ffc4878f43b276e6f3c2f03855532d2c98b9",
+  "dependencies": {
+    "espressif/esp-sr": {
+      "version": "2.6.1",
+      "component_hash": "7ba1e97d446440faa96a7d98fbda7dbaaf7ae6b960e06cc68264d38aa6eb4d14",
+      "files": {
+        "lib/esp32p4/libesp_audio_processor.a": "7fe8f1fd7563fbd09917116fd6d621b3ddcd85715ba48442eb03f63071dd168b",
+        "lib/esp32p4/libdl_lib.a": "07174a92fae60884998186a843e06e9955b78c2dc4d491fe2b6de2068f6eedd2"
+      }
+    },
+    "espressif/dl_fft": {
+      "version": "0.8.0",
+      "component_hash": "965be7152132b365061abf5fc5fc7b85e525f73b94a204cdda61cfe9572c0d77",
+      "files": {
+        "base/dl_fft2r_fc32_ansi.c": "8ee9794462849e498ec6d7f707f3bada7723212ecf48531a8491f114a2c5a0ac",
+        "base/isa/esp32p4/dl_fft2r_fc32_arp4.S": "25d706406cd3e7de3407ad8518790fb157097bad1a7e705a9d67736c4115f76b"
+      }
+    }
+  },
+  "elf_sha256": "5c90bfa45170ab0fadeb1d7647faadefe23adecee80f692561ecffd6e01c1708",
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "native_fft_elf_sha256": "2d0a88c9c124cd75721ce7b638664b4f4bcdda7aa86363a3ea301013d5331a10",
+  "native_fft_failure": "dl_fft2r_fc32_arp4_: esp.lp.setup, machine instruction 0x026fc02b",
+  "uart_sha256": "2be72a53a947da844d067cde5955228481a9b10de550d27544ac599d14374309",
+  "repeat_uart_sha256": "6c016f49a5fdc13a754c69fce93933bf5cf4f0b8b35e8e85fc4d965cef9cd715",
+  "uart_archive_sha256": "0ab0c27e8911ae93079f919e07741792bd5c820489d9c7236cf67d86539c7671",
+  "repeat_check": "all post-prime output samples and notifications equal in two QEMU boots",
+  "asr": {
+    "model": "small.en",
+    "device": "cuda",
+    "compute_type": "float16",
+    "files": {
+      ".local/wakeword/whisper-small-en/model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+      ".local/wakeword/whisper-small-en/config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+      ".local/wakeword/whisper-small-en/tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+      ".local/wakeword/whisper-small-en/vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+    }
+  },
+  "records": [
+    {
+      "channel": "digital",
+      "wav_sha256": "fd304b4934144bea259cee4b856667b345534aa9d2a7398768439eecd6ade759",
+      "source_samples": 140400,
+      "aec_chunk_samples": 256,
+      "prime_samples": 81664,
+      "output_samples": 142496,
+      "input_command_onset": 106400,
+      "input_notification": 102788,
+      "agc_notifications": [
+        104228
+      ],
+      "source_transcript": {
+        "text": "Lower the fan speed.",
+        "words": [
+          {
+            "word": " Lower",
+            "start": 0.0,
+            "end": 0.16
+          },
+          {
+            "word": " the",
+            "start": 0.16,
+            "end": 0.28
+          },
+          {
+            "word": " fan",
+            "start": 0.28,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "stages": {
+        "aec": {
+          "pcm_sha256": "bd966c2a97e50f634533492852e893bd0e41dbeabfb4616174a00a97d37d0f9d",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.9994670467514938,
+          "command_transcript": {
+            "text": "lower the fan speed.",
+            "words": [
+              {
+                "word": " lower",
+                "start": 0.0,
+                "end": 0.16
+              },
+              {
+                "word": " the",
+                "start": 0.16,
+                "end": 0.28
+              },
+              {
+                "word": " fan",
+                "start": 0.28,
+                "end": 0.5
+              },
+              {
+                "word": " speed.",
+                "start": 0.5,
+                "end": 0.82
+              }
+            ]
+          }
+        },
+        "agc": {
+          "pcm_sha256": "9950f3fd1d8ef03042a81b1d9f62a7d07241c18d4ce5657d185f44d3731f2797",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.9486322043811549,
+          "command_transcript": {
+            "text": "lower the fan speed.",
+            "words": [
+              {
+                "word": " lower",
+                "start": 0.0,
+                "end": 0.16
+              },
+              {
+                "word": " the",
+                "start": 0.16,
+                "end": 0.28
+              },
+              {
+                "word": " fan",
+                "start": 0.28,
+                "end": 0.5
+              },
+              {
+                "word": " speed.",
+                "start": 0.5,
+                "end": 0.82
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "channel": "near",
+      "wav_sha256": "7bd139cbcaea84aab44e79a316bcd0d035c4719f8f927fcebd27607e0fa8c694",
+      "source_samples": 141134,
+      "aec_chunk_samples": 256,
+      "prime_samples": 81664,
+      "output_samples": 143296,
+      "input_command_onset": 106315,
+      "input_notification": 102704,
+      "agc_notifications": [
+        104144
+      ],
+      "source_transcript": {
+        "text": "lower the fan speed.",
+        "words": [
+          {
+            "word": " lower",
+            "start": 0.0,
+            "end": 0.18
+          },
+          {
+            "word": " the",
+            "start": 0.18,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "stages": {
+        "aec": {
+          "pcm_sha256": "8ed3f79cc4ccdb61c0b19dd37af4e89ee481214f7c99b417128e5c3f96447b59",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.9990033115878857,
+          "command_transcript": {
+            "text": "lower the fan speed.",
+            "words": [
+              {
+                "word": " lower",
+                "start": 0.0,
+                "end": 0.18
+              },
+              {
+                "word": " the",
+                "start": 0.18,
+                "end": 0.3
+              },
+              {
+                "word": " fan",
+                "start": 0.3,
+                "end": 0.52
+              },
+              {
+                "word": " speed.",
+                "start": 0.52,
+                "end": 0.84
+              }
+            ]
+          }
+        },
+        "agc": {
+          "pcm_sha256": "b52af0f8762979cdbda098732d61cf60b7fb1a8bf35b0aa3f84414eeea8d50fc",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.9832344220690061,
+          "command_transcript": {
+            "text": "lower the fan speed.",
+            "words": [
+              {
+                "word": " lower",
+                "start": 0.0,
+                "end": 0.18
+              },
+              {
+                "word": " the",
+                "start": 0.18,
+                "end": 0.3
+              },
+              {
+                "word": " fan",
+                "start": 0.3,
+                "end": 0.52
+              },
+              {
+                "word": " speed.",
+                "start": 0.52,
+                "end": 0.84
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "channel": "far",
+      "wav_sha256": "199a6b643ab879a6e041f89c97125c10556ab37e734d365c28260744e0289e40",
+      "source_samples": 142941,
+      "aec_chunk_samples": 256,
+      "prime_samples": 81664,
+      "output_samples": 145056,
+      "input_command_onset": 106539,
+      "input_notification": 102932,
+      "agc_notifications": [
+        104372
+      ],
+      "source_transcript": {
+        "text": "",
+        "words": []
+      },
+      "stages": {
+        "aec": {
+          "pcm_sha256": "1ee0ce114210ca3103ff159d3bb73a989857fdcbb159d8611fa21bfd6ca75f03",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.981715331217104,
+          "command_transcript": {
+            "text": "",
+            "words": []
+          }
+        },
+        "agc": {
+          "pcm_sha256": "34a467e1820a6244c426258f790c8ea991342f8d6f5e9eecddafbfe18aa7bb6b",
+          "command_delay_samples": 1440,
+          "command_correlation": 0.9798321711548263,
+          "command_transcript": {
+            "text": "We'll be right back.",
+            "words": [
+              {
+                "word": " We'll",
+                "start": 0.0,
+                "end": 0.1
+              },
+              {
+                "word": " be",
+                "start": 0.1,
+                "end": 0.24
+              },
+              {
+                "word": " right",
+                "start": 0.24,
+                "end": 0.24
+              },
+              {
+                "word": " back.",
+                "start": 0.24,
+                "end": 0.6
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

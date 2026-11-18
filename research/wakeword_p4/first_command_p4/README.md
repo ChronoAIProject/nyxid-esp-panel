@@ -24,3 +24,19 @@ ESP32-P4 QEMU 运行 v5 匹配器、面板的 `panel_voice_audio.c` 队列和生
 | 关闭 | 12/12 | 7/12 | 6/12 |
 
 在与上方 P4 远场回放相同的 “lower the fan speed.” 案例中，背景降低 12 dB 后转写为 “lower the band speed.”。该音频可供 Mac 检查首词，也能暴露命令中的错词。独立命令数为 12，各行重复使用这 12 条开发输入。[48 条逐项报告](../results/4090-c161-v5-far-command-noise.json) · [远场降低 12 dB 的 WAV](../results/4090-c161-v5-far-command-minus12.wav) · [复现程序](../experiments/check_c161_v5_far_command_noise.py)
+
+## P4 回声消除和自动增益后的首句
+
+将相同的三份 WAV 作为 16 kHz 麦克风输入，参考声道置零，采用面板的 ESP-SR 2.6.1 配置。AEC 使用单麦、单参考、8 个滤波分区、VOIP 高性能模式和强非线性抑制，每次处理 256 样本。AEC 输出按连续时钟分为 160 样本一帧，送入 AGC 模式 2（15 dB、限幅、目标 3 dB），再送入 v5 检测器。两次独立启动 QEMU，在每个条件下均得到逐样本相同的 AEC、AGC 输出和相同的通知位置。
+
+| 同一条合成命令 | 输入 WAV 的通知样本 | 处理后通知样本 | AEC 后 Whisper 转写 | AEC + AGC 后 Whisper 转写 |
+| --- | ---: | ---: | --- | --- |
+| 数字 | 102788 | 104228 | lower the fan speed. | lower the fan speed. |
+| 近场 | 102704 | 104144 | lower the fan speed. | lower the fan speed. |
+| 远场 | 102932 | 104372 | 空 | We'll be right back. |
+
+三条处理后音频均恰好通知一次，相对输入晚 1440 样本（90 ms）。用每条命令开始的 24000 个输入样本与 AEC 或 AGC 输出做归一化互相关，六组延迟估计也均为 1440 样本。表中转写在 4090 上运行，按各自延迟对齐并截取与原输入等长的命令段。原始远场输入转写为空，AGC 输出产生了一句与命令无关的文字。Mac 可用前两条检查首句，用第三条检查低信噪比时的错误转写。[每条的 PCM 哈希、转写和来源](../results/4090-c161-first-command-frontend-v5.json) · [带样本时钟的原始串口记录](../results/4090-c161-first-command-frontend-v5-uart.zip)
+
+P4 QEMU 运行按根目录依赖锁校验的 ESP-SR 库。原生 dl_fft 0.8.0 在首个数字输入的静音预热阶段遇到模拟器缺少的 `esp.lp.setup`，指令编码为 `0x026fc02b`。完成回放的构建将正、逆浮点基 2 FFT 各切换到该组件的 ANSI 实现，并为仿真外部 RAM 注册 16 MiB 地址空间。测试在 DSP 调用期间屏蔽时钟中断，以避开模拟器恢复浮点状态时的异常。90 ms 是样本时钟上的音频处理延迟。实机优化 FFT 的输出、真实扬声器参考、I2S 采集、墙钟耗时和整机余量需由 Mac 在板上测量。
+
+复现使用上面的 ESP-IDF 和分区配置。把 `NYX_SR_COMPONENT` 指向解包的 `espressif__esp-sr`，把 `EXTRA_COMPONENT_DIRS` 指向同级 `espressif__dl_fft`。在 `.local/wakeword/c161-first-command-v5/frontend-native` 构建原生 FFT，在同级 `frontend` 构建时额外传入 `-DNYX_QEMU_REFERENCE_FFT=ON`。从仓库根目录运行 `python3 research/wakeword_p4/experiments/run_c161_frontend_v5.py native boot repeat score`。评分程序会验证串口时钟连续、两轮输出相同、模型和库文件哈希，随后写出新的研究报告。[回放和评分程序](../experiments/run_c161_frontend_v5.py)

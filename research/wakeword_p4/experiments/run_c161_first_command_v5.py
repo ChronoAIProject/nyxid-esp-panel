@@ -21,25 +21,25 @@ LOG = WORK / "first-command-uart.log"
 STEM = "4090-c161-first-command-opus-v5"
 
 
-def boot():
-    images = read(BUILD / "flasher_args.json")["flash_files"]
+def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"FIRST_COMMAND PASS"):
+    images = read(build / "flasher_args.json")["flash_files"]
     flash = bytearray(b"\xff" * (4 << 20))
     for offset, name in images.items():
         start = int(offset, 16)
-        data = (BUILD / name).read_bytes()
+        data = (build / name).read_bytes()
         assert start + len(data) <= len(flash) and all(b == 255 for b in flash[start:start+len(data)])
         flash[start:start+len(data)] = data
-    image = WORK / "first-command-flash.bin"
     image.write_bytes(flash)
-    LOG.unlink(missing_ok=True)
-    cmd = [str(QEMU), "-machine", "esp32p4", "-display", "none", "-serial", f"file:{LOG.resolve()}",
+    log.unlink(missing_ok=True)
+    cmd = [str(QEMU), "-machine", "esp32p4", "-display", "none", "-serial", f"file:{log.resolve()}",
            "-monitor", "stdio", "-snapshot", "-drive", f"file={image.resolve()},if=mtd,format=raw"]
+    data = b""
     with subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE) as emulator:
         try:
             deadline = time.monotonic() + 150
             while time.monotonic() < deadline:
-                data = LOG.read_bytes() if LOG.exists() else b""
-                if b"FIRST_COMMAND PASS\r\n" in data or b"abort() was called" in data or emulator.poll() is not None:
+                data = log.read_bytes() if log.exists() else b""
+                if marker+b"\r\n" in data or b"Rebooting..." in data or emulator.poll() is not None:
                     break
                 time.sleep(.4)
             _,stderr = emulator.communicate(b"quit\n",timeout=8)
@@ -47,7 +47,7 @@ def boot():
             if emulator.poll() is None:
                 emulator.kill()
     assert emulator.returncode == 0, stderr
-    assert b"FIRST_COMMAND PASS" in data, data[-1800:]
+    assert marker+b"\r\n" in data, data[-1800:]
 
 
 def transcripts(reader, pcm):

@@ -4,6 +4,21 @@ set(waves "")
 foreach(channel IN ITEMS digital near far)
     list(APPEND waves "${results}/4090-c161-coded-cue-v5-command-${channel}.wav")
 endforeach()
-idf_component_register(SRCS "main.cpp" "${panel}/panel_voice_audio.c"
-    INCLUDE_DIRS "../../portable" "${panel}" PRIV_REQUIRES esp_audio_codec
-    EMBED_FILES ${waves})
+if(DEFINED ENV{NYX_SR_COMPONENT})
+    idf_component_register(SRCS "frontend.cpp" INCLUDE_DIRS "../../portable" "$ENV{NYX_SR_COMPONENT}/include/esp32p4"
+                           PRIV_REQUIRES espressif__dl_fft EMBED_FILES ${waves})
+    if(NYX_QEMU_REFERENCE_FFT)
+        target_sources(${COMPONENT_LIB} PRIVATE "qemu_reference_fft.c")
+        target_link_options(${COMPONENT_LIB} INTERFACE "-Wl,-u,__wrap_dl_fft2r_fc32_arp4_" "-Wl,-u,__wrap_dl_ifft2r_fc32_arp4_"
+            "-Wl,--wrap=dl_fft2r_fc32_arp4_" "-Wl,--wrap=dl_ifft2r_fc32_arp4_")
+    endif()
+    set(sr_libs "$ENV{NYX_SR_COMPONENT}/lib/esp32p4")
+    idf_component_get_property(dl_fft espressif__dl_fft COMPONENT_LIB)
+    target_link_libraries(${COMPONENT_LIB} PRIVATE "-Wl,--start-group"
+        "${sr_libs}/libesp_audio_processor.a" "${sr_libs}/libdl_lib.a"
+        "$<TARGET_FILE:${dl_fft}>" "-Wl,--end-group")
+else()
+    idf_component_register(SRCS "main.cpp" "${panel}/panel_voice_audio.c"
+        INCLUDE_DIRS "../../portable" "${panel}" PRIV_REQUIRES esp_audio_codec
+        EMBED_FILES ${waves})
+endif()
