@@ -1,0 +1,50 @@
+{
+  "purpose": "Failed replacement research evidence for Mac review; retain C161, no candidate promotion or P4 qualification",
+  "source_commit": "c40e67bf",
+  "model": {
+    "path": ".local/wakeword/local-stem-final-int8-v1/joint/int8.tflite",
+    "bytes": 69600,
+    "sha256": "09bdd5ede22adb59970d92e7f67e2b0d3ed4888a04411df465fefd3a2af0170e"
+  },
+  "ops": [
+    "ADD",
+    "CONCATENATION",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "LOGISTIC",
+    "PAD",
+    "RESHAPE",
+    "STRIDED_SLICE",
+    "TRANSPOSE"
+  ],
+  "versions": {
+    "torch": "2.15.0",
+    "tensorflow": "2.21.0",
+    "ai-edge-litert": "2.3.0",
+    "pymicro-features": "2.0.2",
+    "numpy": "2.4.6"
+  },
+  "threshold": 0.91796875,
+  "smoothing_steps": 5,
+  "source_report": "research/wakeword_p4/results/4090-local-stem-joint-context-original-v1.json",
+  "files": {
+    "builtin.npz": {
+      "bytes": 12430,
+      "sha256": "ba405e4a40297116bfcf47dbcb3b6a8b0f89e70f4f769e053293d319ead504da",
+      "source_path": ".local/wakeword/local-stem-joint-context-v1/builtin.npz",
+      "source_commit": "c40e67bf"
+    },
+    "melo-US.npz": {
+      "bytes": 15350,
+      "sha256": "570595e9b395612de4ba4c29364688da7580e5f72c00eb4c11b13809a7d28e6a",
+      "source_path": ".local/wakeword/local-stem-joint-context-v1/melo-US.npz",
+      "source_commit": "c40e67bf"
+    },
+    "melo-BR.npz": {
+      "bytes": 13044,
+      "sha256": "618952a95e7d5975b277466c426981662facb784715cdc899512a36ca44248d7",
+      "source_path": ".local/wakeword/local-stem-joint-context-v1/melo-BR.npz",
+      "source_commit": "c40e67bf"
+    }
+  }
+}
