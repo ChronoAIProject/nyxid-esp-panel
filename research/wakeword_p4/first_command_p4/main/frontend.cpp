@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "c161_coded_cue_v5.h"
+#include "c161_coded_cue_reference_v5.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
 #include "esp_flash.h"
@@ -66,6 +66,7 @@ void run(const char* channel, const uint8_t* mic_pcm, const uint8_t* ref_pcm, in
     alignas(16) int16_t mic[max_chunk], ref[max_chunk]{}, clean[max_chunk];
     alignas(16) int16_t frame[frame_samples], adjusted[frame_samples];
     nyx::CodedCueV5 detector;
+    nyx::CodedCueReferenceV5 reference_guard;
     int fill = 0, emitted = -prime;
     for (int at = -prime; at < length + 2048; at += chunk) {
         if ((at + prime) % (64 * chunk) == 0) vTaskDelay(1);
@@ -90,7 +91,17 @@ void run(const char* channel, const uint8_t* mic_pcm, const uint8_t* ref_pcm, in
                 if (esp_agc_process(agc, frame, adjusted, frame_samples, rate) != ESP_AGC_SUCCESS) abort();
             }
             for (int j = 0; j < frame_samples; ++j) {
-                if (detector.update(adjusted[j])) std::printf("EVENT %s %d\n", channel, emitted+j+1);
+                const bool hit = detector.update(adjusted[j]);
+                const int at_output = emitted + j;
+                if (hit) std::printf("EVENT %s %d\n", channel, at_output + 1);
+                if (ref_pcm) {
+                    // An actual capture FIFO can retain each reference sample until AGC emits this index.
+                    int16_t reference = 0;
+                    if (at_output >= 0 && at_output < length) {
+                        std::memcpy(&reference, ref_pcm + 2 * at_output, sizeof(reference));
+                    }
+                    if (reference_guard.allow(reference, hit)) std::printf("ALLOWED %d\n", at_output + 1);
+                }
             }
             if (emitted + frame_samples > 0) emit("agc", emitted, adjusted);
             emitted += frame_samples;
