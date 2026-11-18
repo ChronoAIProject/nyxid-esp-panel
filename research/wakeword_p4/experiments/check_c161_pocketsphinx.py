@@ -18,12 +18,12 @@ PAST, WAIT, BLOCK = 24000, 4800, 480
 WHEEL = "a3541ad8b6ce00230bd96fe520d48c3a252e031531bc8337dfccf7553cbca998"
 
 
-def setup():
+def setup(threshold=1e-30):
     cache = Path(".local/wakeword/c161-pocket-reference")
     wheel, = cache.glob("pocketsphinx-5.0.4-*.whl")
     assert sha(wheel) == WHEEL
-    config = Config(keyphrase=PHRASE, loglevel="ERROR")
-    assert config["lm"] is None and config["kws_threshold"] == 1e-30 and config["frate"] == 100
+    config = Config(keyphrase=PHRASE, loglevel="ERROR", kws_threshold=threshold)
+    assert config["lm"] is None and config["kws_threshold"] == threshold and config["frate"] == 100
     model = Path(get_model_path())
     files = {p.relative_to(model).as_posix(): dict(bytes=p.stat().st_size, sha256=sha(p))
              for p in (*Path(config["hmm"]).iterdir(), Path(config["dict"])) if p.is_file()}
@@ -65,8 +65,8 @@ def confirmations(decoder, cmn, pcm, proposals):
     return out
 
 
-def run():
-    decoder, cmn, spec = setup()
+def run(threshold=1e-30, stem=STEM):
+    decoder, cmn, spec = setup(threshold)
     prior = RESULTS/f"{CANDIDATE}-replay-v1.json"
     sources = {(r["cohort"],r["record_key"]):r for r in read(prior)["records"]}
     records = []
@@ -87,12 +87,12 @@ def run():
         matches = search(decoder, cmn, pcm, 0)
         records.append(dict(cohort="household", key=r["pcm_sha256"], direct=matches,
                             direct_events=choose([], sorted(set(x["returned"] for x in matches)))))
-    save(RESULTS/f"{STEM}-v1.json", dict(implementation=spec, reset_cmn=cmn, inputs_sha256=sha(prior),
+    save(RESULTS/f"{stem}-v1.json", dict(implementation=spec, reset_cmn=cmn, inputs_sha256=sha(prior),
                                         household_sha256=sha(rooms), records=records))
 
 
-def background():
-    decoder, cmn, spec = setup()
+def background(threshold=1e-30, stem=STEM):
+    decoder, cmn, spec = setup(threshold)
     prior = RESULTS/f"{CANDIDATE}-background.json"
     backgrounds = read(prior)["records"]
     records = []
@@ -112,7 +112,7 @@ def background():
             records.append(dict(key=key, source=r["source"], pcm_sha256=r["pcm_sha256"], samples=len(pcm),
                                 proposals=checked, merged=merged))
     assert len(records)==66
-    save(RESULTS/f"{STEM}-background-v1.json", dict(implementation=spec, reset_cmn=cmn,
+    save(RESULTS/f"{stem}-background-v1.json", dict(implementation=spec, reset_cmn=cmn,
                                                     prior_sha256=sha(prior), records=records))
 
 
