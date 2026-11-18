@@ -1,0 +1,54 @@
+{
+  "idf": "v5.5.4",
+  "target": "esp32p4",
+  "qemu_command": [
+    ".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32",
+    "-machine",
+    "esp32p4",
+    "-display",
+    "none",
+    "-serial",
+    "file:/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-p4-cue-selftest-v1/build/witness-uart.log",
+    "-monitor",
+    "stdio",
+    "-snapshot",
+    "-drive",
+    "file=/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/.local/wakeword/c161-p4-cue-selftest-v1/build/selftest-qemu-flash.bin,if=mtd,format=raw"
+  ],
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "exit_code": 0,
+  "symbols": "embedded v3 PCM played twice with gap, 81600 zeros continuous prime",
+  "physical_board": false,
+  "files": {
+    "nyx_cue_selftest.elf": {
+      "bytes": 3951024,
+      "sha256": "3b737a89c538f885fef11649700320aeaacece6399caf756ddb3ef6d597f6b04"
+    },
+    "nyx_cue_selftest.bin": {
+      "bytes": 226768,
+      "sha256": "6c08c4c543d0389aba19a40bea224f6faf5b0f69a59852935ab887888b347975"
+    },
+    "bootloader/bootloader.bin": {
+      "bytes": 23072,
+      "sha256": "a99a067928644ab9bc45d2d833ca7e2e36a73ae3ef13328cc83a623245da07aa"
+    },
+    "partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+    },
+    "selftest-qemu-flash.bin": {
+      "bytes": 4194304,
+      "sha256": "0d5d89b94e4e047857d158fb3531e3bd32686a74a84373c137081c3236437ee5"
+    },
+    "witness-uart.log": {
+      "bytes": 3398,
+      "sha256": "c2744570e154f9b6efdc51925482ad0e64457322e007c91aefeb906a4d00ba1e"
+    }
+  },
+  "events": [
+    13214,
+    66574
+  ],
+  "uart_marker": "NYX_CUE_SELFTEST PASS hits=2 state=6888 max_block_us=2042 blocks_ge_30ms=0 min_internal_heap=597364",
+  "idf_build_log_sha256": "bb5641009fb1361d91eb52808041c6feafd94f3b0dc236c763f1d903f5bdee48"
+}
