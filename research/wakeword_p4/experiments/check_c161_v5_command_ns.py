@@ -45,16 +45,17 @@ def cases():
     return rows
 
 
-def replay(rows):
-    OUT.mkdir(exist_ok=True)
+def replay(rows, directory=None):
+    directory = OUT if directory is None else directory
+    directory.mkdir(exist_ok=True)
     for group in range(0, len(rows), 3):
         payload = bytearray(struct.pack("<I", 3))
         for i in range(group, group+3):
             src, pcm = rows[i]
-            start = src["start"] - 2048
+            start = src.get("ns_output_start", src["start"] - 2048)
             payload.extend(struct.pack("<4I", i, len(pcm), start, 1))
             payload.extend(pcm.astype("<i2", copy=False).tobytes())
-        boot(BUILD, OUT / f"{group}.log", OUT / "flash.bin", b"NS PASS", (2 << 20, payload))
+        boot(BUILD, directory / f"{group}.log", directory / "flash.bin", b"NS PASS", (2 << 20, payload))
 
 
 def frames(log, rows, group):
@@ -66,7 +67,7 @@ def frames(log, rows, group):
             current = int(idx)
             assert current == group + len(complete)
             src, pcm = rows[current]
-            assert (int(length), int(start), int(mode)) == (len(pcm), src["start"]-2048, 1)
+            assert (int(length), int(start), int(mode)) == (len(pcm), src.get("ns_output_start", src["start"] - 2048), 1)
             origin = int(start) // 160 * 160
             raw = bytearray()
         elif line.startswith("PCM "):
