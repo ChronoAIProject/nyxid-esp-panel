@@ -39,3 +39,7 @@
 | Melo BR | 21 | 5 | 17 | 1 |
 
 Jenny 的 44 次构造近音误触减少到 19 次，同时丢失 25 条原本识别的唤醒。Legacy 中新出现 1 条交叉触发，输入为 “Hi E S P, turn on the light.”，样本 41760。原 C161 继续用于面板验证。历史报告的目标事件说明负例改善伴随明显的跨声音召回损失。保留两份训练模型及完整分数供复核。[Legacy](../results/4090-c161-signed-confuser-isolated-primed-v1.json) · [Jenny](../results/4090-c161-signed-confuser-isolated-jenny-v1.json) · [Melo](../results/4090-c161-signed-confuser-isolated-melo-v1.json)
+
+同一批 1188 条孤立语句又用扣分前的有声父模型回放。四组各 36 条正常目标，父模型在 Legacy、Jenny、Melo US、Melo BR 上分别命中 36、33、35、31，加入第二版扣分后分别为 22、8、14、5。Jenny 的 25 条损失全部发生在加入扣分之后。[父模型 Legacy](../results/4090-c161-confuser-parent-isolated-primed-v1.json) · [Jenny](../results/4090-c161-confuser-parent-isolated-jenny-v1.json) · [Melo](../results/4090-c161-confuser-parent-isolated-melo-v1.json)
+
+下一次训练使用同一单输出图，加入此前已许可但未用于干扰词拟合的 59 条 Chatterbox 正例。在正例的教师五步峰值窗口内保护高响应的各帧，并给干扰词权重使用独立的 INT8 尺度。在训练文件中按原音 SHA256 分出校准子集，用这部分教师已能命中的窗口确定扣分偏置，随后在四个旧声音和两套命令场景比较。训练和偏置选择均不使用回放结果或验收留出。
