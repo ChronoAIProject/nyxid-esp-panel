@@ -22,3 +22,18 @@
 同时确认仍会被常用人名 Max 触发。独立句为 “Hey Max, come over here.”，连续语流为 “Hey Max, can you carry the other bag upstairs?”。家庭普通 Nyx 在 0、6、12 dB 的命中数，原 C161 为 1/8、2/8、3/8，房间组和最高分负窗组均为 3/8、4/8、5/8，同时确认为 1/8、3/8、4/8。四条 Mac 历史目标录音的主机回放，原 C161 为 1/4，房间组 4/4，最高分负窗组和同时确认均为 2/4。Joe 是已消费开发集，Mike 保持封存。固定 v5 音频的匹配器和普通发音分类器是两条不同的检测路径。[家庭回放与 v5](c161_v5_household_rooms.md)
 
 从仓库根目录运行 `/usr/bin/python3 research/wakeword_p4/experiments/check_c161_room_word.py`，参数 `room`、`random` 或 `hard` 选择比较对象。需要已备妥的家庭 PCM 和对应得分文件，脚本会校验输入身份。在单独的复现工作区移出同名输出后即可重新生成报告。
+
+## 完整背景、跨声音和自播
+
+以下三组是已消费的 66 段不同 PCM。每条从头到尾使用同一前端连续回放，每 30 ms 取得两个冻结模型的实际 INT8 分数。原 C161 在这些录音的已验证事件记录均为空。本次回放的总时长为 28.001227 小时。
+
+| 录音组 | 文件数 | 小时 | 原 C161 | 干声模型 | 最高分负窗模型 | 两个模型同时确认 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Melo 背景 | 42 | 7.902862 | 0 | 21 | 94 | 6 |
+| primed 财报电话 | 12 | 10.483945 | 0 | 7 | 50 | 3 |
+| Jenny 财报电话 | 12 | 9.614420 | 0 | 3 | 59 | 1 |
+| 合计 | 66 | 28.001227 | 0 | 31 | 203 | 10 |
+
+这 10 次通知来自六条录音。这批音频上每小时约 0.36 次，仅描述本组观测。用 RTX 4090 上的 Whisper small.en 对每个事件前 2 秒后 1 秒和前 5 秒后 3 秒作英语无提示转写。两种长度的上下文均未转录出唤醒词。可复核的日常话语包括 qajyo 178.47 秒的 “so many bags”、thnuq 470.82 秒的 “our first speaker”、4468919 财报 821.88 秒的 “giving us flexibility”。短窗与长窗在一些词上有分歧，报告保留了两个版本及逐词样本时钟。[全量事件](../results/4090-c161-room-word-negatives-hard-background.json) · [逐步 INT8 分数](../results/4090-c161-room-word-negatives-hard-background-scores.npz) · [十个事件的转写](../results/4090-c161-room-word-negatives-hard-background-asr.json)
+
+在四种合成声音各读三条原速命令的 forward 组中，同时确认对 bf_lily 和 am_eric 各命中 3/3，对 af_aoede 和 am_fenrir 各为 0/3，12 个平行对照零通知。两种 Bot 声音、每种两条传输路径上的 48 次普通回复零通知，8 次明确念唤醒词的自播有 4 次通知。综合常用姓名、连续背景和上述逐声音表现，本轮普通语音候选留作研究，板上普通语音验收使用原 C161，固定播放音沿用已交付的 v5。[四声音、Bot 和逐句时钟](../results/4090-c161-room-word-negatives-hard-comparison-v1.json)
