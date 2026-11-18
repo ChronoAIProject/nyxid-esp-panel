@@ -8,7 +8,7 @@ PHRASES=('Hey Nicks.','Hey Nick.','Hey Next.','Hey Mix.','Hey Muse.')
 def plan():
  p=json.loads((R/'4090-binary40-training-fit-plan-v1.json').read_text())
  for f in [Path(__file__),ROOT/'features.json',ROOT/'features.bin']:p['files'][str(f)]=sha(f)
- p['files']['.local/wakeword/binary40-local-stem-training-v1/final.pt']=sha('.local/wakeword/binary40-local-stem-training-v1/final.pt')
+ p['files']['.local/wakeword/local-stem-training-v1/final.pt']=sha('.local/wakeword/local-stem-training-v1/final.pt')
  for folder in ['experiments','training']:
   for f in Path('research/wakeword_p4',folder).glob('*.py'):p['files'][str(f)]=sha(f)
  p['policy']='Local-frequency stem candidate; All31644 original training broad bare rows in metadata order, five original classes, final20000weights, original features/masks and zero-cache startup, GPUfloat only, no fit/retry/dev/acceptance/threshold/calibration access. Full282calls preserve padded tails but label reporting separates valid source support. Existing training support, not independent generalization; no INT8/P4 equivalence.'
@@ -25,7 +25,7 @@ def run():
  from causal_binary40_local_stem_v1 import Binary40LocalStem
  torch.set_num_threads(2);torch.set_num_interop_threads(1);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
  assert torch.cuda.is_available() and '4090' in torch.cuda.get_device_name()
- cp=torch.load('.local/wakeword/binary40-local-stem-training-v1/final.pt',map_location='cpu',weights_only=False);assert cp['step']==20000
+ cp=torch.load('.local/wakeword/local-stem-training-v1/final.pt',map_location='cpu',weights_only=False);assert cp['step']==20000
  m=Binary40LocalStem().cuda().eval();m.load_state_dict(cp['model'],strict=True);assert all(torch.equal(v.cpu(),cp['model'][k]) for k,v in m.state_dict().items())
  rows=[r for r in json.loads((ROOT/'features.json').read_text()) if r['source_pair_key']['carrier']=='bare' and r['text'] in PHRASES];assert len(rows)==31644
  assert all(r['split']=='training' and r['frames']<=846 for r in rows)
