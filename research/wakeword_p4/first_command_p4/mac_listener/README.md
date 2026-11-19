@@ -38,6 +38,10 @@
 
 Mac 可沿用原固定音为 A，将下方 ZIP 中同路径的 WAV 作 B，保持外部播放器音量、位置和板端配置一致。同目录 `first/015.wav` 和 `second/011.wav` 对应两条弱档漏开条件。独立 B 音长 1.45 秒，采样率 16 kHz。[B 单播 WAV](../../results/hye-nyx-af-bella-peak-minus1.wav) · [B 的 24 条连说 WAV 和清单](../../results/c161-bella-peak-command-playback.zip) · [72 条主机回放](../../results/4090-c161-bella-peak-playback.json) · [26 次 P4 模拟与完整首句](../../results/4090-c161-bella-peak-playback-p4.json)
 
+同一组合成 af_bella 另读 Hey Willow，两种称呼在各自有效段的 RMS 配平到 0.01 dB 以内，再同时提高 5.68 dB。24 个背面弱档条件用相同命令后缀、背景音乐、面板声和麦克风增益。官方 Hey Willow DEFAULT 在两档各开麦 0/24；C161 配三段标记听自己的称呼分别及时开麦 22/24 和 24/24，两种接收器在去称呼输入均为 0/24。此前同一份原电平 Willow 干声在官方接收器上于样本 50,496 命中。[逐场时钟](../../results/4090-c161-bella-peak-willow.json) · [官方返回与串口](../../results/4090-c161-bella-peak-willow.zip)
+
+为核对唤醒音电平与首句的关系，另把两版归档的同一串 Opus 包完整解码，只在送入识别器时跳过开头两秒。24 条配对命令的原音由 Qwen 识全 16 条、turbo 识全 9 条，加大称呼后分别为 13 和 10 条。两个原漏开条件此时两种识别器都漏词。完整上行与截短送识各自的转写和 PCM 哈希均可逐句核对。[解码后的首句对照](../../results/4090-c161-bella-decoded-history.json)
+
 ## 复现
 
 从仓库根目录运行，Mac 源提交须已获取。使用 ESP-IDF 5.5.4、ESP-SR 2.6.1、esp-tflite-micro 1.3.3~1、esp-nn 1.1.2 与 esp-micro-speech-features 1.2.3，前端使用 Mac 提交中的分配检查补丁。QEMU 使用 ANSI 神经网络内核和参考 FFT，并在 DSP 运算时屏蔽 tick 以避开模拟器浮点舍入 CSR 的延迟上下文切换问题；C161 内部进度日志在此模拟构建关闭。源 WAV 的生成和路径见上方配对实验。
