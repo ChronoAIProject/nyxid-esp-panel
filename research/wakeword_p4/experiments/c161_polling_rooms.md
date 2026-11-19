@@ -1083,3 +1083,16 @@ TX 提前 80 ms 时，完整上行中两条 “turn down” 被 Qwen 转成 “t
 使用 Amir Majidimehr 在 Audio Science Review 发表的 Google Nest Audio 水平声压测量，取 Spinorama 的正面、90° 和 180° 三条曲线。以正面 500–2,000 Hz 的平均分贝为共同基准，从各自的幅频曲线重建 16 kHz 最小相位滤波器。三个方向在 700–1,580 Hz 标记频带的平均相对增益为 +0.10、−5.28、−5.95 dB。在 100–7,800 Hz，滤波器与插值后的目标曲线最大偏差小于 0.05 dB。原曲线按 CC BY-NC-SA 4.0 发布，保存的三个数值序列沿用该许可。角度滤波器用于模拟开发回放，真实扬声器的相位、非线性、房内各方向反射及绝对声压尚需实采。[ASR 原始测量](https://www.audiosciencereview.com/forum/index.php?threads/google-nest-audio-speaker-review.58134/) · [Spinorama 数据](https://www.spinorama.org/speakers/Google%20Nest%20Audio/ASR/index_asr.html) · [许可](https://creativecommons.org/licenses/by-nc-sa/4.0/) · [提取的三条曲线](../results/nest-audio-asr-horizontal-curves.json)
 
 只对外部扬声器轨应用滤波，随后沿用已有的房间卷积、面板示范、音乐、固定麦克风增益和 TX 提前 80 ms 的时钟。先逐条核对两批原始输入与原开麦结果。两批各包含四种声音、三句命令和三个电平。冻结 C161 加专用匹配器在主机 INT8 回放中，直通与正面均及时开麦 72/72，侧面、背面各为 65/72。两个方向的 14 个漏开都在 −6 dB 外部电平。中、强档三个方向均及时 48/48。四条路径的去称呼对照各 0/72 开麦。复用原来的 24 条干声及其房间和音乐。[576 个输入、开麦及对照](../results/4090-c161-sender-directivity.json)
+
+### 把已训练的三段标记增益用于八种 Hye Nyx 合成音
+
+采用此前在训练房间得到的三段振幅倍率 1.4233、1.4062、1.4054。每条合成音增强标记后，按原称呼总 RMS 缩放，再接回原命令。24 条称呼的 RMS 与原轨相差均小于 0.00002 dB，命令 PCM 逐字节一致。每种声音取预定的第一条命令，单独导出称呼，供实物播放。归档含 8 个独立 Hye Nyx 和 24 条带命令的 16 kHz 单声道 WAV，均为干声。[八声线研究播放包](../results/c161-eight-voice-marker-gains.zip) · [训练来源与增益](../results/4090-c161-single-marker-gains-fit.json)
+
+| 扬声器频响，每行 72 个条件 | 原音及时开麦 | 等 RMS 增强音及时开麦 | 配对找回 / 新丢 |
+| --- | ---: | ---: | ---: |
+| 直通 | 72 | 72 | 0 / 0 |
+| 正面 | 72 | 72 | 0 / 0 |
+| 侧面 90° | 65 | 71 | 6 / 0 |
+| 背面 180° | 65 | 70 | 5 / 0 |
+
+表中为冻结 C161 加标记匹配器的主机回放。四条播放路径逐场核对原版麦克风 PCM 与去称呼对照哈希。找回的 11 次全部位于 −6 dB 弱档。两批、四个方向条件复用同一批 24 条外部命令。[原版与增强版的 288 个配对结果](../results/4090-c161-connected-marker-gains.json)
